@@ -1,13 +1,13 @@
 // tslint:disable:radix
 // tslint:disable:triple-equals
 
-import {ElementRef, Injectable, Input} from '@angular/core';
-import {DatePipe, DecimalPipe} from '@angular/common';
-import {EventService} from '../Data-service/event.service';
-import {HttpClient} from '@angular/common/http';
-import {SubscriptionService} from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
-import {FormGroup} from '@angular/forms';
-import {BehaviorSubject} from 'rxjs';
+import { ElementRef, Injectable, Input } from '@angular/core';
+import { DatePipe, DecimalPipe } from '@angular/common';
+import { EventService } from '../Data-service/event.service';
+import { HttpClient } from '@angular/common/http';
+import { SubscriptionService } from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
+import { FormGroup } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs';
 import { AuthService } from '../auth-service/authService';
 
 
@@ -86,7 +86,7 @@ export class UtilService {
   static convertObjectToCustomArray(inputObject: object, keyNameForOutput: string, keyValueForOutput: string): object[] {
     const outputArray = [];
     Object.keys(inputObject).map(key => {
-      const object = {selected: false};
+      const object = { selected: false };
       object[keyNameForOutput] = inputObject[key];
       object[keyValueForOutput] = key;
 
@@ -318,7 +318,7 @@ export class UtilService {
     }
     formGroup.patchValue(event.target.value.toUpperCase());
   }
-   getBrowserName() {
+  getBrowserName() {
     const agent = window.navigator.userAgent.toLowerCase()
     switch (true) {
       case agent.indexOf('edge') > -1:
@@ -349,22 +349,37 @@ export class UtilService {
     console.log(browser)
     return this.http.post(
       'http://dev.ifanow.in:8080/futurewise/api/v1/web//subscription/html-to-pdf', obj,
-      {responseType: 'blob'}).subscribe(
-      data => {
-        const file = new Blob([data], {type: 'application/pdf'});
-        fragData.isSpinner = false;
-        // window.open(fileURL,"hello");
-        var namePdf = "'s "+pdfName+ "as on:"+new Date(); 
-        const a = document.createElement('a');
-        a.href=window.URL.createObjectURL(file);
-        a.download=namePdf+".pdf";
-        a.click();
-        //a.download = fileURL;
-        return (this.fileURL) ? this.fileURL : null;
-      }
-    );
+      { responseType: 'blob' }).subscribe(
+        data => {
+          const file = new Blob([data], { type: 'application/pdf' });
+          fragData.isSpinner = false;
+          // window.open(fileURL,"hello");
+          var namePdf = "'s " + pdfName + "as on:" + new Date();
+          const a = document.createElement('a');
+          a.href = window.URL.createObjectURL(file);
+          a.download = namePdf + ".pdf";
+          a.click();
+          //a.download = fileURL;
+          return (this.fileURL) ? this.fileURL : null;
+        }
+      );
   }
-
+  bulkHtmlToPdf(data) {
+    let obj = {
+      htmlInput: data.htmlInput,
+      name: data.name,
+      fromEmail: data.fromEmail,
+      toEmail: data.toEmail,
+      clientId: data.clientId,
+      advisorId: data.advisorId
+    }
+    return this.http.post(
+      'http://dev.ifanow.in:8080/futurewise/api/v1/web/pdfAndEmail/bulk-mail/html-to-pdf', obj,
+      { responseType: 'blob' }).subscribe(
+        data => {
+          console.log('done email',data)
+        });
+  }
   /**
    * Convert base64 image string to proper image file
    * @param dataURI - Base 64 string of image file
@@ -397,8 +412,8 @@ export class UtilService {
     for (let i = 0; i < byteString.length; i++) {
       ia[i] = byteString.charCodeAt(i);
     }
-    const imageBlob = new Blob([ia], {type: mimeString});
-    return new File([imageBlob], imageName, {type: 'image/png'});
+    const imageBlob = new Blob([ia], { type: mimeString });
+    return new File([imageBlob], imageName, { type: 'image/png' });
   }
 
   /**

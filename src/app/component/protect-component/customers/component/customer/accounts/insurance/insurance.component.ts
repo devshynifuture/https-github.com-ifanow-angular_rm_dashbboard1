@@ -29,6 +29,8 @@ import {FileUploadServiceService} from '../assets/file-upload-service.service';
 export class InsuranceComponent implements OnInit {
   personalProfileData: any;
   isLoadingUpload: boolean;
+  isExpandedLife: boolean;
+  isExpandedGeneral: boolean;
 
   [x: string]: any;
 
@@ -102,6 +104,8 @@ export class InsuranceComponent implements OnInit {
   insuranceTypeId;
 
   ngOnInit() {
+    this.isExpandedLife = true;
+    this.isExpandedGeneral = false;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.personalProfileData = AuthService.getProfileDetails();
@@ -113,7 +117,15 @@ export class InsuranceComponent implements OnInit {
     this.lifeInsuranceFlag = true;
     this.generalInsuranceFlag = false;
   }
+  changeExpression(){
+    this.isExpandedLife=true;
+    this.isExpandedGeneral = false;
 
+  }
+  changeExpressionGeneral(){
+    this.isExpandedGeneral = true;
+    this.isExpandedLife=false;
+  }
   fetchData(value, fileName, element) {
     this.isLoadingUpload = true;
     let obj = {
@@ -409,7 +421,7 @@ export class InsuranceComponent implements OnInit {
             if (singleInsuranceData.insuredMembers.length > 1) {
               for (let i = 1; i < singleInsuranceData.insuredMembers.length; i++) {
                 const firstName = (singleInsuranceData.insuredMembers[i].name as string).split(' ')[0];
-                singleInsuranceData.displayHolderName += ',' + firstName;
+                singleInsuranceData.displayHolderName += ', ' + firstName;
               }
             }
           } else {
@@ -436,11 +448,14 @@ export class InsuranceComponent implements OnInit {
                 this.showType = 'Plan type';
               }
             } else {
-              this.showType = 'PlanName';
+              this.showType = 'Plan name';
             }
 
           });
           (element.insuredMembers.length == 0) ? this.showPolicyHolder = 'Name of policy holder' : this.showPolicyHolder = 'Name of insured members';
+          if(this.insuranceSubTypeId == 4){
+            element.planName = element.policyName;
+          }
         }
         // this.sumAssured = 0;
         // if (element.insuredMembers.length > 0) {
@@ -543,7 +558,7 @@ export class InsuranceComponent implements OnInit {
 
   getInsuranceTypeData(typeId, typeSubId) {
     if (typeSubId == 4){
-      this.displayedColumns2 = ['no', 'life', 'insurerName', 'sumInsured', 'premiumAmount', 'policyExpiryDate', 'Duration', 'planName', 'policyNumber','vehicleNum','status', 'icons'];
+      this.displayedColumns2 = ['no', 'life', 'insurerName', 'sumInsured', 'premiumAmount', 'policyExpiryDate', 'Duration', 'planName', 'policyNumber','vehicleModel','status', 'icons'];
     }else{
       this.displayedColumns2 = ['no', 'life', 'insurerName', 'sumInsured', 'premiumAmount', 'policyExpiryDate', 'Duration', 'planName', 'policyNumber', 'status', 'icons'];
     }

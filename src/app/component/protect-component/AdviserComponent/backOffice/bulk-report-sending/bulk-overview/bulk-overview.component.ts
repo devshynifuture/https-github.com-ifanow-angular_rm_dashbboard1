@@ -3,6 +3,7 @@ import { MutualFundOverviewComponent } from 'src/app/component/protect-component
 import * as Highcharts from 'highcharts';
 import { UtilService } from 'src/app/services/util.service';
 import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-bulk-overview',
@@ -14,7 +15,7 @@ import { MfServiceService } from 'src/app/component/protect-component/customers/
 export class BulkOverviewComponent implements OnInit {
 
   sendData = [{
-    clientId: 88317
+    clientId: 93902
   }]
   getObj: any;
   dataSource3: any;
@@ -54,14 +55,19 @@ export class BulkOverviewComponent implements OnInit {
   set data(data) {
     this.inputData = data;
     console.log('This is Input data of proceed ', data);
-    this.clientId = data.clientId;
-    this.sendData = data
-    this.ngOnInit()
+    if(data.clientId){
+      this.clientId = data.clientId;
+      this.sendData = data
+      this.userInfo = data.userInfo.advisorData;
+      this.clientData = data.userInfo.clientData;
+      this.ngOnInit()
+    }
   }
   get data() {
     return this.inputData;
   }
   ngOnInit() {
+    this.reportDate = new Date()
     this.fragmentData = {}
     this.getUploadData();
     this.fragmentData.isSpinner = true;
@@ -96,8 +102,6 @@ export class BulkOverviewComponent implements OnInit {
     this.otherPercentage = this.getObj.otherPercentage;
     this.hybridPercenatge = this.getObj.hybridPercenatge;
     this.totalValue = this.getObj.totalValue;
-    // pie chart data after calculating percentage
-    //this.ngAfterViewInit()
   }
   generatePdf() {
     this.svg = this.chart.getSVG()
@@ -107,9 +111,14 @@ export class BulkOverviewComponent implements OnInit {
       name: 'Overview',
       landscape: true,
       key: 'showPieChart',
-      svg: this.svg
+      svg: this.svg,
+      clientId : 93902,
+      advisorId : AuthService.getAdvisorId(),
+      fromEmail: 'devshyni@futurewise.co.in',
+      toEmail: 'devshyni@futurewise.co.in'
     }
-    this.utilService.htmlToPdf(para.innerHTML, 'Overview', false, this.fragmentData, '', '')
+    this.utilService.bulkHtmlToPdf(obj)
+    //this.utilService.htmlToPdf(para.innerHTML, 'Overview', false, this.fragmentData, '', '')
     return obj
 
   }

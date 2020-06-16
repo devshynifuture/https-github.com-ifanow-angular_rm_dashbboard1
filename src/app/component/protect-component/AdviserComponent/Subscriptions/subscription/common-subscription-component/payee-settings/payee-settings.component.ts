@@ -9,6 +9,7 @@ import { PostalService } from 'src/app/services/postal.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { MatInput } from '@angular/material';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
 
 @Component({
   selector: 'app-payee-settings',
@@ -86,9 +87,11 @@ export class PayeeSettingsComponent implements OnInit {
   showGstin: boolean = false;
   clientData: any;
   isLoader: boolean;
+  sendObj: any;
+  addressList: any;
 
   constructor(public utils: UtilService, public subInjectService: SubscriptionInject, private eventService: EventService,
-    private subService: SubscriptionService, private fb: FormBuilder, private postalService: PostalService, private peopleService: PeopleService) {
+    private subService: SubscriptionService, private fb: FormBuilder, private postalService: PostalService, private peopleService: PeopleService,private custumService:CustomerService) {
   }
 
   get data() {
@@ -138,7 +141,75 @@ export class PayeeSettingsComponent implements OnInit {
       this.pinInvalid = false;
     }
   }
+  getAddressList(data) {
+    if (data.clientId || data.familyMemberId) {
+      const obj = {
+        userId: data.userType == 2 ? data.clientId : data.familyMemberId,
+        userType: data.userType
+      };
+      this.custumService.getAddressList(obj).subscribe(
+        responseData => {
+          let address = responseData[0];
+          if(address){
+          this.addressList.billerAddress = address.address1;
+          this.addressList.zipCode = address.pinCode;
+          this.addressList.city = address.city;
+          this.addressList.country = address.country;
+          this.addressList.state = address.state;
+          }
+          this.getClientPayeeSettings(this.addressList);
+        },
+        err => {
+        }
+      );
+    }
 
+  }
+  getClientOrFamilyDetails(data) {
+    this.addressList={};
+    let clientData =data;
+    if (data.userType == 2) {
+      this.sendObj = {
+        clientId: data.clientId,
+      };
+      this.peopleService.getClientOrLeadData(this.sendObj).subscribe(
+        data => {
+          this.addressList = data;
+          if (this.addressList.emailList.length > 0) {
+            this.addressList.email = this.addressList.emailList[0].email;
+          }
+          if (this.addressList.mobileList.length > 0) {
+            this.addressList.primaryContact = this.addressList.mobileList[0].mobileNo;
+          }
+          this.getAddressList(clientData);
+          // this.getClientPayeeSettings(this.addressList);
+        },
+        err => {
+          this.addressList = {};
+        }
+      );
+    } else {
+      this.sendObj = {
+        familyMemberId: data.familyMemberId,
+      };
+      this.custumService.getFamilyMembers(this.sendObj).subscribe(
+        data => {
+          this.addressList = data[0];
+          if (this.addressList.emailList.length > 0) {
+            this.addressList.email = this.addressList.emailList[0].email;
+          }
+          if (this.addressList.mobileList.length > 0) {
+            this.addressList.primaryContact = this.addressList.mobileList[0].mobileNo;
+          }
+          this.getAddressList(clientData);
+          // this.getClientPayeeSettings(this.addressList);
+        },
+        err => {
+          console.error(err);
+        }
+      );
+    }
+  }
   PinData(data) {
     if (data[0].Status == "Error") {
       this.pinInvalid = true;
@@ -182,6 +253,7 @@ export class PayeeSettingsComponent implements OnInit {
   }
   getOwnerName(data) {
     this.familyMemberId = data.familyMemberId
+    this.getClientOrFamilyDetails(data);
   }
   getFormControl() {
     return this.payeeSettingsForm.controls;

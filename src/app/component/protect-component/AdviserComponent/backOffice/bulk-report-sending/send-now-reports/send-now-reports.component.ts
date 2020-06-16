@@ -37,6 +37,7 @@ export class SendNowReportsComponent implements OnInit {
     this.allTransactions = false;
     this.summary = false;
     this.overview = true;
+    this.selectedReportType = 'overview'
   }
   close() {
     this.subInjectService.changeNewRightSliderState({
@@ -45,9 +46,9 @@ export class SendNowReportsComponent implements OnInit {
   }
   proceed() {
     const dialogRef = this.dialog.open(OpenSendReportPopupComponent, {
-      width: '300px',
-      height: '400px',
-      data: { reportType: this.selectedReportType , selectedElement: '' }
+      width: '400px',
+      height: '500px',
+      data: { reportType: this.selectedReportType, selectedElement: '' }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result == undefined) {
@@ -59,42 +60,51 @@ export class SendNowReportsComponent implements OnInit {
     });
   }
   selectReportType(reportType, flag) {
-    this.selectedReportType = reportType
+
+    if (this.selectedReportType == undefined) {
+      this.selectedReportType = 'overview'
+    } 
     if (reportType == 'overview') {
       if (flag == true) {
         this.overview = false
       } else {
         this.overview = true
+         this.selectedReportType = reportType
       }
     } else if (reportType == 'summary') {
       if (flag == true) {
         this.summary = false
       } else {
         this.summary = true
+         this.selectedReportType = reportType
       }
     } else if (reportType == 'allTransactions') {
       if (flag == true) {
         this.allTransactions = false
       } else {
         this.allTransactions = true
+         this.selectedReportType = reportType
       }
     } else if (reportType == 'unrealisedTransactions') {
       if (flag == true) {
         this.unrealisedTransactions = false
       } else {
         this.unrealisedTransactions = true
+         this.selectedReportType = reportType
       }
     } else if (reportType == 'capitalGainDetails') {
       if (flag == true) {
         this.capitalGainDetails = false
       } else {
         this.capitalGainDetails = true
+         this.selectedReportType = reportType
       }
     } else if (reportType == 'capitalGainSummary') {
       if (flag == true) {
         this.capitalGainSummary = false
       } else {
         this.capitalGainSummary = true
+         this.selectedReportType = reportType
       }
     }
   }

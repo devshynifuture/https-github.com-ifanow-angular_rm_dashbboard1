@@ -33,7 +33,7 @@ export class CategoryWiseComponent implements OnInit {
     [
       'Sr. No.',
       'Sub Category Name',
-      'Current Name',
+      'Current Value',
       '% Weight'
     ],
     [
@@ -66,7 +66,7 @@ export class CategoryWiseComponent implements OnInit {
     [
       { width: 10, key: 'Sr. No.' },
       { width: 50, key: 'Scheme Name' },
-      { width: 30, key: 'Current Name' },
+      { width: 30, key: 'Current Value' },
       { width: 10, key: '% Weight' }
     ],
     [
@@ -81,20 +81,22 @@ export class CategoryWiseComponent implements OnInit {
   @Output() changedValue = new EventEmitter();
   selectedSubCategory: any;
   selectedClientIndex: any;
-  totalCurrentValue=0;
-  totalWeight=0;
+  totalCurrentValue = 0;
+  totalWeight = 0;
   propertyName: any;
   propertyName2: any;
   propertyName3: any;
   propertyName4: any;
-  reverse=true;
-  reverse2=true;
-  reverse3=true;
-  reverse4=true;
+  reverse = true;
+  reverse2 = true;
+  reverse3 = true;
+  reverse4 = true;
   parentId: any;
   clientId: any;
+  totalArray: any = [];
+  categoryTotal: number = 0;
   constructor(
-    private backoffice: BackOfficeService, private dataService: EventService, public aum: AumComponent,private mfService:MfServiceService
+    private backoffice: BackOfficeService, private dataService: EventService, public aum: AumComponent, private mfService: MfServiceService
   ) { }
   selectedCategory;
   ngOnInit() {
@@ -106,54 +108,54 @@ export class CategoryWiseComponent implements OnInit {
     // this.clientFolioWise();
     // this.getSubCatAum();
   }
-  sortBy(applicant,propertyName){
+  sortBy(applicant, propertyName) {
     this.propertyName = propertyName;
     this.reverse = (propertyName !== null && this.propertyName === propertyName) ? !this.reverse : false;
-    if (this.reverse === false){
-      applicant=applicant.sort((a, b) =>
-         a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
-        );
-    }else{
-      applicant=applicant.sort((a, b) => 
+    if (this.reverse === false) {
+      applicant = applicant.sort((a, b) =>
+        a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+      );
+    } else {
+      applicant = applicant.sort((a, b) =>
         a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
       );
     }
   }
-  sortBySubCat(applicant,propertyName){
+  sortBySubCat(applicant, propertyName) {
     this.propertyName2 = propertyName;
     this.reverse2 = (propertyName !== null && this.propertyName2 === propertyName) ? !this.reverse2 : false;
-    if (this.reverse2 === false){
-      applicant=applicant.sort((a, b) =>
-         a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
-        );
-    }else{
-      applicant=applicant.sort((a, b) => 
+    if (this.reverse2 === false) {
+      applicant = applicant.sort((a, b) =>
+        a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+      );
+    } else {
+      applicant = applicant.sort((a, b) =>
         a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
       );
     }
   }
-  sortByScheme(applicant,propertyName){
+  sortByScheme(applicant, propertyName) {
     this.propertyName3 = propertyName;
     this.reverse3 = (propertyName !== null && this.propertyName3 === propertyName) ? !this.reverse3 : false;
-    if (this.reverse3 === false){
-      applicant=applicant.sort((a, b) =>
-         a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
-        );
-    }else{
-      applicant=applicant.sort((a, b) => 
+    if (this.reverse3 === false) {
+      applicant = applicant.sort((a, b) =>
+        a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+      );
+    } else {
+      applicant = applicant.sort((a, b) =>
         a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
       );
     }
   }
-  sortByApplicant(applicant,propertyName){
+  sortByApplicant(applicant, propertyName) {
     this.propertyName4 = propertyName;
     this.reverse4 = (propertyName !== null && this.propertyName4 === propertyName) ? !this.reverse4 : false;
-    if (this.reverse4 === false){
-      applicant=applicant.sort((a, b) =>
-         a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
-        );
-    }else{
-      applicant=applicant.sort((a, b) => 
+    if (this.reverse4 === false) {
+      applicant = applicant.sort((a, b) =>
+        a[propertyName] > b[propertyName] ? 1 : (a[propertyName] === b[propertyName] ? 0 : -1)
+      );
+    } else {
+      applicant = applicant.sort((a, b) =>
         a[propertyName] > b[propertyName] ? -1 : (a[propertyName] === b[propertyName] ? 0 : 1)
       );
     }
@@ -220,8 +222,8 @@ export class CategoryWiseComponent implements OnInit {
       this.totalAumForSubSchemeName = data.totalAum;
       // excel init
       this.excelInitOfCategories();
-    }else{
-      this.category=[];
+    } else {
+      this.category = [];
     }
 
     // this.excelSheetInitialization();
@@ -269,14 +271,14 @@ export class CategoryWiseComponent implements OnInit {
   }
 
   getFilerrorResponse(err) {
-    this.isLoading=false;
-    this.category=[];
+    this.isLoading = false;
+    this.category = [];
     this.dataService.openSnackBar(err, 'Dismiss')
   }
 
   excelInitOfCategories() {
     let dataValue = {};
-
+    let sumTemp = 0;
     this.category.forEach((element, index1) => {
       dataValue = {
         index: index1 + 1,
@@ -285,8 +287,9 @@ export class CategoryWiseComponent implements OnInit {
         weightInPerc: element.weightInPercentage,
         subCatList: []
       };
-      this.arrayOfExcelData.push(dataValue);
+      sumTemp = sumTemp + element.totalAum;
     });
+    this.categoryTotal = sumTemp;
   }
 
   appendingOfValuesInExcel(iterable, index, choice) {
@@ -298,7 +301,7 @@ export class CategoryWiseComponent implements OnInit {
           this.arrayOfExcelData[index].subCatList.push({
             index: index1 + 1,
             name: element.name,
-            totalAum:this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+            totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
             weightInPerc: element.weightInPercentage,
             schemeList: []
           });
