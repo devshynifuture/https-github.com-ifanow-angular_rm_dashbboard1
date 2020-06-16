@@ -10,7 +10,7 @@ export class MarketSummaryComponent implements OnInit {
   selectedVal: string;
   StockFeedFlag: boolean;
   deptData: any = {};
-  bscData: any = {};
+  bscData = new Date().getTime();
   nscData: any = {};
   goldData: any = {};
   silverData: any = {};
@@ -102,7 +102,7 @@ export class MarketSummaryComponent implements OnInit {
       silver.change_in_percentage = parseFloat(silver.change_in_percentage).toFixed(2);
       silver['colourFlag'] = this.checkNumberPositiveAndNegative(silver.change_in_percentage);
     }
-    this.bscData = bse_and_nse;
+    // this.bscData = bse_and_nse;
     // this.nscData = nse;
     this.goldData = { carat_24, carat_22 };
     this.silverData = silver;
