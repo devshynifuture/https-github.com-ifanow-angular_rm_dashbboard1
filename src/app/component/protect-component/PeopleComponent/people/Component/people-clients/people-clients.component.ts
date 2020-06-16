@@ -30,7 +30,8 @@ export class PeopleClientsComponent implements OnInit {
   @ViewChild('clientTableSort', { static: false }) clientTableSort: MatSort;
   screenSize: number;
 
-  hasEndReached:boolean = false;
+  hasEndReached: boolean = false;
+  finalClientList = [];
 
   constructor(private authService: AuthService, private ngZone: NgZone, private router: Router,
     private subInjectService: SubscriptionInject, public eventService: EventService,
@@ -40,18 +41,21 @@ export class PeopleClientsComponent implements OnInit {
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
-    console.log(window.innerHeight, window.innerWidth);
-    this.getClientList();
+    
+    this.hasEndReached = true;
+    this.clientDatasource.data = [{}, {}, {}];
+    this.isLoading = true;
+    this.getClientList(0);
   }
 
   // @HostListener('window:scroll', [])
-  onWindowScroll(e:any) {
-    if(this.tableEl._elementRef.nativeElement.querySelector('tbody').querySelector('tr:last-child').offsetTop <= (e.target.scrollTop + e.target.offsetHeight + 200)) {
-      if(!this.hasEndReached) {
-        // call api, in callback set hasEndReached as false again
+  onWindowScroll(e: any) {
+    if (this.tableEl._elementRef.nativeElement.querySelector('tbody').querySelector('tr:last-child').offsetTop <= (e.target.scrollTop + e.target.offsetHeight + 200)) {
+      if (!this.hasEndReached) {
         this.hasEndReached = true;
+        this.getClientList(this.finalClientList[this.finalClientList.length - 1].clientId)
       }
-      
+
     }
   }
 
@@ -59,18 +63,18 @@ export class PeopleClientsComponent implements OnInit {
     this.screenSize = window.innerWidth;
   }
 
-  getClientList() {
-    this.clientDatasource.data = [{}, {}, {}];
-    this.isLoading = true;
+  getClientList(offsetValue) {
     const obj = {
       advisorId: this.advisorId,
-      status: 1
+      status: 1,
+      limit: 50,
+      offset: offsetValue
     };
 
     this.peopleService.getClientList(obj).subscribe(
       data => {
-        console.log(data);
-        this.isLoading = false;
+        (this.finalClientList.length > 0) ? '' : this.isLoading = false;
+        // this.isLoading = false;
         if (data && data.length > 0) {
           data.forEach((singleData) => {
             if (singleData.mobileList && singleData.mobileList.length > 0) {
@@ -80,11 +84,13 @@ export class PeopleClientsComponent implements OnInit {
               singleData.email = singleData.emailList[0].email;
             }
           });
-          this.clientDatasource.data = data;
+          this.finalClientList = this.finalClientList.concat(data);
+          this.clientDatasource.data = this.finalClientList;
           this.clientDatasource.sort = this.clientTableSort;
+          this.hasEndReached = false;
         } else {
           this.isLoading = false;
-          this.clientDatasource.data = [];
+          (this.finalClientList.length > 0) ? this.clientDatasource.data = this.finalClientList : this.clientDatasource.data = [];
         }
       },
       err => {
@@ -128,7 +134,7 @@ export class PeopleClientsComponent implements OnInit {
             this.enumDataService.searchClientList();
             this.enumDataService.searchClientAndFamilyMember();
             this.cancelFlagService.setCancelFlag(undefined);
-            this.getClientList();
+            this.getClientList(0);
           }
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
@@ -165,7 +171,7 @@ export class PeopleClientsComponent implements OnInit {
             dialogRef.close();
             this.enumDataService.searchClientList();
             this.enumDataService.searchClientAndFamilyMember();
-            this.getClientList();
+            this.getClientList(0);
           },
           error => this.eventService.showErrorMessage(error)
         );
