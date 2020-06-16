@@ -31,45 +31,45 @@ export class EnumDataService {
   ];
 
   cashflowAssetNaming = [
-    {assetName: 'ASSETS', assetType: 1, assetShortName: 'Asset'},
-    { assetShortName: 'Liabilities', assetName: 'LIABILITIES', assetType: 2},
-    { assetShortName: 'LI', assetName: 'LIFE_INSURANCE', assetType: 3},
-    { assetShortName: 'GI', assetName: 'GENERAL_INSURANCE', assetType: 4},
-    { assetShortName: 'MF', assetName: 'MUTUAL_FUNDS', assetType: 5},
-    { assetShortName: 'Stocks', assetName: 'STOCKS', assetType: 6},
-    { assetShortName: '', assetName: 'FIXED_INCOME', assetType: 7},
-    { assetShortName: 'Real estate', assetName: 'REAL_ESTATE', assetType: 8},
-    { assetShortName: '', assetName: 'RETIREMENT_ACCOUNTS', assetType: 9},
-    { assetShortName: '', assetName: 'SMALL_SAVING_SCHEMES', assetType: 10},
-    { assetShortName: '', assetName: 'CASH_AND_BANKS', assetType: 11},
-    { assetShortName: '', assetName: 'COMMODITIES', assetType: 12},
-    { assetShortName: 'FD', assetName: 'FIXED_DEPOSIT', assetType: 13},
-    { assetShortName: 'RD', assetName: 'RECURRING_DEPOSIT', assetType: 14},
-    { assetShortName: 'Bonds', assetName: 'BONDS', assetType: 15},
-    { assetShortName: 'EPF', assetName: 'EPF', assetType: 16},
-    { assetShortName: 'NPS', assetName: 'NPS', assetType: 17},
-    { assetShortName: 'Gratuity', assetName: 'GRATUITY', assetType: 18},
-    { assetShortName: 'FD', assetName: 'SUPERANNUATION', assetType: 19},
-    { assetShortName: 'EPS', assetName: 'EPS', assetType: 20},
-    { assetShortName: 'PPF', assetName: 'PPF', assetType: 21},
-    { assetShortName: 'NSC', assetName: 'NSC', assetType: 22},
-    { assetShortName: 'SSY', assetName: 'SSY', assetType: 23},
-    { assetShortName: 'KVP', assetName: 'KVP', assetType: 24},
-    { assetShortName: 'SCSS', assetName: 'SCSS', assetType: 25},
-    { assetShortName: 'PO savings', assetName: 'PO_SAVINGS', assetType: 26},
-    { assetShortName: 'PO RD', assetName: 'PO_RD', assetType: 27},
-    { assetShortName: 'PO TD', assetName: 'PO_TD', assetType: 28},
-    { assetShortName: 'PO MIS', assetName: 'PO_MIS', assetType: 29},
-    { assetShortName: 'Bank accounts', assetName: 'BANK_ACCOUNTS', assetType: 30},
-    { assetShortName: 'Cash', assetName: 'CASH_IN_HAND', assetType: 31},
-    { assetShortName: 'Gold', assetName: 'GOLD', assetType: 32},
-    { assetShortName: 'Others', assetName: 'Others', assetType: 33},
+    { assetName: 'ASSETS', assetType: 1, assetShortName: 'Asset' },
+    { assetShortName: 'Liabilities', assetName: 'LIABILITIES', assetType: 2 },
+    { assetShortName: 'LI', assetName: 'LIFE_INSURANCE', assetType: 3 },
+    { assetShortName: 'GI', assetName: 'GENERAL_INSURANCE', assetType: 4 },
+    { assetShortName: 'MF', assetName: 'MUTUAL_FUNDS', assetType: 5 },
+    { assetShortName: 'Stocks', assetName: 'STOCKS', assetType: 6 },
+    { assetShortName: '', assetName: 'FIXED_INCOME', assetType: 7 },
+    { assetShortName: 'Real estate', assetName: 'REAL_ESTATE', assetType: 8 },
+    { assetShortName: '', assetName: 'RETIREMENT_ACCOUNTS', assetType: 9 },
+    { assetShortName: '', assetName: 'SMALL_SAVING_SCHEMES', assetType: 10 },
+    { assetShortName: '', assetName: 'CASH_AND_BANKS', assetType: 11 },
+    { assetShortName: '', assetName: 'COMMODITIES', assetType: 12 },
+    { assetShortName: 'FD', assetName: 'FIXED_DEPOSIT', assetType: 13 },
+    { assetShortName: 'RD', assetName: 'RECURRING_DEPOSIT', assetType: 14 },
+    { assetShortName: 'Bonds', assetName: 'BONDS', assetType: 15 },
+    { assetShortName: 'EPF', assetName: 'EPF', assetType: 16 },
+    { assetShortName: 'NPS', assetName: 'NPS', assetType: 17 },
+    { assetShortName: 'Gratuity', assetName: 'GRATUITY', assetType: 18 },
+    { assetShortName: 'FD', assetName: 'SUPERANNUATION', assetType: 19 },
+    { assetShortName: 'EPS', assetName: 'EPS', assetType: 20 },
+    { assetShortName: 'PPF', assetName: 'PPF', assetType: 21 },
+    { assetShortName: 'NSC', assetName: 'NSC', assetType: 22 },
+    { assetShortName: 'SSY', assetName: 'SSY', assetType: 23 },
+    { assetShortName: 'KVP', assetName: 'KVP', assetType: 24 },
+    { assetShortName: 'SCSS', assetName: 'SCSS', assetType: 25 },
+    { assetShortName: 'PO savings', assetName: 'PO_SAVINGS', assetType: 26 },
+    { assetShortName: 'PO RD', assetName: 'PO_RD', assetType: 27 },
+    { assetShortName: 'PO TD', assetName: 'PO_TD', assetType: 28 },
+    { assetShortName: 'PO MIS', assetName: 'PO_MIS', assetType: 29 },
+    { assetShortName: 'Bank accounts', assetName: 'BANK_ACCOUNTS', assetType: 30 },
+    { assetShortName: 'Cash', assetName: 'CASH_IN_HAND', assetType: 31 },
+    { assetShortName: 'Gold', assetName: 'GOLD', assetType: 32 },
+    { assetShortName: 'Others', assetName: 'Others', assetType: 33 },
   ]
 
   constructor(private enumService: EnumServiceService, private subService: SubscriptionService,
     private onlineTransactionService: OnlineTransactionService, private custumService: CustomerService,
     private orgSettingService: OrgSettingServiceService, private peopleService: PeopleService) {
-      this.enumService.setAssetShortForms(this.cashflowAssetNaming);
+    this.enumService.setAssetShortForms(this.cashflowAssetNaming);
   }
 
   bankList: any = [];
@@ -157,7 +157,9 @@ export class EnumDataService {
 
   getClientSearchData(value) {
     const filterValue = value.toLowerCase();
-    return this.searchData.filter(state => state.name.toLowerCase().includes(filterValue));
+    if (this.searchData && this.searchData.length > 0) {
+      return this.searchData.filter(state => state.name.toLowerCase().includes(filterValue));
+    }
   }
 
   getEmptySearchStateData() {
