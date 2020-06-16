@@ -1,4 +1,4 @@
-import { Component, ElementRef, NgZone, OnInit } from '@angular/core';
+import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from '../../../Data-service/event.service';
 import { SubscriptionInject } from '../../protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -42,7 +42,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   showDefaultDropDownOnSearch: boolean;
   isOpen: boolean;
   roleObj: any = {};
-
+  @ViewChild('inputSearch', { static: true }) inputRef: ElementRef
   logoText = 'Your Logo here';
   role: any;
   isLoding: boolean;
@@ -114,6 +114,16 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   }
 
   ngOnInit() {
+    this.subinject.singleProfileData.subscribe(data => {
+      if (data) {
+        this.isLoding = false;
+        this.showDefaultDropDownOnSearch = false
+        if (this.myControl.value) {
+          this.myControl.setValue(this.myControl.value);
+          this.myControl.updateValueAndValidity();
+        }
+      }
+    })
     this.advisorId = AuthService.getAdvisorId();
     this.advisorName = AuthService.getUserInfo().name;
     this.onResize();
