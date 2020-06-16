@@ -119,7 +119,6 @@ export class AddGoalsComponent implements OnInit {
             Q3: 'Give this goal a name',
             Q4: 'Notes'
           }
-          element.imageUrl = '/assets/images/svg/retierment.svg';
           element.validations = {
             minAgeFromPresent: 0,
             maxAgeFromPresent: 60,
@@ -145,7 +144,6 @@ export class AddGoalsComponent implements OnInit {
             Q3: 'Give this goal a name',
             Q4: 'Notes'
           }
-          element.imageUrl = '/assets/images/svg/retierment.svg';
           element.validations = {
             minAgeFromPresent: 0,
             maxAgeFromPresent: 60,
@@ -167,7 +165,6 @@ export class AddGoalsComponent implements OnInit {
             Q3: 'Give this goal a name',
             Q4: 'Notes'
           }
-          element.imageUrl = '/assets/images/svg/car.svg';
           element.validations = {
             minAgeFromPresent: 0,
             maxAgeFromPresent: 20,
@@ -190,7 +187,6 @@ export class AddGoalsComponent implements OnInit {
             Q3: 'Give this goal a name',
             Q4: 'Notes'
           }
-          element.imageUrl = '/assets/images/svg/wedding.svg';
           element.validations = {
             minAge: 18,
             maxAge: 60,
@@ -212,7 +208,6 @@ export class AddGoalsComponent implements OnInit {
           Q3: 'Give this goal a name',
           Q4: 'Notes'
         }
-          element.imageUrl = '/assets/images/svg/retierment.svg';
           element.validations = {
             minAgeFromPresent: 0,
             maxAgeFromPresent: 50,
@@ -235,7 +230,6 @@ export class AddGoalsComponent implements OnInit {
           Q3: 'Give this goal a name',
           Q4: 'Notes'
         }
-          element.imageUrl = '/assets/images/svg/wedding.svg';
           element.validations = {
             minAge: 2,
             maxAge: 60,
@@ -257,7 +251,6 @@ export class AddGoalsComponent implements OnInit {
             Q3: 'Give this goal a name',
             Q4: 'Notes'
           }
-          element.imageUrl = '/assets/images/svg/wedding.svg';
           element.validations = {
             minAge: 1,
             maxAge: 60,
@@ -280,7 +273,6 @@ export class AddGoalsComponent implements OnInit {
             Q3: 'Give this goal a name',
             Q4: 'Notes'
           }
-          element.imageUrl = '/assets/images/svg/wedding.svg';
           element.validations = {
             minAgeFromPresent: 2,
             maxAgeFromPresent: 28,
@@ -302,7 +294,6 @@ export class AddGoalsComponent implements OnInit {
             Q3: 'Give this goal a name',
             Q4: 'notes'
           }
-          element.imageUrl = '/assets/images/svg/wedding.svg';
           element.validations = {
             minAgeFromPresent: 0,
             maxAgeFromPresent: 30,
@@ -324,7 +315,6 @@ export class AddGoalsComponent implements OnInit {
             Q3: 'Give this goal a name',
             Q4: 'notes'
           }
-          element.imageUrl = '/assets/images/svg/wedding.svg';
           element.validations = {
             minAgeFromPresent: 0,
             maxAgeFromPresent: 30,
