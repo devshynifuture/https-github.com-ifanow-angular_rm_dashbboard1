@@ -70,6 +70,7 @@ export class ServicesComponent implements OnInit {
   }
 
   getPlanServiceData() {
+    this.planServiceData = [{}, {}, {}];
     this.isLoading = true;
     const obj = {
       // advisorId: 12345,
@@ -95,10 +96,13 @@ export class ServicesComponent implements OnInit {
         S['read'] = false;
       }
       this.planServiceData.forEach(element => {
-        const newElement = {
-          ...element,
-          ...element.servicePricing
-        };
+        // const newElement = {
+        //   ...element,
+        //   ...element.servicePricing
+        // };
+        element['feeTypeId'] = element.servicePricing.billingNature == 1
+        element['billingNature'] = element.servicePricing.billingNature == 1
+        element['billingMode'] = element.servicePricing.billingNature == 1
         if (element.selected == true) {
           this.mappedData.push(element);
         }
@@ -111,6 +115,7 @@ export class ServicesComponent implements OnInit {
   }
   getServicesMapped() {
     this.isLoading = true;
+    this.planServiceData = [{}, {}, {}];
     const obj = {
       // advisorid: 12345,
       advisorId: this.advisorId,
