@@ -118,7 +118,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
       if (data) {
         this.isLoding = false;
         this.showDefaultDropDownOnSearch = false
-        if (this.myControl.value) {
+        if (this.myControl) {
           this.myControl.setValue(this.myControl.value);
           this.myControl.updateValueAndValidity();
         }
