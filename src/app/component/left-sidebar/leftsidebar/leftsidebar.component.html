@@ -14,8 +14,7 @@
             <div *ngIf="showTabs" class="main-details min-height">
                 <p class="f-16 f-600 mb-0">{{advisorName}}</p>
 
-                <button (click)="showsmallNavWrapper()" *ngIf="showTabs" aria-label="Toggle sidenav"
-                    class="btn_nav desKBTN" mat-icon-button type="button">
+                <button (click)="showsmallNavWrapper()" *ngIf="showTabs" aria-label="Toggle sidenav" class="btn_nav desKBTN" mat-icon-button type="button">
                     <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
                 </button>
             </div>
@@ -24,8 +23,7 @@
 
             <div class="pt-12 scorllable row">
                 <div class="col-md-12 p-0">
-                    <button class="ml-8 desKBTN" (click)="showMainNavWrapper()" *ngIf="showTabs==false"
-                        aria-label="Toggle sidenav" mat-icon-button type="button">
+                    <button class="ml-8 desKBTN" (click)="showMainNavWrapper()" *ngIf="showTabs==false" aria-label="Toggle sidenav" mat-icon-button type="button">
                         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
                     </button>
 
@@ -91,13 +89,11 @@
                         <img src="assets/images/svg/mail.svg">
                         <span *ngIf="showTabs" class="title" mat-line>Email</span>
                     </a> -->
-                    <a class="sidenav-link" [ngClass]="getActiveLink('transactions') ? 'bg-grey lter': ''" mat-list-item
-                        routerLink="./transactions/overview">
+                    <a class="sidenav-link" [ngClass]="getActiveLink('transactions') ? 'bg-grey lter': ''" mat-list-item routerLink="./transactions/overview">
                         <img src="assets/images/svg/cart.svg">
                         <span *ngIf="showTabs" class="title" mat-line>Transactions</span>
                     </a>
-                    <a class="sidenav-link" [ngClass]="getActiveLink('subscription') ? 'bg-grey lter': ''" mat-list-item
-                        routerLink="./subscription/dashboard">
+                    <a class="sidenav-link" [ngClass]="getActiveLink('subscription') ? 'bg-grey lter': ''" mat-list-item routerLink="./subscription/dashboard">
                         <img src="assets/images/svg/ruppes.svg">
                         <span *ngIf="showTabs" class="title" mat-line>Subscription</span>
                     </a>
@@ -129,21 +125,17 @@
                                 </mat-panel-title>
 
                             </mat-expansion-panel-header>
-                            <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
-                                routerLink="/admin/backoffice-aum-reconciliation">
+                            <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/backoffice-aum-reconciliation">
                                 <span *ngIf="showTabs" class="title" mat-line>AUM Reconciliation</span>
                             </a>
-                            <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
-                                routerLink="/admin/backoffice-mis/mutual-funds">
+                            <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/backoffice-mis/mutual-funds">
                                 <span *ngIf="showTabs" class="title" mat-line>MIS</span>
                             </a>
-                            <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
-                                routerLink="/admin/backoffice-file-upload/transaction">
+                            <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/backoffice-file-upload/transaction">
                                 <span *ngIf="showTabs" class="title" mat-line>File uploads</span>
                             </a>
 
-                            <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
-                                routerLink="/admin/bulk-report-sending">
+                            <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/bulk-report-sending">
                                 <span *ngIf="showTabs" class="title" mat-line>Bulk report sending</span>
                             </a>
 
@@ -176,25 +168,19 @@
     </mat-sidenav>
     <mat-sidenav-content id="left" class="mainNav" [ngClass]="showTabs?'mainNav':'smallNav'">
         <mat-toolbar class="bg-white fix-top pl-0  ">
-            <button class="mobileBTN" (click)="showMainNavWrapper()" *ngIf="showTabs==false" aria-label="Toggle sidenav"
-                mat-icon-button type="button">
+            <button class="mobileBTN" (click)="showMainNavWrapper()" *ngIf="showTabs==false" aria-label="Toggle sidenav" mat-icon-button type="button">
                 <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
             </button>
-            <button (click)="showsmallNavWrapper()" *ngIf="showTabs" aria-label="Toggle sidenav"
-                class="btn_nav mobileBTN" mat-icon-button type="button">
+            <button (click)="showsmallNavWrapper()" *ngIf="showTabs" aria-label="Toggle sidenav" class="btn_nav mobileBTN" mat-icon-button type="button">
                 <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
             </button>
 
             <mat-form-field class="widthSerachBox serachbox ml-16">
                 <div class="form-group searchBoxHeader">
-                    <input #inputSearch [formControl]="myControl" [matAutocomplete]="auto" class="form-control pl-40"
-                        matInput type="text">
+                    <input #inputSearch [formControl]="myControl" [matAutocomplete]="auto" class="form-control pl-40" matInput type="text">
                     <i class="material-icons searchIcon"> search </i>
                     <mat-autocomplete #auto="matAutocomplete">
-                        <mat-option (onSelectionChange)="selectClient(singleClient)"
-                            *ngFor="let singleClient of clientList | async" [value]="singleClient.displayName">
-
-
+                        <mat-option (onSelectionChange)="selectClient(singleClient)" *ngFor="let singleClient of clientList | async" [value]="singleClient.displayName">
 
                             <div class="row  ">
                                 <div class="col-md-1 d-flex align-items-center">
@@ -206,10 +192,8 @@
                                 </div>
                                 <div class="col-md-4 text-right">
 
-                                    <button class="small-primitive" *ngIf="singleClient.userType==3"
-                                        mat-stroked-button>FAMILY MEMBER</button>
-                                    <button class="small-primitive" *ngIf="singleClient.userType==2"
-                                        mat-stroked-button>Group head</button>
+                                    <button class="small-primitive" *ngIf="singleClient.userType==3" mat-stroked-button>FAMILY MEMBER</button>
+                                    <button class="small-primitive" *ngIf="singleClient.userType==2" mat-stroked-button>Group head</button>
 
                                 </div>
                             </div>
@@ -217,7 +201,7 @@
 
                         <mat-option disabled *ngIf="showDefaultDropDownOnSearch && !isLoding">
                             <div class="row">
-                                <div class="col-md-1 d-flex align-items-center">
+                                <div class="col-md-1   d-flex align-items-center">
                                     <i class="material-icons">person</i>
 
                                 </div>
@@ -233,24 +217,46 @@
 
                         <!-- empty state -->
 
-                        <mat-option *ngIf="showDefaultDropDownOnSearch && isLoding">
-                            <div class="row skeletonAnimation" [appSkeletonLoading]="isLoding" appSkeletonLoading>
-                                <div class="col-md-1 d-flex align-items-center">
-                                    <div class="relClass">
-                                        <div class="bar" [ngClass]="{'height24': isLoading}"></div>
+                        <mat-option class="ht-100" *ngIf="showDefaultDropDownOnSearch && isLoding">
+                            <div class="skeletonAnimation" [appSkeletonLoading]="isLoding" appSkeletonLoading>
+                                <div class="row height24">
+                                    <div class="col-md-1 p-0">
+                                        <div class="relClass">
+                                            <div class="bar height24"> </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7 pr-0">
+                                        <div class="relClass">
+                                            <div class="bar height24"> </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 pr-0">
+                                        <div class="relClass">
+                                            <div class="bar height24"> </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-7 d-flex align-items-center">
-                                    <div class="relClass">
-                                        <div class="bar" [ngClass]="{'height24': isLoading}"></div>
+
+                                <div class="row height24 pt-12">
+                                    <div class="col-md-1 p-0">
+                                        <div class="relClass">
+                                            <div class="bar height24"> </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-4 text-right">
-                                    <div class="relClass">
-                                        <div class="bar" [ngClass]="{'height24': isLoading}"></div>
+                                    <div class="col-md-7 pr-0">
+                                        <div class="relClass">
+                                            <div class="bar height24"> </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 pr-0">
+                                        <div class="relClass">
+                                            <div class="bar height24"> </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+
+
                         </mat-option>
 
 
@@ -285,8 +291,7 @@
             </div>
 
 
-            <div class="hide-on-800 d-flex align-items-center justify-content-center right-fixed tablate-none"
-                id="right-sidemenu">
+            <div class="hide-on-800 d-flex align-items-center justify-content-center right-fixed tablate-none" id="right-sidemenu">
                 <a class="sidenav-link" mat-list-item>
                     <img class="t-12" src="assets/images/svg/bell.svg">
                 </a>
@@ -376,8 +381,7 @@
                                 </div>
                             </button>
                         </div>
-                        <p class="m-0 roboto text-primitive text-center pt-40 pb-28">Office hours: 10.00AM - 6.30PM
-                            (Monday to Friday)
+                        <p class="m-0 roboto text-primitive text-center pt-40 pb-28">Office hours: 10.00AM - 6.30PM (Monday to Friday)
                         </p>
                         <div class="p-20 bg-grey lter">
                             <div class="row">
@@ -414,32 +418,27 @@
                                 </div>
                                 <div class="col-md-10 pl-0">
                                     <p class="m-0 roboto">Profile</p>
-                                    <p class="text-regular ws-normal">Add key details about you and your organisation
-                                        that will reflect across the system
+                                    <p class="text-regular ws-normal">Add key details about you and your organisation that will reflect across the system
                                     </p>
                                 </div>
                             </div>
-                            <div class="row c-p" [routerLink]="['/admin/setting/preference']"
-                                *ngIf="roleObj.advisorOrClientRole == 1">
+                            <div class="row c-p" [routerLink]="['/admin/setting/preference']" *ngIf="roleObj.advisorOrClientRole == 1">
                                 <div class="col-md-2">
                                     <img src="/assets/images/svg/settings-gear-menu/preferences.svg" class="v-super">
                                 </div>
                                 <div class="col-md-10 pl-0">
                                     <p class="m-0 roboto">Preferences</p>
-                                    <p class="text-regular ws-normal">Manage settings that will take the customization
-                                        possibilities to the next level</p>
+                                    <p class="text-regular ws-normal">Manage settings that will take the customization possibilities to the next level</p>
                                 </div>
                             </div>
 
-                            <div [routerLink]="['/admin/setting/activity']" class="row c-p"
-                                *ngIf="roleObj.advisorOrClientRole == 1">
+                            <div [routerLink]="['/admin/setting/activity']" class="row c-p" *ngIf="roleObj.advisorOrClientRole == 1">
                                 <div class="col-md-2">
                                     <img src="/assets/images/svg/settings-gear-menu/activity.svg" class="v-super">
                                 </div>
                                 <div class="col-md-10 pl-0">
                                     <p class="m-0 roboto">Activity</p>
-                                    <p class="text-regular ws-normal">Manage settings related to tasks, email,
-                                        calendars, notifications, reminders etc.</p>
+                                    <p class="text-regular ws-normal">Manage settings related to tasks, email, calendars, notifications, reminders etc.</p>
                                 </div>
                             </div>
 
@@ -455,28 +454,24 @@
                                 </div>
                             </div> -->
 
-                            <div [routerLink]="['/admin/setting/users&roles']" class="row c-p"
-                                *ngIf="roleObj.advisorOrClientRole == 1">
+                            <div [routerLink]="['/admin/setting/users&roles']" class="row c-p" *ngIf="roleObj.advisorOrClientRole == 1">
                                 <div class="col-md-2">
                                     <img src="/assets/images/svg/settings-gear-menu/user-and-roles.svg" class="v-super">
                                 </div>
                                 <div class="col-md-10 pl-0">
                                     <p class="m-0 roboto">Users & roles</p>
-                                    <p class="text-regular ws-normal">Define roles and assign it to your team members
-                                        and clients. Manage hierarchy to control client viewing rights between the team
+                                    <p class="text-regular ws-normal">Define roles and assign it to your team members and clients. Manage hierarchy to control client viewing rights between the team
                                     </p>
                                 </div>
                             </div>
 
-                            <div [routerLink]="['/admin/setting/backoffice']" class="row c-p"
-                                *ngIf="roleObj.advisorOrClientRole == 1">
+                            <div [routerLink]="['/admin/setting/backoffice']" class="row c-p" *ngIf="roleObj.advisorOrClientRole == 1">
                                 <div class="col-md-2">
                                     <img src="/assets/images/svg/settings-gear-menu/backoffice.svg" class="v-super">
                                 </div>
                                 <div class="col-md-10 pl-0">
                                     <p class="m-0 roboto">Back office</p>
-                                    <p class="text-regular ws-normal">Add your ARN/RIA details, Manage RTA credentials,
-                                        SOA settings etc.
+                                    <p class="text-regular ws-normal">Add your ARN/RIA details, Manage RTA credentials, SOA settings etc.
                                     </p>
                                 </div>
                             </div>
@@ -499,8 +494,7 @@
                 </a>
                 <a class="sidenav-link" mat-list-item>
                     <img [src]="authService.profilePic" [matMenuTriggerFor]="menu" class="c-p header-img">
-                    <mat-menu #menu="matMenu" class="log-out maxw-320"
-                        style="width: 320px !important;max-width: 320px !important;">
+                    <mat-menu #menu="matMenu" class="log-out maxw-320" style="width: 320px !important;max-width: 320px !important;">
                         <div class="pl-20 maxw-320" style="width: 320px !important;max-width: 320px !important;">
                             <div class="row bb-1 pt-20 pb-20">
                                 <div class="col-md-3 p-0">
@@ -513,9 +507,7 @@
                             </div>
 
                             <ul class="d-block bb-1 pb-20">
-                                <li class="text-left pt-20 f-14 c-p"
-                                    *ngIf="userInfo.userType==1 || userInfo.userType==8"
-                                    [routerLink]="['/admin/setting/orgprofile']">
+                                <li class="text-left pt-20 f-14 c-p" *ngIf="userInfo.userType==1 || userInfo.userType==8" [routerLink]="['/admin/setting/orgprofile']">
                                     Profile</li>
                                 <li class="text-left pt-20 f-14 c-p" *ngIf="userInfo.userType==1">Account & Billing</li>
                                 <li class="text-left pt-20 f-14 c-p" *ngIf="userInfo.userType==1">Refer & Earn
