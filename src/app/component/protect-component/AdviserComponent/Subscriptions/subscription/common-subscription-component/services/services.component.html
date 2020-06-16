@@ -118,6 +118,8 @@
                                     <div class="col-md-6 p-0">
                                         <p *ngIf="serviceData&&serviceData.feeTypeId==1" class="text-primitive f-12">
                                             FEES</p>
+                                        <p *ngIf="isLoading" class="text-primitive f-12">
+                                            FEES</p>
 
                                         <p *ngIf="serviceData&&serviceData.feeTypeId==2" class="text-primitive f-12">
                                             OTHER ASSET FEES</p>
