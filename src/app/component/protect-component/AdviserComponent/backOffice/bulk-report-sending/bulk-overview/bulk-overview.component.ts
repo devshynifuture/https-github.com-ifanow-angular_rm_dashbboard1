@@ -108,7 +108,7 @@ export class BulkOverviewComponent implements OnInit {
     let para = document.getElementById('templateOver');
     let obj = {
       htmlInput: para.innerHTML,
-      name: 'Overview',
+      name: 'Overview`s'+this.clientData.name,
       landscape: true,
       key: 'showPieChart',
       svg: this.svg,
