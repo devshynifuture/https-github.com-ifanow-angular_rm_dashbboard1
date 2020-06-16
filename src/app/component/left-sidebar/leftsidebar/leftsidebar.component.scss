@@ -379,10 +379,3 @@ img.header-img {
 .height24 {
     height: 24px;
 }
-
-::ng-deep .ht-100 {
-    height: 100px !important;
-    .mat-option-text {
-        height: 65px !important;
-    }
-}
