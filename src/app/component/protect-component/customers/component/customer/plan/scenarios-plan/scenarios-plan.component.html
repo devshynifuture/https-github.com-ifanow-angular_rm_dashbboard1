@@ -265,8 +265,7 @@
                     <h3 class="m-0 pt-6  pb-8">Scenarios</h3>
                 </div>
                 <div class="col-md-3 p-0 text-right">
-                    <button mat-stroked-button class="btn-primary br-0 pl-8" (click)="openDialog()"><img
-                            src="/assets/images/svg/plus.svg" class="pr-12">ADD NEW</button>
+                    <button mat-stroked-button class="btn-primary" (click)="openDialog()">ADD NEW</button>
                 </div>
             </div>
             <div class="row pt-20">
@@ -512,15 +511,16 @@
             </div>
             <div class="row pt-16">
                 <div class="col-md-6 pl-0 pr-8">
-                    <p class="m-0 roboto text-center pt-20 b-a-custom h-60">Scenario 1</p>
+                    <p class="m-0 roboto f-400 text-center pt-20 b-a-custom h-60">Scenario 1</p>
                     <div class="cancel">
-                        <i class="material-icons">
+                        <i class="material-icons f-16 lh-21">
                             clear
                         </i>
                     </div>
                 </div>
                 <div class="col-md-6 pr-0 pl-8">
-                    <p class="m-0 roboto text-center f-12 pt-12 ba-dashed text-primitive h-60">Add another scenario from
+                    <p class="m-0 roboto text-center f-12 f-400 pt-16 lh-14 ba-dashed text-primitive h-60">Add another
+                        scenario from
                         left to compare</p>
 
                 </div>
@@ -536,7 +536,7 @@
                     </mat-select>
                 </mat-form-field>
             </div>
-            <button (click)="openNewgoalsPlans()" mat-raised-button class="btn-primitive mt-12">PROCEED</button>
+            <button (click)="openNewgoalsPlans()" mat-stroked-button class="btn-primitive mt-12">PROCEED</button>
 
         </div>
 

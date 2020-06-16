@@ -3,7 +3,8 @@
         <!-- <h4 class="m-0">Clients</h4> -->
     </div>
 
-    <div *ngIf="clientDatasource.data.length>0 && isLoading==false" class="col-md-8 d-flex align-items-center justify-content-end pb-10">
+    <div *ngIf="clientDatasource.data.length>0 && isLoading==false"
+        class="col-md-8 d-flex align-items-center justify-content-end pb-10">
 
         <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
             <img src="assets/images/svg/download-bordered.svg">
@@ -29,9 +30,13 @@
     </div>
 </div>
 <div [ngClass]="{'pe-none': isLoading}" class="row">
-    <div class="col-md-12 people-clients">
-        <div [ngClass]="{'table-scroll':isLoading==false }" (scroll)="onWindowScroll($event)" class="" style="overflow: auto; height: 75vh;">
-            <table #tableEl matSort *ngIf="clientDatasource.data.length>0" #clientTableSort="matSort" mat-table [dataSource]="clientDatasource" id="tbs" appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation">
+    <div class="col-md-12 people-clients pb-28">
+        <div [ngClass]="{'table-scroll':isLoading==false }" (scroll)="onWindowScroll($event)"
+            class="people-clients-scroll">
+            <!--  -->
+            <table #tableEl matSort *ngIf="clientDatasource.data.length>0" #clientTableSort="matSort" mat-table
+                [dataSource]="clientDatasource" id="tbs" appSkeletonLoading [appSkeletonLoading]="isLoading"
+                class="skeletonAnimation">
                 <ng-container matColumnDef="position">
                     <th mat-sort-header="name" mat-header-cell *matHeaderCellDef class="br  w-20"> Group head name
                     </th>
@@ -78,7 +83,8 @@
                 <ng-container matColumnDef="login">
                     <th mat-sort-header="login" mat-header-cell *matHeaderCellDef class="br"> Last login </th>
                     <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br c-p">
-                        <div class="bar"> {{element.lastLoginString}} <span *ngIf="!isLoading && element.lastLoginString!='Pending'">ago</span></div>
+                        <div class="bar"> {{element.lastLoginString}} <span
+                                *ngIf="!isLoading && element.lastLoginString!='Pending'">ago</span></div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="status">
@@ -93,7 +99,7 @@
                         <img *ngIf="isLoading==false" src="/assets/images/svg/action.svg">
                     </td>
                 </ng-container>
-                <ng-container matColumnDef="icons1" sticky>
+                <ng-container matColumnDef="icons1">
                     <th mat-header-cell *matHeaderCellDef> </th>
                     <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu" class="c-p">
                         <img *ngIf="isLoading==false" class="c-p" src="/assets/images/svg/dot-menu.svg">
@@ -123,8 +129,10 @@
 
 
                 <div class="dashedClass">
-                    <p>Tip: If you already have access to your mutual fund RTA feeds then simply upload your folio master files. Once you do, all the clients will automatically reflect here.</p>
-                    <p> How to do it: You can manually upload your folio master file from here. Or share your RTA details with us here, we will upload them for you quickly.</p>
+                    <p>Tip: If you already have access to your mutual fund RTA feeds then simply upload your folio
+                        master files. Once you do, all the clients will automatically reflect here.</p>
+                    <p> How to do it: You can manually upload your folio master file from here. Or share your RTA
+                        details with us here, we will upload them for you quickly.</p>
                     <p class="mb-0">Still have questions? Watch this video:</p>
                 </div>
             </div>
