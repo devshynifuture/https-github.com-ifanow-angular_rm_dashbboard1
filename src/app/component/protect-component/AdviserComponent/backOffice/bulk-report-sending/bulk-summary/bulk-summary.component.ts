@@ -92,7 +92,7 @@ export class BulkSummaryComponent implements OnInit {
     let para = document.getElementById('template');
     let obj = {
       htmlInput: para.innerHTML,
-      name: 'Summary',
+      name: 'Summary`s'+this.clientData.name,
       landscape: true,
       key: 'showPieChart',
       clientId : 93902,
