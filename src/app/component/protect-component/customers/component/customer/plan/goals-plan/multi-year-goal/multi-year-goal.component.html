@@ -27,7 +27,7 @@
                                         class="form-control br-0 br-none">
                                         <mat-option value="" disabled>Select member</mat-option>
                                         <mat-option *ngFor="let familyMember of familyList" [value]="familyMember">
-                                            {{familyMember.userName}}</mat-option>
+                                            {{familyMember.displayName}}</mat-option>
                                     </mat-select>
                                     <mat-error>This field is required</mat-error>
                                 </mat-form-field>
