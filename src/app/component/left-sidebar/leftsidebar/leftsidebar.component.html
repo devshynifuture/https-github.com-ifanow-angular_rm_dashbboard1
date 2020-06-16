@@ -199,10 +199,10 @@
                             </div>
                         </mat-option>
 
-                        <mat-option disabled *ngIf="showDefaultDropDownOnSearch">
-                            <div class="row  ">
+                        <mat-option disabled *ngIf="showDefaultDropDownOnSearch && !isLoding">
+                            <div class="row">
                                 <div class="col-md-1 d-flex align-items-center">
-                                    <i class="material-icons"> person </i>
+                                    <i class="material-icons">person</i>
 
                                 </div>
                                 <div class="col-md-7 d-flex align-items-center">
@@ -217,25 +217,25 @@
 
                         <!-- empty state -->
 
-                        <!-- <mat-option>
-                            <div class="row skeletonAnimation">
+                        <mat-option *ngIf="showDefaultDropDownOnSearch && isLoding">
+                            <div class="row skeletonAnimation" [appSkeletonLoading]="isLoding" appSkeletonLoading>
                                 <div class="col-md-1 d-flex align-items-center">
                                     <div class="relClass">
-                                        <div class="bar" [ngClass]="{'heightBar24': isLoading}"></div>
+                                        <div class="bar" [ngClass]="{'height24': isLoading}"></div>
                                     </div>
                                 </div>
                                 <div class="col-md-7 d-flex align-items-center">
                                     <div class="relClass">
-                                        <div class="bar" [ngClass]="{'heightBar24': isLoading}"></div>
+                                        <div class="bar" [ngClass]="{'height24': isLoading}"></div>
                                     </div>
                                 </div>
                                 <div class="col-md-4 text-right">
                                     <div class="relClass">
-                                        <div class="bar" [ngClass]="{'heightBar24': isLoading}"></div>
+                                        <div class="bar" [ngClass]="{'height24': isLoading}"></div>
                                     </div>
                                 </div>
                             </div>
-                        </mat-option> -->
+                        </mat-option>
 
 
 
