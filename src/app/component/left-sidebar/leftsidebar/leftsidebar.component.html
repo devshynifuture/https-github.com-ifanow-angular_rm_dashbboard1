@@ -201,7 +201,7 @@
 
                         <mat-option disabled *ngIf="showDefaultDropDownOnSearch && !isLoding">
                             <div class="row">
-                                <div class="col-md-1 d-flex align-items-center">
+                                <div class="col-md-1   d-flex align-items-center">
                                     <i class="material-icons">person</i>
 
                                 </div>
@@ -217,24 +217,46 @@
 
                         <!-- empty state -->
 
-                        <mat-option *ngIf="showDefaultDropDownOnSearch && isLoding">
-                            <div class="row skeletonAnimation" [appSkeletonLoading]="isLoding" appSkeletonLoading>
-                                <div class="col-md-1 d-flex align-items-center">
-                                    <div class="relClass">
-                                        <div class="bar" [ngClass]="{'height24': isLoading}"></div>
+                        <mat-option class="ht-100" *ngIf="showDefaultDropDownOnSearch && isLoding">
+                            <div class="skeletonAnimation" [appSkeletonLoading]="isLoding" appSkeletonLoading>
+                                <div class="row height24">
+                                    <div class="col-md-1 pl-0">
+                                        <div class="relClass">
+                                            <div class="bar height24"> </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="relClass">
+                                            <div class="bar height24"> </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 text-right">
+                                        <div class="relClass">
+                                            <div class="bar height24"> </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-7 d-flex align-items-center">
-                                    <div class="relClass">
-                                        <div class="bar" [ngClass]="{'height24': isLoading}"></div>
+
+                                <div class="row height24 pt-12">
+                                    <div class="col-md-1 pl-0">
+                                        <div class="relClass">
+                                            <div class="bar height24"> </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-4 text-right">
-                                    <div class="relClass">
-                                        <div class="bar" [ngClass]="{'height24': isLoading}"></div>
+                                    <div class="col-md-7">
+                                        <div class="relClass">
+                                            <div class="bar height24"> </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 text-right">
+                                        <div class="relClass">
+                                            <div class="bar height24"> </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+
+
                         </mat-option>
 
 
