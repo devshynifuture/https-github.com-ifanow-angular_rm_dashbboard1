@@ -181,33 +181,88 @@
                     <i class="material-icons searchIcon"> search </i>
                     <mat-autocomplete #auto="matAutocomplete">
                         <mat-option (onSelectionChange)="selectClient(singleClient)" *ngFor="let singleClient of clientList | async" [value]="singleClient.displayName">
-                            <div class="row">
+
+                            <div class="row  ">
                                 <div class="col-md-1 d-flex align-items-center">
                                     <i class="material-icons"> person </i>
+
                                 </div>
                                 <div class="col-md-7 d-flex align-items-center">
                                     <p class="t-left m-0">{{singleClient.displayName}}</p>
                                 </div>
                                 <div class="col-md-4 text-right">
+
                                     <button class="small-primitive" *ngIf="singleClient.userType==3" mat-stroked-button>FAMILY MEMBER</button>
                                     <button class="small-primitive" *ngIf="singleClient.userType==2" mat-stroked-button>Group head</button>
+
                                 </div>
                             </div>
                         </mat-option>
 
-                        <mat-option disabled *ngIf="showDefaultDropDownOnSearch">
+                        <mat-option disabled *ngIf="showDefaultDropDownOnSearch && !isLoding">
                             <div class="row">
-                                <div class="col-md-1 d-flex align-items-center">
-                                    <i class="material-icons"> person </i>
+                                <div class="col-md-1   d-flex align-items-center">
+                                    <i class="material-icons">person</i>
+
                                 </div>
                                 <div class="col-md-7 d-flex align-items-center">
                                     <p class="t-left m-0"> No Client Found</p>
+
                                 </div>
                                 <div class="col-md-4 text-right">
                                     <!-- <button class="small-primitive" mat-stroked-button disabled>FAMILY MEMBER</button> -->
                                 </div>
                             </div>
                         </mat-option>
+
+                        <!-- empty state -->
+
+                        <mat-option class="ht-100" *ngIf="showDefaultDropDownOnSearch && isLoding">
+                            <div class="skeletonAnimation" [appSkeletonLoading]="isLoding" appSkeletonLoading>
+                                <div class="row height24">
+                                    <div class="col-md-1 p-0">
+                                        <div class="relClass">
+                                            <div class="bar height24"> </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7 pr-0">
+                                        <div class="relClass">
+                                            <div class="bar height24"> </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 pr-0">
+                                        <div class="relClass">
+                                            <div class="bar height24"> </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row height24 pt-12">
+                                    <div class="col-md-1 p-0">
+                                        <div class="relClass">
+                                            <div class="bar height24"> </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7 pr-0">
+                                        <div class="relClass">
+                                            <div class="bar height24"> </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 pr-0">
+                                        <div class="relClass">
+                                            <div class="bar height24"> </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </mat-option>
+
+
+
+
+
                     </mat-autocomplete>
                 </div>
             </mat-form-field>

@@ -437,8 +437,8 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
           },
           startAngle: 0,
           endAngle: 360,
-          center: ['52%', '55%'],
-          size: '120%'
+          center: ['50%', '50%'],
+          size: '100%'
         }
       },
       exporting: {

@@ -183,7 +183,7 @@
         }
         
         .piechartMutualFund {
-            height: 270px;
+            height: 256px;
         }
         
         .highcharts-data-table table {
@@ -378,11 +378,10 @@
             width: 75px !important;
         }
         
-         ::ng-deep .heightBox svg {
-            height: 250px !important;
-            width: 240px !important;
-        }
-        
+        //  ::ng-deep .heightBox svg {
+        //     height: 250px !important;
+        //     width: 240px !important;
+        // }
         .myfeedWrapper {
             li.activeClass {
                 width: 100%;
@@ -399,7 +398,7 @@
         
         .borderChatBoxMutual {
             width: 100%;
-            height: 310px;
+            height: 330px;
             border: 1px solid #D9DEE1;
             margin-top: 10px;
             border-radius: 4px !important;
@@ -415,11 +414,10 @@
             height: 250px;
         }
         
-         ::ng-deep .heightBox1 svg {
-            height: 250px !important;
-            width: 240px !important;
-        }
-        
+        //  ::ng-deep .heightBox1 svg {
+        //     height: 250px !important;
+        //     width: 240px !important;
+        // }
         .widthValueportfolio {
             width: 33%;
         }
@@ -445,7 +443,7 @@
         
         .pointUlNew {
             display: block;
-            margin-top: 8px;
+            margin-top: 60px;
             li {
                 text-align: left;
                 // display: flex;
@@ -565,4 +563,8 @@
             width: 80% !important;
             height: 24px;
             margin-bottom: 10px;
+        }
+        
+        .width55 {
+            width: 55px;
         }
