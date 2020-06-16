@@ -41,7 +41,10 @@ export class PeopleClientsComponent implements OnInit {
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
-    console.log(window.innerHeight, window.innerWidth);
+    
+    this.hasEndReached = true;
+    this.clientDatasource.data = [{}, {}, {}];
+    this.isLoading = true;
     this.getClientList(0);
   }
 
@@ -49,9 +52,8 @@ export class PeopleClientsComponent implements OnInit {
   onWindowScroll(e: any) {
     if (this.tableEl._elementRef.nativeElement.querySelector('tbody').querySelector('tr:last-child').offsetTop <= (e.target.scrollTop + e.target.offsetHeight + 200)) {
       if (!this.hasEndReached) {
-        this.getClientList(this.finalClientList[this.finalClientList.length - 1].clientId)
-        // call api, in callback set hasEndReached as false again
         this.hasEndReached = true;
+        this.getClientList(this.finalClientList[this.finalClientList.length - 1].clientId)
       }
 
     }
@@ -62,13 +64,6 @@ export class PeopleClientsComponent implements OnInit {
   }
 
   getClientList(offsetValue) {
-    if (this.finalClientList.length > 0) {
-      this.hasEndReached = false;
-    }
-    else {
-      this.clientDatasource.data = [{}, {}, {}];
-      this.isLoading = true;
-    }
     const obj = {
       advisorId: this.advisorId,
       status: 1,
@@ -78,7 +73,6 @@ export class PeopleClientsComponent implements OnInit {
 
     this.peopleService.getClientList(obj).subscribe(
       data => {
-        console.log(data);
         (this.finalClientList.length > 0) ? '' : this.isLoading = false;
         // this.isLoading = false;
         if (data && data.length > 0) {
@@ -93,6 +87,7 @@ export class PeopleClientsComponent implements OnInit {
           this.finalClientList = this.finalClientList.concat(data);
           this.clientDatasource.data = this.finalClientList;
           this.clientDatasource.sort = this.clientTableSort;
+          this.hasEndReached = false;
         } else {
           this.isLoading = false;
           (this.finalClientList.length > 0) ? this.clientDatasource.data = this.finalClientList : this.clientDatasource.data = [];

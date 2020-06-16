@@ -23,6 +23,10 @@
     <app-bulk-summary [data]="clientsSend"></app-bulk-summary>
 
 </div>
+<div *ngIf="data.reportType == 'allTransactions' || data.reportType == 'unrealisedTransactions'">
+    <app-bulk-all-transactions [data]="clientsSend"></app-bulk-all-transactions>
+
+</div>
 <div class="row pt-16 pb-16">
     <div class="col-md-12 text-right">
         <button class="br-0 text-inherit f-14" mat-button [mat-dialog-close]="data.investor">
