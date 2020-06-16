@@ -425,7 +425,7 @@ export class DocumentComponent implements OnInit {
   }
   getplanDocumentDataResponse(data) {
     this.isLoading = false;
-    if (data !== undefined) {
+    if (data && data.length > 0) {
       data.forEach(singleData => {
         singleData.isChecked = false;
         // singleData.docText = '<h1>One morning, when Gregor Samsa woke from troubled \n' +
