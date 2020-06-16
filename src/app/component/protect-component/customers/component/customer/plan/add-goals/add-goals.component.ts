@@ -38,6 +38,7 @@ export class AddGoalsComponent implements OnInit {
   }
 
   ngOnInit() {
+    // TODO:- add loader
     this.loadGlobalGoalData();
   }
 
@@ -55,19 +56,6 @@ export class AddGoalsComponent implements OnInit {
       data => this.getGoalGlobalDataRes(data),
       error => this.eventService.showErrorMessage(error)
     )
-
-    //EDIT:- this api is no longer working. shifting to new api
-    // let advisor_client_obj = {
-    //   advisorId: this.advisorId,
-    //   clientId: this.clientId
-    // }
-
-    // this.planService.getListOfFamilyByClient(advisor_client_obj).subscribe((data)=>{
-    //   this.familyList = data.familyMembersList.sort((a, b) => {
-    //     return a.relationshipId - b.relationshipId;
-    //   });
-    //   this.familyList = this.utilService.calculateAgeFromCurrentDate(this.familyList);
-    // }, (err) => {this.eventService.openSnackBar(err, "Dismiss")});
 
     this.getFamilyMembersList();
   }
@@ -337,6 +325,7 @@ export class AddGoalsComponent implements OnInit {
     this.goalTypeSecondRowListData = data.slice(5, 10);
   }
   
+  // TODO:- understand implementation of retirement goal
   setGoalTypeData(data) {
     this.goalTypeData = data;
     this.showGoalType = [5,6].includes(data.id) ? 'multiYear' : 'singleYear' 

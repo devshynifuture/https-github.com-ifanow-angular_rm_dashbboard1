@@ -14,9 +14,9 @@ import { ViewPastnotGoalComponent } from './view-pastnot-goal/view-pastnot-goal.
 import { PlanService } from '../plan.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { AuthService } from 'src/app/auth-service/authService';
-import { MatDialog } from '@angular/material';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import * as Highcharts from 'highcharts';
+import { MatDialog } from '@angular/material';
 
 export interface PeriodicElement {
   position: string;
@@ -38,9 +38,7 @@ export class GoalsPlanComponent implements OnInit {
     advisorId:'',
     clientId:''
   }
-  selectedGoal:any;
-
-  // initializing dummy data
+  selectedGoal:any = {};
   allGoals: any[] = [];
 
   // options set for bar charts
@@ -149,17 +147,15 @@ export class GoalsPlanComponent implements OnInit {
 
 
   ngOnInit() {
+    // TODO:- implement loader fundtion
     this.loadAllGoals();
-    // this.loadGlobalAPIs();
-    this.selectedGoal = this.allGoals[0];
   }
 
   // load all goals created for the client and select the first goal
   loadAllGoals(){
     this.plansService.getAllGoals(this.advisor_client_id).subscribe((data)=>{
       if (data) {
-        // this.allGoals = data || [];
-        // this.allGoals = this.allGoals.map((goal)=> this.mapGoalDashboardData);
+        // TODO:- remove filter of single year goal
         this.allGoals = data.filter(goal => goal.singleOrMulti === 2).map(goal => this.mapGoalDashboardData(goal));
         
         console.log('sagar', data);
@@ -169,13 +165,6 @@ export class GoalsPlanComponent implements OnInit {
   }
 
   mapGoalDashboardData(goal:any) {
-    // single year goal model
-      // id: 4,
-      // goalName: 'Aryan’s marriage',
-      // gv: 4813000,
-      // year: '2030 - 2033',
-      // img: '/assets/images/svg/higher-edu.svg',
-
     let mapData:any = {};
     if(goal.singleOrMulti == 1) {
       goal.dashboardData = {
