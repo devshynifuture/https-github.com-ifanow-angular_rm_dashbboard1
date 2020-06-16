@@ -1,4 +1,9 @@
 .people-clients {
+  .people-clients-scroll {
+    overflow-y: auto;
+    height: calc(100vh - 36vh);
+  }
+
   tr.mat-header-row {
     height: 44px !important;
   }

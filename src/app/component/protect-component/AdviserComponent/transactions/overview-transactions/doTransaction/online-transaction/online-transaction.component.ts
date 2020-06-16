@@ -24,6 +24,7 @@ export class OnlineTransactionComponent implements OnInit {
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
               private eventService: EventService, private fb: FormBuilder,
+              private utilsService: UtilService,
               public processTransaction: ProcessTransactionService, private router: Router,
               private enumDataService: EnumDataService, private peopleService: PeopleService) {
     this.advisorId = AuthService.getAdvisorId();
@@ -318,6 +319,7 @@ export class OnlineTransactionComponent implements OnInit {
   }
 
   saveAndNext() {
+    this.utilsService.scrollToTopForRightSlider();
     if (this.noMapping) {
       return;
     }

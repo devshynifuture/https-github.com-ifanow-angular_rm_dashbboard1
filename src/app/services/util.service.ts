@@ -461,6 +461,7 @@ export class UtilService {
     return false;
   }
 
+  // do not use this function. use the loader function below
   loader(increament: number) {
     if (increament === 0) {
       this.counter = 0;
@@ -473,6 +474,17 @@ export class UtilService {
       this.isLoading = true;
       this.loaderObservable.next(true);
     }
+  }
+
+  // dirty fix to shift the view to top for right slider
+  // TODO:- need to find a better solution and fix this mess as js code is not recommended by angular
+  scrollToTopForRightSlider(){
+    document.querySelector('.right_sidenav').scrollTop = 0;
+  }
+
+  scrollToBottomForRightSlider(){
+    let height = document.querySelector('.right_sidenav').scrollHeight;
+    document.querySelector('.right_sidenav').scrollTop = height;
   }
 }
 
