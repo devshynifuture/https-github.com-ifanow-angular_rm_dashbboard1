@@ -73,28 +73,23 @@ export class MarketSummaryComponent implements OnInit {
       // bse_and_nse = (bse_and_nse as string).replace(regex, ':');
       bse_and_nse = JSON.parse(bse_and_nse);
       bse_and_nse.date = new Date(bse_and_nse.date).getTime();
-      const bse = bse_and_nse.bse;
-      // {date=12/06/2020, bse={closing_value=33,780.89, change=+242.52,
-      //   name=BSE Sensex, change_in_percentage=+0.72%},
-      //   nifty={closing_value=9,972.90, change=+70.90, name=Nifty 50, change_in_percentage=+0.72%}}
+      const bse = JSON.parse(bse_and_nse.bse);
       bse.current_value = Math.round((bse.closing_value).replace(',', ''));
       bse.change_in_percentage = parseFloat(bse.change_in_percentage).toFixed(2);
       bse['colourFlag'] = this.checkNumberPositiveAndNegative(bse.change_in_percentage);
     }
-    // if (nse) {
-    //   nse.current_value = Math.round((nse.current_value).replace(',', ''));
-    //   nse.change_in_percentage = parseFloat(nse.change_in_percentage).toFixed(2);
-    //   nse['colourFlag'] = this.checkNumberPositiveAndNegative(nse.change_in_percentage);
-    // }
     if (carat_22) {
+      carat_22 = JSON.parse(carat_22);
       carat_22.change_in_percentage = parseFloat(carat_22.change_in_percentage).toFixed(2);
       carat_22['colourFlag'] = this.checkNumberPositiveAndNegative(carat_22.change_in_percentage.replace('%', ''));
     }
     if (carat_24) {
+      carat_24 = JSON.parse(carat_24);
       carat_24.change_in_percentage = parseFloat(carat_24.change_in_percentage).toFixed(2);
       carat_24['colourFlag'] = this.checkNumberPositiveAndNegative(carat_24.change_in_percentage.replace('%', ''));
     }
     if (silver) {
+      silver = JSON.parse(silver);
       silver.current_value = (silver.current_value).replace('₹', '');
       silver.current_value = (silver.current_value).replace(',', '');
       silver.current_value = Math.round(silver.current_value);
