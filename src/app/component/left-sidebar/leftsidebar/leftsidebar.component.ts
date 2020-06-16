@@ -135,7 +135,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
               this.isLoding = true;
               return;
             }
-            if (list.length == 0) {
+            if (list && list.length == 0) {
               this.isLoding = false;
               this.showDefaultDropDownOnSearch = true;
               return;
