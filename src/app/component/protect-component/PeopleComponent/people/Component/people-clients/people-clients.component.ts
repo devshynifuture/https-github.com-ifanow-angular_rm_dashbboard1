@@ -1,4 +1,4 @@
-import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
+import { Component, NgZone, OnInit, ViewChild, HostListener, ElementRef } from '@angular/core';
 import { EventService } from 'src/app/Data-service/event.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
@@ -30,6 +30,8 @@ export class PeopleClientsComponent implements OnInit {
   @ViewChild('clientTableSort', { static: false }) clientTableSort: MatSort;
   screenSize: number;
 
+  hasEndReached:boolean = false;
+
   constructor(private authService: AuthService, private ngZone: NgZone, private router: Router,
     private subInjectService: SubscriptionInject, public eventService: EventService,
     private peopleService: PeopleService, public dialog: MatDialog, private excel: ExcelGenService, private pdfGen: PdfGenService, private cancelFlagService: CancelFlagService, private enumDataService: EnumDataService,
@@ -40,6 +42,17 @@ export class PeopleClientsComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     console.log(window.innerHeight, window.innerWidth);
     this.getClientList();
+  }
+
+  // @HostListener('window:scroll', [])
+  onWindowScroll(e:any) {
+    if(this.tableEl._elementRef.nativeElement.querySelector('tbody').querySelector('tr:last-child').offsetTop <= (e.target.scrollTop + e.target.offsetHeight + 200)) {
+      if(!this.hasEndReached) {
+        // call api, in callback set hasEndReached as false again
+        this.hasEndReached = true;
+      }
+      
+    }
   }
 
   onResize() {

@@ -30,9 +30,9 @@
 </div>
 <div [ngClass]="{'pe-none': isLoading}" class="row">
     <div class="col-md-12 people-clients">
-        <div [ngClass]="{'table-scroll':isLoading==false }">
+        <div [ngClass]="{'table-scroll':isLoading==false }" (scroll)="onWindowScroll($event)" class="" style="overflow: auto; height: 75vh;">
             <table #tableEl matSort *ngIf="clientDatasource.data.length>0" #clientTableSort="matSort" mat-table [dataSource]="clientDatasource" id="tbs" appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation">
-                <ng-container matColumnDef="position" sticky>
+                <ng-container matColumnDef="position">
                     <th mat-sort-header="name" mat-header-cell *matHeaderCellDef class="br  w-20"> Group head name
                     </th>
                     <td (click)="selectClient(element)" mat-cell *matCellDef="let element" class="br c-p">
