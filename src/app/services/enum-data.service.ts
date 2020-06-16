@@ -7,6 +7,7 @@ import { AuthService } from '../auth-service/authService';
 import { CustomerService } from '../component/protect-component/customers/component/customer/customer.service';
 import { OrgSettingServiceService } from '../component/protect-component/AdviserComponent/setting/org-setting-service.service';
 import { PeopleService } from '../component/protect-component/PeopleComponent/people.service';
+import { SubscriptionInject } from '../component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
 @Injectable({
   providedIn: 'root'
@@ -68,7 +69,8 @@ export class EnumDataService {
 
   constructor(private enumService: EnumServiceService, private subService: SubscriptionService,
     private onlineTransactionService: OnlineTransactionService, private custumService: CustomerService,
-    private orgSettingService: OrgSettingServiceService, private peopleService: PeopleService) {
+    private orgSettingService: OrgSettingServiceService, private peopleService: PeopleService,
+    private subInject: SubscriptionInject) {
     this.enumService.setAssetShortForms(this.cashflowAssetNaming);
   }
 
@@ -118,8 +120,9 @@ export class EnumDataService {
     };
     this.peopleService.getClientSearch(obj).subscribe(
       data => {
-        if (data) {
+        if (data && data.length > 0) {
           this.setSearchData(data);
+          this.subInject.addSingleProfile(data);
         }
       },
     );
