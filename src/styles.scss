@@ -1,5 +1,9 @@
 @import'./assets/style/scss/config';
 
+* {
+  box-sizing: border-box;
+}
+
 @mixin heading {
   padding-left: 20px !important;
   padding-top: 20px !important;
@@ -1096,7 +1100,7 @@ mat-tab-group[vertical] {
   background-color: #000;
   width: 100%;
   box-shadow: 0 1px 6px rgba(0, 0, 0, .2), 0 1px 0 rgba(0, 0, 0, .12), 0 3px 3px rgba(0, 0, 0, .14);
-  z-index: 101;
+  z-index: 100;
 
   .mat-tab-links {
     height: 60px;
