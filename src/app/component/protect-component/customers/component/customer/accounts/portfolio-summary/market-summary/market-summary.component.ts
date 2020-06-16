@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { Component, OnInit } from '@angular/core';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
 
 @Component({
   selector: 'app-market-summary',
@@ -18,6 +18,8 @@ export class MarketSummaryComponent implements OnInit {
   letsideBarLoader: boolean;
   deptDataFlag: boolean;
   nifty500DataFlag: boolean;
+  bse: any = {};
+  nifty50: any = {};
 
   constructor(private cusService: CustomerService) {
   }
@@ -66,17 +68,21 @@ export class MarketSummaryComponent implements OnInit {
   getStockFeedsResponse(data) {
     this.StockFeedFlag = false;
     this.letsideBarLoader = false;
-    let {bse_and_nse, carat_22, carat_24, silver} = data;
+    let { bse_and_nse, carat_22, carat_24, silver } = data;
     if (bse_and_nse) {
       const regex = /\=/gi;
 
       // bse_and_nse = (bse_and_nse as string).replace(regex, ':');
       bse_and_nse = JSON.parse(bse_and_nse);
       bse_and_nse.date = new Date(bse_and_nse.date).getTime();
-      const bse = JSON.parse(bse_and_nse.bse);
-      bse.current_value = Math.round((bse.closing_value).replace(',', ''));
-      bse.change_in_percentage = parseFloat(bse.change_in_percentage).toFixed(2);
-      bse['colourFlag'] = this.checkNumberPositiveAndNegative(bse.change_in_percentage);
+      this.bse = JSON.parse(bse_and_nse.bse);
+      this.nifty50 = JSON.parse(bse_and_nse.nifty);
+      this.bse.current_value = Math.round((this.bse.closing_value).replace(',', ''));
+      this.bse.change_in_percentage = parseFloat(this.bse.change_in_percentage).toFixed(2);
+      this.bse['colourFlag'] = this.checkNumberPositiveAndNegative(this.bse.change_in_percentage);
+      this.nifty50.current_value = Math.round((this.nifty50.closing_value).replace(',', ''));
+      this.nifty50.change_in_percentage = parseFloat(this.nifty50.change_in_percentage).toFixed(2);
+      this.nifty50['colourFlag'] = this.checkNumberPositiveAndNegative(this.nifty50.change_in_percentage);
     }
     if (carat_22) {
       carat_22 = JSON.parse(carat_22);
@@ -98,7 +104,7 @@ export class MarketSummaryComponent implements OnInit {
     }
     this.bscData = bse_and_nse;
     // this.nscData = nse;
-    this.goldData = {carat_24, carat_22};
+    this.goldData = { carat_24, carat_22 };
     this.silverData = silver;
   }
 
