@@ -203,7 +203,7 @@ export class RightFilterComponent implements OnInit {
         amc_name: element.amc_name,
         mutualFund: element.mutualFund,
         amc_id: element.amc_id,
-        selected: element.selected
+        selected: element.selected,
       };
       filterData.push(obj);
     });
@@ -638,10 +638,16 @@ export class RightFilterComponent implements OnInit {
         });
       }
     });
+    let filterFamData =filterData3;
+    this.familyMember.forEach(element => {
+      if(element.selected ==true){
+        filterFamData = filterFamData.filter(item => item.familyMemberId === element.familyMemberId);
+      }
+    });
     this.scheme = [...new Map(filterData1.map(item => [item.id, item])).values()];
     this.amc = [...new Map(filterData1.map(item => [item.amc_id, item])).values()];
     this.folio = [...new Map(filterData2.map(item => [item.folioNumber, item])).values()]
-    this.familyMember = [...new Map(filterData3.map(item => [item.familyMemberId, item])).values()];
+    this.familyMember = [...new Map(filterFamData.map(item => [item.familyMemberId, item])).values()];
     this.changeSelect('', '');
   }
 
@@ -666,6 +672,7 @@ export class RightFilterComponent implements OnInit {
               schemeCode: amc.schemeCode,
               mutualFund: amc.mutualFund,
               id: amc.schemeId,
+
               amc_id: amc.amcId,
               selected: true
             };
@@ -676,7 +683,7 @@ export class RightFilterComponent implements OnInit {
             };
 
             const obj2 = {
-              category: amc.categoryName,
+            category: amc.categoryName,
               categoryId: amc.categoryId,
               selected: true
             };
@@ -684,13 +691,20 @@ export class RightFilterComponent implements OnInit {
             filterData1.push(obj1);
             filterData3.push(obj2);
           }
-          // });
+          // });                                                                            
         });
+      }
+    });
+    let filterFamData =filterData1;
+    filterFamData = [...new Map(filterFamData.map(item => [item.familyMemberId, item])).values()];
+    this.familyMember.forEach(element => {
+      if(element.selected ==true){
+        filterFamData = filterFamData.filter(item => item.familyMemberId === element.familyMemberId);
       }
     });
     this.scheme = [...new Map(filterData.map(item => [item.id, item])).values()];
     this.amc = [...new Map(filterData.map(item => [item.amc_id, item])).values()];
-    this.familyMember = [...new Map(filterData1.map(item => [item.familyMemberId, item])).values()];
+    this.familyMember = [...new Map(filterFamData.map(item => [item.familyMemberId, item])).values()];
     this.category = [...new Map(filterData3.map(item => [item.categoryId, item])).values()];
     console.log(this.amc);
     this.changeSelect('', '');
@@ -744,9 +758,16 @@ export class RightFilterComponent implements OnInit {
         });
       }
     });
+    let filterFamData =filterData1;
+    filterFamData = [...new Map(filterFamData.map(item => [item.familyMemberId, item])).values()];
+    this.familyMember.forEach(element => {
+      if(element.selected ==true){
+        filterFamData = filterFamData.filter(item => item.familyMemberId === element.familyMemberId);
+      }
+    });
     this.scheme = [...new Map(filterData.map(item => [item.id, item])).values()];
     this.folio = [...new Map(filterData4.map(item => [item.folioNumber, item])).values()];
-    this.familyMember = [...new Map(filterData1.map(item => [item.familyMemberId, item])).values()];
+    this.familyMember = [...new Map(filterFamData.map(item => [item.familyMemberId, item])).values()];
     this.category = [...new Map(filterData3.map(item => [item.categoryId, item])).values()];
     console.log(this.amc);
     this.changeSelect('', '');
@@ -809,8 +830,15 @@ export class RightFilterComponent implements OnInit {
         });
       }
     });
+    let filterFamData =filterData1;
+    filterFamData = [...new Map(filterFamData.map(item => [item.familyMemberId, item])).values()];
+    this.familyMember.forEach(element => {
+      if(element.selected ==true){
+        filterFamData = filterFamData.filter(item => item.familyMemberId === element.familyMemberId);
+      }
+    });
     this.amc = [...new Map(filterData.map(item => [item.amc_id, item])).values()];
-    this.familyMember = [...new Map(filterData1.map(item => [item.familyMemberId, item])).values()];
+    this.familyMember = [...new Map(filterFamData.map(item => [item.familyMemberId, item])).values()];
     this.folio = [...new Map(filterData4.map(item => [item.folioNumber, item])).values()];
     this.category = [...new Map(filterData3.map(item => [item.categoryId, item])).values()];
 
