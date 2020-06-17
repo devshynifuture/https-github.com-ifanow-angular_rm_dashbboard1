@@ -93,8 +93,14 @@ export class CategoryWiseComponent implements OnInit {
   reverse4 = true;
   parentId: any;
   clientId: any;
-  totalArray: any = [];
-  categoryTotal: number = 0;
+  categoryWiseTotalArr = [];
+  subCategoryWiseTotalArr = [];
+  schemeWiseTotalArr = [];
+  applicantWiseTotalArr = [];
+  // categoryTotal: number = 0;
+  // subCategoryTotal: number = 0;
+  // applicantTotal: number = 0;
+  // schemeTotal: number = 0;
   constructor(
     private backoffice: BackOfficeService, private dataService: EventService, public aum: AumComponent, private mfService: MfServiceService
   ) { }
@@ -190,6 +196,7 @@ export class CategoryWiseComponent implements OnInit {
 
     this.selectedCategory = index;
     category.showCategory = !category.showCategory;
+
     if (!category.showCategory) {
       if (this.category[this.selectedCategory].hasOwnProperty('subCategoryList') && this.category[this.selectedCategory].subCategoryList.length !== 0) {
         this.appendingOfValuesInExcel(this.category[this.selectedCategory].subCategoryList, index, 'sub-category');
@@ -197,6 +204,21 @@ export class CategoryWiseComponent implements OnInit {
     } else {
       // remove
       this.removeValuesFromExcel('sub-category', index);
+      if (category.subCategoryList.length !== 0) {
+        category.subCategoryList.forEach(subCatElement => {
+          subCatElement.showSubCategory = true;
+          if (subCatElement.schemes.length !== 0) {
+            subCatElement.schemes.forEach(schemeElement => {
+              schemeElement.showScheme = true;
+              if (schemeElement.clientList.length !== 0) {
+                schemeElement.clientList.forEach(element => {
+                  element.show = true;
+                });
+              }
+            });
+          }
+        });
+      }
     }
   }
 
@@ -239,17 +261,67 @@ export class CategoryWiseComponent implements OnInit {
     });
 
   }
-  showSchemeName(subcatshowSubcat, index, catIndex) {
+  showSchemeName(subCategory, index, catIndex) {
     this.selectedSubCategory = index;
     this.selectedCategory = catIndex;
-    subcatshowSubcat.showSubCategory = !subcatshowSubcat.showSubCategory
-    subcatshowSubcat.schemes.forEach(element => {
+    subCategory.showSubCategory = !subCategory.showSubCategory;
+
+    subCategory.schemes.forEach(element => {
       element.showScheme = true;
     });
-    if (!subcatshowSubcat.showSubCategory) {
+    if (!subCategory.showSubCategory) {
       this.appendingOfValuesInExcel(this.category[this.selectedCategory].subCategoryList[this.selectedSubCategory].schemes, index, 'schemes');
     } else {
       this.removeValuesFromExcel('schemes', index);
+      if (subCategory.schemes.length !== 0) {
+        subCategory.schemes.forEach(schemeElement => {
+          schemeElement.showScheme = true;
+          if (schemeElement.clientList.length !== 0) {
+            schemeElement.clientList.forEach(element => {
+              element.show = true;
+            });
+          }
+        });
+      }
+    }
+  }
+
+  closeAllBottomOpenedCat(category) {
+    if (category.hasOwnProperty('subCategoryList') && category.subCategoryList.length !== 0) {
+      category.subCategoryList.forEach(subCatElement => {
+        subCatElement.showSubCategory = false;
+        if (subCatElement.schemes.length !== 0) {
+          subCatElement.schemes.forEach(schemeElement => {
+            schemeElement.showScheme = false;
+            if (schemeElement.clientList.length !== 0) {
+              schemeElement.clientList.forEach(element => {
+                element.show = false;
+              });
+            }
+          });
+        }
+      });
+    }
+    console.log("this is category:::::", category);
+  }
+
+  closeAllBottomOpenedSubCat(subCatElement) {
+    if (subCatElement.schemes.length !== 0) {
+      subCatElement.schemes.forEach(schemeElement => {
+        schemeElement.showScheme = false;
+        if (schemeElement.clientList.length !== 0) {
+          schemeElement.clientList.forEach(element => {
+            element.show = false;
+          });
+        }
+      });
+    }
+  }
+  closeAllBottomOpenedScheme(schemeElement) {
+    if (schemeElement.clientList.length !== 0) {
+      schemeElement.clientList.forEach(element => {
+        element.show = false;
+      });
     }
   }
 
@@ -278,7 +350,8 @@ export class CategoryWiseComponent implements OnInit {
 
   excelInitOfCategories() {
     let dataValue = {};
-    let sumTemp = 0;
+    let sumTotalAumTemp = 0;
+    let sumWeightInPercTemp = 0;
     this.category.forEach((element, index1) => {
       dataValue = {
         index: index1 + 1,
@@ -287,16 +360,22 @@ export class CategoryWiseComponent implements OnInit {
         weightInPerc: element.weightInPercentage,
         subCatList: []
       };
-      sumTemp = sumTemp + element.totalAum;
+      this.arrayOfExcelData.push(dataValue);
+      sumTotalAumTemp = sumTotalAumTemp + element.totalAum;
+      sumWeightInPercTemp = sumWeightInPercTemp + element.weightInPercentage;
     });
-    this.categoryTotal = sumTemp;
+    this.categoryWiseTotalArr = ['Total', '', sumTotalAumTemp, sumWeightInPercTemp]
   }
 
   appendingOfValuesInExcel(iterable, index, choice) {
-
+    let sumTotalAumTemp = 0;
+    let sumTotalWeightInPercTemp = 0;
     switch (choice) {
       case 'sub-category':
         // categories
+        this.subCategoryWiseTotalArr = [];
+        sumTotalAumTemp = 0;
+        sumTotalWeightInPercTemp = 0;
         iterable.forEach((element, index1) => {
           this.arrayOfExcelData[index].subCatList.push({
             index: index1 + 1,
@@ -305,10 +384,16 @@ export class CategoryWiseComponent implements OnInit {
             weightInPerc: element.weightInPercentage,
             schemeList: []
           });
+          sumTotalAumTemp = sumTotalAumTemp + element.totalAum;
+          sumTotalWeightInPercTemp = sumTotalWeightInPercTemp + element.weightInPercentage;
         });
+        this.subCategoryWiseTotalArr = ['Total', '', sumTotalAumTemp, sumTotalWeightInPercTemp];
         break;
       case 'schemes':
+        this.schemeWiseTotalArr = [];
         // sub categories
+        sumTotalAumTemp = 0;
+        sumTotalWeightInPercTemp = 0;
         iterable.forEach((element, index1) => {
           this.arrayOfExcelData[this.selectedCategory].subCatList[index].schemeList.push({
             index: index1 + 1,
@@ -317,9 +402,15 @@ export class CategoryWiseComponent implements OnInit {
             weightInPerc: element.weightInPercentage,
             applicantList: []
           });
+          sumTotalAumTemp = sumTotalAumTemp + element.totalAum;
+          sumTotalWeightInPercTemp = sumTotalWeightInPercTemp + element.weightInPercentage
         });
+        this.schemeWiseTotalArr = ['Total', '', sumTotalAumTemp, sumTotalWeightInPercTemp];
         break;
       case 'applicant':
+        this.applicantWiseTotalArr = [];
+        sumTotalAumTemp = 0;
+        sumTotalWeightInPercTemp = 0;
         iterable.forEach((element, index1) => {
           this.arrayOfExcelData[this.selectedCategory].subCatList[this.selectedSubCategory]
             .schemeList[index].applicantList.push({
@@ -329,7 +420,10 @@ export class CategoryWiseComponent implements OnInit {
               totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
               weightInPerc: element.weightInPercentage
             });
+          sumTotalAumTemp = sumTotalAumTemp + element.totalAum;
+          sumTotalWeightInPercTemp = sumTotalWeightInPercTemp + element.weightInPercentage
         });
+        this.applicantWiseTotalArr = ['Total', '', '', sumTotalAumTemp, sumTotalWeightInPercTemp];
         break;
     }
   }
@@ -340,7 +434,7 @@ export class CategoryWiseComponent implements OnInit {
       subCatList: false,
       schemeList: false,
       applicantList: false
-    });
+    }, this.categoryWiseTotalArr);
   }
 
   subCategoryWiseExcelSheet(index) {
@@ -361,7 +455,7 @@ export class CategoryWiseComponent implements OnInit {
       subCatList: false,
       schemeList: false,
       applicantList: false
-    });
+    }, this.subCategoryWiseTotalArr);
   }
 
   applicantWiseExcelSheet(index) {
@@ -373,10 +467,10 @@ export class CategoryWiseComponent implements OnInit {
         field2: this.mfService.mutualFundRoundAndFormat(element.balanceUnit, 2),
         field3: element.folioNumber,
         field4: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
-        field5: element.weightInPerc
+        field5: element.weightInPerc,
       });
     })
-    ExcelMisService.exportExcel(this.arrayOfHeaderStyles[3], this.arrayOfHeaders[3], newarr, [], 'Applicant Wise MIS Report');
+    ExcelMisService.exportExcel(this.arrayOfHeaderStyles[3], this.arrayOfHeaders[3], newarr, [], 'Applicant Wise MIS Report', this.applicantWiseTotalArr);
   }
 
   schemeWiseExcelSheet(index) {
@@ -398,7 +492,7 @@ export class CategoryWiseComponent implements OnInit {
       subCatList: true,
       schemeList: false,
       applicantList: false
-    });
+    }, this.schemeWiseTotalArr);
   }
 
   exportToExcelReport(choice, index) {

@@ -514,30 +514,18 @@
     </tr>
 
 
-    <tr *ngIf="dataSource.data.length > 0">
-        <td valign="top">
-            Total
-        </td>
-
-        <td valign="top">
-
-        </td>
-
-        <td valign="top">
-
-        </td>
-
-        <td valign="top">
-            0
-        </td>
+        <tr *ngFor="let element of dataSource1.data">
+            <td valign="top">
+                {{element.schemeName}}
+            </td>
 
         <td valign="top">
             {{(equityObj) ? ((equityObj.stGain == 0 ) ? 0 : (equityObj.stGain | number:'1.2-2')) : '0'}}
         </td>
 
-        <td valign="top">
-            {{(equityObj) ? ((equityObj.stLoss == 0 ) ? 0 : (equityObj.stLoss | number:'1.2-2')) : '0'}}
-        </td>
+            <td valign="top">
+                {{(element.ownerName) ? element.ownerName : 'N.A'}}
+            </td>
 
         <td valign="top">
             {{(equityObj) ? ((equityObj.totalIndexGain == 0 ) ? 0 : (equityObj.totalIndexGain | number:'1.2-2')) : '0'}}
