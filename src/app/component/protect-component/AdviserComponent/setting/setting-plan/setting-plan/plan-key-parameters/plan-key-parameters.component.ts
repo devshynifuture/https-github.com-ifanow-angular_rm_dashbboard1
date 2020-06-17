@@ -37,15 +37,6 @@ export class PlanKeyParametersComponent implements OnInit {
 
   }
 
-  //   lifeExpectancy: (11) [50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]
-  // retirementAge: (9) [40, 45, 50, 55, 60, 65, 70, 75, 80]
-  // savingType: {1: "Group all years together", 2: "Divide"}
-  // savingStatus: {1: "Break up", 2: "Total"}
-  // InsurancePlanGrowthRate: (19) [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20]
-  // key-Params: []
-  // configuration_type_id: {1: "SavingsType", 2: "RetirementAge", 3: "InsurancePlanning", 4: "SavingsStatus", 5: "LifeExpectancy"
-
-
   getdataForm() {
     this.keyParameter = this.fb.group({
       lifeExpectancy: [(!this.getLifeExpentancy) ? '' : (this.getLifeExpentancy.parameter), [Validators.required]],
