@@ -908,7 +908,9 @@ export class DocumentComponent implements OnInit {
       }
     });
   }
+  openDocument(flag){
 
+  }
   // /** Whether the number of selected elements matches the total number of rows. */
   // isAllSelected() {
   //   if (this.dataSource != undefined) {
