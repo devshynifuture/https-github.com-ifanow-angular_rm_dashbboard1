@@ -372,7 +372,8 @@
                     <th class="br text-right w-6" mat-header-cell *matHeaderCellDef>
                         Amount </th>
                     <td class="br text-right w-6" mat-cell *matCellDef="let element">
-                        <div class="bar"><span appFormatNumber *ngIf="element.redeemAmount">
+                        <div class="bar">
+                            <span appFormatNumber *ngIf="element.redeemAmount">
                                 {{(isLoading) ? '' : ((element.redeemAmount) ? element.redeemAmount : '0')}}</span>
                             <span *ngIf="element.totalAmount" class=" f-600 amt text-right" appFormatNumber>
                                 {{(isLoading) ? '' : ((element.totalAmount) ? element.totalAmount : '0')}}</span>
@@ -587,7 +588,8 @@
                     <th class="br text-right w-5" mat-header-cell *matHeaderCellDef>
                         Days</th>
                     <td class="br text-right w-5" mat-cell *matCellDef="let element">
-                        <div class="bar"> <span *ngIf="element.days || element.days == 0">{{(isLoading) ? '' : ((element.days) ? (element.days) : 'N.A')}}</span>
+                        <div class="bar">
+                            <span *ngIf="element.days || element.days == 0">{{(isLoading) ? '' : ((element.days) ? (element.days) : 'N.A')}}</span>
                         </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right"></td>
@@ -872,3 +874,182 @@
             </div>
         </div>
     </div>
+
+
+
+    <!-- -------------inner html------------ -->
+
+
+    <!-- <div>
+
+            <table cellpadding="0" width="100%" cellspacing="0" border="0" style="font-family: 'Roboto', sans-serif; margin: 0px auto;" align="center; page-break-before: always;">
+                <tr>
+                    <td style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;"
+                        colspan="17">
+                        DEBT
+                    </td>
+                </tr>
+        
+        
+        
+                <tr>
+                    <td style="width:26%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                        <b>Date </b> </td>
+        
+                    <td style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                        <b> Transaction type </b> </td>
+        
+                    <td style="width:26%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                        <b> Amount </b> </td>
+        
+                    <td style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                        <b> STT </b> </td>
+        
+                    <td style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                        <b> Units </b> </td>
+        
+                    <td style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                        <b> Sale rate </b> </td>
+        
+                    <td style="width:26%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                        <b>Date </b> </td>
+        
+                    <td style="width:26%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                        <b> Amount </b> </td>
+        
+                    <td style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                        <b> Units </b> </td>
+        
+                    <td style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                        <b> Purchase rate ST </b> </td>
+        
+                    <td style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                        <b> ST gain </b> </td>
+        
+                    <td style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                        <b> ST loss </b> </td>
+        
+                    <td style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                        <b> LT gain </b> </td>
+        
+                    <td style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                        <b> LT loss </b> </td>
+        
+                    <td style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                        <b> Indexed gain </b> </td>
+        
+                    <td style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                        <b> Indexed loss </b> </td>
+        
+                    <td style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                        <b> Days </b> </td>
+                </tr>
+        
+                <tr>
+                    <td style="font-weight: 600;">
+                        {{group.schemeName}}|{{group.folioNumber}}|{{group.ownerName}}
+                    </td>
+                </tr>
+        
+        
+                <tr>
+                    <td valign="top">
+                        <span *ngIf="element.redeemTransactionDate">
+                            {{(element.redeemTransactionDate) ? (element.redeemTransactionDate  | date:'dd/MM/yyyy') : ''}}
+                        </span>
+                        <span class="f-700" *ngIf="element.totalAmt">
+                            {{element.totalAmt}}</span>
+                    </td>
+        
+                    <td valign="top">
+                        <span *ngIf="element.transactionType">
+                            {{(isLoading) ? '' : ((element.transactionType) ? element.transactionType : 'N.A')}}</span>
+                    </td>
+        
+                    <td valign="top">
+                        <span appFormatNumber *ngIf="element.redeemAmount">
+                            {{(isLoading) ? '' : ((element.redeemAmount) ? element.redeemAmount : '0')}}</span>
+                        <span *ngIf="element.totalAmount" class=" f-600 amt text-right" appFormatNumber>
+                            {{(isLoading) ? '' : ((element.totalAmount) ? element.totalAmount : '0')}}</span>
+                    </td>
+        
+                    <td valign="top">
+                        <span *ngIf="element.redeemStt || element.redeemStt == 0">{{(isLoading) ? '' : ((element.redeemStt) ? (element.redeemStt | number:'1.2-2') : '0')}}</span>
+                        <span *ngIf="element.totalStt" class=" f-600 amt text-right">{{(isLoading) ? '' : ((element.totalStt) ? (element.totalStt | number:'1.2-2') : '0')}}</span>
+                    </td>
+        
+                    <td valign="top">
+                        <span *ngIf="element.redeemUnit == 0 || element.redeemUnit">{{(isLoading) ? '' : ((element.redeemUnit == 0 || element.redeemUnit) ? (element.redeemUnit | number:'1.2-2') : '0')}}</span>
+                    </td>
+        
+                    <td valign="top">
+                        <span *ngIf="element.redeemRate == 0 || element.redeemRate  ">{{(isLoading) ? '' : ((element.redeemRate == 0 || element.redeemRate) ? (element.redeemRate | number:'1.2-2') : '0')}}</span>
+                    </td>
+        
+                    <td valign="top">
+                        <span *ngIf="element.transactionDate || element.transactionDate == ''">
+                            {{(isLoading) ? '' : ((element.transactionDate) ? (element.transactionDate  | date:'dd/MM/yyyy') : 'N.A.') }}</span>
+                    </td>
+        
+                    <td valign="top">
+                        <span *ngIf="element.amount || element.amount == 0" appFormatNumber>{{(isLoading) ? '' : ((element.amount) ? (element.amount | number:'1.2-2') : 0)}}</span>
+                        <span *ngIf="element.purchaseAmount || element.purchaseAmount == 0" class=" f-600 amt text-right" appFormatNumber>{{(isLoading) ? '' : ((element.purchaseAmount) ? (element.purchaseAmount | number:'1.2-2'): 0)}}</span>
+                    </td>
+        
+                    <td valign="top">
+                        <span *ngIf="element.unit || element.unit == 0">{{(isLoading) ? '' : ((element.unit) ? (element.unit | number:'1.2-2') : (element.unit == 0) ? 0 : 0)}}</span>
+                    </td>
+        
+                    <td valign="top">
+                        <span *ngIf="element.purchasePrice || element.purchasePrice == 0">{{(isLoading) ? '' : ((element.purchasePrice) ? (element.purchasePrice | number:'1.2-2') : (element.purchasePrice == 0) ? 0 : 0)}}</span>
+                    </td>
+        
+                    <td valign="top">
+                        <span *ngIf="element.stGain || element.stGain == 0">
+                            {{(isLoading) ? '' : ((element.stGain) ? (element.stGain | number:'1.2-2') : (element.stGain == 0) ? 0 : 0)}}</span>
+                        <span *ngIf="element.totalStGain || element.totalStGain == 0" class=" f-600 amt text-right">
+                            {{(isLoading) ? '' : ((element.totalStGain) ? (element.totalStGain | number:'1.2-2') : (element.totalStGain == 0) ? 0 : 0)}}</span>
+        
+                    </td>
+        
+                    <td>
+                        <span *ngIf="element.stLoss == 0">{{(isLoading) ? '' : ((element.stLoss) ? (element.stLoss | number:'1.2-2') : (element.stLoss == 0) ? 0 : 0)}}</span>
+                        <span *ngIf="element.totalStLoss || element.totalStLoss == 0" class=" f-600 amt text-right">{{(isLoading) ? '' : ((element.totalStLoss) ? (element.totalStLoss | number:'1.2-2') : (element.totalStLoss == 0) ? 0 : 0)}}</span>
+                    </td>
+        
+                    <td>
+                        <span *ngIf="element.ltGain || element.ltGain == 0">
+                            {{(isLoading) ? '' : ((element.ltGain) ? (element.ltGain | number:'1.2-2') : (element.ltGain == 0) ? 0 : 0)}}</span>
+                        <span *ngIf="element.totalLtGain || element.totalLtGain == 0" class=" f-600 amt text-right">
+                            {{(isLoading) ? '' : ((element.totalLtGain) ? (element.totalLtGain | number:'1.2-2') : (element.totalLtGain == 0) ? 0 : 0)}}</span>
+                    </td>
+        
+                    <td>
+                        <span *ngIf="element.ltLoss || element.ltLoss == 0">{{(isLoading) ? '' : ((element.ltLoss) ? (element.ltLoss | number:'1.2-2') : (element.ltLoss == 0) ? 0 : 0)}}</span>
+                        <span *ngIf="element.totalStLoss || element.totalStLoss == 0" class=" f-600 amt text-right">{{(isLoading) ? '' : ((element.totalStLoss) ? (element.totalStLoss | number:'1.2-2') : (element.totalStLoss == 0) ? 0 : 0)}}</span>
+                    </td>
+        
+                    <td>
+                        <span *ngIf="element.indexGain || element.indexGain == 0">{{(isLoading) ? '' : ((element.indexGain) ? (element.indexGain | number:'1.2-2') : (element.indexGain == 0) ? 0 : 0)}}</span>
+                        <span *ngIf="element.totalIndexGain || element.totalIndexGain == 0" class="f-600  amt text-right">{{(isLoading) ? '' : ((element.totalIndexGain) ? (element.totalIndexGain | number:'1.2-2') : (element.totalIndexGain == 0) ? 0 : 0)}}</span>
+                    </td>
+        
+                    <td>
+                        <span *ngIf="element.indexLoss || element.indexLoss == 0">
+                            {{(isLoading) ? '' : ((element.indexLoss) ? (element.indexLoss | number:'1.2-2') : (element.indexLoss == 0) ? 0 : 0)}}</span>
+                        <span *ngIf="element.totalIndexLoss || element.totalIndexLoss == 0" class=" f-600 amt text-right">
+                            {{(isLoading) ? '' : ((element.totalIndexLoss) ? (element.totalIndexLoss | number:'1.2-2') : (element.totalIndexLoss == 0) ? 0 : 0)}}</span>
+                    </td>
+        
+        
+                    <td>
+                        <span *ngIf="element.days || element.days == 0">{{(isLoading) ? '' : ((element.days) ? (element.days) : 'N.A')}}</span>
+                    </td>
+        
+                </tr>
+        
+        
+        
+            </table>
+        
+        </div> -->
