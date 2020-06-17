@@ -32,11 +32,10 @@
 <div [ngClass]="{'pe-none': isLoading}" class="row">
     <div class="col-md-12 people-clients pb-28">
         <div [ngClass]="{'table-scroll':isLoading==false }" (scroll)="onWindowScroll($event)"
-            class="people-clients-scroll" *ngIf="clientDatasource.data.length>0">
+            class="ox-hide people-clients-scroll" *ngIf="clientDatasource.data.length>0">
             <!--  -->
-            <table #tableEl matSort #clientTableSort="matSort" mat-table
-                [dataSource]="clientDatasource" id="tbs" appSkeletonLoading [appSkeletonLoading]="isLoading"
-                class="skeletonAnimation">
+            <table #tableEl matSort #clientTableSort="matSort" mat-table [dataSource]="clientDatasource" id="tbs"
+                appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation">
                 <ng-container matColumnDef="position">
                     <th mat-sort-header="name" mat-header-cell *matHeaderCellDef class="br  w-20"> Group head name
                     </th>
