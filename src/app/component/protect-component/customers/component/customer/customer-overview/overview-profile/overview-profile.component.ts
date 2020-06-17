@@ -92,7 +92,7 @@ export class OverviewProfileComponent implements OnInit {
         } else {
           this.letsideBarLoader = false;
           // this.authService.setClientData(data);
-          if (data.mobileList && data.mobileList.length > 0) {
+          if (data.mobileList && data.mobileList.length > 0 && data.mobileList[0].mobileNo !== 0) {
             data.mobileNo = data.mobileList[0].mobileNo;
             const obj =
             {

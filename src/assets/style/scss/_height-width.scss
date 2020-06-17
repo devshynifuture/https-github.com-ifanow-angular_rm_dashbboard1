@@ -225,9 +225,13 @@
   height: 300px;
 }
 
-.h-300 {
+.h-overflow-300 {
   height: 300px;
   overflow-x: auto;
+}
+
+.h-24 {
+  height: 24px !important;
 }
 
 .h-424 {
@@ -235,8 +239,17 @@
   overflow-x: auto;
 }
 
+.h-354 {
+  height: 354px !important;
+  overflow-x: auto;
+}
+
 .h-500 {
   height: 500px !important;
+}
+
+.h-800 {
+  height: 800px !important;
 }
 
 .h-72 {
@@ -582,7 +595,7 @@
 
 .t-30,
 .w-30 {
-  width: 30%;
+  width: 30% !important;
 }
 
 .t-31,

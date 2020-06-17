@@ -73,6 +73,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   reportDate: Date;
   customDataSource: any;
   unrealisedData: TableVirtualScrollDataSource<any>;
+  dataTransaction: any;
+  mode: string;
 
   constructor(public dialog: MatDialog, private datePipe: DatePipe,
     private subInjectService: SubscriptionInject, private utilService: UtilService,
@@ -92,13 +94,40 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   get data() {
     return this.inputData;
   }
+  uploadData(data) {
+    if (data.clientId) {
+      this.clientId = data.clientId
+      this.addedData = true;
+      if(data.mode == 'unrealisedTransactions'){
+        this.viewMode = 'Unrealized Transactions'
+        this.mode = 'Unrealized Transactions'
+      }else{
+        this.viewMode = 'All Transactions'
+        this.mode = 'All Transactions'
+      }
+      this.ngOnInit()
+    }
+    return this.dataTransaction
 
+  }
   ngOnInit() {
+    this.dataTransaction = {}
+    this.dataTransaction.viewMode = {}
+    this.dataTransaction.columnHeader = {}
+    this.dataTransaction.displayedColumns = []
+    this.dataTransaction.dataSource = []
+    this.dataTransaction.customDataSource =[]
+    this.dataTransaction.grandTotal = {}
+    this.setDefaultFilterData = {}
+    this.setDefaultFilterData.transactionView =[]
     this.reportDate = new Date()
     this.unrealisedData = new TableVirtualScrollDataSource([]);
     this.mfService.getViewMode()
       .subscribe(res => {
         this.viewMode = res;
+        if(res == ''){
+          this.viewMode = this.mode
+        }
       });
     this.getFilterData((this.viewMode == 'Unrealized Transactions') ? 4 : 3);
 
@@ -115,6 +144,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       this.displayedColumnsTotal = ['noTotal', 'transactionTypeTotal', 'transactionDateTotal', 'transactionAmountTotal', 'transactionNavTotal',
         'unitsTotal', 'balanceUnitsTotal', 'daysTotal', 'iconsTotal'];
     }
+    this.dataTransaction.displayedColumns = this.displayedColumns
   }
 
 
@@ -126,6 +156,9 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     this.mfService.getFilterValues()
       .subscribe(res => {
         this.setDefaultFilterData = res;
+        if(this.setDefaultFilterData == ''){
+          this.setDefaultFilterData = {}
+        }
       });
     this.mfService.getDataForMfGet()
       .subscribe(res => {
@@ -212,7 +245,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
             selectFilter: (getList.length > 0) ? this.clientId : 0
           };
           this.mfData = this.mfGetData;
-          if (this.viewMode == 'Unrealized Transactions') {
+          if (this.viewMode == 'Unrealized Transactions' && this.mfGetData != "") {
             this.isLoading = true;
             this.getUnrealizedData();
           } else if (this.viewMode != 'Unrealized Transactions' && this.mfGetData != '') {
@@ -254,7 +287,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         }
        
         this.mfData = this.mfGetData;
-        if (this.viewMode == 'Unrealized Transactions') {
+        if (this.viewMode == 'Unrealized Transactions'  && this.mfGetData != "") {
           this.isLoading = true;
           this.getUnrealizedData();
         } else if (this.viewMode != 'Unrealized Transactions' && this.mfGetData != '') {
@@ -525,6 +558,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         console.log('worker output : ', data);
         this.grandTotal = data.totalValue;
         this.dataSource.data = (data.dataSourceData);
+        this.dataTransaction.dataSource = data.dataSourceData
         // this.customDataSource.data = (data.customDataSourceData);
         this.customDataSource = []
         this.customDataSource.data = []
@@ -532,6 +566,12 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         this.customDataSource.data = (data.customDataSourceData)
         this.pdfDataFornTRansaction = this.customDataSource.data;
         this.customDataHolder = data.customDataHolder;
+        this.dataTransaction.grandTotal = this.grandTotal
+        this.dataTransaction.customDataSourceData = data.customDataSourceData
+        this.dataTransaction.viewMode = this.mode
+        this.dataTransaction.setDefaultFilterData=this.setDefaultFilterData
+        this.dataTransaction.columnHeader = this.columnHeader
+        this.mfService.setTransactionData(this.dataTransaction)
         if (this.viewMode == 'All Transactions' || this.viewMode == 'all transactions') {
           this.displayedColumns.forEach(element => {
             this.styleObjectTransaction(element)
@@ -790,6 +830,9 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
             // this.asyncFilter(this.reponseData.mutualFundList);
             this.mfService.setFilterValues(this.setDefaultFilterData);
             this.mfService.setDataForMfGet(this.rightFilterData.mfData);
+            this.dataTransaction.setDefaultFilterData = this.setDefaultFilterData
+            this.dataTransaction.rightFilterData = this.rightFilterData.mfData
+            this.mfService.setTransactionData(this.dataTransaction)
             this.getFilterData((this.viewMode == 'Unrealized Transactions') ? 4 : 3);
             // this.dataSource.data = this.getCategory(this.rightFilterData.mutualFundList,
             // this.rightFilterData.reportType, this.mfService);

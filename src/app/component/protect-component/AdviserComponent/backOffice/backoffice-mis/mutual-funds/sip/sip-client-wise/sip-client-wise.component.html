@@ -7,15 +7,16 @@
                     </h3>
                 </div>
                 <div class="col-md-6 text-right pr-0">
-                    <button (click)="exportToExcelSheet('client-wise', null)" *ngIf="!isLoading && filteredArray.length>0" class="btn-default addon"
-                        mat-stroked-button><i class="material-icons">add</i>XLS
+                    <button (click)="exportToExcelSheet('client-wise', null)"
+                        *ngIf="!isLoading && filteredArray.length>0" class="btn-default addon" mat-stroked-button><i
+                            class="material-icons">add</i>XLS
                     </button>
                     <button mat-stroked-button class="btn-success ml-8 addon" (click)="aumReport()">Back</button>
 
                 </div>
             </div>
 
-            <div class="row" *ngIf="!isLoading && filteredArray.length > 0">  
+            <div class="row" *ngIf="!isLoading && filteredArray.length > 0">
                 <div class="col-md-8"></div>
                 <div class="col-md-4 pr-0 mt-12 mb-12" ng-init="clietnFilter=''">
                     <input type="text" class="form-control" placeholder="Search Client Name" [(ngModel)]="clientFilter"
@@ -54,15 +55,18 @@
                         <tbody *ngFor="let category of filteredArray; let i = index">
                             <tr>
                                 <td>
-                                    <div [ngClass]="{'bar': isLoading}" >
+                                    <div [ngClass]="{'bar': isLoading}">
                                         {{isLoading? '' : category.investorName}}
                                     </div>
                                 </td>
                                 <td>
-                                    <div [ngClass]="{'bar': isLoading}" >{{isLoading ? ' ' : '₹ '}}<span appFormatNumber *ngIf="!isLoading" [value]="category.sipAmount"></span></div>
+                                    <div [ngClass]="{'bar': isLoading}">{{isLoading ? ' ' : '₹ '}}<span appFormatNumber
+                                            *ngIf="!isLoading" [value]="category.sipAmount"></span></div>
                                 </td>
                                 <td>
-                                    <div [ngClass]="{'bar': isLoading}" >{{isLoading ? '' : category.weightInPercentage | number:'1.2-2'}}{{(isLoading?'':'%') }}</div>
+                                    <div [ngClass]="{'bar': isLoading}">
+                                        {{isLoading ? '' : category.weightInPercentage | number:'1.2-2'}}{{(isLoading?'':'%') }}
+                                    </div>
                                 </td>
                                 <td class="text-center" (click)="showSubTableList(i,category.showCategory,category)">
                                     <div class="bar text-center">
@@ -78,7 +82,8 @@
                             </tr>
                             <tr style="border: transparent !important">
                                 <td colspan="4" class="innerTd one">
-                                    <div class="d-block text-right" *ngIf="!category.showCategory && !isLoading && category.applicantList?.length > 0">
+                                    <div class="d-block text-right"
+                                        *ngIf="!category.showCategory && !isLoading && category.applicantList?.length > 0">
                                         <button (click)="exportToExcelSheet('investor-wise', i)" mat-icon-button>
                                             <mat-icon>
                                                 save_alt
@@ -86,8 +91,8 @@
                                         </button>
                                     </div>
                                     <table *ngIf="category.showCategory==false && category.applicantList?.length > 0"
-                                        class="skeletonAnimation mt-8 mb-8 table-low" appSkeletonLoading
-                                        [appSkeletonLoading]="isLoadingApplicant" id="table-high">
+                                        class="skeletonAnimation mt-8 mb-8" appSkeletonLoading
+                                        [appSkeletonLoading]="isLoadingApplicant" id="table-low">
                                         <thead class="bg-light text-dark">
                                             <tr class="h-40">
                                                 <th (click)="sortByApplicant(category.applicantList,'investorName')"
@@ -227,7 +232,9 @@
                                                 </td>
                                                 <td>
                                                     <div [ngClass]="{'bar': isLoadingApplicant}">
-                                                            {{isLoadingApplicant ? ' ' : '₹ '}} <span appFormatNumber *ngIf="!isLoadingApplicant" [value]="subcategory.sipAmount"></span>
+                                                        {{isLoadingApplicant ? ' ' : '₹ '}} <span appFormatNumber
+                                                            *ngIf="!isLoadingApplicant"
+                                                            [value]="subcategory.sipAmount"></span>
                                                     </div>
                                                 </td>
                                                 <td>
@@ -239,29 +246,32 @@
                                                     <!-- {{(isLoadingApplicant?'':' Add cease date') }} -->
                                                     <div [ngClass]="{'bar': isLoadingApplicant}">
                                                         <div *ngIf="!isLoadingApplicant">
-                                                            <button (click)="subcategory.isEdit=true" *ngIf="!subcategory.isEdit" >Add Cease Date</button>
+                                                            <button (click)="subcategory.isEdit=true"
+                                                                *ngIf="!subcategory.isEdit">Add Cease Date</button>
                                                             <div [formGroup]="caesedForm" *ngIf="subcategory.isEdit">
-                                                                    <div class="col-md-3 pr-0">
-                                                                        <div class="form-group mb-0">
-                                                                            <mat-form-field class="ba-date">
-                                                                                <input matInput
-                                                                                    class="form-control br-0 b-0"
-                                                                                    #ceaseddate [max]="maxDate"
-                                                                                    (input)="preventDefault($event)"
-                                                                                    matInput [matDatepicker]="picker"
-                                                                                    formControlName="ceaseddate"
-                                                                                    readonly>
-                                                                                <mat-datepicker-toggle matSuffix
-                                                                                    [for]="picker">
-                                                                                </mat-datepicker-toggle>
-                                                                                <mat-datepicker #picker>
-                                                                                </mat-datepicker>
-                                                                            </mat-form-field>
-                                                                        </div>
+                                                                <div class="">
+                                                                    <div class="form-group mb-0">
+                                                                        <mat-form-field class="ba-date">
+                                                                            <input matInput
+                                                                                class="form-control br-0 b-0"
+                                                                                #ceaseddate [max]="maxDate"
+                                                                                (input)="preventDefault($event)"
+                                                                                matInput [matDatepicker]="picker"
+                                                                                formControlName="ceaseddate" readonly>
+                                                                            <mat-datepicker-toggle matSuffix
+                                                                                [for]="picker">
+                                                                            </mat-datepicker-toggle>
+                                                                            <mat-datepicker #picker>
+                                                                            </mat-datepicker>
+                                                                        </mat-form-field>
                                                                     </div>
-                                                                <span >
-                                                                    <button [disabled]="ceaseddate.value == ''" (click)="addCeasesdDate(subcategory,category,ceaseddate.value)">Save</button>
-                                                                    <button (click)="subcategory.isEdit=false">Cancel</button>
+                                                                </div>
+                                                                <span class="d-flex justify-content-center mt-4">
+                                                                    <button class="h-24 btn-sm lh-18 btn-primary mr-4"
+                                                                        [disabled]="ceaseddate.value == ''"
+                                                                        (click)="addCeasesdDate(subcategory,category,ceaseddate.value)">Save</button>
+                                                                    <button class="h-24 btn-sm lh-18"
+                                                                        (click)="subcategory.isEdit=false">Cancel</button>
                                                                 </span>
                                                             </div>
                                                         </div>
@@ -284,7 +294,8 @@
                         <tbody *ngIf="!isLoading && filteredArray.length>0">
                             <tr>
                                 <td class="p-table"><strong>Total</strong></td>
-                                <td class="p-table"><strong>{{'₹ '}}<span appFormatNumber [value]="totalOfSipAmount"></span></strong>
+                                <td class="p-table"><strong>{{'₹ '}}<span appFormatNumber
+                                            [value]="totalOfSipAmount"></span></strong>
                                 </td>
                                 <td class="p-table "><strong>{{totalWeight | number:'1.2-2'}}%</strong></td>
                                 <td></td>

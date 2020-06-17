@@ -493,8 +493,7 @@
                                                                                                 Cease Date</button>
                                                                                             <div [formGroup]="caesedForm"
                                                                                                 *ngIf="applicant.isEdit">
-                                                                                                <div
-                                                                                                    class="col-md-3 pr-0">
+                                                                                                <div class="">
                                                                                                     <div
                                                                                                         class="form-group mb-0">
                                                                                                         <mat-form-field
@@ -519,12 +518,15 @@
                                                                                                         </mat-form-field>
                                                                                                     </div>
                                                                                                 </div>
-                                                                                                <span>
+                                                                                                <span
+                                                                                                    class="d-flex justify-content-center mt-4">
                                                                                                     <button
                                                                                                         [disabled]="ceaseddate.value == ''"
-                                                                                                        (click)="addCeasesdDate(applicant,inv,ceaseddate.value)">Save</button>
+                                                                                                        (click)="addCeasesdDate(applicant,inv,ceaseddate.value)"
+                                                                                                        class="h-24 btn-sm lh-18 btn-primary mr-4">Save</button>
                                                                                                     <button
-                                                                                                        (click)="applicant.isEdit=false">Cancel</button>
+                                                                                                        (click)="applicant.isEdit=false"
+                                                                                                        class="h-24 btn-sm lh-18">Cancel</button>
                                                                                                 </span>
                                                                                             </div>
                                                                                         </div>

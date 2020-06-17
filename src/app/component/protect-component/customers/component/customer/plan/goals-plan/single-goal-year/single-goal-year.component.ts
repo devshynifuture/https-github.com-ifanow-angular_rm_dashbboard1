@@ -3,6 +3,9 @@ import {EventService} from 'src/app/Data-service/event.service';
 import {FormBuilder, Validators, FormGroup, FormControl} from '@angular/forms';
 import {AuthService} from 'src/app/auth-service/authService';
 import {PlanService} from '../../plan.service';
+import { AppConstants } from 'src/app/services/app-constants';
+import { AppComponent } from 'src/app/app.component';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-single-goal-year',
@@ -29,6 +32,7 @@ export class SingleGoalYearComponent implements OnInit {
   
   constructor(
     private eventService: EventService, 
+    private datePipe: DatePipe,
     private fb: FormBuilder, 
     private planService: PlanService, 
   ) {
@@ -52,50 +56,62 @@ export class SingleGoalYearComponent implements OnInit {
   }
   
   createGoalObj() {
+    const currentDate = new Date();
     let obj = {
       "clientId": this.clientId,
       "advisorId": this.advisorId,
       "goalName": this.singleYearGoalForm.get('goalName').value,
       "notes": this.singleYearGoalForm.get('goalDescription').value,
-      "imageUrl": this.logoImg || this.goalTypeData.imageUrl
+      "imageUrl": this.logoImg,
+      "goalType": this.goalTypeData.id,
+      "savingStartDate": this.datePipe.transform(currentDate, 'yyyy-MM-dd'),
     }
 
+    let ageDiff = 0;
+    let futureDate = new Date(currentDate);
     switch (this.goalTypeData.id) {
-      case 2: // House
-        obj['currentAge'] = this.singleYearGoalForm.get('goalMember').value.age;
+      case AppConstants.HOUSE_GOAL: // House
+        obj['currentAge'] = this.singleYearGoalForm.get('goalMember').value.familyMemberAge;
         obj['planningThisForId'] = this.singleYearGoalForm.get('goalMember').value.id;
         obj['clientOrFamilyMember'] = (this.singleYearGoalForm.get('goalMember').value.relationshipId === 0) ? 1 : 2;
         obj['whatAgeBuyHouse'] = this.singleYearGoalForm.get('age').value;
         obj['goalPresentValue'] = this.singleYearGoalForm.get('cost').value;
+        
+        ageDiff = this.singleYearGoalForm.get('age').value - this.singleYearGoalForm.get('goalMember').value.familyMemberAge;
+        futureDate = new Date(currentDate);
+        futureDate.setFullYear(futureDate.getFullYear() + ageDiff);
+        obj['goalStartDate'] = this.datePipe.transform(futureDate, 'yyyy-MM-dd');
+        obj['goalEndDate'] = this.datePipe.transform(futureDate, 'yyyy-MM-dd');
+        obj['savingEndDate'] = this.datePipe.transform(futureDate, 'yyyy-MM-dd');
         break;
-      case 3: // Car
-        obj['currentAge'] = this.singleYearGoalForm.get('goalMember').value.age;
+      case AppConstants.CAR_GOAL: // Car
+        obj['currentAge'] = this.singleYearGoalForm.get('goalMember').value.familyMemberAge;
         obj['whatAgeBuyCar'] = this.singleYearGoalForm.get('age').value;
         obj['goalPresentValue'] = this.singleYearGoalForm.get('cost').value;
         break;
-      case 4: // Marriage
-        obj['currentAge'] = this.singleYearGoalForm.get('goalMember').value.age;
+      case AppConstants.MARRIAGE_GOAL: // Marriage
+        obj['currentAge'] = this.singleYearGoalForm.get('goalMember').value.familyMemberAge;
         obj['planningThisForId'] = this.singleYearGoalForm.get('goalMember').value.id;
         obj['clientOrFamilyMember'] = (this.singleYearGoalForm.get('goalMember').value.relationshipId === 0) ? 1 : 2;
         obj['marryAtAge'] = this.singleYearGoalForm.get('age').value;
         obj['goalPresentValue'] = this.singleYearGoalForm.get('cost').value;
         break;
-      case 7: // Emergency
+      case AppConstants.EMERGENCY_GOAL: // Emergency
         obj['goalTargetInMonth'] = this.singleYearGoalForm.get('age').value;
         obj['goalFV'] = this.singleYearGoalForm.get('cost').value;
         break;
-      case 8: // Wealth Creation
-        obj['currentAge'] = this.singleYearGoalForm.get('goalMember').value.age;
+      case AppConstants.WEALTH_CREATION_GOAL: // Wealth Creation
+        obj['currentAge'] = this.singleYearGoalForm.get('goalMember').value.familyMemberAge;
         obj['planningThisForId'] = this.singleYearGoalForm.get('goalMember').value.id;
         obj['clientOrFamilyMember'] = (this.singleYearGoalForm.get('goalMember').value.relationshipId === 0) ? 1 : 2;
         obj['goalTargetAge'] = this.singleYearGoalForm.get('age').value;
         obj['goalFV'] = this.singleYearGoalForm.get('cost').value;
         break;
-      case 9: // Big Spends
+      case AppConstants.BIG_SPEND_GOAL: // Big Spends
         obj['goalStartDate'] = this.singleYearGoalForm.get('age').value;
         obj['goalPresentValue'] = this.singleYearGoalForm.get('cost').value;
         break;
-      case 10: // Others
+      case AppConstants.OTHERS_GOAL: // Others
         obj['goalStartDate'] = this.singleYearGoalForm.get('age').value;
         obj['goalPresentValue'] = this.singleYearGoalForm.get('cost').value;
         break;
@@ -107,73 +123,46 @@ export class SingleGoalYearComponent implements OnInit {
   }
 
   sendDataObj(obj){
-    switch (this.goalTypeData.id) {
-      case 2: // House
-        this.planService.addHouseGoal(obj).subscribe(
-          data => {
-            this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
+    
+    this.planService.addSingleYearGoal(obj).subscribe(
+      data => {
+        this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
+        switch (this.goalTypeData.id) {
+          case AppConstants.HOUSE_GOAL:
             this.eventService.openSnackBar("House goal is added");
-          },
-          error => this.eventService.showErrorMessage(error)
-        );
-        break;
-      case 3: // Car
-        this.planService.addCarGoal(obj).subscribe(
-          data => {
-            this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
+            break;
+
+          case AppConstants.CAR_GOAL:
             this.eventService.openSnackBar("Car goal is added");
-          },
-          error => this.eventService.showErrorMessage(error)
-        );
-        break;
-      case 4: // Marriage
-        this.planService.addMarriageGoal(obj).subscribe(
-          data => {
-            this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
+            break;
+
+          case AppConstants.MARRIAGE_GOAL:
             this.eventService.openSnackBar("Marriage goal is added");
-          },
-          error => this.eventService.showErrorMessage(error)
-        );
-        break;
-      case 7: // Emergency
-        this.planService.addEmergencyGoal(obj).subscribe(
-          data => {
-            this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
+            break;
+
+          case AppConstants.EMERGENCY_GOAL:
             this.eventService.openSnackBar("Emergency goal is added");
-          },
-          error => this.eventService.showErrorMessage(error)
-        );
-        break;
-      case 8: // Wealth Creation
-        this.planService.addWealthCreationGoal(obj).subscribe(
-          data => {
-            this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
-            this.eventService.openSnackBar("Wealth Creation goal is added");
-          },
-          error => this.eventService.showErrorMessage(error)
-        );
-        break;
-      case 9: // Big Spends
-        this.planService.addBigSpendsGoal(obj).subscribe(
-          data => {
-            this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
-            this.eventService.openSnackBar("Big Spends goal is added");
-          },
-          error => this.eventService.showErrorMessage(error)
-        );
-        break;
-      case 10: // Others
-        this.planService.addOthersGoal(obj).subscribe(
-          data => {
-            this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
+            break;
+
+          case AppConstants.WEALTH_CREATION_GOAL:
+            this.eventService.openSnackBar("Wealth creation goal is added");
+            break;
+
+          case AppConstants.BIG_SPEND_GOAL:
+            this.eventService.openSnackBar("Big spends goal is added");
+            break;
+
+          case AppConstants.OTHERS_GOAL:
             this.eventService.openSnackBar("Others goal is added");
-          },
-          error => this.eventService.showErrorMessage(error)
-        );
-        break;
-      default:
-        console.error('unknown goal id found')
-    }
+            break;
+
+          default:
+            console.error("Unidentified goal id found")
+            break;
+        }
+      },
+      error => this.eventService.showErrorMessage(error)
+    );
   }
 
   saveGoal(){
@@ -181,6 +170,7 @@ export class SingleGoalYearComponent implements OnInit {
       this.singleYearGoalForm.markAllAsTouched();
     } else {
       let goalObj = this.createGoalObj();
+      console.log(goalObj)
       this.sendDataObj(goalObj);
     }
   }
@@ -188,14 +178,14 @@ export class SingleGoalYearComponent implements OnInit {
   // set the validation age for the age form field 
   setMinMaxAgeOrYear(value){
     if(this.goalTypeData.validations.showAge) {
-      this.minAgeYear = (this.goalTypeData.validations.minAge || (this.goalTypeData.validations.minAgeFromPresent + value.age));
-      this.maxAgeYear = (this.goalTypeData.validations.maxAge || (this.goalTypeData.validations.maxAgeFromPresent + value.age));
+      this.minAgeYear = (this.goalTypeData.validations.minAge || (this.goalTypeData.validations.minAgeFromPresent + value.familyMemberAge));
+      this.maxAgeYear = (this.goalTypeData.validations.maxAge || (this.goalTypeData.validations.maxAgeFromPresent + value.familyMemberAge));
     } else {
       this.minAgeYear = (this.goalTypeData.validations.minAgeFromPresent + this.currentYear);
       this.maxAgeYear = (this.goalTypeData.validations.maxAgeFromPresent + this.currentYear);
     }
-    if(this.minAgeYear < (value.age + this.goalTypeData.validations.minAgeFromPresent)) {
-      this.minAgeYear = value.age + this.goalTypeData.validations.minAgeFromPresent;
+    if(this.minAgeYear < (value.familyMemberAge + this.goalTypeData.validations.minAgeFromPresent)) {
+      this.minAgeYear = value.familyMemberAge + this.goalTypeData.validations.minAgeFromPresent;
     }
   }
 

@@ -3,6 +3,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { DialogData } from 'src/app/common/link-bank/link-bank.component';
 import { EventService } from 'src/app/Data-service/event.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { BackOfficeService } from '../../back-office.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-open-send-report-popup',
@@ -12,22 +14,44 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class OpenSendReportPopupComponent implements OnInit {
   sendReport: any;
   clientsSend: any;
+  advisorId: any;
+  dataClients: { clientId: number; };
 
   constructor(public dialogRef: MatDialogRef<OpenSendReportPopupComponent>,
-     private fb: FormBuilder,
+    private fb: FormBuilder,
+    private backOfficeService: BackOfficeService,
     @Inject(MAT_DIALOG_DATA) public data: DialogData, private eventService: EventService, ) {
+
+    this.advisorId = AuthService.getAdvisorId()
   }
 
   ngOnInit() {
-    console.log('reportType',this.data)
+    console.log('reportType', this.data)
   }
 
-  sendClientId(){
+  sendClientId() {
+    this.dataClients = {
+      clientId: 95961
+    }
+    this.getDetails(this.dataClients)
+  }
+  getDetails(data) {
+    const obj = {
+      clientId: data.clientId,
+      advisorId: this.advisorId,
+    };
+    this.backOfficeService.getDetailsClientAdvisor(obj).subscribe(
+      data => this.getDetailsClientAdvisorRes(data)
+    );
+  }
+  getDetailsClientAdvisorRes(data) {
+    console.log('data', data)
     this.clientsSend = {
-      clientId : 93808
+      userInfo : data,
+      clientId : this.dataClients.clientId,
+      mode : this.data.reportType
     }
   }
-
   getdataForm(data) {
     this.sendReport = this.fb.group({
     });
@@ -42,7 +66,7 @@ export class OpenSendReportPopupComponent implements OnInit {
   }
 
   onNoClick(value): void {
-      this.dialogRef.close('');
-    
+    this.dialogRef.close('');
+
   }
 }

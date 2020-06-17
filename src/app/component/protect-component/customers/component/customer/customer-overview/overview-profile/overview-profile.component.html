@@ -1,7 +1,7 @@
 <div class="profileOverview" *ngIf="!hasError">
     <div class="row">
-        <div class="col-width-18  pt-8">
-            <ul class="vertical-menu  d-block bg-grey lter">
+        <div class="col-md-2 pt-8 pb-20 pl-0 pr-0  bg-grey lter">
+            <ul class="vertical-menu ">
                 <li (click)="Tab='Tab1'" [ngClass]="{'activeColor lt':Tab=='Tab1'}" class="c-p">
                     <img class="mr-8" src="/assets/images/svg/key-info-icon.svg"> Key info
                 </li>
@@ -18,8 +18,8 @@
         </div>
 
 
-        <div *ngIf="Tab=='Tab1'" class="col-width-79">
-            <div class="bg-grey lter p-9">
+        <div *ngIf="Tab=='Tab1'" class="col-md-10 p-20 mt-5">
+            <div class="bg-grey lter p-9 borRd">
                 <div class="row">
                     <div class="col-md-10">
                         <div class="row">
@@ -86,7 +86,7 @@
                 </div>
                 <!-- *ngIf="clientOverviewData" -->
                 <div *ngIf="clientData" class="row">
-                    <div *ngIf="clientData.clientType!=3" class="col-md-12">
+                    <div *ngIf="clientData.clientType!=3" class="col-md-12 p-0">
                         <div class="primary-border familyMemberBox mt-12">
                             <p class="memberName">Family members</p>
 
@@ -164,9 +164,9 @@
             </div>
             <div class=" detailContainer ">
                 <div class=" row ">
-                    <div class=" col-md-6 pr-8 br-primitive ">
+                    <div class=" col-md-6 p-0 br-primitive ">
                         <div class=" row ">
-                            <div class=" col-md-10 ">
+                            <div class=" col-md-10 pl-0">
                                 <h5 class=" headingDetails ml-8 "> Basic details </h5>
                             </div>
 
@@ -179,7 +179,7 @@
 
                         <div class="row">
                             <div [appSkeletonLoading]="letsideBarLoader" appSkeletonLoading
-                                class=" col-md-6 skeletonAnimation">
+                                class=" col-md-6 skeletonAnimation pl-0">
                                 <div class=" basicDetaisList ">
                                     <p class=" text-primitive m-0 f-12 ">DISPLAY NAME</p>
                                     <div class="relClass">
@@ -199,7 +199,7 @@
                                         <div class="bar height23">
                                             <p class=" f-14 roboto f-500 m-0 ">
                                                 <span *ngIf="!letsideBarLoader">
-                                                    {{(clientOverviewData.mobileList && clientOverviewData.mobileList.length > 0) ? clientOverviewData.mobileList[0].mobileNo : 'N/A'}}
+                                                    {{(clientOverviewData.mobileList && clientOverviewData.mobileList.length > 0 && clientOverviewData.mobileList[0].mobileNo!=0) ? clientOverviewData.mobileList[0].mobileNo : 'N/A'}}
                                                 </span>
                                             </p>
                                         </div>
@@ -310,7 +310,7 @@
 
                     </div>
 
-                    <div class=" col-md-3 pl-20 pr-8 br-primitive ">
+                    <div class=" col-md-3 pl-8 pr-8 br-primitive ">
                         <div class=" row ">
                             <div class=" col-md-9 ">
                                 <h5 class=" headingDetails "> Address</h5>
@@ -328,21 +328,24 @@
                             </div>
                         </div>
                         <div class="row ">
-                            <div *ngFor="let singleAddress of addressList" class=" col-md-12 mb-8 ">
-                                <div class="d-flex justify-content-between align-items-center mb-8">
-                                    <p class=" f-12 mb-0 mt-8 text-primitive ">PERMANENT</p>
+                            <div *ngFor="let singleAddress of addressList" class=" row ">
+                                <div class="col-md-9">
+                                    <p class=" f-12 mb-0 pt-4 text-primitive ">PERMANENT</p>
+
+
+                                    <p class=" f-14 ">
+                                        {{singleAddress.address1 ? singleAddress.address1 + ' , ' : ''}}
+                                        {{singleAddress.address2 ? singleAddress.address2 + ' , ' : ''}}
+                                        {{singleAddress.address3 ? singleAddress.address3 + ' , ' : ''}}
+                                        {{singleAddress.city ? singleAddress.city : ''}} {{singleAddress.pinCode
+                                    ? singleAddress.pinCode + '.' : ''}}
+                                        {{singleAddress.state ? singleAddress.state : ''}}
+                                    </p>
+                                </div>
+                                <div class="col-md-3 pr-8 text-right">
                                     <a (click)="openAddEdit(clientOverviewData,singleAddress,'Address','Edit')"
                                         class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
                                 </div>
-                                <p class=" f-14 ">
-                                    {{singleAddress.address1 ? singleAddress.address1 + ' , ' : ''}}
-                                    {{singleAddress.address2 ? singleAddress.address2 + ' , ' : ''}}
-                                    {{singleAddress.address3 ? singleAddress.address3 + ' , ' : ''}}
-                                    {{singleAddress.city ? singleAddress.city : ''}} {{singleAddress.pinCode
-                                    ? singleAddress.pinCode + '.' : ''}}
-                                    {{singleAddress.state ? singleAddress.state : ''}}
-                                </p>
-
 
                             </div>
 
@@ -350,7 +353,8 @@
                                 <div class="d-flex flex-column align-items-center">
                                     <!-- <img class="width150" src="assets/images/svg/noDataFound.svg"> -->
                                     <h4 *ngIf="!showSectionError.addressList" class="text-center pt-12 f-14">No address
-                                        found</h4>
+                                        found
+                                    </h4>
                                     <h4 *ngIf="showSectionError.addressList" class="text-center pt-12">Sorry! it's not
                                         you it's us</h4>
                                     <p (click)="openAddEdit(clientOverviewData,null,'Address','Add')"
@@ -362,7 +366,7 @@
                         </div>
                     </div>
 
-                    <div class=" col-md-3 pl-20 ">
+                    <div class=" col-md-3 pl-20 pr-0">
                         <h5 *ngIf="bankFlag" class=" headingDetails "> Bank </h5>
                         <div [appSkeletonLoading]="bankFlag" [hidden]="!bankFlag" appSkeletonLoading
                             class="skeletonAnimation">
@@ -388,9 +392,9 @@
                                 </div>
                             </div>
 
-                            <div *ngFor="let singleBank of bankList;index as i" class="col-md-12">
+                            <div *ngFor="let singleBank of bankList;index as i" class="w-100">
                                 <div *ngIf="selectedBankData===singleBank" class=" row ">
-                                    <div class="col-md-6  ">
+                                    <div class="col-md-6  pl-0">
 
                                         <h5 class=" headingDetails d-flex"> Bank
                                             <i (click)="openAddEdit(clientData,null,'Bank','Add')"
@@ -400,7 +404,7 @@
 
                                     </div>
                                     <div *ngIf="bankList && bankList.length>1"
-                                        class=" col-md-5 p-0 d-flex align-items-center justify-content-end ">
+                                        class=" col-md-6 p-0 d-flex align-items-center justify-content-end ">
                                         <span class=" f-12 text-primitive ">{{i + 1}} of {{bankList.length}}</span>
                                         <span class=" arrow-primitive arrowSlider c-p ">
                                             <i (click)="previous('bank',i)"
@@ -417,14 +421,14 @@
                                 </div>
 
                                 <div *ngIf="selectedBankData===singleBank" class="row">
-                                    <div class=" col-md-9 pr-0 ">
+                                    <div class=" col-md-9 p-0 ">
                                         <p class=" m-0 f-14 ">
                                             <span class=" f-500 roboto ">{{selectedBankData.bankName}}</span><br> A/c:
                                             {{selectedBankData.accountNumber}} <br>
                                             {{selectedBankData.accountTypeName }} <br> IFSC:
                                             {{selectedBankData.ifscCode }} <br> {{selectedBankData.shortAddress}}
                                     </div>
-                                    <div class=" col-md-2 p-0 text-right ">
+                                    <div class=" col-md-3 p-0 text-right ">
                                         <a (click)="openAddEdit(clientData,selectedBankData,'Bank','Edit')"
                                             class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
                                     </div>
@@ -459,7 +463,7 @@
 
                         <div *ngFor="let singleDemat of dematList;index as i">
                             <div *ngIf="selectedDemat===singleDemat">
-                                <h5 class=" headingDetails "> Demat
+                                <h5 class=" headingDetails d-flex"> Demat
                                     <i (click)="openAddEdit(clientData,null,'Demat','Add')"
                                         class=" material-icons f-18 ">
                                         add_circle_outline</i>
@@ -479,7 +483,7 @@
                                     </span>
                                 </div>
                                 <div class=" row ">
-                                    <div class=" col-md-9 pr-0 ">
+                                    <div class=" col-md-9 p-0 ">
                                         <p class=" m-0 f-14 ">
                                             <span
                                                 class=" f-500 roboto ">{{selectedDemat.depositoryParticipantName}}</span>
@@ -489,7 +493,7 @@
 
                                         </p>
                                     </div>
-                                    <div class=" col-md-2 p-0 text-right ">
+                                    <div class=" col-md-3 p-0 text-right ">
                                         <a (click)="openAddEdit(clientData,selectedDemat,'Demat','Edit')"
                                             class=" f-12 text-primary primary-border c-p editCLass ">EDIT</a>
                                     </div>
@@ -500,7 +504,7 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="Tab=='Tab2'" class="col-width-79 pl-4">
+        <div *ngIf="Tab=='Tab2'" class="col-md-10 pl-4">
             <app-overview-risk-profile></app-overview-risk-profile>
         </div>
     </div>

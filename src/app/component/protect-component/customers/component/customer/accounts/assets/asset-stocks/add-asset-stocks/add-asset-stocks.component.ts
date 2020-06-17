@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-add-asset-stocks',
@@ -41,7 +42,7 @@ export class AddAssetStocksComponent implements OnInit {
   adviceShowHeaderFooter: boolean = true;
   callMethod: { methodName: string; ParamValue: any; };
 
-  constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService) { }
+  constructor(private subInjectService: SubscriptionInject, private datePipe: DatePipe, private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -95,6 +96,7 @@ export class AddAssetStocksComponent implements OnInit {
       this.editApiData.id = formData.stockList[0].id;
     }
     else{
+      this.editMood = false;
       this.editApiData.id = 0;
     }
     // this.assetForm.get('valueAsOn').setValue(formData);
@@ -324,7 +326,7 @@ addNewNominee(data) {
           "stockList": [
             {
               "ownerList": this.assetForm.value.getCoOwnerName,
-              "valueAsOn": this.assetForm.get("valueAsOn").value,
+              "valueAsOn": this.datePipe.transform(this.assetForm.get("valueAsOn").value, 'yyyy-MM-dd'),
               "currentMarketValue": this.assetForm.get("currentMarketValue").value,
               "amountInvested": this.assetForm.get("amtInvested").value,
               "id": this.editApiData.id,
@@ -360,7 +362,7 @@ addNewNominee(data) {
           "stockList": [
             {
               "ownerList": this.assetForm.value.getCoOwnerName,
-              "valueAsOn": this.assetForm.get("valueAsOn").value,
+              "valueAsOn": this.datePipe.transform(this.assetForm.get("valueAsOn").value, 'yyyy-MM-dd'),
               "currentMarketValue": this.assetForm.get("currentMarketValue").value,
               "amountInvested": this.assetForm.get("amtInvested").value,
               "stockType": 1,

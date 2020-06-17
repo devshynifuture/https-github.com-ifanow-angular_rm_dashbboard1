@@ -14,8 +14,7 @@
             </mat-menu>
             <!-- <img class="c-p" src="assets/images/svg/three-dot-bordered.svg">
                 <img class="c-p mr-12" src="assets/images/svg/up-down.svg"> -->
-            <button class="btn-default addon v-middle mat-stroked-button mat-button-base" mat-stroked-button=""
-                (click)="openFilter()">
+            <button class="btn-default addon v-middle mat-stroked-button mat-button-base" mat-stroked-button="" (click)="openFilter()">
                 <span class="mat-button-wrapper"><i class="material-icons">filter_list</i>FILTERS</span>
                 <div class="mat-button-ripple mat-ripple" matripple="" ng-reflect-centered="false"
                     ng-reflect-disabled="false" ng-reflect-trigger="[object HTMLButtonElement]">
@@ -32,23 +31,9 @@
                     EQUITY
                 </h5>
             </div>
-            <!-- <div class="d-flex b-a bb-0">
-                <div class="w-40 br">
-                    <p class="m-0">REDEMPTION DETAILS</p>
-                </div>
 
-                <div class="w-30 br">
-                    <p class="m-0">REDEMPTION AGAINST (PURCHASES)
-                        AS ON 31 JAN 2018</p>
-                </div>
-                <div class="w-30">
-                    <p class="m-0">GAIN/LOSS</p>
-                </div>
-            </div> -->
 
-            <table mat-table [dataSource]="dataSource" id="table-low"
-                class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading"
-                *ngIf="dataSource.data.length>0">
+            <table mat-table [dataSource]="dataSource" id="table-low" class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" *ngIf="dataSource.data.length>0">
 
                 <!--- Note that these columns can be defined in any order.
                                   The actual rendered columns are set as a property on the row definition" -->
@@ -96,8 +81,7 @@
                                 {{(isLoading) ? '' : ((element.totalAmount) ? element.totalAmount : '0')}}</span>
                         </div>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right" appFormatNumber
-                        [value]="equityObj ? equityObj.totalAmount : 0"></td>
+                    <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right" appFormatNumber [value]="equityObj ? equityObj.totalAmount : 0"></td>
 
                 </ng-container>
 
@@ -107,10 +91,8 @@
                     </th>
                     <td class="br text-right w-4" mat-cell *matCellDef="let element">
                         <div class="bar">
-                            <span
-                                *ngIf="element.redeemStt || element.redeemStt == 0">{{(isLoading) ? '' : ((element.redeemStt) ? (element.redeemStt | number:'1.2-2') : '0')}}</span>
-                            <span *ngIf="element.totalStt"
-                                class=" f-600 amt text-right">{{(isLoading) ? '' : ((element.totalStt) ? (element.totalStt | number:'1.2-2') : '0')}}</span>
+                            <span *ngIf="element.redeemStt || element.redeemStt == 0">{{(isLoading) ? '' : ((element.redeemStt) ? (element.redeemStt | number:'1.2-2') : '0')}}</span>
+                            <span *ngIf="element.totalStt" class=" f-600 amt text-right">{{(isLoading) ? '' : ((element.totalStt) ? (element.totalStt | number:'1.2-2') : '0')}}</span>
                         </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
@@ -124,8 +106,7 @@
                     </th>
                     <td class="br text-right w-4" mat-cell *matCellDef="let element">
                         <div class="bar">
-                            <span
-                                *ngIf="element.redeemUnit == 0 || element.redeemUnit">{{(isLoading) ? '' : ((element.redeemUnit) ? (element.redeemUnit | number:'1.2-2') : '0')}}</span>
+                            <span *ngIf="element.redeemUnit == 0 || element.redeemUnit">{{(isLoading) ? '' : ((element.redeemUnit) ? (element.redeemUnit | number:'1.2-2') : '0')}}</span>
                         </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right"></td>
@@ -138,8 +119,7 @@
                     </th>
                     <td class="br text-right w-6" mat-cell *matCellDef="let element">
                         <div class="bar">
-                            <span
-                                *ngIf="element.redeemRate == 0 || element.redeemRate">{{(isLoading) ? '' : ((element.redeemRate) ? (element.redeemRate | number:'1.2-2') : '0')}}</span>
+                            <span *ngIf="element.redeemRate == 0 || element.redeemRate">{{(isLoading) ? '' : ((element.redeemRate) ? (element.redeemRate | number:'1.2-2') : '0')}}</span>
                         </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right"></td>
@@ -165,15 +145,11 @@
                     <th class="br text-right w-5" mat-header-cell *matHeaderCellDef>Amount
                     </th>
                     <td class="br text-right w-5" mat-cell *matCellDef="let element">
-                        <div class="bar"> <span *ngIf="element.amount || element.amount == 0"
-                                appFormatNumber>{{(isLoading) ? '' : ((element.amount) ? element.amount : 0)}}</span>
-                            <span *ngIf="element.purchaseAmount || element.purchaseAmount == 0"
-                                class=" f-600 amt text-right"
-                                appFormatNumber>{{(isLoading) ? '' : ((element.purchaseAmount) ? element.purchaseAmount : 0)}}</span>
+                        <div class="bar"> <span *ngIf="element.amount || element.amount == 0" appFormatNumber>{{(isLoading) ? '' : ((element.amount) ? element.amount : 0)}}</span>
+                            <span *ngIf="element.purchaseAmount || element.purchaseAmount == 0" class=" f-600 amt text-right" appFormatNumber>{{(isLoading) ? '' : ((element.purchaseAmount) ? element.purchaseAmount : 0)}}</span>
                         </div>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right" appFormatNumber
-                        [value]="equityObj ? equityObj.purchaseAmount : 0"></td>
+                    <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right" appFormatNumber [value]="equityObj ? equityObj.purchaseAmount : 0"></td>
 
 
                 </ng-container>
@@ -183,8 +159,7 @@
                         Units</th>
                     <td class="br text-right w-4" mat-cell *matCellDef="let element">
                         <div class="bar">
-                            <span
-                                *ngIf="element.unit || element.unit == 0">{{(isLoading) ? '' : ((element.unit) ? (element.unit | number:'1.2-2') : (element.unit == 0) ? 0 : 0)}}</span>
+                            <span *ngIf="element.unit || element.unit == 0">{{(isLoading) ? '' : ((element.unit) ? (element.unit | number:'1.2-2') : (element.unit == 0) ? 0 : 0)}}</span>
                         </div>
 
                     </td>
@@ -196,8 +171,7 @@
                         Purchase rate</th>
                     <td class="br text-right w-8" mat-cell *matCellDef="let element">
                         <div class="bar">
-                            <span
-                                *ngIf="element.purchasePrice || element.purchasePrice == 0">{{(isLoading) ? '' : ((element.purchasePrice) ? (element.purchasePrice | number:'1.2-2') : (element.purchasePrice == 0) ? 0 : 0)}}</span>
+                            <span *ngIf="element.purchasePrice || element.purchasePrice == 0">{{(isLoading) ? '' : ((element.purchasePrice) ? (element.purchasePrice | number:'1.2-2') : (element.purchasePrice == 0) ? 0 : 0)}}</span>
                         </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right"></td>
@@ -227,10 +201,8 @@
                         ST loss</th>
                     <td class="br text-right w-5" mat-cell *matCellDef="let element">
                         <div class="bar">
-                            <span
-                                *ngIf="element.stLoss == 0">{{(isLoading) ? '' : ((element.stLoss) ? (element.stLoss | number:'1.2-2') : (element.stLoss == 0) ? 0 : 0)}}</span>
-                            <span *ngIf="element.totalStLoss || element.totalStLoss == 0"
-                                class=" f-600 amt text-right">{{(isLoading) ? '' : ((element.totalStLoss) ? (element.totalStLoss | number:'1.2-2') : (element.totalStLoss == 0) ? 0 : 0)}}</span>
+                            <span *ngIf="element.stLoss == 0">{{(isLoading) ? '' : ((element.stLoss) ? (element.stLoss | number:'1.2-2') : (element.stLoss == 0) ? 0 : 0)}}</span>
+                            <span *ngIf="element.totalStLoss || element.totalStLoss == 0" class=" f-600 amt text-right">{{(isLoading) ? '' : ((element.totalStLoss) ? (element.totalStLoss | number:'1.2-2') : (element.totalStLoss == 0) ? 0 : 0)}}</span>
                         </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
@@ -260,10 +232,8 @@
                         LT loss</th>
                     <td class="br text-right w-5" mat-cell *matCellDef="let element">
                         <div class="bar">
-                            <span
-                                *ngIf="element.ltLoss || element.ltLoss == 0">{{(isLoading) ? '' : ((element.ltLoss) ? (element.ltLoss | number:'1.2-2') : (element.ltLoss == 0) ? 0 : 0)}}</span>
-                            <span *ngIf="element.totalStLoss || element.totalStLoss == 0"
-                                class=" f-600 amt text-right">{{(isLoading) ? '' : ((element.totalStLoss) ? (element.totalStLoss | number:'1.2-2') : (element.totalStLoss == 0) ? 0 : 0)}}</span>
+                            <span *ngIf="element.ltLoss || element.ltLoss == 0">{{(isLoading) ? '' : ((element.ltLoss) ? (element.ltLoss | number:'1.2-2') : (element.ltLoss == 0) ? 0 : 0)}}</span>
+                            <span *ngIf="element.totalStLoss || element.totalStLoss == 0" class=" f-600 amt text-right">{{(isLoading) ? '' : ((element.totalStLoss) ? (element.totalStLoss | number:'1.2-2') : (element.totalStLoss == 0) ? 0 : 0)}}</span>
                         </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
@@ -276,10 +246,8 @@
                         Indexed gain</th>
                     <td class="br text-right w-5" mat-cell *matCellDef="let element">
                         <div class="bar">
-                            <span
-                                *ngIf="element.indexGain || element.indexGain == 0">{{(isLoading) ? '' : ((element.indexGain) ? (element.indexGain | number:'1.2-2') : (element.indexGain == 0) ? 0 : 0)}}</span>
-                            <span *ngIf="element.totalIndexGain || element.totalIndexGain == 0"
-                                class="f-600 p- amt text-right">{{(isLoading) ? '' : ((element.totalIndexGain) ? (element.totalIndexGain | number:'1.2-2') : (element.totalIndexGain == 0) ? 0 : 0)}}</span>
+                            <span *ngIf="element.indexGain || element.indexGain == 0">{{(isLoading) ? '' : ((element.indexGain) ? (element.indexGain | number:'1.2-2') : (element.indexGain == 0) ? 0 : 0)}}</span>
+                            <span *ngIf="element.totalIndexGain || element.totalIndexGain == 0" class="f-600 p- amt text-right">{{(isLoading) ? '' : ((element.totalIndexGain) ? (element.totalIndexGain | number:'1.2-2') : (element.totalIndexGain == 0) ? 0 : 0)}}</span>
                         </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
@@ -295,8 +263,7 @@
                         <div class="bar">
                             <span *ngIf="element.indexLoss || element.indexLoss == 0">
                                 {{(isLoading) ? '' : ((element.indexLoss) ? (element.indexLoss | number:'1.2-2') : (element.indexLoss == 0) ? 0 : 0)}}</span>
-                            <span *ngIf="element.totalIndexLoss || element.totalIndexLoss == 0"
-                                class=" f-600 amt text-right">
+                            <span *ngIf="element.totalIndexLoss || element.totalIndexLoss == 0" class=" f-600 amt text-right">
                                 {{(isLoading) ? '' : ((element.totalIndexLoss) ? (element.totalIndexLoss | number:'1.2-2') : (element.totalIndexLoss == 0) ? 0 : 0)}}</span>
                         </div>
                     </td>
@@ -310,8 +277,7 @@
                     <th class="br text-right w-5" mat-header-cell *matHeaderCellDef>
                         Days</th>
                     <td class="br text-right w-5" mat-cell *matCellDef="let element">
-                        <div class="bar"> <span
-                                *ngIf="element.days || element.days == 0">{{(isLoading) ? '' : ((element.days) ? (element.days) : 'N.A')}}</span>
+                        <div class="bar"> <span *ngIf="element.days || element.days == 0">{{(isLoading) ? '' : ((element.days) ? (element.days) : 'N.A')}}</span>
                         </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right"></td>
@@ -319,8 +285,7 @@
 
                 </ng-container>
                 <ng-container matColumnDef="groupHeader">
-                    <td *matCellDef="let group" [attr.colspan]="displayedColumns.length"
-                        class="f-600 pl-4 proximaFont text-left">
+                    <td *matCellDef="let group" [attr.colspan]="displayedColumns.length" class="f-600 pl-4 proximaFont text-left">
                         <div class="bar">{{group.schemeName}}|{{group.folioNumber}}|{{group.ownerName}}</div>
 
                     </td>
@@ -328,27 +293,23 @@
 
 
                 <ng-container matColumnDef="header-row-first-group">
-                    <th mat-header-cell *matHeaderCellDef [style.text-align]="'center'" class="header-tables br"
-                        [attr.colspan]="6">
+                    <th mat-header-cell *matHeaderCellDef [style.text-align]="'center'" class="header-tables br" [attr.colspan]="6">
                         REDEMPTION DETAILS
                     </th>
                 </ng-container>
 
 
                 <ng-container matColumnDef="header-row-second-group">
-                    <th mat-header-cell *matHeaderCellDef [attr.colspan]="4" class="header-tables br"> REDEMPTION
-                        AGAINST
-                        (PURCHASES)<br>
-                        <span
-                            *ngIf="(fromDate) ? fromDate.getFullYear() > 2018 : ''">AS
+                    <th mat-header-cell *matHeaderCellDef [attr.colspan]="4" class="header-tables br"> REDEMPTION AGAINST (PURCHASES)
+                        <br>
+                        <span *ngIf="(fromDate) ? fromDate.getFullYear() > 2018 : ''">AS
                             ON 31 JAN
                             2018</span></th>
                 </ng-container>
                 <ng-container matColumnDef="header-row-third-group">
                     <th mat-header-cell *matHeaderCellDef [attr.colspan]="7" class="header-tables"> GAIN/LOSS </th>
                 </ng-container>
-                <tr mat-header-row
-                    *matHeaderRowDef="['header-row-first-group', 'header-row-second-group','header-row-third-group']">
+                <tr mat-header-row *matHeaderRowDef="['header-row-first-group', 'header-row-second-group','header-row-third-group']">
                 </tr>
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
@@ -356,8 +317,7 @@
                 <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: false" [hidden]="isLoading"></tr>
 
             </table>
-            <div *ngIf="dataSource.data.length == 0" [ngClass]="{'account-empty-state': dataSource.data.length == 0}"
-                class="w-100 d-flex flex-column align-items-center ">
+            <div *ngIf="dataSource.data.length == 0" [ngClass]="{'account-empty-state': dataSource.data.length == 0}" class="w-100 d-flex flex-column align-items-center ">
                 <!-- <img class="width400" src="assets/images/svg/noDataFound.svg"> -->
                 <h4 class="text-center pt-12">No Data Found</h4>
                 <!-- <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddInsurance(null)">ADD NEW</button> -->
@@ -372,9 +332,7 @@
                     DEBT
                 </h5>
             </div>
-            <table mat-table [dataSource]="dataSource1" id="table-low"
-                class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading"
-                *ngIf="dataSource1.data.length>0">
+            <table mat-table [dataSource]="dataSource1" id="table-low" class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" *ngIf="dataSource1.data.length>0">
 
                 <!--- Note that these columns can be defined in any order.
                                   The actual rendered columns are set as a property on the row definition" -->
@@ -414,14 +372,14 @@
                     <th class="br text-right w-6" mat-header-cell *matHeaderCellDef>
                         Amount </th>
                     <td class="br text-right w-6" mat-cell *matCellDef="let element">
-                        <div class="bar"><span appFormatNumber *ngIf="element.redeemAmount">
+                        <div class="bar">
+                            <span appFormatNumber *ngIf="element.redeemAmount">
                                 {{(isLoading) ? '' : ((element.redeemAmount) ? element.redeemAmount : '0')}}</span>
                             <span *ngIf="element.totalAmount" class=" f-600 amt text-right" appFormatNumber>
                                 {{(isLoading) ? '' : ((element.totalAmount) ? element.totalAmount : '0')}}</span>
                         </div>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right" appFormatNumber
-                        [value]="debtObj ? debtObj.totalAmount : 0"></td>
+                    <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right" appFormatNumber [value]="debtObj ? debtObj.totalAmount : 0"></td>
 
                 </ng-container>
                 <!-- <ng-container matColumnDef="amtRedeem">
@@ -445,10 +403,8 @@
                     </th>
                     <td class="br text-right w-4" mat-cell *matCellDef="let element">
                         <div class="bar">
-                            <span
-                                *ngIf="element.redeemStt || element.redeemStt == 0">{{(isLoading) ? '' : ((element.redeemStt) ? (element.redeemStt | number:'1.2-2') : '0')}}</span>
-                            <span *ngIf="element.totalStt"
-                                class=" f-600 amt text-right">{{(isLoading) ? '' : ((element.totalStt) ? (element.totalStt | number:'1.2-2') : '0')}}</span>
+                            <span *ngIf="element.redeemStt || element.redeemStt == 0">{{(isLoading) ? '' : ((element.redeemStt) ? (element.redeemStt | number:'1.2-2') : '0')}}</span>
+                            <span *ngIf="element.totalStt" class=" f-600 amt text-right">{{(isLoading) ? '' : ((element.totalStt) ? (element.totalStt | number:'1.2-2') : '0')}}</span>
                         </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
@@ -461,8 +417,7 @@
                     </th>
                     <td class="br text-right w-4" mat-cell *matCellDef="let element">
                         <div class="bar">
-                            <span
-                                *ngIf="element.redeemUnit == 0 || element.redeemUnit">{{(isLoading) ? '' : ((element.redeemUnit == 0 || element.redeemUnit) ? (element.redeemUnit | number:'1.2-2') : '0')}}</span>
+                            <span *ngIf="element.redeemUnit == 0 || element.redeemUnit">{{(isLoading) ? '' : ((element.redeemUnit == 0 || element.redeemUnit) ? (element.redeemUnit | number:'1.2-2') : '0')}}</span>
                         </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right"></td>
@@ -475,8 +430,7 @@
                     </th>
                     <td class="br text-right w-6" mat-cell *matCellDef="let element">
                         <div class="bar">
-                            <span
-                                *ngIf="element.redeemRate == 0 || element.redeemRate  ">{{(isLoading) ? '' : ((element.redeemRate == 0 || element.redeemRate) ? (element.redeemRate | number:'1.2-2') : '0')}}</span>
+                            <span *ngIf="element.redeemRate == 0 || element.redeemRate  ">{{(isLoading) ? '' : ((element.redeemRate == 0 || element.redeemRate) ? (element.redeemRate | number:'1.2-2') : '0')}}</span>
                         </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right"></td>
@@ -502,15 +456,11 @@
                     <th class="br text-right w-5" mat-header-cell *matHeaderCellDef>Amount
                     </th>
                     <td class="br text-right w-5" mat-cell *matCellDef="let element">
-                        <div class="bar"> <span *ngIf="element.amount || element.amount == 0"
-                                appFormatNumber>{{(isLoading) ? '' : ((element.amount) ? (element.amount | number:'1.2-2') : 0)}}</span>
-                            <span *ngIf="element.purchaseAmount || element.purchaseAmount == 0"
-                                class=" f-600 amt text-right"
-                                appFormatNumber>{{(isLoading) ? '' : ((element.purchaseAmount) ? (element.purchaseAmount | number:'1.2-2'): 0)}}</span>
+                        <div class="bar"> <span *ngIf="element.amount || element.amount == 0" appFormatNumber>{{(isLoading) ? '' : ((element.amount) ? (element.amount | number:'1.2-2') : 0)}}</span>
+                            <span *ngIf="element.purchaseAmount || element.purchaseAmount == 0" class=" f-600 amt text-right" appFormatNumber>{{(isLoading) ? '' : ((element.purchaseAmount) ? (element.purchaseAmount | number:'1.2-2'): 0)}}</span>
                         </div>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right" appFormatNumber
-                        [value]="debtObj ? debtObj.purchaseAmount : 0"></td>
+                    <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right" appFormatNumber [value]="debtObj ? debtObj.purchaseAmount : 0"></td>
 
 
                 </ng-container>
@@ -520,8 +470,7 @@
                         Units</th>
                     <td class="br text-right w-4" mat-cell *matCellDef="let element">
                         <div class="bar">
-                            <span
-                                *ngIf="element.unit || element.unit == 0">{{(isLoading) ? '' : ((element.unit) ? (element.unit | number:'1.2-2') : (element.unit == 0) ? 0 : 0)}}</span>
+                            <span *ngIf="element.unit || element.unit == 0">{{(isLoading) ? '' : ((element.unit) ? (element.unit | number:'1.2-2') : (element.unit == 0) ? 0 : 0)}}</span>
                         </div>
 
                     </td>
@@ -533,8 +482,7 @@
                         Purchase rate</th>
                     <td class="br text-right w-8" mat-cell *matCellDef="let element">
                         <div class="bar">
-                            <span
-                                *ngIf="element.purchasePrice || element.purchasePrice == 0">{{(isLoading) ? '' : ((element.purchasePrice) ? (element.purchasePrice | number:'1.2-2') : (element.purchasePrice == 0) ? 0 : 0)}}</span>
+                            <span *ngIf="element.purchasePrice || element.purchasePrice == 0">{{(isLoading) ? '' : ((element.purchasePrice) ? (element.purchasePrice | number:'1.2-2') : (element.purchasePrice == 0) ? 0 : 0)}}</span>
                         </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8  text-right"></td>
@@ -564,10 +512,8 @@
                         ST loss</th>
                     <td class="br text-right w-5" mat-cell *matCellDef="let element">
                         <div class="bar">
-                            <span
-                                *ngIf="element.stLoss == 0">{{(isLoading) ? '' : ((element.stLoss) ? (element.stLoss | number:'1.2-2') : (element.stLoss == 0) ? 0 : 0)}}</span>
-                            <span *ngIf="element.totalStLoss || element.totalStLoss == 0"
-                                class=" f-600 amt text-right">{{(isLoading) ? '' : ((element.totalStLoss) ? (element.totalStLoss | number:'1.2-2') : (element.totalStLoss == 0) ? 0 : 0)}}</span>
+                            <span *ngIf="element.stLoss == 0">{{(isLoading) ? '' : ((element.stLoss) ? (element.stLoss | number:'1.2-2') : (element.stLoss == 0) ? 0 : 0)}}</span>
+                            <span *ngIf="element.totalStLoss || element.totalStLoss == 0" class=" f-600 amt text-right">{{(isLoading) ? '' : ((element.totalStLoss) ? (element.totalStLoss | number:'1.2-2') : (element.totalStLoss == 0) ? 0 : 0)}}</span>
                         </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 text-right">
@@ -597,10 +543,8 @@
                         LT loss</th>
                     <td class="br text-right w-5" mat-cell *matCellDef="let element">
                         <div class="bar">
-                            <span
-                                *ngIf="element.ltLoss || element.ltLoss == 0">{{(isLoading) ? '' : ((element.ltLoss) ? (element.ltLoss | number:'1.2-2') : (element.ltLoss == 0) ? 0 : 0)}}</span>
-                            <span *ngIf="element.totalStLoss || element.totalStLoss == 0"
-                                class=" f-600 amt text-right">{{(isLoading) ? '' : ((element.totalStLoss) ? (element.totalStLoss | number:'1.2-2') : (element.totalStLoss == 0) ? 0 : 0)}}</span>
+                            <span *ngIf="element.ltLoss || element.ltLoss == 0">{{(isLoading) ? '' : ((element.ltLoss) ? (element.ltLoss | number:'1.2-2') : (element.ltLoss == 0) ? 0 : 0)}}</span>
+                            <span *ngIf="element.totalStLoss || element.totalStLoss == 0" class=" f-600 amt text-right">{{(isLoading) ? '' : ((element.totalStLoss) ? (element.totalStLoss | number:'1.2-2') : (element.totalStLoss == 0) ? 0 : 0)}}</span>
                         </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 text-right">
@@ -613,10 +557,8 @@
                         Indexed gain</th>
                     <td class="br text-right w-5" mat-cell *matCellDef="let element">
                         <div class="bar">
-                            <span
-                                *ngIf="element.indexGain || element.indexGain == 0">{{(isLoading) ? '' : ((element.indexGain) ? (element.indexGain | number:'1.2-2') : (element.indexGain == 0) ? 0 : 0)}}</span>
-                            <span *ngIf="element.totalIndexGain || element.totalIndexGain == 0"
-                                class="f-600  amt text-right">{{(isLoading) ? '' : ((element.totalIndexGain) ? (element.totalIndexGain | number:'1.2-2') : (element.totalIndexGain == 0) ? 0 : 0)}}</span>
+                            <span *ngIf="element.indexGain || element.indexGain == 0">{{(isLoading) ? '' : ((element.indexGain) ? (element.indexGain | number:'1.2-2') : (element.indexGain == 0) ? 0 : 0)}}</span>
+                            <span *ngIf="element.totalIndexGain || element.totalIndexGain == 0" class="f-600  amt text-right">{{(isLoading) ? '' : ((element.totalIndexGain) ? (element.totalIndexGain | number:'1.2-2') : (element.totalIndexGain == 0) ? 0 : 0)}}</span>
                         </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 text-right">
@@ -632,8 +574,7 @@
                         <div class="bar">
                             <span *ngIf="element.indexLoss || element.indexLoss == 0">
                                 {{(isLoading) ? '' : ((element.indexLoss) ? (element.indexLoss | number:'1.2-2') : (element.indexLoss == 0) ? 0 : 0)}}</span>
-                            <span *ngIf="element.totalIndexLoss || element.totalIndexLoss == 0"
-                                class=" f-600 amt text-right">
+                            <span *ngIf="element.totalIndexLoss || element.totalIndexLoss == 0" class=" f-600 amt text-right">
                                 {{(isLoading) ? '' : ((element.totalIndexLoss) ? (element.totalIndexLoss | number:'1.2-2') : (element.totalIndexLoss == 0) ? 0 : 0)}}</span>
                         </div>
                     </td>
@@ -647,8 +588,8 @@
                     <th class="br text-right w-5" mat-header-cell *matHeaderCellDef>
                         Days</th>
                     <td class="br text-right w-5" mat-cell *matCellDef="let element">
-                        <div class="bar"> <span
-                                *ngIf="element.days || element.days == 0">{{(isLoading) ? '' : ((element.days) ? (element.days) : 'N.A')}}</span>
+                        <div class="bar">
+                            <span *ngIf="element.days || element.days == 0">{{(isLoading) ? '' : ((element.days) ? (element.days) : 'N.A')}}</span>
                         </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right"></td>
@@ -656,42 +597,36 @@
 
                 </ng-container>
                 <ng-container matColumnDef="groupHeader">
-                    <td *matCellDef="let group" [attr.colspan]="displayedColumns.length"
-                        class="f-600 pl-4 proximaFont text-left">
+                    <td *matCellDef="let group" [attr.colspan]="displayedColumns.length" class="f-600 pl-4 proximaFont text-left">
                         <div class="bar">{{group.schemeName}}|{{group.folioNumber}}|{{group.ownerName}}</div>
 
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="header-row-first-group">
-                    <th mat-header-cell *matHeaderCellDef [style.text-align]="'center'" class="header-tables br"
-                        [attr.colspan]="6">
+                    <th mat-header-cell *matHeaderCellDef [style.text-align]="'center'" class="header-tables br" [attr.colspan]="6">
                         REDEMPTION DETAILS
                     </th>
                 </ng-container>
 
 
                 <ng-container matColumnDef="header-row-second-group">
-                    <th mat-header-cell *matHeaderCellDef [attr.colspan]="4" class="header-tables br"> REDEMPTION
-                        AGAINST
-                        (PURCHASES)<br>
-                        <span
-                            *ngIf="(fromDate) ? fromDate.getFullYear() > 2018 : ''">AS
+                    <th mat-header-cell *matHeaderCellDef [attr.colspan]="4" class="header-tables br"> REDEMPTION AGAINST (PURCHASES)
+                        <br>
+                        <span *ngIf="(fromDate) ? fromDate.getFullYear() > 2018 : ''">AS
                             ON 31 JAN
                             2018</span></th>
                 </ng-container>
                 <ng-container matColumnDef="header-row-third-group">
                     <th mat-header-cell *matHeaderCellDef [attr.colspan]="7" class="header-tables"> GAIN/LOSS </th>
                 </ng-container>
-                <tr mat-header-row
-                    *matHeaderRowDef="['header-row-first-group', 'header-row-second-group','header-row-third-group']">
+                <tr mat-header-row *matHeaderRowDef="['header-row-first-group', 'header-row-second-group','header-row-third-group']">
                 </tr>
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 <tr *matRowDef="let row; columns: ['groupHeader']; when: isGroup" mat-row></tr>
                 <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr>
             </table>
-            <div *ngIf="dataSource1.data.length == 0" [ngClass]="{'account-empty-state': dataSource1.data.length == 0}"
-                class="w-100 d-flex flex-column align-items-center">
+            <div *ngIf="dataSource1.data.length == 0" [ngClass]="{'account-empty-state': dataSource1.data.length == 0}" class="w-100 d-flex flex-column align-items-center">
                 <!-- <img class="width400" src="assets/images/svg/noDataFound.svg"> -->
                 <h4 class="text-center pt-12">No Data Found</h4>
                 <!-- <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddInsurance(null)">ADD NEW</button> -->
@@ -743,8 +678,7 @@
 
                 <!-- Weight Column -->
                 <ng-container matColumnDef="amtRedeem">
-                    <th class="br f-600 p-8 amt text-right w-6" mat-header-cell *matHeaderCellDef appFormatNumber
-                        [value]="redeemAmount">
+                    <th class="br f-600 p-8 amt text-right w-6" mat-header-cell *matHeaderCellDef appFormatNumber [value]="redeemAmount">
                     </th>
 
 
@@ -782,8 +716,7 @@
                 </ng-container>
 
                 <ng-container matColumnDef="amtPurchase">
-                    <th class="br f-600 p-8 amt text-right w-5" mat-header-cell *matHeaderCellDef appFormatNumber
-                        [value]="purchaseAmount">
+                    <th class="br f-600 p-8 amt text-right w-5" mat-header-cell *matHeaderCellDef appFormatNumber [value]="purchaseAmount">
                     </th>
 
 
@@ -862,9 +795,7 @@
                         DIVIDEND SUMMARY
                     </h5>
                 </div>
-                <table #tableEl3 mat-table [dataSource]="dataSource2" id="table-low"
-                    class="mutualfunds-capital-dividend-summary skeletonAnimation" appSkeletonLoading
-                    [appSkeletonLoading]="isLoading" *ngIf="dataSource2.data.length>0">
+                <table #tableEl3 mat-table [dataSource]="dataSource2" id="table-low" class="mutualfunds-capital-dividend-summary skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" *ngIf="dataSource2.data.length>0">
 
                     <!--- Note that these columns can be defined in any order.
                                           The actual rendered columns are set as a property on the row definition" -->
@@ -935,9 +866,7 @@
                     <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
                     <tr mat-footer-row *matFooterRowDef="displayedColumns2;sticky: false" [hidden]="isLoading"></tr>
                 </table>
-                <div *ngIf="dataSource2.data.length == 0"
-                    [ngClass]="{'account-empty-state': dataSource2.data.length == 0}"
-                    class="w-100 d-flex flex-column align-items-center">
+                <div *ngIf="dataSource2.data.length == 0" [ngClass]="{'account-empty-state': dataSource2.data.length == 0}" class="w-100 d-flex flex-column align-items-center">
                     <!-- <img class="width400" src="assets/images/svg/noDataFound.svg"> -->
                     <h4 class="text-center pt-12">No Data Found</h4>
                     <!-- <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddInsurance(null)">ADD NEW</button> -->
@@ -945,3 +874,182 @@
             </div>
         </div>
     </div>
+
+
+
+    <!-- -------------inner html------------ -->
+
+
+    <!-- <div>
+
+            <table cellpadding="0" width="100%" cellspacing="0" border="0" style="font-family: 'Roboto', sans-serif; margin: 0px auto;" align="center; page-break-before: always;">
+                <tr>
+                    <td style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;"
+                        colspan="17">
+                        DEBT
+                    </td>
+                </tr>
+        
+        
+        
+                <tr>
+                    <td style="width:26%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                        <b>Date </b> </td>
+        
+                    <td style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                        <b> Transaction type </b> </td>
+        
+                    <td style="width:26%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                        <b> Amount </b> </td>
+        
+                    <td style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                        <b> STT </b> </td>
+        
+                    <td style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                        <b> Units </b> </td>
+        
+                    <td style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                        <b> Sale rate </b> </td>
+        
+                    <td style="width:26%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                        <b>Date </b> </td>
+        
+                    <td style="width:26%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                        <b> Amount </b> </td>
+        
+                    <td style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                        <b> Units </b> </td>
+        
+                    <td style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                        <b> Purchase rate ST </b> </td>
+        
+                    <td style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                        <b> ST gain </b> </td>
+        
+                    <td style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                        <b> ST loss </b> </td>
+        
+                    <td style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                        <b> LT gain </b> </td>
+        
+                    <td style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                        <b> LT loss </b> </td>
+        
+                    <td style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                        <b> Indexed gain </b> </td>
+        
+                    <td style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                        <b> Indexed loss </b> </td>
+        
+                    <td style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                        <b> Days </b> </td>
+                </tr>
+        
+                <tr>
+                    <td style="font-weight: 600;">
+                        {{group.schemeName}}|{{group.folioNumber}}|{{group.ownerName}}
+                    </td>
+                </tr>
+        
+        
+                <tr>
+                    <td valign="top">
+                        <span *ngIf="element.redeemTransactionDate">
+                            {{(element.redeemTransactionDate) ? (element.redeemTransactionDate  | date:'dd/MM/yyyy') : ''}}
+                        </span>
+                        <span class="f-700" *ngIf="element.totalAmt">
+                            {{element.totalAmt}}</span>
+                    </td>
+        
+                    <td valign="top">
+                        <span *ngIf="element.transactionType">
+                            {{(isLoading) ? '' : ((element.transactionType) ? element.transactionType : 'N.A')}}</span>
+                    </td>
+        
+                    <td valign="top">
+                        <span appFormatNumber *ngIf="element.redeemAmount">
+                            {{(isLoading) ? '' : ((element.redeemAmount) ? element.redeemAmount : '0')}}</span>
+                        <span *ngIf="element.totalAmount" class=" f-600 amt text-right" appFormatNumber>
+                            {{(isLoading) ? '' : ((element.totalAmount) ? element.totalAmount : '0')}}</span>
+                    </td>
+        
+                    <td valign="top">
+                        <span *ngIf="element.redeemStt || element.redeemStt == 0">{{(isLoading) ? '' : ((element.redeemStt) ? (element.redeemStt | number:'1.2-2') : '0')}}</span>
+                        <span *ngIf="element.totalStt" class=" f-600 amt text-right">{{(isLoading) ? '' : ((element.totalStt) ? (element.totalStt | number:'1.2-2') : '0')}}</span>
+                    </td>
+        
+                    <td valign="top">
+                        <span *ngIf="element.redeemUnit == 0 || element.redeemUnit">{{(isLoading) ? '' : ((element.redeemUnit == 0 || element.redeemUnit) ? (element.redeemUnit | number:'1.2-2') : '0')}}</span>
+                    </td>
+        
+                    <td valign="top">
+                        <span *ngIf="element.redeemRate == 0 || element.redeemRate  ">{{(isLoading) ? '' : ((element.redeemRate == 0 || element.redeemRate) ? (element.redeemRate | number:'1.2-2') : '0')}}</span>
+                    </td>
+        
+                    <td valign="top">
+                        <span *ngIf="element.transactionDate || element.transactionDate == ''">
+                            {{(isLoading) ? '' : ((element.transactionDate) ? (element.transactionDate  | date:'dd/MM/yyyy') : 'N.A.') }}</span>
+                    </td>
+        
+                    <td valign="top">
+                        <span *ngIf="element.amount || element.amount == 0" appFormatNumber>{{(isLoading) ? '' : ((element.amount) ? (element.amount | number:'1.2-2') : 0)}}</span>
+                        <span *ngIf="element.purchaseAmount || element.purchaseAmount == 0" class=" f-600 amt text-right" appFormatNumber>{{(isLoading) ? '' : ((element.purchaseAmount) ? (element.purchaseAmount | number:'1.2-2'): 0)}}</span>
+                    </td>
+        
+                    <td valign="top">
+                        <span *ngIf="element.unit || element.unit == 0">{{(isLoading) ? '' : ((element.unit) ? (element.unit | number:'1.2-2') : (element.unit == 0) ? 0 : 0)}}</span>
+                    </td>
+        
+                    <td valign="top">
+                        <span *ngIf="element.purchasePrice || element.purchasePrice == 0">{{(isLoading) ? '' : ((element.purchasePrice) ? (element.purchasePrice | number:'1.2-2') : (element.purchasePrice == 0) ? 0 : 0)}}</span>
+                    </td>
+        
+                    <td valign="top">
+                        <span *ngIf="element.stGain || element.stGain == 0">
+                            {{(isLoading) ? '' : ((element.stGain) ? (element.stGain | number:'1.2-2') : (element.stGain == 0) ? 0 : 0)}}</span>
+                        <span *ngIf="element.totalStGain || element.totalStGain == 0" class=" f-600 amt text-right">
+                            {{(isLoading) ? '' : ((element.totalStGain) ? (element.totalStGain | number:'1.2-2') : (element.totalStGain == 0) ? 0 : 0)}}</span>
+        
+                    </td>
+        
+                    <td>
+                        <span *ngIf="element.stLoss == 0">{{(isLoading) ? '' : ((element.stLoss) ? (element.stLoss | number:'1.2-2') : (element.stLoss == 0) ? 0 : 0)}}</span>
+                        <span *ngIf="element.totalStLoss || element.totalStLoss == 0" class=" f-600 amt text-right">{{(isLoading) ? '' : ((element.totalStLoss) ? (element.totalStLoss | number:'1.2-2') : (element.totalStLoss == 0) ? 0 : 0)}}</span>
+                    </td>
+        
+                    <td>
+                        <span *ngIf="element.ltGain || element.ltGain == 0">
+                            {{(isLoading) ? '' : ((element.ltGain) ? (element.ltGain | number:'1.2-2') : (element.ltGain == 0) ? 0 : 0)}}</span>
+                        <span *ngIf="element.totalLtGain || element.totalLtGain == 0" class=" f-600 amt text-right">
+                            {{(isLoading) ? '' : ((element.totalLtGain) ? (element.totalLtGain | number:'1.2-2') : (element.totalLtGain == 0) ? 0 : 0)}}</span>
+                    </td>
+        
+                    <td>
+                        <span *ngIf="element.ltLoss || element.ltLoss == 0">{{(isLoading) ? '' : ((element.ltLoss) ? (element.ltLoss | number:'1.2-2') : (element.ltLoss == 0) ? 0 : 0)}}</span>
+                        <span *ngIf="element.totalStLoss || element.totalStLoss == 0" class=" f-600 amt text-right">{{(isLoading) ? '' : ((element.totalStLoss) ? (element.totalStLoss | number:'1.2-2') : (element.totalStLoss == 0) ? 0 : 0)}}</span>
+                    </td>
+        
+                    <td>
+                        <span *ngIf="element.indexGain || element.indexGain == 0">{{(isLoading) ? '' : ((element.indexGain) ? (element.indexGain | number:'1.2-2') : (element.indexGain == 0) ? 0 : 0)}}</span>
+                        <span *ngIf="element.totalIndexGain || element.totalIndexGain == 0" class="f-600  amt text-right">{{(isLoading) ? '' : ((element.totalIndexGain) ? (element.totalIndexGain | number:'1.2-2') : (element.totalIndexGain == 0) ? 0 : 0)}}</span>
+                    </td>
+        
+                    <td>
+                        <span *ngIf="element.indexLoss || element.indexLoss == 0">
+                            {{(isLoading) ? '' : ((element.indexLoss) ? (element.indexLoss | number:'1.2-2') : (element.indexLoss == 0) ? 0 : 0)}}</span>
+                        <span *ngIf="element.totalIndexLoss || element.totalIndexLoss == 0" class=" f-600 amt text-right">
+                            {{(isLoading) ? '' : ((element.totalIndexLoss) ? (element.totalIndexLoss | number:'1.2-2') : (element.totalIndexLoss == 0) ? 0 : 0)}}</span>
+                    </td>
+        
+        
+                    <td>
+                        <span *ngIf="element.days || element.days == 0">{{(isLoading) ? '' : ((element.days) ? (element.days) : 'N.A')}}</span>
+                    </td>
+        
+                </tr>
+        
+        
+        
+            </table>
+        
+        </div> -->

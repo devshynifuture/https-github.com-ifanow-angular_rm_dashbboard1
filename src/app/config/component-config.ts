@@ -30,7 +30,7 @@ export const appConfig = {
   ARN_RIA_LIST: 'backoffice/arn/ria/list/get',
   RM_LOGIN: 'rmdashboard/rm/sign-in',
   ADD_CEASED_DATE: 'backoffice/cease/date/add',
-  CLIENT_WITHOUT_MF:'backoffice/clientWithoutMf/get',
+  CLIENT_WITHOUT_MF: 'backoffice/clientWithoutMf/get',
   ///////////////////foliodetails///////////////////////////
   FOLIO_GROUP_HEAD_SEARCH: 'backoffice/folio/search/by/groupHead/get',
   FOLIO_INVESTOR_SEARCH: 'backoffice/folio/search/by/investorName/get',
@@ -76,7 +76,9 @@ export const appConfig = {
   Update_expiryDate: 'asset/update/expiryDate',
   Update_Password: 'asset/update/password',
   Fileorder_Status_Report_Get: 'asset/fileorder/status/report/get',
-
+  ///////////////////////////////BULK EMAIL///////////////////////////////
+  GET_CLIENT_ADVISOR_DEATILS: '/backoffice/bulk-report/advisor-client/detail/get',
+  HTML_TO_PDF: '    /pdfAndEmail/bulk-mail/html-to-pdf',
   /////////////////////////////Accounts///////////////////////////////////
   ADD_FIXEDDEPOSIT: 'account/asset/fixed-income/fixed-deposit/add',
   ADD_LIFE_INSURANCE: 'account/insurance/life-insurance/add',
@@ -247,6 +249,7 @@ export const appConfig = {
   ADD_HOUSE_GOAL: 'goal-planning/house/goal/add',
   ADD_CAR_GOAL: 'goal-planning/car/goal/add',
   ADD_MARRIAGE_GOAL: 'goal-planning/marriage/goal/add',
+  ADD_SINGLE_YEAR_GOAL: 'goal-planning/single-year/goal/add',
   ADD_MULTI_YEAR_GOAL: 'goal-planning/multi-year/goal/add',
   ADD_EMERGENCY_GOAL: 'goal-planning/emergency/goal/add',
   ADD_WEALTH_CREATION_GOAL: 'goal-planning/wealth-creation/goal/add',
@@ -766,7 +769,7 @@ export const appConfig = {
   SUSPEND_TEAM_MEMBER: 'setting/users/team-member/suspend',
   REACTIVATE_TEAM_MEMBER: 'setting/users/team-member/resume',
   HAND_OVER_TEAM_MEMBER: 'setting/users/team-member/hand-over/get',
-
+  GET_CLIENT_OR_ADVISOR_ROLES: 'setting/users-roles/role/module-loader/get',
 
   ////////////////////////////// settings////////////////////////////////////////////
   //////////////////////////////////customer-overview-profile//////////////////////
