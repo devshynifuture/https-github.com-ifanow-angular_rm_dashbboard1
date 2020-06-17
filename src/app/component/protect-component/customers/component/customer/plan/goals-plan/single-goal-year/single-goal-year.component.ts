@@ -65,9 +65,10 @@ export class SingleGoalYearComponent implements OnInit {
       "imageUrl": this.logoImg,
       "goalType": this.goalTypeData.id,
       "savingStartDate": this.datePipe.transform(currentDate, 'yyyy-MM-dd'),
-      "goalStartDate": this.datePipe.transform(currentDate, 'yyyy-MM-dd'),
     }
 
+    let ageDiff = 0;
+    let futureDate = new Date(currentDate);
     switch (this.goalTypeData.id) {
       case AppConstants.HOUSE_GOAL: // House
         obj['currentAge'] = this.singleYearGoalForm.get('goalMember').value.familyMemberAge;
@@ -75,10 +76,11 @@ export class SingleGoalYearComponent implements OnInit {
         obj['clientOrFamilyMember'] = (this.singleYearGoalForm.get('goalMember').value.relationshipId === 0) ? 1 : 2;
         obj['whatAgeBuyHouse'] = this.singleYearGoalForm.get('age').value;
         obj['goalPresentValue'] = this.singleYearGoalForm.get('cost').value;
-
-        const ageDiff = this.singleYearGoalForm.get('age').value - this.singleYearGoalForm.get('goalMember').value.familyMemberAge;
-        let futureDate = new Date(currentDate);
+        
+        ageDiff = this.singleYearGoalForm.get('age').value - this.singleYearGoalForm.get('goalMember').value.familyMemberAge;
+        futureDate = new Date(currentDate);
         futureDate.setFullYear(futureDate.getFullYear() + ageDiff);
+        obj['goalStartDate'] = this.datePipe.transform(futureDate, 'yyyy-MM-dd');
         obj['goalEndDate'] = this.datePipe.transform(futureDate, 'yyyy-MM-dd');
         obj['savingEndDate'] = this.datePipe.transform(futureDate, 'yyyy-MM-dd');
         break;
