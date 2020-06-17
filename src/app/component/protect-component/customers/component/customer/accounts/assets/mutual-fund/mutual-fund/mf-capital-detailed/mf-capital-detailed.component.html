@@ -339,8 +339,7 @@
                     <th mat-header-cell *matHeaderCellDef [attr.colspan]="4" class="header-tables br"> REDEMPTION
                         AGAINST
                         (PURCHASES)<br>
-                        <span
-                            *ngIf="(fromDate) ? fromDate.getFullYear() > 2018 : ''">AS
+                        <span *ngIf="(fromDate) ? fromDate.getFullYear() > 2018 : ''">AS
                             ON 31 JAN
                             2018</span></th>
                 </ng-container>
@@ -366,7 +365,7 @@
     </div>
 
     <div class="row  ">
-        <div class="col-md-12 p-0 mb-8">
+        <div class="col-md-12 p-0 mb-8" id="debt-header">
             <div class="b-a bb-0">
                 <h5 class="wrapper-8 f-500 f-14 mb-0 text-primary">
                     DEBT
@@ -381,8 +380,8 @@
 
                 <!-- Position Column -->
                 <ng-container matColumnDef="dateRedeem">
-                    <th class="br w-8" mat-header-cell *matHeaderCellDef> Date</th>
-                    <td class="br w-8" mat-cell *matCellDef="let element">
+                    <th class="br w-6" mat-header-cell *matHeaderCellDef> Date</th>
+                    <td class="br" mat-cell *matCellDef="let element">
                         <div class="bar">
                             <span *ngIf="element.redeemTransactionDate">
                                 {{(element.redeemTransactionDate) ? (element.redeemTransactionDate  | date:'dd/MM/yyyy') : ''}}
@@ -398,8 +397,8 @@
 
                 <!-- Name Column -->
                 <ng-container matColumnDef="trnRedeem">
-                    <th class="br text-right w-11" mat-header-cell *matHeaderCellDef> Transaction type </th>
-                    <td class="br text-right w-11" mat-cell *matCellDef="let element">
+                    <th class="br text-right w-11" mat-header-cell *matHeaderCellDef> Transaction<br> type </th>
+                    <td class="br text-right" mat-cell *matCellDef="let element">
                         <div class="bar">
                             <span *ngIf="element.transactionType">
                                 {{(isLoading) ? '' : ((element.transactionType) ? element.transactionType : 'N.A')}}</span>
@@ -411,9 +410,9 @@
 
                 <!-- Weight Column -->
                 <ng-container matColumnDef="amtRedeem">
-                    <th class="br text-right w-6" mat-header-cell *matHeaderCellDef>
+                    <th class="br text-right w-5" mat-header-cell *matHeaderCellDef>
                         Amount </th>
-                    <td class="br text-right w-6" mat-cell *matCellDef="let element">
+                    <td class="br text-right" mat-cell *matCellDef="let element">
                         <div class="bar"><span appFormatNumber *ngIf="element.redeemAmount">
                                 {{(isLoading) ? '' : ((element.redeemAmount) ? element.redeemAmount : '0')}}</span>
                             <span *ngIf="element.totalAmount" class=" f-600 amt text-right" appFormatNumber>
@@ -443,7 +442,7 @@
                 <ng-container matColumnDef="sttRedeem">
                     <th class="br text-right w-4" mat-header-cell *matHeaderCellDef>STT
                     </th>
-                    <td class="br text-right w-4" mat-cell *matCellDef="let element">
+                    <td class="br text-right" mat-cell *matCellDef="let element">
                         <div class="bar">
                             <span
                                 *ngIf="element.redeemStt || element.redeemStt == 0">{{(isLoading) ? '' : ((element.redeemStt) ? (element.redeemStt | number:'1.2-2') : '0')}}</span>
@@ -459,7 +458,7 @@
                 <ng-container matColumnDef="unitsRedeem">
                     <th class="br text-right w-4" mat-header-cell *matHeaderCellDef> Units
                     </th>
-                    <td class="br text-right w-4" mat-cell *matCellDef="let element">
+                    <td class="br text-right" mat-cell *matCellDef="let element">
                         <div class="bar">
                             <span
                                 *ngIf="element.redeemUnit == 0 || element.redeemUnit">{{(isLoading) ? '' : ((element.redeemUnit == 0 || element.redeemUnit) ? (element.redeemUnit | number:'1.2-2') : '0')}}</span>
@@ -471,9 +470,9 @@
                 </ng-container>
 
                 <ng-container matColumnDef="rateRedeem">
-                    <th class="br text-right w-6" mat-header-cell *matHeaderCellDef>Sale rate
+                    <th class="br text-right w-6" mat-header-cell *matHeaderCellDef>Sale<br> rate
                     </th>
-                    <td class="br text-right w-6" mat-cell *matCellDef="let element">
+                    <td class="br text-right" mat-cell *matCellDef="let element">
                         <div class="bar">
                             <span
                                 *ngIf="element.redeemRate == 0 || element.redeemRate  ">{{(isLoading) ? '' : ((element.redeemRate == 0 || element.redeemRate) ? (element.redeemRate | number:'1.2-2') : '0')}}</span>
@@ -485,9 +484,9 @@
                 </ng-container>
 
                 <ng-container matColumnDef="datePurchase">
-                    <th class="br text-right w-7" mat-header-cell *matHeaderCellDef>
+                    <th class="br text-right w-6" mat-header-cell *matHeaderCellDef>
                         Date</th>
-                    <td class="br text-right w-7" mat-cell *matCellDef="let element">
+                    <td class="br text-right" mat-cell *matCellDef="let element">
                         <div class="bar">
                             <span *ngIf="element.transactionDate || element.transactionDate == ''">
                                 {{(isLoading) ? '' : ((element.transactionDate) ? (element.transactionDate  | date:'dd/MM/yyyy') : 'N.A.') }}</span>
@@ -499,9 +498,9 @@
                 </ng-container>
 
                 <ng-container matColumnDef="amtPurchase">
-                    <th class="br text-right w-5" mat-header-cell *matHeaderCellDef>Amount
+                    <th class="br text-right w-8" mat-header-cell *matHeaderCellDef>Amount
                     </th>
-                    <td class="br text-right w-5" mat-cell *matCellDef="let element">
+                    <td class="br text-right" mat-cell *matCellDef="let element">
                         <div class="bar"> <span *ngIf="element.amount || element.amount == 0"
                                 appFormatNumber>{{(isLoading) ? '' : ((element.amount) ? (element.amount | number:'1.2-2') : 0)}}</span>
                             <span *ngIf="element.purchaseAmount || element.purchaseAmount == 0"
@@ -518,7 +517,7 @@
                 <ng-container matColumnDef="unitsPurchase">
                     <th class="br text-right w-4" mat-header-cell *matHeaderCellDef>
                         Units</th>
-                    <td class="br text-right w-4" mat-cell *matCellDef="let element">
+                    <td class="br text-right" mat-cell *matCellDef="let element">
                         <div class="bar">
                             <span
                                 *ngIf="element.unit || element.unit == 0">{{(isLoading) ? '' : ((element.unit) ? (element.unit | number:'1.2-2') : (element.unit == 0) ? 0 : 0)}}</span>
@@ -529,9 +528,9 @@
 
                 </ng-container>
                 <ng-container matColumnDef="ratePurchase">
-                    <th class="br text-right w-8" mat-header-cell *matHeaderCellDef>
-                        Purchase rate</th>
-                    <td class="br text-right w-8" mat-cell *matCellDef="let element">
+                    <th class="br text-right w-9" mat-header-cell *matHeaderCellDef>
+                        Purchase<br> rate</th>
+                    <td class="br text-right" mat-cell *matCellDef="let element">
                         <div class="bar">
                             <span
                                 *ngIf="element.purchasePrice || element.purchasePrice == 0">{{(isLoading) ? '' : ((element.purchasePrice) ? (element.purchasePrice | number:'1.2-2') : (element.purchasePrice == 0) ? 0 : 0)}}</span>
@@ -542,9 +541,9 @@
 
                 </ng-container>
                 <ng-container matColumnDef="stGainPurchase">
-                    <th class="br text-right w-6" mat-header-cell *matHeaderCellDef>
+                    <th class="br text-right w-5" mat-header-cell *matHeaderCellDef>
                         ST gain</th>
-                    <td class="br text-right w-6" mat-cell *matCellDef="let element">
+                    <td class="br text-right" mat-cell *matCellDef="let element">
                         <div class="bar">
                             <span *ngIf="element.stGain || element.stGain == 0">
                                 {{(isLoading) ? '' : ((element.stGain) ? (element.stGain | number:'1.2-2') : (element.stGain == 0) ? 0 : 0)}}</span>
@@ -562,7 +561,7 @@
                 <ng-container matColumnDef="stLossPurchase">
                     <th class="br text-right w-5" mat-header-cell *matHeaderCellDef>
                         ST loss</th>
-                    <td class="br text-right w-5" mat-cell *matCellDef="let element">
+                    <td class="br text-right" mat-cell *matCellDef="let element">
                         <div class="bar">
                             <span
                                 *ngIf="element.stLoss == 0">{{(isLoading) ? '' : ((element.stLoss) ? (element.stLoss | number:'1.2-2') : (element.stLoss == 0) ? 0 : 0)}}</span>
@@ -579,7 +578,7 @@
                 <ng-container matColumnDef="ltGainPurchase">
                     <th class="br text-right w-5" mat-header-cell *matHeaderCellDef>
                         LT gain</th>
-                    <td class="br text-right w-5" mat-cell *matCellDef="let element">
+                    <td class="br text-right" mat-cell *matCellDef="let element">
                         <div class="bar">
                             <span *ngIf="element.ltGain || element.ltGain == 0">
                                 {{(isLoading) ? '' : ((element.ltGain) ? (element.ltGain | number:'1.2-2') : (element.ltGain == 0) ? 0 : 0)}}</span>
@@ -595,7 +594,7 @@
                 <ng-container matColumnDef="ltLossPurchase">
                     <th class="br text-right w-5" mat-header-cell *matHeaderCellDef>
                         LT loss</th>
-                    <td class="br text-right w-5" mat-cell *matCellDef="let element">
+                    <td class="br text-right" mat-cell *matCellDef="let element">
                         <div class="bar">
                             <span
                                 *ngIf="element.ltLoss || element.ltLoss == 0">{{(isLoading) ? '' : ((element.ltLoss) ? (element.ltLoss | number:'1.2-2') : (element.ltLoss == 0) ? 0 : 0)}}</span>
@@ -609,9 +608,9 @@
 
                 </ng-container>
                 <ng-container matColumnDef="indGainPurchase">
-                    <th class="br text-right w-5" mat-header-cell *matHeaderCellDef>
-                        Indexed gain</th>
-                    <td class="br text-right w-5" mat-cell *matCellDef="let element">
+                    <th class="br text-right w-4" mat-header-cell *matHeaderCellDef>
+                        Indexed<br> gain</th>
+                    <td class="br text-right" mat-cell *matCellDef="let element">
                         <div class="bar">
                             <span
                                 *ngIf="element.indexGain || element.indexGain == 0">{{(isLoading) ? '' : ((element.indexGain) ? (element.indexGain | number:'1.2-2') : (element.indexGain == 0) ? 0 : 0)}}</span>
@@ -626,9 +625,9 @@
 
                 </ng-container>
                 <ng-container matColumnDef="indLossPurchase">
-                    <th class="br text-right w-8" mat-header-cell *matHeaderCellDef>
-                        Indexed loss</th>
-                    <td class="br text-right w-8" mat-cell *matCellDef="let element">
+                    <th class="br text-right w-9" mat-header-cell *matHeaderCellDef>
+                        Indexed<br> loss</th>
+                    <td class="br text-right" mat-cell *matCellDef="let element">
                         <div class="bar">
                             <span *ngIf="element.indexLoss || element.indexLoss == 0">
                                 {{(isLoading) ? '' : ((element.indexLoss) ? (element.indexLoss | number:'1.2-2') : (element.indexLoss == 0) ? 0 : 0)}}</span>
@@ -644,20 +643,20 @@
 
                 </ng-container>
                 <ng-container matColumnDef="daysPurchase">
-                    <th class="br text-right w-5" mat-header-cell *matHeaderCellDef>
+                    <th class="text-right w-4" mat-header-cell *matHeaderCellDef>
                         Days</th>
-                    <td class="br text-right w-5" mat-cell *matCellDef="let element">
+                    <td class="text-right" mat-cell *matCellDef="let element">
                         <div class="bar"> <span
                                 *ngIf="element.days || element.days == 0">{{(isLoading) ? '' : ((element.days) ? (element.days) : 'N.A')}}</span>
                         </div>
                     </td>
-                    <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right"></td>
+                    <td mat-footer-cell *matFooterCellDef class="f-600 p-8 amt text-right"></td>
 
 
                 </ng-container>
                 <ng-container matColumnDef="groupHeader">
                     <td *matCellDef="let group" [attr.colspan]="displayedColumns.length"
-                        class="f-600 pl-4 proximaFont text-left">
+                        class="f-600 pl-4 proximaFont text-left bb-1">
                         <div class="bar">{{group.schemeName}}|{{group.folioNumber}}|{{group.ownerName}}</div>
 
                     </td>
@@ -674,8 +673,7 @@
                     <th mat-header-cell *matHeaderCellDef [attr.colspan]="4" class="header-tables br"> REDEMPTION
                         AGAINST
                         (PURCHASES)<br>
-                        <span
-                            *ngIf="(fromDate) ? fromDate.getFullYear() > 2018 : ''">AS
+                        <span *ngIf="(fromDate) ? fromDate.getFullYear() > 2018 : ''">AS
                             ON 31 JAN
                             2018</span></th>
                 </ng-container>
@@ -737,13 +735,13 @@
 
                 <!-- Name Column -->
                 <ng-container matColumnDef="trnRedeem">
-                    <th class="br f-600 p-8 amt text-right w-11" mat-header-cell *matHeaderCellDef> </th>
+                    <th class="br f-600 p-8 amt text-right w-8" mat-header-cell *matHeaderCellDef> </th>
 
                 </ng-container>
 
                 <!-- Weight Column -->
                 <ng-container matColumnDef="amtRedeem">
-                    <th class="br f-600 p-8 amt text-right w-6" mat-header-cell *matHeaderCellDef appFormatNumber
+                    <th class="br f-600 p-8 amt text-right w-7" mat-header-cell *matHeaderCellDef appFormatNumber
                         [value]="redeemAmount">
                     </th>
 
@@ -752,7 +750,7 @@
 
                 <!-- Symbol Column -->
                 <ng-container matColumnDef="sttRedeem">
-                    <th class="br f-600 p-8 amt text-right w-4" mat-header-cell *matHeaderCellDef>
+                    <th class="br f-600 p-8 amt text-right w-5" mat-header-cell *matHeaderCellDef>
                         {{(total_stt) ? (total_stt | number:'1.2-2') : '0'}}
                     </th>
 
@@ -760,7 +758,7 @@
                 </ng-container>
 
                 <ng-container matColumnDef="unitsRedeem">
-                    <th class="br f-600 p-8 amt text-right w-4" mat-header-cell *matHeaderCellDef>
+                    <th class="br f-600 p-8 amt text-right w-6" mat-header-cell *matHeaderCellDef>
 
                     </th>
 
@@ -768,14 +766,14 @@
                 </ng-container>
 
                 <ng-container matColumnDef="rateRedeem">
-                    <th class="br f-600 p-8 amt text-right w-6" mat-header-cell *matHeaderCellDef>
+                    <th class="br f-600 p-8 amt text-right w-5" mat-header-cell *matHeaderCellDef>
                     </th>
 
 
                 </ng-container>
 
                 <ng-container matColumnDef="datePurchase">
-                    <th class="br f-600 p-8 amt text-right w-7" mat-header-cell *matHeaderCellDef>
+                    <th class="br f-600 p-8 amt text-right w-8" mat-header-cell *matHeaderCellDef>
                     </th>
 
 
@@ -791,18 +789,18 @@
                 </ng-container>
 
                 <ng-container matColumnDef="unitsPurchase">
-                    <th class="br f-600 p-8 amt text-right w-4" mat-header-cell *matHeaderCellDef>
+                    <th class="br f-600 p-8 amt text-right w-6" mat-header-cell *matHeaderCellDef>
                     </th>
 
                 </ng-container>
                 <ng-container matColumnDef="ratePurchase">
-                    <th class="br f-600 p-8 amt text-right w-8" mat-header-cell *matHeaderCellDef>
+                    <th class="br f-600 p-8 amt text-right w-5" mat-header-cell *matHeaderCellDef>
                     </th>
 
 
                 </ng-container>
                 <ng-container matColumnDef="stGainPurchase">
-                    <th class="br f-600 p-8 amt text-right w-6" mat-header-cell *matHeaderCellDef>
+                    <th class="br f-600 p-8 amt text-right w-4" mat-header-cell *matHeaderCellDef>
                         {{(total_stGain) ? ((total_stGain == 0 ) ? 0 : (total_stGain | number:'1.2-2')) : '0'}}
                     </th>
 
@@ -810,34 +808,35 @@
 
                 </ng-container>
                 <ng-container matColumnDef="stLossPurchase">
-                    <th class="br f-600 p-8 amt text-right w-5" mat-header-cell *matHeaderCellDef>
+                    <th class="br f-600 p-8 amt text-right w-4" mat-header-cell *matHeaderCellDef>
                         {{(total_stLoss) ? ((total_stLoss == 0 ) ? 0 : (total_stLoss | number:'1.2-2')) : '0'}}
                     </th>
 
                 </ng-container>
                 <ng-container matColumnDef="ltGainPurchase">
-                    <th class="br f-600 p-8 amt text-right w-5" mat-header-cell *matHeaderCellDef>
+                    <th class="br f-600 p-8 amt text-right w-4" mat-header-cell *matHeaderCellDef>
                         {{(total_ltGain) ? ((total_ltGain == 0 ) ? 0 : (total_ltGain | number:'1.2-2')) : '0'}}
                     </th>
 
                 </ng-container>
                 <ng-container matColumnDef="ltLossPurchase">
-                    <th class="br f-600 p-8 amt text-right w-5" mat-header-cell *matHeaderCellDef>
+                    <th class="br f-600 p-8 amt text-right w-4" mat-header-cell *matHeaderCellDef>
                         {{(total_ltLoss) ? ((total_ltLoss == 0 ) ? 0 : (total_ltLoss | number:'1.2-2')) : '0'}}
                     </th>
 
 
                 </ng-container>
                 <ng-container matColumnDef="indGainPurchase">
-                    <th class="br f-600 p-8 amt text-right w-5" mat-header-cell *matHeaderCellDef>
+                    <th class="br f-600 p-8 amt text-right w-7" mat-header-cell *matHeaderCellDef>
                         {{(total_indexGain) ? ((total_indexGain == 0 ) ? 0 : (total_indexGain | number:'1.2-2')) : '0'}}
                     </th>
 
 
 
                 </ng-container>
+
                 <ng-container matColumnDef="indLossPurchase">
-                    <th class="br f-600 p-8 amt text-right w-8" mat-header-cell *matHeaderCellDef>
+                    <th class="br f-600 p-8 amt text-right w-6" mat-header-cell *matHeaderCellDef>
                         {{(total_indexLoss) ? ((total_indexLoss == 0 ) ? 0 : (total_indexLoss | number:'1.2-2')) : '0'}}
                     </th>
 
@@ -845,7 +844,7 @@
 
                 </ng-container>
                 <ng-container matColumnDef="daysPurchase">
-                    <th class="br f-600 p-8 amt text-right w-5" mat-header-cell *matHeaderCellDef>
+                    <th class="br f-600 p-8 amt text-right w-4" mat-header-cell *matHeaderCellDef>
                     </th>
 
 
@@ -857,7 +856,7 @@
         </div>
         <div class="row w-100">
             <div class="col-md-12 p-0 mb-8">
-                <div class="b-a bb-0">
+                <div class="b-a bt-0 bb-0">
                     <h5 class="wrapper-8 f-500 f-14 mb-0 text-primary">
                         DIVIDEND SUMMARY
                     </h5>
