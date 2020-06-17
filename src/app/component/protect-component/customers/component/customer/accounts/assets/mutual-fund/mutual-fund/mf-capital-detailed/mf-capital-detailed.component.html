@@ -1034,11 +1034,9 @@
 
 
             <tr *ngFor="let element of dataSource.data">
-                <!-- <tr *ngIf="element.schemeName || element.folioNumber || element.ownerName">
-                                        <td style="font-weight: 600;">
-                                            {{element.schemeName}}|{{element.folioNumber}}|{{item.ownerName}}
+                                        <td style="font-weight: 600;" *ngIf="element.schemeName || element.folioNumber || element.ownerName">
+                                            {{element.schemeName}}|{{element.folioNumber}}|{{element.ownerName}}
                                         </td>
-                                    </tr> -->
                 <td valign="top">
                     <span *ngIf="element.redeemTransactionDate">
                         {{(element.redeemTransactionDate) ? (element.redeemTransactionDate  | date:'dd/MM/yyyy') : ''}}
@@ -1335,6 +1333,9 @@
                                     {{element.schemeName}}|{{element.folioNumber}}|{{item.ownerName}}
                                 </td>
                             </tr> -->
+                            <td style="font-weight: 600;" *ngIf="element.schemeName || element.folioNumber">
+                                    {{element.schemeName}}|{{element.folioNumber}}|{{element.ownerName}}
+                                </td>
                 <td valign="top">
                     <span *ngIf="element.redeemTransactionDate">
                         {{(element.redeemTransactionDate) ? (element.redeemTransactionDate  | date:'dd/MM/yyyy') : ''}}
