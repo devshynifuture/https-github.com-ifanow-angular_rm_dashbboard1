@@ -2,12 +2,13 @@ import { Component, OnInit, Input } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
-import { MutualFundsCapitalComponent } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mutual-fund/mutual-funds-capital/mutual-funds-capital.component';
+import { MfCapitalDetailedComponent } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mutual-fund/mf-capital-detailed/mf-capital-detailed.component';
 
 @Component({
   selector: 'app-bulk-capital-gain-detailed',
   templateUrl: './bulk-capital-gain-detailed.component.html',
-  styleUrls: ['./bulk-capital-gain-detailed.component.scss']
+  styleUrls: ['./bulk-capital-gain-detailed.component.scss'],
+  providers:[MfCapitalDetailedComponent]
 })
 export class BulkCapitalGainDetailedComponent implements OnInit {
   inputData: any;
@@ -16,13 +17,21 @@ export class BulkCapitalGainDetailedComponent implements OnInit {
   userInfo: any;
   clientData: any;
   reportDate: Date;
+  GTdividendPayout : any;
+  GTdividendReinvestment: any;
+  GTReinvesment : any;
+  dataSource : any;
+  dataSource1 : any;
+  dataSource2 : any;
+  equityObj : any;
+  debtObj : any;
   getObj: any;
   fragmentData: any;
 
   constructor(
     private utilService :UtilService,
     public mfService :MfServiceService,
-    public capitalDetailed : MutualFundsCapitalComponent
+    public capitalDetailed : MfCapitalDetailedComponent
   ) { }
   @Input()
   set data(data) {
@@ -66,14 +75,14 @@ export class BulkCapitalGainDetailedComponent implements OnInit {
     console.log(this.getObj)
   }
   getAllData(){
-    // this.dataSource = this.getObj.dataSource
-    // this.dataSource1 = this.getObj.dataSource1
-    // this.dataSource2 = this.getObj.dataSource2
-    // this.equityObj = this.getObj.equityObj
-    // this.debtObj = this.getObj.debtObj
-    // this.GTReinvesment = this.getObj.GTReinvesment
-    // this.GTdividendPayout = this.getObj.GTdividendPayout
-    // this.GTdividendReinvestment = this.getObj.GTdividendReinvestment
+    this.dataSource = this.getObj.dataSource
+    this.dataSource1 = this.getObj.dataSource1
+    this.dataSource2 = this.getObj.dataSource2
+    this.equityObj = this.getObj.equityObj
+    this.debtObj = this.getObj.debtObj
+    this.GTReinvesment = this.getObj.GTReinvesment
+    this.GTdividendPayout = this.getObj.GTdividendPayout
+    this.GTdividendReinvestment = this.getObj.GTdividendReinvestment
   }
   generatePdf() {
     let para = document.getElementById('template');

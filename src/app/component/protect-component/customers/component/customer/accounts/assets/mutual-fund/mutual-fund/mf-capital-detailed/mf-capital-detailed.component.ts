@@ -51,13 +51,32 @@ export class MfCapitalDetailedComponent implements OnInit {
   GTdividendReinvestment = 0;
   fragmentData = { isSpinner: false };
   showDownload: boolean;
+  setCapitaDetails: any;
+  clientId: any;
   constructor(private MfServiceService:MfServiceService,private subInjectService : SubscriptionInject, private UtilService:UtilService) { }
    @Output() reponseToInput = new EventEmitter();
    @Output() changeInput = new EventEmitter();
    @Input() responseData;
    @Input() changedData;
    @Input() mutualFund;
+   uploadData(data) {
+    if (data.clientId) {
+      this.clientId = data.clientId
+      this.ngOnInit()
+    }
+    return this.setCapitaDetails
+
+  }
   ngOnInit() {
+    this.setCapitaDetails = {}
+    this.setCapitaDetails.dataSource = []
+    this.setCapitaDetails.dataSource1 = []
+    this.setCapitaDetails.dataSource2 = []
+    this.setCapitaDetails.equityObj = {}
+    this.setCapitaDetails.debtObj = {}
+    this.setCapitaDetails.GTdividendReinvestment = {}
+    this.setCapitaDetails.GTdividendPayout = {}
+    this.setCapitaDetails.GTReinvesment = {}
     this.isLoading =true;
     setTimeout(() => {
       console.log('response data:',this.responseData);  // You will get the @Input value
@@ -105,6 +124,19 @@ export class MfCapitalDetailedComponent implements OnInit {
       this.dataSource = new MatTableDataSource(equityData);
       this.dataSource1 =  new MatTableDataSource(this.getFilterData( catObj['DEBT'],'DEBT'))
       this.dataSource2 = new MatTableDataSource(this.getDividendSummaryData(data));
+
+      this.setCapitaDetails = {}
+      this.setCapitaDetails.dataSource = this.dataSource
+      this.setCapitaDetails.dataSource1 = this.dataSource1
+      this.setCapitaDetails.dataSource2 = this.dataSource2
+      this.setCapitaDetails.equityObj = this.equityObj
+      this.setCapitaDetails.debtObj = this.debtObj
+      this.setCapitaDetails.GTdividendReinvestment = this.GTdividendReinvestment
+      this.setCapitaDetails.GTdividendPayout = this.GTdividendPayout
+      this.setCapitaDetails.GTReinvesment = this.GTReinvesment
+
+      this.MfServiceService.setCapitalDetailed(this.setCapitaDetails)
+
       this.objSendToDetailedCapital={
         // mfData:this.mutualFund,
         responseData :this.responseData ,
