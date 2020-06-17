@@ -82,7 +82,14 @@ export class MutualFundsCapitalComponent implements OnInit {
   @ViewChild('tableEl', { static: false }) tableEl;
   @ViewChild('tableEl2', { static: false }) tableEl2;
   @ViewChild('tableEl3', { static: false }) tableEl3;
+  uploadData(data) {
+    if (data.clientId) {
+      this.clientId = data.clientId
+      this.ngOnInit()
+    }
+    return this.setCapitaSummary
 
+  }
   ngOnInit() {
     this.setCapitaSummary = {}
     this.setCapitaSummary.dataSource = []

@@ -1,39 +1,28 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
-import { MutualFundOverviewComponent } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mutual-fund/mutual-fund-overview/mutual-fund-overview.component';
-import { MutualFundsCapitalComponent } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mutual-fund/mutual-funds-capital/mutual-funds-capital.component';
 import { UtilService } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
+import { MutualFundsCapitalComponent } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mutual-fund/mutual-funds-capital/mutual-funds-capital.component';
 
 @Component({
-  selector: 'app-bulk-capital-gain-summary',
-  templateUrl: './bulk-capital-gain-summary.component.html',
-  styleUrls: ['./bulk-capital-gain-summary.component.scss'],
-  providers:[MutualFundsCapitalComponent]
+  selector: 'app-bulk-capital-gain-detailed',
+  templateUrl: './bulk-capital-gain-detailed.component.html',
+  styleUrls: ['./bulk-capital-gain-detailed.component.scss']
 })
-export class BulkCapitalGainSummaryComponent implements OnInit {
-
-  GTdividendPayout : any;
-  GTdividendReinvestment: any;
-  GTReinvesment : any;
-  dataSource : any;
-  dataSource1 : any;
-  dataSource2 : any;
-  equityObj : any;
-  debtObj : any;
-  reportDate: Date;
-  fragmentData: any;
-  clientData: any;
-  sendData: any;
+export class BulkCapitalGainDetailedComponent implements OnInit {
   inputData: any;
-  userInfo: any;
   clientId: any;
+  sendData: any;
+  userInfo: any;
+  clientData: any;
+  reportDate: Date;
   getObj: any;
+  fragmentData: any;
 
   constructor(
-    public mfService : MfServiceService,
-    private utilService : UtilService,
-    public capitalGainSummary : MutualFundsCapitalComponent
+    private utilService :UtilService,
+    public mfService :MfServiceService,
+    public capitalDetailed : MutualFundsCapitalComponent
   ) { }
   @Input()
   set data(data) {
@@ -55,7 +44,7 @@ export class BulkCapitalGainSummaryComponent implements OnInit {
     this.fragmentData = {}
     this.getUploadData();
     this.fragmentData.isSpinner = true;
-    this.mfService.getCapitalSummary()
+    this.mfService.getCapitalDetailed()
       .subscribe(res => {
         this.getObj = res; //used for getting mutual fund data coming from main gain call
         console.log('capital summary data here =',this.getObj)
@@ -72,19 +61,19 @@ export class BulkCapitalGainSummaryComponent implements OnInit {
     }
   }
   getUploadData(){
-    this.getObj = this.capitalGainSummary.uploadData(this.sendData)
+    this.getObj = this.capitalDetailed.uploadData(this.sendData)
     console.log('data ======', this.getObj)
     console.log(this.getObj)
   }
   getAllData(){
-    this.dataSource = this.getObj.dataSource
-    this.dataSource1 = this.getObj.dataSource1
-    this.dataSource2 = this.getObj.dataSource2
-    this.equityObj = this.getObj.equityObj
-    this.debtObj = this.getObj.debtObj
-    this.GTReinvesment = this.getObj.GTReinvesment
-    this.GTdividendPayout = this.getObj.GTdividendPayout
-    this.GTdividendReinvestment = this.getObj.GTdividendReinvestment
+    // this.dataSource = this.getObj.dataSource
+    // this.dataSource1 = this.getObj.dataSource1
+    // this.dataSource2 = this.getObj.dataSource2
+    // this.equityObj = this.getObj.equityObj
+    // this.debtObj = this.getObj.debtObj
+    // this.GTReinvesment = this.getObj.GTReinvesment
+    // this.GTdividendPayout = this.getObj.GTdividendPayout
+    // this.GTdividendReinvestment = this.getObj.GTdividendReinvestment
   }
   generatePdf() {
     let para = document.getElementById('template');
