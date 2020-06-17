@@ -118,6 +118,7 @@ import { OpenSendReportPopupComponent } from './component/protect-component/Advi
 import { BulkOverviewComponent } from './component/protect-component/AdviserComponent/backOffice/bulk-report-sending/bulk-overview/bulk-overview.component';
 import { BulkSummaryComponent } from './component/protect-component/AdviserComponent/backOffice/bulk-report-sending/bulk-summary/bulk-summary.component';
 import { BulkAllTransactionsComponent } from './component/protect-component/AdviserComponent/backOffice/bulk-report-sending/bulk-all-transactions/bulk-all-transactions.component';
+import { BulkCapitalGainSummaryComponent } from './component/protect-component/AdviserComponent/backOffice/bulk-report-sending/bulk-capital-gain-summary/bulk-capital-gain-summary.component';
 // tslint:disable-next-line:max-line-length
 // import { TransactionAddComponent } from './component/protect-component/AdviserComponent/transactions/transaction-add/transaction-add.component';
 
@@ -214,6 +215,7 @@ export const componentList = [
   DetailedPoSavingsComponent,
   DetailedPoTdComponent,
   DetailedPoMisComponent,
+  BulkCapitalGainSummaryComponent,
   DetailedViewRealEstateComponent,
   DetaildedViewSuperannuationComponent,
   DatailedViewNpsHoldingsComponent,
