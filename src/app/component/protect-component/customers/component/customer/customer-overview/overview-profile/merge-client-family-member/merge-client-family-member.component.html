@@ -21,7 +21,7 @@
       <div class="col-md-8 p-0">
         <h5 class="m-0 text-black pb-4">Select an investor from the search box below</h5>
         <mat-form-field appearance="standard" floatLabel="never">
-          <input #searchClient autofocus (input)="hideSuggetion(searchClient.value)" [formControl]="stateCtrl"
+          <input #searchClient (input)="hideSuggetion(searchClient.value)" [formControl]="stateCtrl"
             [matAutocomplete]="auto1" appPrefixFocusDirective aria-label="client" class="form-control pl-8" matInput
             placeholder="Start typing to see investor names">
           <mat-autocomplete #auto1="matAutocomplete" (optionSelected)="optionSelected($event.option.value)">

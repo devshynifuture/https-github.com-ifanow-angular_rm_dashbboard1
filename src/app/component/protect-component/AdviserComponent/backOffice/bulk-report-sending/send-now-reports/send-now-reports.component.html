@@ -150,6 +150,30 @@
                         </mat-select>
                     </mat-form-field>
                 </div>
+                <div class="col-md-4 pl-0">
+                <h5 class="m-0 pb-8">From date</h5>
+                <div class="col-md-12 p-0">
+                    <mat-form-field class="ba-date">
+                        <input class="form-control br-0 b-0" matInput [matDatepicker]="picker1" formControlName="fromDate"
+                            readonly>
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+    
+                </div>
+            </div>
+            <div class="col-md-4 p-0">
+                <h5 class="m-0 pb-8">To date</h5>
+                <div class="col-md-12 p-0">
+                    <mat-form-field class="ba-date">
+                        <input class="form-control br-0 b-0" matInput [matDatepicker]="picker2" formControlName="toDate"
+                            readonly>
+                        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                        <mat-datepicker #picker2></mat-datepicker>
+                    </mat-form-field>
+    
+                </div>
+            </div>
             </div>
 
             <div class="row h-80 borderDasd" *ngIf="capitalGainSummary == true">

@@ -109,7 +109,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
     this.auth.setClientData(singleClientData);
     this.myControl.setValue(singleClientData.displayName)
     this.ngZone.run(() => {
-      this.router.navigate(['customer', 'detail', 'account', 'assets'], { state: { ...singleClientData } });
+      this.router.navigate(['customer', 'detail', 'overview', 'myfeed'], { state: { ...singleClientData } });
     });
   }
 
