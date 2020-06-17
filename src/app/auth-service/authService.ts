@@ -46,6 +46,17 @@ export class AuthService {
       return null;
     }
   }
+  static setClientRolesSettings(data) {
+    sessionStorage.setItem('clientRoles', JSON.stringify(data));
+  }
+
+  static setAdvisorRolesSettings(data) {
+    localStorage.setItem('advisorRoles', JSON.stringify(data));
+  }
+
+  static setTeamMemberRolesSettings(data) {
+    localStorage.setItem('teamMemberRoles', JSON.stringify(data));
+  }
 
   static setUserRoleType(roleObj) {
     localStorage.setItem('roleObj', JSON.stringify(roleObj));
@@ -116,6 +127,22 @@ export class AuthService {
   get appPic() {
     const orgData = JSON.parse(localStorage.getItem('orgData'));
     return orgData ? orgData.logoUrl : '';
+  }
+
+  static getClientRoles(data)
+  {
+    return sessionStorage.getItem('clientRoles');
+  }
+
+  static getAdvisorRoles(data)
+  {
+    return localStorage.getItem('advisorRoles');
+  }
+
+  static getTeamMemberRoles(data)
+  {
+    return localStorage.getItem('teamMemberRoles');
+
   }
 
   setToken(token: string) {

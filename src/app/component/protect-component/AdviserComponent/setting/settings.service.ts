@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
-import {HttpService} from 'src/app/http-service/http-service';
-import {appConfig} from 'src/app/config/component-config';
-import {apiConfig} from 'src/app/config/main-config';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpService } from 'src/app/http-service/http-service';
+import { appConfig } from 'src/app/config/component-config';
+import { apiConfig } from 'src/app/config/main-config';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -165,5 +165,10 @@ export class SettingsService {
 
   deleteMFRTA(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_MF_RTA, data);
+  }
+
+  getAdvisorOrClientOrTeamMemberRoles(data) {
+    const httpParams = new HttpParams().set('id', data.id);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CLIENT_OR_ADVISOR_ROLES, httpParams);
   }
 }
