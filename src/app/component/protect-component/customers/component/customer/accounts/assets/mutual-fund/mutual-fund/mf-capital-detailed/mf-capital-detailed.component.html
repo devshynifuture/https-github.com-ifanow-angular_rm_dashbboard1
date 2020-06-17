@@ -1130,6 +1130,60 @@
                 </td>
 
             </tr>
+              <tr *ngFor="let element of dataSource.data">
+                    <td valign="top" *ngIf="element.totalAmt">
+                        {{element.totalAmt}}
+                    </td>
+    
+                    <td valign="top">
+    
+                    </td>
+    
+                    <td valign="top" *ngIf="element.totalAmount">
+                        {{((element.totalAmount) ? element.totalAmount : '0')}}
+                    </td>
+    
+                    <td valign="top" *ngIf="element.totalStt">
+                        {{(isLoading) ? '' : ((element.totalStt) ? (element.totalStt | number:'1.2-2') : '0')}}
+                    </td>
+    
+                    <td valign="top">
+                    </td>
+    
+                    <td valign="top">
+                    </td>
+    
+                    <td valign="top">
+                    </td>
+    
+                    <td valign="top" *ngIf="element.purchaseAmount || element.purchaseAmount == 0">
+                            {{((element.purchaseAmount) ? element.purchaseAmount : 0)}}
+                    </td>
+                    <td valign="top">
+                    </td>
+                    <td valign="top">
+                    </td>
+                    <td valign="top" *ngIf="element.totalStGain || element.totalStGain == 0">
+                            {{((element.totalStGain) ? (element.totalStGain | number:'1.2-2') : (element.totalStGain == 0) ? 0 : 0)}}
+                    </td>
+                    <td valign="top" *ngIf="element.totalStLoss || element.totalStLoss == 0">
+                            {{((element.totalStLoss) ? (element.totalStLoss | number:'1.2-2') : (element.totalStLoss == 0) ? 0 : 0)}}
+                    </td>
+                    <td valign="top"  *ngIf="element.totalLtGain || element.totalLtGain == 0">
+                            {{((element.totalLtGain) ? (element.totalLtGain | number:'1.2-2') : (element.totalLtGain == 0) ? 0 : 0)}}
+                    </td>
+                    <td valign="top"  *ngIf="element.totalStLoss || element.totalStLoss == 0">
+                            {{((element.totalStLoss) ? (element.totalStLoss | number:'1.2-2') : (element.totalStLoss == 0) ? 0 : 0)}}
+                    </td>
+                    <td valign="top" *ngIf="element.totalIndexGain || element.totalIndexGain == 0">
+                            {{((element.totalIndexGain) ? (element.totalIndexGain | number:'1.2-2') : (element.totalIndexGain == 0) ? 0 : 0)}}
+                    </td>
+                    <td valign="top" *ngIf="element.totalIndexLoss || element.totalIndexLoss == 0">
+                            {{((element.totalIndexLoss) ? (element.totalIndexLoss | number:'1.2-2') : (element.totalIndexLoss == 0) ? 0 : 0)}}
+                    </td>
+                    <td valign="top">
+                    </td>
+                </tr>
             <tr *ngIf="dataSource.data.length > 0">
                     <td valign="top">
                         EQUITY TOTAL
@@ -1372,6 +1426,60 @@
                 </td>
 
             </tr>
+            <tr *ngFor="let element of dataSource1.data">
+                    <td valign="top" *ngIf="element.totalAmt">
+                        {{element.totalAmt}}
+                    </td>
+    
+                    <td valign="top">
+    
+                    </td>
+    
+                    <td valign="top" *ngIf="element.totalAmount">
+                        <span appFormatNumber>{{((element.totalAmount) ? element.totalAmount : '0')}}</span>
+                    </td>
+    
+                    <td valign="top" *ngIf="element.totalStt">
+                        {{(isLoading) ? '' : ((element.totalStt) ? (element.totalStt | number:'1.2-2') : '0')}}
+                    </td>
+    
+                    <td valign="top">
+                    </td>
+    
+                    <td valign="top">
+                    </td>
+    
+                    <td valign="top">
+                    </td>
+    
+                    <td valign="top" *ngIf="element.purchaseAmount || element.purchaseAmount == 0">
+                            {{((element.purchaseAmount) ? element.purchaseAmount : 0)}}
+                    </td>
+                    <td valign="top">
+                    </td>
+                    <td valign="top">
+                    </td>
+                    <td valign="top" *ngIf="element.totalStGain || element.totalStGain == 0">
+                            {{((element.totalStGain) ? (element.totalStGain | number:'1.2-2') : (element.totalStGain == 0) ? 0 : 0)}}
+                    </td>
+                    <td valign="top" *ngIf="element.totalStLoss || element.totalStLoss == 0">
+                            {{((element.totalStLoss) ? (element.totalStLoss | number:'1.2-2') : (element.totalStLoss == 0) ? 0 : 0)}}
+                    </td>
+                    <td valign="top"  *ngIf="element.totalLtGain || element.totalLtGain == 0">
+                            {{((element.totalLtGain) ? (element.totalLtGain | number:'1.2-2') : (element.totalLtGain == 0) ? 0 : 0)}}
+                    </td>
+                    <td valign="top"  *ngIf="element.totalStLoss || element.totalStLoss == 0">
+                            {{((element.totalStLoss) ? (element.totalStLoss | number:'1.2-2') : (element.totalStLoss == 0) ? 0 : 0)}}
+                    </td>
+                    <td valign="top" *ngIf="element.totalIndexGain || element.totalIndexGain == 0">
+                            {{((element.totalIndexGain) ? (element.totalIndexGain | number:'1.2-2') : (element.totalIndexGain == 0) ? 0 : 0)}}
+                    </td>
+                    <td valign="top" *ngIf="element.totalIndexLoss || element.totalIndexLoss == 0">
+                            {{((element.totalIndexLoss) ? (element.totalIndexLoss | number:'1.2-2') : (element.totalIndexLoss == 0) ? 0 : 0)}}
+                    </td>
+                    <td valign="top">
+                    </td>
+                </tr>
             <tr *ngIf="dataSource1.data.length > 0">
                 <td valign="top">
                     DEBT TOTAL
