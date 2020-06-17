@@ -1,6 +1,6 @@
 <div class="dialogclose">
     <div class="row popup-header-fix-100">
-        <div class="col-md-2 border-right-1 p-0">
+        <div class="col-md-2 border-right-1 p-0 d-flex justify-content-center align-items-center">
             <img class="imgAdLogo"
                 src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
         </div>
@@ -20,7 +20,7 @@
 </div>
 
 
-<div class="row pt-100">
+<div class="row pt-80 pl-90" id="scenarios-plan-goal">
     <!-- <div class="col-md-10 p-0">
         <div class="row">
             <div class="col-md-6 pr-10">
@@ -340,7 +340,7 @@
 
 
         <div class="row">
-            <div class="col-md-11 planTable">
+            <div class="col-md-11 tax-planning">
                 <table mat-table id="table-low" [dataSource]="dataSource3" class=" ">
                     <ng-container matColumnDef="description">
                         <th class="br w-44" mat-header-cell *matHeaderCellDef> Description </th>
@@ -381,8 +381,8 @@
 
                     <ng-container matColumnDef="emptybox">
                         <th mat-header-cell class="br w-4 text-center" *matHeaderCellDef> </th>
-                        <td mat-cell class="br w-4 text-center" *matCellDef="let element">
-                            <div class="bar"> <i class="material-icons">
+                        <td mat-cell class="br w-4 text-center c-p" *matCellDef="let element">
+                            <div class="bar"> <i class="material-icons c-p">
                                     keyboard_arrow_down
                                 </i></div>
                         </td>
@@ -393,18 +393,8 @@
                 </table>
             </div>
         </div>
-
-
-
-
-
-
     </div>
-
-
-
-
-    <div class="col-md-2 b-l ">
+    <div class="col-md-2 b-l pr-10 pl-10">
         <div class="row">
             <div class="p-0 b-h-dashed mb-40 col-md-12">
                 <button mat-stroked-button class="btn-primary br-0 mb-40 ">

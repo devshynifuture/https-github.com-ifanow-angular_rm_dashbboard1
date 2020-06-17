@@ -480,7 +480,12 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
         this.tabsLoaded.portfolioData.hasData = false;
       } else {
         this.tabsLoaded.portfolioData.hasData = true;
+        let stock = res.find(d => d.assetType == 6);
         this.portFolioData = res;
+        if(stock) {
+          this.portFolioData = this.portFolioData.filter(d => d.assetType != 6);
+          this.portFolioData.unshift(stock);
+        }
 
         let chartData = [];
         let counter = 0;
