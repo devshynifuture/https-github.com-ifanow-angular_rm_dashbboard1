@@ -7,9 +7,6 @@
             <button class="btn-primary " mat-stroked-button [matMenuTriggerFor]="menu">
                 ADD NEW
             </button>
-            <mat-menu #menu="matMenu">
-                <button mat-menu-item *ngFor="let rta_type of globalData.rta_type_master_list" (click)="openInSideBar(rta_type.id,'',true)">{{rta_type.type}}</button>
-            </mat-menu>
         </div>
     </div>
     <div *ngIf="mfRTAlist.length > 0">
@@ -324,7 +321,7 @@
         <div class="boxEmpty mt-52">
             <img src="assets/images/svg/mf-rta-details-empty-state.svg">
             <h4 class="mt-24 mb-12"> No details added yet </h4>
-            <button class="btn-primary addon v-middle " mat-stroked-button>
+            <button class="btn-primary addon v-middle " mat-stroked-buttonbutton class="btn-primary " [matMenuTriggerFor]="menu">
                 ADD NEW
             </button>
         </div>
@@ -350,7 +347,7 @@
         <div class="boxEmpty mt-52">
             <img src="assets/images/svg/mf-rta-details-empty-state.svg">
             <h4 class="mt-24 mb-12"> No details added yet </h4>
-            <button class="btn-primary addon v-middle " mat-stroked-button>
+            <button class="btn-primary addon v-middle " mat-stroked-button [matMenuTriggerFor]="menu">
                 ADD NEW
             </button>
         </div>
@@ -369,3 +366,7 @@
     <!-- <img class="width300" src="assets/images/svg/noDataFound.svg">
     <h4 class="text-center pt-12">No MF RTA detail found</h4> -->
 </div>
+
+<mat-menu #menu="matMenu">
+    <button mat-menu-item *ngFor="let rta_type of globalData.rta_type_master_list" (click)="openInSideBar(rta_type.id,'',true)">{{rta_type.type}}</button>
+</mat-menu>
