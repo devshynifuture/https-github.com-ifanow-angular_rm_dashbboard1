@@ -126,31 +126,9 @@ export class MergeClientFamilyMemberComponent implements OnInit {
     if ((this.clientListMobile && this.clientListMobile.length > 0) && (this.clientListEmail == undefined || this.clientListEmail.length == 0)) {
       this.finalSuggestionList = this.clientListMobile
     }
-    if ((this.clientListEmail && this.clientListEmail.length) == (this.clientListMobile && this.clientListMobile.length) && this.clientListEmail.some(a => this.clientListMobile.some(b => a.userId === b.userId))) {
-      this.finalSuggestionList = this.clientListEmail;
-      if (this.finalSuggestionList) {
-        this.finalSuggestionList = this.finalSuggestionList.filter(element => element.count == 0)
-        this.finalSuggestionList.map(element => {
-          element['addedFlag'] = false;
-          element['isLoading'] = false;
-          this.rows.push(this.fb.group({
-            relation: ['', [Validators.required]],
-            gender: ['', [Validators.required]]
-          }))
-        })
-      }
-      return;
-    }
     if ((this.clientListEmail && this.clientListEmail.length > 0) && (this.clientListMobile && this.clientListMobile.length > 0)) {
-      this.finalSuggestionList = this.clientListEmail.filter(a => this.clientListMobile.some(b => a.userId === b.userId));
-      this.clientListEmail = this.clientListEmail.filter(a => this.clientListMobile.some(b => a.userId != b.userId));
-      this.finalSuggestionList = this.finalSuggestionList.filter(a => this.clientListMobile.some(b => a.userId != b.userId));
-      this.clientListMobile = this.clientListMobile.filter(a => this.clientListEmail.some(b => a.userId != b.userId));
-      this.finalSuggestionList = this.finalSuggestionList.filter(a => this.clientListEmail.some(b => a.userId != b.userId));
-      this.finalSuggestionList = this.finalSuggestionList.concat(this.clientListMobile)
-      this.finalSuggestionList = this.finalSuggestionList.concat(this.clientListEmail);
-      // this.finalSuggestionList = this.finalSuggestionList.filter(a => this.finalSuggestionList.some(b => a.userId === b.userId));
-
+      this.finalSuggestionList = this.clientListEmail.concat(this.clientListMobile);
+      this.finalSuggestionList = this.getUniqueListBy(this.finalSuggestionList, 'userId');
     }
     if (this.finalSuggestionList) {
       this.finalSuggestionList = this.finalSuggestionList.filter(element => element.count == 0)
@@ -183,6 +161,12 @@ export class MergeClientFamilyMemberComponent implements OnInit {
         }),
       );
   }
+
+
+  getUniqueListBy(arr, key) {
+    return [...new Map(arr.map(item => [item[key], item])).values()]
+  }
+
   hideSuggetion(value) {
     if (value == '') {
       this.showSuggestion = true
@@ -195,6 +179,7 @@ export class MergeClientFamilyMemberComponent implements OnInit {
       return;
     }
     if (value.count > 0) {
+      this.showSuggestion = true
       this.eventService.openSnackBar("Family member count must be 0", "Dismiss")
       return;
     }
