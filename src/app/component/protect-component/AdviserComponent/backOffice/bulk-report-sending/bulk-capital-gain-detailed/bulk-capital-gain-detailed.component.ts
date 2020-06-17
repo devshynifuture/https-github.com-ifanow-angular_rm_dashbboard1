@@ -27,6 +27,15 @@ export class BulkCapitalGainDetailedComponent implements OnInit {
   debtObj : any;
   getObj: any;
   fragmentData: any;
+  total_stGain: any;
+  total_ltGain: any;
+  total_stLoss: any;
+  total_ltLoss: any;
+  total_indexGain: any;
+  total_indexLoss: any;
+  purchaseAmount: any;
+  redeemAmount: any;
+  total_stt: any;
 
   constructor(
     private utilService :UtilService,
@@ -83,6 +92,15 @@ export class BulkCapitalGainDetailedComponent implements OnInit {
     this.GTReinvesment = this.getObj.GTReinvesment
     this.GTdividendPayout = this.getObj.GTdividendPayout
     this.GTdividendReinvestment = this.getObj.GTdividendReinvestment
+    this.total_stGain = this.getObj.total_stGain;
+    this.total_ltGain = this.getObj.total_ltGain;
+    this.total_stLoss = this.getObj.total_stLoss;
+    this.total_ltLoss = this.getObj.total_ltLoss;
+    this.total_indexGain = this.getObj.total_indexGain;
+    this.total_indexLoss = this.getObj.total_indexLoss;
+    this.purchaseAmount = this.getObj.purchaseAmount;
+    this.redeemAmount = this.getObj.redeemAmount;
+    this.total_stt = this.getObj.total_stt;
   }
   generatePdf() {
     let para = document.getElementById('template');
