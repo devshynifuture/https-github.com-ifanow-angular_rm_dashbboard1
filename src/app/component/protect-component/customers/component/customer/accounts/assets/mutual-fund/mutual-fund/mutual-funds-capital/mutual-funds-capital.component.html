@@ -444,7 +444,7 @@
         </tr>
 
 
-        <tr>
+        <tr *ngFor="let element of dataSource1.data">
             <td valign="top">
                 {{element.schemeName}}
             </td>
@@ -454,7 +454,7 @@
             </td>
 
             <td valign="top">
-                {{(isLoading) ? '' : ((element.ownerName) ? element.ownerName : 'N.A')}}
+                {{(element.ownerName) ? element.ownerName : 'N.A')}}
             </td>
 
             <td valign="top">

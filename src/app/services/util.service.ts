@@ -339,7 +339,7 @@ export class UtilService {
     }
   }
   htmlToPdf(inputData, pdfName, landscape, fragData: any = {}, key = null, svg = null) {
-    let date = this.datePipe.transform(new Date(), 'yyyy/MMM/dd')
+    let date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy')
     const obj = {
       htmlInput: inputData,
       name: pdfName,
@@ -356,7 +356,7 @@ export class UtilService {
           const file = new Blob([data], { type: 'application/pdf' });
           fragData.isSpinner = false;
           // window.open(fileURL,"hello");
-          var namePdf = this.client.name +"'s " + pdfName + " as on_:" + new Date();
+          var namePdf = this.client.name +"'s " + pdfName + " as on :" +date;
           const a = document.createElement('a');
           a.href = window.URL.createObjectURL(file);
           a.download = namePdf + ".pdf";

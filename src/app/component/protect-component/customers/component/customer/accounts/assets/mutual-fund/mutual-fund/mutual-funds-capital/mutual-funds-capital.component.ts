@@ -75,6 +75,7 @@ export class MutualFundsCapitalComponent implements OnInit {
   GTReinvesment=0;
   GTdividendPayout=0;
   GTdividendReinvestment=0;
+  fragmentData = { isSpinner: false };
   // capitalGainData: any;
   constructor(private pdfGen: PdfGenService, private excel: ExcelGenService, private UtilService: UtilService, private custumService: CustomerService, private eventService: EventService, private reconService: ReconciliationService, private MfServiceService: MfServiceService, private subInjectService: SubscriptionInject) { }
   @ViewChild('tableEl', { static: false }) tableEl;
@@ -450,7 +451,12 @@ export class MutualFundsCapitalComponent implements OnInit {
     this.excel.generateExcel(rows, tableTitle)
   }
   pdf(tableTitle) {
-    let rows = this.tableEl._elementRef.nativeElement.rows;
-    this.pdfGen.generatePdf(rows, tableTitle);
+    this.fragmentData.isSpinner = true;
+
+    let para = document.getElementById('template');
+    // this.util.htmlToPdf(para.innerHTML, 'Test', this.fragmentData);
+    this.UtilService.htmlToPdf(para.innerHTML, 'CapitalGain', 'true', this.fragmentData, '', '');
+    // let rows = this.tableEl._elementRef.nativeElement.rows;
+    // this.pdfGen.generatePdf(rows, tableTitle);
   }
 } 
