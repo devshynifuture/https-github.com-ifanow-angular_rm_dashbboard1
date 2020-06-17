@@ -20,9 +20,10 @@ export class UtilService {
     private eventService: EventService,
     private http: HttpClient,
     private subService: SubscriptionService,
+    private datePipe: DatePipe
   ) {
   }
-
+  client = AuthService.getClientData();
   private static decimalPipe = new DecimalPipe('en-US');
   @Input()
   public positiveMethod: Function;
@@ -338,6 +339,7 @@ export class UtilService {
     }
   }
   htmlToPdf(inputData, pdfName, landscape, fragData: any = {}, key = null, svg = null) {
+    let date = this.datePipe.transform(new Date(), 'yyyy/MMM/dd')
     const obj = {
       htmlInput: inputData,
       name: pdfName,
@@ -354,7 +356,7 @@ export class UtilService {
           const file = new Blob([data], { type: 'application/pdf' });
           fragData.isSpinner = false;
           // window.open(fileURL,"hello");
-          var namePdf = "' s " + pdfName + "as on:" + new Date();
+          var namePdf = this.client.name +"'s " + pdfName + " as on_:" + new Date();
           const a = document.createElement('a');
           a.href = window.URL.createObjectURL(file);
           a.download = namePdf + ".pdf";
