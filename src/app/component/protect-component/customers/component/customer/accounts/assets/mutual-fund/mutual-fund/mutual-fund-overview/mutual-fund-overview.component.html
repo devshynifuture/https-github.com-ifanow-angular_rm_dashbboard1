@@ -1,7 +1,7 @@
 <div>
     <div class="p-8">
         <div class="row pt-0">
-            <div class="col-md-4 pl-0 c-p" *ngIf="showSummaryBar">
+            <div class="col-md-4 pl-0 c-p">
                 <h4 class="m-0 text-black roboto pt-8">Mutual fund overview</h4>
                 <p class="m-0 text-custom f-13">A quick summary of all your mutual fund holdings</p>
             </div>
@@ -916,6 +916,10 @@
                     {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : '-'}}</p>
                 <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email : </strong>
                     {{(details) ? details.emailId : '-'}}</p>
+                   
+                    <p style="margin: 0px; font-size: 14px;padding-top: 12px;"> <strong>
+                        {{'MF Overview'}}</strong>
+                </p>
                 <p style="margin: 0px; font-size: 14px;padding-top: 12px;"> <strong> Report as on :
                         {{reportDate | date:'dd-MMM-yyyy' }}</strong>
                 </p>
@@ -928,15 +932,15 @@
 
 
         <tr>
-            <td colspan="2" style=" border: 1px solid #dee5e7; border-bottom: transparent;" valign="top">
+            <td colspan="2" style="border-bottom: transparent;" valign="top" [ngStyle]="{'border': showSummaryBar ? '1px solid #dee5e7' : '' }">
                 <table cellpadding="0" cellspacing="0" border="0" width="100%">
                     <tr>
                         <p style="margin: 0px; font-weight: 600; font-size: 14px;padding-top: 4px;" *ngIf="clientData">
-                            Client name : {{(clientData.name) ? clientData.name : '-'}}</p>
-                        <p style="margin: 0px; font-weight: 600; font-size: 18px; padding-top: 4px;" *ngIf="clientData">
+                            Client name: {{(clientData.name) ? clientData.name : '-'}}</p>
+                        <p style="margin: 0px; font-weight: 600; font-size: 18px; padding-top: 4px;" *ngIf="clientData && showSummaryBar ">
                             Summary</p>
                     </tr>
-                    <tr>
+                    <tr  *ngIf="showSummaryBar" >
                         <td
                             style=" padding-top: 15px; padding-bottom: 10px; padding-left: 15px; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7;">
                             <p style="font-size: 14px; margin: 0px;">Current value </p>
@@ -947,7 +951,7 @@
                         </td>
                     </tr>
 
-                    <tr>
+                    <tr  *ngIf="showSummaryBar" > 
                         <td>
                             <table bgcolor="#F5F7F7" style="padding: 16px 15px;" cellpadding="0" cellspacing="0"
                                 border="0" width="100%">
@@ -983,7 +987,7 @@
             </td>
         </tr>
 
-        <tr>
+        <tr  *ngIf="showSummaryBar" >
             <td valign="top" style="width: 196px;  border: 1px solid #dee5e7; ">
                 <div>showPieChart</div>
             </td>
@@ -1058,7 +1062,7 @@
             <td style="padding: 10px;" colspan="2"></td>
         </tr>
 
-        <tr>
+        <tr *ngIf="showSchemeWise">
             <td valign="top" colspan="2">
                 <h3
                     style="background: #F5F7F7; border: 1px solid #dee5e7; border-bottom: transparent; margin: 0px; padding: 10px; font-size: 16px;">
@@ -1141,7 +1145,7 @@
         </tr>
 
 
-        <tr>
+        <tr  *ngIf="showCashFlow">
             <td valign="top" colspan="2">
                 <h3
                     style="background: #F5F7F7; border: 1px solid #dee5e7; border-bottom: transparent; margin: 0px; padding: 10px; font-size: 16px; page-break-before: always;">
@@ -1231,7 +1235,7 @@
         </tr>
 
 
-        <tr>
+        <tr *ngIf="showSubCategory">
             <td valign="top" colspan="2">
                 <h3
                     style="background: #F5F7F7; border: 1px solid #dee5e7; border-bottom: transparent; margin: 0px; padding: 10px; font-size: 16px;">
@@ -1316,7 +1320,7 @@
             <td style="padding: 10px;" colspan="2"></td>
         </tr>
 
-        <tr>
+        <tr *ngIf="showFamilyMember">
             <td valign="top" colspan="2">
                 <h3
                     style="background: #F5F7F7; border: 1px solid #dee5e7; border-bottom: transparent; margin: 0px; padding: 10px; font-size: 16px;">
@@ -1400,7 +1404,7 @@
             <td style="padding: 10px;" colspan="2"></td>
         </tr>
 
-        <tr>
+        <tr *ngIf="showCategory">
             <td valign="top" colspan="2">
                 <h3
                     style="background: #F5F7F7; border: 1px solid #dee5e7; border-bottom: transparent; margin: 0px; padding: 10px; font-size: 16px;">

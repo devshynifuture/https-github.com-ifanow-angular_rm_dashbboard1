@@ -325,6 +325,7 @@ export class PayeeSettingsComponent implements OnInit {
   }
 
   savePayeeSettings() {
+    this.familyMemberId = (this.clientData.familyMemberId) ? this.clientData.familyMemberId : this.clientData.id
     // this.inputData
     if (this.payeeSettingsForm.invalid) {
       // for (let element in this.payeeSettingsForm.controls) {
@@ -342,7 +343,7 @@ export class PayeeSettingsComponent implements OnInit {
           city: this.payeeSettingsForm.controls.city.value,
           clientBillerId: 1,
           companyDisplayName: this.payeeSettingsForm.controls.displayName.value,
-          familyMemberId: this.familyMemberId,
+          familyMemberId: (this.familyMemberId == 0) ? (this.clientData.clientId ? this.clientData.clientId : this.clientData.id) : this.familyMemberId,
           companyName: this.payeeSettingsForm.controls.companyName.value,
           country: this.payeeSettingsForm.controls.country.value,
           currency: 'string',
@@ -374,7 +375,7 @@ export class PayeeSettingsComponent implements OnInit {
         const obj = {
           customerName: this.getFormControl().customerName.value,
           gstin: (this.getFormControl().gstIn.value == null) ? 0 : this.payeeSettingsForm.controls.gstIn.value,
-          familyMemberId: this.familyMemberId,
+          familyMemberId: (this.clientData.familyMemberId == 0) ? this.clientData.clientId : this.clientData.familyMemberId,
           gstTreatmentId: this.payeeSettingsForm.controls.gstTreatment.value,
           email: this.getFormControl().emailId.value,
           // customerTypeId: (this.getFormControl().customerType.value == 'Business') ? '1' : '2',
@@ -388,7 +389,8 @@ export class PayeeSettingsComponent implements OnInit {
           pan: this.getFormControl().pan.value,
           country: this.getFormControl().country.value,
           zipCode: this.getFormControl().pincode.value,
-          clientId: !this.inputData.flag ? this.clientData.clientId : this.clientData.id
+          // clientId: !this.inputData.flag ? this.clientData.clientId : this.clientData.id
+          clientId: this.clientData.clientId 
         };
         this.subService.addClientBillerProfile(obj).subscribe(
           data => {

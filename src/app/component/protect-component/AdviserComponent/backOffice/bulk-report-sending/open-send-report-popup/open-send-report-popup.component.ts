@@ -31,7 +31,7 @@ export class OpenSendReportPopupComponent implements OnInit {
 
   sendClientId() {
     this.dataClients = {
-      clientId: 93902
+      clientId: 95961
     }
     this.getDetails(this.dataClients)
   }

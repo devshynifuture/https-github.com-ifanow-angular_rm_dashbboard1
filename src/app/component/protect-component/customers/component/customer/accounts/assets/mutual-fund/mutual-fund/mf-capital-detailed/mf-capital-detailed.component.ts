@@ -49,7 +49,9 @@ export class MfCapitalDetailedComponent implements OnInit {
   GTdividendPayout = 0;
   GTReinvesment = 0;
   GTdividendReinvestment = 0;
-  constructor(private MfServiceService:MfServiceService,private subInjectService : SubscriptionInject) { }
+  fragmentData = { isSpinner: false };
+  showDownload: boolean;
+  constructor(private MfServiceService:MfServiceService,private subInjectService : SubscriptionInject, private UtilService:UtilService) { }
    @Output() reponseToInput = new EventEmitter();
    @Output() changeInput = new EventEmitter();
    @Input() responseData;
@@ -441,5 +443,21 @@ export class MfCapitalDetailedComponent implements OnInit {
   }
   isGroup = (index, item) => item.schemeName;// for grouping schme name
 
-
+  generatePdf() {
+    this.fragmentData.isSpinner = true
+    const para = document.getElementById('template');
+    this.UtilService.htmlToPdf(para.innerHTML, 'capitalGain', 'true', this.fragmentData, '', '');
+  }
+  Excel(tableTitle) {
+    this.showDownload = true
+    setTimeout(() => {
+      var blob = new Blob([document.getElementById('template').innerHTML], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+      });
+      saveAs(blob, tableTitle + ".xls");
+    }, 200);
+    // if (data) {
+    //   this.fragmentData.isSpinner = false;
+    // }
+  }
 }
