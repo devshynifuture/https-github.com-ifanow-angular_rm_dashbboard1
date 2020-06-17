@@ -478,8 +478,13 @@ export class UtilService {
 
   // dirty fix to shift the view to top for right slider
   // TODO:- need to find a better solution and fix this mess as js code is not recommended by angular
-  goToTopForRightSlider(){
+  scrollToTopForRightSlider(){
     document.querySelector('.right_sidenav').scrollTop = 0;
+  }
+
+  scrollToBottomForRightSlider(){
+    let height = document.querySelector('.right_sidenav').scrollHeight;
+    document.querySelector('.right_sidenav').scrollTop = height;
   }
 }
 

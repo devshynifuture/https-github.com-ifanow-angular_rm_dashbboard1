@@ -122,7 +122,7 @@
                                                 <li *ngFor="let data of chartData">
                                                     <span class="pointNumber" [style.background-color]="data.color">
                                                     </span>
-                                                    <span class="f-14 mr-8 width55" appFormatNumber>{{(data.y/chartTotal*100) | number : '0.2-2'}}%</span>
+                                                    <span class="f-14 width55" appFormatNumber>{{(data.y/chartTotal*100) | number : '0.2-2'}}%</span>
                                                     <p class="f-500 f-14 mr-8 text-black mb-0">{{data.name}}</p>
                                                 </li>
                                             </ul>
@@ -342,7 +342,7 @@
                                                     <li *ngFor="let data of mfAllocationData">
                                                         <span class="pointNumber" [style.background-color]="data.color">
                                                     </span>
-                                                        <span class="f-14 width55 mr-8" appFormatNumber>{{(data.y | number:'1.2-2')}}%</span>
+                                                        <span class="f-14 width60" appFormatNumber>{{(data.y | number:'1.2-2')}}%</span>
                                                         <p class="f-500 f-14 mr-8 text-black mb-0">{{data.name}}</p>
                                                     </li>
                                                 </ul>
@@ -911,7 +911,7 @@
                             <div class="scrollingDiv d-flex">
 
                                 <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="sliderConfig" #slickModal2="slick-carousel" (wheel)="carouselWheelEvent(slickModal2, $event)">
-                                    <div class="transactionsBox bg-white col-md-8" ngxSlickItem *ngFor="let tnx of rtaFeedsData">
+                                    <div class="transactionsBox  bg-white col-md-8" ngxSlickItem *ngFor="let tnx of rtaFeedsData">
                                         <div class="row">
                                             <div class="col-md-8">
                                                 <p class="mb-5">{{tnx.fwTransactionType}}</p>
