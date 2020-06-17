@@ -86,8 +86,12 @@ export class ClientWiseComponent implements OnInit {
   isLoadingFolio: boolean;
   @Input() data;
   parentId: any;
+  clientWiseTotal = [];
+  investorWiseTotal = [];
+  schemeWiseTotal = [];
+  scheme2WiseTotal = [];
 
-  constructor(public aum: AumComponent, private backoffice: BackOfficeService,private mfService:MfServiceService) { }
+  constructor(public aum: AumComponent, private backoffice: BackOfficeService, private mfService: MfServiceService) { }
 
 
   showLoader = true;
@@ -179,8 +183,8 @@ export class ClientWiseComponent implements OnInit {
     this.clientList = [{}, {}, {}];
     let obj = {
       advisorId: (this.parentId) ? 0 : (this.data.arnRiaDetailId != -1) ? 0 : [this.data.adminAdvisorIds],
-        arnRiaDetailsId: (this.data) ? this.data.arnRiaDetailId : -1,
-        parentId: (this.data) ? this.data.parentId : -1,
+      arnRiaDetailsId: (this.data) ? this.data.arnRiaDetailId : -1,
+      parentId: (this.data) ? this.data.parentId : -1,
     }
     this.backoffice.getAumClientTotalAum(obj).subscribe(
       data => this.clientTotalAum(data),
@@ -193,14 +197,13 @@ export class ClientWiseComponent implements OnInit {
   }
   getInvestorName(clientData, index) {
     this.selectedClient = index;
-    clientData.show = !clientData.show
-
-
+    clientData.show = !clientData.show;
+    console.log("this is client Data::::", clientData);
     if (clientData.show == false) {
-      clientData.investorList = []
-      this.investorList = []
+      clientData.investorList = [];
+      this.investorList = [];
       clientData.investorList = [{}, {}, {}];
-      this.isLoadingInvestor = true
+      this.isLoadingInvestor = true;
       const obj = {
         advisorId: (this.parentId) ? 0 : (this.data.arnRiaDetailId != -1) ? 0 : [this.data.adminAdvisorIds],
         arnRiaDetailsId: (this.data) ? this.data.arnRiaDetailId : -1,
@@ -232,6 +235,11 @@ export class ClientWiseComponent implements OnInit {
       )
     } else {
       this.removeValuesFromExcel('investor', index);
+      if (clientData.hasOwnProperty('investorList') && clientData.investorList.length !== 0) {
+        clientData.investorList.forEach(element => {
+          element.showInvestor = false;
+        });
+      }
     }
   }
 
@@ -256,7 +264,7 @@ export class ClientWiseComponent implements OnInit {
       investorList: false,
       schemeList: false,
       schemeFolioList: false
-    });
+    }, this.clientWiseTotal);
   }
 
   investorWiseExcelSheet(index) {
@@ -274,7 +282,7 @@ export class ClientWiseComponent implements OnInit {
       investorList: false,
       schemeList: false,
       schemeFolioList: false
-    });
+    }, this.investorWiseTotal);
   }
 
   scheme1WiseExcelSheet(index) {
@@ -295,7 +303,7 @@ export class ClientWiseComponent implements OnInit {
       investorList: true,
       schemeList: false,
       schemeFolioList: false
-    });
+    }, this.schemeWiseTotal);
   }
 
   scheme2WiseExcelSheet() {
@@ -311,7 +319,7 @@ export class ClientWiseComponent implements OnInit {
         field6: element.weightInPerc
       });
     });
-    ExcelMisService.exportExcel(this.arrayOfHeaderStyles[3], this.arrayOfHeaders[3], newarr, [], 'Scheme Folio Wise');
+    ExcelMisService.exportExcel(this.arrayOfHeaderStyles[3], this.arrayOfHeaders[3], newarr, [], 'Scheme Folio Wise', this.scheme2WiseTotal);
   }
 
   exportToExcelSheet(choice, index) {
@@ -333,6 +341,8 @@ export class ClientWiseComponent implements OnInit {
 
   excelInitClientList() {
     let data = {};
+    let sumAumTotalTemp = 0;
+    let sumWeightInPercTemp = 0;
     this.clientList.forEach((element, index1) => {
       data = {
         index: index1 + 1,
@@ -341,11 +351,16 @@ export class ClientWiseComponent implements OnInit {
         weightInPerc: element.weightInPercentage,
         investorList: [],
       }
+      sumAumTotalTemp = sumAumTotalTemp + element.totalAum;
+      sumWeightInPercTemp = sumWeightInPercTemp + element.weightInPercentage;
       this.arrayOfExcelData.push(data);
-    })
+    });
+    this.clientWiseTotal = ['Total', '', sumAumTotalTemp, sumWeightInPercTemp];
   }
 
   appendingOfValuesInExcel(iterable, index, choice) {
+    let sumAumTotalTemp = 0;
+    let sumWeightInPercTemp = 0;
     switch (choice) {
       case 'investor':
         // investor
@@ -357,7 +372,10 @@ export class ClientWiseComponent implements OnInit {
             weightInPerc: element.weightInPercentage,
             schemeList: [],
           });
+          sumAumTotalTemp = sumAumTotalTemp + element.totalAum;
+          sumWeightInPercTemp = sumWeightInPercTemp + element.weightInPercentage;
         });
+        this.investorWiseTotal = ['Total', '', sumAumTotalTemp, sumWeightInPercTemp];
         break;
       case 'schemes':
         // schemes
@@ -369,7 +387,10 @@ export class ClientWiseComponent implements OnInit {
             weightInPerc: element.weightInPercentage,
             schemeFolioList: []
           });
+          sumAumTotalTemp = sumAumTotalTemp + element.totalAum;
+          sumWeightInPercTemp = sumWeightInPercTemp + element.weightInPercentage;
         });
+        this.schemeWiseTotal = ['Total', '', sumAumTotalTemp, sumWeightInPercTemp];
         break;
       case 'scheme-folio':
         // scheme folio
@@ -382,6 +403,9 @@ export class ClientWiseComponent implements OnInit {
             balanceUnit: this.mfService.mutualFundRoundAndFormat(element.balanceUnit, 2),
             weightInPerc: element.weightInPercentage
           });
+          sumAumTotalTemp = sumAumTotalTemp + element.totalAum;
+          sumWeightInPercTemp = sumWeightInPercTemp + element.weightInPercentage;
+          this.scheme2WiseTotal = ['Total', '', '', sumAumTotalTemp, '', sumWeightInPercTemp];
         });
         break;
     }
@@ -412,12 +436,12 @@ export class ClientWiseComponent implements OnInit {
     this.selectedInvestor = index;
     this.selectedClient = clientIndex;
     investorData.showInvestor = !investorData.showInvestor
-    
+
 
     if (investorData.showInvestor == false) {
       investorData.schemeList = [];
-    this.scheme1ListArr = []
-    investorData.schemeList = [{}, {}, {}];
+      this.scheme1ListArr = []
+      investorData.schemeList = [{}, {}, {}];
       this.isLoadingScheme = true
       const obj = {
         advisorId: (this.parentId) ? 0 : (this.data.arnRiaDetailId != -1) ? 0 : [this.data.adminAdvisorIds],
@@ -425,16 +449,17 @@ export class ClientWiseComponent implements OnInit {
         parentId: (this.data) ? this.data.parentId : -1,
         familyMemberId: investorData.familyMemberId,
         totalAum: investorData.totalAum,
-        clientId:investorData.clientId
+        clientId: investorData.clientId
       }
       this.backoffice.getAumFamilyMemberScheme(obj).subscribe(
         data => {
-          this.isLoadingScheme = false
+          this.isLoadingScheme = false;
+          console.log(data);
           if (data) {
             data.forEach(element => {
               element.showScheme = true;
               element.familyMemberId = investorData.familyMemberId;
-              element.clientId=investorData.clientId
+              element.clientId = investorData.clientId
             });
             investorData.schemeList = data;
             this.scheme1ListArr = data
@@ -449,6 +474,11 @@ export class ClientWiseComponent implements OnInit {
       )
     } else {
       this.removeValuesFromExcel('schemes', index);
+      if (investorData.hasOwnProperty('schemeList') && investorData.schemeList.length !== 0) {
+        investorData.schemeList.forEach(element => {
+          element.showScheme = false;
+        });
+      }
     }
 
   }
@@ -457,9 +487,9 @@ export class ClientWiseComponent implements OnInit {
     this.selectedInvestor = investorIndex;
     this.selectedClient = clientIndex;
     schemeData.showScheme = !schemeData.showScheme
-  
+
     if (schemeData.showScheme == false) {
-     this.isLoadingFolio = true
+      this.isLoadingFolio = true
       this.scheme2List = []
       schemeData.folioList = []
       schemeData.folioList = [{}, {}, {}];
@@ -470,21 +500,22 @@ export class ClientWiseComponent implements OnInit {
         familyMemberId: schemeData.familyMemberId,
         totalAum: schemeData.totalAum,
         schemeId: schemeData.mutualFundSchemeMasterId,
-        clientId:schemeData.clientId
+        clientId: schemeData.clientId
       }
       this.backoffice.getAumFamilyMemberSchemeFolio(obj).subscribe(
         data => {
-          this.isLoadingFolio = false
+          this.isLoadingFolio = false;
+          console.log("folio data>::::", data);
           if (data) {
             schemeData.folioList = data;
             this.scheme2List = data;
             // this.initializeExcelData();
             this.appendingOfValuesInExcel(data, index, 'scheme-folio');
 
-          }else{
+          } else {
             this.scheme2List = []
-          schemeData.folioList = []
-          this.isLoadingFolio = false
+            schemeData.folioList = []
+            this.isLoadingFolio = false;
           }
         },
         err => {
@@ -495,6 +526,7 @@ export class ClientWiseComponent implements OnInit {
       )
     } else {
       this.removeValuesFromExcel('scheme-folio', index);
+
     }
 
   }

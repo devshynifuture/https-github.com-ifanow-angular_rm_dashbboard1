@@ -10,7 +10,9 @@
 </div>
 <div class="row pt-20 pl-16">
     <div *ngFor="let user of userList" class="col-md-3 mb-12 pl-0 ">
-        <mat-card [ngClass]="{'active-class-name': user.isSuspended == 0, 'suspended-class-name': user.isSuspended == 1}" class="b-a p-8 pr-0 br-4">
+        <mat-card
+            [ngClass]="{'active-class-name': user.isSuspended == 0, 'suspended-class-name': user.isSuspended == 1}"
+            class="b-a p-8 pr-0 br-4">
             <div class="row skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                 <div class="col-md-4 p-0">
                     <div class="relClass">
@@ -24,7 +26,7 @@
                     <div class="row">
                         <div class="col-md-11 p-0 relClass overflow-text-users">
                             <div class="bar" [ngClass]="{'height23_mb': isLoading}">
-                                <h5 class="m-0 text-black" *ngIf="user.fullName.length < 13">{{user.fullName}}</h5>
+                                <h5 class="m-0 text-black" *ngIf="user.fullName.length <= 13">{{user.fullName}}</h5>
 
                                 <h5 class="m-0 text-black" *ngIf="user.fullName.length > 13" [title]="user.fullName">
                                     {{user.fullName}}</h5>
@@ -36,17 +38,22 @@
                             <img *ngIf="!isLoading" class="c-p userMenuDots" src="/assets/images/svg/dot-menu.svg">
                             <mat-menu #menu="matMenu">
                                 <button (click)="addEditTeamMember(user, false)" mat-menu-item>Edit</button>
-                                <button (click)="suspendUser(user)" *ngIf="user.isSuspended == 0" mat-menu-item>Suspend</button>
-                                <button (click)="reactivateUser(user)" *ngIf="user.isSuspended == 1" mat-menu-item>Reactivate</button>
+                                <button (click)="suspendUser(user)" *ngIf="user.isSuspended == 0"
+                                    mat-menu-item>Suspend</button>
+                                <button (click)="reactivateUser(user)" *ngIf="user.isSuspended == 1"
+                                    mat-menu-item>Reactivate</button>
                                 <!-- role type 1 is admin, dont allow admin to kill himself -->
-                                <button (click)="deleteUser(user)" mat-menu-item *ngIf="user.role.advisorOrClientRole != 1">Delete</button>
+                                <button (click)="deleteUser(user)" mat-menu-item
+                                    *ngIf="user.role.advisorOrClientRole != 1">Delete</button>
                             </mat-menu>
                         </div>
 
                     </div>
                     <div class="relClass">
                         <div class="bar" [ngClass]="{'height_23': isLoading}">
-                            <h3 *ngIf="!isLoading" [routerLink]="['/admin/people/clients']" routerLinkActive="router-link-active" class="m-0 f-400 text-primary f-18 pt-16 c-p txt-underline">
+                            <h3 *ngIf="!isLoading" [routerLink]="['/admin/people/clients']"
+                                routerLinkActive="router-link-active"
+                                class="m-0 f-400 text-primary f-18 pt-16 c-p txt-underline">
                                 {{user.clientCount}} clients<span *ngIf="user.clientCount>1"></span></h3>
                         </div>
                     </div>
@@ -67,7 +74,8 @@
         </div>
 
         <div class="dashedClass">
-            <p> We’ve built IFANOW for teams small and big. There’s so much you can do together with your team on IFANOW. For starters, </p>
+            <p> We’ve built IFANOW for teams small and big. There’s so much you can do together with your team on
+                IFANOW. For starters, </p>
             <ul>
                 <li>
                     - You can assign specific roles to your team members based on your practice
@@ -103,7 +111,8 @@
         </div>
 
         <div class="dashedClass">
-            <p> We’ve built IFANOW for teams small and big. There’s so much you can do together with your team on IFANOW. For starters, </p>
+            <p> We’ve built IFANOW for teams small and big. There’s so much you can do together with your team on
+                IFANOW. For starters, </p>
             <ul>
                 <li>
                     - You can assign specific roles to your team members based on your practice

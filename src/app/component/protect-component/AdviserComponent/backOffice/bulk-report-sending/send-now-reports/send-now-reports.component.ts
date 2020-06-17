@@ -38,6 +38,9 @@ export class SendNowReportsComponent implements OnInit {
     this.summary = false;
     this.overview = true;
     this.selectedReportType = 'overview'
+    const fromDate = new Date();
+    fromDate.setFullYear(fromDate.getFullYear() - 1);
+    const toDate = new Date();
   }
   close() {
     this.subInjectService.changeNewRightSliderState({

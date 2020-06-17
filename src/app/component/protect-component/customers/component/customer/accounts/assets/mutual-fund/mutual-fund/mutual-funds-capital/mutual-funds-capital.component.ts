@@ -71,18 +71,25 @@ export class MutualFundsCapitalComponent implements OnInit {
   capitalGainData: any;
   toDate: Date;
   fromDate: Date;
-  finalValue = {};
-  GTReinvesment = 0;
-  GTdividendPayout = 0;
-  GTdividendReinvestment = 0;
-  fragmentData: any;
+  finalValue={};
+  GTReinvesment=0;
+  GTdividendPayout=0;
+  GTdividendReinvestment=0;
+  fragmentData = { isSpinner: false };
   setCapitaSummary: any;
   // capitalGainData: any;
   constructor(private pdfGen: PdfGenService, private excel: ExcelGenService, private UtilService: UtilService, private custumService: CustomerService, private eventService: EventService, private reconService: ReconciliationService, private MfServiceService: MfServiceService, private subInjectService: SubscriptionInject) { }
   @ViewChild('tableEl', { static: false }) tableEl;
   @ViewChild('tableEl2', { static: false }) tableEl2;
   @ViewChild('tableEl3', { static: false }) tableEl3;
+  uploadData(data) {
+    if (data.clientId) {
+      this.clientId = data.clientId
+      this.ngOnInit()
+    }
+    return this.setCapitaSummary
 
+  }
   ngOnInit() {
     this.setCapitaSummary = {}
     this.setCapitaSummary.dataSource = []
@@ -224,9 +231,9 @@ export class MutualFundsCapitalComponent implements OnInit {
     );
   }
   generatePdf() {
-    this.fragmentData.spinner = true
+    this.fragmentData.isSpinner = true
     const para = document.getElementById('template');
-    this.UtilService.htmlToPdf(para.innerHTML, 'Mutualfundsummary', 'true', this.fragmentData, '', '');
+    this.UtilService.htmlToPdf(para.innerHTML, 'capitalGain', 'true', this.fragmentData, '', '');
   }
   calculateCapitalGain(data) {
     this.isLoading = false;
@@ -480,7 +487,12 @@ export class MutualFundsCapitalComponent implements OnInit {
     this.excel.generateExcel(rows, tableTitle)
   }
   pdf(tableTitle) {
-    let rows = this.tableEl._elementRef.nativeElement.rows;
-    this.pdfGen.generatePdf(rows, tableTitle);
+    this.fragmentData.isSpinner = true;
+
+    let para = document.getElementById('template');
+    // this.util.htmlToPdf(para.innerHTML, 'Test', this.fragmentData);
+    this.UtilService.htmlToPdf(para.innerHTML, 'CapitalGain', 'true', this.fragmentData, '', '');
+    // let rows = this.tableEl._elementRef.nativeElement.rows;
+    // this.pdfGen.generatePdf(rows, tableTitle);
   }
 } 
