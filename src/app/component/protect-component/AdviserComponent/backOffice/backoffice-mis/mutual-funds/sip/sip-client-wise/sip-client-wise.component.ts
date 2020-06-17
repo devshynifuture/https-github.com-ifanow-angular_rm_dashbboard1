@@ -35,6 +35,8 @@ export class SipClientWiseComponent implements OnInit {
   reverse = true;
   reverse2 = true;
   arrayOfExcelData: any[] = [];
+  clientTotalArray = [];
+  applicantTotalArray = [];
   arrayOfHeaders: any[][] = [
     [
       'Sr. No.',
@@ -83,7 +85,7 @@ export class SipClientWiseComponent implements OnInit {
   caesedForm: any;
   parentId: any;
 
-  constructor(private datePipe: DatePipe,private eventService:EventService,private backoffice: BackOfficeService, public sip: SipComponent, private fb: FormBuilder, private mfService: MfServiceService) { }
+  constructor(private datePipe: DatePipe, private eventService: EventService, private backoffice: BackOfficeService, public sip: SipComponent, private fb: FormBuilder, private mfService: MfServiceService) { }
 
 
 
@@ -141,6 +143,8 @@ export class SipClientWiseComponent implements OnInit {
   }
   excelInitClientList() {
     let data = {};
+    let sumAmtTotal = 0;
+    let sumWeightInPercTotal = 0;
     this.clientList.forEach((element, index1) => {
       data = {
         index: index1 + 1,
@@ -149,18 +153,22 @@ export class SipClientWiseComponent implements OnInit {
         weightInPerc: element.weightInPercentage,
         investorList: [],
       }
+      sumAmtTotal += element.sipAmount;
+      sumWeightInPercTotal += element.weightInPercentage;
       this.arrayOfExcelData.push(data);
-    })
+    });
+    this.clientTotalArray = ['Total', '', sumAmtTotal, sumWeightInPercTotal];
   }
+
   clientWiseExcelSheet(index) {
     ExcelMisSipService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, this.arrayOfExcelData, 'Client wise MIS Report', 'client-wise-aum-mis', {
       clientList: false,
       investorList: false,
       schemeList: false,
       schemeFolioList: false
-    });
+    }, this.clientTotalArray);
   }
-  addCeasesdDate(sip, investor, date){
+  addCeasesdDate(sip, investor, date) {
     var obj = {
       id: sip.id,
       mutualFundId: sip.mutualFundId,
@@ -169,12 +177,12 @@ export class SipClientWiseComponent implements OnInit {
     }
     this.backoffice.addCeasedDate(obj).subscribe(
       data => {
-       console.log(data);
-       investor.applicantList.splice(investor.applicantList.indexOf(sip), 1);
-       this.eventService.openSnackBar('Cease date added successfully', 'Dismiss');
+        console.log(data);
+        investor.applicantList.splice(investor.applicantList.indexOf(sip), 1);
+        this.eventService.openSnackBar('Cease date added successfully', 'Dismiss');
       },
       err => {
-       
+
       }
     )
 
@@ -212,7 +220,7 @@ export class SipClientWiseComponent implements OnInit {
     this.isLoading = true;
     this.filteredArray = [{}, {}, {}];
     const obj = {
-      advisorId: (this.parentId) ? 0 : (this.data.arnRiaId!=-1) ? 0 :[this.data.adminAdvisorIds],
+      advisorId: (this.parentId) ? 0 : (this.data.arnRiaId != -1) ? 0 : [this.data.adminAdvisorIds],
       arnRiaDetailsId: (this.data) ? this.data.arnRiaId : -1,
       parentId: (this.data) ? this.data.parentId : -1
     }
@@ -244,6 +252,8 @@ export class SipClientWiseComponent implements OnInit {
     e.preventDefault();
   }
   appendingOfValuesInExcel(iterable, index, choice) {
+    let sumAmtTotal = 0;
+    let sumWeightInPercTotal = 0;
     switch (choice) {
       case 'applicant':
         // investor
@@ -262,7 +272,10 @@ export class SipClientWiseComponent implements OnInit {
             weightInPerc: element.weightInPercentage,
             schemeList: [],
           });
+          sumAmtTotal += element.sipAmount;
+          sumWeightInPercTotal += element.weightInPercentage;
         });
+        this.applicantTotalArray = ['Total', '', '', '', '', '', '', '', '', sumAmtTotal, sumWeightInPercTotal];
         break;
       case 'schemes':
         // schemes
@@ -308,13 +321,13 @@ export class SipClientWiseComponent implements OnInit {
   showSubTableList(index, category, applicantData) {
     applicantData.showCategory = !applicantData.showCategory
     if (applicantData.showCategory == false) {
-      this.isLoadingApplicant = true
-      applicantData.applicantList = []
-      this.applicantList = []
+      this.isLoadingApplicant = true;
+      applicantData.applicantList = [];
+      this.applicantList = [];
       applicantData.applicantList = [{}, {}, {}];
       const obj = {
         clientId: applicantData.clientId,
-        advisorId: (this.parentId) ? 0 : (this.data.arnRiaId!=-1) ? 0 :[this.data.adminAdvisorIds],
+        advisorId: (this.parentId) ? 0 : (this.data.arnRiaId != -1) ? 0 : [this.data.adminAdvisorIds],
         arnRiaDetailsId: (this.data) ? this.data.arnRiaId : -1,
         parentId: (this.data) ? this.data.parentId : -1
       }
@@ -330,8 +343,6 @@ export class SipClientWiseComponent implements OnInit {
             this.applicantList = data
             if (applicantData.showCategory == false) {
               this.appendingOfValuesInExcel(data, index, 'applicant');
-            } else {
-              this.removeValuesFromExcel('applicant', index);
             }
           }
         },
@@ -341,6 +352,8 @@ export class SipClientWiseComponent implements OnInit {
           this.isLoadingApplicant = false
         }
       )
+    } else {
+      this.removeValuesFromExcel('applicant', index);
     }
   }
 }

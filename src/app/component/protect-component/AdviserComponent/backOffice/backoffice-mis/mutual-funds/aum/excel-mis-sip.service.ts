@@ -15,9 +15,9 @@ export class ExcelMisSipService {
     constructor() {
         this.advisor = AuthService.getUserInfo();
         this.client = AuthService.getClientData();
-     }
+    }
 
-    static async exportExcel(headerData, header, excelData: any, footer: any[], metaData: any) {
+    static async exportExcel(headerData, header, excelData: any, footer: any[], metaData: any, totalArray?) {
         const wb = new Excel.Workbook();
         const ws = wb.addWorksheet();
         const meta1 = ws.getCell('A1');
@@ -48,20 +48,26 @@ export class ExcelMisSipService {
 
         if (excelData && excelData.length !== 0) {
             excelData.forEach(element => {
+
                 ws.addRow([
                     element.field1,
                     element.field2,
                     element.field3,
                     element.field4,
                     (element.hasOwnProperty('field5') && element.field5 !== undefined) ? element.field5 : '',
-                    (element.hasOwnProperty('field6') && element.field6 !== undefined) ? element.field6 : ''
+                    (element.hasOwnProperty('field6') && element.field6 !== undefined) ? element.field6 : '',
+                    (element.hasOwnProperty('field7') && element.field7 !== undefined) ? element.field7 : '',
+                    (element.hasOwnProperty('field8') && element.field8 !== undefined) ? element.field8 : '',
+                    (element.hasOwnProperty('field9') && element.field9 !== undefined) ? element.field9 : '',
+                    (element.hasOwnProperty('field10') && element.field10 !== undefined) ? element.field10 : '',
+                    (element.hasOwnProperty('field11') && element.field11 !== undefined) ? element.field11 : ''
                 ]);
             });
         }
-        footer.forEach(element => {
-            const last = ws.addRow(element);
-            last.font = { bold: true };
-        });
+
+        const last = ws.addRow(totalArray);
+        last.font = { bold: true };
+
         const buf = await wb.xlsx.writeBuffer();
         let name;
         if (userData.hasOwnProperty('fullName')) {
@@ -69,10 +75,11 @@ export class ExcelMisSipService {
         } else {
             name = userData.name;
         }
+
         saveAs(new Blob([buf]), name + '-' + metaData + '-' + new Date() + '.xlsx');
     }
 
-    static async exportExcel2(arrayOfHeaders, arrayOfHeaderStyle, arrayOfExcelData, metaData, choice, excluded) {
+    static async exportExcel2(arrayOfHeaders, arrayOfHeaderStyle, arrayOfExcelData, metaData, choice, excluded, totalArray?) {
         const wb = new Excel.Workbook();
         const ws = wb.addWorksheet();
         const meta1 = ws.getCell('A1');
@@ -117,6 +124,10 @@ export class ExcelMisSipService {
                     } else {
                         ws.addRow(['', '', '', '']);
                         currentRowPos = currentRowPos + 2;
+                        ws.getRow(currentRowPos).values = arrayOfHeaders[0];
+                        ws.columns = arrayOfHeaderStyle[0];
+                        headCell = ws.getRow(currentRowPos);
+                        headCell.font = { bold: true };
                     }
                     ws.addRow([
                         catElement.index,
@@ -129,7 +140,7 @@ export class ExcelMisSipService {
                     if (catElement && catElement.hasOwnProperty('subCatList') && catElement.subCatList.length !== 0) {
                         if (!excluded.subCatList) {
                             catElement.subCatList.forEach((subCatElement, index2) => {
-                                currentRowPos = currentRowPos + index1 + 2;
+                                currentRowPos = currentRowPos + 3;
 
                                 ws.getRow(currentRowPos).values = arrayOfHeaders[1];
                                 ws.columns = arrayOfHeaderStyle[1];
@@ -144,15 +155,10 @@ export class ExcelMisSipService {
                                     subCatElement.weightInPerc
                                 ]);
 
-                                if (subCatElement && subCatElement.hasOwnProperty('applicantList') && subCatElement.applicantList.length !== 0) {
-                                    if (!excluded.applicantList) {
-                                        if (subCatElement.applicantList !== 0) {
-                                            currentRowPos = currentRowPos + catElement.subCatList.length + 1;
-                                        } else {
+                                if (subCatElement && subCatElement.hasOwnProperty('schemeList') && subCatElement.schemeList.length !== 0) {
+                                    if (!excluded.schemeList) {
+                                        subCatElement.schemeList.forEach((schemeElement, index3) => {
                                             currentRowPos = currentRowPos + 2;
-                                        }
-
-                                        subCatElement.applicantList.forEach((schemeElement, index3) => {
                                             ws.getRow(currentRowPos).values = arrayOfHeaders[2];
                                             ws.columns = arrayOfHeaderStyle[2];
                                             headCell = ws.getRow(currentRowPos);
@@ -171,35 +177,35 @@ export class ExcelMisSipService {
                                                 schemeElement.weightInPerc,
                                             ]);
 
-                                            // if (schemeElement.applicantList.length !== 0) {
-                                            //     if (catElement.subCatList.length !== 0) {
-                                            //         currentRowPos = currentRowPos + catElement.subCatList.length + 1;
-                                            //     } else if (catElement.subCatList.length !== 0 && subCatElement.schemeList.length !== 0) {
-                                            //         currentRowPos = currentRowPos + catElement.subCatList.length + subCatElement.schemeList.length + 1;
-                                            //     } else {
-                                            //         currentRowPos = currentRowPos + 2;
-                                            //     }
+                                            if (schemeElement.applicantList.length !== 0) {
+                                                // if (catElement.subCatList.length !== 0) {
+                                                //     currentRowPos = currentRowPos + catElement.subCatList.length + 1;
+                                                // } else if (catElement.subCatList.length !== 0 && subCatElement.schemeList.length !== 0) {
+                                                //     currentRowPos = currentRowPos + catElement.subCatList.length + subCatElement.schemeList.length + 1;
+                                                // } else {
+                                                // }
 
-                                            //     schemeElement.applicantList.forEach((element, index4) => {
-                                            //         ws.getRow(currentRowPos).values = arrayOfHeaders[3];
-                                            //         ws.columns = arrayOfHeaderStyle[3];
-                                            //         headCell = ws.getRow(currentRowPos);
-                                            //         headCell.font = { bold: true };
+                                                schemeElement.applicantList.forEach((element, index4) => {
+                                                    currentRowPos = currentRowPos + 2;
+                                                    ws.getRow(currentRowPos).values = arrayOfHeaders[3];
+                                                    ws.columns = arrayOfHeaderStyle[3];
+                                                    headCell = ws.getRow(currentRowPos);
+                                                    headCell.font = { bold: true };
 
-                                            //         ws.addRow([
-                                            //             element.name,
-                                            //             element.schemeName,
-                                            //             element.folio,
-                                            //             element.registeredDate,
-                                            //             element.fromDate,
-                                            //             element.toDate,
-                                            //             element.toTriggerDay,
-                                            //             element.frequency,
-                                            //             element.amount,
-                                            //             element.weightInPerc,
-                                            //         ]);
-                                            //     });
-                                            // }
+                                                    ws.addRow([
+                                                        element.name,
+                                                        element.schemeName,
+                                                        element.folio,
+                                                        element.registeredDate,
+                                                        element.fromDate,
+                                                        element.toDate,
+                                                        element.toTriggerDay,
+                                                        element.frequency,
+                                                        element.amount,
+                                                        element.weightInPerc,
+                                                    ]);
+                                                });
+                                            }
                                         });
                                     }
                                 }
@@ -211,7 +217,7 @@ export class ExcelMisSipService {
                     if (catElement && catElement.hasOwnProperty('subCatList') && catElement.subCatList.length !== 0) {
                         if (!excluded.subCatList) {
                             catElement.subCatList.forEach((subCatElement, index2) => {
-                                currentRowPos = currentRowPos + index1 + 2;
+                                currentRowPos = currentRowPos + 2;
 
                                 ws.getRow(currentRowPos).values = arrayOfHeaders[1];
                                 ws.columns = arrayOfHeaderStyle[1];
@@ -226,15 +232,15 @@ export class ExcelMisSipService {
                                     subCatElement.weightInPerc
                                 ]);
 
-                                if (subCatElement.applicantList.length !== 0) {
-                                    if (!excluded.applicantList) {
-                                        if (subCatElement.applicantList !== 0) {
-                                            currentRowPos = currentRowPos + catElement.subCatList.length + 1;
-                                        } else {
-                                            currentRowPos = currentRowPos + 2;
-                                        }
+                                if (subCatElement.schemeList.length !== 0) {
+                                    if (!excluded.schemeList) {
+                                        // if (subCatElement.applicantList !== 0) {
+                                        //     currentRowPos = currentRowPos + catElement.subCatList.length + 1;
+                                        // } else {
+                                        // }
 
-                                        subCatElement.applicantList.forEach((schemeElement, index3) => {
+                                        subCatElement.schemeList.forEach((schemeElement, index3) => {
+                                            currentRowPos = currentRowPos + 2;
                                             ws.getRow(currentRowPos).values = arrayOfHeaders[2];
                                             ws.columns = arrayOfHeaderStyle[2];
                                             headCell = ws.getRow(currentRowPos);
@@ -281,15 +287,15 @@ export class ExcelMisSipService {
                                     } else {
                                         subCatElement.schemeList.forEach((schemeElement, index3) => {
                                             if (schemeElement.applicantList.length !== 0) {
-                                                if (catElement.subCatList.length !== 0) {
-                                                    currentRowPos = currentRowPos + catElement.subCatList.length + 1;
-                                                } else if (catElement.subCatList.length !== 0 && subCatElement.schemeList.length !== 0) {
-                                                    currentRowPos = currentRowPos + catElement.subCatList.length + subCatElement.schemeList.length + 1;
-                                                } else {
-                                                    currentRowPos = currentRowPos + 2;
-                                                }
+                                                // if (catElement.subCatList.length !== 0) {
+                                                //     currentRowPos = currentRowPos + catElement.subCatList.length + 1;
+                                                // } else if (catElement.subCatList.length !== 0 && subCatElement.schemeList.length !== 0) {
+                                                //     currentRowPos = currentRowPos + catElement.subCatList.length + subCatElement.schemeList.length + 1;
+                                                // } else {
+                                                // }
 
                                                 schemeElement.applicantList.forEach((element, index4) => {
+                                                    currentRowPos = currentRowPos + 2;
                                                     ws.getRow(currentRowPos).values = arrayOfHeaders[3];
                                                     ws.columns = arrayOfHeaderStyle[3];
                                                     headCell = ws.getRow(currentRowPos);
@@ -310,15 +316,15 @@ export class ExcelMisSipService {
                             });
                         } else {
                             catElement.subCatList.forEach((subCatElement, index2) => {
-                                if (subCatElement.applicantList.length !== 0) {
-                                    if (subCatElement.subCatList !== 0) {
-                                        currentRowPos = currentRowPos + catElement.subCatList.length + 1;
-                                    } else {
-                                        currentRowPos = currentRowPos + 2;
-                                    }
+                                if (subCatElement.schemeList.length !== 0) {
+                                    // if (subCatElement.subCatList !== 0) {
+                                    //     currentRowPos = currentRowPos + catElement.subCatList.length + 1;
+                                    // } else {
+                                    // }
 
-                                    subCatElement.applicantList.forEach((schemeElement, index3) => {
-                                        if (!excluded.applicantList) {
+                                    subCatElement.schemeList.forEach((schemeElement, index3) => {
+                                        if (!excluded.schemeList) {
+                                            currentRowPos = currentRowPos + 2;
                                             ws.getRow(currentRowPos).values = arrayOfHeaders[2];
                                             ws.columns = arrayOfHeaderStyle[2];
                                             headCell = ws.getRow(currentRowPos);
@@ -338,15 +344,15 @@ export class ExcelMisSipService {
                                             ]);
 
                                             if (schemeElement && schemeElement.hasOwnProperty('applicantList') && schemeElement.applicantList.length !== 0) {
-                                                if (catElement.subCatList.length !== 0) {
-                                                    currentRowPos = currentRowPos + catElement.subCatList.length + 1;
-                                                } else if (catElement.subCatList.length !== 0 && subCatElement.schemeList.length !== 0) {
-                                                    currentRowPos = currentRowPos + catElement.subCatList.length + subCatElement.schemeList.length + 1;
-                                                } else {
-                                                    currentRowPos = currentRowPos + 2;
-                                                }
+                                                // if (catElement.subCatList.length !== 0) {
+                                                //     currentRowPos = currentRowPos + catElement.subCatList.length + 1;
+                                                // } else if (catElement.subCatList.length !== 0 && subCatElement.schemeList.length !== 0) {
+                                                //     currentRowPos = currentRowPos + catElement.subCatList.length + subCatElement.schemeList.length + 1;
+                                                // } else {
+                                                // }
 
                                                 schemeElement.applicantList.forEach((element, index4) => {
+                                                    currentRowPos = currentRowPos + 2;
                                                     ws.getRow(currentRowPos).values = arrayOfHeaders[3];
                                                     ws.columns = arrayOfHeaderStyle[3];
                                                     headCell = ws.getRow(currentRowPos);
@@ -362,15 +368,15 @@ export class ExcelMisSipService {
                                             }
                                         } else {
                                             if (schemeElement.applicantList.length !== 0) {
-                                                if (catElement.subCatList.length !== 0) {
-                                                    currentRowPos = currentRowPos + catElement.subCatList.length + 1;
-                                                } else if (catElement.subCatList.length !== 0 && subCatElement.schemeList.length !== 0) {
-                                                    currentRowPos = currentRowPos + catElement.subCatList.length + subCatElement.schemeList.length + 1;
-                                                } else {
-                                                    currentRowPos = currentRowPos + 2;
-                                                }
+                                                // if (catElement.subCatList.length !== 0) {
+                                                //     currentRowPos = currentRowPos + catElement.subCatList.length + 1;
+                                                // } else if (catElement.subCatList.length !== 0 && subCatElement.schemeList.length !== 0) {
+                                                //     currentRowPos = currentRowPos + catElement.subCatList.length + subCatElement.schemeList.length + 1;
+                                                // } else {
+                                                // }
 
                                                 schemeElement.applicantList.forEach((element, index4) => {
+                                                    currentRowPos = currentRowPos + 2;
                                                     ws.getRow(currentRowPos).values = arrayOfHeaders[3];
                                                     ws.columns = arrayOfHeaderStyle[3];
                                                     headCell = ws.getRow(currentRowPos);
@@ -424,7 +430,7 @@ export class ExcelMisSipService {
                 if (amcElement.schemeList.length !== 0) {
                     if (!excluded.schemeList) {
                         amcElement.schemeList.forEach((schemeElement, index2) => {
-                            currentRowPos = currentRowPos + arrayOfExcelData.length + 1;
+                            currentRowPos = currentRowPos + 2;
                             ws.getRow(currentRowPos).values = arrayOfHeaders[1];
                             ws.columns = arrayOfHeaderStyle[1];
                             headCell = ws.getRow(currentRowPos);
@@ -439,7 +445,7 @@ export class ExcelMisSipService {
                             if (schemeElement.investorList.length !== 0) {
                                 if (!excluded.investorList) {
                                     schemeElement.investorList.forEach((investorElement, index2) => {
-                                        currentRowPos = currentRowPos + arrayOfExcelData.length + 2;
+                                        currentRowPos = currentRowPos + 2;
                                         ws.getRow(currentRowPos).values = arrayOfHeaders[2];
                                         ws.columns = arrayOfHeaderStyle[2];
                                         headCell = ws.getRow(currentRowPos);
@@ -455,7 +461,7 @@ export class ExcelMisSipService {
                                         if (investorElement.applicantList.length !== 0) {
                                             if (!excluded.applicantList) {
                                                 investorElement.applicantList.forEach(applicantElement => {
-                                                    currentRowPos = currentRowPos + investorElement.applicantList.length + 2;
+                                                    currentRowPos = currentRowPos + 2;
 
                                                     ws.getRow(currentRowPos).values = arrayOfHeaders[3];
                                                     ws.columns = arrayOfHeaderStyle[3];
@@ -471,7 +477,7 @@ export class ExcelMisSipService {
                                                         applicantElement.toDate,
                                                         applicantElement.triggerDay,
                                                         applicantElement.frequency,
-                                                        applicantElement.sipAmount,
+                                                        applicantElement.amount,
                                                         applicantElement.weightInPerc
                                                     ]);
                                                 });
@@ -487,20 +493,42 @@ export class ExcelMisSipService {
                         amcElement.schemeList.forEach((schemeElement, index2) => {
                             if (schemeElement.investorList.length !== 0) {
                                 if (!excluded.investorList) {
-                                    schemeElement.investorList.forEach(applicantElement => {
-                                        currentRowPos = currentRowPos + schemeElement.investorList.length + 1;
+                                    schemeElement.investorList.forEach(investorElement => {
+                                        currentRowPos = currentRowPos + 2;
 
                                         ws.getRow(currentRowPos).values = arrayOfHeaders[2];
                                         ws.columns = arrayOfHeaderStyle[2];
                                         headCell = ws.getRow(currentRowPos);
                                         headCell.font = { bold: true };
                                         ws.addRow([
-                                            applicantElement.index,
-                                            applicantElement.name,
-                                            applicantElement.sipAmount,
-                                            applicantElement.sipCount,
-                                            applicantElement.weightInPerc
+                                            investorElement.index,
+                                            investorElement.name,
+                                            investorElement.sipAmount,
+                                            investorElement.sipCount,
+                                            investorElement.weightInPerc
                                         ]);
+                                        if (investorElement.applicantList.length !== 0) {
+                                            investorElement.applicantList.forEach(element => {
+                                                currentRowPos = currentRowPos + 2;
+                                                ws.getRow(currentRowPos).values = arrayOfHeaders[3];
+                                                ws.columns = arrayOfHeaderStyle[3];
+                                                headCell = ws.getRow(currentRowPos);
+                                                headCell.font = { bold: true };
+                                                ws.addRow([
+                                                    element.index,
+                                                    element.name,
+                                                    element.schemeName,
+                                                    element.folio,
+                                                    element.registeredDate,
+                                                    element.fromDate,
+                                                    element.toDate,
+                                                    element.triggerDay,
+                                                    element.frequency,
+                                                    element.amount,
+                                                    element.weightInPerc,
+                                                ]);
+                                            });
+                                        }
                                     });
                                 }
                             }
@@ -544,12 +572,12 @@ export class ExcelMisSipService {
                 if (clientElement.investorList.length !== 0) {
                     if (!excluded.investorList) {
                         clientElement.investorList.forEach((investorElement, index2) => {
-                            currentRowPos = currentRowPos + arrayOfExcelData.length + 1;
+                            currentRowPos = currentRowPos + 2;
                             ws.getRow(currentRowPos).values = arrayOfHeaders[1];
                             ws.columns = arrayOfHeaderStyle[1];
                             headCell = ws.getRow(currentRowPos);
                             headCell.font = { bold: true };
-                            index: 1
+
                             ws.addRow([
                                 investorElement.index,
                                 investorElement.name,
@@ -567,7 +595,7 @@ export class ExcelMisSipService {
                             if (investorElement.schemeList.length !== 0) {
                                 if (!excluded.schemeList) {
                                     investorElement.schemeList.forEach(schemeElement => {
-                                        currentRowPos = currentRowPos + investorElement.schemeList.length + 1;
+                                        currentRowPos = currentRowPos + 2;
 
                                         ws.getRow(currentRowPos).values = arrayOfHeaders[2];
                                         ws.columns = arrayOfHeaderStyle[2];
@@ -586,14 +614,14 @@ export class ExcelMisSipService {
 
                                             if (!excluded.schemeFolioList) {
                                                 schemeElement.schemeFolioList.forEach(element => {
-                                                    if (investorElement.schemeList.length !== 0) {
-                                                        currentRowPos = currentRowPos + investorElement.schemeList.length + 1;
-                                                    } else if (investorElement.schemeList.length !== 0 && schemeElement.schemeFolioList.length !== 0) {
-                                                        currentRowPos = currentRowPos + investorElement.schemeList.length + schemeElement.schemeFolioList.length + 1;
-                                                    } else {
-                                                        currentRowPos = currentRowPos + 2;
-                                                    }
+                                                    // if (investorElement.schemeList.length !== 0) {
+                                                    //     currentRowPos = currentRowPos + investorElement.schemeList.length + 1;
+                                                    // } else if (investorElement.schemeList.length !== 0 && schemeElement.schemeFolioList.length !== 0) {
+                                                    //     currentRowPos = currentRowPos + investorElement.schemeList.length + schemeElement.schemeFolioList.length + 1;
+                                                    // } else {
+                                                    // }
 
+                                                    currentRowPos = currentRowPos + 2;
                                                     ws.getRow(currentRowPos).values = arrayOfHeaders[3];
 
                                                     ws.columns = arrayOfHeaderStyle[3];
@@ -616,13 +644,14 @@ export class ExcelMisSipService {
                                         if (schemeElement.schemeFolioList.length !== 0) {
                                             if (!excluded.schemeFolioList) {
                                                 schemeElement.schemeFolio.forEach(element => {
-                                                    if (investorElement.schemeList.length !== 0) {
-                                                        currentRowPos = currentRowPos + investorElement.schemeList.length + 1;
-                                                    } else if (investorElement.schemeList.length !== 0 && schemeElement.schemeFolioList.length !== 0) {
-                                                        currentRowPos = currentRowPos + investorElement.schemeList.length + schemeElement.schemeFolioList.length + 1;
-                                                    } else {
-                                                        currentRowPos = currentRowPos + 2;
-                                                    }
+                                                    // if (investorElement.schemeList.length !== 0) {
+                                                    //     currentRowPos = currentRowPos + investorElement.schemeList.length + 1;
+                                                    // } else if (investorElement.schemeList.length !== 0 && schemeElement.schemeFolioList.length !== 0) {
+                                                    //     currentRowPos = currentRowPos + investorElement.schemeList.length + schemeElement.schemeFolioList.length + 1;
+                                                    // } else {
+                                                    // }
+                                                    currentRowPos = currentRowPos + 2;
+
                                                     ws.addRow([
                                                         element.index,
                                                         element.name,
@@ -643,13 +672,12 @@ export class ExcelMisSipService {
                             if (investorElement.schemeList.length !== 0) {
                                 if (!excluded.schemeList) {
                                     investorElement.schemeList.forEach(schemeElement => {
-                                        currentRowPos = currentRowPos + investorElement.schemeList.length + 1;
+                                        currentRowPos = currentRowPos + 2;
 
                                         ws.getRow(currentRowPos).values = arrayOfHeaders[2];
                                         ws.columns = arrayOfHeaderStyle[2];
                                         headCell = ws.getRow(currentRowPos);
                                         headCell.font = { bold: true };
-
 
                                         ws.addRow([
                                             schemeElement.index,
@@ -662,14 +690,14 @@ export class ExcelMisSipService {
 
                                             if (!excluded.schemeFolioList) {
                                                 schemeElement.schemeFolioList.forEach(element => {
-                                                    if (investorElement.schemeList.length !== 0) {
-                                                        currentRowPos = currentRowPos + investorElement.schemeList.length + 1;
-                                                    } else if (investorElement.schemeList.length !== 0 && schemeElement.schemeFolioList.length !== 0) {
-                                                        currentRowPos = currentRowPos + investorElement.schemeList.length + schemeElement.schemeFolioList.length + 1;
-                                                    } else {
-                                                        currentRowPos = currentRowPos + 2;
-                                                    }
+                                                    // if (investorElement.schemeList.length !== 0) {
+                                                    //     currentRowPos = currentRowPos + investorElement.schemeList.length + 1;
+                                                    // } else if (investorElement.schemeList.length !== 0 && schemeElement.schemeFolioList.length !== 0) {
+                                                    //     currentRowPos = currentRowPos + investorElement.schemeList.length + schemeElement.schemeFolioList.length + 1;
+                                                    // } else {
+                                                    // }
 
+                                                    currentRowPos = currentRowPos + 2;
                                                     ws.getRow(currentRowPos).values = arrayOfHeaders[3];
                                                     ws.columns = arrayOfHeaderStyle[3];
                                                     headCell = ws.getRow(currentRowPos);
@@ -691,14 +719,14 @@ export class ExcelMisSipService {
                                         if (schemeElement.schemeFolioList.length !== 0) {
                                             if (!excluded.schemeFolioList) {
                                                 schemeElement.schemeFolioList.forEach(element => {
-                                                    if (investorElement.schemeList.length !== 0) {
-                                                        currentRowPos = currentRowPos + investorElement.schemeList.length + 1;
-                                                    } else if (investorElement.schemeList.length !== 0 && schemeElement.schemeFolioList.length !== 0) {
-                                                        currentRowPos = currentRowPos + investorElement.schemeList.length + schemeElement.schemeFolioList.length + 1;
-                                                    } else {
-                                                        currentRowPos = currentRowPos + 2;
-                                                    }
+                                                    // if (investorElement.schemeList.length !== 0) {
+                                                    //     currentRowPos = currentRowPos + investorElement.schemeList.length + 1;
+                                                    // } else if (investorElement.schemeList.length !== 0 && schemeElement.schemeFolioList.length !== 0) {
+                                                    //     currentRowPos = currentRowPos + investorElement.schemeList.length + schemeElement.schemeFolioList.length + 1;
+                                                    // } else {
+                                                    // }
 
+                                                    currentRowPos = currentRowPos + 2;
                                                     ws.getRow(currentRowPos).values = arrayOfHeaders[3];
                                                     ws.columns = arrayOfHeaderStyle[3];
                                                     headCell = ws.getRow(currentRowPos);
@@ -721,8 +749,6 @@ export class ExcelMisSipService {
                     }
                 }
             });
-
-
         }
 
         if (choice === 'applicant-wise-aum-mis') {
@@ -1192,6 +1218,10 @@ export class ExcelMisSipService {
         // values for schemeName
         // else 
         // continue
+
+        const last = ws.addRow(totalArray);
+        last.font = { bold: true };
+
         const buf = await wb.xlsx.writeBuffer();
         let name;
         if (userData.hasOwnProperty('fullName')) {
@@ -1213,88 +1243,88 @@ export class ExcelMisSipService {
         const header = headers;
         const data = trTd;
         for (const cells in rows) {
-          for (const c in rows[cells].cells) {
-            if (parseInt(c) != rows[cells].cells.length) {
-              if (cells == '0' && rows[cells].cells[c].innerText != undefined) {
-                headers.push(rows[cells].cells[c].innerText);
-              } else if (cells == rows.length - 1 + '' && rows[cells].cells[c].innerText != undefined) {
-                footer.push(rows[cells].cells[c].innerText);
-              } else {
-                if (rows[cells].cells[c].innerText != undefined) {
-                  if (td.length >= parseInt(c) + 1) {
-                    trTd.push(td);
-                    td = [];
-                  }
-                  td.push(rows[cells].cells[c].innerText);
+            for (const c in rows[cells].cells) {
+                if (parseInt(c) != rows[cells].cells.length) {
+                    if (cells == '0' && rows[cells].cells[c].innerText != undefined) {
+                        headers.push(rows[cells].cells[c].innerText);
+                    } else if (cells == rows.length - 1 + '' && rows[cells].cells[c].innerText != undefined) {
+                        footer.push(rows[cells].cells[c].innerText);
+                    } else {
+                        if (rows[cells].cells[c].innerText != undefined) {
+                            if (td.length >= parseInt(c) + 1) {
+                                trTd.push(td);
+                                td = [];
+                            }
+                            td.push(rows[cells].cells[c].innerText);
+                        }
+                    }
                 }
-              }
             }
-          }
         }
-    
+
         trTd.push(td);
         console.log(headers, 'dataSource excel');
         console.log(td, 'dataSource excel');
         console.log(trTd, 'dataSource excel');
         console.log(footer, 'dataSource excel');
-    
-    
+
+
         // Create workbook and worksheet
         const workbook = new Workbook();
         const worksheet = workbook.addWorksheet(this.advisor.name + '_' + title + '_' + 'Data');
-    
-    
+
+
         // Add Row and formatting
         worksheet.addRow([]);
         const titleRow = worksheet.addRow([title]);
         titleRow.font = { name: 'Comic Sans MS', family: 4, size: 16, underline: 'double', bold: true };
         worksheet.addRow([]);
-    
+
         worksheet.addRow(['Advisor', this.advisor.name]);
         worksheet.addRow(['Client', this.client ? this.client.name : '']);
         worksheet.addRow([]);
-    
+
         // Add Header Row
         const headerRow = worksheet.addRow(header);
-    
+
         // Cell Style : Fill and Border
         headerRow.eachCell((cell, indexNumber) => {
-          cell.fill = {
-            type: 'pattern',
-            pattern: 'solid',
-            fgColor: { argb: 'FFFFFF00' },
-            bgColor: { argb: 'FF0000FF' }
-          };
-          cell.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
+            cell.fill = {
+                type: 'pattern',
+                pattern: 'solid',
+                fgColor: { argb: 'FFFFFF00' },
+                bgColor: { argb: 'FF0000FF' }
+            };
+            cell.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
         });
         // worksheet.addRows(data);
-    
-    
+
+
         // Add Data and Conditional Formatting
         data.forEach(d => {
-          const row = worksheet.addRow(d);
-          // let qty = row.getCell(5);
-          const color = 'FF99FF99';
+            const row = worksheet.addRow(d);
+            // let qty = row.getCell(5);
+            const color = 'FF99FF99';
         }
         );
-    
+
         worksheet.getColumn(2).width = 30;
         const footerRow = worksheet.addRow(footer);
-    
-    
+
+
         footerRow.eachCell((cell, indexNumber) => {
-          footerRow.fill = {
-            type: 'pattern',
-            pattern: 'solid',
-            fgColor: { argb: 'FFCCFFE5' }
-          };
-          cell.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
+            footerRow.fill = {
+                type: 'pattern',
+                pattern: 'solid',
+                fgColor: { argb: 'FFCCFFE5' }
+            };
+            cell.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
         });
         workbook.xlsx.writeBuffer().then((data) => {
-          const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-          fs.saveAs(blob, title + '.xlsx');
+            const blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+            fs.saveAs(blob, title + '.xlsx');
         });
         return data;
-      }
+    }
 
 }
