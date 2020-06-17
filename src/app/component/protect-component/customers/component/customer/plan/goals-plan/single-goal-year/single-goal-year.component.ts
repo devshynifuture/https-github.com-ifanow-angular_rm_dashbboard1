@@ -88,6 +88,13 @@ export class SingleGoalYearComponent implements OnInit {
         obj['currentAge'] = this.singleYearGoalForm.get('goalMember').value.familyMemberAge;
         obj['whatAgeBuyCar'] = this.singleYearGoalForm.get('age').value;
         obj['goalPresentValue'] = this.singleYearGoalForm.get('cost').value;
+
+        ageDiff = this.singleYearGoalForm.get('age').value - this.singleYearGoalForm.get('goalMember').value.familyMemberAge;
+        futureDate = new Date(currentDate);
+        futureDate.setFullYear(futureDate.getFullYear() + ageDiff);
+        obj['goalStartDate'] = this.datePipe.transform(futureDate, 'yyyy-MM-dd');
+        obj['goalEndDate'] = this.datePipe.transform(futureDate, 'yyyy-MM-dd');
+        obj['savingEndDate'] = this.datePipe.transform(futureDate, 'yyyy-MM-dd');
         break;
       case AppConstants.MARRIAGE_GOAL: // Marriage
         obj['currentAge'] = this.singleYearGoalForm.get('goalMember').value.familyMemberAge;
@@ -95,6 +102,13 @@ export class SingleGoalYearComponent implements OnInit {
         obj['clientOrFamilyMember'] = (this.singleYearGoalForm.get('goalMember').value.relationshipId === 0) ? 1 : 2;
         obj['marryAtAge'] = this.singleYearGoalForm.get('age').value;
         obj['goalPresentValue'] = this.singleYearGoalForm.get('cost').value;
+        
+        ageDiff = this.singleYearGoalForm.get('age').value - this.singleYearGoalForm.get('goalMember').value.familyMemberAge;
+        futureDate = new Date(currentDate);
+        futureDate.setFullYear(futureDate.getFullYear() + ageDiff);
+        obj['goalStartDate'] = this.datePipe.transform(futureDate, 'yyyy-MM-dd');
+        obj['goalEndDate'] = this.datePipe.transform(futureDate, 'yyyy-MM-dd');
+        obj['savingEndDate'] = this.datePipe.transform(futureDate, 'yyyy-MM-dd');
         break;
       case AppConstants.EMERGENCY_GOAL: // Emergency
         obj['goalTargetInMonth'] = this.singleYearGoalForm.get('age').value;
@@ -108,12 +122,14 @@ export class SingleGoalYearComponent implements OnInit {
         obj['goalFV'] = this.singleYearGoalForm.get('cost').value;
         break;
       case AppConstants.BIG_SPEND_GOAL: // Big Spends
-        obj['goalStartDate'] = this.singleYearGoalForm.get('age').value;
-        obj['goalPresentValue'] = this.singleYearGoalForm.get('cost').value;
-        break;
       case AppConstants.OTHERS_GOAL: // Others
-        obj['goalStartDate'] = this.singleYearGoalForm.get('age').value;
         obj['goalPresentValue'] = this.singleYearGoalForm.get('cost').value;
+
+        futureDate = new Date(currentDate);
+        futureDate.setFullYear(this.singleYearGoalForm.get('age').value);
+        obj['goalStartDate'] = this.datePipe.transform(futureDate, 'yyyy-MM-dd');
+        obj['goalEndDate'] = this.datePipe.transform(futureDate, 'yyyy-MM-dd');
+        obj['savingEndDate'] = this.datePipe.transform(futureDate, 'yyyy-MM-dd');
         break;
       default:
         console.error('unknown goal id found');
