@@ -56,7 +56,7 @@ export class BulkCapitalGainDetailedComponent implements OnInit {
     this.mfService.getCapitalDetailed()
       .subscribe(res => {
         this.getObj = res; //used for getting mutual fund data coming from main gain call
-        console.log('capital summary data here =',this.getObj)
+        console.log('capital getCapitalDetailed data here =',this.getObj)
         if (this.getObj.hasOwnProperty('dataSource')&& this.getObj.hasOwnProperty('dataSource1')&&this.getObj.hasOwnProperty('dataSource2')) {
           this.getAllData()
         }
