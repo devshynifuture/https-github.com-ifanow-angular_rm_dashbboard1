@@ -327,8 +327,9 @@
         }
         
         .pointUl {
-            display: block;
-            margin-top: 60px;
+            display: flex;
+            flex-direction: column;
+            margin-top: 8px;
             li {
                 text-align: left;
                 display: flex;
@@ -443,7 +444,9 @@
         
         .pointUlNew {
             display: block;
-            margin-top: 60px;
+            margin-top: 8px;
+            display: flex;
+            flex-direction: column;
             li {
                 text-align: left;
                 // display: flex;

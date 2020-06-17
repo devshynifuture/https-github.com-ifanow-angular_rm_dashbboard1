@@ -24,6 +24,7 @@ export class PurchaseTrasactionComponent implements OnInit {
   constructor(public processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService,
               private subInjectService: SubscriptionInject, private fb: FormBuilder,
               private eventService: EventService,
+              private utilService: UtilService,
               private customerService: CustomerService) {
   }
 
@@ -722,6 +723,7 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
 
   AddMultiTransaction() {
+    this.utilService.scrollToTopForRightSlider();
     if (this.validateSinglePurchase()) {
       if (this.isEdit != true) {
         this.id++;
