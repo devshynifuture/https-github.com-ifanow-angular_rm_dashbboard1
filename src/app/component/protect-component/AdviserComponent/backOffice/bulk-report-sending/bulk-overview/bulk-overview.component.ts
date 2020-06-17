@@ -13,10 +13,6 @@ import { AuthService } from 'src/app/auth-service/authService';
 
 })
 export class BulkOverviewComponent implements OnInit {
-
-  sendData = [{
-    clientId: 93902
-  }]
   getObj: any;
   dataSource3: any;
   dataSource: any;
@@ -46,6 +42,7 @@ export class BulkOverviewComponent implements OnInit {
   inputData: any;
   clientId: any;
   totalValue: any;
+  sendData: any;
 
   constructor(public overview: MutualFundOverviewComponent,
     private utilService : UtilService,
@@ -55,11 +52,11 @@ export class BulkOverviewComponent implements OnInit {
   set data(data) {
     this.inputData = data;
     console.log('This is Input data of proceed ', data);
-    if(data.clientId){
+    if(data){
       this.clientId = data.clientId;
       this.sendData = data
-      this.userInfo = data.userInfo.advisorData;
-      this.clientData = data.userInfo.clientData;
+      this.userInfo =  (data.userInfo)? data.userInfo.advisorData: '-';
+      this.clientData = (data.userInfo)?  data.userInfo.clientData: '-';
       this.ngOnInit()
     }
   }
@@ -82,8 +79,11 @@ export class BulkOverviewComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.pieChart('piechartMutualFund');
-    this.generatePdf()
+    let para = document.getElementById('templateOver');
+    if(para.innerHTML){
+      this.pieChart('piechartMutualFund');
+      this.generatePdf()
+    }
   }
   getUploadData() {
     this.getObj = this.overview.uploadData(this.sendData)
@@ -112,7 +112,7 @@ export class BulkOverviewComponent implements OnInit {
       landscape: true,
       key: 'showPieChart',
       svg: this.svg,
-      clientId : 93902,
+      clientId : this.sendData.clientId,
       advisorId : AuthService.getAdvisorId(),
       fromEmail: 'devshyni@futurewise.co.in',
       toEmail: 'devshyni@futurewise.co.in'
