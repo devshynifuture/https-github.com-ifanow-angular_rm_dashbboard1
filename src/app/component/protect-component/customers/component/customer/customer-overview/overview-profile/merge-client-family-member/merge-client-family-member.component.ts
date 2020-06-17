@@ -145,6 +145,7 @@ export class MergeClientFamilyMemberComponent implements OnInit {
     this.filteredStates = this.stateCtrl.valueChanges
       .pipe(
         startWith(''),
+        map(value => typeof value === 'string' ? value : value.name),
         map(state => {
           if (state) {
             const filterValue = state.toLowerCase();
@@ -162,6 +163,9 @@ export class MergeClientFamilyMemberComponent implements OnInit {
       );
   }
 
+  displayFn(user): string {
+    return user && user.name ? user.name : '';
+  }
 
   getUniqueListBy(arr, key) {
     return [...new Map(arr.map(item => [item[key], item])).values()]
@@ -174,6 +178,7 @@ export class MergeClientFamilyMemberComponent implements OnInit {
     };
   }
   optionSelected(value) {
+    this.stateCtrl.setValue(value.name)
     if (this.addClientList.length > 0 && this.addClientList.some(element => element == value.displayName)) {
       this.eventService.openSnackBar("Client is already converted into family member", "Dismiss");
       return;
