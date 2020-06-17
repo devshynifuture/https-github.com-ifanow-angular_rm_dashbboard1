@@ -26,6 +26,7 @@ export class MfServiceService {
   private sendData = new BehaviorSubject('');
   private sendDataSummary = new BehaviorSubject('');
   private sendDataTansaction = new BehaviorSubject('')
+  private sendDataCapitalSummary = new BehaviorSubject('')
   getPersonalDetails(data) {
     const obj = {
       id: data
@@ -660,5 +661,11 @@ export class MfServiceService {
   }
   getTransactionData(){
     return this.sendDataTansaction.asObservable();
+  }
+  setCapitalSummary(value){
+    this.sendDataCapitalSummary.next(value);
+  }
+  getCapitalSummary(){
+    return this.sendDataCapitalSummary.asObservable();
   }
 }

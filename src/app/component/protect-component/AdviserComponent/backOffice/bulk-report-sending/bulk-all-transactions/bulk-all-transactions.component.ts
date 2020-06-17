@@ -43,11 +43,13 @@ export class BulkAllTransactionsComponent implements OnInit {
   set data(data) {
     this.inputData = data;
     console.log('This is Input data of proceed ', data);
+    if(data){
     this.sendData = data
     this.mode = data.reportType
     this.userInfo =  data.userInfo.advisorData
     this.clientData = data.userInfo.clientData
     this.ngOnInit()
+    }
   }
   get data() {
     return this.inputData;
@@ -89,10 +91,10 @@ export class BulkAllTransactionsComponent implements OnInit {
       const para = document.getElementById('template');
      let obj = {
         htmlInput: para.innerHTML,
-        name: this.mode+this.clientData.name,
+        name: this.sendData.mode+this.clientData.name,
         landscape: true,
         key: 'showPieChart',
-        clientId : 93902,
+        clientId : this.sendData.clientId,
         advisorId : AuthService.getAdvisorId(),
         fromEmail: 'devshyni@futurewise.co.in',
         toEmail: 'devshyni@futurewise.co.in'
