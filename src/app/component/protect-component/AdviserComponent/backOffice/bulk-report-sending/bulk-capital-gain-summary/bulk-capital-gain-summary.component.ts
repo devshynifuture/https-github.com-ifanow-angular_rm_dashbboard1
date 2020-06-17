@@ -13,6 +13,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 })
 export class BulkCapitalGainSummaryComponent implements OnInit {
   GTdividendReinvestment=0;
+  totaldividendPayout =0;
   GTReinvesment=0;
   isLoading = false;
   GTdividendPayout : any;
