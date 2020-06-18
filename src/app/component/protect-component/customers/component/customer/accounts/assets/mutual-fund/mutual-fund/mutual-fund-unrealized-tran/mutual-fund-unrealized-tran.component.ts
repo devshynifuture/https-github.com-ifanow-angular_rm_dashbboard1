@@ -75,6 +75,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   unrealisedData: TableVirtualScrollDataSource<any>;
   dataTransaction: any;
   mode: string;
+  isBulkEmailing: boolean;
 
   constructor(public dialog: MatDialog, private datePipe: DatePipe,
     private subInjectService: SubscriptionInject, private utilService: UtilService,
@@ -98,6 +99,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     if (data.clientId) {
       this.clientId = data.clientId
       this.addedData = true;
+      this.isBulkEmailing=true;
       if(data.mode == 'unrealisedTransactions'){
         this.viewMode = 'Unrealized Transactions'
         this.mode = 'Unrealized Transactions'
@@ -432,7 +434,13 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
           this.mutualFund = this.mfData
           this.getTransactionTypeData();
         this.setDefaultFilterData = this.mfService.setFilterData(this.mutualFund, this.rightFilterData, this.displayedColumns);
+
         this.mfService.setDataForMfGet(this.mfData);
+        if(this.isBulkEmailing && this.viewMode == 'All Transactions'){
+          this.filterForBulkEmailing(data.mutualFundList);
+        }else{
+          this.getUnrealizedData();
+        }
         this.mfService.setMfData(this.mfData);
         this.mfService.setFilterValues(this.setDefaultFilterData);
       }
@@ -447,6 +455,28 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       //   this.mfData.advisorData = this.mfService.getPersonalDetails(this.advisorId);
       // }
     }
+  }
+  filterForBulkEmailing(data){
+    if(data){
+      let categoryWiseMfList = [];
+      data.forEach(element => {
+      categoryWiseMfList.push(element.id)
+    });
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      toDate: '2020-06-18',
+      id: categoryWiseMfList
+    };
+    this.custumService.getMutualFund(obj).subscribe(
+      data => {
+        console.log(data);
+        let response = this.mfService.doFiltering(data)
+        this.asyncFilter(response.mutualFundList);
+      }
+    );
+    }
+    
   }
   getTransactionTypeData() {
     const obj = {
@@ -515,7 +545,11 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         // console.log(data);
         // this.mutualFund.mutualFundList = data;
         // this.asyncFilter(this.mutualFund.mutualFundList);
-        this.asyncFilter(data);
+        if(this.isBulkEmailing){
+          this.filterForBulkEmailing(data);
+        }else{
+          this.asyncFilter(data);
+        }
 
       }, (error) => {
         this.isLoading = false;
