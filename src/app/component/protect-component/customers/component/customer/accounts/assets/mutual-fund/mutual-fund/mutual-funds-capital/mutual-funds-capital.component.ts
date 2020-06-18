@@ -77,6 +77,7 @@ export class MutualFundsCapitalComponent implements OnInit {
   GTdividendReinvestment=0;
   fragmentData = { isSpinner: false };
   setCapitaSummary: any;
+  bulkData: any;
   // capitalGainData: any;
   constructor(private pdfGen: PdfGenService, private excel: ExcelGenService, private UtilService: UtilService, private custumService: CustomerService, private eventService: EventService, private reconService: ReconciliationService, private MfServiceService: MfServiceService, private subInjectService: SubscriptionInject) { }
   @ViewChild('tableEl', { static: false }) tableEl;
@@ -84,6 +85,7 @@ export class MutualFundsCapitalComponent implements OnInit {
   @ViewChild('tableEl3', { static: false }) tableEl3;
   uploadData(data) {
     if (data.clientId) {
+      this.bulkData = data
       this.clientId = data.clientId
       this.ngOnInit()
     }
@@ -108,9 +110,14 @@ export class MutualFundsCapitalComponent implements OnInit {
       .subscribe(res => {
         this.mutualFund = res;
       })
-    this.fromDateYear = 2019;
+    if(this.bulkData.from){
+      this.fromDateYear = this.bulkData.from;
+      this.toDateYear = this.bulkData.to;
+    }else{
+      this.fromDateYear = 2019;
+      this.toDateYear = 2020;
+    }
     this.fromDate = new Date(this.fromDateYear, 3, 1);
-    this.toDateYear = 2020;
     this.toDate = new Date(this.toDateYear, 2, 31);
     this.grandFatheringEffect = true;
     // this.getAdvisorData();

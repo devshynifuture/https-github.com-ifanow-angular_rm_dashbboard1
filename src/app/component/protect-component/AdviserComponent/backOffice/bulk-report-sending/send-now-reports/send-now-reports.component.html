@@ -146,8 +146,7 @@
                     <div class="col-md-12 p-0">
                         <mat-form-field class="ba-date">
                             <input class="form-control br-0 b-0" matInput [matDatepicker]="picker1" readonly
-                                [(ngModel)]="fromDate"
-                                (dateChange)="changeFromDate($event,'fromDate')">
+                                [(ngModel)]="fromDate" (dateChange)="changeFromDate($event,'fromDate')">
                             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                             <mat-datepicker #picker1></mat-datepicker>
                         </mat-form-field>
@@ -159,7 +158,7 @@
                     <div class="col-md-12 p-0">
                         <mat-form-field class="ba-date">
                             <input class="form-control br-0 b-0" matInput [matDatepicker]="picker2" readonly
-                                [(ngModel)]="toDate"(dateChange)="changeFromDate($event,'toDate')">
+                                [(ngModel)]="toDate" (dateChange)="changeFromDate($event,'toDate')">
                             <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                             <mat-datepicker #picker2></mat-datepicker>
                         </mat-form-field>
@@ -205,14 +204,9 @@
                     <mat-form-field>
                         <mat-select class="form-control">
                             <mat-option> Select finacial year </mat-option>
-                            <mat-list-item role="listitem" *ngFor="let item of financialYears">
-                                <mat-radio-button [checked]="item.selected" (change)="changeFinancialYear(item)"
-                                    [disabled]="item.disabled">
-                                    <span [matTooltipPosition]="'right'"
-                                        [matTooltip]="item.disabled ? 'No capital gains on this financial year.' : ''">
-                                        {{'FY '+item.from+' - '+item.to}}</span>
-                                </mat-radio-button>
-                            </mat-list-item>
+                            <mat-option (click)="changeFinancialYear(item)" role="listitem"
+                              [value]="'FY '+item.from+' - '+item.to"  *ngFor="let item of financialYears">
+                                {{'FY '+item.from+' - '+item.to}} </mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
@@ -225,14 +219,9 @@
                     <mat-form-field>
                         <mat-select class="form-control">
                             <mat-option> Select finacial year </mat-option>
-                            <mat-list-item role="listitem" *ngFor="let item of financialYears">
-                                <mat-radio-button [checked]="item.selected" (change)="changeFinancialYear(item)"
-                                    [disabled]="item.disabled">
-                                    <span [matTooltipPosition]="'right'"
-                                        [matTooltip]="item.disabled ? 'No capital gains on this financial year.' : ''">
-                                        {{'FY '+item.from+' - '+item.to}}</span>
-                                </mat-radio-button>
-                            </mat-list-item>
+                            <mat-option (click)="changeFinancialYear(item)" role="listitem"
+                              [value]="'FY '+item.from+' - '+item.to"  *ngFor="let item of financialYears">
+                                {{'FY '+item.from+' - '+item.to}} </mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
