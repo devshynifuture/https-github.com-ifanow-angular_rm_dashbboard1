@@ -15,6 +15,7 @@ export class BulkCapitalGainDetailedComponent implements OnInit {
   clientId: any;
   sendData: any;
   userInfo: any;
+  isLoading: any;
   clientData: any;
   reportDate: Date;
   GTdividendPayout : any;
@@ -26,6 +27,8 @@ export class BulkCapitalGainDetailedComponent implements OnInit {
   equityObj : any;
   debtObj : any;
   getObj: any;
+  totaldividendPayout: any;
+  getOrgData : any;
   fragmentData: any;
   total_stGain: any;
   total_ltGain: any;

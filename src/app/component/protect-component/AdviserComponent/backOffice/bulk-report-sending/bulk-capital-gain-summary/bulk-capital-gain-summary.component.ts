@@ -23,6 +23,9 @@ export class BulkCapitalGainSummaryComponent implements OnInit {
   dataSource1 : any;
   dataSource2 : any;
   equityObj : any;
+  totaldividendPayout: any;
+  getOrgData :any;
+  viewMode : any;
   debtObj : any;
   reportDate: Date;
   fragmentData: any;
