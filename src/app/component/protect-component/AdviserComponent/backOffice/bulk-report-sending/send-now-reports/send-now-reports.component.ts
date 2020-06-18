@@ -40,8 +40,6 @@ export class SendNowReportsComponent implements OnInit {
   ngOnInit() {
     this.capitalGainSummary = false;
     this.date = {}
-    this.date.fromDate = {}
-    this.date.toDate = {}
     this.capitalGainDetails = false;
     this.unrealisedTransactions = false;
     this.allTransactions = false;
@@ -70,15 +68,15 @@ export class SendNowReportsComponent implements OnInit {
     });
   }
   proceed() {
-    if(this.date.fromDate){
-
+    if(this.date.toDate ){
+     
     }else{
       this.date.fromDate = new Date();
       this.date.fromDate.setFullYear(this.date.fromDate.getFullYear() - 1);
       this.date.toDate = new Date();
-      this.datePipe.transform(this.date.fromDate, 'yyyy/MM/dd')
-      this.datePipe.transform(this.date.toDate, 'yyyy/MM/dd')
     }
+    this.date.fromDate=this.datePipe.transform(this.date.fromDate, 'yyyy/MM/dd')
+    this.date.toDate=this.datePipe.transform(this.date.toDate, 'yyyy/MM/dd')
     const dialogRef = this.dialog.open(OpenSendReportPopupComponent, {
       width: '400px',
       height: '500px',
