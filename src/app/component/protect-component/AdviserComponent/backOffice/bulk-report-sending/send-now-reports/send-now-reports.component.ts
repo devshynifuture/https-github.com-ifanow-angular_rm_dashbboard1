@@ -22,6 +22,9 @@ export class SendNowReportsComponent implements OnInit {
   summary = false;
   overview = true;
   selectedReportType: any;
+  fromDate: Date;
+  toDate: Date;
+  financialYears: { from: number; to: number; selected: boolean; disabled: boolean; }[];
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -38,9 +41,20 @@ export class SendNowReportsComponent implements OnInit {
     this.summary = false;
     this.overview = true;
     this.selectedReportType = 'overview'
-    const fromDate = new Date();
-    fromDate.setFullYear(fromDate.getFullYear() - 1);
-    const toDate = new Date();
+    this.fromDate = new Date();
+    this.fromDate.setFullYear(this.fromDate.getFullYear() - 1);
+    this.toDate = new Date();
+    this.financialYears=[{'from':2010,'to':2011,'selected':true,'disabled':true},{'from':2011,'to':2012,'selected':true,'disabled':true},{'from':2012,'to':2013,'selected':true,'disabled':true},{'from':2013,'to':2014,'selected':true,'disabled':true},{'from':2014,'to':2015,'selected':true,'disabled':true},
+    {'from':2015,'to':2016,'selected':true,'disabled':true},{'from':2016,'to':2017,'selected':true,'disabled':true},{'from':2017,'to':2018,'selected':true,'disabled':true},{'from':2018,'to':2019,'selected':true,'disabled':true},{'from':2019,'to':2020,'selected':true,'disabled':true},{'from':2020,'to':2021,'selected':true,'disabled':true}]
+    this.financialYears.filter(function (element) {
+      if (element.from == 2019 && element.to == 2020) {
+        element.selected = true;
+      } else {
+        element.selected = false;
+      }
+
+    });
+ 
   }
   close() {
     this.subInjectService.changeNewRightSliderState({
@@ -145,4 +159,5 @@ export class SendNowReportsComponent implements OnInit {
       }
     }
   }
+  changeFinancialYear(){}
 }

@@ -155,9 +155,9 @@ export class GoalsPlanComponent implements OnInit {
   loadAllGoals(){
     this.plansService.getAllGoals(this.advisor_client_id).subscribe((data)=>{
       if (data) {
-        this.allGoals = data.map(goal => this.mapGoalDashboardData(goal));
-        // let dom render first
         setTimeout(() => {
+          this.allGoals = data.map(goal => this.mapGoalDashboardData(goal));
+          // let dom render first
           this.loadSelectedGoalData(this.allGoals[0]);
         });
       }
