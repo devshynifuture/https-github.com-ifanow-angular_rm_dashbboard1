@@ -1,19 +1,18 @@
-import { Component, Input, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { EventService } from 'src/app/Data-service/event.service';
-import { SubscriptionPopupComponent } from '../subscription-popup/subscription-popup.component';
-import { SubscriptionService } from '../../../subscription.service';
-import { AddDocumentComponent } from '../add-document/add-document.component';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {EventService} from 'src/app/Data-service/event.service';
+import {SubscriptionPopupComponent} from '../subscription-popup/subscription-popup.component';
+import {SubscriptionService} from '../../../subscription.service';
 // import { SubscriptionUpperSliderComponent } from '../../common-subscription-component/upper-slider/subscription-upper-slider.component';
-import { AuthService } from '../../../../../../../auth-service/authService';
-import { UtilService } from 'src/app/services/util.service';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-import { CommonFroalaComponent } from '../common-froala/common-froala.component';
-import { EmailOnlyComponent } from '../email-only/email-only.component';
-import { Router } from '@angular/router';
-import { Location } from '@angular/common';
+import {AuthService} from '../../../../../../../auth-service/authService';
+import {UtilService} from 'src/app/services/util.service';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import {CommonFroalaComponent} from '../common-froala/common-froala.component';
+import {EmailOnlyComponent} from '../email-only/email-only.component';
+import {Router} from '@angular/router';
+import {Location} from '@angular/common';
 
 // import { window } from 'rxjs/operators';
 
@@ -51,7 +50,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./document.component.scss']
 })
 export class DocumentComponent implements OnInit {
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
     text: 'Save',
@@ -66,7 +65,7 @@ export class DocumentComponent implements OnInit {
     // buttonIcon: {
     //   fontIcon: 'favorite'
     // }
-  }
+  };
   quotationDesignEmail: any;
   // @Input() upperData;
 
@@ -75,11 +74,11 @@ export class DocumentComponent implements OnInit {
 
   /*@Input()*/
   documentDesign;
-  planDocumentData = [{ selected: false }, { selected: false }, { selected: false }];
-  serviceDocumentData = [{ selected: false }, { selected: false }, { selected: false }];
+  planDocumentData = [{selected: false}, {selected: false}, {selected: false}];
+  serviceDocumentData = [{selected: false}, {selected: false}, {selected: false}];
   mappedData = [];
   dataCount;
-  sendESign: boolean = true;
+  sendESign = true;
   _clientData: any;
   _upperData: any;
   noData: string;
@@ -90,8 +89,8 @@ export class DocumentComponent implements OnInit {
 
 
   constructor(public subInjectService: SubscriptionInject,
-    private eventService: EventService, public dialog: MatDialog, private subService: SubscriptionService,
-    public subscription: SubscriptionService, private router: Router, private location: Location) {
+              private eventService: EventService, public dialog: MatDialog, private subService: SubscriptionService,
+              public subscription: SubscriptionService, private router: Router, private location: Location) {
     // this.subInjectService.rightSliderDocument.subscribe(
     //   data => this.getDocumentsDesignData(data)
     // );
@@ -112,16 +111,16 @@ export class DocumentComponent implements OnInit {
 
   @Input()
   set componentFlag1(data) {
-    this.componentFlag = data
+    this.componentFlag = data;
     this.advisorId = AuthService.getAdvisorId();
     if (data === 'plansDocuments') {
       this.getplanDocumentData();
-    } else if (data === "servicesDocuments") {
+    } else if (data === 'servicesDocuments') {
       this.getServiceDocumentData();
     } else {
       return;
     }
-  };
+  }
 
   @Input()
   set clientData(clientData) {
@@ -225,7 +224,7 @@ export class DocumentComponent implements OnInit {
 
     if (data == undefined) {
       this.dataSource.data = [];
-      this.noData = "No Data Found";
+      this.noData = 'No Data Found';
     } else {
       data.forEach(singleData => {
         singleData.selected = false;
@@ -254,7 +253,7 @@ export class DocumentComponent implements OnInit {
   }
 
   dialogClose() {
-    this.eventService.changeUpperSliderState({ state: 'close' });
+    this.eventService.changeUpperSliderState({state: 'close'});
 
     // this.dialogRef.close();
   }
@@ -271,7 +270,7 @@ export class DocumentComponent implements OnInit {
   unmapDocumentToPlan(data) {
     data.selected = false;
     // _.remove(this.mappedData, delData => delData.documentRepositoryId === data.documentRepositoryId);
-    this.mappedData = this.mappedData.filter(delData => delData.documentRepositoryId != data.documentRepositoryId)
+    this.mappedData = this.mappedData.filter(delData => delData.documentRepositoryId != data.documentRepositoryId);
   }
 
   openDocumentESign(value, state) {
@@ -344,13 +343,14 @@ export class DocumentComponent implements OnInit {
     });
     this.openSendEmailComponent('email', data);
   }
+
   openSendEmailComponent(value, data) {
     if (this.isLoading) {
-      return
+      return;
     }
     const fragmentData = {
       flag: value,
-      data: data,
+      data,
       id: 1,
       state: 'open',
       componentName: EmailOnlyComponent
@@ -370,6 +370,7 @@ export class DocumentComponent implements OnInit {
     );
 
   }
+
   // open(value, data) {
 
   //   // this.eventService.sliderData(value);
@@ -399,11 +400,11 @@ export class DocumentComponent implements OnInit {
   // }
   open(value, data) {
     if (this.isLoading) {
-      return
+      return;
     }
     const fragmentData = {
       flag: value,
-      data: data,
+      data,
       id: 1,
       state: 'open',
       componentName: CommonFroalaComponent
@@ -423,6 +424,7 @@ export class DocumentComponent implements OnInit {
     );
 
   }
+
   getplanDocumentDataResponse(data) {
     this.isLoading = false;
     if (data && data.length > 0) {
@@ -779,14 +781,13 @@ export class DocumentComponent implements OnInit {
           documentRepositoryId: 0,
           mappingId: this.upperData.id
         }
-      ]
+      ];
     }
     this.subService.mapDocumentsToPlanData(obj).subscribe(
       data => {
         if (data !== 204) {
           this.saveMappingDocumentToPlansResponse(data);
-        }
-        else if (data === 204) {
+        } else if (data === 204) {
           this.eventService.openSnackBar('No documents created', 'Dismiss');
           this.barButtonOptions.active = false;
         }
@@ -809,12 +810,12 @@ export class DocumentComponent implements OnInit {
     }
     this.router.navigate(['/admin/subscription/settings', 'plans']);
     this.location.replaceState('/admin/subscription/settings/plans');
-    this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: true });
+    this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
     this.barButtonOptions.active = false;
   }
 
   savePlanMapToDocument() {
-    let obj = [];
+    const obj = [];
     if (this.mappedData) {
       this.mappedData.forEach(element => {
         const data = {
@@ -826,7 +827,8 @@ export class DocumentComponent implements OnInit {
         obj.push(data);
       });
       this.subService.mapDocumentsToPlanData(obj).subscribe(
-        data => { }
+        data => {
+        }
       );
 
     }
@@ -838,7 +840,7 @@ export class DocumentComponent implements OnInit {
 
   mapDocumentToService() {
     this.barButtonOptions.active = true;
-    let obj = [];
+    const obj = [];
     if (this.mappedData.length == 0) {
       const data = {
         mappedType: 0,
@@ -886,7 +888,7 @@ export class DocumentComponent implements OnInit {
     this.router.navigate(['/admin/subscription/settings', 'services']);
     this.location.replaceState('/admin/subscription/settings/services');
 
-    this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: true });
+    this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
   }
 
   selectAll(event) {
@@ -900,6 +902,7 @@ export class DocumentComponent implements OnInit {
       });
     }
   }
+
   changeSelect() {
     this.dataCount = 0;
     this.dataSource.filteredData.forEach(item => {
@@ -908,9 +911,11 @@ export class DocumentComponent implements OnInit {
       }
     });
   }
-  openDocument(flag){
+
+  openDocument(flag) {
 
   }
+
   // /** Whether the number of selected elements matches the total number of rows. */
   // isAllSelected() {
   //   if (this.dataSource != undefined) {
