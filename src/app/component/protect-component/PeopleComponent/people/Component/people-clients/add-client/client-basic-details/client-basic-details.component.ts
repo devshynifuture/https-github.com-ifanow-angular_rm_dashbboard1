@@ -86,12 +86,31 @@ export class ClientBasicDetailsComponent implements OnInit {
       (data.relationshipId == 7) ? this.maxDateForAdultDob = new Date() : '';
       this.basicDetailsData = data;
       if (this.basicDetailsData.relationshipId == 2 || this.basicDetailsData.relationshipId == 3 || this.basicDetailsData.relationshipId == 6 || this.basicDetailsData.relationshipId == 7) {
+        (data.relationshipId == 6 || data.relationshipId == 2) ? data.genderId = 1 : data.genderId = 2;
         this.familyMemberType = { name: 'Individual', value: '1' };
         this.invTypeCategory = '1';
         this.hideDematTab.emit(true);
         this.invTaxStatusList = this.enumService.getIndividualTaxList();
         this.createIndividualForm(this.basicDetailsData);
-      } else {
+      } else if (this.basicDetailsData.relationshipId == 4 || this.basicDetailsData.relationshipId == 5) {
+        if (this.basicDetailsData.age > 18) {
+          (data.relationshipId != 10) ? (data.relationshipId == 4) ? data.genderId = 1 : data.genderId = 2 : '';
+          this.familyMemberType = { name: 'Individual', value: '1' };
+          this.invTypeCategory = '1';
+          this.hideDematTab.emit(true);
+          this.invTaxStatusList = this.enumService.getIndividualTaxList();
+          this.createIndividualForm(this.basicDetailsData);
+        }
+        else {
+          (data.relationshipId == 4) ? data.genderId = 1 : data.genderId = 2;
+          this.familyMemberType = { name: 'Minor', value: '2' };
+          this.invTypeCategory = '2';
+          this.createMinorForm(this.basicDetailsData);
+          this.invTaxStatusList = this.enumService.getMinorTaxList();
+          this.hideDematTab.emit(false);
+        }
+      }
+      else {
         if (this.basicDetailsData.age > 18) {
           this.familyMemberType = { name: 'Individual', value: '1' };
           this.invTypeCategory = '1';
@@ -105,22 +124,6 @@ export class ClientBasicDetailsComponent implements OnInit {
           this.createMinorForm(this.basicDetailsData);
           this.invTaxStatusList = this.enumService.getMinorTaxList();
           this.hideDematTab.emit(false);
-        }
-        if (data.relationshipId == 10) {
-          if (this.basicDetailsData.age > 18) {
-            this.familyMemberType = { name: 'Individual', value: '1' };
-            this.invTypeCategory = '1';
-            this.hideDematTab.emit(true);
-            this.invTaxStatusList = this.enumService.getIndividualTaxList();
-            this.createIndividualForm(this.basicDetailsData);
-          }
-          else {
-            this.familyMemberType = { name: 'Minor', value: '2' };
-            this.invTypeCategory = '2';
-            this.createMinorForm(this.basicDetailsData);
-            this.invTaxStatusList = this.enumService.getMinorTaxList();
-            this.hideDematTab.emit(false);
-          }
         }
       }
       this.invTaxStatus = (this.basicDetailsData.residentFlag != undefined) ? String(this.basicDetailsData.residentFlag) : '';
