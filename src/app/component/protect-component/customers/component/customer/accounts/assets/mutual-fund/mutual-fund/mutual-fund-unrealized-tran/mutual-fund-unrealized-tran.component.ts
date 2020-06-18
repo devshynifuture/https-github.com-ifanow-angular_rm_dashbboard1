@@ -76,6 +76,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   dataTransaction: any;
   mode: string;
   isBulkEmailing: boolean;
+  toDate: any;
 
   constructor(public dialog: MatDialog, private datePipe: DatePipe,
     private subInjectService: SubscriptionInject, private utilService: UtilService,
@@ -100,6 +101,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       this.clientId = data.clientId
       this.addedData = true;
       this.isBulkEmailing=true;
+      this.toDate = this.datePipe.transform(data.toDate, 'yyyy-MM-dd');
       if(data.mode == 'unrealisedTransactions'){
         this.viewMode = 'Unrealized Transactions'
         this.mode = 'Unrealized Transactions'
@@ -465,7 +467,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      toDate: '2020-06-18',
+      toDate: this.toDate,
       id: categoryWiseMfList
     };
     this.custumService.getMutualFund(obj).subscribe(
@@ -534,7 +536,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       }
       element.mutualFundTransactions = [];
       // element.mutualFundTransactions.forEach(element => {
-      //   element.transactionDate =  this.datePipe.transform(element.transactionDate, 'yyyy-MM-dd')
+      //   element.transactionDate = 
       // });
     });
     const obj = {
