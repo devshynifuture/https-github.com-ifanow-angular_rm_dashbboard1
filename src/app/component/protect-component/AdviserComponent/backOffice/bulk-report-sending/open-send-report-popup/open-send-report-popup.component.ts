@@ -52,6 +52,8 @@ export class OpenSendReportPopupComponent implements OnInit {
       mode : this.data.reportType,
       fromDate:this.data.selectedElement.fromDate,
       toDate:this.data.selectedElement.toDate,
+      from  : this.data.selectedElement.from,
+      to : this.data.selectedElement.to,
     }
   }
   getdataForm(data) {
