@@ -84,6 +84,7 @@ export class SingleGoalYearComponent implements OnInit {
         obj['goalEndDate'] = this.datePipe.transform(futureDate, 'yyyy-MM-dd');
         obj['savingEndDate'] = this.datePipe.transform(futureDate, 'yyyy-MM-dd');
         break;
+
       case AppConstants.CAR_GOAL: // Car
         obj['currentAge'] = this.singleYearGoalForm.get('goalMember').value.familyMemberAge;
         obj['whatAgeBuyCar'] = this.singleYearGoalForm.get('age').value;
@@ -96,6 +97,7 @@ export class SingleGoalYearComponent implements OnInit {
         obj['goalEndDate'] = this.datePipe.transform(futureDate, 'yyyy-MM-dd');
         obj['savingEndDate'] = this.datePipe.transform(futureDate, 'yyyy-MM-dd');
         break;
+
       case AppConstants.MARRIAGE_GOAL: // Marriage
         obj['currentAge'] = this.singleYearGoalForm.get('goalMember').value.familyMemberAge;
         obj['planningThisForId'] = this.singleYearGoalForm.get('goalMember').value.id;
@@ -110,23 +112,37 @@ export class SingleGoalYearComponent implements OnInit {
         obj['goalEndDate'] = this.datePipe.transform(futureDate, 'yyyy-MM-dd');
         obj['savingEndDate'] = this.datePipe.transform(futureDate, 'yyyy-MM-dd');
         break;
+
       case AppConstants.EMERGENCY_GOAL: // Emergency
         obj['goalTargetInMonth'] = this.singleYearGoalForm.get('age').value;
         obj['goalFV'] = this.singleYearGoalForm.get('cost').value;
+
+        futureDate = new Date(currentDate.setMonth(currentDate.getMonth() + this.singleYearGoalForm.get('age').value))
+        obj['goalStartDate'] = this.datePipe.transform(futureDate, 'yyyy-MM-dd');
+        obj['goalEndDate'] = this.datePipe.transform(futureDate, 'yyyy-MM-dd');
+        obj['savingEndDate'] = this.datePipe.transform(futureDate, 'yyyy-MM-dd');
         break;
+
       case AppConstants.WEALTH_CREATION_GOAL: // Wealth Creation
         obj['currentAge'] = this.singleYearGoalForm.get('goalMember').value.familyMemberAge;
         obj['planningThisForId'] = this.singleYearGoalForm.get('goalMember').value.id;
         obj['clientOrFamilyMember'] = (this.singleYearGoalForm.get('goalMember').value.relationshipId === 0) ? 1 : 2;
         obj['goalTargetAge'] = this.singleYearGoalForm.get('age').value;
         obj['goalFV'] = this.singleYearGoalForm.get('cost').value;
+
+        ageDiff = this.singleYearGoalForm.get('age').value - this.singleYearGoalForm.get('goalMember').value.familyMemberAge;
+        futureDate = new Date(currentDate);
+        futureDate.setFullYear(futureDate.getFullYear() + ageDiff);
+        obj['goalStartDate'] = this.datePipe.transform(futureDate, 'yyyy-MM-dd');
+        obj['goalEndDate'] = this.datePipe.transform(futureDate, 'yyyy-MM-dd');
+        obj['savingEndDate'] = this.datePipe.transform(futureDate, 'yyyy-MM-dd');
         break;
+
       case AppConstants.BIG_SPEND_GOAL: // Big Spends
       case AppConstants.OTHERS_GOAL: // Others
         obj['goalPresentValue'] = this.singleYearGoalForm.get('cost').value;
 
-        futureDate = new Date(currentDate);
-        futureDate.setFullYear(this.singleYearGoalForm.get('age').value);
+        futureDate = new Date(currentDate.setFullYear(this.singleYearGoalForm.get('age').value));
         obj['goalStartDate'] = this.datePipe.transform(futureDate, 'yyyy-MM-dd');
         obj['goalEndDate'] = this.datePipe.transform(futureDate, 'yyyy-MM-dd');
         obj['savingEndDate'] = this.datePipe.transform(futureDate, 'yyyy-MM-dd');
@@ -186,7 +202,6 @@ export class SingleGoalYearComponent implements OnInit {
       this.singleYearGoalForm.markAllAsTouched();
     } else {
       let goalObj = this.createGoalObj();
-      console.log(goalObj)
       this.sendDataObj(goalObj);
     }
   }
@@ -210,7 +225,7 @@ export class SingleGoalYearComponent implements OnInit {
       goalMember: ['', [Validators.required]], // who the goal is for
       age: ['', [Validators.required]], // age or time
       cost: [this.goalTypeData.defaults.cost, [Validators.required, Validators.min(this.goalTypeData.validations.minCost), Validators.max(this.goalTypeData.validations.maxCost)]], // cost
-      goalName: [''], // goal name
+      goalName: ['', Validators.required], // goal name
       goalDescription: [''],  // goal description
       logo: [''],
     });

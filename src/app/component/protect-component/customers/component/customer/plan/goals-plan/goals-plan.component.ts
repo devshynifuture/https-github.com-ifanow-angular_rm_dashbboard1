@@ -155,25 +155,45 @@ export class GoalsPlanComponent implements OnInit {
   loadAllGoals(){
     this.plansService.getAllGoals(this.advisor_client_id).subscribe((data)=>{
       if (data) {
-        // TODO:- remove filter of single year goal
-        this.allGoals = data.filter(goal => goal.singleOrMulti === 2).map(goal => this.mapGoalDashboardData(goal));
-        
-        console.log('sagar', data);
-        this.loadSelectedGoalData(this.allGoals[0]);
+        this.allGoals = data.map(goal => this.mapGoalDashboardData(goal));
+        // let dom render first
+        setTimeout(() => {
+          this.loadSelectedGoalData(this.allGoals[0]);
+        });
       }
     }, err => this.eventService.openSnackBar(err, "Dismiss"))
   }
 
   mapGoalDashboardData(goal:any) {
     let mapData:any = {};
+
+    /**
+     * TODO:- need to correct the logics for the following
+     * 1. goal progress
+     * 2. achieved value -- fix on html as well
+     * 3. image for multi year goal
+     */
+
     if(goal.singleOrMulti == 1) {
-      goal.dashboardData = {
-        presentValue: goal.singleGoalModel.goalPresentValue,
-        futureValue: goal.singleGoalModel.goalFV,
-        equity_monthly: 0
+      mapData.id = goal.id;
+      const goalSubData = goal.singleGoalModel;
+      mapData.img = goalSubData.imageUrl;
+      mapData.year = (new Date(goalSubData.goalStartDate).getFullYear()) + ' - ' + (new Date(goalSubData.goalStartDate).getFullYear());
+      mapData.goalName = goalSubData.goalName;
+      mapData.gv = goalSubData.goalFV;
+      mapData.dashboardData = {
+        goalYear: new Date(goalSubData.goalStartDate).getFullYear(),
+        presentValue: goalSubData.goalPresentValue,
+        futureValue: goalSubData.goalFV,
+        equity_monthly: goalSubData.equitySipAmount || 0,
+        debt_monthly: goalSubData.debtSipAmount || 0,
+        lump_equity: goalSubData.lumpsumEquityReqOnSSD || 0,
+        lump_debt: goalSubData.lumpsumDebtReqOnSSD || 0,
+        goalProgress: (goalSubData.goalPresentValue / goalSubData.goalFV * 100),
       }
+      mapData.remainingData = goalSubData;
     } else {
-      mapData.id = goal.goalId;
+      mapData.id = goal.id;
       const goalSubData:any = goal.multiYearGoalPlan;
       mapData.img = '/assets/images/svg/higher-edu.svg';
       mapData.year = (new Date(goalSubData.vacationStartYr || 2033942400000).getFullYear()) + ' - ' + (new Date(goalSubData.vacationEndYr || 2033942400000).getFullYear());
