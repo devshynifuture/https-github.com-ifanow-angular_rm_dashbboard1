@@ -8,6 +8,7 @@ import { CustomerService } from '../component/protect-component/customers/compon
 import { OrgSettingServiceService } from '../component/protect-component/AdviserComponent/setting/org-setting-service.service';
 import { PeopleService } from '../component/protect-component/PeopleComponent/people.service';
 import { SubscriptionInject } from '../component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { rejects } from 'assert';
 
 @Injectable({
   providedIn: 'root'
@@ -77,21 +78,31 @@ export class EnumDataService {
   bankList: any = [];
   advisorId: any;
   clientData: any;
-
-  getAccountList() {
-    this.advisorId = AuthService.getAdvisorId();
-    this.clientData = AuthService.getClientData();
-
-    const obj = {
-      advisorId: this.advisorId,
-      clientId: this.clientData.clientId
-    };
-    this.custumService.getBankAccount(obj).subscribe(
-      (data) => {
-        this.bankList = data;
-        this.enumService.addBank(this.bankList);
-      }
-    );
+  userData:any;
+  getAccountList(userData) {
+    let self = this;
+    if(userData != null){
+      self.userData = userData;
+    }
+    return new Promise(function (resolve, reject) {
+      // this.advisorId = AuthService.getAdvisorId();
+      // this.clientData = AuthService.getClientData();
+  
+      const obj = {
+        "userId": self.userData[0].id,
+        "userType": self.userData[0].userType 
+      };
+      self.custumService.getBankList(obj).subscribe(
+        (data) => {
+          self.bankList = data;
+          resolve(data);
+          self.enumService.addBank(self.bankList);
+        },
+        (err)=>{
+          reject('failed')
+        }
+      );
+    });
   }
 
   public getProofType() {
@@ -171,7 +182,7 @@ export class EnumDataService {
 
   public getBank() {
     if (this.bankList && this.bankList.length <= 0) {
-      this.getAccountList();
+      this.getAccountList(null);
     } else {
       this.enumService.addBank(this.bankList);
     }

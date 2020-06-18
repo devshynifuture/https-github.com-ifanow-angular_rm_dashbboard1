@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
-import { OpenSendReportPopupComponent } from '../open-send-report-popup/open-send-report-popup.component';
-import { MatDialog } from '@angular/material';
-import * as Highcharts from 'highcharts';
-import { MutualFundOverviewComponent } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mutual-fund/mutual-fund-overview/mutual-fund-overview.component';
-import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
+import {Component, OnInit} from '@angular/core';
+import {SubscriptionInject} from '../../../Subscriptions/subscription-inject.service';
+import {OpenSendReportPopupComponent} from '../open-send-report-popup/open-send-report-popup.component';
+import {MatDialog} from '@angular/material';
+import {MutualFundOverviewComponent} from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mutual-fund/mutual-fund-overview/mutual-fund-overview.component';
+import {MfServiceService} from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
 
 @Component({
   selector: 'app-send-now-reports',
@@ -58,7 +57,7 @@ export class SendNowReportsComponent implements OnInit {
       }
 
     });
- 
+
   }
   close() {
     this.subInjectService.changeNewRightSliderState({
@@ -163,15 +162,18 @@ export class SendNowReportsComponent implements OnInit {
       }
     }
   }
-  changeFinancialYear(){}
-  changeFromDate(date,flag){
-    if(flag == 'fromDate'){
+
+  changeFinancialYear(item) {
+  }
+
+  changeFromDate(date, flag) {
+    if (flag == 'fromDate') {
       this.fromDate = date.value
       this.date.fromDate = this.fromDate
-    }else{
+    } else {
       this.toDate = date.value
       this.date.toDate = this.toDate
     }
-    console.log('from date',this.fromDate)
+    console.log('from date', this.fromDate)
   }
 }

@@ -9,6 +9,7 @@ import { MatChipInputEvent } from '@angular/material';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { OrgSettingServiceService } from '../../../../setting/org-setting-service.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-email-only',
@@ -31,6 +32,38 @@ export class EmailOnlyComponent implements OnInit {
   userId: any;
   verifiedEmailsList: any[] = [];
   emailTemplateGroup: FormGroup
+
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SEND',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
+
+  barButtonOptions1: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE TEMPLATE',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
 
   @Input() set data(inputData) {
     this.emailTemplateGroup = this.fb.group({
@@ -161,6 +194,7 @@ export class EmailOnlyComponent implements OnInit {
     this.onTouched = fn;
   }
   saveEmailTemplate() {
+    this.barButtonOptions1.active = true;
     let obj = {
       id: this._inputData.id,
       fromEmail: this._inputData.fromEmail,
@@ -242,6 +276,8 @@ export class EmailOnlyComponent implements OnInit {
   }
 
   getResponseData(data) {
+    this.barButtonOptions.active = false;
+    this.barButtonOptions1.active = false;
     this.close(true);
   }
 
@@ -252,6 +288,10 @@ export class EmailOnlyComponent implements OnInit {
   sendEmail() {
     if (this._inputData.fromEmail == undefined) {
       this.eventService.openSnackBar('Please enter to email', "Dismiss");
+      return;
+    }
+    if (this.emailIdList.length == 0) {
+      this.eventService.openSnackBar("Please enter email ");
       return;
     }
     if (this._inputData && this._inputData.documentList.length > 0) {
@@ -283,12 +323,11 @@ export class EmailOnlyComponent implements OnInit {
         messageBody: this.emailBody,
         emailSubject: this.subject,
       };
-
+      this.barButtonOptions.active = true;
       this.subscription.documentEsignRequest(emailRequestData).subscribe(
         data => this.getResponseData(data)
       );
     } else {
-
       const emailRequestData = {
         messageBody: this.emailBody,
         emailSubject: this.subject,
@@ -307,6 +346,9 @@ export class EmailOnlyComponent implements OnInit {
     // const index = this.emailIdList.indexOf(singleEmail);
 
     // if (index >= 0) {
+    if (this.emailIdList.length == 1) {
+      return;
+    }
     this.emailIdList.splice(index, 1);
     // }
   }
