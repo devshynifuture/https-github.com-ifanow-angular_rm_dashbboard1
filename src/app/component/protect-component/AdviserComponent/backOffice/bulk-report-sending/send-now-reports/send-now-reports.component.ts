@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material';
 import * as Highcharts from 'highcharts';
 import { MutualFundOverviewComponent } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mutual-fund/mutual-fund-overview/mutual-fund-overview.component';
 import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-send-now-reports',
@@ -26,12 +27,14 @@ export class SendNowReportsComponent implements OnInit {
   toDate: Date;
   financialYears: { from: number; to: number; selected: boolean; disabled: boolean; }[];
   date: any;
+  default: any;
 
   constructor(
     private subInjectService: SubscriptionInject,
     public dialog: MatDialog,
     public overviewRepot: MutualFundOverviewComponent,
     public mfService: MfServiceService,
+    private datePipe: DatePipe,
   ) { }
 
   ngOnInit() {
@@ -46,6 +49,7 @@ export class SendNowReportsComponent implements OnInit {
     this.overview = true;
     this.selectedReportType = 'overview'
     this.fromDate = new Date();
+    this.default = {'from':2019,'to':2020,'selected':true,'disabled':true}
     this.fromDate.setFullYear(this.fromDate.getFullYear() - 1);
     this.toDate = new Date();
     this.financialYears=[{'from':2010,'to':2011,'selected':true,'disabled':true},{'from':2011,'to':2012,'selected':true,'disabled':true},{'from':2012,'to':2013,'selected':true,'disabled':true},{'from':2013,'to':2014,'selected':true,'disabled':true},{'from':2014,'to':2015,'selected':true,'disabled':true},
@@ -58,7 +62,7 @@ export class SendNowReportsComponent implements OnInit {
       }
 
     });
- 
+
   }
   close() {
     this.subInjectService.changeNewRightSliderState({
@@ -66,6 +70,15 @@ export class SendNowReportsComponent implements OnInit {
     });
   }
   proceed() {
+    if(this.date.fromDate){
+
+    }else{
+      this.date.fromDate = new Date();
+      this.date.fromDate.setFullYear(this.date.fromDate.getFullYear() - 1);
+      this.date.toDate = new Date();
+      this.datePipe.transform(this.date.fromDate, 'yyyy/MM/dd')
+      this.datePipe.transform(this.date.toDate, 'yyyy/MM/dd')
+    }
     const dialogRef = this.dialog.open(OpenSendReportPopupComponent, {
       width: '400px',
       height: '500px',
@@ -163,15 +176,17 @@ export class SendNowReportsComponent implements OnInit {
       }
     }
   }
-  changeFinancialYear(){}
+  changeFinancialYear(year){
+    this.date = year
+  }
   changeFromDate(date,flag){
     if(flag == 'fromDate'){
       this.fromDate = date.value
       this.date.fromDate = this.fromDate
-    }else{
+    } else {
       this.toDate = date.value
       this.date.toDate = this.toDate
     }
-    console.log('from date',this.fromDate)
+    console.log('from date', this.fromDate)
   }
 }
