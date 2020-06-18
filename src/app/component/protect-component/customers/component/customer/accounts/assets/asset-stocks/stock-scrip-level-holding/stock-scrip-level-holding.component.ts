@@ -374,7 +374,7 @@ addNewNominee(data) {
       // }
       // else {
         const finalStocks:any = [];
-        this.HoldingArray.controls.forEach(element => {
+        this.HoldingArray.controls.forEach((element, i) => {
             let objStock = {
               'id':null,
               "scripNameId": element.value.scripNameId,
@@ -398,7 +398,8 @@ addNewNominee(data) {
 
             }
                 if(element.get('id').value != null){
-                  objStock.id = this.editApiData.id;
+                  objStock.id = this.editApiData.stockListForEditView[i].id;
+                  objStock.ownerList = this.editApiData.stockListForEditView[i].ownerList;
                 }
                 if(objStock.id == null){
                   objStock.ownerList[0].id = null;
