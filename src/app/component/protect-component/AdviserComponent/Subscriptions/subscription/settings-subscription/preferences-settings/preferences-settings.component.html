@@ -14,10 +14,10 @@
                         [ngClass]="{'b-outline':viewMode =='tab2','':viewMode =='tab2'}" class="c-p">
                         Invoice
                     </li>
-                    <!-- <li (click)="viewMode ='tab3';getPrefixData(2)"
+                    <li (click)="viewMode ='tab3';getPrefixData(2)"
                         [ngClass]="{'b-outline':viewMode =='tab3','':viewMode =='tab3'}" class="c-p">
                         Quotations
-                    </li> -->
+                    </li>
                     <li (click)="viewMode ='tab4';getPrefixData(3)"
                         [ngClass]="{'b-outline':viewMode =='tab4','':viewMode =='tab4'}" class=" c-p">
                         Subscriptions
@@ -256,7 +256,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div *ngSwitchCase="'tab3'">
+                <div *ngSwitchCase="'tab3'">
                     <div [formGroup]="prefixData" class="wrapper-44 skeletonAnimation" appSkeletonLoading
                         [appSkeletonLoading]="isLoading">
                         <div class="row pl-44">
@@ -290,7 +290,7 @@
                         </div>
 
                     </div>
-                </div> -->
+                </div>
                 <div *ngSwitchCase="'tab4'">
                     <div [formGroup]="prefixData" class="wrapper-44 skeletonAnimation" appSkeletonLoading
                         [appSkeletonLoading]="isLoading">
@@ -382,7 +382,7 @@
                                     </mat-card>
                                 </div>
                             </div>
-                            <!-- <div class="col-md-6 c-p" (click)="openEmailInvoice(this.storeData[1])">
+                            <div class="col-md-6 c-p" (click)="openEmailInvoice(this.storeData[1])">
                                 <div class="example-card">
                                     <mat-card class="p-0 b-a">
                                         <div class="bg-grey lter wrapper-16 pl-24">
@@ -407,7 +407,7 @@
                                         </div>
                                     </mat-card>
                                 </div>
-                            </div> -->
+                            </div>
                             <div class="col-md-6 c-p" (click)="openEmailInvoice(this.storeData[2])">
                                 <div class="example-card">
                                     <mat-card class="p-0 b-a">

@@ -684,6 +684,7 @@ export class FixedDepositComponent implements OnInit {
     this.subInjectService.changeNewRightSliderState({state: 'close', data, refreshRequired: true});
   }
 
+  
 //link bank
   openDialog(eventData): void {
     const dialogRef = this.dialog.open(LinkBankComponent, {

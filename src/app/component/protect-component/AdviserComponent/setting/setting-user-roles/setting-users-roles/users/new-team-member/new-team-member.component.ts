@@ -21,6 +21,7 @@ import { AppConstants } from 'src/app/services/app-constants';
 export class NewTeamMemberComponent implements OnInit {
   @Input() data: any = {};
   advisorId: any;
+  adminAdvisorId: any;
   roles: any;
   teamMemberFG: FormGroup;
   counter = 0;
@@ -58,6 +59,7 @@ export class NewTeamMemberComponent implements OnInit {
     private peopleService: PeopleService,
   ) {
     this.advisorId = AuthService.getAdvisorId();
+    this.adminAdvisorId = AuthService.getAdminAdvisorId();
   }
 
   ngOnInit() {
@@ -110,7 +112,7 @@ export class NewTeamMemberComponent implements OnInit {
   createForm() {
     const roleId = this.data.mainData.role ? this.data.mainData.role.id : '';
     this.teamMemberFG = this.fb.group({
-      adminAdvisorId: [this.data.mainData.adminAdvisorId || this.advisorId],
+      adminAdvisorId: [this.data.mainData.adminAdvisorId || this.adminAdvisorId],
       parentId: this.advisorId,
       fullName: [this.data.mainData.fullName || '',
       [Validators.required, Validators.maxLength(50), Validators.pattern(ValidatorType.PERSON_NAME)]],

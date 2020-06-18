@@ -27,6 +27,15 @@ export class AuthService {
     return this.getUserInfo().advisorId;
   }
 
+  static getAdminAdvisorId(){
+    let adminid = this.getUserInfo().adminAdvisorId;
+    if(adminid > 0) {
+      return adminid
+    } else {
+      return this.getUserInfo().advisorId;
+    }
+  }
+
   static getParentId() {
     return this.getUserInfo().parentId;
   }
