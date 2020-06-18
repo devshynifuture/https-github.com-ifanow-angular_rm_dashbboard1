@@ -884,21 +884,21 @@
     <div #mfCapitalTemplate id="template">
 
         <table cellpadding="0" width="100%" cellspacing="0" border="0" style="font-family: 'Roboto', sans-serif; margin: 0px auto;" align="center; page-break-before: always;">
-            <!-- <tr>
-                <td style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;"
+            <tr>
+                <td style=" color: #008FFF;text-align: left; padding-left: 8px; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px; border-top: 1px solid #DADCE0; border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;"
                     colspan="17">
                     EQUITY
                 </td>
-            </tr> -->
+            </tr>
 
-            <!-- <tr *ngIf="dataSource.data?.length == 0">
+            <tr *ngIf="dataSource.data?.length == 0">
                 <td style="text-align: center;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;"
                     colspan="17">
                     No Data Found
                 </td>
-            </tr> -->
+            </tr>
 
-            <!-- <tr *ngIf="dataSource.data?.length > 0">
+            <tr *ngIf="dataSource.data?.length > 0">
                 <td style="width:26%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                     <b>Date </b> </td>
 
@@ -949,7 +949,7 @@
 
                 <td style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                     <b> Days </b> </td>
-            </tr> -->
+            </tr>
 
 
             <!-- <tr *ngFor="let element of dataSource.data">
@@ -1149,7 +1149,7 @@
             </tr> -->
 
             <tr>
-                <td style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;"
+                <td style=" color: #008FFF;text-align: left; padding-left: 8px; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px; border-top: 1px solid #DADCE0; border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;"
                     colspan="17">
                     DEBT
                 </td>
@@ -1162,56 +1162,74 @@
                 </td>
             </tr>
 
+            <tr>
+                <td colspan="6" style="padding: 8px; font-weight: 600; background: #F5F7F7; font-size: 13px; border-right: 1px solid #dee5e7;">
+                    REDEMPTION DETAILS
+                </td>
+
+                <td colspan="4" style="padding: 8px; font-weight: 600; background: #F5F7F7; font-size: 13px; border-right: 1px solid #dee5e7;">
+                    REDEMPTION AGAINST (PURCHASES)
+
+                    <span *ngIf="(fromDate) ? fromDate.getFullYear() > 2018 : ''">AS
+                        ON 31 JAN
+                        2018</span>
+                </td>
+
+                <td colspan="7" style=" font-weight: 600; background: #F5F7F7; padding: 8px; font-size: 13px; border-right: 1px solid #dee5e7;">
+                    GAIN/LOSS
+                </td>
+            </tr>
+
             <tr *ngIf="dataSource1.data?.length > 0">
-                <td style="width:26%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                <td style="background: #F5F7F7; width:26%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                     <b>Date </b> </td>
 
-                <td style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                <td style="background: #F5F7F7; width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                     <b> Transaction type </b> </td>
 
-                <td style="width:26%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                <td style="background: #F5F7F7; width:26%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                     <b> Amount </b> </td>
 
-                <td style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                <td style="background: #F5F7F7; width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                     <b> STT </b> </td>
 
-                <td style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                <td style="background: #F5F7F7; width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                     <b> Units </b> </td>
 
-                <td style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                <td style="background: #F5F7F7; width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                     <b> Sale rate </b> </td>
 
-                <td style="width:26%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                <td style="background: #F5F7F7;width:26%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                     <b>Date </b> </td>
 
-                <td style="width:26%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                <td style="background: #F5F7F7;width:26%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                     <b> Amount </b> </td>
 
-                <td style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                <td style="background: #F5F7F7;width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                     <b> Units </b> </td>
 
-                <td style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                <td style="background: #F5F7F7;width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                     <b> Purchase rate ST </b> </td>
 
                 <td style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                     <b> ST gain </b> </td>
 
-                <td style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                <td style="background: #F5F7F7;width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                     <b> ST loss </b> </td>
 
-                <td style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                <td style="background: #F5F7F7;width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                     <b> LT gain </b> </td>
 
-                <td style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                <td style="background: #F5F7F7;width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                     <b> LT loss </b> </td>
 
-                <td style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                <td style="background: #F5F7F7;width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                     <b> Indexed gain </b> </td>
 
-                <td style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                <td style="background: #F5F7F7;width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                     <b> Indexed loss </b> </td>
 
-                <td style="width:26%;text-align: right; border-right: 1px solid #dee5e7; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                <td style="background: #F5F7F7;width:26%;text-align: right; border-right: 1px solid #dee5e7; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                     <b> Days </b> </td>
             </tr>
 
@@ -1221,13 +1239,13 @@
                 <td colspan="17">
                     <table style="width: 100%">
                         <tr>
-                            <td *ngIf="element.schemeName || element.folioNumber || element.ownerName" colspan="17" style="font-weight: 600; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
+                            <td *ngIf="element.schemeName || element.folioNumber || element.ownerName" colspan="17" style="border-right: 1px solid #dee5e7; font-weight: 600; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
                                 {{element.schemeName}}|{{element.folioNumber}}|{{element.ownerName}}
                             </td>
                         </tr>
 
                         <tr *ngIf="element.redeemTransactionDate">
-                            <td valign="top" style="border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                            <td valign="top" style="border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
                                 <span *ngIf="element.redeemTransactionDate">
                                     {{(element.redeemTransactionDate) ? (element.redeemTransactionDate  | date:'dd/MM/yyyy') : ''}}
                                 </span>
