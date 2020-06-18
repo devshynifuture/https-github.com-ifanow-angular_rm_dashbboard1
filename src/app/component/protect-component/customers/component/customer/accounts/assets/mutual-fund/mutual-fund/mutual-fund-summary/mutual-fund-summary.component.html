@@ -227,12 +227,14 @@
                 </ng-container>
 
                 <ng-container matColumnDef="navDate">
-                    <th class="br text-right" mat-header-cell *matHeaderCellDef>NAV Date
+                    <th class="br text-right" mat-header-cell *matHeaderCellDef>NAV | Date
                     </th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
                         <div class="bar">
-                            <span>{{isLoading ? '': ((element.navDate) ? (element.navDate  | date:'dd/MM/yyyy') : '-')}}
+                            <span *ngIf="!isLoading">{{(element.nav) ? element.nav : ''}}</span><br>
+                            <span  *ngIf="!isLoading" >{{((element.navDate) ? (element.navDate  | date:'dd/MM/yyyy') : '-')}}
                             </span>
+                            <span *ngIf="isLoading">{{''}}</span>
                         </div>
                     </td>
 

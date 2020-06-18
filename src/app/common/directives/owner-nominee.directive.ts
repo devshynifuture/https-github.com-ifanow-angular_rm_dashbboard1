@@ -3,6 +3,7 @@ import {AuthService} from 'src/app/auth-service/authService';
 import {FormArray, FormBuilder} from '@angular/forms';
 import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
 import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
 
 @Directive({
   selector: '[appOwnerNominee]'
@@ -20,7 +21,7 @@ export class OwnerNomineeDirective {
   showErrorOwner = false;
   emitedNOminee: any = [];
 
-  constructor(private fb: FormBuilder, private custumService: CustomerService,
+  constructor(private fb: FormBuilder, private custumService: CustomerService, private enumService: EnumServiceService,
               private peopleService: PeopleService) {
   }
 
@@ -93,7 +94,13 @@ export class OwnerNomineeDirective {
     }
     if (this.sendData.length <= 0) {
       this.peopleService.getClientFamilyMemberListAsset(obj).subscribe(
-        data => this.getListOfFamilyByClientRes(data)
+        (data) =>{
+          this.enumService.getFamilyList(data);
+          this.getListOfFamilyByClientRes(data);
+        },
+        error =>{
+          this.getListOfFamilyByClientRes(this.enumService.FamilyList());
+        } 
       );
     }
   }

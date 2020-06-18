@@ -58,8 +58,8 @@ export class CalendarComponent implements OnInit {
 
   getEvent() {
     let eventData = {
-      "calendarId": "gaurav@futurewise.co.in",
-      "userId": 2727
+      "calendarId": "aniruddha@futurewise.co.in",
+      "userId": 5483
     }
     this.calenderService.getEvent(eventData).subscribe((data) => {
       if (data != undefined) {
@@ -264,8 +264,8 @@ export class CalendarComponent implements OnInit {
       if (result != undefined) {
         this.dialogData =
         {
-          "calendarId": "gaurav@futurewise.co.in",
-          "userId": 2727,
+          "calendarId": "aniruddha@futurewise.co.in",
+          "userId": 5483,
           "eventId": result.eventId,
           "summary": result.title,
           "location": result.location,
@@ -496,8 +496,8 @@ export class EventDialog implements OnInit {
 
   deleteEvent(eventId) {
     let deleteData = {
-      "calendarId": "gaurav@futurewise.co.in",
-      "userId": 2727,
+      "calendarId": "aniruddha@futurewise.co.in",
+      "userId": 5483,
       "eventId": eventId,
     }
     this.calenderService.deleteEvent(deleteData).subscribe((data) => {

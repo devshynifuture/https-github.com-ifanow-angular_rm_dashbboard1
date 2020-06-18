@@ -41,7 +41,7 @@ export class PeopleClientsComponent implements OnInit {
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
-    
+
     this.hasEndReached = true;
     this.clientDatasource.data = [{}, {}, {}];
     this.isLoading = true;
@@ -134,6 +134,7 @@ export class PeopleClientsComponent implements OnInit {
             this.enumDataService.searchClientList();
             this.enumDataService.searchClientAndFamilyMember();
             this.cancelFlagService.setCancelFlag(undefined);
+            this.finalClientList = [];
             this.getClientList(0);
           }
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
