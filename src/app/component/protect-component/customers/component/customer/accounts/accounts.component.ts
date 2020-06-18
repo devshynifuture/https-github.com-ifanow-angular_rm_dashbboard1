@@ -52,7 +52,7 @@ export class AccountsComponent implements OnInit {
     this._value = 1;
     this.loading = false;
     this.clientData = AuthService.getClientData();
-    this.enumDataService.getAccountList();
+    // this.enumDataService.getAccountList();
     console.log('this is child url now->>>>>', this.router.url.split('/')[3]);
     // var roterName = this.router.url.split('/')[3];
     // if (roterName === 'summary') {
