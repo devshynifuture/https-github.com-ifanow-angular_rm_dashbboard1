@@ -1,10 +1,17 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UtilService } from '../../../../../../../services/util.service';
 import { SetDateFooter } from './set-date-footer.component'
+import { DatePipe } from '@angular/common';
+import { MAT_DATE_FORMATS } from '@angular/material';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 @Component({
   selector: 'app-sudscription-table-filter',
   templateUrl: './sudscription-table-filter.component.html',
-  styleUrls: ['./sudscription-table-filter.component.scss']
+  styleUrls: ['./sudscription-table-filter.component.scss'],
+  providers: [
+    [DatePipe],
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+],
 })
 export class SudscriptionTableFilterComponent implements OnInit {
   dataSource = {

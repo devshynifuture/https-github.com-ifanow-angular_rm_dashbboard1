@@ -62,7 +62,7 @@ export class SendNowReportsComponent implements OnInit {
       }
 
     });
- 
+
   }
   close() {
     this.subInjectService.changeNewRightSliderState({
@@ -183,10 +183,10 @@ export class SendNowReportsComponent implements OnInit {
     if(flag == 'fromDate'){
       this.fromDate = date.value
       this.date.fromDate = this.fromDate
-    }else{
+    } else {
       this.toDate = date.value
       this.date.toDate = this.toDate
     }
-    console.log('from date',this.fromDate)
+    console.log('from date', this.fromDate)
   }
 }

@@ -28,7 +28,7 @@
             </div>
         </div>
     </div>
-    <div class="pl-16 pb-12 pt-12" *ngIf="showfromEmail == false">
+    <div class="pl-16 pb-12 pt-12">
         <div class="row">
             <div class="col-md-1 d-flex align-items-center">
                 <p class="m-0 text-custom ">To</p>
@@ -97,8 +97,13 @@
 <div class="bottom-fixed wrapper-12 w-60">
     <div class="row">
         <div class="col-md-12 text-right full-end">
-            <button (click)="sendEmail()" class="btn-primary br-0 mr-16" mat-stroked-button>Send</button>
-            <button (click)="saveEmailTemplate()" class="btn-primary br-0" mat-stroked-button>Save template</button>
+            <app-progress-button (btnClick)="sendEmail()" class="br-0 text-inherit ml-12" [options]="barButtonOptions">
+            </app-progress-button>
+            <!-- <button (click)="sendEmail()" class="btn-primary br-0 mr-16" mat-stroked-button>Send</button> -->
+            <!-- <button (click)="saveEmailTemplate()" class="btn-primary br-0" mat-stroked-button>Save template</button> -->
+            <app-progress-button (btnClick)="saveEmailTemplate()" class="br-0 text-inherit ml-12"
+                [options]="barButtonOptions1">
+            </app-progress-button>
         </div>
     </div>
 </div>
