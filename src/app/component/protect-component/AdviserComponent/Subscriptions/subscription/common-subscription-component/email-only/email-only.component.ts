@@ -194,6 +194,7 @@ export class EmailOnlyComponent implements OnInit {
     this.onTouched = fn;
   }
   saveEmailTemplate() {
+    this.barButtonOptions1.active = true;
     let obj = {
       id: this._inputData.id,
       fromEmail: this._inputData.fromEmail,
@@ -327,7 +328,6 @@ export class EmailOnlyComponent implements OnInit {
         data => this.getResponseData(data)
       );
     } else {
-      this.barButtonOptions1.active = true;
       const emailRequestData = {
         messageBody: this.emailBody,
         emailSubject: this.subject,
