@@ -25,6 +25,7 @@ export class SendNowReportsComponent implements OnInit {
   fromDate: Date;
   toDate: Date;
   financialYears: { from: number; to: number; selected: boolean; disabled: boolean; }[];
+  date: any;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -35,6 +36,9 @@ export class SendNowReportsComponent implements OnInit {
 
   ngOnInit() {
     this.capitalGainSummary = false;
+    this.date = {}
+    this.date.fromDate = {}
+    this.date.toDate = {}
     this.capitalGainDetails = false;
     this.unrealisedTransactions = false;
     this.allTransactions = false;
@@ -65,7 +69,7 @@ export class SendNowReportsComponent implements OnInit {
     const dialogRef = this.dialog.open(OpenSendReportPopupComponent, {
       width: '400px',
       height: '500px',
-      data: { reportType: this.selectedReportType, selectedElement: '' }
+      data: { reportType: this.selectedReportType, selectedElement: this.date }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result == undefined) {
@@ -160,4 +164,14 @@ export class SendNowReportsComponent implements OnInit {
     }
   }
   changeFinancialYear(){}
+  changeFromDate(date,flag){
+    if(flag == 'fromDate'){
+      this.fromDate = date.value
+      this.date.fromDate = this.fromDate
+    }else{
+      this.toDate = date.value
+      this.date.toDate = this.toDate
+    }
+    console.log('from date',this.fromDate)
+  }
 }
