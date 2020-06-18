@@ -129,20 +129,20 @@
                         </app-client-upper-subscription>
                     </ng-template>
                 </mat-tab>
-                <!-- <mat-tab label="QUOTATIONS"> -->
-                <!--                  <div class="wrapper-20 bg-grey lter heading-fix">-->
-                <!--                    <h3 class="m-0 text-center head-common">{{fragmentDataSubsUpper.clientData.name}}</h3>-->
-                <!--                  </div>-->
-                <!--                  <app-quotations-subscription [upperData]="fragmentDataSubsUpper.clientData" [screenType]="1"-->
-                <!--                                               *ngIf="subscriptionTab=='QUOTATIONS'"></app-quotations-subscription>-->
-                <!-- <ng-template matTabContent>
+                <mat-tab label="QUOTATIONS">
+                    <!--                  <div class="wrapper-20 bg-grey lter heading-fix">-->
+                    <!--                    <h3 class="m-0 text-center head-common">{{fragmentDataSubsUpper.clientData.name}}</h3>-->
+                    <!--                  </div>-->
+                    <!--                  <app-quotations-subscription [upperData]="fragmentDataSubsUpper.clientData" [screenType]="1"-->
+                    <!--                                               *ngIf="subscriptionTab=='QUOTATIONS'"></app-quotations-subscription>-->
+                    <ng-template matTabContent>
                         <div class="wrapper-18 bg-grey lter heading-fix b-a">
                             <h3 class="m-0 text-center head-common">{{fragmentDataSubsUpper.data.name}}</h3>
                         </div>
                         <app-quotations [clientData]="fragmentDataSubsUpper.data">
                         </app-quotations>
-                    </ng-template> -->
-                <!-- </mat-tab> -->
+                    </ng-template>
+                </mat-tab>
                 <mat-tab label="INVOICES">
                     <ng-template matTabContent>
                         <div class="wrapper-18 bg-grey lter heading-fix b-a">
