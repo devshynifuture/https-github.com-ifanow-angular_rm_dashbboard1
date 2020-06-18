@@ -115,6 +115,8 @@ export class MultiYearGoalComponent implements OnInit {
         obj['ageAttheStartofTheCourse'] = this.multiYearGoalForm.get('field2').value[0];
         obj['ageAtTheEndofTheCourse'] = this.multiYearGoalForm.get('field2').value[1];
         obj['presentValue'] = this.detailedSpendingFormArray[0].value;
+        obj["presentAge"] = this.multiYearGoalForm.get('field1').value.familyMemberAge
+
         break;
     }
 

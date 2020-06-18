@@ -58,21 +58,23 @@ export class CalendarComponent implements OnInit {
 
   getEvent() {
     let eventData = {
-      "calendarId": "aniruddha@futurewise.co.in",
-      "userId": 5483
+      "calendarId": AuthService.getUserInfo().userName,
+      "userId": AuthService.getUserInfo().advisorId
     }
     this.calenderService.getEvent(eventData).subscribe((data) => {
+      console.log(data,"events calender");
+      
       if (data != undefined) {
 
         this.eventData = data;
 
         this.formatedEvent = [];
         for (let e of this.eventData) {
-          e["day"] = this.formateDate(new Date(e.start.dateTime == null ? e.created : e.start.dateTime));
-          e["month"] = this.formateMonth(new Date(e.start.dateTime == null ? e.created : e.start.dateTime));
-          e["year"] = this.formateYear(new Date(e.start.dateTime == null ? e.created : e.start.dateTime));
-          e["startTime"] = this.formateTime(new Date(e.start.dateTime == null ? e.created : e.start.dateTime));
-          e["endTime"] = this.formateTime(new Date(e.end.dateTime == null ? e.created : e.end.dateTime));
+          e["day"] = this.formateDate(e.start.dateTime == null ? new Date(e.created) : new Date(e.start.dateTime));
+          e["month"] = this.formateMonth(e.start.dateTime == null ?new Date(e.created) : new Date(e.start.dateTime));
+          e["year"] = this.formateYear(e.start.dateTime == null ? new Date(e.created) : new Date(e.start.dateTime));
+          e["startTime"] = this.formateTime(e.start.dateTime == null ? new Date(e.created) : new Date(e.start.dateTime));
+          e["endTime"] = this.formateTime(e.end.dateTime == null ? new Date(e.created) : new Date(e.start.dateTime));
 
           this.formatedEvent.push(e);
         }
@@ -264,8 +266,8 @@ export class CalendarComponent implements OnInit {
       if (result != undefined) {
         this.dialogData =
         {
-          "calendarId": "aniruddha@futurewise.co.in",
-          "userId": 5483,
+          "calendarId": AuthService.getUserInfo().userName,
+          "userId": AuthService.getUserInfo().advisorId,
           "eventId": result.eventId,
           "summary": result.title,
           "location": result.location,
@@ -496,8 +498,8 @@ export class EventDialog implements OnInit {
 
   deleteEvent(eventId) {
     let deleteData = {
-      "calendarId": "aniruddha@futurewise.co.in",
-      "userId": 5483,
+      "calendarId": AuthService.getUserInfo().userName,
+      "userId": AuthService.getUserInfo().advisorId,
       "eventId": eventId,
     }
     this.calenderService.deleteEvent(deleteData).subscribe((data) => {

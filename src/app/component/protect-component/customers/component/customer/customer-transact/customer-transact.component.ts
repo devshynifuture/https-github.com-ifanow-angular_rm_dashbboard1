@@ -44,7 +44,7 @@ export class CustomerTransactComponent implements OnInit {
     this._value = 1;
     this.loading = false;
     this.clientData = AuthService.getClientData();
-    this.enumDataService.getAccountList();
+    this.enumDataService.getAccountList(null);
     console.log('this is child url now->>>>>', this.router.url.split('/')[3]);
   }
 

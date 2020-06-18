@@ -1,20 +1,19 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { SubscriptionInject } from '../../subscription-inject.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog, MatSort } from '@angular/material';
-import { MatTableDataSource } from '@angular/material/table';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {SubscriptionInject} from '../../subscription-inject.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog, MatSort} from '@angular/material';
+import {MatTableDataSource} from '@angular/material/table';
 
-import { EventService } from 'src/app/Data-service/event.service';
-import { SubscriptionService } from '../../subscription.service';
-import { AuthService } from '../../../../../../auth-service/authService';
-import { UtilService } from 'src/app/services/util.service';
-import { DatePipe } from '@angular/common';
-import { MAT_DATE_FORMATS } from 'saturn-datepicker';
-import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { CommonFroalaComponent } from '../common-subscription-component/common-froala/common-froala.component';
-import { ErrPageOpenComponent } from 'src/app/component/protect-component/customers/component/common-component/err-page-open/err-page-open.component';
-import { SubscriptionDataService } from '../../subscription-data.service';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import {EventService} from 'src/app/Data-service/event.service';
+import {SubscriptionService} from '../../subscription.service';
+import {AuthService} from '../../../../../../auth-service/authService';
+import {UtilService} from 'src/app/services/util.service';
+import {DatePipe} from '@angular/common';
+import {MAT_DATE_FORMATS} from 'saturn-datepicker';
+import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
+import {CommonFroalaComponent} from '../common-subscription-component/common-froala/common-froala.component';
+import {ErrPageOpenComponent} from 'src/app/component/protect-component/customers/component/common-component/err-page-open/err-page-open.component';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
 
 export interface PeriodicElement {
   name: string;
@@ -32,11 +31,11 @@ export interface PeriodicElement {
   selector: 'app-documents-subscriptions',
   templateUrl: './documents-subscriptions.component.html',
   styleUrls: ['./documents-subscriptions.component.scss'],
-  providers: [[DatePipe], { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+  providers: [[DatePipe], {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
   ],
 })
 export class DocumentsSubscriptionsComponent implements OnInit {
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
 
   displayedColumns: string[] = ['checkbox', 'name', 'docname', 'plan', 'servicename', 'cdate', 'sdate', 'clientsign', 'status', 'icons'];
 
@@ -54,24 +53,24 @@ export class DocumentsSubscriptionsComponent implements OnInit {
   selectedDateFilter: any = 'dateFilter';
   selectedStatusFilter: any = 'statusFilter';
   chips = [
-    { name: 'NOT STARTED', value: 0 },
-    { name: 'READY TO SEND', value: 1 },
-    { name: 'SENT', value: 2 },
-    { name: 'ESIGNED', value: 3 }
+    {name: 'NOT STARTED', value: 0},
+    {name: 'READY TO SEND', value: 1},
+    {name: 'SENT', value: 2},
+    {name: 'ESIGNED', value: 3}
   ];
   dateChips = [
-    { name: 'Created date', value: 1 },
-    { name: 'Sent date', value: 2 },
-    { name: 'Client Signitature', value: 3 }
+    {name: 'Created date', value: 1},
+    {name: 'Sent date', value: 2},
+    {name: 'Client Signitature', value: 3}
   ];
 
   passFilterData = {
-    data: "",
-    selectedCount: "",
+    data: '',
+    selectedCount: '',
     statusFilter: this.chips,
     dateFilter: this.dateChips
   };
-  isFilter: boolean = false;
+  isFilter = false;
   selectedDateRange: { begin: Date; end: Date; };
   showFilter = false;
   data: Array<any> = [{}, {}, {}];
@@ -82,7 +81,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
 
 
   constructor(public subInjectService: SubscriptionInject, public dialog: MatDialog, public eventService: EventService,
-    public subscription: SubscriptionService, private datePipe: DatePipe, private subService: SubscriptionService, private utilservice: UtilService) {
+              public subscription: SubscriptionService, private datePipe: DatePipe, private subService: SubscriptionService, private utilservice: UtilService) {
   }
 
   ngOnInit() {
@@ -91,27 +90,28 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.dataCount = 0;
     if (this.utilservice.checkSubscriptionastepData(5) == undefined) {
-      this.dataSource.data = [{}, {}, {}]
-    }
-    else {
-      (this.utilservice.checkSubscriptionastepData(5) == false) ? this.dataSource.data = [] : this.dataSource.data = [{}, {}, {}]
+      this.dataSource.data = [{}, {}, {}];
+    } else {
+      (this.utilservice.checkSubscriptionastepData(5) == false) ? this.dataSource.data = [] : this.dataSource.data = [{}, {}, {}];
     }
     this.getClientSubData(this.scrollLoad);
     this.getClientSubscriptionList();
   }
+
   getClientSubData(boolean) {
-    this.dataSource.data = [{}, {}, {}]
+    this.dataSource.data = [{}, {}, {}];
     this.getdocumentSubData(boolean).subscribe(
       data => {
-        this.getdocumentResponseData(data)
+        this.getdocumentResponseData(data);
       }, (error) => {
         this.errorMessage();
         // this.eventService.showErrorMessage(error);
         this.dataSource.data = [];
         this.isLoading = false;
       }
-    )
+    );
   }
+
   changeSelect() {
     this.dataCount = 0;
     this.dataSource.filteredData.forEach(item => {
@@ -120,6 +120,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
       }
     });
   }
+
   errorMessage() {
     const fragmentData = {
       flag: 'app-err-page-open',
@@ -137,15 +138,15 @@ export class DocumentsSubscriptionsComponent implements OnInit {
           data => {
             barButtonOption.active = false;
             this.getdocumentResponseData(data);
-            this.eventService.changeUpperSliderState({ state: 'close' })
+            this.eventService.changeUpperSliderState({state: 'close'});
             // this.errorMessage();
           }, (error) => {
             barButtonOption.active = false;
             this.eventService.openSnackBar('Wait for sometime....', 'Dismiss');
           }
-        )
+        );
       },
-    }
+    };
     const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
@@ -154,6 +155,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
       }
     );
   }
+
   selectAll(event) {
     // if(this.dataCount > 0 && this.dataCount != this.dataSource.data.length){
     //   this.dataSource.filteredData.forEach(item => {
@@ -217,6 +219,13 @@ export class DocumentsSubscriptionsComponent implements OnInit {
       state: 'open',
       componentName: CommonFroalaComponent
     };
+    const placeHolder = {
+      advisorAddress: '',
+      advisorName: '',
+      clientAddress: '',
+      clientName: fragmentData.data.clientName
+    };
+    fragmentData.data.documentText = this.utilservice.replacePlaceholder(fragmentData.data.documentText, placeHolder);
     fragmentData.data.isDocument = true;
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -300,7 +309,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     UtilService.getStartOfTheDay(beginDate);
     const endDate = new Date();
     UtilService.getStartOfTheDay(endDate);
-    this.selectedDateRange = { begin: selectedDateRange.begin, end: selectedDateRange.end };
+    this.selectedDateRange = {begin: selectedDateRange.begin, end: selectedDateRange.end};
   }
 
   getdocumentSubData(scrollLoader) {

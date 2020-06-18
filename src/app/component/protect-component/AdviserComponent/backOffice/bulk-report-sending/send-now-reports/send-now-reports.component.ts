@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material';
 import * as Highcharts from 'highcharts';
 import { MutualFundOverviewComponent } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mutual-fund/mutual-fund-overview/mutual-fund-overview.component';
 import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-send-now-reports',
@@ -22,25 +23,44 @@ export class SendNowReportsComponent implements OnInit {
   summary = false;
   overview = true;
   selectedReportType: any;
+  fromDate: Date;
+  toDate: Date;
+  financialYears: { from: number; to: number; selected: boolean; disabled: boolean; }[];
+  date: any;
+  default: any;
 
   constructor(
     private subInjectService: SubscriptionInject,
     public dialog: MatDialog,
     public overviewRepot: MutualFundOverviewComponent,
     public mfService: MfServiceService,
+    private datePipe: DatePipe,
   ) { }
 
   ngOnInit() {
     this.capitalGainSummary = false;
+    this.date = {}
     this.capitalGainDetails = false;
     this.unrealisedTransactions = false;
     this.allTransactions = false;
     this.summary = false;
     this.overview = true;
     this.selectedReportType = 'overview'
-    const fromDate = new Date();
-    fromDate.setFullYear(fromDate.getFullYear() - 1);
-    const toDate = new Date();
+    this.fromDate = new Date();
+    this.default = {'from':2019,'to':2020,'selected':true,'disabled':true}
+    this.fromDate.setFullYear(this.fromDate.getFullYear() - 1);
+    this.toDate = new Date();
+    this.financialYears=[{'from':2010,'to':2011,'selected':true,'disabled':true},{'from':2011,'to':2012,'selected':true,'disabled':true},{'from':2012,'to':2013,'selected':true,'disabled':true},{'from':2013,'to':2014,'selected':true,'disabled':true},{'from':2014,'to':2015,'selected':true,'disabled':true},
+    {'from':2015,'to':2016,'selected':true,'disabled':true},{'from':2016,'to':2017,'selected':true,'disabled':true},{'from':2017,'to':2018,'selected':true,'disabled':true},{'from':2018,'to':2019,'selected':true,'disabled':true},{'from':2019,'to':2020,'selected':true,'disabled':true},{'from':2020,'to':2021,'selected':true,'disabled':true}]
+    this.financialYears.filter(function (element) {
+      if (element.from == 2019 && element.to == 2020) {
+        element.selected = true;
+      } else {
+        element.selected = false;
+      }
+
+    });
+
   }
   close() {
     this.subInjectService.changeNewRightSliderState({
@@ -48,10 +68,19 @@ export class SendNowReportsComponent implements OnInit {
     });
   }
   proceed() {
+    if(this.date.toDate ){
+     
+    }else{
+      this.date.fromDate = new Date();
+      this.date.fromDate.setFullYear(this.date.fromDate.getFullYear() - 1);
+      this.date.toDate = new Date();
+    }
+    this.date.fromDate=this.datePipe.transform(this.date.fromDate, 'yyyy/MM/dd')
+    this.date.toDate=this.datePipe.transform(this.date.toDate, 'yyyy/MM/dd')
     const dialogRef = this.dialog.open(OpenSendReportPopupComponent, {
       width: '400px',
       height: '500px',
-      data: { reportType: this.selectedReportType, selectedElement: '' }
+      data: { reportType: this.selectedReportType, selectedElement: this.date }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result == undefined) {
@@ -144,5 +173,18 @@ export class SendNowReportsComponent implements OnInit {
         this.selectedReportType = reportType
       }
     }
+  }
+  changeFinancialYear(year){
+    this.date = year
+  }
+  changeFromDate(date,flag){
+    if(flag == 'fromDate'){
+      this.fromDate = date.value
+      this.date.fromDate = this.fromDate
+    } else {
+      this.toDate = date.value
+      this.date.toDate = this.toDate
+    }
+    console.log('from date', this.fromDate)
   }
 }

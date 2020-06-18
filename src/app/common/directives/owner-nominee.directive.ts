@@ -3,6 +3,8 @@ import {AuthService} from 'src/app/auth-service/authService';
 import {FormArray, FormBuilder} from '@angular/forms';
 import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
 import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 
 @Directive({
   selector: '[appOwnerNominee]'
@@ -20,7 +22,7 @@ export class OwnerNomineeDirective {
   showErrorOwner = false;
   emitedNOminee: any = [];
 
-  constructor(private fb: FormBuilder, private custumService: CustomerService,
+  constructor(private fb: FormBuilder, private enumDataService: EnumDataService, private custumService: CustomerService, private enumService: EnumServiceService,
               private peopleService: PeopleService) {
   }
 
@@ -57,6 +59,7 @@ export class OwnerNomineeDirective {
   @Input() userTypeFlag;
   @Output() valueChange3 = new EventEmitter();
   @Output() valueChange1 = new EventEmitter();
+  @Output() emitBank = new EventEmitter();
 
   get getCoOwner() {
     if (this.ownerData) {
@@ -93,7 +96,13 @@ export class OwnerNomineeDirective {
     }
     if (this.sendData.length <= 0) {
       this.peopleService.getClientFamilyMemberListAsset(obj).subscribe(
-        data => this.getListOfFamilyByClientRes(data)
+        (data) =>{
+          this.enumService.getFamilyList(data);
+          this.getListOfFamilyByClientRes(data);
+        },
+        error =>{
+          this.getListOfFamilyByClientRes(this.enumService.FamilyList());
+        } 
       );
     }
   }
@@ -121,6 +130,7 @@ export class OwnerNomineeDirective {
     }));
   }
 
+  userForBank:any;
   disabledMember(value) {
     const controlsArr: any = [];
     if (this.getCoOwner) {
@@ -143,6 +153,17 @@ export class OwnerNomineeDirective {
         if (e.data.name != '') {
           if (element.userName == e.data.name) {
             if (e.type == 'owner') {
+              if(e.index == "0"){
+                setTimeout(() => {
+                  this.userForBank = this.sendData.filter(x => x.id == this.getCoOwner.controls[e.index].get('familyMemberId').value);
+                  console.log(this.userForBank);
+                  if(this.userForBank){
+                    this.enumDataService.getAccountList(this.userForBank).then((data)=>{
+                         this.emitBank.emit();
+                    });
+                  }
+                }, 500);
+              }
               this.getCoOwner.controls[e.index].get('familyMemberId').setValue(element.id);
               this.getCoOwner.controls[e.index].get('isClient').setValue(element.relationshipId == 0 ? 1 : 0);
               if (this.getCoOwner.controls[e.index].get('relationshipId')) {

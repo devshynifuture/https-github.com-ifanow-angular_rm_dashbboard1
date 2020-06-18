@@ -66,9 +66,9 @@ export class MfCapitalDetailedComponent implements OnInit {
     if (data.clientId) {
       this.clientId = data.clientId
       // this.ngOnInit()
-      this.fromDateYear = 2019;
+      this.fromDateYear = data.from;
       this.fromDate = new Date(this.fromDateYear, 3, 1);
-      this.toDateYear = 2020;
+      this.toDateYear = data.to;
       this.toDate = new Date(this.toDateYear, 2, 31);
       this.grandFatheringEffect = true;
       // this.getAdvisorData();

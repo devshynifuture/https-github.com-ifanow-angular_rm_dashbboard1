@@ -597,8 +597,10 @@ export class InvoiceComponent implements OnInit {
   }
 
   formatter(data) {
-    data = Math.round(data);
-    return data;
+    if (data != NaN) {
+      data = Math.round(data);
+      return data;
+    }
   }
 
   passInvoice(data, index, event) {

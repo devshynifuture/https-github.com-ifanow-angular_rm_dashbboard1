@@ -130,7 +130,7 @@ export class AddEditDocumentComponent implements OnInit {
           docText: 'docText',
           description: this.blankDocumentProperties.controls.docName.value,
           public: true,
-          quotation: this._inputData.docType == '3' ? true : false,
+          quotation: this.blankDocumentProperties.controls.docType.value == 7 ? true : false,
           availableAt: this.selectedOption ? parseInt(this.selectedOption) : 0,
           mappingId: this._inputData.docType == '3' ? 5 : 0,
           docType: this.blankDocumentProperties.controls.docType.value
