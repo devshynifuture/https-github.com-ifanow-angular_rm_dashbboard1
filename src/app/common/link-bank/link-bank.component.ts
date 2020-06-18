@@ -44,7 +44,7 @@ export class LinkBankComponent implements OnInit {
   userData: any;
   holderList: any;
   bankList: any=[];
-
+  userInfo:boolean = false;
   bankForm;
   isIfsc;
   isPostal;
@@ -56,7 +56,9 @@ export class LinkBankComponent implements OnInit {
     private fb: FormBuilder, private subInjectService: SubscriptionInject, private enumDataService: EnumDataService,
     private subService: SubscriptionService, private postalService: PostalService,
     private peopleService: PeopleService, private utilService: UtilService, @Inject(MAT_DIALOG_DATA) public data: DialogData) {
-      this.bankList = data;
+      this.bankList = data.bankList;
+      this.userInfo = data.userInfo;
+      console.log(this.bankList, this.userInfo,'this.bankList 123');
   }
 
   ngOnInit() {
@@ -253,10 +255,15 @@ export class LinkBankComponent implements OnInit {
         bankId: null,
         addressId: null
       };
+      if(this.userInfo){
+        obj.userId = this.enumDataService.userData[0].id;
+        obj.userType = this.enumDataService.userData[0].userType;
+      }
+      
       this.peopleService.addEditClientBankDetails(obj).subscribe(
         data => {
           this.barButtonOptions.active = false;
-          this.enumDataService.getAccountList();
+          this.enumDataService.getAccountList(this.enumDataService.userData);
           // this.valueChange.emit("get-list");
           this.closeDialog("get-list");
         },
