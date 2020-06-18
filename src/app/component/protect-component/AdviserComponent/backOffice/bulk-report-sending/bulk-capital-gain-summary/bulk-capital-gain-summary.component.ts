@@ -103,7 +103,7 @@ export class BulkCapitalGainSummaryComponent implements OnInit {
       toEmail: 'devshyni@futurewise.co.in'
     }
     this.utilService.bulkHtmlToPdf(obj)
-    this.utilService.htmlToPdf(para.innerHTML, 'Overview', false, this.fragmentData, '', '')
+    this.utilService.htmlToPdf(para.innerHTML, 'Capital_Gain_Summary', true, this.fragmentData, '', '')
     return obj
 
   }

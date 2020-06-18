@@ -8,7 +8,7 @@
             <div class="col-md-8 p-0 d-flex justify-content-end" *ngIf="!isLoading">
                 <!-- <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu1"> -->
 
-                <a class="c-p downloadPdfIcon mr-10" [matMenuTriggerFor]="menu1">
+                <a class="c-p downloadPdfIcon mr-10" [matMenuTriggerFor]="menu1" *ngIf="!fragmentData.isSpinner">
                     <img src="assets/images/svg/download-bordered.svg">
                 </a>
 
@@ -16,10 +16,10 @@
                     <button mat-menu-item (click)="generatePdf()">PDF</button>
                     <button mat-menu-item (click)="Excel('Capital Gain')">XLS</button>
                 </mat-menu>
+                <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
                 <!-- <img class="c-p" src="assets/images/svg/three-dot-bordered.svg">
                 <img class="c-p mr-12" src="assets/images/svg/up-down.svg"> -->
-                <button class="btn-default addon v-middle mat-stroked-button mat-button-base" mat-stroked-button=""
-                    (click)="openFilter()">
+                <button class="btn-default addon v-middle mat-stroked-button mat-button-base" mat-stroked-button="" (click)="openFilter()">
                     <span class="mat-button-wrapper"><i class="material-icons">filter_list</i>FILTERS</span>
                     <div class="mat-button-ripple mat-ripple" matripple="" ng-reflect-centered="false"
                         ng-reflect-disabled="false" ng-reflect-trigger="[object HTMLButtonElement]">
@@ -37,9 +37,7 @@
                     </h5>
                 </div>
 
-                <table #tableEl mat-table [dataSource]="dataSource" id="table-low"
-                    class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading
-                    [appSkeletonLoading]="isLoading" *ngIf="dataSource.data.length>0">
+                <table #tableEl mat-table [dataSource]="dataSource" id="table-low" class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" *ngIf="dataSource.data.length>0">
 
                     <!--- Note that these columns can be defined in any order.
                                   The actual rendered columns are set as a property on the row definition" -->
@@ -162,9 +160,7 @@
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                     <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: false" [hidden]="isLoading"></tr>
                 </table>
-                <div *ngIf="dataSource.data.length == 0"
-                    [ngClass]="{'account-empty-state': dataSource.data.length == 0}"
-                    class="w-100 d-flex flex-column align-items-center">
+                <div *ngIf="dataSource.data.length == 0" [ngClass]="{'account-empty-state': dataSource.data.length == 0}" class="w-100 d-flex flex-column align-items-center">
                     <!-- <img class="width400" src="assets/images/svg/noDataFound.svg"> -->
                     <h4 class="text-center pt-12">No Data Found</h4>
                     <!-- <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddInsurance(null)">ADD NEW</button> -->
@@ -181,9 +177,7 @@
                         DEBT
                     </h5>
                 </div>
-                <table #tableEl2 mat-table [dataSource]="dataSource1" id="table-low"
-                    class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading
-                    [appSkeletonLoading]="isLoading" *ngIf="dataSource1.data.length>0">
+                <table #tableEl2 mat-table [dataSource]="dataSource1" id="table-low" class="mutualfunds-capital-equity skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" *ngIf="dataSource1.data.length>0">
 
                     <!--- Note that these columns can be defined in any order.
                               The actual rendered columns are set as a property on the row definition" -->
@@ -306,9 +300,7 @@
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                     <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr>
                 </table>
-                <div *ngIf="dataSource1.data.length == 0"
-                    [ngClass]="{'account-empty-state': dataSource1.data.length == 0}"
-                    class="w-100 d-flex flex-column align-items-center">
+                <div *ngIf="dataSource1.data.length == 0" [ngClass]="{'account-empty-state': dataSource1.data.length == 0}" class="w-100 d-flex flex-column align-items-center">
                     <!-- <img class="width400" src="assets/images/svg/noDataFound.svg"> -->
                     <h4 class="text-center pt-12">No Data Found</h4>
                     <!-- <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddInsurance(null)">ADD NEW</button> -->
@@ -324,9 +316,7 @@
                         DIVIDEND SUMMARY
                     </h5>
                 </div>
-                <table #tableEl3 mat-table [dataSource]="dataSource2" id="table-low"
-                    class="mutualfunds-capital-dividend-summary skeletonAnimation" appSkeletonLoading
-                    [appSkeletonLoading]="isLoading" *ngIf="dataSource2.data.length>0">
+                <table #tableEl3 mat-table [dataSource]="dataSource2" id="table-low" class="mutualfunds-capital-dividend-summary skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" *ngIf="dataSource2.data.length>0">
 
                     <!--- Note that these columns can be defined in any order.
                                       The actual rendered columns are set as a property on the row definition" -->
@@ -397,9 +387,7 @@
                     <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
                     <tr mat-footer-row *matFooterRowDef="displayedColumns2;sticky: true" [hidden]="isLoading"></tr>
                 </table>
-                <div *ngIf="dataSource2.data.length == 0"
-                    [ngClass]="{'account-empty-state': dataSource2.data.length == 0}"
-                    class="w-100 d-flex flex-column align-items-center">
+                <div *ngIf="dataSource2.data.length == 0" [ngClass]="{'account-empty-state': dataSource2.data.length == 0}" class="w-100 d-flex flex-column align-items-center">
                     <!-- <img class="width400" src="assets/images/svg/noDataFound.svg"> -->
                     <h4 class="text-center pt-12">No Data Found</h4>
                     <!-- <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddInsurance(null)">ADD NEW</button> -->
@@ -410,349 +398,338 @@
     </div>
 </div>
 <div *ngIf="!summaryView">
-    <app-mf-capital-detailed [responseData]="capitalGainData" [mutualFund]="mutualFund" [changedData]="dataToSend"
-        (reponseToInput)="outputResponse($event)"></app-mf-capital-detailed>
+    <app-mf-capital-detailed [responseData]="capitalGainData" [mutualFund]="mutualFund" [changedData]="dataToSend" (reponseToInput)="outputResponse($event)"></app-mf-capital-detailed>
 </div>
 
 
 <!-- inner html design -->
 
 
-<div #mfCapitalTemplate id="template">
-    <table cellpadding="0" width="100%" cellspacing="0" border="0"
-    style="font-family: 'Roboto', sans-serif; margin: 0px auto;" align="center; page-break-before: always;">
+<div #mfCapitalTemplate id="template" class="hide
+" style="display: none;">
+    <table cellpadding="0" width="100%" cellspacing="0" border="0" style="font-family: 'Roboto', sans-serif; margin: 0px auto;" align="center; page-break-before: always;">
+        <tr>
+            <td style="text-align: left;color: #008FFF; padding-left: 8px; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; font-family: Roboto,sans-serif;"
+                colspan="9">
+                EQUITY
+            </td>
+        </tr>
+        <tr *ngIf="dataSource.data.length == 0">
+            <td style="text-align: center;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;"
+                colspan="9">
+                No Data Found
+            </td>
+        </tr>
 
-    <tr>
-        <td style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;"
-            colspan="9">
-            EQUITY
-        </td>
-    </tr>
-    <tr *ngIf="dataSource.data.length == 0">
-        <td style="text-align: center;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;"
-            colspan="9">
-            No Data Found
-        </td>
-    </tr>
-    <tr *ngIf="dataSource.data.length > 0">
-        <td
-            style="width:26%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-            <b>Scheme name </b> </td>
+        <tr *ngIf="dataSource.data.length > 0">
+            <td style="width:26%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                <b>Scheme name </b> </td>
 
-        <td
-            style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-            <b> Folio number </b> </td>
+            <td style="width:12%;text-align: right; font-size: 12px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                <b> Folio number </b> </td>
 
-        <td
-            style="width:26%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-            <b> Investor name </b> </td>
+            <td style="width:18%;text-align: left; font-size: 12px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                <b> Investor name </b> </td>
 
-        <td
-            style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-            <b> ST gain </b> </td>
+            <td style="width:8%;text-align: right; font-size: 12px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                <b> ST gain </b> </td>
 
-        <td
-            style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-            <b> ST loss </b> </td>
+            <td style="width:8%;text-align: right; font-size: 12px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                <b> ST loss </b> </td>
 
-        <td
-            style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-            <b> LT gain </b> </td>
+            <td style="width:8%;text-align: right; font-size: 12px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                <b> LT gain </b> </td>
 
-        <td
-            style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-            <b> Indexed gain </b> </td>
+            <td style="width:8%;text-align: right; font-size: 12px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                <b> Indexed gain </b> </td>
 
-        <td
-            style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-            <b> LT loss </b> </td>
+            <td style="width:8%;text-align: right; font-size: 12px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                <b> LT loss </b> </td>
 
-        <td
-            style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-            <b> Indexed loss </b> </td>
+            <td style="width:12%;text-align: right; font-size: 12px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                <b> Indexed loss </b> </td>
 
-    </tr>
+        </tr>
 
 
-    <tr *ngFor="let element of dataSource.data">
-        <td valign="top">
-            {{element.schemeName}}
-        </td>
-
-        <td valign="top">
-            {{element.folioNumber}}
-        </td>
-
-        <td valign="top">
-            {{(isLoading) ? '' : ((element.ownerName) ? element.ownerName : 'N.A')}}
-        </td>
-
-        <td valign="top">
-            {{(element.stGain == 0) ? (element.stGain) : (element.stGain | number:'1.2-2' ) }}
-        </td>
-
-        <td valign="top">
-            {{(element.stLoss == 0 ) ? (element.stLoss) : (element.stLoss | number:'1.2-2')}}
-        </td>
-
-        <td valign="top">
-            {{(element.ltGain == 0 ) ? (element.ltGain) : (element.ltGain | number:'1.2-2')}}
-        </td>
-
-        <td valign="top">
-            {{(element.indexGain == 0 ) ? (element.indexGain) : (element.indexGain | number:'1.2-2')}}
-        </td>
-
-        <td valign="top">
-            {{(element.ltLoss == 0 ) ? (element.ltLoss) : (element.ltLoss | number:'1.2-2')}}
-        </td>
-
-        <td valign="top">
-            {{(element.indexLoss == 0 ) ? (element.indexLoss) : (element.indexLoss | number:'1.2-2')}}
-        </td>
-
-    </tr>
-
-
-        <tr *ngFor="let element of dataSource1.data">
-            <td valign="top">
+        <tr *ngFor="let element of dataSource.data">
+            <td valign="top" style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
                 {{element.schemeName}}
             </td>
 
-        <td valign="top">
-            {{(equityObj) ? ((equityObj.stGain == 0 ) ? 0 : (equityObj.stGain | number:'1.2-2')) : '0'}}
-        </td>
-
-            <td valign="top">
-                {{(element.ownerName) ? element.ownerName : 'N.A'}}
+            <td valign="top" style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                {{element.folioNumber}}
             </td>
 
-        <td valign="top">
-            {{(equityObj) ? ((equityObj.totalIndexGain == 0 ) ? 0 : (equityObj.totalIndexGain | number:'1.2-2')) : '0'}}
-        </td>
+            <td valign="top" style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                {{(isLoading) ? '' : ((element.ownerName) ? element.ownerName : 'N.A')}}
+            </td>
 
-        <td valign="top">
-            {{(equityObj) ? ((equityObj.totalIndexLoss == 0 ) ? 0 : (equityObj.totalIndexLoss | number:'1.2-2')) : '0'}}
-        </td>
+            <td valign="top" style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                {{(element.stGain == 0) ? (element.stGain) : (element.stGain | number:'1.2-2' ) }}
+            </td>
 
-        <td valign="top">
-            0
-        </td>
+            <td valign="top" style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                {{(element.stLoss == 0 ) ? (element.stLoss) : (element.stLoss | number:'1.2-2')}}
+            </td>
 
-    </tr>
-    <tr>
-        <td style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;"
-            colspan="9">
-            DEBT
-        </td>
-    </tr>
-    <tr *ngIf="dataSource1.data.length == 0">
-        <td style="text-align: center;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;"
-            colspan="9">
-            No Data Found
-        </td>
-    </tr>
-    <tr *ngIf="dataSource1.data.length > 0">
-        <td
-            style="width:26%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-            <b>Scheme name </b> </td>
+            <td valign="top" style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                {{(element.ltGain == 0 ) ? (element.ltGain) : (element.ltGain | number:'1.2-2')}}
+            </td>
 
-        <td
-            style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-            <b> Folio number </b> </td>
+            <td valign="top" style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                {{(element.indexGain == 0 ) ? (element.indexGain) : (element.indexGain | number:'1.2-2')}}
+            </td>
 
-        <td
-            style="width:26%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-            <b> Investor name </b> </td>
+            <td valign="top" style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                {{(element.ltLoss == 0 ) ? (element.ltLoss) : (element.ltLoss | number:'1.2-2')}}
+            </td>
 
-        <td
-            style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-            <b> ST gain </b> </td>
+            <td valign="top" style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                {{(element.indexLoss == 0 ) ? (element.indexLoss) : (element.indexLoss | number:'1.2-2')}}
+            </td>
 
-        <td
-            style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-            <b> ST loss </b> </td>
-
-        <td
-            style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-            <b> LT gain </b> </td>
-
-        <td
-            style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-            <b> Indexed gain </b> </td>
-
-        <td
-            style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-            <b> LT loss </b> </td>
-
-        <td
-            style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-            <b> Indexed loss </b> </td>
-
-    </tr>
+        </tr>
 
 
-    <tr *ngFor="let element of dataSource1.data">
-        <td valign="top">
-            {{element.schemeName}}
-        </td>
+        <tr *ngIf="dataSource.data.length > 0">
+            <td valign="top" style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                Total
+            </td>
 
-        <td valign="top">
-            {{element.folioNumber}}
-        </td>
+            <td valign="top" style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
 
-        <td valign="top">
-            {{(isLoading) ? '' : ((element.ownerName) ? element.ownerName : 'N.A')}}
-        </td>
+            </td>
 
-        <td valign="top">
-            {{(element.stGain == 0) ? (element.stGain) : (element.stGain | number:'1.2-2' ) }}
-        </td>
+            <td valign="top" style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
 
-        <td valign="top">
-            {{(element.stLoss == 0 ) ? (element.stLoss) : (element.stLoss | number:'1.2-2')}}
-        </td>
+            </td>
 
-        <td valign="top">
-            {{(element.ltGain == 0 ) ? (element.ltGain) : (element.ltGain | number:'1.2-2')}}
-        </td>
+            <td valign="top" style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                0
+            </td>
 
-        <td valign="top">
-            {{(element.indexGain == 0 ) ? (element.indexGain) : (element.indexGain | number:'1.2-2')}}
-        </td>
+            <td valign="top" style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                {{(equityObj) ? ((equityObj.stGain == 0 ) ? 0 : (equityObj.stGain | number:'1.2-2')) : '0'}}
+            </td>
 
-        <td valign="top">
-            {{(element.ltLoss == 0 ) ? (element.ltLoss) : (element.ltLoss | number:'1.2-2')}}
-        </td>
+            <td valign="top" style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                {{(equityObj) ? ((equityObj.stLoss == 0 ) ? 0 : (equityObj.stLoss | number:'1.2-2')) : '0'}}
+            </td>
 
-        <td valign="top">
-            {{(element.indexLoss == 0 ) ? (element.indexLoss) : (element.indexLoss | number:'1.2-2')}}
-        </td>
+            <td valign="top" style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                {{(equityObj) ? ((equityObj.totalIndexGain == 0 ) ? 0 : (equityObj.totalIndexGain | number:'1.2-2')) : '0'}}
+            </td>
 
-    </tr>
+            <td valign="top" style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                {{(equityObj) ? ((equityObj.totalIndexLoss == 0 ) ? 0 : (equityObj.totalIndexLoss | number:'1.2-2')) : '0'}}
+            </td>
 
+            <td valign="top" style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                0
+            </td>
 
-    <tr *ngIf="dataSource1.data.length > 0">
-        <td valign="top">
-            Total
-        </td>
+        </tr>
+        <tr>
+            <td style="text-align: left; padding-left: 8px; color: #008FFF;  padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;"
+                colspan="9">
+                DEBT
+            </td>
+        </tr>
+        <tr *ngIf="dataSource1.data.length == 0">
+            <td style="text-align: center;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;"
+                colspan="9">
+                No Data Found
+            </td>
+        </tr>
 
-        <td valign="top">
+        <tr *ngIf="dataSource1.data.length > 0">
+            <td style="width:23%;text-align: left; font-size: 12px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                <b>Scheme name </b> </td>
 
-        </td>
+            <td style="width:12%;text-align: right; font-size: 12px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                <b> Folio number </b> </td>
 
-        <td valign="top">
+            <td style="width:18%;text-align: left; font-size: 12px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                <b> Investor name </b> </td>
 
-        </td>
+            <td style="width:8%;text-align: right; font-size: 12px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                <b> ST gain </b> </td>
 
-        <td valign="top">
-            {{(debtObj) ? ((debtObj.stGain == 0 ) ? 0 : (debtObj.stGain | number:'1.2-2')) : '0'}}
-        </td>
+            <td style="width:8%;text-align: right; font-size: 12px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                <b> ST loss </b> </td>
 
-        <td valign="top">
-            {{(debtObj) ? ((debtObj.stLoss == 0 ) ? 0 : (debtObj.stLoss | number:'1.2-2')) : '0'}}
-        </td>
+            <td style="width:8%;text-align: right; font-size: 12px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                <b> LT gain </b> </td>
 
-        <td valign="top">
-            {{(debtObj) ? ((debtObj.ltGain == 0 ) ? 0 : (debtObj.ltGain | number:'1.2-2')) : '0'}}
-        </td>
+            <td style="width:8%;text-align: right; font-size: 12px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                <b> Indexed gain </b> </td>
 
-        <td valign="top">
-            {{(debtObj) ? ((debtObj.indexGain == 0 ) ? 0 : (debtObj.indexGain | number:'1.2-2')) : '0'}}
-        </td>
+            <td style="width:8%;text-align: right; font-size: 12px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                <b> LT loss </b> </td>
 
-        <td valign="top">
-            {{(debtObj) ? ((debtObj.ltLoss == 0 ) ? 0 : (debtObj.ltLoss | number:'1.2-2')) : '0'}}
-        </td>
+            <td style="width:12%;text-align: right; font-size: 12px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                <b> Indexed loss </b> </td>
 
-        <td valign="top">
-            {{(debtObj) ? ((debtObj.indexLoss == 0 ) ? 0 : (debtObj.indexLoss | number:'1.2-2')) : '0'}}
-        </td>
-
-    </tr>
-
-    <tr>
-        <td style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;"
-            colspan="9">
-            DIVIDEND SUMMARY
-        </td>
-    </tr>
-    <tr *ngIf="dataSource2.data.length == 0">
-        <td style="text-align: center;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;"
-            colspan="9">
-            No Data Found
-        </td>
-    </tr>
-    <tr *ngIf="dataSource2.data.length > 0">
-        <td
-            style="width:26%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-            <b>Scheme name </b> </td>
-
-        <td
-            style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-            <b> Folio number </b> </td>
-
-        <td
-            style="width:26%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-            <b> Dividend payout </b> </td>
-
-        <td
-            style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-            <b> Dividend reinvestment </b> </td>
-
-        <td
-            style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-            <b> Total reinvesment </b> </td>
-
-    </tr>
+        </tr>
 
 
-    <tr *ngFor="let element of dataSource2.data">
-        <td valign="top">
-            {{element.schemeName}}
-        </td>
+        <tr *ngFor="let element of dataSource1.data">
+            <td valign="top" style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                {{element.schemeName}}
+            </td>
 
-        <td valign="top">
-            {{element.folioNumber}}
-        </td>
+            <td valign="top" style=" font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; text-align: right;">
+                {{element.folioNumber}}
+            </td>
 
-        <td valign="top">
-            {{(isLoading) ? '' : ((element.dividendPayout) ? element.dividendPayout : 'N.A')}}
-        </td>
+            <td valign="top" style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                {{(isLoading) ? '' : ((element.ownerName) ? element.ownerName : 'N.A')}}
+            </td>
 
-        <td valign="top">
-            {{(element.dividendReinvestment == 0) ? (element.dividendReinvestment) : (element.dividendReinvestment | number:'1.2-2' ) }}
-        </td>
+            <td valign="top" style="font-size: 13px; text-align: right; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                {{(element.stGain == 0) ? (element.stGain) : (element.stGain | number:'1.2-2' ) }}
+            </td>
 
-        <td valign="top">
-            {{(element.totalReinvesment == 0 ) ? (element.totalReinvesment) : (element.totalReinvesment | number:'1.2-2')}}
-        </td>
+            <td valign="top" style=" font-size: 13px; text-align: right; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                {{(element.stLoss == 0 ) ? (element.stLoss) : (element.stLoss | number:'1.2-2')}}
+            </td>
+
+            <td valign="top" style="font-size: 13px; text-align: right; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                {{(element.ltGain == 0 ) ? (element.ltGain) : (element.ltGain | number:'1.2-2')}}
+            </td>
+
+            <td valign="top" style="font-size: 13px; text-align: right; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                {{(element.indexGain == 0 ) ? (element.indexGain) : (element.indexGain | number:'1.2-2')}}
+            </td>
+
+            <td valign="top" style="font-size: 13px; text-align: right; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                {{(element.ltLoss == 0 ) ? (element.ltLoss) : (element.ltLoss | number:'1.2-2')}}
+            </td>
+
+            <td valign="top" style="font-size: 13px;  text-align: right; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                {{(element.indexLoss == 0 ) ? (element.indexLoss) : (element.indexLoss | number:'1.2-2')}}
+            </td>
+
+        </tr>
 
 
-    </tr>
+        <tr *ngIf="dataSource1.data.length > 0">
+            <td valign="top" style="font-weight: 500; border-left: 1px solid #dee5e7; font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                Total
+            </td>
+
+            <td valign="top" style="font-weight: 500; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+
+            </td>
+
+            <td valign="top" style="font-weight: 500; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+
+            </td>
+
+            <td valign="top" style="font-weight: 500; text-align: right; border-left: 1px solid #dee5e7; font-size: 13px; padding: 8px; border-bottom: 1px solid #dee5e7;">
+                {{(debtObj) ? ((debtObj.stGain == 0 ) ? 0 : (debtObj.stGain | number:'1.2-2')) : '0'}}
+            </td>
+
+            <td valign="top" style="font-weight: 500; text-align: right; border-left: 1px solid #dee5e7; font-size: 13px; padding: 8px; border-bottom: 1px solid #dee5e7;">
+                {{(debtObj) ? ((debtObj.stLoss == 0 ) ? 0 : (debtObj.stLoss | number:'1.2-2')) : '0'}}
+            </td>
+
+            <td valign="top" style="font-weight: 500;  text-align: right;border-left: 1px solid #dee5e7; font-size: 13px; padding: 8px; border-bottom: 1px solid #dee5e7;">
+                {{(debtObj) ? ((debtObj.ltGain == 0 ) ? 0 : (debtObj.ltGain | number:'1.2-2')) : '0'}}
+            </td>
+
+            <td valign="top" style="font-weight: 500;text-align: right;  border-left: 1px solid #dee5e7; font-size: 13px; padding: 8px; border-bottom: 1px solid #dee5e7;">
+                {{(debtObj) ? ((debtObj.indexGain == 0 ) ? 0 : (debtObj.indexGain | number:'1.2-2')) : '0'}}
+            </td>
+
+            <td valign="top" style="font-weight: 500; text-align: right; border-left: 1px solid #dee5e7; font-size: 13px; padding: 8px; border-bottom: 1px solid #dee5e7;">
+                {{(debtObj) ? ((debtObj.ltLoss == 0 ) ? 0 : (debtObj.ltLoss | number:'1.2-2')) : '0'}}
+            </td>
+
+            <td valign="top" style="font-weight: 500; text-align: right; border-left: 1px solid #dee5e7; font-size: 13px; padding: 8px; border-bottom: 1px solid #dee5e7;">
+                {{(debtObj) ? ((debtObj.indexLoss == 0 ) ? 0 : (debtObj.indexLoss | number:'1.2-2')) : '0'}}
+            </td>
+
+        </tr>
+
+        <tr>
+            <td style="text-align: left; padding-left: 8px; color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;"
+                colspan="9">
+                DIVIDEND SUMMARY
+            </td>
+        </tr>
+        <tr *ngIf="dataSource2.data.length == 0">
+            <td style="text-align: center;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;"
+                colspan="9">
+                No Data Found
+            </td>
+        </tr>
+        <tr *ngIf="dataSource2.data.length > 0">
+            <td style="width:26%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                <b>Scheme name </b> </td>
+
+            <td style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                <b> Folio number </b> </td>
+
+            <td style="width:26%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                <b> Dividend payout </b> </td>
+
+            <td style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                <b> Dividend reinvestment </b> </td>
+
+            <td style="width:26%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                <b> Total reinvesment </b> </td>
+
+        </tr>
 
 
-    <tr *ngIf="dataSource2.data.length > 0">
-        <td valign="top">
-            Total
-        </td>
+        <tr *ngFor="let element of dataSource2.data">
+            <td valign="top" style="font-size: 13px; text-align: left;  border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                {{element.schemeName}}
+            </td>
 
-        <td valign="top">
+            <td valign="top" style="font-size: 13px; text-align: right; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                {{element.folioNumber}}
+            </td>
 
-        </td>
+            <td valign="top" style="font-size: 13px; text-align: right; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                {{(isLoading) ? '' : ((element.dividendPayout) ? element.dividendPayout : 'N.A')}}
+            </td>
 
-        <td valign="top">
-            {{(GTdividendPayout == 0 ) ? (totaldividendPayout) : (GTdividendPayout | number:'1.2-2')}}
-        </td>
+            <td valign="top" style="font-size: 13px; text-align: right; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                {{(element.dividendReinvestment == 0) ? (element.dividendReinvestment) : (element.dividendReinvestment | number:'1.2-2' ) }}
+            </td>
 
-        <td valign="top">
-            {{(GTdividendReinvestment == 0 ) ? (GTdividendReinvestment) : (GTdividendReinvestment | number:'1.2-2')}}
-        </td>
+            <td valign="top" style="font-size: 13px; text-align: right; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                {{(element.totalReinvesment == 0 ) ? (element.totalReinvesment) : (element.totalReinvesment | number:'1.2-2')}}
+            </td>
 
-        <td valign="top">
-            {{(GTReinvesment == 0 ) ? (GTReinvesment) : (GTReinvesment | number:'1.2-2')}}
-        </td>
 
-    </tr>
-</table>
+        </tr>
+
+
+        <tr *ngIf="dataSource2.data.length > 0">
+            <td valign="top" style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                Total
+            </td>
+
+            <td valign="top" style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+
+            </td>
+
+            <td valign="top" style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                {{(GTdividendPayout == 0 ) ? (totaldividendPayout) : (GTdividendPayout | number:'1.2-2')}}
+            </td>
+
+            <td valign="top" style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                {{(GTdividendReinvestment == 0 ) ? (GTdividendReinvestment) : (GTdividendReinvestment | number:'1.2-2')}}
+            </td>
+
+            <td valign="top" style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                {{(GTReinvesment == 0 ) ? (GTReinvesment) : (GTReinvesment | number:'1.2-2')}}
+            </td>
+
+        </tr>
+    </table>
 </div>

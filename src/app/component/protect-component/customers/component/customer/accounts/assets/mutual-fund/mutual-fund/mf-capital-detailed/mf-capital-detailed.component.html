@@ -5,13 +5,15 @@
         </div>
         <!-- *ngIf="!isLoading" prod -->
         <div class="col-md-8 p-0 d-flex justify-content-end" *ngIf="!isLoading">
-            <div class="downloadPdfIcon mr-8">
+            <div [matMenuTriggerFor]="menu1" class="c-p downloadPdfIcon" *ngIf="!fragmentData.isSpinner">
                 <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu1">
             </div>
             <mat-menu #menu1="matMenu">
                 <button mat-menu-item (click)="generatePdf()">PDF</button>
                 <button mat-menu-item (click)="Excel('detailed Capital')">XLS</button>
             </mat-menu>
+            <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
+
             <!-- <img class="c-p" src="assets/images/svg/three-dot-bordered.svg">
                 <img class="c-p mr-12" src="assets/images/svg/up-down.svg"> -->
             <button class="btn-default addon v-middle mat-stroked-button mat-button-base" mat-stroked-button=""
@@ -1034,11 +1036,9 @@
 
 
             <tr *ngFor="let element of dataSource.data">
-                <!-- <tr *ngIf="element.schemeName || element.folioNumber || element.ownerName">
-                                        <td style="font-weight: 600;">
-                                            {{element.schemeName}}|{{element.folioNumber}}|{{item.ownerName}}
+                                        <td style="font-weight: 600;" *ngIf="element.schemeName || element.folioNumber || element.ownerName">
+                                            {{element.schemeName}}|{{element.folioNumber}}|{{element.ownerName}}
                                         </td>
-                                    </tr> -->
                 <td valign="top">
                     <span *ngIf="element.redeemTransactionDate">
                         {{(element.redeemTransactionDate) ? (element.redeemTransactionDate  | date:'dd/MM/yyyy') : ''}}
@@ -1130,44 +1130,113 @@
                 </td>
 
             </tr>
+              <tr *ngFor="let element of dataSource.data">
+                    <td valign="top" *ngIf="element.totalAmt">
+                        {{element.totalAmt}}
+                    </td>
+    
+                    <td valign="top">
+    
+                    </td>
+    
+                    <td valign="top" *ngIf="element.totalAmount">
+                        {{((element.totalAmount) ? element.totalAmount : '0')}}
+                    </td>
+    
+                    <td valign="top" *ngIf="element.totalStt">
+                        {{(isLoading) ? '' : ((element.totalStt) ? (element.totalStt | number:'1.2-2') : '0')}}
+                    </td>
+    
+                    <td valign="top">
+                    </td>
+    
+                    <td valign="top">
+                    </td>
+    
+                    <td valign="top">
+                    </td>
+    
+                    <td valign="top" *ngIf="element.purchaseAmount || element.purchaseAmount == 0">
+                            {{((element.purchaseAmount) ? element.purchaseAmount : 0)}}
+                    </td>
+                    <td valign="top">
+                    </td>
+                    <td valign="top">
+                    </td>
+                    <td valign="top" *ngIf="element.totalStGain || element.totalStGain == 0">
+                            {{((element.totalStGain) ? (element.totalStGain | number:'1.2-2') : (element.totalStGain == 0) ? 0 : 0)}}
+                    </td>
+                    <td valign="top" *ngIf="element.totalStLoss || element.totalStLoss == 0">
+                            {{((element.totalStLoss) ? (element.totalStLoss | number:'1.2-2') : (element.totalStLoss == 0) ? 0 : 0)}}
+                    </td>
+                    <td valign="top"  *ngIf="element.totalLtGain || element.totalLtGain == 0">
+                            {{((element.totalLtGain) ? (element.totalLtGain | number:'1.2-2') : (element.totalLtGain == 0) ? 0 : 0)}}
+                    </td>
+                    <td valign="top"  *ngIf="element.totalStLoss || element.totalStLoss == 0">
+                            {{((element.totalStLoss) ? (element.totalStLoss | number:'1.2-2') : (element.totalStLoss == 0) ? 0 : 0)}}
+                    </td>
+                    <td valign="top" *ngIf="element.totalIndexGain || element.totalIndexGain == 0">
+                            {{((element.totalIndexGain) ? (element.totalIndexGain | number:'1.2-2') : (element.totalIndexGain == 0) ? 0 : 0)}}
+                    </td>
+                    <td valign="top" *ngIf="element.totalIndexLoss || element.totalIndexLoss == 0">
+                            {{((element.totalIndexLoss) ? (element.totalIndexLoss | number:'1.2-2') : (element.totalIndexLoss == 0) ? 0 : 0)}}
+                    </td>
+                    <td valign="top">
+                    </td>
+                </tr>
             <tr *ngIf="dataSource.data.length > 0">
-                <td valign="top">
-                    Total
-                </td>
-
-                <td valign="top">
-
-                </td>
-
-                <td valign="top">
-
-                </td>
-
-                <td valign="top">
-                    {{(equityObj) ? ((equityObj.stGain == 0 ) ? 0 : (equityObj.stGain | number:'1.2-2')) : '0'}}
-                </td>
-
-                <td valign="top">
-                    {{(equityObj) ? ((equityObj.stLoss == 0 ) ? 0 : (equityObj.stLoss | number:'1.2-2')) : '0'}}
-                </td>
-
-                <td valign="top">
-                    {{(equityObj) ? ((equityObj.ltGain == 0 ) ? 0 : (equityObj.ltGain | number:'1.2-2')) : '0'}}
-                </td>
-
-                <td valign="top">
-                    {{(equityObj) ? ((equityObj.indexGain == 0 ) ? 0 : (equityObj.indexGain | number:'1.2-2')) : '0'}}
-                </td>
-
-                <td valign="top">
-                    {{(equityObj) ? ((equityObj.ltLoss == 0 ) ? 0 : (equityObj.ltLoss | number:'1.2-2')) : '0'}}
-                </td>
-
-                <td valign="top">
-                    {{(equityObj) ? ((equityObj.indexLoss == 0 ) ? 0 : (equityObj.indexLoss | number:'1.2-2')) : '0'}}
-                </td>
-
-            </tr>
+                    <td valign="top">
+                        EQUITY TOTAL
+                    </td>
+    
+                    <td valign="top">
+    
+                    </td>
+    
+                    <td valign="top" appFormatNumber [value]="equityObj ? equityObj.totalAmount : 0">
+    
+                    </td>
+    
+                    <td valign="top">
+                        {{(equityObj) ? ((equityObj.totalStt == 0 ) ? 0 : (equityObj.totalStt | number:'1.2-2')) : '0'}}
+                    </td>
+    
+                    <td valign="top">
+                    </td>
+    
+                    <td valign="top">
+                    </td>
+    
+                    <td valign="top">
+                    </td>
+    
+                    <td valign="top" appFormatNumber [value]="equityObj ? equityObj.purchaseAmount : 0">
+                    </td>
+                    <td valign="top">
+                    </td>
+                    <td valign="top">
+                    </td>
+                    <td valign="top">
+                        {{(equityObj) ? ((equityObj.totalStGain == 0 ) ? 0 : (equityObj.totalStGain | number:'1.2-2')) : '0'}}
+                    </td>
+                    <td valign="top">
+                        {{(equityObj) ? ((equityObj.totalStLoss == 0 ) ? 0 : (equityObj.totalStLoss | number:'1.2-2')) : '0'}}
+                    </td>
+                    <td valign="top">
+                        {{(equityObj) ? ((equityObj.totalLtGain == 0 ) ? 0 : (equityObj.totalLtGain | number:'1.2-2')) : '0'}}
+                    </td>
+                    <td valign="top">
+                        {{(equityObj) ? ((equityObj.totalStLoss == 0 ) ? 0 : (equityObj.totalStLoss | number:'1.2-2')) : '0'}}
+                    </td>
+                    <td valign="top">
+                        {{(equityObj) ? ((equityObj.totalIndexGain == 0 ) ? 0 : (equityObj.totalIndexGain | number:'1.2-2')) : '0'}}
+                    </td>
+                    <td valign="top">
+                        {{(equityObj) ? ((equityObj.totalIndexLoss == 0 ) ? 0 : (equityObj.totalIndexLoss | number:'1.2-2')) : '0'}}
+                    </td>
+                    <td valign="top">
+                    </td>
+                </tr>
 
             <tr>
                 <td style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;"
@@ -1266,6 +1335,9 @@
                                     {{element.schemeName}}|{{element.folioNumber}}|{{item.ownerName}}
                                 </td>
                             </tr> -->
+                            <td style="font-weight: 600;" *ngIf="element.schemeName || element.folioNumber">
+                                    {{element.schemeName}}|{{element.folioNumber}}|{{element.ownerName}}
+                                </td>
                 <td valign="top">
                     <span *ngIf="element.redeemTransactionDate">
                         {{(element.redeemTransactionDate) ? (element.redeemTransactionDate  | date:'dd/MM/yyyy') : ''}}
@@ -1357,45 +1429,167 @@
                 </td>
 
             </tr>
+            <tr *ngFor="let element of dataSource1.data">
+                    <td valign="top" *ngIf="element.totalAmt">
+                        {{element.totalAmt}}
+                    </td>
+    
+                    <td valign="top">
+    
+                    </td>
+    
+                    <td valign="top" *ngIf="element.totalAmount">
+                        <span appFormatNumber>{{((element.totalAmount) ? element.totalAmount : '0')}}</span>
+                    </td>
+    
+                    <td valign="top" *ngIf="element.totalStt">
+                        {{(isLoading) ? '' : ((element.totalStt) ? (element.totalStt | number:'1.2-2') : '0')}}
+                    </td>
+    
+                    <td valign="top">
+                    </td>
+    
+                    <td valign="top">
+                    </td>
+    
+                    <td valign="top">
+                    </td>
+    
+                    <td valign="top" *ngIf="element.purchaseAmount || element.purchaseAmount == 0">
+                            {{((element.purchaseAmount) ? element.purchaseAmount : 0)}}
+                    </td>
+                    <td valign="top">
+                    </td>
+                    <td valign="top">
+                    </td>
+                    <td valign="top" *ngIf="element.totalStGain || element.totalStGain == 0">
+                            {{((element.totalStGain) ? (element.totalStGain | number:'1.2-2') : (element.totalStGain == 0) ? 0 : 0)}}
+                    </td>
+                    <td valign="top" *ngIf="element.totalStLoss || element.totalStLoss == 0">
+                            {{((element.totalStLoss) ? (element.totalStLoss | number:'1.2-2') : (element.totalStLoss == 0) ? 0 : 0)}}
+                    </td>
+                    <td valign="top"  *ngIf="element.totalLtGain || element.totalLtGain == 0">
+                            {{((element.totalLtGain) ? (element.totalLtGain | number:'1.2-2') : (element.totalLtGain == 0) ? 0 : 0)}}
+                    </td>
+                    <td valign="top"  *ngIf="element.totalStLoss || element.totalStLoss == 0">
+                            {{((element.totalStLoss) ? (element.totalStLoss | number:'1.2-2') : (element.totalStLoss == 0) ? 0 : 0)}}
+                    </td>
+                    <td valign="top" *ngIf="element.totalIndexGain || element.totalIndexGain == 0">
+                            {{((element.totalIndexGain) ? (element.totalIndexGain | number:'1.2-2') : (element.totalIndexGain == 0) ? 0 : 0)}}
+                    </td>
+                    <td valign="top" *ngIf="element.totalIndexLoss || element.totalIndexLoss == 0">
+                            {{((element.totalIndexLoss) ? (element.totalIndexLoss | number:'1.2-2') : (element.totalIndexLoss == 0) ? 0 : 0)}}
+                    </td>
+                    <td valign="top">
+                    </td>
+                </tr>
             <tr *ngIf="dataSource1.data.length > 0">
                 <td valign="top">
-                    Total
+                    DEBT TOTAL
                 </td>
 
                 <td valign="top">
 
                 </td>
 
-                <td valign="top">
+                <td valign="top" appFormatNumber [value]="debtObj ? debtObj.totalAmount : 0">
 
                 </td>
 
                 <td valign="top">
-                    {{(debtObj) ? ((debtObj.stGain == 0 ) ? 0 : (debtObj.stGain | number:'1.2-2')) : '0'}}
+                    {{(debtObj) ? ((debtObj.totalStt == 0 ) ? 0 : (debtObj.totalStt | number:'1.2-2')) : '0'}}
                 </td>
 
                 <td valign="top">
-                    {{(debtObj) ? ((debtObj.stLoss == 0 ) ? 0 : (debtObj.stLoss | number:'1.2-2')) : '0'}}
                 </td>
 
                 <td valign="top">
-                    {{(debtObj) ? ((debtObj.ltGain == 0 ) ? 0 : (debtObj.ltGain | number:'1.2-2')) : '0'}}
                 </td>
 
                 <td valign="top">
-                    {{(debtObj) ? ((debtObj.indexGain == 0 ) ? 0 : (debtObj.indexGain | number:'1.2-2')) : '0'}}
                 </td>
 
+                <td valign="top" appFormatNumber [value]="debtObj ? debtObj.purchaseAmount : 0">
+                </td>
                 <td valign="top">
-                    {{(debtObj) ? ((debtObj.ltLoss == 0 ) ? 0 : (debtObj.ltLoss | number:'1.2-2')) : '0'}}
                 </td>
-
                 <td valign="top">
-                    {{(debtObj) ? ((debtObj.indexLoss == 0 ) ? 0 : (debtObj.indexLoss | number:'1.2-2')) : '0'}}
                 </td>
-
+                <td valign="top">
+                    {{(debtObj) ? ((debtObj.totalStGain == 0 ) ? 0 : (debtObj.totalStGain | number:'1.2-2')) : '0'}}
+                </td>
+                <td valign="top">
+                    {{(debtObj) ? ((debtObj.totalStLoss == 0 ) ? 0 : (debtObj.totalStLoss | number:'1.2-2')) : '0'}}
+                </td>
+                <td valign="top">
+                    {{(debtObj) ? ((debtObj.totalLtGain == 0 ) ? 0 : (debtObj.totalLtGain | number:'1.2-2')) : '0'}}
+                </td>
+                <td valign="top">
+                    {{(debtObj) ? ((debtObj.totalStLoss == 0 ) ? 0 : (debtObj.totalStLoss | number:'1.2-2')) : '0'}}
+                </td>
+                <td valign="top">
+                    {{(debtObj) ? ((debtObj.totalIndexGain == 0 ) ? 0 : (debtObj.totalIndexGain | number:'1.2-2')) : '0'}}
+                </td>
+                <td valign="top">
+                    {{(debtObj) ? ((debtObj.totalIndexLoss == 0 ) ? 0 : (debtObj.totalIndexLoss | number:'1.2-2')) : '0'}}
+                </td>
+                <td valign="top">
+                </td>
             </tr>
-
+            <tr *ngIf="dataSource1.data.length > 0">
+                    <td valign="top">
+                        GRAND TOTAL 
+                    </td>
+    
+                    <td valign="top">
+    
+                    </td>
+    
+                    <td valign="top" appFormatNumber [value]="redeemAmount">
+    
+                    </td>
+    
+                    <td valign="top">
+                        {{(total_stt) ? (total_stt | number:'1.2-2') : '0'}}               
+                         </td>
+    
+                    <td valign="top">
+                    </td>
+    
+                    <td valign="top">
+                    </td>
+    
+                    <td valign="top">
+                    </td>
+    
+                    <td valign="top" appFormatNumber [value]="purchaseAmount">
+                    </td>
+                    <td valign="top">
+                    </td>
+                    <td valign="top">
+                    </td>
+                    <td valign="top">
+                        {{(total_stGain) ? ((total_stGain == 0 ) ? 0 : (total_stGain | number:'1.2-2')) : '0'}}
+                                        </td>
+                    <td valign="top">
+                        {{(debtObj) ? ((debtObj.totalStLoss == 0 ) ? 0 : (debtObj.totalStLoss | number:'1.2-2')) : '0'}}
+                    </td>
+                    <td valign="top">
+                        {{(debtObj) ? ((debtObj.totalLtGain == 0 ) ? 0 : (debtObj.totalLtGain | number:'1.2-2')) : '0'}}
+                    </td>
+                    <td valign="top">
+                        {{(debtObj) ? ((debtObj.totalStLoss == 0 ) ? 0 : (debtObj.totalStLoss | number:'1.2-2')) : '0'}}
+                    </td>
+                    <td valign="top">
+                        {{(debtObj) ? ((debtObj.totalIndexGain == 0 ) ? 0 : (debtObj.totalIndexGain | number:'1.2-2')) : '0'}}
+                    </td>
+                    <td valign="top">
+                        {{(debtObj) ? ((debtObj.totalIndexLoss == 0 ) ? 0 : (debtObj.totalIndexLoss | number:'1.2-2')) : '0'}}
+                    </td>
+                    <td valign="top">
+                    </td>
+                </tr>
+    
             <tr>
                 <td style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;"
                     colspan="9">
