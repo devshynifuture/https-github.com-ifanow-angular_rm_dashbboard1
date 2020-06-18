@@ -26,7 +26,7 @@
                 <div [ngClass]="getCoOwner.controls.length > 1?'col-md-3' : 'col-md-5'">
                     <div class="form-group">
                         <mat-form-field floatLabel="never" appearance="standard">
-                            <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData' (selectionChange)="disabledMember($event.value,'owner')" (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
+                            <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData' (selectionChange)="disabledMember($event.value,'owner')" (valueChange3)='displayControler($event)' (emitBank)='getBank()' (emitBank)='getBank()' (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
                                 <mat-option value='' disabled>Select family members</mat-option>
                                 <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" [value]="f.userName">
                                     <span>{{f.userName}}</span>
