@@ -461,10 +461,19 @@ export class AddPersonalAccidentInAssetComponent implements OnInit {
       }
     );
   }
+  getBank(){
+    if(this.enumService.getBank().length > 0){
+      this.bankList = this.enumService.getBank();
+    }
+    else{
+      this.bankList = [];
+    }
+    console.log(this.bankList,"this.bankList2");
+  }
   openDialog(eventData): void {
     const dialogRef = this.dialog.open(LinkBankComponent, {
       width: '50%',
-      data: this.bankList
+      data:{bankList: this.bankList, userInfo: true} 
     });
 
     dialogRef.afterClosed().subscribe(result => {

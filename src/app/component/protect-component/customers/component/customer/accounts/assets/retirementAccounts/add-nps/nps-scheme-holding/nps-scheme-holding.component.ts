@@ -609,7 +609,7 @@ addNewNominee(data) {
   openDialog(eventData): void {
     const dialogRef = this.dialog.open(LinkBankComponent, {
       width: '50%',
-      data: this.bankList
+      data:{bankList: this.bankList, userInfo: true} 
     });
 
     dialogRef.afterClosed().subscribe(result => {
