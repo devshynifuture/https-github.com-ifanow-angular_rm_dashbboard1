@@ -1,14 +1,14 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { FormBuilder, Validators } from '@angular/forms';
-import { CustomerService } from '../../customer/customer.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { MfServiceService } from '../../customer/accounts/assets/mutual-fund/mf-service.service';
-import { DatePipe } from '@angular/common';
-import { MAT_DATE_FORMATS } from '@angular/material';
-import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-import { AuthService } from 'src/app/auth-service/authService';
+import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {FormBuilder, Validators} from '@angular/forms';
+import {CustomerService} from '../../customer/customer.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {MfServiceService} from '../../customer/accounts/assets/mutual-fund/mf-service.service';
+import {DatePipe} from '@angular/common';
+import {MAT_DATE_FORMATS} from '@angular/material';
+import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import {AuthService} from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-right-filter',
@@ -16,7 +16,7 @@ import { AuthService } from 'src/app/auth-service/authService';
   styleUrls: ['./right-filter.component.scss'],
   providers: [
     [DatePipe],
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
   ],
 })
 export class RightFilterComponent implements OnInit {
@@ -35,8 +35,8 @@ export class RightFilterComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
-  customCollapsedHeight: string = '45px';
-  customExpandedHeight: string = '45px';
+  customCollapsedHeight = '45px';
+  customExpandedHeight = '45px';
   panelOpenState = false;
   _data: any;
   familyMember: any;
@@ -68,7 +68,7 @@ export class RightFilterComponent implements OnInit {
   finalFilterData: any;
   reportTypeobj: any;
   reportFormatObj: any;
-  financialYearsObj: any
+  financialYearsObj: any;
   overviewFilter: any;
   selectedTransactionView;
   sendTransactionView;
@@ -82,9 +82,10 @@ export class RightFilterComponent implements OnInit {
   clientId: any;
   selectUnselctAllFlag = true;
   transactionType: any;
+
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder,
-    private custumService: CustomerService, private eventService: EventService,
-    private mfService: MfServiceService, private datePipe: DatePipe, ) {
+              private custumService: CustomerService, private eventService: EventService,
+              private mfService: MfServiceService, private datePipe: DatePipe,) {
   }
 
   @Input()
@@ -106,28 +107,28 @@ export class RightFilterComponent implements OnInit {
     // (this._data.name == 'SUMMARY REPORT') ? this.transactionPeriod = false : this.transactionPeriod = true;
     this.transactionPeriodCheck = (this._data.transactionPeriodCheck) ? this._data.transactionPeriodCheck : false;
     this.transactionPeriod = (this._data.transactionPeriod) ? this._data.transactionPeriod : false;
-    // this.amc = this._data.schemeWise;//amc wise data 
+    // this.amc = this._data.schemeWise;//amc wise data
     // this.folio = this._data.folioWise;//for getting all folios
-    this.amc = [...new Map(this._data.schemeWise.map(item => [item.amc_id, item])).values()];//amc wise data 
-    this.amc = this.mfService.sorting(this.amc, 'amc_name')
-    this.folio = [...new Map(this._data.folioWise.map(item => [item.folioNumber, item])).values()];//for getting all folios
-    this.folio = this.mfService.sorting(this.folio, 'folioNumber')
-    this.showSummaryFilterForm(this._data);//as on date and showZero folio form
+    this.amc = [...new Map(this._data.schemeWise.map(item => [item.amc_id, item])).values()]; // amc wise data
+    this.amc = this.mfService.sorting(this.amc, 'amc_name');
+    this.folio = [...new Map(this._data.folioWise.map(item => [item.folioNumber, item])).values()]; // for getting all folios
+    this.folio = this.mfService.sorting(this.folio, 'folioNumber');
+    this.showSummaryFilterForm(this._data); // as on date and showZero folio form
 
-    this.getCategoryWise(this._data.category);//get category wise data
+    this.getCategoryWise(this._data.category); // get category wise data
     if (this._data.scheme) {
       this.getSchemeWise(this._data.scheme); // scheme wise data
     }
-    this.getFamilyMember(this._data.familyMember);//for family memeber
-    this.getTransactionView(this._data.transactionView);//for displaying how many columns to show in table
-    this.getReportType();//get type of report categorywise,investor,sub category wise
-    this.getReportFormat();//get capital gain report
-    this.getSaveFilters(); //forSaving filters
-    this.transactionType = this._data.transactionTypeList;//for transaction type in all transactions
-    this.getFinancialYears(this.summaryFilerForm);//for getting financial years for capital gain
+    this.getFamilyMember(this._data.familyMember); // for family memeber
+    this.getTransactionView(this._data.transactionView); // for displaying how many columns to show in table
+    this.getReportType(); // get type of report categorywise,investor,sub category wise
+    this.getReportFormat(); // get capital gain report
+    this.getSaveFilters(); // forSaving filters
+    this.transactionType = this._data.transactionTypeList; // for transaction type in all transactions
+    this.getFinancialYears(this.summaryFilerForm); // for getting financial years for capital gain
     this.overviewFilter = this._data.overviewFilter;
     // this.getOverviewFilter();//used for overview filter to show specific tables
-    this.setDefaultFilters();//setting default selected in each above array
+    this.setDefaultFilters(); // setting default selected in each above array
     if (this._data.category) {
       this.getCategoryWise(this._data.category);
       // get category wise data
@@ -167,7 +168,7 @@ export class RightFilterComponent implements OnInit {
       };
       filterData.push(obj);
     });
-    let sortedData = this.mfService.sorting(filterData, 'category')
+    const sortedData = this.mfService.sorting(filterData, 'category');
     this.category = [...new Map(sortedData.map(item => [item.categoryId, item])).values()];
   }
 
@@ -176,7 +177,7 @@ export class RightFilterComponent implements OnInit {
     (data.filterDataForCapital) ? (data.filterDataForCapital.grandfathering == 2 ? grandFatheringEffect = 2 : grandFatheringEffect = 1) : '2';
     const fromDate = new Date();
     fromDate.setFullYear(fromDate.getFullYear() - 1);
-    var todayDate = new Date().toISOString().slice(0, 10);
+    const todayDate = new Date().toISOString().slice(0, 10);
     this.summaryFilerForm = this.fb.group({
       reportAsOn: [data.reportAsOn ? new Date(data.reportAsOn) : null, [Validators.required]],
       fromDate: [data.fromDate ? new Date(data.fromDate) : null, [Validators.required]],
@@ -188,7 +189,7 @@ export class RightFilterComponent implements OnInit {
 
   getSchemeWise(data) {
     const filterData = [];
-    data.filter(function (element) {
+    data.filter(function(element) {
       // const obj = {
       //   id: element.id,
       //   schemeName: element.schemeName,
@@ -207,18 +208,19 @@ export class RightFilterComponent implements OnInit {
       };
       filterData.push(obj);
     });
-    let sortedData = this.mfService.sorting(filterData, 'schemeName')
+    const sortedData = this.mfService.sorting(filterData, 'schemeName');
     this.scheme = sortedData;
   }
 
   getFamilyMember(data) {
     let filterData = [];
-    if (this._data.name == "CAPITAL GAIN REPORT") {
+    if (this._data.name == 'CAPITAL GAIN REPORT') {
       this._data.capitalGainData.mutualFundList.forEach(element => {
         const obj = {
           name: element.ownerName,
           familyMemberId: element.familyMemberId,
-          selected: true
+          selected: true,
+          showInFilter: true
         };
         filterData.push(obj);
       });
@@ -250,13 +252,13 @@ export class RightFilterComponent implements OnInit {
         filterData.push(obj);
       });
     }
-    let sortedData = this.mfService.sorting(filterData, 'name')
+    const sortedData = this.mfService.sorting(filterData, 'name');
     this.familyMember = [...new Map(sortedData.map(item => [item.familyMemberId, item])).values()];
   }
 
   getTransactionView(data) {
     const filterData = [];
-    data.filter(function (element) {
+    data.filter(function(element) {
       const obj = {
         displayName: (element.displayName) ? element.displayName : element,
         selected: (element.selected == false) ? element.selected = false : (element.selected == true) ? element.selected = true : true
@@ -273,7 +275,7 @@ export class RightFilterComponent implements OnInit {
       this.reportType = ['Investor wise', 'Category wise', 'Sub Category wise', 'Scheme wise'];
     }
     const filterData = [];
-    this.reportType.filter(function (element) {
+    this.reportType.filter(function(element) {
       const obj = {
         name: element,
         selected: false
@@ -282,43 +284,64 @@ export class RightFilterComponent implements OnInit {
     });
     this.reportType = filterData;
   }
+
   getFinancialYears(form) {
-    let calculatingYears = []
+    const calculatingYears = [];
     let sortingYeras: any;
     if (this._data.capitalGainData) {
-      let redemptionList = this._data.capitalGainData.redemptionList
+      const redemptionList = this._data.capitalGainData.redemptionList;
       redemptionList.forEach(element => {
-        if(element.purchaceAgainstRedemptionTransactions.length > 0){
+        if (element.purchaceAgainstRedemptionTransactions.length > 0) {
           let year = element.financialYear;
-          let date = new Date(element.transactionDate);
-  
-          let finDate = new Date(year, 3, 1);
+          const date = new Date(element.transactionDate);
+
+          const finDate = new Date(year, 3, 1);
           if (date < finDate) {
-            year = (element.financialYear - 1)
+            year = (element.financialYear - 1);
           }
           const obj = {
-            "from": year,
-            "to": (year + 1),
-          }
+            from: year,
+            to: (year + 1),
+          };
           calculatingYears.push(obj);
         }
       });
       console.log(calculatingYears);
-      let filteredYears = [...new Map(calculatingYears.map(item => [item.from, item])).values()];
+      const filteredYears = [...new Map(calculatingYears.map(item => [item.from, item])).values()];
       sortingYeras = filteredYears.sort((a, b) =>
         a.from > b.from ? 1 : (a.from === b.from ? 0 : -1)
       );
-      let calculatedFinYears = sortingYeras;
-      this.financialYears=[{'from':2010,'to':2011,'selected':true,'disabled':true},{'from':2011,'to':2012,'selected':true,'disabled':true},{'from':2012,'to':2013,'selected':true,'disabled':true},{'from':2013,'to':2014,'selected':true,'disabled':true},{'from':2014,'to':2015,'selected':true,'disabled':true},
-      {'from':2015,'to':2016,'selected':true,'disabled':true},{'from':2016,'to':2017,'selected':true,'disabled':true},{'from':2017,'to':2018,'selected':true,'disabled':true},{'from':2018,'to':2019,'selected':true,'disabled':true},{'from':2019,'to':2020,'selected':true,'disabled':true},{'from':2020,'to':2021,'selected':true,'disabled':true}]
+      const calculatedFinYears = sortingYeras;
+      this.financialYears = [{from: 2010, to: 2011, selected: true, disabled: true}, {
+        from: 2011,
+        to: 2012,
+        selected: true,
+        disabled: true
+      }, {from: 2012, to: 2013, selected: true, disabled: true}, {
+        from: 2013,
+        to: 2014,
+        selected: true,
+        disabled: true
+      }, {from: 2014, to: 2015, selected: true, disabled: true},
+        {from: 2015, to: 2016, selected: true, disabled: true}, {
+          from: 2016,
+          to: 2017,
+          selected: true,
+          disabled: true
+        }, {from: 2017, to: 2018, selected: true, disabled: true}, {
+          from: 2018,
+          to: 2019,
+          selected: true,
+          disabled: true
+        }, {from: 2019, to: 2020, selected: true, disabled: true}, {from: 2020, to: 2021, selected: true, disabled: true}];
       calculatedFinYears.forEach(element => {
         this.financialYears.forEach(item => {
-          if(element.from == item.from){
+          if (element.from == item.from) {
             item.disabled = false;
           }
-        })
+        });
       });
-      this.financialYears.filter(function (element) {
+      this.financialYears.filter(function(element) {
         if (element.from == 2019 && element.to == 2020) {
           element.selected = true;
           form.get('grandfathering').setValue('1');
@@ -332,10 +355,10 @@ export class RightFilterComponent implements OnInit {
 
       });
       this.financialYears.forEach(item => {
-        if(this._data.capitalGainData.fromDateYear >= 2018){
+        if (this._data.capitalGainData.fromDateYear >= 2018) {
           form.get('grandfathering').setValue('1');
         }
-      })
+      });
     }
     if (this._data.filterDataForCapital) {
       this.financialYears.forEach(item => item.selected = '');
@@ -354,11 +377,12 @@ export class RightFilterComponent implements OnInit {
     }
 
   }
+
   getReportFormat() {
     this.reportFormat = ['Summary', 'Detailed'];
 
     const filterData = [];
-    this.reportFormat.filter(function (element) {
+    this.reportFormat.filter(function(element) {
       const obj = {
         name: element,
         selected: false
@@ -383,21 +407,23 @@ export class RightFilterComponent implements OnInit {
     this.reportFormat = filterData;
 
   }
+
   // getTransactionType(){
-    
+
   // }
   getSaveFilters() {
     this.saveFilters = [
-      { value: 'Current Client', selected: false }, { value: 'All Client', selected: false }];
+      {value: 'Current Client', selected: false}, {value: 'All Client', selected: false}];
 
   }
+
   getOverviewFilter() {
-    this.overviewFilter = [{ name: 'Summary bar', selected: true },
-    { name: 'Scheme wise allocation', selected: true },
-    { name: 'Cashflow Status', selected: true },
-    { name: 'Family Member wise allocation', selected: true },
-    { name: 'Category wise allocation', selected: true },
-    { name: 'Sub Category wise allocation', selected: true }];
+    this.overviewFilter = [{name: 'Summary bar', selected: true},
+      {name: 'Scheme wise allocation', selected: true},
+      {name: 'Cashflow Status', selected: true},
+      {name: 'Family Member wise allocation', selected: true},
+      {name: 'Category wise allocation', selected: true},
+      {name: 'Sub Category wise allocation', selected: true}];
   }
 
   changeFilterPeriod(value) {
@@ -410,34 +436,27 @@ export class RightFilterComponent implements OnInit {
   }
 
   setDefaultFilters() {
-    // if (this.familyMember) {
-    //   this.familyMember.forEach(item => item.selected = true);
-    // }
-    // if (this.amc) {
-    //   this.amc.forEach(item => item.selected = true);
-    // }
-    // this.scheme.forEach(item => item.selected = true);
-    // this.folio.forEach(item => item.selected = true);
-    // this.category.forEach(item => item.selected = true);
-    // this.transactionView.forEach(item => item.selected = true);
-      this.reportType.forEach(item => {
-        this.countReport = 0;
-        if(this._data.name == 'SUMMARY REPORT' && this._data.reportType == "Scheme wise"){
-          if (item.name == 'Sub Category wise') {
-            item.selected = true;
-            this.countReport++;
-          }
-        }else{
-          if (item.name == this._data.reportType) {
-            item.selected = true;
-            this.countReport++;
-          }
+    this.reportType.forEach(item => {
+      this.countReport = 0;
+      if (this._data.name == 'SUMMARY REPORT' && this._data.reportType == 'Scheme wise') {
+        if (item.name == 'Sub Category wise') {
+          item.selected = true;
+          this.countReport++;
         }
-      });
-    if(this._data.selectFilter || this._data.selectFilter == 0){
+      } else {
+        if (item.name == this._data.reportType) {
+          item.selected = true;
+          this.countReport++;
+        }
+      }
+    });
+    if (this._data.selectFilter || this._data.selectFilter == 0) {
       this.saveFilters = [
-        { value: 'Current Client', selected: (this._data.selectFilter != 0) ? true : false }, { value: 'All Client', selected: (this._data.selectFilter == 0) ? true : false }];
-  
+        {value: 'Current Client', selected: (this._data.selectFilter != 0) ? true : false}, {
+          value: 'All Client',
+          selected: (this._data.selectFilter == 0) ? true : false
+        }];
+
     }
 
     if (this._data.filterDataForCapital) {
@@ -469,16 +488,16 @@ export class RightFilterComponent implements OnInit {
 
   changeFilterFamily() {
     (this.familyMemObj.length == 0) ? this.showError = null : (this.familyMemObj.length == 1 && !this.familyMemObj[0].selected) ? this.showError = 'family member' : this.showError = null;
-    let filterData = this._data.mfData.mutualFundList;
+    const filterData = this._data.mfData.mutualFundList;
     // filterData = filterData.filter((item: any) =>
     //   (item.currentValue != 0 && item.currentValue > 0)
     // );
     const filterData1 = [];
     const filterData2 = [];
     const filterData3 = [];
-    this.familyMember.filter(function (element) {
+    this.familyMember.filter(function(element) {
       if (element.selected == true) {
-        filterData.filter(function (amc) {
+        filterData.filter(function(amc) {
           // amc.mutualFund.forEach(function (mf) {
           if (amc.familyMemberId == element.familyMemberId) {
             const obj = {
@@ -487,16 +506,19 @@ export class RightFilterComponent implements OnInit {
               id: amc.schemeId,
               mutualFund: amc.mutualFund,
               amc_id: amc.amcId,
-              selected: true
+              selected: true,
+              showInFilter: true
             };
             const obj2 = {
               folioNumber: amc.folioNumber,
-              selected: true
+              selected: true,
+              showInFilter: true
             };
             const obj3 = {
               category: amc.categoryName,
               categoryId: amc.categoryId,
-              selected: true
+              selected: true,
+              showInFilter: true
             };
             filterData1.push(obj);
             filterData2.push(obj2);
@@ -512,104 +534,19 @@ export class RightFilterComponent implements OnInit {
     this.category = [...new Map(filterData3.map(item => [item.categoryId, item])).values()];
     this.changeSelect('', '');
   }
-  // changeFilterFamily() {
-  //   (this.familyMemObj.length == 0) ? this.showError = null : (this.familyMemObj.length == 1 && !this.familyMemObj[0].selected) ? this.showError = 'family member' : this.showError = null;
-  //   const filterData = this._data.schemeWise;
-  //   const filterData1 = [];
-  //   const filterData2 = [];
-  //   const filterData3 = [];
-  //   this.familyMember.filter(function (element) {
-  //     if (element.selected == true) {
-  //       filterData.filter(function (amc) {
-  //         amc.mutualFund.forEach(function (mf) {
-  //           if (mf.familyMemberId == element.familyMemberId) {
-  //             const obj = {
-  //               amc_name: amc.amc_name,
-  //               schemeName: amc.schemeName,
-  //               id: amc.id,
-  //               mutualFund: amc.mutualFund,
-  //               amc_id: amc.amc_id,
-  //               selected: true
-  //             };
-  //             const obj2 = {
-  //               folioNumber: mf.folioNumber,
-  //               selected: true
-  //             };
-  //             const obj3 = {
-  //               category: mf.categoryName,
-  //               categoryId: mf.categoryId,
-  //               selected: true
-  //             };
-  //             filterData1.push(obj);
-  //             filterData2.push(obj2);
-  //             filterData3.push(obj3);
-  //           }
-  //         });
-  //       });
-  //     }
-  //   });
-  //   this.scheme = [...new Map(filterData1.map(item => [item.id, item])).values()];
-  //   this.amc = [...new Map(filterData1.map(item => [item.amc_id, item])).values()];
-  //   this.folio = [...new Map(filterData2.map(item => [item.folioNumber, item])).values()];
-  //   this.category = [...new Map(filterData3.map(item => [item.categoryId, item])).values()];
-  //   this.changeSelect('', '');
-  // }
 
-  // changeFilterCategory(data) {
-  //   (this.categoryObj.length == 0) ? this.showError = null : (this.categoryObj.length == 1 && !this.categoryObj[0].selected) ? this.showError = 'category' : this.showError = null;
-  //   const filterData = this._data.schemeWise;
-  //   const filterData1 = [];
-  //   const filterData2 = [];
-  //   const filterData3 = [];
-  //   data.filter(function (element) {
-  //     if (element.selected == true) {
-  //       filterData.filter(function (amc) {
-  //         amc.mutualFund.forEach(function (mf) {
-  //           if (mf.categoryId == element.categoryId) {
-  //             const obj = {
-  //               amc_name: amc.amc_name,
-  //               schemeName: amc.schemeName,
-  //               schemeCode: amc.schemeCode,
-  //               mutualFund: amc.mutualFund,
-  //               id: amc.id,
-  //               amc_id: amc.amc_id,
-  //               selected: true
-  //             };
-  //             const obj2 = {
-  //               folioNumber: mf.folioNumber,
-  //               selected: true
-  //             };
-  //             const obj3 = {
-  //               name: mf.ownerName,
-  //               familyMemberId: mf.familyMemberId,
-  //               selected: true
-  //             };
-  //             filterData1.push(obj);
-  //             filterData2.push(obj2);
-  //             filterData3.push(obj3);
-  //           }
-  //         });
-  //       });
-  //     }
-  //   });
-  //   this.scheme = [...new Map(filterData1.map(item => [item.id, item])).values()];
-  //   this.amc = [...new Map(filterData1.map(item => [item.amc_id, item])).values()];
-  //   this.folio = [...new Map(filterData2.map(item => [item.folioNumber, item])).values()]
-  //   this.familyMember = [...new Map(filterData3.map(item => [item.familyMemberId, item])).values()];
-  //   this.changeSelect('', '');
-  // }
   changeFilterCategory(data) {
     (this.categoryObj.length == 0) ? this.showError = null : (this.categoryObj.length == 1 && !this.categoryObj[0].selected) ? this.showError = 'category' : this.showError = null;
-    let filterData = this._data.mfData.mutualFundList;
+    const filterData = this._data.mfData.mutualFundList;
     // filterData = filterData.filter((item: any) =>
     //   (item.currentValue != 0 && item.currentValue > 0)
     // );
     const filterData1 = [];
     const filterData2 = [];
     const filterData3 = [];
-    data.filter(function (element) {
+    data.filter(function(element) {
       if (element.selected == true) {
-        filterData.filter(function (amc) {
+        filterData.filter(function(amc) {
           // amc.mutualFund.forEach(function (mf) {
           if (amc.categoryId == element.categoryId) {
             const obj = {
@@ -619,16 +556,20 @@ export class RightFilterComponent implements OnInit {
               mutualFund: amc.mutualFund,
               id: amc.schemeId,
               amc_id: amc.amcId,
-              selected: true
+              selected: true,
+              showInFilter: true
+
             };
             const obj2 = {
               folioNumber: amc.folioNumber,
-              selected: true
+              selected: true,
+              showInFilter: true
             };
             const obj3 = {
               name: amc.ownerName,
               familyMemberId: amc.familyMemberId,
-              selected: true
+              selected: true,
+              showInFilter: true
             };
             filterData1.push(obj);
             filterData2.push(obj2);
@@ -638,15 +579,15 @@ export class RightFilterComponent implements OnInit {
         });
       }
     });
-    let filterFamData =filterData3;
+    let filterFamData = filterData3;
     this.familyMember.forEach(element => {
-      if(element.selected ==true){
+      if (element.selected == true) {
         filterFamData = filterFamData.filter(item => item.familyMemberId === element.familyMemberId);
       }
     });
     this.scheme = [...new Map(filterData1.map(item => [item.id, item])).values()];
     this.amc = [...new Map(filterData1.map(item => [item.amc_id, item])).values()];
-    this.folio = [...new Map(filterData2.map(item => [item.folioNumber, item])).values()]
+    this.folio = [...new Map(filterData2.map(item => [item.folioNumber, item])).values()];
     this.familyMember = [...new Map(filterFamData.map(item => [item.familyMemberId, item])).values()];
     this.changeSelect('', '');
   }
@@ -654,14 +595,10 @@ export class RightFilterComponent implements OnInit {
   changeFilterFolio() {
     (this.folioObj.length == 0) ? this.showError = null : (this.folioObj.length == 1 && !this.folioObj[0].selected) ? this.showError = 'folio' : this.showError = null;
     const filterData = [];
-    // let filterData2 = this._data.mfData.mutualFundList;
-    let filterData2 = this._data.mfData.mutualFundList;
-    // filterData2 = filterData2.filter((item: any) =>
-    //   (item.currentValue != 0 && item.currentValue > 0)
-    // );
+    const filterData2 = this._data.mfData.mutualFundList;
     const filterData1 = [];
     const filterData3 = [];
-    this.folio.filter(function (element) {
+    this.folio.filter(function(element) {
       if (element.selected == true) {
         filterData2.forEach(amc => {
           // amc.mutualFund.forEach(mf => {
@@ -674,31 +611,33 @@ export class RightFilterComponent implements OnInit {
               id: amc.schemeId,
 
               amc_id: amc.amcId,
-              selected: true
+              selected: true,
+              showInFilter: true
+
             };
             const obj1 = {
               name: amc.ownerName,
               familyMemberId: amc.familyMemberId,
-              selected: true
+              selected: true, showInFilter: true
             };
 
             const obj2 = {
-            category: amc.categoryName,
+              category: amc.categoryName,
               categoryId: amc.categoryId,
-              selected: true
+              selected: true, showInFilter: true
             };
             filterData.push(obj);
             filterData1.push(obj1);
             filterData3.push(obj2);
           }
-          // });                                                                            
+          // });
         });
       }
     });
-    let filterFamData =filterData1;
+    let filterFamData = filterData1;
     filterFamData = [...new Map(filterFamData.map(item => [item.familyMemberId, item])).values()];
     this.familyMember.forEach(element => {
-      if(element.selected ==true){
+      if (element.selected == true) {
         filterFamData = filterFamData.filter(item => item.familyMemberId === element.familyMemberId);
       }
     });
@@ -713,15 +652,11 @@ export class RightFilterComponent implements OnInit {
   changeFilterAmc() {
     (this.amcObj.length == 0) ? this.showError = null : (this.amcObj.length == 1 && !this.amcObj[0].selected) ? this.showError = 'amc' : this.showError = null;
     const filterData = [];
-    // let filterData2 = this._data.mfData.mutualFundList;
-    let filterData2 = this._data.mfData.mutualFundList;
-    // filterData2 = filterData2.filter((item: any) =>
-    //   (item.currentValue != 0 && item.currentValue > 0)
-    // );
+    const filterData2 = this._data.mfData.mutualFundList;
     const filterData1 = [];
     const filterData3 = [];
     const filterData4 = [];
-    this.amc.filter(function (element) {
+    this.amc.filter(function(element) {
       if (element.selected == true) {
         filterData2.forEach(amc => {
           // amc.mutualFund.forEach(mf => {
@@ -733,35 +668,34 @@ export class RightFilterComponent implements OnInit {
               mutualFund: amc.mutualFund,
               id: amc.schemeId,
               amc_id: amc.amcId,
-              selected: true
+              selected: true, showInFilter: true
             };
             const obj1 = {
               name: amc.ownerName,
               familyMemberId: amc.familyMemberId,
-              selected: true
+              selected: true, showInFilter: true
             };
             const obj4 = {
               folioNumber: amc.folioNumber,
-              selected: true
+              selected: true, showInFilter: true
             };
             const obj2 = {
               category: amc.categoryName,
               categoryId: amc.categoryId,
-              selected: true
+              selected: true, showInFilter: true
             };
             filterData.push(obj);
             filterData1.push(obj1);
             filterData3.push(obj2);
             filterData4.push(obj4);
           }
-          // });
         });
       }
     });
-    let filterFamData =filterData1;
+    let filterFamData = filterData1;
     filterFamData = [...new Map(filterFamData.map(item => [item.familyMemberId, item])).values()];
     this.familyMember.forEach(element => {
-      if(element.selected ==true){
+      if (element.selected == true) {
         filterFamData = filterFamData.filter(item => item.familyMemberId === element.familyMemberId);
       }
     });
@@ -771,29 +705,16 @@ export class RightFilterComponent implements OnInit {
     this.category = [...new Map(filterData3.map(item => [item.categoryId, item])).values()];
     console.log(this.amc);
     this.changeSelect('', '');
-
-
-    // (this.amcObj.length == 0) ? this.showError = null : (this.amcObj.length == 1 && !this.amcObj[0].selected) ? this.showError = 'amc' : this.showError = null;
-    // this.obj = this.mfService.filterScheme(this.amc);
-    // this.folio = [...new Map(this.obj.filterData.map(item => [item.folioNumber, item])).values()];
-    // this.familyMember = [...new Map(this.obj.filterData2.map(item => [item.familyMemberId, item])).values()];
-    // this.category = [...new Map(this.obj.filterData3.map(item => [item.categoryId, item])).values()];
-    // this.scheme = [...new Map(this.obj.filterData4.map(item => [item.id, item])).values()];
-
-    // this.changeSelect('', '');
   }
 
   changeFilterScheme() {
     (this.schemeObj.length == 0) ? this.showError = null : (this.schemeObj.length == 1 && !this.schemeObj[0].selected) ? this.showError = 'scheme' : this.showError = null;
     const filterData = [];
-    let filterData2 = this._data.mfData.mutualFundList;
-    // filterData2 = filterData2.filter((item: any) =>
-    //   (item.currentValue != 0 && item.currentValue > 0)
-    // );
+    const filterData2 = this._data.mfData.mutualFundList;
     const filterData1 = [];
     const filterData3 = [];
     const filterData4 = [];
-    this.scheme.filter(function (element) {
+    this.scheme.filter(function(element) {
       if (element.selected == true) {
         filterData2.forEach(amc => {
           // amc.mutualFund.forEach(mf => {
@@ -805,21 +726,21 @@ export class RightFilterComponent implements OnInit {
               mutualFund: amc.mutualFund,
               id: amc.schemeId,
               amc_id: amc.amcId,
-              selected: true
+              selected: true, showInFilter: true
             };
             const obj1 = {
               name: amc.ownerName,
               familyMemberId: amc.familyMemberId,
-              selected: true
+              selected: true, showInFilter: true
             };
             const obj4 = {
               folioNumber: amc.folioNumber,
-              selected: true
+              selected: true, showInFilter: true
             };
             const obj2 = {
               category: amc.categoryName,
               categoryId: amc.categoryId,
-              selected: true
+              selected: true, showInFilter: true
             };
             filterData.push(obj);
             filterData1.push(obj1);
@@ -830,10 +751,10 @@ export class RightFilterComponent implements OnInit {
         });
       }
     });
-    let filterFamData =filterData1;
+    let filterFamData = filterData1;
     filterFamData = [...new Map(filterFamData.map(item => [item.familyMemberId, item])).values()];
     this.familyMember.forEach(element => {
-      if(element.selected ==true){
+      if (element.selected == true) {
         filterFamData = filterFamData.filter(item => item.familyMemberId === element.familyMemberId);
       }
     });
@@ -843,15 +764,6 @@ export class RightFilterComponent implements OnInit {
     this.category = [...new Map(filterData3.map(item => [item.categoryId, item])).values()];
 
     this.changeSelect('', '');
-
-
-    // (this.schemeObj.length == 0) ? this.showError = null : (this.schemeObj.length == 1 && !this.schemeObj[0].selected) ? this.showError = 'scheme' : this.showError = null;
-    // this.obj = this.mfService.filterScheme(this.scheme);
-    // this.folio = [...new Map(this.obj.filterData.map(item => [item.folioNumber, item])).values()];
-    // this.familyMember = [...new Map(this.obj.filterData2.map(item => [item.familyMemberId, item])).values()];
-    // this.category = [...new Map(this.obj.filterData3.map(item => [item.categoryId, item])).values()];
-    // this.amc = [...new Map(this.obj.filterData4.map(item => [item.amc_id, item])).values()];
-    // this.changeSelect('', '');
   }
 
   changeReportFilter(value) {
@@ -862,6 +774,7 @@ export class RightFilterComponent implements OnInit {
     });
     this.changeSelect('', '');
   }
+
   changeFormatFilter(value) {
     (this.reportFormatObj.length == 0) ? this.showError = null : (this.reportFormatObj.length == 1 && !this.reportFormatObj[0].selected) ? this.showError = 'report format' : this.showError = null;
     this.reportFormat.forEach(element => {
@@ -871,8 +784,9 @@ export class RightFilterComponent implements OnInit {
     });
     this.changeSelect('', '');
   }
+
   changeFinancialYear(value) {
-    value.selected=true;
+    value.selected = true;
     (this.financialYearsObj.length == 0) ? this.showError = null : (this.financialYearsObj.length == 1 && !this.financialYearsObj[0].selected) ? this.showError = 'financial year' : this.showError = null;
     if (value.from <= 2017) {
       this.showGrandfathering = false;
@@ -888,8 +802,9 @@ export class RightFilterComponent implements OnInit {
     });
     this.changeSelect('', '');
   }
-  saveFilterCall(){
-    let ReportFilterConfigModel = [];
+
+  saveFilterCall() {
+    const ReportFilterConfigModel = [];
     let reportId;
     switch (this._data.name) {
       case 'Overview Report':
@@ -905,74 +820,61 @@ export class RightFilterComponent implements OnInit {
         reportId = 4;
         break;
     }
-    let trnOrder = [];
-    if(this._data.name == 'Overview Report'){
-      this.overviewFilter.forEach((element,ind) => {
+    const trnOrder = [];
+    if (this._data.name == 'Overview Report') {
+      this.overviewFilter.forEach((element, ind) => {
         const obj = {
           advisorId: this.advisorId,
-          clientId:(this.saveFilters[0].selected == true) ? this.clientId : 0,
+          clientId: (this.saveFilters[0].selected == true) ? this.clientId : 0,
           transactionOrder: ind,
           columnName: element.name,
           selected: element.selected,
           reportType: (this.reportTypeobj.length > 0) ? this.reportTypeobj[0].name : 'Sub Category wise',
-          transactionReportType: (this._data.name == 'UNREALIZED TRANSACTION REPORT') ? 'Unrealized report' : (this._data.name == 'ALL TRANSACTION REPORT') ? 'Transaction report' :'-',
+          transactionReportType: (this._data.name == 'UNREALIZED TRANSACTION REPORT') ? 'Unrealized report' : (this._data.name == 'ALL TRANSACTION REPORT') ? 'Transaction report' : '-',
           showZeroFolios: (this.summaryFilerForm.controls.showFolios.value == '1') ? 'true' : 'false',
-          reportId:reportId,
-        }
-        ReportFilterConfigModel.push(obj)
+          reportId,
+        };
+        ReportFilterConfigModel.push(obj);
       });
-    }else{
-      this.transactionView.forEach((element,ind) => {
+    } else {
+      this.transactionView.forEach((element, ind) => {
         const obj = {
           advisorId: this.advisorId,
-          clientId:(this.saveFilters[0].selected == true) ? this.clientId : 0,
+          clientId: (this.saveFilters[0].selected == true) ? this.clientId : 0,
           transactionOrder: ind,
           columnName: element.displayName,
           selected: element.selected,
           reportType: (this.reportTypeobj.length > 0) ? this.reportTypeobj[0].name : 'Sub Category wise',
-          transactionReportType: (this._data.name == 'UNREALIZED TRANSACTION REPORT') ? 'Unrealized report' : (this._data.name == 'ALL TRANSACTION REPORT') ? 'Transaction report' :'-',
+          transactionReportType: (this._data.name == 'UNREALIZED TRANSACTION REPORT') ? 'Unrealized report' : (this._data.name == 'ALL TRANSACTION REPORT') ? 'Transaction report' : '-',
           showZeroFolios: (this.summaryFilerForm.controls.showFolios.value == '1') ? 'true' : 'false',
-          reportId:reportId,
-        }
-        ReportFilterConfigModel.push(obj)
+          reportId,
+        };
+        ReportFilterConfigModel.push(obj);
       });
     }
-  
-    // const ReportFilterConfigModel = [{
-    //   advisorId: this.advisorId,
-    //   clientId:(value.value == 'Current Client') ? this.clientId : 0,
-    //   transactionOrder: trnOrder,
-    //   reportType: this.reportTypeobj[0].name,
-    //   transactionReportType: (this._data.name == 'UNREALIZED TRANSACTION REPORT') ? 'Unrealized report' : (this._data.name == 'ALL TRANSACTION REPORT') ? 'Transaction report' :null,
-    //   showZeroFolios: (this.summaryFilerForm.controls.showFolios.value == '1') ? 'true' : 'false',
-    //   reportId:reportId,
-    // }
-    // ]
-    const obj={
-      ReportFilterConfigModel:ReportFilterConfigModel
-    }
-  //  const reportFilterConfigModelList={
-  //   ReportFilterConfigModel: [ReportFilterConfigModel]
-  //  }
+
+    const obj = {
+      ReportFilterConfigModel
+    };
     this.custumService.AddSaveFilters(obj).subscribe(
       data => {
         console.log(data);
       }
-
-      
     );
   }
+
   changeSaveFilterSelection(value) {
     this.saveFilters.forEach(element => {
       if (element.value != value.value) {
         element.selected = false;
       }
     });
-    if(this.saveFilters[0].selected == true || this.saveFilters[1].selected == true){
+    if (this.saveFilters[0].selected == true || this.saveFilters[1].selected == true) {
       this.saveFilterCall();
     }
   }
-  changeSelect = function (data, i) {
+
+  changeSelect = function(data, i) {
     this.sendTransactionView = this._data.transactionView;
     if (this._data.name == 'Overview Report') {
       if (this.overviewFilter != undefined) {
@@ -1036,7 +938,7 @@ export class RightFilterComponent implements OnInit {
       this.folioObj = filter;
     }
     if (this.transactionView != undefined) {
-      if (data != "") {
+      if (data != '') {
         (this.transactionView.length == 0) ? this.showError = null : (this.transactionView.length == 1 && !this.transactionView[0].selected) ? this.showError = 'transaction view' : this.showError = null;
       }
       this.countTranView = 0;
@@ -1089,24 +991,24 @@ export class RightFilterComponent implements OnInit {
     if (this._data.name == 'Overview Report') {
       let array = [];
       array = this.overviewFilter.filter(item => item.selected == false);
-      if(array.length == this.overviewFilter.length) {
-        this.showError = 'filter view'
-      } 
+      if (array.length == this.overviewFilter.length) {
+        this.showError = 'filter view';
+      }
     }
   };
 
   selectAll(value) {
-    if(value.checked){
-      this.selectUnselctAllFlag = value.checked
+    if (value.checked) {
+      this.selectUnselctAllFlag = value.checked;
       this.familyMember.forEach(item => item.selected = true);
       this.amc.forEach(item => item.selected = true);
       this.scheme.forEach(item => item.selected = true);
       this.folio.forEach(item => item.selected = true);
       // this.transactionView.forEach(item => item.selected = true);
       this.category.forEach(item => item.selected = true);
-      this.showError =''
+      this.showError = '';
 
-    }else{
+    } else {
       this.familyMember.forEach(item => item.selected = false);
       this.amc.forEach(item => item.selected = false);
       this.scheme.forEach(item => item.selected = false);
@@ -1114,21 +1016,14 @@ export class RightFilterComponent implements OnInit {
       // this.transactionView.forEach(item => item.selected = false);
       this.category.forEach(item => item.selected = false);
       this.selectUnselctAllFlag = value.checked;
-      this.showError ='filter'
+      this.showError = 'filter';
     }
     this.changeSelect('', '');
-    // if (array != undefined) {
-    //   array.forEach(item => {
-    //     item.selected = event.checked;
-    //   });
-    //   this.changeSelect('', '');
-    // }
-
   }
 
   generateReport() {
     this.barButtonOptions.active = true;
-    var todayDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+    const todayDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
 
     if (this.transactionPeriod == false && this._data.name != 'CAPITAL GAIN REPORT') {
       if (this.summaryFilerForm.get('reportAsOn').invalid) {
@@ -1156,7 +1051,7 @@ export class RightFilterComponent implements OnInit {
       name: this._data.name,
       transactionPeriodCheck: this.transactionPeriodCheck,
       transactionPeriod: this.transactionPeriod,
-      transactionType:this.transactionType
+      transactionType: this.transactionType
     };
     console.log('dataToSend---------->', this.dataToSend);
 
@@ -1164,90 +1059,16 @@ export class RightFilterComponent implements OnInit {
     this.finalFilterData.transactionView = this.transactionView;
     console.log('this.sendTransactionView ====', this.finalFilterData);
     console.log(this.finalFilterData);
-    // if (this._data.name == 'UNREALIZED TRANSACTION REPORT') {
-    //   let mutualFund = this.finalFilterData.mutualFundList;
-    //   (this.dataToSend.toDate != todayDate) ? Object.assign(mutualFund, { toDate: this.dataToSend.toDate }) : null;
-    //   this.obj = {
-    //     mutualFundList: mutualFund
-    //   }
-    //   this.custumService.getMfUnrealizedTransactions(this.obj).subscribe(
-    //     data => {
-    //       console.log(data);
-    //       this.barButtonOptions.active = false;
-    //       this.finalFilterData.mutualFundList = data;
-    //       this.Close(this.finalFilterData);
-    //     }
-    //   );
 
-    // } else if (this._data.name == 'ALL TRANSACTION REPORT' && this.dataToSend.toDate && this.dataToSend.toDate != todayDate) {
-    //   let catObj: any;
-    //   catObj = this.mfService.categoryFilter(this.finalFilterData.mutualFundList, 'id');
-    //   Object.keys(catObj).map(key => {
-    //     catObj[key].forEach((singleData) => {
-    //       let singleDataTransaction = singleData;
-    //       singleData = {};
-    //       catObj[key] = [];
-    //       singleDataTransaction.mutualFundTransactions.forEach((ele) => {
-    //         const singleData = {
-    //           unit: ele.unit,
-    //           transactionDate: ele.transactionDate,
-    //           schemeCode: singleDataTransaction.schemeCode,
-    //           effect: ele.effect,
-    //         }
-    //         catObj[key].push(singleData);
-    //       });
-    //     });
-
-    //   });
-    //   catObj.toDate = this.dataToSend.toDate;
-    //   console.log(catObj.toDate);
-    //   this.custumService.getMfUnrealizedTransactions(catObj).subscribe(
-    //     data => {
-    //       console.log(data);
-    //     }
-    //   );
-    // } else if(this._data.name != 'CAPITAL GAIN REPORT') {
-
-    //   this.obj = {
-    //     advisorId:this.advisorId,
-    //     clientId:this.clientId,
-    //     toDate: JSON.stringify(this.finalFilterData.reportAsOn),
-    //     id: this.finalFilterData.categoryWiseMfList
-    //   }
-    //   this.custumService.getMutualFund(this.obj).subscribe(
-    //     data => {
-    //       console.log(data);
-    //       this.barButtonOptions.active = false;
-    //       this.finalFilterData.mfData = data;
-    //       this.Close(this.finalFilterData);
-    //     }
-    //   );
-    // this.obj = {
-    //   advisorId:this.advisorId,
-    //   clientId:this.clientId,
-    //   lastDate: (this.finalFilterData.reportAsOn) ? this.finalFilterData.reportAsOn : this.finalFilterData.toDate,
-    //   reportType:this.finalFilterData.categoryWiseMfList
-    // }
-    // this.custumService.getDatedReportWiseCalculations(this.obj).subscribe(
-    //   data => {
-    //     console.log(data);
-    //     this.barButtonOptions.active = false;
-    //     this.finalFilterData.mutualFundList = data;
-    //     this.Close(this.finalFilterData);
-    //   }
-    // );
-    // this.barButtonOptions.active = false;
-    // this.Close(this.finalFilterData);
-    // }
     if (this._data.name != 'CAPITAL GAIN REPORT') {
       this.obj = {
         advisorId: this.advisorId,
         clientId: this.clientId,
         toDate: (this.finalFilterData.reportAsOn) ? JSON.stringify(this.finalFilterData.reportAsOn) : JSON.stringify(this.finalFilterData.toDate),
         id: this.finalFilterData.categoryWiseMfList
-      }
-      if(this._data.name == 'Overview Report'){
-      this.obj.toDate = todayDate;
+      };
+      if (this._data.name == 'Overview Report') {
+        this.obj.toDate = todayDate;
       }
       this.custumService.getMutualFund(this.obj).subscribe(
         data => {
@@ -1265,9 +1086,7 @@ export class RightFilterComponent implements OnInit {
   }
 
 
-
-
   Close(data) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data: data });
+    this.subInjectService.changeNewRightSliderState({state: 'close', data});
   }
 }
