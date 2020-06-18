@@ -2,7 +2,7 @@
     <div class="col-md-12 p-0 ">
         <h5 class=" mb-8 roboto f-500 d-flex justify-content-between">Market summary
             <span *ngIf="bscData" class="f-12 m-0 text-custom f-400 pl-4 pt-4">
-                {{bscData.date | date:'dd/MM/yyyy'}} </span></h5>
+                {{bscData | date:'dd/MM/yyyy'}} </span></h5>
     </div>
 
 </div>
@@ -27,18 +27,18 @@
 
     <div class="row">
         <div class="col-md-5  p-0">
-            <p class="text-black roboto m-0 pl-4 pb-8 f-300">BSE Sensex</p>
+            <p class="text-black roboto m-0  pb-8 f-300">BSE Sensex</p>
         </div>
         <div class="col-md-3 relClass pl-0 pr-4">
             <div class="bar">
-                <p class="m-0 f-400 roboto" [ngClass]="{'greenColor-text': bscData.colourFlag,'text-danger': bscData.colourFlag==false}">
-                    {{bscData.change_in_percentage}}%</p>
+                <p class="m-0 f-400 roboto" [ngClass]="{'greenColor-text': bse.colourFlag,'text-danger': bse.colourFlag==false}">
+                    {{bse.change_in_percentage}}%</p>
             </div>
         </div>
         <div class="col-md-4 relClass text-right p-0">
             <div class="bar">
-                <p appFormatNumber [value]="bscData.current_value" class="m-0 roboto chng-color f-400">
-                    {{bscData.current_value}}</p>
+                <p appFormatNumber [value]="bse.current_value" class="m-0 roboto chng-color f-400">
+                    {{bse.current_value}}</p>
             </div>
         </div>
     </div>
@@ -46,19 +46,19 @@
     <div class="row">
         <div class="col-md-5  p-0">
             <div>
-                <p class="text-black roboto m-0 pl-4 pb-8 f-300">Nifty 50</p>
+                <p class="text-black roboto m-0  pb-8 f-300">Nifty 50</p>
             </div>
         </div>
         <div class="col-md-3 relClass pl-0 pr-4">
             <div class="bar">
-                <p class="m-0 f-400 roboto" [ngClass]="{'greenColor-text': nscData.colourFlag,'text-danger': nscData.colourFlag==false}">
-                    {{nscData.change_in_percentage}}%</p>
+                <p class="m-0 f-400 roboto" [ngClass]="{'greenColor-text': nifty50.colourFlag,'text-danger': nifty50.colourFlag==false}">
+                    {{nifty50.change_in_percentage}}%</p>
             </div>
         </div>
         <div class="col-md-4 relClass text-right p-0">
             <div class="bar">
-                <p appFormatNumber [value]="nscData.current_value" class="m-0 roboto chng-color f-400">
-                    {{nscData.current_value}}</p>
+                <p appFormatNumber [value]="nifty50.current_value" class="m-0 roboto chng-color f-400">
+                    {{nifty50.current_value}}</p>
             </div>
         </div>
     </div>
@@ -66,7 +66,7 @@
     <div class="row">
         <div class="col-md-5  p-0">
             <div>
-                <p class="text-black m-0 roboto pl-4 pb-8 f-300">Nifty 500</p>
+                <p class="text-black m-0 roboto  pb-8 f-300">Nifty 500</p>
             </div>
         </div>
         <div class="col-md-3 relClass pl-0 pr-4">
@@ -91,7 +91,7 @@
     <div class="row">
         <div class="col-md-5 relClass p-0">
             <div>
-                <p class="text-black m-0 roboto pl-4 pb-8 f-300">Dept</p>
+                <p class="text-black m-0 roboto  pb-8 f-300">Dept</p>
             </div>
         </div>
         <div class="col-md-3 relClass pl-0 pr-4">
@@ -116,7 +116,7 @@
     <!-- <div class="row">
         <div class="col-md-5 p-0">
             <div>
-                <p class="text-black m-0 roboto pl-4 pb-8 f-300">Gold (22 CARAT)</p>
+                <p class="text-black m-0 roboto  pb-8 f-300">Gold (22 CARAT)</p>
             </div>
         </div>
         <div class="col-md-3 relClass pl-0 pr-4">
@@ -136,7 +136,7 @@
     <div class="row">
         <div class="col-md-5 p-0">
             <div>
-                <p class="text-black m-0 pl-4 roboto pb-8 f-300">Gold </p>
+                <p class="text-black m-0  roboto pb-8 f-300">Gold </p>
             </div>
         </div>
         <div class="col-md-3 relClass pl-0 pr-4">
@@ -154,7 +154,7 @@
     <div class="row">
         <div class="col-md-5 p-0">
             <div>
-                <p class="text-black m-0 pl-4 roboto pb-8 f-300">Silver</p>
+                <p class="text-black m-0  roboto pb-8 f-300">Silver</p>
             </div>
         </div>
         <div class="col-md-3 relClass pl-0 pr-4">

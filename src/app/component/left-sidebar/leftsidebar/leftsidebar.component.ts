@@ -1,4 +1,4 @@
-import { Component, ElementRef, NgZone, OnInit } from '@angular/core';
+import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from '../../../Data-service/event.service';
 import { SubscriptionInject } from '../../protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -42,9 +42,10 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   showDefaultDropDownOnSearch: boolean;
   isOpen: boolean;
   roleObj: any = {};
-
+  @ViewChild('inputSearch', { static: true }) inputRef: ElementRef
   logoText = 'Your Logo here';
   role: any;
+  isLoding: boolean;
 
   constructor(public authService: AuthService, private _eref: ElementRef,
     protected eventService: EventService, protected subinject: SubscriptionInject,
@@ -108,11 +109,21 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
     this.auth.setClientData(singleClientData);
     this.myControl.setValue(singleClientData.displayName)
     this.ngZone.run(() => {
-      this.router.navigate(['customer', 'detail', 'account', 'assets'], { state: { ...singleClientData } });
+      this.router.navigate(['customer', 'detail', 'overview', 'myfeed'], { state: { ...singleClientData } });
     });
   }
 
   ngOnInit() {
+    this.subinject.singleProfileData.subscribe(data => {
+      if (data) {
+        this.isLoding = false;
+        this.showDefaultDropDownOnSearch = false
+        if (this.myControl) {
+          this.myControl.setValue(this.myControl.value);
+          this.myControl.updateValueAndValidity();
+        }
+      }
+    })
     this.advisorId = AuthService.getAdvisorId();
     this.advisorName = AuthService.getUserInfo().name;
     this.onResize();
@@ -129,13 +140,21 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
         map(state => {
           if (state) {
             let list = this.enumDataService.getClientSearchData(state);
-            if (list.length == 0) {
+            if (list == undefined) {
+              this.showDefaultDropDownOnSearch = true;
+              this.isLoding = true;
+              return;
+            }
+            if (list && list.length == 0) {
+              this.isLoding = false;
               this.showDefaultDropDownOnSearch = true;
               return;
             }
+            this.isLoding = false;
             this.showDefaultDropDownOnSearch = false;
             return this.enumDataService.getClientSearchData(state)
           } else {
+            this.isLoding = false;
             this.showDefaultDropDownOnSearch = false;
             return this.enumDataService.getEmptySearchStateData();
           }

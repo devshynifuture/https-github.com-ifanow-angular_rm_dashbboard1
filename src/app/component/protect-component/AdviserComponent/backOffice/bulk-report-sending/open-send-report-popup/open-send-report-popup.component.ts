@@ -31,7 +31,7 @@ export class OpenSendReportPopupComponent implements OnInit {
 
   sendClientId() {
     this.dataClients = {
-      clientId: 93902
+      clientId: 95961
     }
     this.getDetails(this.dataClients)
   }
@@ -48,7 +48,8 @@ export class OpenSendReportPopupComponent implements OnInit {
     console.log('data', data)
     this.clientsSend = {
       userInfo : data,
-      clientId : this.dataClients.clientId
+      clientId : this.dataClients.clientId,
+      mode : this.data.reportType
     }
   }
   getdataForm(data) {

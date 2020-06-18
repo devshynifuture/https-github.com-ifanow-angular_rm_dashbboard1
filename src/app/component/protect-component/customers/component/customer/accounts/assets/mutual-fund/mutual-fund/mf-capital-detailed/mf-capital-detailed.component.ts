@@ -4,6 +4,8 @@ import { MfServiceService } from '../../mf-service.service';
 import { RightFilterComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter/right-filter.component';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
+import { CustomerService } from '../../../../../customer.service';
+import { AuthService } from 'src/app/auth-service/authService';
 // import { MutualFundAllTransactionComponent } from '../mutual-fund-all-transaction/mutual-fund-all-transaction.component';
 
 @Component({
@@ -49,15 +51,43 @@ export class MfCapitalDetailedComponent implements OnInit {
   GTdividendPayout = 0;
   GTReinvesment = 0;
   GTdividendReinvestment = 0;
-  constructor(private MfServiceService:MfServiceService,private subInjectService : SubscriptionInject) { }
+  fragmentData = { isSpinner: false };
+  showDownload: boolean;
+  setCapitaDetails: any;
+  clientId: any;
+  constructor(private MfServiceService:MfServiceService,private subInjectService : SubscriptionInject, private UtilService:UtilService,private custumService:CustomerService) { }
    @Output() reponseToInput = new EventEmitter();
    @Output() changeInput = new EventEmitter();
    @Input() responseData;
    @Input() changedData;
    @Input() mutualFund;
+   advisorId = AuthService.getAdvisorId();
+   uploadData(data) {
+    if (data.clientId) {
+      this.clientId = data.clientId
+      // this.ngOnInit()
+      this.fromDateYear = 2019;
+      this.fromDate = new Date(this.fromDateYear, 3, 1);
+      this.toDateYear = 2020;
+      this.toDate = new Date(this.toDateYear, 2, 31);
+      this.grandFatheringEffect = true;
+      // this.getAdvisorData();
+      this.getCapitalgain();
+    }
+    return this.setCapitaDetails
+
+  }
   ngOnInit() {
+    this.setCapitaDetails = {}
+    this.setCapitaDetails.dataSource = []
+    this.setCapitaDetails.dataSource1 = []
+    this.setCapitaDetails.dataSource2 = []
+    this.setCapitaDetails.equityObj = {}
+    this.setCapitaDetails.debtObj = {}
+    this.setCapitaDetails.GTdividendReinvestment = {}
+    this.setCapitaDetails.GTdividendPayout = {}
+    this.setCapitaDetails.GTReinvesment = {}
     this.isLoading =true;
-    setTimeout(() => {
       console.log('response data:',this.responseData);  // You will get the @Input value
 
       this.mutualFundList = this.MfServiceService.filter(this.responseData, 'mutualFund');
@@ -74,7 +104,34 @@ export class MfCapitalDetailedComponent implements OnInit {
       // this.mfList = this.responseData.mfData;
 
 
-  });
+  }
+  getCapitalgain() {
+    this.isLoading = true;
+    this.changeInput.emit(true);
+    const obj = {
+      advisorIds: [this.advisorId],
+      clientId: this.clientId,
+      parentId: 0
+
+    };
+    this.custumService.capitalGainGet(obj).subscribe(
+      data => {
+        if (data) {
+          this.getDetailedData(data);
+
+        } else {
+          this.dataSource.data = [];
+          this.dataSource1.data = [];
+          this.dataSource2.data = [];
+        }
+
+      }, (error) => {
+        this.dataSource.data = [];
+        this.dataSource1.data = [];
+        this.dataSource2.data = [];
+        this.changeInput.emit(false);
+      }
+    );
   }
   getDetailedData(data){
     let equityData=[];
@@ -103,6 +160,27 @@ export class MfCapitalDetailedComponent implements OnInit {
       this.dataSource = new MatTableDataSource(equityData);
       this.dataSource1 =  new MatTableDataSource(this.getFilterData( catObj['DEBT'],'DEBT'))
       this.dataSource2 = new MatTableDataSource(this.getDividendSummaryData(data));
+
+      this.setCapitaDetails = {}
+      this.setCapitaDetails.dataSource = this.dataSource
+      this.setCapitaDetails.dataSource1 = this.dataSource1
+      this.setCapitaDetails.dataSource2 = this.dataSource2
+      this.setCapitaDetails.equityObj = this.equityObj
+      this.setCapitaDetails.debtObj = this.debtObj
+      this.setCapitaDetails.GTdividendReinvestment = this.GTdividendReinvestment
+      this.setCapitaDetails.GTdividendPayout = this.GTdividendPayout
+      this.setCapitaDetails.GTReinvesment = this.GTReinvesment
+      this.setCapitaDetails.total_stGain = this.total_stGain;
+      this.setCapitaDetails.total_ltGain = this.total_ltGain;
+      this.setCapitaDetails.total_stLoss = this.total_stLoss;
+      this.setCapitaDetails.total_ltLoss = this.total_ltLoss;
+      this.setCapitaDetails.total_indexGain = this.total_indexGain;
+      this.setCapitaDetails.total_indexLoss = this.total_indexLoss;
+      this.setCapitaDetails.purchaseAmount = this.purchaseAmount;
+      this.setCapitaDetails.redeemAmount = this.redeemAmount;
+      this.setCapitaDetails.total_stt = this.total_stt;
+      this.MfServiceService.setCapitalDetailed(this.setCapitaDetails)
+
       this.objSendToDetailedCapital={
         // mfData:this.mutualFund,
         responseData :this.responseData ,
@@ -441,5 +519,21 @@ export class MfCapitalDetailedComponent implements OnInit {
   }
   isGroup = (index, item) => item.schemeName;// for grouping schme name
 
-
+  generatePdf() {
+    this.fragmentData.isSpinner = true
+    const para = document.getElementById('template');
+    this.UtilService.htmlToPdf(para.innerHTML, 'capitalGain', 'true', this.fragmentData, '', '');
+  }
+  Excel(tableTitle) {
+    this.showDownload = true
+    setTimeout(() => {
+      var blob = new Blob([document.getElementById('template').innerHTML], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+      });
+      saveAs(blob, tableTitle + ".xls");
+    }, 200);
+    // if (data) {
+    //   this.fragmentData.isSpinner = false;
+    // }
+  }
 }

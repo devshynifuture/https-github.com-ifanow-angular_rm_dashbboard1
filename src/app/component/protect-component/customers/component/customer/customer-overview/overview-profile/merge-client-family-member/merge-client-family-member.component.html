@@ -24,8 +24,7 @@
           <input #searchClient (input)="hideSuggetion(searchClient.value)" [formControl]="stateCtrl"
             [matAutocomplete]="auto1" appPrefixFocusDirective aria-label="client" class="form-control pl-8" matInput
             placeholder="Start typing to see investor names">
-          <mat-autocomplete #auto1="matAutocomplete" (optionSelected)="optionSelected($event.option.value)"
-            [displayWith]="processTransaction.displayName" autoFocus>
+          <mat-autocomplete #auto1="matAutocomplete" (optionSelected)="optionSelected($event.option.value)">
             <mat-option *ngFor="let f of filteredStates | async" [value]="f">
               <div class="row">
                 <div class="col-md-7 d-flex align-items-center">

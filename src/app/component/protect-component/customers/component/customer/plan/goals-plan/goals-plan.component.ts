@@ -14,9 +14,9 @@ import { ViewPastnotGoalComponent } from './view-pastnot-goal/view-pastnot-goal.
 import { PlanService } from '../plan.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { AuthService } from 'src/app/auth-service/authService';
-import { MatDialog } from '@angular/material';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import * as Highcharts from 'highcharts';
+import { MatDialog } from '@angular/material';
 
 export interface PeriodicElement {
   position: string;
@@ -38,79 +38,8 @@ export class GoalsPlanComponent implements OnInit {
     advisorId:'',
     clientId:''
   }
-  selectedGoal:any;
-
-  // initializing dummy data
-  allGoals: any[] = [
-    {
-      id: 1,
-      goalName: 'Shreya’s higher education',
-      gv: 4813000,
-      year: '2030 - 2033',
-      img: '/assets/images/svg/higher-edu.svg',
-      dummyDashBoardData: {
-        goalYear: 2025,
-        goalPresentValue: 24325,
-        futureValue: 456543,
-        equity_monthly: 5200,
-        debt_monthly: 44553,
-        lump_equity: 45232,
-        lump_debt: 35452,
-        goalProgress: 20,
-      }
-    },
-    {
-      id: 2,
-      goalName: 'House',
-      gv: 10000000,
-      year: '2033',
-      img: '/assets/images/svg/house-goals.svg',
-      dummyDashBoardData: {
-        goalYear: 2025,
-        goalPresentValue: 24325,
-        futureValue: 456543,
-        equity_monthly: 5200,
-        debt_monthly: 44553,
-        lump_equity: 45232,
-        lump_debt: 35452,
-        goalProgress: 20,
-      }
-    },
-    {
-      id: 3,
-      goalName: 'Rahul’s retirement',
-      gv: 45522000,
-      year: '2030 - 2033',
-      img: '/assets/images/svg/retierment-goals.svg',
-      dummyDashBoardData: {
-        goalYear: 2025,
-        goalPresentValue: 24325,
-        futureValue: 456543,
-        equity_monthly: 5200,
-        debt_monthly: 44553,
-        lump_equity: 45232,
-        lump_debt: 35452,
-        goalProgress: 20,
-      }
-    },
-    {
-      id: 4,
-      goalName: 'Aryan’s marriage',
-      gv: 4813000,
-      year: '2030 - 2033',
-      img: '/assets/images/svg/higher-edu.svg',
-      dummyDashBoardData: {
-        goalYear: 2025,
-        goalPresentValue: 24325,
-        futureValue: 456543,
-        equity_monthly: 5200,
-        debt_monthly: 44553,
-        lump_equity: 45232,
-        lump_debt: 35452,
-        goalProgress: 20,
-      }
-    },
-  ];
+  selectedGoal:any = {};
+  allGoals: any[] = [];
 
   // options set for bar charts
   // Reference - https://api.highcharts.com/highcharts/
@@ -218,35 +147,71 @@ export class GoalsPlanComponent implements OnInit {
 
 
   ngOnInit() {
+    // TODO:- implement loader fundtion
     this.loadAllGoals();
-    // this.loadGlobalAPIs();
-    this.selectedGoal = this.allGoals[0];
   }
 
   // load all goals created for the client and select the first goal
   loadAllGoals(){
     this.plansService.getAllGoals(this.advisor_client_id).subscribe((data)=>{
       if (data) {
-        // this.allGoals = data || [];
-        // this.allGoals = this.allGoals.map((goal)=> this.mapGoalDashboardData);
-        console.log('sagar', data);
-        this.loadSelectedGoalData(this.allGoals[0]);
+        this.allGoals = data.map(goal => this.mapGoalDashboardData(goal));
+        // let dom render first
+        setTimeout(() => {
+          this.loadSelectedGoalData(this.allGoals[0]);
+        });
       }
     }, err => this.eventService.openSnackBar(err, "Dismiss"))
   }
 
   mapGoalDashboardData(goal:any) {
-    // single year goal model
-    if(goal.singleOrMulti == 1) {
-      goal.dashboardData = {
-        presentValue: goal.singleGoalModel.goalPresentValue,
-        futureValue: goal.singleGoalModel.goalFV,
-        equity_monthly: 0
-      }
-    } else {
+    let mapData:any = {};
 
+    /**
+     * TODO:- need to correct the logics for the following
+     * 1. goal progress
+     * 2. achieved value -- fix on html as well
+     * 3. image for multi year goal
+     */
+
+    if(goal.singleOrMulti == 1) {
+      mapData.id = goal.id;
+      const goalSubData = goal.singleGoalModel;
+      mapData.img = goalSubData.imageUrl;
+      mapData.year = (new Date(goalSubData.goalStartDate).getFullYear()) + ' - ' + (new Date(goalSubData.goalStartDate).getFullYear());
+      mapData.goalName = goalSubData.goalName;
+      mapData.gv = goalSubData.goalFV;
+      mapData.dashboardData = {
+        goalYear: new Date(goalSubData.goalStartDate).getFullYear(),
+        presentValue: goalSubData.goalPresentValue,
+        futureValue: goalSubData.goalFV,
+        equity_monthly: goalSubData.equitySipAmount || 0,
+        debt_monthly: goalSubData.debtSipAmount || 0,
+        lump_equity: goalSubData.lumpsumEquityReqOnSSD || 0,
+        lump_debt: goalSubData.lumpsumDebtReqOnSSD || 0,
+        goalProgress: (goalSubData.goalPresentValue / goalSubData.goalFV * 100),
+      }
+      mapData.remainingData = goalSubData;
+    } else {
+      mapData.id = goal.id;
+      const goalSubData:any = goal.multiYearGoalPlan;
+      mapData.img = '/assets/images/svg/higher-edu.svg';
+      mapData.year = (new Date(goalSubData.vacationStartYr || 2033942400000).getFullYear()) + ' - ' + (new Date(goalSubData.vacationEndYr || 2033942400000).getFullYear());
+      mapData.goalName = goalSubData.name;
+      mapData.gv = goalSubData.futureValue;
+      mapData.dashboardData = {
+        goalYear: new Date(goalSubData.vacationEndYr || 2033942400000).getFullYear(),
+        presentValue: goalSubData.presentValue,
+        futureValue: goalSubData.futureValue,
+        equity_monthly: goalSubData.sipAmoutEquity || 0,
+        debt_monthly: goalSubData.sipAmoutDebt || 0,
+        lump_equity: goalSubData.lumpSumAmountEquity || 0,
+        lump_debt: goalSubData.lumpSumAmountDebt || 0,
+        goalProgress: (goalSubData.presentValue / goalSubData.futureValue * 100),
+      }
+      mapData.remainingData = goalSubData;
     }
-    return goal;
+    return mapData;
   }
 
   loadGlobalAPIs(){
@@ -309,7 +274,7 @@ export class GoalsPlanComponent implements OnInit {
         fragmentData.state = 'open25';
 
         // TODO:- remove .data as its for demo purpose only
-        fragmentData.data = this.selectedGoal.dummyDashBoardData;
+        fragmentData.data = this.selectedGoal.dashboardData;
         break;
       case 'openallocations':
         fragmentData.componentName = AddGoalComponent;

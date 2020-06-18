@@ -82,6 +82,9 @@ export class AmcWiseComponent implements OnInit {
   applicationList: any[];
   parentId: any;
   clientId: any;
+  amcWiseTotal = [];
+  schemeWiseTotal = [];
+  applicantWiseTotal = [];
 
   constructor(public aum: AumComponent, private backoffice: BackOfficeService, private dataService: EventService, private mfService: MfServiceService) { }
 
@@ -174,7 +177,7 @@ export class AmcWiseComponent implements OnInit {
       })
     });
 
-    ExcelMisService.exportExcel(this.arrayOfHeaderStyles[2], this.arrayOfHeaders[2], newArray, [], 'category-wise-aum-mis');
+    ExcelMisService.exportExcel(this.arrayOfHeaderStyles[2], this.arrayOfHeaders[2], newArray, [], 'category-wise-aum-mis', this.applicantWiseTotal);
   }
 
   schemeWiseExcelReport(index) {
@@ -191,7 +194,7 @@ export class AmcWiseComponent implements OnInit {
       amcList: true,
       schemeList: false,
       applicantList: false
-    });
+    }, this.schemeWiseTotal);
   }
 
   amcWiseExcelReport() {
@@ -202,7 +205,7 @@ export class AmcWiseComponent implements OnInit {
       amcList: false,
       schemeList: false,
       applicantList: false
-    });
+    }, this.amcWiseTotal);
   }
 
   // initializeExcelSheet() {
@@ -276,6 +279,8 @@ export class AmcWiseComponent implements OnInit {
   }
 
   appendingOfValuesInExcel(iterable, index, choice) {
+    let sumAumTotal = 0;
+    let sumWeightInPercTotal = 0;
     switch (choice) {
       case 'schemes':
         // scheme
@@ -287,7 +292,10 @@ export class AmcWiseComponent implements OnInit {
             weightInPerc: element.weightInPercentage,
             applicantList: []
           });
+          sumAumTotal += element.totalAum;
+          sumWeightInPercTotal += element.weightInPercentage;
         });
+        this.schemeWiseTotal = ['Total', '', sumAumTotal, sumWeightInPercTotal];
         break;
       case 'applicant':
         // applicant
@@ -299,12 +307,17 @@ export class AmcWiseComponent implements OnInit {
             totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
             weightInPerc: element.weightInPercentage
           });
+          sumAumTotal += element.totalAum;
+          sumWeightInPercTotal += element.weightInPercentage;
         });
+        this.applicantWiseTotal = ['Total', '', '', sumAumTotal, sumWeightInPercTotal];
         break;
     }
   }
 
   excelInitAmcList() {
+    let sumAumTotal = 0;
+    let sumWeightInPercTotal = 0;
     this.amcList.forEach((element, index1) => {
       this.arrayOfExcelData.push({
         index: index1 + 1,
@@ -313,7 +326,10 @@ export class AmcWiseComponent implements OnInit {
         weightInPerc: element.weightInPercentage,
         schemeList: [],
       });
+      sumAumTotal += element.totalAum;
+      sumWeightInPercTotal += element.weightInPercentage;
     });
+    this.amcWiseTotal = ['Total', '', sumAumTotal, sumWeightInPercTotal];
 
   }
 

@@ -38,6 +38,7 @@ export class AddGoalsComponent implements OnInit {
   }
 
   ngOnInit() {
+    // TODO:- add loader
     this.loadGlobalGoalData();
   }
 
@@ -55,19 +56,6 @@ export class AddGoalsComponent implements OnInit {
       data => this.getGoalGlobalDataRes(data),
       error => this.eventService.showErrorMessage(error)
     )
-
-    //EDIT:- this api is no longer working. shifting to new api
-    // let advisor_client_obj = {
-    //   advisorId: this.advisorId,
-    //   clientId: this.clientId
-    // }
-
-    // this.planService.getListOfFamilyByClient(advisor_client_obj).subscribe((data)=>{
-    //   this.familyList = data.familyMembersList.sort((a, b) => {
-    //     return a.relationshipId - b.relationshipId;
-    //   });
-    //   this.familyList = this.utilService.calculateAgeFromCurrentDate(this.familyList);
-    // }, (err) => {this.eventService.openSnackBar(err, "Dismiss")});
 
     this.getFamilyMembersList();
   }
@@ -119,7 +107,6 @@ export class AddGoalsComponent implements OnInit {
             Q3: 'Give this goal a name',
             Q4: 'Notes'
           }
-          element.imageUrl = '/assets/images/svg/retierment.svg';
           element.validations = {
             minAgeFromPresent: 0,
             maxAgeFromPresent: 60,
@@ -145,7 +132,6 @@ export class AddGoalsComponent implements OnInit {
             Q3: 'Give this goal a name',
             Q4: 'Notes'
           }
-          element.imageUrl = '/assets/images/svg/retierment.svg';
           element.validations = {
             minAgeFromPresent: 0,
             maxAgeFromPresent: 60,
@@ -167,7 +153,6 @@ export class AddGoalsComponent implements OnInit {
             Q3: 'Give this goal a name',
             Q4: 'Notes'
           }
-          element.imageUrl = '/assets/images/svg/car.svg';
           element.validations = {
             minAgeFromPresent: 0,
             maxAgeFromPresent: 20,
@@ -190,7 +175,6 @@ export class AddGoalsComponent implements OnInit {
             Q3: 'Give this goal a name',
             Q4: 'Notes'
           }
-          element.imageUrl = '/assets/images/svg/wedding.svg';
           element.validations = {
             minAge: 18,
             maxAge: 60,
@@ -212,7 +196,6 @@ export class AddGoalsComponent implements OnInit {
           Q3: 'Give this goal a name',
           Q4: 'Notes'
         }
-          element.imageUrl = '/assets/images/svg/retierment.svg';
           element.validations = {
             minAgeFromPresent: 0,
             maxAgeFromPresent: 50,
@@ -235,7 +218,6 @@ export class AddGoalsComponent implements OnInit {
           Q3: 'Give this goal a name',
           Q4: 'Notes'
         }
-          element.imageUrl = '/assets/images/svg/wedding.svg';
           element.validations = {
             minAge: 2,
             maxAge: 60,
@@ -257,7 +239,6 @@ export class AddGoalsComponent implements OnInit {
             Q3: 'Give this goal a name',
             Q4: 'Notes'
           }
-          element.imageUrl = '/assets/images/svg/wedding.svg';
           element.validations = {
             minAge: 1,
             maxAge: 60,
@@ -280,7 +261,6 @@ export class AddGoalsComponent implements OnInit {
             Q3: 'Give this goal a name',
             Q4: 'Notes'
           }
-          element.imageUrl = '/assets/images/svg/wedding.svg';
           element.validations = {
             minAgeFromPresent: 2,
             maxAgeFromPresent: 28,
@@ -302,7 +282,6 @@ export class AddGoalsComponent implements OnInit {
             Q3: 'Give this goal a name',
             Q4: 'notes'
           }
-          element.imageUrl = '/assets/images/svg/wedding.svg';
           element.validations = {
             minAgeFromPresent: 0,
             maxAgeFromPresent: 30,
@@ -324,7 +303,6 @@ export class AddGoalsComponent implements OnInit {
             Q3: 'Give this goal a name',
             Q4: 'notes'
           }
-          element.imageUrl = '/assets/images/svg/wedding.svg';
           element.validations = {
             minAgeFromPresent: 0,
             maxAgeFromPresent: 30,
@@ -347,6 +325,7 @@ export class AddGoalsComponent implements OnInit {
     this.goalTypeSecondRowListData = data.slice(5, 10);
   }
   
+  // TODO:- understand implementation of retirement goal
   setGoalTypeData(data) {
     this.goalTypeData = data;
     this.showGoalType = [5,6].includes(data.id) ? 'multiYear' : 'singleYear' 

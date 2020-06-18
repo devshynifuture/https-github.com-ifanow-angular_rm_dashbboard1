@@ -40,29 +40,11 @@ export class PlanService {
   addRetirementGoal(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_RETIREMENT_GOAL, data)
   }
-  addHouseGoal(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_HOUSE_GOAL, data)
-  }
-  addCarGoal(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_CAR_GOAL, data)
-  }
-  addMarriageGoal(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_MARRIAGE_GOAL, data)
-  }
   addMultiYearGoal(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_MULTI_YEAR_GOAL, data)
   }
-  addEmergencyGoal(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_EMERGENCY_GOAL, data)
-  }
-  addWealthCreationGoal(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_WEALTH_CREATION_GOAL, data)
-  }
-  addBigSpendsGoal(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_BIGSPEND_GOAL, data)
-  }
-  addOthersGoal(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_OTHERS_GOAL, data)
+  addSingleYearGoal(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_SINGLE_YEAR_GOAL, data)
   }
   getListOfFamilyByClient(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);

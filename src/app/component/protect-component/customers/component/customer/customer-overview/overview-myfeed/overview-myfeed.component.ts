@@ -437,8 +437,8 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
           },
           startAngle: 0,
           endAngle: 360,
-          center: ['52%', '55%'],
-          size: '120%'
+          center: ['50%', '50%'],
+          size: '100%'
         }
       },
       exporting: {
@@ -480,7 +480,12 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
         this.tabsLoaded.portfolioData.hasData = false;
       } else {
         this.tabsLoaded.portfolioData.hasData = true;
+        let stock = res.find(d => d.assetType == 6);
         this.portFolioData = res;
+        if(stock) {
+          this.portFolioData = this.portFolioData.filter(d => d.assetType != 6);
+          this.portFolioData.unshift(stock);
+        }
 
         let chartData = [];
         let counter = 0;

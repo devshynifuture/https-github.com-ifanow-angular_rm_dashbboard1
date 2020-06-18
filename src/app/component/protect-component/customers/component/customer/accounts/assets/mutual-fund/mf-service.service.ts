@@ -25,6 +25,9 @@ export class MfServiceService {
   private transactionType = new BehaviorSubject('');
   private sendData = new BehaviorSubject('');
   private sendDataSummary = new BehaviorSubject('');
+  private sendDataTansaction = new BehaviorSubject('')
+  private sendDataCapitalSummary = new BehaviorSubject('')
+  private sendDataCapitalDetailed = new BehaviorSubject('')
   getPersonalDetails(data) {
     const obj = {
       id: data
@@ -653,5 +656,23 @@ export class MfServiceService {
   }
   getSummaryData(){
     return this.sendDataSummary.asObservable();
+  }
+  setTransactionData(value){
+    this.sendDataTansaction.next(value);
+  }
+  getTransactionData(){
+    return this.sendDataTansaction.asObservable();
+  }
+  setCapitalSummary(value){
+    this.sendDataCapitalSummary.next(value);
+  }
+  getCapitalSummary(){
+    return this.sendDataCapitalSummary.asObservable();
+  }
+  setCapitalDetailed(value){
+    this.sendDataCapitalDetailed.next(value);
+  }
+  getCapitalDetailed(){
+    return this.sendDataCapitalDetailed.asObservable();
   }
 }

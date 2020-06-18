@@ -20,9 +20,10 @@ export class UtilService {
     private eventService: EventService,
     private http: HttpClient,
     private subService: SubscriptionService,
+    private datePipe: DatePipe
   ) {
   }
-
+  client = AuthService.getClientData();
   private static decimalPipe = new DecimalPipe('en-US');
   @Input()
   public positiveMethod: Function;
@@ -338,6 +339,7 @@ export class UtilService {
     }
   }
   htmlToPdf(inputData, pdfName, landscape, fragData: any = {}, key = null, svg = null) {
+    let date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy')
     const obj = {
       htmlInput: inputData,
       name: pdfName,
@@ -354,7 +356,7 @@ export class UtilService {
           const file = new Blob([data], { type: 'application/pdf' });
           fragData.isSpinner = false;
           // window.open(fileURL,"hello");
-          var namePdf = "'s " + pdfName + "as on:" + new Date();
+          var namePdf = this.client.name +"'s " + pdfName + " as on :" +date;
           const a = document.createElement('a');
           a.href = window.URL.createObjectURL(file);
           a.download = namePdf + ".pdf";
@@ -461,6 +463,7 @@ export class UtilService {
     return false;
   }
 
+  // do not use this function. use the loader function below
   loader(increament: number) {
     if (increament === 0) {
       this.counter = 0;
@@ -473,6 +476,17 @@ export class UtilService {
       this.isLoading = true;
       this.loaderObservable.next(true);
     }
+  }
+
+  // dirty fix to shift the view to top for right slider
+  // TODO:- need to find a better solution and fix this mess as js code is not recommended by angular
+  scrollToTopForRightSlider(){
+    document.querySelector('.right_sidenav').scrollTop = 0;
+  }
+
+  scrollToBottomForRightSlider(){
+    let height = document.querySelector('.right_sidenav').scrollHeight;
+    document.querySelector('.right_sidenav').scrollTop = height;
   }
 }
 

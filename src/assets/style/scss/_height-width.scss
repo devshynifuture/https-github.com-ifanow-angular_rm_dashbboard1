@@ -225,7 +225,7 @@
   height: 300px;
 }
 
-.h-300 {
+.h-overflow-300 {
   height: 300px;
   overflow-x: auto;
 }
@@ -595,7 +595,7 @@
 
 .t-30,
 .w-30 {
-  width: 30%;
+  width: 30% !important;
 }
 
 .t-31,

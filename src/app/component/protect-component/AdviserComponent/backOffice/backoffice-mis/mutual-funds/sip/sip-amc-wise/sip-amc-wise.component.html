@@ -63,11 +63,11 @@
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody *ngFor="let category of filteredArray; let i = index">
+                        <tbody *ngFor="let category of filteredArray; let catIndex = index">
                             <tr>
                                 <td>
                                     <div [ngClass]="{'bar': isLoading}">
-                                        {{(isLoading)?'':i+1}}
+                                        {{(isLoading)?'':catIndex+1}}
                                     </div>
                                 </td>
                                 <td>
@@ -90,7 +90,7 @@
                                     </div>
                                 </td>
 
-                                <td (click)="showSubTableList(i,category.showCategory,category)">
+                                <td (click)="showSubTableList(catIndex,category.showCategory,category)">
                                     <div class="bar text-center">
                                         <i class="material-icons b-a f-14 mt-4 c-p"
                                             *ngIf="category.showCategory==true && !isLoading">
@@ -106,7 +106,8 @@
                                 <td colspan="6" class="innerTd one">
                                     <div class="d-block text-right"
                                         *ngIf="category.showCategory==false && category.schemeList?.length > 0">
-                                        <button mat-icon-button (click)="exportToExcelSheet('scheme-wise', i, null)">
+                                        <button mat-icon-button
+                                            (click)="exportToExcelSheet('scheme-wise', catIndex, null)">
                                             <mat-icon>
                                                 save_alt
                                             </mat-icon>
@@ -155,11 +156,11 @@
                                                 <th></th>
                                             </tr>
                                         </thead>
-                                        <tbody *ngFor="let subcategory of category.schemeList; let i = index">
+                                        <tbody *ngFor="let subcategory of category.schemeList; let subCatIndex = index">
                                             <tr>
                                                 <td>
                                                     <div [ngClass]="{'bar': isLoadingCategory}">
-                                                        {{(isLoadingCategory)?'':i+1}}
+                                                        {{(isLoadingCategory)?'':subCatIndex+1}}
                                                     </div>
                                                 </td>
                                                 <td>
@@ -185,7 +186,7 @@
                                                     </div>
                                                 </td>
                                                 <td class="text-center"
-                                                    (click)="showSchemeName(i,subcategory.showSubCategory,subcategory)">
+                                                    (click)="showSchemeName(subCatIndex,subcategory.showSubCategory,subcategory)">
                                                     <i *ngIf="subcategory.showSubCategory==true"
                                                         class="material-icons b-a f-14 mt-4 c-p">add</i>
                                                     <i *ngIf="subcategory.showSubCategory==false"
@@ -197,7 +198,7 @@
                                                     <div class="d-block text-right"
                                                         *ngIf="!subcategory.showSubCategory && !isLoadingCategory && subcategory.investorList?.length > 0">
                                                         <button mat-icon-button
-                                                            (click)="exportToExcelSheet('investor-wise', i, null)">
+                                                            (click)="exportToExcelSheet('investor-wise', subCatIndex, null)">
                                                             <mat-icon>
                                                                 save_alt
                                                             </mat-icon>
@@ -245,11 +246,11 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody
-                                                            *ngFor="let inv of subcategory.investorList;let i = index">
+                                                            *ngFor="let inv of subcategory.investorList;let investorIndex = index">
                                                             <tr>
                                                                 <td>
                                                                     <div [ngClass]="{'bar': isLoadingSubCategory}">
-                                                                        {{(isLoadingSubCategory)?'':i+1}}
+                                                                        {{(isLoadingSubCategory)?'':investorIndex+1}}
                                                                     </div>
                                                                 </td>
                                                                 <td>
@@ -278,7 +279,7 @@
                                                                 </td>
 
                                                                 <td class="text-center"
-                                                                    (click)="showApplicantName(i,inv.showInvestor,inv)">
+                                                                    (click)="showApplicantName(investorIndex,inv.showInvestor,inv)">
                                                                     <i class="material-icons b-a f-14 mt-4 c-p"
                                                                         *ngIf="inv.showInvestor==true">add</i>
                                                                     <i class="material-icons b-a f-14 mt-4 c-p"
@@ -290,7 +291,7 @@
                                                                     <div class="d-block text-right"
                                                                         *ngIf="subcategory.showSubCategory==false && !isLoadingSubCategory && inv.applicantList?.length > 0">
                                                                         <button mat-icon-button
-                                                                            (click)="exportToExcelSheet('applicant-wise', i, null)">
+                                                                            (click)="exportToExcelSheet('applicant-wise', investorIndex, null)">
                                                                             <mat-icon>
                                                                                 save_alt
                                                                             </mat-icon>

@@ -35,7 +35,7 @@ export class BulkSummaryComponent implements OnInit {
   @Input()
   set data(data) {
     this.inputData = data;
-    if (data.clientId) {
+    if (data) {
       console.log('This is Input data of proceed ', data);
       this.sendData = data
       this.userInfo = data.userInfo.advisorData;
@@ -92,10 +92,10 @@ export class BulkSummaryComponent implements OnInit {
     let para = document.getElementById('template');
     let obj = {
       htmlInput: para.innerHTML,
-      name: 'Summary',
+      name: 'Summary`s'+this.clientData.name,
       landscape: true,
       key: 'showPieChart',
-      clientId : 93902,
+      clientId : this.sendData.clientId,
       advisorId : AuthService.getAdvisorId(),
       fromEmail: 'devshyni@futurewise.co.in',
       toEmail: 'devshyni@futurewise.co.in'

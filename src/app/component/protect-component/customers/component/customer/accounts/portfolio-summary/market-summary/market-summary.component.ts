@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { Component, OnInit } from '@angular/core';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
 
 @Component({
   selector: 'app-market-summary',
@@ -10,7 +10,7 @@ export class MarketSummaryComponent implements OnInit {
   selectedVal: string;
   StockFeedFlag: boolean;
   deptData: any = {};
-  bscData: any = {};
+  bscData = new Date().getTime();
   nscData: any = {};
   goldData: any = {};
   silverData: any = {};
@@ -18,6 +18,8 @@ export class MarketSummaryComponent implements OnInit {
   letsideBarLoader: boolean;
   deptDataFlag: boolean;
   nifty500DataFlag: boolean;
+  bse: any = {};
+  nifty50: any = {};
 
   constructor(private cusService: CustomerService) {
   }
@@ -66,44 +68,43 @@ export class MarketSummaryComponent implements OnInit {
   getStockFeedsResponse(data) {
     this.StockFeedFlag = false;
     this.letsideBarLoader = false;
-    let {bse_and_nse, carat_22, carat_24, silver} = data;
+    let { bse_and_nse, carat_22, carat_24, silver } = data;
     if (bse_and_nse) {
       const regex = /\=/gi;
 
       // bse_and_nse = (bse_and_nse as string).replace(regex, ':');
       bse_and_nse = JSON.parse(bse_and_nse);
       bse_and_nse.date = new Date(bse_and_nse.date).getTime();
-      const bse = bse_and_nse.bse;
-      // {date=12/06/2020, bse={closing_value=33,780.89, change=+242.52,
-      //   name=BSE Sensex, change_in_percentage=+0.72%},
-      //   nifty={closing_value=9,972.90, change=+70.90, name=Nifty 50, change_in_percentage=+0.72%}}
-      bse.current_value = Math.round((bse.closing_value).replace(',', ''));
-      bse.change_in_percentage = parseFloat(bse.change_in_percentage).toFixed(2);
-      bse['colourFlag'] = this.checkNumberPositiveAndNegative(bse.change_in_percentage);
+      this.bse = JSON.parse(bse_and_nse.bse);
+      this.nifty50 = JSON.parse(bse_and_nse.nifty);
+      this.bse.current_value = Math.round((this.bse.closing_value).replace(',', ''));
+      this.bse.change_in_percentage = parseFloat(this.bse.change_in_percentage).toFixed(2);
+      this.bse['colourFlag'] = this.checkNumberPositiveAndNegative(this.bse.change_in_percentage);
+      this.nifty50.current_value = Math.round((this.nifty50.closing_value).replace(',', ''));
+      this.nifty50.change_in_percentage = parseFloat(this.nifty50.change_in_percentage).toFixed(2);
+      this.nifty50['colourFlag'] = this.checkNumberPositiveAndNegative(this.nifty50.change_in_percentage);
     }
-    // if (nse) {
-    //   nse.current_value = Math.round((nse.current_value).replace(',', ''));
-    //   nse.change_in_percentage = parseFloat(nse.change_in_percentage).toFixed(2);
-    //   nse['colourFlag'] = this.checkNumberPositiveAndNegative(nse.change_in_percentage);
-    // }
     if (carat_22) {
+      carat_22 = JSON.parse(carat_22);
       carat_22.change_in_percentage = parseFloat(carat_22.change_in_percentage).toFixed(2);
       carat_22['colourFlag'] = this.checkNumberPositiveAndNegative(carat_22.change_in_percentage.replace('%', ''));
     }
     if (carat_24) {
+      carat_24 = JSON.parse(carat_24);
       carat_24.change_in_percentage = parseFloat(carat_24.change_in_percentage).toFixed(2);
       carat_24['colourFlag'] = this.checkNumberPositiveAndNegative(carat_24.change_in_percentage.replace('%', ''));
     }
     if (silver) {
+      silver = JSON.parse(silver);
       silver.current_value = (silver.current_value).replace('₹', '');
       silver.current_value = (silver.current_value).replace(',', '');
       silver.current_value = Math.round(silver.current_value);
       silver.change_in_percentage = parseFloat(silver.change_in_percentage).toFixed(2);
       silver['colourFlag'] = this.checkNumberPositiveAndNegative(silver.change_in_percentage);
     }
-    this.bscData = bse_and_nse;
+    // this.bscData = bse_and_nse;
     // this.nscData = nse;
-    this.goldData = {carat_24, carat_22};
+    this.goldData = { carat_24, carat_22 };
     this.silverData = silver;
   }
 
