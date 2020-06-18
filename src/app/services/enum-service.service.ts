@@ -86,6 +86,15 @@ export class EnumServiceService {
     this.bankList = data;
   }
 
+  familyList:any;
+  public getFamilyList(data) {
+    this.familyList = data;
+  }
+
+  public FamilyList() {
+    return this.familyList;
+  }
+
   public getBank() {
     return this.bankList;
   }
