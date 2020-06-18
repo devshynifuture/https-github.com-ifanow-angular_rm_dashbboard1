@@ -1,5 +1,5 @@
 import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { NG_VALUE_ACCESSOR, FormGroup, FormBuilder } from '@angular/forms';
 import { EventService } from 'src/app/Data-service/event.service';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { SubscriptionService } from '../../../subscription.service';
@@ -8,6 +8,7 @@ import { ValidatorType } from '../../../../../../../services/util.service';
 import { MatChipInputEvent } from '@angular/material';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { OrgSettingServiceService } from '../../../../setting/org-setting-service.service';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 
 @Component({
   selector: 'app-email-only',
@@ -29,11 +30,16 @@ export class EmailOnlyComponent implements OnInit {
   showfromEmail: any;
   userId: any;
   verifiedEmailsList: any[] = [];
+  emailTemplateGroup: FormGroup
 
   @Input() set data(inputData) {
+    this.emailTemplateGroup = this.fb.group({
+      emailId: [''],
+      subject: ['']
+    })
     const obj = [];
     this.doc = inputData.documentList;
-    this.showfromEmail = inputData.showfromEmail
+    this.showfromEmail = inputData.showfromEmail;
     if (inputData.isInv) {
       this.doc.forEach(element => {
         if (element) {
@@ -63,6 +69,7 @@ export class EmailOnlyComponent implements OnInit {
     } else {
       this.emailBody = inputData.clientData.documentText;
     }
+    this.getClientData(this._inputData.clientData)
   }
 
   get data() {
@@ -97,7 +104,8 @@ export class EmailOnlyComponent implements OnInit {
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
   constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
-    public subscription: SubscriptionService, private orgSetting: OrgSettingServiceService) {
+    public subscription: SubscriptionService, private orgSetting: OrgSettingServiceService,
+    private fb: FormBuilder, private peopleService: PeopleService) {
     this.advisorId = AuthService.getAdvisorId();
     this.userId = AuthService.getUserId()
   }
@@ -107,6 +115,19 @@ export class EmailOnlyComponent implements OnInit {
     this.getAllEmails();
   }
 
+  getClientData(data) {
+    const obj = {
+      clientId: data.clientId
+    };
+    this.peopleService.getClientOrLeadData(obj).subscribe(
+      data => {
+        if (data) {
+          if (data.emailList && data.emailList.length > 0) {
+            this.emailIdList.push({ emailAddress: data.emailList[0].email })
+          }
+        }
+      })
+  }
   getAllEmails() {
     let obj = {
       userId: this.advisorId,
@@ -115,6 +136,7 @@ export class EmailOnlyComponent implements OnInit {
     this.orgSetting.getEmailVerification(obj).subscribe(
       data => {
         this.verifiedEmailsList = data.listItems.filter(data => data.emailVerificationStatus == 1);
+        this._inputData.fromEmail = (this.verifiedEmailsList && this.verifiedEmailsList.length == 1) ? this.verifiedEmailsList[0].emailAddress : ''
       },
       err => this.eventService.openSnackBar(err, "Dismiss")
     );
@@ -229,12 +251,12 @@ export class EmailOnlyComponent implements OnInit {
 
   sendEmail() {
     if (this._inputData.fromEmail == undefined) {
-      this.eventService.openSnackBar('Please enter to email');
+      this.eventService.openSnackBar('Please enter to email', "Dismiss");
       return;
     }
     if (this._inputData && this._inputData.documentList.length > 0) {
     } else {
-      this.eventService.openSnackBar('Please select a document to send email.');
+      this.eventService.openSnackBar('Please select a document to send email.', "Dismiss");
       return;
     }
     if (this._inputData.templateType == 3) {
@@ -306,7 +328,7 @@ export class EmailOnlyComponent implements OnInit {
       if (this.validatorType.EMAIL.test(value)) {
         this.emailIdList.push({ emailAddress: value });
       } else {
-        this.eventService.openSnackBar('Enter valid email address');
+        this.eventService.openSnackBar('Enter valid email address', "Dismiss");
       }
     }
     // Reset the input value
