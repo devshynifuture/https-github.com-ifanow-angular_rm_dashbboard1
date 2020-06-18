@@ -1222,12 +1222,12 @@
                 <td colspan="17">
                     <table style="width: 100%">
                         <tr>
-                            <td *ngIf="element.schemeName || element.folioNumber" colspan="17" style="font-weight: 600; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                            <td *ngIf="element.schemeName || element.folioNumber || element.ownerName" colspan="17" style="font-weight: 600; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
                                 {{element.schemeName}}|{{element.folioNumber}}|{{element.ownerName}}
                             </td>
                         </tr>
 
-                        <tr>
+                        <tr *ngIf="element.redeemTransactionDate">
                             <td valign="top" style="border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
                                 <span *ngIf="element.redeemTransactionDate">
                                     {{(element.redeemTransactionDate) ? (element.redeemTransactionDate  | date:'dd/MM/yyyy') : ''}}
