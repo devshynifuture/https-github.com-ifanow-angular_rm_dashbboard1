@@ -31,7 +31,7 @@ export class OpenSendReportPopupComponent implements OnInit {
 
   sendClientId() {
     this.dataClients = {
-      clientId: 95961
+      clientId: 97114
     }
     this.getDetails(this.dataClients)
   }
@@ -55,6 +55,7 @@ export class OpenSendReportPopupComponent implements OnInit {
       from  : this.data.selectedElement.from,
       to : this.data.selectedElement.to,
     }
+    this.dialogRef.close('');
   }
   getdataForm(data) {
     this.sendReport = this.fb.group({

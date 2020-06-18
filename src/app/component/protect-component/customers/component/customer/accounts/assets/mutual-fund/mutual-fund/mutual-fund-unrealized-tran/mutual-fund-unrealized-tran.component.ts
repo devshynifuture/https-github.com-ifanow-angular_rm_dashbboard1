@@ -101,7 +101,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       this.clientId = data.clientId
       this.addedData = true;
       this.isBulkEmailing=true;
-      this.toDate = this.datePipe.transform(data.toDate, 'yyyy-MM-dd');
+      this.toDate = data.toDate;
       if(data.mode == 'unrealisedTransactions'){
         this.viewMode = 'Unrealized Transactions'
         this.mode = 'Unrealized Transactions'
