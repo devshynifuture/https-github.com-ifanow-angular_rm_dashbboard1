@@ -20,8 +20,11 @@ export class AddQuotationSubscriptionComponent implements OnInit {
   noDataFoundFlag: boolean;
 
   constructor(public subInjectService: SubscriptionInject, private subService: SubscriptionService, private eventService: EventService) { }
-  @Input() data;
+  @Input() set data(data) {
+    data
+  };
   ngOnInit() {
+    this.data;
     this.advisorId = AuthService.getAdvisorId();
     this.clientData = AuthService.getSubscriptionUpperSliderData();
     this.getPlanOfAdvisor();

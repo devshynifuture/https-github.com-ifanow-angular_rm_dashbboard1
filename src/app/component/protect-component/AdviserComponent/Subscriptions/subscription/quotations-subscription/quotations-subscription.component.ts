@@ -15,6 +15,7 @@ import { AddQuotationSubscriptionComponent } from 'src/app/component/protect-com
 import { ErrPageOpenComponent } from 'src/app/component/protect-component/customers/component/common-component/err-page-open/err-page-open.component';
 import { SubscriptionDataService } from '../../subscription-data.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { SearchClientAddQuotationComponent } from './search-client-add-quotation/search-client-add-quotation.component';
 
 export interface PeriodicElement {
   name: string;
@@ -96,6 +97,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
     filterQuotation: true
   };
   dataCount: number;
+  clientList: any;
 
 
   constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
@@ -105,6 +107,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
   ngOnInit() {
     // this.dataSource = [{}, {}, {}];
     this.advisorId = AuthService.getAdvisorId();
+    this.getQuotationRelatedClients();
     if (this.utilservice.checkSubscriptionastepData(5) == undefined) {
       this.dataSource.data = [{}, {}, {}]
     }
@@ -404,13 +407,25 @@ export class QuotationsSubscriptionComponent implements OnInit {
   remove(item) {
     this.filterStatus.splice(item, 1);
   }
-  addQuotation(value, data) {
+  getQuotationRelatedClients() {
+    const obj = {
+      advisorId: this.advisorId
+    }
+    this.subService.getClientListWithSubscription(obj).subscribe(
+      data => {
+        if (data) {
+          this.clientList = data
+        }
+      }
+    )
+  }
+  addQuotation(value) {
     const fragmentData = {
       flag: value,
-      data,
+      data: this.clientList,
       id: 1,
       state: 'open',
-      componentName: AddQuotationSubscriptionComponent
+      componentName: SearchClientAddQuotationComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
