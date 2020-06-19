@@ -62,7 +62,7 @@ export class CalendarComponent implements OnInit {
       "userId": AuthService.getUserInfo().advisorId
     }
     this.calenderService.getEvent(eventData).subscribe((data) => {
-      console.log(data,"events calender");
+      console.log(data,"events calender",);
       
       if (data != undefined) {
 
@@ -70,16 +70,19 @@ export class CalendarComponent implements OnInit {
 
         this.formatedEvent = [];
         for (let e of this.eventData) {
-          e["day"] = this.formateDate(e.start.dateTime == null ? new Date(e.created) : new Date(e.start.dateTime));
-          e["month"] = this.formateMonth(e.start.dateTime == null ?new Date(e.created) : new Date(e.start.dateTime));
-          e["year"] = this.formateYear(e.start.dateTime == null ? new Date(e.created) : new Date(e.start.dateTime));
-          e["startTime"] = this.formateTime(e.start.dateTime == null ? new Date(e.created) : new Date(e.start.dateTime));
-          e["endTime"] = this.formateTime(e.end.dateTime == null ? new Date(e.created) : new Date(e.start.dateTime));
+          e["day"] = this.formateDate(!e.start.dateTime? new Date(e.created) : new Date(e.start.dateTime));
+          e["month"] = this.formateMonth(!e.start.dateTime ?new Date(e.created) : new Date(e.start.dateTime));
+          e["year"] = this.formateYear(!e.start.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
+          e["startTime"] = this.formateTime(!e.start.dateTime? new Date(e.created) : new Date(e.start.dateTime));
+          e["endTime"] = this.formateTime(!e.end.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
 
           this.formatedEvent.push(e);
         }
       }
     });
+
+    console.log(this.formatedEvent,"formatedEvent calender",);
+
   }
 
   getDaysCount(month: number, year: number, ch: string): any {
