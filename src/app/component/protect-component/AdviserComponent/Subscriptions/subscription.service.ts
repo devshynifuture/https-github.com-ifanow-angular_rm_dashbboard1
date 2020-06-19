@@ -463,6 +463,11 @@ export class SubscriptionService {
     return this.http.put(apiConfig.MAIN_URL + appConfig.GET_INVOICE_STATTUS, data);
   }
 
+  getDocumentPlaceholder(data) {
+    const httpParams = new HttpParams().set('availableAt', data.availableAt).set('documentTypeId', data.documentTypeId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DOCUMENTS_PLACEHOLDERS, httpParams);
+  }
+
   base_64Data(data) {
     return this.http.getEncoded(apiConfig.MAIN_URL + appConfig.GET_BASE_64, data, 10000);
   }
