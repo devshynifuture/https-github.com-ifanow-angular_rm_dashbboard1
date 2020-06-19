@@ -407,8 +407,9 @@ export const appConfig = {
   GET_INVOICE_STATTUS: 'subscription/invoice/status/edit',
   GET_BASE_64: 'api/v1/test/base64/decode',
   GET_DOCUMENTS_PLACEHOLDERS: 'subscription/document-placeholder/list/get',
-
-
+  GET_QUOTATIONS_PLANS: 'subscription/plans/subscribed/by/client/get',
+  CREATE_QUOTATION: 'subscription/quotation/add',
+  CLIENTLIST_WITH_SUBSCRIPTION: 'subscription/clients/with/subscriptions/get',
   // Plan Module
 
   GET_INCOME_LIST: 'account/income/get',

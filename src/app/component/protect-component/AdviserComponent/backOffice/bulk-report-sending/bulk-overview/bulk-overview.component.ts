@@ -108,11 +108,11 @@ export class BulkOverviewComponent implements OnInit {
     let para = document.getElementById('templateOver');
     let obj = {
       htmlInput: para.innerHTML,
-      name: 'Overview`s'+this.clientData.name,
+      name: 'Overview`s',
       landscape: true,
       key: 'showPieChart',
       svg: this.svg,
-      clientId : this.sendData.clientId,
+      clientId : 97118,
       advisorId : AuthService.getAdvisorId(),
       fromEmail: 'devshyni@futurewise.co.in',
       toEmail: 'devshyni@futurewise.co.in'

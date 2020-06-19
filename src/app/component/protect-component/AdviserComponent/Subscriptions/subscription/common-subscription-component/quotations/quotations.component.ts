@@ -74,14 +74,14 @@ export class QuotationsComponent implements OnInit {
     // this.getQuotationsList();
     this.dataCount = 0;
   }
-    changeSelect() {
-      this.dataCount = 0;
-      this.dataSource.filteredData.forEach(item => {
-        if (item.selected) {
-          this.dataCount++;
-        }
-      });
-    }
+  changeSelect() {
+    this.dataCount = 0;
+    this.dataSource.filteredData.forEach(item => {
+      if (item.selected) {
+        this.dataCount++;
+      }
+    });
+  }
 
   addQuotation(value) {
     const fragmentData = {
@@ -93,8 +93,7 @@ export class QuotationsComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         if (UtilService.isRefreshRequired(sideBarData)) {
-          // this.getQuotationsList();
-
+          this.getQuotationsList();
         }
         rightSideDataSub.unsubscribe();
       }
@@ -173,7 +172,7 @@ export class QuotationsComponent implements OnInit {
       this.noData = 'No Data Found';
     } else {
       data.forEach(singleData => {
-        singleData.isChecked = false;
+        singleData.selected = false;
       });
       // this.dataSource = data;
       this.dataSource = new MatTableDataSource(data);
