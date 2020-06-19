@@ -129,6 +129,8 @@ export class DocumentComponent implements OnInit {
     this.getdocumentSubData();
   }
 
+  @Input() isAdvisor = true;
+
   get clientData() {
     return this._clientData;
   }
@@ -137,7 +139,9 @@ export class DocumentComponent implements OnInit {
 
 
   ngOnInit() {
-
+    if(!this.isAdvisor) {
+      this.displayedColumns = this.displayedColumns.slice(1, -1);
+    }
 
     this.documentDesign = 'true';
     this.dataCount = 0;
@@ -399,7 +403,7 @@ export class DocumentComponent implements OnInit {
   //   );
   // }
   open(value, data) {
-    if (this.isLoading) {
+    if (this.isLoading || !this.isAdvisor) {
       return;
     }
     const fragmentData = {

@@ -50,6 +50,7 @@ import { DocumentPreviewComponent } from './subscription/common-subscription-com
 import { SubscriptionUpperRoutingModule } from './subscription-upper-routing-routing.module';
 import { SubscriptionUpperSliderComponent } from './subscription/common-subscription-component/upper-slider/subscription-upper-slider.component';
 import { SubscriptionDetailsComponent } from './subscription/common-subscription-component/biller-profile-advisor/subscription-details/subscription-details.component';
+import { SearchClientAddQuotationComponent } from './subscription/quotations-subscription/search-client-add-quotation/search-client-add-quotation.component';
 
 export const componentList = [
   OverviewComponent,
@@ -94,7 +95,8 @@ export const componentList = [
   HowToUseDialogComponent,
   PreferenceEmailInvoiceComponent,
   ErrPageOpenComponent,
-  DocumentPreviewComponent
+  DocumentPreviewComponent,
+  SearchClientAddQuotationComponent
 ]
 
 @NgModule({
@@ -111,14 +113,14 @@ export const componentList = [
     CustomDirectiveModule,
     CustomCommonModule
   ],
-  exports: [componentList],
-  entryComponents: [componentList, SubscriptionPopupComponent, AddDocumentComponent, HowToUseDialogComponent, ErrPageOpenComponent, DocumentPreviewComponent],
+  exports: componentList,
+  entryComponents: componentList,
   providers: [DynamicComponentService]
 })
 
 export class SubscriptionUpperEntry {
 
-  static getComponentList() {
-    return componentList;
-  }
+  // static getComponentList() {
+  //   return componentList;
+  // }
 }

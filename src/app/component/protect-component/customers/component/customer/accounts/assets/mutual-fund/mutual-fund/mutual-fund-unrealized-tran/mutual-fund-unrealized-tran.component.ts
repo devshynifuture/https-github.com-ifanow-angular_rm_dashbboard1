@@ -97,7 +97,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     return this.inputData;
   }
   uploadData(data) {
-    if (data.clientId) {
+    if (data) {
       this.clientId = data.clientId
       this.addedData = true;
       this.isBulkEmailing=true;
@@ -868,7 +868,6 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
             this.mfService.setDataForMfGet(this.rightFilterData.mfData);
             this.dataTransaction.setDefaultFilterData = this.setDefaultFilterData
             this.dataTransaction.rightFilterData = this.rightFilterData.mfData
-            // this.mfService.setTransactionData(this.dataTransaction)
             this.getFilterData((this.viewMode == 'Unrealized Transactions') ? 4 : 3);
             // this.dataSource.data = this.getCategory(this.rightFilterData.mutualFundList,
             // this.rightFilterData.reportType, this.mfService);
