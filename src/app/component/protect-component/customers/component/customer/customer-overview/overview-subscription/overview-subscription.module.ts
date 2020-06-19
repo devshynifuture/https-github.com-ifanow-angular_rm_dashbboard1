@@ -8,10 +8,11 @@ import { ClientInvociesComponent } from './invocies/invocies.component';
 import { ClientDocumentsComponent } from './documents/documents.component';
 import { ClientSettingsComponent } from './settings/settings.component';
 import { SubscriptionUpperEntry } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-upper-entry-module';
+import { ClientQuotationsComponent } from './client-quotations/client-quotations.component';
 
 
 @NgModule({
-  declarations: [OverviewSubscriptionComponent, SubscriptionsComponent, ClientInvociesComponent, ClientDocumentsComponent, ClientSettingsComponent],
+  declarations: [OverviewSubscriptionComponent, SubscriptionsComponent, ClientInvociesComponent, ClientDocumentsComponent, ClientSettingsComponent, ClientQuotationsComponent],
   imports: [
     CommonModule,
     SubscriptionUpperEntry,
