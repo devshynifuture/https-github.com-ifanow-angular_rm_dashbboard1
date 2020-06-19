@@ -6,6 +6,7 @@ import { ClientSettingsComponent } from './settings/settings.component';
 import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
 import { ClientInvociesComponent } from './invocies/invocies.component';
 import { ClientDocumentsComponent } from './documents/documents.component';
+import { ClientQuotationsComponent } from './client-quotations/client-quotations.component';
 
 const routes: Routes = [{
   path: '', 
@@ -26,6 +27,10 @@ const routes: Routes = [{
     {
       path: 'documents',
       component: ClientDocumentsComponent
+    },
+    {
+      path: 'quotations',
+      component: ClientQuotationsComponent
     },
   ]
 }];
