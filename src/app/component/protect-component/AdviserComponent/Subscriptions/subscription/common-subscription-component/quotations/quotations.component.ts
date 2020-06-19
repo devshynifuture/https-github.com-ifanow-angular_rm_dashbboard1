@@ -31,7 +31,7 @@ export interface PeriodicElement {
 })
 export class QuotationsComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
-
+  @Input() isAdvisor = true;
   noData: string;
   quotationData: any[];
 
@@ -64,6 +64,9 @@ export class QuotationsComponent implements OnInit {
   }
 
   ngOnInit() {
+    if(!this.isAdvisor) {
+      this.displayedColumns = this.displayedColumns.slice(1,-2);
+    }
 
 
     this.advisorId = AuthService.getAdvisorId();

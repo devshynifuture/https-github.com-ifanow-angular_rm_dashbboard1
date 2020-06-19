@@ -113,14 +113,14 @@ export const componentList = [
     CustomDirectiveModule,
     CustomCommonModule
   ],
-  exports: [componentList],
-  entryComponents: [componentList, SubscriptionPopupComponent, AddDocumentComponent, HowToUseDialogComponent, ErrPageOpenComponent, DocumentPreviewComponent],
+  exports: componentList,
+  entryComponents: componentList,
   providers: [DynamicComponentService]
 })
 
 export class SubscriptionUpperEntry {
 
-  static getComponentList() {
-    return componentList;
-  }
+  // static getComponentList() {
+  //   return componentList;
+  // }
 }
