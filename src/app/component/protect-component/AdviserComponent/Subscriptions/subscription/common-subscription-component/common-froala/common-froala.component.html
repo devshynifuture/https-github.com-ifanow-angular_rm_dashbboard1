@@ -126,7 +126,7 @@
         <div class="col-md-8 right text-right">
             <button *ngIf="storeData.quotationFlag==undefined" mat-button class="btn-bottom br-0 text-inherit pr-4 pl-4"
                 (click)="save()">SAVE</button>
-            <button *ngIf="storeData.quotationFlag==undefined" mat-button class="btn-bottom p-0 mw-40 "
+            <button *ngIf="storeData.sendEsignFlag" mat-button class="btn-bottom p-0 mw-40 "
                 [matMenuTriggerFor]="menu"><i class="material-icons">
                     keyboard_arrow_up
                 </i></button>

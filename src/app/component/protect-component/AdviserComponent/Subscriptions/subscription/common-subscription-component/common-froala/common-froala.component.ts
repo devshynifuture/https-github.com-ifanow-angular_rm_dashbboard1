@@ -76,7 +76,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
   }) renderElement: ElementRef;
 
   constructor(public subscription: SubscriptionService, public subInjectService: SubscriptionInject,
-    public eventService: EventService, public dialog: MatDialog) {
+    public eventService: EventService, public dialog: MatDialog, private utilService: UtilService) {
     this.advisorId = AuthService.getAdvisorId();
     // this.dataSub = this.subInjectService.singleProfileData.subscribe(
     //   data=>this.getcommanFroalaData(data)
@@ -119,13 +119,21 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
 
   getcommanFroalaData(data) {
     this.storeData = data;
-    let d = new Date();
-    this.storeData.documentText = this.storeData.documentText.replace(new RegExp(escapeRegExp('$(customer_name)'), 'g'),
-      this.storeData.clientName);
-    this.storeData.documentText = this.storeData.documentText.replace(new RegExp(escapeRegExp('$(plan_name)'), 'g'),
-      this.storeData.planName);
-    this.storeData.documentText = this.storeData.documentText.replace(new RegExp(escapeRegExp(' $(date)'), 'g'),
-      d.getDate() + "/" + d.getMonth() + 1 + "/" + d.getFullYear());
+    const obj =
+    {
+      clientName: this.storeData.clientName,
+      clientAddress: '',
+      advisorName: AuthService.getUserInfo().name,
+      advisorAddress: ''
+    }
+    this.storeData.documentText = this.utilService.replacePlaceholder(this.storeData.documentText, obj)
+    // let d = new Date();
+    // this.storeData.documentText = this.storeData.documentText.replace(new RegExp(escapeRegExp('$(customer_name)'), 'g'),
+    //   this.storeData.clientName);
+    // this.storeData.documentText = this.storeData.documentText.replace(new RegExp(escapeRegExp('$(plan_name)'), 'g'),
+    //   this.storeData.planName);
+    // this.storeData.documentText = this.storeData.documentText.replace(new RegExp(escapeRegExp(' $(date)'), 'g'),
+    // d.getDate() + "/" + d.getMonth() + 1 + "/" + d.getFullYear());
   }
 
   Close(data, flag) {

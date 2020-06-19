@@ -64,8 +64,8 @@ export class QuotationsComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(!this.isAdvisor) {
-      this.displayedColumns = this.displayedColumns.slice(1,-2);
+    if (!this.isAdvisor) {
+      this.displayedColumns = this.displayedColumns.slice(1, -2);
     }
 
 
@@ -100,6 +100,7 @@ export class QuotationsComponent implements OnInit {
     );
   }
   Open(value, state, data) {
+    data['sendEsignFlag'] = false;
     if (this.isLoading) {
       return
     }

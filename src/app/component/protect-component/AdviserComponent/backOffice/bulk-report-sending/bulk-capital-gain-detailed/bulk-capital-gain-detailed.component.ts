@@ -1,8 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {UtilService} from 'src/app/services/util.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {MfServiceService} from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
-import {MfCapitalDetailedComponent} from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mutual-fund/mf-capital-detailed/mf-capital-detailed.component';
+import { Component, Input, OnInit } from '@angular/core';
+import { UtilService } from 'src/app/services/util.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
+import { MfCapitalDetailedComponent } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mutual-fund/mf-capital-detailed/mf-capital-detailed.component';
 
 @Component({
   selector: 'app-bulk-capital-gain-detailed',
@@ -23,12 +23,12 @@ export class BulkCapitalGainDetailedComponent implements OnInit {
   GTdividendReinvestment: any;
   GTReinvesment: any;
   dataSource: any;
-  dataSource1 : any;
-  dataSource2 : any;
-  equityObj : any;
-  debtObj : any;
+  dataSource1: any;
+  dataSource2: any;
+  equityObj: any;
+  debtObj: any;
   getObj: any;
-  getOrgData : any;
+  getOrgData: any;
   fragmentData: any;
   total_stGain: any;
   total_ltGain: any;
@@ -39,21 +39,22 @@ export class BulkCapitalGainDetailedComponent implements OnInit {
   purchaseAmount: any;
   redeemAmount: any;
   total_stt: any;
+  triggerBack: any;
 
   constructor(
-    private utilService :UtilService,
-    public mfService :MfServiceService,
-    public capitalDetailed : MfCapitalDetailedComponent
+    private utilService: UtilService,
+    public mfService: MfServiceService,
+    public capitalDetailed: MfCapitalDetailedComponent
   ) { }
   @Input()
   set data(data) {
     this.inputData = data;
     console.log('This is Input data of proceed ', data);
-    if(data){
+    if (data) {
       this.clientId = data.clientId;
       this.sendData = data
-      this.userInfo =  (data.userInfo)? data.userInfo.advisorData: '-';
-      this.clientData = (data.userInfo)?  data.userInfo.clientData: '-';
+      this.userInfo = (data.userInfo) ? data.userInfo.advisorData : '-';
+      this.clientData = (data.userInfo) ? data.userInfo.clientData : '-';
       this.ngOnInit()
     }
   }
@@ -61,6 +62,8 @@ export class BulkCapitalGainDetailedComponent implements OnInit {
     return this.inputData;
   }
   ngOnInit() {
+    this.triggerBack = this.sendData
+    console.log('dokyala tap ahe hya data cha',this.triggerBack)
     this.reportDate = new Date()
     this.fragmentData = {}
     this.getUploadData();
@@ -68,25 +71,25 @@ export class BulkCapitalGainDetailedComponent implements OnInit {
     this.mfService.getCapitalDetailed()
       .subscribe(res => {
         this.getObj = res; //used for getting mutual fund data coming from main gain call
-        console.log('capital getCapitalDetailed data here =',this.getObj)
-        if (this.getObj.hasOwnProperty('dataSource')&& this.getObj.hasOwnProperty('dataSource1')&&this.getObj.hasOwnProperty('dataSource2')) {
+        console.log('capital getCapitalDetailed data here =', this.getObj)
+        if (this.getObj.hasOwnProperty('dataSource') && this.getObj.hasOwnProperty('dataSource1') && this.getObj.hasOwnProperty('dataSource2')) {
           this.getAllData()
         }
       })
     console.log(this.getObj)
   }
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     let para = document.getElementById('template');
-    if(para.innerHTML){
+    if (para.innerHTML) {
       this.generatePdf()
     }
   }
-  getUploadData(){
+  getUploadData() {
     this.getObj = this.capitalDetailed.uploadData(this.sendData)
     console.log('data ======', this.getObj)
     console.log(this.getObj)
   }
-  getAllData(){
+  getAllData() {
     this.dataSource = this.getObj.dataSource
     this.dataSource1 = this.getObj.dataSource1
     this.dataSource2 = this.getObj.dataSource2
@@ -113,13 +116,13 @@ export class BulkCapitalGainDetailedComponent implements OnInit {
       landscape: true,
       key: 'showPieChart',
       svg: '',
-      clientId : 97118,
-      advisorId : AuthService.getAdvisorId(),
+      clientId: this.triggerBack.clientId,
+      advisorId: AuthService.getAdvisorId(),
       fromEmail: 'devshyni@futurewise.co.in',
       toEmail: 'devshyni@futurewise.co.in'
     }
     this.utilService.bulkHtmlToPdf(obj)
-    this.utilService.htmlToPdf(para.innerHTML, 'Overview', false, this.fragmentData, '', '')
+    this.utilService.htmlToPdf(para.innerHTML, 'Capital_Gain_Summary', true, this.fragmentData, '', '')
     return obj
 
   }

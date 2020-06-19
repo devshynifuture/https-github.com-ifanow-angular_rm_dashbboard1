@@ -9,6 +9,7 @@ const routes: Routes = [
     children: [
       {
         path: 'myfeed',
+        data: {animation: 'Tab1', preload: true},
         loadChildren: () => import('./overview-myfeed/overview-myfeed.module').then(m => m.OverviewMyfeedModule)
       },
       {

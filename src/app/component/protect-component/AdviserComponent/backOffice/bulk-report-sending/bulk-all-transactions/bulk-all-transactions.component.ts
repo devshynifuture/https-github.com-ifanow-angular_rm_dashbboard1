@@ -34,6 +34,8 @@ export class BulkAllTransactionsComponent implements OnInit {
   displayedColumns: any;
 
   @ViewChild('unrealizedTranTemplate', { static: false }) unrealizedTranTemplate: ElementRef;
+  datakaySangu: any;
+  triggerBack: any;
 
   constructor(
     private utilService : UtilService,
@@ -56,6 +58,8 @@ export class BulkAllTransactionsComponent implements OnInit {
     return this.inputData;
   }
   ngOnInit() {
+    this.triggerBack = this.sendData
+    console.log('dokyala tap ahe hya data cha',this.triggerBack)
     this.fragmentData = {}
     this.getUploadData();
     this.fragmentData.isSpinner = true;
@@ -100,7 +104,7 @@ export class BulkAllTransactionsComponent implements OnInit {
         name: 'transaction',
         landscape: true,
         key: 'showPieChart',
-        clientId :97118,
+        clientId :this.triggerBack.clientId,
         advisorId : AuthService.getAdvisorId(),
         fromEmail: 'devshyni@futurewise.co.in',
         toEmail: 'devshyni@futurewise.co.in'
