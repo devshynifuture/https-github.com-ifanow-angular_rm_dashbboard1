@@ -99,7 +99,7 @@ export class MutualFundSummaryComponent implements OnInit {
   mutualFund;
   @ViewChild('summaryTemplate', { static: false }) summaryTemplate: ElementRef;
   uploadData(data) {
-    if (data.clientId) {
+    if (data) {
       this.clientId = data.clientId
       this.addedData = true;
       this.ngOnInit()

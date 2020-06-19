@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, ViewChild } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
 import { MutualFundUnrealizedTranComponent } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mutual-fund/mutual-fund-unrealized-tran/mutual-fund-unrealized-tran.component';
@@ -33,6 +33,7 @@ export class BulkAllTransactionsComponent implements OnInit {
   mode: any;
   displayedColumns: any;
 
+  @ViewChild('unrealizedTranTemplate', { static: false }) unrealizedTranTemplate: ElementRef;
 
   constructor(
     private utilService : UtilService,
@@ -62,14 +63,17 @@ export class BulkAllTransactionsComponent implements OnInit {
       .subscribe(res => {
         this.getObj = res; //used for getting mutual fund data coming from main gain call
         console.log('yeeeeeeeee Transaction ====',res)
-        if (this.getObj.hasOwnProperty('customDataSourceData')&& this.getObj.hasOwnProperty('displayedColumns')&& this.getObj.hasOwnProperty('viewMode')) {
+        if (this.getObj.hasOwnProperty('grandTotal') && this.getObj.hasOwnProperty('setDefaultFilterData') && this.getObj.hasOwnProperty('customDataSourceData')&& this.getObj.hasOwnProperty('displayedColumns')&& this.getObj.hasOwnProperty('viewMode')) {
           this.getAllData()
         }
       })
     console.log(this.getObj)
   }
   ngAfterViewInit() {
-    this.generatePdf()
+    const para = document.getElementById('transaction');
+    if (para.innerHTML) {
+      this.generatePdf();
+    }
   }
   getAllData(){
     this.customDataSource = this.getObj.customDataSourceData
@@ -87,8 +91,7 @@ export class BulkAllTransactionsComponent implements OnInit {
   }
   generatePdf() {
     this.fragmentData.isSpinner = true;
-    setTimeout(() => {
-      const para = document.getElementById('template');
+      const para = document.getElementById('transaction');
      let obj = {
         htmlInput: para.innerHTML,
         name: this.sendData.mode+this.clientData.name,
@@ -100,12 +103,7 @@ export class BulkAllTransactionsComponent implements OnInit {
         toEmail: 'devshyni@futurewise.co.in'
       }
       this.utilService.bulkHtmlToPdf(obj)
-      this.utilService.htmlToPdf(para.innerHTML, 'Test', 'true', this.fragmentData, '', '');
-    }, 200);
-
-    // if(data){
-    //   this.isSpinner = false;
-    // }
+      this.utilService.htmlToPdf(para.innerHTML, 'Test', 'true', this.fragmentData, '', '')
   }
 
 }
