@@ -109,11 +109,11 @@ export class BulkCapitalGainDetailedComponent implements OnInit {
     let para = document.getElementById('template');
     let obj = {
       htmlInput: para.innerHTML,
-      name: 'Capital_Gain_Summary`s'+this.clientData.name,
+      name: 'Capital_Gain_Summary`s',
       landscape: true,
       key: 'showPieChart',
       svg: '',
-      clientId : this.sendData.clientId,
+      clientId : 97118,
       advisorId : AuthService.getAdvisorId(),
       fromEmail: 'devshyni@futurewise.co.in',
       toEmail: 'devshyni@futurewise.co.in'

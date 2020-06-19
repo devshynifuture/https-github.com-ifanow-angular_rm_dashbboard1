@@ -84,7 +84,7 @@ export class MutualFundsCapitalComponent implements OnInit {
   @ViewChild('tableEl2', { static: false }) tableEl2;
   @ViewChild('tableEl3', { static: false }) tableEl3;
   uploadData(data) {
-    if (data.clientId) {
+    if (data) {
       this.bulkData = data
       this.clientId = data.clientId
       this.ngOnInit()
@@ -110,7 +110,7 @@ export class MutualFundsCapitalComponent implements OnInit {
       .subscribe(res => {
         this.mutualFund = res;
       })
-    if(this.bulkData.from){
+    if(this.bulkData){
       this.fromDateYear = this.bulkData.from;
       this.toDateYear = this.bulkData.to;
     }else{

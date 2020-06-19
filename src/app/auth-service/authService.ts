@@ -183,6 +183,8 @@ export class AuthService {
     localStorage.removeItem('orgData');
     localStorage.removeItem('advisorDetail');
     localStorage.removeItem('roleObj');
+    localStorage.removeItem('successStoringToken');
+    localStorage.removeItem('googleOAuthToken');
 
     // this.myRoute.navigate(['login']);
   }
