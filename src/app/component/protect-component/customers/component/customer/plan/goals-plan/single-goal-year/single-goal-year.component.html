@@ -11,25 +11,23 @@
         </i>
     </div>
 </div>
-<div [formGroup]="singleYearGoalForm" class="row bg-grey lter">
-    <div class="col-md-8 p-0">
-        <div class="wrapper-40 pt-72">
+<div [formGroup]="singleYearGoalForm" class="row ">
+    <div class="col-md-8 mt-60 pl-0 ">
+        <div class="pl-40 pr-40 pt-20 pb-90 bg-grey lter ">
             <div class="row">
                 <div class="col-md-8 p-0">
-
                     <!-- FAMILY SELECTION -->
                     <div class="row" [hidden]="!planForFamily">
                         <div class="col-md-8 p-0">
-                            <h5 class="m-0 text-black pl-0">{{Questions.Q}}</h5>
-                            <div class="form-group mb-0 pt-8">
+                            <h5 class="mb-8 text-black pl-0">{{Questions.Q}}</h5>
+                            <div class="form-group">
                                 <mat-form-field>
-                                    <mat-select (selectionChange)="selectOwnerAndUpdateForm($event.value)" formControlName="goalMember"
-                                        class="form-control br-0 br-none">
+                                    <mat-select (selectionChange)="selectOwnerAndUpdateForm($event.value)" formControlName="goalMember" class="form-control br-0 br-none">
                                         <mat-option value="" disabled>Select member</mat-option>
                                         <mat-option *ngFor="let familyMember of familyList" [value]="familyMember">
                                             {{familyMember.displayName}}</mat-option>
                                     </mat-select>
-                                    <mat-error>This field is required</mat-error>
+                                    <mat-error class="f-12">This field is required</mat-error>
                                 </mat-form-field>
                             </div>
                             <!-- <div class="col-md-12 p-0">
@@ -39,27 +37,22 @@
                     </div>
 
                     <!-- AGE FIELD -->
-                    <div class="row"
-                        [ngClass]="{'pt-20':goalTypeData.name=='House' || goalTypeData.name=='Marriage'|| goalTypeData.name=='Wealth creation'}">
+                    <div class="row" [ngClass]="{'pt-20':goalTypeData.name=='House' || goalTypeData.name=='Marriage'|| goalTypeData.name=='Wealth creation'}">
                         <div class="col-md-12 p-0">
                             <h5 class="m-0 text-black">{{Questions.Q1}}</h5>
                             <div class="row pt-8">
                                 <div class="col-md-4 p-0">
-                                    <div class="form-group mb-0">
+                                    <div class="form-group ">
                                         <mat-form-field>
-                                            <input type="number"
-                                                formControlName="age" autocomplete="off" matInput
-                                                [value]="singleYearGoalForm.value.age"
-                                                class="form-control br-0" [placeholder]="goalTypeData.placeHolder">
+                                            <input type="number" formControlName="age" autocomplete="off" matInput [value]="singleYearGoalForm.value.age" class="form-control br-0" [placeholder]="goalTypeData.placeHolder">
                                         </mat-form-field>
-                                        <mat-error *ngIf="singleYearGoalForm.get('age').value==null">This field
-                                            is required</mat-error>
+                                        <mat-error class="f-12" *ngIf="singleYearGoalForm.get('age').value==null">This field is required
+                                        </mat-error>
                                     </div>
                                 </div>
                                 <div class=" col-md-8 pr-0">
                                     <div id="custom-slider">
-                                        <mat-slider formControlName="age" [value]="singleYearGoalForm.value.age"
-                                        [min]="minAgeYear" [max]="maxAgeYear"></mat-slider>
+                                        <mat-slider formControlName="age" [value]="singleYearGoalForm.value.age" [min]="minAgeYear" [max]="maxAgeYear"></mat-slider>
                                     </div>
                                 </div>
                             </div>
@@ -72,22 +65,16 @@
                             <h5 class="m-0 text-black">{{Questions.Q2}}</h5>
                             <div class="row pt-8">
                                 <div class="col-md-4 p-0">
-                                    <div class="form-group mb-0">
+                                    <div class="form-group ">
                                         <mat-form-field>
-                                            <input type="number"
-                                                formControlName="cost" autocomplete="off" matInput
-                                                [value]="singleYearGoalForm.value.cost"
-                                                class="form-control br-0 rupess">
-                                            <mat-error>This field is required</mat-error>
+                                            <input type="number" formControlName="cost" autocomplete="off" matInput [value]="singleYearGoalForm.value.cost" class="form-control br-0 rupess">
+                                            <mat-error class="f-12">This field is required</mat-error>
                                         </mat-form-field>
                                     </div>
                                 </div>
                                 <div class="col-md-8 pr-0">
                                     <div id="custom-slider">
-                                        <mat-slider formControlName="cost"
-                                            [value]="singleYearGoalForm.value.cost"
-                                            [min]="goalTypeData.validations.minCost"
-                                            [max]="goalTypeData.validations.maxCost"></mat-slider>
+                                        <mat-slider formControlName="cost" [value]="singleYearGoalForm.value.cost" [min]="goalTypeData.validations.minCost" [max]="goalTypeData.validations.maxCost"></mat-slider>
                                     </div>
                                 </div>
                             </div>
@@ -100,22 +87,16 @@
                             <h5 class="m-0 text-black">{{Questions.Q5}}</h5>
                             <div class="row pt-8">
                                 <div class="col-md-4 p-0">
-                                    <div class="form-group mb-0">
+                                    <div class="form-group">
                                         <mat-form-field>
-                                            <input type="number"
-                                                formControlName="costReduction" autocomplete="off" matInput
-                                                [value]="singleYearGoalForm.value.costReduction"
-                                                class="form-control br-0 rupess">
-                                            <mat-error>This field is required</mat-error>
+                                            <input type="number" formControlName="costReduction" autocomplete="off" matInput [value]="singleYearGoalForm.value.costReduction" class="form-control br-0 rupess">
+                                            <mat-error class="f-12">This field is required</mat-error>
                                         </mat-form-field>
                                     </div>
                                 </div>
                                 <div class="col-md-8 pr-0">
                                     <div id="custom-slider">
-                                        <mat-slider formControlName="costReduction"
-                                            [value]="singleYearGoalForm.value.costReduction"
-                                            [min]="goalTypeData.validations.maxCostReduction"
-                                            [max]="goalTypeData.validations.minCostReduction"></mat-slider>
+                                        <mat-slider formControlName="costReduction" [value]="singleYearGoalForm.value.costReduction" [min]="goalTypeData.validations.maxCostReduction" [max]="goalTypeData.validations.minCostReduction"></mat-slider>
                                     </div>
                                 </div>
                             </div>
@@ -128,32 +109,32 @@
                             <h5 class="m-0 text-black">{{Questions.Q6}}</h5>
                             <div class="row pt-8">
                                 <div class="col-md-4 p-0">
-                                    <div class="form-group mb-0">
+                                    <div class="form-group">
                                         <mat-form-field>
                                             <mat-select class="form-control f-500">
                                                 <mat-option class="f-500" value="option">Advisor Login</mat-option>
                                             </mat-select>
-                                            <mat-error>This field is required</mat-error>
+                                            <mat-error class="f-12">This field is required</mat-error>
                                         </mat-form-field>
                                     </div>
                                 </div>
                                 <div class="col-md-4 p-0">
-                                    <div class="form-group mb-0">
+                                    <div class="form-group">
                                         <mat-form-field>
                                             <mat-select class="form-control f-500">
                                                 <mat-option class="f-500" value="option">After Retirement</mat-option>
                                             </mat-select>
-                                            <mat-error>This field is required</mat-error>
+                                            <mat-error class="f-12">This field is required</mat-error>
                                         </mat-form-field>
                                     </div>
                                 </div>
                                 <div class="col-md-4 p-0">
-                                    <div class="form-group mb-0">
+                                    <div class="form-group">
                                         <mat-form-field>
                                             <mat-select class="form-control f-500">
                                                 <mat-option class="f-500" value="option">Advisor Login</mat-option>
                                             </mat-select>
-                                            <mat-error>This field is required</mat-error>
+                                            <mat-error class="f-12">This field is required</mat-error>
                                         </mat-form-field>
                                     </div>
                                 </div>
@@ -167,11 +148,10 @@
                             <h5 class="m-0 text-black">{{Questions.Q3}}</h5>
                             <div class="row pt-8">
                                 <div class="col-md-4 p-0">
-                                    <div class="form-group mb-0">
+                                    <div class="form-group ">
                                         <mat-form-field>
-                                            <input formControlName="goalName" autocomplete="off" matInput
-                                                class="form-control br-0">
-                                            <mat-error>This field is required</mat-error>
+                                            <input formControlName="goalName" autocomplete="off" matInput class="form-control br-0">
+                                            <mat-error class="f-12">This field is required</mat-error>
                                         </mat-form-field>
                                     </div>
                                 </div>
@@ -183,87 +163,87 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- GOAL NOTES -->
                     <div class="row pt-20">
                         <div class="col-md-12 p-0">
                             <h5 class="m-0 text-black">{{Questions.Q4}}</h5>
                             <div class="row pt-8">
                                 <div class="col-md-8 p-0">
-                                    <div class="form-group mb-0">
+                                    <div class="form-group">
                                         <mat-form-field>
-                                            <input formControlName="goalDescription" autocomplete="off" matInput
-                                                class="form-control br-0">
-                                            <mat-error>This field is required</mat-error>
+                                            <input formControlName="goalDescription" autocomplete="off" matInput class="form-control br-0">
+                                            <mat-error class="f-12">This field is required</mat-error>
+                                            <mat-hint>Optional</mat-hint>
                                         </mat-form-field>
                                     </div>
                                 </div>
-                                <div class="col-md-12 pt-4">
+                                <!-- <div class="col-md-12 pt-4">
                                     <p class="f-12 m-0 text-primitive">Optional</p>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4" (click)="file.click()">
-                    <img [src]="logoImg">
+                <div class="col-md-4 pr-0">
+                    <div class="goalImg" (click)="file.click()">
+                        <img [src]="logoImg">
+                    </div>
+
                 </div>
-                <input #file (change)="previewGoalImage($event)" accept='image/*'
-                    formControlName="logo" type="file" [hidden]="true">
+                <input #file (change)="previewGoalImage($event)" accept='image/*' formControlName="logo" type="file" [hidden]="true">
             </div>
         </div>
         <div class="col-md-4"></div>
 
     </div>
     <div class="col-md-4 p-0">
-        <h5 class="m-0 text-black pt-16">{{goalTypeData.name}}, here’s how people with similar profile as yours are planning for
-            their
-            house goal.<img src="/assets/images/svg/info.svg"></h5>
+        <h5 class="m-0 text-black pt-16">{{goalTypeData.name}}, here’s how people with similar profile as yours are planning for their house goal.<img src="/assets/images/svg/info.svg"></h5>
         <h5 class="m-0 f-500 text-black pt-20">Retirement age</h5>
         <div class="row pt-12">
-            <div class="col-md-10 p-0">
+            <div class="col-md-10 pl-0">
                 <div class="addgoal-common">
                     <mat-progress-bar mode="determinate" value="50">
                     </mat-progress-bar>
                 </div>
             </div>
-            <div class="col-md-2 p-0">
+            <div class="col-md-2 pl-0 d-flex align-items-center">
                 <h5 class="m-0 text-black">51%</h5>
             </div>
         </div>
         <div class="row pt-12">
-            <div class="col-md-10 p-0">
+            <div class="col-md-10 pl-0">
                 <div class="addgoal-common">
                     <mat-progress-bar mode="determinate" value="25">
 
                     </mat-progress-bar>
                 </div>
             </div>
-            <div class="col-md-2 p-0">
+            <div class="col-md-2 pl-0 d-flex align-items-center">
                 <h5 class="m-0 text-black">23%</h5>
             </div>
         </div>
         <div class="row pt-12">
-            <div class="col-md-10 p-0">
+            <div class="col-md-10 pl-0">
                 <div class="addgoal-common">
                     <mat-progress-bar mode="determinate" value="20">
 
                     </mat-progress-bar>
                 </div>
             </div>
-            <div class="col-md-2 p-0">
+            <div class="col-md-2 pl-0 d-flex align-items-center">
                 <h5 class="m-0 text-black">18%</h5>
             </div>
         </div>
         <div class="row pt-12">
-            <div class="col-md-10 p-0">
+            <div class="col-md-10 pl-0">
                 <div class="addgoal-common">
                     <mat-progress-bar mode="determinate" value="10">
 
                     </mat-progress-bar>
                 </div>
             </div>
-            <div class="col-md-2 p-0">
+            <div class="col-md-2 pl-0 d-flex align-items-center">
                 <h5 class="m-0 text-black">9%</h5>
             </div>
         </div>
@@ -273,49 +253,49 @@
             </div>
         </div>
         <div class="row pt-12">
-            <div class="col-md-10 p-0">
+            <div class="col-md-10 pl-0">
                 <div class="addgoal-common">
                     <mat-progress-bar mode="determinate" value="50">
                     </mat-progress-bar>
                 </div>
             </div>
-            <div class="col-md-2 p-0">
+            <div class="col-md-2 pl-0 d-flex align-items-center">
                 <h5 class="m-0 text-black">51%</h5>
             </div>
         </div>
         <div class="row pt-12">
-            <div class="col-md-10 p-0">
+            <div class="col-md-10 pl-0">
                 <div class="addgoal-common">
                     <mat-progress-bar mode="determinate" value="25">
 
                     </mat-progress-bar>
                 </div>
             </div>
-            <div class="col-md-2 p-0">
+            <div class="col-md-2 pl-0 d-flex align-items-center">
                 <h5 class="m-0 text-black">23%</h5>
             </div>
         </div>
         <div class="row pt-12">
-            <div class="col-md-10 p-0">
+            <div class="col-md-10 pl-0">
                 <div class="addgoal-common">
                     <mat-progress-bar mode="determinate" value="20">
 
                     </mat-progress-bar>
                 </div>
             </div>
-            <div class="col-md-2 p-0">
+            <div class="col-md-2 pl-0 d-flex align-items-center">
                 <h5 class="m-0 text-black">18%</h5>
             </div>
         </div>
         <div class="row pt-12">
-            <div class="col-md-10 p-0">
+            <div class="col-md-10 pl-0">
                 <div class="addgoal-common">
                     <mat-progress-bar mode="determinate" value="10">
 
                     </mat-progress-bar>
                 </div>
             </div>
-            <div class="col-md-2 p-0">
+            <div class="col-md-2 pl-0 d-flex align-items-center">
                 <h5 class="m-0 text-black">9%</h5>
             </div>
         </div>
@@ -324,7 +304,7 @@
 <div class="bottom-fixed wrapper-12 w-100">
     <div class="row">
         <div class="col-md-4">
-            <h4 class="mb-0 pt-8 text-white c-p f-16" (click)="goBack()">Cancel  </h4>
+            <h4 class="mb-0 pt-8 text-white c-p f-16" (click)="goBack()">Cancel </h4>
         </div>
         <div class="col-md-8 right text-right">
             <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveGoal()">Save</button>
