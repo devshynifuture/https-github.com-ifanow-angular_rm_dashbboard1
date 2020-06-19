@@ -43,6 +43,8 @@ export class BulkOverviewComponent implements OnInit {
   clientId: any;
   totalValue: any;
   sendData: any;
+  datakaySangu: any;
+  triggerBack: any;
 
   constructor(public overview: MutualFundOverviewComponent,
     private utilService : UtilService,
@@ -64,6 +66,8 @@ export class BulkOverviewComponent implements OnInit {
     return this.inputData;
   }
   ngOnInit() {
+    this.triggerBack = this.sendData
+    console.log('dokyala tap ahe hya data cha',this.triggerBack)
     this.reportDate = new Date()
     this.fragmentData = {}
     this.getUploadData();
@@ -112,7 +116,7 @@ export class BulkOverviewComponent implements OnInit {
       landscape: true,
       key: 'showPieChart',
       svg: this.svg,
-      clientId : 97118,
+      clientId : this.triggerBack.clientId,
       advisorId : AuthService.getAdvisorId(),
       fromEmail: 'devshyni@futurewise.co.in',
       toEmail: 'devshyni@futurewise.co.in'

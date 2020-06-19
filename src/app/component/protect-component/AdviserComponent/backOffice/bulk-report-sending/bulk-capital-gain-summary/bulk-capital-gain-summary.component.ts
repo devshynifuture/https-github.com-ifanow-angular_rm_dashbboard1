@@ -33,6 +33,8 @@ export class BulkCapitalGainSummaryComponent implements OnInit, AfterViewInit {
   userInfo: any;
   clientId: any;
   getObj: any;
+  datakaySangu: any;
+  triggerBack: any;
 
   constructor(
     public mfService: MfServiceService,
@@ -59,6 +61,8 @@ export class BulkCapitalGainSummaryComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.triggerBack = this.sendData
+    console.log('dokyala tap ahe hya data cha',this.triggerBack)
     this.reportDate = new Date();
     this.fragmentData = {};
     this.getUploadData();
@@ -108,7 +112,7 @@ export class BulkCapitalGainSummaryComponent implements OnInit, AfterViewInit {
       landscape: true,
       key: 'showPieChart',
       svg: '',
-      clientId: 97118,
+      clientId: this.triggerBack.clientId,
       advisorId: AuthService.getAdvisorId(),
       fromEmail: 'devshyni@futurewise.co.in',
       toEmail: 'devshyni@futurewise.co.in'

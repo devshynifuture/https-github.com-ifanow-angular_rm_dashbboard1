@@ -1,18 +1,18 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {EventService} from 'src/app/Data-service/event.service';
-import {SubscriptionPopupComponent} from '../subscription-popup/subscription-popup.component';
-import {SubscriptionService} from '../../../subscription.service';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionPopupComponent } from '../subscription-popup/subscription-popup.component';
+import { SubscriptionService } from '../../../subscription.service';
 // import { SubscriptionUpperSliderComponent } from '../../common-subscription-component/upper-slider/subscription-upper-slider.component';
-import {AuthService} from '../../../../../../../auth-service/authService';
-import {UtilService} from 'src/app/services/util.service';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {CommonFroalaComponent} from '../common-froala/common-froala.component';
-import {EmailOnlyComponent} from '../email-only/email-only.component';
-import {Router} from '@angular/router';
-import {Location} from '@angular/common';
+import { AuthService } from '../../../../../../../auth-service/authService';
+import { UtilService } from 'src/app/services/util.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { CommonFroalaComponent } from '../common-froala/common-froala.component';
+import { EmailOnlyComponent } from '../email-only/email-only.component';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 // import { window } from 'rxjs/operators';
 
@@ -50,7 +50,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./document.component.scss']
 })
 export class DocumentComponent implements OnInit {
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
     text: 'Save',
@@ -74,8 +74,8 @@ export class DocumentComponent implements OnInit {
 
   /*@Input()*/
   documentDesign;
-  planDocumentData = [{selected: false}, {selected: false}, {selected: false}];
-  serviceDocumentData = [{selected: false}, {selected: false}, {selected: false}];
+  planDocumentData: any = [{ selected: false }, { selected: false }, { selected: false }];
+  serviceDocumentData = [{ selected: false }, { selected: false }, { selected: false }];
   mappedData = [];
   dataCount;
   sendESign = true;
@@ -89,8 +89,8 @@ export class DocumentComponent implements OnInit {
 
 
   constructor(public subInjectService: SubscriptionInject,
-              private eventService: EventService, public dialog: MatDialog, private subService: SubscriptionService,
-              public subscription: SubscriptionService, private router: Router, private location: Location) {
+    private eventService: EventService, public dialog: MatDialog, private subService: SubscriptionService,
+    public subscription: SubscriptionService, private router: Router, private location: Location) {
     // this.subInjectService.rightSliderDocument.subscribe(
     //   data => this.getDocumentsDesignData(data)
     // );
@@ -129,6 +129,8 @@ export class DocumentComponent implements OnInit {
     this.getdocumentSubData();
   }
 
+  @Input() isAdvisor = true;
+
   get clientData() {
     return this._clientData;
   }
@@ -137,7 +139,9 @@ export class DocumentComponent implements OnInit {
 
 
   ngOnInit() {
-
+    if (!this.isAdvisor) {
+      this.displayedColumns = this.displayedColumns.slice(1, -1);
+    }
 
     this.documentDesign = 'true';
     this.dataCount = 0;
@@ -253,7 +257,7 @@ export class DocumentComponent implements OnInit {
   }
 
   dialogClose() {
-    this.eventService.changeUpperSliderState({state: 'close'});
+    this.eventService.changeUpperSliderState({ state: 'close' });
 
     // this.dialogRef.close();
   }
@@ -265,6 +269,15 @@ export class DocumentComponent implements OnInit {
   mapDocumentToPlan(data) {
     data.selected = true;
     this.mappedData.push(data);
+    if (this.componentFlag == "plansDocuments") {
+      let quotationData = this.mappedData.filter(element => element.quotation);
+      if (quotationData.length > 1) {
+        data.selected = false;
+        this.mappedData = this.mappedData.filter(delData => delData.documentRepositoryId != data.documentRepositoryId);
+        this.eventService.openSnackBar("More than one quotation is not allowed", "Dismiss")
+        return;
+      }
+    }
   }
 
   unmapDocumentToPlan(data) {
@@ -399,7 +412,7 @@ export class DocumentComponent implements OnInit {
   //   );
   // }
   open(value, data) {
-    if (this.isLoading) {
+    if (this.isLoading || !this.isAdvisor) {
       return;
     }
     const fragmentData = {
@@ -810,7 +823,7 @@ export class DocumentComponent implements OnInit {
     }
     this.router.navigate(['/admin/subscription/settings', 'plans']);
     this.location.replaceState('/admin/subscription/settings/plans');
-    this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
+    this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: true });
     this.barButtonOptions.active = false;
   }
 
@@ -888,7 +901,7 @@ export class DocumentComponent implements OnInit {
     this.router.navigate(['/admin/subscription/settings', 'services']);
     this.location.replaceState('/admin/subscription/settings/services');
 
-    this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
+    this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: true });
   }
 
   selectAll(event) {

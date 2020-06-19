@@ -17,6 +17,7 @@ export class SettingsComponent implements OnInit {
   advisorId: any;
   clientId: any;
   family: any;
+  @Input() isAdvisor = true;
 
 
   constructor(public dialog: MatDialog, private fb: FormBuilder, public subInjectService: SubscriptionInject,

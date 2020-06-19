@@ -32,17 +32,17 @@ export class CommonFroalaComponent implements OnInit {
   }
 }
 */
-import {AfterViewInit, Component, ElementRef, forwardRef, Input, OnInit, ViewChild} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog} from '@angular/material';
-import {SubscriptionService} from '../../../subscription.service';
-import {escapeRegExp, UtilService} from 'src/app/services/util.service';
-import {EmailOnlyComponent} from '../email-only/email-only.component';
-import {AuthService} from '../../../../../../../auth-service/authService';
-import {PdfService} from '../../../../../../../services/pdf.service';
+import { AfterViewInit, Component, ElementRef, forwardRef, Input, OnInit, ViewChild } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
+import { SubscriptionService } from '../../../subscription.service';
+import { escapeRegExp, UtilService } from 'src/app/services/util.service';
+import { EmailOnlyComponent } from '../email-only/email-only.component';
+import { AuthService } from '../../../../../../../auth-service/authService';
+import { PdfService } from '../../../../../../../services/pdf.service';
 // import { escapeRegExp } from '';
 
 // import html2canvas from 'html2canvas';
@@ -76,7 +76,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
   }) renderElement: ElementRef;
 
   constructor(public subscription: SubscriptionService, public subInjectService: SubscriptionInject,
-    public eventService: EventService, public dialog: MatDialog) {
+    public eventService: EventService, public dialog: MatDialog, private utilService: UtilService) {
     this.advisorId = AuthService.getAdvisorId();
     // this.dataSub = this.subInjectService.singleProfileData.subscribe(
     //   data=>this.getcommanFroalaData(data)
@@ -119,13 +119,21 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
 
   getcommanFroalaData(data) {
     this.storeData = data;
-    let d = new Date();
-    this.storeData.documentText = this.storeData.documentText.replace(new RegExp(escapeRegExp('$(customer_name)'), 'g'),
-      this.storeData.clientName);
-    this.storeData.documentText = this.storeData.documentText.replace(new RegExp(escapeRegExp('$(plan_name)'), 'g'),
-      this.storeData.planName);
-    this.storeData.documentText = this.storeData.documentText.replace(new RegExp(escapeRegExp(' $(date)'), 'g'),
-      d.getDate() + "/" + d.getMonth() + 1 + "/" + d.getFullYear());
+    const obj =
+    {
+      clientName: this.storeData.clientName,
+      clientAddress: '',
+      advisorName: AuthService.getUserInfo().name,
+      advisorAddress: ''
+    }
+    this.storeData.documentText = this.utilService.replacePlaceholder(this.storeData.documentText, obj)
+    // let d = new Date();
+    // this.storeData.documentText = this.storeData.documentText.replace(new RegExp(escapeRegExp('$(customer_name)'), 'g'),
+    //   this.storeData.clientName);
+    // this.storeData.documentText = this.storeData.documentText.replace(new RegExp(escapeRegExp('$(plan_name)'), 'g'),
+    //   this.storeData.planName);
+    // this.storeData.documentText = this.storeData.documentText.replace(new RegExp(escapeRegExp(' $(date)'), 'g'),
+    // d.getDate() + "/" + d.getMonth() + 1 + "/" + d.getFullYear());
   }
 
   Close(data, flag) {
@@ -353,11 +361,11 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
       clientData: this.storeData,
       templateType: this.templateType, // 2 is for quotation
       documentList: [this.storeData],
-      showfromEmail :(this.inputData.showfromEmail == true)? true:false,
-      fromEmailId : this.inputData.fromEmail,
-      subject:this.inputData.subject,
-      id:this.inputData.id,
-      emailTemplateTypeId:this.inputData.emailTemplateTypeId
+      showfromEmail: (this.inputData.showfromEmail == true) ? true : false,
+      fromEmailId: this.inputData.fromEmail,
+      subject: this.inputData.subject,
+      id: this.inputData.id,
+      emailTemplateTypeId: this.inputData.emailTemplateTypeId
     };
     // this.dataSource.forEach(singleElement => {
     //   if (singleElement.selected) {
@@ -394,5 +402,25 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
       );
     }
 
+  }
+
+  createQuotation() {
+    const obj =
+    {
+      "planId": this.storeData.planId,
+      "documentRepositoryId": this.storeData.documentRepositoryId,
+      "clientId": this.storeData.clientId,
+      "advisorId": this.advisorId,
+      "documentText": this.storeData.documentText
+    }
+    this.subscription.createQuotation(obj).subscribe(
+      data => {
+        this.eventService.openSnackBar("Quotation added sucessfully", "Dismiss");
+        this.Close('close', true)
+      },
+      err => {
+        this.eventService.openSnackBar(err, "Dismiss");
+      }
+    )
   }
 }
