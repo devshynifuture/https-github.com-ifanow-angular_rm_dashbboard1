@@ -1,15 +1,14 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { UtilService } from 'src/app/services/util.service';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { GoldComponent } from '../../../accounts/assets/commodities/gold/gold.component';
-import { OthersComponent } from '../../../accounts/assets/commodities/others/others.component';
-import { AuthService } from 'src/app/auth-service/authService';
-import { ActiityService } from '../../actiity.service';
-import { MatTableDataSource, MatSort, MatDialog } from '@angular/material';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-import { AdviceUtilsService } from '../advice-utils.service';
-import { SuggestAdviceComponent } from '../suggest-advice/suggest-advice.component';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {UtilService} from 'src/app/services/util.service';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {GoldComponent} from '../../../accounts/assets/commodities/gold/gold.component';
+import {OthersComponent} from '../../../accounts/assets/commodities/others/others.component';
+import {AuthService} from 'src/app/auth-service/authService';
+import {ActiityService} from '../../actiity.service';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {AdviceUtilsService} from '../advice-utils.service';
+import {SuggestAdviceComponent} from '../suggest-advice/suggest-advice.component';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-advice-commodities',
