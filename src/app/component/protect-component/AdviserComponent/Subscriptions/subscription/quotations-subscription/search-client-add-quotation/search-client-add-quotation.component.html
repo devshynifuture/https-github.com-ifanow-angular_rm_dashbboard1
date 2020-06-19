@@ -79,6 +79,13 @@
   </div>
 
 
+  <div *ngIf="noDataFoundFlag" class="row">
+    <div class="col-md-12 d-flex flex-column justify-content-center align-items-center h-100vh">
+      <img src="/assets/images/svg/noDataFound.svg" class="w-50">
+      <p class="f-22 f-600 pt-28">No Plan Found</p>
+    </div>
+  </div>
+
   <div class="bottom-fixed wrapper-12">
     <div class="row">
       <div class="col-md-4">
