@@ -56,15 +56,6 @@ export class OpenSendReportPopupComponent implements OnInit {
       to : this.data.selectedElement.to,
     }
   }
-  getdataForm(data) {
-    this.sendReport = this.fb.group({
-    });
-  }
-
-  getFormControl(): any {
-    return this.sendReport.controls;
-  }
-
   procced() {
     this.dialogRef.close('');
   }

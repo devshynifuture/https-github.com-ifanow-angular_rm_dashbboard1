@@ -72,7 +72,9 @@ export class BulkAllTransactionsComponent implements OnInit {
   ngAfterViewInit() {
     const para = document.getElementById('transaction');
     if (para.innerHTML) {
+      if (this.getObj.hasOwnProperty('grandTotal') && this.getObj.hasOwnProperty('setDefaultFilterData') && this.getObj.hasOwnProperty('customDataSourceData')&& this.getObj.hasOwnProperty('displayedColumns')&& this.getObj.hasOwnProperty('viewMode')) {
       this.generatePdf();
+      }
     }
   }
   getAllData(){
@@ -90,14 +92,15 @@ export class BulkAllTransactionsComponent implements OnInit {
     console.log(this.getObj)
   }
   generatePdf() {
+    console.log('prevoius data',this.sendData)
     this.fragmentData.isSpinner = true;
       const para = document.getElementById('transaction');
      let obj = {
         htmlInput: para.innerHTML,
-        name: this.sendData.mode+this.clientData.name,
+        name: 'transaction',
         landscape: true,
         key: 'showPieChart',
-        clientId : this.sendData.clientId,
+        clientId :97118,
         advisorId : AuthService.getAdvisorId(),
         fromEmail: 'devshyni@futurewise.co.in',
         toEmail: 'devshyni@futurewise.co.in'
