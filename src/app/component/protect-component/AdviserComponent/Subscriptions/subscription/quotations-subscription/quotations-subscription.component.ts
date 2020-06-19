@@ -287,16 +287,16 @@ export class QuotationsSubscriptionComponent implements OnInit {
     }
   }
 
-  deleteModal(data) {
+  deleteModal(deleteData) {
     this.list = [];
-    if (data == null) {
+    if (deleteData == null) {
       this.dataSource.filteredData.forEach(singleElement => {
         if (singleElement.selected) {
-          this.list.push(singleElement.documentRepositoryId);
+          this.list.push(singleElement.id);
         }
       });
     } else {
-      this.list = [data.documentRepositoryId];
+      this.list = [deleteData.id];
     }
     const dialogData = {
       data: 'QUOTATION',
@@ -310,6 +310,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
           data => {
             this.eventService.openSnackBar('Document is deleted', 'Dismiss');
             // this.valueChange.emit('close');
+            this.getQuotationsData(null);
             dialogRef.close(this.list);
             // this.getRealEstate();
           },
