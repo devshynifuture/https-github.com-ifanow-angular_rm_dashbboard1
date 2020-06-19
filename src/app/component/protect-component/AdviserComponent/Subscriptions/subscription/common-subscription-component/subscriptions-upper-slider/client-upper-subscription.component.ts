@@ -57,7 +57,11 @@ export class ClientUpperSubscriptionComponent implements OnInit {
     this.clientData = data;
     this.getSummaryDataClient();
   }
+  @Input() isAdvisor = true;
   ngOnInit() {
+    if(!this.isAdvisor) {
+      this.displayedColumns.pop()
+    }
   }
   openPlanSlider(value, state, data) {
     if (this.isLoading) {
@@ -127,6 +131,9 @@ export class ClientUpperSubscriptionComponent implements OnInit {
     );
   }
   Open(state, data) {
+    if(!this.isAdvisor) {
+      return
+    }
     let feeMode;
     let component;
     data.isCreateSub = true;

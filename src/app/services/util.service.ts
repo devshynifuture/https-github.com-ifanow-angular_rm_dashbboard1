@@ -1,15 +1,15 @@
 // tslint:disable:radix
 // tslint:disable:triple-equals
 
-import {ElementRef, Injectable, Input} from '@angular/core';
-import {DatePipe, DecimalPipe} from '@angular/common';
-import {EventService} from '../Data-service/event.service';
-import {HttpClient} from '@angular/common/http';
-import {SubscriptionService} from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
-import {FormGroup} from '@angular/forms';
-import {BehaviorSubject} from 'rxjs';
-import {AuthService} from '../auth-service/authService';
-import {PlaceHolder} from '../interfaces/place-holder.interface';
+import { ElementRef, Injectable, Input } from '@angular/core';
+import { DatePipe, DecimalPipe } from '@angular/common';
+import { EventService } from '../Data-service/event.service';
+import { HttpClient } from '@angular/common/http';
+import { SubscriptionService } from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
+import { FormGroup } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs';
+import { AuthService } from '../auth-service/authService';
+import { PlaceHolder } from '../interfaces/place-holder.interface';
 
 
 @Injectable({
@@ -90,7 +90,7 @@ export class UtilService {
   static convertObjectToCustomArray(inputObject: object, keyNameForOutput: string, keyValueForOutput: string): object[] {
     const outputArray = [];
     Object.keys(inputObject).map(key => {
-      const object = {selected: false};
+      const object = { selected: false };
       object[keyNameForOutput] = inputObject[key];
       object[keyValueForOutput] = key;
 
@@ -248,16 +248,19 @@ export class UtilService {
   }
 
 
-  public replacePlaceholder(inputValue: string, placeHolder: PlaceHolder) {
+  public replacePlaceholder(inputValue: string, placeHolder) {
     if (!!inputValue) {
-      let regex = /\$\(client_name\)/gi;
-      inputValue = inputValue.replace(regex, placeHolder.clientName);
-      regex = /\$\(client_address\)/gi;
-      inputValue = inputValue.replace(regex, placeHolder.clientAddress);
-      regex = /\$\(advisor_name\)/gi;
-      inputValue = inputValue.replace(regex, placeHolder.advisorName);
-      regex = /\$\(advisor_address\)/gi;
-      inputValue = inputValue.replace(regex, placeHolder.advisorAddress);
+      // let regex = $client_name\)/gi;
+      inputValue = inputValue.replace(new RegExp(escapeRegExp('$client_name'), 'g'), placeHolder.clientName);
+      // regex = /\$\(client_address\)/gi;
+      inputValue = inputValue.replace(new RegExp(escapeRegExp('$client_address'), 'g'), placeHolder.clientAddress);
+      // inputValue = inputValue.replace(regex, placeHolder.clientAddress);
+      // regex = /\$\(advisor_name\)/gi;
+      inputValue = inputValue.replace(new RegExp(escapeRegExp('$advisor_name'), 'g'), placeHolder.advisorName);
+      // inputValue = inputValue.replace(regex, placeHolder.advisorName);
+      // regex = /\$\(advisor_address\)/gi;
+      inputValue = inputValue.replace(new RegExp(escapeRegExp('$advisor_address'), 'g'), placeHolder.advisorAddress);
+      // inputValue = inputValue.replace(regex, placeHolder.advisorAddress);
       return inputValue;
     }
     return null;
@@ -372,20 +375,20 @@ export class UtilService {
     console.log(browser);
     return this.http.post(
       'http://dev.ifanow.in:8080/futurewise/api/v1/web//subscription/html-to-pdf', obj,
-      {responseType: 'blob'}).subscribe(
-      data => {
-        const file = new Blob([data], {type: 'application/pdf'});
-        fragData.isSpinner = false;
-        // window.open(fileURL,"hello");
-        const namePdf = (this.client.name) ? this.client.name : '' + '\'s ' + pdfName + ' as on :' + date;
-        const a = document.createElement('a');
-        a.href = window.URL.createObjectURL(file);
-        a.download = namePdf + '.pdf';
-        a.click();
-        // a.download = fileURL;
-        return (this.fileURL) ? this.fileURL : null;
-      }
-    );
+      { responseType: 'blob' }).subscribe(
+        data => {
+          const file = new Blob([data], { type: 'application/pdf' });
+          fragData.isSpinner = false;
+          // window.open(fileURL,"hello");
+          const namePdf = (this.client.name) ? this.client.name : '' + '\'s ' + pdfName + ' as on :' + date;
+          const a = document.createElement('a');
+          a.href = window.URL.createObjectURL(file);
+          a.download = namePdf + '.pdf';
+          a.click();
+          // a.download = fileURL;
+          return (this.fileURL) ? this.fileURL : null;
+        }
+      );
   }
 
   bulkHtmlToPdf(data) {
@@ -399,10 +402,10 @@ export class UtilService {
     };
     return this.http.post(
       'http://dev.ifanow.in:8080/futurewise/api/v1/web/pdfAndEmail/bulk-mail/html-to-pdf', obj,
-      {responseType: 'blob'}).subscribe(
-      data => {
-        console.log('done email', data);
-      });
+      { responseType: 'blob' }).subscribe(
+        data => {
+          console.log('done email', data);
+        });
   }
 
   /**
@@ -437,8 +440,8 @@ export class UtilService {
     for (let i = 0; i < byteString.length; i++) {
       ia[i] = byteString.charCodeAt(i);
     }
-    const imageBlob = new Blob([ia], {type: mimeString});
-    return new File([imageBlob], imageName, {type: 'image/png'});
+    const imageBlob = new Blob([ia], { type: mimeString });
+    return new File([imageBlob], imageName, { type: 'image/png' });
   }
 
   /**

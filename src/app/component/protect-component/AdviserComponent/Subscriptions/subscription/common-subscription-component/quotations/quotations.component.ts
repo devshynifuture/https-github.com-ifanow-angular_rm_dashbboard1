@@ -31,7 +31,7 @@ export interface PeriodicElement {
 })
 export class QuotationsComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
-
+  @Input() isAdvisor = true;
   noData: string;
   quotationData: any[];
 
@@ -64,6 +64,9 @@ export class QuotationsComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (!this.isAdvisor) {
+      this.displayedColumns = this.displayedColumns.slice(1, -2);
+    }
 
 
     this.advisorId = AuthService.getAdvisorId();
@@ -71,14 +74,14 @@ export class QuotationsComponent implements OnInit {
     // this.getQuotationsList();
     this.dataCount = 0;
   }
-    changeSelect() {
-      this.dataCount = 0;
-      this.dataSource.filteredData.forEach(item => {
-        if (item.selected) {
-          this.dataCount++;
-        }
-      });
-    }
+  changeSelect() {
+    this.dataCount = 0;
+    this.dataSource.filteredData.forEach(item => {
+      if (item.selected) {
+        this.dataCount++;
+      }
+    });
+  }
 
   addQuotation(value) {
     const fragmentData = {
@@ -90,14 +93,14 @@ export class QuotationsComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         if (UtilService.isRefreshRequired(sideBarData)) {
-          // this.getQuotationsList();
-
+          this.getQuotationsList();
         }
         rightSideDataSub.unsubscribe();
       }
     );
   }
   Open(value, state, data) {
+    data['sendEsignFlag'] = false;
     if (this.isLoading) {
       return
     }
@@ -170,7 +173,7 @@ export class QuotationsComponent implements OnInit {
       this.noData = 'No Data Found';
     } else {
       data.forEach(singleData => {
-        singleData.isChecked = false;
+        singleData.selected = false;
       });
       // this.dataSource = data;
       this.dataSource = new MatTableDataSource(data);
@@ -198,17 +201,17 @@ export class QuotationsComponent implements OnInit {
 
   list: any = [];
 
-  deleteModal(data) {
+  deleteModal(deleteData) {
     this.list = [];
-    if (data == null) {
+    if (deleteData == null) {
       this.dataSource.filteredData.forEach(singleElement => {
         if (singleElement.selected) {
-          this.list.push(singleElement.documentRepositoryId);
+          this.list.push(singleElement.id);
         }
       });
     }
     else {
-      this.list = [data.documentRepositoryId];
+      this.list = [deleteData.id];
     }
     const dialogData = {
       data: 'QUOTATION',
@@ -218,10 +221,11 @@ export class QuotationsComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        this.subService.deleteSettingsDocument(this.list).subscribe(
+        this.subService.deleteClientDocumentsMultiple(this.list).subscribe(
           data => {
-            this.eventService.openSnackBar('document is deleted', 'Dismiss');
+            this.eventService.openSnackBar('Document is deleted', 'Dismiss');
             // this.valueChange.emit('close');
+            this.getQuotationsList();
             dialogRef.close(this.list);
             // this.getRealEstate();
           },

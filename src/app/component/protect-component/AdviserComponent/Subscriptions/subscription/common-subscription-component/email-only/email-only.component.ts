@@ -100,7 +100,7 @@ export class EmailOnlyComponent implements OnInit {
     if (this.showfromEmail == false) {
       this.getEmailTemplateFilterData(inputData);
     } else {
-      this.emailBody = inputData.clientData.documentText;
+      this.emailBody = inputData.documentList[0].documentText;
     }
     this.getClientData(this._inputData.clientData)
   }
@@ -220,7 +220,7 @@ export class EmailOnlyComponent implements OnInit {
     };
     this.subscription.getEmailTemplateFilterData(data).subscribe(responseData => {
       this.emailData = responseData;
-      this.subject = this.emailData.subject;
+      this._inputData.subject = this.emailData.subject;
       this.emailBody = this.emailData.body;
       this.emailBody.replace('$client_name', invoiceData.clientData.clientName);
       this.emailBody.replace('$advisor_name', AuthService.getUserInfo().fullName);
@@ -336,6 +336,7 @@ export class EmailOnlyComponent implements OnInit {
         documentList: this._inputData.documentList,
         document_id: this._inputData.documentList[0].id,
       };
+      this.barButtonOptions.active = true;
       this.subscription.sendDocumentViaEmailInPdfFormat(emailRequestData).subscribe(
         data => this.getResponseData(data)
       );

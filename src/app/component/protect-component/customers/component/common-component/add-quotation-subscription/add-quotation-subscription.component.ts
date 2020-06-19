@@ -20,17 +20,23 @@ export class AddQuotationSubscriptionComponent implements OnInit {
   noDataFoundFlag: boolean;
 
   constructor(public subInjectService: SubscriptionInject, private subService: SubscriptionService, private eventService: EventService) { }
-  @Input() data;
+  @Input() set data(data) {
+    data
+  };
   ngOnInit() {
+    this.data;
     this.advisorId = AuthService.getAdvisorId();
+    this.clientData = AuthService.getSubscriptionUpperSliderData();
     this.getPlanOfAdvisor();
   }
 
   getPlanOfAdvisor() {
     const obj = {
-      advisorId: this.advisorId
+      advisorId: this.advisorId,
+      clientId: (this.clientData.data) ? this.clientData.data.id : 0,
+      flag: (this.clientData) ? 4 : 3
     };
-    this.subService.getPlanOfAdvisorClients(obj).subscribe(
+    this.subService.getQuotationReplatedPlans(obj).subscribe(
       data => {
         if (data && data.length > 0) {
           this.noDataFoundFlag = false;
@@ -45,6 +51,9 @@ export class AddQuotationSubscriptionComponent implements OnInit {
   }
 
   createSubscription(value, data) {
+    data.quotation['planId'] = data.id;
+    data = data['quotation'];
+    data['quotationFlag'] = true;
     // this.Close(false);
     // const fragmentData = {
     //   flag: 'openUpper',

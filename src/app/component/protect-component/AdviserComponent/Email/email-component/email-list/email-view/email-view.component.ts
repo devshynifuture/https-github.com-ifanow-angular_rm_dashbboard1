@@ -128,7 +128,7 @@ export class EmailViewComponent implements OnInit, OnDestroy {
               if (part.filename !== null) {
                 const obj = {
                   userId: AuthService.getUserInfo().advisorId,
-                  email: AuthService.getUserInfo().emailId,
+                  email: AuthService.getUserInfo().userName,
                   attachmentId: part.body.attachmentId,
                   messageId: this.messageId
                 }
