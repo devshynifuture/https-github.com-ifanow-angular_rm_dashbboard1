@@ -1,29 +1,32 @@
-<div class="row pt-12" *ngIf="cashFlowCategory !== 'surplus'">
-    <h3 class="col-md-12">
-        Add {{ cashFlowCategory | titlecase }}
-    </h3>
-</div>
+<div class="cashflow-modal">
 
-<!-- ------------------------- add Expenses -------------- -->
+    <div class="row " *ngIf="cashFlowCategory !== 'surplus'">
+        <div class="col-md-12">
+            <h3 class="m-0 roboto f-400 pt-20">Add {{ cashFlowCategory | titlecase }}</h3>
+        </div>
+    </div>
 
-<div *ngIf="cashFlowCategory === 'expenses'">
-    <app-cashflow-add-expenses></app-cashflow-add-expenses>
-</div>
+    <!-- ------------------------- add Expenses -------------- -->
 
-<!-- ------------------------- add income -------------- -->
+    <div *ngIf="cashFlowCategory === 'expenses'">
+        <app-cashflow-add-expenses></app-cashflow-add-expenses>
+    </div>
 
-<div *ngIf="cashFlowCategory === 'income'">
-    <app-cashflow-add-income></app-cashflow-add-income>
-</div>
+    <!-- ------------------------- add income -------------- -->
 
-<!-- surplus dialog -->
+    <div *ngIf="cashFlowCategory === 'income'">
+        <app-cashflow-add-income></app-cashflow-add-income>
+    </div>
 
-<div *ngIf="cashFlowCategory === 'surplus'">
-    <app-cashflow-add-surplus></app-cashflow-add-surplus>
-</div>
+    <!-- surplus dialog -->
 
-<!-- add liabilities dialog -->
+    <div *ngIf="cashFlowCategory === 'surplus'">
+        <app-cashflow-add-surplus></app-cashflow-add-surplus>
+    </div>
 
-<div *ngIf="cashFlowCategory==='liabilities'" class="p-12">
-    <app-cashflow-add-liabilities></app-cashflow-add-liabilities>
+    <!-- add liabilities dialog -->
+
+    <div *ngIf="cashFlowCategory==='liabilities'" class="p-12">
+        <app-cashflow-add-liabilities></app-cashflow-add-liabilities>
+    </div>
 </div>

@@ -3,9 +3,9 @@
 
     <!-- Position Column -->
     <ng-container matColumnDef="financialYear">
-        <th class="br-grey f-400 f-14" mat-header-cell *matHeaderCellDef> Financial year
+        <th class="br f-400 f-14" mat-header-cell *matHeaderCellDef> Financial year
         </th>
-        <td class="br-grey f-14" mat-cell *matCellDef="let element">
+        <td class="br f-14" mat-cell *matCellDef="let element">
             <div class="bar">
                 {{element.financialYear}}
             </div>
@@ -14,48 +14,48 @@
 
     <!-- Name Column -->
     <ng-container matColumnDef="ageH">
-        <th class="br-grey f-400 text-right f-14" mat-header-cell *matHeaderCellDef> Age
+        <th class="br f-400 text-right f-14" mat-header-cell *matHeaderCellDef> Age
             (H)
         </th>
-        <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
+        <td class="br text-right f-14" mat-cell *matCellDef="let element">
             <div class="bar"> {{element.ageH}} </div>
         </td>
     </ng-container>
 
     <!-- Weight Column -->
     <ng-container matColumnDef="ageW">
-        <th class="br-grey text-right f-400 f-14" mat-header-cell *matHeaderCellDef> Age
+        <th class="br text-right f-400 f-14" mat-header-cell *matHeaderCellDef> Age
             (W)
         </th>
-        <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
+        <td class="br text-right f-14" mat-cell *matCellDef="let element">
             <div class="bar"> {{element.ageW}}</div>
         </td>
     </ng-container>
 
     <!-- Symbol Column -->
     <ng-container matColumnDef="originalSurplus">
-        <th class="br-grey text-right f-400 f-14" mat-header-cell *matHeaderCellDef>
+        <th class="br text-right f-400 f-14" mat-header-cell *matHeaderCellDef>
             Original surplus
         </th>
-        <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
+        <td class="br text-right f-14" mat-cell *matCellDef="let element">
             <div class="bar">{{element.originalSurplus}} </div>
         </td>
     </ng-container>
 
     <ng-container matColumnDef="surplusAllocated">
-        <th class="br-grey text-right f-400 f-14" mat-header-cell *matHeaderCellDef>
+        <th class="br text-right f-400 f-14" mat-header-cell *matHeaderCellDef>
             Surplus allocated
         </th>
-        <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
+        <td class="br text-right f-14" mat-cell *matCellDef="let element">
             <div class="bar"> {{element.surplusAllocated}}</div>
         </td>
     </ng-container>
 
     <ng-container matColumnDef="balanceSurplus">
-        <th class="br-grey text-right f-400 f-14" mat-header-cell *matHeaderCellDef>
+        <th class="br text-right f-400 f-14" mat-header-cell *matHeaderCellDef>
             Balance Surplus
         </th>
-        <td class="br-grey text-right f-14 f-400" mat-cell *matCellDef="let element">
+        <td class="br text-right f-14 f-400" mat-cell *matCellDef="let element">
             <div class="bar"> {{element.balanceSurplus}} </div>
         </td>
     </ng-container>
