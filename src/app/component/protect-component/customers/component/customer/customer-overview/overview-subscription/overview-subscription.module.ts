@@ -14,9 +14,9 @@ import { ClientQuotationsComponent } from './client-quotations/client-quotations
 @NgModule({
   declarations: [OverviewSubscriptionComponent, SubscriptionsComponent, ClientInvociesComponent, ClientDocumentsComponent, ClientSettingsComponent, ClientQuotationsComponent],
   imports: [
-    CommonModule,
     SubscriptionUpperEntry,
-    OverviewSubscriptionRoutingModule
-  ]
+    CommonModule,
+    OverviewSubscriptionRoutingModule,
+  ],
 })
 export class OverviewSubscriptionModule { }
