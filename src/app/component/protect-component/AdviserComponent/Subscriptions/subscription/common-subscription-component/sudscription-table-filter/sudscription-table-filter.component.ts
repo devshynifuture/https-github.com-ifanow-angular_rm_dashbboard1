@@ -1,16 +1,38 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { UtilService } from '../../../../../../../services/util.service';
-import { SetDateFooter } from './set-date-footer.component'
-import { DatePipe } from '@angular/common';
-import { MAT_DATE_FORMATS } from '@angular/material';
-import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {UtilService} from '../../../../../../../services/util.service';
+import {SetDateFooter} from './set-date-footer.component'
+import {DatePipe, formatDate} from '@angular/common';
+import {DateAdapter, MAT_DATE_FORMATS, NativeDateAdapter} from 'saturn-datepicker'
+
+export const PICK_FORMATS = {
+  parse: {dateInput: {month: 'short', year: 'numeric', day: 'numeric'}},
+  display: {
+    dateInput: 'input',
+    monthYearLabel: {year: 'numeric', month: 'short'},
+    dateA11yLabel: {year: 'numeric', month: 'long', day: 'numeric'},
+    monthYearA11yLabel: {year: 'numeric', month: 'long'}
+  }
+};
+
+export class PickDateAdapter extends NativeDateAdapter {
+  format(date: Date, displayFormat: Object): string {
+    if (displayFormat === 'input') {
+      return formatDate(date, 'dd/MM/yyyy', this.locale);
+      ;
+    } else {
+      return date.toDateString();
+    }
+  }
+}
+
 @Component({
   selector: 'app-sudscription-table-filter',
   templateUrl: './sudscription-table-filter.component.html',
   styleUrls: ['./sudscription-table-filter.component.scss'],
   providers: [
     [DatePipe],
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+    {provide: DateAdapter, useClass: PickDateAdapter},
+    {provide: MAT_DATE_FORMATS, useValue: PICK_FORMATS},
 ],
 })
 export class SudscriptionTableFilterComponent implements OnInit {

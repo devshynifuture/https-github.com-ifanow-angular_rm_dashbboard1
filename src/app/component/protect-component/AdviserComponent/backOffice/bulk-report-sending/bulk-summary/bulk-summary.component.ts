@@ -31,6 +31,8 @@ export class BulkSummaryComponent implements OnInit {
 
   @ViewChild('summaryTemplate', { static: false }) summaryTemplate: ElementRef;
   chart: Highcharts.Chart;
+  datakaySangu: any;
+  triggerBack: any;
 
   @Input()
   set data(data) {
@@ -57,6 +59,8 @@ export class BulkSummaryComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.triggerBack = this.sendData
+    console.log('dokyala tap ahe hya data cha',this.triggerBack)
     this.reportDate = new Date()
     this.fragmentData = {}
     this.getUploadData();
@@ -92,10 +96,10 @@ export class BulkSummaryComponent implements OnInit {
     let para = document.getElementById('template');
     let obj = {
       htmlInput: para.innerHTML,
-      name: 'Summary`s'+this.clientData.name,
+      name: 'Summary`s',
       landscape: true,
       key: 'showPieChart',
-      clientId : this.sendData.clientId,
+      clientId : this.triggerBack.clientId,
       advisorId : AuthService.getAdvisorId(),
       fromEmail: 'devshyni@futurewise.co.in',
       toEmail: 'devshyni@futurewise.co.in'
