@@ -10,4 +10,39 @@
 
     }
   }
+
+  .mat-progress-bar-fill::after {
+    background-color: #008FFF;
+  }
+
+  .mat-progress-bar-background {
+    fill: #D9DEE1;
+  }
+
+  .progress-tables#table-low {
+    tbody td {
+      padding: 3px 8px !important;
+    }
+
+    tr.mat-header-row {
+      height: 48px;
+    }
+  }
+}
+
+.financialGoalsTable {
+  #table-low {
+    tbody td {
+      padding: 6px 8px !important;
+    }
+  }
+
+  tr.mat-row {
+    // padding: 3px 5px !important;
+    height: 30px !important;
+  }
+
+  tr.mat-header-row {
+    height: 40px !important;
+  }
 }

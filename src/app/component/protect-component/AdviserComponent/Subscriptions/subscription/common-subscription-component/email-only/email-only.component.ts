@@ -330,8 +330,8 @@ export class EmailOnlyComponent implements OnInit {
     } else {
       const emailRequestData = {
         messageBody: this.emailBody,
-        emailSubject: this.subject,
-        fromEmail: this.emailData.fromEmail,
+        emailSubject: this._inputData.subject,
+        fromEmail: this._inputData.fromEmail,
         toEmail: this.emailIdList,
         documentList: this._inputData.documentList,
         document_id: this._inputData.documentList[0].id,

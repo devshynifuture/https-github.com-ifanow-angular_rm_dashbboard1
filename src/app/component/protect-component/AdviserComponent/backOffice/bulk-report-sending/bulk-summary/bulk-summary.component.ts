@@ -92,10 +92,10 @@ export class BulkSummaryComponent implements OnInit {
     let para = document.getElementById('template');
     let obj = {
       htmlInput: para.innerHTML,
-      name: 'Summary`s'+this.clientData.name,
+      name: 'Summary`s',
       landscape: true,
       key: 'showPieChart',
-      clientId : this.sendData.clientId,
+      clientId : 97118,
       advisorId : AuthService.getAdvisorId(),
       fromEmail: 'devshyni@futurewise.co.in',
       toEmail: 'devshyni@futurewise.co.in'
