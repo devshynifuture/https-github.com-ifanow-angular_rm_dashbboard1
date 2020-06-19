@@ -406,6 +406,7 @@ export const appConfig = {
   EMAIL_DOCUMENT: 'pdfAndEmail/send/docId',
   GET_INVOICE_STATTUS: 'subscription/invoice/status/edit',
   GET_BASE_64: 'api/v1/test/base64/decode',
+  GET_DOCUMENTS_PLACEHOLDERS: 'subscription/document-placeholder/list/get',
 
 
   // Plan Module
