@@ -75,7 +75,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
     read: ElementRef,
     static: false
   }) renderElement: ElementRef;
-  feeStructureHtmlData: string;
+  feeStructureHtmlData: string = '';
   quotationData: any;
 
   constructor(public subscription: SubscriptionService, public subInjectService: SubscriptionInject,
@@ -141,7 +141,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
     if (feeStructureTableData) {
       this.storeData.documentText = this.storeData.documentText.replace(new RegExp(escapeRegExp('$service_fee'), 'g'),
         feeStructureTableData)
-      this.storeData.documentText.replace(new RegExp('undefined'), 'g', '');
+      // this.storeData.documentText.replace(new RegExp(escapeRegExp('undefined')), 'g', '');
     }
     // let d = new Date();
     // this.storeData.documentText = this.storeData.documentText.replace(new RegExp(escapeRegExp('$(customer_name)'), 'g'),
@@ -460,8 +460,6 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
 
   createFeeStructureForFroala(responseData, quotationData) {
     responseData.forEach(element => {
-      this.feeStructureHtmlData;
-
       let feeStructureTable = `<div class="hide">
 <table style="width: 100%; margin: 0px auto; border: 1px solid rgba(0, 0, 0, 0.12);" align="center">
    <tr>
@@ -492,7 +490,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
 
                    <td style="padding: 24px; border: none;">
                        <p style="font-size: 12px; margin:0px;">FEES</p>
-                       <h4 style="margin: 0px; padding: 0px; font-size: 18px;">${(element.servicePricing.feeTypeId == 1) ? '' : ''}${element.averageFees}${(element.servicePricing.feeTypeId == 2) ? '%' : ''}</h4>
+                       <h4 style="margin: 0px; padding: 0px; font-size: 18px;">${(element.servicePricing.feeTypeId == 1) ? '₹' : ''}${element.averageFees}${(element.servicePricing.feeTypeId == 2) ? '%' : ''}</h4>
                    </td>
                </tr>
            </table>
