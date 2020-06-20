@@ -7,10 +7,13 @@ import { CalendarMonthComponent } from './calendar-month/calendar-month.componen
 
 
 const routes: Routes = [
-  {path: '', component: CalendarComponent},
-  {path: 'month', component: CalendarMonthComponent},
-  {path: 'week', component: CalendarWeekComponent},
-  {path: 'day', component: CalendarDayComponent}
+  {path: '', component: CalendarComponent,
+  children: [
+      {path: 'month', component: CalendarMonthComponent},
+      {path: 'week', component: CalendarWeekComponent},
+      {path: 'day', component: CalendarDayComponent}
+    ]
+  },
 ];
 
 @NgModule({
