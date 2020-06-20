@@ -98,6 +98,8 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
     this.inputData = data;
     if (data.quotation && data.feeStructureFlag) {
       if (this.quotationData == undefined) {
+        this.sendEmailFlag = data.sendEsignFlag
+        this.saveQuotationFlag = data.quotationFlag;
         this.getServicesForPlan(data);
         return;
       }

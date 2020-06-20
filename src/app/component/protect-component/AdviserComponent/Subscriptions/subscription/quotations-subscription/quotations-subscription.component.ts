@@ -271,6 +271,9 @@ export class QuotationsSubscriptionComponent implements OnInit {
   getQuotationsDataResponse(data) {
     this.isLoading = false;
     if (data && data.length > 0) {
+      data.forEach(element => {
+        element['sentDateInFormat'] = this.datePipe.transform((element.sentDate) ? element.sentDate : undefined, "dd/MM/yyyy");
+      });
       this.data = data;
       this.dataSource.data = data;
       this.dataSource.sort = this.sort;

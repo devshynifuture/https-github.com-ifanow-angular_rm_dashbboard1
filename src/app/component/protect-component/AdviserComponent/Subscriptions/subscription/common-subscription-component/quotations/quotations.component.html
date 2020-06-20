@@ -87,7 +87,8 @@
                         <th *matHeaderCellDef mat-header-cell mat-sort-header="sentDate"> Sent date</th>
                         <td *matCellDef="let element" mat-cell>
                             <div class="bar">
-                                {{element.sentDate | date:'dd/MM/yyyy'}}
+                                <span
+                                    *ngIf="!isLoading">{{(element.sentDateInFormat)?element.sentDateInFormat:'N/A'}}</span>
                             </div>
                         </td>
                     </ng-container>
