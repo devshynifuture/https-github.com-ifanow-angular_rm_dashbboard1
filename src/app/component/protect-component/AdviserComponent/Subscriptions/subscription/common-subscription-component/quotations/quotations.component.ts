@@ -47,7 +47,7 @@ export class QuotationsComponent implements OnInit {
   quotationDesign;
   dataCount;
   _clientData;
-  displayedColumns: string[] = ['checkbox', 'document', 'plan', 'date', 'sdate', 'cdate', 'status', 'send', 'icons'];
+  displayedColumns: string[] = ['checkbox', 'document', 'plan', 'date', 'sdate', 'status', 'send', 'icons'];
   changeEmail = 'footerChange';
   advisorId;
   data: Array<any> = [{}, {}, {}];

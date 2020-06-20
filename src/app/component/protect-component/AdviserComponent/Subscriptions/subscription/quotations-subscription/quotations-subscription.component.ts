@@ -48,7 +48,7 @@ export interface PeriodicElement {
 })
 export class QuotationsSubscriptionComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  displayedColumns: string[] = ['checkbox', 'name', 'docname', 'plan', 'cdate', 'sdate', 'clientsign', 'status', 'icons'];
+  displayedColumns: string[] = ['checkbox', 'name', 'docname', 'plan', 'cdate', 'sdate', 'status', 'icons'];
   advisorId;
   maxDate = new Date();
   noData: string;

@@ -96,14 +96,14 @@
                             </div>
                         </td>
                     </ng-container>
-                    <ng-container matColumnDef="cdate">
+                    <!-- <ng-container matColumnDef="cdate">
                         <th *matHeaderCellDef mat-header-cell mat-sort-header="signedDate"> Client consent date</th>
                         <td *matCellDef="let element" mat-cell>
                             <div class="bar">
                                 {{element.signedDate | date:'dd/MM/yyyy'}}
                             </div>
                         </td>
-                    </ng-container>
+                    </ng-container> -->
 
                     <ng-container matColumnDef="status">
                         <th *matHeaderCellDef class=" t-12" mat-header-cell mat-sort-header="status"> Status</th>
@@ -112,6 +112,7 @@
                                 <span *ngIf="element.status==1" class="text-success t-12 f-500 c-p ">READY TO
                                     SEND</span>
                                 <span *ngIf="element.status==0" class="text-success t-12 f-500 c-p ">NOT STARTED</span>
+                                <span *ngIf="element.status==2" class="text-success t-12 f-500 c-p ">SENT</span>
                             </div>
                         </td>
                     </ng-container>
@@ -119,8 +120,8 @@
                         <th *matHeaderCellDef mat-header-cell></th>
                         <td *matCellDef="let element" mat-cell>
                             <div *ngIf="isLoading==false" class="bar">
-                                <button (click)="openSendEmail(element)" class="btn-header btn-xs br-0 "
-                                    mat-stroked-button>SEND
+                                <button *ngIf="element.status==1" (click)="openSendEmail(element)"
+                                    class="btn-header btn-xs br-0 " mat-stroked-button>SEND
                                 </button>
                             </div>
                         </td>

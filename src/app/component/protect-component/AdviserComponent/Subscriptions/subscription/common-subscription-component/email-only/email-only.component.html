@@ -37,11 +37,13 @@
             <div class="col-md-11">
                 <mat-form-field class="heightAuto">
                     <mat-chip-list #chipListEmail>
-                        <mat-chip [removable]="true" *ngFor="let singleEmailId of emailIdList; let i = index" [selectable]="false" (removed)="removeEmailId(i)">
+                        <mat-chip [removable]="true" *ngFor="let singleEmailId of emailIdList; let i = index"
+                            [selectable]="false" (removed)="removeEmailId(i)">
                             {{singleEmailId.emailAddress}}
                             <mat-icon matChipRemove>cancel</mat-icon>
                         </mat-chip>
-                        <input [matChipInputFor]="chipListEmail" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="add($event)" [autofocus]="true">
+                        <input [matChipInputFor]="chipListEmail" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                            [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="add($event)" [autofocus]="true">
                     </mat-chip-list>
                 </mat-form-field>
             </div>
@@ -53,17 +55,19 @@
                 <p class="m-0 text-custom ">Subject</p>
             </div>
             <div class="col-md-9 pr-0">
-                <input [(ngModel)]="_inputData.subject" class="form-control" type="text" [readonly]="_inputData.subjectChange">
+                <input [(ngModel)]="_inputData.subject" class="form-control" type="text"
+                    [readonly]="_inputData.subjectChange">
             </div>
         </div>
 
         <div class="form-group mb-0 mt-8" *ngIf="!_inputData.bodyChange">
             <app-froala [(model)]="emailBody" modelChange="saveData($event)"></app-froala>
         </div>
-        <div *ngIf="_inputData.bodyChange" class="col-md-12 pl-0 pr-0 mt-16 pt-16 b-t" [innerHTML]="emailBody" style="min-height: 550px;"></div>
+        <div *ngIf="_inputData.bodyChange" class="col-md-12 pl-0 pr-0 mt-16 pt-16 b-t" [innerHTML]="emailBody"
+            style="min-height: 550px;"></div>
     </div>
 
-    <div class="row">
+    <div *ngIf="docObj" class="row">
         <div class="col-md-10">
             <div class="row">
                 <div class="col-md-12 ">
@@ -96,7 +100,8 @@
             </app-progress-button>
             <!-- <button (click)="sendEmail()" class="btn-primary br-0 mr-16" mat-stroked-button>Send</button> -->
             <!-- <button (click)="saveEmailTemplate()" class="btn-primary br-0" mat-stroked-button>Save template</button> -->
-            <app-progress-button (btnClick)="saveEmailTemplate()" class="br-0 text-inherit ml-12" [options]="barButtonOptions1">
+            <app-progress-button (btnClick)="saveEmailTemplate()" class="br-0 text-inherit ml-12"
+                [options]="barButtonOptions1">
             </app-progress-button>
         </div>
     </div>
