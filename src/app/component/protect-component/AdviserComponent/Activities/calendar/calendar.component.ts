@@ -40,7 +40,9 @@ export class CalendarComponent implements OnInit {
   userInfo: any;
   currentYear: any;
   excessAllow: any;
-  constructor(public dialog: MatDialog, private calenderService: calendarService) { }
+  constructor(public dialog: MatDialog, private calenderService: calendarService) {
+    
+   }
 
   ngOnInit() {
     this.currentMonth = new Date().getMonth();
@@ -48,42 +50,42 @@ export class CalendarComponent implements OnInit {
     this.viewDate = new Date();
     this.userInfo = AuthService.getUserInfo()
     this.updatecalendar();
-    this.getEvent();
+    // this.getEvent();
     this.curruntDayIndex = this.daysArr.indexOf(this.todayDate);
 
     this.excessAllow = localStorage.getItem('successStoringToken')
   }
 
-  getEvent() {
-    let eventData = {
-      "calendarId": AuthService.getUserInfo().userName,
-      "userId": AuthService.getUserInfo().advisorId
-    }
-    this.calenderService.getEvent(eventData).subscribe((data) => {
+  // getEvent() {
+  //   let eventData = {
+  //     "calendarId": AuthService.getUserInfo().userName,
+  //     "userId": AuthService.getUserInfo().advisorId
+  //   }
+  //   this.calenderService.getEvent(eventData).subscribe((data) => {
       
-      if (data != undefined) {
+  //     if (data != undefined) {
         
-        this.eventData = data;
+  //       this.eventData = data;
         
-        console.log(data,"events calender",this.eventData);
-        this.formatedEvent = [];
+  //       console.log(data,"events calender",this.eventData);
+  //       this.formatedEvent = [];
         
-        for (let e of this.eventData) {
-          if(e.start){
-            e["day"] = this.formateDate(!e.start.dateTime? new Date(e.created): new Date(e.start.dateTime));
-            e["month"] = this.formateMonth(!e.start.dateTime ?new Date(e.created) : new Date(e.start.dateTime));
-            e["year"] = this.formateYear(!e.start.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
-            e["startTime"] = this.formateTime(!e.start.dateTime? new Date(e.created) : new Date(e.start.dateTime));
-            e["endTime"] = this.formateTime(!e.end.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
-            this.formatedEvent.push(e);
-            console.log(this.formatedEvent,"formatedEvent calender1",);
-          }
-        }
-      }
-    });
+  //       for (let e of this.eventData) {
+  //         if(e.start){
+  //           e["day"] = this.formateDate(!e.start.dateTime? new Date(e.created): new Date(e.start.dateTime));
+  //           e["month"] = this.formateMonth(!e.start.dateTime ?new Date(e.created) : new Date(e.start.dateTime));
+  //           e["year"] = this.formateYear(!e.start.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
+  //           e["startTime"] = this.formateTime(!e.start.dateTime? new Date(e.created) : new Date(e.start.dateTime));
+  //           e["endTime"] = this.formateTime(!e.end.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
+  //           this.formatedEvent.push(e);
+  //           console.log(this.formatedEvent,"formatedEvent calender1",);
+  //         }
+  //       }
+  //     }
+  //   });
 
 
-  }
+  // }
 
   getDaysCount(month: number, year: number, ch: string): any {
     switch (ch) {
@@ -97,7 +99,7 @@ export class CalendarComponent implements OnInit {
   }
 
   curruntDayIndex: any;
-
+presentCalendar:any = [];
   updatecalendar() {
     this.month = this.viewDate.getMonth();
     this.year = this.viewDate.getFullYear();
@@ -129,12 +131,25 @@ export class CalendarComponent implements OnInit {
       this.daysArr.push(fd);
     }
 
+    this.presentCalendar=[this.daysArr,
+    {
+      month:this.month,
+      year:this.year,
+      todayDate: this.todayDate,
+      numbersOfDays: this.numbersOfDays,
+      lastMonthDays: this.lastMonthDays,
+      nextMonthDays :this.nextMonthDays,
+      viewDate :this.viewDate,
+      addLastMonthDays : this.addLastMonthDays
+    }]
 
-
+    this.calenderService.getDayArr(this.presentCalendar);
   }
 
   persentMonth() {
     this.viewDate = new Date();
+    this.daysArr = [];
+    this.updatecalendar();
   }
 
   nextMonth() {

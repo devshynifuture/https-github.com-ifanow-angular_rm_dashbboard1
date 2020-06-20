@@ -9,6 +9,7 @@ import { CalendarMonthComponent } from './calendar-month/calendar-month.componen
 const routes: Routes = [
   {path: '', component: CalendarComponent,
   children: [
+      {path: '', component: CalendarMonthComponent},
       {path: 'month', component: CalendarMonthComponent},
       {path: 'week', component: CalendarWeekComponent},
       {path: 'day', component: CalendarDayComponent}
