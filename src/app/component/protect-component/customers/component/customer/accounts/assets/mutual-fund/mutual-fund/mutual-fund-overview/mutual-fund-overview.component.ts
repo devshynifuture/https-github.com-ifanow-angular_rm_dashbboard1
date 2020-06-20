@@ -18,6 +18,7 @@ import { WebworkerService } from 'src/app/services/web-worker.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { SettingsService } from 'src/app/component/protect-component/AdviserComponent/setting/settings.service';
 import { DatePipe } from '@angular/common';
+import { RightFilterDuplicateComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
 
 
 @Component({
@@ -807,7 +808,7 @@ export class MutualFundOverviewComponent implements OnInit {
       data: {},
       id: 1,
       state: 'open35',
-      componentName: RightFilterComponent
+      componentName: RightFilterDuplicateComponent
     };
     // fragmentData.data = {
     //   name: 'Overview Report',

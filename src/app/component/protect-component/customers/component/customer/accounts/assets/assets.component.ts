@@ -123,7 +123,7 @@ export class AssetsComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
     this.getAssetCountGLobalData();
-    this.stateOfPanel.mode = 'side';
+    // this.stateOfPanel.mode = 'side';
     this.stateOfPanel.open();
     this.route.queryParams.subscribe((params) => {
       if (params.tab) {
