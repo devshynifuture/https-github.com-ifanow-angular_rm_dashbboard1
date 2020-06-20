@@ -30,7 +30,15 @@
       box-shadow: 5px 1px 10px rgba(0, 0, 0, 0.2), 3px 4px 5px rgba(0, 0, 0, 0.12), 2px 2px 4px rgba(0, 0, 0, 0.14);
     }
   }
+  .sub-rounded-primary {
+    border-radius: 50%;
+    height: 20px;
+    width: 20px;
 
+    color: #06070f !important;
+    background: rgb(180, 214, 240);
+    cursor: pointer;
+  }
   .rounded-primary {
     border-radius: 50%;
     height: 20px;
@@ -40,6 +48,8 @@
     background: #008FFF;
     cursor: pointer;
   }
+
+  
 }
 
 // ::ng-deep .mat-button-toggle-appearance-standard .mat-button-toggle-label-content {

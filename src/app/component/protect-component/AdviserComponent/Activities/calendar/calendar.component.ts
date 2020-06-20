@@ -3,6 +3,7 @@ import { MatDialog} from '@angular/material/dialog';
 import { calendarService } from './calendar.service';
 import { AuthService } from '../../../../../auth-service/authService';
 import { EventDialog } from './event-dialog';
+import { Router } from '@angular/router';
 
 
 export interface DialogData {
@@ -23,9 +24,12 @@ export class CalendarComponent implements OnInit {
   lastMonthDays: any;
   nextMonthDays: any;
   updateDate: any;
+  day;
+  todays;
   month;
   year;
-  todayDate;
+  selectedDate;
+  todaysDate;
   dialogData: any
   currentMonth;
   addLastMonthDays;
@@ -40,7 +44,7 @@ export class CalendarComponent implements OnInit {
   userInfo: any;
   currentYear: any;
   excessAllow: any;
-  constructor(public dialog: MatDialog, private calenderService: calendarService) {
+  constructor(public dialog: MatDialog, private calenderService: calendarService, private router: Router) {
     
    }
 
@@ -49,10 +53,12 @@ export class CalendarComponent implements OnInit {
     this.currentYear = new Date().getFullYear();
     this.viewDate = new Date();
     this.userInfo = AuthService.getUserInfo()
+    this.todaysDate = this.formateDate(new Date());
     this.updatecalendar();
     // this.getEvent();
-    this.curruntDayIndex = this.daysArr.indexOf(this.todayDate);
-
+    this.curruntDayIndex = this.daysArr.indexOf(this.selectedDate);
+    console.log(this.router.url,"router test");
+    
     this.excessAllow = localStorage.getItem('successStoringToken')
   }
 
@@ -98,12 +104,15 @@ export class CalendarComponent implements OnInit {
 
   }
 
+  
+
+  
   curruntDayIndex: any;
 presentCalendar:any = [];
   updatecalendar() {
     this.month = this.viewDate.getMonth();
     this.year = this.viewDate.getFullYear();
-    this.todayDate = this.viewDate.getDate();
+    this.selectedDate = this.viewDate.getDate();
     // this.numbersOfDays = this.daysInMonth(this.month, this.year)
     this.numbersOfDays = this.getDaysCount(this.month, this.year, "currentMonthDays");
     this.lastMonthDays = this.getDaysCount(this.month, this.year, "lastMonthDays");
@@ -133,9 +142,10 @@ presentCalendar:any = [];
 
     this.presentCalendar=[this.daysArr,
     {
+      // day:this.formateDate(this.viewDate),
       month:this.month,
       year:this.year,
-      todayDate: this.todayDate,
+      selectedDate: this.selectedDate,
       numbersOfDays: this.numbersOfDays,
       lastMonthDays: this.lastMonthDays,
       nextMonthDays :this.nextMonthDays,
@@ -150,21 +160,44 @@ presentCalendar:any = [];
     this.viewDate = new Date();
     this.daysArr = [];
     this.updatecalendar();
+    
   }
 
   nextMonth() {
-    this.viewDate = new Date(this.viewDate.setMonth(this.viewDate.getMonth() + 1))
+    switch (this.router.url) {
+      case '/admin/activies/day':
+        this.viewDate = new Date(this.viewDate.setDate(this.viewDate.getDate() + 1))
+        break;
+      case '/admin/activies/week':
+        this.viewDate = new Date(this.viewDate.setDate(this.viewDate.getDate() + 7))
+        break;
+      case '/admin/activies/month':
+        this.viewDate = new Date(this.viewDate.setMonth(this.viewDate.getMonth() + 1))
+        break;
+    }
+    // this.viewDate = new Date(this.viewDate.setMonth(this.viewDate.getMonth() + 1))
     this.daysArr = [];
     // if(this.currentMonth != this.month){
     //   this.curruntDayIndex = 41;
     // }else{
-    //   this.curruntDayIndex = this.daysArr.indexOf(this.todayDate);
+    //   this.curruntDayIndex = this.daysArr.indexOf(this.selectedDate);
     // }
     this.updatecalendar();
   }
 
   lastMonth() {
-    this.viewDate = new Date(this.viewDate.setMonth(this.viewDate.getMonth() - 1))
+    switch (this.router.url) {
+      case '/admin/activies/day':
+        this.viewDate = new Date(this.viewDate.setDate(this.viewDate.getDate() - 1))
+        break;
+      case '/admin/activies/week':
+        this.viewDate = new Date(this.viewDate.setDate(this.viewDate.getDate() - 7))
+        break;
+      case '/admin/activies/month':
+        this.viewDate = new Date(this.viewDate.setMonth(this.viewDate.getMonth() - 1))
+        break;
+    }
+    // this.viewDate = new Date(this.viewDate.setMonth(this.viewDate.getMonth() - 1))
     this.daysArr = [];
     this.updatecalendar();
   }
