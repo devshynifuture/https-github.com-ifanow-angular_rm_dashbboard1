@@ -1,3 +1,11 @@
 .heightAuto {
-  height: auto !important;
+    height: auto !important;
+}
+
+::ng-deep .fr-box.fr-basic .fr-wrapper {
+    margin-bottom: 0px !important;
+}
+
+.custom-email {
+    margin-bottom: 120px;
 }
