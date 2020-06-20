@@ -9,7 +9,7 @@ import { ClientDocumentsComponent } from './documents/documents.component';
 import { ClientQuotationsComponent } from './client-quotations/client-quotations.component';
 
 const routes: Routes = [{
-  path: '', 
+  path: '',
   component: OverviewSubscriptionComponent,
   children: [
     {
@@ -32,6 +32,11 @@ const routes: Routes = [{
       path: 'quotations',
       component: ClientQuotationsComponent
     },
+    {
+      path: '',
+      redirectTo: 'subscriptions',
+      pathMatch: 'full'
+    }
   ]
 }];
 
