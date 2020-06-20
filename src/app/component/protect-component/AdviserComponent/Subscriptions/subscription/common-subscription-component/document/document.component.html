@@ -409,7 +409,7 @@
             </div>
         </div>
 
-        <div class="row" *ngIf="dataSource.data.length == 0">
+        <div class="row" *ngIf="dataSource.data.length == 0 && isAdvisor">
             <div class="col-md-12 d-flex align-items-center flex-column justify-content-center h-100vh">
                 <!-- <img class="width200" src="assets/images/svg/no-data-found.svg">
                 <p class="f-22 f-600 pt-28"> No Data Found </p> -->
@@ -429,6 +429,15 @@
                     ADD DOCUMENTS </button>
             </div>
         </div>
+        
+
+        <div class="row" *ngIf="dataSource.data.length == 0 && !isAdvisor">
+            <div class="col-md-12 d-flex align-items-center flex-column justify-content-center h-100vh">
+                <img class="width200" src="assets/images/svg/add-documents-img.svg">
+                <p class="f-22 f-600 pt-28"> No data found </p>
+            </div>
+        </div>
+        
 
         <div *ngIf="documentDesign=='completeSteps'">
             <button>CLOSE</button>
