@@ -314,23 +314,23 @@
     </div>
     <div *ngIf="showRecord==false && feeCalc==false" class="row pt-72">
         <div class="col-md-6 text-custom ">
-            <img matTooltip="Edit" *ngIf="storeData.status != 1" (click)="editInvoice()" class="c-p"
+            <img matTooltip="Edit" *ngIf="storeData.isAdvisor && storeData.status != 1" (click)="editInvoice()" class="c-p"
                 src="assets/images/svg/pencil.svg">
-            <img matTooltip="Email" (click)="openSendEmail('upper')" class="b-a c-p"
+            <img matTooltip="Email" (click)="openSendEmail('upper')" class="b-a c-p" *ngIf="storeData.isAdvisor"
                 src="assets/images/svg/mail-light.svg">
             <img matTooltip="Download PDF" class="b-a c-p" src="assets/images/svg/pdf-icons.svg">
             <img matTooltip="Print" (click)="printPage(invoiceTemplate)" class="b-a c-p"
                 src="assets/images/svg/printer.svg">
-            <img matTooltip="Delete" (click)="deleteModal('INVOICE',element)" class="b-a wrapper-9 ml-8 c-p"
+            <img matTooltip="Delete" (click)="deleteModal('INVOICE',element)" class="b-a wrapper-9 ml-8 c-p" *ngIf="storeData.isAdvisor"
                 src="assets/images/svg/delete.svg">
         </div>
-        <div class="right text-right" [ngClass]="storeData.status !=1? 'col-md-4' : 'col-md-5'">
+        <div class="right text-right" [ngClass]="storeData.status !=1? 'col-md-4' : 'col-md-5'" *ngIf="storeData.isAdvisor">
             <button (click)="recordPayment()" class="btn-primary br-0 mb-8" *ngIf="rpyment==true"
                 mat-stroked-button>RECORD
                 PAYMENT
             </button>
         </div>
-        <div class="col-md-2 right text-right pl-0" *ngIf="storeData.status!=1">
+        <div class="col-md-2 right text-right pl-0" *ngIf="storeData.isAdvisor && storeData.status!=1">
             <mat-form-field>
                 <mat-select (selectionChange)="addStatus(storeData,$event)" [(ngModel)]="moreStatus"
                     class="form-control br-0" id="sel1">

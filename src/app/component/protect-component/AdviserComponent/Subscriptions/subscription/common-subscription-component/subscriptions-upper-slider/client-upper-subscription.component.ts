@@ -140,11 +140,9 @@ export class ClientUpperSubscriptionComponent implements OnInit {
   }
 
   Open(state, data) {
-    if (!this.isAdvisor) {
-      return;
-    }
     let feeMode;
     let component;
+    data.isAdvisor = this.isAdvisor;
     data.isCreateSub = true;
     (data.subscriptionPricing.feeTypeId == 1) ? feeMode = 'fixedModifyFees' : feeMode = 'variableModifyFees';
     (data.subscriptionPricing.feeTypeId == 1) ? component = FixedFeeComponent : component = VariableFeeComponent;
