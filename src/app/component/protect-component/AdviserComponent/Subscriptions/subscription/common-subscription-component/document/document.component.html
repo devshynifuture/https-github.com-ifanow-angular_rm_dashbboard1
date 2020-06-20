@@ -210,7 +210,7 @@
         </div>-->
 
         <div *ngIf="dataSource.data.length > 0">
-            <div class="bg-white pt-60">
+            <div class="bg-white mt-60">
                 <div class="wrapper-20 pt-130" *ngIf="isAdvisor">
                     <div class="row">
                         <div class="col-md-12 p-0">
@@ -222,7 +222,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="wrapper-40 pt-0 pr-20" *ngIf="isAdvisor" [ngClass]="{'wrapper-40': isAdvisor, 'p-0': !isAdvisor}">
+                <div class="wrapper-40 pt-0 pr-20 " [ngClass]="{'wrapper-40 pr-20': isAdvisor, 'pl-16 pr-16 ': !isAdvisor}">
                     <div class="row">
                         <div class="col-md-10 p-0">
                             <div class="row" *ngIf="isAdvisor">
