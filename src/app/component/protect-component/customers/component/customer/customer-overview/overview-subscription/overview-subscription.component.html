@@ -2,22 +2,28 @@
     <div class="row">
         <div class="col-md-2 pt-8 pb-20 pl-0 pr-0  bg-grey lter">
             <ul class="vertical-menu ">
-                <li [routerLink]="['subscriptions']" routerLinkActive="activeClass">
+                <li class="c-p" [routerLink]="['subscriptions']" routerLinkActive="activeClass">
                     <img class="mr-8" src="/assets/images/svg/key-info-icon.svg"> Subscriptions
                 </li>
-                <li [routerLink]="['settings']" routerLinkActive="activeClass">
-                    <img class="mr-8" src="/assets/images/svg/key-info-icon.svg"> Settings
+                <li class="c-p" [routerLink]="['quotations']" routerLinkActive="activeClass">
+                    <img class="mr-8" src="/assets/images/svg/people.svg"> Quotations
                 </li>
-                <li [routerLink]="['invoices']" routerLinkActive="activeClass">
-                    <img class="mr-8" src="/assets/images/svg/key-info-icon.svg"> Invoices
+                <li class="c-p" [routerLink]="['invoices']" routerLinkActive="activeClass">
+                    <img class="mr-8" src="/assets/images/svg/speed-meter-icon.svg"> Invoices
                 </li>
-                <li [routerLink]="['documents']" routerLinkActive="activeClass">
-                    <img class="mr-8" src="/assets/images/svg/key-info-icon.svg"> Documents
+
+                <li class="c-p" [routerLink]="['documents']" routerLinkActive="activeClass">
+                    <img class="mr-8" src="/assets/images/svg/speed-meter-icon.svg"> Documents
                 </li>
+
+                <li class="c-p" [routerLink]="['settings']" routerLinkActive="activeClass">
+                    <img class="mr-8" src="/assets/images/svg/speed-meter-icon.svg"> Settings
+                </li>
+
             </ul>
         </div>
 
-        <div class="col-md-9" *ngIf="!isLoading">
+        <div class="col-md-10" *ngIf="!isLoading">
             <router-outlet></router-outlet>
         </div>
     </div>

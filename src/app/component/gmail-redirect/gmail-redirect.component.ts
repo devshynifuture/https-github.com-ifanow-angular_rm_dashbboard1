@@ -34,7 +34,7 @@ export class GmailRedirectComponent implements OnInit {
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
-    this.emailId = AuthService.getUserInfo().emailId;
+    this.emailId = AuthService.getUserInfo().userName;
     this.route.queryParams
       .subscribe(params => {
 
@@ -78,6 +78,8 @@ export class GmailRedirectComponent implements OnInit {
 
     this.httpService.post(apiConfig.GMAIL_URL + appConfig.ACCESS_TOKEN_SAVE, data).subscribe(
       response => {
+        console.log("successStoringToken");
+        
         localStorage.setItem("successStoringToken", "true");
         this.isSuccess = true;
         window.close();

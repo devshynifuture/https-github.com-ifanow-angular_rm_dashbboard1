@@ -84,8 +84,7 @@
                         </mat-expansion-panel>
                     </mat-accordion> -->
 
-                    <a class="sidenav-link" [ngClass]="getActiveLink('emails') ? 'bg-grey lter': ''" mat-list-item
-                        routerLink="./emails/inbox/google-connect">
+                    <a class="sidenav-link" [ngClass]="getActiveLink('emails') ? 'bg-grey lter': ''" mat-list-item routerLink="./emails/inbox/google-connect">
                         <img src="assets/images/svg/mail.svg">
                         <span *ngIf="showTabs" class="title" mat-line>Email</span>
                     </a>
@@ -146,7 +145,7 @@
                                 <span *ngIf="showTabs" class="title" mat-line>Opportunities</span>
                             </a> -->
                             <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/activies/calendar">
-                                <span *ngIf="showTabs" class="title" mat-line>calendar</span>
+                                <span *ngIf="showTabs" class="title" mat-line>Calendar</span>
                             </a>
                         </mat-expansion-panel>
                     </mat-accordion>

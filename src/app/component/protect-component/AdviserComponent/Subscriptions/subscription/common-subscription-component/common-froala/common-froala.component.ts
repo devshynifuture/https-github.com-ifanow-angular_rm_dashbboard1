@@ -32,17 +32,18 @@ export class CommonFroalaComponent implements OnInit {
   }
 }
 */
-import {AfterViewInit, Component, ElementRef, forwardRef, Input, OnInit, ViewChild} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog} from '@angular/material';
-import {SubscriptionService} from '../../../subscription.service';
-import {escapeRegExp, UtilService} from 'src/app/services/util.service';
-import {EmailOnlyComponent} from '../email-only/email-only.component';
-import {AuthService} from '../../../../../../../auth-service/authService';
-import {PdfService} from '../../../../../../../services/pdf.service';
+import { AfterViewInit, Component, ElementRef, forwardRef, Input, OnInit, ViewChild } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
+import { SubscriptionService } from '../../../subscription.service';
+import { escapeRegExp, UtilService } from 'src/app/services/util.service';
+import { EmailOnlyComponent } from '../email-only/email-only.component';
+import { AuthService } from '../../../../../../../auth-service/authService';
+import { PdfService } from '../../../../../../../services/pdf.service';
+import { SubscriptionDataService } from '../../../subscription-data.service';
 // import { escapeRegExp } from '';
 
 // import html2canvas from 'html2canvas';
@@ -74,9 +75,12 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
     read: ElementRef,
     static: false
   }) renderElement: ElementRef;
+  feeStructureHtmlData: string;
+  quotationData: any;
 
   constructor(public subscription: SubscriptionService, public subInjectService: SubscriptionInject,
-    public eventService: EventService, public dialog: MatDialog) {
+    public eventService: EventService, public dialog: MatDialog, private utilService: UtilService,
+    private subDataService: SubscriptionDataService) {
     this.advisorId = AuthService.getAdvisorId();
     // this.dataSub = this.subInjectService.singleProfileData.subscribe(
     //   data=>this.getcommanFroalaData(data)
@@ -90,7 +94,14 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
   @Input()
   set data(data) {
     this.inputData = data;
-    this.getcommanFroalaData(data);
+    if (data.quotation && data.feeStructureFlag) {
+      if (this.quotationData == undefined) {
+        this.getServicesForPlan(data);
+        return;
+      }
+      return;
+    }
+    this.getcommanFroalaData(data, null);
   }
 
   get data() {
@@ -117,15 +128,28 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
     }
   }
 
-  getcommanFroalaData(data) {
+  getcommanFroalaData(data, feeStructureTableData) {
     this.storeData = data;
-    let d = new Date();
-    this.storeData.documentText = this.storeData.documentText.replace(new RegExp(escapeRegExp('$(customer_name)'), 'g'),
-      this.storeData.clientName);
-    this.storeData.documentText = this.storeData.documentText.replace(new RegExp(escapeRegExp('$(plan_name)'), 'g'),
-      this.storeData.planName);
-    this.storeData.documentText = this.storeData.documentText.replace(new RegExp(escapeRegExp(' $(date)'), 'g'),
-      d.getDate() + "/" + d.getMonth() + 1 + "/" + d.getFullYear());
+    const obj =
+    {
+      clientName: this.storeData.clientName,
+      clientAddress: '',
+      advisorName: AuthService.getUserInfo().name,
+      advisorAddress: ''
+    }
+    this.storeData.documentText = this.utilService.replacePlaceholder(this.storeData.documentText, obj);
+    if (feeStructureTableData) {
+      this.storeData.documentText = this.storeData.documentText.replace(new RegExp(escapeRegExp('$service_fee'), 'g'),
+        feeStructureTableData)
+      this.storeData.documentText.replace(new RegExp('undefined'), 'g', '');
+    }
+    // let d = new Date();
+    // this.storeData.documentText = this.storeData.documentText.replace(new RegExp(escapeRegExp('$(customer_name)'), 'g'),
+    //   this.storeData.clientName);
+    // this.storeData.documentText = this.storeData.documentText.replace(new RegExp(escapeRegExp('$(plan_name)'), 'g'),
+    //   this.storeData.planName);
+    // this.storeData.documentText = this.storeData.documentText.replace(new RegExp(escapeRegExp(' $(date)'), 'g'),
+    // d.getDate() + "/" + d.getMonth() + 1 + "/" + d.getFullYear());
   }
 
   Close(data, flag) {
@@ -353,11 +377,11 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
       clientData: this.storeData,
       templateType: this.templateType, // 2 is for quotation
       documentList: [this.storeData],
-      showfromEmail :(this.inputData.showfromEmail == true)? true:false,
-      fromEmailId : this.inputData.fromEmail,
-      subject:this.inputData.subject,
-      id:this.inputData.id,
-      emailTemplateTypeId:this.inputData.emailTemplateTypeId
+      showfromEmail: (this.inputData.showfromEmail == true) ? true : false,
+      fromEmailId: this.inputData.fromEmail,
+      subject: this.inputData.subject,
+      id: this.inputData.id,
+      emailTemplateTypeId: this.inputData.emailTemplateTypeId
     };
     // this.dataSource.forEach(singleElement => {
     //   if (singleElement.selected) {
@@ -395,4 +419,131 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
     }
 
   }
+
+  createQuotation() {
+    const obj =
+    {
+      "planId": this.storeData.planId,
+      "documentRepositoryId": this.storeData.documentRepositoryId,
+      "clientId": this.storeData.clientId,
+      "advisorId": this.advisorId,
+      "documentText": this.storeData.documentText
+    }
+    this.subscription.createQuotation(obj).subscribe(
+      data => {
+        this.eventService.openSnackBar("Quotation added sucessfully", "Dismiss");
+        this.Close('close', true)
+      },
+      err => {
+        this.eventService.openSnackBar(err, "Dismiss");
+      }
+    )
+  }
+
+  getServicesForPlan(quotationData) {
+    this.quotationData = quotationData;
+    const obj =
+    {
+      advisorId: this.advisorId,
+      planId: quotationData.planId
+    }
+    this.subscription.getSettingPlanServiceData(obj).subscribe(
+      responseData => {
+        if (responseData && responseData.length > 0) {
+          console.log(responseData);
+          this.createFeeStructureForFroala(responseData, quotationData);
+        }
+      }
+    )
+  }
+
+
+  createFeeStructureForFroala(responseData, quotationData) {
+    responseData.forEach(element => {
+      this.feeStructureHtmlData;
+
+      let feeStructureTable = `<div class="hide">
+<table style="width: 100%; margin: 0px auto; border: 1px solid rgba(0, 0, 0, 0.12);" align="center">
+   <tr>
+       <td>
+           <table style="width: 100%; background: #F5F7F7; ">
+               <tr>
+                   <td style="padding: 28px 22px; border: none;">
+                       <h3 style="margin: 0px; font-size: 24px;">${element.serviceName}</h3>
+                       <h5 style="margin: 0px; font-size: 16px;">${element.serviceCode}</h5>
+                   </td>
+               </tr>
+           </table>
+       </td>
+   </tr>
+   <tr>
+       <td>
+           <table style="width: 100%; ">
+               <tr>
+                   <td style="padding: 24px; border: none;">
+                       <p style="font-size: 12px; margin:0px;">BILLING NATURE</p>
+                       <h4 style="margin: 0px; padding: 0px; font-size: 18px;">${(element.servicePricing.billingNature == 1) ? 'Recurring' : 'Once'}</h4>
+                   </td>
+
+                   <td style="padding: 24px; border: none;">
+                       <p style="font-size: 12px; margin:0px;">BILLING MODE</p>
+                       <h4 style="margin: 0px; padding: 0px; font-size: 18px;">${(element.servicePricing.billingMode == 1) ? 'Start Of Period' : 'End Of Period'}</h4>
+                   </td>
+
+                   <td style="padding: 24px; border: none;">
+                       <p style="font-size: 12px; margin:0px;">FEES</p>
+                       <h4 style="margin: 0px; padding: 0px; font-size: 18px;">${(element.servicePricing.feeTypeId == 1) ? '' : ''}${element.averageFees}${(element.servicePricing.feeTypeId == 2) ? '%' : ''}</h4>
+                   </td>
+               </tr>
+           </table>
+       </td>
+   </tr>
+   <tr>
+       <td>
+           <table style="width: 100%;">
+               <tr>
+                   <td style="padding: 24px; border: none; width: 50%; vertical-align: top; border: none;">
+                       <p style="font-size: 12px; margin:0px;">DESCRIPTION</p>
+                       <h4 style="margin: 0px; padding: 0px; font-size: 18px;">${(element.description) ? element.description : 'N/A'}</h4>
+                   </td>
+               ${(element.servicePricing.feeTypeId == 2) ? `<td style="padding: 24px; border: none;">
+                       <p style="font-size: 12px; margin:0px;">VARIABLE FEE DETAILS </p>
+                       <h4 style="margin: 0px; padding: 0px; font-size: 18px;">Mutual Funds </h4>
+                       <table style="width: 100%;   background: #F5F7F7;">
+                           <tr>
+                               <td colspan="3" style="   text-align: center; padding: 10px;">
+                                   Direct</td>
+                               <td colspan="3" style="  padding: 10px;  text-align: center;">
+                                   Regular</td>
+                           </tr>
+                           <tr>
+                               <td style="padding: 5px;">Equity</td>
+                               <td style="padding: 5px;">Debt</td>
+                               <td style="padding: 5px;">Liquid</td>
+                               <td style="padding: 5px;">Equity</td>
+                               <td style="padding: 5px;">Debt</td>
+                               <td style="padding: 5px;">Liquid</td>
+                           </tr>
+                           <tr>
+                               <td style="padding: 5px;">${element.servicePricing.pricingList[0].equityAllocation}%</td>
+                               <td style="padding: 5px;">${element.servicePricing.pricingList[0].debtAllocation}%</td>
+                               <td style="padding: 5px;">${element.servicePricing.pricingList[0].liquidAllocation}%</td>
+                               <td style="padding: 5px;">${element.servicePricing.pricingList[1].equityAllocation}%</td>
+                               <td style="padding: 5px;">${element.servicePricing.pricingList[1].debtAllocation}%</td>
+                               <td style="padding: 5px;">${element.servicePricing.pricingList[1].liquidAllocation}%</td>
+                           </tr>
+                       </table>
+                   </td>
+                   </tr>`: ''}
+           </table>
+       </td>
+   </tr>
+</table>
+<br>
+</div>`;
+      this.feeStructureHtmlData += feeStructureTable;
+    });
+    this.getcommanFroalaData(quotationData, this.feeStructureHtmlData)
+  }
+
 }

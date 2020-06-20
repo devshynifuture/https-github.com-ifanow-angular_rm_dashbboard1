@@ -33,6 +33,8 @@ export class BulkCapitalGainSummaryComponent implements OnInit, AfterViewInit {
   userInfo: any;
   clientId: any;
   getObj: any;
+  datakaySangu: any;
+  triggerBack: any;
 
   constructor(
     public mfService: MfServiceService,
@@ -59,10 +61,13 @@ export class BulkCapitalGainSummaryComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.triggerBack = this.sendData
+    console.log('dokyala tap ahe hya data cha',this.triggerBack)
     this.reportDate = new Date();
     this.fragmentData = {};
     this.getUploadData();
     this.fragmentData.isSpinner = true;
+    this.getObj.sendData  = this.sendData
     this.mfService.getCapitalSummary()
       .subscribe(res => {
         this.getObj = res; // used for getting mutual fund data coming from main gain call
@@ -103,11 +108,11 @@ export class BulkCapitalGainSummaryComponent implements OnInit, AfterViewInit {
     const para = document.getElementById('template');
     const obj = {
       htmlInput: para.innerHTML,
-      name: 'Capital_Gain_Summary`s' + this.clientData.name,
+      name: 'Capital_Gain_Summary`s',
       landscape: true,
       key: 'showPieChart',
       svg: '',
-      clientId: this.sendData.clientId,
+      clientId: this.triggerBack.clientId,
       advisorId: AuthService.getAdvisorId(),
       fromEmail: 'devshyni@futurewise.co.in',
       toEmail: 'devshyni@futurewise.co.in'

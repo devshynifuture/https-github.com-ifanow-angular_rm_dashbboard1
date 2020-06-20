@@ -41,6 +41,7 @@ export class ClientSubscriptionComponent implements OnInit {
   }
 
   @Input() upperData: any;
+  @Input() isAdvisor = true;
 
   displayedColumns: string[] = ['name', 'email', 'num', 'balance'];
   advisorId;

@@ -134,6 +134,9 @@ export class InvoiceComponent implements OnInit {
 
   @Input()
   set data(data) {
+    if(data.isAdvisor == undefined || data.isAdvisor == null) {
+      data.isAdvisor = true;
+    }
     this.inputData = data;
     this.getInvoiceData(data);
     this.getRecordPayment(data);

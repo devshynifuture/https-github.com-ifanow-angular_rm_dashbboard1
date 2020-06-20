@@ -51,6 +51,8 @@ export class TermsAgreementComponent implements OnInit {
   advisorId: () => any;
   serviceData: any;
   @Output() changePlanData = new EventEmitter();
+  placeholderList: any;
+  placeHolderLoader: boolean;
 
   constructor(private route: Router, public subInjectService: SubscriptionInject, public dialog: MatDialog,
     public subService: SubscriptionService, private eventService: EventService, private render: Renderer2,
@@ -73,6 +75,7 @@ export class TermsAgreementComponent implements OnInit {
   set upperData(upperData) {
     this._upperData = upperData;
     this.isRefresh = false
+    this.getDocumentPlaceholderList(upperData.documentData)
     this.getDataTerms(upperData);
     if (upperData && upperData.documentData) {
       // this.changeDisplay();
@@ -108,7 +111,22 @@ export class TermsAgreementComponent implements OnInit {
     this.eventService.changeUpperSliderState({ state: 'close' });
 
   }
-
+  getDocumentPlaceholderList(data) {
+    this.placeHolderLoader = true
+    const obj =
+    {
+      availableAt: data.availableAt,
+      documentTypeId: data.documentTypeId
+    }
+    this.subService.getDocumentPlaceholder(obj).subscribe(
+      data => {
+        if (data) {
+          this.placeHolderLoader = false
+          this.placeholderList = data
+        }
+      }
+    )
+  }
   getPlanServiceData() {
     const obj = {
       // advisorId: 12345,

@@ -27,19 +27,19 @@
             <p class="text-primary m-0 pt-8 text-right c-p roboto">How to use?</p>
           </div>
         </div>
-        <div class="wrapper-16 pb-0">
+        <div *ngFor="let singlePlaceholder of placeholderList" class="wrapper-16 pb-0">
           <div class="row b-a mb-16">
             <div class="col-md-12 p-0">
               <div class="bg-grey lter wrapper-12 pt-16">
-                <p class="m-0 text-black">Agreement date</p>
+                <p class="m-0 text-black">{{singlePlaceholder.name}}</p>
               </div>
-              <div class="bg-white wrapper-12" cdkDrag>
-                <p class="m-0 text-black">agreement-date</p>
+              <div (click)="copyName($event)" class="bg-white wrapper-12" cdkDrag>
+                <p class="m-0 text-black">{{singlePlaceholder.value}}</p>
               </div>
             </div>
           </div>
         </div>
-        <div class="wrapper-16 pb-0">
+        <!-- <div class="wrapper-16 pb-0">
           <div class="row b-a">
             <div class="col-md-12 p-0">
               <div class="bg-grey lter wrapper-12 pt-16">
@@ -62,7 +62,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
         <div *ngIf="_upperData.documentData.planName!=undefined" class="wrapper-16 pt-0 pb-0">
           <h5 class="m-0 pt-20 pb-12 text-black">{{_upperData.documentData.planName}}</h5>
           <div *ngFor="let singleService of serviceData" class="row b-a">
@@ -110,7 +110,7 @@
         </div>
         <div class="col-md-3 p-0">
           <!-- <button mat-button class="btn-bottom br-0 text-inherit" (click)="updateData(dataTerms)">SAVE</button> -->
-          <app-progress-button (btnClick)="updateData(dataTerms)" [options]="barButtonOptions" >
+          <app-progress-button (btnClick)="updateData(dataTerms)" [options]="barButtonOptions">
           </app-progress-button>
         </div>
       </div>

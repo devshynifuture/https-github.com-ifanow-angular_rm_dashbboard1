@@ -195,7 +195,7 @@ export class GoalsPlanComponent implements OnInit {
     } else {
       mapData.id = goal.id;
       const goalSubData:any = goal.multiYearGoalPlan;
-      mapData.img = '/assets/images/svg/higher-edu.svg';
+      mapData.img = goalSubData.imageUrl;
       mapData.year = (new Date(goalSubData.goalStartDate || goalSubData.vacationStartYr).getFullYear()) + ' - ' + (new Date(goalSubData.goalEndDate || goalSubData.vacationEndYr).getFullYear());
       mapData.goalName = goalSubData.name;
       mapData.gv = goalSubData.futureValue;

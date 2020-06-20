@@ -5,9 +5,9 @@ export const chart = () => {
         chart: {
             type: 'bar'
         },
-        title: {
-            text: 'Bar chart with negative values'
-        },
+        // title: {
+        //     text: 'Bar chart with negative values'
+        // },
         xAxis: {
             categories: []
         },

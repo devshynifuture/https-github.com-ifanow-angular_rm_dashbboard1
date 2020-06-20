@@ -37,6 +37,7 @@ export class InvoicesComponent implements OnInit {
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
   uperDataToClient: any;
+  @Input() isAdvisor = true;
 
 
   constructor(public subInjectService: SubscriptionInject, private eventService: EventService, private subService: SubscriptionService, public dialog: MatDialog) {
@@ -52,6 +53,9 @@ export class InvoicesComponent implements OnInit {
 
 
   ngOnInit() {
+    if(!this.isAdvisor) {
+      this.displayedColumns = this.displayedColumns.slice(1,-1)
+    }
 
     this.getInvoiceList();
     this.advisorId = AuthService.getAdvisorId();
@@ -197,6 +201,7 @@ export class InvoicesComponent implements OnInit {
   }
 
   openInvoice(data, value, state) {
+    data.isAdvisor = this.isAdvisor;
 
     const fragmentData = {
       flag: value,

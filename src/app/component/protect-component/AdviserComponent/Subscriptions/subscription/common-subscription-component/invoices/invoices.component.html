@@ -4,11 +4,11 @@
 
 <div *ngIf="dataSource.data.length > 0">
     <div class="bg-white" *ngIf="invoiceDesign=='true'">
-        <div class="wrapper-20 pb-0 mt-32 pt-180">
+        <div class="wrapper-20 pb-0 mt-32 pt-180" *ngIf="isAdvisor">
 
         </div>
         <div class="wrapper-40 pt-0 pr-20">
-            <div class="row">
+            <div class="row" *ngIf="isAdvisor">
                 <div class="col-md-10 p-0">
                     <div class="row">
                         <div class="col-md-1 p-0">
@@ -161,7 +161,9 @@
     <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
         <img class="width200" src="assets/images/svg/no-data-found.svg">
         <p class="f-22 f-600 pt-28"> No Data Found </p>
-        <button mat-stroked-button class="btn-primary mt-20 br-0 right text-right addon" (click)="openEdit('edit')"> ADD
+        <button mat-stroked-button class="btn-primary mt-20 br-0 right text-right addon" 
+            *ngIf="isAdvisor"
+            (click)="openEdit('edit')"> ADD
             INVOICE
         </button>
     </div>
