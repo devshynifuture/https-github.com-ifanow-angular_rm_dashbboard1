@@ -68,7 +68,7 @@ export class CalendarDayComponent implements OnInit {
       this.numbersOfDays= data[1].numbersOfDays;
       this.lastMonthDays= data[1].lastMonthDays;
       this.nextMonthDays =data[1].nextMonthDays;
-      this.viewDate =data[1].nextMonthDays;
+      this.viewDate =data[1].viewDate;
       this.addLastMonthDays =data[1].addLastMonthDays;
       console.log(this.daysArr,"this.daysArr....");
     });
