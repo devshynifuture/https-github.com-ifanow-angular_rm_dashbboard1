@@ -53,6 +53,7 @@ export class AddQuotationSubscriptionComponent implements OnInit {
   createSubscription(value, data) {
     data.quotation['planId'] = data.id;
     data = data['quotation'];
+    data['feeStructureFlag'] = data.documentText.includes('$service_fee');
     data['quotationFlag'] = true;
     // this.Close(false);
     // const fragmentData = {

@@ -76,6 +76,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
     static: false
   }) renderElement: ElementRef;
   feeStructureHtmlData: string;
+  quotationData: any;
 
   constructor(public subscription: SubscriptionService, public subInjectService: SubscriptionInject,
     public eventService: EventService, public dialog: MatDialog, private utilService: UtilService,
@@ -94,7 +95,10 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
   set data(data) {
     this.inputData = data;
     if (data.quotation && data.feeStructureFlag) {
-      this.getServicesForPlan(data);
+      if (this.quotationData == undefined) {
+        this.getServicesForPlan(data);
+        return;
+      }
       return;
     }
     this.getcommanFroalaData(data, null);
@@ -134,7 +138,11 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
       advisorAddress: ''
     }
     this.storeData.documentText = this.utilService.replacePlaceholder(this.storeData.documentText, obj);
-    (feeStructureTableData) ? this.storeData.documentText += feeStructureTableData : '';
+    if (feeStructureTableData) {
+      this.storeData.documentText = this.storeData.documentText.replace(new RegExp(escapeRegExp('$service_fee'), 'g'),
+        feeStructureTableData)
+      this.storeData.documentText.replace(new RegExp('undefined'), 'g', '');
+    }
     // let d = new Date();
     // this.storeData.documentText = this.storeData.documentText.replace(new RegExp(escapeRegExp('$(customer_name)'), 'g'),
     //   this.storeData.clientName);
@@ -433,6 +441,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
   }
 
   getServicesForPlan(quotationData) {
+    this.quotationData = quotationData;
     const obj =
     {
       advisorId: this.advisorId,
@@ -454,7 +463,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
       this.feeStructureHtmlData;
 
       let feeStructureTable = `<div class="hide">
-<table style="width: 800px; margin: 0px auto; border: 1px solid rgba(0, 0, 0, 0.12);" align="center">
+<table style="width: 100%; margin: 0px auto; border: 1px solid rgba(0, 0, 0, 0.12);" align="center">
    <tr>
        <td>
            <table style="width: 100%; background: #F5F7F7; ">
