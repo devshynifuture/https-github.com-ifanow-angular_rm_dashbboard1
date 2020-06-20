@@ -1,10 +1,11 @@
 <div class="cashflowTable">
-    <table mat-table [appSkeletonLoading]="isLoading" appSkeletonLoading [dataSource]="dataSource" id="table-low" class="skeletonAnimation">
+    <table mat-table [appSkeletonLoading]="isLoading" appSkeletonLoading [dataSource]="dataSource" id="table-low"
+        class="skeletonAnimation">
 
         <!-- Position Column -->
         <ng-container matColumnDef="year">
-            <th class="br-grey f-14" mat-header-cell *matHeaderCellDef> Year </th>
-            <td class="br-grey f-14" mat-cell *matCellDef="let element">
+            <th class="br f-14" mat-header-cell *matHeaderCellDef> Year </th>
+            <td class="br f-14" mat-cell *matCellDef="let element">
                 <div class="bar">
                     {{element.year}}
                 </div>
@@ -13,10 +14,10 @@
 
         <!-- Name Column -->
         <ng-container matColumnDef="groupHeadAge">
-            <th class="br-grey text-right f-14" mat-header-cell *matHeaderCellDef>
+            <th class="br text-right f-14" mat-header-cell *matHeaderCellDef>
                 Group head age
             </th>
-            <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
+            <td class="br text-right f-14" mat-cell *matCellDef="let element">
                 <div class="bar"> {{element.groupHeadAge === 0 ? 'no data': element.groupHeadAge }}
                 </div>
             </td>
@@ -24,26 +25,27 @@
 
         <!-- Weight Column -->
         <ng-container matColumnDef="spouseAge">
-            <th class="br-grey text-right f-14" mat-header-cell *matHeaderCellDef>
+            <th class="br text-right f-14" mat-header-cell *matHeaderCellDef>
                 Spouse age
             </th>
-            <td class="br-grey text-right f-14" mat-cell *matCellDef="let element">
+            <td class="br text-right f-14" mat-cell *matCellDef="let element">
                 <div class="bar">{{element.spouseAge === 0 ? 'no data': element.spouseAge }}</div>
             </td>
         </ng-container>
 
         <ng-container matColumnDef="totalIncome">
-            <th class="br-grey text-right f-14" mat-header-cell *matHeaderCellDef>
+            <th class="br text-right f-14" mat-header-cell *matHeaderCellDef>
                 Total incomes
             </th>
-            <td class="br-grey text-right f-14 " mat-cell *matCellDef="let element">
+            <td class="br text-right f-14 " mat-cell *matCellDef="let element">
                 <div class="bar"> {{element.totalIncome}}</div>
             </td>
         </ng-container>
 
         <ng-container matColumnDef="view">
             <th mat-header-cell *matHeaderCellDef> Monthly View </th>
-            <td class="c-p text-primary text-center f-14" mat-cell *matCellDef="let element" (click)="openUpperSlider(element)">
+            <td class="c-p text-primary text-center f-14" mat-cell *matCellDef="let element"
+                (click)="openUpperSlider(element)">
                 <div class="bar">
                     {{element.view }}
                 </div>

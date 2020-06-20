@@ -242,7 +242,8 @@
             <button mat-stroked-button class="br-2 ba-black text-black right mr-16">Schedule</button>
         </div>
     </div>
-    <div class="row h-100vh pt-72">
+    <app-google-connect *ngIf="!excessAllow"></app-google-connect>
+    <div class="row h-100vh pt-72" *ngIf="excessAllow">
         <div class="col-md-2 p-0 bg-grey lter">
             <div class="p-12 text-right">
                 <button mat-raised-button class="btn-primary br-0" (click)="openDialog(null)" ><img src="/assets/images/svg/plus.svg"
