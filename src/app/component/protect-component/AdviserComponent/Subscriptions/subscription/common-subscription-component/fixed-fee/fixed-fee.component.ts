@@ -41,6 +41,9 @@ export class FixedFeeComponent implements OnInit {
   }
   subData:any
   getSubscribeData(data) {
+    if(data.isAdvisor == undefined || data.isAdvisor == null) {
+      data.isAdvisor = true;
+    }
     const fixedData = data
     this.subData = data;
     

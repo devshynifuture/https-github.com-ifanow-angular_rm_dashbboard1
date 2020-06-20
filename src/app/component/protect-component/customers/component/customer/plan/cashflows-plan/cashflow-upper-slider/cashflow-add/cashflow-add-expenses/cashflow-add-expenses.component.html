@@ -1,7 +1,7 @@
 <form [formGroup]="formExpense">
-    <div class="scrollHeight">
+    <div class="pt-24">
 
-        <div class="row p-12">
+        <div class="row pt-12">
             <div class="col-md-4 pr-0 text-right">
                 <h5 class="m-0 pt-8">Select a category</h5>
             </div>
@@ -19,14 +19,14 @@
             </div>
         </div>
 
-        <div class="row p-12">
+        <div class="row pt-36">
             <div class="col-md-4 pr-0 text-right">
                 <h5 class="m-0 pt-8">Enter amount</h5>
                 <p class="m-0 f-12 text-custom">Enter the expense</p>
 
             </div>
-            <div class="col-md-4">
-                <mat-form-field>
+            <div class="col-md-3">
+                <mat-form-field class="iconRupess">
                     <input matInput type="text" #expenseAmtInput appInputValueValidation
                         [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" formControlName="amount"
                         class="form-control br-0 rupess">
@@ -42,11 +42,11 @@
         </div>
 
 
-        <div class="row p-12">
+        <div class="row pt-24">
             <div class="col-md-4 pr-0 text-right d-flex justify-content-end align-items-center">
                 <h5 class="m-0 pt-8">Repeat options</h5>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 pr-0">
                 <div class="row">
                     <div class="col-md-6 pl-0">
                         <h5 class="m-0 pb-8">Frequency</h5>
@@ -63,7 +63,7 @@
                             </mat-form-field>
                         </div>
                     </div>
-                    <div class="col-md-6 pr-0">
+                    <div class="col-md-6 pl-0">
                         <h5 class="m-0 pb-8">Every</h5>
                         <div class="form-group mb-0">
                             <mat-form-field>
@@ -82,17 +82,17 @@
             </div>
         </div>
 
-        <div class="row p-12">
+        <div class="row pt-28">
             <div class="col-md-4 pr-0 text-right">
                 <h5 class="m-0 pt-8">Starts from</h5>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 pr-0">
                 <div class="row">
                     <div class="col-md-6 pl-0">
                         <div class="form-group mb-0">
-                            <mat-form-field>
+                            <mat-form-field class="ba-date">
                                 <input matInput (focus)="picker.open()" formControlName="starts-date"
-                                    class="form-control br-0" [matDatepicker]="picker" readonly>
+                                    class="form-control br-0 b-0" [matDatepicker]="picker" readonly>
                                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                 <mat-datepicker #picker></mat-datepicker>
                                 <mat-error
@@ -103,7 +103,7 @@
                             </mat-form-field>
                         </div>
                     </div>
-                    <div class="col-md-6 pr-0">
+                    <div class="col-md-6 pl-0">
                         <div class="form-group mb-0">
                             <mat-form-field>
                                 <mat-select class="form-control br-0" formControlName="starts-day">
@@ -127,7 +127,7 @@
             </div>
         </div>
 
-        <div class="row p-12">
+        <div class="row pt-28">
             <div class="col-md-4 pr-0 text-right">
                 <h5 class="m-0 pt-8"> Continues till</h5>
             </div>
@@ -151,8 +151,8 @@
                     <div class="col-md-6 pl-8  pr-0">
 
                         <div class="form-group mb-0">
-                            <mat-form-field>
-                                <input matInput formControlName="continues-till-date" class="form-control br-0"
+                            <mat-form-field class="ba-date">
+                                <input matInput formControlName="continues-till-date" class="form-control b-0 br-0"
                                     [matDatepicker]="picker1" readonly (focus)="picker1.open()">
                                 <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                 <mat-datepicker #picker1></mat-datepicker>
@@ -168,7 +168,7 @@
             </div>
         </div>
 
-        <div class="row p-12">
+        <div class="row pt-32">
             <div class="col-md-4 pr-0 text-right">
                 <h5 class="m-0 pt-8">Payment mode</h5>
 
@@ -188,7 +188,7 @@
             </div>
         </div>
 
-        <div class="row p-12">
+        <div class="row pt-32">
             <div class="col-md-4 pr-0 text-right">
                 <h5 class="m-0 pt-8"> Family member </h5>
 
@@ -208,10 +208,10 @@
             </div>
         </div>
 
-        <div class="row p-12">
+        <div class="row pt-20 pb-20">
             <div class="col-md-12 text-right">
-                <button mat-button class="text-primitive" (click)="closeDialog()">CANCEL</button>
-                <button mat-button class="text-primary" (click)="submitForm()">SAVE</button>
+                <button mat-button class="text-primitive f-500" (click)="closeDialog()">CANCEL</button>
+                <button mat-button class="text-primary f-500" (click)="submitForm()">SAVE</button>
             </div>
         </div>
     </div>
