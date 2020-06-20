@@ -12,7 +12,7 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
 import { CommonFroalaComponent } from '../common-froala/common-froala.component';
 import { EmailOnlyComponent } from '../email-only/email-only.component';
 import { Router } from '@angular/router';
-import { Location } from '@angular/common';
+import { Location, DatePipe } from '@angular/common';
 
 // import { window } from 'rxjs/operators';
 
@@ -90,7 +90,8 @@ export class DocumentComponent implements OnInit {
 
   constructor(public subInjectService: SubscriptionInject,
     private eventService: EventService, public dialog: MatDialog, private subService: SubscriptionService,
-    public subscription: SubscriptionService, private router: Router, private location: Location) {
+    public subscription: SubscriptionService, private router: Router, private location: Location,
+    private datePipe: DatePipe) {
     // this.subInjectService.rightSliderDocument.subscribe(
     //   data => this.getDocumentsDesignData(data)
     // );
@@ -231,6 +232,7 @@ export class DocumentComponent implements OnInit {
       this.noData = 'No Data Found';
     } else {
       data.forEach(singleData => {
+        singleData['sentDateInFormat'] = this.datePipe.transform((singleData.sentDate) ? singleData.sentDate : undefined, "dd/MM/yyyy");
         singleData.selected = false;
         singleData.documentText = singleData.docText;
       });
