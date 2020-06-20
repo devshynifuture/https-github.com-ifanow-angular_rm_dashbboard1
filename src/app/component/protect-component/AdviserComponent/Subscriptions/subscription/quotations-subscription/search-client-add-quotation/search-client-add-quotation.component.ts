@@ -103,6 +103,7 @@ export class SearchClientAddQuotationComponent implements OnInit {
   createSubscription(value, data) {
     data.quotation['planId'] = data.id;
     data = data['quotation'];
+    data['feeStructureFlag'] = data.documentText.includes('$service_fee');
     data['quotationFlag'] = true;
     const fragmentData = {
       flag: value,
