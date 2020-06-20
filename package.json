@@ -9,6 +9,7 @@
       }
     ]
   },
+
   "scripts": {
     "ng": "ng",
     "start": "ng serve --port 4200 --poll=2000",
@@ -17,6 +18,7 @@
     "build-dev": "node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng build --configuration dev --extra-webpack-config webpack.extra.js",
     "build-staging": "node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng build --configuration staging --extra-webpack-config webpack.extra.js",
     "build-prod": "node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng build --prod --stats-json --extra-webpack-config webpack.extra.js --watch",
+    "build-devifanow": "node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng build --configuration devifanow --extra-webpack-config webpack.extra.js",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
