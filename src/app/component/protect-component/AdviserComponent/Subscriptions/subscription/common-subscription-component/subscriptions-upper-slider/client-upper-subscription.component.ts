@@ -67,7 +67,7 @@ export class ClientUpperSubscriptionComponent implements OnInit {
 
   ngOnInit() {
     if (!this.isAdvisor) {
-      // this.displayedColumns.pop();
+      this.displayedColumns.pop();
     }
   }
 
