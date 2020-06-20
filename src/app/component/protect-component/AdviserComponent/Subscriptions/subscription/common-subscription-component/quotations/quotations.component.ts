@@ -259,13 +259,14 @@ export class QuotationsComponent implements OnInit {
   }
 
   openSendEmail(element) {
+    this._clientData['clientId'] = this._clientData.id;
     this.quotationData = []
     const data = {
       advisorId: this.advisorId,
       clientData: this._clientData,
       templateType: 2, // 2 is for quotation
-      documentList: []
-
+      documentList: [],
+      showfromEmail: false
     };
     if (this.dataCount == 0) {
       this.quotationData.push(element);
