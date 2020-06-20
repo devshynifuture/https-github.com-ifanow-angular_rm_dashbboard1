@@ -3,8 +3,7 @@
         <h4 class="m-0 text-black pt-8">ARN/RIA details</h4>
     </div>
     <div class="col-md-6 text-right ">
-        <button (click)="openArnDetails(null, null, true)" class="btn-primary" mat-stroked-button
-            [disabled]="utilService.isLoading">
+        <button (click)="openArnDetails(null, null, true)" class="btn-primary" mat-stroked-button [disabled]="utilService.isLoading">
             ADD NEW
         </button>
     </div>
@@ -22,8 +21,7 @@
                     </div>
 
                     <div class="col-md-3 p-0 d-flex align-items-center justify-content-end">
-                        <span
-                            class="text-black roboto f-16 mr-12">{{arn.dataUploadTypeId == 1 ? 'AUTO UPLOAD' : 'MANUAL UPLOAD'}}
+                        <span class="text-black roboto f-16 mr-12">{{arn.dataUploadTypeId == 1 ? 'AUTO UPLOAD' : 'MANUAL UPLOAD'}}
                         </span>
                         <ng-container>
                             <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="c-p">
@@ -89,9 +87,7 @@
         <div class="boxEmpty mt-52">
             <img src="assets/images/svg/arn-ria-details-empty-state.svg">
             <h4 class="mt-24 mb-12"> No details added yet </h4>
-            <button class="btn-primary addon v-middle " mat-stroked-button
-                (click)="openArnDetails(null, null, true)"
-                [disabled]="utilService.isLoading">
+            <button class="btn-primary addon v-middle " mat-stroked-button (click)="openArnDetails(null, null, true)" [disabled]="utilService.isLoading">
                 ADD NEW
             </button>
         </div>
@@ -113,9 +109,7 @@
         <div class="boxEmpty mt-52">
             <img src="assets/images/svg/arn-ria-details-empty-state.svg">
             <h4 class="mt-24 mb-12"> No details added yet </h4>
-            <button class="btn-primary addon v-middle " mat-stroked-button
-                (click)="openArnDetails(null, null, true)"
-                [disabled]="utilService.isLoading">
+            <button class="btn-primary addon v-middle " mat-stroked-button (click)="openArnDetails(null, null, true)" [disabled]="utilService.isLoading">
                 ADD NEW
             </button>
         </div>
