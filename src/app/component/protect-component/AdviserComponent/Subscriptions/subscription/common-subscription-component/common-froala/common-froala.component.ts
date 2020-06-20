@@ -98,6 +98,8 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
     this.inputData = data;
     if (data.quotation && data.feeStructureFlag) {
       if (this.quotationData == undefined) {
+        this.sendEmailFlag = data.sendEsignFlag
+        this.saveQuotationFlag = data.quotationFlag;
         this.getServicesForPlan(data);
         return;
       }
@@ -468,9 +470,9 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
 <table style="width: 100%; margin: 0px auto; border: 1px solid rgba(0, 0, 0, 0.12);" align="center">
    <tr>
        <td>
-           <table style="width: 100%; background: #F5F7F7; ">
+           <table style="width: 100%; border-bottom: 1px solid rgba(0, 0, 0, 0.12); background: #F5F7F7; ">
                <tr>
-                   <td style="padding: 28px 22px; border: none;">
+                   <td style="padding: 28px 22px;  ">
                        <h3 style="margin: 0px; font-size: 24px;">${element.serviceName}</h3>
                        <h5 style="margin: 0px; font-size: 16px;">${element.serviceCode}</h5>
                    </td>
@@ -480,7 +482,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
    </tr>
    <tr>
        <td>
-           <table style="width: 100%; ">
+           <table style="width: 100%; border-bottom: 1px solid rgba(0, 0, 0, 0.12);">
                <tr>
                    <td style="padding: 24px; border: none;">
                        <p style="font-size: 12px; margin:0px;">BILLING NATURE</p>
@@ -511,28 +513,28 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
                ${(element.servicePricing.feeTypeId == 2) ? `<td style="padding: 24px; border: none;">
                        <p style="font-size: 12px; margin:0px;">VARIABLE FEE DETAILS </p>
                        <h4 style="margin: 0px; padding: 0px; font-size: 18px;">Mutual Funds </h4>
-                       <table style="width: 100%;   background: #F5F7F7;">
+                       <table style="width: 100%; border: 1px solid rgba(0, 0, 0, 0.12);  background: #F5F7F7;">
                            <tr>
-                               <td colspan="3" style="   text-align: center; padding: 10px;">
+                               <td colspan="3" style=" border-bottom: 1px solid rgba(0, 0, 0, 0.12); border-right: 1px solid rgba(0, 0, 0, 0.12);  text-align: center; padding: 10px;">
                                    Direct</td>
-                               <td colspan="3" style="  padding: 10px;  text-align: center;">
+                               <td colspan="3" style=" border-bottom: 1px solid rgba(0, 0, 0, 0.12); padding: 10px;  text-align: center;">
                                    Regular</td>
                            </tr>
                            <tr>
-                               <td style="padding: 5px;">Equity</td>
-                               <td style="padding: 5px;">Debt</td>
-                               <td style="padding: 5px;">Liquid</td>
-                               <td style="padding: 5px;">Equity</td>
-                               <td style="padding: 5px;">Debt</td>
-                               <td style="padding: 5px;">Liquid</td>
+                               <td style="padding: 5px; border-bottom: 1px solid rgba(0, 0, 0, 0.12); border-right: 1px solid rgba(0, 0, 0, 0.12); ">Equity</td>
+                               <td style="padding: 5px; border-bottom: 1px solid rgba(0, 0, 0, 0.12); border-right: 1px solid rgba(0, 0, 0, 0.12);">Debt</td>
+                               <td style="padding: 5px; border-bottom: 1px solid rgba(0, 0, 0, 0.12); border-right: 1px solid rgba(0, 0, 0, 0.12);">Liquid</td>
+                               <td style="padding: 5px; border-bottom: 1px solid rgba(0, 0, 0, 0.12); border-right: 1px solid rgba(0, 0, 0, 0.12);">Equity</td>
+                               <td style="padding: 5px; border-bottom: 1px solid rgba(0, 0, 0, 0.12); border-right: 1px solid rgba(0, 0, 0, 0.12);">Debt</td>
+                               <td style="padding: 5px; border-bottom: 1px solid rgba(0, 0, 0, 0.12);">Liquid</td>
                            </tr>
                            <tr>
-                               <td style="padding: 5px;">${element.servicePricing.pricingList[0].equityAllocation}%</td>
-                               <td style="padding: 5px;">${element.servicePricing.pricingList[0].debtAllocation}%</td>
-                               <td style="padding: 5px;">${element.servicePricing.pricingList[0].liquidAllocation}%</td>
-                               <td style="padding: 5px;">${element.servicePricing.pricingList[1].equityAllocation}%</td>
-                               <td style="padding: 5px;">${element.servicePricing.pricingList[1].debtAllocation}%</td>
-                               <td style="padding: 5px;">${element.servicePricing.pricingList[1].liquidAllocation}%</td>
+                               <td style="padding: 5px;border-right: 1px solid rgba(0, 0, 0, 0.12);">${element.servicePricing.pricingList[0].equityAllocation}%</td>
+                               <td style="padding: 5px;border-right: 1px solid rgba(0, 0, 0, 0.12);">${element.servicePricing.pricingList[0].debtAllocation}%</td>
+                               <td style="padding: 5px;border-right: 1px solid rgba(0, 0, 0, 0.12);">${element.servicePricing.pricingList[0].liquidAllocation}%</td>
+                               <td style="padding: 5px;border-right: 1px solid rgba(0, 0, 0, 0.12);">${element.servicePricing.pricingList[1].equityAllocation}%</td>
+                               <td style="padding: 5px;border-right: 1px solid rgba(0, 0, 0, 0.12);">${element.servicePricing.pricingList[1].debtAllocation}%</td>
+                               <td style="padding: 5px;border-right: 1px solid rgba(0, 0, 0, 0.12);">${element.servicePricing.pricingList[1].liquidAllocation}%</td>
                            </tr>
                        </table>
                    </td>

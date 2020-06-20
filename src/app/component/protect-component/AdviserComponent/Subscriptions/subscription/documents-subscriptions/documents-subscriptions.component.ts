@@ -487,6 +487,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
       this.noData = 'No Data Found';
     } else {
       data.forEach(singleData => {
+        singleData['sentDateInFormat'] = this.datePipe.transform((singleData.sentDate) ? singleData.sentDate : undefined, "dd/MM/yyyy");
         singleData.documentText = singleData.docText;
       });
       // this.dataSource = data;
