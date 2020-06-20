@@ -80,13 +80,13 @@
                     <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="documentName"> Document name
                     </th>
                     <td *matCellDef="let element" mat-cell>
-                        <div class="bar"> {{element.documentName || isLoading ? '' : '-' }} </div>
+                        <div class="bar"> {{element.documentName}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="plan">
                     <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="planName"> Plan name</th>
                     <td *matCellDef="let element" mat-cell>
-                        <div class="bar"> {{element.planName?element.planName: '-'}} </div>
+                        <div class="bar"> {{element.planName}} </div>
                     </td>
                 </ng-container>
 

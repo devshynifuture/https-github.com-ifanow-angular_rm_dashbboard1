@@ -77,6 +77,8 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
   }) renderElement: ElementRef;
   feeStructureHtmlData: string = '';
   quotationData: any;
+  saveQuotationFlag: any;
+  sendEmailFlag: any;
 
   constructor(public subscription: SubscriptionService, public subInjectService: SubscriptionInject,
     public eventService: EventService, public dialog: MatDialog, private utilService: UtilService,
@@ -101,6 +103,8 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
       }
       return;
     }
+    this.sendEmailFlag = data.sendEsignFlag
+    this.saveQuotationFlag = data.quotationFlag;
     this.getcommanFroalaData(data, null);
   }
 
@@ -129,7 +133,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
   }
 
   getcommanFroalaData(data, feeStructureTableData) {
-    this.storeData = data;
+    this.storeData = Object.assign({}, data);
     const obj =
     {
       clientName: this.storeData.clientName,
