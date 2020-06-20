@@ -42,9 +42,9 @@
   }
 }
 
-::ng-deep .mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
-  line-height: 0 !important;
-}
+// ::ng-deep .mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
+//   line-height: 0 !important;
+// }
 
 
 .calendar-column {
@@ -470,14 +470,6 @@ img.header-img {
   background: #555;
 }
 
-event-dialog {
-  .date-wrapper {
-
-    mat-form-field {
-      width: 75px !important;
-    }
-  }
-}
 
 
 /***********************************************************************************/

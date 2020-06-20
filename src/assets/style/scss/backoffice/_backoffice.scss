@@ -237,7 +237,7 @@
       margin-left: 2px;
       margin-top: 4px;
       width: 12px;
-      z-index: 99;
+      z-index: 8;
 
     }
   }
@@ -253,6 +253,15 @@
   background: #fff !important;
   box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.2), 0px 1px 0px rgba(0, 0, 0, 0.12), 0px 3px 3px rgba(0, 0, 0, 0.14);
   height: 60px;
+}
+
+#ui-calendar {
+  .main-header {
+    .mat-button-toggle-label-content {
+      line-height: 38px;
+
+    }
+  }
 }
 
 #ui-backoffice-week {
