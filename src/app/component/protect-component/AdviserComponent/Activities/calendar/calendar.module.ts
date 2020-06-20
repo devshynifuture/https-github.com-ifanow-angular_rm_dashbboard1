@@ -8,11 +8,18 @@ import {CalendarRoutingModule} from './calendar-routing.module';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { CustomCommonModule } from 'src/app/common/custom.common.module';
+import { CalendarDayComponent } from './calendar-day/calendar-day.component';
+import { CalendarMonthComponent } from './calendar-month/calendar-month.component';
+import { CalendarWeekComponent } from './calendar-week/calendar-week.component';
 
 @NgModule({
   declarations: [
     CalendarComponent,
     EventDialog,
+    CalendarDayComponent,
+    CalendarMonthComponent,
+    CalendarWeekComponent,
   ],
   imports: [
     CommonModule,
@@ -21,7 +28,7 @@ import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
     FormsModule,
     ReactiveFormsModule,
     CalendarRoutingModule,
-
+    CustomCommonModule
   ],
   providers: [
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },

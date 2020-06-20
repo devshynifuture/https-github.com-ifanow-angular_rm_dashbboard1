@@ -235,14 +235,15 @@
         </div>
         <div class="col-md-4 p-0 right">
             <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="right">
-                <mat-button-toggle value="bold" routerLink="/admin/day-calendar" routerLinkActive="btn-primary">Day</mat-button-toggle>
-                <mat-button-toggle value="italic" routerLink="/admin/week-calendar" routerLinkActive="btn-primary">Week</mat-button-toggle>
-                <mat-button-toggle value="underline" routerLink="/admin/calendar" routerLinkActive="btn-primary">Month</mat-button-toggle>
+                <mat-button-toggle value="bold" routerLink="/admin/activies/day" routerLinkActive="btn-primary">Day</mat-button-toggle>
+                <mat-button-toggle value="italic" routerLink="/admin/activies/week" routerLinkActive="btn-primary">Week</mat-button-toggle>
+                <mat-button-toggle value="underline" routerLink="/admin/activies/month" routerLinkActive="btn-primary">Month</mat-button-toggle>
             </mat-button-toggle-group>
             <button mat-stroked-button class="br-2 ba-black text-black right mr-16">Schedule</button>
         </div>
     </div>
-    <div class="row h-100vh pt-72">
+    <app-google-connect *ngIf="!excessAllow"></app-google-connect>
+    <div class="row h-100vh pt-72" *ngIf="excessAllow">
         <div class="col-md-2 p-0 bg-grey lter">
             <div class="p-12 text-right">
                 <button mat-raised-button class="btn-primary br-0" (click)="openDialog(null)" ><img src="/assets/images/svg/plus.svg"

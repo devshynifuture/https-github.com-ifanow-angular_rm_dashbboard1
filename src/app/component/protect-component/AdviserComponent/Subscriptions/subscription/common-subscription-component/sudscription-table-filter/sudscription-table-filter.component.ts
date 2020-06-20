@@ -1,28 +1,27 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { UtilService } from '../../../../../../../services/util.service';
-import { SetDateFooter } from './set-date-footer.component'
-import { DatePipe, formatDate } from '@angular/common';
-import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, SatDatepickerModule, NativeDateAdapter } from 'saturn-datepicker'
-import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter'
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {UtilService} from '../../../../../../../services/util.service';
+import {SetDateFooter} from './set-date-footer.component'
+import {DatePipe, formatDate} from '@angular/common';
+import {DateAdapter, MAT_DATE_FORMATS, NativeDateAdapter} from 'saturn-datepicker'
 
 export const PICK_FORMATS = {
   parse: {dateInput: {month: 'short', year: 'numeric', day: 'numeric'}},
   display: {
-      dateInput: 'input',
-      monthYearLabel: {year: 'numeric', month: 'short'},
-      dateA11yLabel: {year: 'numeric', month: 'long', day: 'numeric'},
-      monthYearA11yLabel: {year: 'numeric', month: 'long'}
+    dateInput: 'input',
+    monthYearLabel: {year: 'numeric', month: 'short'},
+    dateA11yLabel: {year: 'numeric', month: 'long', day: 'numeric'},
+    monthYearA11yLabel: {year: 'numeric', month: 'long'}
   }
 };
 
-class PickDateAdapter extends NativeDateAdapter {
+export class PickDateAdapter extends NativeDateAdapter {
   format(date: Date, displayFormat: Object): string {
-      if (displayFormat === 'input') {
-          return formatDate(date,'dd/MM/yyyy',this.locale);;
-      } else {
-          return date.toDateString();
-      }
+    if (displayFormat === 'input') {
+      return formatDate(date, 'dd/MM/yyyy', this.locale);
+      ;
+    } else {
+      return date.toDateString();
+    }
   }
 }
 

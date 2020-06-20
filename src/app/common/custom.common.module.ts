@@ -8,6 +8,7 @@ import { CustomDirectiveModule } from "./directives/common-directive.module";
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { LinkBankComponent } from './link-bank/link-bank.component';
 import { EmailDomainAutoSuggestComponent } from './email-domain-auto-suggest/email-domain-auto-suggest.component';
+import { GoogleConnectComponent } from '../component/protect-component/AdviserComponent/Email/email-component/email-list/email-listing/google-connect/google-connect.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { EmailDomainAutoSuggestComponent } from './email-domain-auto-suggest/ema
     ProgressButtonComponent,
     LinkBankComponent,
     EmailDomainAutoSuggestComponent,
+    GoogleConnectComponent
   ],
   imports: [
     MaterialModule,
@@ -28,7 +30,8 @@ import { EmailDomainAutoSuggestComponent } from './email-domain-auto-suggest/ema
     DialogContainerComponent, 
     ProgressButtonComponent, 
     LinkBankComponent,
-    EmailDomainAutoSuggestComponent
+    EmailDomainAutoSuggestComponent,
+    GoogleConnectComponent
   ],
   entryComponents: [LinkBankComponent]
 })

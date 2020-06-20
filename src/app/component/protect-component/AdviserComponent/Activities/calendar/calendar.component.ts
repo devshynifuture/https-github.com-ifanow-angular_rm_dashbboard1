@@ -42,6 +42,7 @@ export class CalendarComponent implements OnInit {
   current_day = new Date();
   userInfo: any;
   currentYear: any;
+  excessAllow: any;
   constructor(public dialog: MatDialog, private calenderService: calendarService) { }
 
   ngOnInit() {
@@ -53,7 +54,7 @@ export class CalendarComponent implements OnInit {
     this.getEvent();
     this.curruntDayIndex = this.daysArr.indexOf(this.todayDate);
 
-
+    this.excessAllow = localStorage.getItem('successStoringToken')
   }
 
   getEvent() {
@@ -62,26 +63,28 @@ export class CalendarComponent implements OnInit {
       "userId": AuthService.getUserInfo().advisorId
     }
     this.calenderService.getEvent(eventData).subscribe((data) => {
-      console.log(data,"events calender",);
       
       if (data != undefined) {
-
+        
         this.eventData = data;
-
+        
+        console.log(data,"events calender",this.eventData);
         this.formatedEvent = [];
+        
         for (let e of this.eventData) {
-          e["day"] = this.formateDate(!e.start.dateTime? new Date(e.created) : new Date(e.start.dateTime));
-          e["month"] = this.formateMonth(!e.start.dateTime ?new Date(e.created) : new Date(e.start.dateTime));
-          e["year"] = this.formateYear(!e.start.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
-          e["startTime"] = this.formateTime(!e.start.dateTime? new Date(e.created) : new Date(e.start.dateTime));
-          e["endTime"] = this.formateTime(!e.end.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
-
-          this.formatedEvent.push(e);
+          if(e.start){
+            e["day"] = this.formateDate(!e.start.dateTime? new Date(e.created): new Date(e.start.dateTime));
+            e["month"] = this.formateMonth(!e.start.dateTime ?new Date(e.created) : new Date(e.start.dateTime));
+            e["year"] = this.formateYear(!e.start.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
+            e["startTime"] = this.formateTime(!e.start.dateTime? new Date(e.created) : new Date(e.start.dateTime));
+            e["endTime"] = this.formateTime(!e.end.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
+            this.formatedEvent.push(e);
+            console.log(this.formatedEvent,"formatedEvent calender1",);
+          }
         }
       }
     });
 
-    console.log(this.formatedEvent,"formatedEvent calender",);
 
   }
 
@@ -155,18 +158,18 @@ export class CalendarComponent implements OnInit {
   }
 
   formateDate(date) {
-    var dd = date.getDate();
+    var dd = new Date(date).getDate();
 
     return dd;
   }
 
   formateMonth(date) {
-    var mm = date.getMonth() + 1; //January is 0!
+    var mm = new Date(date).getMonth() + 1; //January is 0!
     return mm;
   }
 
   formateYear(date) {
-    var yyyy = date.getFullYear();
+    var yyyy = new Date(date).getFullYear();
     return yyyy;
   }
 

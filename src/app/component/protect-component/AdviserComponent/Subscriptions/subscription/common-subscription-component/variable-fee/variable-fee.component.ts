@@ -84,6 +84,10 @@ export class VariableFeeComponent implements OnInit {
   }
 
   getSubscribeData(data) {
+
+    if(data.isAdvisor == undefined || data.isAdvisor == null) {
+      data.isAdvisor = true;
+    }
     (data.isCreateSub) ? this.isSave = true : this.isSave = false;
     if (data == undefined) {
       this.createVariableForm('');

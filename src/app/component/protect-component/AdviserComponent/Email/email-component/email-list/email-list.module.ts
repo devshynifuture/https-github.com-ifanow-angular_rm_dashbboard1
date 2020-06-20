@@ -12,7 +12,8 @@ import { EmailReplyComponent } from './email-reply/email-reply.component';
 import { GmailDatePipe } from './email-listing/gmail-date.pipe';
 import { TruncateStringPipe } from 'src/app/truncate.pipe';
 import { ShowListActionsDirective } from './email-listing/show-list-actions.directive';
-import { GoogleConnectComponent } from './email-listing/google-connect/google-connect.component';
+import { CustomCommonModule } from 'src/app/common/custom.common.module';
+// import { GoogleConnectComponent } from './email-listing/google-connect/google-connect.component';
 
 
 
@@ -24,15 +25,16 @@ import { GoogleConnectComponent } from './email-listing/google-connect/google-co
     EmailViewComponent,
     GmailDatePipe,
     TruncateStringPipe,
-    ShowListActionsDirective,
-    GoogleConnectComponent
+    ShowListActionsDirective
+    // GoogleConnectComponent
   ],
   imports: [
     CommonModule,
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    EmailListRoutingModule
+    EmailListRoutingModule,
+    CustomCommonModule
   ],
   exports: [
     GmailDatePipe,
