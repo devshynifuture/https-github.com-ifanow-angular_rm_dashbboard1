@@ -47,7 +47,7 @@ export class QuotationsComponent implements OnInit {
   quotationDesign;
   dataCount;
   _clientData;
-  displayedColumns: string[] = ['checkbox', 'document', 'plan', 'date', 'sdate', 'cdate', 'status', 'send', 'icons'];
+  displayedColumns: string[] = ['checkbox', 'document', 'plan', 'date', 'sdate', 'status', 'send', 'icons'];
   changeEmail = 'footerChange';
   advisorId;
   data: Array<any> = [{}, {}, {}];
@@ -118,7 +118,7 @@ export class QuotationsComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.getQuotationsList();
-
+            this.dataCount = 0;
           }
           rightSideDataSub.unsubscribe();
         }
@@ -226,6 +226,7 @@ export class QuotationsComponent implements OnInit {
           data => {
             this.eventService.openSnackBar('Document is deleted', 'Dismiss');
             // this.valueChange.emit('close');
+            this.dataCount = 0;
             this.getQuotationsList();
             dialogRef.close(this.list);
             // this.getRealEstate();

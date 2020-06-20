@@ -85,6 +85,7 @@ export class AddQuotationSubscriptionComponent implements OnInit {
       sideBarData => {
         if (UtilService.isRefreshRequired(sideBarData)) {
           // this.getQuotationsData(false);
+          this.Close(true);
           // console.log('this is sidebardata in subs subs 2: ');
           // this.dataCount = 0;
         }

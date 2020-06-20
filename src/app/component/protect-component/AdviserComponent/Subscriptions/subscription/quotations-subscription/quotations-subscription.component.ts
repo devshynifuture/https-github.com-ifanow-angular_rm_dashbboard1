@@ -48,7 +48,7 @@ export interface PeriodicElement {
 })
 export class QuotationsSubscriptionComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  displayedColumns: string[] = ['checkbox', 'name', 'docname', 'plan', 'cdate', 'sdate', 'clientsign', 'status', 'icons'];
+  displayedColumns: string[] = ['checkbox', 'name', 'docname', 'plan', 'cdate', 'sdate', 'status', 'icons'];
   advisorId;
   maxDate = new Date();
   noData: string;
@@ -251,6 +251,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
   }
 
   getQuotationsData(scrollLoader) {
+    // this.dataSource.data = [{}, {}, {}];
     this.dataCount = 0;
     const obj = {
       // advisorId: 12345
@@ -310,7 +311,9 @@ export class QuotationsSubscriptionComponent implements OnInit {
           data => {
             this.eventService.openSnackBar('Document is deleted', 'Dismiss');
             // this.valueChange.emit('close');
-            this.getQuotationsData(null);
+            this.dataCount = 0;
+            // this.getQuotationsData(null);
+            this.getClientSubData(false);
             dialogRef.close(this.list);
             // this.getRealEstate();
           },

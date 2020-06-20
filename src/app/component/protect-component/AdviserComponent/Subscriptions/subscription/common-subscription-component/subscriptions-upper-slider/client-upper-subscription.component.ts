@@ -1,20 +1,20 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog, MatSort} from '@angular/material';
-import {DeleteSubscriptionComponent} from '../delete-subscription/delete-subscription.component';
-import {SubscriptionService} from '../../../subscription.service';
-import {AuthService} from '../../../../../../../auth-service/authService';
-import {UtilService} from 'src/app/services/util.service';
-import {MatTableDataSource} from '@angular/material/table';
-import {FixedFeeComponent} from '../fixed-fee/fixed-fee.component';
-import {VariableFeeComponent} from '../variable-fee/variable-fee.component';
-import {BillerSettingsComponent} from '../biller-settings/biller-settings.component';
-import {ChangePayeeComponent} from '../change-payee/change-payee.component';
-import {CreateSubscriptionComponent} from '../create-subscription/create-subscription.component';
-import {PlanRightsliderComponent} from '../plan-rightslider/plan-rightslider.component';
-import {SubscriptionDetailsComponent} from '../biller-profile-advisor/subscription-details/subscription-details.component';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog, MatSort } from '@angular/material';
+import { DeleteSubscriptionComponent } from '../delete-subscription/delete-subscription.component';
+import { SubscriptionService } from '../../../subscription.service';
+import { AuthService } from '../../../../../../../auth-service/authService';
+import { UtilService } from 'src/app/services/util.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { FixedFeeComponent } from '../fixed-fee/fixed-fee.component';
+import { VariableFeeComponent } from '../variable-fee/variable-fee.component';
+import { BillerSettingsComponent } from '../biller-settings/biller-settings.component';
+import { ChangePayeeComponent } from '../change-payee/change-payee.component';
+import { CreateSubscriptionComponent } from '../create-subscription/create-subscription.component';
+import { PlanRightsliderComponent } from '../plan-rightslider/plan-rightslider.component';
+import { SubscriptionDetailsComponent } from '../biller-profile-advisor/subscription-details/subscription-details.component';
 
 // import { element } from 'protractor';
 export interface PeriodicElement {
@@ -46,11 +46,11 @@ export class ClientUpperSubscriptionComponent implements OnInit {
   // newArray: any[];
   clientData;
   advisorId;
-  subscriptionData: Array<any> = [{subscriptions: [{}, {}, {}], planName: ''}];
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  subscriptionData: Array<any> = [{ subscriptions: [{}, {}, {}], planName: '' }];
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   constructor(public subInjectService: SubscriptionInject, private eventService: EventService,
-              public dialog: MatDialog, public subscription: SubscriptionService) {
+    public dialog: MatDialog, public subscription: SubscriptionService) {
   }
 
   ELEMENT_DATA;
@@ -129,7 +129,7 @@ export class ClientUpperSubscriptionComponent implements OnInit {
       offset: 0,
       order: 0,
     };
-    this.subscriptionData = [{subscriptions: [{}, {}, {}], planName: ''}];
+    this.subscriptionData = [{ subscriptions: [{}, {}, {}], planName: '' }];
     this.subscription.getSubSummary(obj).subscribe(
       data => this.getSubSummaryRes(data), (error) => {
         this.eventService.showErrorMessage(error);
@@ -207,6 +207,8 @@ export class ClientUpperSubscriptionComponent implements OnInit {
     if (data == undefined) {
     } else if (data.length > 0) {
       for (const d of data) {
+        d['feeTypeId'] = d.subscriptionPricing.feeTypeId;
+        d['pricing'] = d.subscriptionPricing.subscriptionAssetPricingList[0].pricing
         if (d.subscriptionPricing.feeTypeId == 1) {
           d.serviceTypeName = 'FIXED';
         } else {
@@ -215,7 +217,7 @@ export class ClientUpperSubscriptionComponent implements OnInit {
         let singlePlanWiseArray: Array<any> = planWiseMap[d.planName];
         if (!singlePlanWiseArray) {
           singlePlanWiseArray = [];
-          this.subscriptionData.push({planName: d.planName, subscriptions: singlePlanWiseArray});
+          this.subscriptionData.push({ planName: d.planName, subscriptions: singlePlanWiseArray });
           planWiseMap[d.planName] = singlePlanWiseArray;
         }
         singlePlanWiseArray.push(d);
