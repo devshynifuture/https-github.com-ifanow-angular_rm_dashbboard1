@@ -159,8 +159,9 @@
   min-width: 49% !important;
 }
 
-#ui-backoffice-day {
-  padding-top: 90px;
+#ui-backoffice-day,
+#ui-backoffice-week {
+  // padding-top: 90px;
 
   li {
     font-size: 10px;
@@ -181,10 +182,6 @@
     border-bottom: 1px solid #ddd;
   }
 
-  .day-schedule {
-    max-height: calc(100vh - 185px);
-    overflow: auto;
-  }
 
   .right-details {
     position: relative;
@@ -240,8 +237,92 @@
       margin-left: 2px;
       margin-top: 4px;
       width: 12px;
-      z-index: 505;
+      z-index: 99;
 
     }
+  }
+}
+
+#ui-calendar-bo {
+  position: fixed;
+  margin-top: 64px;
+  float: right;
+  width: 100%;
+  padding-right: 0px;
+  z-index: 101;
+  background: #fff !important;
+  box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.2), 0px 1px 0px rgba(0, 0, 0, 0.12), 0px 3px 3px rgba(0, 0, 0, 0.14);
+  height: 60px;
+}
+
+#ui-backoffice-week {
+  .custom-grid {
+    width: 100%;
+    //   float: left;
+    flex-wrap: wrap;
+    display: flex;
+    padding: 16px;
+
+    .column {
+      position: relative;
+      width: 14.28%;
+      text-align: center;
+
+      p {
+        cursor: pointer;
+      }
+
+      .column:last-child {
+        border-right: 0px !important;
+      }
+    }
+  }
+
+  .all-schedule {
+
+    padding: 0;
+
+    .column {
+      border-right: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
+      height: 40px;
+      overflow: hidden;
+    }
+  }
+
+  .all-schedule.fix-div {
+    .column {
+      height: 20px !important;
+    }
+  }
+
+  .day-schedule {
+    position: relative;
+    margin-top: -25px !important;
+
+    span {
+      position: relative;
+      top: 14px;
+    }
+  }
+
+  .week-clicks {
+    background-color: #008FFF;
+    border-radius: 6px;
+    color: #fff;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    margin: 2px;
+    text-align: left;
+
+    p {
+      line-height: 16px;
+    }
+  }
+
+  .day-holiday {
+    background-color: #007F6A;
+    color: #fff;
+    padding: 2px 4px;
   }
 }
