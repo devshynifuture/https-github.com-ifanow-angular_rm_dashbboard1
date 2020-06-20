@@ -76,6 +76,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
     static: false
   }) renderElement: ElementRef;
   feeStructureHtmlData: string;
+  quotationData: any;
 
   constructor(public subscription: SubscriptionService, public subInjectService: SubscriptionInject,
     public eventService: EventService, public dialog: MatDialog, private utilService: UtilService,
@@ -94,7 +95,10 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
   set data(data) {
     this.inputData = data;
     if (data.quotation && data.feeStructureFlag) {
-      this.getServicesForPlan(data);
+      if (this.quotationData == undefined) {
+        this.getServicesForPlan(data);
+        return;
+      }
       return;
     }
     this.getcommanFroalaData(data, null);
@@ -134,7 +138,11 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
       advisorAddress: ''
     }
     this.storeData.documentText = this.utilService.replacePlaceholder(this.storeData.documentText, obj);
-    (feeStructureTableData) ? this.storeData.documentText += feeStructureTableData : '';
+    if (feeStructureTableData) {
+      this.storeData.documentText = this.storeData.documentText.replace(new RegExp(escapeRegExp('$service_fee'), 'g'),
+        feeStructureTableData)
+      this.storeData.documentText.replace(new RegExp('undefined'), 'g', '');
+    }
     // let d = new Date();
     // this.storeData.documentText = this.storeData.documentText.replace(new RegExp(escapeRegExp('$(customer_name)'), 'g'),
     //   this.storeData.clientName);
@@ -433,6 +441,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
   }
 
   getServicesForPlan(quotationData) {
+    this.quotationData = quotationData;
     const obj =
     {
       advisorId: this.advisorId,
@@ -454,12 +463,12 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
       this.feeStructureHtmlData;
 
       let feeStructureTable = `<div class="hide">
-<table style="width: 800px; margin: 0px auto; border: 1px solid rgba(0, 0, 0, 0.12);" align="center">
+<table style="width: 100%; margin: 0px auto; border: 1px solid rgba(0, 0, 0, 0.12);" align="center">
    <tr>
        <td>
            <table style="width: 100%; background: #F5F7F7; ">
                <tr>
-                   <td style="padding: 28px 22px;">
+                   <td style="padding: 28px 22px; border: none;">
                        <h3 style="margin: 0px; font-size: 24px;">${element.serviceName}</h3>
                        <h5 style="margin: 0px; font-size: 16px;">${element.serviceCode}</h5>
                    </td>
@@ -469,19 +478,19 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
    </tr>
    <tr>
        <td>
-           <table style="width: 100%; border-bottom: 1px solid rgba(0, 0, 0, 0.12);">
+           <table style="width: 100%; ">
                <tr>
-                   <td style="padding: 24px;">
+                   <td style="padding: 24px; border: none;">
                        <p style="font-size: 12px; margin:0px;">BILLING NATURE</p>
                        <h4 style="margin: 0px; padding: 0px; font-size: 18px;">${(element.servicePricing.billingNature == 1) ? 'Recurring' : 'Once'}</h4>
                    </td>
 
-                   <td style="padding: 24px;">
+                   <td style="padding: 24px; border: none;">
                        <p style="font-size: 12px; margin:0px;">BILLING MODE</p>
                        <h4 style="margin: 0px; padding: 0px; font-size: 18px;">${(element.servicePricing.billingMode == 1) ? 'Start Of Period' : 'End Of Period'}</h4>
                    </td>
 
-                   <td style="padding: 24px;">
+                   <td style="padding: 24px; border: none;">
                        <p style="font-size: 12px; margin:0px;">FEES</p>
                        <h4 style="margin: 0px; padding: 0px; font-size: 18px;">${(element.servicePricing.feeTypeId == 1) ? '' : ''}${element.averageFees}${(element.servicePricing.feeTypeId == 2) ? '%' : ''}</h4>
                    </td>
@@ -493,35 +502,35 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
        <td>
            <table style="width: 100%;">
                <tr>
-                   <td style="padding: 24px; width: 50%; vertical-align: top;">
+                   <td style="padding: 24px; border: none; width: 50%; vertical-align: top; border: none;">
                        <p style="font-size: 12px; margin:0px;">DESCRIPTION</p>
                        <h4 style="margin: 0px; padding: 0px; font-size: 18px;">${(element.description) ? element.description : 'N/A'}</h4>
                    </td>
-               ${(element.servicePricing.feeTypeId == 2) ? `<td style="padding: 24px;">
+               ${(element.servicePricing.feeTypeId == 2) ? `<td style="padding: 24px; border: none;">
                        <p style="font-size: 12px; margin:0px;">VARIABLE FEE DETAILS </p>
                        <h4 style="margin: 0px; padding: 0px; font-size: 18px;">Mutual Funds </h4>
-                       <table style="width: 100%;  border: 1px solid rgba(0, 0, 0, 0.12); background: #F5F7F7;">
+                       <table style="width: 100%;   background: #F5F7F7;">
                            <tr>
-                               <td colspan="3" style=" border:1px solid rgba(0, 0, 0, 0.12); text-align: center; padding: 10px;">
+                               <td colspan="3" style="   text-align: center; padding: 10px;">
                                    Direct</td>
-                               <td colspan="3" style=" border:1px solid rgba(0, 0, 0, 0.12); padding: 10px;  text-align: center;">
+                               <td colspan="3" style="  padding: 10px;  text-align: center;">
                                    Regular</td>
                            </tr>
                            <tr>
-                               <td style="border:1px solid rgba(0, 0, 0, 0.12);padding: 5px;">Equity</td>
-                               <td style="border:1px solid rgba(0, 0, 0, 0.12);padding: 5px;">Debt</td>
-                               <td style="border:1px solid rgba(0, 0, 0, 0.12);padding: 5px;">Liquid</td>
-                               <td style="border:1px solid rgba(0, 0, 0, 0.12);padding: 5px;">Equity</td>
-                               <td style="border:1px solid rgba(0, 0, 0, 0.12);padding: 5px;">Debt</td>
-                               <td style="border:1px solid rgba(0, 0, 0, 0.12);padding: 5px;">Liquid</td>
+                               <td style="padding: 5px;">Equity</td>
+                               <td style="padding: 5px;">Debt</td>
+                               <td style="padding: 5px;">Liquid</td>
+                               <td style="padding: 5px;">Equity</td>
+                               <td style="padding: 5px;">Debt</td>
+                               <td style="padding: 5px;">Liquid</td>
                            </tr>
                            <tr>
-                               <td style="border:1px solid rgba(0, 0, 0, 0.12);padding: 5px;">${element.servicePricing.pricingList[0].equityAllocation}%</td>
-                               <td style="border:1px solid rgba(0, 0, 0, 0.12);padding: 5px;">${element.servicePricing.pricingList[0].debtAllocation}%</td>
-                               <td style="border:1px solid rgba(0, 0, 0, 0.12);padding: 5px;">${element.servicePricing.pricingList[0].liquidAllocation}%</td>
-                               <td style="border:1px solid rgba(0, 0, 0, 0.12);padding: 5px;">${element.servicePricing.pricingList[1].equityAllocation}%</td>
-                               <td style="border:1px solid rgba(0, 0, 0, 0.12);padding: 5px;">${element.servicePricing.pricingList[1].debtAllocation}%</td>
-                               <td style="border:1px solid rgba(0, 0, 0, 0.12);padding: 5px;">${element.servicePricing.pricingList[1].liquidAllocation}%</td>
+                               <td style="padding: 5px;">${element.servicePricing.pricingList[0].equityAllocation}%</td>
+                               <td style="padding: 5px;">${element.servicePricing.pricingList[0].debtAllocation}%</td>
+                               <td style="padding: 5px;">${element.servicePricing.pricingList[0].liquidAllocation}%</td>
+                               <td style="padding: 5px;">${element.servicePricing.pricingList[1].equityAllocation}%</td>
+                               <td style="padding: 5px;">${element.servicePricing.pricingList[1].debtAllocation}%</td>
+                               <td style="padding: 5px;">${element.servicePricing.pricingList[1].liquidAllocation}%</td>
                            </tr>
                        </table>
                    </td>
@@ -530,7 +539,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
        </td>
    </tr>
 </table>
-<br><br><br><br>
+<br>
 </div>`;
       this.feeStructureHtmlData += feeStructureTable;
     });

@@ -235,9 +235,9 @@
         </div>
         <div class="col-md-4 p-0 right">
             <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="right">
-                <mat-button-toggle value="bold" routerLink="/admin/day-calendar" routerLinkActive="btn-primary">Day</mat-button-toggle>
-                <mat-button-toggle value="italic" routerLink="/admin/week-calendar" routerLinkActive="btn-primary">Week</mat-button-toggle>
-                <mat-button-toggle value="underline" routerLink="/admin/calendar" routerLinkActive="btn-primary">Month</mat-button-toggle>
+                <mat-button-toggle value="bold" routerLink="/admin/activies/day" routerLinkActive="btn-primary">Day</mat-button-toggle>
+                <mat-button-toggle value="italic" routerLink="/admin/activies/week" routerLinkActive="btn-primary">Week</mat-button-toggle>
+                <mat-button-toggle value="underline" routerLink="/admin/activies/month" routerLinkActive="btn-primary">Month</mat-button-toggle>
             </mat-button-toggle-group>
             <button mat-stroked-button class="br-2 ba-black text-black right mr-16">Schedule</button>
         </div>
@@ -337,55 +337,7 @@
             </div>
         </div>
         <div class="col-md-10">
-            <div class="custom-grid pt-20">
-                <div class="column">
-                    <p class="m-0 roboto text-black">MON</p>
-                </div>
-                <div class="column">
-                    <p class="m-0 roboto text-black">TUE</p>
-                </div>
-                <div class="column">
-                    <p class="m-0 roboto text-black">WED</p>
-                </div>
-                <div class="column">
-                    <p class="m-0 roboto text-black">THU</p>
-                </div>
-                <div class="column">
-                    <p class="m-0 roboto text-black">FRI</p>
-                </div>
-                <div class="column">
-                    <p class="m-0 roboto text-black">SAT</p>
-                </div>
-                <div class="column">
-                    <p class="m-0 roboto text-black">SUN</p>
-                </div>
-            </div>
-            <div class="custom-grid p-0 b-a bb-0  calendar-column">
-                <div class="column " *ngFor="let day of daysArr; let i = index">
-                    <mat-chip style="margin-right: 3px;" [class.actived]="day == todayDate && i > addLastMonthDays - 1 && i < numbersOfDays - 1 && currentMonth == month" 
-                        [class.text-primitive]="i < addLastMonthDays || i > numbersOfDays + addLastMonthDays - 1" 
-                        >{{day}}</mat-chip>
-                        <div   class="pt-20 pl-4" style="width: 100%; border: none; ">
-                            <ul   *ngFor="let event of formatedEvent;" class="date-info blue" [hidden]="day != event.day || month + 1 != event.month || year != event.year || i < addLastMonthDays || i > numbersOfDays + addLastMonthDays - 1">
-                                <li style="display: none;" >
-                                    <mat-chip-list *ngFor="let list of event.attendeeList;"  class="pink mt-8" >
-                                        <mat-chip >{{list}}</mat-chip>
-                                    </mat-chip-list>
-                                </li>
-                                <li  (click)="editEvent(event)">                                    
-                                    <span *ngIf="event.start.dateTime != null">{{event.startTime}}</span> <span class="f-700 m-0" [innerHTML]="event.summary" ></span></li>
-                            </ul>
-                           
-                           <!-- currunt month add event -->
-                           <!-- && i >= curruntDayIndex && currentMonth == month && currentYear >= year || && month>= currentMonth && year >= currentYear-->
-                            <div *ngIf = "i > addLastMonthDays-1 && i < numbersOfDays + addLastMonthDays " (click)="addEvent(day,month + 1,year)" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; border: none;"></div>
-                           <!-- previous month add event || && (month != 0 && year >= currentYear)-->
-                            <div *ngIf = "i < addLastMonthDays && month >= currentMonth " (click)="addEvent(day,month,year)" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; border: none;"></div>
-                           <!-- next month add event || && ((month == 11 && year+1 == currentYear) ||  year >= currentYear)-->
-                           <div *ngIf = "i >= numbersOfDays + addLastMonthDays " (click)="addEvent(day,month+2,year)" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; border: none;"></div>
-                        </div>
-                </div>
-            </div>
+            <router-outlet></router-outlet>
         </div>
     </div>
 </div>

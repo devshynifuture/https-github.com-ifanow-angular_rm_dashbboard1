@@ -1,23 +1,14 @@
 import { Component,OnInit } from '@angular/core';
 import { MatDialog} from '@angular/material/dialog';
-import { calendarService } from './calendar.service';
-import { AuthService } from '../../../../../auth-service/authService';
-import { EventDialog } from './event-dialog';
-
-
-export interface DialogData {
-  [x: string]: any;
-  animal: string;
-  name: string; 
-}
-
+import { calendarService } from './../calendar.service';
+import { AuthService } from '../../../../../../auth-service/authService';
+import { EventDialog } from './../event-dialog';
 @Component({
-  selector: 'app-calendar',
-  templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'app-calendar-month',
+  templateUrl: './calendar-month.component.html',
+  styleUrls: ['./calendar-month.component.scss']
 })
-export class CalendarComponent implements OnInit {
+export class CalendarMonthComponent implements OnInit {
   viewDate: any;
   numbersOfDays: any;
   lastMonthDays: any;
@@ -50,8 +41,7 @@ export class CalendarComponent implements OnInit {
     this.updatecalendar();
     this.getEvent();
     this.curruntDayIndex = this.daysArr.indexOf(this.todayDate);
-
-    this.excessAllow = localStorage.getItem('successStoringToken')
+    // this.excessAllow = localStorage.getItem('successStoringToken')
   }
 
   getEvent() {
@@ -345,7 +335,6 @@ export class CalendarComponent implements OnInit {
       return current_year + '-' + current_month + '-' + current_date + 'T' + current_hrs + ':' + current_mins + ':' + current_secs;
     }
   }
+
+
 }
-
-
-
