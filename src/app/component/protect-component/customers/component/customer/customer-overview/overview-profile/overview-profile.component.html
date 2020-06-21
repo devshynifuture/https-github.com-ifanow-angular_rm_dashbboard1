@@ -101,13 +101,13 @@
 
                             <div class="memberSlider">
                                 <div *ngFor="let singleMembers of familyMemberList" class="memberList primary-border c-p">
-                                    <img (click)="open('edit',singleMembers)" *ngIf="singleMembers.relationshipId==2" src="/assets/images/svg/man-profile.svg" width="48px">
-                                    <img (click)="open('edit',singleMembers)" *ngIf="singleMembers.relationshipId==3" src="/assets/images/svg/women-profile-icon.svg" width="48px">
+                                    <img (click)="open('edit',singleMembers)" *ngIf="singleMembers.relationshipId==2" style="margin-right: 10px; margin-left: 2px;" src="/assets/images/svg/man-profile.svg" width="48px">
+                                    <img (click)="open('edit',singleMembers)" *ngIf="singleMembers.relationshipId==3" style="margin-right: 10px; margin-left: 2px;" src="/assets/images/svg/women-profile-icon.svg" width="48px">
                                     <img (click)="open('edit',singleMembers)" *ngIf="singleMembers.relationshipId==4" style="margin-right: 10px; margin-left: 2px;" src="/assets/images/svg/son-profile.svg" width="36px">
                                     <img (click)="open('edit',singleMembers)" *ngIf="singleMembers.relationshipId==5" style="margin-right: 10px; margin-left: 2px;" src="/assets/images/svg/daughter-profile.svg" width="36px">
-                                    <img (click)="open('edit',singleMembers)" *ngIf="singleMembers.relationshipId==7" src="/assets/images/svg/mother-profile.svg" width="48px">
-                                    <img (click)="open('edit',singleMembers)" *ngIf="singleMembers.relationshipId==6" src="/assets/images/svg/father-profile.svg" width="48px">
-                                    <img (click)="open('edit',singleMembers)" *ngIf="singleMembers.relationshipId==10" src="/assets/images/svg/others.svg" width="48px">
+                                    <img (click)="open('edit',singleMembers)" *ngIf="singleMembers.relationshipId==7" style="margin-right: 10px; margin-left: 2px;" src="/assets/images/svg/mother-profile.svg" width="48px">
+                                    <img (click)="open('edit',singleMembers)" *ngIf="singleMembers.relationshipId==6" style="margin-right: 10px; margin-left: 2px;" src="/assets/images/svg/father-profile.svg" width="48px">
+                                    <img (click)="open('edit',singleMembers)" *ngIf="singleMembers.relationshipId==10" style="margin-right: 10px; margin-left: 2px;" src="/assets/images/svg/others.svg" width="48px">
                                     <div (click)="open('edit',singleMembers)" class="familyList">
                                         <h4 (click)="open('edit',singleMembers)" class="f-12 m-0">
                                             <span *ngIf="singleMembers.shortName==undefined">{{singleMembers.name}}</span><span *ngIf="singleMembers.shortName" matTooltip="{{singleMembers.name}}">{{singleMembers.shortName}}
