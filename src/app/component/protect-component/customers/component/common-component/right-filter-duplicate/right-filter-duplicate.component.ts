@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MAT_DATE_FORMATS } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { DatePipe } from '@angular/common';
@@ -16,7 +16,7 @@ import { MfServiceService } from '../../customer/accounts/assets/mutual-fund/mf-
   styleUrls: ['./right-filter-duplicate.component.scss'],
   providers: [
     [DatePipe],
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ],
 })
 export class RightFilterDuplicateComponent implements OnInit {
@@ -85,10 +85,15 @@ export class RightFilterDuplicateComponent implements OnInit {
   checkFlag: boolean;
   uncheckFlag = true;
   whichFilter: any;
+  selectUnselctAllFlagFam = true;
+  selectUnselctAllFlagAmc = true;
+  selectUnselctAllFlagScheme = true;
+  selectUnselctAllFlagFolio = true;
+  selectUnselctAllFlagCategory = true;
 
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder,
-              private custumService: CustomerService, private eventService: EventService,
-              private mfService: MfServiceService, private datePipe: DatePipe,) {
+    private custumService: CustomerService, private eventService: EventService,
+    private mfService: MfServiceService, private datePipe: DatePipe, ) {
   }
 
   @Input()
@@ -112,12 +117,9 @@ export class RightFilterDuplicateComponent implements OnInit {
     this.transactionPeriod = (this._data.transactionPeriod) ? this._data.transactionPeriod : false;
     // this.amc = this._data.schemeWise;//amc wise data
     // this.folio = this._data.folioWise;//for getting all folios
-    this.amc = [...new Map(this._data.schemeWise.map(item => [item.amc_id, item])).values()]; // amc wise data
-    this.amc = this.mfService.sorting(this.amc, 'amc_name');
-    this.amc.forEach(item => item.showInFilter = true);
-    this.folio = [...new Map(this._data.folioWise.map(item => [item.folioNumber, item])).values()]; // for getting all folios
-    this.folio = this.mfService.sorting(this.folio, 'folioNumber');
-    this.folio.forEach(item => item.showInFilter = true);
+
+    this.getAmc(this._data.schemeWise);
+    this.getFolio(this._data.folioWise);
     this.showSummaryFilterForm(this._data); // as on date and showZero folio form
 
     this.getCategoryWise(this._data.category); // get category wise data
@@ -162,14 +164,61 @@ export class RightFilterDuplicateComponent implements OnInit {
   getFormControl(): any {
     return this.summaryFilerForm.controls;
   }
-
-  getCategoryWise(data) {
+  getAmc(data) {
+    const myArray = data;
+    const list = [];
+    myArray.forEach(val => list.push(Object.assign({}, val)));
     const filterData = [];
-    data.forEach(element => {
+    list.forEach(element => {
+      const obj = {
+        amc_name: element.amc_name,
+        schemeName: element.schemeName,
+        schemeCode: element.schemeCode,
+        mutualFund: element.mutualFund,
+        id: element.id,
+        amc_id: element.amc_id,
+        selected: element.selected,
+        showInFilter: true
+      };
+      filterData.push(obj);
+    });
+    const sortedData = this.mfService.sorting(filterData, 'amc_name');
+    this.amc = [...new Map(sortedData.map(item => [item.amc_id, item])).values()];
+
+
+
+    // this.amc = [...new Map(this._data.schemeWise.map(item => [item.amc_id, item])).values()]; // amc wise data
+
+    // this.amc = this.mfService.sorting(this.amc, 'amc_name');
+    // this.amc.forEach(item => item.showInFilter = true);
+  }
+  getFolio(data) {
+    const myArray = data;
+    const list = [];
+    myArray.forEach(val => list.push(Object.assign({}, val)));
+    const filterData = [];
+    list.forEach(element => {
+      const obj = {
+        folioNumber: element.folioNumber,
+        selected: element.selected,
+        showInFilter: true
+      };
+      filterData.push(obj);
+    });
+    const sortedData = this.mfService.sorting(filterData, 'folioNumber');
+    this.folio = [...new Map(sortedData.map(item => [item.folioNumber, item])).values()];
+  }
+  getCategoryWise(data) {
+    const myArray = data;
+    const list = [];
+    myArray.forEach(val => list.push(Object.assign({}, val)));
+    const filterData = [];
+    list.forEach(element => {
       const obj = {
         category: element.category,
         categoryId: element.id,
-        selected: element.selected
+        selected: element.selected,
+        showInFilter: true
       };
       filterData.push(obj);
     });
@@ -194,7 +243,7 @@ export class RightFilterDuplicateComponent implements OnInit {
 
   getSchemeWise(data) {
     const filterData = [];
-    data.filter(function(element) {
+    data.filter(function (element) {
       // const obj = {
       //   id: element.id,
       //   schemeName: element.schemeName,
@@ -210,7 +259,7 @@ export class RightFilterDuplicateComponent implements OnInit {
         mutualFund: element.mutualFund,
         amc_id: element.amc_id,
         selected: element.selected,
-        showInFilter:true
+        showInFilter: true
       };
       filterData.push(obj);
     });
@@ -254,7 +303,7 @@ export class RightFilterDuplicateComponent implements OnInit {
           name: element.name,
           familyMemberId: element.id,
           selected: element.selected,
-          showInFilter:true
+          showInFilter: true
         };
         filterData.push(obj);
       });
@@ -265,7 +314,7 @@ export class RightFilterDuplicateComponent implements OnInit {
 
   getTransactionView(data) {
     const filterData = [];
-    data.filter(function(element) {
+    data.filter(function (element) {
       const obj = {
         displayName: (element.displayName) ? element.displayName : element,
         selected: (element.selected == false) ? element.selected = false : (element.selected == true) ? element.selected = true : true
@@ -282,7 +331,7 @@ export class RightFilterDuplicateComponent implements OnInit {
       this.reportType = ['Investor wise', 'Category wise', 'Sub Category wise', 'Scheme wise'];
     }
     const filterData = [];
-    this.reportType.filter(function(element) {
+    this.reportType.filter(function (element) {
       const obj = {
         name: element,
         selected: false
@@ -319,28 +368,33 @@ export class RightFilterDuplicateComponent implements OnInit {
         a.from > b.from ? 1 : (a.from === b.from ? 0 : -1)
       );
       const calculatedFinYears = sortingYeras;
-      this.financialYears = [{from: 2010, to: 2011, selected: true, disabled: true}, {
+      this.financialYears = [{ from: 2010, to: 2011, selected: true, disabled: true }, {
         from: 2011,
         to: 2012,
         selected: true,
         disabled: true
-      }, {from: 2012, to: 2013, selected: true, disabled: true}, {
+      }, { from: 2012, to: 2013, selected: true, disabled: true }, {
         from: 2013,
         to: 2014,
         selected: true,
         disabled: true
-      }, {from: 2014, to: 2015, selected: true, disabled: true},
-        {from: 2015, to: 2016, selected: true, disabled: true}, {
-          from: 2016,
-          to: 2017,
-          selected: true,
-          disabled: true
-        }, {from: 2017, to: 2018, selected: true, disabled: true}, {
-          from: 2018,
-          to: 2019,
-          selected: true,
-          disabled: true
-        }, {from: 2019, to: 2020, selected: true, disabled: true}, {from: 2020, to: 2021, selected: true, disabled: true}];
+      }, { from: 2014, to: 2015, selected: true, disabled: true },
+      { from: 2015, to: 2016, selected: true, disabled: true }, {
+        from: 2016,
+        to: 2017,
+        selected: true,
+        disabled: true
+      }, { from: 2017, to: 2018, selected: true, disabled: true }, {
+        from: 2018,
+        to: 2019,
+        selected: true,
+        disabled: true
+      }, { from: 2019, to: 2020, selected: true, disabled: true }, {
+        from: 2020,
+        to: 2021,
+        selected: true,
+        disabled: true
+      }];
       calculatedFinYears.forEach(element => {
         this.financialYears.forEach(item => {
           if (element.from == item.from) {
@@ -348,7 +402,7 @@ export class RightFilterDuplicateComponent implements OnInit {
           }
         });
       });
-      this.financialYears.filter(function(element) {
+      this.financialYears.filter(function (element) {
         if (element.from == 2019 && element.to == 2020) {
           element.selected = true;
           form.get('grandfathering').setValue('1');
@@ -389,7 +443,7 @@ export class RightFilterDuplicateComponent implements OnInit {
     this.reportFormat = ['Summary', 'Detailed'];
 
     const filterData = [];
-    this.reportFormat.filter(function(element) {
+    this.reportFormat.filter(function (element) {
       const obj = {
         name: element,
         selected: false
@@ -420,17 +474,17 @@ export class RightFilterDuplicateComponent implements OnInit {
   // }
   getSaveFilters() {
     this.saveFilters = [
-      {value: 'Current Client', selected: false}, {value: 'All Client', selected: false}];
+      { value: 'Current Client', selected: false }, { value: 'All Client', selected: false }];
 
   }
 
   getOverviewFilter() {
-    this.overviewFilter = [{name: 'Summary bar', selected: true},
-      {name: 'Scheme wise allocation', selected: true},
-      {name: 'Cashflow Status', selected: true},
-      {name: 'Family Member wise allocation', selected: true},
-      {name: 'Category wise allocation', selected: true},
-      {name: 'Sub Category wise allocation', selected: true}];
+    this.overviewFilter = [{ name: 'Summary bar', selected: true },
+    { name: 'Scheme wise allocation', selected: true },
+    { name: 'Cashflow Status', selected: true },
+    { name: 'Family Member wise allocation', selected: true },
+    { name: 'Category wise allocation', selected: true },
+    { name: 'Sub Category wise allocation', selected: true }];
   }
 
   changeFilterPeriod(value) {
@@ -459,7 +513,7 @@ export class RightFilterDuplicateComponent implements OnInit {
     });
     if (this._data.selectFilter || this._data.selectFilter == 0) {
       this.saveFilters = [
-        {value: 'Current Client', selected: (this._data.selectFilter != 0) ? true : false}, {
+        { value: 'Current Client', selected: (this._data.selectFilter != 0) ? true : false }, {
           value: 'All Client',
           selected: (this._data.selectFilter == 0) ? true : false
         }];
@@ -503,10 +557,10 @@ export class RightFilterDuplicateComponent implements OnInit {
     const filterData2 = [];
     const filterData3 = [];
     this.checkFlag = true;
-    this.familyMember.filter(function(element) {
+    this.familyMember.filter(function (element) {
       if (element.selected == true) {
-        element.showInFilter =true;
-        filterData.filter(function(amc) {
+        element.showInFilter = true;
+        filterData.filter(function (amc) {
           // amc.mutualFund.forEach(function (mf) {
           if (amc.familyMemberId == element.familyMemberId) {
             const obj = {
@@ -535,13 +589,80 @@ export class RightFilterDuplicateComponent implements OnInit {
           }
           // });
         });
-      }else{
-        element.showInFilter =false;
+      } else {
+        element.showInFilter = false;
       }
     });
     this.scheme = [...new Map(filterData1.map(item => [item.id, item])).values()];
     this.amc = [...new Map(filterData1.map(item => [item.amc_id, item])).values()];
     this.folio = [...new Map(filterData2.map(item => [item.folioNumber, item])).values()];
+    this.category = [...new Map(filterData3.map(item => [item.categoryId, item])).values()];
+    this.changeSelect('', '');
+  }
+
+  changeFilterAmc() {
+    (this.amcObj.length == 0) ? this.showError = null : (this.amcObj.length == 1 && !this.amcObj[0].selected) ? this.showError = 'amc' : this.showError = null;
+    const filterData = [];
+    const filterData2 = this._data.mfData.mutualFundList;
+    let filterData1 = [];
+    const filterData3 = [];
+    const filterData4 = [];
+    this.checkFlag = true;
+    this.amc.filter(function (element) {
+      if (element.selected == true) {
+        element.showInFilter = true;
+        filterData2.forEach(amc => {
+          // amc.mutualFund.forEach(mf => {
+          if (element.amc_id == amc.amcId) {
+            const obj = {
+              amc_name: amc.amcName,
+              schemeName: amc.schemeName,
+              schemeCode: amc.schemeCode,
+              mutualFund: amc.mutualFund,
+              id: amc.schemeId,
+              amc_id: amc.amcId,
+              selected: true,
+              showInFilter: true
+            };
+            const obj1 = {
+              name: amc.ownerName,
+              familyMemberId: amc.familyMemberId,
+              selected: true,
+              showInFilter: true
+
+            };
+            const obj4 = {
+              folioNumber: amc.folioNumber,
+              selected: true,
+              showInFilter: true
+
+            };
+            const obj2 = {
+              category: amc.categoryName,
+              categoryId: amc.categoryId,
+              selected: true,
+              showInFilter: true
+
+            };
+            filterData.push(obj);
+            filterData1.push(obj1);
+            filterData3.push(obj2);
+            filterData4.push(obj4);
+          }
+        });
+      } else {
+        // element.showInFilter = false;
+      }
+    });
+    filterData1 = [...new Map(filterData1.map(item => [item.familyMemberId, item])).values()];
+
+
+    this.FilterAmcOnlySelcted(filterData1, this.familyMember, 'familyMemberId', 'familyMemberId');
+    // const tempFam = [];
+    // tempFam.push(...this.familyMember);
+    // this.familyMember = tempFam;
+    this.scheme = [...new Map(filterData.map(item => [item.id, item])).values()];
+    this.folio = [...new Map(filterData4.map(item => [item.folioNumber, item])).values()];
     this.category = [...new Map(filterData3.map(item => [item.categoryId, item])).values()];
     this.changeSelect('', '');
   }
@@ -552,17 +673,29 @@ export class RightFilterDuplicateComponent implements OnInit {
     // filterData = filterData.filter((item: any) =>
     //   (item.currentValue != 0 && item.currentValue > 0)
     // );
-    const filterData1 = [];
-    const filterData2 = [];
-    const filterData3 = [];
+    let filterData1 = [];
+    let filterData2 = [];
+    let filterData3 = [];
+    let filterData4 = [];
     this.checkFlag = true;
-    data.filter(function(element) {
+    data.filter(function (element) {
       if (element.selected == true) {
-        element.showInFilter =true;
-        filterData.filter(function(amc) {
+        element.showInFilter = true;
+        filterData.filter(function (amc) {
           // amc.mutualFund.forEach(function (mf) {
           if (amc.categoryId == element.categoryId) {
             const obj = {
+              amc_name: amc.amcName,
+              schemeName: amc.schemeName,
+              schemeCode: amc.schemeCode,
+              mutualFund: amc.mutualFund,
+              id: amc.schemeId,
+              amc_id: amc.amcId,
+              selected: true,
+              showInFilter: true
+
+            };
+            const obj4= {
               amc_name: amc.amcName,
               schemeName: amc.schemeName,
               schemeCode: amc.schemeCode,
@@ -587,11 +720,12 @@ export class RightFilterDuplicateComponent implements OnInit {
             filterData1.push(obj);
             filterData2.push(obj2);
             filterData3.push(obj3);
+            filterData4.push(obj4);
           }
           // });
         });
-      }else{
-        element.showInFilter =false;
+      } else {
+        element.showInFilter = false;
       }
     });
     // let filterFamData = filterData3;
@@ -600,10 +734,15 @@ export class RightFilterDuplicateComponent implements OnInit {
     //     filterFamData = filterFamData.filter(item => item.familyMemberId === element.familyMemberId);
     //   }
     // });
-    this.familyMember = this.FilterAmcOnlySelcted(filterData3,this.familyMember,'familyMemberId','familyMemberId');
-    this.amc = this.FilterAmcOnlySelcted(filterData1,this.amc,'amc_id','amc_id');
-    this.scheme = this.FilterAmcOnlySelcted(filterData1,this.amc,'id','id');
-    this.folio = this.FilterAmcOnlySelcted(filterData2,this.folio,'folioNumber','folioNumber');
+    filterData3 = [...new Map(filterData3.map(item => [item.familyMemberId, item])).values()];
+    filterData1 = [...new Map(filterData1.map(item => [item.amc_id, item])).values()];
+    filterData4 = [...new Map(filterData4.map(item => [item.id, item])).values()];
+    filterData2 = [...new Map(filterData2.map(item => [item.folioNumber, item])).values()];
+
+    this.FilterAmcOnlySelcted(filterData3, this.familyMember, 'familyMemberId', 'familyMemberId');
+    this.FilterAmcOnlySelcted(filterData1, this.amc, 'amc_id', 'amc_id');
+    this.FilterAmcOnlySelcted(filterData4, this.scheme, 'id', 'id');
+    this.FilterAmcOnlySelcted(filterData2, this.folio, 'folioNumber', 'folioNumber');
 
     // this.scheme = [...new Map(filterData1.map(item => [item.id, item])).values()];
     // this.amc = [...new Map(filterData1.map(item => [item.amc_id, item])).values()];
@@ -614,14 +753,14 @@ export class RightFilterDuplicateComponent implements OnInit {
 
   changeFilterFolio() {
     (this.folioObj.length == 0) ? this.showError = null : (this.folioObj.length == 1 && !this.folioObj[0].selected) ? this.showError = 'folio' : this.showError = null;
-    const filterData = [];
+    let filterData = [];
     const filterData2 = this._data.mfData.mutualFundList;
-    const filterData1 = [];
-    const filterData3 = [];
+    let filterData1 = [];
+    let filterData3 = [];
     this.checkFlag = true;
-    this.folio.filter(function(element) {
+    this.folio.filter(function (element) {
       if (element.selected == true) {
-        element.showInFilter =true;
+        element.showInFilter = true;
         filterData2.forEach(amc => {
           // amc.mutualFund.forEach(mf => {
           if (element.folioNumber == amc.folioNumber) {
@@ -654,8 +793,8 @@ export class RightFilterDuplicateComponent implements OnInit {
           }
           // });
         });
-      }else{
-        element.showInFilter =false;
+      } else {
+        element.showInFilter = false;
       }
     });
     // let filterFamData = filterData1;
@@ -665,10 +804,14 @@ export class RightFilterDuplicateComponent implements OnInit {
     //     filterFamData = filterFamData.filter(item => item.familyMemberId === element.familyMemberId);
     //   }
     // });
-    this.familyMember = this.FilterAmcOnlySelcted(filterData1,this.familyMember,'familyMemberId','familyMemberId');
-    this.amc = this.FilterAmcOnlySelcted(filterData,this.amc,'amc_id','amc_id');
-    this.scheme = this.FilterAmcOnlySelcted(filterData,this.amc,'id','id');
-   
+    filterData1 = [...new Map(filterData1.map(item => [item.familyMemberId, item])).values()];
+    filterData = [...new Map(filterData.map(item => [item.amc_id, item])).values()];
+    filterData = [...new Map(filterData.map(item => [item.id, item])).values()];
+
+    this.FilterAmcOnlySelcted(filterData1, this.familyMember, 'familyMemberId', 'familyMemberId');
+    this.FilterAmcOnlySelcted(filterData, this.amc, 'amc_id', 'amc_id');
+    this.FilterAmcOnlySelcted(filterData, this.amc, 'id', 'id');
+
     // this.category = this.matchDataFunction(filterData3,this.category,'categoryId','categoryId');
     // this.scheme = [...new Map(filterData.map(item => [item.id, item])).values()];
     // this.amc = [...new Map(filterData.map(item => [item.amc_id, item])).values()];
@@ -678,127 +821,39 @@ export class RightFilterDuplicateComponent implements OnInit {
     this.changeSelect('', '');
   }
 
-  changeFilterAmc() {
-    (this.amcObj.length == 0) ? this.showError = null : (this.amcObj.length == 1 && !this.amcObj[0].selected) ? this.showError = 'amc' : this.showError = null;
-    const filterData = [];
-    const filterData2 = this._data.mfData.mutualFundList;
-    const filterData1 = [];
-    const filterData3 = [];
-    const filterData4 = [];
-    this.checkFlag = true;
-    this.amc.filter(function(element) {
-      if (element.selected == true) {
-        element.showInFilter =true;
-        filterData2.forEach(amc => {
-          // amc.mutualFund.forEach(mf => {
-          if (element.amc_id == amc.amcId) {
-            const obj = {
-              amc_name: amc.amcName,
-              schemeName: amc.schemeName,
-              schemeCode: amc.schemeCode,
-              mutualFund: amc.mutualFund,
-              id: amc.schemeId,
-              amc_id: amc.amcId,
-              selected: true, 
-              showInFilter:true
-            };
-            const obj1 = {
-              name: amc.ownerName,
-              familyMemberId: amc.familyMemberId,
-              selected: true,
-              showInFilter:true
 
-            };
-            const obj4 = {
-              folioNumber: amc.folioNumber,
-              selected: true,
-              showInFilter:true
+  FilterAmcOnlySelcted(filterData, orgData, filterId, orgId) {
+    orgData.forEach(item => item.selected = false);
 
-            };
-            const obj2 = {
-              category: amc.categoryName,
-              categoryId: amc.categoryId,
-              selected: true, 
-              showInFilter:true
-
-            };
-            filterData.push(obj);
-            filterData1.push(obj1);
-            filterData3.push(obj2);
-            filterData4.push(obj4);
-          }
-        });
-      }else{
-        element.showInFilter =false;
-      }
-    });
-    // let filterFamData = filterData1;
-    // filterFamData = [...new Map(filterFamData.map(item => [item.familyMemberId, item])).values()];
-    // this.familyMember.forEach(element => {
-    //   if (element.selected == true) {
-    //     filterFamData = filterFamData.filter(item => item.familyMemberId === element.familyMemberId);
-    //   }
-    // });
-    this.familyMember = this.FilterAmcOnlySelcted(filterData1,this.familyMember,'familyMemberId','familyMemberId');
-    // this.scheme = this.matchDataFunction(filterData,this.scheme,'id','id');
-    // this.folio = this.matchDataFunction(filterData4,this.folio,'folioNumber','folioNumber');
-    // this.category = this.matchDataFunction(filterData3,this.category,'categoryId','categoryId');
-
-    // this.scheme = this.FilterAmcOnlySelcted(filterData,this.scheme,'id','id');
-
-    // this.folio = this.FilterAmcOnlySelcted(filterData4,this.folio,'folioNumber','folioNumber');
-    // this.category = this.FilterAmcOnlySelcted(filterData3,this.category,'categoryId','categoryId');
-
-    this.scheme = [...new Map(filterData.map(item => [item.id, item])).values()];
-    this.folio = [...new Map(filterData4.map(item => [item.folioNumber, item])).values()];
-    // // this.familyMember = [...new Map(familyFilter.map(item => [item.familyMemberId, item])).values()];
-     this.category = [...new Map(filterData3.map(item => [item.categoryId, item])).values()];
-    // console.log(this.amc);
-    this.changeSelect('', '');
-  }
-  FilterAmcOnlySelcted(filterData,orgData,filterId,orgId){
-    if(filterData.length > 0){
-      if(orgData.length > 0){
-        orgData.forEach(item => item.selected = '');
+    if (filterData.length > 0) {
+      if (orgData.length > 0) {
         filterData.forEach(element => {
           orgData.forEach(item => {
-            if(item[filterId] == element[orgId]){
-              item.selected=true;
+            if (item[filterId] == element[orgId] && item.showInFilter) {
+              item.selected = true;
             }
           });
         });
-      
-        orgData.forEach(element => {
-          if(element.selected == ''){
-            element.selected = false;
-          }
-        });
-      }else{
-        orgData=filterData
-
       }
-
-    }else{
-      orgData=filterData
     }
-
-    orgData = [...new Map(orgData.map(item => [item[orgId], item])).values()];
-    return orgData
+    // orgData = [...new Map(orgData.map(item => [item[orgId], item])).values()];
+    // return orgData;
   }
-  matchDataFunction(filterData,orgData,filterId,orgId){
-    let newARr= [];
-    if(orgData.length>0){
+
+  matchDataFunction(filterData, orgData, filterId, orgId) {
+    let newARr = [];
+    if (orgData.length > 0) {
 
       filterData.forEach(element => {
         orgData.forEach(item => {
-          if(item[orgId] === element[filterId]){
-            newARr.push(element)
+          if (item[orgId] === element[filterId]) {
+            newARr.push(element);
           }
         });
         // newARr =orgData.filter(item => item[orgId] === element[filterId]);
       });
-    }else{
-      newARr=filterData
+    } else {
+      newARr = filterData;
     }
 
 
@@ -806,17 +861,18 @@ export class RightFilterDuplicateComponent implements OnInit {
 
     return newARr;
   }
+
   changeFilterScheme() {
     (this.schemeObj.length == 0) ? this.showError = null : (this.schemeObj.length == 1 && !this.schemeObj[0].selected) ? this.showError = 'scheme' : this.showError = null;
-    const filterData = [];
+    let filterData = [];
     const filterData2 = this._data.mfData.mutualFundList;
-    const filterData1 = [];
+    let filterData1 = [];
     const filterData3 = [];
-    const filterData4 = [];
+    let filterData4 = [];
     this.checkFlag = true;
-    this.scheme.filter(function(element) {
+    this.scheme.filter(function (element) {
       if (element.selected == true) {
-        element.showInFilter =true;
+        element.showInFilter = true;
         filterData2.forEach(amc => {
           // amc.mutualFund.forEach(mf => {
           if (element.id == amc.schemeId) {
@@ -850,8 +906,8 @@ export class RightFilterDuplicateComponent implements OnInit {
           }
           // });
         });
-      }else{
-        element.showInFilter =false;
+      } else {
+        element.showInFilter = false;
       }
     });
     // let filterFamData = filterData1;
@@ -861,9 +917,14 @@ export class RightFilterDuplicateComponent implements OnInit {
     //     filterFamData = filterFamData.filter(item => item.familyMemberId === element.familyMemberId);
     //   }
     // });
-    this.familyMember = this.FilterAmcOnlySelcted(filterData1,this.familyMember,'familyMemberId','familyMemberId');
-    this.amc = this.FilterAmcOnlySelcted(filterData,this.amc,'amc_id','amc_id');
+    filterData1 = [...new Map(filterData1.map(item => [item.familyMemberId, item])).values()];
 
+    filterData = [...new Map(filterData.map(item => [item.amc_id, item])).values()];
+
+    this.FilterAmcOnlySelcted(filterData1, this.familyMember, 'familyMemberId', 'familyMemberId');
+    console.log(' this.amc pre : ', this.amc);
+    this.FilterAmcOnlySelcted(filterData, this.amc, 'amc_id', 'amc_id');
+    console.log(' this.amc : ', this.amc);
     // this.folio = this.matchDataFunction(filterData4,this.folio,'folioNumber','folioNumber');
     // this.category = this.matchDataFunction(filterData3,this.category,'categoryId','categoryId');
     // this.amc = [...new Map(filterData.map(item => [item.amc_id, item])).values()];
@@ -982,7 +1043,7 @@ export class RightFilterDuplicateComponent implements OnInit {
     }
   }
 
-  changeSelect = function(data, i) {
+  changeSelect = function (data, i) {
     this.sendTransactionView = this._data.transactionView;
     if (this._data.name == 'Overview Report') {
       if (this.overviewFilter != undefined) {
@@ -1005,12 +1066,12 @@ export class RightFilterDuplicateComponent implements OnInit {
       const filter = [];
       this.countFamily = 0;
       this.familyMember.forEach(item => {
-        if ((this.whichFilter == 'family') ? item.selected : (this.checkFlag) ? item.showInFilter  : item.selected) {
+        if ((this.whichFilter == 'family') ? item.selected : item.showInFilter && item.selected) {
           item.selected = true;
           this.countFamily++;
           filter.push(item);
-        }else{
-          (this.whichFilter != 'family') ? item.selected = false : '';
+        } else if (this.whichFilter != 'family') {
+          item.selected = false;
         }
       });
       this.familyMemObj = filter;
@@ -1019,11 +1080,11 @@ export class RightFilterDuplicateComponent implements OnInit {
       const filter = [];
       this.countAmc = 0;
       this.amc.forEach(item => {
-        if ((this.whichFilter == 'amc') ? item.selected : (this.checkFlag) ? item.showInFilter  : item.selected) {
+        if ((this.whichFilter == 'amc') ? item.selected : item.showInFilter && item.selected) {
           item.selected = true;
           this.countAmc++;
           filter.push(item);
-        }else{
+        } else {
           (this.whichFilter != 'amc') ? item.selected = false : '';
         }
       });
@@ -1033,11 +1094,11 @@ export class RightFilterDuplicateComponent implements OnInit {
       const filter = [];
       this.countScheme = 0;
       this.scheme.forEach(item => {
-        if ((this.whichFilter == 'scheme') ? item.selected : (this.checkFlag) ? item.showInFilter  : item.selected) {
+        if ((this.whichFilter == 'scheme') ? item.selected : item.showInFilter && item.selected) {
           item.selected = true;
           this.countScheme++;
           filter.push(item);
-        }else{
+        } else {
           (this.whichFilter != 'scheme') ? item.selected = false : '';
         }
       });
@@ -1047,13 +1108,13 @@ export class RightFilterDuplicateComponent implements OnInit {
       const filter = [];
       this.countFolio = 0;
       this.folio.forEach(item => {
-        if ((this.whichFilter == 'folio') ? item.selected : (this.checkFlag) ? item.showInFilter  : item.selected) {
+        if ((this.whichFilter == 'folio') ? item.selected : item.showInFilter && item.selected) {
           item.selected = true;
           this.countFolio++;
           filter.push(item);
-      }else{
-        (this.whichFilter != 'folio') ? item.selected = false : '';
-      }
+        } else {
+          (this.whichFilter != 'folio') ? item.selected = false : '';
+        }
       });
       this.folioObj = filter;
     }
@@ -1073,11 +1134,11 @@ export class RightFilterDuplicateComponent implements OnInit {
       const filter = [];
       this.countCategory = 0;
       this.category.forEach(item => {
-        if ((this.whichFilter == 'category') ? item.selected : (this.checkFlag) ? item.showInFilter  : item.selected) {
+        if ((this.whichFilter == 'category') ? item.selected : item.showInFilter && item.selected) {
           item.selected = true;
           this.countCategory++;
           filter.push(item);
-        }else{
+        } else {
           (this.whichFilter != 'category') ? item.selected = false : '';
         }
       });
@@ -1120,12 +1181,14 @@ export class RightFilterDuplicateComponent implements OnInit {
     }
   };
 
-  selectAll(value,filter) {
-    this.whichFilter =filter;
+  selectAll(value, filter) {
+
+    this.whichFilter = filter;
+   
     if (value.checked) {
       this.checkFlag = true;
-      this.uncheckFlag=false;
-      this.selectUnselctAllFlag = value.checked;
+      this.uncheckFlag = false;
+      // this.selectUnselctAllFlag = value.checked;
       this.familyMember.forEach(item => item.selected = true);
       this.amc.forEach(item => item.selected = true);
       this.scheme.forEach(item => item.selected = true);
@@ -1135,7 +1198,7 @@ export class RightFilterDuplicateComponent implements OnInit {
       this.showError = '';
 
     } else {
-      this.uncheckFlag=true;
+      this.uncheckFlag = true;
       this.checkFlag = false;
       this.familyMember.forEach(item => item.selected = false);
       this.amc.forEach(item => item.selected = false);
@@ -1143,8 +1206,45 @@ export class RightFilterDuplicateComponent implements OnInit {
       this.folio.forEach(item => item.selected = false);
       // this.transactionView.forEach(item => item.selected = false);
       this.category.forEach(item => item.selected = false);
-      this.selectUnselctAllFlag = value.checked;
+      // this.selectUnselctAllFlag = value.checked;
       this.showError = 'filter';
+    }
+    switch (this.whichFilter) {
+      case 'family':
+        this.selectUnselctAllFlagFam = value.checked
+        if (value.checked) {
+          this.changeFilterFamily()
+        }
+        break;
+
+      case 'amc':
+        this.selectUnselctAllFlagAmc = value.checked
+        if (value.checked) {
+          this.changeFilterAmc()
+        }
+        break;
+
+      case 'scheme':
+        this.selectUnselctAllFlagScheme = value.checked
+        if (value.checked) {
+          this.changeFilterScheme()
+        }
+        break;
+      case 'folio':
+        this.selectUnselctAllFlagFolio = value.checked
+        if (value.checked) {
+          this.changeFilterFolio()
+        }
+        break;
+      case 'category':
+        this.selectUnselctAllFlagCategory = value.checked
+        if (value.checked) {
+          this.changeFilterCategory(this.category)
+        }
+        break;
+
+      default:
+        break;
     }
     this.changeSelect('', '');
   }
@@ -1215,6 +1315,6 @@ export class RightFilterDuplicateComponent implements OnInit {
 
 
   Close(data) {
-    this.subInjectService.changeNewRightSliderState({state: 'close', data});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data });
   }
 }
