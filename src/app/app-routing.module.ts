@@ -8,8 +8,6 @@ import {AuthGuard} from './guards/auth.guard';
 import {FormTestComponent} from './test/form-test/form-test.component';
 import {BackofficeDashboardComponent} from './component/protect-component/AdviserComponent/backOffice/backoffice-dashboard/backoffice-dashboard.component';
 import {AdvisorGuard} from './guards/advisor.guard';
-import { PdfRoutingComponent } from './pdfRouting/pdf-routing/pdf-routing.component';
-
 
 const routes: Routes = [
   {
