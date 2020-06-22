@@ -10,6 +10,7 @@ import {BackofficeDashboardComponent} from './component/protect-component/Advise
 import {AdvisorGuard} from './guards/advisor.guard';
 import { PdfRoutingComponent } from './pdfRouting/pdf-routing/pdf-routing.component';
 
+
 const routes: Routes = [
   {
     path: 'login',
@@ -28,7 +29,7 @@ const routes: Routes = [
   },
   {
     path: 'pdf',
-    component: PdfRoutingComponent
+    loadChildren: () => import('./component/protect-component/AdviserComponent/backOffice/backoffice-mis/pdf.module').then(m => m.PdfModule), 
   },
   // {
   //   path: 'calendar',
