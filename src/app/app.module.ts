@@ -35,6 +35,11 @@ import { SignUpComponent } from './component/no-protected/login/sign-up/sign-up.
 import { SetNewPasswordComponent } from './component/no-protected/login/set-new-password/set-new-password.component';
 import { VerifyOtpComponent } from './component/no-protected/login/verify-otp/verify-otp.component';
 import { ScrollDispatchModule } from '@angular/cdk/scrolling';
+import { MutualFundSummaryComponent } from './component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mutual-fund/mutual-fund-summary/mutual-fund-summary.component';
+import { MutualFundUnrealizedTranComponent } from './component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mutual-fund/mutual-fund-unrealized-tran/mutual-fund-unrealized-tran.component';
+import { MutualFundsCapitalComponent } from './component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mutual-fund/mutual-funds-capital/mutual-funds-capital.component';
+import { MfCapitalDetailedComponent } from './component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mutual-fund/mf-capital-detailed/mf-capital-detailed.component';
+import { AssetsModule } from './component/protect-component/customers/component/customer/accounts/assets/assets.module';
 
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
@@ -54,11 +59,13 @@ import { ScrollDispatchModule } from '@angular/cdk/scrolling';
     // AddInsuranceComponent
     FormTestComponent,
     BackofficeDashboardComponent,
+
   ],
   imports: [
     // CalendarModule,
     // SubscriptionEntry,
     // SubscriptionUpperEntry,
+    AssetsModule,
     BrowserModule,
     BrowserAnimationsModule,
     MaterialModule,

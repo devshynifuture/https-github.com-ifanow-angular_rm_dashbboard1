@@ -8,10 +8,11 @@ import {ScrollingModule} from '@angular/cdk/scrolling';
 import {CustomCommonModule} from 'src/app/common/custom.common.module';
 import { AssetsRoutingModule } from '../../../customers/component/customer/accounts/assets/assets-routing.module';
 import { AssetsModule } from '../../../customers/component/customer/accounts/assets/assets.module';
+import { OpenUrlsComponent } from '../bulk-report-sending/open-urls/open-urls.component';
 
 
 @NgModule({
-  declarations: [
+  declarations: [OpenUrlsComponent
 
   ],
   imports: [
