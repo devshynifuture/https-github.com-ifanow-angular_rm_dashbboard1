@@ -13,7 +13,9 @@
         <div class="col-md-8 p-0">
             <h5 class="m-0 text-black pb-4">Select an client from the search box below</h5>
             <mat-form-field appearance="standard" floatLabel="never">
-                <input #searchClient (input)="hidePlans(searchClient.value)" [formControl]="stateCtrl" [matAutocomplete]="auto1" aria-label="client" class="form-control pl-8" matInput placeholder="Start typing to see investor names">
+                <input #searchClient (input)="hidePlans(searchClient.value)" [formControl]="stateCtrl"
+                    [matAutocomplete]="auto1" aria-label="client" class="form-control pl-8" matInput
+                    placeholder="Start typing to see investor names">
                 <mat-autocomplete #auto1="matAutocomplete" (optionSelected)="optionSelected($event.option.value)">
                     <mat-option *ngFor="let f of filteredStates | async" [value]="f">
                         <div class="row">
@@ -48,10 +50,12 @@
     <div *ngIf="planSettingData" class="row">
         <div class="col-md-6 mt-10 pl-0 c-p" *ngFor="let singlePlan of planSettingData">
             <div class="example-card">
-                <mat-card class="p-0 pa-blue" (click)="select(singlePlan)" [ngClass]="singlePlan.selected == true ? 'ba-blue' : 'b-ua'">
+                <mat-card class="p-0 pa-blue" (click)="select(singlePlan)"
+                    [ngClass]="singlePlan.selected == true ? 'ba-blue' : 'b-ua'">
                     <div class="row bg-grey lter">
                         <div class="col-md-12 p-0">
-                            <mat-checkbox class="right text-right" *ngIf="singlePlan.selected == true" [(ngModel)]="singlePlan.selected"></mat-checkbox>
+                            <mat-checkbox class="right text-right" *ngIf="singlePlan.selected == true"
+                                [(ngModel)]="singlePlan.selected"></mat-checkbox>
                             <div class="col-md-12 p-0 height115">
                                 <h3 class="m-0 pt-20 pl-24" matTooltip="Plan name">{{singlePlan.name}}</h3>
                                 <h5 class="m-0 pt-4 pb-24 pl-24 text-custom" matTooltip="Plan code">{{singlePlan.code}}
@@ -94,7 +98,10 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button *ngIf="selectedPlan" mat-button class="btn-bottom br-0 text-inherit" (click)="createSubscription('openQuotation',selectedPlan)">Save</button>
+            <!-- <button *ngIf="selectedPlan" mat-button class="btn-bottom br-0 text-inherit" (click)="createSubscription('openQuotation',selectedPlan)">Save</button> -->
+            <app-progress-button *ngIf="selectedPlan" (btnClick)="createSubscription('openQuotation',selectedPlan)"
+                class="br-0 text-inherit ml-12" [options]="barButtonOptions">
+            </app-progress-button>
         </div>
     </div>
 </div>
