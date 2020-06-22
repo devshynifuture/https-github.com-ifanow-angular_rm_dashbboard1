@@ -138,7 +138,11 @@ export class MutualFundOverviewComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+   // token : authTokenInLoginComponnennt
+    if(localStorage.getItem('token')!='authTokenInLoginComponnennt'){
+      localStorage.setItem('token','authTokenInLoginComponnennt')
+    }
+  
     this.routerActive.queryParamMap.subscribe((queryParamMap) => {
       if (queryParamMap.has('clientId')) {
         let param1 = queryParamMap['params'];
