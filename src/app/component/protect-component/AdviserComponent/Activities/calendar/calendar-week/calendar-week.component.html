@@ -42,7 +42,7 @@
           <div class="column"  *ngFor='let day of week; let di = index'>
             <div *ngFor='let event of formatedEvent; let ei = index'>
               <!-- {{time == returnNumber(event.startTime)}}  -->
-              <div class="week-clicks pl-4" *ngIf="event.day == formateDate(day) && event.month == formateMonth(day) && event.year == formateYear(day) && returnNumber(event.startTime)  == time">
+              <div class="week-clicks pl-4" *ngIf="event.day == formateDate(day) && event.month == formateMonth(day) && event.year == formateYear(day) && returnNumber(event.startTime)  == time ">
                 <p class="m-0 f-12 roboto f-400 text-white">{{event.summary}}</p>
                 <p class="m-0 f-12 roboto f-400 text-white">{{event.startTime}}- {{event.endTime}}</p>
               </div>
