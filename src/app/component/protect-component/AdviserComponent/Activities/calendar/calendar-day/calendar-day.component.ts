@@ -95,7 +95,7 @@ export class CalendarDayComponent implements OnInit {
             e["month"] = this.formateMonth(!e.start.dateTime ?new Date(e.created) : new Date(e.start.dateTime));
             e["year"] = this.formateYear(!e.start.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
             e["startTime"] = this.formateTime(!e.start.dateTime? new Date(e.created) : new Date(e.start.dateTime));
-            e["endTime"] = this.formateTime(!e.end.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
+            e["endTime"] = this.formateTime(!e.end.dateTime ? new Date(e.created) : new Date(e.end.dateTime));
             this.formatedEvent.push(e);
             // console.log(this.formatedEvent,"formatedEvent calender1",);
           }
@@ -116,6 +116,8 @@ export class CalendarDayComponent implements OnInit {
     }
 
   }
+
+  
 
   curruntDayIndex: any;
 
@@ -153,6 +155,12 @@ export class CalendarDayComponent implements OnInit {
 
 
   // }
+
+  returnNumber(num){
+    // num.toUpperCase()
+   console.log(parseInt(num) +' '+ num.charAt(num.length - 3).toUpperCase() + num.charAt(num.length - 2).toUpperCase(),"time event");
+    return parseInt(num)  +' '+ num.charAt(num.length - 3).toUpperCase() + num.charAt(num.length - 2).toUpperCase()
+  }
 
   formateDate(date) {
     var dd = new Date(date).getDate();

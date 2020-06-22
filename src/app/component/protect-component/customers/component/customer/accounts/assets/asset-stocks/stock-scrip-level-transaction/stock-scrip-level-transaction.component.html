@@ -21,7 +21,7 @@
                     <div class="pr-0">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData' (selectionChange)="disabledMember($event.value,'owner')" (valueChange3)='displayControler($event)'  (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
+                                <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData' (selectionChange)="disabledMember($event.value,'owner')" (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
                                     <!-- || f.familyMemberAge <= 60 -->
                                     <mat-option value='' disabled>Select family members</mat-option>
                                     <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" [value]="f.userName">
@@ -75,18 +75,18 @@
     </div>
     <div class="row pl-28 sl-trans">
         <div class="col-md-4 pl-0">
-            <label class="f-16"> Transaction type</label>
+            <label class="f-14"> Transaction type</label>
         </div>
 
         <div class="col-md-2 pl-0">
-            <label class="pb-8 f-16"> Date </label>
+            <label class="pb-8 f-14"> Date </label>
         </div>
 
         <div class="col-md-3">
-            <label class="pb-8 f-16">Transaction amount </label>
+            <label class="pb-8 f-14">Transaction amount </label>
         </div>
         <div class="col-md-3 pl-0">
-            <label class="pb-8 f-16">Quantity</label>
+            <label class="pb-8 f-14">Quantity</label>
         </div>
     </div>
 

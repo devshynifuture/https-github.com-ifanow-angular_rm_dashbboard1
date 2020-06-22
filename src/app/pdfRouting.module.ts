@@ -88,10 +88,6 @@ const routes: Routes = [
     loadChildren: () => import('./component/gmail-redirect/gmail-redirect.module').then(m => m.GmailRedirectModule)
   },
   {
-    path: 'not-found',
-    loadChildren: './component/protect-component/common-component/not-found/not-found.module#NotFoundModule'
-  },
-  {
     path: 'error-page',
     component: ErrorPageComponent
   },

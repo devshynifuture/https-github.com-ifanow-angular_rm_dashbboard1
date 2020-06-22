@@ -103,6 +103,20 @@ export class BackofficeFileUploadTransactionsComponent implements OnInit {
       });
   }
 
+  getProcessStatus(statusNumber) {
+    if (statusNumber === 0) {
+      return 'Pending';
+    } else if (statusNumber === 1) {
+      return 'Success';
+    } else if (statusNumber === 2) {
+      return 'Duplicate';
+    } else if (statusNumber === 3) {
+      return 'Failed';
+    } else if (statusNumber === -1) {
+      return 'Duplicate';
+    }
+  }
+
   ngOnDestroy() {
     if (this.unSubcrip) {
       this.unSubcrip.unsubscribe();

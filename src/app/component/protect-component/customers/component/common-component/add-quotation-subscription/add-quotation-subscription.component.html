@@ -65,8 +65,11 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button *ngIf="noDataFoundFlag==false" mat-button class="btn-bottom br-0 text-inherit"
-                (click)="createSubscription('openQuotation',selectedPlan)">Save</button>
+            <!-- <button *ngIf="noDataFoundFlag==false" mat-button class="btn-bottom br-0 text-inherit"
+                (click)="createSubscription('openQuotation',selectedPlan)">Save</button> -->
+            <app-progress-button (btnClick)="createSubscription('openQuotation',selectedPlan)"
+                class="br-0 text-inherit ml-12" [options]="barButtonOptions">
+            </app-progress-button>
         </div>
     </div>
 </div>

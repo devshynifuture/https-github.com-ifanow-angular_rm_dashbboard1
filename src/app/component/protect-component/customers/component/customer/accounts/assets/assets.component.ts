@@ -42,6 +42,8 @@ export class AssetsComponent implements OnInit {
     public dialog: MatDialog,
     private cusService: CustomerService,
     private route: ActivatedRoute,
+    public routerActive: ActivatedRoute,
+
     private router: Router) {
   }
 
@@ -163,6 +165,16 @@ export class AssetsComponent implements OnInit {
   }
 
   getAssetCountGLobalData() {
+    if(!this.advisorId){
+      this.routerActive.queryParamMap.subscribe((queryParamMap) => {
+        if (queryParamMap.has('clientId')) {
+          let param1 = queryParamMap['params'];
+          this.clientId = parseInt(param1.clientId)
+          this.advisorId = parseInt(param1.advisorId)
+          console.log('2423425',param1)
+        }
+      });
+    }
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId
