@@ -1,7 +1,7 @@
 <!--<div class="wrapper-20 bg-grey lter heading-fix">
     <h3 class="m-0 text-center head-common">{{upperData.name}} </h3>
 </div>-->
-<div class="bg-white settings">
+<div class="bg-white settings" [ngClass]="{'mt-52': !isAdvisor}">
     <div *ngIf="SettingProfileData != undefined">
 
         <div class="row pt-180" *ngIf="isAdvisor && SettingProfileData.length > 0">
@@ -146,7 +146,7 @@
     </div>
     <div class="row" *ngIf="SettingProfileData.length == 0">
         <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
-            <img class="width200" src="assets/images/svg/no-data-found.svg">
+            <img [ngClass]="{'width300': !isAdvisor}" class="width200" src="assets/images/svg/no-data-found.svg">
             <p class="f-22 f-600 pt-28"> No Data Found </p>
             <button (click)="openPayeeSettings({},'Add')" class="btn-primary mt-20 br-0 right text-right addon" *ngIf="isAdvisor" mat-stroked-button>
                 ADD MORE
