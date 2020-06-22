@@ -5,7 +5,6 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { BackOfficeService } from '../../back-office.service';
 import { AuthService } from 'src/app/auth-service/authService';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-open-send-report-popup',
@@ -21,8 +20,7 @@ export class OpenSendReportPopupComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<OpenSendReportPopupComponent>,
     private fb: FormBuilder,
     private backOfficeService: BackOfficeService,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData, private eventService: EventService,
-    private router: Router) {
+    @Inject(MAT_DIALOG_DATA) public data: DialogData, private eventService: EventService,) {
 
     this.advisorId = AuthService.getAdvisorId()
   }

@@ -28,7 +28,6 @@ import { CustomCommonModule } from 'src/app/common/custom.common.module';
     TruncateStringPipe,
     DomSanitizerPipe,
     ShowListActionsDirective,
-    GoogleConnectComponent
   ],
   imports: [
     CommonModule,
