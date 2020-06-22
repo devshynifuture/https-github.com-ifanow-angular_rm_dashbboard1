@@ -12,9 +12,10 @@
     </div>
     <div class="col-md-3 p-0">
         <div class="pt-8">
-            <img src="/assets/images/svg/refresh.svg" class="mr-20 c-p">
-            <img src="/assets/images/svg/double-drawer.svg" class="mr-20 c-p">
-            <img src="/assets/images/svg/delete.svg" (click)="multipleMoveToTrash()" class="mr-20 c-p">
+            <img src="/assets/images/svg/refresh.svg" class="mr-20 c-p" matTooltip="Refresh">
+            <img src="/assets/images/svg/double-drawer.svg" class="mr-20 c-p" matTooltip="Archive">
+            <img src="/assets/images/svg/delete.svg" (click)="multipleMoveToTrash()" class="mr-20 c-p"
+                matTooltip="Move to Trash">
             <mat-icon [matMenuTriggerFor]="menu" class="c-p pab">more_vert</mat-icon>
             <mat-menu #menu="matMenu">
                 <button mat-menu-item>Make as read</button>
@@ -31,7 +32,7 @@
     </div>
 
     <div class="col-md-5"></div>
-    <div class="col-md-3 float-right">
+    <div class="col-md-3 text-right">
 
         <span class="text-primitive">
             {{ currentList }} - {{ maxListRes }} of {{ paginatorLength }}
@@ -70,7 +71,7 @@
         <ng-container matColumnDef="emailers">
             <th mat-header-cell *matHeaderCellDef> </th>
             <td mat-cell *matCellDef="let element" (click)="redirectMessages(element)">
-                {{element.emailers | truncate:20}}
+                {{element.emailers | truncate:30}}
                 {{ element.messageCount <= 1 ? '': element.messageCount }} </td>
         </ng-container>
 
@@ -78,9 +79,9 @@
         <ng-container matColumnDef="subjectMessage">
             <th mat-header-cell *matHeaderCellDef> </th>
             <td mat-cell *matCellDef="let element" class="d-flex" (click)="redirectMessages(element)">
-                {{element.subjectMessage.subject | truncate:30}}
+                {{element.subjectMessage.subject | truncate:40}}
                 <p class="m-0 pl-12 text-primitive">
-                    {{element.subjectMessage.message | truncate:30}}
+                    {{element.subjectMessage.message | truncate:50}}
                 </p>
             </td>
         </ng-container>

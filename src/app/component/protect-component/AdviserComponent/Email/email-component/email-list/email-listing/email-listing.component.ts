@@ -31,7 +31,8 @@ export class EmailListingComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private dialog: MatDialog,
     private eventService: EventService,
-    private authService: AuthService) { }
+    private authService: AuthService,
+    private emailUtilService: EmailUtilService) { }
 
   paginatorLength;
   paginatorSubscription;
@@ -51,6 +52,7 @@ export class EmailListingComponent implements OnInit {
   displayedColumns: string[] = ['select', 'emailers', 'subjectMessage', 'date'];
 
   selection = new SelectionModel<MessageListArray>(true, []);
+  location = '';
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -64,6 +66,7 @@ export class EmailListingComponent implements OnInit {
     }
     (location === 'trash') ? this.trashAction = true : this.trashAction = false;
     (location === 'draft') ? this.showDraftView = true : this.showDraftView = false;
+    this.location = location;
 
     this.totalListSize = this.totalListSize - 50;
     this.currentList = this.maxListRes + 1;
@@ -73,6 +76,7 @@ export class EmailListingComponent implements OnInit {
   }
 
   redirectMessages(element) {
+    console.log("this is some listing ::element;::::", element);
     element.labelIdsfromMessages.forEach(labelArr => {
       labelArr.labelIds.forEach(label => {
         if (label === 'DRAFT') {
@@ -105,18 +109,36 @@ export class EmailListingComponent implements OnInit {
   getPaginatorLengthRes(location) {
     if (localStorage.getItem('associatedGoogleEmailId')) {
       const userInfo = AuthService.getUserInfo();
-      userInfo['emailId'] = localStorage.getItem('associatedGoogleEmailId');
+      userInfo['email'] = localStorage.getItem('associatedGoogleEmailId');
       this.authService.setUserInfo(userInfo);
     }
 
     this.paginatorSubscription = this.emailService.getProfile().subscribe(response => {
       if (response === undefined) {
         this.eventService.openSnackBar("You must connect your gmail account", "Dismiss");
-        localStorage.removeItem('successStoringToken');
+        if (localStorage.getItem('successStoringToken')) {
+          localStorage.removeItem('successStoringToken');
+        }
         this.router.navigate(['google-connect'], { relativeTo: this.activatedRoute });
       } else {
-
         this.paginatorLength = response.threadsTotal;
+        this.emailUtilService.getLabelCount()
+          .subscribe(res => {
+            if (res) {
+              if (location === 'inbox') {
+                this.paginatorLength = res['importantCount'];
+              }
+              else if (location === 'sent') {
+                this.paginatorLength = res['sentCount'];
+              }
+              else if (location === 'draft') {
+                this.paginatorLength = res['draftCount'];
+              }
+              else if (location === 'trash') {
+                this.paginatorLength = res['trashCount'];
+              }
+            }
+          })
         this.totalListSize = this.paginatorLength;
         this.isLoading = true;
         this.getGmailList(location.toUpperCase(), '');
@@ -192,7 +214,7 @@ export class EmailListingComponent implements OnInit {
       threadIdsArray.push(item["idsOfThread"]["id"]);
     });
     this.emailService.sendNextData({ dataObj, threadIdsArray });
-    this.emailService.openComposeEmail({ dataObj, threadIdsArray }, ComposeEmailComponent);
+    this.emailService.openComposeEmail({ dataObj, threadIdsArray }, ComposeEmailComponent, 'draft');
     this.showDraftView = false;
   }
 
@@ -229,6 +251,9 @@ export class EmailListingComponent implements OnInit {
 
   // get List view
   getGmailList(data, page) {
+    if (data === 'INBOX') {
+      data = 'IMPORTANT';
+    }
     data = {
       labelIds: data,
       pageToken: (page == 'next') ? (this.nextPageToken ? this.nextPageToken : '') : '',
@@ -249,6 +274,7 @@ export class EmailListingComponent implements OnInit {
 
         this.nextPageToken = nextPageToken;
         this.gmailThreads = gmailThreads;
+        console.log("this is response data::::", responseData);
         gmailThreads.forEach((thread: GmailInboxResponseI, index: number) => {
           // thread.messages.map((message) => {
           //   message.payload.body.data = btoa(message.payload.body.data);
@@ -306,11 +332,13 @@ export class EmailListingComponent implements OnInit {
 
           // tempArray.push(Obj);
           tempArray1.push(Obj1);
+          console.log("this is what i need", Obj1);
         });
 
 
         this.messageListArray = tempArray1;
         // this.messageDetailArray = tempArray;
+
         this.isLoading = false;
         this.dataSource = new MatTableDataSource<MessageListArray>(this.messageListArray);
         this.dataSource.paginator = this.paginator;
