@@ -28,7 +28,7 @@ const routes: Routes = [
 
   },
   {
-    path: 'pdf',
+    path: 'pdf/summary',
     loadChildren: () => import('./component/protect-component/AdviserComponent/backOffice/backoffice-mis/pdf.module').then(m => m.PdfModule),
 
   },
