@@ -24,7 +24,7 @@ export class EmailServiceService {
   getProfile() {
     const userInfo = AuthService.getUserInfo();
     return this.http.get(apiConfig.GMAIL_URL + appConfig.GET_PROFILE, {
-      email: userInfo.emailId,
+      email: userInfo.email,
       userId: userInfo.advisorId
     });
   }
@@ -34,7 +34,7 @@ export class EmailServiceService {
 
     return this.http.post(apiConfig.GMAIL_URL + appConfig.DELETE_MULTIPLE_THREADS, {
       ids: ids,
-      emailId: userInfo.emailId,
+      emailId: userInfo.email,
       userId: userInfo.advisorId
     });
   }
@@ -45,7 +45,7 @@ export class EmailServiceService {
 
     return this.http.post(apiConfig.GMAIL_URL + appConfig.DELETE_MESSAGES, {
       ids: ids,
-      emailId: userInfo.emailId,
+      emailId: userInfo.email,
       userId: userInfo.advisorId
     });
   }
@@ -55,7 +55,7 @@ export class EmailServiceService {
 
     return this.http.post(apiConfig.GMAIL_URL + appConfig.MOVE_THREADS_TO_TRASH, {
       ids: ids,
-      emailId: userInfo.emailId,
+      emailId: userInfo.email,
       userId: userInfo.advisorId
     });
   }
@@ -66,7 +66,7 @@ export class EmailServiceService {
 
     return this.http.post(apiConfig.GMAIL_URL + appConfig.MOVE_MESSAGES_TO_TRASH, {
       ids: ids,
-      emailId: userInfo.emailId,
+      emailId: userInfo.email,
       userId: userInfo.advisorId
     });
   }
@@ -77,7 +77,7 @@ export class EmailServiceService {
 
     return this.http.post(apiConfig.GMAIL_URL + appConfig.MOVE_THREADS_FROM_TRASH, {
       ids,
-      emailId: userInfo.emailId,
+      emailId: userInfo.email,
       userId: userInfo.advisorId
     });
   }
@@ -88,7 +88,7 @@ export class EmailServiceService {
 
     return this.http.post(apiConfig.GMAIL_URL + appConfig.MOVE_MESSAGES_FROM_TRASH, {
       ids,
-      emailId: userInfo.emailId,
+      emailId: userInfo.email,
       userId: userInfo.advisorId
     });
   }
@@ -97,7 +97,7 @@ export class EmailServiceService {
     const { labelIds, maxResults, pageToken } = data;
     const userInfo = AuthService.getUserInfo();
     return this.http.get(apiConfig.GMAIL_URL + appConfig.GET_GMAIL_INBOX_LIST, {
-      email: userInfo.emailId,
+      email: userInfo.email,
       userId: userInfo.advisorId,
       labelIds,
       maxResults,
@@ -108,7 +108,7 @@ export class EmailServiceService {
   gmailMessageDetail(messageId: string) {
     const userInfo = AuthService.getUserInfo();
     return this.http.get(apiConfig.GMAIL_URL + appConfig.GET_MESSAGE_DETAIL, {
-      email: userInfo.emailId,
+      email: userInfo.email,
       userId: userInfo.advisorId,
       messageId
     });
@@ -117,7 +117,7 @@ export class EmailServiceService {
   getRightSideNavList() {
     const userInfo = AuthService.getUserInfo();
     return this.http.get(apiConfig.GMAIL_URL + appConfig.GET_RIGHT_SIDE_NAV, {
-      email: userInfo.emailId,
+      email: userInfo.email,
       userId: userInfo.advisorId
     });
   }
@@ -309,14 +309,15 @@ export class EmailServiceService {
     const userInfo = AuthService.getUserInfo();
 
     if (id) {
-      return this.http.post(apiConfig.GMAIL_URL + appConfig.UPDATE_DRAFT, {
-        email: userInfo.emailId,
+      return this.http.put(apiConfig.GMAIL_URL + appConfig.UPDATE_DRAFT, {
+        email: userInfo.email,
         userId: userInfo.advisorId,
-        ...body
+        ...body,
+        id
       })
     } else if (id === null) {
       return this.http.post(apiConfig.GMAIL_URL + appConfig.CREATE_DRAFT, {
-        email: userInfo.emailId,
+        email: userInfo.email,
         userId: userInfo.advisorId,
         ...body
       });
@@ -342,10 +343,10 @@ export class EmailServiceService {
     );
   }
 
-  openComposeEmail(data, componentName) {
+  openComposeEmail(data, componentName, choice) {
     const fragmentData = {
       flag: 'composeEmail',
-      data,
+      data: { dataToSend: data, choice },
       id: 1,
       state: 'open35',
       componentName
@@ -371,7 +372,7 @@ export class EmailServiceService {
 
     const userInfo = AuthService.getUserInfo();
     return this.http.get(apiConfig.GMAIL_URL + appConfig.GET_DRAFT_LIST, {
-      email: userInfo.emailId,
+      email: userInfo.email,
       userId: userInfo.advisorId
     });
   }
