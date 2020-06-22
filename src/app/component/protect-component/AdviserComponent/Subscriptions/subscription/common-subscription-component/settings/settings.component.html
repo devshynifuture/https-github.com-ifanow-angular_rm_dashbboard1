@@ -15,7 +15,7 @@
         </div>
 
         <div *ngFor="let profileData of SettingProfileData skeletonAnimation" class="d-flex justify-content-center" appSkeletonLoading [appSkeletonLoading]="isLoading">
-            <div class="row wrapper-100 pb-72 pt-8 pb-10 " [ngClass]="{'mt-60': !isAdvisor}">
+            <div class="row wrapper-100 pb-72 pt-8 pb-10 " [ngClass]="{'mt-60': isAdvisor}">
                 <div class="hoverable overflow-hidden">
                     <div class="row pt-16 pb-16 b-a bb-0 bg-grey lter">
                         <div class="col-md-8 pl-20 d-flex align-items-center relClass">

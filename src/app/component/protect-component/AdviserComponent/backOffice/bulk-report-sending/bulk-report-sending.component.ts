@@ -3,6 +3,7 @@ import { SendNowReportsComponent } from './send-now-reports/send-now-reports.com
 import { SubscriptionInject } from '../../Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
 import { StatusReportComponent } from './status-report/status-report.component';
+import { BackOfficeService } from '../back-office.service';
 
 @Component({
   selector: 'app-bulk-report-sending',
@@ -15,9 +16,21 @@ export class BulkReportSendingComponent implements OnInit {
 
   constructor(
     private subInjectService : SubscriptionInject,
+    private backOfficeService : BackOfficeService,
   ) { }
 
   ngOnInit() {
+    this.getlistOrder()
+  }
+  getlistOrder(){
+    const obj = {
+      advisorId: 5125
+    };
+    this.backOfficeService.getOrderList(obj).subscribe(
+      data => {
+        console.log('getClientIdByLoop ==', data)
+      }
+    );
   }
   openSendNow(data){
       const fragmentData = {

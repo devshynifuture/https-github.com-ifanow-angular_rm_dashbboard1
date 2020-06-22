@@ -52,7 +52,7 @@ export class ExpensesComponent implements OnInit {
     var chart = Highcharts.chart('bugetChart', {
 
       title: {
-        text: 'Buget'
+        text: 'Budget'
       },
       xAxis: {
         categories: ['Buget', 'Spent']
@@ -434,10 +434,10 @@ export class ExpensesComponent implements OnInit {
     });
   }
   openExpenses(value, data) {
-    if(data == null){
+    if (data == null) {
       data = {}
       data.flag = value
-    }else{
+    } else {
       data.flag = value
     }
     const fragmentData = {
