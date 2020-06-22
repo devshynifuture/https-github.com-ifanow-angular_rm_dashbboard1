@@ -72,7 +72,7 @@
         </div>
 
 
-        <div class="col-md-10 b-a p-0 min-height pt-28">
+        <div class="col-md-10 b-a p-0 min-height">
             <div *ngIf="sidenavState">
                 <!-- prod fix  (click)="sidenav.toggle()" -->
                 <div class="leftside-overlay-toggle-button ">
@@ -92,7 +92,8 @@
                 <div class="col-md-12 bg-white bb-0 pb-24  pl-0 pr-0 min-height" [ngSwitch]="viewMode">
                     <div *ngSwitchCase="'tab1'">
                         <div>
-                            <app-mutual-fund  (changeCount)="getAssetCountGLobalData()" (sendData)="getValue($event)"></app-mutual-fund>
+                            <app-mutual-fund (changeCount)="getAssetCountGLobalData()" (sendData)="getValue($event)">
+                            </app-mutual-fund>
                         </div>
                     </div>
                     <div *ngSwitchCase="'tab2'">

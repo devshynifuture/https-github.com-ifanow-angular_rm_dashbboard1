@@ -9,7 +9,6 @@
       }
     ]
   },
-
   "scripts": {
     "ng": "ng",
     "start": "ng serve --port 4200 --poll=2000",
