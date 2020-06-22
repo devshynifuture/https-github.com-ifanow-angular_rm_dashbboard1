@@ -28,12 +28,23 @@ export class OpenSendReportPopupComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.router.navigate(['/pdf'], { queryParams: { clientId: 1 } });
     console.log('reportType', this.data)
     this.sendClientId()
   }
 
   sendClientId() {
+    // if(this.data.reportType == 'overview'){
+    //   this.router.navigate(['/pdf'], { queryParams: { clientId: 97118 ,advisorId: 5393 ,reportTypeId:1},});
+    // }else if(this.data.reportType == 'summary'){
+    //   this.router.navigate(['/pdf'], { queryParams: { clientId: 97118 ,advisorId: 5393 ,reportTypeId:2},});
+    // }else if(this.data.reportType == 'allTransactions'){
+    //   this.router.navigate(['/pdf'], { queryParams: { clientId: 97118 ,advisorId: 5393 ,reportTypeId:3, fromDate: '2019/06/19',toDate: '2020/06/19'},});
+    // }else if(this.data.reportType == 'unrealisedTransactions'){
+    //   this.router.navigate(['/pdf'], { queryParams: { clientId: 97118 ,advisorId: 5393 ,reportTypeId:4, fromDate: '2019/06/19',toDate: '2020/06/19'},});
+    // }else if(this.data.reportType == 'capitalGainSummary'){
+    //   this.router.navigate(['/pdf'], { queryParams: { clientId: 97118 ,advisorId: 5393 ,reportTypeId:5, from :'2019',to: '2020'},});
+
+    // }
     this.dataClients = {
       clientId: 97118
     }
