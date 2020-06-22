@@ -49,85 +49,18 @@
         </ul>
       </div>
       <div class="col-md-11 p-0 right-details">
-        <div class="day-details">
-
-        </div>
-        <div class="day-details">
-
-        </div>
-        <div class="day-details">
-
-        </div>
-        <div class="day-details">
-
-        </div>
-        <div class="day-details">
-
-        </div>
-        <div class="day-details">
-          <div class="day-clicks pl-4">
-            <p class="m-0 f-12 roboto f-400 text-white">(No title)</p>
-            <p class="m-0 f-12 roboto f-400 text-white">6 - 7am</p>
+        <div class="day-details" *ngFor='let time of timeArry'>
+          <div *ngFor='let event of formatedEvent; let ei = index'>
+            <div class="day-clicks pl-4" *ngIf="event.day == formateDate(viewDate) && event.month == formateMonth(viewDate) && event.year == formateYear(viewDate) && returnNumber(event.startTime)  == time">
+              <p class="m-0 f-12 roboto f-400 text-white">{{event.summary}}</p>
+              <p class="m-0 f-12 roboto f-400 text-white">{{event.startTime}}- {{event.endTime}}</p>
+            </div>
+            <div class="main-days" [hidden]="true">
+              <div class="circle"></div>
+              <hr class="red-lines">
+            </div>
           </div>
         </div>
-        <div class="day-details">
-
-        </div>
-        <div class="day-details">
-
-        </div>
-        <div class="day-details">
-
-        </div>
-        <div class="day-details">
-          <div class="main-days">
-            <div class="circle"></div>
-            <hr class="red-lines">
-          </div>
-        </div>
-        <div class="day-details">
-
-        </div>
-        <div class="day-details">
-
-        </div>
-        <div class="day-details">
-
-        </div>
-        <div class="day-details">
-
-        </div>
-        <div class="day-details">
-
-        </div>
-        <div class="day-details">
-
-        </div>
-        <div class="day-details">
-
-        </div>
-        <div class="day-details">
-
-        </div>
-        <div class="day-details">
-
-        </div>
-        <div class="day-details">
-
-        </div>
-        <div class="day-details">
-
-        </div>
-        <div class="day-details">
-
-        </div>
-        <div class="day-details">
-
-        </div>
-        <div class="day-details">
-
-        </div>
-
       </div>
     </div>
   </div>

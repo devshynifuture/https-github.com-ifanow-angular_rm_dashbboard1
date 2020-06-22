@@ -14,12 +14,40 @@ export class LeftSidebarComponent implements OnInit {
 
   constructor(private emailService: EmailServiceService,
     private router: Router,
-    private activatedRoute: ActivatedRoute) {
+    private activatedRoute: ActivatedRoute,
+    private emailUtilService: EmailUtilService) {
   }
+  importantCount = 0;
+  sentCount = 0;
+  draftCount = 0;
+  trashCount = 0;
 
   ngOnInit() {
     this.emailService.getRightSideNavList().subscribe(responseData => {
       this.navList = responseData;
+      console.log("check navlist :::", this.navList);
+      if (this.navList.length !== 0) {
+        this.navList.forEach(element => {
+          if (element.labelId === 'IMPORTANT') {
+            this.importantCount = element.threadsTotal;
+          }
+          if (element.labelId === 'SENT') {
+            this.sentCount = element.threadsTotal;
+          }
+          if (element.labelId === 'DRAFT') {
+            this.draftCount = element.threadsTotal;
+          }
+          if (element.labelId === 'THRASH') {
+            this.trashCount = element.threadsTotal;
+          }
+        });
+      }
+      this.emailUtilService.sendLabelCount({
+        sentCount: this.sentCount,
+        importantCount: this.importantCount,
+        draftCount: this.draftCount,
+        trashCount: this.trashCount
+      });
     });
   }
 
@@ -47,7 +75,7 @@ export class LeftSidebarComponent implements OnInit {
   }
 
   openCompose() {
-    this.emailService.openComposeEmail(null, ComposeEmailComponent);
+    this.emailService.openComposeEmail(null, ComposeEmailComponent, 'email');
   }
 
 }
