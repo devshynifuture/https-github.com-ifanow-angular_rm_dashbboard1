@@ -25,11 +25,12 @@ const routes: Routes = [
     canActivate: [AuthGuard, AdvisorGuard],
 
   },
-/*  {
-    path: 'pdf/overview',
+  {
+    path: 'pdf',
     loadChildren: () => import('./component/protect-component/AdviserComponent/backOffice/backoffice-mis/pdf.module').then(m => m.PdfModule),
 
   },
+  /*
   {
     path: 'pdf/summary',
     component: MutualFundSummaryComponent
