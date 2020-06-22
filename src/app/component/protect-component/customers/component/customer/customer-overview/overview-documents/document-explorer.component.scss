@@ -157,10 +157,13 @@
         z-index: 2;
     }
     
-    .documentSideBox .vertical-menu {
-        width: 16.7% !important;
-        height: calc(100vh - 147px);
-        display: block !important;
-        text-align: left;
-        position: fixed;
+    .documentSideBox {
+        height: 100vh;
+        .vertical-menu {
+            width: 16.7% !important;
+            height: calc(100vh - 147px);
+            display: block !important;
+            text-align: left;
+            position: fixed;
+        }
     }

@@ -213,6 +213,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
 
   openViewDocument(value, data) {
     data['sendEsignFlag'] = true;
+    data['feeStructureFlag'] = data.documentText.includes('<service_fee>');
     const fragmentData = {
       flag: value,
       data,
@@ -486,6 +487,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
       this.noData = 'No Data Found';
     } else {
       data.forEach(singleData => {
+        singleData['sentDateInFormat'] = this.datePipe.transform((singleData.sentDate) ? singleData.sentDate : undefined, "dd/MM/yyyy");
         singleData.documentText = singleData.docText;
       });
       // this.dataSource = data;

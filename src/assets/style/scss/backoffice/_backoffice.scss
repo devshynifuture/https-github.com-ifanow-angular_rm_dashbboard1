@@ -158,3 +158,180 @@
 #mistabs2 .mat-tab-label {
   min-width: 49% !important;
 }
+
+#ui-backoffice-day,
+#ui-backoffice-week {
+  // padding-top: 90px;
+
+  li {
+    font-size: 10px;
+    height: 40px;
+    // padding-right: 8px;
+    text-align: right;
+    color: #757575;
+
+  }
+
+  span {
+    top: -6px;
+    position: relative;
+  }
+
+  .day-details {
+    height: 40px;
+    border-bottom: 1px solid #ddd;
+  }
+
+
+  .right-details {
+    position: relative;
+    margin-left: -10px;
+  }
+
+  .week-date {
+    border-radius: 50%;
+    background-color: #008FFF !important;
+    font-size: 24px;
+    font-weight: 500;
+    font-family: "Roboto";
+    color: #fff;
+    width: 46px;
+    height: 46px;
+    padding-top: 5px;
+    text-align: center;
+
+  }
+
+  .day-clicks {
+    background-color: #008FFF;
+    border-radius: 6px;
+    color: #fff;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    margin-right: 12px;
+    margin-left: 10px;
+
+    p {
+      line-height: 16px;
+    }
+  }
+
+  .main-days {
+    hr.red-lines {
+      margin-top: 0;
+      margin-bottom: 0;
+      height: 1px;
+      background-color: #ea4335;
+      width: 100%;
+      position: relative;
+      top: 10px;
+      margin-left: 6px;
+    }
+
+    .circle {
+      background-color: #ea4335;
+      border-radius: 50%;
+      content: "";
+      position: absolute;
+      height: 12px;
+      margin-left: 2px;
+      margin-top: 4px;
+      width: 12px;
+      z-index: 8;
+
+    }
+  }
+}
+
+#ui-calendar-bo {
+  position: fixed;
+  margin-top: 64px;
+  float: right;
+  width: 100%;
+  padding-right: 0px;
+  z-index: 101;
+  background: #fff !important;
+  box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.2), 0px 1px 0px rgba(0, 0, 0, 0.12), 0px 3px 3px rgba(0, 0, 0, 0.14);
+  height: 60px;
+}
+
+#ui-calendar {
+  .main-header {
+    .mat-button-toggle-label-content {
+      line-height: 38px;
+
+    }
+  }
+}
+
+#ui-backoffice-week {
+  .custom-grid {
+    width: 100%;
+    //   float: left;
+    flex-wrap: wrap;
+    display: flex;
+    padding: 16px;
+
+    .column {
+      position: relative;
+      width: 14.28%;
+      text-align: center;
+
+      p {
+        cursor: pointer;
+      }
+
+      .column:last-child {
+        border-right: 0px !important;
+      }
+    }
+  }
+
+  .all-schedule {
+
+    padding: 0;
+
+    .column {
+      border-right: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
+      height: 40px;
+      overflow: hidden;
+    }
+  }
+
+  .all-schedule.fix-div {
+    .column {
+      height: 20px !important;
+    }
+  }
+
+  .day-schedule {
+    position: relative;
+    margin-top: -25px !important;
+
+    span {
+      position: relative;
+      top: 14px;
+    }
+  }
+
+  .week-clicks {
+    background-color: #008FFF;
+    border-radius: 6px;
+    color: #fff;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    margin: 2px;
+    text-align: left;
+
+    p {
+      line-height: 16px;
+    }
+  }
+
+  .day-holiday {
+    background-color: #007F6A;
+    color: #fff;
+    padding: 2px 4px;
+  }
+}

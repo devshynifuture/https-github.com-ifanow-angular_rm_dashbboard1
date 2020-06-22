@@ -53,6 +53,7 @@ export class AddQuotationSubscriptionComponent implements OnInit {
   createSubscription(value, data) {
     data.quotation['planId'] = data.id;
     data = data['quotation'];
+    data['feeStructureFlag'] = data.documentText.includes('$service_fee');
     data['quotationFlag'] = true;
     // this.Close(false);
     // const fragmentData = {
@@ -84,6 +85,7 @@ export class AddQuotationSubscriptionComponent implements OnInit {
       sideBarData => {
         if (UtilService.isRefreshRequired(sideBarData)) {
           // this.getQuotationsData(false);
+          this.Close(true);
           // console.log('this is sidebardata in subs subs 2: ');
           // this.dataCount = 0;
         }

@@ -1,11 +1,11 @@
-import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
-// import * as $ from 'jquery';
-import { BackOfficeService } from '../../../../back-office.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { AumComponent } from '../aum.component';
-import { AuthService } from 'src/app/auth-service/authService';
-import { ExcelMisService } from '../excel-mis.service';
-import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {BackOfficeService} from '../../../../back-office.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {AumComponent} from '../aum.component';
+import {AuthService} from 'src/app/auth-service/authService';
+import {ExcelMisService} from '../excel-mis.service';
+import {MfServiceService} from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
+
 @Component({
   selector: 'app-category-wise',
   templateUrl: './category-wise.component.html',

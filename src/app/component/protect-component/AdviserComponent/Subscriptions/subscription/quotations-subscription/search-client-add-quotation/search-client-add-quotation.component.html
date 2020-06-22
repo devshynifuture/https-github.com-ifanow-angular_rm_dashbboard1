@@ -1,92 +1,100 @@
 <div class="row bb-1 popup-header-fix-60">
-  <div class="col-md-10 p-0">
-    <h4 class="wrapper-20 m-0 roboto">SELECT PLAN</h4>
-  </div>
-  <div class="col-md-2 text-right">
-    <i class="material-icons pt-16 pr-16 c-p" (click)="close()"> clear</i>
-  </div>
+    <div class="col-md-10 p-0">
+        <h4 class="wrapper-20 m-0 roboto">Select plan</h4>
+    </div>
+    <div class="col-md-2 text-right">
+        <i class="material-icons pt-16 pr-16 c-p" (click)="close()"> clear</i>
+    </div>
 </div>
 
 
-<div class="pt-80 pb-90 ">
-  <div class="row">
-    <div class="col-md-8 p-0">
-      <h5 class="m-0 text-black pb-4">Select an client from the search box below</h5>
-      <mat-form-field appearance="standard" floatLabel="never">
-        <input #searchClient (input)="hidePlans(searchClient.value)" [formControl]="stateCtrl" [matAutocomplete]="auto1"
-          aria-label="client" class="form-control pl-8" matInput placeholder="Start typing to see investor names">
-        <mat-autocomplete #auto1="matAutocomplete" (optionSelected)="optionSelected($event.option.value)">
-          <mat-option *ngFor="let f of filteredStates | async" [value]="f">
-            <div class="row">
-              <div class="col-md-7 d-flex align-items-center">
-                <p class="t-left m-0">{{f.client_name}}</p>
-              </div>
-              <div class="col-md-4 text-right">
-              </div>
-            </div>
-          </mat-option>
-        </mat-autocomplete>
-        <mat-error *ngIf="stateCtrl.errors?.invalid" class="f-12">
-          This client does not exist
-        </mat-error>
-      </mat-form-field>
-    </div>
-    <div *ngIf="loader == true" class="col-md-1 align-items-end d-flex">
-      <mat-spinner class=" " [diameter]="30"></mat-spinner>
-    </div>
-  </div>
-
-
-  <div *ngIf="planSettingData" class="row">
-    <div class="col-md-12">
-      <p class="m-0 text-right text-custom roboto pt-24">You can map more than one plan to the client</p>
-    </div>
-  </div>
-
-  <div *ngIf="planSettingData" class="row">
-    <div class="col-md-6 mt-20 c-p" *ngFor="let singlePlan of planSettingData">
-      <div class="example-card">
-        <mat-card class="p-0 pa-blue" (click)="select(singlePlan)"
-          [ngClass]="singlePlan.selected == true ? 'ba-blue' : 'b-ua'">
-          <div class="row bg-grey lter">
-            <div class="col-md-12 p-0">
-              <mat-checkbox class="right text-right" *ngIf="singlePlan.selected == true"
-                [(ngModel)]="singlePlan.selected"></mat-checkbox>
-              <div class="col-md-12 p-0 height115">
-                <h3 class="m-0 pt-20 pl-24" matTooltip="Plan name">{{singlePlan.name}}</h3>
-                <h5 class="m-0 pt-4 pb-24 pl-24 text-custom" matTooltip="Plan code">{{singlePlan.code}}
-                </h5>
-              </div>
-            </div>
-          </div>
-          <mat-card-content class="bg-white mb-0">
-            <div class="wrapper-24">
-              <div class="row">
-                <div class="col-md-12 p-0 height110">
-                  <p class="f-12 mb-0 text-primitive">DESCRIPTION</p>
-                  <h5 class="mb-0 text-break">
-                    {{singlePlan.description==''?'N/A':singlePlan.description}}</h5>
-
-                </div>
-              </div>
-            </div>
-
-          </mat-card-content>
-
-        </mat-card>
-      </div>
-    </div>
-  </div>
-
-
-  <div class="bottom-fixed wrapper-12">
+<div class="pt-80 pb-90 pl-40 pr-40">
     <div class="row">
-      <div class="col-md-4">
-        <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
-      </div>
-      <div class="col-md-8 right text-right">
-        <button *ngIf="selectedPlan" mat-button class="btn-bottom br-0 text-inherit"
-          (click)="createSubscription('openQuotation',selectedPlan)">Save</button>
-      </div>
+        <div class="col-md-8 p-0">
+            <h5 class="m-0 text-black pb-4">Select an client from the search box below</h5>
+            <mat-form-field appearance="standard" floatLabel="never">
+                <input #searchClient (input)="hidePlans(searchClient.value)" [formControl]="stateCtrl" [matAutocomplete]="auto1" aria-label="client" class="form-control pl-8" matInput placeholder="Start typing to see investor names">
+                <mat-autocomplete #auto1="matAutocomplete" (optionSelected)="optionSelected($event.option.value)">
+                    <mat-option *ngFor="let f of filteredStates | async" [value]="f">
+                        <div class="row">
+                            <div class="col-md-1 p-0 d-flex align-items-center">
+                                <i class="material-icons"> person </i>
+                            </div>
+                            <div class="col-md-7 d-flex align-items-center">
+                                <p class="t-left m-0">{{f.client_name}}</p>
+                            </div>
+                            <div class="col-md-4 text-right">
+                            </div>
+                        </div>
+                    </mat-option>
+                </mat-autocomplete>
+                <mat-error *ngIf="stateCtrl.errors?.invalid" class="f-12">
+                    This client does not exist
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div *ngIf="loader == true" class="col-md-1 align-items-end d-flex">
+            <mat-spinner class=" " [diameter]="30"></mat-spinner>
+        </div>
     </div>
-  </div>
+
+
+    <div *ngIf="planSettingData" class="row">
+        <div class="col-md-12">
+            <p class="m-0 text-right text-custom roboto pt-24">You can map more than one plan to the client</p>
+        </div>
+    </div>
+
+    <div *ngIf="planSettingData" class="row">
+        <div class="col-md-6 mt-10 pl-0 c-p" *ngFor="let singlePlan of planSettingData">
+            <div class="example-card">
+                <mat-card class="p-0 pa-blue" (click)="select(singlePlan)" [ngClass]="singlePlan.selected == true ? 'ba-blue' : 'b-ua'">
+                    <div class="row bg-grey lter">
+                        <div class="col-md-12 p-0">
+                            <mat-checkbox class="right text-right" *ngIf="singlePlan.selected == true" [(ngModel)]="singlePlan.selected"></mat-checkbox>
+                            <div class="col-md-12 p-0 height115">
+                                <h3 class="m-0 pt-20 pl-24" matTooltip="Plan name">{{singlePlan.name}}</h3>
+                                <h5 class="m-0 pt-4 pb-24 pl-24 text-custom" matTooltip="Plan code">{{singlePlan.code}}
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                    <mat-card-content class="bg-white mb-0">
+                        <div class="wrapper-24">
+                            <div class="row">
+                                <div class="col-md-12 p-0 height110">
+                                    <p class="f-12 mb-0 text-primitive">DESCRIPTION</p>
+                                    <h5 class="mb-0 text-break">
+                                        {{singlePlan.description==''?'N/A':singlePlan.description}}</h5>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </mat-card-content>
+
+                </mat-card>
+            </div>
+        </div>
+    </div>
+
+
+    <div *ngIf="noDataFoundFlag" class="row">
+        <div class="col-md-12 d-flex flex-column justify-content-center align-items-center h-100vh">
+            <img src="/assets/images/svg/noDataFound.svg" class="w-50">
+            <p class="f-22 f-600 pt-28">No Plan Found</p>
+        </div>
+    </div>
+
+</div>
+
+<div class="bottom-fixed wrapper-12">
+    <div class="row">
+        <div class="col-md-4">
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
+        </div>
+        <div class="col-md-8 right text-right">
+            <button *ngIf="selectedPlan" mat-button class="btn-bottom br-0 text-inherit" (click)="createSubscription('openQuotation',selectedPlan)">Save</button>
+        </div>
+    </div>
+</div>

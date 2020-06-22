@@ -3,20 +3,22 @@
 </div>-->
 <div *ngIf="subscriptionData.length==0" class="bg-white">
     <div class="align-center">
-        <div class="row">
+        <div class="row" *ngIf="isAdvisor">
             <div class="col-md-12 pt-150">
-                <h5 class="pt-44">Hey, it seems {{clientData.name}} hasn't been subscribed to any Services yet. You need
-                    to add a Plan to get going. </h5>
-                <h5>Once a Plan is added, all the associated Services (along with the fee structure) will be added. If
-                    you want, you can customize the fee structure for this client. Each Service will have it’s own
-                    Subscription attached to it.
+                <h5 class="pt-44">Hey, it seems {{clientData.name}} hasn't been subscribed to any services yet. You need to add a Plan to get going. </h5>
+                <h5>Once a Plan is added, all the associated Services (along with the fee structure) will be added. If you want, you can customize the fee structure for this client. Each Service will have it’s own Subscription attached to it.
                 </h5>
                 <h5>Next, you will be able to send Quotations, sign Documents etc.</h5>
                 <h5>Let's get started!</h5>
-                <button *ngIf="isAdvisor" mat-storked-button (click)="openPlanSlider('planRightSlider','open',null)"
-                    class="btn-primary br-0 mt-44" mat-stroked-button>Add
+                <button mat-storked-button (click)="openPlanSlider('planRightSlider','open',null)" class="btn-primary br-0 mt-44" mat-stroked-button>Add
                     Plan
                 </button>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="!isAdvisor">
+            <div class="col-md-12 pt-150">
+                <h5 class="pt-44">Hey, it seems you haven't been subscribed to any services yet. Please contact your financial advisor to subscript to a service now. </h5>
             </div>
         </div>
     </div>
@@ -32,19 +34,16 @@
     <div *ngIf="isAdvisor && subscriptionData.length > 0" class="wrapper-20 pb-0 pt-180 mt-0">
         <div class="row">
             <div class="col-md-12 p-0 pt-32">
-                <button (click)="openPlanSlider('planRightSlider','open',null)"
-                    class="btn-primary br-0 right text-right addon" mat-stroked-button>ADD PLAN
+                <button (click)="openPlanSlider('planRightSlider','open',null)" class="btn-primary br-0 right text-right addon" mat-stroked-button>ADD PLAN
                 </button>
             </div>
         </div>
     </div>
-    <div *ngFor="let sub of subscriptionData; let i = index" class="pl-20 pr-20 pb-40 mt-12 col-md-12">
+    <div [ngClass]="{'mt-60': !isAdvisor}" *ngFor="let sub of subscriptionData; let i = index" class="pl-20 pr-20 pb-40 mt-12 col-md-12">
         <!--    *ngIf="clientData.length > 0"-->
-        <h4 class="pb-8 text-black" *ngIf="sub.subscriptions.length > 0">{{sub.planName}} </h4>
+        <h4 class=" text-black" *ngIf="sub.subscriptions.length > 0">{{sub.planName}} </h4>
         <div class="overflow-hidden">
-            <table *ngIf="sub!=undefined && sub.subscriptions.length > 0" [appSkeletonLoading]="isLoading"
-                [dataSource]="checkAndGenerateTableSource(sub.subscriptions)" appSkeletonLoading
-                class="mt-8 skeletonAnimation" id="table-low" mat-table matSort>
+            <table *ngIf="sub!=undefined && sub.subscriptions.length > 0" [appSkeletonLoading]="isLoading" [dataSource]="checkAndGenerateTableSource(sub.subscriptions)" appSkeletonLoading class="mt-8 skeletonAnimation" id="table-low" mat-table matSort>
                 <ng-container matColumnDef="service">
                     <th *matHeaderCellDef class="f-18 w-23" mat-header-cell mat-sort-header="serviceName">
                         Service name
@@ -57,13 +56,13 @@
                 </ng-container>
                 <ng-container matColumnDef="amt">
                     <th *matHeaderCellDef class="f-18" mat-header-cell> Fee amount</th>
-                    <td (click)="Open('open',element)" *matCellDef="let element" [ngClass]="{'c-p': isAdvisor}" mat-cell>
-                        <div class="bar text-primary text-underline" (click)="Open('open',element)"
-                            *ngIf="isAdvisor && element.startsOn==undefined"> {{isLoading ? ' ' : 'View details'}} </div>
-                        <div appFormatNumber *ngIf="element.startsOn && element.subscriptionPricing.feeTypeId==1">
-                            ₹ {{element.subscriptionPricing.subscriptionAssetPricingList[0].pricing}}</div>
-                        <div appFormatNumber *ngIf="element.startsOn && element.subscriptionPricing.feeTypeId==2">
-                            {{element.subscriptionPricing.subscriptionAssetPricingList[2].pricing}} %</div>
+                    <td (click)="element.feeTypeId == 2 ? Open('open',element) : ''" *matCellDef="let element" [ngClass]="{'c-p': element.feeTypeId == 2}" mat-cell>
+                        <div class="bar text-primary text-underline" *ngIf="element.startsOn==undefined">
+                            {{isLoading ? ' ' : 'View details'}} </div>
+                        <div appFormatNumber *ngIf="element.startsOn && element.feeTypeId==1">
+                            ₹ {{element.pricing}}</div>
+                        <div appFormatNumber *ngIf="element.startsOn && element.feeTypeId==2" class="text-primary text-underline">
+                            View details</div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="type">
@@ -110,8 +109,7 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="bdate">
-                    <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="prevBillingDate"> Last billing
-                        date
+                    <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="prevBillingDate"> Last billing date
                     </th>
                     <td *matCellDef="let element" mat-cell>
                         <div class="bar">
@@ -120,8 +118,7 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="ndate">
-                    <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="nextBillingDate"> Next billing
-                        date
+                    <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="nextBillingDate"> Next billing date
                     </th>
                     <td *matCellDef="let element" mat-cell>
                         <div class="bar">
@@ -130,8 +127,7 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="mode">
-                    <th *matHeaderCellDef class="f-18" mat-header-cell matTooltip="Fee collection mode"
-                        aria-label="Button that displays a tooltip when focused or hovered over">Fee coll...</th>
+                    <th *matHeaderCellDef class="f-18" mat-header-cell matTooltip="Fee collection mode" aria-label="Button that displays a tooltip when focused or hovered over">Fee coll...</th>
                     <td *matCellDef="let element" mat-cell>
                         <div class="bar">
                             {{getFeeTypeName(element.feeMode)}}
@@ -142,31 +138,24 @@
                     <th *matHeaderCellDef class="f-18" mat-header-cell style="width: 2%;"></th>
                     <td *matCellDef="let element" mat-cell style="width: 2%;">
                         <div *ngIf="!isLoading">
-                            <i [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu"
-                                class="material-icons c-p iconscolors">
+                            <i [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu" class="material-icons c-p iconscolors">
                                 more_vert
                             </i>
                             <mat-menu #menu="matMenu">
-                                <a (click)="Open('open',element)" *ngIf="element.status!=4 && element.status !=1"
-                                    mat-menu-item>
+                                <a (click)="Open('open',element)" *ngIf="element.status!=4 && element.status !=1" mat-menu-item>
                                     View fee structure</a>
-                                <a (click)="openPlanSlider('subscriptionDetails','open',element)"
-                                    *ngIf="element.status!=4 && element.status !=1" mat-menu-item>View
+                                <a (click)="openPlanSlider('subscriptionDetails','open',element)" *ngIf="element.status!=4 && element.status !=1" mat-menu-item>View
                                     subscription details</a>
-                                <a class="bt-1" (click)="openPlanSlider('billerSettings','open',element)"
-                                    *ngIf="element.status!=4 && element.status !=1" mat-menu-item>Change
+                                <a class="bt-1" (click)="openPlanSlider('billerSettings','open',element)" *ngIf="element.status!=4 && element.status !=1" mat-menu-item>Change
                                     biller</a>
-                                <a (click)="openPlanSlider('changePayee','open',element)"
-                                    *ngIf="element.status!=4 && element.status !=1" mat-menu-item>Change
+                                <a (click)="openPlanSlider('changePayee','open',element)" *ngIf="element.status!=4 && element.status !=1" mat-menu-item>Change
                                     payee</a>
 
                                 <div [ngClass]="element.status !=1? 'bt-1':''">
 
-                                    <a (click)="delete('cancelSubscription',element)"
-                                        *ngIf="element.status==2 || element.status == 3" mat-menu-item>Cancel
+                                    <a (click)="delete('cancelSubscription',element)" *ngIf="element.status==2 || element.status == 3" mat-menu-item>Cancel
                                         subscription</a>
-                                    <a (click)="deleteModal('SUBSCRIPTION',element, sub.subscriptions, i)"
-                                        mat-menu-item>Delete
+                                    <a (click)="deleteModal('SUBSCRIPTION',element, sub.subscriptions, i)" mat-menu-item>Delete
                                         subscription</a>
                                 </div>
                             </mat-menu>

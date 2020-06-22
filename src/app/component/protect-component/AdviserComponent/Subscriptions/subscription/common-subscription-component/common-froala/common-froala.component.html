@@ -124,17 +124,17 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close('close',false)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button *ngIf="storeData.quotationFlag==undefined" mat-button class="btn-bottom br-0 text-inherit pr-4 pl-4"
+            <button *ngIf="saveQuotationFlag==undefined" mat-button class="btn-bottom br-0 text-inherit pr-4 pl-4"
                 (click)="save()">SAVE</button>
-            <button *ngIf="storeData.sendEsignFlag" mat-button class="btn-bottom p-0 mw-40 "
-                [matMenuTriggerFor]="menu"><i class="material-icons">
+            <button *ngIf="sendEmailFlag" mat-button class="btn-bottom p-0 mw-40 " [matMenuTriggerFor]="menu"><i
+                    class="material-icons">
                     keyboard_arrow_up
                 </i></button>
             <mat-menu #menu="matMenu">
-                <button class="btn-bottom br-0 text-inherit" (click)="saveSendEsign()" mat-menu-item>SAVE & SEND WITH
+                <button class="btn-bottom br-0 text-inherit" (click)="openSendEmail()" mat-menu-item>SAVE & SEND WITH
                     ESIGN</button>
             </mat-menu>
-            <button *ngIf="storeData.quotationFlag" mat-button class="btn-bottom br-0 text-inherit pr-4 pl-4"
+            <button *ngIf="saveQuotationFlag" mat-button class="btn-bottom br-0 text-inherit pr-4 pl-4"
                 (click)="createQuotation()">SAVE</button>
         </div>
     </div>

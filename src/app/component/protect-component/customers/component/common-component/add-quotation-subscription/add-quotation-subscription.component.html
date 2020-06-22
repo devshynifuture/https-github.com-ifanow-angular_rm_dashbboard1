@@ -1,6 +1,6 @@
 <div class="row bb-1 popup-header-fix-60">
     <div class="col-md-10 p-0">
-        <h4 class="wrapper-20 m-0 roboto">SELECT A PLAN</h4>
+        <h4 class="wrapper-20 m-0 roboto">Select a Plan </h4>
     </div>
     <div class="col-md-2 text-right">
         <i class="material-icons pt-16 pr-16 c-p" (click)="Close(false)"> clear</i>
@@ -65,7 +65,7 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit"
+            <button *ngIf="noDataFoundFlag==false" mat-button class="btn-bottom br-0 text-inherit"
                 (click)="createSubscription('openQuotation',selectedPlan)">Save</button>
         </div>
     </div>

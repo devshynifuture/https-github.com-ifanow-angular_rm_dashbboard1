@@ -1,7 +1,7 @@
 <form [formGroup]="formIncome">
-    <div class=" scrollHeight">
+    <div class="">
 
-        <div class="row p-12">
+        <div class="row pt-24">
             <div class="col-md-4 pr-0 text-right">
                 <h5 class="m-0 pt-8">Earning member</h5>
             </div>
@@ -21,7 +21,7 @@
             </div>
         </div>
 
-        <div class="row p-12">
+        <div class="row pt-32">
             <div class="col-md-4 pr-0 text-right">
                 <h5 class="m-0 pt-8">Income source </h5>
             </div>
@@ -52,7 +52,7 @@
             </div>
         </div>
 
-        <div class="row p-12">
+        <div class="row pt-32">
             <div class="col-md-4 pr-0 text-right">
                 <h5 class="m-0 pt-8">Monthly amount </h5>
                 <p class="m-0 f-12 text-custom">Enter the net income you get in hand</p>
@@ -73,7 +73,7 @@
             </div>
         </div>
 
-        <div class="row p-12">
+        <div class="row pt-32">
             <div class="col-md-4 pr-0 text-right">
                 <h5 class="m-0 pt-8">Continues till</h5>
             </div>
@@ -117,15 +117,15 @@
             </div>
         </div>
 
-        <div class="row p-12">
+        <div class="row pt-32">
             <div class="col-md-4 pr-0 text-right">
                 <h5 class="m-0 pt-8"> Income growth rate </h5>
                 <p class="m-0 f-12 text-custom">This is the long term growth rate rather than just the next year’s</p>
             </div>
             <div class="col-md-6">
                 <div class="row">
-                    <div class="col-md-9 p-0">
-                        <div class="form-group mb-0">
+                    <div class="col-md-7 p-0">
+                        <div class="form-group mb-0 cashflow-add-income">
                             <mat-button-toggle-group name="income-growth-rate" aria-label="Income Growth Rate"
                                 formControlName="growthRate">
                                 <mat-button-toggle type="radio" value="4-6">4-6 %</mat-button-toggle>
@@ -162,7 +162,7 @@
             </div>
         </div>
 
-        <div class="row p-12">
+        <div class="row pt-32">
             <div class="col-md-4 pr-0 text-right">
                 <h5 class="m-0 pt-8">Income period</h5>
                 <p class="m-0 f-12 text-custom"> Income start & end dates helps in planning cash flows better </p>
@@ -172,9 +172,9 @@
                 <div class="row">
                     <div class="col-md-6 pr-8  pl-0">
                         <div class="form-group mb-0">
-                            <mat-form-field>
+                            <mat-form-field class="ba-date">
                                 <input matInput (focus)="picker2.open()" formControlName="income-period-start"
-                                    class="form-control br-0" [matDatepicker]="picker2" readonly>
+                                    class="form-control br-0 b-0" [matDatepicker]="picker2" readonly>
                                 <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                                 <mat-datepicker #picker2></mat-datepicker>
                                 <mat-error
@@ -186,9 +186,9 @@
                     </div>
                     <div class="col-md-6 pl-8 pr-0">
                         <div class="form-group mb-0">
-                            <mat-form-field>
+                            <mat-form-field class="ba-date">
                                 <input matInput (focus)="picker3.open()" formControlName="income-period-end"
-                                    class="form-control br-0" [matDatepicker]="picker3" readonly>
+                                    class="form-control br-0 b-0" [matDatepicker]="picker3" readonly>
                                 <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
                                 <mat-datepicker #picker3></mat-datepicker>
                                 <mat-error
@@ -202,15 +202,15 @@
             </div>
         </div>
 
-        <div class="row p-12">
+        <div class="row pt-32">
             <div class="col-md-4 pr-0 text-right">
                 <h5 class="m-0 pt-8"> Next appraisal in</h5>
                 <p class="m-0 f-12 text-custom"> Enter next appriasal date. Approx year & month should do </p>
             </div>
-            <div class="col-md-6">
-                <mat-form-field>
+            <div class="col-md-3">
+                <mat-form-field class="ba-date">
                     <input matInput (focus)="picker.open()" formControlName="nextAppraisalOrNextRenewal"
-                        class="form-control br-0" [matDatepicker]="picker" readonly>
+                        class="form-control br-0 b-0" [matDatepicker]="picker" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                     <mat-error
@@ -221,20 +221,20 @@
             </div>
         </div>
 
-        <div class="row p-12">
+        <div class="row pt-32">
             <div class="col-md-4 pr-0 text-right">
                 <h5 class="m-0 pt-8">I’m expecting a bonus/inflow</h5>
                 <p class="m-0 f-12 text-custom">Enter the month & approx amount </p>
 
             </div>
             <div class="col-md-6">
-                <div class="row" [formGroup]="formItem"
+                <div class="row no-wrap" [formGroup]="formItem"
                     *ngFor="let formItem of formBonusListArrayControls.controls; index as i">
                     <div class="col-md-6 pr-8 pl-0">
                         <div class="form-group mb-0">
-                            <mat-form-field>
+                            <mat-form-field class="ba-date">
                                 <input matInput appInputValueValidation (focus)="picker1.open()"
-                                    formControlName="bonus-date" class="form-control br-0" [matDatepicker]="picker1"
+                                    formControlName="bonus-date" class="form-control br-0 b-0" [matDatepicker]="picker1"
                                     readonly>
                                 <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                 <mat-datepicker #picker1></mat-datepicker>
@@ -245,7 +245,7 @@
                             </mat-form-field>
                         </div>
                     </div>
-                    <div class="col-md-5 pl-8 pr-0">
+                    <div class="col-md-6 pl-8 pr-0">
                         <div class="form-group mb-0">
                             <mat-form-field>
                                 <input matInput type="text" formControlName="bonus-amt" class="form-control br-0">

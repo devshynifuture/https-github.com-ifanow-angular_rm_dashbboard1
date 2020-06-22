@@ -1,4 +1,3 @@
-
 <!-- <mat-toolbar class="bg-white bl-1" class="fix-top pl-0">
    
     <mat-toolbar  class="bg-white p-0 " style=" width:300px; text-align: center; border-right: 1px #dddddd;">
@@ -214,177 +213,140 @@
 
 <div id="ui-calendar">
     <!-- <div style="background:red; height: 64px"></div> -->
-    <div class="row main-header p-16">
-        <div class="col-md-8 p-0">
-            <div class="row">
-                <div class="col-md-3 p-0">
-                    <h3 class="m-0 pt-8">Calendar</h3>
+    <div class="">
+        <div class="row main-header p-12">
+            <div class="col-md-8 p-0">
+                <div class="row">
+                    <div class="col-md-3 p-0">
+                        <h3 class="m-0 pt-8">Calendar</h3>
 
-                </div>
-                <div class="col-md-1 p-0">
-                    <button mat-stroked-button (click)="persentMonth()" class="br-2 ba-black text-black">Today</button>
-                </div>
-                <div class="col-md-2 p-0 pt-8 pl-28 pr-0">
-                    <img src="/assets/images/svg/arrowright-black.svg" (click)="lastMonth()" class="mr-24 c-p">
-                    <img src="/assets/images/svg/arrowleft-black.svg" (click)="nextMonth()" class="c-p">
-                </div>
-                <div class="col-md-4 p-0">
-                    <h3 class="m-0 pt-8">{{viewDate | date: 'MMMM y'}}</h3>
+                    </div>
+                    <div class="col-md-1 p-0">
+                        <button mat-stroked-button (click)="persentMonth()"
+                            class="br-2 ba-black text-black">Today</button>
+                    </div>
+                    <div class="col-md-2 p-0 pt-8 pl-28 pr-0">
+                        <img src="/assets/images/svg/arrowright-black.svg" (click)="lastMonth()" class="mr-24 c-p">
+                        <img src="/assets/images/svg/arrowleft-black.svg" (click)="nextMonth()" class="c-p">
+                    </div>
+                    <div class="col-md-4 p-0">
+                        <h3 class="m-0 pt-8">{{viewDate | date: 'MMMM y'}}</h3>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4 p-0 right">
-            <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="right">
-                <mat-button-toggle value="bold" routerLink="/admin/day-calendar" routerLinkActive="btn-primary">Day</mat-button-toggle>
-                <mat-button-toggle value="italic" routerLink="/admin/week-calendar" routerLinkActive="btn-primary">Week</mat-button-toggle>
-                <mat-button-toggle value="underline" routerLink="/admin/calendar" routerLinkActive="btn-primary">Month</mat-button-toggle>
-            </mat-button-toggle-group>
-            <button mat-stroked-button class="br-2 ba-black text-black right mr-16">Schedule</button>
-        </div>
-    </div>
-    <div class="row h-100vh pt-72">
-        <div class="col-md-2 p-0 bg-grey lter">
-            <div class="p-12 text-right">
-                <button mat-raised-button class="btn-primary br-0" (click)="openDialog(null)" ><img src="/assets/images/svg/plus.svg"
-                        class="pr-12">ADD
-                    NEW</button>
+            <div class="col-md-4 p-0 right">
+                <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="right">
+                    <mat-button-toggle value="bold" routerLink="/admin/activies/day" routerLinkActive="btn-primary">Day
+                    </mat-button-toggle>
+                    <mat-button-toggle value="italic" routerLink="/admin/activies/week" routerLinkActive="btn-primary">
+                        Week
+                    </mat-button-toggle>
+                    <mat-button-toggle value="underline" routerLink="/admin/activies/month"
+                        routerLinkActive="btn-primary">
+                        Month</mat-button-toggle>
+                </mat-button-toggle-group>
+                <button mat-stroked-button class="br-2 ba-black text-black right mr-16">Schedule</button>
             </div>
+        </div>
 
-            <div class="row pt-16">
-                <div class="col-md-8">
-                    <h5 class="m-0">{{viewDate | date: 'MMMM y'}}</h5>
+        <!-- *ngIf="!excessAllow" -->
+        <!-- <app-google-connect></app-google-connect> -->
+        <div class="row h-100vh pt-68">
+            <div class="col-md-2 p-0 bg-grey lter">
+                <div class="p-12 text-right">
+                    <button mat-stroked-button class="btn-primary br-0" (click)="openDialog(null)">ADD
+                        NEW</button>
                 </div>
-                <!-- <button mat-button color="primary">
+
+                <div class="row pt-16">
+                    <div class="col-md-8">
+                        <h5 class="m-0">{{viewDate | date: 'MMMM y'}}</h5>
+                    </div>
+                    <!-- <button mat-button color="primary">
                     
                 </button> -->
-                <div class="col-md-2" (click)="lastMonth()">
-                    <img src="/assets/images/svg/arrowright-black.svg" class="c-p">
+                    <div class="col-md-2" (click)="lastMonth()">
+                        <img src="/assets/images/svg/arrowright-black.svg" class="c-p">
+                    </div>
+                    <div class="col-md-2 " (click)="nextMonth()">
+                        <img src="/assets/images/svg/arrowleft-black.svg" class="c-p">
+                    </div>
                 </div>
-                <div class="col-md-2 " (click)="nextMonth()">
-                    <img src="/assets/images/svg/arrowleft-black.svg" class="c-p">
+                <div class="custom-grid">
+                    <div class="column">
+                        <p class="m-0 roboto text-black f-11 f-500">M</p>
+                    </div>
+                    <div class="column">
+                        <p class="m-0 roboto text-black f-11 f-500">T</p>
+                    </div>
+                    <div class="column">
+                        <p class="m-0 roboto text-black f-11 f-500">W</p>
+                    </div>
+                    <div class="column">
+                        <p class="m-0 roboto text-black f-11 f-500">T</p>
+                    </div>
+                    <div class="column">
+                        <p class="m-0 roboto text-black f-11 f-500">F</p>
+                    </div>
+                    <div class="column">
+                        <p class="m-0 roboto text-black f-11 f-500">S</p>
+                    </div>
+                    <div class="column">
+                        <p class="m-0 roboto text-black f-11 f-500">S</p>
+                    </div>
                 </div>
-            </div>
-            <div class="custom-grid">
-                <div class="column">
-                    <p class="m-0 roboto text-black f-11 f-500">M</p>
+
+                <div class="custom-grid pt-0">
+                    <div class="column" *ngFor="let day of daysArr; let i = index" style="padding: 7px 0px;">
+                        <p [class.rounded-primary]="day == todaysDate && currentMonth == month"
+
+                            [class.sub-rounded-primary]="day == selectedDate && i > addLastMonthDays - 1 && i < numbersOfDays + addLastMonthDays"
+                            
+                            [class.text-primitive]="i < addLastMonthDays || i > numbersOfDays + addLastMonthDays - 1"
+                            class="m-0 roboto f-11">{{day}}</p>
+                    </div>
                 </div>
-                <div class="column">
-                    <p class="m-0 roboto text-black f-11 f-500">T</p>
-                </div>
-                <div class="column">
-                    <p class="m-0 roboto text-black f-11 f-500">W</p>
-                </div>
-                <div class="column">
-                    <p class="m-0 roboto text-black f-11 f-500">T</p>
-                </div>
-                <div class="column">
-                    <p class="m-0 roboto text-black f-11 f-500">F</p>
-                </div>
-                <div class="column">
-                    <p class="m-0 roboto text-black f-11 f-500">S</p>
-                </div>
-                <div class="column">
-                    <p class="m-0 roboto text-black f-11 f-500">S</p>
-                </div>
-            </div>
-            
-            <div class="custom-grid pt-0">
-                <div class="column" *ngFor="let day of daysArr; let i = index" style="padding: 7px 0px;">
-                    <p  
-                    [class.rounded-primary]="day == todayDate && i > addLastMonthDays - 1 && i < numbersOfDays - 1 && currentMonth == month" 
-                    [class.text-primitive]="i < addLastMonthDays || i > numbersOfDays + addLastMonthDays - 1"  
-                    class="m-0 roboto f-11">{{day}}</p>
-                </div>
-            </div>
-            
-            <div class="p-16" id="calendar-tabs" style=" top:30px;">
-                <mat-tab-group animationDuration="0ms">
-                    <mat-tab label="Categories">
-                        <div class="row">
-                            <div class="col-md-12 d-grid">
-                                <div class="Heterogenous-Blue">
-                                    <mat-checkbox checked="false">Meetings</mat-checkbox>
-                                </div>
-                                <div class="Heterogenous-Yellow">
-                                    <mat-checkbox checked="false">Client reviews</mat-checkbox>
-                                </div>
-                                <div class="Heterogenous-Red">
-                                    <mat-checkbox checked="false">Tasks</mat-checkbox>
-                                </div>
-                                <div class="Heterogenous-Green">
-                                    <mat-checkbox checked="false">Action plans</mat-checkbox>
-                                </div>
-                                <div class="Heterogenous-Teal">
-                                    <mat-checkbox checked="false">Opportunities</mat-checkbox>
-                                </div>
-                                <div class="Heterogenous-Pink">
-                                    <mat-checkbox checked="false">Birthdays</mat-checkbox>
-                                </div>
-                                <div class="Heterogenous-Purple">
-                                    <mat-checkbox checked="false">Holidays</mat-checkbox>
-                                </div>
-                                <div class="Heterogenous-dker">
-                                    <mat-checkbox checked="false">Uncategorised</mat-checkbox>
+
+                <div class="p-12" id="calendar-tabs" style=" top:30px;">
+                    <mat-tab-group animationDuration="0ms">
+                        <mat-tab label="Categories">
+                            <div class="row">
+                                <div class="col-md-12 d-grid">
+                                    <div class="Heterogenous-Blue">
+                                        <mat-checkbox checked="false">Meetings</mat-checkbox>
+                                    </div>
+                                    <div class="Heterogenous-Yellow">
+                                        <mat-checkbox checked="false">Client reviews</mat-checkbox>
+                                    </div>
+                                    <div class="Heterogenous-Red">
+                                        <mat-checkbox checked="false">Tasks</mat-checkbox>
+                                    </div>
+                                    <div class="Heterogenous-Green">
+                                        <mat-checkbox checked="false">Action plans</mat-checkbox>
+                                    </div>
+                                    <div class="Heterogenous-Teal">
+                                        <mat-checkbox checked="false">Opportunities</mat-checkbox>
+                                    </div>
+                                    <div class="Heterogenous-Pink">
+                                        <mat-checkbox checked="false">Birthdays</mat-checkbox>
+                                    </div>
+                                    <div class="Heterogenous-Purple">
+                                        <mat-checkbox checked="false">Holidays</mat-checkbox>
+                                    </div>
+                                    <div class="Heterogenous-dker">
+                                        <mat-checkbox checked="false">Uncategorised</mat-checkbox>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </mat-tab>
-                    <mat-tab label="Team">
+                        </mat-tab>
+                        <mat-tab label="Team">
 
-                    </mat-tab>
-                </mat-tab-group>
-            </div>
-        </div>
-        <div class="col-md-10">
-            <div class="custom-grid pt-20">
-                <div class="column">
-                    <p class="m-0 roboto text-black">MON</p>
-                </div>
-                <div class="column">
-                    <p class="m-0 roboto text-black">TUE</p>
-                </div>
-                <div class="column">
-                    <p class="m-0 roboto text-black">WED</p>
-                </div>
-                <div class="column">
-                    <p class="m-0 roboto text-black">THU</p>
-                </div>
-                <div class="column">
-                    <p class="m-0 roboto text-black">FRI</p>
-                </div>
-                <div class="column">
-                    <p class="m-0 roboto text-black">SAT</p>
-                </div>
-                <div class="column">
-                    <p class="m-0 roboto text-black">SUN</p>
+                        </mat-tab>
+                    </mat-tab-group>
                 </div>
             </div>
-            <div class="custom-grid p-0 b-a bb-0  calendar-column">
-                <div class="column " *ngFor="let day of daysArr; let i = index">
-                    <mat-chip style="margin-right: 3px;" [class.actived]="day == todayDate && i > addLastMonthDays - 1 && i < numbersOfDays - 1 && currentMonth == month" 
-                        [class.text-primitive]="i < addLastMonthDays || i > numbersOfDays + addLastMonthDays - 1" 
-                        >{{day}}</mat-chip>
-                        <div   class="pt-20 pl-4" style="width: 100%; border: none; ">
-                            <ul   *ngFor="let event of formatedEvent;" class="date-info blue" [hidden]="day != event.day || month + 1 != event.month || year != event.year || i < addLastMonthDays || i > numbersOfDays + addLastMonthDays - 1">
-                                <li style="display: none;" >
-                                    <mat-chip-list *ngFor="let list of event.attendeeList;"  class="pink mt-8" >
-                                        <mat-chip >{{list}}</mat-chip>
-                                    </mat-chip-list>
-                                </li>
-                                <li  (click)="editEvent(event)">                                    
-                                    <span *ngIf="event.start.dateTime != null">{{event.startTime}}</span> <span class="f-700 m-0" [innerHTML]="event.summary" ></span></li>
-                            </ul>
-                           
-                           <!-- currunt month add event -->
-                           <!-- && i >= curruntDayIndex && currentMonth == month && currentYear >= year || && month>= currentMonth && year >= currentYear-->
-                            <div *ngIf = "i > addLastMonthDays-1 && i < numbersOfDays + addLastMonthDays " (click)="addEvent(day,month + 1,year)" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; border: none;"></div>
-                           <!-- previous month add event || && (month != 0 && year >= currentYear)-->
-                            <div *ngIf = "i < addLastMonthDays && month >= currentMonth " (click)="addEvent(day,month,year)" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; border: none;"></div>
-                           <!-- next month add event || && ((month == 11 && year+1 == currentYear) ||  year >= currentYear)-->
-                           <div *ngIf = "i >= numbersOfDays + addLastMonthDays " (click)="addEvent(day,month+2,year)" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; border: none;"></div>
-                        </div>
-                </div>
+            <div class="col-md-10">
+                <router-outlet></router-outlet>
             </div>
         </div>
     </div>
-</div>

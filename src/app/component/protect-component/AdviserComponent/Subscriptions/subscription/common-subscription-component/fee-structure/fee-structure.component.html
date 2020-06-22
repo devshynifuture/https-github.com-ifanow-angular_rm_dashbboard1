@@ -7,10 +7,13 @@
         </div>
         <div class="row pt-40">
             <div class="col-md-6 hover c-p" (click)="selectedFees('fixed')">
-                <mat-card [ngClass]="{'ba-blue': selectedFee=='fixed','b-ua':selectedFee!='fixed'}" class="p-0" (click)="openPlanSliderFee('','fixedFee')">
+                <mat-card [ngClass]="{'ba-blue': selectedFee=='fixed','b-ua':selectedFee!='fixed'}" class="p-0"
+                    (click)="openPlanSliderFee('','fixedFee')">
                     <div class="row bg-grey lter">
                         <div class="col-md-12 p-0">
-                            <mat-checkbox class="right text-right" [ngStyle]="{'pointer-events': (selectedFee=='fixed')?'none':'all'}" *ngIf="selectedFee=='fixed'" checked="false"></mat-checkbox>
+                            <mat-checkbox class="right text-right"
+                                [ngStyle]="{'pointer-events': (selectedFee=='fixed')?'none':'all'}"
+                                *ngIf="selectedFee=='fixed'" checked="false"></mat-checkbox>
                             <h4 class="f-20 playfair">Fixed fee</h4>
                         </div>
                     </div>
@@ -23,15 +26,19 @@
 
             </div>
             <div class="col-md-6 hover c-p" (click)="selectedFees('variable')">
-                <mat-card class="p-0" [ngClass]="{'ba-blue': selectedFee=='variable','b-ua':selectedFee!='variable'}" (click)="openPlanSliderFee('','varibleFee')">
+                <mat-card class="p-0" [ngClass]="{'ba-blue': selectedFee=='variable','b-ua':selectedFee!='variable'}"
+                    (click)="openPlanSliderFee('','varibleFee')">
                     <div class="row bg-grey lter">
                         <div class="col-md-12 p-0">
-                            <mat-checkbox class="right text-right" [ngStyle]="{'pointer-events': (selectedFee=='variable')?'none':'all'}" *ngIf="selectedFee=='variable'" checked="false"></mat-checkbox>
+                            <mat-checkbox class="right text-right"
+                                [ngStyle]="{'pointer-events': (selectedFee=='variable')?'none':'all'}"
+                                *ngIf="selectedFee=='variable'" checked="false"></mat-checkbox>
                             <h4 class="f-20 playfair">Variable fee</h4>
                         </div>
                     </div>
                     <div class="col-md-12 p-0">
-                        <h5 class="p-20 f-14 proxima height100">Choose this fee type if you want to charge a variable fee. E.g. for AUM linked fee.
+                        <h5 class="p-20 f-14 proxima height100">Choose this fee type if you want to charge a variable
+                            fee. E.g. for AUM linked fee.
                         </h5>
                     </div>
                 </mat-card>
@@ -53,16 +60,20 @@
                             <h3 class="m-0 pt-18 pt-24 f-24 pb-0 pl-24" *ngIf="_upperData" matTooltip="Service name">
                                 {{_upperData.serviceName}}
                             </h3>
-                            <h5 class="m-0 pt-4 pb-44 pl-24 text-custom proxima" *ngIf="_upperData" matTooltip="Service code">
+                            <h5 class="m-0 pt-4 pb-44 pl-24 text-custom proxima" *ngIf="_upperData"
+                                matTooltip="Service code">
                                 {{_upperData.serviceCode}}</h5>
                         </div>
                         <div *ngIf="_upperData" class="col-md-2">
-                            <i class="material-icons text-right right text-custom f-28 pt-12 c-p" [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu">
+                            <i class="material-icons text-right right text-custom f-28 pt-12 c-p"
+                                [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu">
                                 more_vert
                             </i>
                             <mat-menu #menu="matMenu">
-                                <a mat-menu-item *ngIf="_upperData.servicePricing.feeTypeId==1" (click)="openPlanSliderFee(_upperData,'fixedFee')">Edit Service</a>
-                                <a mat-menu-item *ngIf="_upperData.servicePricing.feeTypeId==2" (click)="openPlanSliderFee(_upperData,'varibleFee')">Edit Service</a>
+                                <a mat-menu-item *ngIf="_upperData.servicePricing.feeTypeId==1"
+                                    (click)="openPlanSliderFee(_upperData,'fixedFee')">Edit Service</a>
+                                <a mat-menu-item *ngIf="_upperData.servicePricing.feeTypeId==2"
+                                    (click)="openPlanSliderFee(_upperData,'varibleFee')">Edit Service</a>
                                 <a mat-menu-item (click)="deleteService(_upperData,'SERVICE')">Delete Service</a>
                             </mat-menu>
                         </div>
@@ -84,14 +95,16 @@
                             </div>
                             <div *ngIf="_upperData" class="col-md-3 text-left">
                                 <p class="text-custom m-0 f-12">BILLING MODE</p>
-                                <h4 class="m-0 p-0 lh-16" *ngIf="_upperData.servicePricing.billingMode==1">Start of period
+                                <h4 class="m-0 p-0 lh-16" *ngIf="_upperData.servicePricing.billingMode==1">Start of
+                                    period
                                 </h4>
                                 <h4 class="m-0 p-0 lh-16" *ngIf="_upperData.servicePricing.billingMode==2">End of period
                                 </h4>
                             </div>
                             <div *ngIf="_upperData" class="col-md-3 text-left">
                                 <p class="text-custom m-0 f-12" *ngIf="_upperData.servicePricing.feeTypeId==1">FEES</p>
-                                <p class="text-custom m-0 f-12" *ngIf="_upperData.servicePricing.feeTypeId==2">OTHER ASSET FEES</p>
+                                <p class="text-custom m-0 f-12" *ngIf="_upperData.servicePricing.feeTypeId==2">OTHER
+                                    ASSET FEES</p>
                                 <h4 class="m-0 p-0 lh-16" *ngIf="_upperData.servicePricing.feeTypeId==2">
                                     {{_upperData.servicePricing.pricingList[2].pricing}}%</h4>
                                 <h4 class="m-0 p-0 lh-16" *ngIf="_upperData.servicePricing.feeTypeId==1">
@@ -197,92 +210,3 @@
 
 
 <!------- pdf html inner html --------->
-
-
-<div class="hide">
-
-    <table style="width: 800px; margin: 0px auto; border: 1px solid rgba(0, 0, 0, 0.12);" align="center">
-        <tr>
-            <td>
-                <table style="width: 100%; background: #F5F7F7; ">
-                    <tr>
-                        <td style="padding: 28px 22px;">
-                            <h3 style="margin: 0px; font-size: 24px;"> test </h3>
-                            <h5 style="margin: 0px; font-size: 16px;">CVV</h5>
-                        </td>
-                    </tr>
-
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <table style="width: 100%; border-bottom: 1px solid rgba(0, 0, 0, 0.12);">
-                    <tr>
-                        <td style="padding: 24px;">
-                            <p style="font-size: 12px; margin:0px;">BILLING NATURE</p>
-                            <h4 style="margin: 0px; padding: 0px; font-size: 18px;">Recurring </h4>
-                        </td>
-
-                        <td style="padding: 24px;">
-                            <p style="font-size: 12px; margin:0px;">BILLING MODE</p>
-                            <h4 style="margin: 0px; padding: 0px; font-size: 18px;">End of period </h4>
-                        </td>
-
-                        <td style="padding: 24px;">
-                            <p style="font-size: 12px; margin:0px;">FEES</p>
-                            <h4 style="margin: 0px; padding: 0px; font-size: 18px;">₹1011 </h4>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <table style="width: 100%;">
-                    <tr>
-                        <td style="padding: 24px; width: 50%; vertical-align: top;">
-                            <p style="font-size: 12px; margin:0px;">BILLING NATURE</p>
-                            <h4 style="margin: 0px; padding: 0px; font-size: 18px;">Recurring </h4>
-                        </td>
-
-
-
-                        <td style="padding: 24px;">
-                            <p style="font-size: 12px; margin:0px;">VARIABLE FEE DETAILS </p>
-                            <h4 style="margin: 0px; padding: 0px; font-size: 18px;">Mutual Funds </h4>
-                            <table style="width: 100%;  border: 1px solid rgba(0, 0, 0, 0.12); background: #F5F7F7;">
-                                <tr>
-                                    <td colspan="3" style=" border:1px solid rgba(0, 0, 0, 0.12); text-align: center; padding: 10px;">
-                                        Direct</td>
-                                    <td colspan="3" style=" border:1px solid rgba(0, 0, 0, 0.12); padding: 10px;  text-align: center;">
-                                        Regular</td>
-                                </tr>
-                                <tr>
-                                    <td style="border:1px solid rgba(0, 0, 0, 0.12);padding: 5px;">Equity</td>
-                                    <td style="border:1px solid rgba(0, 0, 0, 0.12);padding: 5px;">Debt</td>
-                                    <td style="border:1px solid rgba(0, 0, 0, 0.12);padding: 5px;">Liquid</td>
-                                    <td style="border:1px solid rgba(0, 0, 0, 0.12);padding: 5px;">Equity</td>
-                                    <td style="border:1px solid rgba(0, 0, 0, 0.12);padding: 5px;">Debt</td>
-                                    <td style="border:1px solid rgba(0, 0, 0, 0.12);padding: 5px;">Liquid</td>
-                                </tr>
-                                <tr>
-                                    <td style="border:1px solid rgba(0, 0, 0, 0.12);padding: 5px;">0.5%</td>
-                                    <td style="border:1px solid rgba(0, 0, 0, 0.12);padding: 5px;">0.5%</td>
-                                    <td style="border:1px solid rgba(0, 0, 0, 0.12);padding: 5px;">0.5%</td>
-                                    <td style="border:1px solid rgba(0, 0, 0, 0.12);padding: 5px;">0.5%</td>
-                                    <td style="border:1px solid rgba(0, 0, 0, 0.12);padding: 5px;">0.5%</td>
-                                    <td style="border:1px solid rgba(0, 0, 0, 0.12);padding: 5px;">0.5%</td>
-
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
-
-    <br><br><br><br>
-
-</div>

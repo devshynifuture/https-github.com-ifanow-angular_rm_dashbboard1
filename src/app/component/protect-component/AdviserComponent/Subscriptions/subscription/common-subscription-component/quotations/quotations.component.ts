@@ -13,6 +13,7 @@ import { AuthService } from '../../../../../../../auth-service/authService';
 import { AddQuotationSubscriptionComponent } from 'src/app/component/protect-component/customers/component/common-component/add-quotation-subscription/add-quotation-subscription.component';
 import { CommonFroalaComponent } from '../common-froala/common-froala.component';
 import { EmailOnlyComponent } from '../email-only/email-only.component';
+import { DatePipe } from '@angular/common';
 
 export interface PeriodicElement {
   document: string;
@@ -36,7 +37,7 @@ export class QuotationsComponent implements OnInit {
   quotationData: any[];
 
   constructor(public subInjectService: SubscriptionInject, private subService: SubscriptionService, private eventService: EventService, public dialog: MatDialog,
-    private subAService: SubscriptionService) {
+    private subAService: SubscriptionService, private datePipe: DatePipe) {
     // this.subInjectService.closeRightSlider.subscribe(
     //   data => this.getQuotationDesignData(data)
     // );
@@ -47,7 +48,7 @@ export class QuotationsComponent implements OnInit {
   quotationDesign;
   dataCount;
   _clientData;
-  displayedColumns: string[] = ['checkbox', 'document', 'plan', 'date', 'sdate', 'cdate', 'status', 'send', 'icons'];
+  displayedColumns: string[] = ['checkbox', 'document', 'plan', 'date', 'sdate', 'status', 'send', 'icons'];
   changeEmail = 'footerChange';
   advisorId;
   data: Array<any> = [{}, {}, {}];
@@ -101,6 +102,7 @@ export class QuotationsComponent implements OnInit {
   }
   Open(value, state, data) {
     data['sendEsignFlag'] = false;
+    data['feeStructureFlag'] = data.documentText.includes('$service_fee');
     if (this.isLoading) {
       return
     }
@@ -117,7 +119,7 @@ export class QuotationsComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.getQuotationsList();
-
+            this.dataCount = 0;
           }
           rightSideDataSub.unsubscribe();
         }
@@ -173,6 +175,7 @@ export class QuotationsComponent implements OnInit {
       this.noData = 'No Data Found';
     } else {
       data.forEach(singleData => {
+        singleData['sentDateInFormat'] = this.datePipe.transform((singleData.sentDate) ? singleData.sentDate : undefined, "dd/MM/yyyy");
         singleData.selected = false;
       });
       // this.dataSource = data;
@@ -225,6 +228,7 @@ export class QuotationsComponent implements OnInit {
           data => {
             this.eventService.openSnackBar('Document is deleted', 'Dismiss');
             // this.valueChange.emit('close');
+            this.dataCount = 0;
             this.getQuotationsList();
             dialogRef.close(this.list);
             // this.getRealEstate();
@@ -258,13 +262,14 @@ export class QuotationsComponent implements OnInit {
   }
 
   openSendEmail(element) {
+    this._clientData['clientId'] = this._clientData.id;
     this.quotationData = []
     const data = {
       advisorId: this.advisorId,
       clientData: this._clientData,
       templateType: 2, // 2 is for quotation
-      documentList: []
-
+      documentList: [],
+      showfromEmail: false
     };
     if (this.dataCount == 0) {
       this.quotationData.push(element);

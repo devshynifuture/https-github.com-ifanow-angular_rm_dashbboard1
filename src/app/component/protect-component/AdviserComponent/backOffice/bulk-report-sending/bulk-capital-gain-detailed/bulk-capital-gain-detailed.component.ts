@@ -1,8 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { UtilService } from 'src/app/services/util.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
-import { MfCapitalDetailedComponent } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mutual-fund/mf-capital-detailed/mf-capital-detailed.component';
+import {Component, Input, OnInit} from '@angular/core';
+import {UtilService} from 'src/app/services/util.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {MfServiceService} from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
+import {MfCapitalDetailedComponent} from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mutual-fund/mf-capital-detailed/mf-capital-detailed.component';
 
 @Component({
   selector: 'app-bulk-capital-gain-detailed',
@@ -11,6 +11,7 @@ import { MfCapitalDetailedComponent } from 'src/app/component/protect-component/
   providers: [MfCapitalDetailedComponent]
 })
 export class BulkCapitalGainDetailedComponent implements OnInit {
+  viewMode;
   totaldividendPayout = 0;
   isLoading = false;
   inputData: any;
