@@ -13,6 +13,7 @@ import { AuthService } from '../../../../../../../auth-service/authService';
 import { AddQuotationSubscriptionComponent } from 'src/app/component/protect-component/customers/component/common-component/add-quotation-subscription/add-quotation-subscription.component';
 import { CommonFroalaComponent } from '../common-froala/common-froala.component';
 import { EmailOnlyComponent } from '../email-only/email-only.component';
+import { DatePipe } from '@angular/common';
 
 export interface PeriodicElement {
   document: string;
@@ -36,7 +37,7 @@ export class QuotationsComponent implements OnInit {
   quotationData: any[];
 
   constructor(public subInjectService: SubscriptionInject, private subService: SubscriptionService, private eventService: EventService, public dialog: MatDialog,
-    private subAService: SubscriptionService) {
+    private subAService: SubscriptionService, private datePipe: DatePipe) {
     // this.subInjectService.closeRightSlider.subscribe(
     //   data => this.getQuotationDesignData(data)
     // );
@@ -118,7 +119,7 @@ export class QuotationsComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.getQuotationsList();
-
+            this.dataCount = 0;
           }
           rightSideDataSub.unsubscribe();
         }
@@ -174,6 +175,7 @@ export class QuotationsComponent implements OnInit {
       this.noData = 'No Data Found';
     } else {
       data.forEach(singleData => {
+        singleData['sentDateInFormat'] = this.datePipe.transform((singleData.sentDate) ? singleData.sentDate : undefined, "dd/MM/yyyy");
         singleData.selected = false;
       });
       // this.dataSource = data;
@@ -226,6 +228,7 @@ export class QuotationsComponent implements OnInit {
           data => {
             this.eventService.openSnackBar('Document is deleted', 'Dismiss');
             // this.valueChange.emit('close');
+            this.dataCount = 0;
             this.getQuotationsList();
             dialogRef.close(this.list);
             // this.getRealEstate();

@@ -6,9 +6,7 @@
 
         <div class="row pt-180" *ngIf="isAdvisor && SettingProfileData.length > 0">
             <div class="col-md-12 mt-36">
-                <button (click)="openPayeeSettings({},'Add')" class="btn-primary br-0 right text-right addon"
-                    *ngIf="isAdvisor"
-                    mat-stroked-button>
+                <button (click)="openPayeeSettings({},'Add')" class="btn-primary br-0 right text-right addon" *ngIf="isAdvisor" mat-stroked-button>
                     ADD MORE
                 </button>
                 <!-- <button class="text-black right br-0 mr-12 text-right" mat-button>HELP</button> -->
@@ -16,9 +14,8 @@
             </div>
         </div>
 
-        <div *ngFor="let profileData of SettingProfileData skeletonAnimation" class="d-flex justify-content-center"
-            appSkeletonLoading [appSkeletonLoading]="isLoading">
-            <div class="row wrapper-100 pb-72 pt-8 pb-10 ">
+        <div *ngFor="let profileData of SettingProfileData skeletonAnimation" class="d-flex justify-content-center" appSkeletonLoading [appSkeletonLoading]="isLoading">
+            <div class="row wrapper-100 pb-72 pt-8 pb-10 " [ngClass]="{'mt-60': !isAdvisor}">
                 <div class="hoverable overflow-hidden">
                     <div class="row pt-16 pb-16 b-a bb-0 bg-grey lter">
                         <div class="col-md-8 pl-20 d-flex align-items-center relClass">
@@ -28,8 +25,7 @@
                         </div>
                         <div class="col-md-4" *ngIf="isAdvisor">
                             <div *ngIf="!isLoading">
-                                <i [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu"
-                                    class="material-icons text-right right text-custom f-28 c-p">
+                                <i [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu" class="material-icons text-right right text-custom f-28 c-p">
                                     more_vert
                                 </i>
                                 <mat-menu #menu="matMenu">
@@ -40,8 +36,7 @@
                                         client
                                         profile</a>
                                 </mat-menu>
-                                <button *ngIf="profileData.isPrimary" class="text-primary br-0 right text-right"
-                                    mat-stroked-button>
+                                <button *ngIf="profileData.isPrimary" class="text-primary br-0 right text-right" mat-stroked-button>
                                     PRIMARY
                                 </button>
                             </div>
@@ -56,7 +51,8 @@
                                             <p>CUSTOMER TYPE</p>
                                             <div class="relClass">
                                                 <div class="bar" [ngClass]="{'height23': isLoading}">
-                                                    <h5> {{ isLoading ? ' ' : (profileData.customerTypeId == 1) ? 'Individual' : (profileData.customerTypeId == 2)?'Corporate':(profileData.customerTypeId == 3)?'LLP':(profileData.customerTypeId == 4)?'Proprietary':(profileData.customerTypeId == 5)?'Partnership':'Others'}}
+                                                    <h5> {{ isLoading ? ' ' : (profileData.customerTypeId == 1) ? 'Individual' : (profileData.customerTypeId == 2)?'Corporate':(profileData.customerTypeId == 3)?'LLP':(profileData.customerTypeId == 4)?'Proprietary':(profileData.customerTypeId
+                                                        == 5)?'Partnership':'Others'}}
                                                     </h5>
                                                 </div>
                                             </div>
@@ -73,7 +69,8 @@
                                             <p>GST TREATMENT</p>
                                             <div class="relClass">
                                                 <div class="bar" [ngClass]="{'height23': isLoading}">
-                                                    <h5>{{isLoading ? ' ' : (profileData.gstTreatmentId == 1) ? 'Consumer' : (profileData.gstTreatmentId == 2) ? 'Not registered business' : (profileData.gstTreatmentId == 3) ? 'Overseas' : (profileData.gstTreatmentId == 4) ? 'Registered Business' : '-'}}
+                                                    <h5>{{isLoading ? ' ' : (profileData.gstTreatmentId == 1) ? 'Consumer' : (profileData.gstTreatmentId == 2) ? 'Not registered business' : (profileData.gstTreatmentId == 3) ? 'Overseas' : (profileData.gstTreatmentId
+                                                        == 4) ? 'Registered Business' : '-'}}
                                                     </h5>
                                                 </div>
                                             </div>
@@ -94,8 +91,7 @@
                                             <p>BILLING ADDRESS</p>
                                             <div class="relClass">
                                                 <div class="bar" [ngClass]="{'height23': isLoading}">
-                                                    <h5> {{profileData.billerAddress}} {{isLoading ? ' ' : ','}}<br>
-                                                        {{profileData.city}} {{isLoading ? ' ' : ','}}
+                                                    <h5> {{profileData.billerAddress}} {{isLoading ? ' ' : ','}}<br> {{profileData.city}} {{isLoading ? ' ' : ','}}
                                                         <br> {{profileData.state}}
                                                         <br> {{profileData.country}}
                                                         <br> {{profileData.zipCode}} </h5>
@@ -152,9 +148,7 @@
         <div class="col-md-12 d-flex align-items-center flex-column justify-content-center">
             <img class="width200" src="assets/images/svg/no-data-found.svg">
             <p class="f-22 f-600 pt-28"> No Data Found </p>
-            <button (click)="openPayeeSettings({},'Add')" class="btn-primary mt-20 br-0 right text-right addon"
-                *ngIf="isAdvisor"
-                mat-stroked-button>
+            <button (click)="openPayeeSettings({},'Add')" class="btn-primary mt-20 br-0 right text-right addon" *ngIf="isAdvisor" mat-stroked-button>
                 ADD MORE
             </button>
         </div>

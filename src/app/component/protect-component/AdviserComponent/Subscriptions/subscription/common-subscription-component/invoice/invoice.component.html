@@ -29,8 +29,7 @@
         </div>
         <div class="row ">
             <div class="col-md-4 p-0 max-height-100">
-                <div (click)="passInvoice(strData,i,$event)" *ngFor="let strData of dataInvoices let i=index"
-                    [ngClass]="(strData.id==storeData.id)?'bg-grey lter':'b-b'" class="invoiceSpacing b-b c-p">
+                <div (click)="passInvoice(strData,i,$event)" *ngFor="let strData of dataInvoices let i=index" [ngClass]="(strData.id==storeData.id)?'bg-grey lter':'b-b'" class="invoiceSpacing b-b c-p">
                     <div class="row">
                         <div class="col-md-8 pl-0">
                             <p class="m-0 f-15">{{strData.clientName}}</p>
@@ -64,27 +63,20 @@
             <div class="col-md-8 p-0 bl-1 ">
                 <div *ngIf="showRecord==false && feeCalc==false" class="row pt-16">
                     <div class="col-md-6 text-custom">
-                        <img *ngIf="storeData.status != 1" matTooltip="Edit" (click)="editInvoice()" class="c-p"
-                            src="assets/images/svg/pencil.svg">
-                        <img matTooltip="Email" (click)="openSendEmail(null)" class="b-a c-p"
-                            src="assets/images/svg/mail-light.svg">
-                        <img matTooltip="Download PDF" (click)="generatePdf()" class="b-a c-p"
-                            src="assets/images/svg/pdf-icons.svg">
-                        <img matTooltip="Print" (click)="printPage(invoiceTemplate)" class="b-a c-p"
-                            src="assets/images/svg/printer.svg">
-                        <img matTooltip="Delete" (click)="deleteModal('INVOICE',storeData.id)"
-                            class="b-a wrapper-9 ml-8 c-p" src="assets/images/svg/delete.svg">
+                        <img *ngIf="storeData.status != 1" matTooltip="Edit" (click)="editInvoice()" class="c-p" src="assets/images/svg/pencil.svg">
+                        <img matTooltip="Email" (click)="openSendEmail(null)" class="b-a c-p" src="assets/images/svg/mail-light.svg">
+                        <img matTooltip="Download PDF" (click)="generatePdf()" class="b-a c-p" src="assets/images/svg/pdf-icons.svg">
+                        <img matTooltip="Print" (click)="printPage(invoiceTemplate)" class="b-a c-p" src="assets/images/svg/printer.svg">
+                        <img matTooltip="Delete" (click)="deleteModal('INVOICE',storeData.id)" class="b-a wrapper-9 ml-8 c-p" src="assets/images/svg/delete.svg">
                     </div>
                     <div class="right text-right" [ngClass]="storeData.status !=1? 'col-md-4' : 'col-md-2'">
-                        <button (click)="recordPayment()" class="btn-primary br-0 " *ngIf="rpyment==true"
-                            mat-stroked-button>RECORD
+                        <button (click)="recordPayment()" class="btn-primary br-0 " *ngIf="rpyment==true" mat-stroked-button>RECORD
                             PAYMENT
                         </button>
                     </div>
                     <div class="col-md-2 right text-right pl-0" *ngIf="storeData.status!=1">
                         <mat-form-field>
-                            <mat-select (selectionChange)="addStatus(storeData,$event)" [(ngModel)]="moreStatus"
-                                class="form-control br-0" id="sel1">
+                            <mat-select (selectionChange)="addStatus(storeData,$event)" [(ngModel)]="moreStatus" class="form-control br-0" id="sel1">
                                 <mat-option [value]="''" disabled>More</mat-option>
                                 <mat-option [value]="5">Void</mat-option>
                                 <mat-option [value]="6">Write off</mat-option>
@@ -92,8 +84,7 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <div #invoiceTemplate id="template" *ngIf="showRecord==false && feeCalc==false"
-                    class="b-a m-16 mt-12 pb-28 scrollArrow max-height-100">
+                <div #invoiceTemplate id="template" *ngIf="showRecord==false && feeCalc==false" class="b-a m-16 mt-12 pb-28 scrollArrow max-height-100">
                     <div class="p-16">
                         <div class="row">
                             <div class="col-md-8">
@@ -115,11 +106,9 @@
                         </div>
                         <div class="row pt-44">
                             <div class="col-md-7">
-                                <p class="text-black f-400"><span class="text-custom f-16">Invoice no</span>:
-                                    {{storeData.invoiceNumber}}
+                                <p class="text-black f-400"><span class="text-custom f-16">Invoice no</span>: {{storeData.invoiceNumber}}
                                 </p>
-                                <p class="text-black f-400"><span class="text-custom f-16">Invoice date</span>:
-                                    {{storeData.invoiceDate| date:'dd/MM/yyyy'}}
+                                <p class="text-black f-400"><span class="text-custom f-16">Invoice date</span>: {{storeData.invoiceDate| date:'dd/MM/yyyy'}}
                                 </p>
                             </div>
                             <div class="col-md-5 text-right">
@@ -215,8 +204,7 @@
                                     <div class="col-md-8">
                                         <p class="f-500 roboto pt-8">Total</p>
                                     </div>
-                                    <div *ngIf="storeData.cgst!=undefined && storeData.sgst!=undefined"
-                                        class="col-md-4 pr-8 text-right">
+                                    <div *ngIf="storeData.cgst!=undefined && storeData.sgst!=undefined" class="col-md-4 pr-8 text-right">
                                         <p class="f-500 roboto pt-8">₹{{formatter(storeData.finalAmount)}}</p>
                                     </div>
                                     <div *ngIf="storeData.igst!=undefined" class="col-md-4 pr-8 text-right">
@@ -249,8 +237,7 @@
                                     <h5 class="m-0 text-black">Payments recieved</h5>
                                 </div>
                             </div>
-                            <table *ngIf="showPaymentRecive == true" [dataSource]="dataSource" class="" id="table-low"
-                                mat-table>
+                            <table *ngIf="showPaymentRecive == true" [dataSource]="dataSource" class="" id="table-low" mat-table>
                                 <ng-container matColumnDef="date">
                                     <th *matHeaderCellDef mat-header-cell>Date</th>
                                     <td *matCellDef="let element" mat-cell> {{element.paymentDate | date:'dd/MM/yyyy'}}
@@ -266,8 +253,7 @@
                                 </ng-container>
                                 <ng-container matColumnDef="amount">
                                     <th *matHeaderCellDef mat-header-cell> Amount(₹)</th>
-                                    <td *matCellDef="let element" mat-cell><span
-                                            appFormatNumber>{{element.amountReceived}}</span></td>
+                                    <td *matCellDef="let element" mat-cell><span appFormatNumber>{{element.amountReceived}}</span></td>
                                 </ng-container>
                                 <ng-container matColumnDef="icons">
                                     <th *matHeaderCellDef class="f-18 t-2" mat-header-cell></th>
@@ -288,8 +274,7 @@
                 </div>
                 <!--record payment div start-->
                 <div *ngIf="showRecord==true">
-                    <app-record-payment [InvRecordData]="sendRecordPaymentData" [padding]="false"
-                        (outputData)='display($event)'>
+                    <app-record-payment [InvRecordData]="sendRecordPaymentData" [padding]="false" (outputData)='display($event)'>
                     </app-record-payment>
                 </div>
                 <!--Fee calculation Div start-->
@@ -314,26 +299,20 @@
     </div>
     <div *ngIf="showRecord==false && feeCalc==false" class="row pt-72">
         <div class="col-md-6 text-custom ">
-            <img matTooltip="Edit" *ngIf="storeData.isAdvisor && storeData.status != 1" (click)="editInvoice()" class="c-p"
-                src="assets/images/svg/pencil.svg">
-            <img matTooltip="Email" (click)="openSendEmail('upper')" class="b-a c-p" *ngIf="storeData.isAdvisor"
-                src="assets/images/svg/mail-light.svg">
+            <img matTooltip="Edit" *ngIf="storeData.isAdvisor && storeData.status != 1" (click)="editInvoice()" class="c-p" src="assets/images/svg/pencil.svg">
+            <img matTooltip="Email" (click)="openSendEmail('upper')" class="b-a c-p" *ngIf="storeData.isAdvisor" src="assets/images/svg/mail-light.svg">
             <img matTooltip="Download PDF" class="b-a c-p" src="assets/images/svg/pdf-icons.svg">
-            <img matTooltip="Print" (click)="printPage(invoiceTemplate)" class="b-a c-p"
-                src="assets/images/svg/printer.svg">
-            <img matTooltip="Delete" (click)="deleteModal('INVOICE',element)" class="b-a wrapper-9 ml-8 c-p" *ngIf="storeData.isAdvisor"
-                src="assets/images/svg/delete.svg">
+            <img matTooltip="Print" (click)="printPage(invoiceTemplate)" class="b-a c-p" src="assets/images/svg/printer.svg">
+            <img matTooltip="Delete" (click)="deleteModal('INVOICE',element)" class="b-a wrapper-9 ml-8 c-p" *ngIf="storeData.isAdvisor" src="assets/images/svg/delete.svg">
         </div>
         <div class="right text-right" [ngClass]="storeData.status !=1? 'col-md-4' : 'col-md-5'" *ngIf="storeData.isAdvisor">
-            <button (click)="recordPayment()" class="btn-primary br-0 mb-8" *ngIf="rpyment==true"
-                mat-stroked-button>RECORD
+            <button (click)="recordPayment()" class="btn-primary br-0 mb-8" *ngIf="rpyment==true" mat-stroked-button>RECORD
                 PAYMENT
             </button>
         </div>
         <div class="col-md-2 right text-right pl-0" *ngIf="storeData.isAdvisor && storeData.status!=1">
             <mat-form-field>
-                <mat-select (selectionChange)="addStatus(storeData,$event)" [(ngModel)]="moreStatus"
-                    class="form-control br-0" id="sel1">
+                <mat-select (selectionChange)="addStatus(storeData,$event)" [(ngModel)]="moreStatus" class="form-control br-0" id="sel1">
                     <mat-option [value]="''" selected disabled>More</mat-option>
                     <mat-option [value]="5">Void</mat-option>
                     <mat-option [value]="6">Write off</mat-option>
@@ -364,11 +343,9 @@
                 </div>
                 <div class="row pt-44">
                     <div class="col-md-8">
-                        <p class="text-black f-400"><span class="text-custom f-16">Invoice no</span>:
-                            {{storeData.invoiceNumber}}
+                        <p class="text-black f-400"><span class="text-custom f-16">Invoice no</span>: {{storeData.invoiceNumber}}
                         </p>
-                        <p class="text-black f-400"><span class="text-custom f-16">Invoice date</span>:
-                            {{storeData.invoiceDate | date:'dd/MM/yyyy'}}
+                        <p class="text-black f-400"><span class="text-custom f-16">Invoice date</span>: {{storeData.invoiceDate | date:'dd/MM/yyyy'}}
                         </p>
                     </div>
                     <div class="col-md-4 text-right">
@@ -461,8 +438,7 @@
                                 <div class="col-md-8">
                                     <p class="f-500 roboto pt-8">Total</p>
                                 </div>
-                                <div *ngIf="storeData.cgst!=undefined && storeData.sgst!=undefined"
-                                    class="col-md-4 text-right">
+                                <div *ngIf="storeData.cgst!=undefined && storeData.sgst!=undefined" class="col-md-4 text-right">
                                     <p class="f-500 roboto pt-8">{{formatter(storeData.finalAmount)}}</p>
                                 </div>
                                 <div *ngIf="storeData.igst!=undefined" class="col-md-4 text-right">
@@ -499,8 +475,7 @@
                                 <h5 class="m-0 text-black">Payments recieved</h5>
                             </div>
                         </div>
-                        <table *ngIf="showPaymentRecive == true" [dataSource]="dataSource" class="" id="table-low"
-                            mat-table>
+                        <table *ngIf="showPaymentRecive == true" [dataSource]="dataSource" class="" id="table-low" mat-table>
                             <ng-container matColumnDef="date">
                                 <th *matHeaderCellDef mat-header-cell>Date</th>
                                 <td *matCellDef="let element" mat-cell> {{element.paymentDate | date:'dd/MM/yyyy'}}
@@ -516,8 +491,7 @@
                             </ng-container>
                             <ng-container matColumnDef="amount">
                                 <th *matHeaderCellDef mat-header-cell> Amount(₹)</th>
-                                <td *matCellDef="let element" mat-cell><span
-                                        appFormatNumber>{{element.amountReceived}}</span></td>
+                                <td *matCellDef="let element" mat-cell><span appFormatNumber>{{element.amountReceived}}</span></td>
                             </ng-container>
                             <ng-container matColumnDef="icons">
                                 <th *matHeaderCellDef class="f-18 t-2" mat-header-cell></th>
@@ -557,8 +531,6 @@
 </div>
 <!--Add and edit invoice section-->
 <div *ngIf="showEdit" [ngClass]="!inputData?'pt-60':''">
-    <app-add-edit-subscription-invoice (cancelAddInvoice)="getAddCancelFlag($event)"
-        (cancelEditInvoice)="getCancelFlag($event)" (valueChange)='display($event)' [data]="storeData"
-        [invoiceInSub]="invoiceInSub" [invoiceValue]="invoiceValue">
+    <app-add-edit-subscription-invoice (cancelAddInvoice)="getAddCancelFlag($event)" (cancelEditInvoice)="getCancelFlag($event)" (valueChange)='display($event)' [data]="storeData" [invoiceInSub]="invoiceInSub" [invoiceValue]="invoiceValue">
     </app-add-edit-subscription-invoice>
 </div>

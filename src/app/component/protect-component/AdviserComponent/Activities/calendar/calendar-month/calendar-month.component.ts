@@ -3,6 +3,8 @@ import { MatDialog} from '@angular/material/dialog';
 import { calendarService } from './../calendar.service';
 import { AuthService } from '../../../../../../auth-service/authService';
 import { EventDialog } from './../event-dialog';
+import { Subscription } from 'rxjs';
+
 @Component({
   selector: 'app-calendar-month',
   templateUrl: './calendar-month.component.html',
@@ -20,7 +22,7 @@ export class CalendarMonthComponent implements OnInit {
   dialogData: any
   currentMonth;
   addLastMonthDays;
-  daysArr = [];
+  daysArr:any = [];
   formatedEvent = []
   eventData: any = [];
   eventTitle;
@@ -31,6 +33,7 @@ export class CalendarMonthComponent implements OnInit {
   userInfo: any;
   currentYear: any;
   excessAllow: any;
+  private unSubcrip: Subscription;
   constructor(public dialog: MatDialog, private calenderService: calendarService) { }
 
   ngOnInit() {
@@ -42,6 +45,18 @@ export class CalendarMonthComponent implements OnInit {
     this.getEvent();
     this.curruntDayIndex = this.daysArr.indexOf(this.todayDate);
     // this.excessAllow = localStorage.getItem('successStoringToken')
+    this.unSubcrip = this.calenderService.updateDayArr().subscribe((data: any) => {
+      this.daysArr = data[0];
+      this.month=data[1].month;
+      this.year=data[1].year;
+      this.numbersOfDays= data[1].numbersOfDays;
+      this.lastMonthDays= data[1].lastMonthDays;
+      this.nextMonthDays =data[1].nextMonthDays;
+      this.viewDate =data[1].nextMonthDays;
+      this.addLastMonthDays =data[1].addLastMonthDays;
+      console.log(this.daysArr,"this.daysArr....");
+    });
+    
   }
 
   getEvent() {
@@ -66,7 +81,7 @@ export class CalendarMonthComponent implements OnInit {
             e["startTime"] = this.formateTime(!e.start.dateTime? new Date(e.created) : new Date(e.start.dateTime));
             e["endTime"] = this.formateTime(!e.end.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
             this.formatedEvent.push(e);
-            console.log(this.formatedEvent,"formatedEvent calender1",);
+            // console.log(this.formatedEvent,"formatedEvent calender1",);
           }
         }
       }
@@ -123,27 +138,6 @@ export class CalendarMonthComponent implements OnInit {
 
   }
 
-  persentMonth() {
-    this.viewDate = new Date();
-  }
-
-  nextMonth() {
-    this.viewDate = new Date(this.viewDate.setMonth(this.viewDate.getMonth() + 1))
-    this.daysArr = [];
-    // if(this.currentMonth != this.month){
-    //   this.curruntDayIndex = 41;
-    // }else{
-    //   this.curruntDayIndex = this.daysArr.indexOf(this.todayDate);
-    // }
-    this.updatecalendar();
-  }
-
-  lastMonth() {
-    this.viewDate = new Date(this.viewDate.setMonth(this.viewDate.getMonth() - 1))
-    this.daysArr = [];
-    this.updatecalendar();
-  }
-
   formateDate(date) {
     var dd = new Date(date).getDate();
 
@@ -168,17 +162,6 @@ export class CalendarMonthComponent implements OnInit {
     hh = hh < 10 ? '0' + hh : hh;
     mm = mm < 10 ? '0' + mm : mm;
     return hh + ":" + mm + amPm + " ";
-
-    // var now = date;
-    // // now.setHours(now.getHours()+2);
-    // var isPM = now.getHours() >= 12;
-    // var isMidday = now.getHours() == 12;
-    // var result = document.querySelector('#result');
-    // var time = [now.getHours() - (isPM && !isMidday ? 12 : 0),
-    //             now.getMinutes(),
-    //             now.getSeconds() || '00'].join(':')
-    //              +(isPM ? ' pm' : 'am');
-    // return time;
   }
 
   addEvent(day, month, year) {
@@ -287,12 +270,12 @@ export class CalendarMonthComponent implements OnInit {
 
         if (this.dialogData.eventId != null) {
           this.calenderService.updateEvent(this.dialogData).subscribe((data) => {
-
+            this.getEvent();
           })
         }
         else {
           this.calenderService.addEvent(this.dialogData).subscribe((data) => {
-
+            this.getEvent();
           })
         }
       }
@@ -336,5 +319,9 @@ export class CalendarMonthComponent implements OnInit {
     }
   }
 
-
+  ngOnDestroy() {
+    this.unSubcrip.unsubscribe();
+    console.log("unsubscribe");
+    
+  }
 }

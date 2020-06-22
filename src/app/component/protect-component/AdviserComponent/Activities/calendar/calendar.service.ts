@@ -3,12 +3,13 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {HttpService} from 'src/app/http-service/http-service';
 import {apiConfig} from 'src/app/config/main-config';
 import {appConfig} from 'src/app/config/component-config';
+import {Subject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class calendarService {
-
+dayArrey:any;
   constructor(public https: HttpClient, public http: HttpService) { }
 
   getEvent(data) {
@@ -55,5 +56,17 @@ export class calendarService {
   deleteEvent(data) {
     const httpParams = new HttpParams().set('calendarId', data.calendarId).set('userId', data.userId).set('eventId', data.eventId);
     return this.http.delete(apiConfig.GMAIL_URL + appConfig.GET_DELETE, data, httpParams);
+  }
+
+  // =======================
+  updateData = new Subject();
+
+  updateDayArr(){
+    return this.updateData.asObservable();
+  }
+
+  getDayArr(calData){
+    this.dayArrey = calData
+    this.updateData.next([...this.dayArrey]);
   }
 }

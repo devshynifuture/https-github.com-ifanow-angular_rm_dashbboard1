@@ -251,6 +251,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
   }
 
   getQuotationsData(scrollLoader) {
+    // this.dataSource.data = [{}, {}, {}];
     this.dataCount = 0;
     const obj = {
       // advisorId: 12345
@@ -270,6 +271,9 @@ export class QuotationsSubscriptionComponent implements OnInit {
   getQuotationsDataResponse(data) {
     this.isLoading = false;
     if (data && data.length > 0) {
+      data.forEach(element => {
+        element['sentDateInFormat'] = this.datePipe.transform((element.sentDate) ? element.sentDate : undefined, "dd/MM/yyyy");
+      });
       this.data = data;
       this.dataSource.data = data;
       this.dataSource.sort = this.sort;
@@ -310,7 +314,9 @@ export class QuotationsSubscriptionComponent implements OnInit {
           data => {
             this.eventService.openSnackBar('Document is deleted', 'Dismiss');
             // this.valueChange.emit('close');
-            this.getQuotationsData(null);
+            this.dataCount = 0;
+            // this.getQuotationsData(null);
+            this.getClientSubData(false);
             dialogRef.close(this.list);
             // this.getRealEstate();
           },

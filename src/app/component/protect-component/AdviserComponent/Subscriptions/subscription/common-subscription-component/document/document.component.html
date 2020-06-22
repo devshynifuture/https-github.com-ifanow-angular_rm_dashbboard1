@@ -44,19 +44,14 @@
             <div class="wrapper-40">
                 <div class="row padder-80">
 
-                    <div class="col-xl-4 col-md-6 pr-20 pb-20 pl-0 skeletonAnimation"
-                        *ngFor="let documentData of planDocumentData" appSkeletonLoading
-                        [appSkeletonLoading]="isLoading">
+                    <div class="col-xl-4 col-md-6 pr-20 pb-20 pl-0 skeletonAnimation" *ngFor="let documentData of planDocumentData" appSkeletonLoading [appSkeletonLoading]="isLoading">
                         <div (click)="selectDocument(documentData)">
-                            <mat-card
-                                [ngClass]="{'ba-blue': documentData.selected,'active': documentData.selected,'b-ua':documentData.selected==false}"
-                                class="example-card overflow-hidden p-0 c-p">
+                            <mat-card [ngClass]="{'ba-blue': documentData.selected,'active': documentData.selected,'b-ua':documentData.selected==false}" class="example-card overflow-hidden p-0 c-p">
                                 <div class="relClass">
                                     <div class="bar180">
                                         <mat-card-header class="m-0 height180  hide-card-text">
                                             <!-- [isChecked]="documentData.selected" -->
-                                            <app-custom-html [isChecked]="documentData.selected"
-                                                [data]="documentData.docText" id="ui-appcustomhtml" class="">
+                                            <app-custom-html [isChecked]="documentData.selected" [data]="documentData.docText" id="ui-appcustomhtml" class="">
                                             </app-custom-html>
                                         </mat-card-header>
                                     </div>
@@ -97,9 +92,7 @@
             <img class="width200 mt-80" src="assets/images/svg/add-documents-img.svg">
             <p class="f-22 f-600 pt-28"> Create Documents </p>
             <p class="f-16 text-center mt-20 l-21">
-                We’ve automated the complete process of documentation (a core part of RIA compliance). <br> You create
-                documents easily using ready made templates or upload. <br> Email to clients, get eSigned and securely
-                store.
+                We’ve automated the complete process of documentation (a core part of RIA compliance). <br> You create documents easily using ready made templates or upload. <br> Email to clients, get eSigned and securely store.
             </p>
             <!--  <button (click)="OpenHelp('clientHelp','open35',Questions)" class="btn-primary  mt-12 d-flex align-items-center">
                 ADD DOCUMENTS </button>-->
@@ -153,18 +146,15 @@
         </div>
         <div class="wrapper-40">
             <div class="row padder-80 overflow-hidden">
-                <div class="col-xl-4 col-md-6 pr-20 pb-20 pl-0 skeletonAnimation"
-                    *ngFor="let document of serviceDocumentData" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                <div class="col-xl-4 col-md-6 pr-20 pb-20 pl-0 skeletonAnimation" *ngFor="let document of serviceDocumentData" appSkeletonLoading [appSkeletonLoading]="isLoading">
                     <div (click)="selectDocument(document)" class="mt-4">
-                        <mat-card [ngClass]="{'ba-blue': document.selected,'b-ua':document.selected==false}"
-                            class="example-card  p-0 c-p  ">
+                        <mat-card [ngClass]="{'ba-blue': document.selected,'b-ua':document.selected==false}" class="example-card  p-0 c-p  ">
 
                             <div class="relClass">
                                 <div class="bar180">
                                     <mat-card-header class="m-0 height180  hide-card-text">
                                         <!-- [isChecked]="document.selected"  -->
-                                        <app-custom-html [isChecked]="document.selected" [data]="document.docText"
-                                            id="ui-appcustomhtml" class="">
+                                        <app-custom-html [isChecked]="document.selected" [data]="document.docText" id="ui-appcustomhtml" class="">
                                         </app-custom-html>
                                     </mat-card-header>
                                 </div>
@@ -205,9 +195,7 @@
             <img class="width200 mt-80" src="assets/images/svg/add-documents-img.svg">
             <p class="f-22 f-600 pt-28"> Create Documents </p>
             <p class="f-16 text-center mt-20 l-21">
-                We’ve automated the complete process of documentation (a core part of RIA compliance). <br> You create
-                documents easily using ready made templates or upload. <br> Email to clients, get eSigned and securely
-                store.
+                We’ve automated the complete process of documentation (a core part of RIA compliance). <br> You create documents easily using ready made templates or upload. <br> Email to clients, get eSigned and securely store.
             </p>
             <!--  <button (click)="OpenHelp('clientHelp','open35',Questions)" class="btn-primary  mt-12 d-flex align-items-center">
                 ADD DOCUMENTS </button>-->
@@ -222,7 +210,7 @@
         </div>-->
 
         <div *ngIf="dataSource.data.length > 0">
-            <div class="bg-white pt-60">
+            <div class="bg-white mt-60">
                 <div class="wrapper-20 pt-130" *ngIf="isAdvisor">
                     <div class="row">
                         <div class="col-md-12 p-0">
@@ -234,7 +222,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="wrapper-40 pt-0 pr-20">
+                <div class="wrapper-40 pt-0 pr-20 " [ngClass]="{'wrapper-40 pr-20': isAdvisor, 'pl-16 pr-16 ': !isAdvisor}">
                     <div class="row">
                         <div class="col-md-10 p-0">
                             <div class="row" *ngIf="isAdvisor">
@@ -247,31 +235,26 @@
                                         <a mat-menu-item *ngIf="dataCount == 0">Select document to see more
                                             actions
                                         </a>
-                                        <a mat-menu-item *ngIf="dataCount == 1 && sendESign"
-                                            (click)="openEsignDocument(null)">Email
+                                        <a mat-menu-item *ngIf="dataCount == 1 && sendESign" (click)="openEsignDocument(null)">Email
                                             with esign
                                             request
                                         </a>
                                         <a (click)="openSendEmail()" *ngIf="dataCount == 1" mat-menu-item>Email
                                             only
                                         </a>
-                                        <a (click)="deleteModal(null)" *ngIf="dataCount==1" class="b-t"
-                                            mat-menu-item>Delete
+                                        <a (click)="deleteModal(null)" *ngIf="dataCount==1" class="b-t" mat-menu-item>Delete
                                             document
                                         </a>
-                                        <a (click)="deleteModal(null)" *ngIf="dataCount >1" class="b-t"
-                                            mat-menu-item>Delete
+                                        <a (click)="deleteModal(null)" *ngIf="dataCount >1" class="b-t" mat-menu-item>Delete
                                             documents
                                         </a>
                                     </mat-menu>
                                 </div>
 
                                 <div class="col-md-9 ml-32 p-0">
-                                    <p class="m-0 text-black text-left pt-12" *ngIf="dataCount == 1">{{dataCount}}
-                                        document selected
+                                    <p class="m-0 text-black text-left pt-12" *ngIf="dataCount == 1">{{dataCount}} document selected
                                     </p>
-                                    <p class="m-0 text-black text-left pt-12" *ngIf="dataCount > 1">{{dataCount}}
-                                        documents selected
+                                    <p class="m-0 text-black text-left pt-12" *ngIf="dataCount > 1">{{dataCount}} documents selected
                                     </p>
                                 </div>
 
@@ -280,24 +263,20 @@
                         </div>
 
                         <div class="col-md-2 p-0" *ngIf="isAdvisor">
-                            <button mat-button class="b-a right text-right"
-                                (click)="openPopup('documentHelpPopup')">HELP
+                            <button mat-button class="b-a right text-right" (click)="openPopup('documentHelpPopup')">HELP
                             </button>
                         </div>
 
                     </div>
 
                     <div class="col-md-12 p-0 overflow-hidden">
-                        <table matSort mat-table [dataSource]="dataSource" class="mt-8" id="table-low"
-                            class="mt-8 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                        <table matSort mat-table [dataSource]="dataSource" class="mt-8" id="table-low" class="mt-8 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                             <ng-container matColumnDef="checkbox">
                                 <th mat-header-cell *matHeaderCellDef class="f-18" style="width: 2%;">
-                                    <mat-checkbox (change)="selectAll($event)" name="selectAll"
-                                        [checked]="dataCount == dataSource.data.length"></mat-checkbox>
+                                    <mat-checkbox (change)="selectAll($event)" name="selectAll" [checked]="dataCount == dataSource.data.length"></mat-checkbox>
                                 </th>
                                 <td mat-cell *matCellDef="let element" style="width: 2%;" [ngClass]="{'c-p': isAdvisor}">
-                                    <mat-checkbox name="selectedData" [(ngModel)]="element.selected"
-                                        (change)="changeSelect()">
+                                    <mat-checkbox name="selectedData" [(ngModel)]="element.selected" (change)="changeSelect()">
                                     </mat-checkbox>
                                 </td>
                             </ng-container>
@@ -305,8 +284,7 @@
                                 <th mat-sort-header="documentName" mat-header-cell *matHeaderCellDef class="f-18">
                                     Document name
                                 </th>
-                                <td mat-cell *matCellDef="let element" [ngClass]="{'c-p': isAdvisor}"
-                                    (click)="open('viewDocuments',element)">
+                                <td mat-cell *matCellDef="let element" [ngClass]="{'c-p': isAdvisor}" (click)="open('viewDocuments',element)">
                                     <div class="bar"> {{element.documentName}} </div>
                                 </td>
                             </ng-container>
@@ -329,25 +307,24 @@
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="date">
-                                <th mat-sort-header="startDate" mat-header-cell *matHeaderCellDef class="text-right"
-                                    class="f-18"> Created date
+                                <th mat-sort-header="startDate" mat-header-cell *matHeaderCellDef class="text-right" class="f-18"> Created date
                                 </th>
                                 <td mat-cell *matCellDef="let element" class="text-left">
                                     <div class="bar"> {{element.startDate | date:'dd/MM/yyyy'}} </div>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="sdate">
-                                <th mat-sort-header="sentDate" mat-header-cell *matHeaderCellDef class="text-right"
-                                    class="f-18"> Sent date
+                                <th mat-sort-header="sentDate" mat-header-cell *matHeaderCellDef class="text-right" class="f-18"> Sent date
                                 </th>
                                 <td mat-cell *matCellDef="let element" class="text-left">
-                                    <div class="bar"> {{element.sentDate | date:'dd/MM/yyyy'}} </div>
+                                    <div class="bar">
+                                        <span *ngIf="!isLoading">
+                                            {{(element.sentDateInFormat)?element.sentDateInFormat:'N/A'}}</span>
+                                    </div>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="cdate">
-                                <th mat-sort-header="cdate" mat-header-cell *matHeaderCellDef class="text-right"
-                                    class="f-18" matTooltip="Client signature date"
-                                    aria-label="Button that displays a tooltip when focused or hovered over">
+                                <th mat-sort-header="cdate" mat-header-cell *matHeaderCellDef class="text-right" class="f-18" matTooltip="Client signature date" aria-label="Button that displays a tooltip when focused or hovered over">
                                     Client sign...
                                 </th>
                                 <td mat-cell *matCellDef="let element" class="text-left">
@@ -362,13 +339,12 @@
                                 <td *matCellDef="let element" mat-cell>
 
                                     <div class="bar">
-                                        <span *ngIf="element.status==0" class="text-primary t-10 f-500">READY TO
+                                        <span *ngIf="element.status==1" class="text-primary t-10 f-500">READY TO
                                             SEND</span>
-                                        <span *ngIf="element.status==1" class="text-primary t-10 f-500">SENT</span>
-                                        <span *ngIf="element.status==2" class="text-danger t-10 f-500">NOT
+                                        <span *ngIf="element.status==2" class="text-primary t-10 f-500">SENT</span>
+                                        <!-- <span *ngIf="element.status==2" class="text-danger t-10 f-500">NOT
                                             APPROVED</span>
-                                        <span *ngIf="element.status==3"
-                                            class="text-success t-10 f-500">APPROVED</span>
+                                        <span *ngIf="element.status==3" class="text-success t-10 f-500">APPROVED</span> -->
                                     </div>
 
                                 </td>
@@ -377,8 +353,7 @@
                                 <th mat-header-cell *matHeaderCellDef class="f-18" style="width: 2%;"></th>
                                 <td mat-cell *matCellDef="let element" style="width: 2%;">
                                     <div *ngIf="!isLoading">
-                                        <i class="material-icons c-p iconscolors" [matMenuTriggerFor]="menu"
-                                            [matMenuTriggerFor]="belowMenu">
+                                        <i class="material-icons c-p iconscolors" [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu">
                                             more_vert
                                         </i>
                                         <mat-menu #menu="matMenu">
@@ -388,11 +363,9 @@
                                                 document</a>
                                             <a mat-menu-item class="bt-1" (click)="deleteModal(element)">Delete
                                                 document</a>
-                                            <a mat-menu-item *ngIf="element.signed" class="bt-1"
-                                                (click)="downloadEsign(element)">Download esigned
+                                            <a mat-menu-item *ngIf="element.signed" class="bt-1" (click)="downloadEsign(element)">Download esigned
                                                 document</a>
-                                            <a mat-menu-item *ngIf="!element.signed" class="bt-1"
-                                                (click)="openEsignDocument(element)">Email
+                                            <a mat-menu-item *ngIf="!element.signed" class="bt-1" (click)="openEsignDocument(element)">Email
                                                 with esign
                                                 request</a>
                                             <a mat-menu-item (click)="openSendEmail()">Email only</a>
@@ -419,17 +392,15 @@
                 <img class="width200" src="assets/images/svg/add-documents-img.svg">
                 <p class="f-22 f-600 pt-28"> Create Documents </p>
                 <p class="f-16 text-center l-21">
-                    We’ve automated the complete process of documentation (a core part of RIA compliance). <br> You
-                    create documents easily using ready made templates or upload. <br> Email to clients, get eSigned and
-                    securely store.
+                    We’ve automated the complete process of documentation (a core part of RIA compliance). <br> You create documents easily using ready made templates or upload. <br> Email to clients, get eSigned and securely store.
                 </p>
 
-                <button mat-stroked-button (click)="openDocument('addDocument')"
+                <!-- <button mat-stroked-button (click)="openDocument('addDocument')"
                     class="btn-primary d-flex align-items-center">
-                    ADD DOCUMENTS </button>
+                    ADD DOCUMENTS </button> -->
             </div>
         </div>
-        
+
 
         <div class="row" *ngIf="dataSource.data.length == 0 && !isAdvisor">
             <div class="col-md-12 d-flex align-items-center flex-column justify-content-center h-100vh">
@@ -437,7 +408,7 @@
                 <p class="f-22 f-600 pt-28"> No data found </p>
             </div>
         </div>
-        
+
 
         <div *ngIf="documentDesign=='completeSteps'">
             <button>CLOSE</button>
@@ -446,21 +417,17 @@
             <app-terms-agreement *ngIf="documentDesign=='termsAgreement'"></app-terms-agreement>
             <div>
                 <div class="pt-140 pr-0">
-                    <app-terms-agreement [quotationDesignE]="quotationDesignEmail" *ngIf="documentDesign=='email'"
-                        (valueChange)='display($event)'></app-terms-agreement>
+                    <app-terms-agreement [quotationDesignE]="quotationDesignEmail" *ngIf="documentDesign=='email'" (valueChange)='display($event)'></app-terms-agreement>
                 </div>
             </div>
             <div class="pt-60 pr-0">
-                <app-email-only [emailDocumentSend]="documentDesign" *ngIf="documentDesign=='documentUpperSlider'"
-                    (valueChange)='display($event)'></app-email-only>
+                <app-email-only [emailDocumentSend]="documentDesign" *ngIf="documentDesign=='documentUpperSlider'" (valueChange)='display($event)'></app-email-only>
             </div>
             <div>
-                <app-email-only [emailDocument]="documentDesign" *ngIf="documentDesign=='readyToSend'"
-                    (valueChange)='display($event)'></app-email-only>
+                <app-email-only [emailDocument]="documentDesign" *ngIf="documentDesign=='readyToSend'" (valueChange)='display($event)'></app-email-only>
             </div>
             <div>
-                <app-email-only [emailDocument]="documentDesign" *ngIf="documentDesign=='documentUpper'"
-                    (valueChange)='display($event)'></app-email-only>
+                <app-email-only [emailDocument]="documentDesign" *ngIf="documentDesign=='documentUpper'" (valueChange)='display($event)'></app-email-only>
             </div>
         </div>
     </div>

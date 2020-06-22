@@ -68,7 +68,7 @@
 #calendar-tabs {
   .mat-tab-label {
     padding: 0 !important;
-    min-width: 90px !important;
+    min-width: 80px !important;
     opacity: 1;
     height: 40px !important;
   }
@@ -107,7 +107,7 @@
   .main-header {
     box-shadow: 5px 1px 10px rgba(0, 0, 0, 0.2), 3px 4px 5px rgba(0, 0, 0, 0.12), 2px 2px 4px rgba(0, 0, 0, 0.14);
     background-color: #fff;
-    top:64px;
+    top: 64px;
     width: 100%;
     position: sticky;
     z-index: 9;
@@ -220,7 +220,9 @@
     padding-bottom: 80px;
   }
 }
-.email-crm #table-low tbody td.p-no{
+
+.email-crm #table-low tbody td.p-no {
   padding: 0px !important;
 }
+
 // end crm

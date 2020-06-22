@@ -4,13 +4,13 @@
       <div class="col-md-1 pl-0 text-right">
         <p class="f-12 roboto m-0 text-custom pt-36">GMT+05:30</p>
       </div>
-      <div class="col-md-11 pl-0">
+      <div class="col-md-11 pl-0 mt-12">
         <div class="row">
           <div class="col-md-1 d-flex justify-content-center text-center pl-0">
             <div class="week-deatils">
-              <p class="text-primary m-0 roboto f-400">SAT</p>
+              <p class="text-primary m-0 roboto f-400" style="text-transform: uppercase">{{viewDate | date:'EEE'}}</p>
               <div class="week-date">
-                20
+                {{day}}
               </div>
             </div>
           </div>
@@ -18,11 +18,11 @@
       </div>
     </div>
     <div class="row day-schedule">
-      <div class="col-md-1 pl-0 br">
+      <div class="col-md-1 pl-10 br">
 
-        <ul class="d-block">
-          <li></li>
-          <li><span>1 AM</span></li>
+        <ul class="d-block" *ngFor='let time of timeArry'>
+          <li>{{time}}</li>
+          <!-- <li><span>1 AM</span></li>
           <li><span>2 AM</span></li>
           <li><span>3 AM</span></li>
           <li><span>4 AM</span></li>
@@ -45,7 +45,7 @@
           <li><span>9 PM</span></li>
           <li><span>10 PM</span></li>
           <li><span>11 PM</span></li>
-          <li><span>12 PM</span></li>
+          <li><span>12 PM</span></li> -->
         </ul>
       </div>
       <div class="col-md-11 p-0 right-details">
