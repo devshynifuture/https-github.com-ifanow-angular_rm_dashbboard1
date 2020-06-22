@@ -146,32 +146,24 @@ export class CreateSubscriptionComponent implements OnInit {
     }
     if (this.stepper.selectedIndex == 2) {
       let date = new Date(this.subscriptionDetails.controls.activationDate.value);
+      let month, year;
+      month = date.getMonth();
+      year = date.getFullYear();
       if (this.clientData.feeTypeId == 1) {
         if (this.clientData.billingNature == "2") {
-          this.billEveryMsg = "yearly"
+          this.billEveryMsg = "yearly";
         }
         else {
           (this.clientData.billEvery == 1) ? this.billEveryMsg = "Monthly" : (this.clientData.billEvery == '3') ? this.billEveryMsg = "Quarterly" : (this.clientData.billEvery == 6) ? this.billEveryMsg = "Half-yearly" : this.billEveryMsg = "Yearly";
-          if (this.clientData.billingMode == '1') {
-          }
-          else {
-            if (this.clientData.billingCycle == 1) {
-              // this.billEveryMsg = "monthly"
-              date.setMonth(date.getMonth() + this.clientData.billEvery)
-            }
-            else {
-              date.setFullYear(date.getFullYear() + parseInt(this.clientData.billEvery));
-            }
+          if (this.clientData.billingMode == 2) {
+            date.setMonth(month + parseInt(this.clientData.billEvery))
           }
         }
       }
       else {
         (this.clientData.billEvery == 1) ? this.billEveryMsg = "Monthly" : (this.clientData.billEvery == '3') ? this.billEveryMsg = "Quarterly" : (this.clientData.billEvery == 6) ? this.billEveryMsg = "Half-yearly" : this.billEveryMsg = "Yearly";
-        if (this.clientData.billingCycle == 1) {
-          date.setMonth(date.getMonth() + this.clientData.billEvery)
-        }
-        else {
-          date.setFullYear(date.getFullYear() + parseInt(this.clientData.billEvery));
+        if (this.clientData.billingMode == 2) {
+          date.setMonth(month + parseInt(this.clientData.billEvery))
         }
       }
       this.subDateToShow = date;

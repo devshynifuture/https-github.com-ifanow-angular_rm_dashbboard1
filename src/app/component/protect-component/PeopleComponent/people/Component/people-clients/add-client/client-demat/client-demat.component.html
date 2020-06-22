@@ -42,7 +42,7 @@
             [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPEC_CHAR" [maxLength]="50" matInput
             class="form-control">
           <mat-hint align="end" class="f-12">{{holderName.value.length}}/50</mat-hint>
-          <mat-error>This field is required</mat-error>
+          <mat-hint>Optional</mat-hint>
         </mat-form-field>
       </div>
     </div> -->
@@ -61,7 +61,7 @@
             #nadNameme appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPEC_CHAR"
             [maxLength]="50" matInput class="form-control">
           <mat-hint align="end" class="f-12">{{nadNameme.value.length}}/50</mat-hint>
-          <mat-error>This field is required</mat-error>
+          <mat-hint>Optional</mat-hint>
         </mat-form-field>
       </div>
     </div>
@@ -76,7 +76,7 @@
           <input placeholder="Enter depository id" autocomplete="off" appInputValueValidation
             [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="depositoryPartId" matInput
             class="form-control">
-          <mat-error>This field is required</mat-error>
+          <mat-hint>Optional</mat-hint>
         </mat-form-field>
       </div>
     </div>
@@ -91,7 +91,7 @@
           <input placeholder="Enter demat client id" autocomplete="off" appInputValueValidation
             [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="dematClientId" matInput
             class="form-control">
-          <mat-error>This field is required</mat-error>
+          <mat-hint>Optional</mat-hint>
         </mat-form-field>
       </div>
     </div>
