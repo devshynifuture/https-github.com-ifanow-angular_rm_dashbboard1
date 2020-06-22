@@ -35,6 +35,7 @@ import { SignUpComponent } from './component/no-protected/login/sign-up/sign-up.
 import { SetNewPasswordComponent } from './component/no-protected/login/set-new-password/set-new-password.component';
 import { VerifyOtpComponent } from './component/no-protected/login/verify-otp/verify-otp.component';
 import { ScrollDispatchModule } from '@angular/cdk/scrolling';
+import { PdfRoutingComponent } from './pdfRouting/pdf-routing/pdf-routing.component';
 
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
@@ -54,6 +55,7 @@ import { ScrollDispatchModule } from '@angular/cdk/scrolling';
     // AddInsuranceComponent
     FormTestComponent,
     BackofficeDashboardComponent,
+    PdfRoutingComponent,
   ],
   imports: [
     // CalendarModule,

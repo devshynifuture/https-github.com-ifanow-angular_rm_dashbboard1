@@ -91,7 +91,7 @@ export class PayeeSettingsComponent implements OnInit {
   addressList: any;
 
   constructor(public utils: UtilService, public subInjectService: SubscriptionInject, private eventService: EventService,
-    private subService: SubscriptionService, private fb: FormBuilder, private postalService: PostalService, private peopleService: PeopleService,private custumService:CustomerService) {
+    private subService: SubscriptionService, private fb: FormBuilder, private postalService: PostalService, private peopleService: PeopleService, private custumService: CustomerService) {
   }
 
   get data() {
@@ -150,12 +150,12 @@ export class PayeeSettingsComponent implements OnInit {
       this.custumService.getAddressList(obj).subscribe(
         responseData => {
           let address = responseData[0];
-          if(address){
-          this.addressList.billerAddress = address.address1;
-          this.addressList.zipCode = address.pinCode;
-          this.addressList.city = address.city;
-          this.addressList.country = address.country;
-          this.addressList.state = address.state;
+          if (address) {
+            this.addressList.billerAddress = address.address1;
+            this.addressList.zipCode = address.pinCode;
+            this.addressList.city = address.city;
+            this.addressList.country = address.country;
+            this.addressList.state = address.state;
           }
           this.getClientPayeeSettings(this.addressList);
         },
@@ -166,8 +166,8 @@ export class PayeeSettingsComponent implements OnInit {
 
   }
   getClientOrFamilyDetails(data) {
-    this.addressList={};
-    let clientData =data;
+    this.addressList = {};
+    let clientData = data;
     if (data.userType == 2) {
       this.sendObj = {
         clientId: data.clientId,
@@ -266,7 +266,7 @@ export class PayeeSettingsComponent implements OnInit {
       customerName: [data.name ? data.name : '', [Validators.required]],
       displayName: [data.companyDisplayName, [Validators.required]],
       customerType: [(data.customerTypeId) ? data.customerTypeId : '', [Validators.required]],
-      companyName: [data.companyName, [Validators.required]],
+      companyName: [data.companyName],
       emailId: [data.email, [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
       primaryContact: [data.primaryContact, [Validators.required]],
       pan: [data.pan, [Validators.required, Validators.pattern("^[A-Za-z]{5}[0-9]{4}[A-z]{1}")]],
@@ -390,7 +390,7 @@ export class PayeeSettingsComponent implements OnInit {
           country: this.getFormControl().country.value,
           zipCode: this.getFormControl().pincode.value,
           // clientId: !this.inputData.flag ? this.clientData.clientId : this.clientData.id
-          clientId: this.clientData.clientId 
+          clientId: this.clientData.clientId
         };
         this.subService.addClientBillerProfile(obj).subscribe(
           data => {
