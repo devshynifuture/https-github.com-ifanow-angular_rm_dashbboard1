@@ -90,8 +90,9 @@ export class AddQuotationSubscriptionComponent implements OnInit {
       return;
     }
     data.quotation['planId'] = data.id;
+    data.quotation.documentText = data.quotation.documentText.replace(new RegExp(escapeRegExp('$plan_name'), 'g'), data.name);
     data = data['quotation'];
-    // data['feeStructureFlag'] = data.documentText.includes('$service_fee');
+    data['feeStructureFlag'] = data.documentText.includes('$service_fee');
     // data['feeStructureFlag'] = data.documentText.includes('$service_name');
     // this.organisationFlag = data.documentText.includes('$organization');
     // this.billerFlag = data.documentText.includes('$biller');
