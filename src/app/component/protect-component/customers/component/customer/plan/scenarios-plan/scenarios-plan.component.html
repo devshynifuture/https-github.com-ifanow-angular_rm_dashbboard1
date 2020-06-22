@@ -240,10 +240,10 @@
     </div>
 </div> -->
 
-<div id="ui-scenarios">
+<div id="ui-scenarios" class="pt-140">
     <!-- Empty Screen -->
 
-    <div class="row">
+    <!-- <div class="row">
         <div class="col-md-12">
             <h3 class="m-0 pt-32 pb-8 bb-1">Scenarios</h3>
         </div>
@@ -265,12 +265,12 @@
             <button (click)="openDialog()" mat-stroked-button class="btn-primary br-0 mt-20">
                 ADD NEW</button>
         </div>
-    </div>
+    </div> -->
 
 
     <!-- End Empty Screen -->
 
-    <!-- <div class="row">
+    <div class="row">
         <div class="col-md-9">
             <div class="row bb-1 pt-16 pb-8">
                 <div class="col-md-9 p-0">
@@ -281,13 +281,13 @@
                 </div>
             </div>
             <div class="row pt-20">
-                <div class="col-md-6 pl-0 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                <div class="col-md-6 pl-0 pr-10 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                     <mat-card class="p-0 b-a mb-20 relClass br-4">
 
                         <div class="bg-grey lter p-24 ">
                             <div class="row">
                                 <div class="col-md-12 pl-0">
-                                    <h2 class="m-0 f-24 wb ">
+                                    <h2 class="m-0 f-20 wb ">
                                         <div class="bar d-flex">Scenario 1 <button mat-stroked-button
                                                 class="warning-sm mt-5 ml-8">UNAPPROVED</button></div>
                                     </h2>
@@ -303,7 +303,7 @@
                             </div>
                         </div>
 
-                        <div class="p-24">
+                        <div class="p-24 pb-14">
                             <mat-card-content>
                                 <p class="f-12 m-0 roboto text-custom">
                                     PLANNER NOTES
@@ -325,7 +325,7 @@
                             </mat-card-content>
                             <mat-card-actions class="bt-1 pt-12 mb-0 pb-0">
                                 <div class="row">
-                                    <div class="col-md-9 p-0">
+                                    <div class="col-md-9 pl-8">
                                         <button mat-button class="btn-black">Mark as approved</button>
                                     </div>
                                     <div class="col-md-3 p-0 pt-4">
@@ -337,13 +337,13 @@
                     </mat-card>
                 </div>
 
-                <div class="col-md-6 pl-0 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                <div class="col-md-6 pl-10 pr-0 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                     <mat-card class="p-0 b-a mb-20 relClass br-4">
 
                         <div class="bg-grey lter p-24 ">
                             <div class="row">
                                 <div class="col-md-12 pl-0">
-                                    <h2 class="m-0 f-24 wb ">
+                                    <h2 class="m-0 f-20 wb ">
                                         <div class="bar d-flex">Scenario 1 <button mat-stroked-button
                                                 class="warning-sm mt-5 ml-8">UNAPPROVED</button></div>
                                     </h2>
@@ -358,7 +358,7 @@
                             </div>
                         </div>
 
-                        <div class="p-24">
+                        <div class="p-24 pb-14">
                             <mat-card-content>
                                 <p class="f-12 m-0 roboto text-custom">
                                     PLANNER NOTES
@@ -380,63 +380,7 @@
                             </mat-card-content>
                             <mat-card-actions class="bt-1 pt-12 mb-0 pb-0">
                                 <div class="row">
-                                    <div class="col-md-9 p-0">
-                                        <button mat-button class="btn-black">Mark as approved</button>
-                                    </div>
-                                    <div class="col-md-3 p-0 pt-4">
-                                        <mat-checkbox>Compare</mat-checkbox>
-                                    </div>
-                                </div>
-                            </mat-card-actions>
-                        </div>
-                    </mat-card>
-                </div>
-
-
-                <div class="col-md-6 pl-0 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
-                    <mat-card class="p-0 b-a mb-20 relClass br-4">
-
-                        <div class="bg-grey lter p-24 ">
-                            <div class="row">
-                                <div class="col-md-12 pl-0">
-                                    <h2 class="m-0 f-24 wb ">
-                                        <div class="bar d-flex">Scenario 1 <button mat-stroked-button
-                                                class="warning-sm mt-5 ml-8">UNAPPROVED</button></div>
-                                    </h2>
-                                </div>
-                                <div class="col-md-12 p-0 pt-12">
-                                    <div class="bar">
-                                        <p class="m-0 roboto text-light">In this scenario we have assumed continuation
-                                            of most products.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="p-24">
-                            <mat-card-content>
-                                <p class="f-12 m-0 roboto text-custom">
-                                    PLANNER NOTES
-                                </p>
-                                <div class="m-0 roboto f-14">
-                                    <div class="bar">This plan is ideal for young people who are just starting off their
-                                        financial journey and want to start saving with a smaller investment amount.
-                                    </div>
-                                </div>
-                                <p class="f-12 m-0 pt-24 roboto text-custom">
-                                    PLANNER NOTES
-                                </p>
-                                <div class="f-14 m-0 roboto">
-                                    <div class="bar">
-                                        This plan is ideal for young people who are just starting off their financial
-                                        journey and want to start saving with a smaller investment amount.
-                                    </div>
-                                </div>
-                            </mat-card-content>
-                            <mat-card-actions class="bt-1 pt-12 mb-0 pb-0">
-                                <div class="row">
-                                    <div class="col-md-9 p-0">
+                                    <div class="col-md-9 pl-8">
                                         <button mat-button class="btn-black">Mark as approved</button>
                                     </div>
                                     <div class="col-md-3 p-0 pt-4">
@@ -449,13 +393,13 @@
                 </div>
 
 
-                <div class="col-md-6 pl-0 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                <div class="col-md-6 pl-0 pr-10 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                     <mat-card class="p-0 b-a mb-20 relClass br-4">
 
                         <div class="bg-grey lter p-24 ">
                             <div class="row">
                                 <div class="col-md-12 pl-0">
-                                    <h2 class="m-0 f-24 wb ">
+                                    <h2 class="m-0 f-20 wb ">
                                         <div class="bar d-flex">Scenario 1 <button mat-stroked-button
                                                 class="warning-sm mt-5 ml-8">UNAPPROVED</button></div>
                                     </h2>
@@ -470,7 +414,7 @@
                             </div>
                         </div>
 
-                        <div class="p-24">
+                        <div class="p-24 pb-14">
                             <mat-card-content>
                                 <p class="f-12 m-0 roboto text-custom">
                                     PLANNER NOTES
@@ -492,7 +436,63 @@
                             </mat-card-content>
                             <mat-card-actions class="bt-1 pt-12 mb-0 pb-0">
                                 <div class="row">
-                                    <div class="col-md-9 p-0">
+                                    <div class="col-md-9 pl-8">
+                                        <button mat-button class="btn-black">Mark as approved</button>
+                                    </div>
+                                    <div class="col-md-3 p-0 pt-4">
+                                        <mat-checkbox>Compare</mat-checkbox>
+                                    </div>
+                                </div>
+                            </mat-card-actions>
+                        </div>
+                    </mat-card>
+                </div>
+
+
+                <div class="col-md-6 pl-10 pr-0 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                    <mat-card class="p-0 b-a mb-20 relClass br-4">
+
+                        <div class="bg-grey lter p-24 ">
+                            <div class="row">
+                                <div class="col-md-12 pl-0">
+                                    <h2 class="m-0 f-20 wb ">
+                                        <div class="bar d-flex">Scenario 1 <button mat-stroked-button
+                                                class="warning-sm mt-5 ml-8">UNAPPROVED</button></div>
+                                    </h2>
+                                </div>
+                                <div class="col-md-12 p-0 pt-12">
+                                    <div class="bar">
+                                        <p class="m-0 roboto text-light">In this scenario we have assumed continuation
+                                            of most products.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-24 pb-14">
+                            <mat-card-content>
+                                <p class="f-12 m-0 roboto text-custom">
+                                    PLANNER NOTES
+                                </p>
+                                <div class="m-0 roboto f-14">
+                                    <div class="bar">This plan is ideal for young people who are just starting off their
+                                        financial journey and want to start saving with a smaller investment amount.
+                                    </div>
+                                </div>
+                                <p class="f-12 m-0 pt-24 roboto text-custom">
+                                    PLANNER NOTES
+                                </p>
+                                <div class="f-14 m-0 roboto">
+                                    <div class="bar">
+                                        This plan is ideal for young people who are just starting off their financial
+                                        journey and want to start saving with a smaller investment amount.
+                                    </div>
+                                </div>
+                            </mat-card-content>
+                            <mat-card-actions class="bt-1 pt-12 mb-0 pb-0">
+                                <div class="row">
+                                    <div class="col-md-9 pl-8">
                                         <button mat-button class="btn-black">Mark as approved</button>
                                     </div>
                                     <div class="col-md-3 p-0 pt-4">
@@ -505,8 +505,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3 pt-20">
-            <h3 class="m-0 bb-1 pt-6 pb-12">Compare scenarios</h3>
+        <div class="col-md-3 pt-26">
+            <h3 class="m-0 bb-1 pb-12">Compare scenarios</h3>
             <div class="ba-dashed mt-20">
                 <p class="m-0 p-24 text-center ws-nowrap">Select two scenarios from left to compare </p>
             </div>
@@ -521,7 +521,7 @@
                 </div>
                 <div class="col-md-6 pr-0 pl-8">
                     <p class="m-0 roboto text-center f-12 f-400 pt-16 lh-14 ba-dashed text-primitive h-60">Add another
-                        scenario from
+                        scenario<br> from
                         left to compare</p>
 
                 </div>

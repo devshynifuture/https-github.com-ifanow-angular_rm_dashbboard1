@@ -230,9 +230,9 @@ export class ClientDematComponent implements OnInit {
     this.dematForm = this.fb.group({
       modeOfHolding: [(data.modeOfHolding) ? String(data.modeOfHolding) : '1'],
       // holderName: [(data.modeOfHolding == '1') ? (data.holderNameList && data.holderNameList.length > 0) ? data.holderNameList[0].name : '' : ''],
-      depositoryPartName: [data.depositoryParticipantName, [Validators.required]],
-      depositoryPartId: [data.depositoryParticipantId, [Validators.required]],
-      dematClientId: [data.dematClientId, [Validators.required]],
+      depositoryPartName: [data.depositoryParticipantName],
+      depositoryPartId: [data.depositoryParticipantId],
+      dematClientId: [data.dematClientId],
       brekerName: [data.brokerName],
       brokerAddress: [data.brokerAddress],
       linkedBankAccount: [data.linkedBankAccount],

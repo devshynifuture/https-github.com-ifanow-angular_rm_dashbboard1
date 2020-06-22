@@ -2,8 +2,8 @@
     <h3 class="m-0 text-center f-24">{{clientSubscriptionData.name}} </h3>
 </div>-->
 <div *ngIf="subscriptionData.length==0" class="bg-white">
-    <div class="align-center">
-        <div class="row" *ngIf="isAdvisor">
+    <div class="align-center" *ngIf="isAdvisor">
+        <div class="row">
             <div class="col-md-12 pt-150">
                 <h5 class="pt-44">Hey, it seems {{clientData.name}} hasn't been subscribed to any services yet. You need to add a Plan to get going. </h5>
                 <h5>Once a Plan is added, all the associated Services (along with the fee structure) will be added. If you want, you can customize the fee structure for this client. Each Service will have it’s own Subscription attached to it.
@@ -16,10 +16,12 @@
             </div>
         </div>
 
-        <div class="row" *ngIf="!isAdvisor">
-            <div class="col-md-12 pt-150">
-                <h5 class="pt-44">Hey, it seems you haven't been subscribed to any services yet. Please contact your financial advisor to subscript to a service now. </h5>
-            </div>
+
+    </div>
+
+    <div class="row pt-150" *ngIf="!isAdvisor">
+        <div class="col-md-12 ">
+            <h5 class=" m-0 text-center">Hey, it seems you haven't been subscribed to any services yet. <br> Please contact your financial advisor to subscript to a service now. </h5>
         </div>
     </div>
 </div>
