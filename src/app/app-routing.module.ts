@@ -1,19 +1,13 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { SelectivePreloadingStrategyService } from './services/selective-preloading-strategy.service';
-import { ErrorPageComponent } from './component/protect-component/common-component/error-page/error-page.component';
-import { WelcomePageComponent } from './component/protect-component/common-component/welcome-page/welcome-page.component';
-import { DataNotFoundComponent } from './component/protect-component/common-component/data-not-found/data-not-found.component';
-import { AuthGuard } from './guards/auth.guard';
-import { FormTestComponent } from './test/form-test/form-test.component';
-import { BackofficeDashboardComponent } from './component/protect-component/AdviserComponent/backOffice/backoffice-dashboard/backoffice-dashboard.component';
-import { AdvisorGuard } from './guards/advisor.guard';
-import { query } from '@angular/animations';
-import { HttpParams } from '@angular/common/http';
-import { MutualFundSummaryComponent } from './component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mutual-fund/mutual-fund-summary/mutual-fund-summary.component';
-import { MutualFundUnrealizedTranComponent } from './component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mutual-fund/mutual-fund-unrealized-tran/mutual-fund-unrealized-tran.component';
-import { MfCapitalDetailedComponent } from './component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mutual-fund/mf-capital-detailed/mf-capital-detailed.component';
-import { MutualFundsCapitalComponent } from './component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mutual-fund/mutual-funds-capital/mutual-funds-capital.component';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {SelectivePreloadingStrategyService} from './services/selective-preloading-strategy.service';
+import {ErrorPageComponent} from './component/protect-component/common-component/error-page/error-page.component';
+import {WelcomePageComponent} from './component/protect-component/common-component/welcome-page/welcome-page.component';
+import {DataNotFoundComponent} from './component/protect-component/common-component/data-not-found/data-not-found.component';
+import {AuthGuard} from './guards/auth.guard';
+import {FormTestComponent} from './test/form-test/form-test.component';
+import {BackofficeDashboardComponent} from './component/protect-component/AdviserComponent/backOffice/backoffice-dashboard/backoffice-dashboard.component';
+import {AdvisorGuard} from './guards/advisor.guard';
 
 const routes: Routes = [
   {
@@ -31,7 +25,7 @@ const routes: Routes = [
     canActivate: [AuthGuard, AdvisorGuard],
 
   },
-  {
+/*  {
     path: 'pdf/overview',
     loadChildren: () => import('./component/protect-component/AdviserComponent/backOffice/backoffice-mis/pdf.module').then(m => m.PdfModule),
 
@@ -55,7 +49,7 @@ const routes: Routes = [
   {
     path: 'pdf/capitalGainDetailed',
     component: MfCapitalDetailedComponent
-  },
+  },*/
   // {
   //   path: 'calendar',
   //   component: calendarComponent

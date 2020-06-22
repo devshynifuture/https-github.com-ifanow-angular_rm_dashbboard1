@@ -641,6 +641,7 @@ export class RightFilterComponent implements OnInit {
         filterFamData = filterFamData.filter(item => item.familyMemberId === element.familyMemberId);
       }
     });
+
     this.scheme = [...new Map(filterData.map(item => [item.id, item])).values()];
     this.amc = [...new Map(filterData.map(item => [item.amc_id, item])).values()];
     this.familyMember = [...new Map(filterFamData.map(item => [item.familyMemberId, item])).values()];
