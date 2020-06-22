@@ -14,30 +14,6 @@
             <p class="m-0 roboto f-400 text-custom">{{day | date:'EEE'}}</p>
             <p class="m-0 roboto f-18 f-400 text-custom">{{day | date:'d'}}</p>
           </div>
-          <!-- <div class="column">
-            <p class="m-0 roboto f-400 text-custom">TUE</p>
-            <p class="m-0 roboto f-18 f-400 text-custom">27</p>
-          </div>
-          <div class="column">
-            <p class="m-0 roboto f-400 text-custom">WED</p>
-            <p class="m-0 roboto f-18 f-400 text-custom">28</p>
-          </div>
-          <div class="column">
-            <p class="m-0 roboto f-400 text-custom">THU</p>
-            <p class="m-0 f-18 f-400 roboto text-custom">29</p>
-          </div>
-          <div class="column">
-            <p class="m-0 roboto f-400 text-custom">FRI</p>
-            <p class="m-0 roboto f-18 f-400 text-custom">30</p>
-          </div>
-          <div class="column">
-            <p class="m-0 roboto f-400 text-custom">SAT</p>
-            <p class="m-0 roboto f-18 f-400 text-custom">31</p>
-          </div>
-          <div class="column">
-            <p class="m-0 roboto f-400 text-custom">SUN</p>
-            <p class="m-0 roboto f-18 f-400 text-custom">1</p>
-          </div> -->
         </div>
         <div class="custom-grid  all-schedule fix-div">
           <div class="column">
@@ -64,29 +40,14 @@
         </div>
         <div class="custom-grid  all-schedule"  *ngFor='let time of timeArry; let i = index'>
           <div class="column"  *ngFor='let day of week; let di = index'>
-            <div class="week-clicks pl-4" *ngIf="di == 0 && i == 0">
-              <p class="m-0 f-12 roboto f-400 text-white">(No title)</p>
-              <p class="m-0 f-12 roboto f-400 text-white">6 - 7am</p>
+            <div *ngFor='let event of formatedEvent; let ei = index'>
+              <!-- {{time == returnNumber(event.startTime)}}  -->
+              <div class="week-clicks pl-4" *ngIf="event.day == formateDate(day) && event.month == formateMonth(day) && event.year == formateYear(day) && returnNumber(event.startTime)  == time">
+                <p class="m-0 f-12 roboto f-400 text-white">{{event.summary}}</p>
+                <p class="m-0 f-12 roboto f-400 text-white">{{event.startTime}}- {{event.endTime}}</p>
+              </div>
             </div>
           </div>
-          <!-- <div class="column">
-
-          </div>
-          <div class="column">
-
-          </div>
-          <div class="column">
-
-          </div>
-          <div class="column">
-
-          </div>
-          <div class="column">
-
-          </div>
-          <div class="column">
-
-          </div> -->
         </div>
       </div>
     </div>

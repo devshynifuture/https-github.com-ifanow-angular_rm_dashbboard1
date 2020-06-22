@@ -48,6 +48,7 @@ export class CreateSubscriptionComponent implements OnInit {
   dateToShow: any;
   subDateToShow: any;
   billEveryMsg: any;
+  serviceData: any;
 
 
   constructor(private enumService: EnumServiceService, public subInjectService: SubscriptionInject,
@@ -149,21 +150,21 @@ export class CreateSubscriptionComponent implements OnInit {
       let month, year;
       month = date.getMonth();
       year = date.getFullYear();
-      if (this.clientData.feeTypeId == 1) {
-        if (this.clientData.billingNature == "2") {
+      if (this.serviceData.feeTypeId == 1) {
+        if (this.serviceData.billingNature == "2") {
           this.billEveryMsg = "yearly";
         }
         else {
-          (this.clientData.billEvery == 1) ? this.billEveryMsg = "Monthly" : (this.clientData.billEvery == '3') ? this.billEveryMsg = "Quarterly" : (this.clientData.billEvery == 6) ? this.billEveryMsg = "Half-yearly" : this.billEveryMsg = "Yearly";
-          if (this.clientData.billingMode == 2) {
-            date.setMonth(month + parseInt(this.clientData.billEvery))
+          (this.serviceData.billEvery == 1) ? this.billEveryMsg = "Monthly" : (this.serviceData.billEvery == '3') ? this.billEveryMsg = "Quarterly" : (this.serviceData.billEvery == 6) ? this.billEveryMsg = "Half-yearly" : this.billEveryMsg = "Yearly";
+          if (this.serviceData.billingMode == 2) {
+            date.setMonth(month + parseInt(this.serviceData.billEvery))
           }
         }
       }
       else {
-        (this.clientData.billEvery == 1) ? this.billEveryMsg = "Monthly" : (this.clientData.billEvery == '3') ? this.billEveryMsg = "Quarterly" : (this.clientData.billEvery == 6) ? this.billEveryMsg = "Half-yearly" : this.billEveryMsg = "Yearly";
-        if (this.clientData.billingMode == 2) {
-          date.setMonth(month + parseInt(this.clientData.billEvery))
+        (this.serviceData.billEvery == 1) ? this.billEveryMsg = "Monthly" : (this.serviceData.billEvery == '3') ? this.billEveryMsg = "Quarterly" : (this.serviceData.billEvery == 6) ? this.billEveryMsg = "Half-yearly" : this.billEveryMsg = "Yearly";
+        if (this.serviceData.billingMode == 2) {
+          date.setMonth(month + parseInt(this.serviceData.billEvery))
         }
       }
       this.subDateToShow = date;
@@ -196,7 +197,7 @@ export class CreateSubscriptionComponent implements OnInit {
   }
 
   nextStep(data) {
-    this.clientData = data;
+    this.serviceData = data;
     this.goForward();
   }
   // getTotalPayeeData(data) {
@@ -297,9 +298,9 @@ export class CreateSubscriptionComponent implements OnInit {
   }
 
   startSubscription() {
-    if (this.clientData.feeTypeId == 1) {
+    if (this.serviceData.feeTypeId == 1) {
       const obj = {
-        id: this.clientData.subId,
+        id: this.clientData.id,
         advisorId: this.advisorId,
         billerProfileId: this.selectedBiller.id,
         services: [
@@ -316,15 +317,15 @@ export class CreateSubscriptionComponent implements OnInit {
         Status: 1,
         subscriptionPricing: {
           autoRenew: 0,
-          billEvery: (this.clientData.billingNature == '2') ? 0 : this.clientData.billEvery,
-          billingCycle: (this.clientData.billingNature == '2') ? 0 : this.clientData.billingCycle,
-          billingMode: this.clientData.billingMode,
-          billingNature: (this.clientData.billingNature == '2') ? 0 : this.clientData.billingNature,
-          feeTypeId: this.clientData.feeTypeId,
+          billEvery: (this.serviceData.billingNature == '2') ? 0 : this.serviceData.billEvery,
+          billingCycle: (this.serviceData.billingNature == '2') ? 0 : this.serviceData.billingCycle,
+          billingMode: this.serviceData.billingMode,
+          billingNature: (this.serviceData.billingNature == '2') ? 0 : this.serviceData.billingNature,
+          feeTypeId: this.serviceData.feeTypeId,
           subscriptionAssetPricingList: [
             {
               assetClassId: 1,
-              pricing: this.clientData.subscriptionAssetPricingList[0].pricing
+              pricing: this.serviceData.subscriptionAssetPricingList[0].pricing
             }
           ]
         }
@@ -333,15 +334,8 @@ export class CreateSubscriptionComponent implements OnInit {
         data => this.startSubscriptionResponse(data)
       );
     } else {
-
-      // const subAsset = [];
-      // this.clientData.subscriptionAssetPricingList[2].otherAssets.forEach(element => {
-      //   subAsset.push(element.subAssetClassId);
-      // });
-      // const selectedPayee = [];
-      // this.clientData;
       const obj = {
-        id: this.clientData.subId,
+        id: this.clientData.id,
         advisorId: this.advisorId,
         billerProfileId: this.selectedBiller.id,
         services: [
@@ -358,30 +352,30 @@ export class CreateSubscriptionComponent implements OnInit {
         Status: 1,
         subscriptionPricing: {
           autoRenew: 0,
-          billEvery: this.clientData.billEvery,
-          billingCycle: this.clientData.billingCycle,
-          billingMode: this.clientData.billingMode,
-          billingNature: this.clientData.billingNature,
-          feeTypeId: this.clientData.feeTypeId,
+          billEvery: this.serviceData.billEvery,
+          billingCycle: this.serviceData.billingCycle,
+          billingMode: this.serviceData.billingMode,
+          billingNature: this.serviceData.billingNature,
+          feeTypeId: this.serviceData.feeTypeId,
           id: 0,
           subscriptionAssetPricingList: [
             {
               directRegular: 1,
               assetClassId: 1,
-              debtAllocation: this.clientData.subscriptionAssetPricingList[0].debtAllocation,
-              equityAllocation: this.clientData.subscriptionAssetPricingList[0].equityAllocation,
-              liquidAllocation: this.clientData.subscriptionAssetPricingList[0].liquidAllocation,
+              debtAllocation: this.serviceData.subscriptionAssetPricingList[0].debtAllocation,
+              equityAllocation: this.serviceData.subscriptionAssetPricingList[0].equityAllocation,
+              liquidAllocation: this.serviceData.subscriptionAssetPricingList[0].liquidAllocation,
             }, {
               directRegular: 2,
               assetClassId: 1,
-              debtAllocation: this.clientData.subscriptionAssetPricingList[1].debtAllocation,
-              equityAllocation: this.clientData.subscriptionAssetPricingList[1].equityAllocation,
-              liquidAllocation: this.clientData.subscriptionAssetPricingList[1].liquidAllocation,
+              debtAllocation: this.serviceData.subscriptionAssetPricingList[1].debtAllocation,
+              equityAllocation: this.serviceData.subscriptionAssetPricingList[1].equityAllocation,
+              liquidAllocation: this.serviceData.subscriptionAssetPricingList[1].liquidAllocation,
             },
             {
               assetClassId: 2,
-              subAssetIds: this.clientData.subscriptionAssetPricingList[2].subAssetIds,
-              pricing: this.clientData.subscriptionAssetPricingList[2].pricing
+              subAssetIds: this.serviceData.subscriptionAssetPricingList[2].subAssetIds,
+              pricing: this.serviceData.subscriptionAssetPricingList[2].pricing
             }
           ]
         }

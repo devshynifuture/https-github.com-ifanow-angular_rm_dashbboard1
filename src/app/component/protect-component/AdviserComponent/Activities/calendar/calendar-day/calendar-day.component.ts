@@ -95,7 +95,7 @@ export class CalendarDayComponent implements OnInit {
             e["month"] = this.formateMonth(!e.start.dateTime ?new Date(e.created) : new Date(e.start.dateTime));
             e["year"] = this.formateYear(!e.start.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
             e["startTime"] = this.formateTime(!e.start.dateTime? new Date(e.created) : new Date(e.start.dateTime));
-            e["endTime"] = this.formateTime(!e.end.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
+            e["endTime"] = this.formateTime(!e.end.dateTime ? new Date(e.created) : new Date(e.end.dateTime));
             this.formatedEvent.push(e);
             // console.log(this.formatedEvent,"formatedEvent calender1",);
           }
