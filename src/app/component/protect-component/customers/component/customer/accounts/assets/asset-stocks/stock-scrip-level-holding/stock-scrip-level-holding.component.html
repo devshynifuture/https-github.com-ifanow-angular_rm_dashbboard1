@@ -14,17 +14,12 @@
     <div [formGroup]="scipLevelHoldingForm" class="row pt-100 pl-28">
         <div class="col-md-3 p-0">
             <div formArrayName="getCoOwnerName">
-                <div [ngClass]="{'pt-36': pointIndex>0}" 
-                    *ngFor="let obj of scipLevelHoldingForm.controls['getCoOwnerName'].controls; let pointIndex=index"
-                    [formGroupName]="pointIndex">
+                <div [ngClass]="{'pt-36': pointIndex>0}" *ngFor="let obj of scipLevelHoldingForm.controls['getCoOwnerName'].controls; let pointIndex=index" [formGroupName]="pointIndex">
                     <h5 class="m-0 pb-8 ">{{pointIndex != 0?'Co-o' : 'O'}}wner{{pointIndex != 0?pointIndex:''}}</h5>
                     <div class="pr-0">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
-                                    (selectionChange)="disabledMember($event.value,'owner')"
-                                    (valueChange3)='displayControler($event)'  (valueChange1)='lisNominee($event)'
-                                    class="form-control br-0" [callMethod]='callMethod'>
+                                <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData' (selectionChange)="disabledMember($event.value,'owner')" (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
                                     <!-- || f.familyMemberAge <= 60 -->
                                     <mat-option value='' disabled>Select family members</mat-option>
                                     <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" [value]="f.userName">
@@ -40,8 +35,7 @@
                     <div class="col-md-2" *ngIf="scipLevelHoldingForm.value.getCoOwnerName.length > 1">
                         <div class="form-group mb-0 iconPetage">
                             <mat-form-field>
-                                <input matInput class="form-control br-0 percentage" type="number" formControlName="share"
-                                    (focusout)="onChangeJointOwnership('owner')">
+                                <input matInput class="form-control br-0 percentage" type="number" formControlName="share" (focusout)="onChangeJointOwnership('owner')">
                                 <mat-error class="f-12" *ngIf="obj.controls['share'].hasError('required')">
                                     This field is required
                                 </mat-error>
@@ -55,17 +49,14 @@
                         <!-- <i *ngIf="scipLevelHoldingForm.value.getCoOwnerName.length < 3"
                             class="material-icons text-primitive f-20 c-p float-left"
                             (click)="addNewCoOwner(undefined)">add</i> -->
-                        <i *ngIf="scipLevelHoldingForm.value.getCoOwnerName.length > 1"
-                            class="material-icons text-primitive f-20 c-p pl-10"
-                            (click)="removeCoOwner(pointIndex)">remove</i>
+                        <i *ngIf="scipLevelHoldingForm.value.getCoOwnerName.length > 1" class="material-icons text-primitive f-20 c-p pl-10" (click)="removeCoOwner(pointIndex)">remove</i>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-md-3">
             <h5 class="m-0 pb-8">Portfolio name</h5>
-            <app-portfolio-field (outputEvent)='getPortfolioData($event)' [checkValid]='checkValid'
-                [ownerId]="portfolioFieldData" [owner]="holdingData"></app-portfolio-field>
+            <app-portfolio-field (outputEvent)='getPortfolioData($event)' [checkValid]='checkValid' [ownerId]="portfolioFieldData" [owner]="holdingData"></app-portfolio-field>
         </div>
     </div>
     <div class="row pl-28">
@@ -75,21 +66,20 @@
     </div>
     <div class="row pl-28">
         <div class="col-md-4 pl-0">
-            <label class="f-16"> Scrip name</label>
+            <label class="f-14"> Scrip name</label>
         </div>
         <div class="col-md-2 pl-0">
-            <label class="pb-8 f-16"> Quantity </label>
+            <label class="pb-8 f-14"> Quantity </label>
         </div>
         <div class="col-md-3">
-            <label class="pb-8 f-16"> Quantity as on </label>
+            <label class="pb-8 f-14"> Quantity as on </label>
         </div>
         <div class="col-md-3 pl-0">
-            <label class="pb-8 f-16"> Amount invested</label>
+            <label class="pb-8 f-14"> Amount invested</label>
         </div>
     </div>
     <div [formGroup]="holdingListForm">
-        <div class="row pb-36 pl-28" *ngFor="let singleHolding of HoldingArray.controls; let i = index;"
-            [formGroup]="singleHolding">
+        <div class="row pb-36 pl-28" *ngFor="let singleHolding of HoldingArray.controls; let i = index;" [formGroup]="singleHolding">
             <div class="col-md-4 pl-0">
                 <div class="form-group mb-0">
                     <app-scrip-field [data]="singleHolding" (scriptList)="getScriptList($event)" (valueChange1)="getScript($event, i)"></app-scrip-field>
@@ -98,10 +88,8 @@
             <div class="col-md-2 p-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input matInput autocomplete="off" #totalUnits type="number" formControlName="holdings"
-                            maxlength="20" class="form-control br-0 rupess">
-                        <mat-hint align="start"
-                            class="m-0 text-custom pt-4">
+                        <input matInput autocomplete="off" #totalUnits type="number" formControlName="holdings" maxlength="20" class="form-control br-0 rupess">
+                        <mat-hint align="start" class="m-0 text-custom pt-4">
                             As in statement
                         </mat-hint>
                         <mat-error>This field is required</mat-error>
@@ -111,8 +99,7 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
-                        <input (click)="picker.open()" matInput autocomplete="off" formControlName="holdingAsOn" [max]="maxDate"
-                            [matDatepicker]="picker" class="form-control br-0 b-0">
+                        <input (click)="picker.open()" matInput autocomplete="off" formControlName="holdingAsOn" [max]="maxDate" [matDatepicker]="picker" class="form-control br-0 b-0">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                         <mat-error>This field is required</mat-error>
@@ -122,8 +109,7 @@
             <div class="col-md-2 pl-0">
                 <div class="form-group mb-0 iconRupess">
                     <mat-form-field>
-                        <input matInput autocomplete="off" #totalNetContribution formControlName="investedAmt"
-                            type="number" maxlength="20" class="form-control br-0 rupess">
+                        <input matInput autocomplete="off" #totalNetContribution formControlName="investedAmt" type="number" maxlength="20" class="form-control br-0 rupess">
                         <mat-error>This field is required</mat-error>
 
                     </mat-form-field>
