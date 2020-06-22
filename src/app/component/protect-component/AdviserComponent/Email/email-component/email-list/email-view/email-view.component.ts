@@ -1,18 +1,18 @@
-import {AuthService} from './../../../../../../../auth-service/authService';
-import {EventService} from './../../../../../../../Data-service/event.service';
+import { AuthService } from './../../../../../../../auth-service/authService';
+import { EventService } from './../../../../../../../Data-service/event.service';
 // import { EmailUtilService } from './../../../../../../../services/email-util.service';
-import {ComposeEmailComponent} from './../../compose-email/compose-email.component';
+import { ComposeEmailComponent } from './../../compose-email/compose-email.component';
 // import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
 // import { UtilService } from '../../../../../../../services/util.service';
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {EmailServiceService} from '../../../email-service.service';
-import {MatBottomSheet} from '@angular/material/bottom-sheet';
-import {EmailReplyComponent} from '../email-reply/email-reply.component';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { EmailServiceService } from '../../../email-service.service';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { EmailReplyComponent } from '../email-reply/email-reply.component';
 // import { EmailAddTaskComponent } from '../email-add-task/email-add-task.component';
-import {Location} from '@angular/common';
-import {Subscription} from 'rxjs';
-import {EmailUtilService} from 'src/app/services/email-util.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import { Location } from '@angular/common';
+import { Subscription } from 'rxjs';
+import { EmailUtilService } from 'src/app/services/email-util.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 // import { DomSanitizer } from '@angular/platform-browser';
 
@@ -74,11 +74,12 @@ export class EmailViewComponent implements OnInit, OnDestroy {
   }
 
   getGmailDetailMessageRaw(id) {
+    this.isLoading = true;
     this.isAttachmentBasedEmail = true;
     this.emailService.gmailMessageDetail(id)
       .subscribe((response) => {
-
-
+        this.isLoading = false;
+        console.log("detailed message::", response);
         // gmail api explorer based integration
         const { id } = response;
         this.messageId = id;
@@ -90,71 +91,120 @@ export class EmailViewComponent implements OnInit, OnDestroy {
             this.decodedPartsDetail.push({
               item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(response.payload.body.data),
             })
+          } else if (response.payload.mimeType === 'text/plain') {
+            this.decodedPartsDetail.push({
+              item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(response.payload.body.data),
+            })
           }
-        }
-        headers.forEach(header => {
-          if (header.name === 'Delivered-To') {
-            this.deliveredTo = header.value;
-          }
-
-          if (header.name === 'Reply-To') {
-            this.replyTo = header.value;
-          }
-
-          if (header.name === 'Date') {
-            this.date = header.value;
-          }
-          if (header.name === 'Subject') {
-            this.subject = header.value;
-          }
-          if (header.name === 'From') {
-            this.fromDetailMessage = header.value;
-          }
-          if (header.name === "To") {
-            this.toDetailMessage = header.value;
-          }
-        });
-
-        if (parts !== null) {
-          parts.forEach(part => {
-            if (part.mimeType === 'text/html') {
-              this.decodedPartsDetail.push({
-                item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data),
-                date: this.date
-              })
-            }
-            if (part.mimeType !== 'multipart/alternative') {
-
-              if (part.filename !== null) {
-                const obj = {
-                  userId: AuthService.getUserInfo().advisorId,
-                  email: AuthService.getUserInfo().emailId,
-                  attachmentId: part.body.attachmentId,
-                  messageId: this.messageId
-                }
-
-                this.emailService.getAttachmentFiles(obj).subscribe(res => {
-                  const resBase64 = res.data.replace(/\-/g, '+').replace(/_/g, '/');
-                  this.creationOfUrlAndBase64File(resBase64, part)
-
-                });
-
-              }
-            } else if (part.mimeType === 'multipart/alternative') {
-              if (part.parts !== null) {
-                const { parts } = part;
-                parts.forEach(part => {
-                  if (part.mimeType === 'text/html') {
-                    this.decodedPartsDetail.push({
-                      item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data),
-                      date: this.date
-                    })
+          else if (response.payload.mimeType === 'multipart/mixed') {
+            if (parts.length !== 0) {
+              parts.forEach(multiPartElement => {
+                if (multiPartElement.mimeType === 'multipart/alternative') {
+                  if (multiPartElement.parts.length !== 0) {
+                    multiPartElement.parts.forEach(multiPartAlternativeElement => {
+                      if (multiPartAlternativeElement.mimeType === 'text/html') {
+                        this.decodedPartsDetail.push({
+                          item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(multiPartAlternativeElement.body.data),
+                        })
+                      } else if (multiPartAlternativeElement.mimeType === 'text/plain') {
+                        this.decodedPartsDetail.push({
+                          item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(multiPartAlternativeElement.body.data),
+                        })
+                      }
+                    });
                   }
-                });
-              }
+                } else if (multiPartElement.mimeType === 'text/html') {
+                  this.decodedPartsDetail.push({
+                    item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(multiPartElement.body.data),
+                  })
+                } else if (multiPartElement.mimeType === 'text/plain') {
+                  this.decodedPartsDetail.push({
+                    item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(multiPartElement.body.data),
+                  })
+                }
+              });
             }
-          });
+          }
+          else if (response.payload.mimeType === 'multipart/alternative') {
+
+            if (response.payload.hasOwnProperty('parts') && response.payload.parts.length !== 0) {
+              response.payload.parts.forEach(multiPartAlternativeElement => {
+                if (multiPartAlternativeElement.mimeType === 'text/html') {
+                  this.decodedPartsDetail.push({
+                    item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(multiPartAlternativeElement.body.data),
+                  })
+                } else if (multiPartAlternativeElement.mimeType === 'text/plain') {
+                  this.decodedPartsDetail.push({
+                    item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(multiPartAlternativeElement.body.data),
+                  })
+                }
+              });
+            }
+          }
         }
+        // headers.forEach(header => {
+        //   if (header.name === 'Delivered-To') {
+        //     this.deliveredTo = header.value;
+        //   }
+
+        //   if (header.name === 'Reply-To') {
+        //     this.replyTo = header.value;
+        //   }
+
+        //   if (header.name === 'Date') {
+        //     this.date = header.value;
+        //   }
+        //   if (header.name === 'Subject') {
+        //     this.subject = header.value;
+        //   }
+        //   if (header.name === 'From') {
+        //     this.fromDetailMessage = header.value;
+        //   }
+        //   if (header.name === "To") {
+        //     this.toDetailMessage = header.value;
+        //   }
+        // });
+
+        // if (parts !== null) {
+        //   parts.forEach(part => {
+        //     if (part.mimeType === 'text/html') {
+        //       this.decodedPartsDetail.push({
+        //         item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data),
+        //         date: this.date
+        //       })
+        //     }
+        //     if (part.mimeType !== 'multipart/alternative') {
+
+        //       if (part.filename !== null) {
+        //         const obj = {
+        //           userId: AuthService.getUserInfo().advisorId,
+        //           email: AuthService.getUserInfo().emailId,
+        //           attachmentId: part.body.attachmentId,
+        //           messageId: this.messageId
+        //         }
+
+        //         this.emailService.getAttachmentFiles(obj).subscribe(res => {
+        //           const resBase64 = res.data.replace(/\-/g, '+').replace(/_/g, '/');
+        //           this.creationOfUrlAndBase64File(resBase64, part)
+
+        //         });
+
+        //       }
+        //     } else if (part.mimeType === 'multipart/alternative') {
+        //       if (part.parts !== null) {
+        //         const parts = part.parts;
+        //         parts.forEach(part => {
+        //           if (part.mimeType === 'text/html') {
+        //             this.decodedPartsDetail.push({
+        //               item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data),
+        //               date: this.date
+        //             })
+        //           }
+        //         });
+        //       }
+        //     }
+        //   });
+        // }
 
 
       });
@@ -187,13 +237,14 @@ export class EmailViewComponent implements OnInit, OnDestroy {
   getEmailThread() {
     this.emailSubscription = this.emailService.data.subscribe(response => {
       this.emailObj = response;
+      console.log("this is what im getting from listing:::", this.emailObj);
       if (!this.emailObj) {
         this.eventService.openSnackBar("No email data !", "Dismiss");
         this.router.navigate(['../'], { relativeTo: this.activatedRoute });
       }
       if (this.emailObj) {
 
-        if (this.emailObj.parsedData.decodedPart.length === 0 || this.ifDecodedPartIsEmptyString()) {
+        if (this.emailObj.parsedData.decodedPart.length === 0 || (!this.ifDecodedPartIsEmptyString())) {
           this.emailObj.idsOfMessages.forEach((element, index) => {
             const id = element;
             this.getGmailDetailMessageRaw(id);
@@ -234,6 +285,12 @@ export class EmailViewComponent implements OnInit, OnDestroy {
 
         let { messageHeaders } = this.emailObj;
         this.messagesHeaders = messageHeaders;
+
+        if (this.messagesHeaders.length !== 0) {
+          this.messagesHeaders.forEach(item => {
+
+          })
+        }
 
         let subject = headers.filter((header) => {
           return header.name === 'Subject';
@@ -304,7 +361,7 @@ export class EmailViewComponent implements OnInit, OnDestroy {
     // need to pass ids
     const deleteMessageSubscription = this.emailService.deleteMessageFromView().subscribe(response => {
       deleteMessageSubscription.unsubscribe();
-    }, error => {});
+    }, error => { });
   }
 
   openBottomSheet() {
@@ -315,9 +372,9 @@ export class EmailViewComponent implements OnInit, OnDestroy {
     this.emailService.openEmailAddTask(data, ComposeEmailComponent);
   }
 
-  openComposeEmail(data) {
-    this.emailService.openComposeEmail(data, ComposeEmailComponent);
-  }
+  // openComposeEmail(data) {
+  //   this.emailService.openComposeEmail(data, ComposeEmailComponent, );
+  // }
 
   goBack() {
     this.location.back();

@@ -32,7 +32,7 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
   receipentEmail: string;
   subject: string;
   emailBody: string = '';
-  from: string = AuthService.getUserInfo().emailId;
+  from: string = AuthService.getUserInfo().email;
   to: string = "";
   idOfMessage = null;
   date;
@@ -64,9 +64,13 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
   interval;
   emailFormValueChange;
   emailAttachments: EmailAttachmentI[] = [];
+  currentDraftId;
 
   ngOnInit() {
     this.createEmailForm();
+  }
+
+  initPoint() {
     if (this.idOfMessage) {
       this.messageDetailApi(this.idOfMessage);
     }
@@ -83,6 +87,10 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
           fileData: this.emailForm.get('attachments').value ? this.emailForm.get('attachments').value : []
         };
         this.emailService.createUpdateDraft(requestJson, (this.idOfMessage !== null ? this.idOfMessage : null)).subscribe(res => {
+          console.log("this is response of create or modify draft,::", res);
+          if (res.length !== 0) {
+            this.currentDraftId = res[0].message.id;
+          }
         });
         this.prevStateOfForm = this.emailFormValueChange;
       }
@@ -94,8 +102,8 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
 
       // based on gmail api explorer response
 
-      const { payload: parts } = res;
-      if (parts) {
+      const { payload: { parts } } = res;
+      if (parts && parts.length !== 0) {
         parts.forEach(part => {
           if (part.mimeType === 'multipart/alternative') {
             // const { parts } = part;
@@ -117,7 +125,7 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
     this.attachmentsIdArray.forEach(attachment => {
       const obj = {
         userId: AuthService.getUserInfo().advisorId,
-        email: AuthService.getUserInfo().emailId,
+        email: AuthService.getUserInfo().email,
         attachmentId: attachment.attachmentId,
         messageId: this.idOfMessage
       }
@@ -179,8 +187,9 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
       attachments: [''],
     });
 
-    if (this.data) {
-      const { dataObj, threadIdsArray } = this.data;
+    if (this.data && this.data.dataToSend !== null) {
+      let data = this.data.dataToSend;
+      const { dataObj, threadIdsArray } = data;
       const { idsOfThread: { id } } = dataObj;
       this.idOfMessage = id;
 
@@ -194,7 +203,11 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
 
       headers.forEach(element => {
         if (element.name === "From") {
-          this.from = element.value.split('<')[1].split('>')[0];
+          if (element.value.includes('<')) {
+            this.from = element.value.split('<')[1].split('>')[0];
+          } else {
+            this.from = element.value;
+          }
         }
         if (element.name === "To" && element.value.includes('<')) {
           this.receipients = [
@@ -226,6 +239,7 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
           this.isBccSelected = true;
         }
       });
+
       this.getAttachmentDetails(this.data);
       this.emailForm.setValue({
         sender: this.from ? this.from : '',
@@ -237,6 +251,7 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
         attachments: []
       });
     }
+    this.initPoint();
   }
 
   areTwoObjectsEquivalent(a: {}, b: {}): boolean {
@@ -374,11 +389,11 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
     this.attachmentIdsArray.forEach(attachmentId => {
       const obj = {
         attachmentId,
-        email: AuthService.getUserInfo().emailId,
+        email: AuthService.getUserInfo().email,
         messageId: data.dataObj.idsOfMessages[0],
         userId: AuthService.getUserInfo().advisorId
       }
-      this.emailService.getAttachmentFiles(obj).subscribe(res => {});
+      this.emailService.getAttachmentFiles(obj).subscribe(res => { });
     })
   }
 
@@ -484,7 +499,7 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
   onSendEmail() {
     const body = {
       userId: AuthService.getUserInfo().advisorId,
-      email: AuthService.getUserInfo().emailId,
+      email: AuthService.getUserInfo().email,
       toAddress: this.emailForm.get('receiver').value,
       ccs: this.emailForm.get('carbonCopy').value,
       bccs: this.emailForm.get('blindCarbonCopy').value,

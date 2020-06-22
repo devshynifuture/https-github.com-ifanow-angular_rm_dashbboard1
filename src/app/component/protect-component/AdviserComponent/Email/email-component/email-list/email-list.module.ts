@@ -13,6 +13,7 @@ import { GmailDatePipe } from './email-listing/gmail-date.pipe';
 import { TruncateStringPipe } from 'src/app/truncate.pipe';
 import { ShowListActionsDirective } from './email-listing/show-list-actions.directive';
 import { GoogleConnectComponent } from './email-listing/google-connect/google-connect.component';
+import { DomSanitizerPipe } from '../../../../../../services/dom-sanitizer.pipe';
 
 
 
@@ -24,6 +25,7 @@ import { GoogleConnectComponent } from './email-listing/google-connect/google-co
     EmailViewComponent,
     GmailDatePipe,
     TruncateStringPipe,
+    DomSanitizerPipe,
     ShowListActionsDirective,
     GoogleConnectComponent
   ],
