@@ -73,9 +73,10 @@
             <mat-form-field class="w-100">
                 <input #companyName class="form-control br-0" formControlName="companyName" matInput maxlength="50"
                     type="text">
-                <mat-error class="f-12">
+                <!-- <mat-error class="f-12">
                     This field is required
-                </mat-error>
+                </mat-error> -->
+                <mat-hint>Optional</mat-hint>
                 <mat-hint align="end" class="f-12">{{companyName.value.length}}/50</mat-hint>
             </mat-form-field>
         </div>
