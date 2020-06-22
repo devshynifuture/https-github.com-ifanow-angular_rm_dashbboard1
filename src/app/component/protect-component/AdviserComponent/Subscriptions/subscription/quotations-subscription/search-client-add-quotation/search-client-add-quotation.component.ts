@@ -11,6 +11,7 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
 import { escapeRegExp } from '@angular/compiler/src/util';
 import { EventService } from 'src/app/Data-service/event.service';
 import { Router } from '@angular/router';
+import { SettingsService } from '../../../../setting/settings.service';
 
 @Component({
   selector: 'app-search-client-add-quotation',
@@ -43,9 +44,14 @@ export class SearchClientAddQuotationComponent implements OnInit {
     // }
   };
   feeStructureHtmlData: string = '';
+  billerInfo: any;
+  orgDetails: any;
 
-  constructor(public subInjectService: SubscriptionInject, private subService: SubscriptionService, private eventService: EventService,
-    private router: Router) { }
+  constructor(public subInjectService: SubscriptionInject,
+    private subService: SubscriptionService,
+    private eventService: EventService,
+    private router: Router,
+    private settingsService: SettingsService) { }
 
 
   @Input() set data(data) {
@@ -92,7 +98,7 @@ export class SearchClientAddQuotationComponent implements OnInit {
     this.loader = true;
     const obj = {
       advisorId: this.advisorId,
-      clientId: data.client_id,
+      clientId: data.id,
     };
     this.subService.getQuotationReplatedPlans(obj).subscribe(
       data => {
@@ -130,6 +136,7 @@ export class SearchClientAddQuotationComponent implements OnInit {
       return;
     }
     data.quotation['planId'] = data.id;
+    data.quotation.documentText = data.quotation.documentText.replace(new RegExp(escapeRegExp('$plan_name'), 'g'), data.name);
     data = data['quotation'];
     data['feeStructureFlag'] = data.documentText.includes('$service_fee');
     data['quotationFlag'] = true;
@@ -154,6 +161,7 @@ export class SearchClientAddQuotationComponent implements OnInit {
   }
 
   createFeeStructureForFroala(responseData, quotationData) {
+    let servicesName = '';
     responseData.forEach(element => {
       let feeStructureTable = `<div class="hide">
 <table style="width: 100%; margin: 0px auto; border: 1px solid rgba(0, 0, 0, 0.12);" align="center">
@@ -235,10 +243,47 @@ export class SearchClientAddQuotationComponent implements OnInit {
 <br>
 </div>`;
       this.feeStructureHtmlData += feeStructureTable;
+      servicesName += element.serviceName + ','
     });
     quotationData.documentText = quotationData.documentText.replace(new RegExp(escapeRegExp('$service_fee'), 'g'), this.feeStructureHtmlData);
-    this.barButtonOptions.active = false;
-    this.openFroala(quotationData, 'openQuotation');
+    quotationData.documentText = quotationData.documentText.replace(new RegExp(escapeRegExp('$service_name'), 'g'), servicesName);
+    this.getOrgProfiles(quotationData);
+  }
+
+  getOrgProfiles(quotationData) {
+
+    const obj = {
+      advisorId: this.advisorId,
+    };
+    this.settingsService.getOrgProfile(obj).subscribe(
+      data => {
+        if (data) {
+          this.orgDetails = data;
+          quotationData.documentText = quotationData.documentText.replace(new RegExp(escapeRegExp('$organization_profile_mobile'), 'g'), this.orgDetails.mobileNumber);
+          quotationData.documentText = quotationData.documentText.replace(new RegExp(escapeRegExp('$organization_profile_email'), 'g'), this.orgDetails.email);
+          quotationData.documentText = quotationData.documentText.replace(new RegExp(escapeRegExp('$company_name'), 'g'), this.orgDetails.companyName);
+          // $logo_for_reports
+          this.getProfileBillerData(quotationData);
+        }
+      }
+    );
+  }
+
+  getProfileBillerData(quotationData) {
+    this.subService.getPreferenceBillerProfile(this.advisorId).subscribe(
+      data => {
+        if (data) {
+          this.billerInfo = data.filter(element => element.primary == true);
+          this.billerInfo = this.billerInfo[0];
+          quotationData.documentText = quotationData.documentText.replace(new RegExp(escapeRegExp('$biller_profile_address'), 'g'), this.billerInfo.billerAddress);
+          quotationData.documentText = quotationData.documentText.replace(new RegExp(escapeRegExp('$biller_profile_city'), 'g'), this.billerInfo.city);
+          quotationData.documentText = quotationData.documentText.replace(new RegExp(escapeRegExp('$biller_profile_pin'), 'g'), this.billerInfo.zipCode);
+          quotationData.documentText = quotationData.documentText.replace(new RegExp(escapeRegExp('$company_display_name'), 'g'), this.billerInfo.companyDisplayName);
+          // quotationData.documentText = quotationData.documentText.replace(new RegExp(escapeRegExp('$biller_profile_address'), 'g'), this.billerInfo.mobileNumber);
+          this.openFroala(quotationData, 'openQuotation');
+        }
+      }
+    );
   }
 
   openFroala(data, value) {

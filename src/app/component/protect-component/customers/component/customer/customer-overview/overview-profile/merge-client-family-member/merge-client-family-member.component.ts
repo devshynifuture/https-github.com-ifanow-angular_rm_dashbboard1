@@ -131,7 +131,6 @@ export class MergeClientFamilyMemberComponent implements OnInit {
       this.finalSuggestionList = this.getUniqueListBy(this.finalSuggestionList, 'userId');
     }
     if (this.finalSuggestionList) {
-      this.finalSuggestionList = this.finalSuggestionList.filter(element => element.count == 0)
       this.finalSuggestionList.map(element => {
         element['addedFlag'] = false;
         element['isLoading'] = false;
@@ -181,11 +180,6 @@ export class MergeClientFamilyMemberComponent implements OnInit {
     this.stateCtrl.setValue(value.name)
     if (this.addClientList.length > 0 && this.addClientList.some(element => element == value.displayName)) {
       this.eventService.openSnackBar("Client is already converted into family member", "Dismiss");
-      return;
-    }
-    if (value.count > 0) {
-      this.showSuggestion = true
-      this.eventService.openSnackBar("Family member count must be 0", "Dismiss")
       return;
     }
     // this.showSuggestion = false;
