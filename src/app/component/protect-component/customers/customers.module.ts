@@ -20,6 +20,8 @@ import {TransactionSuccessfulComponent} from './component/customer/transaction-s
 import {MatStepperModule} from '@angular/material/stepper';
 import {AdvisorAndOrganizationInfoService} from './resolvers/advisor-and-organization-info.service';
 import {TransactionEntryModule} from '../AdviserComponent/transactions/transaction.entry.module';
+import {SubscriptionEntry} from "../AdviserComponent/Subscriptions/subscription.entry.module";
+import {SubscriptionUpperEntry} from "../AdviserComponent/Subscriptions/subscription-upper-entry-module";
 
 
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
@@ -49,6 +51,8 @@ import {TransactionEntryModule} from '../AdviserComponent/transactions/transacti
     CustomDirectiveModule,
     MatStepperModule,
     TransactionEntryModule,
+    SubscriptionEntry,
+    SubscriptionUpperEntry,
 
     // PlanModule
   ],

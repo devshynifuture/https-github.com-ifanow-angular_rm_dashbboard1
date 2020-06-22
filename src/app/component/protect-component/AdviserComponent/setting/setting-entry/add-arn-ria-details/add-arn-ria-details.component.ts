@@ -60,7 +60,7 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
   createForm() {
     let arnNumber = this.data.mainData.number;
     if(arnNumber) {
-      arnNumber = arnNumber.replace('ARN-', '').replace('INA-', '');
+      arnNumber = arnNumber.replace('ARN', '').replace('INA', '').replace('-', '');
     }
     let euinNumber = this.data.mainData.euin;
     if(euinNumber) {
@@ -145,7 +145,7 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
         jsonObj.number = 'ARN-' + jsonObj.number;
         jsonObj.euin = 'E' + jsonObj.euin;
       } else {
-        jsonObj.number = 'INA-' + jsonObj.number;
+        jsonObj.number = 'INA' + jsonObj.number;
       }
 
       if (jsonObj.commencementDate) {
@@ -178,6 +178,7 @@ export class AddArnRiaDetailsComponent implements OnInit, OnDestroy {
           this.barButtonOptions.active = false;
         })
       } else {
+        // save action
         this.settingService.addArn(jsonObj).subscribe((res) => {
           this.eventService.openSnackBar("ARN-RIA Added successfully");
           this.Close(true);

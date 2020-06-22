@@ -155,9 +155,9 @@ export class GoalsPlanComponent implements OnInit {
   loadAllGoals(){
     this.plansService.getAllGoals(this.advisor_client_id).subscribe((data)=>{
       if (data) {
-        this.allGoals = data.map(goal => this.mapGoalDashboardData(goal));
-        // let dom render first
         setTimeout(() => {
+          this.allGoals = data.map(goal => this.mapGoalDashboardData(goal));
+          // let dom render first
           this.loadSelectedGoalData(this.allGoals[0]);
         });
       }
@@ -195,12 +195,12 @@ export class GoalsPlanComponent implements OnInit {
     } else {
       mapData.id = goal.id;
       const goalSubData:any = goal.multiYearGoalPlan;
-      mapData.img = '/assets/images/svg/higher-edu.svg';
-      mapData.year = (new Date(goalSubData.vacationStartYr || 2033942400000).getFullYear()) + ' - ' + (new Date(goalSubData.vacationEndYr || 2033942400000).getFullYear());
+      mapData.img = goalSubData.imageUrl;
+      mapData.year = (new Date(goalSubData.goalStartDate || goalSubData.vacationStartYr).getFullYear()) + ' - ' + (new Date(goalSubData.goalEndDate || goalSubData.vacationEndYr).getFullYear());
       mapData.goalName = goalSubData.name;
       mapData.gv = goalSubData.futureValue;
       mapData.dashboardData = {
-        goalYear: new Date(goalSubData.vacationEndYr || 2033942400000).getFullYear(),
+        goalYear: new Date(goalSubData.goalEndDate || goalSubData.vacationEndYr).getFullYear(),
         presentValue: goalSubData.presentValue,
         futureValue: goalSubData.futureValue,
         equity_monthly: goalSubData.sipAmoutEquity || 0,

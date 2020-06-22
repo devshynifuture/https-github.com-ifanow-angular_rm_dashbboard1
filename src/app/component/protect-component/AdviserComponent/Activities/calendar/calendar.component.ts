@@ -1,17 +1,15 @@
-import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { MAT_DATE_FORMATS, MatBottomSheet } from '@angular/material';
-import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component,OnInit } from '@angular/core';
+import { MatDialog} from '@angular/material/dialog';
 import { calendarService } from './calendar.service';
 import { AuthService } from '../../../../../auth-service/authService';
-import { BottomSheetComponent } from '../../../customers/component/common-component/bottom-sheet/bottom-sheet.component';
+import { EventDialog } from './event-dialog';
+import { Router } from '@angular/router';
 
 
 export interface DialogData {
   [x: string]: any;
   animal: string;
-  name: string;
+  name: string; 
 }
 
 @Component({
@@ -26,9 +24,12 @@ export class CalendarComponent implements OnInit {
   lastMonthDays: any;
   nextMonthDays: any;
   updateDate: any;
+  day;
+  todays;
   month;
   year;
-  todayDate;
+  selectedDate;
+  todaysDate;
   dialogData: any
   currentMonth;
   addLastMonthDays;
@@ -42,43 +43,55 @@ export class CalendarComponent implements OnInit {
   current_day = new Date();
   userInfo: any;
   currentYear: any;
-  constructor(public dialog: MatDialog, private calenderService: calendarService) { }
+  excessAllow: any;
+  constructor(public dialog: MatDialog, private calenderService: calendarService, private router: Router) {
+    
+   }
 
   ngOnInit() {
     this.currentMonth = new Date().getMonth();
     this.currentYear = new Date().getFullYear();
     this.viewDate = new Date();
     this.userInfo = AuthService.getUserInfo()
+    this.todaysDate = this.formateDate(new Date());
     this.updatecalendar();
-    this.getEvent();
-    this.curruntDayIndex = this.daysArr.indexOf(this.todayDate);
-
-
+    // this.getEvent();
+    this.curruntDayIndex = this.daysArr.indexOf(this.selectedDate);
+    console.log(this.router.url,"router test");
+    
+    this.excessAllow = localStorage.getItem('successStoringToken')
   }
 
-  getEvent() {
-    let eventData = {
-      "calendarId": "aniruddha@futurewise.co.in",
-      "userId": 5483
-    }
-    this.calenderService.getEvent(eventData).subscribe((data) => {
-      if (data != undefined) {
+  // getEvent() {
+  //   let eventData = {
+  //     "calendarId": AuthService.getUserInfo().userName,
+  //     "userId": AuthService.getUserInfo().advisorId
+  //   }
+  //   this.calenderService.getEvent(eventData).subscribe((data) => {
+      
+  //     if (data != undefined) {
+        
+  //       this.eventData = data;
+        
+  //       console.log(data,"events calender",this.eventData);
+  //       this.formatedEvent = [];
+        
+  //       for (let e of this.eventData) {
+  //         if(e.start){
+  //           e["day"] = this.formateDate(!e.start.dateTime? new Date(e.created): new Date(e.start.dateTime));
+  //           e["month"] = this.formateMonth(!e.start.dateTime ?new Date(e.created) : new Date(e.start.dateTime));
+  //           e["year"] = this.formateYear(!e.start.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
+  //           e["startTime"] = this.formateTime(!e.start.dateTime? new Date(e.created) : new Date(e.start.dateTime));
+  //           e["endTime"] = this.formateTime(!e.end.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
+  //           this.formatedEvent.push(e);
+  //           console.log(this.formatedEvent,"formatedEvent calender1",);
+  //         }
+  //       }
+  //     }
+  //   });
 
-        this.eventData = data;
 
-        this.formatedEvent = [];
-        for (let e of this.eventData) {
-          e["day"] = this.formateDate(new Date(e.start.dateTime == null ? e.created : e.start.dateTime));
-          e["month"] = this.formateMonth(new Date(e.start.dateTime == null ? e.created : e.start.dateTime));
-          e["year"] = this.formateYear(new Date(e.start.dateTime == null ? e.created : e.start.dateTime));
-          e["startTime"] = this.formateTime(new Date(e.start.dateTime == null ? e.created : e.start.dateTime));
-          e["endTime"] = this.formateTime(new Date(e.end.dateTime == null ? e.created : e.end.dateTime));
-
-          this.formatedEvent.push(e);
-        }
-      }
-    });
-  }
+  // }
 
   getDaysCount(month: number, year: number, ch: string): any {
     switch (ch) {
@@ -91,12 +104,15 @@ export class CalendarComponent implements OnInit {
 
   }
 
-  curruntDayIndex: any;
+  
 
+  
+  curruntDayIndex: any;
+presentCalendar:any = [];
   updatecalendar() {
     this.month = this.viewDate.getMonth();
     this.year = this.viewDate.getFullYear();
-    this.todayDate = this.viewDate.getDate();
+    this.selectedDate = this.viewDate.getDate();
     // this.numbersOfDays = this.daysInMonth(this.month, this.year)
     this.numbersOfDays = this.getDaysCount(this.month, this.year, "currentMonthDays");
     this.lastMonthDays = this.getDaysCount(this.month, this.year, "lastMonthDays");
@@ -124,44 +140,81 @@ export class CalendarComponent implements OnInit {
       this.daysArr.push(fd);
     }
 
+    this.presentCalendar=[this.daysArr,
+    {
+      // day:this.formateDate(this.viewDate),
+      month:this.month,
+      year:this.year,
+      selectedDate: this.selectedDate,
+      numbersOfDays: this.numbersOfDays,
+      lastMonthDays: this.lastMonthDays,
+      nextMonthDays :this.nextMonthDays,
+      viewDate :this.viewDate,
+      addLastMonthDays : this.addLastMonthDays
+    }]
 
-
+    this.calenderService.getDayArr(this.presentCalendar);
   }
 
   persentMonth() {
     this.viewDate = new Date();
+    this.daysArr = [];
+    this.updatecalendar();
+    
   }
 
   nextMonth() {
-    this.viewDate = new Date(this.viewDate.setMonth(this.viewDate.getMonth() + 1))
+    switch (this.router.url) {
+      case '/admin/activies/day':
+        this.viewDate = new Date(this.viewDate.setDate(this.viewDate.getDate() + 1))
+        break;
+      case '/admin/activies/week':
+        this.viewDate = new Date(this.viewDate.setDate(this.viewDate.getDate() + 7))
+        break;
+      case '/admin/activies/month':
+        this.viewDate = new Date(this.viewDate.setMonth(this.viewDate.getMonth() + 1))
+        break;
+    }
+    // this.viewDate = new Date(this.viewDate.setMonth(this.viewDate.getMonth() + 1))
     this.daysArr = [];
     // if(this.currentMonth != this.month){
     //   this.curruntDayIndex = 41;
     // }else{
-    //   this.curruntDayIndex = this.daysArr.indexOf(this.todayDate);
+    //   this.curruntDayIndex = this.daysArr.indexOf(this.selectedDate);
     // }
     this.updatecalendar();
   }
 
   lastMonth() {
-    this.viewDate = new Date(this.viewDate.setMonth(this.viewDate.getMonth() - 1))
+    switch (this.router.url) {
+      case '/admin/activies/day':
+        this.viewDate = new Date(this.viewDate.setDate(this.viewDate.getDate() - 1))
+        break;
+      case '/admin/activies/week':
+        this.viewDate = new Date(this.viewDate.setDate(this.viewDate.getDate() - 7))
+        break;
+      case '/admin/activies/month':
+        this.viewDate = new Date(this.viewDate.setMonth(this.viewDate.getMonth() - 1))
+        break;
+    }
+    // this.viewDate = new Date(this.viewDate.setMonth(this.viewDate.getMonth() - 1))
     this.daysArr = [];
     this.updatecalendar();
   }
 
   formateDate(date) {
-    var dd = date.getDate();
+    var dd = new Date(date).getDate();
 
     return dd;
   }
 
   formateMonth(date) {
-    var mm = date.getMonth() + 1; //January is 0!
+    var mm = new Date(date).getMonth() + 1; //January is 0!
     return mm;
   }
 
   formateYear(date) {
-    var yyyy = date.getFullYear();
+    var yyyy = new Date(date).getFullYear();
     return yyyy;
   }
 
@@ -264,8 +317,8 @@ export class CalendarComponent implements OnInit {
       if (result != undefined) {
         this.dialogData =
         {
-          "calendarId": "aniruddha@futurewise.co.in",
-          "userId": 5483,
+          "calendarId": AuthService.getUserInfo().userName,
+          "userId": AuthService.getUserInfo().advisorId,
           "eventId": result.eventId,
           "summary": result.title,
           "location": result.location,
@@ -342,198 +395,5 @@ export class CalendarComponent implements OnInit {
   }
 }
 
-@Component({
-  selector: 'event-dialog',
-  templateUrl: './event-dialog.html',
-  providers: [
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
-  ],
-})
-export class EventDialog implements OnInit {
-  attendeesArr = [];
-  startDate = new Date();
-  startTime = "";
-  endTime = "";
-  eventDescription: any;
-  eventForm: FormGroup;
-  showTime: boolean = false;
-  eventData: any;
-  isEditAdd: boolean = true;
-  isEditable: boolean = false;
-  showBothDate: boolean = true;
-  userInfo: any;
-  timeArr = ["01:00", "01:30", "02:00", "02:30", "03:00", "03:30", "04:00", "04:30", "05:00", "05:30", "06:00", "06:30", "07:00", "07:30", "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:20", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00", "23:30", "24:00"]
-  constructor(
-    private fb: FormBuilder,
-    public dialogRef: MatDialogRef<EventDialog>,
-    private changeDetectorRef: ChangeDetectorRef,
-    private calenderService: calendarService,
-    private _bottomSheet: MatBottomSheet,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
-    this.eventData = data;
-  }
 
-
-  ngOnInit() {
-    this.eventForm = this.fb.group({
-      eventId: [this.eventData.id],
-      summary: [this.eventData.summary, [Validators.required]],
-      location: [this.eventData.location],
-      title: [this.eventData.summary, [Validators.required]],
-      description: [this.eventDescription],
-      startDateTime: ["", [Validators.required]],
-      endDateTime: ["", [Validators.required]],
-      recurrence: [this.eventData.recurrence],
-      attendee: ["", [Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
-      attendeesList: [this.attendeesArr],
-      startTime: [this.startTime],
-      endTime: [this.endTime]
-    });
-
-    this.userInfo = AuthService.getUserInfo();
-
-
-    if (this.eventData.id != undefined) {
-      this.isEditAdd = false;
-    }
-
-    if (this.eventData.id != undefined) {
-      this.showTime = true;
-      if (new Date(this.eventData.start.dateTime).getDate() == new Date(this.eventData.end.dateTime).getDate() && new Date(this.eventData.start.dateTime).getMonth() == new Date(this.eventData.end.dateTime).getMonth()) {
-        this.showBothDate = false;
-      }
-      this.eventForm.get("startTime").setValue(this.formateTime(new Date(this.eventData.start.dateTime)));
-      this.eventForm.get("endTime").setValue(this.formateTime(new Date(this.eventData.end.dateTime)));
-    }
-
-    this.eventForm.get("description").setValue(this.eventData.description);
-    this.eventForm.get("startDateTime").setValue(this.eventData.start.dateTime);
-
-    if (this.eventData.attendees != undefined) {
-      for (let att of this.eventData.attendees) {
-        this.attendeesArr.push({ "email": att.email });
-      }
-    }
-    this.setEndDate();
-  }
-
-  model: any;
-  writeValue(content: any): void {
-    this.model = content;
-  }
-
-  descriptionData(data) {
-
-    this.eventForm.get("description").setValue(data);
-  }
-
-  addAttendee() {
-    this.attendeesArr.push({ "email": this.eventForm.value.attendee });
-    this.eventForm.get("attendee").setValue("");
-  }
-
-  removeMember(member) {
-    // this.attendeesArr.splice(this.attendeesArr.indexOf(member.email), 1)
-    this.attendeesArr = this.attendeesArr.filter((x) => x.email != member.email);
-  }
-
-  addTime() {
-    this.showTime = true;
-    this.eventForm.get("startTime").setValue("09:00");
-    this.eventForm.get("endTime").setValue("10:00");
-  }
-
-  setEndDate() {
-    if (this.eventData.start.dateTime != null && this.eventData.end.dateTime != null) {
-      if (this.eventForm.value.startDateTime._d != undefined) {
-        if (new Date(this.eventForm.value.startDateTime._d).getTime() > new Date(this.eventForm.value.endDateTime).getTime()) {
-          this.eventForm.get("endDateTime").setValue(this.eventForm.value.startDateTime._d);
-        }
-      }
-      else {
-        if (this.eventData.end.dateTime != undefined) {
-          this.eventForm.get("endDateTime").setValue(this.eventData.end.dateTime);
-        }
-        else {
-          this.eventForm.get("endDateTime").setValue(this.startDate);
-        }
-      }
-    }
-    else {
-      this.eventForm.get("startDateTime").setValue(this.eventData.created);
-      this.eventForm.get("endDateTime").setValue(this.eventData.created);
-    }
-  }
-
-  setTime(mood) {
-    if (mood == "start" && this.eventForm.value.endTime < this.eventForm.value.startTime) {
-
-
-      this.eventForm.get("endTime").setValue(this.timeArr[this.timeArr.indexOf(this.eventForm.value.startTime) + 2]);
-      // this.eventForm.get("endDateTime").setValue(this.eventForm.value.startDateTime._d);
-    }
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-
-
-  }
-
-  formateTime(date) {
-    var hh = date.getHours();
-    var mm = date.getMinutes();
-    hh = hh < 10 ? '0' + hh : hh;
-    mm = mm < 10 ? '0' + mm : mm;
-    return hh + ":" + mm;
-  }
-
-
-  editEvent() {
-    this.isEditAdd = true;
-    this.isEditable = true;
-  }
-
-  deleteEvent(eventId) {
-    let deleteData = {
-      "calendarId": "aniruddha@futurewise.co.in",
-      "userId": 5483,
-      "eventId": eventId,
-    }
-    this.calenderService.deleteEvent(deleteData).subscribe((data) => {
-
-    });
-  }
-
-  myFiles: any = [];
-  filenm: any;
-  parentId: any;
-  // upload file
-  getFileDetails(e) {
-
-    for (let i = 0; i < e.target.files.length; i++) {
-      this.myFiles.push(e.target.files[i]);
-    }
-    this.myFiles.forEach(fileName => {
-      this.filenm = fileName;
-      this.parentId = (this.parentId == undefined) ? 0 : this.parentId;
-      // this.uploadFile(this.parentId, this.filenm);
-    });
-    // const bottomSheetRef = this._bottomSheet.open(BottomSheetComponent, {
-    //   data: this.myFiles,
-    // });
-  }
-
-  // uploadFile(element, fileName) {
-  //   const obj = {
-  //     clientId: this.clientId,
-  //     advisorId: this.userInfo.advisorId,
-  //     folderId: element,
-  //     fileName: fileName.name
-  //   };
-  //   this.custumService.uploadFile(obj).subscribe(
-  //     data => this.uploadFileRes(data, fileName)
-  //   );
-  // }
-}
 

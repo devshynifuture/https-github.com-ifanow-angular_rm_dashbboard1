@@ -134,6 +134,9 @@ export class InvoiceComponent implements OnInit {
 
   @Input()
   set data(data) {
+    if(data.isAdvisor == undefined || data.isAdvisor == null) {
+      data.isAdvisor = true;
+    }
     this.inputData = data;
     this.getInvoiceData(data);
     this.getRecordPayment(data);
@@ -597,8 +600,10 @@ export class InvoiceComponent implements OnInit {
   }
 
   formatter(data) {
-    data = Math.round(data);
-    return data;
+    if (data != NaN) {
+      data = Math.round(data);
+      return data;
+    }
   }
 
   passInvoice(data, index, event) {

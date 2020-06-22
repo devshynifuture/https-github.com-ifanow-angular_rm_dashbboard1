@@ -125,7 +125,7 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
     this.attachmentsIdArray.forEach(attachment => {
       const obj = {
         userId: AuthService.getUserInfo().advisorId,
-        email: AuthService.getUserInfo().email,
+        email: AuthService.getUserInfo().userName,
         attachmentId: attachment.attachmentId,
         messageId: this.idOfMessage
       }
@@ -389,7 +389,7 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
     this.attachmentIdsArray.forEach(attachmentId => {
       const obj = {
         attachmentId,
-        email: AuthService.getUserInfo().email,
+        email: AuthService.getUserInfo().userName,
         messageId: data.dataObj.idsOfMessages[0],
         userId: AuthService.getUserInfo().advisorId
       }
@@ -499,7 +499,7 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
   onSendEmail() {
     const body = {
       userId: AuthService.getUserInfo().advisorId,
-      email: AuthService.getUserInfo().email,
+      email: AuthService.getUserInfo().userName,
       toAddress: this.emailForm.get('receiver').value,
       ccs: this.emailForm.get('carbonCopy').value,
       bccs: this.emailForm.get('blindCarbonCopy').value,

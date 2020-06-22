@@ -10,4 +10,187 @@
 
     }
   }
+
+  .mat-progress-bar-fill::after {
+    background-color: #008FFF;
+  }
+
+  .mat-progress-bar-background {
+    fill: #D9DEE1;
+  }
+
+  .progress-tables#table-low {
+    tbody td {
+      padding: 3px 8px !important;
+    }
+
+    tr.mat-header-row {
+      height: 48px;
+    }
+  }
+}
+
+.financialGoalsTable {
+  #table-low {
+    tbody td {
+      padding: 6px 8px !important;
+    }
+  }
+
+  tr.mat-row {
+    // padding: 3px 5px !important;
+    height: 30px !important;
+  }
+
+  tr.mat-header-row {
+    height: 40px !important;
+  }
+}
+
+.cashflowTable {
+  #table-low {
+    tr.mat-header-row {
+      height: 35px !important;
+    }
+
+    tr.mat-row {
+      height: 30px !important;
+
+      th {
+        padding: 10px 8px !important;
+        font-weight: 400 !important;
+      }
+
+      td {
+        padding: 8px !important;
+      }
+    }
+  }
+}
+
+#surplus {
+  height: calc(100vh - 20vh);
+
+  .highcharts-legend-item {
+    padding-right: 50px;
+  }
+}
+
+.cash-flow-upperTable {
+  #table-low {
+    tr.mat-header-row {
+      height: 48px !important;
+    }
+
+    tr.mat-row {
+      height: 40px !important;
+
+      td {
+        padding: 0px 8px !important;
+      }
+    }
+  }
+}
+
+#cashflow-upper-insurance {
+  .mat-tab-body-content {
+    overflow: hidden;
+  }
+
+  .mat-tab-header {
+    margin-left: 16px !important;
+  }
+
+  .mat-tab-label {
+    height: 36px !important;
+    padding: 0 10px !important;
+    font-weight: 400;
+
+    &.mat-tab-label-active {
+      color: #008FFF !important;
+      border: 1px solid #BCC6CA !important;
+    }
+  }
+
+}
+
+.highcharts-exporting-group {
+  display: none;
+}
+
+.cash-flow-upperTable-expense,
+.cashflow-upper-liabilities {
+  #table-low {
+    tr.mat-header-row {
+      height: 36px !important;
+    }
+
+    tr.mat-row {
+      height: 28px !important;
+
+      td {
+        padding: 0px 8px !important;
+      }
+    }
+  }
+}
+
+.cashflow-modal {
+  max-height: calc(100vh - 25vh);
+  overflow: auto;
+}
+
+#ui-cashflow-add-surplus {
+  height: 50vh;
+  overflow: auto;
+
+  .mat-ink-bar {
+    display: none;
+  }
+
+  .mat-tab-header {
+    border-bottom: 0 !important;
+  }
+
+  .mat-tab-label {
+    font-weight: 400;
+    padding: 0 10px !important;
+    min-width: 100px !important;
+  }
+
+  .mat-tab-label-active {
+    border: 1px solid #e9eaec;
+    border-bottom: 0 !important;
+    opacity: initial;
+    background: #fff;
+    color: #212121;
+    font-weight: 400;
+  }
+
+  .mat-tab-label {
+    height: 40px !important;
+  }
+
+  .mat-tab-body-wrapper {
+    border-top: 1px solid #e9eaec;
+    margin-top: -1px;
+  }
+
+  tr.mat-header-row {
+    height: 48px !important;
+  }
+
+  tr.mat-row {
+    height: 40px !important;
+  }
+}
+
+.cashflow-add-income {
+  .mat-button-toggle-group {
+    height: 52px;
+  }
+
+  .mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
+    line-height: 52px;
+  }
 }

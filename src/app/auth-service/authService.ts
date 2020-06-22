@@ -27,6 +27,15 @@ export class AuthService {
     return this.getUserInfo().advisorId;
   }
 
+  static getAdminAdvisorId(){
+    let adminid = this.getUserInfo().adminAdvisorId;
+    if(adminid > 0) {
+      return adminid
+    } else {
+      return this.getUserInfo().advisorId;
+    }
+  }
+
   static getParentId() {
     return this.getUserInfo().parentId;
   }
@@ -174,6 +183,8 @@ export class AuthService {
     localStorage.removeItem('orgData');
     localStorage.removeItem('advisorDetail');
     localStorage.removeItem('roleObj');
+    localStorage.removeItem('successStoringToken');
+    localStorage.removeItem('googleOAuthToken');
 
     // this.myRoute.navigate(['login']);
   }

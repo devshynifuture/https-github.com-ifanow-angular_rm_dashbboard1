@@ -310,4 +310,10 @@ export class BackOfficeService {
   getClientFolioWise(data) {
     return this.http.getEncoded(apiConfig.MAIN_URL + appConfig.GET_BASE_64, data, 10000);
   }
+  getClientIdByLoop(data){
+    return this.http.post(apiConfig.MAIN_URL + appConfig.GET_CLIENT_IN_LOOP, data);
+  }
+  getOrderList(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ORDER_LIST, data);
+  }
 }

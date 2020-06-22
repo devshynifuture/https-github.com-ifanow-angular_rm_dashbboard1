@@ -14,6 +14,7 @@ import { TruncateStringPipe } from 'src/app/truncate.pipe';
 import { ShowListActionsDirective } from './email-listing/show-list-actions.directive';
 import { GoogleConnectComponent } from './email-listing/google-connect/google-connect.component';
 import { DomSanitizerPipe } from '../../../../../../services/dom-sanitizer.pipe';
+import { CustomCommonModule } from 'src/app/common/custom.common.module';
 
 
 
@@ -34,7 +35,8 @@ import { DomSanitizerPipe } from '../../../../../../services/dom-sanitizer.pipe'
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    EmailListRoutingModule
+    EmailListRoutingModule,
+    CustomCommonModule
   ],
   exports: [
     GmailDatePipe,

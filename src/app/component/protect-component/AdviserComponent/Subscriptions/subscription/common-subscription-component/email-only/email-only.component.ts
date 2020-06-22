@@ -1,5 +1,5 @@
 import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { NG_VALUE_ACCESSOR, FormGroup, FormBuilder } from '@angular/forms';
 import { EventService } from 'src/app/Data-service/event.service';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { SubscriptionService } from '../../../subscription.service';
@@ -8,6 +8,8 @@ import { ValidatorType } from '../../../../../../../services/util.service';
 import { MatChipInputEvent } from '@angular/material';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { OrgSettingServiceService } from '../../../../setting/org-setting-service.service';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-email-only',
@@ -29,11 +31,48 @@ export class EmailOnlyComponent implements OnInit {
   showfromEmail: any;
   userId: any;
   verifiedEmailsList: any[] = [];
+  emailTemplateGroup: FormGroup
+
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SEND',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
+
+  barButtonOptions1: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE TEMPLATE',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
 
   @Input() set data(inputData) {
+    this.emailTemplateGroup = this.fb.group({
+      emailId: [''],
+      subject: ['']
+    })
     const obj = [];
     this.doc = inputData.documentList;
-    this.showfromEmail = inputData.showfromEmail
+    this.showfromEmail = inputData.showfromEmail;
     if (inputData.isInv) {
       this.doc.forEach(element => {
         if (element) {
@@ -61,8 +100,9 @@ export class EmailOnlyComponent implements OnInit {
     if (this.showfromEmail == false) {
       this.getEmailTemplateFilterData(inputData);
     } else {
-      this.emailBody = inputData.clientData.documentText;
+      this.emailBody = inputData.documentList[0].documentText;
     }
+    this.getClientData(this._inputData.clientData)
   }
 
   get data() {
@@ -97,7 +137,8 @@ export class EmailOnlyComponent implements OnInit {
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
   constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
-    public subscription: SubscriptionService, private orgSetting: OrgSettingServiceService) {
+    public subscription: SubscriptionService, private orgSetting: OrgSettingServiceService,
+    private fb: FormBuilder, private peopleService: PeopleService) {
     this.advisorId = AuthService.getAdvisorId();
     this.userId = AuthService.getUserId()
   }
@@ -107,6 +148,19 @@ export class EmailOnlyComponent implements OnInit {
     this.getAllEmails();
   }
 
+  getClientData(data) {
+    const obj = {
+      clientId: data.clientId
+    };
+    this.peopleService.getClientOrLeadData(obj).subscribe(
+      data => {
+        if (data) {
+          if (data.emailList && data.emailList.length > 0) {
+            this.emailIdList.push({ emailAddress: data.emailList[0].email })
+          }
+        }
+      })
+  }
   getAllEmails() {
     let obj = {
       userId: this.advisorId,
@@ -115,6 +169,7 @@ export class EmailOnlyComponent implements OnInit {
     this.orgSetting.getEmailVerification(obj).subscribe(
       data => {
         this.verifiedEmailsList = data.listItems.filter(data => data.emailVerificationStatus == 1);
+        this._inputData.fromEmail = (this.verifiedEmailsList && this.verifiedEmailsList.length == 1) ? this.verifiedEmailsList[0].emailAddress : ''
       },
       err => this.eventService.openSnackBar(err, "Dismiss")
     );
@@ -139,6 +194,7 @@ export class EmailOnlyComponent implements OnInit {
     this.onTouched = fn;
   }
   saveEmailTemplate() {
+    this.barButtonOptions1.active = true;
     let obj = {
       id: this._inputData.id,
       fromEmail: this._inputData.fromEmail,
@@ -164,7 +220,7 @@ export class EmailOnlyComponent implements OnInit {
     };
     this.subscription.getEmailTemplateFilterData(data).subscribe(responseData => {
       this.emailData = responseData;
-      this.subject = this.emailData.subject;
+      this._inputData.subject = this.emailData.subject;
       this.emailBody = this.emailData.body;
       this.emailBody.replace('$client_name', invoiceData.clientData.clientName);
       this.emailBody.replace('$advisor_name', AuthService.getUserInfo().fullName);
@@ -220,6 +276,8 @@ export class EmailOnlyComponent implements OnInit {
   }
 
   getResponseData(data) {
+    this.barButtonOptions.active = false;
+    this.barButtonOptions1.active = false;
     this.close(true);
   }
 
@@ -229,12 +287,16 @@ export class EmailOnlyComponent implements OnInit {
 
   sendEmail() {
     if (this._inputData.fromEmail == undefined) {
-      this.eventService.openSnackBar('Please enter to email');
+      this.eventService.openSnackBar('Please enter to email', "Dismiss");
+      return;
+    }
+    if (this.emailIdList.length == 0) {
+      this.eventService.openSnackBar("Please enter email ");
       return;
     }
     if (this._inputData && this._inputData.documentList.length > 0) {
     } else {
-      this.eventService.openSnackBar('Please select a document to send email.');
+      this.eventService.openSnackBar('Please select a document to send email.', "Dismiss");
       return;
     }
     if (this._inputData.templateType == 3) {
@@ -261,20 +323,20 @@ export class EmailOnlyComponent implements OnInit {
         messageBody: this.emailBody,
         emailSubject: this.subject,
       };
-
+      this.barButtonOptions.active = true;
       this.subscription.documentEsignRequest(emailRequestData).subscribe(
         data => this.getResponseData(data)
       );
     } else {
-
       const emailRequestData = {
         messageBody: this.emailBody,
-        emailSubject: this.subject,
-        fromEmail: this.emailData.fromEmail,
+        emailSubject: this._inputData.subject,
+        fromEmail: this._inputData.fromEmail,
         toEmail: this.emailIdList,
         documentList: this._inputData.documentList,
         document_id: this._inputData.documentList[0].id,
       };
+      this.barButtonOptions.active = true;
       this.subscription.sendDocumentViaEmailInPdfFormat(emailRequestData).subscribe(
         data => this.getResponseData(data)
       );
@@ -285,6 +347,9 @@ export class EmailOnlyComponent implements OnInit {
     // const index = this.emailIdList.indexOf(singleEmail);
 
     // if (index >= 0) {
+    if (this.emailIdList.length == 1) {
+      return;
+    }
     this.emailIdList.splice(index, 1);
     // }
   }
@@ -306,7 +371,7 @@ export class EmailOnlyComponent implements OnInit {
       if (this.validatorType.EMAIL.test(value)) {
         this.emailIdList.push({ emailAddress: value });
       } else {
-        this.eventService.openSnackBar('Enter valid email address');
+        this.eventService.openSnackBar('Enter valid email address', "Dismiss");
       }
     }
     // Reset the input value

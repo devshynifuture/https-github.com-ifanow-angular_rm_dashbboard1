@@ -340,8 +340,10 @@ export class MutualFundOverviewComponent implements OnInit {
     );
   }
   getMutualFundResponse(data) {
-    this.getNav();
-    this.getTransactionTypeData();
+    if(data){
+      this.getNav();
+      this.getTransactionTypeData();
+    }
     if (data) {
       this.getCountData.emit("call");
       this.mfCopyData = data

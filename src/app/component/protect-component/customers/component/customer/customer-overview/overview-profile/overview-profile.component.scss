@@ -58,11 +58,12 @@
     }
     .memberList {
         border-radius: 4px;
-        display: inline-block;
+        //display: inline-block;
         width: 148px;
+        display: flex;
         height: 57px;
         margin-right: 9px;
-        margin-top: 8px;
+        // margin-top: 8px;
         position: relative;
         // padding-left: 8px;
         .familyDelete {
@@ -73,14 +74,14 @@
             cursor: pointer;
         }
         img {
-            float: left;
-            margin-top: 3px;
+            // float: left;
+            margin-top: 1px;
         }
         .familyList {
             margin-left: 0px;
             margin-top: 2px;
-            float: left;
-            width: 94px;
+            // float: left;
+            width: 57%;
             p {
                 line-height: 16px;
             }
@@ -140,6 +141,8 @@
     max-width: 84%;
     overflow-x: auto;
     white-space: nowrap;
+    display: flex;
+    align-items: center;
 }
 
 .memberSlider::-webkit-scrollbar {

@@ -13,7 +13,6 @@ import { MAT_DATE_FORMATS } from 'saturn-datepicker';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { CommonFroalaComponent } from '../common-subscription-component/common-froala/common-froala.component';
 import { ErrPageOpenComponent } from 'src/app/component/protect-component/customers/component/common-component/err-page-open/err-page-open.component';
-import { SubscriptionDataService } from '../../subscription-data.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 export interface PeriodicElement {
@@ -66,12 +65,12 @@ export class DocumentsSubscriptionsComponent implements OnInit {
   ];
 
   passFilterData = {
-    data: "",
-    selectedCount: "",
+    data: '',
+    selectedCount: '',
     statusFilter: this.chips,
     dateFilter: this.dateChips
   };
-  isFilter: boolean = false;
+  isFilter = false;
   selectedDateRange: { begin: Date; end: Date; };
   showFilter = false;
   data: Array<any> = [{}, {}, {}];
@@ -91,27 +90,28 @@ export class DocumentsSubscriptionsComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.dataCount = 0;
     if (this.utilservice.checkSubscriptionastepData(5) == undefined) {
-      this.dataSource.data = [{}, {}, {}]
-    }
-    else {
-      (this.utilservice.checkSubscriptionastepData(5) == false) ? this.dataSource.data = [] : this.dataSource.data = [{}, {}, {}]
+      this.dataSource.data = [{}, {}, {}];
+    } else {
+      (this.utilservice.checkSubscriptionastepData(5) == false) ? this.dataSource.data = [] : this.dataSource.data = [{}, {}, {}];
     }
     this.getClientSubData(this.scrollLoad);
     this.getClientSubscriptionList();
   }
+
   getClientSubData(boolean) {
-    this.dataSource.data = [{}, {}, {}]
+    this.dataSource.data = [{}, {}, {}];
     this.getdocumentSubData(boolean).subscribe(
       data => {
-        this.getdocumentResponseData(data)
+        this.getdocumentResponseData(data);
       }, (error) => {
         this.errorMessage();
         // this.eventService.showErrorMessage(error);
         this.dataSource.data = [];
         this.isLoading = false;
       }
-    )
+    );
   }
+
   changeSelect() {
     this.dataCount = 0;
     this.dataSource.filteredData.forEach(item => {
@@ -120,6 +120,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
       }
     });
   }
+
   errorMessage() {
     const fragmentData = {
       flag: 'app-err-page-open',
@@ -137,15 +138,15 @@ export class DocumentsSubscriptionsComponent implements OnInit {
           data => {
             barButtonOption.active = false;
             this.getdocumentResponseData(data);
-            this.eventService.changeUpperSliderState({ state: 'close' })
+            this.eventService.changeUpperSliderState({ state: 'close' });
             // this.errorMessage();
           }, (error) => {
             barButtonOption.active = false;
             this.eventService.openSnackBar('Wait for sometime....', 'Dismiss');
           }
-        )
+        );
       },
-    }
+    };
     const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
@@ -154,6 +155,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
       }
     );
   }
+
   selectAll(event) {
     // if(this.dataCount > 0 && this.dataCount != this.dataSource.data.length){
     //   this.dataSource.filteredData.forEach(item => {
@@ -210,6 +212,8 @@ export class DocumentsSubscriptionsComponent implements OnInit {
 
 
   openViewDocument(value, data) {
+    data['sendEsignFlag'] = true;
+    data['feeStructureFlag'] = data.documentText.includes('<service_fee>');
     const fragmentData = {
       flag: value,
       data,
@@ -217,6 +221,13 @@ export class DocumentsSubscriptionsComponent implements OnInit {
       state: 'open',
       componentName: CommonFroalaComponent
     };
+    const placeHolder = {
+      advisorAddress: '',
+      advisorName: '',
+      clientAddress: '',
+      clientName: fragmentData.data.clientName
+    };
+    fragmentData.data.documentText = this.utilservice.replacePlaceholder(fragmentData.data.documentText, placeHolder);
     fragmentData.data.isDocument = true;
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -476,6 +487,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
       this.noData = 'No Data Found';
     } else {
       data.forEach(singleData => {
+        singleData['sentDateInFormat'] = this.datePipe.transform((singleData.sentDate) ? singleData.sentDate : undefined, "dd/MM/yyyy");
         singleData.documentText = singleData.docText;
       });
       // this.dataSource = data;

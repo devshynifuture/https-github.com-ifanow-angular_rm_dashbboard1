@@ -1,11 +1,10 @@
-import { Component, Input, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { EventService } from 'src/app/Data-service/event.service';
 import { SubscriptionPopupComponent } from '../subscription-popup/subscription-popup.component';
 import { SubscriptionService } from '../../../subscription.service';
-import { AddDocumentComponent } from '../add-document/add-document.component';
 // import { SubscriptionUpperSliderComponent } from '../../common-subscription-component/upper-slider/subscription-upper-slider.component';
 import { AuthService } from '../../../../../../../auth-service/authService';
 import { UtilService } from 'src/app/services/util.service';
@@ -13,7 +12,7 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
 import { CommonFroalaComponent } from '../common-froala/common-froala.component';
 import { EmailOnlyComponent } from '../email-only/email-only.component';
 import { Router } from '@angular/router';
-import { Location } from '@angular/common';
+import { Location, DatePipe } from '@angular/common';
 
 // import { window } from 'rxjs/operators';
 
@@ -66,7 +65,7 @@ export class DocumentComponent implements OnInit {
     // buttonIcon: {
     //   fontIcon: 'favorite'
     // }
-  }
+  };
   quotationDesignEmail: any;
   // @Input() upperData;
 
@@ -75,11 +74,11 @@ export class DocumentComponent implements OnInit {
 
   /*@Input()*/
   documentDesign;
-  planDocumentData = [{ selected: false }, { selected: false }, { selected: false }];
+  planDocumentData: any = [{ selected: false }, { selected: false }, { selected: false }];
   serviceDocumentData = [{ selected: false }, { selected: false }, { selected: false }];
   mappedData = [];
   dataCount;
-  sendESign: boolean = true;
+  sendESign = true;
   _clientData: any;
   _upperData: any;
   noData: string;
@@ -91,7 +90,8 @@ export class DocumentComponent implements OnInit {
 
   constructor(public subInjectService: SubscriptionInject,
     private eventService: EventService, public dialog: MatDialog, private subService: SubscriptionService,
-    public subscription: SubscriptionService, private router: Router, private location: Location) {
+    public subscription: SubscriptionService, private router: Router, private location: Location,
+    private datePipe: DatePipe) {
     // this.subInjectService.rightSliderDocument.subscribe(
     //   data => this.getDocumentsDesignData(data)
     // );
@@ -112,16 +112,16 @@ export class DocumentComponent implements OnInit {
 
   @Input()
   set componentFlag1(data) {
-    this.componentFlag = data
+    this.componentFlag = data;
     this.advisorId = AuthService.getAdvisorId();
     if (data === 'plansDocuments') {
       this.getplanDocumentData();
-    } else if (data === "servicesDocuments") {
+    } else if (data === 'servicesDocuments') {
       this.getServiceDocumentData();
     } else {
       return;
     }
-  };
+  }
 
   @Input()
   set clientData(clientData) {
@@ -129,6 +129,8 @@ export class DocumentComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.getdocumentSubData();
   }
+
+  @Input() isAdvisor = true;
 
   get clientData() {
     return this._clientData;
@@ -138,7 +140,9 @@ export class DocumentComponent implements OnInit {
 
 
   ngOnInit() {
-
+    if (!this.isAdvisor) {
+      this.displayedColumns = this.displayedColumns.slice(1, -1);
+    }
 
     this.documentDesign = 'true';
     this.dataCount = 0;
@@ -225,9 +229,10 @@ export class DocumentComponent implements OnInit {
 
     if (data == undefined) {
       this.dataSource.data = [];
-      this.noData = "No Data Found";
+      this.noData = 'No Data Found';
     } else {
       data.forEach(singleData => {
+        singleData['sentDateInFormat'] = this.datePipe.transform((singleData.sentDate) ? singleData.sentDate : undefined, "dd/MM/yyyy");
         singleData.selected = false;
         singleData.documentText = singleData.docText;
       });
@@ -266,12 +271,21 @@ export class DocumentComponent implements OnInit {
   mapDocumentToPlan(data) {
     data.selected = true;
     this.mappedData.push(data);
+    if (this.componentFlag == "plansDocuments") {
+      let quotationData = this.mappedData.filter(element => element.quotation);
+      if (quotationData.length > 1) {
+        data.selected = false;
+        this.mappedData = this.mappedData.filter(delData => delData.documentRepositoryId != data.documentRepositoryId);
+        this.eventService.openSnackBar("More than one quotation is not allowed", "Dismiss")
+        return;
+      }
+    }
   }
 
   unmapDocumentToPlan(data) {
     data.selected = false;
     // _.remove(this.mappedData, delData => delData.documentRepositoryId === data.documentRepositoryId);
-    this.mappedData = this.mappedData.filter(delData => delData.documentRepositoryId != data.documentRepositoryId)
+    this.mappedData = this.mappedData.filter(delData => delData.documentRepositoryId != data.documentRepositoryId);
   }
 
   openDocumentESign(value, state) {
@@ -344,13 +358,14 @@ export class DocumentComponent implements OnInit {
     });
     this.openSendEmailComponent('email', data);
   }
+
   openSendEmailComponent(value, data) {
     if (this.isLoading) {
-      return
+      return;
     }
     const fragmentData = {
       flag: value,
-      data: data,
+      data,
       id: 1,
       state: 'open',
       componentName: EmailOnlyComponent
@@ -370,6 +385,7 @@ export class DocumentComponent implements OnInit {
     );
 
   }
+
   // open(value, data) {
 
   //   // this.eventService.sliderData(value);
@@ -398,12 +414,14 @@ export class DocumentComponent implements OnInit {
   //   );
   // }
   open(value, data) {
-    if (this.isLoading) {
-      return
+    data['sendEsignFlag'] = true;
+    data['feeStructureFlag'] = data.documentText.includes('$service_fee');
+    if (this.isLoading || !this.isAdvisor) {
+      return;
     }
     const fragmentData = {
       flag: value,
-      data: data,
+      data,
       id: 1,
       state: 'open',
       componentName: CommonFroalaComponent
@@ -423,6 +441,7 @@ export class DocumentComponent implements OnInit {
     );
 
   }
+
   getplanDocumentDataResponse(data) {
     this.isLoading = false;
     if (data && data.length > 0) {
@@ -779,14 +798,13 @@ export class DocumentComponent implements OnInit {
           documentRepositoryId: 0,
           mappingId: this.upperData.id
         }
-      ]
+      ];
     }
     this.subService.mapDocumentsToPlanData(obj).subscribe(
       data => {
         if (data !== 204) {
           this.saveMappingDocumentToPlansResponse(data);
-        }
-        else if (data === 204) {
+        } else if (data === 204) {
           this.eventService.openSnackBar('No documents created', 'Dismiss');
           this.barButtonOptions.active = false;
         }
@@ -814,7 +832,7 @@ export class DocumentComponent implements OnInit {
   }
 
   savePlanMapToDocument() {
-    let obj = [];
+    const obj = [];
     if (this.mappedData) {
       this.mappedData.forEach(element => {
         const data = {
@@ -826,7 +844,8 @@ export class DocumentComponent implements OnInit {
         obj.push(data);
       });
       this.subService.mapDocumentsToPlanData(obj).subscribe(
-        data => { }
+        data => {
+        }
       );
 
     }
@@ -838,7 +857,7 @@ export class DocumentComponent implements OnInit {
 
   mapDocumentToService() {
     this.barButtonOptions.active = true;
-    let obj = [];
+    const obj = [];
     if (this.mappedData.length == 0) {
       const data = {
         mappedType: 0,
@@ -900,6 +919,7 @@ export class DocumentComponent implements OnInit {
       });
     }
   }
+
   changeSelect() {
     this.dataCount = 0;
     this.dataSource.filteredData.forEach(item => {
@@ -908,9 +928,11 @@ export class DocumentComponent implements OnInit {
       }
     });
   }
-  openDocument(flag){
+
+  openDocument(flag) {
 
   }
+
   // /** Whether the number of selected elements matches the total number of rows. */
   // isAllSelected() {
   //   if (this.dataSource != undefined) {

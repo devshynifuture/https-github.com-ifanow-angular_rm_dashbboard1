@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { CustomerComponent } from './component/customer/customer.component';
-import { AdvisorAndOrganizationInfoService } from './resolvers/advisor-and-organization-info.service';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {CustomerComponent} from './component/customer/customer.component';
+import {AdvisorAndOrganizationInfoService} from './resolvers/advisor-and-organization-info.service';
 
 
 const routes: Routes = [
@@ -12,6 +12,7 @@ const routes: Routes = [
     children: [
       {
         path: 'overview',
+        data: {animation: 'Tab1', preload: true},
         loadChildren: () => import('./component/customer/customer-overview/customer-overview.module').then(m => m.CustomerOverviewModule)
       },
       {

@@ -302,7 +302,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
         clientName: this.editPayment.value.clientName,
         billerAddress: this.editPayment.value.billerAddress,
         billingAddress: this.editPayment.value.billingAddress,
-        invoiceNumber: this.editPayment.value.invoiceNumber,
+        invoiceNumber: this.editPayment.controls.invoiceNumber.value,
         billerName: this.billerName,
         subTotal: this.editPayment.value.finalAmount,
         discount: this.editPayment.value.discount == '' ? 0 : this.editPayment.value.discount,

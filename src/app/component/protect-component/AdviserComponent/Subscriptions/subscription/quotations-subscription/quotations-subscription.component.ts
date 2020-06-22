@@ -15,6 +15,7 @@ import { AddQuotationSubscriptionComponent } from 'src/app/component/protect-com
 import { ErrPageOpenComponent } from 'src/app/component/protect-component/customers/component/common-component/err-page-open/err-page-open.component';
 import { SubscriptionDataService } from '../../subscription-data.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { SearchClientAddQuotationComponent } from './search-client-add-quotation/search-client-add-quotation.component';
 
 export interface PeriodicElement {
   name: string;
@@ -47,7 +48,7 @@ export interface PeriodicElement {
 })
 export class QuotationsSubscriptionComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  displayedColumns: string[] = ['checkbox', 'name', 'docname', 'plan', 'cdate', 'sdate', 'clientsign', 'status', 'icons'];
+  displayedColumns: string[] = ['checkbox', 'name', 'docname', 'plan', 'cdate', 'sdate', 'status', 'icons'];
   advisorId;
   maxDate = new Date();
   noData: string;
@@ -96,6 +97,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
     filterQuotation: true
   };
   dataCount: number;
+  clientList: any;
 
 
   constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
@@ -105,6 +107,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
   ngOnInit() {
     // this.dataSource = [{}, {}, {}];
     this.advisorId = AuthService.getAdvisorId();
+    this.getQuotationRelatedClients();
     if (this.utilservice.checkSubscriptionastepData(5) == undefined) {
       this.dataSource.data = [{}, {}, {}]
     }
@@ -248,6 +251,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
   }
 
   getQuotationsData(scrollLoader) {
+    // this.dataSource.data = [{}, {}, {}];
     this.dataCount = 0;
     const obj = {
       // advisorId: 12345
@@ -267,6 +271,9 @@ export class QuotationsSubscriptionComponent implements OnInit {
   getQuotationsDataResponse(data) {
     this.isLoading = false;
     if (data && data.length > 0) {
+      data.forEach(element => {
+        element['sentDateInFormat'] = this.datePipe.transform((element.sentDate) ? element.sentDate : undefined, "dd/MM/yyyy");
+      });
       this.data = data;
       this.dataSource.data = data;
       this.dataSource.sort = this.sort;
@@ -284,16 +291,16 @@ export class QuotationsSubscriptionComponent implements OnInit {
     }
   }
 
-  deleteModal(data) {
+  deleteModal(deleteData) {
     this.list = [];
-    if (data == null) {
+    if (deleteData == null) {
       this.dataSource.filteredData.forEach(singleElement => {
         if (singleElement.selected) {
-          this.list.push(singleElement.documentRepositoryId);
+          this.list.push(singleElement.id);
         }
       });
     } else {
-      this.list = [data.documentRepositoryId];
+      this.list = [deleteData.id];
     }
     const dialogData = {
       data: 'QUOTATION',
@@ -307,6 +314,9 @@ export class QuotationsSubscriptionComponent implements OnInit {
           data => {
             this.eventService.openSnackBar('Document is deleted', 'Dismiss');
             // this.valueChange.emit('close');
+            this.dataCount = 0;
+            // this.getQuotationsData(null);
+            this.getClientSubData(false);
             dialogRef.close(this.list);
             // this.getRealEstate();
           },
@@ -404,13 +414,25 @@ export class QuotationsSubscriptionComponent implements OnInit {
   remove(item) {
     this.filterStatus.splice(item, 1);
   }
-  addQuotation(value, data) {
+  getQuotationRelatedClients() {
+    const obj = {
+      advisorId: this.advisorId
+    }
+    this.subService.getClientListWithSubscription(obj).subscribe(
+      data => {
+        if (data) {
+          this.clientList = data
+        }
+      }
+    )
+  }
+  addQuotation(value) {
     const fragmentData = {
       flag: value,
-      data,
+      data: this.clientList,
       id: 1,
       state: 'open',
-      componentName: AddQuotationSubscriptionComponent
+      componentName: SearchClientAddQuotationComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -430,6 +452,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
     if (this.isLoading) {
       return;
     }
+    data['sendEsignFlag'] = false;
     const fragmentData = {
       flag: value,
       data,

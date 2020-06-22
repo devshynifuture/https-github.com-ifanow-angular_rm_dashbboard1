@@ -542,13 +542,23 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.summaryNPS}
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: true })
   }
 
+  getBank(){
+    if(this.enumService.getBank().length > 0){
+      this.bankList = this.enumService.getBank();
+    }
+    else{
+      this.bankList = [];
+    }
+    console.log(this.bankList,"this.bankList2");
+  }
+
   bankList:any = [];
 
   //link bank
   openDialog(eventData): void {
     const dialogRef = this.dialog.open(LinkBankComponent, {
       width: '50%',
-      data: this.bankList
+      data:{bankList: this.bankList, userInfo: true} 
     });
 
     dialogRef.afterClosed().subscribe(result => {
