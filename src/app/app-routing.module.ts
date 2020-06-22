@@ -26,6 +26,10 @@ const routes: Routes = [
     canActivate: [AuthGuard, AdvisorGuard],
 
   },
+  {
+    path: 'pdf',
+    component: PdfRoutingComponent
+  },
   // {
   //   path: 'calendar',
   //   component: calendarComponent
@@ -88,10 +92,10 @@ const routes: Routes = [
     // outlet: 'mainrouter',
     loadChildren: () => import('./component/gmail-redirect/gmail-redirect.module').then(m => m.GmailRedirectModule)
   },
-  // {
-  //   path: 'not-found',
-  //   loadChildren: './component/protect-component/common-component/not-found/not-found.module#NotFoundModule'
-  // },
+  {
+    path: 'not-found',
+    loadChildren: './component/protect-component/common-component/not-found/not-found.module#NotFoundModule'
+  },
   {
     path: 'error-page',
     component: ErrorPageComponent
@@ -99,10 +103,6 @@ const routes: Routes = [
   {
     path: 'unauthorized',
     component: ErrorPageComponent
-  },
-  {
-    path: 'pdf',
-    component: PdfRoutingComponent
   },
   {
     path: 'welcome-page',
