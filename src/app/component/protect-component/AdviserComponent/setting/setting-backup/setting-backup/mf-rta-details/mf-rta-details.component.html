@@ -13,7 +13,8 @@
         <div class="row" *ngIf="camsDS.data.length > 0">
             <div class="col-md-7 p-0 camsTable">
                 <h5 class="m-0 pt-24">CAMS</h5>
-                <table mat-table [dataSource]="camsDS" class="mt-8 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="utilService.isLoading" id="table-low">
+                <table mat-table [dataSource]="camsDS" class="mt-8 skeletonAnimation" appSkeletonLoading
+                    [appSkeletonLoading]="utilService.isLoading" id="table-low">
                     <ng-container matColumnDef="position">
                         <th mat-header-cell *matHeaderCellDef class="br"> ARN/RIA </th>
                         <td mat-cell *matCellDef="let element" class="br">
@@ -37,7 +38,8 @@
                         <td mat-cell *matCellDef="let element" class="br  ">
                             <div class="bar">
                                 <ng-container *ngIf="!utilService.isLoading">
-                                    <ng-template *ngTemplateOutlet="templateRef; context:{element :{element:element.mailbackPassword, toggleValue: true}}">
+                                    <ng-template
+                                        *ngTemplateOutlet="templateRef; context:{element :{element:element.mailbackPassword, toggleValue: true}}">
                                     </ng-template>
                                 </ng-container>
                             </div>
@@ -47,12 +49,13 @@
                     <!-- Symbol Column -->
                     <ng-container matColumnDef="symbol">
                         <th mat-header-cell *matHeaderCellDef> </th>
-                        <td mat-cell *matCellDef="let element" class="text-center" [matMenuTriggerFor]="menu">
+                        <td mat-cell *matCellDef="let element" class="text-center c-p" [matMenuTriggerFor]="menu">
                             <div class="bar">
                                 <div [hidden]="utilService.isLoading">
                                     <img src="/assets/images/svg/dot-menu.svg" class="c-p">
                                     <mat-menu #menu="matMenu">
-                                        <button mat-menu-item (click)="openInSideBar(element.rtTypeMasterid, element, false)">Edit</button>
+                                        <button mat-menu-item
+                                            (click)="openInSideBar(element.rtTypeMasterid, element, false)">Edit</button>
                                         <button mat-menu-item (click)="deleteRTA(element)">Delete</button>
                                     </mat-menu>
                                 </div>
@@ -68,7 +71,8 @@
         <div class="row" *ngIf="karvyDS.data.length > 0">
             <div class="col-md-12 p-0 camsTable">
                 <h5 class="m-0 pt-24">Karvy (KFintech)</h5>
-                <table mat-table [dataSource]="karvyDS" class="mt-8 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="utilService.isLoading" id="table-low">
+                <table mat-table [dataSource]="karvyDS" class="mt-8 skeletonAnimation" appSkeletonLoading
+                    [appSkeletonLoading]="utilService.isLoading" id="table-low">
 
                     <ng-container matColumnDef="position">
                         <th mat-header-cell *matHeaderCellDef class="br"> ARN/RIA </th>
@@ -96,7 +100,8 @@
                         <td mat-cell *matCellDef="let element" class="br d-flex justify-content-between">
                             <div class="bar w-100">
                                 <ng-container *ngIf="!utilService.isLoading">
-                                    <ng-template *ngTemplateOutlet="templateRef; context:{element :{element:element.loginPassword, toggleValue: true}}">
+                                    <ng-template
+                                        *ngTemplateOutlet="templateRef; context:{element :{element:element.loginPassword, toggleValue: true}}">
                                     </ng-template>
                                 </ng-container>
                             </div>
@@ -117,7 +122,8 @@
                         <td mat-cell *matCellDef="let element" class="br  ">
                             <div class="bar">
                                 <ng-container *ngIf="!utilService.isLoading">
-                                    <ng-template *ngTemplateOutlet="templateRef; context:{element :{element:element.mailbackPassword, toggleValue: true}}">
+                                    <ng-template
+                                        *ngTemplateOutlet="templateRef; context:{element :{element:element.mailbackPassword, toggleValue: true}}">
                                     </ng-template>
                                 </ng-container>
                             </div>
@@ -127,18 +133,20 @@
                         <th mat-header-cell *matHeaderCellDef class="br"> Use for file ordering? </th>
                         <td mat-cell *matCellDef="let element" class="br">
                             <div class="bar">
-                                <span *ngIf="!utilService.isLoading">{{element.fileOrderingUseabilityStatusId == 1 ? 'Yes' : 'No'}}</span>
+                                <span
+                                    *ngIf="!utilService.isLoading">{{element.fileOrderingUseabilityStatusId == 1 ? 'Yes' : 'No'}}</span>
                             </div>
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="icons">
                         <th mat-header-cell *matHeaderCellDef> </th>
-                        <td class="text-center" mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu">
+                        <td class="text-center c-p" mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu">
                             <div class="bar">
                                 <div [hidden]="utilService.isLoading">
                                     <img src="/assets/images/svg/dot-menu.svg" class="c-p">
                                     <mat-menu #menu="matMenu">
-                                        <button mat-menu-item (click)="openInSideBar(element.rtTypeMasterid, element, false)">Edit</button>
+                                        <button mat-menu-item
+                                            (click)="openInSideBar(element.rtTypeMasterid, element, false)">Edit</button>
                                         <button mat-menu-item (click)="deleteRTA(element)">Delete</button>
                                     </mat-menu>
                                 </div>
@@ -154,7 +162,8 @@
         <div class="row" *ngIf="frankDS.data.length > 0">
             <div class="col-md-10 p-0 camsTable">
                 <h5 class="m-0 pt-24">Franklin Templeton</h5>
-                <table mat-table [dataSource]="frankDS" class="mt-8 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="utilService.isLoading" id="table-low">
+                <table mat-table [dataSource]="frankDS" class="mt-8 skeletonAnimation" appSkeletonLoading
+                    [appSkeletonLoading]="utilService.isLoading" id="table-low">
 
                     <ng-container matColumnDef="position">
                         <th mat-header-cell *matHeaderCellDef class="br"> ARN/RIA </th>
@@ -177,7 +186,8 @@
                         <td mat-cell *matCellDef="let element" class="br">
                             <div class="bar">
                                 <ng-container *ngIf="!utilService.isLoading">
-                                    <ng-template *ngTemplateOutlet="templateRef; context:{element :{element:element.loginPassword, toggleValue: true}}">
+                                    <ng-template
+                                        *ngTemplateOutlet="templateRef; context:{element :{element:element.loginPassword, toggleValue: true}}">
                                     </ng-template>
                                 </ng-container>
                             </div>
@@ -196,7 +206,8 @@
                         <td mat-cell *matCellDef="let element" class="br">
                             <div class="bar">
                                 <ng-container *ngIf="!utilService.isLoading">
-                                    <ng-template *ngTemplateOutlet="templateRef; context:{element :{element:element.mailbackPassword, toggleValue: true}}">
+                                    <ng-template
+                                        *ngTemplateOutlet="templateRef; context:{element :{element:element.mailbackPassword, toggleValue: true}}">
                                     </ng-template>
                                 </ng-container>
                             </div>
@@ -205,12 +216,13 @@
 
                     <ng-container matColumnDef="icons">
                         <th mat-header-cell *matHeaderCellDef> </th>
-                        <td mat-cell class="text-center" *matCellDef="let element" [matMenuTriggerFor]="menu">
+                        <td mat-cell class="text-center c-p" *matCellDef="let element" [matMenuTriggerFor]="menu">
                             <div class="bar">
                                 <div [hidden]="utilService.isLoading">
                                     <img src="/assets/images/svg/dot-menu.svg" class="c-p">
                                     <mat-menu #menu="matMenu">
-                                        <button mat-menu-item (click)="openInSideBar(element.rtTypeMasterid, element, false)">Edit</button>
+                                        <button mat-menu-item
+                                            (click)="openInSideBar(element.rtTypeMasterid, element, false)">Edit</button>
                                         <button mat-menu-item (click)="deleteRTA(element)">Delete</button>
                                     </mat-menu>
                                 </div>
@@ -226,7 +238,8 @@
         <div class="row" *ngIf="fundsDS.data.length > 0">
             <div class="col-md-11 p-0 camsTable pb-44">
                 <h5 class="m-0 pt-24">CAMS Fundsnet</h5>
-                <table mat-table [dataSource]="fundsDS" class="mt-8 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="utilService.isLoading" id="table-low">
+                <table mat-table [dataSource]="fundsDS" class="mt-8 skeletonAnimation" appSkeletonLoading
+                    [appSkeletonLoading]="utilService.isLoading" id="table-low">
 
                     <ng-container matColumnDef="position">
                         <th mat-header-cell *matHeaderCellDef class="br"> ARN/RIA </th>
@@ -249,7 +262,8 @@
                         <td valign="top" mat-cell *matCellDef="let element" class="br">
                             <div class="bar">
                                 <ng-container *ngIf="!utilService.isLoading">
-                                    <ng-template *ngTemplateOutlet="templateRef; context:{element :{element:element.loginPassword, toggleValue: true}}">
+                                    <ng-template
+                                        *ngTemplateOutlet="templateRef; context:{element :{element:element.loginPassword, toggleValue: true}}">
                                     </ng-template>
                                 </ng-container>
                             </div>
@@ -261,7 +275,8 @@
                         <th mat-header-cell *matHeaderCellDef class="br p-5"> Secret Question </th>
                         <td mat-cell *matCellDef="let element" class="br">
                             <div class="bar">
-                                <div *ngFor="let questionSet of element.rtaCamsFundNetSecurityQuestionsList" class="p-5">
+                                <div *ngFor="let questionSet of element.rtaCamsFundNetSecurityQuestionsList"
+                                    class="p-5">
                                     {{getQuestion(questionSet.questionId)}}
                                 </div>
                             </div>
@@ -274,7 +289,8 @@
                                 <div *ngIf="!utilService.isLoading">
                                     <div *ngFor="let questionSet of element.rtaCamsFundNetSecurityQuestionsList">
                                         <ng-container>
-                                            <ng-template *ngTemplateOutlet="templateRef; context:{element :{element:questionSet.answer, toggleValue: true}}">
+                                            <ng-template
+                                                *ngTemplateOutlet="templateRef; context:{element :{element:questionSet.answer, toggleValue: true}}">
                                             </ng-template>
                                         </ng-container>
                                     </div>
@@ -285,12 +301,13 @@
 
                     <ng-container matColumnDef="icons">
                         <th mat-header-cell *matHeaderCellDef> </th>
-                        <td valign="top" mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu">
+                        <td valign="top" mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu" class="c-p">
                             <div class="bar">
                                 <div [hidden]="utilService.isLoading">
                                     <img src="/assets/images/svg/dot-menu.svg" class="c-p">
                                     <mat-menu #menu="matMenu">
-                                        <button mat-menu-item (click)="openInSideBar(element.rtTypeMasterid, element, false)">Edit</button>
+                                        <button mat-menu-item
+                                            (click)="openInSideBar(element.rtTypeMasterid, element, false)">Edit</button>
                                         <button mat-menu-item (click)="deleteRTA(element)">Delete</button>
                                     </mat-menu>
                                 </div>
@@ -321,20 +338,24 @@
         <div class="boxEmpty mt-52">
             <img src="assets/images/svg/mf-rta-details-empty-state.svg">
             <h4 class="mt-24 mb-12"> No details added yet </h4>
-            <button class="btn-primary addon v-middle " mat-stroked-buttonbutton class="btn-primary " [matMenuTriggerFor]="menu">
+            <button class="btn-primary addon v-middle " mat-stroked-buttonbutton class="btn-primary "
+                [matMenuTriggerFor]="menu">
                 ADD NEW
             </button>
         </div>
 
         <div class="dashedClass">
-            <p>When you provide your RTA credentials, the system will automatically order and upload all the relevant RTA feeds for you in no time. </p>
-            <p>You can provide your CAMS, Karvy and Franklin Templeton credentials. If you would like to access CAMS SOA (Statement of accounts) then we need your Fundsnet details too.</p>
+            <p>When you provide your RTA credentials, the system will automatically order and upload all the relevant
+                RTA feeds for you in no time. </p>
+            <p>You can provide your CAMS, Karvy and Franklin Templeton credentials. If you would like to access CAMS SOA
+                (Statement of accounts) then we need your Fundsnet details too.</p>
             <p class="m-0">If you are not registered for any of the above, then checkout how to register with:</p>
             <p class="m-0"> - CAMS </p>
             <p class="m-0"> - Karvy </p>
             <p class="m-0"> - Franklin Templeton </p>
             <p> - Fundsnet</p>
-            <p>Please note that for full automation of mutual fund feeds to work, your registered email ID with these RTA needs to be a Gmail ID. Checkout the process of changing your registered email ID here. </p>
+            <p>Please note that for full automation of mutual fund feeds to work, your registered email ID with these
+                RTA needs to be a Gmail ID. Checkout the process of changing your registered email ID here. </p>
         </div>
     </div>
 
@@ -353,14 +374,17 @@
         </div>
 
         <div class="dashedClass">
-            <p>When you provide your RTA credentials, the system will automatically order and upload all the relevant RTA feeds for you in no time. </p>
-            <p>You can provide your CAMS, Karvy and Franklin Templeton credentials. If you would like to access CAMS SOA (Statement of accounts) then we need your Fundsnet details too.</p>
+            <p>When you provide your RTA credentials, the system will automatically order and upload all the relevant
+                RTA feeds for you in no time. </p>
+            <p>You can provide your CAMS, Karvy and Franklin Templeton credentials. If you would like to access CAMS SOA
+                (Statement of accounts) then we need your Fundsnet details too.</p>
             <p class="m-0">If you are not registered for any of the above, then checkout how to register with:</p>
             <p class="m-0"> - CAMS </p>
             <p class="m-0"> - Karvy </p>
             <p class="m-0"> - Franklin Templeton </p>
             <p> - Fundsnet</p>
-            <p>Please note that for full automation of mutual fund feeds to work, your registered email ID with these RTA needs to be a Gmail ID. Checkout the process of changing your registered email ID here. </p>
+            <p>Please note that for full automation of mutual fund feeds to work, your registered email ID with these
+                RTA needs to be a Gmail ID. Checkout the process of changing your registered email ID here. </p>
         </div>
     </div>
     <!-- <img class="width300" src="assets/images/svg/noDataFound.svg">
@@ -368,5 +392,6 @@
 </div>
 
 <mat-menu #menu="matMenu">
-    <button mat-menu-item *ngFor="let rta_type of globalData.rta_type_master_list" (click)="openInSideBar(rta_type.id,'',true)">{{rta_type.type}}</button>
+    <button mat-menu-item *ngFor="let rta_type of globalData.rta_type_master_list"
+        (click)="openInSideBar(rta_type.id,'',true)">{{rta_type.type}}</button>
 </mat-menu>

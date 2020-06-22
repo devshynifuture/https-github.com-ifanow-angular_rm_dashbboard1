@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { MfServiceService } from '../mf-service.service';
 import { map } from 'rxjs/operators';
 import { SettingsService } from 'src/app/component/protect-component/AdviserComponent/setting/settings.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-mutual-fund',
@@ -46,10 +47,16 @@ export class MutualFundComponent implements OnInit {
 
   constructor(public subInjectService: SubscriptionInject, public utilService: UtilService,
     public eventService: EventService, private custumService: CustomerService,
+    public routerActive: ActivatedRoute,
     private mfService: MfServiceService, private settingService: SettingsService) {
   }
 
   ngOnInit() {
+    this.routerActive.queryParamMap.subscribe((queryParamMap) => {
+      if (queryParamMap.has('advisorId')) {
+        // this.clientSignUp = true;
+      }
+    });
     this.mfService.getMutualFundShowDropdown()
       .subscribe(res => {
         console.log(typeof res);
