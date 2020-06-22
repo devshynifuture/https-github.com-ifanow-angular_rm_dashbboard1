@@ -145,7 +145,7 @@ export class AssetsComponent implements OnInit {
       this.toggleSideNav();
     } else {
       this.sidenavState = false;
-      this.stateOfPanel.open();
+      // this.stateOfPanel.open();
 
     }
   }

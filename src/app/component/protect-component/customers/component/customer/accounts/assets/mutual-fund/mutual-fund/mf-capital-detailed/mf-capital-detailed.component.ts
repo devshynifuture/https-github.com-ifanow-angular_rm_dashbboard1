@@ -6,6 +6,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { UtilService } from 'src/app/services/util.service';
 import { CustomerService } from '../../../../../customer.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { RightFilterDuplicateComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
 // import { MutualFundAllTransactionComponent } from '../mutual-fund-all-transaction/mutual-fund-all-transaction.component';
 
 @Component({
@@ -198,7 +199,7 @@ export class MfCapitalDetailedComponent implements OnInit {
       data: {},
       id: 1,
       state: 'open35',
-      componentName: RightFilterComponent
+      componentName: RightFilterDuplicateComponent
     };
   fragmentData.data = {
     name: 'CAPITAL GAIN REPORT',
