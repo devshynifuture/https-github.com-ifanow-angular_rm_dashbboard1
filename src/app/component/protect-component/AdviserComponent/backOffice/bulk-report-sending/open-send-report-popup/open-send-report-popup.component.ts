@@ -16,11 +16,12 @@ export class OpenSendReportPopupComponent implements OnInit {
   clientsSend: any;
   advisorId: any;
   dataClients: { clientId: number; };
+  setObj: {};
 
   constructor(public dialogRef: MatDialogRef<OpenSendReportPopupComponent>,
     private fb: FormBuilder,
     private backOfficeService: BackOfficeService,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData, private eventService: EventService,) {
+    @Inject(MAT_DIALOG_DATA) public data: DialogData, private eventService: EventService, ) {
 
     this.advisorId = AuthService.getAdvisorId()
   }
@@ -31,18 +32,51 @@ export class OpenSendReportPopupComponent implements OnInit {
   }
 
   sendClientId() {
-    // if(this.data.reportType == 'overview'){
-    //   this.router.navigate(['/pdf'], { queryParams: { clientId: 97118 ,advisorId: 5393 ,reportTypeId:1},});
-    // }else if(this.data.reportType == 'summary'){
-    //   this.router.navigate(['/pdf'], { queryParams: { clientId: 97118 ,advisorId: 5393 ,reportTypeId:2},});
-    // }else if(this.data.reportType == 'allTransactions'){
-    //   this.router.navigate(['/pdf'], { queryParams: { clientId: 97118 ,advisorId: 5393 ,reportTypeId:3, fromDate: '2019/06/19',toDate: '2020/06/19'},});
-    // }else if(this.data.reportType == 'unrealisedTransactions'){
-    //   this.router.navigate(['/pdf'], { queryParams: { clientId: 97118 ,advisorId: 5393 ,reportTypeId:4, fromDate: '2019/06/19',toDate: '2020/06/19'},});
-    // }else if(this.data.reportType == 'capitalGainSummary'){
-    //   this.router.navigate(['/pdf'], { queryParams: { clientId: 97118 ,advisorId: 5393 ,reportTypeId:5, from :'2019',to: '2020'},});
-
-    // }
+    if (this.data.reportType == 'overview') {
+      this.setObj = {
+        advisorId: 5125,
+        clientId: 97118,
+        reportTypeId: 1
+      }
+    } else if (this.data.reportType == 'summary') {
+      this.setObj = {
+        advisorId: 5125,
+        clientId: 97118,
+        reportTypeId: 2
+      }
+    } else if (this.data.reportType == 'allTransactions') {
+      this.setObj = {
+        advisorId: 5125,
+        clientId: 97118,
+        reportTypeId: 3,
+        fromDate : '',
+        toDate :''
+      }
+    } else if (this.data.reportType == 'unrealisedTransactions') {
+      this.setObj = {
+        advisorId: 5125,
+        clientId: 97118,
+        reportTypeId: 4,
+        fromDate : '',
+        toDate :''
+      }
+    } else if (this.data.reportType == 'capitalGainSummary') {
+      this.setObj = {
+        advisorId: 5125,
+        clientId: 97118,
+        reportTypeId: 5,
+        from: 2019,
+        to:2020
+      }
+    } else if (this.data.reportType == 'capitalGainDetails') {
+      this.setObj = {
+        advisorId: 5125,
+        clientId: 97118,
+        reportTypeId: 6,
+        from: 2019,
+        to:2020
+      }
+    }
     this.dataClients = {
       clientId: 97118
     }
@@ -50,7 +84,7 @@ export class OpenSendReportPopupComponent implements OnInit {
       advisorId: 5125,
       reportTypeId: 1
     };
-    this.backOfficeService.getClientIdByLoop(obj).subscribe(
+    this.backOfficeService.getClientIdByLoop(this.setObj).subscribe(
       data => {
         console.log('getClientIdByLoop ==', data)
       }

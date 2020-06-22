@@ -48,8 +48,6 @@ export class MutualFundSummaryComponent implements OnInit {
   clientData = AuthService.getClientData();
   details = AuthService.getProfileDetails();
   getOrgData = AuthService.getOrgDetails();
-  advisorId = AuthService.getAdvisorId();
-  clientId = AuthService.getClientId();
   // schemeWiseForFilter: any[];
   // mutualFundListFilter: any[];
   @ViewChild('tableEl', { static: false }) tableEl;
@@ -75,6 +73,8 @@ export class MutualFundSummaryComponent implements OnInit {
   addedData: boolean;
   dataSummary: any;
   getObj: any;
+  advisorId: number;
+  clientId: any;
   @Input()
   set data(data) {
     this.inputData = data;
@@ -94,7 +94,20 @@ export class MutualFundSummaryComponent implements OnInit {
     public eventService: EventService,
     private customerService: CustomerService,
     private router: Router,
+    public routerActive: ActivatedRoute,
     private activatedRoute: ActivatedRoute) {
+    this.routerActive.queryParamMap.subscribe((queryParamMap) => {
+      if (queryParamMap.has('clientId')) {
+        let param1 = queryParamMap['params'];
+        this.clientId = parseInt(param1.clientId)
+        this.advisorId = parseInt(param1.advisorId)
+        console.log('2423425', param1)
+      }
+      else {
+        this.advisorId = AuthService.getAdvisorId();
+        this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
+      }
+    });
   }
 
   mutualFund;
@@ -109,6 +122,18 @@ export class MutualFundSummaryComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (localStorage.getItem('token') != 'authTokenInLoginComponnennt') {
+      localStorage.setItem('token', 'authTokenInLoginComponnennt')
+    }
+
+    this.routerActive.queryParamMap.subscribe((queryParamMap) => {
+      if (queryParamMap.has('clientId')) {
+        let param1 = queryParamMap['params'];
+        this.clientId = parseInt(param1.clientId)
+        this.advisorId = parseInt(param1.advisorId)
+        console.log('2423425', param1)
+      }
+    });
     this.dataSummary = {}
     this.dataSummary.grandTotal = {}
     this.dataSummary.customDataSourceData = {}
@@ -475,8 +500,8 @@ export class MutualFundSummaryComponent implements OnInit {
             this.getObj = res; //used for getting mutual fund data coming from main gain call
             console.log('yeeeeeeeee', res)
             if (this.getObj.customDataSourceData) {
-             
-            }else{
+
+            } else {
               this.mfService.setSummaryData(this.dataSummary)
             }
           })
