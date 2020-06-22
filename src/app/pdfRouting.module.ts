@@ -89,10 +89,6 @@ const routes: Routes = [
     loadChildren: () => import('./component/gmail-redirect/gmail-redirect.module').then(m => m.GmailRedirectModule)
   },
   {
-    path: 'not-found',
-    loadChildren: './component/protect-component/common-component/not-found/not-found.module#NotFoundModule'
-  },
-  {
     path: 'error-page',
     component: ErrorPageComponent
   },
@@ -101,7 +97,7 @@ const routes: Routes = [
     component: ErrorPageComponent
   },
   {
-    path: 'pdf',
+    path: 'customer/detail/account/assets?reportTypeId=1&advisorId=2808&fromDate=2020-01-01&toDate=2020-06-01',
     component: PdfRoutingComponent
   },
   {

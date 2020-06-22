@@ -8,6 +8,7 @@ import {AuthGuard} from './guards/auth.guard';
 import {FormTestComponent} from './test/form-test/form-test.component';
 import {BackofficeDashboardComponent} from './component/protect-component/AdviserComponent/backOffice/backoffice-dashboard/backoffice-dashboard.component';
 import {AdvisorGuard} from './guards/advisor.guard';
+import { PdfRoutingComponent } from './pdfRouting/pdf-routing/pdf-routing.component';
 
 const routes: Routes = [
   {
@@ -87,10 +88,10 @@ const routes: Routes = [
     // outlet: 'mainrouter',
     loadChildren: () => import('./component/gmail-redirect/gmail-redirect.module').then(m => m.GmailRedirectModule)
   },
-  {
-    path: 'not-found',
-    loadChildren: './component/protect-component/common-component/not-found/not-found.module#NotFoundModule'
-  },
+  // {
+  //   path: 'not-found',
+  //   loadChildren: './component/protect-component/common-component/not-found/not-found.module#NotFoundModule'
+  // },
   {
     path: 'error-page',
     component: ErrorPageComponent
@@ -98,6 +99,10 @@ const routes: Routes = [
   {
     path: 'unauthorized',
     component: ErrorPageComponent
+  },
+  {
+    path: 'pdf',
+    component: PdfRoutingComponent
   },
   {
     path: 'welcome-page',
