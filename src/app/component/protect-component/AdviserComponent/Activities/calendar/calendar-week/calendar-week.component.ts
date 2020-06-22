@@ -200,8 +200,8 @@ export class CalendarWeekComponent implements OnInit {
 
   returnNumber(num){
     // num.toUpperCase()
-   console.log(parseInt(num) +' '+ num.charAt(num.length - 3).toUpperCase() + num.charAt(num.length - 2).toUpperCase(),"time event");
-    return parseInt(num) +' '+ num.charAt(num.length - 3).toUpperCase() + num.charAt(num.length - 2).toUpperCase()
+   console.log(parseInt(num) +1+' '+ num.charAt(num.length - 3).toUpperCase() + num.charAt(num.length - 2).toUpperCase(),"time event");
+    return parseInt(num) + 1 +' '+ num.charAt(num.length - 3).toUpperCase() + num.charAt(num.length - 2).toUpperCase()
   }
 
   formateTime(date) {
