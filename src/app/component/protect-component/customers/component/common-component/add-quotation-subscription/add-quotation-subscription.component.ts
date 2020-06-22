@@ -75,7 +75,7 @@ export class AddQuotationSubscriptionComponent implements OnInit {
 
   createSubscription(value, data) {
     if (!data.quotation) {
-      this.eventService.openSnackBar("Please map plan to document", "Dismiss");
+      this.eventService.openSnackBar("Please map quotation to plan", "Dismiss");
       this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: false });
       this.router.navigate(['/admin/subscription/settings/documents']);
       return;
