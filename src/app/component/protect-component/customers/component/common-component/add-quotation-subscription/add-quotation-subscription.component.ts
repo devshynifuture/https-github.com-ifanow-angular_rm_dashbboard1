@@ -128,6 +128,7 @@ export class AddQuotationSubscriptionComponent implements OnInit {
   }
 
   createFeeStructureForFroala(responseData, quotationData) {
+    let servicesName = '';
     responseData.forEach(element => {
       let feeStructureTable = `<div class="hide">
 <table style="width: 100%; margin: 0px auto; border: 1px solid rgba(0, 0, 0, 0.12);" align="center">
@@ -209,8 +210,10 @@ export class AddQuotationSubscriptionComponent implements OnInit {
 <br>
 </div>`;
       this.feeStructureHtmlData += feeStructureTable;
+      servicesName += element.serviceName + ','
     });
     quotationData.documentText = quotationData.documentText.replace(new RegExp(escapeRegExp('$service_fee'), 'g'), this.feeStructureHtmlData);
+    quotationData.documentText = quotationData.documentText.replace(new RegExp(escapeRegExp('$service_name'), 'g'), servicesName);
     this.barButtonOptions.active = false;
     this.openFroala(quotationData, 'openQuotation');
   }
