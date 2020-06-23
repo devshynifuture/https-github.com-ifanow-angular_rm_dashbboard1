@@ -23,6 +23,8 @@ export class EmailListingComponent implements OnInit {
   maxListRes: number = 0;
   resultSizeEstimate: any;
   currentList: number = 0;
+  showNextPaginationBtn: boolean;
+  showPrevPaginationBtn: boolean;
 
 
   constructor(
@@ -53,6 +55,7 @@ export class EmailListingComponent implements OnInit {
 
   selection = new SelectionModel<MessageListArray>(true, []);
   location = '';
+  secondInit = false;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -67,10 +70,19 @@ export class EmailListingComponent implements OnInit {
     (location === 'trash') ? this.trashAction = true : this.trashAction = false;
     (location === 'draft') ? this.showDraftView = true : this.showDraftView = false;
     this.location = location;
+    this.totalListSize = 0;
+    this.currentList = 0;
+    this.maxListRes = 0;
 
     this.totalListSize = this.totalListSize - 50;
     this.currentList = this.maxListRes + 1;
     this.maxListRes = this.maxListRes + 50;
+
+    if (this.currentList <= 1) {
+      this.showPrevPaginationBtn = false;
+    } else {
+      this.showPrevPaginationBtn == true;
+    }
 
     this.getPaginatorLengthRes(location);
   }
@@ -81,6 +93,7 @@ export class EmailListingComponent implements OnInit {
       labelArr.labelIds.forEach(label => {
         if (label === 'DRAFT') {
           this.showDraftView = true;
+          // some error with this
         }
       });
     });
@@ -121,7 +134,8 @@ export class EmailListingComponent implements OnInit {
         }
         this.router.navigate(['google-connect'], { relativeTo: this.activatedRoute });
       } else {
-        this.paginatorLength = response.threadsTotal;
+        // this.paginatorLength = response.threadsTotal;
+        this.isLoading = true;
         this.emailUtilService.getLabelCount()
           .subscribe(res => {
             if (res) {
@@ -138,11 +152,29 @@ export class EmailListingComponent implements OnInit {
                 this.paginatorLength = res['trashCount'];
               }
             }
+            this.totalListSize = this.paginatorLength;
+            if (this.maxListRes > this.paginatorLength) {
+              this.maxListRes = this.paginatorLength;
+            }
+            let valueOfNextPagination = this.currentList + 50;
+            if (valueOfNextPagination >= this.paginatorLength) {
+              this.showNextPaginationBtn = false;
+            } else if (valueOfNextPagination > this.paginatorLength) {
+              this.showNextPaginationBtn = false;
+            } else if (this.maxListRes < this.paginatorLength) {
+              this.showNextPaginationBtn = true;
+            }
           })
-        this.totalListSize = this.paginatorLength;
-        this.isLoading = true;
+
         this.getGmailList(location.toUpperCase(), '');
       }
+    }, err => {
+      this.eventService.openSnackBarNoDuration(err);
+      this.eventService.openSnackBar("You must connect your gmail account", "Dismiss");
+      if (localStorage.getItem('successStoringToken')) {
+        localStorage.removeItem('successStoringToken');
+      }
+      this.router.navigate(['google-connect'], { relativeTo: this.activatedRoute });
     });
   }
 
@@ -225,7 +257,6 @@ export class EmailListingComponent implements OnInit {
     ids.push(id);
     // {"ids":["abc","xyz"],"userId":2727,"emailId":"gaurav@futurewise.co.in"}
     this.threadsToTrashService(ids);
-
   }
 
   // move threads from trash
@@ -242,10 +273,16 @@ export class EmailListingComponent implements OnInit {
   }
 
   threadsToTrashService(ids) {
+    this.isLoading = true;
     const threadsToTrashSubscription = this.emailService.moveThreadsToTrashFromList(ids)
       .subscribe(response => {
-        threadsToTrashSubscription.unsubscribe();
-        this.ngOnInit();
+        this.isLoading = false;
+        if (response) {
+          this.eventService.openSnackBar('Deleted Successfully!! Updating list', "DISMISS");
+          this.selection.clear();
+          threadsToTrashSubscription.unsubscribe();
+          this.ngOnInit();
+        }
       });
   }
 
@@ -347,34 +384,50 @@ export class EmailListingComponent implements OnInit {
   }
 
   nextPagesList() {
+    let aheadPaginatorVal = this.currentList + 50;
+    if (aheadPaginatorVal <= this.paginatorLength) {
+      this.totalListSize = this.totalListSize - 50;
+      this.currentList = this.maxListRes + 1;
+      this.maxListRes = this.maxListRes + 50;
+      if (this.currentList > 50) {
+        this.showPrevPaginationBtn = true;
+      }
+      if (this.maxListRes >= this.paginatorLength) {
+        this.maxListRes = this.paginatorLength;
+      }
+      if (this.currentList >= this.paginatorLength) {
+        this.currentList = 1;
+        this.maxListRes = 50;
+      }
+      this.isLoading = true;
+      this.getGmailList(this.router.url.split('/')[3].toUpperCase(), 'next');
+    } else {
+      this.showNextPaginationBtn = false;
+    }
 
-    this.totalListSize = this.totalListSize - 50;
-    this.currentList = this.maxListRes + 1;
-    this.maxListRes = this.maxListRes + 50;
-    if (this.maxListRes >= this.paginatorLength) {
-      this.maxListRes = this.paginatorLength;
-    }
-    if (this.currentList >= this.paginatorLength) {
-      this.currentList = 1;
-      this.maxListRes = 50;
-    }
-    this.isLoading = true;
-    this.getGmailList(this.router.url.split('/')[3].toUpperCase(), 'next');
   }
 
   previousPagesList() {
-    this.totalListSize = this.totalListSize + 50;
-    this.currentList = this.maxListRes - 1;
-    this.maxListRes = this.maxListRes - 50;
-    if (this.maxListRes <= this.paginatorLength) {
-      this.maxListRes = this.paginatorLength;
+    if (this.currentList > 1) {
+      this.totalListSize = this.totalListSize + 50;
+      this.currentList = this.maxListRes - 1;
+      this.maxListRes = this.maxListRes - 50;
+      // if(this.currentList === 1){
+
+      // }
+      if (this.maxListRes <= this.paginatorLength) {
+        this.maxListRes = this.paginatorLength;
+      }
+      if (this.currentList <= this.paginatorLength) {
+        this.currentList = 1;
+        this.maxListRes = 50;
+      }
+      this.isLoading = true;
+      this.getGmailList(this.router.url.split('/')[3].toUpperCase(), 'prev');
+    } else {
+      this.showPrevPaginationBtn = false;
     }
-    if (this.currentList <= this.paginatorLength) {
-      this.currentList = 1;
-      this.maxListRes = 50;
-    }
-    this.isLoading = true;
-    this.getGmailList(this.router.url.split('/')[3].toUpperCase(), 'prev');
+
   }
 
   // getFileDetails(e): void {
@@ -443,7 +496,7 @@ export class EmailListingComponent implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`; //
   }
 
-  // routing to view page
+  // routing to view pageF`
   gotoEmailView(dataObj: Object): void {
 
 
