@@ -66,6 +66,8 @@ export class MfCapitalDetailedComponent implements OnInit {
         let param1 = queryParamMap['params'];
         this.clientId = parseInt(param1.clientId)
         this.advisorId = parseInt(param1.advisorId)
+        this.fromDateYear = param1.from,
+        this.toDateYear = param1.to,
         console.log('2423425', param1)
       }
       else {
@@ -104,6 +106,8 @@ export class MfCapitalDetailedComponent implements OnInit {
         let param1 = queryParamMap['params'];
         this.clientId = parseInt(param1.clientId)
         this.advisorId = parseInt(param1.advisorId)
+        this.fromDateYear = param1.from,
+        this.toDateYear = param1.to,
         console.log('2423425', param1)
       }
     });
