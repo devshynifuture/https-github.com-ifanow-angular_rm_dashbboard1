@@ -36,19 +36,16 @@ export class OpenSendReportPopupComponent implements OnInit {
     if (this.data.reportType == 'overview') {
       this.setObj = {
         advisorId: 5125,
-        clientId: 97118,
         reportTypeId: 1
       }
     } else if (this.data.reportType == 'summary') {
       this.setObj = {
         advisorId: 5125,
-        clientId: 97118,
         reportTypeId: 2
       }
     } else if (this.data.reportType == 'allTransactions') {
       this.setObj = {
         advisorId: 5125,
-        clientId: 97118,
         reportTypeId: 3,
         fromDate : this.data.selectedElement.fromDate,
         toDate :this.data.selectedElement.toDate
@@ -56,7 +53,6 @@ export class OpenSendReportPopupComponent implements OnInit {
     } else if (this.data.reportType == 'unrealisedTransactions') {
       this.setObj = {
         advisorId: 5125,
-        clientId: 97118,
         reportTypeId: 4,
         fromDate : this.data.selectedElement.fromDate,
         toDate :this.data.selectedElement.toDate
@@ -64,7 +60,6 @@ export class OpenSendReportPopupComponent implements OnInit {
     } else if (this.data.reportType == 'capitalGainSummary') {
       this.setObj = {
         advisorId: 5125,
-        clientId: 97118,
         reportTypeId: 5,
         from: this.data.selectedElement.from,
         to:this.data.selectedElement.to,
@@ -72,7 +67,6 @@ export class OpenSendReportPopupComponent implements OnInit {
     } else if (this.data.reportType == 'capitalGainDetails') {
       this.setObj = {
         advisorId: 5125,
-        clientId: 97118,
         reportTypeId: 6,
         from: this.data.selectedElement.from,
         to:this.data.selectedElement.to,

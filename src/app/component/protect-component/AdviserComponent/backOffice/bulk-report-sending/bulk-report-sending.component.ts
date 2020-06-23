@@ -12,7 +12,8 @@ import { BackOfficeService } from '../back-office.service';
 })
 export class BulkReportSendingComponent implements OnInit {
   displayedColumns: string[] = ['type', 'sendDate', 'recipients', 'emails', 'status'];
-  dataSource = ELEMENT_DATA;
+  dataSource = [{},{},{}];
+  isLoading
 
   constructor(
     private subInjectService : SubscriptionInject,
@@ -21,6 +22,7 @@ export class BulkReportSendingComponent implements OnInit {
 
   ngOnInit() {
     this.getlistOrder()
+    this.isLoading = false
   }
   getlistOrder(){
     const obj = {
@@ -28,7 +30,9 @@ export class BulkReportSendingComponent implements OnInit {
     };
     this.backOfficeService.getOrderList(obj).subscribe(
       data => {
-        console.log('getClientIdByLoop ==', data)
+        console.log('getOrderList ==', data)
+        this.isLoading = true
+        this.dataSource = data
       }
     );
   }

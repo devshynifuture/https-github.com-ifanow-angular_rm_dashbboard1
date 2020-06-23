@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
 
 @Component({
@@ -7,11 +7,21 @@ import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.s
   styleUrls: ['./status-report.component.scss']
 })
 export class StatusReportComponent implements OnInit {
+  inputData: any;
 
   constructor(
     private subInjectService : SubscriptionInject,
   ) { }
-
+  @Input()
+  set data(data) {
+    this.inputData = data;
+    if (data) {
+      console.log('This is Input data of proceed ', data);
+    }
+  }
+  get data() {
+    return this.inputData;
+  }
   ngOnInit() {
   }
   close() {
