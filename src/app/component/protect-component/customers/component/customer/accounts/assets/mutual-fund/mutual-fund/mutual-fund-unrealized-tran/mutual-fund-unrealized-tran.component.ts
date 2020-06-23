@@ -13,6 +13,8 @@ import { DatePipe } from '@angular/common';
 import { MFSchemeLevelHoldingsComponent } from '../mfscheme-level-holdings/mfscheme-level-holdings.component';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
+import { RightFilterDuplicateComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-mutual-fund-unrealized-tran',
@@ -46,12 +48,6 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   @Output() changeInput = new EventEmitter();
   advisorData: any;
   // displayedColumns: string[];
-  userInfo = AuthService.getUserInfo();
-  clientData = AuthService.getClientData();
-  details = AuthService.getProfileDetails();
-  advisorId = AuthService.getAdvisorId();
-  clientId = AuthService.getClientId();
-  getOrgData = AuthService.getOrgDetails();
   viewMode: string = '';
   reponseData: any;
   setDefaultFilterData: any;
@@ -77,12 +73,37 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   mode: string;
   isBulkEmailing: boolean;
   toDate: any;
+  clientId: number;
+  advisorId: number;
+  userInfo: any;
+  clientData: any;
+  details: any;
+  getOrgData: any;
 
   constructor(public dialog: MatDialog, private datePipe: DatePipe,
     private subInjectService: SubscriptionInject, private utilService: UtilService,
     private mfService: MfServiceService, private excel: ExcelGenService,
+    private route: Router,
+    public routerActive: ActivatedRoute,
     private custumService: CustomerService, private eventService: EventService,
               /*private changeDetectorRef: ChangeDetectorRef*/) {
+    this.routerActive.queryParamMap.subscribe((queryParamMap) => {
+      if (queryParamMap.has('clientId')) {
+        let param1 = queryParamMap['params'];
+        this.clientId = parseInt(param1.clientId)
+        this.advisorId = parseInt(param1.advisorId)
+        console.log('2423425', param1)
+      }
+      else {
+        this.advisorId = AuthService.getAdvisorId();
+        this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
+        this.userInfo = AuthService.getUserInfo();
+        this.clientData = AuthService.getClientData();
+        this.details = AuthService.getProfileDetails();
+        this.getOrgData = AuthService.getOrgDetails();
+
+      }
+    });
   }
 
   mutualFund;
@@ -100,12 +121,12 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     if (data) {
       this.clientId = data.clientId
       this.addedData = true;
-      this.isBulkEmailing=true;
+      this.isBulkEmailing = true;
       this.toDate = data.toDate;
-      if(data.mode == 'unrealisedTransactions'){
+      if (data.mode == 'unrealisedTransactions') {
         this.viewMode = 'Unrealized Transactions'
         this.mode = 'Unrealized Transactions'
-      }else{
+      } else {
         this.viewMode = 'All Transactions'
         this.mode = 'All Transactions'
       }
@@ -115,22 +136,42 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
 
   }
   ngOnInit() {
+    if (localStorage.getItem('token') != 'authTokenInLoginComponnennt') {
+      localStorage.setItem('token', 'authTokenInLoginComponnennt')
+    }
+
+    this.routerActive.queryParamMap.subscribe((queryParamMap) => {
+      if (queryParamMap.has('clientId')) {
+        let param1 = queryParamMap['params'];
+        this.clientId = parseInt(param1.clientId)
+        this.advisorId = parseInt(param1.advisorId)
+        this.toDate = (param1.toDate)
+        if (this.route.url.split('?')[0] == '/pdf/allTransactions') {
+          this.viewMode = 'All Transactions'
+          this.mode = 'All Transactions'
+        } else {
+          this.viewMode = 'Unrealized Transactions'
+          this.mode = 'Unrealized Transactions'
+        }
+        console.log('2423425', param1)
+      }
+    });
     this.dataTransaction = {}
     this.dataTransaction.viewMode = {}
     this.dataTransaction.columnHeader = {}
     this.dataTransaction.displayedColumns = []
     this.dataTransaction.dataSource = []
-    this.dataTransaction.customDataSource =[]
+    this.dataTransaction.customDataSource = []
     this.dataTransaction.grandTotal = {}
     this.setDefaultFilterData = {}
     this.dataTransaction.flag = false
-    this.setDefaultFilterData.transactionView =[]
+    this.setDefaultFilterData.transactionView = []
     this.reportDate = new Date()
     this.unrealisedData = new TableVirtualScrollDataSource([]);
     this.mfService.getViewMode()
       .subscribe(res => {
         this.viewMode = res;
-        if(res == ''){
+        if (res == '') {
           this.viewMode = this.mode
         }
       });
@@ -161,7 +202,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     this.mfService.getFilterValues()
       .subscribe(res => {
         this.setDefaultFilterData = res;
-        if(this.setDefaultFilterData == ''){
+        if (this.setDefaultFilterData == '') {
           this.setDefaultFilterData = {}
         }
       });
@@ -171,7 +212,10 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       });
     this.mfService.getTransactionType()
       .subscribe(res => {
-        this.getTransactionType(res);
+        if(res){
+          this.getTransactionType(res);
+
+        }
       });
     this.dataSource = new MatTableDataSource([{}, {}, {}]);
 
@@ -223,13 +267,13 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
             });
             if (this.viewMode == 'Unrealized Transactions' || this.viewMode == 'unrealized transactions') {
               this.displayedColumns.forEach(element => {
-                if(this.customDataSource.length > 0){
+                if (this.customDataSource.length > 0) {
                   this.styleObjectUnrealised(element)
                 }
               });
             } else {
               this.displayedColumns.forEach(element => {
-                if(this.customDataSource.length > 0){
+                if (this.customDataSource.length > 0) {
                   this.styleObjectTransaction(element)
                 }
               });
@@ -269,19 +313,19 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         this.columnHeader = (type == 'Sub Category wise') ? 'Sub Category Name' : (type == 'Category wise') ? 'Category Name	' : (type == 'Investor wise') ? 'Family Member Name' : (type == 'Scheme wise') ? 'Scheme Name' : 'Sub Category wise';
       },
       (error) => {
-        if(this.reponseData){
-          
-          this.displayedColumns=[];
-          this.displayedColumnsTotal=[];
+        if (this.reponseData) {
+
+          this.displayedColumns = [];
+          this.displayedColumnsTotal = [];
           this.setDefaultFilterData.transactionView.forEach(element => {
-            if(element.selected==true){
+            if (element.selected == true) {
               this.displayedColumns.push(element.displayName)
               this.displayedColumnsTotal.push(element.displayName + 'Total');
 
             }
           });
-        }else{
-          this.setDefaultFilterData.transactionView=[];
+        } else {
+          this.setDefaultFilterData.transactionView = [];
           this.displayedColumns.forEach(element => {
             const obj = {
               displayName: element,
@@ -290,9 +334,9 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
             this.setDefaultFilterData.transactionView.push(obj)
           });
         }
-       
+
         this.mfData = this.mfGetData;
-        if (this.viewMode == 'Unrealized Transactions'  && this.mfGetData != "") {
+        if (this.viewMode == 'Unrealized Transactions' && this.mfGetData != "") {
           this.isLoading = true;
           this.getUnrealizedData();
         } else if (this.viewMode != 'Unrealized Transactions' && this.mfGetData != '') {
@@ -434,14 +478,14 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       this.mfData = data;
       // this.mutualFund = data;
       if (this.addedData) {
-          this.mutualFund = this.mfData
-          this.getTransactionTypeData();
+        this.mutualFund = this.mfData
+        this.getTransactionTypeData();
         this.setDefaultFilterData = this.mfService.setFilterData(this.mutualFund, this.rightFilterData, this.displayedColumns);
 
         this.mfService.setDataForMfGet(this.mfData);
-        if(this.isBulkEmailing && this.viewMode == 'All Transactions'){
+        if (this.isBulkEmailing && this.viewMode == 'All Transactions') {
           this.filterForBulkEmailing(data.mutualFundList);
-        }else{
+        } else {
           this.getUnrealizedData();
         }
         this.mfService.setMfData(this.mfData);
@@ -459,28 +503,28 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       // }
     }
   }
-  filterForBulkEmailing(data){
-    if(data){
+  filterForBulkEmailing(data) {
+    if (data) {
       let categoryWiseMfList = [];
       data.forEach(element => {
-      categoryWiseMfList.push(element.id)
-    });
-    const obj = {
-      advisorId: this.advisorId,
-      clientId: this.clientId,
-      toDate: this.toDate,
-      id: categoryWiseMfList
-    };
-    this.custumService.getMutualFund(obj).subscribe(
-      data => {
-        console.log(data);
-        let response = this.mfService.doFiltering(data)
-        Object.assign(response.mutualFundList, {flag: true});
-        this.asyncFilter(response.mutualFundList);
-      }
-    );
+        categoryWiseMfList.push(element.id)
+      });
+      const obj = {
+        advisorId: this.advisorId,
+        clientId: this.clientId,
+        toDate: this.toDate,
+        id: categoryWiseMfList
+      };
+      this.custumService.getMutualFund(obj).subscribe(
+        data => {
+          console.log(data);
+          let response = this.mfService.doFiltering(data)
+          Object.assign(response.mutualFundList, { flag: true });
+          this.asyncFilter(response.mutualFundList);
+        }
+      );
     }
-    
+
   }
   getTransactionTypeData() {
     const obj = {
@@ -492,7 +536,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     this.custumService.getTransactionTypeInMF(obj).subscribe(
       data => {
         if (data) {
-          data = data.filter(item => item !=null);
+          data = data.filter(item => item != null);
           this.mfService.setTransactionType(data);
           // this.setDefaultFilterData.transactionTypeList = filterData
 
@@ -549,9 +593,9 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         // console.log(data);
         // this.mutualFund.mutualFundList = data;
         // this.asyncFilter(this.mutualFund.mutualFundList);
-        if(this.isBulkEmailing){
+        if (this.isBulkEmailing) {
           this.filterForBulkEmailing(data);
-        }else{
+        } else {
           this.asyncFilter(data);
         }
 
@@ -607,9 +651,9 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         this.dataTransaction.grandTotal = this.grandTotal
         this.dataTransaction.customDataSourceData = data.customDataSourceData
         this.dataTransaction.viewMode = this.mode
-        this.dataTransaction.setDefaultFilterData=this.setDefaultFilterData
+        this.dataTransaction.setDefaultFilterData = this.setDefaultFilterData
         this.dataTransaction.columnHeader = this.columnHeader
-        if( mutualFund.flag == true){
+        if (mutualFund.flag == true) {
           this.dataTransaction.flag = true
         }
         this.mfService.setTransactionData(this.dataTransaction)
@@ -658,24 +702,24 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   }
 
   openMutualEditFund(flag, element) {
-    let sendData:any;
-  //   let list = [];
-  //   this.mfData.mutualFundList.forEach(val => list.push(Object.assign({}, val)));
-  //   list.forEach(element => {
-  //     element.mutualFundTransactions = element.mutualFundTransactions.filter(item => item.id === element.id);
-  // });
+    let sendData: any;
+    //   let list = [];
+    //   this.mfData.mutualFundList.forEach(val => list.push(Object.assign({}, val)));
+    //   list.forEach(element => {
+    //     element.mutualFundTransactions = element.mutualFundTransactions.filter(item => item.id === element.id);
+    // });
 
 
     this.mfData.mutualFundList.forEach(ele => {
       ele.mutualFundTransactions.forEach(tran => {
         if (tran.id == element.id) {
-          sendData=tran;
+          sendData = tran;
           this.selectedLoadData = ele;
         }
       });
     });
     this.selectedLoadData.mutualFundTransactions = this.selectedLoadData.mutualFundTransactions.filter(item => item.id === sendData.id);
-    this.selectedLoadData.id=sendData.id;
+    this.selectedLoadData.id = sendData.id;
     // this.mfService.getMutualFundData()
     //   .subscribe(res => {
     const fragmentData = {
@@ -791,7 +835,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       data: {},
       id: 1,
       state: 'open35',
-      componentName: RightFilterComponent
+      componentName: RightFilterDuplicateComponent
     };
     // fragmentData.data = {
     //   name: (this.viewMode == 'Unrealized Transactions') ? 'UNREALIZED TRANSACTION REPORT' : 'ALL TRANSACTION REPORT',
