@@ -145,7 +145,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         this.clientId = parseInt(param1.clientId)
         this.advisorId = parseInt(param1.advisorId)
         this.toDate = (param1.toDate)
-        if (this.route.url.split('?')[0] == 'pdf/allTransactions') {
+        if (this.route.url.split('?')[0] == '/pdf/allTransactions') {
           this.viewMode = 'All Transactions'
           this.mode = 'All Transactions'
         } else {
