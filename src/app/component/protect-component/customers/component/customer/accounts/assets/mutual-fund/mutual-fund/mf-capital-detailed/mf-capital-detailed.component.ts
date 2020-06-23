@@ -57,6 +57,7 @@ export class MfCapitalDetailedComponent implements OnInit {
   showDownload: boolean;
   setCapitaDetails: any;
   clientId: any;
+  advisorId: any;
   constructor(private MfServiceService:MfServiceService,
     public routerActive: ActivatedRoute,
     private subInjectService : SubscriptionInject, private UtilService:UtilService,private custumService:CustomerService) {
@@ -79,7 +80,6 @@ export class MfCapitalDetailedComponent implements OnInit {
    @Input() responseData;
    @Input() changedData;
    @Input() mutualFund;
-   advisorId = AuthService.getAdvisorId();
    uploadData(data) {
     if (data.clientId) {
       this.clientId = data.clientId
