@@ -134,7 +134,7 @@ export class InvoiceComponent implements OnInit {
 
   @Input()
   set data(data) {
-    if(data.isAdvisor == undefined || data.isAdvisor == null) {
+    if (data.isAdvisor == undefined || data.isAdvisor == null) {
       data.isAdvisor = true;
     }
     this.inputData = data;
@@ -673,6 +673,7 @@ export class InvoiceComponent implements OnInit {
 
   openSendEmail(input) {
     const data = {
+      showfromEmail: false,
       advisorId: this.advisorId,
       clientData: this.storeData,
       templateType: 1, // 2 is for quotation
