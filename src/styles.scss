@@ -1882,3 +1882,14 @@ ngx-slick-carousel>.slick-disabled {
     border-bottom: 0px !important;
   }
 }
+
+.calendar-empty {
+  height: calc(100vh - 240px);
+  justify-content: center;
+  align-items: center;
+
+  button {
+    height: 44px;
+    line-height: 44px;
+  }
+}
