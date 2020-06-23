@@ -203,7 +203,10 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       });
     this.mfService.getTransactionType()
       .subscribe(res => {
-        this.getTransactionType(res);
+        if(res){
+          this.getTransactionType(res);
+
+        }
       });
     this.dataSource = new MatTableDataSource([{}, {}, {}]);
 
