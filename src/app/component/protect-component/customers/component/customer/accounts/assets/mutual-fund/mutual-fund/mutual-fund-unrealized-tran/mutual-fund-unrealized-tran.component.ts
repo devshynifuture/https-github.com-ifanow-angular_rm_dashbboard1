@@ -48,10 +48,6 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   @Output() changeInput = new EventEmitter();
   advisorData: any;
   // displayedColumns: string[];
-  userInfo = AuthService.getUserInfo();
-  clientData = AuthService.getClientData();
-  details = AuthService.getProfileDetails();
-  getOrgData = AuthService.getOrgDetails();
   viewMode: string = '';
   reponseData: any;
   setDefaultFilterData: any;
@@ -79,6 +75,10 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   toDate: any;
   clientId: number;
   advisorId: number;
+  userInfo: any;
+  clientData: any;
+  details: any;
+  getOrgData: any;
 
   constructor(public dialog: MatDialog, private datePipe: DatePipe,
     private subInjectService: SubscriptionInject, private utilService: UtilService,
@@ -96,6 +96,11 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
                   else {
                     this.advisorId = AuthService.getAdvisorId();
                     this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
+                    this.userInfo = AuthService.getUserInfo();
+                    this.clientData = AuthService.getClientData();
+                    this.details = AuthService.getProfileDetails();
+                    this.getOrgData = AuthService.getOrgDetails();
+                 
                   }
                 });
   }
