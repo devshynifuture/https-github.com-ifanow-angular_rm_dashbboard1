@@ -14,6 +14,7 @@ import { MFSchemeLevelHoldingsComponent } from '../mfscheme-level-holdings/mfsch
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
 import { RightFilterDuplicateComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-mutual-fund-unrealized-tran',
@@ -50,8 +51,6 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   userInfo = AuthService.getUserInfo();
   clientData = AuthService.getClientData();
   details = AuthService.getProfileDetails();
-  advisorId = AuthService.getAdvisorId();
-  clientId = AuthService.getClientId();
   getOrgData = AuthService.getOrgDetails();
   viewMode: string = '';
   reponseData: any;
@@ -78,12 +77,27 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   mode: string;
   isBulkEmailing: boolean;
   toDate: any;
+  clientId: number;
+  advisorId: number;
 
   constructor(public dialog: MatDialog, private datePipe: DatePipe,
     private subInjectService: SubscriptionInject, private utilService: UtilService,
     private mfService: MfServiceService, private excel: ExcelGenService,
+    public routerActive: ActivatedRoute,
     private custumService: CustomerService, private eventService: EventService,
               /*private changeDetectorRef: ChangeDetectorRef*/) {
+                this.routerActive.queryParamMap.subscribe((queryParamMap) => {
+                  if (queryParamMap.has('clientId')) {
+                    let param1 = queryParamMap['params'];
+                    this.clientId = parseInt(param1.clientId)
+                    this.advisorId = parseInt(param1.advisorId)
+                    console.log('2423425', param1)
+                  }
+                  else {
+                    this.advisorId = AuthService.getAdvisorId();
+                    this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
+                  }
+                });
   }
 
   mutualFund;
@@ -116,6 +130,18 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
 
   }
   ngOnInit() {
+    if (localStorage.getItem('token') != 'authTokenInLoginComponnennt') {
+      localStorage.setItem('token', 'authTokenInLoginComponnennt')
+    }
+
+    this.routerActive.queryParamMap.subscribe((queryParamMap) => {
+      if (queryParamMap.has('clientId')) {
+        let param1 = queryParamMap['params'];
+        this.clientId = parseInt(param1.clientId)
+        this.advisorId = parseInt(param1.advisorId)
+        console.log('2423425', param1)
+      }
+    });
     this.dataTransaction = {}
     this.dataTransaction.viewMode = {}
     this.dataTransaction.columnHeader = {}

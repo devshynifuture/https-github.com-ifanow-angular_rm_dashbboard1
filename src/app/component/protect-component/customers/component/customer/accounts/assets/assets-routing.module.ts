@@ -5,6 +5,7 @@ import { MutualFundOverviewComponent } from './mutual-fund/mutual-fund/mutual-fu
 import { MutualFundUnrealizedTranComponent } from './mutual-fund/mutual-fund/mutual-fund-unrealized-tran/mutual-fund-unrealized-tran.component';
 import { MutualFundsCapitalComponent } from './mutual-fund/mutual-fund/mutual-funds-capital/mutual-funds-capital.component';
 import { MfCapitalDetailedComponent } from './mutual-fund/mutual-fund/mf-capital-detailed/mf-capital-detailed.component';
+import { MutualFundSummaryComponent } from './mutual-fund/mutual-fund/mutual-fund-summary/mutual-fund-summary.component';
 
 
 const routes: Routes = [
@@ -17,7 +18,7 @@ const routes: Routes = [
     path: 'overview', component: MutualFundOverviewComponent,
 
   }, {
-    path: 'summary', component: MutualFundOverviewComponent,
+    path: 'summary', component: MutualFundSummaryComponent,
 
   }, {
     path: 'allTransactions', component: MutualFundUnrealizedTranComponent,
