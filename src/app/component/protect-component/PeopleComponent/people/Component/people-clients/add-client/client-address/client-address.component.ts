@@ -1,14 +1,14 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { UtilService, ValidatorType } from 'src/app/services/util.service';
-import { PostalService } from 'src/app/services/postal.service';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import {PostalService} from 'src/app/services/postal.service';
+import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog} from '@angular/material';
 
 @Component({
   selector: 'app-client-address',
@@ -42,10 +42,12 @@ export class ClientAddressComponent implements OnInit {
   disableBtn = false;
   maxLength: number;
   proofTypeData: any;
-  firstTimeEditFlag: boolean = false;
+  firstTimeEditFlag = false;
+
   constructor(private cusService: CustomerService, private fb: FormBuilder,
-    private subInjectService: SubscriptionInject, private postalService: PostalService,
-    private peopleService: PeopleService, private eventService: EventService, private utilService: UtilService, public dialog: MatDialog) {
+              private subInjectService: SubscriptionInject, private postalService: PostalService,
+              private peopleService: PeopleService, private eventService: EventService,
+              private utilService: UtilService, public dialog: MatDialog) {
   }
 
   addressForm;
@@ -85,57 +87,50 @@ export class ClientAddressComponent implements OnInit {
       state: [data.state, [Validators.required]],
       country: [data.country, [Validators.required]]
     });
-    (data) ? this.proofTypeData = data : ''
+    (data) ? this.proofTypeData = data : '';
     let regexPattern;
     if (data.proofType == '1') {
       regexPattern = this.validatorType.PASSPORT;
       this.maxLength = 8;
-    }
-    else if (data.proofType == '2') {
+    } else if (data.proofType == '2') {
       regexPattern = this.validatorType.ADHAAR;
       this.maxLength = 12;
-    }
-    else if (data.proofType == '3') {
+    } else if (data.proofType == '3') {
       this.maxLength = 15;
       // regexPattern = this.validatorType.DRIVING_LICENCE
-    }
-    else if (data.proofType == '4') {
+    } else if (data.proofType == '4') {
       regexPattern = this.validatorType.VOTER_ID;
       this.maxLength = 10;
-    }
-    else {
-      this.maxLength = undefined
+    } else {
+      this.maxLength = undefined;
     }
     // this.changeAddrProofNumber({ value: String(data.proofType) });
   }
+
   changeAddrProofNumber(data) {
     let regexPattern;
     this.userData.aadhaarNumber = (this.userData.aadhaarNumber == 0) ? null : this.userData.aadhaarNumber;
     if (this.firstTimeEditFlag) {
-      this.proofTypeData.proofIdNumber = null
+      this.proofTypeData.proofIdNumber = null;
     }
     if (data.value == '1') {
       regexPattern = this.validatorType.PASSPORT;
       this.maxLength = 8;
       this.addressForm.get('proofIdNum').setValue((this.proofTypeData.proofType == '1') ? this.proofTypeData.proofIdNumber : '');
-    }
-    else if (data.value == '2') {
+    } else if (data.value == '2') {
       regexPattern = this.validatorType.ADHAAR;
       this.addressForm.get('proofIdNum').setValue(this.proofTypeData.proofType == undefined ? this.userData.aadhaarNumber : ((this.proofTypeData.proofType == 2 && this.proofTypeData.proofIdNumber == undefined) || this.userMappingIdFlag == false) ? this.userData.aadhaarNumber : (this.proofTypeData.proofIdNumber != 2 && this.userData.aadhaarNumber) ? this.userData.aadhaarNumber : this.proofTypeData.proofIdNumber);
       this.maxLength = 12;
-    }
-    else if (data.value == '3') {
+    } else if (data.value == '3') {
       this.maxLength = 15;
       // regexPattern = this.validatorType.DRIVING_LICENCE
       this.addressForm.get('proofIdNum').setValue(this.proofTypeData.proofType == '3' ? this.proofTypeData.proofIdNumber : '');
-    }
-    else if (data.value == '4') {
+    } else if (data.value == '4') {
       regexPattern = this.validatorType.VOTER_ID;
       this.maxLength = 10;
       this.addressForm.get('proofIdNum').setValue(this.proofTypeData.proofType == '4' ? this.proofTypeData.proofIdNumber : '');
-    }
-    else {
-      this.maxLength = undefined
+    } else {
+      this.maxLength = undefined;
       this.addressForm.get('proofIdNum').setValue(this.proofTypeData ? this.proofTypeData.proofIdNumber : '');
     }
     this.addressForm.get('proofIdNum').setValidators([(regexPattern) ? Validators.pattern(regexPattern) : null]);
@@ -196,14 +191,12 @@ export class ClientAddressComponent implements OnInit {
           this.userMappingIdFlag = true;
           this.addressList = data[0];
           this.createAddressForm(this.addressList);
-        }
-        else {
+        } else {
           if (this.fieldFlag == 'familyMember') {
-            const obj =
-            {
+            const obj = {
               userId: this.userData.clientId,
               userType: 2
-            }
+            };
             this.cusService.getAddressList(obj).subscribe(
               data => {
                 if (data && data.length > 0) {
@@ -212,7 +205,7 @@ export class ClientAddressComponent implements OnInit {
                   this.createAddressForm(this.addressList);
                 }
               }
-            )
+            );
           }
         }
       },
@@ -244,29 +237,28 @@ export class ClientAddressComponent implements OnInit {
         userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
         userType: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3,
         // addressType: this.addressForm.get('addressType').value,
-        proofType: this.addressForm.get('addProofType').value,
-        proofIdNumber: this.addressForm.get('proofIdNum').value,
+        proofType: this.addressForm.get('addProofType').invalid ? undefined : this.addressForm.get('addProofType').value,
+        proofIdNumber: this.addressForm.get('proofIdNum').invalid ? undefined : this.addressForm.get('proofIdNum').value,
         userAddressMappingId: (this.userData.addressData) ? this.userData.addressData.userAddressMappingId : (this.addressList && this.userMappingIdFlag) ? this.addressList.userAddressMappingId : null,
         addressId: (this.userData.addressData) ? this.userData.addressData.addressId : (this.addressList && this.userMappingIdFlag) ? this.addressList.addressId : null
       };
 
       this.peopleService.addEditClientAddress(obj).subscribe(
         data => {
-          this.disableBtn = false
+          this.disableBtn = false;
           console.log(data);
           this.barButtonOptions.active = false;
           if (flag == 'Next') {
             this.saveNextData.emit(true);
-            this.tabChange.emit(1)
-          }
-          else {
+            this.tabChange.emit(1);
+          } else {
             this.closeAndSave();
           }
         },
         err => {
           this.eventService.openSnackBar(err, 'Dismiss');
           this.barButtonOptions.active = false;
-          this.disableBtn = false
+          this.disableBtn = false;
         }
       );
     }
@@ -286,8 +278,10 @@ export class ClientAddressComponent implements OnInit {
             dialogRef.close();
             this.closeAndSave();
           },
-          err => { this.eventService.openSnackBar(err, "Dismiss") }
-        )
+          err => {
+            this.eventService.openSnackBar(err, 'Dismiss');
+          }
+        );
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');
@@ -306,11 +300,13 @@ export class ClientAddressComponent implements OnInit {
 
     });
   }
+
   close(data) {
-    (this.fieldFlag) ? this.cancelTab.emit('close') : (data == 'close' && this.fieldFlag == undefined) ? this.subInjectService.changeNewRightSliderState({ state: 'close' }) :
-      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
+    (this.fieldFlag) ? this.cancelTab.emit('close') : (data == 'close' && this.fieldFlag == undefined) ? this.subInjectService.changeNewRightSliderState({state: 'close'}) :
+      this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: true});
   }
+
   closeAndSave() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
+    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: true});
   }
 }
