@@ -2,7 +2,7 @@
 
     <div class="row pt-12">
         <div class="col-md-4 pr-0 text-right">
-            <h5 class="m-0 pt-8">Owner</h5>
+            <h5 class="m-0 f-14 ">Owner</h5>
             <p class="m-0 f-12 text-custom"> In whose name is this asset </p>
         </div>
         <div class="col-md-6">
@@ -22,7 +22,7 @@
 
     <div class="row pt-32">
         <div class="col-md-4 pr-0 text-right">
-            <h5 class="m-0 pt-8">Loan type </h5>
+            <h5 class="m-0 f-14 ">Loan type </h5>
         </div>
         <div class="col-md-4">
             <mat-form-field>
@@ -44,15 +44,12 @@
 
     <div class="row pt-32">
         <div class="col-md-4 pr-0 text-right">
-            <h5 class="m-0 pt-8">Original loan amount</h5>
+            <h5 class="m-0 f-14">Original loan amount</h5>
         </div>
         <div class="col-md-4">
             <mat-form-field class="iconRupess">
-                <input matInput #originalLoanAmtRef type="text" appInputValueValidation
-                    [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" type="text"
-                    class="form-control br-0 rupess" formControlName="original-amt-loan">
-                <mat-error
-                    *ngIf="formLiabilities.get('original-amt-loan').touched && formLiabilities.get('original-amt-loan').invalid">
+                <input matInput #originalLoanAmtRef type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" type="text" class="form-control br-0 rupess" formControlName="original-amt-loan">
+                <mat-error *ngIf="formLiabilities.get('original-amt-loan').touched && formLiabilities.get('original-amt-loan').invalid">
                     This field is required
                 </mat-error>
                 <mat-hint align="end" class="f-12">
@@ -64,16 +61,13 @@
 
     <div class="row pt-32">
         <div class="col-md-4 pr-0 text-right">
-            <h5 class="m-0 pt-8">Loan tenure</h5>
+            <h5 class="m-0 f-14 ">Loan tenure</h5>
         </div>
 
         <div class="col-md-4">
             <mat-form-field>
-                <input matInput #loanTenureRef type="text" appInputValueValidation
-                    [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" type="text" class="form-control br-0"
-                    formControlName="loan-tenure">
-                <mat-error
-                    *ngIf="formLiabilities.get('loan-tenure').touched && formLiabilities.get('loan-tenure').invalid">
+                <input matInput #loanTenureRef type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" type="text" class="form-control br-0" formControlName="loan-tenure">
+                <mat-error *ngIf="formLiabilities.get('loan-tenure').touched && formLiabilities.get('loan-tenure').invalid">
                     This field is required
                 </mat-error>
                 <mat-hint align="end" class="f-12">
@@ -86,17 +80,15 @@
 
     <div class="row pt-32">
         <div class="col-md-4 pr-0 text-right">
-            <h5 class="m-0 pt-8"> Commencement date</h5>
+            <h5 class="m-0 f-14 "> Commencement date</h5>
 
         </div>
         <div class="col-md-4">
             <mat-form-field class="ba-date">
-                <input matInput (focus)="picker.open()" [max]="maxDate" formControlName="commencement-date"
-                    class="form-control br-0 b-0" [matDatepicker]="picker" readonly>
+                <input matInput (focus)="picker.open()" [max]="maxDate" formControlName="commencement-date" class="form-control br-0 b-0" [matDatepicker]="picker" readonly>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
-                <mat-error
-                    *ngIf="formLiabilities.get('commencement-date').touched && formLiabilities.get('commencement-date').invalid">
+                <mat-error *ngIf="formLiabilities.get('commencement-date').touched && formLiabilities.get('commencement-date').invalid">
                     This field is required
                 </mat-error>
             </mat-form-field>
@@ -105,7 +97,7 @@
 
     <div class="row pt-32">
         <div class="col-md-4 pr-0 text-right">
-            <h5 class="m-0 pt-8">EMI frequency</h5>
+            <h5 class="m-0 f-14">EMI frequency</h5>
 
         </div>
         <div class="col-md-4">
@@ -126,16 +118,13 @@
 
     <div class="row pt-32">
         <div class="col-md-4 pr-0 text-right">
-            <h5 class="m-0 pt-8"> Annual interest rate </h5>
+            <h5 class="m-0 f-14 "> Annual interest rate </h5>
         </div>
         <div class="col-md-4">
             <mat-form-field class="iconPetage">
                 <!-- maxlength="{{ formLiabilities.get('annual-interest-rate').maxLength}}"  for Prod -->
-                <input matInput (keyup)="onChange($event)" appInputValueValidation
-                    [inputValidator]="validatorType.NUMBER_ONLY" type="text" formControlName="annual-interest-rate"
-                    class="form-control br-0 percentage">
-                <mat-error
-                    *ngIf="formLiabilities.get('annual-interest-rate').touched && formLiabilities.get('annual-interest-rate').invalid">
+                <input matInput (keyup)="onChange($event)" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" type="text" formControlName="annual-interest-rate" class="form-control br-0 percentage">
+                <mat-error *ngIf="formLiabilities.get('annual-interest-rate').touched && formLiabilities.get('annual-interest-rate').invalid">
                     This field is required
                 </mat-error>
             </mat-form-field>
@@ -144,8 +133,7 @@
 
     <div class="row pt-40 ng-star-inserted">
         <div class="col-md-4 pr-0 text-right">
-            <h5 class="m-0 text-primitive c-p" (click)="toggleLiabilitiesExpansion()"> + Add more [optional
-                data] </h5>
+            <h5 class="m-0 text-primitive c-p" (click)="toggleLiabilitiesExpansion()"> + Add more [optional data] </h5>
         </div>
         <div class="col-md-3 "></div>
     </div>
@@ -153,13 +141,11 @@
     <div *ngIf="shouldExpandLiabilities==true">
         <div class="row pt-32">
             <div class="col-md-4 pr-0 text-right">
-                <h5 class="m-0 pt-8"> EMI </h5>
+                <h5 class="m-0 f-14"> EMI </h5>
             </div>
             <div class="col-md-4">
                 <mat-form-field>
-                    <input matInput appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
-                        [maxLength]="10" #emiOptionalRef type="text" formControlName="emi"
-                        class="form-control br-0 rupess">
+                    <input matInput appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="10" #emiOptionalRef type="text" formControlName="emi" class="form-control br-0 rupess">
                     <mat-hint align="start">Optional</mat-hint>
                     <mat-hint align="end">{{ emiOptionalRef.value.length }}/10</mat-hint>
                 </mat-form-field>
@@ -168,14 +154,12 @@
 
         <div class="row pt-32">
             <div class="col-md-4 pr-0 text-right">
-                <h5 class="m-0 pt-8"> Financial institution </h5>
+                <h5 class="m-0 f-14"> Financial institution </h5>
 
             </div>
             <div class="col-md-6">
                 <mat-form-field>
-                    <input matInput appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC"
-                        [maxLength]="40" #financialInstitutionRef type="text" class="form-control br-0"
-                        formControlName="financial-institution">
+                    <input matInput appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="40" #financialInstitutionRef type="text" class="form-control br-0" formControlName="financial-institution">
                     <mat-hint align="start">
                         Optional
                     </mat-hint>
@@ -188,13 +172,11 @@
 
         <div class="row pt-32">
             <div class="col-md-4 pr-0 text-right">
-                <h5 class="m-0 pt-8"> Collateral </h5>
+                <h5 class="m-0 f-14"> Collateral </h5>
             </div>
             <div class="col-md-6">
                 <mat-form-field>
-                    <input matInput appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC"
-                        [maxLength]="20" #collateralRef type="text" class="form-control br-0"
-                        fornControlName="collateral">
+                    <input matInput appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="20" #collateralRef type="text" class="form-control br-0" fornControlName="collateral">
                     <mat-hint align="start">
                         Optional
                     </mat-hint>
@@ -219,22 +201,20 @@
 
         <div class="row" formArrayName="transact" *ngIf="showTransact">
             <div class="col-md-3 text-center p-0">
-                <h5 class="m-0 pb-8 pl-28">Part Payment date </h5>
+                <h5 class="m-0 f-14 pb-8 pl-28">Part Payment date </h5>
             </div>
             <div class="col-md-3 pr-0">
-                <h5 class="m-0 pb-8">Part Payment Amount</h5>
+                <h5 class="m-0 f-14 pb-8">Part Payment Amount</h5>
             </div>
             <div class="col-md-5 pr-0">
-                <h5 class="m-0 pb-8">Options </h5>
+                <h5 class="m-0 f-14 pb-8">Options </h5>
             </div>
             <div class="col-md-1 pr-0">
             </div>
-            <div class="row pt-4" [formGroup]="formItem"
-                *ngFor="let formItem of getFormArrayControlsOfTransact(); index as i">
+            <div class="row pt-4" [formGroup]="formItem" *ngFor="let formItem of getFormArrayControlsOfTransact(); index as i">
                 <div class="col-md-3">
                     <div class="form-group mb-0">
-                        <input matInput (focus)="picker1.open()" [max]="maxDate" formControlName="partPaymentDate"
-                            class="form-control br-0" [matDatepicker]="picker1" readonly>
+                        <input matInput (focus)="picker1.open()" [max]="maxDate" formControlName="partPaymentDate" class="form-control br-0" [matDatepicker]="picker1" readonly>
                         <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                         <mat-datepicker #picker1></mat-datepicker>
                     </div>
@@ -242,9 +222,7 @@
                 <div class="col-md-3">
                     <div class="form-group mb-0">
                         <mat-form-field class="b-a">
-                            <input type="text" #partPaymentAmtRef appInputValueValidation
-                                [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="20" matInput
-                                formControlName="partPaymentAmount" class="form-control br-0">
+                            <input type="text" #partPaymentAmtRef appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="20" matInput formControlName="partPaymentAmount" class="form-control br-0">
                             <mat-hint align="end">
                                 {{ partPaymentAmtRef.value.length }}/20
                             </mat-hint>
@@ -254,12 +232,8 @@
                 <div class="col-md-5">
                     <mat-form-field>
                         <mat-select formControlName="partPaymentOptions" class="form-control br-0">
-                            <mat-option value="1" matTooltip="Keep the EMI as it is and reduce the term">Keep the
-                                EMI as it is and
-                                reduce the term</mat-option>
-                            <mat-option value="2" matTooltip="Keep the term as it is and reduce the EMI">Keep the
-                                term as it is
-                                and reduce the EMI</mat-option>
+                            <mat-option value="1" matTooltip="Keep the EMI as it is and reduce the term">Keep the EMI as it is and reduce the term</mat-option>
+                            <mat-option value="2" matTooltip="Keep the term as it is and reduce the EMI">Keep the term as it is and reduce the EMI</mat-option>
                         </mat-select>
                     </mat-form-field>
                 </div>
