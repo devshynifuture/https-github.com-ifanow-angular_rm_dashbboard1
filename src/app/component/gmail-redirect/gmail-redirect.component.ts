@@ -4,10 +4,11 @@ import { apiConfig } from './../../config/main-config';
 import { AuthService } from './../../auth-service/authService';
 import { SubscriptionInject } from './../protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import 'rxjs-compat/add/operator/filter';
 import { HttpService } from '../../http-service/http-service';
 import { HttpHeaders } from '@angular/common/http';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-gmail-redirect',
@@ -29,10 +30,12 @@ export class GmailRedirectComponent implements OnInit {
   isSuccess: boolean = false;
 
   constructor(private route: ActivatedRoute,
-    private httpService: HttpService) {
+    private httpService: HttpService,
+    private location: Location) {
   }
 
   ngOnInit() {
+    this.REDIRECT_URI = window.location.origin + '/redirect';
     this.advisorId = AuthService.getAdvisorId();
     this.emailId = AuthService.getUserInfo().userName;
     this.route.queryParams
@@ -79,7 +82,7 @@ export class GmailRedirectComponent implements OnInit {
     this.httpService.post(apiConfig.GMAIL_URL + appConfig.ACCESS_TOKEN_SAVE, data).subscribe(
       response => {
         console.log("successStoringToken");
-        
+
         localStorage.setItem("successStoringToken", "true");
         this.isSuccess = true;
         window.close();

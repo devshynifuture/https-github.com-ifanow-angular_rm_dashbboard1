@@ -11,6 +11,7 @@ import { escapeRegExp } from '@angular/compiler/src/util';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { identifierModuleUrl } from '@angular/compiler';
 import { SettingsService } from 'src/app/component/protect-component/AdviserComponent/setting/settings.service';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-add-quotation-subscription',
@@ -112,6 +113,7 @@ export class AddQuotationSubscriptionComponent implements OnInit {
       responseData => {
         if (responseData && responseData.length > 0) {
           console.log(responseData);
+          responseData = responseData.filter(element => element.selected == true);
           this.createFeeStructureForFroala(responseData, quotationData);
         }
       }

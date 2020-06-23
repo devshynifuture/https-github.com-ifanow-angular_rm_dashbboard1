@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChildren, QueryList } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
@@ -78,6 +78,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   }
 
   @Input() set data(data) {
+    console.log('AddEditSubscriptionInvoiceComponent data : ', data);
     this.copyStoreData = data;
     this.storeData = data;
     this.advisorId = AuthService.getAdvisorId();
@@ -146,7 +147,9 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
 
     });
     this.editPayment.controls.invoiceNumber.disable();
-    this.editPayment.controls.finalAmount.disable();
+    if (!!data.id) {
+      this.editPayment.controls.finalAmount.disable();
+    }
     this.igstTaxAmount = data.igstTaxAmount;
     this.cgstTaxAmount = data.cgstTaxAmount;
     this.sgstTaxAmount = data.sgstTaxAmount;
@@ -167,14 +170,14 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
     });
     this.editPayment.controls.discount.valueChanges.subscribe(val => {
       if (val == null) {
-      } else if (val > this.editPayment.value.finalAmount) {
-        val = this.editPayment.value.finalAmount;
+      } else if (val > this.editPayment.controls.finalAmount.value) {
+        val = this.editPayment.controls.finalAmount.value;
         this.editPayment.controls.discount.setValue(val);
       }
-      this.changeTaxStatus(this.editPayment.value.finalAmount, val, this.editPayment.value.taxStatus);
+      this.changeTaxStatus(this.editPayment.controls.finalAmount.value, val, this.editPayment.value.taxStatus);
     });
     this.editPayment.controls.taxStatus.valueChanges.subscribe(val => {
-      this.changeTaxStatus(this.editPayment.value.finalAmount, this.editPayment.value.discount, val);
+      this.changeTaxStatus(this.editPayment.controls.finalAmount.value, this.editPayment.value.discount, val);
     });
     this.editPayment.controls.clientName.valueChanges.subscribe(value => {
     });
@@ -295,7 +298,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
     //  else if (isNaN(this.editPayment.controls.finalAmount.value)) {
     //   this.showErr = true;
     //   return;
-    // } 
+    // }
     else {
       this.barButtonOptions.active = true;
       let obj = {
@@ -304,7 +307,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
         billingAddress: this.editPayment.value.billingAddress,
         invoiceNumber: this.editPayment.controls.invoiceNumber.value,
         billerName: this.billerName,
-        subTotal: this.editPayment.value.finalAmount,
+        subTotal: this.editPayment.controls.finalAmount.value,
         discount: this.editPayment.value.discount == '' ? 0 : this.editPayment.value.discount,
         finalAmount: parseInt(this.finAmount),
         invoiceDate: this.editPayment.value.invoiceDate,
@@ -341,7 +344,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
         }];
         obj['id'] = this.storeData.id,
           obj['auto'] = this.editPayment.value.auto,
-          // finalAmount: this.editPayment.value.finalAmount,
+          // finalAmount: this.editPayment.controls.finalAmount.value,
           obj['services'] = service,
           this.subService.updateInvoiceInfo(obj).subscribe(
             data => this.updateInvoiceInfoRes(data)
@@ -350,6 +353,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
     }
 
   }
+
   updateInvoiceInfoRes(data) {
     if (data == 1) {
       this.barButtonOptions.active = false;
@@ -367,11 +371,13 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
       data => this.getClientListRes(data)
     );
   }
+
   selectService(service) {
 
     this.editPayment.get("finalAmount").setValue(service.price)
     this.finAmount = service.price
   }
+
   getClientListRes(data) {
     this.clientList = data.payees;
     this.billerName = data.biller.companyDisplayName
