@@ -13,6 +13,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
 import { Key } from 'protractor';
+import { RightFilterDuplicateComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -94,6 +95,7 @@ export class MutualFundsCapitalComponent implements OnInit {
       }
       else {
         this.advisorId = AuthService.getAdvisorId();
+        this.parentId = AuthService.getUserInfo().parentId
         this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
       }
     });
@@ -120,6 +122,8 @@ export class MutualFundsCapitalComponent implements OnInit {
         let param1 = queryParamMap['params'];
         this.clientId = parseInt(param1.clientId)
         this.advisorId = parseInt(param1.advisorId)
+        this.fromDateYear = (param1.from);
+        this.toDateYear = (param1.to);
         console.log('2423425', param1)
       }
     });
@@ -132,10 +136,6 @@ export class MutualFundsCapitalComponent implements OnInit {
     this.setCapitaSummary.GTdividendReinvestment = {}
     this.setCapitaSummary.GTdividendPayout = {}
     this.setCapitaSummary.GTReinvesment = {}
-
-    this.advisorId = AuthService.getAdvisorId();
-    this.clientId = AuthService.getClientId();
-    this.parentId = AuthService.getUserInfo().parentId
     this.MfServiceService.getMfData()
       .subscribe(res => {
         this.mutualFund = res;
@@ -163,7 +163,7 @@ export class MutualFundsCapitalComponent implements OnInit {
       data: {},
       id: 1,
       state: 'open35',
-      componentName: RightFilterComponent
+      componentName: RightFilterDuplicateComponent
     };
     fragmentData.data = {
       name: 'CAPITAL GAIN REPORT',

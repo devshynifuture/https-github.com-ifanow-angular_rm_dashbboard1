@@ -17,6 +17,7 @@ export class OpenSendReportPopupComponent implements OnInit {
   advisorId: any;
   dataClients: { clientId: number; };
   setObj: {};
+  callBulk: boolean = false;
 
   constructor(public dialogRef: MatDialogRef<OpenSendReportPopupComponent>,
     private fb: FormBuilder,
@@ -28,10 +29,10 @@ export class OpenSendReportPopupComponent implements OnInit {
 
   ngOnInit() {
     console.log('reportType', this.data)
-    this.sendClientId()
   }
 
   sendClientId() {
+    this.callBulk = true
     if (this.data.reportType == 'overview') {
       this.setObj = {
         advisorId: 5125,
@@ -49,32 +50,32 @@ export class OpenSendReportPopupComponent implements OnInit {
         advisorId: 5125,
         clientId: 97118,
         reportTypeId: 3,
-        fromDate : '',
-        toDate :''
+        fromDate : this.data.selectedElement.fromDate,
+        toDate :this.data.selectedElement.toDate
       }
     } else if (this.data.reportType == 'unrealisedTransactions') {
       this.setObj = {
         advisorId: 5125,
         clientId: 97118,
         reportTypeId: 4,
-        fromDate : '',
-        toDate :''
+        fromDate : this.data.selectedElement.fromDate,
+        toDate :this.data.selectedElement.toDate
       }
     } else if (this.data.reportType == 'capitalGainSummary') {
       this.setObj = {
         advisorId: 5125,
         clientId: 97118,
         reportTypeId: 5,
-        from: 2019,
-        to:2020
+        from: this.data.selectedElement.from,
+        to:this.data.selectedElement.to,
       }
     } else if (this.data.reportType == 'capitalGainDetails') {
       this.setObj = {
         advisorId: 5125,
         clientId: 97118,
         reportTypeId: 6,
-        from: 2019,
-        to:2020
+        from: this.data.selectedElement.from,
+        to:this.data.selectedElement.to,
       }
     }
     this.dataClients = {

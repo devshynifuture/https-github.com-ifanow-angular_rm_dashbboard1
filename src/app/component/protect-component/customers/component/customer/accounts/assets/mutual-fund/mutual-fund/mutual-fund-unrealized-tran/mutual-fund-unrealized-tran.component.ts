@@ -13,6 +13,7 @@ import { DatePipe } from '@angular/common';
 import { MFSchemeLevelHoldingsComponent } from '../mfscheme-level-holdings/mfscheme-level-holdings.component';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
+import { RightFilterDuplicateComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -91,6 +92,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         let param1 = queryParamMap['params'];
         this.clientId = parseInt(param1.clientId)
         this.advisorId = parseInt(param1.advisorId)
+        this.addedData = true;
         console.log('2423425', param1)
       }
       else {
@@ -145,7 +147,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         this.clientId = parseInt(param1.clientId)
         this.advisorId = parseInt(param1.advisorId)
         this.toDate = (param1.toDate)
-        if (this.route.url.split('?')[0] == 'pdf/allTransactions') {
+        if (this.route.url.split('?')[0] == '/pdf/allTransactions') {
           this.viewMode = 'All Transactions'
           this.mode = 'All Transactions'
         } else {
@@ -211,7 +213,10 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       });
     this.mfService.getTransactionType()
       .subscribe(res => {
-        this.getTransactionType(res);
+        if(res){
+          this.getTransactionType(res);
+
+        }
       });
     this.dataSource = new MatTableDataSource([{}, {}, {}]);
 
@@ -831,7 +836,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       data: {},
       id: 1,
       state: 'open35',
-      componentName: RightFilterComponent
+      componentName: RightFilterDuplicateComponent
     };
     // fragmentData.data = {
     //   name: (this.viewMode == 'Unrealized Transactions') ? 'UNREALIZED TRANSACTION REPORT' : 'ALL TRANSACTION REPORT',

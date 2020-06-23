@@ -120,6 +120,7 @@ import { BulkSummaryComponent } from './component/protect-component/AdviserCompo
 import { BulkAllTransactionsComponent } from './component/protect-component/AdviserComponent/backOffice/bulk-report-sending/bulk-all-transactions/bulk-all-transactions.component';
 import { BulkCapitalGainSummaryComponent } from './component/protect-component/AdviserComponent/backOffice/bulk-report-sending/bulk-capital-gain-summary/bulk-capital-gain-summary.component';
 import { BulkCapitalGainDetailedComponent } from './component/protect-component/AdviserComponent/backOffice/bulk-report-sending/bulk-capital-gain-detailed/bulk-capital-gain-detailed.component';
+import { RightFilterDuplicateComponent } from './component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
 // tslint:disable-next-line:max-line-length
 // import { TransactionAddComponent } from './component/protect-component/AdviserComponent/transactions/transaction-add/transaction-add.component';
 
@@ -273,7 +274,8 @@ export const componentList = [
   AddHomeInsuranceInAssetComponent,
   AddFireAndPerilsInsuranceInAssetComponent,
   DetailedViewGeneralInsuranceComponent,
-  DetailedViewLifeInsuranceComponent
+  DetailedViewLifeInsuranceComponent,
+  RightFilterDuplicateComponent
   // ComposeEmailComponent
 ];
 
