@@ -140,7 +140,7 @@ export class SearchClientAddQuotationComponent implements OnInit {
     data = data['quotation'];
     data['feeStructureFlag'] = data.documentText.includes('$service_fee');
     data['quotationFlag'] = true;
-    (data.feeStructureFlag) ? this.getServicesForPlan(data) : this.openFroala(value, data);
+    this.getServicesForPlan(data);
   }
 
   getServicesForPlan(quotationData) {
