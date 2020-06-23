@@ -38,12 +38,12 @@
             {{ currentList }} - {{ maxListRes }} of {{ paginatorLength }}
         </span>
         <span>
-            <button mat-icon-button (click)="previousPagesList()">
+            <button mat-icon-button (click)="previousPagesList()" [disabled]="!showPrevPaginationBtn">
                 <mat-icon>
                     chevron_left
                 </mat-icon>
             </button>
-            <button mat-icon-button (click)="nextPagesList()">
+            <button mat-icon-button (click)="nextPagesList()" [disabled]="!showNextPaginationBtn">
                 <mat-icon>
                     chevron_right
                 </mat-icon>
