@@ -4,6 +4,7 @@ import { SubscriptionInject } from '../../Subscriptions/subscription-inject.serv
 import { UtilService } from 'src/app/services/util.service';
 import { StatusReportComponent } from './status-report/status-report.component';
 import { BackOfficeService } from '../back-office.service';
+import { MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-bulk-report-sending',
@@ -12,8 +13,10 @@ import { BackOfficeService } from '../back-office.service';
 })
 export class BulkReportSendingComponent implements OnInit {
   displayedColumns: string[] = ['type', 'sendDate', 'recipients', 'emails', 'status'];
-  dataSource = [{},{},{}];
+  data: Array<any> = [{}, {}, {}];
+  dataSource = new MatTableDataSource(this.data);
   isLoading
+  
 
   constructor(
     private subInjectService : SubscriptionInject,
@@ -25,16 +28,23 @@ export class BulkReportSendingComponent implements OnInit {
     this.isLoading = false
   }
   getlistOrder(){
+    this.dataSource.data = [{}, {}, {}];
+    this.isLoading = true
+    console.log(this.dataSource)
     const obj = {
       advisorId: 5125
     };
     this.backOfficeService.getOrderList(obj).subscribe(
       data => {
         console.log('getOrderList ==', data)
-        this.isLoading = true
-        this.dataSource = data
+        this.isLoading = false
+        this.dataSource.data = data
+        console.log(this.dataSource)
       }
     );
+  }
+  refresh(flag){
+
   }
   openSendNow(data){
       const fragmentData = {
