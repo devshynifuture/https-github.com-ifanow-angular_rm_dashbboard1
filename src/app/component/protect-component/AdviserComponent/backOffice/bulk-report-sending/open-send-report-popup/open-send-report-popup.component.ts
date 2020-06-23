@@ -76,7 +76,7 @@ export class OpenSendReportPopupComponent implements OnInit {
       clientId: 97118
     }
     const obj = {
-      advisorId: 5125,
+      advisorId: AuthService.getAdvisorId(),
       reportTypeId: 1
     };
     this.backOfficeService.getClientIdByLoop(this.setObj).subscribe(
