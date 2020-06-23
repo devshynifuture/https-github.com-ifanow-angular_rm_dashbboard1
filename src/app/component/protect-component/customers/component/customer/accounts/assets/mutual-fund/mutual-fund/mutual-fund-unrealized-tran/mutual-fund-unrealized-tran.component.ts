@@ -193,7 +193,13 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     }
     this.dataTransaction.displayedColumns = this.displayedColumns
   }
+  ngAfterViewInit() {
+    let para = document.getElementById('template');
+    if (para.innerHTML) {
+      this.generatePdfBulk()
 
+    }
+  }
 
   getFilterData(value) {
     this.mfService.getMfData()
@@ -656,8 +662,21 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         this.dataTransaction.columnHeader = this.columnHeader
         if (mutualFund.flag == true) {
           this.dataTransaction.flag = true
+          if(this.route.url.split('?')[0] == '/pdf/allTransactions'){
+            this.generatePdfBulk()
+          }
+          if(this.route.url.split('?')[0] == '/pdf/unrealisedTransactions'){
+            this.generatePdfBulk()
+          }
+        }
+        if(this.route.url.split('?')[0] == '/pdf/allTransactions' && this.isLoading == false){
+          this.generatePdfBulk()
+        }
+        if(this.route.url.split('?')[0] == '/pdf/unrealisedTransactions' && this.isLoading == false){
+          this.generatePdfBulk()
         }
         this.mfService.setTransactionData(this.dataTransaction)
+
         if (this.viewMode == 'All Transactions' || this.viewMode == 'all transactions') {
           this.displayedColumns.forEach(element => {
             this.styleObjectTransaction(element)
@@ -973,5 +992,21 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     //   this.isSpinner = false;
     // }
   }
-
+  generatePdfBulk() {
+    setTimeout(() => {
+      let para = document.getElementById('template');
+    let obj = {
+      htmlInput: para.innerHTML,
+      name: this.mode,
+      landscape: true,
+      key: 'showPieChart',
+      clientId : this.clientId,
+      advisorId : this.advisorId,
+      fromEmail: 'devshyni@futurewise.co.in',
+      toEmail: 'abhishek@futurewise.co.in'
+    }
+    this.utilService.bulkHtmlToPdf(obj)
+    this.utilService.htmlToPdf(para.innerHTML, 'Summary', false, this.fragmentData, '', '')
+    }, 400);
+  }
 }

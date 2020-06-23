@@ -7,7 +7,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { CustomerService } from '../../../../../customer.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { RightFilterDuplicateComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 // import { MutualFundAllTransactionComponent } from '../mutual-fund-all-transaction/mutual-fund-all-transaction.component';
 
 @Component({
@@ -60,6 +60,7 @@ export class MfCapitalDetailedComponent implements OnInit {
   advisorId: any;
   constructor(private MfServiceService:MfServiceService,
     public routerActive: ActivatedRoute,
+    private route : Router,
     private subInjectService : SubscriptionInject, private UtilService:UtilService,private custumService:CustomerService) {
 
     this.routerActive.queryParamMap.subscribe((queryParamMap) => {
@@ -220,6 +221,9 @@ export class MfCapitalDetailedComponent implements OnInit {
       this.setCapitaDetails.redeemAmount = this.redeemAmount;
       this.setCapitaDetails.total_stt = this.total_stt;
       this.MfServiceService.setCapitalDetailed(this.setCapitaDetails)
+      if(this.route.url.split('?')[0] == '/pdf/capitalGainDetailed'){
+        this.generatePdfBulk()
+      }
 
       this.objSendToDetailedCapital={
         // mfData:this.mutualFund,
@@ -575,5 +579,24 @@ export class MfCapitalDetailedComponent implements OnInit {
     // if (data) {
     //   this.fragmentData.isSpinner = false;
     // }
+  }
+  generatePdfBulk() {
+    let para = document.getElementById('template');
+    let obj = {
+      htmlInput: para.innerHTML,
+      name: 'MF_Capital_Gain_Detailed',
+      landscape: true,
+      key: 'showPieChart',
+      clientId : this.clientId,
+      advisorId : this.advisorId,
+      fromEmail: 'devshyni@futurewise.co.in',
+      toEmail: 'abhishek@futurewise.co.in'
+    }
+    setTimeout(() => {
+      this.UtilService.bulkHtmlToPdf(obj)
+     this.UtilService.htmlToPdf(para.innerHTML, 'MF_Capital_Gain_Detailed', false, this.fragmentData, '', '')
+    }, 300);
+    
+
   }
 }
