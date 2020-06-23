@@ -216,7 +216,7 @@ export class EmailOnlyComponent implements OnInit {
 
     const data = {
       advisorId: this._inputData.advisorId,
-      clientId: this._inputData.clientData.id,
+      clientId: this._inputData.clientData.clientId,
       templateType: this._inputData.templateType
     };
     this.subscription.getEmailTemplateFilterData(data).subscribe(responseData => {
