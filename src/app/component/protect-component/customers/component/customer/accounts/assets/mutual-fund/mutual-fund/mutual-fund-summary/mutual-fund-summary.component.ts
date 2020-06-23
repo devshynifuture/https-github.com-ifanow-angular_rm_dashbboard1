@@ -19,6 +19,7 @@ import { CustomerService } from '../../../../../customer.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { map } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
+import { RightFilterDuplicateComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
 
 
 @Component({
@@ -130,6 +131,7 @@ export class MutualFundSummaryComponent implements OnInit {
         let param1 = queryParamMap['params'];
         this.clientId = parseInt(param1.clientId)
         this.advisorId = parseInt(param1.advisorId)
+        this.addedData = true;
         console.log('2423425', param1)
       }
     });
@@ -588,7 +590,7 @@ export class MutualFundSummaryComponent implements OnInit {
       data: {},
       id: 1,
       state: 'open35',
-      componentName: RightFilterComponent
+      componentName: RightFilterDuplicateComponent
     };
     fragmentData.data = {
       name: 'SUMMARY REPORT',

@@ -13,21 +13,21 @@
     <img src="assets/images/svg/loader-optimize.gif">
 </div>
 
-<div *ngIf="data.reportType == 'overview'">
+<div *ngIf="callBulk == true && data.reportType == 'overview'">
     <app-bulk-overview [data]="clientsSend"></app-bulk-overview>
 
 </div>
-<div *ngIf="data.reportType == 'summary'">
+<div *ngIf="callBulk == true && data.reportType == 'summary'">
     <app-bulk-summary [data]="clientsSend"></app-bulk-summary>
 
 </div>
-<div *ngIf="data.reportType == 'allTransactions' || data.reportType == 'unrealisedTransactions'">
+<div *ngIf="callBulk == true && (data.reportType == 'allTransactions' || data.reportType == 'unrealisedTransactions')">
     <app-bulk-all-transactions [data]="clientsSend"></app-bulk-all-transactions>
 </div>
-<div *ngIf="data.reportType == 'capitalGainSummary'">
+<div *ngIf="callBulk == true && data.reportType == 'capitalGainSummary'">
     <app-bulk-capital-gain-summary [data]="clientsSend"></app-bulk-capital-gain-summary>
 </div>
-<div *ngIf="data.reportType == 'capitalGainDetails'">
+<div *ngIf="callBulk == true && data.reportType == 'capitalGainDetails'">
     <app-bulk-capital-gain-detailed [data]="clientsSend"></app-bulk-capital-gain-detailed>
 </div>
 

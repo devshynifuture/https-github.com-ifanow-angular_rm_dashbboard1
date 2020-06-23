@@ -16,7 +16,7 @@ export class PdfGenService {
     this.advisor = AuthService.getUserInfo();
     this.client = AuthService.getClientData();
     this.getOrgData = AuthService.getOrgDetails();
-    this.imageUrl= this.getBase64ImageFromURL(this.getOrgData.reportLogoUrl);
+    this.imageUrl= this.getBase64ImageFromURL((this.getOrgData)?this.getOrgData.reportLogoUrl:'');
   }
 
   getBase64ImageFromURL(url) {

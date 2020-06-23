@@ -253,7 +253,11 @@ export class PayeeSettingsComponent implements OnInit {
   }
   getOwnerName(data) {
     this.familyMemberId = data.familyMemberId
-    this.getClientOrFamilyDetails(data);
+    // this.getClientOrFamilyDetails(data);
+    this.payeeSettingsForm.controls.emailId.setValue(data.email);
+    this.payeeSettingsForm.controls.pan.setValue(data.pan);
+    this.payeeSettingsForm.controls.displayName.setValue(data.displayName);
+    // this.payeeSettingsForm.controls
   }
   getFormControl() {
     return this.payeeSettingsForm.controls;
@@ -325,7 +329,7 @@ export class PayeeSettingsComponent implements OnInit {
   }
 
   savePayeeSettings() {
-    this.familyMemberId = (this.clientData.familyMemberId) ? this.clientData.familyMemberId : this.clientData.id
+    // this.familyMemberId = (this.clientData.familyMemberId) ? this.clientData.familyMemberId : this.clientData.id
     // this.inputData
     if (this.payeeSettingsForm.invalid) {
       // for (let element in this.payeeSettingsForm.controls) {
@@ -343,7 +347,7 @@ export class PayeeSettingsComponent implements OnInit {
           city: this.payeeSettingsForm.controls.city.value,
           clientBillerId: 1,
           companyDisplayName: this.payeeSettingsForm.controls.displayName.value,
-          familyMemberId: (this.familyMemberId == 0) ? (this.clientData.clientId ? this.clientData.clientId : this.clientData.id) : this.familyMemberId,
+          familyMemberId: this.familyMemberId,
           companyName: this.payeeSettingsForm.controls.companyName.value,
           country: this.payeeSettingsForm.controls.country.value,
           currency: 'string',
@@ -375,7 +379,7 @@ export class PayeeSettingsComponent implements OnInit {
         const obj = {
           customerName: this.getFormControl().customerName.value,
           gstin: (this.getFormControl().gstIn.value == null) ? 0 : this.payeeSettingsForm.controls.gstIn.value,
-          familyMemberId: (this.clientData.familyMemberId == 0) ? this.clientData.clientId : this.clientData.familyMemberId,
+          familyMemberId: this.familyMemberId,
           gstTreatmentId: this.payeeSettingsForm.controls.gstTreatment.value,
           email: this.getFormControl().emailId.value,
           // customerTypeId: (this.getFormControl().customerType.value == 'Business') ? '1' : '2',
@@ -390,7 +394,7 @@ export class PayeeSettingsComponent implements OnInit {
           country: this.getFormControl().country.value,
           zipCode: this.getFormControl().pincode.value,
           // clientId: !this.inputData.flag ? this.clientData.clientId : this.clientData.id
-          clientId: this.clientData.clientId
+          clientId: (this.clientData.clientId) ? this.clientData.clientId : this.clientData.id
         };
         this.subService.addClientBillerProfile(obj).subscribe(
           data => {

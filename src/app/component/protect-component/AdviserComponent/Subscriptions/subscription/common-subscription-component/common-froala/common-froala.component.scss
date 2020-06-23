@@ -49,3 +49,8 @@ span {
 ::ng-deep .fr-view table td {
     border: transparent;
 }
+
+.pe-none
+{
+    pointer-events: none;
+}

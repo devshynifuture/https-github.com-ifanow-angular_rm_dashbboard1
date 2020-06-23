@@ -79,8 +79,8 @@ export const appConfig = {
   ///////////////////////////////BULK EMAIL///////////////////////////////
   GET_CLIENT_ADVISOR_DEATILS: '/backoffice/bulk-report/advisor-client/detail/get',
   HTML_TO_PDF: 'pdfAndEmail/bulk-mail/html-to-pdf',
-  GET_CLIENT_IN_LOOP:'mutual-fund/report/bulk-order/save',
-  GET_ORDER_LIST:'mutual-fund/report/bulk-order/list/get',
+  GET_CLIENT_IN_LOOP: 'mutual-fund/report/bulk-order/save',
+  GET_ORDER_LIST: 'mutual-fund/report/bulk-order/list/get',
   /////////////////////////////Accounts///////////////////////////////////
   ADD_FIXEDDEPOSIT: 'account/asset/fixed-income/fixed-deposit/add',
   ADD_LIFE_INSURANCE: 'account/insurance/life-insurance/add',
@@ -412,6 +412,7 @@ export const appConfig = {
   GET_QUOTATIONS_PLANS: 'subscription/plans/subscribed/by/client/get',
   CREATE_QUOTATION: 'subscription/quotation/add',
   CLIENTLIST_WITH_SUBSCRIPTION: 'subscription/clients/with/subscriptions/get',
+  GET_INVOICE_FEE_CALCULATIONS: 'subscription/invoice/fee-calculation/get',
   // Plan Module
 
   GET_INCOME_LIST: 'account/income/get',

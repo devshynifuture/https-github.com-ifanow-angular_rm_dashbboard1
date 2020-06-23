@@ -6,6 +6,8 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { UtilService } from 'src/app/services/util.service';
 import { CustomerService } from '../../../../../customer.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { RightFilterDuplicateComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
+import { ActivatedRoute } from '@angular/router';
 // import { MutualFundAllTransactionComponent } from '../mutual-fund-all-transaction/mutual-fund-all-transaction.component';
 
 @Component({
@@ -55,13 +57,31 @@ export class MfCapitalDetailedComponent implements OnInit {
   showDownload: boolean;
   setCapitaDetails: any;
   clientId: any;
-  constructor(private MfServiceService:MfServiceService,private subInjectService : SubscriptionInject, private UtilService:UtilService,private custumService:CustomerService) { }
+  advisorId: any;
+  constructor(private MfServiceService:MfServiceService,
+    public routerActive: ActivatedRoute,
+    private subInjectService : SubscriptionInject, private UtilService:UtilService,private custumService:CustomerService) {
+
+    this.routerActive.queryParamMap.subscribe((queryParamMap) => {
+      if (queryParamMap.has('clientId')) {
+        let param1 = queryParamMap['params'];
+        this.clientId = parseInt(param1.clientId)
+        this.advisorId = parseInt(param1.advisorId)
+        this.fromDateYear = param1.from,
+        this.toDateYear = param1.to,
+        console.log('2423425', param1)
+      }
+      else {
+        this.advisorId = AuthService.getAdvisorId();
+        this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
+      }
+    });
+   }
    @Output() reponseToInput = new EventEmitter();
    @Output() changeInput = new EventEmitter();
    @Input() responseData;
    @Input() changedData;
    @Input() mutualFund;
-   advisorId = AuthService.getAdvisorId();
    uploadData(data) {
     if (data.clientId) {
       this.clientId = data.clientId
@@ -78,6 +98,24 @@ export class MfCapitalDetailedComponent implements OnInit {
 
   }
   ngOnInit() {
+    if (localStorage.getItem('token') != 'authTokenInLoginComponnennt') {
+      localStorage.setItem('token', 'authTokenInLoginComponnennt')
+    }
+
+    this.routerActive.queryParamMap.subscribe((queryParamMap) => {
+      if (queryParamMap.has('clientId')) {
+        let param1 = queryParamMap['params'];
+        this.clientId = parseInt(param1.clientId)
+        this.advisorId = parseInt(param1.advisorId)
+        this.fromDateYear = param1.from,
+        this.toDateYear = param1.to,
+        this.fromDate = new Date(this.fromDateYear, 3, 1);
+        this.toDate = new Date(this.toDateYear, 2, 31);
+        this.grandFatheringEffect = true;
+        this.getCapitalgain();
+        console.log('2423425', param1)
+      }
+    });
     this.setCapitaDetails = {}
     this.setCapitaDetails.dataSource = []
     this.setCapitaDetails.dataSource1 = []
@@ -89,9 +127,11 @@ export class MfCapitalDetailedComponent implements OnInit {
     this.setCapitaDetails.GTReinvesment = {}
     this.isLoading =true;
       console.log('response data:',this.responseData);  // You will get the @Input value
+      if(this.responseData || this.mutualFundList){
+        this.mutualFundList = this.MfServiceService.filter(this.responseData, 'mutualFund');
+        this.redemption = this.MfServiceService.filter(this.mutualFundList, 'redemptionTransactions');
+      }
 
-      this.mutualFundList = this.MfServiceService.filter(this.responseData, 'mutualFund');
-      this.redemption = this.MfServiceService.filter(this.mutualFundList, 'redemptionTransactions');
       if(this.changedData){
         this.fromDateYear = this.changedData.fromDateYear;
         this.fromDate =new Date(this.fromDateYear, 3, 1);
@@ -198,7 +238,7 @@ export class MfCapitalDetailedComponent implements OnInit {
       data: {},
       id: 1,
       state: 'open35',
-      componentName: RightFilterComponent
+      componentName: RightFilterDuplicateComponent
     };
   fragmentData.data = {
     name: 'CAPITAL GAIN REPORT',
