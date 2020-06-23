@@ -134,9 +134,6 @@ export class MutualFundsCapitalComponent implements OnInit {
     this.setCapitaSummary.GTdividendReinvestment = {}
     this.setCapitaSummary.GTdividendPayout = {}
     this.setCapitaSummary.GTReinvesment = {}
-
-    this.advisorId = AuthService.getAdvisorId();
-    this.clientId = AuthService.getClientId();
     this.parentId = AuthService.getUserInfo().parentId
     this.MfServiceService.getMfData()
       .subscribe(res => {
