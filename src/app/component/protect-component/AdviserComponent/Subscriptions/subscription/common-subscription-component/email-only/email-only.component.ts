@@ -10,6 +10,7 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { OrgSettingServiceService } from '../../../../setting/org-setting-service.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-email-only',
@@ -168,7 +169,7 @@ export class EmailOnlyComponent implements OnInit {
     }
     this.orgSetting.getEmailVerification(obj).subscribe(
       data => {
-        this.verifiedEmailsList = data.listItems.filter(data => data.emailVerificationStatus == 1);
+        this.verifiedEmailsList = data.listItems.filter(element => element.emailVerificationStatus == 1);
         this._inputData.fromEmail = (this.verifiedEmailsList && this.verifiedEmailsList.length == 1) ? this.verifiedEmailsList[0].emailAddress : ''
       },
       err => this.eventService.openSnackBar(err, "Dismiss")
