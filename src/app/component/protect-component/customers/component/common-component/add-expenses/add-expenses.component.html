@@ -25,8 +25,8 @@
     <div class="pt-72 pl-24 pr-24 pb-48 mb-48" [formGroup]="recuring">
         <div class="row">
             <div class="col-md-12 p-0 text-right">
-                Add recuring <mat-checkbox class="text-right" [(ngModel)]="isRecuring" (change)="toggle($event)"
-                    formControlName="isRecuring">
+                Add recuring
+                <mat-checkbox class="text-right" [(ngModel)]="isRecuring" (change)="toggle($event)" formControlName="isRecuring">
                 </mat-checkbox>
             </div>
         </div>
@@ -90,8 +90,7 @@
                 <h5 class="m-0 pt-8">Start from </h5>
                 <div class="form-group mb-0 pt-8">
                     <mat-form-field class="ba-date">
-                        <input matInput class="form-control br-0 b-0" (focus)="picker1.open()"
-                            (input)="preventDefault($event)" [matDatepicker]="picker1" formControlName="startsFrom">
+                        <input matInput class="form-control br-0 b-0" (focus)="picker1.open()" (input)="preventDefault($event)" [matDatepicker]="picker1" formControlName="startsFrom">
                         <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                         <mat-datepicker #picker1></mat-datepicker>
                         <mat-error class="f-12 pt-4">
@@ -107,8 +106,7 @@
                 <h5 class="m-0 pt-8"> Continues till </h5>
                 <div class="form-group mb-0 pt-8">
                     <mat-form-field>
-                        <mat-select class="form-control br-0" (ngModelChange)="continuesTill($event)"
-                            formControlName="continueTill">
+                        <mat-select class="form-control br-0" (ngModelChange)="continuesTill($event)" formControlName="continueTill">
                             <mat-option value=1> Retirement </mat-option>
                             <mat-option value=2> Life time </mat-option>
                             <mat-option value=3> No.of yrs </mat-option>
@@ -123,8 +121,7 @@
             <div class="col-md-6" *ngIf="isNoOfYrs == '4' || isNoOfYrs == '3'">
                 <div class="form-group mt-35 mb-0">
                     <mat-form-field>
-                        <input matInput class="form-control br-0" formControlName="numberOfYearOrNumberOfTime"
-                            type="number">
+                        <input matInput class="form-control br-0" formControlName="numberOfYearOrNumberOfTime" type="number">
                         <mat-error class="f-12 pt-4">
                             This field is required
                         </mat-error>
@@ -158,8 +155,7 @@
                     <mat-form-field class="w-100">
                         <mat-select formControlName="ownerName" class="form-control br-0">
                             <mat-option value=''>Search family members</mat-option>
-                            <mat-option *ngFor="let f of familyMember" [value]="f.userName"
-                                (click)="selectClient($event, f)">
+                            <mat-option *ngFor="let f of familyMember" [value]="f.userName" (click)="selectClient($event, f)">
                                 <span>{{f.userName}}</span>
                             </mat-option>
                         </mat-select>
@@ -190,7 +186,8 @@
     <div class="pt-72 pl-24 pr-24 pb-48 mb-48" [formGroup]="expenses">
         <div class="row ">
             <div class="col-md-12 p-0 text-right">
-                Add recuring <mat-checkbox class="" (change)=" toggle($event)" formControlName="isRecuring">
+                Add recuring
+                <mat-checkbox class="" (change)=" toggle($event)" formControlName="isRecuring">
                 </mat-checkbox>
             </div>
         </div>
@@ -199,8 +196,7 @@
                 <h5 class="m-0 pt-8">Choose a date</h5>
                 <div class="form-group mb-0 pt-4">
                     <mat-form-field class="ba-date">
-                        <input matInput class="form-control b-0 br-0" (focus)="picker.open()"
-                            (input)="preventDefault($event)" [matDatepicker]="picker" formControlName="expenseDoneOn">
+                        <input matInput class="form-control b-0 br-0" (focus)="picker.open()" (input)="preventDefault($event)" [matDatepicker]="picker" formControlName="expenseDoneOn">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
@@ -281,8 +277,7 @@
                     <mat-form-field class="w-100">
                         <mat-select formControlName="ownerName" class="form-control br-0">
                             <mat-option value=''>Search family members</mat-option>
-                            <mat-option *ngFor="let f of familyMember" [value]="f.userName"
-                                (click)="selectClient($event, f)">
+                            <mat-option *ngFor="let f of familyMember" [value]="f.userName" (click)="selectClient($event, f)">
                                 <span>{{f.userName}}</span>
                             </mat-option>
                         </mat-select>
