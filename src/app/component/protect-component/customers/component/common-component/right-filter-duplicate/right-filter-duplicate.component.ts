@@ -1,14 +1,14 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { MAT_DATE_FORMATS } from '@angular/material';
-import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { DatePipe } from '@angular/common';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-import { AuthService } from 'src/app/auth-service/authService';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { FormBuilder, Validators } from '@angular/forms';
-import { EventService } from 'src/app/Data-service/event.service';
-import { CustomerService } from '../../customer/customer.service';
-import { MfServiceService } from '../../customer/accounts/assets/mutual-fund/mf-service.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {MAT_DATE_FORMATS} from '@angular/material';
+import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
+import {DatePipe} from '@angular/common';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import {AuthService} from 'src/app/auth-service/authService';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {FormBuilder, Validators} from '@angular/forms';
+import {EventService} from 'src/app/Data-service/event.service';
+import {CustomerService} from '../../customer/customer.service';
+import {MfServiceService} from '../../customer/accounts/assets/mutual-fund/mf-service.service';
 
 @Component({
   selector: 'app-right-filter-duplicate',
@@ -16,7 +16,7 @@ import { MfServiceService } from '../../customer/accounts/assets/mutual-fund/mf-
   styleUrls: ['./right-filter-duplicate.component.scss'],
   providers: [
     [DatePipe],
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
   ],
 })
 export class RightFilterDuplicateComponent implements OnInit {
@@ -62,6 +62,9 @@ export class RightFilterDuplicateComponent implements OnInit {
   schemeObj: any;
   categoryObj: any;
   familyMemObj: any;
+  selectedFamilyMap = {};
+  selectedAmcMap = {};
+  selectedSchemeMap = {};
   amcObj: any;
   obj: any;
   mfData: any;
@@ -92,8 +95,8 @@ export class RightFilterDuplicateComponent implements OnInit {
   selectUnselctAllFlagCategory = true;
 
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder,
-    private custumService: CustomerService, private eventService: EventService,
-    private mfService: MfServiceService, private datePipe: DatePipe, ) {
+              private custumService: CustomerService, private eventService: EventService,
+              private mfService: MfServiceService, private datePipe: DatePipe,) {
   }
 
   @Input()
@@ -164,6 +167,7 @@ export class RightFilterDuplicateComponent implements OnInit {
   getFormControl(): any {
     return this.summaryFilerForm.controls;
   }
+
   getAmc(data) {
     const myArray = data;
     const list = [];
@@ -186,12 +190,12 @@ export class RightFilterDuplicateComponent implements OnInit {
     this.amc = [...new Map(sortedData.map(item => [item.amc_id, item])).values()];
 
 
-
     // this.amc = [...new Map(this._data.schemeWise.map(item => [item.amc_id, item])).values()]; // amc wise data
 
     // this.amc = this.mfService.sorting(this.amc, 'amc_name');
     // this.amc.forEach(item => item.showInFilter = true);
   }
+
   getFolio(data) {
     const myArray = data;
     const list = [];
@@ -208,6 +212,7 @@ export class RightFilterDuplicateComponent implements OnInit {
     const sortedData = this.mfService.sorting(filterData, 'folioNumber');
     this.folio = [...new Map(sortedData.map(item => [item.folioNumber, item])).values()];
   }
+
   getCategoryWise(data) {
     const myArray = data;
     const list = [];
@@ -368,33 +373,33 @@ export class RightFilterDuplicateComponent implements OnInit {
         a.from > b.from ? 1 : (a.from === b.from ? 0 : -1)
       );
       const calculatedFinYears = sortingYeras;
-      this.financialYears = [{ from: 2010, to: 2011, selected: true, disabled: true }, {
+      this.financialYears = [{from: 2010, to: 2011, selected: true, disabled: true}, {
         from: 2011,
         to: 2012,
         selected: true,
         disabled: true
-      }, { from: 2012, to: 2013, selected: true, disabled: true }, {
+      }, {from: 2012, to: 2013, selected: true, disabled: true}, {
         from: 2013,
         to: 2014,
         selected: true,
         disabled: true
-      }, { from: 2014, to: 2015, selected: true, disabled: true },
-      { from: 2015, to: 2016, selected: true, disabled: true }, {
-        from: 2016,
-        to: 2017,
-        selected: true,
-        disabled: true
-      }, { from: 2017, to: 2018, selected: true, disabled: true }, {
-        from: 2018,
-        to: 2019,
-        selected: true,
-        disabled: true
-      }, { from: 2019, to: 2020, selected: true, disabled: true }, {
-        from: 2020,
-        to: 2021,
-        selected: true,
-        disabled: true
-      }];
+      }, {from: 2014, to: 2015, selected: true, disabled: true},
+        {from: 2015, to: 2016, selected: true, disabled: true}, {
+          from: 2016,
+          to: 2017,
+          selected: true,
+          disabled: true
+        }, {from: 2017, to: 2018, selected: true, disabled: true}, {
+          from: 2018,
+          to: 2019,
+          selected: true,
+          disabled: true
+        }, {from: 2019, to: 2020, selected: true, disabled: true}, {
+          from: 2020,
+          to: 2021,
+          selected: true,
+          disabled: true
+        }];
       calculatedFinYears.forEach(element => {
         this.financialYears.forEach(item => {
           if (element.from == item.from) {
@@ -474,17 +479,17 @@ export class RightFilterDuplicateComponent implements OnInit {
   // }
   getSaveFilters() {
     this.saveFilters = [
-      { value: 'Current Client', selected: false }, { value: 'All Client', selected: false }];
+      {value: 'Current Client', selected: false}, {value: 'All Client', selected: false}];
 
   }
 
   getOverviewFilter() {
-    this.overviewFilter = [{ name: 'Summary bar', selected: true },
-    { name: 'Scheme wise allocation', selected: true },
-    { name: 'Cashflow Status', selected: true },
-    { name: 'Family Member wise allocation', selected: true },
-    { name: 'Category wise allocation', selected: true },
-    { name: 'Sub Category wise allocation', selected: true }];
+    this.overviewFilter = [{name: 'Summary bar', selected: true},
+      {name: 'Scheme wise allocation', selected: true},
+      {name: 'Cashflow Status', selected: true},
+      {name: 'Family Member wise allocation', selected: true},
+      {name: 'Category wise allocation', selected: true},
+      {name: 'Sub Category wise allocation', selected: true}];
   }
 
   changeFilterPeriod(value) {
@@ -513,7 +518,7 @@ export class RightFilterDuplicateComponent implements OnInit {
     });
     if (this._data.selectFilter || this._data.selectFilter == 0) {
       this.saveFilters = [
-        { value: 'Current Client', selected: (this._data.selectFilter != 0) ? true : false }, {
+        {value: 'Current Client', selected: (this._data.selectFilter != 0) ? true : false}, {
           value: 'All Client',
           selected: (this._data.selectFilter == 0) ? true : false
         }];
@@ -558,8 +563,10 @@ export class RightFilterDuplicateComponent implements OnInit {
     const filterData3 = [];
     const filterData4 = [];
     this.checkFlag = true;
+    this.selectedFamilyMap = {};
     this.familyMember.filter(function (element) {
       if (element.selected == true) {
+        this.selectedFamilyMap[element.familyMemberId] = element;
         element.showInFilter = true;
         filterData.filter(function (amc) {
           // amc.mutualFund.forEach(function (mf) {
@@ -573,7 +580,7 @@ export class RightFilterDuplicateComponent implements OnInit {
               selected: true,
               showInFilter: true
             };
-              const obj4 = {
+            const obj4 = {
               amc_name: amc.amcName,
               schemeName: amc.schemeName,
               id: amc.schemeId,
@@ -621,10 +628,13 @@ export class RightFilterDuplicateComponent implements OnInit {
     this.checkFlag = true;
     this.amc.filter(function (element) {
       if (element.selected == true) {
+
         element.showInFilter = true;
         filterData2.forEach(amc => {
           // amc.mutualFund.forEach(mf => {
-          if (element.amc_id == amc.amcId) {
+          if (element.amc_id == amc.amcId && !!this.selectedFamilyMap[element.familyMemberId]) {
+            this.selectedAmcMap[element.amcId] = element;
+
             const obj = {
               amc_name: amc.amcName,
               schemeName: amc.schemeName,
@@ -635,7 +645,7 @@ export class RightFilterDuplicateComponent implements OnInit {
               selected: true,
               showInFilter: true
             };
-            
+
             const obj1 = {
               name: amc.ownerName,
               familyMemberId: amc.familyMemberId,
@@ -663,7 +673,7 @@ export class RightFilterDuplicateComponent implements OnInit {
           }
         });
       } else {
-         element.showInFilter = false;
+        element.showInFilter = false;
       }
     });
     filterData1 = [...new Map(filterData1.map(item => [item.familyMemberId, item])).values()];
@@ -707,7 +717,7 @@ export class RightFilterDuplicateComponent implements OnInit {
               showInFilter: true
 
             };
-            const obj4= {
+            const obj4 = {
               amc_name: amc.amcName,
               schemeName: amc.schemeName,
               schemeCode: amc.schemeCode,
@@ -789,7 +799,7 @@ export class RightFilterDuplicateComponent implements OnInit {
               showInFilter: true
 
             };
-            const obj3= {
+            const obj3 = {
               amc_name: amc.amcName,
               schemeName: amc.schemeName,
               schemeCode: amc.schemeCode,
@@ -1210,7 +1220,7 @@ export class RightFilterDuplicateComponent implements OnInit {
   selectAll(value, filter) {
 
     this.whichFilter = filter;
-   
+
     if (value.checked) {
       this.checkFlag = true;
       this.uncheckFlag = false;
@@ -1341,6 +1351,6 @@ export class RightFilterDuplicateComponent implements OnInit {
 
 
   Close(data) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data });
+    this.subInjectService.changeNewRightSliderState({state: 'close', data});
   }
 }
