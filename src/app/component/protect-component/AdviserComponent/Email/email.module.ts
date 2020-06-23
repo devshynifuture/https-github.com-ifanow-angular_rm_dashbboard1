@@ -12,8 +12,10 @@ import { EmailComponent } from './email-component/email.component';
 import { LeftSidebarComponent } from './email-component/left-sidebar/left-sidebar.component';
 import { EmailRoutingModule } from './email-routing.module';
 import { EmailEntryModule } from './email.entry.module';
-import { EmailSettingsComponent } from './email-component/email-settings/email-settings.component';
+
 // import { GoogleConnectDialogComponent } from './email-component/google-connect-dialog/google-connect-dialog.component';
+import { EmailSettingsComponent } from './email-component/email-settings/email-settings.component';
+
 
 @NgModule({
   declarations: [

@@ -6,6 +6,9 @@ import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { GoogleConnectDialogComponent } from '../../../google-connect-dialog/google-connect-dialog.component';
+import { UtilService } from '../../../../../../../../services/util.service';
+import { SubscriptionInject } from '../../../../../Subscriptions/subscription-inject.service';
+import { EmailFaqAndSecurityComponent } from '../../../email-faq-and-security/email-faq-and-security.component';
 
 @Component({
   selector: 'app-google-connect',
@@ -20,7 +23,8 @@ export class GoogleConnectComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private emailService: EmailServiceService,
     private eventService: EventService,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog,
+    private subInjectService: SubscriptionInject) { }
 
 
   //  URLv2 = 'https://accounts.google.com/o/oauth2/v2/auth';
@@ -58,6 +62,28 @@ export class GoogleConnectComponent implements OnInit {
     else {
       this.isEmail = true;
     }
+
+  }
+
+  openImportantNoticeEmail() {
+    console.log("clicked");
+    const fragmentData = {
+      id: 1,
+      state: 'open',
+      componentName: EmailFaqAndSecurityComponent
+    };
+
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            // refresh required.
+
+            rightSideDataSub.unsubscribe();
+          }
+        }
+      });
 
   }
 

@@ -13,7 +13,8 @@
                         *ngIf="!showEmailInput">
                         CONNECT EMAIL ACCOUNT
                     </button>
-                    <p class="m-0 roboto f-400 text-danger pt-20">Important note on security</p>
+                    <p class="m-0 roboto f-400 text-danger pt-20" (click)="openImportantNoticeEmail()">Important note on
+                        security</p>
                 </div>
             </div>
 
@@ -33,20 +34,20 @@
                         to your clients, team members from here, seamlessly.</p>
                     <p class="m-0 roboto f-400 text-custom">You can connect your gmail and gsuite accounts.<br>
                         Personal as well as shared accounts (e.g. info@abcfinancial.com) are supported.</p>
-                    <button mat-stroked-button class="btn-primary mt-44" (click)="toggleShowEmailInput()"
+                    <button mat-stroked-button class="btn-primary mt-44" (click)="openGoogleConnectDialog()"
                         *ngIf="!showEmailInput">
                         CONNECT EMAIL ACCOUNT
                     </button>
-                    <p class="m-0 roboto f-400 text-danger pt-20">Important note on security</p>
+
+                    <p class="m-0 roboto f-400 text-danger pt-20 c-p" (click)="openImportantNoticeEmail()">Important
+                        note on security</p>
                 </div>
             </div>
         </div>
         <form [formGroup]="redirectForm">
-            <p class="mb-0 text-primitive p-44" *ngIf="showEmailInput">
+            <p class="mb-0 text-primitive p-44 b-a" *ngIf="showEmailInput">
                 <input type="email" matInput formControlName="googleConnectEmail" placeholder="Enter Your Gmail Id">
             </p>
-
-
         </form>
     </div>
 </div>

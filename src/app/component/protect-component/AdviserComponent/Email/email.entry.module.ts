@@ -6,12 +6,13 @@ import { ComposeEmailComponent } from './email-component/compose-email/compose-e
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GoogleConnectDialogComponent } from './email-component/google-connect-dialog/google-connect-dialog.component';
-
+import { EmailFaqAndSecurityComponent } from './email-component/email-faq-and-security/email-faq-and-security.component';
 
 export const componentList = [
   EmailAddTaskComponent,
   ComposeEmailComponent,
   GoogleConnectDialogComponent,
+  EmailFaqAndSecurityComponent
 ];
 
 @NgModule({

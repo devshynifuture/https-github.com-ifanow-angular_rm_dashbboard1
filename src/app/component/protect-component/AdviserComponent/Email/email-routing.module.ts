@@ -5,6 +5,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { EmailSettingsComponent } from './email-component/email-settings/email-settings.component';
 
 
+
 const routes: Routes = [
   {
     path: '',
