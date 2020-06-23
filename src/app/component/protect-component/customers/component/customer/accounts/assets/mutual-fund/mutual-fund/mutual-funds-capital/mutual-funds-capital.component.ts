@@ -13,6 +13,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
 import { Key } from 'protractor';
+import { RightFilterDuplicateComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -162,7 +163,7 @@ export class MutualFundsCapitalComponent implements OnInit {
       data: {},
       id: 1,
       state: 'open35',
-      componentName: RightFilterComponent
+      componentName: RightFilterDuplicateComponent
     };
     fragmentData.data = {
       name: 'CAPITAL GAIN REPORT',
