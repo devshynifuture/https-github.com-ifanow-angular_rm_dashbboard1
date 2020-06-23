@@ -4,6 +4,8 @@ import { SubscriptionInject } from '../../Subscriptions/subscription-inject.serv
 import { UtilService } from 'src/app/services/util.service';
 import { StatusReportComponent } from './status-report/status-report.component';
 import { BackOfficeService } from '../back-office.service';
+import { MatTableDataSource } from '@angular/material';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-bulk-report-sending',
@@ -12,25 +14,41 @@ import { BackOfficeService } from '../back-office.service';
 })
 export class BulkReportSendingComponent implements OnInit {
   displayedColumns: string[] = ['type', 'sendDate', 'recipients', 'emails', 'status'];
-  dataSource = ELEMENT_DATA;
+  data: Array<any> = [{}, {}, {}];
+  dataSource = new MatTableDataSource(this.data);
+  isLoading
+  advisorId: any;
+  
 
   constructor(
     private subInjectService : SubscriptionInject,
     private backOfficeService : BackOfficeService,
-  ) { }
+  ) { 
+    this.advisorId = AuthService.getAdvisorId();
+  }
 
   ngOnInit() {
     this.getlistOrder()
+    this.isLoading = false
   }
   getlistOrder(){
+    this.dataSource.data = [{}, {}, {}];
+    this.isLoading = true
+    console.log(this.dataSource)
     const obj = {
-      advisorId: 5125
+      advisorId: this.advisorId///5125
     };
     this.backOfficeService.getOrderList(obj).subscribe(
       data => {
-        console.log('getClientIdByLoop ==', data)
+        console.log('getOrderList ==', data)
+        this.isLoading = false
+        this.dataSource.data = data
+        console.log(this.dataSource)
       }
     );
+  }
+  refresh(flag){
+
   }
   openSendNow(data){
       const fragmentData = {
@@ -43,6 +61,7 @@ export class BulkReportSendingComponent implements OnInit {
       const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
         sideBarData => {
           if (UtilService.isDialogClose(sideBarData)) {
+            this.getlistOrder()
             if (UtilService.isRefreshRequired(sideBarData)) {
             }
             rightSideDataSub.unsubscribe();

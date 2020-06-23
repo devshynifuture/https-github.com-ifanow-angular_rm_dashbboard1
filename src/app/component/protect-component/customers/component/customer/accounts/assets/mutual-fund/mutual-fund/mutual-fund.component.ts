@@ -54,7 +54,12 @@ export class MutualFundComponent implements OnInit {
   ngOnInit() {
     this.routerActive.queryParamMap.subscribe((queryParamMap) => {
       if (queryParamMap.has('advisorId')) {
-        // this.clientSignUp = true;
+        if (queryParamMap.has('clientId')) {
+          let param1 = queryParamMap['params'];
+          this.clientId = param1.clientId
+          this.advisorId = param1.advisorId
+          console.log('2423425',param1)
+        }
       }
     });
     this.mfService.getMutualFundShowDropdown()

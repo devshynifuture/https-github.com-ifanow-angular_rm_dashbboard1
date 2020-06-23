@@ -18,6 +18,7 @@ import { WebworkerService } from 'src/app/services/web-worker.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { SettingsService } from 'src/app/component/protect-component/AdviserComponent/setting/settings.service';
 import { DatePipe } from '@angular/common';
+import { RightFilterDuplicateComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
 import { ActivatedRoute } from '@angular/router';
 
 
@@ -102,8 +103,18 @@ export class MutualFundOverviewComponent implements OnInit {
     private mfService: MfServiceService,
     public routerActive: ActivatedRoute,
     public eventService: EventService, private custumService: CustomerService, private MfServiceService: MfServiceService, private workerService: WebworkerService, private settingService: SettingsService) {
-    this.advisorId = AuthService.getAdvisorId();
-    this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
+      this.routerActive.queryParamMap.subscribe((queryParamMap) => {
+        if (queryParamMap.has('clientId')) {
+          let param1 = queryParamMap['params'];
+          this.clientId = parseInt(param1.clientId)
+          this.advisorId = parseInt(param1.advisorId)
+          console.log('2423425',param1)
+        }
+        else{
+          this.advisorId = AuthService.getAdvisorId();
+          this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
+        }
+      });
     this.userInfo = AuthService.getUserInfo();
     this.clientData = AuthService.getClientData();
     this.getAdvisorDetail = AuthService.getAdvisorDetails()
@@ -128,9 +139,17 @@ export class MutualFundOverviewComponent implements OnInit {
   }
 
   ngOnInit() {
+   // token : authTokenInLoginComponnennt
+    if(localStorage.getItem('token')!='authTokenInLoginComponnennt'){
+      localStorage.setItem('token','authTokenInLoginComponnennt')
+    }
+  
     this.routerActive.queryParamMap.subscribe((queryParamMap) => {
-      if (queryParamMap.has('advisorId')) {
-        console.log('233333333333333 6')
+      if (queryParamMap.has('clientId')) {
+        let param1 = queryParamMap['params'];
+        this.clientId = parseInt(param1.clientId)
+        this.advisorId = parseInt(param1.advisorId)
+        console.log('2423425',param1)
       }
     });
     this.sendaata = {}
@@ -814,7 +833,7 @@ export class MutualFundOverviewComponent implements OnInit {
       data: {},
       id: 1,
       state: 'open35',
-      componentName: RightFilterComponent
+      componentName: RightFilterDuplicateComponent
     };
     // fragmentData.data = {
     //   name: 'Overview Report',

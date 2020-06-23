@@ -34,7 +34,7 @@ export class GoogleConnectComponent implements OnInit {
   emailId;
   showEmailInput: boolean = false;
   redirectForm;
-
+  isEmail:boolean = true;
   ngOnInit() {
     this.redirectForm = this.fb.group({
       googleConnectEmail: ['', Validators.required]
@@ -46,6 +46,14 @@ export class GoogleConnectComponent implements OnInit {
       localStorage.removeItem('associatedGoogleEmailId');
     } else {
       this.router.navigate(['../'], { relativeTo: this.activatedRoute })
+    }
+
+    if(this.router.url == "/admin/activies/month"){
+      this.isEmail = false;
+      
+    }
+    else{
+      this.isEmail = true;
     }
 
   }

@@ -411,7 +411,7 @@
                                 </div>
                             </td>
                         </ng-container>
-                        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: false"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                         <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: false" [hidden]="isLoading"></tr>
 
@@ -536,7 +536,7 @@
                                     </div>
                                 </td>
                             </ng-container>
-                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: false"></tr>
                             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                             <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: false" [hidden]="isLoading">
                             </tr>
@@ -582,7 +582,7 @@
                                 </div>
                             </td>
                         </ng-container>
-                        <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: false"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
                     </table>
                 </div>
@@ -697,7 +697,7 @@
                                     </div>
                                 </td>
                             </ng-container>
-                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: false"></tr>
                             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                             <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: false" [hidden]="isLoading">
                             </tr>
@@ -819,7 +819,7 @@
                                     </div>
                                 </td>
                             </ng-container>
-                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: false"></tr>
                             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                             <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: false" [hidden]="isLoading">
                             </tr>

@@ -117,6 +117,8 @@ export class CalendarDayComponent implements OnInit {
 
   }
 
+  
+
   curruntDayIndex: any;
 
   // updatecalendar() {
@@ -153,6 +155,12 @@ export class CalendarDayComponent implements OnInit {
 
 
   // }
+
+  returnNumber(num){
+    // num.toUpperCase()
+   console.log(parseInt(num) +' '+ num.charAt(num.length - 3).toUpperCase() + num.charAt(num.length - 2).toUpperCase(),"time event");
+    return parseInt(num)  +' '+ num.charAt(num.length - 3).toUpperCase() + num.charAt(num.length - 2).toUpperCase()
+  }
 
   formateDate(date) {
     var dd = new Date(date).getDate();
