@@ -104,6 +104,8 @@ export class MutualFundsCapitalComponent implements OnInit {
   @ViewChild('tableEl', { static: false }) tableEl;
   @ViewChild('tableEl2', { static: false }) tableEl2;
   @ViewChild('tableEl3', { static: false }) tableEl3;
+  @ViewChild('mfCapitalTemplate', { static: false }) mfCapitalTemplate;
+
   uploadData(data) {
     if (data) {
       this.bulkData = data
@@ -537,20 +539,21 @@ export class MutualFundsCapitalComponent implements OnInit {
     // this.pdfGen.generatePdf(rows, tableTitle);
   }
   generatePdfBulk() {
-    let para = document.getElementById('template');
-    let obj = {
-      htmlInput: para.innerHTML,
-      name: 'MF_Capital_Gain_Summary',
-      landscape: true,
-      key: 'showPieChart',
-      clientId : this.clientId,
-      advisorId : this.advisorId,
-      fromEmail: 'devshyni@futurewise.co.in',
-      toEmail: 'abhishek@futurewise.co.in'
-    }
+   
     setTimeout(() => {
+      let para = this.mfCapitalTemplate.nativeElement.innerHTML
+      let obj = {
+        htmlInput: para,
+        name: 'MF_Capital_Gain_Summary',
+        landscape: true,
+        key: 'showPieChart',
+        clientId : this.clientId,
+        advisorId : this.advisorId,
+        fromEmail: 'devshyni@futurewise.co.in',
+        toEmail: 'abhishek@futurewise.co.in'
+      }
       this.UtilService.bulkHtmlToPdf(obj)
-      this.UtilService.htmlToPdf(para.innerHTML, 'MF_Capital_Gain_Summary', false, this.fragmentData, '', '') 
+      //this.UtilService.htmlToPdf(para, 'MF_Capital_Gain_Summary', false, this.fragmentData, '', '') 
     }, 400);
     
 

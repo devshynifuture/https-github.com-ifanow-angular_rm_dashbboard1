@@ -967,7 +967,7 @@ export class MutualFundOverviewComponent implements OnInit {
       svg : this.svg
     }
     this.UtilService.bulkHtmlToPdf(obj)
-    this.UtilService.htmlToPdf(para.innerHTML, 'Overview', false, this.fragmentData,'showPieChart', this.svg)
+  //  this.UtilService.htmlToPdf(para.innerHTML, 'Overview', false, this.fragmentData,'showPieChart', this.svg)
 
   }
 }

@@ -42,6 +42,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   isSpinner = false;
   customDataHolder = [];
   @ViewChild('tableEl', { static: false }) tableEl;
+  @ViewChild('unrealizedTranTemplate', { static: false }) unrealizedTranTemplate;
   rightFilterData: any = { reportType: '' };
   adviorData: any;
   fragmentData = { isSpinner: false };
@@ -670,9 +671,11 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
           }
         }
         if(this.route.url.split('?')[0] == '/pdf/allTransactions' && this.isLoading == false){
+          this.showDownload = true
           this.generatePdfBulk()
         }
         if(this.route.url.split('?')[0] == '/pdf/unrealisedTransactions' && this.isLoading == false){
+          this.showDownload = true
           this.generatePdfBulk()
         }
         this.mfService.setTransactionData(this.dataTransaction)
@@ -994,9 +997,9 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   }
   generatePdfBulk() {
     setTimeout(() => {
-      let para = document.getElementById('template');
-    let obj = {
-      htmlInput: para.innerHTML,
+      let para = this.unrealizedTranTemplate.nativeElement.innerHTML
+      let obj = {
+      htmlInput: para,
       name: this.mode,
       landscape: true,
       key: 'showPieChart',
@@ -1006,7 +1009,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       toEmail: 'abhishek@futurewise.co.in'
     }
     this.utilService.bulkHtmlToPdf(obj)
-    this.utilService.htmlToPdf(para.innerHTML, 'Summary', false, this.fragmentData, '', '')
+    //this.utilService.htmlToPdf(para, this.mode, false, this.fragmentData, '', '')
     }, 400);
   }
 }
