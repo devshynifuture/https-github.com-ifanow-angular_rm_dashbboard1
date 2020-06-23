@@ -60,14 +60,14 @@
 
 <div class="row">
     <div class="col-md-12">
-        <table mat-table [dataSource]="dataSource" class="mt-20 skeletonAnimation" [appSkeletonLoading]="isLoading"
+        <table mat-table [dataSource]="dataSource.data" class="mt-20 skeletonAnimation" [appSkeletonLoading]="isLoading"
             id="tbs">
 
             <ng-container matColumnDef="type">
                 <th mat-header-cell class="br" *matHeaderCellDef> Report type </th>
                 <td mat-cell class="br" *matCellDef="let element" (click)="openStatusReport(element)">
                     <div class="bar">
-                        {{(element.reportTypeId == 1)? 'MF Overview':(element.reportTypeId == 2)? 'MF Summary':(element.reportTypeId == 3)? 'MF All Transactions':(element.reportTypeId == 4)? 'MF Overview':(element.reportTypeId == 1)? 'MF Unrealised Transactions':(element.reportTypeId == 5)? 'MF Capital gains - Summary':(element.reportTypeId == 6)? 'MF Capital gains - Detailed':''}}
+                        {{isLoading ? '' :(element.reportTypeId == 1)? 'MF Overview':(element.reportTypeId == 2)? 'MF Summary':(element.reportTypeId == 3)? 'MF All Transactions':(element.reportTypeId == 4)? 'MF Overview':(element.reportTypeId == 1)? 'MF Unrealised Transactions':(element.reportTypeId == 5)? 'MF Capital gains - Summary':(element.reportTypeId == 6)? 'MF Capital gains - Detailed':''}}
                     </div>
                 </td>
             </ng-container>
@@ -76,7 +76,7 @@
             <ng-container matColumnDef="sendDate">
                 <th mat-header-cell class="br" *matHeaderCellDef> Report sent date </th>
                 <td mat-cell class="br" *matCellDef="let element" (click)="openStatusReport(element)">
-                    <div class="bar"> {{element.createdDate | date:'dd/MM/yyyy'}} </div>
+                    <div class="bar"> {{isLoading ? '' : element.createdDate | date:'dd/MM/yyyy'}} </div>
                 </td>
             </ng-container>
 
@@ -84,7 +84,7 @@
             <ng-container matColumnDef="recipients">
                 <th mat-header-cell class="br" *matHeaderCellDef> Number of recipients </th>
                 <td mat-cell class="br" *matCellDef="let element" (click)="openStatusReport(element)">
-                    <div class="bar"> {{element.recipients}} </div>
+                    <div class="bar"> {{isLoading ? '' : element.emailDeliveredCount}} </div>
                 </td>
             </ng-container>
 
@@ -92,14 +92,14 @@
             <ng-container matColumnDef="emails">
                 <th mat-header-cell class="br" *matHeaderCellDef> Bounced emails </th>
                 <td mat-cell class="br" *matCellDef="let element">
-                    <div class="bar"> {{element.emails}} </div>
+                    <div class="bar"> {{isLoading ? '' : element.emailSentCount-element.emailDeliveredCount}} </div>
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="status">
                 <th mat-header-cell class="br" *matHeaderCellDef> Status </th>
                 <td mat-cell class="br" *matCellDef="let element">
-                    <div class="bar"> {{element.isActive}} </div>
+                    <div class="bar"> {{isLoading ? '' : element.isActive}} </div>
                 </td>
             </ng-container>
 

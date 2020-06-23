@@ -18,20 +18,21 @@ export class BulkReportSendingComponent implements OnInit {
   dataSource = new MatTableDataSource(this.data);
   isLoading
   advisorId: any;
-  
+
 
   constructor(
-    private subInjectService : SubscriptionInject,
-    private backOfficeService : BackOfficeService,
-  ) { 
+    private subInjectService: SubscriptionInject,
+    private backOfficeService: BackOfficeService,
+  ) {
     this.advisorId = AuthService.getAdvisorId();
   }
 
   ngOnInit() {
-    this.getlistOrder()
     this.isLoading = false
+    this.dataSource.data = [{}, {}, {}];
+    this.getlistOrder()
   }
-  getlistOrder(){
+  getlistOrder() {
     this.dataSource.data = [{}, {}, {}];
     this.isLoading = true
     console.log(this.dataSource)
@@ -47,31 +48,31 @@ export class BulkReportSendingComponent implements OnInit {
       }
     );
   }
-  refresh(flag){
+  refresh(flag) {
+    this.getlistOrder()
+  }
+  openSendNow(data) {
+    const fragmentData = {
+      flag: 'openSendNow',
+      data,
+      id: 1,
+      state: 'open65',
+      componentName: SendNowReportsComponent,
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        if (UtilService.isDialogClose(sideBarData)) {
+          this.getlistOrder()
+          if (UtilService.isRefreshRequired(sideBarData)) {
+          }
+          rightSideDataSub.unsubscribe();
+
+        }
+      }
+    );
 
   }
-  openSendNow(data){
-      const fragmentData = {
-        flag: 'openSendNow',
-        data,
-        id: 1,
-        state: 'open65',
-        componentName: SendNowReportsComponent,
-      };
-      const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-        sideBarData => {
-          if (UtilService.isDialogClose(sideBarData)) {
-            this.getlistOrder()
-            if (UtilService.isRefreshRequired(sideBarData)) {
-            }
-            rightSideDataSub.unsubscribe();
-  
-          }
-        }
-      );
-    
-  }
-  openStatusReport(data){
+  openStatusReport(data) {
     const fragmentData = {
       flag: 'openSendNow',
       data,
