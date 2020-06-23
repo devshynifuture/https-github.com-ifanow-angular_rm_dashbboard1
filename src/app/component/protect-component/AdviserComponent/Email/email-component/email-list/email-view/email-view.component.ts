@@ -49,6 +49,7 @@ export class EmailViewComponent implements OnInit, OnDestroy {
   attachmentsBase64Data: { filename: string, mimeType: 'string', base64Data: 'string' }[];
   attachmentArrayDetail: Array<any> = [];
   isAttachmentBasedEmail: boolean = false;
+  isLoadingForAttachment: boolean;
 
   constructor(private emailService: EmailServiceService,
     private _bottomSheet: MatBottomSheet,
@@ -87,14 +88,10 @@ export class EmailViewComponent implements OnInit, OnDestroy {
         const { payload: { headers } } = response;
         const { payload: { parts } } = response;
         if (response.payload.body !== null) {
-          if (response.payload.mimeType === 'text/html') {
+          if (response.payload.mimeType === 'text/html' || response.payload.mimeType === 'text/plain') {
             this.decodedPartsDetail.push({
               item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(response.payload.body.data),
-            })
-          } else if (response.payload.mimeType === 'text/plain') {
-            this.decodedPartsDetail.push({
-              item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(response.payload.body.data),
-            })
+            });
           }
           else if (response.payload.mimeType === 'multipart/mixed') {
             if (parts.length !== 0) {
@@ -141,71 +138,56 @@ export class EmailViewComponent implements OnInit, OnDestroy {
               });
             }
           }
+          if (response.payload.mimeType === 'multipart/mixed' || response.payload.mimeType === 'multipart/alternative') {
+            if (parts.length != 0) {
+              this.isLoadingForAttachment = true;
+              parts.forEach((part, index) => {
+                if (part.filename !== null) {
+                  const obj = {
+                    userId: AuthService.getUserInfo().advisorId,
+                    email: AuthService.getUserInfo().userName,
+                    attachmentId: part.body.attachmentId,
+                    messageId: this.messageId
+                  }
+                  this.emailService.getAttachmentFiles(obj).subscribe(res => {
+                    if (res) {
+                      const resBase64 = res.data.replace(/\-/g, '+').replace(/_/g, '/');
+                      this.creationOfUrlAndBase64File(resBase64, part);
+                    }
+                    if (index === (parts.length - 1)) {
+                      this.isLoadingForAttachment = false;
+                    }
+                  });
+                }
+              });
+            }
+          }
         }
-        // headers.forEach(header => {
-        //   if (header.name === 'Delivered-To') {
-        //     this.deliveredTo = header.value;
-        //   }
 
-        //   if (header.name === 'Reply-To') {
-        //     this.replyTo = header.value;
-        //   }
+        headers.forEach(header => {
+          if (header.name === 'Delivered-To') {
+            this.deliveredTo = header.value;
+          }
 
-        //   if (header.name === 'Date') {
-        //     this.date = header.value;
-        //   }
-        //   if (header.name === 'Subject') {
-        //     this.subject = header.value;
-        //   }
-        //   if (header.name === 'From') {
-        //     this.fromDetailMessage = header.value;
-        //   }
-        //   if (header.name === "To") {
-        //     this.toDetailMessage = header.value;
-        //   }
-        // });
+          if (header.name === 'Reply-To') {
+            this.replyTo = header.value;
+          }
 
-        // if (parts !== null) {
-        //   parts.forEach(part => {
-        //     if (part.mimeType === 'text/html') {
-        //       this.decodedPartsDetail.push({
-        //         item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data),
-        //         date: this.date
-        //       })
-        //     }
-        //     if (part.mimeType !== 'multipart/alternative') {
+          if (header.name === 'Date') {
+            this.date = header.value;
+          }
+          if (header.name === 'Subject') {
+            this.subject = header.value;
+          }
+          if (header.name === 'From') {
+            this.fromDetailMessage = header.value;
+          }
+          if (header.name === "To") {
+            this.toDetailMessage = header.value;
+          }
+        });
 
-        //       if (part.filename !== null) {
-        //         const obj = {
-        //           userId: AuthService.getUserInfo().advisorId,
-        //           email: AuthService.getUserInfo().emailId,
-        //           attachmentId: part.body.attachmentId,
-        //           messageId: this.messageId
-        //         }
-
-        //         this.emailService.getAttachmentFiles(obj).subscribe(res => {
-        //           const resBase64 = res.data.replace(/\-/g, '+').replace(/_/g, '/');
-        //           this.creationOfUrlAndBase64File(resBase64, part)
-
-        //         });
-
-        //       }
-        //     } else if (part.mimeType === 'multipart/alternative') {
-        //       if (part.parts !== null) {
-        //         const parts = part.parts;
-        //         parts.forEach(part => {
-        //           if (part.mimeType === 'text/html') {
-        //             this.decodedPartsDetail.push({
-        //               item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data),
-        //               date: this.date
-        //             })
-        //           }
-        //         });
-        //       }
-        //     }
-        //   });
-        // }
-
+        console.log('this is detailed view json::', this.decodedPartsDetail);
 
       });
   }
@@ -286,11 +268,11 @@ export class EmailViewComponent implements OnInit, OnDestroy {
         let { messageHeaders } = this.emailObj;
         this.messagesHeaders = messageHeaders;
 
-        if (this.messagesHeaders.length !== 0) {
-          this.messagesHeaders.forEach(item => {
+        // if (this.messagesHeaders.length !== 0) {
+        //   this.messagesHeaders.forEach(item => {
 
-          })
-        }
+        //   });
+        // }
 
         let subject = headers.filter((header) => {
           return header.name === 'Subject';

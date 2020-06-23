@@ -14,7 +14,7 @@ import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
 import { Key } from 'protractor';
 import { RightFilterDuplicateComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-mutual-funds-capital',
@@ -83,6 +83,7 @@ export class MutualFundsCapitalComponent implements OnInit {
   // capitalGainData: any;
   constructor(private pdfGen: PdfGenService,
     public routerActive: ActivatedRoute,
+    private route : Router,
      private excel: ExcelGenService, private UtilService: UtilService, private custumService: CustomerService, private eventService: EventService, private reconService: ReconciliationService, private MfServiceService: MfServiceService, private subInjectService: SubscriptionInject) { 
        
 
@@ -103,6 +104,8 @@ export class MutualFundsCapitalComponent implements OnInit {
   @ViewChild('tableEl', { static: false }) tableEl;
   @ViewChild('tableEl2', { static: false }) tableEl2;
   @ViewChild('tableEl3', { static: false }) tableEl3;
+  @ViewChild('mfCapitalTemplate', { static: false }) mfCapitalTemplate;
+
   uploadData(data) {
     if (data) {
       this.bulkData = data
@@ -306,6 +309,9 @@ export class MutualFundsCapitalComponent implements OnInit {
       this.setCapitaSummary.GTReinvesment = this.GTReinvesment
 
       this.MfServiceService.setCapitalSummary(this.setCapitaSummary)
+      if(this.route.url.split('?')[0] == '/pdf/capitalGainSummary'){
+        this.generatePdfBulk()
+      }
       this.objSendToDetailedCapital = {
         mfData: this.mutualFund,
         responseData: this.capitalGainData,
@@ -531,5 +537,25 @@ export class MutualFundsCapitalComponent implements OnInit {
     this.UtilService.htmlToPdf(para.innerHTML, 'CapitalGain', 'true', this.fragmentData, '', '');
     // let rows = this.tableEl._elementRef.nativeElement.rows;
     // this.pdfGen.generatePdf(rows, tableTitle);
+  }
+  generatePdfBulk() {
+   
+    setTimeout(() => {
+      let para = this.mfCapitalTemplate.nativeElement.innerHTML
+      let obj = {
+        htmlInput: para,
+        name: 'MF_Capital_Gain_Summary',
+        landscape: true,
+        key: 'showPieChart',
+        clientId : this.clientId,
+        advisorId : this.advisorId,
+        fromEmail: 'devshyni@futurewise.co.in',
+        toEmail: 'abhishek@futurewise.co.in'
+      }
+      this.UtilService.bulkHtmlToPdf(obj)
+      //this.UtilService.htmlToPdf(para, 'MF_Capital_Gain_Summary', false, this.fragmentData, '', '') 
+    }, 400);
+    
+
   }
 } 

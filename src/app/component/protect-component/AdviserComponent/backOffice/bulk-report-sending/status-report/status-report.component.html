@@ -21,11 +21,11 @@
         <div class="col-md-12 d-flex">
             <div class="bg-grey lter smallBoxReport">
                 <p class=" mb-4 pl-10 f-14 text-primitive">Total recipients</p>
-                <p class="mb-0 pl-10 f-20">127</p>
+                <p class="mb-0 pl-10 f-20">{{inputData.clientCount}}</p>
             </div>
             <div class="bg-grey lter smallBoxReport">
                 <p class=" f-14 pl-10 mb-4 text-primitive">Total recipients</p>
-                <p class="mb-12 pl-10 f-20">30 <span class="primary-border refeClassBox text-primary f-12">REFRESH</span> </p>
+                <p class="mb-12 pl-10 f-20">{{inputData.emailSentCount}} <span class="primary-border refeClassBox text-primary f-12">REFRESH</span> </p>
                 <mat-progress-bar mode="determinate" value="20"></mat-progress-bar>
             </div>
         </div>

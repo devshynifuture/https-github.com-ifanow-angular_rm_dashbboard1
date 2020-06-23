@@ -19,7 +19,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { SettingsService } from 'src/app/component/protect-component/AdviserComponent/setting/settings.service';
 import { DatePipe } from '@angular/common';
 import { RightFilterDuplicateComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -102,6 +102,7 @@ export class MutualFundOverviewComponent implements OnInit {
   constructor(private datePipe: DatePipe, public subInjectService: SubscriptionInject, public UtilService: UtilService,
     private mfService: MfServiceService,
     public routerActive: ActivatedRoute,
+    private router : Router,
     public eventService: EventService, private custumService: CustomerService, private MfServiceService: MfServiceService, private workerService: WebworkerService, private settingService: SettingsService) {
       this.routerActive.queryParamMap.subscribe((queryParamMap) => {
         if (queryParamMap.has('clientId')) {
@@ -326,8 +327,10 @@ export class MutualFundOverviewComponent implements OnInit {
         }
         this.calculatePercentage(categoryList); // for Calculating MF categories percentage
         this.pieChart('piechartMutualFund'); // pie chart data after calculating percentage
-
         this.isLoading = false;
+        if(this.router.url.split('?')[0] == '/pdf/overview'){
+          this.generatePdfBulk()
+        }
         this.changeInput.emit(false);
       };
       worker.postMessage(input);
@@ -947,6 +950,24 @@ export class MutualFundOverviewComponent implements OnInit {
   }
 
   generateUpload(data) {
+
+  }
+  generatePdfBulk() {
+    this.svg = this.chart.getSVG()
+    let para = document.getElementById('template');
+    let obj = {
+      htmlInput: para.innerHTML,
+      name: 'Overview`s',
+      landscape: true,
+      key: 'showPieChart',
+      clientId : this.clientId,
+      advisorId : this.advisorId,
+      fromEmail: 'devshyni@futurewise.co.in',
+      toEmail: 'devshyni@futurewise.co.in',
+      svg : this.svg
+    }
+    this.UtilService.bulkHtmlToPdf(obj)
+  //  this.UtilService.htmlToPdf(para.innerHTML, 'Overview', false, this.fragmentData,'showPieChart', this.svg)
 
   }
 }

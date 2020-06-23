@@ -1,10 +1,10 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialog} from '@angular/material';
-import {EventService} from '../../../../../../../Data-service/event.service';
-import {FormControl, FormGroup} from '@angular/forms';
-import {SubscriptionService} from '../../../subscription.service';
-import {HowToUseDialogComponent} from '../how-to-use-dialog/how-to-use-dialog.component';
-import {AuthService} from "../../../../../../../auth-service/authService";
+import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+import { EventService } from '../../../../../../../Data-service/event.service';
+import { FormControl, FormGroup } from '@angular/forms';
+import { SubscriptionService } from '../../../subscription.service';
+import { HowToUseDialogComponent } from '../how-to-use-dialog/how-to-use-dialog.component';
+import { AuthService } from "../../../../../../../auth-service/authService";
 
 @Component({
   selector: 'app-preference-email-invoice',
@@ -24,7 +24,7 @@ export class PreferenceEmailInvoiceComponent implements OnInit {
   heading: string;
   fragmentData: any;
 
-  constructor(private eventService: EventService, public subService: SubscriptionService,public dialog: MatDialog) {
+  constructor(private eventService: EventService, public subService: SubscriptionService, public dialog: MatDialog, private render: Renderer2) {
 
   }
 
@@ -40,14 +40,23 @@ export class PreferenceEmailInvoiceComponent implements OnInit {
     this.heading = (this.fragmentData.data.id == 1) ? 'Invoice' : (this.fragmentData.data.id == 2) ? 'Quotations' : (this.fragmentData.data.id == 3) ? ' Documents with esign request' : ' Documents without eSign request';
     this.storeData = this.fragmentData.data;
   }
-
-// Begin ControlValueAccesor methods.
+  copyName(value) {
+    const tag = this.render.createElement('input');
+    tag.value = value;
+    document.body.appendChild(tag);
+    tag.focus();
+    tag.select();
+    document.execCommand('copy');
+    document.body.removeChild(tag);
+    this.eventService.openSnackBar('Text copied', 'Dismiss');
+  }
+  // Begin ControlValueAccesor methods.
   onChange = (_) => {
   }
   onTouched = () => {
   }
 
-// Form model content changed.
+  // Form model content changed.
   writeValue(content: any): void {
     this.model = content;
   }
@@ -85,7 +94,7 @@ export class PreferenceEmailInvoiceComponent implements OnInit {
       advisorId: this.advisorId,
 
       // "advisorId":2727,
-      emailTemplateId: 1
+      emailTemplateId: this.storeData.emailTemplateTypeId
     };
     this.subService.updateEmailTemplate(obj).subscribe(
       data => this.getResponseData(data)

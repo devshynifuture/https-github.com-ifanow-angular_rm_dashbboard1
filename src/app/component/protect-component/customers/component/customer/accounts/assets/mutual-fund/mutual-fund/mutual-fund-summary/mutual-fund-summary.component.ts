@@ -146,6 +146,14 @@ export class MutualFundSummaryComponent implements OnInit {
       })
     this.getFilterData(2);
   }
+  ngAfterViewInit() {
+    //this.showDownload == true
+    let para = document.getElementById('template');
+    if (para.innerHTML) {
+      this.generatePdfBulk()
+
+    }
+  }
   getFilterData(value) {
     this.customDataSource = [];
     let transactionView = [];
@@ -504,6 +512,10 @@ export class MutualFundSummaryComponent implements OnInit {
 
             } else {
               this.mfService.setSummaryData(this.dataSummary)
+              if(this.router.url.split('?')[0] == '/pdf/summary'){
+                this.showDownload = true
+                this.generatePdfBulk()
+              }
             }
           })
         this.isLoading = false;
@@ -898,5 +910,23 @@ export class MutualFundSummaryComponent implements OnInit {
       );
     }
 
+  }
+  generatePdfBulk() {
+    this.showDownload = true
+    setTimeout(() => {
+      let para = this.summaryTemplate.nativeElement.innerHTML
+      let obj = {
+        htmlInput: para,
+        name: 'Summary`s',
+        landscape: true,
+        key: 'showPieChart',
+        clientId : this.clientId,
+        advisorId : this.advisorId,
+        fromEmail: 'devshyni@futurewise.co.in',
+        toEmail: 'devshyni@futurewise.co.in'
+      }
+      this.utilService.bulkHtmlToPdf(obj)
+     // this.utilService.htmlToPdf(para, 'Summary', false, this.fragmentData, '', '')
+    }, 400);
   }
 }

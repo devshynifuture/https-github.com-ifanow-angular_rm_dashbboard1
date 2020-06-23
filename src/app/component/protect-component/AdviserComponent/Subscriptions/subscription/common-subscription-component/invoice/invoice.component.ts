@@ -9,6 +9,7 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 import { MatDialog } from '@angular/material';
 import { UtilService } from 'src/app/services/util.service';
 import { EmailOnlyComponent } from '../email-only/email-only.component';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 
 export interface PeriodicElement {
@@ -44,6 +45,23 @@ export class InvoiceComponent implements OnInit {
   moreStatus: any;
 
   [x: string]: any;
+
+
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'VIEW',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
 
   // invoiceTemplate
   gstTreatment = [
@@ -561,7 +579,20 @@ export class InvoiceComponent implements OnInit {
 
 
   OpenFeeCalc() {
-    this.feeCalc = true;
+    this.barButtonOptions.active = true;
+    const obj =
+    {
+      invoiceId: this.storeData.id
+    }
+    this.subService.getInvoiceFeeCalculations(obj).subscribe(
+      data => {
+        if (data) {
+          this.feeCalc = true;
+          this.barButtonOptions.active = false;
+          this.invoiceFeeCalculations = data
+        }
+      }
+    )
   }
 
   recordPayment() {

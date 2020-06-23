@@ -240,7 +240,7 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
         }
       });
 
-      this.getAttachmentDetails(this.data);
+      this.getAttachmentDetails(this.data.dataToSend);
       this.emailForm.setValue({
         sender: this.from ? this.from : '',
         receiver: this.receipients ? this.receipients : [],
@@ -393,7 +393,9 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
         messageId: data.dataObj.idsOfMessages[0],
         userId: AuthService.getUserInfo().advisorId
       }
-      this.emailService.getAttachmentFiles(obj).subscribe(res => { });
+      this.emailService.getAttachmentFiles(obj).subscribe(res => {
+        console.log("attachment details:::", res)
+      });
     })
   }
 

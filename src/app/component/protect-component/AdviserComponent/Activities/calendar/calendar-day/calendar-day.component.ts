@@ -188,7 +188,14 @@ export class CalendarDayComponent implements OnInit {
     return hh + ":" + mm + amPm + " ";
   }
 
-  addEvent(day, month, year) {
+  addEvent(day, month, year, time) {
+    let hr;
+    if(time.charAt(time.length - 2)+time.charAt(time.length - 1) == 'PM'){
+      hr = 12 + parseInt(time);
+    }
+    else{
+      hr = parseInt(time);
+    }
     let event: any;
     if (month == 0) {
       month = 12;
@@ -197,8 +204,8 @@ export class CalendarDayComponent implements OnInit {
       month = 1;
       year += 1;
     }
-    let eventDate = month + "/" + day + "/" + year;
-
+    let eventDate = new Date(month + "/" + day + "/" + year);
+    eventDate.setHours(hr-1)
     event = {
       "eventId": "",
       "summary": "",
@@ -206,11 +213,11 @@ export class CalendarDayComponent implements OnInit {
       "title": "",
       "description": "",
       "start": {
-        "dateTime": new Date(eventDate),
+        "dateTime":eventDate,
         "timeZone": null
       },
       "end": {
-        "dateTime": new Date(eventDate),
+        "dateTime":eventDate,
         "timeZone": null
       },
       "recurrence": "",
