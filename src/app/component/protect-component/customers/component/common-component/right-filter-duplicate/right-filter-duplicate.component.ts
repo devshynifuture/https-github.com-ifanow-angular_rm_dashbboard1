@@ -93,6 +93,7 @@ export class RightFilterDuplicateComponent implements OnInit {
   selectUnselctAllFlagScheme = true;
   selectUnselctAllFlagFolio = true;
   selectUnselctAllFlagCategory = true;
+  selectedFolioMap= {};
 
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder,
               private custumService: CustomerService, private eventService: EventService,
@@ -562,11 +563,11 @@ export class RightFilterDuplicateComponent implements OnInit {
     const filterData2 = [];
     const filterData3 = [];
     const filterData4 = [];
+    let selectedFamilyMapObj= {};
     this.checkFlag = true;
-    this.selectedFamilyMap = {};
     this.familyMember.filter(function (element) {
       if (element.selected == true) {
-        this.selectedFamilyMap[element.familyMemberId] = element;
+         selectedFamilyMapObj[element.familyMemberId] = element.familyMemberId;
         element.showInFilter = true;
         filterData.filter(function (amc) {
           // amc.mutualFund.forEach(function (mf) {
@@ -578,7 +579,8 @@ export class RightFilterDuplicateComponent implements OnInit {
               mutualFund: amc.mutualFund,
               amc_id: amc.amcId,
               selected: true,
-              showInFilter: true
+              showInFilter: true,
+              familyMemberId:amc.familyMemberId
             };
             const obj4 = {
               amc_name: amc.amcName,
@@ -587,18 +589,26 @@ export class RightFilterDuplicateComponent implements OnInit {
               mutualFund: amc.mutualFund,
               amc_id: amc.amcId,
               selected: true,
-              showInFilter: true
+              showInFilter: true,
+              familyMemberId:amc.familyMemberId
             };
             const obj2 = {
               folioNumber: amc.folioNumber,
               selected: true,
-              showInFilter: true
+              showInFilter: true,
+              familyMemberId:amc.familyMemberId,
+              amc_id: amc.amcId,
+              id: amc.schemeId,
             };
             const obj3 = {
               category: amc.categoryName,
               categoryId: amc.categoryId,
               selected: true,
-              showInFilter: true
+              showInFilter: true,
+              familyMemberId:amc.familyMemberId,
+              amc_id: amc.amcId,
+              id: amc.schemeId,
+              folioNumber: amc.folioNumber,
             };
             filterData1.push(obj);
             filterData2.push(obj2);
@@ -611,6 +621,7 @@ export class RightFilterDuplicateComponent implements OnInit {
         element.showInFilter = false;
       }
     });
+    this.selectedFamilyMap = selectedFamilyMapObj;
     this.scheme = [...new Map(filterData4.map(item => [item.id, item])).values()];
     this.amc = [...new Map(filterData1.map(item => [item.amc_id, item])).values()];
     this.folio = [...new Map(filterData2.map(item => [item.folioNumber, item])).values()];
@@ -625,6 +636,9 @@ export class RightFilterDuplicateComponent implements OnInit {
     let filterData1 = [];
     const filterData3 = [];
     const filterData4 = [];
+    let famMap = {};
+    let selectedFamilyMapObj = this.selectedFamilyMap
+    let selectedAmcMapObj = {};
     this.checkFlag = true;
     this.amc.filter(function (element) {
       if (element.selected == true) {
@@ -632,8 +646,9 @@ export class RightFilterDuplicateComponent implements OnInit {
         element.showInFilter = true;
         filterData2.forEach(amc => {
           // amc.mutualFund.forEach(mf => {
-          if (element.amc_id == amc.amcId && !!this.selectedFamilyMap[element.familyMemberId]) {
-            this.selectedAmcMap[element.amcId] = element;
+             (Object.keys(selectedFamilyMapObj).length > 0) ? famMap = selectedFamilyMapObj[element.familyMemberId] : famMap = amc.familyMemberId;
+          if (element.amc_id == amc.amcId && famMap== amc.familyMemberId) {
+            selectedAmcMapObj[element.amc_id] = element.amc_id;
 
             const obj = {
               amc_name: amc.amcName,
@@ -643,7 +658,9 @@ export class RightFilterDuplicateComponent implements OnInit {
               id: amc.schemeId,
               amc_id: amc.amcId,
               selected: true,
-              showInFilter: true
+              showInFilter: true,
+              familyMemberId:amc.familyMemberId
+
             };
 
             const obj1 = {
@@ -656,14 +673,20 @@ export class RightFilterDuplicateComponent implements OnInit {
             const obj4 = {
               folioNumber: amc.folioNumber,
               selected: true,
-              showInFilter: true
-
+              showInFilter: true,
+              familyMemberId:amc.familyMemberId,
+              amc_id: amc.amcId,
+              id: amc.schemeId,
             };
             const obj2 = {
               category: amc.categoryName,
               categoryId: amc.categoryId,
               selected: true,
-              showInFilter: true
+              showInFilter: true,
+              familyMemberId:amc.familyMemberId,
+              amc_id: amc.amcId,
+              id: amc.schemeId,
+              folioNumber: amc.folioNumber,
 
             };
             filterData.push(obj);
@@ -676,6 +699,7 @@ export class RightFilterDuplicateComponent implements OnInit {
         element.showInFilter = false;
       }
     });
+    this.selectedAmcMap = selectedAmcMapObj;
     filterData1 = [...new Map(filterData1.map(item => [item.familyMemberId, item])).values()];
 
 
@@ -700,12 +724,26 @@ export class RightFilterDuplicateComponent implements OnInit {
     let filterData3 = [];
     let filterData4 = [];
     this.checkFlag = true;
+    let famMap ={};
+    let amcMAp = {};
+    let schemeMap = {};
+    let folioMap = {};
+
+    let selectedFamilyMapObj = this.selectedFamilyMap;
+    let selectedAmcMapObj = this.selectedAmcMap;
+    let selectedSchemeMapObj = this.selectedSchemeMap;
+    let selectedFolioMapObj = this.selectedFolioMap;
+
     data.filter(function (element) {
       if (element.selected == true) {
         element.showInFilter = true;
         filterData.filter(function (amc) {
-          // amc.mutualFund.forEach(function (mf) {
-          if (amc.categoryId == element.categoryId) {
+          (Object.keys(selectedFamilyMapObj).length > 0) ? famMap = selectedFamilyMapObj[element.familyMemberId] : famMap = amc.familyMemberId;
+          (Object.keys(selectedAmcMapObj).length > 0) ? amcMAp = selectedAmcMapObj[element.amc_id] : amcMAp = amc.amcId;
+          (Object.keys(selectedSchemeMapObj).length > 0) ? schemeMap = selectedSchemeMapObj[element.id] : schemeMap = amc.schemeId;
+          (Object.keys(selectedFolioMapObj).length > 0) ? folioMap = selectedFolioMapObj[element.folioNumber] : folioMap = amc.folioNumber;
+
+          if (amc.categoryId == element.categoryId && famMap == amc.familyMemberId && amcMAp == amc.amcId && schemeMap == amc.schemeId &&  folioMap == amc.folioNumber) {
             const obj = {
               amc_name: amc.amcName,
               schemeName: amc.schemeName,
@@ -714,7 +752,9 @@ export class RightFilterDuplicateComponent implements OnInit {
               id: amc.schemeId,
               amc_id: amc.amcId,
               selected: true,
-              showInFilter: true
+              showInFilter: true,
+              familyMemberId:amc.familyMemberId,
+
 
             };
             const obj4 = {
@@ -725,13 +765,18 @@ export class RightFilterDuplicateComponent implements OnInit {
               id: amc.schemeId,
               amc_id: amc.amcId,
               selected: true,
-              showInFilter: true
+              showInFilter: true,
+              familyMemberId:amc.familyMemberId,
+
 
             };
             const obj2 = {
               folioNumber: amc.folioNumber,
               selected: true,
-              showInFilter: true
+              showInFilter: true,
+              familyMemberId:amc.familyMemberId,
+              amc_id: amc.amcId,
+              id: amc.schemeId,
             };
             const obj3 = {
               name: amc.ownerName,
@@ -781,19 +826,31 @@ export class RightFilterDuplicateComponent implements OnInit {
     let filterData3 = [];
     let filterData4 = [];
     this.checkFlag = true;
+    let famMap ={};
+    let amcMAp ={};
+    let schemeMap ={};
+
+    let selectedFamilyMapObj = this.selectedFamilyMap;
+    let selectedAmcMapObj = this.selectedAmcMap;
+    let selectedSchemeMapObj = this.selectedSchemeMap;
+    let selectedFolioMapObj={};
     this.folio.filter(function (element) {
       if (element.selected == true) {
         element.showInFilter = true;
         filterData2.forEach(amc => {
           // amc.mutualFund.forEach(mf => {
-          if (element.folioNumber == amc.folioNumber) {
+            (Object.keys(selectedFamilyMapObj).length > 0) ? famMap = selectedFamilyMapObj[element.familyMemberId] : famMap = amc.familyMemberId;
+            (Object.keys(selectedAmcMapObj).length > 0) ? amcMAp = selectedAmcMapObj[element.amc_id] : amcMAp = amc.amcId;
+            (Object.keys(selectedSchemeMapObj).length > 0) ? schemeMap = selectedSchemeMapObj[element.id] : schemeMap = amc.schemeId;
+          if (element.folioNumber == amc.folioNumber && famMap == amc.familyMemberId &&  amcMAp == amc.amcId && schemeMap == amc.schemeId) {
+            selectedFolioMapObj[element.folioNumber] = element.folioNumber;
             const obj = {
               amc_name: amc.amcName,
               schemeName: amc.schemeName,
               schemeCode: amc.schemeCode,
               mutualFund: amc.mutualFund,
               id: amc.schemeId,
-
+              familyMemberId:amc.familyMemberId,
               amc_id: amc.amcId,
               selected: true,
               showInFilter: true
@@ -805,10 +862,11 @@ export class RightFilterDuplicateComponent implements OnInit {
               schemeCode: amc.schemeCode,
               mutualFund: amc.mutualFund,
               id: amc.schemeId,
-
               amc_id: amc.amcId,
               selected: true,
-              showInFilter: true
+              showInFilter: true,
+              familyMemberId:amc.familyMemberId,
+
 
             };
             const obj1 = {
@@ -820,7 +878,10 @@ export class RightFilterDuplicateComponent implements OnInit {
             const obj2 = {
               category: amc.categoryName,
               categoryId: amc.categoryId,
-              selected: true, showInFilter: true
+              selected: true, showInFilter: true, familyMemberId:amc.familyMemberId,
+              amc_id: amc.amcId,
+              id: amc.schemeId,
+              folioNumber: amc.folioNumber,
             };
             filterData.push(obj);
             filterData4.push(obj3);
@@ -833,6 +894,7 @@ export class RightFilterDuplicateComponent implements OnInit {
         element.showInFilter = false;
       }
     });
+    this.selectedFolioMap = selectedFolioMapObj;
     // let filterFamData = filterData1;
     // filterFamData = [...new Map(filterFamData.map(item => [item.familyMemberId, item])).values()];
     // this.familyMember.forEach(element => {
@@ -906,12 +968,21 @@ export class RightFilterDuplicateComponent implements OnInit {
     const filterData3 = [];
     let filterData4 = [];
     this.checkFlag = true;
+    let famMap ={};
+    let amcMAp ={};
+    let selectedFamilyMapObj = this.selectedFamilyMap;
+    let selectedAmcMapObj =this.selectedAmcMap;
+    let selectedSchemeMapObj ={}
     this.scheme.filter(function (element) {
       if (element.selected == true) {
         element.showInFilter = true;
         filterData2.forEach(amc => {
           // amc.mutualFund.forEach(mf => {
-          if (element.id == amc.schemeId) {
+          (Object.keys(selectedFamilyMapObj).length > 0) ? famMap = selectedFamilyMapObj[element.familyMemberId] : famMap = amc.familyMemberId;
+          (Object.keys(selectedAmcMapObj).length > 0) ? amcMAp = selectedAmcMapObj[element.amc_id] : amcMAp = amc.amcId;
+          if (element.id == amc.schemeId && famMap == amc.familyMemberId &&  amcMAp == amc.amcId) {
+            selectedSchemeMapObj[element.id] = element.id;
+
             const obj = {
               amc_name: amc.amcName,
               schemeName: amc.schemeName,
@@ -919,21 +990,31 @@ export class RightFilterDuplicateComponent implements OnInit {
               mutualFund: amc.mutualFund,
               id: amc.schemeId,
               amc_id: amc.amcId,
-              selected: true, showInFilter: true
+              selected: true, showInFilter: true,
+              familyMemberId:amc.familyMemberId
+
             };
             const obj1 = {
               name: amc.ownerName,
               familyMemberId: amc.familyMemberId,
-              selected: true, showInFilter: true
+              selected: true, showInFilter: true,
+              amc_id: amc.amcId,
+              id: amc.schemeId,
             };
             const obj4 = {
               folioNumber: amc.folioNumber,
-              selected: true, showInFilter: true
+              selected: true, showInFilter: true,
+              familyMemberId:amc.familyMemberId,
+              amc_id: amc.amcId,
+              id: amc.schemeId,
             };
             const obj2 = {
               category: amc.categoryName,
               categoryId: amc.categoryId,
-              selected: true, showInFilter: true
+              selected: true, showInFilter: true,
+              familyMemberId:amc.familyMemberId,
+              amc_id: amc.amcId,
+              id: amc.schemeId,
             };
             filterData.push(obj);
             filterData1.push(obj1);
@@ -953,6 +1034,7 @@ export class RightFilterDuplicateComponent implements OnInit {
     //     filterFamData = filterFamData.filter(item => item.familyMemberId === element.familyMemberId);
     //   }
     // });
+    this.selectedSchemeMap = selectedSchemeMapObj;
     filterData1 = [...new Map(filterData1.map(item => [item.familyMemberId, item])).values()];
 
     filterData = [...new Map(filterData.map(item => [item.amc_id, item])).values()];
