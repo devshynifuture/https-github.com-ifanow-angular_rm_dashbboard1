@@ -68,6 +68,13 @@ export class SendNowReportsComponent implements OnInit {
     });
   }
   proceed() {
+    if(this.selectedReportType == "capitalGainSummary" || this.selectedReportType == "capitalGainDetailed"){
+      if(this.date.to){
+
+      }else{
+        this.date = this.default
+      }
+    }
     if(this.date.toDate ){
      
     }else{
