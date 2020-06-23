@@ -29,7 +29,6 @@ export class OpenSendReportPopupComponent implements OnInit {
 
   ngOnInit() {
     console.log('reportType', this.data)
-    this.sendClientId()
   }
 
   sendClientId() {
