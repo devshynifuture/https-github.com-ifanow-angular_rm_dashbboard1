@@ -37,6 +37,8 @@ import { BottomSheetComponent } from '../../../customers/component/common-compon
       private _bottomSheet: MatBottomSheet,
       public dialogRef: MatDialogRef<EventDialog>, @Inject(MAT_DIALOG_DATA) public data: any) {
       this.eventData = data;
+      console.log(this.eventData,"add this.eventData");
+      
     }
   
   

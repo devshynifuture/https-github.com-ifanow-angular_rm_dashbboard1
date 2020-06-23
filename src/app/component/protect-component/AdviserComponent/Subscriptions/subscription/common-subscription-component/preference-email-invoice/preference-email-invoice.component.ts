@@ -94,7 +94,7 @@ export class PreferenceEmailInvoiceComponent implements OnInit {
       advisorId: this.advisorId,
 
       // "advisorId":2727,
-      emailTemplateId: 1
+      emailTemplateId: this.storeData.emailTemplateTypeId
     };
     this.subService.updateEmailTemplate(obj).subscribe(
       data => this.getResponseData(data)

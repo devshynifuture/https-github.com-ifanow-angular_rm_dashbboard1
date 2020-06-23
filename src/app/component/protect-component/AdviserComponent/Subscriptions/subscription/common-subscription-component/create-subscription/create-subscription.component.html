@@ -233,9 +233,9 @@
         <mat-step class="test-right-padder" [stepControl]="create" state="done">
             <ng-template matStepLabel>Create</ng-template>
             <div class="wrapper-100 pt-44">
-                <div class="row">
+                <div *ngIf="serviceData" class="row">
                     <div class="col-md-12">
-                        <div *ngIf="clientData.feeTypeId==1" class="pl-44 pr-44">
+                        <div *ngIf="serviceData.feeTypeId==1" class="pl-44 pr-44">
                             <h4 class="m-0 text-success">YOU’RE ALL SET!</h4>
 
                             <p class="m-0 text-black pt-28">When you click on the Create button below, the subscription
@@ -250,7 +250,7 @@
                             <p class="m-0 text-custom pt-28">You have an option to change the Invoice Sending Mode to
                                 auto or manual. You can do this from Subscription settings.</p>
                         </div>
-                        <div *ngIf="clientData.feeTypeId==2" class="pl-44 pr-44">
+                        <div *ngIf="serviceData.feeTypeId==2" class="pl-44 pr-44">
                             <h4 class="m-0 text-success">YOU’RE ALL SET!</h4>
 
                             <p class="m-0 text-black pt-28">When you click on the Create button below, the subscription

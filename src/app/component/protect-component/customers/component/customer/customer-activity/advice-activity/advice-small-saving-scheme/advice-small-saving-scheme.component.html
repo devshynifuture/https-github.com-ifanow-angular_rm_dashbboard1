@@ -157,9 +157,9 @@
         </ng-container>
         <ng-container matColumnDef="icon">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
-            <td mat-cell *matCellDef="let element">
+            <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu" class="c-p">
                 <div class="bar">
-                    <i *ngIf="isLoading==false" class="material-icons c-p" [matMenuTriggerFor]="menu">
+                    <i *ngIf="isLoading==false" class="material-icons c-p">
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
@@ -277,9 +277,9 @@
         </ng-container>
         <ng-container matColumnDef="icon">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
-            <td mat-cell *matCellDef="let element">
+            <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu" class="c-p">
                 <div class="bar">
-                    <i *ngIf="isLoading==false" class="material-icons c-p" [matMenuTriggerFor]="menu">
+                    <i *ngIf="isLoading==false" class="material-icons">
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
@@ -401,9 +401,9 @@
         </ng-container>
         <ng-container matColumnDef="icon">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
-            <td mat-cell *matCellDef="let element">
+            <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu" class="c-p">
                 <div class="bar">
-                    <i *ngIf="isLoading==false" class="material-icons c-p" [matMenuTriggerFor]="menu">
+                    <i *ngIf="isLoading==false" class="material-icons">
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
@@ -531,9 +531,9 @@
         </ng-container>
         <ng-container matColumnDef="icon">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
-            <td mat-cell *matCellDef="let element">
+            <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu" class="c-p">
                 <div class="bar">
-                    <i *ngIf="isLoading==false" class="material-icons c-p" [matMenuTriggerFor]="menu">
+                    <i *ngIf="isLoading==false" class="material-icons">
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
@@ -635,9 +635,9 @@
         </ng-container>
         <ng-container matColumnDef="icon">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
-            <td mat-cell *matCellDef="let element">
+            <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu" class="c-p">
                 <div class="bar">
-                    <i *ngIf="isLoading==false" class="material-icons c-p" [matMenuTriggerFor]="menu">
+                    <i *ngIf="isLoading==false" class="material-icons">
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
@@ -742,9 +742,9 @@
         </ng-container>
         <ng-container matColumnDef="icon">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
-            <td mat-cell *matCellDef="let element">
+            <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu" class="c-p">
                 <div class="bar">
-                    <i *ngIf="isLoading==false" class="material-icons c-p" [matMenuTriggerFor]="menu">
+                    <i *ngIf="isLoading==false" class="material-icons">
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
@@ -863,9 +863,9 @@
         </ng-container>
         <ng-container matColumnDef="icon">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
-            <td mat-cell *matCellDef="let element">
+            <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu" class="c-p">
                 <div class="bar">
-                    <i *ngIf="isLoading==false" class="material-icons c-p" [matMenuTriggerFor]="menu">
+                    <i *ngIf="isLoading==false" class="material-icons">
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
@@ -982,9 +982,9 @@
         </ng-container>
         <ng-container matColumnDef="icon">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
-            <td mat-cell *matCellDef="let element">
+            <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu" class="c-p">
                 <div class="bar">
-                    <i *ngIf="isLoading==false" class="material-icons c-p" [matMenuTriggerFor]="menu">
+                    <i *ngIf="isLoading==false" class="material-icons">
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">
@@ -1086,10 +1086,10 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="icon">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header [matMenuTriggerFor]="menu" class="c-p"> </th>
             <td mat-cell *matCellDef="let element">
                 <div class="bar">
-                    <i *ngIf="isLoading==false" class="material-icons c-p" [matMenuTriggerFor]="menu">
+                    <i *ngIf="isLoading==false" class="material-icons">
                         more_vert
                     </i>
                     <mat-menu #menu="matMenu">

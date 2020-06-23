@@ -39,14 +39,14 @@
           </div>
         </div>
         <div class="custom-grid  all-schedule"  *ngFor='let time of timeArry; let i = index'>
-          <div class="column"  *ngFor='let day of week; let di = index'>
-            <div *ngFor='let event of formatedEvent; let ei = index'>
-              <!-- {{time == returnNumber(event.startTime)}}  -->
-              <div class="week-clicks pl-4" *ngIf="event.day == formateDate(day) && event.month == formateMonth(day) && event.year == formateYear(day) && returnNumber(event.startTime)  == time ">
+          <div class="column"  *ngFor='let day of week; let di = index'  style="position: relative;">
+            <div *ngFor='let event of formatedEvent; let ei = index' (click)="editEvent(event)" style="position: relative; z-index: 1;" >
+              <div class="week-clicks pl-4"  *ngIf="event.day == formateDate(day) && event.month == formateMonth(day) && event.year == formateYear(day) && returnNumber(event.startTime)  == time ">
                 <p class="m-0 f-12 roboto f-400 text-white">{{event.summary}}</p>
-                <p class="m-0 f-12 roboto f-400 text-white">{{event.startTime}}- {{event.endTime}}</p>
+                <p class="m-0 f-12 roboto f-400 text-white">{{event.startTime}} {{event.startTime != event.endTime?' - '+ event.endTime:''}}</p>
               </div>
             </div>
+            <div (click)="addEvent(formateDate(day),formateMonth(day),formateYear(day), time)" style="position: absolute; width: 100%; height: 100%;"></div>
           </div>
         </div>
       </div>
