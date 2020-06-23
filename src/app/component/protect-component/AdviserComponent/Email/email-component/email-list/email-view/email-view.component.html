@@ -138,10 +138,13 @@
         </div>
     </div> -->
 </div>
-<div class="row">
+<div class="row" *ngIf="attachmentArrayDetail.length!==0">
+    <h4 class="p-12">
+        Attachments:
+    </h4>
     <mat-action-list class="p-12 w-100">
         <!-- just need to replace attachmentArray with attachmentArrayDetail -->
-        <button mat-list-item class="c-p" *ngFor="let attachment of attachmentArrayDetail"
+        <button mat-list-item class="c-p border-background" *ngFor="let attachment of attachmentArrayDetail"
             (click)="attachmentDownload(attachment)">
             <div class="col-md-11 text-primary">
                 {{ attachment.filename }}
@@ -153,6 +156,9 @@
             </div>
         </button>
     </mat-action-list>
+    <div *ngIf="isLoadingForAttachment">
+        <mat-spinner class="loader" [diameter]="30"></mat-spinner>
+    </div>
 </div>
 
 <div *ngIf="isLoading">

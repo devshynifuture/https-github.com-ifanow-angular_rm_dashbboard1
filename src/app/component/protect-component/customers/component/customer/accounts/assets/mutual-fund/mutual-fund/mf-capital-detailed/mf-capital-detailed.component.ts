@@ -109,6 +109,10 @@ export class MfCapitalDetailedComponent implements OnInit {
         this.advisorId = parseInt(param1.advisorId)
         this.fromDateYear = param1.from,
         this.toDateYear = param1.to,
+        this.fromDate = new Date(this.fromDateYear, 3, 1);
+        this.toDate = new Date(this.toDateYear, 2, 31);
+        this.grandFatheringEffect = true;
+        this.getCapitalgain();
         console.log('2423425', param1)
       }
     });
@@ -123,9 +127,11 @@ export class MfCapitalDetailedComponent implements OnInit {
     this.setCapitaDetails.GTReinvesment = {}
     this.isLoading =true;
       console.log('response data:',this.responseData);  // You will get the @Input value
+      if(this.responseData || this.mutualFundList){
+        this.mutualFundList = this.MfServiceService.filter(this.responseData, 'mutualFund');
+        this.redemption = this.MfServiceService.filter(this.mutualFundList, 'redemptionTransactions');
+      }
 
-      this.mutualFundList = this.MfServiceService.filter(this.responseData, 'mutualFund');
-      this.redemption = this.MfServiceService.filter(this.mutualFundList, 'redemptionTransactions');
       if(this.changedData){
         this.fromDateYear = this.changedData.fromDateYear;
         this.fromDate =new Date(this.fromDateYear, 3, 1);

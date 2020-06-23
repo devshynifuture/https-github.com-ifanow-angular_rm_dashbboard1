@@ -482,6 +482,11 @@ export class SubscriptionService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.CLIENTLIST_WITH_SUBSCRIPTION, httpParams);
   }
 
+  getInvoiceFeeCalculations(data) {
+    const httpParams = new HttpParams().set('invoiceId', data.invoiceId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_INVOICE_FEE_CALCULATIONS, httpParams);
+  }
+
   base_64Data(data) {
     return this.http.getEncoded(apiConfig.MAIN_URL + appConfig.GET_BASE_64, data, 10000);
   }

@@ -104,7 +104,7 @@ export class EmailUtilService {
               if (decodedValue === null) {
                 decodedPartArray.push(part.body.data);
               } else if (decodedValue !== '') {
-                decodedPartArray.push(EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data));
+                decodedPartArray.push(decodedValue);
               }
             }
 
