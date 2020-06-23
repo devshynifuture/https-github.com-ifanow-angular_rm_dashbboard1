@@ -13,6 +13,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
 import { Key } from 'protractor';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-mutual-funds-capital',
@@ -79,7 +80,24 @@ export class MutualFundsCapitalComponent implements OnInit {
   setCapitaSummary: any;
   bulkData: any;
   // capitalGainData: any;
-  constructor(private pdfGen: PdfGenService, private excel: ExcelGenService, private UtilService: UtilService, private custumService: CustomerService, private eventService: EventService, private reconService: ReconciliationService, private MfServiceService: MfServiceService, private subInjectService: SubscriptionInject) { }
+  constructor(private pdfGen: PdfGenService,
+    public routerActive: ActivatedRoute,
+     private excel: ExcelGenService, private UtilService: UtilService, private custumService: CustomerService, private eventService: EventService, private reconService: ReconciliationService, private MfServiceService: MfServiceService, private subInjectService: SubscriptionInject) { 
+       
+
+    this.routerActive.queryParamMap.subscribe((queryParamMap) => {
+      if (queryParamMap.has('clientId')) {
+        let param1 = queryParamMap['params'];
+        this.clientId = parseInt(param1.clientId)
+        this.advisorId = parseInt(param1.advisorId)
+        console.log('2423425', param1)
+      }
+      else {
+        this.advisorId = AuthService.getAdvisorId();
+        this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
+      }
+    });
+  }
   @ViewChild('tableEl', { static: false }) tableEl;
   @ViewChild('tableEl2', { static: false }) tableEl2;
   @ViewChild('tableEl3', { static: false }) tableEl3;
@@ -93,6 +111,18 @@ export class MutualFundsCapitalComponent implements OnInit {
 
   }
   ngOnInit() {
+    if (localStorage.getItem('token') != 'authTokenInLoginComponnennt') {
+      localStorage.setItem('token', 'authTokenInLoginComponnennt')
+    }
+
+    this.routerActive.queryParamMap.subscribe((queryParamMap) => {
+      if (queryParamMap.has('clientId')) {
+        let param1 = queryParamMap['params'];
+        this.clientId = parseInt(param1.clientId)
+        this.advisorId = parseInt(param1.advisorId)
+        console.log('2423425', param1)
+      }
+    });
     this.setCapitaSummary = {}
     this.setCapitaSummary.dataSource = []
     this.setCapitaSummary.dataSource1 = []
