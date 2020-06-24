@@ -409,6 +409,34 @@
 " style="display: none;">
     <table cellpadding="0" width="100%" cellspacing="0" border="0" style="font-family: 'Roboto', sans-serif; margin: 0px auto;" align="center; page-break-before: always;">
         <tr>
+            <td style="text-align: left;" colspan="2">
+               <img width="100px" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
+            </td>
+            <td style="text-align: right;" colspan="7">
+                <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;" *ngIf="userInfo">
+                    {{(userInfo.name) ? userInfo.name : '-'}}</p>
+                <!-- <p style="margin: 0px; font-size: 14px;" *ngIf="clientData">Himachal Pradesh</p> -->
+                <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Number: </strong>
+                    {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}</p>
+                <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email : </strong>
+                    {{(details) ? details.emailId : userInfo.email}}</p>
+                <p style="margin: 0px; font-size: 14px;padding-top: 12px;"> <strong> MF Capital gain Summary Report</strong>
+                </p>
+                <p style="margin: 0px; font-size: 14px;padding-top: 12px;"> <strong> Report as on :
+                        {{reportDate | date:'dd-MMM-yyyy' }} </strong></p>
+            </td>
+         </tr>
+         <tr>
+            <td colspan="9" style="padding: 10px;"></td>
+         </tr>
+         <tr>
+            <td style="margin: 0px; font-weight: 600;font-size: 14px;padding-top: 4px;" *ngIf="clientData">
+               Client name :
+               <span> {{(clientData.name) ? clientData.name : '-'}}</span>
+            </td>
+   
+         </tr>
+        <tr>
             <td style="text-align: left;color: #008FFF; padding-left: 8px; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0; font-family: Roboto,sans-serif;"
                 colspan="9">
                 EQUITY

@@ -214,7 +214,14 @@ export class CalendarWeekComponent implements OnInit {
     return hh + ":" + mm + amPm + " ";
   }
 
-  addEvent(day, month, year) {
+  addEvent(day, month, year, time) {
+    let hr;
+    if(time.charAt(time.length - 2)+time.charAt(time.length - 1) == 'PM'){
+      hr = 12 + parseInt(time);
+    }
+    else{
+      hr = parseInt(time);
+    }
     let event: any;
     if (month == 0) {
       month = 12;
@@ -223,8 +230,8 @@ export class CalendarWeekComponent implements OnInit {
       month = 1;
       year += 1;
     }
-    let eventDate = month + "/" + day + "/" + year;
-
+    let eventDate = new Date(month + "/" + day + "/" + year);
+    eventDate.setHours(hr-1)
     event = {
       "eventId": "",
       "summary": "",
@@ -232,11 +239,11 @@ export class CalendarWeekComponent implements OnInit {
       "title": "",
       "description": "",
       "start": {
-        "dateTime": new Date(eventDate),
+        "dateTime":eventDate,
         "timeZone": null
       },
       "end": {
-        "dateTime": new Date(eventDate),
+        "dateTime":eventDate,
         "timeZone": null
       },
       "recurrence": "",
@@ -339,8 +346,8 @@ export class CalendarWeekComponent implements OnInit {
     var current_month = date.getMonth() + 1;
     var current_year = date.getFullYear();
     if (this.startTime == "" || this.endTime == "") {
-      var current_hrs: any = this.current_day.getHours();
-      var current_mins: any = this.current_day.getMinutes();
+      var current_hrs: any = date.getHours();
+      var current_mins: any = date.getMinutes();
       current_hrs = current_hrs < 10 ? '0' + current_hrs : current_hrs;
       current_mins = current_mins < 10 ? '0' + current_mins : current_mins;
     }

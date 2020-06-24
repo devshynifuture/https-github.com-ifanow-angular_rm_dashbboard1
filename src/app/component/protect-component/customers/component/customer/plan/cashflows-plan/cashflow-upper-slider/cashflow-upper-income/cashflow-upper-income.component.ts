@@ -162,6 +162,7 @@ export class CashflowUpperIncomeComponent implements OnInit {
   addCashFlow(data) {
     const dialogRef = this.dialog.open(CashflowAddComponent, {
       width: '750px',
+
       data: { ...data, familyMemberList: this.familyMemberList, tableData: this.data }
     });
 

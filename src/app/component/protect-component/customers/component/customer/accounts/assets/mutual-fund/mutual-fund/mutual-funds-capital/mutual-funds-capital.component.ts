@@ -14,7 +14,8 @@ import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
 import { Key } from 'protractor';
 import { RightFilterDuplicateComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BackOfficeService } from 'src/app/component/protect-component/AdviserComponent/backOffice/back-office.service';
 
 @Component({
   selector: 'app-mutual-funds-capital',
@@ -80,9 +81,15 @@ export class MutualFundsCapitalComponent implements OnInit {
   fragmentData = { isSpinner: false };
   setCapitaSummary: any;
   bulkData: any;
+  userInfo: any;
+  clientDetails: any;
+  clientData: any;
+  getOrgData: any;
   // capitalGainData: any;
   constructor(private pdfGen: PdfGenService,
     public routerActive: ActivatedRoute,
+    private route : Router,
+    private backOfficeService : BackOfficeService,
      private excel: ExcelGenService, private UtilService: UtilService, private custumService: CustomerService, private eventService: EventService, private reconService: ReconciliationService, private MfServiceService: MfServiceService, private subInjectService: SubscriptionInject) { 
        
 
@@ -96,6 +103,10 @@ export class MutualFundsCapitalComponent implements OnInit {
       else {
         this.advisorId = AuthService.getAdvisorId();
         this.parentId = AuthService.getUserInfo().parentId
+        this.userInfo = AuthService.getUserInfo();
+        this.clientData = AuthService.getClientData();
+        this.getOrgData = AuthService.getOrgDetails();
+
         this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
       }
     });
@@ -103,6 +114,8 @@ export class MutualFundsCapitalComponent implements OnInit {
   @ViewChild('tableEl', { static: false }) tableEl;
   @ViewChild('tableEl2', { static: false }) tableEl2;
   @ViewChild('tableEl3', { static: false }) tableEl3;
+  @ViewChild('mfCapitalTemplate', { static: false }) mfCapitalTemplate;
+
   uploadData(data) {
     if (data) {
       this.bulkData = data
@@ -125,6 +138,7 @@ export class MutualFundsCapitalComponent implements OnInit {
         this.fromDateYear = (param1.from);
         this.toDateYear = (param1.to);
         console.log('2423425', param1)
+        this.getDetails()
       }
     });
     this.setCapitaSummary = {}
@@ -306,6 +320,9 @@ export class MutualFundsCapitalComponent implements OnInit {
       this.setCapitaSummary.GTReinvesment = this.GTReinvesment
 
       this.MfServiceService.setCapitalSummary(this.setCapitaSummary)
+      if(this.route.url.split('?')[0] == '/pdf/capitalGainSummary'){
+        this.generatePdfBulk()
+      }
       this.objSendToDetailedCapital = {
         mfData: this.mutualFund,
         responseData: this.capitalGainData,
@@ -531,5 +548,40 @@ export class MutualFundsCapitalComponent implements OnInit {
     this.UtilService.htmlToPdf(para.innerHTML, 'CapitalGain', 'true', this.fragmentData, '', '');
     // let rows = this.tableEl._elementRef.nativeElement.rows;
     // this.pdfGen.generatePdf(rows, tableTitle);
+  }
+  generatePdfBulk() {
+   
+    setTimeout(() => {
+      let para = this.mfCapitalTemplate.nativeElement.innerHTML
+      let obj = {
+        htmlInput: para,
+        name: 'MF_Capital_Gain_Summary',
+        landscape: true,
+        key: 'showPieChart',
+        clientId : this.clientId,
+        advisorId : this.advisorId,
+        fromEmail: 'devshyni@futurewise.co.in',
+        toEmail: 'abhishek@futurewise.co.in'
+      }
+      this.UtilService.bulkHtmlToPdf(obj)
+      //this.UtilService.htmlToPdf(para, 'MF_Capital_Gain_Summary', false, this.fragmentData, '', '') 
+    }, 200);
+    
+
+  }
+  getDetails() {
+    const obj = {
+      clientId: this.clientId,
+      advisorId: this.advisorId,
+    };
+    this.backOfficeService.getDetailsClientAdvisor(obj).subscribe(
+      data => this.getDetailsClientAdvisorRes(data)
+    );
+  }
+  getDetailsClientAdvisorRes(data) {
+    console.log('data', data)
+    this.clientDetails = data
+    this.clientData = data.clientData
+    this.userInfo = data.advisorData
   }
 } 

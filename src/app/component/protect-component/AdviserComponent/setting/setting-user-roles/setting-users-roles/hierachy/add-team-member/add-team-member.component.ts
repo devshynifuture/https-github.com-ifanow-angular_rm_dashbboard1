@@ -27,7 +27,7 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
   teamMembers: any[];
   selectedMember: any;
   showSpinner = false;
-  formPlaceHolder:any;
+  formPlaceHolder: any;
 
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
@@ -41,12 +41,12 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
     disabled: false,
     fullWidth: false,
   };
-  
+
   constructor(
     private settingsService: SettingsService,
     private eventService: EventService,
     private fb: FormBuilder,
-    private subInjectService : SubscriptionInject,
+    private subInjectService: SubscriptionInject,
     private orgSetting: OrgSettingServiceService,
   ) {
     this.advisorId = AuthService.getAdvisorId();
@@ -80,10 +80,10 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
     }
     this.settingsService.getTeamMembers(dataObj).subscribe((res) => {
       this.showSpinner = false;
-      if(res && res.length > 0) {
+      if (res && res.length > 0) {
         this.teamMembers = res;
         this.teamMembers = this.teamMembers.filter(member => member.adminAdvisorId != this.data.childId);
-        if(this.data.parentId) {
+        if (this.data.parentId) {
           this.selectedMember = this.teamMembers.find(team => team.id === this.data.parentId);
         }
       } else {
@@ -100,12 +100,12 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
   selectTeamMember(teamMember) {
     this.selectedMember = teamMember
   }
-  saveTeamMember(){
-    if(!this.selectedMember) {
+  saveTeamMember() {
+    if (!this.selectedMember) {
       this.eventService.openSnackBar("Please assign a team member", "Dismiss");
       return
     }
-    if(this.barButtonOptions.active) return;
+    if (this.barButtonOptions.active) return;
 
     this.barButtonOptions.active = true;
     let obj = {
@@ -119,7 +119,7 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
     }
     this.orgSetting.updateAccessControl(obj).subscribe((res) => {
       this.teamMembers = res;
-      this.eventService.openSnackBar("Reporting Manager Updated Successfully");
+      this.eventService.openSnackBar("Reporting manager updated successfully");
       this.close(true);
     }, (err) => {
       console.error(err);
@@ -127,13 +127,13 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
       this.eventService.openSnackBar("Error occured.");
     });
   }
-  
+
   chooseUser() {
     this.selectedUser = this.usersForm.get('userInput').value;
   }
 
-  close(status = false){
-    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: status});
+  close(status = false) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: status });
   }
 
   ngOnDestroy() {

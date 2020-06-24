@@ -89,6 +89,8 @@ export class PayeeSettingsComponent implements OnInit {
   isLoader: boolean;
   sendObj: any;
   addressList: any;
+  selectedCustomerData: any;
+  customerDataFlag: any;
 
   constructor(public utils: UtilService, public subInjectService: SubscriptionInject, private eventService: EventService,
     private subService: SubscriptionService, private fb: FormBuilder, private postalService: PostalService, private peopleService: PeopleService, private custumService: CustomerService) {
@@ -151,15 +153,21 @@ export class PayeeSettingsComponent implements OnInit {
         responseData => {
           let address = responseData[0];
           if (address) {
-            this.addressList.billerAddress = address.address1;
-            this.addressList.zipCode = address.pinCode;
-            this.addressList.city = address.city;
-            this.addressList.country = address.country;
-            this.addressList.state = address.state;
+            // this.selectedCustomerData['address'] = address
+            // this.addressList.billerAddress = address.address1;
+            // this.addressList.zipCode = address.pinCode;
+            // this.addressList.city = address.city;
+            // this.addressList.country = address.country;
+            // this.addressList.state = address.state;
+            this.setCustomerAddressDetails(address);
           }
-          this.getClientPayeeSettings(this.addressList);
+          this.customerDataFlag = false;
+          this.setCustomerDetails(this.selectedCustomerData);
+          // this.getClientPayeeSettings(this.addressList);
         },
         err => {
+          this.customerDataFlag = false;
+          this.setCustomerDetails(this.selectedCustomerData);
         }
       );
     }
@@ -167,6 +175,7 @@ export class PayeeSettingsComponent implements OnInit {
   }
   getClientOrFamilyDetails(data) {
     this.addressList = {};
+    this.customerDataFlag = true;
     let clientData = data;
     if (data.userType == 2) {
       this.sendObj = {
@@ -174,12 +183,12 @@ export class PayeeSettingsComponent implements OnInit {
       };
       this.peopleService.getClientOrLeadData(this.sendObj).subscribe(
         data => {
-          this.addressList = data;
-          if (this.addressList.emailList.length > 0) {
-            this.addressList.email = this.addressList.emailList[0].email;
+          this.selectedCustomerData = data;
+          if (this.selectedCustomerData.emailList.length > 0) {
+            this.selectedCustomerData.email = this.selectedCustomerData.emailList[0].email;
           }
-          if (this.addressList.mobileList.length > 0) {
-            this.addressList.primaryContact = this.addressList.mobileList[0].mobileNo;
+          if (this.selectedCustomerData.mobileList.length > 0) {
+            this.selectedCustomerData.primaryContact = this.selectedCustomerData.mobileList[0].mobileNo;
           }
           this.getAddressList(clientData);
           // this.getClientPayeeSettings(this.addressList);
@@ -194,12 +203,12 @@ export class PayeeSettingsComponent implements OnInit {
       };
       this.custumService.getFamilyMembers(this.sendObj).subscribe(
         data => {
-          this.addressList = data[0];
-          if (this.addressList.emailList.length > 0) {
-            this.addressList.email = this.addressList.emailList[0].email;
+          this.selectedCustomerData = data[0];
+          if (this.selectedCustomerData.emailList.length > 0) {
+            this.selectedCustomerData.email = this.selectedCustomerData.emailList[0].email;
           }
-          if (this.addressList.mobileList.length > 0) {
-            this.addressList.primaryContact = this.addressList.mobileList[0].mobileNo;
+          if (this.selectedCustomerData.mobileList.length > 0) {
+            this.selectedCustomerData.primaryContact = this.selectedCustomerData.mobileList[0].mobileNo;
           }
           this.getAddressList(clientData);
           // this.getClientPayeeSettings(this.addressList);
@@ -209,6 +218,19 @@ export class PayeeSettingsComponent implements OnInit {
         }
       );
     }
+  }
+  setCustomerDetails(data) {
+    this.payeeSettingsForm.controls.displayName.setValue(data.displayName);
+    this.payeeSettingsForm.controls.emailId.setValue(data.email);
+    this.payeeSettingsForm.controls.primaryContact.setValue(data.primaryContact);
+    this.payeeSettingsForm.controls.pan.setValue(data.pan);
+  }
+  setCustomerAddressDetails(data) {
+    this.payeeSettingsForm.controls.billingAddress.setValue(data.address1);
+    this.payeeSettingsForm.controls.city.setValue(data.city);
+    this.payeeSettingsForm.controls.state.setValue(data.state);
+    this.payeeSettingsForm.controls.country.setValue(data.country);
+    this.payeeSettingsForm.controls.pincode.setValue(data.pinCode);
   }
   PinData(data) {
     if (data[0].Status == "Error") {
@@ -253,10 +275,10 @@ export class PayeeSettingsComponent implements OnInit {
   }
   getOwnerName(data) {
     this.familyMemberId = data.familyMemberId
-    // this.getClientOrFamilyDetails(data);
-    this.payeeSettingsForm.controls.emailId.setValue(data.email);
-    this.payeeSettingsForm.controls.pan.setValue(data.pan);
-    this.payeeSettingsForm.controls.displayName.setValue(data.displayName);
+    this.getClientOrFamilyDetails(data);
+    // this.payeeSettingsForm.controls.emailId.setValue(data.email);
+    // this.payeeSettingsForm.controls.pan.setValue(data.pan);
+    // this.payeeSettingsForm.controls.displayName.setValue(data.displayName);
     // this.payeeSettingsForm.controls
   }
   getFormControl() {
