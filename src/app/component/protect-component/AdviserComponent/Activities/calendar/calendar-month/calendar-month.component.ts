@@ -239,7 +239,7 @@ export class CalendarMonthComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result != undefined) {
+      if (result != undefined && result != 'delete') {
         this.dialogData =
         {
           "calendarId": AuthService.getUserInfo().userName,
@@ -278,6 +278,9 @@ export class CalendarMonthComponent implements OnInit {
             this.getEvent();
           })
         }
+      }
+      if(result == 'delete'){
+        this.getEvent();
       }
     });
   }

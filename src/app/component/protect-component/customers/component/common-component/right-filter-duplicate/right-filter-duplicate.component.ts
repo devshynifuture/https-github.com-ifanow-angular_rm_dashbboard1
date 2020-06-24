@@ -574,7 +574,7 @@ export class RightFilterDuplicateComponent implements OnInit {
     this.checkFlag = true;
     this.familyMember.filter(function (element) {
       if (element.selected == true) {
-        selectedFamilyMapObj[element.familyMemberId] = element.familyMemberId;
+        selectedFamilyMapObj[element.familyMemberId] = element;
         element.showInFilter = true;
         filterData.filter(function (amc) {
           // amc.mutualFund.forEach(function (mf) {
@@ -672,7 +672,10 @@ export class RightFilterDuplicateComponent implements OnInit {
             (Object.keys(selectedFamilyMapObj).length > 0) ? famMap = selectedFamilyMapObj[element.familyMemberId] : famMap = amc.familyMemberId;
           }
           // amc.mutualFund.forEach(mf => {
-          if (element.amc_id == amc.amcId /*&& this.selectedFamilyMap[amc.familyMemberId].showInFiler*/) {
+          console.log('selectedFamilyMap : ', this.selectedFamilyMap);
+          const famObj = this.selectedFamilyMap[amc.familyMemberId];
+
+          if (element.amc_id == amc.amcId && famObj && famObj.showInFilter) {
             selectedAmcMapObj[element.amc_id] = element.amc_id;
 
             const obj = {
@@ -721,7 +724,7 @@ export class RightFilterDuplicateComponent implements OnInit {
     // });
     this.filterOnlySelected(selectedFamilyMapObj2, this.familyMember, 'familyMemberId');
 
-    this.FilterAmcOnlySelcted(filterData1, this.familyMember, 'familyMemberId', 'familyMemberId');
+    // this.FilterAmcOnlySelcted(filterData1, this.familyMember, 'familyMemberId', 'familyMemberId');
     // const tempFam = [];
     // tempFam.push(...this.familyMember);
     // this.familyMember = tempFam;

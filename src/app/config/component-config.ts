@@ -729,7 +729,7 @@ export const appConfig = {
   GET_EVENT: 'calendar/event/list/get',
   GET_UPDATE: 'calendar/event/update',
   GET_ADD: 'calendar/event/add',
-  GET_DELETE: 'calendar/event/detele',
+  GET_DELETE: 'calendar/event/delete',
   ////////////////////////////// calendar////////////////////////////////////////////
   ///////////////////////////////Postal////////////////////////////////
 
