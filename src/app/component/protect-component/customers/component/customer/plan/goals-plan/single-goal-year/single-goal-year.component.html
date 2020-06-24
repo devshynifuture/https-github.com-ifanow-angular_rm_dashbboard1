@@ -68,7 +68,9 @@
                                     <div class="form-group ">
                                         <mat-form-field>
                                             <input type="number" formControlName="cost" autocomplete="off" matInput [value]="singleYearGoalForm.value.cost" class="form-control br-0 rupess">
-                                            <mat-error class="f-12">This field is required</mat-error>
+                                            
+                                            <mat-error *ngIf="singleYearGoalForm.get('cost').errors?.required">This field is required</mat-error>
+                                            <mat-error *ngIf="singleYearGoalForm.get('cost').errors?.min || singleYearGoalForm.get('cost').errors?.max">Please enter valid value</mat-error>
                                         </mat-form-field>
                                     </div>
                                 </div>
