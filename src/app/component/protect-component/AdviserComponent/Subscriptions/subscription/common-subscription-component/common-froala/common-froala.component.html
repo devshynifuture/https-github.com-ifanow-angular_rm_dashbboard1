@@ -24,7 +24,7 @@
         </div>
     </div>
     <div class="wrapper-20">
-        <div [ngClass]="{'pe-none': sendEmailFlag==false}" class="row">
+        <div [ngClass]="{'pe-none': storeData.quotation}" class="row">
             <div class="col-md-12 p-0" *ngIf="storeData!=null">
                 <h3 class="mb-8 mt-20">{{storeData.documentName}}</h3>
                 <!-- <textarea [froalaEditor]="config" (froalaModelChange)="onChange($event)" [(froalaModel)]="model"></textarea> -->
@@ -131,7 +131,8 @@
                     keyboard_arrow_up
                 </i></button>
             <mat-menu #menu="matMenu">
-                <button class="btn-bottom br-0 text-inherit" (click)="openSendEmail()" mat-menu-item>SAVE & SEND WITH
+                <button class="btn-bottom br-0 text-inherit" (click)="openSendEmailEsign()" mat-menu-item>SAVE & SEND
+                    WITH
                     ESIGN</button>
             </mat-menu>
             <button *ngIf="saveQuotationFlag" mat-button class="btn-bottom br-0 text-inherit pr-4 pl-4"

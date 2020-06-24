@@ -1,13 +1,13 @@
-import {Component, ElementRef, EventEmitter, Input, OnInit, Output, QueryList, ViewChild, ViewChildren} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionService} from '../../../subscription.service';
-import {EnumServiceService} from '../../../../../../../services/enum-service.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {AuthService} from '../../../../../../../auth-service/authService';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {MatInput} from '@angular/material';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionService } from '../../../subscription.service';
+import { EnumServiceService } from '../../../../../../../services/enum-service.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AuthService } from '../../../../../../../auth-service/authService';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { MatInput } from '@angular/material';
 
 @Component({
   selector: 'app-add-variable-fee',
@@ -43,7 +43,7 @@ export class AddVariableFeeComponent implements OnInit {
   otherAssetData;
   selectedOtherAssets = [];
   pricing = false;
-  @ViewChild('htmlTag', {static: true}) htmltag: ElementRef;
+  @ViewChild('htmlTag', { static: true }) htmltag: ElementRef;
   variableFees = true;
   serviceId: any;
   dataToSend: any;
@@ -51,7 +51,7 @@ export class AddVariableFeeComponent implements OnInit {
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
   constructor(public utils: UtilService, public subInjectService: SubscriptionInject, private fb: FormBuilder,
-              private subService: SubscriptionService, private enumService: EnumServiceService, private eventService: EventService) {
+    private subService: SubscriptionService, private enumService: EnumServiceService, private eventService: EventService) {
   }
 
   otherAssetDataId: any;
@@ -125,7 +125,7 @@ export class AddVariableFeeComponent implements OnInit {
         liquid: [, [Validators.required]]
       }),
       otherAssetClassFees: [],
-      pricing: [, [Validators.required, Validators.min(0.00)]]
+      // pricing: [, [Validators.required, Validators.min(0.00)]]
     });
     // , Validators.max(99)
     this.getFormControl().serviceName.maxLength = 40;
@@ -156,19 +156,19 @@ export class AddVariableFeeComponent implements OnInit {
           debt: [data.servicePricing.pricingList[1].debtAllocation, [Validators.required]],
           liquid: [data.servicePricing.pricingList[1].liquidAllocation, [Validators.required]]
         }),
-        otherAssetClassFees: [data.servicePricing.pricingList[2].serviceSubAssets],
-        pricing: [data.servicePricing.pricingList[2].pricing, [Validators.required]]
+        // otherAssetClassFees: [data.servicePricing.pricingList[2].serviceSubAssets],
+        // pricing: [data.servicePricing.pricingList[2].pricing, [Validators.required]]
       });
-      if (data.servicePricing.pricingList[2].serviceSubAssets != undefined) {
-        this.otherAssetData = data.servicePricing.pricingList[2].serviceSubAssets.filter((x) => x.subAssetClassName == 'Stocks');
-      }
+      // if (data.servicePricing.pricingList[2].serviceSubAssets != undefined) {
+      //   this.otherAssetData = data.servicePricing.pricingList[2].serviceSubAssets.filter((x) => x.subAssetClassName == 'Stocks');
+      // }
       // this.otherAssetData = data.servicePricing.pricingList[2].serviceSubAssets
       // this.otherAssetData = data.servicePricing.pricingList[2].serviceSubAssets
-      this.otherAssetData.forEach(element => {
-        if (element.isActive == 1) {
-          this.selectedOtherAssets.push(element.subAssetClassId);
-        }
-      });
+      // this.otherAssetData.forEach(element => {
+      //   if (element.isActive == 1) {
+      //     this.selectedOtherAssets.push(element.subAssetClassId);
+      //   }
+      // });
       this.getFormControl().serviceName.maxLength = 40;
       this.getFormControl().code.maxLength = 10;
       this.getFormControl().description.maxLength = 500;
@@ -176,7 +176,7 @@ export class AddVariableFeeComponent implements OnInit {
   }
 
   Close(state) {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
     if (this.serviceId == undefined) {
       this.otherAssetData.forEach(element => {
         element.isActive = 0;
@@ -211,10 +211,10 @@ export class AddVariableFeeComponent implements OnInit {
           this.getFormControl().directFees.controls.equity.markAsTouched();
           this.getFormControl().directFees.controls.debt.markAsTouched();
           this.getFormControl().directFees.controls.liquid.markAsTouched();
-          this.variableFeeData.controls.pricing.markAsTouched();
-          if (this.variableFeeData.controls.pricing.invalid) {
-            this.pricing = true;
-          }
+          // this.variableFeeData.controls.pricing.markAsTouched();
+          // if (this.variableFeeData.controls.pricing.invalid) {
+          //   this.pricing = true;
+          // }
         }
       }
     } else {
@@ -247,17 +247,17 @@ export class AddVariableFeeComponent implements OnInit {
               equityAllocation: this.variableFeeData.controls.regularFees.controls.equity.value > 100 ? 100 : this.variableFeeData.controls.regularFees.controls.equity.value,
               liquidAllocation: this.variableFeeData.controls.regularFees.controls.liquid.value > 100 ? 100 : this.variableFeeData.controls.regularFees.controls.liquid.value,
             },
-            {
-              id: (this._data != undefined) ? this._data.servicePricing.pricingList[2].id : '',
-              assetClassId: 2,
-              otherAssets: this.selectedOtherAssets,
-              pricing: this.variableFeeData.controls.pricing.value > 100 ? 100 : this.variableFeeData.controls.pricing.value
-            }
+            // {
+            //   id: (this._data != undefined) ? this._data.servicePricing.pricingList[2].id : '',
+            //   assetClassId: 2,
+            //   otherAssets: this.selectedOtherAssets,
+            //   pricing: this.variableFeeData.controls.pricing.value > 100 ? 100 : this.variableFeeData.controls.pricing.value
+            // }
           ]
         }
       };
       this.dataToSend = obj;
-      Object.assign(this.dataToSend, {id: this.serviceId});
+      Object.assign(this.dataToSend, { id: this.serviceId });
       if (this.serviceId == undefined) {
         this.subService.createSettingService(obj).subscribe(
           data => {
@@ -287,13 +287,13 @@ export class AddVariableFeeComponent implements OnInit {
 
   saveVariableFeeDataResponse(data, obj) {
     this.eventService.openSnackBar('Service is created', 'OK');
-    this.subInjectService.changeNewRightSliderState({flag: 'added', state: 'close', data});
+    this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data });
   }
 
   saveFeeTypeDataEditResponse(data) {
-    this.dataToSend.servicePricing.pricingList[2].serviceSubAssets = this.otherAssetData;
+    // this.dataToSend.servicePricing.pricingList[2].serviceSubAssets = this.otherAssetData;
     this.eventService.openSnackBar('Service is edited', 'OK');
-    this.subInjectService.changeNewRightSliderState({state: 'close', data});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data });
   }
 
   select(assetData) {

@@ -37,7 +37,7 @@ export class VariableFeeComponent implements OnInit {
       liquid: [, [Validators.required]]
     }),
     otherAssetClassFees: [],
-    pricing: [, [Validators.required, Validators.min(0.001), Validators.max(99)]]
+    // pricing: [, [Validators.required, Validators.min(0.001), Validators.max(99)]]
   });
   validatorType = ValidatorType;
 
@@ -110,15 +110,15 @@ export class VariableFeeComponent implements OnInit {
         debt: this.singleSubscriptionData.subscriptionPricing.subscriptionAssetPricingList[1].debtAllocation,
         liquid: this.singleSubscriptionData.subscriptionPricing.subscriptionAssetPricingList[1].liquidAllocation
       });
-      this.getVariableFee().pricing.setValue(this.singleSubscriptionData.subscriptionPricing.subscriptionAssetPricingList[2].pricing);
+      // this.getVariableFee().pricing.setValue(this.singleSubscriptionData.subscriptionPricing.subscriptionAssetPricingList[2].pricing);
       this.getVariableFee().otherAssetClassFees.setValue(this.singleSubscriptionData.subscriptionPricing.subscriptionAssetPricingList[0].subscriptionSubAssets);
-      this.otherAssetData = [];
-      this.otherAssetData = this.singleSubscriptionData.subscriptionPricing.subscriptionAssetPricingList[2].subscriptionSubAssets;
-      this.singleSubscriptionData.subscriptionPricing.subscriptionAssetPricingList[2].subscriptionSubAssets.forEach(element => {
-        if (element.selected) {
-          this.selectedOtherAssets.push(element.subAssetClassId)
-        }
-      });
+      // this.otherAssetData = [];
+      // this.otherAssetData = this.singleSubscriptionData.subscriptionPricing.subscriptionAssetPricingList[2].subscriptionSubAssets;
+      // this.singleSubscriptionData.subscriptionPricing.subscriptionAssetPricingList[2].subscriptionSubAssets.forEach(element => {
+      //   if (element.selected) {
+      //     this.selectedOtherAssets.push(element.subAssetClassId)
+      //   }
+      // });
       (this.singleSubscriptionData.isCreateSub == false) ? this.variableFeeStructureForm.enable() : this.variableFeeStructureForm.disable();
     }
   }
@@ -164,10 +164,12 @@ export class VariableFeeComponent implements OnInit {
     if (this.variableFeeStructureForm.get('directFees').invalid || this.variableFeeStructureForm.get('regularFees').invalid) {
       this.mutualFundFees = true;
       return;
-    } else if (this.getVariableFee().pricing.invalid) {
-      this.pricing = true;
-      return;
-    } else {
+    }
+    // else if (this.getVariableFee().pricing.invalid) {
+    //   this.pricing = true;
+    //   return;
+    // }
+    else {
       const obj = {
         subscriptionId: this.singleSubscriptionData.id,
         // subscriptionId: 12,
@@ -189,11 +191,12 @@ export class VariableFeeComponent implements OnInit {
             equityAllocation: this.variableFeeStructureForm.get('regularFees.equity').value,
             debtAllocation: this.variableFeeStructureForm.get('regularFees.debt').value,
             liquidAllocation: this.variableFeeStructureForm.get('regularFees.liquid').value
-          }, {
-            assetClassId: 2,
-            subAssetIds: this.selectedOtherAssets,
-            pricing: this.variableFeeStructureForm.controls.pricing.value
-          }
+          },
+          //  {
+          //   assetClassId: 2,
+          //   subAssetIds: this.selectedOtherAssets,
+          //   pricing: this.variableFeeStructureForm.controls.pricing.value
+          // }
         ]
       };
       // this.getJsonForSelectedSubAsset()
