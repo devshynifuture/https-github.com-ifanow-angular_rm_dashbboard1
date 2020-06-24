@@ -360,7 +360,9 @@ export class MutualFundOverviewComponent implements OnInit {
       // clientId: this.clientId
     };
     this.custumService.getMutualFund(obj).subscribe(
-      data => this.getMutualFundResponse(data), (error) => {
+      data => {
+        this.getMutualFundResponse(data)
+      }, (error) => {
         this.showSummaryBar = false;
         this.dataSource.data = [];
         this.showFamilyMember = false;
