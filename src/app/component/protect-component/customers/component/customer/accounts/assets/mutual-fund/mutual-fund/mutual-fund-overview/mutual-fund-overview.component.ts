@@ -114,7 +114,7 @@ export class MutualFundOverviewComponent implements OnInit {
               public eventService: EventService, private custumService: CustomerService, private MfServiceService: MfServiceService, private workerService: WebworkerService, private settingService: SettingsService) {
     this.routerActive.queryParamMap.subscribe((queryParamMap) => {
       if (queryParamMap.has('clientId')) {
-        const param1 = queryParamMap.params;
+        const param1 = queryParamMap['params'];
         this.clientId = parseInt(param1.clientId);
         this.advisorId = parseInt(param1.advisorId);
         console.log('2423425', param1);
@@ -149,7 +149,7 @@ export class MutualFundOverviewComponent implements OnInit {
 
     this.routerActive.queryParamMap.subscribe((queryParamMap) => {
       if (queryParamMap.has('clientId')) {
-        const param1 = queryParamMap.params;
+        const param1 = queryParamMap['params'];
         this.clientId = parseInt(param1.clientId);
         this.advisorId = parseInt(param1.advisorId);
         console.log('2423425', param1);

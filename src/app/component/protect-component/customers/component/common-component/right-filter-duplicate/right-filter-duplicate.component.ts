@@ -672,7 +672,7 @@ export class RightFilterDuplicateComponent implements OnInit {
             (Object.keys(selectedFamilyMapObj).length > 0) ? famMap = selectedFamilyMapObj[element.familyMemberId] : famMap = amc.familyMemberId;
           }
           // amc.mutualFund.forEach(mf => {
-          if (element.amc_id == amc.amcId && this.selectedFamilyMap[amc.familyMemberId].showInFiler) {
+          if (element.amc_id == amc.amcId /*&& this.selectedFamilyMap[amc.familyMemberId].showInFiler*/) {
             selectedAmcMapObj[element.amc_id] = element.amc_id;
 
             const obj = {
