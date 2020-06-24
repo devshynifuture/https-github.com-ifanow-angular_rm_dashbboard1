@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { HttpService } from 'src/app/http-service/http-service';
-import { apiConfig } from 'src/app/config/main-config';
-import { appConfig } from 'src/app/config/component-config';
-import { HttpParams, HttpClient } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpService} from 'src/app/http-service/http-service';
+import {apiConfig} from 'src/app/config/main-config';
+import {appConfig} from 'src/app/config/component-config';
+import {HttpClient, HttpParams} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -22,32 +22,41 @@ export class CustomerService {
   addGeneralInsurance(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_GENERAL_INSURANCE, data);
   }
+
   addFixedDeposit(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_FIXEDDEPOSIT, data);
   }
+
   deleteGeneralInsurance(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_GENERAL_INSURANCE, data);
   }
+
   deletePartPayment(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_PART_PAYMENT, data);
   }
+
   deleteBorrower(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_BORROWER, data);
   }
+
   getLifeInsuranceData(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId).set('insuranceSubTypeId', data.insuranceSubTypeId).set('insuranceTypeId', data.insuranceTypeId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_LIFE_INSURANCE, httpParams);
   }
+
   getInsuranceCount(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.INSURANCE_COUNT_GET, httpParams);
   }
+
   editLifeInsuranceData(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_LIFE_INSURANCE, data);
   }
+
   editGeneralInsuranceData(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_GENERAL_INSURANCE, data);
   }
+
   getGeneralInsuranceData(data) {
     const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId).set('insuranceSubTypeId', data.insuranceSubTypeId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_GENERAL_INSURANCE, httpParams);
@@ -91,8 +100,9 @@ export class CustomerService {
   getBonds(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_BONDS, data);
   }
+
   geCalculatedEmi(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.CALCULATE_EMI, { request: JSON.stringify(data) });
+    return this.http.get(apiConfig.MAIN_URL + appConfig.CALCULATE_EMI, {request: JSON.stringify(data)});
   }
 
   addRecurringDeposit(data) {
@@ -427,8 +437,9 @@ export class CustomerService {
     const httpParams = new HttpParams().set('policyName', data.policyName).set('insuranceSubTypeId', data.insuranceSubTypeId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_POLICY_NAME, httpParams);
   }
+
   getCompanyNames(data) {
-    return this.http.get(apiConfig.MAIN_URL + appConfig.COMPANY_LIST_GET, { query: data });
+    return this.http.get(apiConfig.MAIN_URL + appConfig.COMPANY_LIST_GET, {query: data});
   }
 
 
@@ -528,6 +539,7 @@ export class CustomerService {
   copyFiles(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.COPY_FILES, data);
   }
+
   copyFolders(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.COPY_FOLDER, data);
   }
@@ -539,18 +551,23 @@ export class CustomerService {
   renameFolder(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.RENAME_FOLDER, data);
   }
+
   sendSharebleLink(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.SEND_SHAREBLE_LINK, data);
   }
+
   deleteFolder(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_FOLDER, data);
   }
+
   deleteFolderPermnant(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_PERMANANT_FOLDER, data);
   }
+
   recovery(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.RECOVERY, data);
   }
+
   starFile(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.STAR_FILE, data);
   }
@@ -568,18 +585,23 @@ export class CustomerService {
     // .set("clientId",data.clientId).set('folderId',data.folderId).set('fileName',data.fileName)
     return this.http.get(apiConfig.MAIN_URL + appConfig.UPLOAD_FILE, data);
   }
-  fetchFileUpload(data){
+
+  fetchFileUpload(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.FETCH_FILE_UPLOAD_DATA, data);
   }
-  getFileUploadDataClient(data){
+
+  getFileUploadDataClient(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_FILE_UPLOAD_DATA_CLIENT, data);
   }
-  fetchFileClientData(data){
+
+  fetchFileClientData(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.FETCH_CLIENT_FILE_UPLOAD, data);
   }
+
   getCountAllDocs(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_COUNT_DOCS, data);
   }
+
   clientUploadFile(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.CLIENT_UPLOAD_FILE, data);
   }
@@ -655,89 +677,114 @@ export class CustomerService {
   editScriplevelHoldingAndTransaction(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_SCRIP_HOLDING_TRANSACTION, data);
   }
+
   getMutualFund(data) {
 
     return this.http.get(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_GET, data);
   }
+
   getNav(data) {
 
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_NAV, data);
   }
+
   getReportWiseCalculations(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.REPORT_WISE_CALCULATION + '?advisorId=' + data.advisorId + '&clientId=' + data.clientId,{report:data.request});
+    return this.http.post(apiConfig.MAIN_URL + appConfig.REPORT_WISE_CALCULATION + '?advisorId=' + data.advisorId + '&clientId=' + data.clientId, {report: data.request});
   }
+
   getMfUnrealizedTransactions(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.UNREALIZED_TRANSACTION_GET, data);
   }
+
   getSaveFilters(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.SAVE_FILTERS_GET, data);
   }
-  AddSaveFilters(data) {	
-    return this.http.post(apiConfig.MAIN_URL + appConfig.SAVE_FILTERS_ADD, {reportFilterConfigModelList:data.ReportFilterConfigModel} );	
+
+  AddSaveFilters(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.SAVE_FILTERS_ADD, {reportFilterConfigModelList: data.ReportFilterConfigModel});
   }
+
   getDatedReportWiseCalculations(data) {
-    const obj ={
-      lastDate : data.lastDate,
-      report:data.reportType
+    const obj = {
+      lastDate: data.lastDate,
+      report: data.reportType
     }
-    return this.http.post(apiConfig.MAIN_URL + appConfig.GET_DATED_REPORT_WISE_CALCULATION+ '?advisorId=' + data.advisorId + '&clientId=' + data.clientId,obj);
+    return this.http.post(apiConfig.MAIN_URL + appConfig.GET_DATED_REPORT_WISE_CALCULATION + '?advisorId=' + data.advisorId + '&clientId=' + data.clientId, obj);
   }
+
   capitalGainGet(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.CAPITAL_GAIN_GET, data);
   }
+
   getMfFolioMaster(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.FOLIO_MASTER_DETAILS, data);
   }
+
   getMfSipDetails(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.SIP_DETAILS, data);
   }
+
   searchFile(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.SEARCH_FILE, data);
   }
+
   getAdviceFd(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_FD, data)
   }
+
   getAdviceRd(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_RD, data)
   }
+
   getAdvicePpf(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_PPF, data)
   }
+
   getAdviceNsc(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_NSC, data)
   }
+
   getAdviceSsy(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_SSY, data)
   }
+
   getAdviceKvp(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_KVP, data)
   }
+
   getAdviceScss(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_SCSS, data)
   }
+
   getAdvicePoSaving(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_POSAVING, data)
   }
+
   getAdvicePord(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_PORD, data)
   }
+
   getAdvicePotd(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_POTD, data)
   }
+
   getAdvicePomis(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_POMIS, data)
   }
+
   getAdviceRealEstate(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_REALESTATE, data)
   }
 
-  
+
   getAdviceEpf(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_EPF, data)
   }
+
   getAdviceNps(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_NPS, data)
   }
+
   getSchemeChoice() {
     let httpParams;
     // = new HttpParams().set('clientId', data.clientId).set("advisorId", data.advisorId).set("familyMemberId", data.familyMemberId);
@@ -748,96 +795,125 @@ export class CustomerService {
     let httpParams = new HttpParams().set('query', data.name);
     return this.http.get(apiConfig.MAIN_URL + appConfig.SCHEME_FILTER_CHOICE, httpParams)
   }
+
   getAdviceGratuity(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_GRATUITY, data)
   }
+
   getAdviceSuperannuation(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_SUPERANNUATION, data)
   }
+
   getAdviceEps(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_EPS, data)
   }
+
   getAdviceBankAccount(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_BANKACCOUNT, data)
   }
+
   getAdviceCashInHand(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_CASHINHAND, data)
   }
+
   getAdviceGold(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_GOLD, data)
   }
+
   getAdviceOthers(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADVICE_ADD_OTHERS, data)
   }
+
   getAdviceDeploymentsData(data) {
     let httpParams = new HttpParams().set('clientId', data.clientId).set("advisorId", data.advisorId).set("familyMemberId", data.familyMemberId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.ADVICE_GET_DEPLOYMENTS, httpParams)
   }
+
   generateGroupId(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.GENERATE_GROUP_ID, data)
   }
+
   consentBypass(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.CONSENT_BYPASS_POST, data)
   }
+
   getAdviceConsent(data) {
     let httpParams = new HttpParams().set('adviceUuid', data);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_CONSENT, httpParams);
   }
+
   updateAssetConsent(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.UPDATE_ASSET_CONSENT, data)
   }
+
   sentEmailConsent(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.SENT_EMAIL_CONSENT, data)
   }
+
   giveAdviceOnGold(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.GIVE_ADVICE_ON_GOLD, data)
   }
+
   giveAdviceOnPoSavings(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.GIVE_ADVICE_ON_PO_SAVING, data)
   }
+
   giveAdviceOnRealEstate(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.GIVE_ADVICE_ON_REAL_ESTATE, data)
   }
+
   addFamilyMembers(data) {
     return this.http.postEncoded(apiConfig.MAIN_URL + appConfig.ADD_FAMILY_MEMBER, data);
   }
+
   getFamilyMembers(data) {
     return this.http.getEncoded(apiConfig.USER + appConfig.GET_FAMILY_MEMBERS, data, 1);
   }
+
   deleteFamilyMember(data) {
     return this.http.putEncoded(apiConfig.USER + appConfig.DELETE_FAMILY_MEMBER, data);
   }
+
   getAddressList(data) {
     return this.http.getEncoded(apiConfig.USER + appConfig.GET_ADDRESS_LIST, data, 1)
   }
+
   getDematList(data) {
     return this.http.getEncoded(apiConfig.USER + appConfig.GET_DEMAT_LIST, data, 1)
   }
+
   getBankList(data) {
     return this.http.getEncoded(apiConfig.USER + appConfig.GET_BANK_LIST, data, 1)
   }
+
   calculateTotalValues(data) {
     let httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId).set('targetDate', data.targetDate);
     return this.http.get(apiConfig.MAIN_URL + appConfig.CALCULATE_TOTAL_VALUES, httpParams);
   }
+
   getSUmmaryList(data) {
     let httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId).set('targetDate', data.targetDate);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SUMMARY_LIST, httpParams);
   }
+
   getCashFlowList(data) {
     let httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId).set('targetDate', data.targetDate);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CASHFLOW_LIST, httpParams);
   }
+
   getOutFlowValuesMonthWise(data) {
     let httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId).set('targetDate', data.targetDate);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CASHFLOW_LIST, httpParams);
   }
+
   getStockFeeds() {
     return this.http.getAws("https://6ewakqcsma.execute-api.us-east-1.amazonaws.com/default/stockfeed");
   }
+
   getNiftyData() {
     return this.http.getAws("https://fzwxpcsz49.execute-api.us-east-1.amazonaws.com/default/nifty500");
   }
+
   getDeptData() {
     return this.http.getAws("https://qi8t9vk6pf.execute-api.us-east-1.amazonaws.com/default/debtindexfeed");
   }
@@ -846,59 +922,76 @@ export class CustomerService {
   getAllFeedsPortFolio(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.CALCULATE_TOTAL_VALUES, data);
   }
+
   getRTAFeeds(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_FEEDS_MF_DATA, data);
   }
+
   getDocumentsFeed(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DOCUMENTS_FEED, data);
   }
+
   getRiskProfile(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_FEED_RISK_PROFILE, data);
   }
+
   getGlobalRiskProfile(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_GLOBAL_RISK_PROFILE, data);
   }
+
   getRecentTransactions(data) {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.GET_FEED_RECENT_TRANSACTIONS, data, null);
   }
+
   getCashFlowFeeds(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CASHFLOW_FEEDS, data);
   }
+
   getCustomerFeedsProfile(data) {
     return this.http.getEncoded(apiConfig.USER + appConfig.GET_CUSTOMER_FEEDS_PROFILE, data, null);
   }
+
   getTransactionTypeData(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_TRANSACTION_TYPE_LIST_POST, data)
   }
+
   getTransactionTypeInMF(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_TRANSACTION_TYPE, data)
   }
+
   postAddTransactionMutualFund(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_TRANSACTION_ADD, data);
   }
+
   postEditTransactionMutualFund(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_TRANSACTION_EDIT, data);
   }
+
   postDeleteTransactionMutualFund(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_TRANSACTION_DELETE, data);
   }
+
   getFamilyMemberListByClientId(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.FAMILY_MEMBER_LIST_GET_BY_CLIENT_ID, data);
   }
+
   getSchemeNameList(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_SCHEME_NAME_LIST_GET, data);
   }
+
   postMutualFundAdd(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_ADD, data);
   }
+
   postMutualFundEdit(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_EDIT, data);
   }
+
   postMutualFundDelete(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_DELETE, data);
   }
 
-  updateClientProfilePic(data){
+  updateClientProfilePic(data) {
     return this.http.putEncoded(apiConfig.USER + appConfig.UPDATE_CLIENT_PROFILE_PIC, data);
   }
 }

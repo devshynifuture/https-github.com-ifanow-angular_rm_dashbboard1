@@ -32,9 +32,6 @@
                                     <mat-error>This field is required</mat-error>
                                 </mat-form-field>
                             </div>
-                            <!-- <div class="col-md-12 p-0">
-                                <p class="text-regular pt-4">Add spouse</p>
-                            </div> -->
                         </div>
                     </div>
 
@@ -67,7 +64,8 @@
                                                     [value]="spending.value" [formControl]="spending"
                                                     autocomplete="off" matInput
                                                     class="form-control br-0 rupess">
-                                                <mat-error>This field is required</mat-error>
+                                                <mat-error *ngIf="multiYearGoalForm.get('field1').errors?.required">This field is required</mat-error>
+                                                <mat-error *ngIf="multiYearGoalForm.get('field1').errors?.min || multiYearGoalForm.get('field1').errors?.max">Please enter valid value</mat-error>
                                             </mat-form-field>
                                         </div>
                                     </div>

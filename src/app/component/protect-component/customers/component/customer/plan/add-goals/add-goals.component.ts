@@ -121,7 +121,7 @@ export class AddGoalsComponent implements OnInit {
             ageIncreament: 5,
             minReduction: -20,
             cost: 7500000,
-            planningForRelative: [0], // self
+            planningForRelative: [AppConstants.RELATIONSHIP_SELF], // self
           }
           break;
         case AppConstants.HOUSE_GOAL: // House
@@ -143,7 +143,7 @@ export class AddGoalsComponent implements OnInit {
           element.defaults = {
             ageIncreament: 5,
             cost: 7500000,
-            planningForRelative: [0], // self
+            planningForRelative: [AppConstants.RELATIONSHIP_SELF], // self
           }
           break;
         case AppConstants.CAR_GOAL: // Car
@@ -164,7 +164,7 @@ export class AddGoalsComponent implements OnInit {
           element.defaults = {
             ageIncreament: 5,
             cost: 500000,
-            planningForRelative: [0], // self
+            planningForRelative: [AppConstants.RELATIONSHIP_SELF], // self
           }
           break;
         case AppConstants.MARRIAGE_GOAL: // Marriage
@@ -186,7 +186,7 @@ export class AddGoalsComponent implements OnInit {
           element.defaults = {
             ageIncreament: 5,
             cost: 3000000,
-            planningForRelative: [5,6], // children
+            planningForRelative: [AppConstants.RELATIONSHIP_SON,AppConstants.RELATIONSHIP_DAUGHTER], // children
           }
           break;
         case AppConstants.VACATION_GOAL: // Vacation
@@ -199,15 +199,15 @@ export class AddGoalsComponent implements OnInit {
           element.validations = {
             minAgeFromPresent: 0,
             maxAgeFromPresent: 50,
-            minCost: 25000,
-            maxCost: 2500000,
+            minCost: 5000,
+            maxCost: 1000000,
             showAge: false,
             placeHolder: 'Year'
           }
           element.defaults = {
             gap: 10,
             cost: 75000,
-            planningForRelative: [0], // self
+            planningForRelative: [AppConstants.RELATIONSHIP_SELF], // self
           }
           break;
         case AppConstants.EDUCATION_GOAL: // Education
@@ -231,7 +231,7 @@ export class AddGoalsComponent implements OnInit {
           element.defaults = {
             gap: 5,
             cost: 3000000,
-            planningForRelative: [0,5,6], // children // abhishek said self too
+            planningForRelative: [AppConstants.RELATIONSHIP_SELF,AppConstants.RELATIONSHIP_SON,AppConstants.RELATIONSHIP_DAUGHTER], // children // abhishek said self too
           }
           break;
         case AppConstants.EMERGENCY_GOAL: // Emergency
@@ -252,7 +252,7 @@ export class AddGoalsComponent implements OnInit {
           element.defaults = {
             ageIncreament: 5,
             cost: 500000,
-            planningForRelative: [0], // self
+            planningForRelative: [AppConstants.RELATIONSHIP_SELF], // self
           }
           break;
         case AppConstants.WEALTH_CREATION_GOAL: // Wealth Creation
@@ -274,7 +274,7 @@ export class AddGoalsComponent implements OnInit {
           element.defaults = {
             ageIncreament: 5,
             cost: 500000,
-            planningForRelative: [5,6], // children
+            planningForRelative: [AppConstants.RELATIONSHIP_SON,AppConstants.RELATIONSHIP_DAUGHTER], // children
           }
           break;
         case AppConstants.BIG_SPEND_GOAL: // Big Spends
@@ -295,7 +295,7 @@ export class AddGoalsComponent implements OnInit {
           element.defaults = {
             ageIncreament: 5,
             cost: 1000000,
-            planningForRelative: [0], // self
+            planningForRelative: [AppConstants.RELATIONSHIP_SELF], // self
           }
           break;
         case AppConstants.OTHERS_GOAL: // Others
@@ -316,7 +316,7 @@ export class AddGoalsComponent implements OnInit {
           element.defaults = {
             ageIncreament: 5,
             cost: 75000,
-            planningForRelative: [0], // self
+            planningForRelative: [AppConstants.RELATIONSHIP_SELF], // self
           }
           break;
         default:
@@ -335,8 +335,8 @@ export class AddGoalsComponent implements OnInit {
 
   validateIfUserAllowedToCreateGoal() {
     // family validation
-    let owner = this.familyList.find((member) => this.goalTypeData.defaults.planningForRelative.includes(member.relationshipId));
-    if(!owner) {
+    let owner = this.familyList.filter((member) => this.goalTypeData.defaults.planningForRelative.includes(member.relationshipId));
+    if(owner.length == 0) {
       this.eventService.openSnackBar("No family member found for such goal");
     }
 

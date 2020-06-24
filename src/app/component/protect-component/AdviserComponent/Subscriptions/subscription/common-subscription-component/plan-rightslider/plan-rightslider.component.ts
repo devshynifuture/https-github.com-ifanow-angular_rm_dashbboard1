@@ -31,6 +31,7 @@ export class PlanRightsliderComponent implements OnInit {
   clientData;
   advisorId;
   noDataFoundFlag: any;
+  selectedPlanList: any = [];
   set data(data) {
     this.clientData = data;
   }
@@ -60,15 +61,15 @@ export class PlanRightsliderComponent implements OnInit {
   }
 
   createSubscription() {
-    if (this.selectedPlan) {
+    if (this.selectedPlanList.length > 0) {
       this.barButtonOptions.active = true;
-      const data = [{
-        advisorId: this.advisorId,
-        planId: this.selectedPlan.id,
-        clientId: this.clientData.id,
-        planName: this.selectedPlan.name
-      }];
-      this.subService.createSubscription(data).subscribe(
+      // const data = [{
+      //   advisorId: this.advisorId,
+      //   planId: this.selectedPlan.id,
+      //   clientId: this.clientData.id,
+      //   planName: this.selectedPlan.name
+      // }];
+      this.subService.createSubscription(this.selectedPlanList).subscribe(
         data => this.createSubscriptionResponse(data)
       );
     } else {
@@ -82,15 +83,19 @@ export class PlanRightsliderComponent implements OnInit {
   }
 
   select(data) {
-    this.planSettingData.forEach(element => {
-      if (data.id == element.id) {
-        data.selected = true
-        this.selectedPlan = data
-      }
-      else {
-        element.selected = false;
-      }
-    })
+    if (data.selected) {
+      data.selected = false;
+      this.selectedPlanList = this.selectedPlanList.filter(element => element.id != data.id);
+    }
+    else {
+      this.selectedPlanList.push({
+        advisorId: this.advisorId,
+        planId: data.id,
+        clientId: this.clientData.id,
+        planName: data.name
+      });
+      data.selected = true;
+    }
   }
   Close(flag) {
     this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });

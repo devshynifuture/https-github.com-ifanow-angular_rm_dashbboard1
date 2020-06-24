@@ -49,7 +49,7 @@ export class LeadsClientsComponent implements OnInit {
     this.clientRoles = this.enumService.getClientRole();
     this.convertClientForm = this.fb.group({
       clientOwner: [data.advisorId, [Validators.required]],
-      confirmRole: ['', [Validators.required]],
+      confirmRole: [data.roleId, [Validators.required]],
       sendEmailFlag: [true, [Validators.required]]
     });
     this.getClientList(data);

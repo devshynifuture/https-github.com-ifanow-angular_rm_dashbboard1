@@ -230,11 +230,9 @@
                         <h5 class="m-0 text-right ">
                             ₹<span [value]="finalAmount" appFormatNumber>{{finalAmount}}</span>
                         </h5>
-                        <h5 *ngIf="storeData.sgst != undefined" [hidden]="finalAmount !=undefined"
-                            class="m-0 text-right ">
+                        <h5 *ngIf="storeData.sgst != 0" [hidden]="finalAmount !=undefined" class="m-0 text-right ">
                             {{storeData.cgstTaxAmount}}</h5>
-                        <h5 *ngIf="storeData.igst != undefined" [hidden]="finalAmount !=undefined"
-                            class="m-0 text-right ">
+                        <h5 *ngIf="storeData.igst != 0" [hidden]="finalAmount !=undefined" class="m-0 text-right ">
                             {{storeData.igstTaxAmount}}</h5>
                     </div>
                 </div>
