@@ -152,7 +152,6 @@ export class EmailUtilService {
 
           // not perfect
           else {
-            console.log("this is null hope so it is not :: data null", part.mimeType);
             let decodedValue = EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data);
             if (decodedValue !== null) {
               decodedPartArray.push(decodedValue);
@@ -179,6 +178,22 @@ export class EmailUtilService {
       });
     });
     return labelIdsArray;
+  }
+
+  static getAttachmentIdFromGmailThread(gmailThread) {
+    let attachmentIds = [];
+    gmailThread.messages.forEach(message => {
+      const { payload } = message;
+      if (payload.mimeType === 'multipart/mixed' && payload.parts.length !== 0) {
+        const { parts } = payload;
+        parts.forEach(part => {
+          if (part.filename !== '') {
+            attachmentIds.push(part.body.attachmentId)
+          }
+        });
+      }
+    });
+    return attachmentIds;
   }
 
   static getIdAndDateAndSnippetOfGmailThreadMessages(gmailThread: GmailInboxResponseI): Object[] {
