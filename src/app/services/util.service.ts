@@ -16,6 +16,7 @@ import { PlaceHolder } from '../interfaces/place-holder.interface';
   providedIn: 'root'
 })
 export class UtilService {
+  responseData: any;
 
   constructor(
     private eventService: EventService,
@@ -400,11 +401,14 @@ export class UtilService {
       clientId: data.clientId,
       advisorId: data.advisorId
     };
+    
     return this.http.post(
       'http://dev.ifanow.in:8080/futurewise/api/v1/web/pdfAndEmail/bulk-mail/html-to-pdf', obj,
-      { responseType: 'blob' }).subscribe(
+      ).subscribe(
         data => {
           console.log('done email', data);
+          this.responseData = data
+          alert(this.responseData.status);
         });
   }
 
