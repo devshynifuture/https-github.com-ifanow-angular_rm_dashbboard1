@@ -199,8 +199,8 @@ export class AddGoalsComponent implements OnInit {
           element.validations = {
             minAgeFromPresent: 0,
             maxAgeFromPresent: 50,
-            minCost: 25000,
-            maxCost: 2500000,
+            minCost: 5000,
+            maxCost: 1000000,
             showAge: false,
             placeHolder: 'Year'
           }
@@ -335,8 +335,8 @@ export class AddGoalsComponent implements OnInit {
 
   validateIfUserAllowedToCreateGoal() {
     // family validation
-    let owner = this.familyList.find((member) => this.goalTypeData.defaults.planningForRelative.includes(member.relationshipId));
-    if(!owner) {
+    let owner = this.familyList.filter((member) => this.goalTypeData.defaults.planningForRelative.includes(member.relationshipId));
+    if(owner.length == 0) {
       this.eventService.openSnackBar("No family member found for such goal");
     }
 
