@@ -169,7 +169,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
         if (data != undefined) {
           data.forEach(element => {
             element['feeTypeId'] = element.subscriptionPricing.feeTypeId;
-            element['pricing'] = element.subscriptionPricing.subscriptionAssetPricingList[0].pricing
+            element['pricing'] = element.subscriptionPricing.subscriptionAssetPricingList[(element.feeTypeId == 1) ? 0 : 2].pricing
           });
           this.lastDataId = data[data.length - 1].id;
           // obj.offset = this.lastDataId;

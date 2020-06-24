@@ -193,7 +193,7 @@ export class SearchClientAddQuotationComponent implements OnInit {
 
                    <td style="padding: 24px; border: none;">
                        <p style="font-size: 12px; margin:0px;">FEES</p>
-                       <h4 style="margin: 0px; padding: 0px; font-size: 18px;">${(element.servicePricing.feeTypeId == 1) ? '₹' : ''}${element.averageFees}${(element.servicePricing.feeTypeId == 2) ? '%' : ''}</h4>
+                       ${(element.servicePricing.feeTypeId == 1) ? `<h4 style="margin: 0px; padding: 0px; font-size: 18px;">₹${element.averageFees}</h4>` : ''}
                    </td>
                </tr>
            </table>

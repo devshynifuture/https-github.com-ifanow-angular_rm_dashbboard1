@@ -60,14 +60,16 @@
                                 appFormatNumber>{{element.subscriptionPricing.subscriptionAssetPricingList[2].pricing}}</span>%
                         </div>
                     </td> -->
-                    <td (click)="element.feeTypeId == 2 ? Open('open',element) : ''" *matCellDef="let element"
-                        [ngClass]="{'c-p': element.feeTypeId == 2}" mat-cell class="t-12 text-right">
-                        <div class="bar text-primary text-underline" *ngIf="element.startsOn==undefined">
+                    <td *matCellDef="let element" mat-cell class="t-12 text-right">
+                        <div class="bar" *ngIf="isLoading">
+                        </div>
+                        <div class="bar text-primary text-underline c-p" (click)="Open('open',element)"
+                            *ngIf="element.startsOn==undefined && element.feeTypeId==1">
                             {{isLoading ? ' ' : 'View details'}} </div>
                         <div appFormatNumber *ngIf="element.startsOn && element.feeTypeId==1">
                             ₹ {{element.pricing}}</div>
-                        <div appFormatNumber *ngIf="element.startsOn && element.feeTypeId==2"
-                            class="text-primary text-underline">
+                        <div appFormatNumber (click)="Open('open',element)"
+                            *ngIf="element.startsOn && element.feeTypeId==2" class="text-primary text-underline c-p">
                             View details</div>
                     </td>
                 </ng-container>
