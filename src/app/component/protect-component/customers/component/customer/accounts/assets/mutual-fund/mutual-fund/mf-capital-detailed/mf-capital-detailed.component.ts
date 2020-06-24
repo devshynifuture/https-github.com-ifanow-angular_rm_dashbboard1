@@ -607,7 +607,7 @@ export class MfCapitalDetailedComponent implements OnInit {
         toEmail: 'abhishek@futurewise.co.in'
       }
       this.UtilService.bulkHtmlToPdf(obj)
-      this.UtilService.htmlToPdf(para, 'MF_Capital_Gain_Detailed', false, this.fragmentData, '', '')
+      this.UtilService.htmlToPdf(para, 'MF_Capital_Gain_Detailed', true, this.fragmentData, '', '')
     }, 300);
 
 

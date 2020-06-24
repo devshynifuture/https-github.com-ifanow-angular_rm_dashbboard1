@@ -82,6 +82,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   details: any;
   getOrgData: any;
   clientDetails: any;
+  reportName: any;
 
   constructor(public dialog: MatDialog, private datePipe: DatePipe,
     private subInjectService: SubscriptionInject, private utilService: UtilService,
@@ -131,9 +132,11 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       if (data.mode == 'unrealisedTransactions') {
         this.viewMode = 'Unrealized Transactions'
         this.mode = 'Unrealized Transactions'
+        this.reportName = 'MF_All_Trasaction_Report'
       } else {
         this.viewMode = 'All Transactions'
         this.mode = 'All Transactions'
+        this.reportName = 'MF_Unrealised_Trasaction_Report'
       }
       this.ngOnInit()
     }
