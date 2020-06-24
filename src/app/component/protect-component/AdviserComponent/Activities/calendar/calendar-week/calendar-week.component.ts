@@ -19,7 +19,7 @@ export class CalendarWeekComponent implements OnInit {
   day;
   month;
   year;
-  week
+  week:any = [];
   selectedDate;
   dialogData: any
   currentMonth;
@@ -59,11 +59,12 @@ export class CalendarWeekComponent implements OnInit {
     this.day = this.formateDate(this.viewDate)
     this.userInfo = AuthService.getUserInfo()
     // this.updatecalendar();
-    this.week =this.getWeek(this.viewDate);
+    this.getWeek(this.viewDate);
     this.getEvent();
     this.curruntDayIndex = this.daysArr.indexOf(this.selectedDate);
     // this.excessAllow = localStorage.getItem('successStoringToken')
     this.unSubcrip = this.calenderService.updateDayArr().subscribe((data: any) => {
+      this.getWeek(data[1].viewDate);
       this.daysArr = data[0];
       this.day=data[1].selectedDate;
       this.month=data[1].month;
@@ -74,7 +75,6 @@ export class CalendarWeekComponent implements OnInit {
       this.viewDate =data[1].viewDate;
       this.addLastMonthDays =data[1].addLastMonthDays;
       // let selectedDate = this.year + "," + this.month+ "," +this.day
-      this.week =this.getWeek(new Date(this.year,this.month,this.day));
       console.log(this.daysArr,this.day,"this.daysArr....",this.week);
     });
     
@@ -82,7 +82,8 @@ export class CalendarWeekComponent implements OnInit {
 
   getWeek(day){
     var d = new Date(day);
-    var week = [];
+    this.week = [];
+    
     var _days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     var _months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     for (let i = 1; i <= 7; i++) {
@@ -96,10 +97,10 @@ export class CalendarWeekComponent implements OnInit {
         }
         var _year = dt.getFullYear();
         var fulldate = _day+' '+_month+' '+_date+' '+_year+' ';
-        week.push(new Date(fulldate));
+        this.week.push(new Date(fulldate));
       }
-      console.log(week,"week");
-      return week
+      // console.log(newWeek,"newWeek",newDate);
+      
   }
 
   getEvent() {
@@ -200,7 +201,7 @@ export class CalendarWeekComponent implements OnInit {
 
   returnNumber(num){
     // num.toUpperCase()
-   console.log(parseInt(num) +1+' '+ num.charAt(num.length - 3).toUpperCase() + num.charAt(num.length - 2).toUpperCase(),"time event");
+  //  console.log(parseInt(num) +1+' '+ num.charAt(num.length - 3).toUpperCase() + num.charAt(num.length - 2).toUpperCase(),"time event");
     return parseInt(num) + 1 +' '+ num.charAt(num.length - 3).toUpperCase() + num.charAt(num.length - 2).toUpperCase()
   }
 
@@ -296,7 +297,7 @@ export class CalendarWeekComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result != undefined) {
+      if (result != undefined && result != 'delete') {
         this.dialogData =
         {
           "calendarId": AuthService.getUserInfo().userName,
@@ -335,6 +336,9 @@ export class CalendarWeekComponent implements OnInit {
             this.getEvent();
           })
         }
+      }
+      if(result == 'delete'){
+        this.getEvent();
       }
     });
   }

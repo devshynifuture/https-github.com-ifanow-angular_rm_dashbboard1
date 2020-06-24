@@ -169,7 +169,7 @@ import { BottomSheetComponent } from '../../../customers/component/common-compon
         "eventId": eventId,
       }
       this.calenderService.deleteEvent(deleteData).subscribe((data) => {
-  
+      this.dialogRef.close('delete');
       });
     }
   
