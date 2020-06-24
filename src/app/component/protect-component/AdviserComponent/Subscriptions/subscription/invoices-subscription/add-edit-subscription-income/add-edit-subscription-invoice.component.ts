@@ -1,12 +1,12 @@
-import {Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AuthService} from 'src/app/auth-service/authService';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {SubscriptionService} from '../../../subscription.service';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {EnumServiceService} from 'src/app/services/enum-service.service';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {MatInput} from '@angular/material';
+import { Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/auth-service/authService';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { SubscriptionService } from '../../../subscription.service';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { MatInput } from '@angular/material';
 
 @Component({
   selector: 'app-add-edit-subscription-invoice',
@@ -72,9 +72,11 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   serviceList: any;
   billerName: any;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
+  dueDate: any;
+  selectedService: any;
 
   constructor(public enumService: EnumServiceService, private fb: FormBuilder, private subService: SubscriptionService,
-              public subInjectService: SubscriptionInject) {
+    public subInjectService: SubscriptionInject) {
   }
 
   @Input() set data(data) {
@@ -120,6 +122,13 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
     this.editAdd1 = false;
     this.editAdd2 = false;
     // , [Validators.required]
+    this.dueDate;
+    if (data.dueDate == undefined) {
+      this.dueDate = new Date().setDate(new Date().getDate() + 5);
+    }
+    else {
+      this.dueDate = data.dueDate
+    }
     this.editPayment = this.fb.group({
       clientName: [data.clientName, [Validators.required]],
       billerName: [data.billerName ? data.billerName : ''],
@@ -129,12 +138,12 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
       invoiceDate: [new Date(data.invoiceDate), [Validators.required]],
       finalAmount: [(data.subTotal == undefined) ? 0 : parseInt(data.subTotal), [Validators.required, Validators.min(1.00)]],
       discount: [(data.discount == undefined) ? 0 : data.discount],
-      dueDate: [new Date(data.dueDate), [Validators.required]],
+      dueDate: [new Date(this.dueDate), [Validators.required]],
       footnote: [data.footnote, [Validators.maxLength(500)]],
       terms: [data.terms, [Validators.maxLength(500)]],
       taxStatus: [data == '' || !data.cgst ? 'IGST(18%)' : 'SGST(9%)|CGST(9%)'],
       serviceName: [(!data.services) ? '0' : (data.services.length == 0) ? '0' : data.services[0].serviceName,
-        [Validators.required]],
+      [Validators.required]],
       subTotal: [(!data.subTotal) ? '' : data.subTotal],
       igstTaxAmount: [data.igstTaxAmount],
       cgstTaxAmount: [data.cgstTaxAmount],
@@ -170,14 +179,14 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
     });
     this.editPayment.controls.discount.valueChanges.subscribe(val => {
       if (val == null) {
-      } else if (val > this.editPayment.value.finalAmount) {
-        val = this.editPayment.value.finalAmount;
+      } else if (val > this.editPayment.controls.finalAmount.value) {
+        val = this.editPayment.controls.finalAmount.value;
         this.editPayment.controls.discount.setValue(val);
       }
-      this.changeTaxStatus(this.editPayment.value.finalAmount, val, this.editPayment.value.taxStatus);
+      this.changeTaxStatus(this.editPayment.controls.finalAmount.value, val, this.editPayment.value.taxStatus);
     });
     this.editPayment.controls.taxStatus.valueChanges.subscribe(val => {
-      this.changeTaxStatus(this.editPayment.value.finalAmount, this.editPayment.value.discount, val);
+      this.changeTaxStatus(this.editPayment.controls.finalAmount.value, this.editPayment.value.discount, val);
     });
     this.editPayment.controls.clientName.valueChanges.subscribe(value => {
     });
@@ -270,8 +279,8 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
       dueDate = new Date((this.editPayment.get('dueDate').value._d) ? this.editPayment.get('dueDate').value._d : this.editPayment.get('dueDate').value).getTime();
       (invoiceDate == undefined && dueDate == undefined) ? ''
         : (dueDate <= invoiceDate)
-        ? this.showDateError = true :
-        this.showDateError = false;
+          ? this.showDateError = true :
+          this.showDateError = false;
     }
   }
 
@@ -295,9 +304,9 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
       // }
       this.editPayment.markAllAsTouched();
     }
-      //  else if (isNaN(this.editPayment.controls.finalAmount.value)) {
-      //   this.showErr = true;
-      //   return;
+    //  else if (isNaN(this.editPayment.controls.finalAmount.value)) {
+    //   this.showErr = true;
+    //   return;
     // }
     else {
       this.barButtonOptions.active = true;
@@ -307,7 +316,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
         billingAddress: this.editPayment.value.billingAddress,
         invoiceNumber: this.editPayment.controls.invoiceNumber.value,
         billerName: this.billerName,
-        subTotal: this.editPayment.value.finalAmount,
+        subTotal: this.editPayment.controls.finalAmount.value,
         discount: this.editPayment.value.discount == '' ? 0 : this.editPayment.value.discount,
         finalAmount: parseInt(this.finAmount),
         invoiceDate: this.editPayment.value.invoiceDate,
@@ -328,7 +337,9 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
           obj['advisorId'] = this.advisorId,
           obj['clientBillerId'] = this.storeData.clientBillerId,
           service = [{
-            serviceName: this.editPayment.value.serviceName
+            serviceName: this.editPayment.value.serviceName,
+            id: this.selectedService.id,
+            description: this.selectedService.description
           }];
         obj['services'] = service,
           this.subService.addInvoice(obj).subscribe(
@@ -344,7 +355,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
         }];
         obj['id'] = this.storeData.id,
           obj['auto'] = this.editPayment.value.auto,
-          // finalAmount: this.editPayment.value.finalAmount,
+          // finalAmount: this.editPayment.controls.finalAmount.value,
           obj['services'] = service,
           this.subService.updateInvoiceInfo(obj).subscribe(
             data => this.updateInvoiceInfoRes(data)
@@ -373,7 +384,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   }
 
   selectService(service) {
-
+    this.selectedService = service;
     this.editPayment.get("finalAmount").setValue(service.price)
     this.finAmount = service.price
   }
@@ -388,7 +399,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
     this.editPayment.controls.terms.setValue(data.biller.terms);
     this.editPayment.controls.invoiceNumber.setValue(data.invoiceNumber);
     this.editPayment.controls.invoiceDate.setValue(new Date());
-    this.editPayment.controls.dueDate.setValue(new Date());
+    this.editPayment.controls.dueDate.setValue(new Date(this.dueDate));
     this.editPayment.controls.taxStatus.setValue("IGST(18%)");
     this.editPayment.controls.invoiceNumber.disable()
   }
@@ -435,7 +446,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
     } else {
 
       // (this.invoiceTab == 'invoiceUpperSlider') ?
-      this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: true});
+      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
 
       this.subInjectService.rightSliderData(state)
       this.subInjectService.rightSideData(state);

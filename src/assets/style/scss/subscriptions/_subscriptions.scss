@@ -27,17 +27,16 @@
   }
 }
 
+.placeholder-scroll {
+  height: 300px;
+  overflow: auto;
+}
 
-
-
-
-
-
-
-
-
-
-
+#ui-search-client-add-quotation {
+  .mat-checkbox-layout {
+    vertical-align: top;
+  }
+}
 
 // responsive style
 @media(max-width:1224px) {

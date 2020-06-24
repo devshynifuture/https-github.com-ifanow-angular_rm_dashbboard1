@@ -189,7 +189,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
       // });
       this.schemeLevelHoldingForm.get('ownerName').setValue(!this.data.ownerName ? '' : this.data.ownerName);
       this.schemeLevelHoldingForm.get('folioNumber').setValue(this.data.folioNumber);
-      this.schemeLevelHoldingForm.get('sip').setValue(this.data.sipAmount);
+      this.schemeLevelHoldingForm.get('sip').setValue((this.data.sipAmount)?this.data.sipAmount:0);
       this.schemeLevelHoldingForm.get('tag').setValue(this.data.tag);
       this.schemeNameControl.patchValue(this.data.schemeName);
     } else {
@@ -202,7 +202,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
 
       this.schemeLevelHoldingForm.get('ownerName').setValue('');
       this.schemeLevelHoldingForm.get('folioNumber').setValue('');
-      this.schemeLevelHoldingForm.get('sip').setValue('');
+      this.schemeLevelHoldingForm.get('sip').setValue(0);
       this.schemeLevelHoldingForm.get('tag').setValue('');
       this.schemeNameControl.patchValue('');
 
@@ -388,6 +388,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
       let mutualFundTransactions = [];
       this.transactionArray.value.forEach(element => {
         console.log("single element", element);
+       
         let obj1;
         if (element) {
           if (this.data && this.data.flag === 'editTransaction') {
