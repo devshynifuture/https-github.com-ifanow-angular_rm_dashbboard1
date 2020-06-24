@@ -207,7 +207,7 @@ export class SearchClientAddQuotationComponent implements OnInit {
                        <p style="font-size: 12px; margin:0px;">DESCRIPTION</p>
                        <h4 style="margin: 0px; padding: 0px; font-size: 18px;">${(element.description) ? element.description : 'N/A'}</h4>
                    </td>
-               ${(element.servicePricing.feeTypeId == 2) ? `<td style="padding: 24px; border: none;">
+               ${(element.servicePricing.feeTypeId == 2) ? `<td style="padding: 24px; border: none;pointer-event:none;">
                        <p style="font-size: 12px; margin:0px;">VARIABLE FEE DETAILS </p>
                        <h4 style="margin: 0px; padding: 0px; font-size: 18px;">Mutual Funds </h4>
                        <table style="width: 100%; border: 1px solid rgba(0, 0, 0, 0.12);  background: #F5F7F7;">

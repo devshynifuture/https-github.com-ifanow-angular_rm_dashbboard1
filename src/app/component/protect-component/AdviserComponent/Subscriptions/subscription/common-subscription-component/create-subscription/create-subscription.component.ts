@@ -372,11 +372,11 @@ export class CreateSubscriptionComponent implements OnInit {
               equityAllocation: this.serviceData.subscriptionAssetPricingList[1].equityAllocation,
               liquidAllocation: this.serviceData.subscriptionAssetPricingList[1].liquidAllocation,
             },
-            {
-              assetClassId: 2,
-              subAssetIds: this.serviceData.subscriptionAssetPricingList[2].subAssetIds,
-              pricing: this.serviceData.subscriptionAssetPricingList[2].pricing
-            }
+            // {
+            //   assetClassId: 2,
+            //   subAssetIds: this.serviceData.subscriptionAssetPricingList[2].subAssetIds,
+            //   pricing: this.serviceData.subscriptionAssetPricingList[2].pricing
+            // }
           ]
         }
       };

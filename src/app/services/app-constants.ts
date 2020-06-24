@@ -45,5 +45,15 @@ export class AppConstants {
   public static EMERGENCY_GOAL = 7;
   public static BIG_SPEND_GOAL = 9;
   public static OTHERS_GOAL = 10;
+
+  public static RELATIONSHIP_FATHER = 6;
+  public static RELATIONSHIP_MOTHER = 7;
+  public static RELATIONSHIP_SON = 4;
+  public static RELATIONSHIP_DAUGHTER = 5;
+  public static RELATIONSHIP_OTHER = 10;
+  public static RELATIONSHIP_WIFE = 3;
+  public static RELATIONSHIP_HUSBAND = 2;
+  public static RELATIONSHIP_SELF = 0;
+
   public static EMAIL_DOMAINS = ['gmail.com','hotmail.com','mail.com','outlook.com','yahoo.com','yahoo.co.in','rediffmail.com'];
 }
