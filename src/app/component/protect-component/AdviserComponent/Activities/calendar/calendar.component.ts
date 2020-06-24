@@ -170,6 +170,7 @@ presentCalendar:any = [];
         break;
       case '/admin/activies/week':
         this.viewDate = new Date(this.viewDate.setDate(this.viewDate.getDate() + 7))
+        this.selectedDate = this.viewDate.getDate();
         break;
       case '/admin/activies/month':
         this.viewDate = new Date(this.viewDate.setMonth(this.viewDate.getMonth() + 1))
