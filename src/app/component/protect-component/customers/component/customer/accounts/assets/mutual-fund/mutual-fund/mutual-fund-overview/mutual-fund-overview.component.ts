@@ -20,6 +20,7 @@ import { SettingsService } from 'src/app/component/protect-component/AdviserComp
 import { DatePipe } from '@angular/common';
 import { RightFilterDuplicateComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BackOfficeService } from 'src/app/component/protect-component/AdviserComponent/backOffice/back-office.service';
 
 
 @Component({
@@ -99,9 +100,11 @@ export class MutualFundOverviewComponent implements OnInit {
   static dataUpload: any;
   genObj: { htmlInput: string; name: string; landscape: boolean; key: string; svg: string; };
   sendaata: any;
+  clientDetails: any;
   constructor(private datePipe: DatePipe, public subInjectService: SubscriptionInject, public UtilService: UtilService,
     private mfService: MfServiceService,
     public routerActive: ActivatedRoute,
+    private backOfficeService : BackOfficeService,
     private router : Router,
     public eventService: EventService, private custumService: CustomerService, private MfServiceService: MfServiceService, private workerService: WebworkerService, private settingService: SettingsService) {
       this.routerActive.queryParamMap.subscribe((queryParamMap) => {
@@ -151,6 +154,7 @@ export class MutualFundOverviewComponent implements OnInit {
         this.clientId = parseInt(param1.clientId)
         this.advisorId = parseInt(param1.advisorId)
         console.log('2423425',param1)
+        this.getDetails()
       }
     });
     this.sendaata = {}
@@ -963,12 +967,27 @@ export class MutualFundOverviewComponent implements OnInit {
       clientId : this.clientId,
       advisorId : this.advisorId,
       fromEmail: 'devshyni@futurewise.co.in',
-      toEmail: 'devshyni@futurewise.co.in',
+      toEmail: 'abhishek@futurewise.co.in',
       svg : this.svg
     }
     this.UtilService.bulkHtmlToPdf(obj)
-  //  this.UtilService.htmlToPdf(para.innerHTML, 'Overview', false, this.fragmentData,'showPieChart', this.svg)
+   // this.UtilService.htmlToPdf(para.innerHTML, 'Overview', false, this.fragmentData,'showPieChart', this.svg)
 
+  }
+  getDetails() {
+    const obj = {
+      clientId: this.clientId,
+      advisorId: this.advisorId,
+    };
+    this.backOfficeService.getDetailsClientAdvisor(obj).subscribe(
+      data => this.getDetailsClientAdvisorRes(data)
+    );
+  }
+  getDetailsClientAdvisorRes(data) {
+    console.log('data', data)
+    this.clientDetails = data
+    this.clientData = data.clientData
+    this.userInfo = data.advisorData
   }
 }
 export interface PeriodicElement1 {

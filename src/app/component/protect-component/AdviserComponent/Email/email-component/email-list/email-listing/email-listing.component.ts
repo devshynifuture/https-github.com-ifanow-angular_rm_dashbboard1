@@ -325,10 +325,12 @@ export class EmailListingComponent implements OnInit {
           let extractSubjectFromHeaders;
           let extractAttachmentFiles = null;
           let attachmentFiles;
+          let attachmentIds = [];
           let messageCountInAThread: number;
           let messageDates: number[] = [];
 
           parsedData = EmailUtilService.decodeGmailThreadExtractMessage(thread);
+          attachmentIds = EmailUtilService.getAttachmentIdFromGmailThread(thread);
           idsOfThread = EmailUtilService.getIdsOfGmailThreads(thread);
           idsOfMessages = EmailUtilService.getIdsOfGmailMessages(thread);
           dateIdsSnippetsOfMessages = EmailUtilService.getIdAndDateAndSnippetOfGmailThreadMessages(thread);
@@ -363,7 +365,8 @@ export class EmailListingComponent implements OnInit {
               subject: extractSubjectFromHeaders['headerSubjectArray'][0],
               message: dateIdsSnippetsOfMessages[0]['snippet']
             },
-            date: `${dateIdsSnippetsOfMessages[0]['internalDate']}`
+            date: `${dateIdsSnippetsOfMessages[0]['internalDate']}`,
+            attachmentIds
           }
 
 
