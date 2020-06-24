@@ -927,10 +927,10 @@ export class MutualFundSummaryComponent implements OnInit {
         clientId : this.clientId,
         advisorId : this.advisorId,
         fromEmail: 'devshyni@futurewise.co.in',
-        toEmail: 'devshyni@futurewise.co.in'
+        toEmail: 'abhishek@futurewise.co.in'
       }
       this.utilService.bulkHtmlToPdf(obj)
-     this.utilService.htmlToPdf(para, 'Summary', false, this.fragmentData, '', '')
+     //this.utilService.htmlToPdf(para, 'Summary', false, this.fragmentData, '', '')
     }, 400);
   }
   getDetails() {
