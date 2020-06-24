@@ -1,6 +1,6 @@
 <div *ngIf="singleSubscriptionData.isCreateSub" class="row bb-1 popup-header-fix-60">
     <div class="col-md-8 p-0">
-        <h4 class="wrapper-20 m-0">{{!isSave?'EDIT':''}} FIXED FEE STRUCTURE</h4>
+        <h4 class="wrapper-20 m-0">{{!isSave?'EDIT':''}} Fixed fee structure</h4>
     </div>
 
     <div class="col-md-4 text-right" *ngIf="subData.status == 2 || subData.status == 3">
@@ -15,20 +15,22 @@
 </div>
 <div class="wrapper-20 pt-36 mb-44 pb-44">
     <div [formGroup]="fixedFeeStructureForm">
-        <p class="text-primary">FIXED FEE STRUCTURE</p>
+        <p class="text-primary">Fixed fee structure</p>
         <h4 class="mb-0 pt-16">{{singleSubscriptionData.serviceName}}</h4>
         <div class="row pt-44">
             <div class="col-md-5">
                 <h5 class="text-right pt-12 mb-0">Fees</h5>
             </div>
             <div class="col-md-3">
-                <div class="form-group mb-0">
-                    <input type="number" formControlName="fees" class="form-control br-0">
-                </div>
-                <mat-error class="f-12"
-                    [ngClass]="{'v-h':!(isFeeValid && getFixedFee().fees.invalid || getFixedFee().fees.touched && getFixedFee().fees.invalid)}">
-                    Code is required
-                </mat-error>
+                <mat-form-field>
+                    <div class="form-group mb-0">
+                        <input matInput type="number" formControlName="fees" class="form-control br-0">
+                    </div>
+                    <mat-error class="f-12"
+                        [ngClass]="{'v-h':!(isFeeValid && getFixedFee().fees.invalid || getFixedFee().fees.touched && getFixedFee().fees.invalid)}">
+                        Code is required
+                    </mat-error>
+                </mat-form-field>
             </div>
 
         </div>
@@ -63,15 +65,17 @@
                         <mat-error class="f-12" [ngClass]="{'v-h':!(isBillValid && getFixedFee().billEvery.invalid || getFixedFee().billEvery.touched && getFixedFee().billEvery.invalid)}">
                             Code is Required
                         </mat-error> -->
-                        <div class="form-group">
-                            <select formControlName='billEvery' class="form-control br-0" f id="sel1">
-                                <option disabled value="">Select option</option>
-                                <option value=1>Monthly</option>
-                                <option value=3>Quarterly</option>
-                                <option value=6>Half yearly</option>
-                                <option value=12>Yearly</option>
-                            </select>
-                        </div>
+                        <mat-form-field>
+                            <div class="form-group">
+                                <mat-select formControlName='billEvery' class="form-control br-0" id="sel1">
+                                    <mat-option disabled value="">Select option</mat-option>
+                                    <mat-option value=1>Monthly</mat-option>
+                                    <mat-option value=3>Quarterly</mat-option>
+                                    <mat-option value=6>Half yearly</mat-option>
+                                    <mat-option value=12>Yearly</mat-option>
+                                </mat-select>
+                            </div>
+                        </mat-form-field>
                     </div>
                     <div class="col-md-5 p-0">
                         <!-- <div class="form-group">
