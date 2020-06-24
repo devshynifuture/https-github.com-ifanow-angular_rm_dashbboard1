@@ -255,19 +255,11 @@
                     </div>
                 </div>
                 <div class="col-md-2 p-0">
-                    <!--          [minValue]="0.001" [maxValue]="99"-->
-    <input (keyup)="validateFees()" [inputValidator]="validatorType.NUMBER_ONLY" (input)="restrictFrom100($event)"
-        [maxLength]="4" appInputValueValidation formControlName="pricing" placeholder="%" type="text"
-        class="form-control bl-0 br-0 h-39 br-grey">
-    <!-- <mat-error *ngIf="pricing == true" class="f-12">
-                        Should be between than 0 to 99
-                    </mat-error> -->
-
-
-</div>
-</div>
-</div>
-</div> -->
+                    <input (keyup)="validateFees()" [inputValidator]="validatorType.NUMBER_ONLY" (input)="restrictFrom100($event)" [maxLength]="4" appInputValueValidation formControlName="pricing" placeholder="%" type="text" class="form-control bl-0 br-0 h-39 br-grey">
+                </div>
+            </div>
+        </div>
+    </div> -->
 </div>
 
 <div class="bottom-fixed wrapper-12">
