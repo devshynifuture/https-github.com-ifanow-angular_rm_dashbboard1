@@ -19,12 +19,13 @@
             </div>
             <div class="col-md-9">
                 <p *ngIf="this.emailData" class="m-0 text-black">
-                    {{(this.emailData) ? this.emailData.fromEmail : 'support@futurewise.co.in'}}</p>
-                <mat-select class="form-control" [(ngModel)]="_inputData.fromEmail">
-                    <!-- <mat-option value="" disabled>Select Email</mat-option> -->
-                    <mat-option *ngFor="let verifiedEmail of verifiedEmailsList" [value]="verifiedEmail.emailAddress">
-                        {{verifiedEmail.emailAddress}}</mat-option>
-                </mat-select>
+                    <!-- {{(this.emailData) ? this.emailData.fromEmail : 'support@futurewise.co.in'}}</p> -->
+                    <mat-select class="form-control" [(ngModel)]="_inputData.fromEmail">
+                        <!-- <mat-option value="" disabled>Select Email</mat-option> -->
+                        <mat-option *ngFor="let verifiedEmail of verifiedEmailsList"
+                            [value]="verifiedEmail.emailAddress">
+                            {{verifiedEmail.emailAddress}}</mat-option>
+                    </mat-select>
             </div>
         </div>
     </div>
