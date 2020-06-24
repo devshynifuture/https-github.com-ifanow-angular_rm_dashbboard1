@@ -69,7 +69,7 @@ export class GoogleConnectComponent implements OnInit {
     console.log("clicked");
     const fragmentData = {
       id: 1,
-      state: 'open',
+      state: 'open35',
       componentName: EmailFaqAndSecurityComponent
     };
 
@@ -124,7 +124,7 @@ export class GoogleConnectComponent implements OnInit {
   openGoogleConnectDialog() {
 
     const dialogRef = this.dialog.open(GoogleConnectDialogComponent, {
-      width: '250px',
+      width: '390px',
       data: ''
     });
 
