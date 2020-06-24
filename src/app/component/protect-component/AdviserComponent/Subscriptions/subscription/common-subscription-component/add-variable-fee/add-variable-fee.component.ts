@@ -159,9 +159,9 @@ export class AddVariableFeeComponent implements OnInit {
         // otherAssetClassFees: [data.servicePricing.pricingList[2].serviceSubAssets],
         // pricing: [data.servicePricing.pricingList[2].pricing, [Validators.required]]
       });
-      if (data.servicePricing.pricingList[2].serviceSubAssets != undefined) {
-        this.otherAssetData = data.servicePricing.pricingList[2].serviceSubAssets.filter((x) => x.subAssetClassName == 'Stocks');
-      }
+      // if (data.servicePricing.pricingList[2].serviceSubAssets != undefined) {
+      //   this.otherAssetData = data.servicePricing.pricingList[2].serviceSubAssets.filter((x) => x.subAssetClassName == 'Stocks');
+      // }
       // this.otherAssetData = data.servicePricing.pricingList[2].serviceSubAssets
       // this.otherAssetData = data.servicePricing.pricingList[2].serviceSubAssets
       // this.otherAssetData.forEach(element => {
@@ -291,7 +291,7 @@ export class AddVariableFeeComponent implements OnInit {
   }
 
   saveFeeTypeDataEditResponse(data) {
-    this.dataToSend.servicePricing.pricingList[2].serviceSubAssets = this.otherAssetData;
+    // this.dataToSend.servicePricing.pricingList[2].serviceSubAssets = this.otherAssetData;
     this.eventService.openSnackBar('Service is edited', 'OK');
     this.subInjectService.changeNewRightSliderState({ state: 'close', data });
   }
