@@ -174,8 +174,8 @@ export class AddQuotationSubscriptionComponent implements OnInit {
                    </td>
 
                    <td style="padding: 24px; border: none;">
-                       <p style="font-size: 12px; margin:0px;">FEES</p>
-                       <h4 style="margin: 0px; padding: 0px; font-size: 18px;">${(element.servicePricing.feeTypeId == 1) ? '₹' : ''}${element.averageFees}${(element.servicePricing.feeTypeId == 2) ? '%' : ''}</h4>
+                   ${(element.servicePricing.feeTypeId == 1) ? ` <p style="font-size: 12px; margin:0px;">FEES</p>
+                       <h4 style="margin: 0px; padding: 0px; font-size: 18px;">₹${element.averageFees}</h4>` : ''} 
                    </td>
                </tr>
            </table>
@@ -189,7 +189,7 @@ export class AddQuotationSubscriptionComponent implements OnInit {
                        <p style="font-size: 12px; margin:0px;">DESCRIPTION</p>
                        <h4 style="margin: 0px; padding: 0px; font-size: 18px;">${(element.description) ? element.description : 'N/A'}</h4>
                    </td>
-               ${(element.servicePricing.feeTypeId == 2) ? `<td style="padding: 24px; border: none;">
+               ${(element.servicePricing.feeTypeId == 2) ? `<td style="padding: 24px; border: none;pointer-event:none">
                        <p style="font-size: 12px; margin:0px;">VARIABLE FEE DETAILS </p>
                        <h4 style="margin: 0px; padding: 0px; font-size: 18px;">Mutual Funds </h4>
                        <table style="width: 100%; border: 1px solid rgba(0, 0, 0, 0.12);  background: #F5F7F7;">
@@ -225,7 +225,7 @@ export class AddQuotationSubscriptionComponent implements OnInit {
 <br>
 </div>`;
       this.feeStructureHtmlData += feeStructureTable;
-      servicesName += element.serviceName + ','
+      servicesName += element.serviceName + ', ';
     });
     quotationData.documentText = quotationData.documentText.replace(new RegExp(escapeRegExp('$service_fee'), 'g'), this.feeStructureHtmlData);
     quotationData.documentText = quotationData.documentText.replace(new RegExp(escapeRegExp('$service_name'), 'g'), servicesName);
@@ -244,7 +244,7 @@ export class AddQuotationSubscriptionComponent implements OnInit {
           this.orgDetails = data;
           quotationData.documentText = quotationData.documentText.replace(new RegExp(escapeRegExp('$organization_profile_mobile'), 'g'), this.orgDetails.mobileNumber);
           quotationData.documentText = quotationData.documentText.replace(new RegExp(escapeRegExp('$organization_profile_email'), 'g'), this.orgDetails.email);
-          quotationData.documentText = quotationData.documentText.replace(new RegExp(escapeRegExp('$company_name'), 'g'), this.orgDetails.companyName);
+          quotationData.documentText = quotationData.documentText.replace(new RegExp(escapeRegExp('$company_name'), 'g'), (this.orgDetails.companyName) ? this.orgDetails.companyName : AuthService.getUserInfo().name);
           // $logo_for_reports
           this.getProfileBillerData(quotationData);
         }

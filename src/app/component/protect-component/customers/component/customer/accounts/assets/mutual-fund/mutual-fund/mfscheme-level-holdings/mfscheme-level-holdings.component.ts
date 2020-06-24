@@ -14,6 +14,7 @@ import { ReconciliationService } from '../../../../../../../../AdviserComponent/
 import { DatePipe } from '@angular/common';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { iif } from 'rxjs';
 
 @Component({
   selector: 'app-mfscheme-level-holdings',
@@ -189,7 +190,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
       // });
       this.schemeLevelHoldingForm.get('ownerName').setValue(!this.data.ownerName ? '' : this.data.ownerName);
       this.schemeLevelHoldingForm.get('folioNumber').setValue(this.data.folioNumber);
-      this.schemeLevelHoldingForm.get('sip').setValue(this.data.sipAmount);
+      this.schemeLevelHoldingForm.get('sip').setValue((this.data.sipAmount)?this.data.sipAmount:0);
       this.schemeLevelHoldingForm.get('tag').setValue(this.data.tag);
       this.schemeNameControl.patchValue(this.data.schemeName);
     } else {
@@ -202,7 +203,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
 
       this.schemeLevelHoldingForm.get('ownerName').setValue('');
       this.schemeLevelHoldingForm.get('folioNumber').setValue('');
-      this.schemeLevelHoldingForm.get('sip').setValue('');
+      this.schemeLevelHoldingForm.get('sip').setValue(0);
       this.schemeLevelHoldingForm.get('tag').setValue('');
       this.schemeNameControl.patchValue('');
 
@@ -294,7 +295,8 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
     this.ownerData = this.schemeLevelHoldingForm.controls;
   }
   transactionListForm = this.fb.group({
-    transactionListArray: new FormArray([])
+    transactionListArray: new FormArray([
+    ])
   })
   get transactionList() { return this.transactionListForm.controls };
   get transactionArray() { return this.transactionList.transactionListArray as FormArray };
@@ -383,11 +385,21 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
       //   element.get('Units').markAsTouched();
       // });
       this.schemeLevelHoldingForm.markAllAsTouched()
+    }else if(this.transactionListForm.invalid == false){
+      if(this.transactionArray.length>0){
+     this.transactionArray.controls.forEach(element => {
+       if(element.value.transactionAmount || element.value.transactionDate || element.value.Units){
+        element.get('transactionType').setValue([Validators.required]);
+        element.get('transactionType').markAsTouched();
+       }
+      });
+      }
     } else {
       this.barButtonOptions.active = true;
       let mutualFundTransactions = [];
       this.transactionArray.value.forEach(element => {
         console.log("single element", element);
+       
         let obj1;
         if (element) {
           if (this.data && this.data.flag === 'editTransaction') {

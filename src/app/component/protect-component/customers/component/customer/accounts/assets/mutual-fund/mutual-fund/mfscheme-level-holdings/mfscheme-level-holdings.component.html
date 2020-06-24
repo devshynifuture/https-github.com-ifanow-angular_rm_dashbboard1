@@ -85,7 +85,7 @@
                 <label class=" f-14">Folio number </label>
                 <div class="form-group">
                     <mat-form-field>
-                        <input matInput #folioNumber appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY_WITH_FORWARD_SLASH" type="text" class="form-control br-0" formControlName="folioNumber">
+                        <input matInput #folioNumber appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC" type="text" class="form-control br-0" formControlName="folioNumber">
                         <mat-error class="f-12">
                             This field is required
                         </mat-error>
@@ -100,9 +100,9 @@
                         <div class="form-group">
                             <mat-form-field>
                                 <input matInput #sip type="text" appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SLASH" class="form-control br-0" formControlName="sip">
-                                <mat-error class="f-12">
+                                <!-- <mat-error class="f-12">
                                     This field is required
-                                </mat-error>
+                                </mat-error> -->
                             </mat-form-field>
                         </div>
                     </div>

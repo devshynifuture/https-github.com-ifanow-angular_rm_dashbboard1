@@ -39,14 +39,14 @@ export class FixedFeeComponent implements OnInit {
   getFixedFee() {
     return this.fixedFeeStructureForm.controls;
   }
-  subData:any
+  subData: any
   getSubscribeData(data) {
-    if(data.isAdvisor == undefined || data.isAdvisor == null) {
+    if (data.isAdvisor == undefined || data.isAdvisor == null) {
       data.isAdvisor = true;
     }
     const fixedData = data
     this.subData = data;
-    
+
     if (data == '') {
       return;
     }
@@ -54,7 +54,7 @@ export class FixedFeeComponent implements OnInit {
       this.singleSubscriptionData = fixedData
       this.getFixedFee().fees.setValue(fixedData.subscriptionPricing.pricing);
       this.getFixedFee().billingNature.setValue(String(fixedData.subscriptionPricing.billingNature));
-      this.getFixedFee().billEvery.setValue(fixedData.subscriptionPricing.billEvery);
+      this.getFixedFee().billEvery.setValue(String(fixedData.subscriptionPricing.billEvery));
       this.getFixedFee().Duration.setValue('1');
       this.getFixedFee().billingMode.setValue(String(fixedData.subscriptionPricing.billingMode));
       (this.singleSubscriptionData.isCreateSub == false) ? this.fixedFeeStructureForm.enable() : this.fixedFeeStructureForm.disable();
@@ -67,8 +67,8 @@ export class FixedFeeComponent implements OnInit {
   }
   Close(flag) {
     this.ngOnInit();
-    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag });
-    this.subInjectService.changeUpperRightSliderState({ state: 'close',refreshRequired:flag});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
+    this.subInjectService.changeUpperRightSliderState({ state: 'close', refreshRequired: flag });
     this.fixedFeeStructureForm.reset();
     this.isSave = true
   }

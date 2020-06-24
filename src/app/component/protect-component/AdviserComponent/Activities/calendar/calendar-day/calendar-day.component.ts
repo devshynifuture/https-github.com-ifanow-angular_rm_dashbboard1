@@ -158,7 +158,7 @@ export class CalendarDayComponent implements OnInit {
 
   returnNumber(num){
     // num.toUpperCase()
-   console.log(parseInt(num) +' '+ num.charAt(num.length - 3).toUpperCase() + num.charAt(num.length - 2).toUpperCase(),"time event");
+  //  console.log(parseInt(num) +' '+ num.charAt(num.length - 3).toUpperCase() + num.charAt(num.length - 2).toUpperCase(),"time event");
     return parseInt(num)  +' '+ num.charAt(num.length - 3).toUpperCase() + num.charAt(num.length - 2).toUpperCase()
   }
 
@@ -205,7 +205,7 @@ export class CalendarDayComponent implements OnInit {
       year += 1;
     }
     let eventDate = new Date(month + "/" + day + "/" + year);
-    eventDate.setHours(hr-1)
+    eventDate.setHours(hr)
     event = {
       "eventId": "",
       "summary": "",
@@ -270,7 +270,7 @@ export class CalendarDayComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result != undefined) {
+      if (result != undefined && result != 'delete') {
         this.dialogData =
         {
           "calendarId": AuthService.getUserInfo().userName,
@@ -309,6 +309,10 @@ export class CalendarDayComponent implements OnInit {
             this.getEvent();
           })
         }
+        
+      }
+      if(result == 'delete'){
+        this.getEvent();
       }
     });
   }
@@ -320,8 +324,8 @@ export class CalendarDayComponent implements OnInit {
     var current_month = date.getMonth() + 1;
     var current_year = date.getFullYear();
     if (this.startTime == "" || this.endTime == "") {
-      var current_hrs: any = this.current_day.getHours();
-      var current_mins: any = this.current_day.getMinutes();
+      var current_hrs: any = date.getHours();
+      var current_mins: any = date.getMinutes();
       current_hrs = current_hrs < 10 ? '0' + current_hrs : current_hrs;
       current_mins = current_mins < 10 ? '0' + current_mins : current_mins;
     }
