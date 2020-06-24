@@ -1,30 +1,25 @@
-import { EventService } from './../../../../../../../../Data-service/event.service';
-import { AuthService } from './../../../../../../../../auth-service/authService';
-import { EmailServiceService } from './../../../../email-service.service';
+
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
-import { MatDialog } from '@angular/material';
-import { GoogleConnectDialogComponent } from '../../../google-connect-dialog/google-connect-dialog.component';
-import { UtilService } from '../../../../../../../../services/util.service';
-import { SubscriptionInject } from '../../../../../Subscriptions/subscription-inject.service';
-import { EmailFaqAndSecurityComponent } from '../../../email-faq-and-security/email-faq-and-security.component';
+import { EmailServiceService } from '../../email-service.service';
+import { EventService } from '../../../../../../Data-service/event.service';
+import { AuthService } from '../../../../../../auth-service/authService';
+
 
 @Component({
-  selector: 'app-google-connect',
-  templateUrl: './google-connect.component.html',
-  styleUrls: ['./google-connect.component.scss']
+  selector: 'app-email-settings',
+  templateUrl: './email-settings.component.html',
+  styleUrls: ['./email-settings.component.scss']
 })
-export class GoogleConnectComponent implements OnInit {
+export class EmailSettingsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private fb: FormBuilder,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private emailService: EmailServiceService,
-    private eventService: EventService,
-    public dialog: MatDialog,
-    private subInjectService: SubscriptionInject) { }
+    private eventService: EventService) { }
 
 
   //  URLv2 = 'https://accounts.google.com/o/oauth2/v2/auth';
@@ -65,28 +60,6 @@ export class GoogleConnectComponent implements OnInit {
 
   }
 
-  openImportantNoticeEmail() {
-    console.log("clicked");
-    const fragmentData = {
-      id: 1,
-      state: 'open',
-      componentName: EmailFaqAndSecurityComponent
-    };
-
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          if (UtilService.isRefreshRequired(sideBarData)) {
-            // refresh required.
-
-            rightSideDataSub.unsubscribe();
-          }
-        }
-      });
-
-  }
-
   toggleShowEmailInput() {
     this.showEmailInput = !this.showEmailInput;
   }
@@ -118,20 +91,6 @@ export class GoogleConnectComponent implements OnInit {
     //     this.router.navigate(['../'], { relativeTo: this.activatedRoute });
     //   }
     // }, 25000);
-
-  }
-
-  openGoogleConnectDialog() {
-
-    const dialogRef = this.dialog.open(GoogleConnectDialogComponent, {
-      width: '250px',
-      data: ''
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-
-    });
 
   }
 

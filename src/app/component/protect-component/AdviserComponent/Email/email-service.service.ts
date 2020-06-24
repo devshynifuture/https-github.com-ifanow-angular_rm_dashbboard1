@@ -24,7 +24,7 @@ export class EmailServiceService {
   getProfile() {
     const userInfo = AuthService.getUserInfo();
     return this.http.get(apiConfig.GMAIL_URL + appConfig.GET_PROFILE, {
-      email: userInfo.email,
+      email: userInfo.userName,
       userId: userInfo.advisorId
     });
   }
@@ -34,7 +34,7 @@ export class EmailServiceService {
 
     return this.http.post(apiConfig.GMAIL_URL + appConfig.DELETE_MULTIPLE_THREADS, {
       ids: ids,
-      emailId: userInfo.email,
+      emailId: userInfo.userName,
       userId: userInfo.advisorId
     });
   }
@@ -45,7 +45,7 @@ export class EmailServiceService {
 
     return this.http.post(apiConfig.GMAIL_URL + appConfig.DELETE_MESSAGES, {
       ids: ids,
-      emailId: userInfo.email,
+      emailId: userInfo.userName,
       userId: userInfo.advisorId
     });
   }
@@ -66,7 +66,7 @@ export class EmailServiceService {
 
     return this.http.post(apiConfig.GMAIL_URL + appConfig.MOVE_MESSAGES_TO_TRASH, {
       ids: ids,
-      emailId: userInfo.email,
+      emailId: userInfo.userName,
       userId: userInfo.advisorId
     });
   }
@@ -77,7 +77,7 @@ export class EmailServiceService {
 
     return this.http.post(apiConfig.GMAIL_URL + appConfig.MOVE_THREADS_FROM_TRASH, {
       ids,
-      emailId: userInfo.email,
+      emailId: userInfo.userName,
       userId: userInfo.advisorId
     });
   }
@@ -88,7 +88,7 @@ export class EmailServiceService {
 
     return this.http.post(apiConfig.GMAIL_URL + appConfig.MOVE_MESSAGES_FROM_TRASH, {
       ids,
-      emailId: userInfo.email,
+      emailId: userInfo.userName,
       userId: userInfo.advisorId
     });
   }
@@ -97,7 +97,7 @@ export class EmailServiceService {
     const { labelIds, maxResults, pageToken } = data;
     const userInfo = AuthService.getUserInfo();
     return this.http.get(apiConfig.GMAIL_URL + appConfig.GET_GMAIL_INBOX_LIST, {
-      email: userInfo.email,
+      email: userInfo.userName,
       userId: userInfo.advisorId,
       labelIds,
       maxResults,
@@ -108,7 +108,7 @@ export class EmailServiceService {
   gmailMessageDetail(messageId: string) {
     const userInfo = AuthService.getUserInfo();
     return this.http.get(apiConfig.GMAIL_URL + appConfig.GET_MESSAGE_DETAIL, {
-      email: userInfo.email,
+      email: userInfo.userName,
       userId: userInfo.advisorId,
       messageId
     });
@@ -117,7 +117,7 @@ export class EmailServiceService {
   getRightSideNavList() {
     const userInfo = AuthService.getUserInfo();
     return this.http.get(apiConfig.GMAIL_URL + appConfig.GET_RIGHT_SIDE_NAV, {
-      email: userInfo.email,
+      email: userInfo.userName,
       userId: userInfo.advisorId
     });
   }
