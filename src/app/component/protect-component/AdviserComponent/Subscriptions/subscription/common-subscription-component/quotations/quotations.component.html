@@ -1,7 +1,7 @@
 <div>
     <div *ngIf="quotationDesign=='true' && dataSource.data.length > 0" class="bg-white">
         <div class="wrapper-40  pr-20" [ngClass]="{'pl-16 pr-16 pt-0 mt-52': true}">
-            <div class="row pt-180" *ngIf="isAdvisor">
+            <div class="row pt-160" *ngIf="isAdvisor">
                 <div class="col-md-9 p-0">
                     <div class="row">
                         <div class="col-md-1 p-0">
@@ -138,7 +138,7 @@
                                 <mat-menu #menu="matMenu">
                                     <!-- <a (click)="Open('viewQuotation','open',element)" mat-menu-item>View & edit
                                         quotation</a> -->
-                                    <a (click)="deleteModal(element)" class="bt-1" mat-menu-item>Delete quotation</a>
+                                    <a (click)="deleteModal(element)" mat-menu-item>Delete quotation</a>
                                 </mat-menu>
                             </div>
                         </td>
