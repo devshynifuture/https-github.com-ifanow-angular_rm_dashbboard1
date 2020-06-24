@@ -22,7 +22,7 @@ export class GoogleConnectDialogComponent {
   ) { }
 
   redirectForm = this.fb.group({
-    googleConnectEmail: ['', Validators.required, Validators.email]
+    googleConnectEmail: ['', [Validators.required, Validators.email]]
   });
 
   ngOnInit(): void {
