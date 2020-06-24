@@ -72,6 +72,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   serviceList: any;
   billerName: any;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
+  dueDate: any;
 
   constructor(public enumService: EnumServiceService, private fb: FormBuilder, private subService: SubscriptionService,
     public subInjectService: SubscriptionInject) {
@@ -120,6 +121,13 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
     this.editAdd1 = false;
     this.editAdd2 = false;
     // , [Validators.required]
+    this.dueDate;
+    if (data.dueDate == undefined) {
+      this.dueDate = new Date().setDate(new Date().getDate() + 5);
+    }
+    else {
+      this.dueDate = data.dueDate
+    }
     this.editPayment = this.fb.group({
       clientName: [data.clientName, [Validators.required]],
       billerName: [data.billerName ? data.billerName : ''],
@@ -129,7 +137,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
       invoiceDate: [new Date(data.invoiceDate), [Validators.required]],
       finalAmount: [(data.subTotal == undefined) ? 0 : parseInt(data.subTotal), [Validators.required, Validators.min(1.00)]],
       discount: [(data.discount == undefined) ? 0 : data.discount],
-      dueDate: [new Date(data.dueDate), [Validators.required]],
+      dueDate: [new Date(this.dueDate), [Validators.required]],
       footnote: [data.footnote, [Validators.maxLength(500)]],
       terms: [data.terms, [Validators.maxLength(500)]],
       taxStatus: [data == '' || !data.cgst ? 'IGST(18%)' : 'SGST(9%)|CGST(9%)'],
@@ -388,7 +396,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
     this.editPayment.controls.terms.setValue(data.biller.terms);
     this.editPayment.controls.invoiceNumber.setValue(data.invoiceNumber);
     this.editPayment.controls.invoiceDate.setValue(new Date());
-    this.editPayment.controls.dueDate.setValue(new Date());
+    this.editPayment.controls.dueDate.setValue(new Date(this.dueDate));
     this.editPayment.controls.taxStatus.setValue("IGST(18%)");
     this.editPayment.controls.invoiceNumber.disable()
   }

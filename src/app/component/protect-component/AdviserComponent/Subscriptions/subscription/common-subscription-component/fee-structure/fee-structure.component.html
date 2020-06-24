@@ -103,10 +103,10 @@
                             </div>
                             <div *ngIf="_upperData" class="col-md-3 text-left">
                                 <p class="text-custom m-0 f-12" *ngIf="_upperData.servicePricing.feeTypeId==1">FEES</p>
-                                <p class="text-custom m-0 f-12" *ngIf="_upperData.servicePricing.feeTypeId==2">OTHER
-                                    ASSET FEES</p>
-                                <h4 class="m-0 p-0 lh-16" *ngIf="_upperData.servicePricing.feeTypeId==2">
-                                    {{_upperData.servicePricing.pricingList[2].pricing}}%</h4>
+                                <!-- <p class="text-custom m-0 f-12" *ngIf="_upperData.servicePricing.feeTypeId==2">OTHER
+                                    ASSET FEES</p> -->
+                                <!-- <h4 class="m-0 p-0 lh-16" *ngIf="_upperData.servicePricing.feeTypeId==2">
+                                    {{_upperData.servicePricing.pricingList[2].pricing}}%</h4> -->
                                 <h4 class="m-0 p-0 lh-16" *ngIf="_upperData.servicePricing.feeTypeId==1">
                                     ₹{{_upperData.servicePricing.pricingList[0].pricing}}</h4>
                             </div>
