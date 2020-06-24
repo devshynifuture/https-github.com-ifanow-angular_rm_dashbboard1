@@ -669,6 +669,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
         autoFocus: false,
       });
       dialogRef.afterClosed().subscribe(result => {
+        this.getClientSubData(false, false);
       });
     }
   }
