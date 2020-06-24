@@ -1,18 +1,20 @@
 <div class="custom-email">
-    <div class="bg-dark wrapper-8 pt-12">
+    <div class="wrapper-16 bb-1 popup-header-fix w-60">
         <div class="row">
-            <div class="col-md-11">
-                <p class="m-0 text-white pt-4" *ngIf="!_inputData.email_header">New email</p>
-                <p class="m-0 text-white pt-4" *ngIf="_inputData.email_header">{{_inputData.email_header}}</p>
+            <div class="col-md-11 pl-0">
+                <h5 class="m-0 text-black pt-4 f-16 roboto f-400" *ngIf="!_inputData.email_header">New email</h5>
+                <h5 class="m-0 text-black pt-4 f-16 roboto f-400" *ngIf="_inputData.email_header">
+                    {{_inputData.email_header}}
+                </h5>
             </div>
-            <div class="col-md-1 p-0 text-center">
-                <i (click)="close(false)" class="material-icons text-white c-p">
+            <div class="col-md-1 p-0 full-end">
+                <i (click)="close(false)" class="material-icons text-black c-p">
                     clear
                 </i>
             </div>
         </div>
     </div>
-    <div class="pl-16 pb-12 pt-12">
+    <div class="pl-16 pb-12 pt-90">
         <div class="row">
             <div class="col-md-1 d-flex align-items-center">
                 <p class="m-0 text-custom">From</p>
