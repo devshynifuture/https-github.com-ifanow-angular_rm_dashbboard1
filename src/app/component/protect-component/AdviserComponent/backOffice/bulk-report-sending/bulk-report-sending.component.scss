@@ -25,3 +25,10 @@
     width: 115px;
     height: 36px;
 }
+
+.reportSending {
+    .bulk-report-scroll {
+        overflow-y: auto !important;
+        height: calc(100vh - 214px);
+    }
+}
