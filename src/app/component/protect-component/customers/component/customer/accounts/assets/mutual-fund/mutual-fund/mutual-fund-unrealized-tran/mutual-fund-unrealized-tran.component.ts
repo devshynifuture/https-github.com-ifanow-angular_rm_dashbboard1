@@ -15,6 +15,7 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
 import { RightFilterDuplicateComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BackOfficeService } from 'src/app/component/protect-component/AdviserComponent/backOffice/back-office.service';
 
 @Component({
   selector: 'app-mutual-fund-unrealized-tran',
@@ -80,11 +81,14 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   clientData: any;
   details: any;
   getOrgData: any;
+  clientDetails: any;
+  reportName: any;
 
   constructor(public dialog: MatDialog, private datePipe: DatePipe,
     private subInjectService: SubscriptionInject, private utilService: UtilService,
     private mfService: MfServiceService, private excel: ExcelGenService,
     private route: Router,
+    private backOfficeService : BackOfficeService,
     public routerActive: ActivatedRoute,
     private custumService: CustomerService, private eventService: EventService,
               /*private changeDetectorRef: ChangeDetectorRef*/) {
@@ -128,9 +132,11 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       if (data.mode == 'unrealisedTransactions') {
         this.viewMode = 'Unrealized Transactions'
         this.mode = 'Unrealized Transactions'
+        this.reportName = 'MF_All_Trasaction_Report'
       } else {
         this.viewMode = 'All Transactions'
         this.mode = 'All Transactions'
+        this.reportName = 'MF_Unrealised_Trasaction_Report'
       }
       this.ngOnInit()
     }
@@ -156,6 +162,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
           this.mode = 'Unrealized Transactions'
         }
         console.log('2423425', param1)
+        this.getDetails()
       }
     });
     this.dataTransaction = {}
@@ -194,13 +201,13 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     }
     this.dataTransaction.displayedColumns = this.displayedColumns
   }
-  ngAfterViewInit() {
-    let para = document.getElementById('template');
-    if (para.innerHTML) {
-      this.generatePdfBulk()
+  // ngAfterViewInit() {
+  //   let para = document.getElementById('template');
+  //   if (para.innerHTML) {
+  //     this.generatePdfBulk()
 
-    }
-  }
+  //   }
+  // }
 
   getFilterData(value) {
     this.mfService.getMfData()
@@ -220,7 +227,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       });
     this.mfService.getTransactionType()
       .subscribe(res => {
-        if(res){
+        if (res) {
           this.getTransactionType(res);
 
         }
@@ -663,18 +670,18 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         this.dataTransaction.columnHeader = this.columnHeader
         if (mutualFund.flag == true) {
           this.dataTransaction.flag = true
-          if(this.route.url.split('?')[0] == '/pdf/allTransactions'){
+          if (this.route.url.split('?')[0] == '/pdf/allTransactions') {
             this.generatePdfBulk()
           }
-          if(this.route.url.split('?')[0] == '/pdf/unrealisedTransactions'){
+          if (this.route.url.split('?')[0] == '/pdf/unrealisedTransactions') {
             this.generatePdfBulk()
           }
         }
-        if(this.route.url.split('?')[0] == '/pdf/allTransactions' && this.isLoading == false){
+        if (this.route.url.split('?')[0] == '/pdf/allTransactions' && this.isLoading == false) {
           this.showDownload = true
           this.generatePdfBulk()
         }
-        if(this.route.url.split('?')[0] == '/pdf/unrealisedTransactions' && this.isLoading == false){
+        if (this.route.url.split('?')[0] == '/pdf/unrealisedTransactions' && this.isLoading == false) {
           this.showDownload = true
           this.generatePdfBulk()
         }
@@ -999,17 +1006,32 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     setTimeout(() => {
       let para = this.unrealizedTranTemplate.nativeElement.innerHTML
       let obj = {
-      htmlInput: para,
-      name: this.mode,
-      landscape: true,
-      key: 'showPieChart',
-      clientId : this.clientId,
-      advisorId : this.advisorId,
-      fromEmail: 'devshyni@futurewise.co.in',
-      toEmail: 'abhishek@futurewise.co.in'
-    }
-    this.utilService.bulkHtmlToPdf(obj)
-    //this.utilService.htmlToPdf(para, this.mode, false, this.fragmentData, '', '')
-    }, 400);
+        htmlInput: para,
+        name: 'transaction',
+        landscape: true,
+        key: 'showPieChart',
+        clientId: this.clientId,
+        advisorId: this.advisorId,
+        fromEmail: 'devshyni@futurewise.co.in',
+        toEmail: 'abhishek@futurewise.co.in'
+      }
+      this.utilService.bulkHtmlToPdf(obj)
+      this.utilService.htmlToPdf(para, 'transaction', false, this.fragmentData, '', '')
+    }, 200);
+  }
+  getDetails() {
+    const obj = {
+      clientId: this.clientId,
+      advisorId: this.advisorId,
+    };
+    this.backOfficeService.getDetailsClientAdvisor(obj).subscribe(
+      data => this.getDetailsClientAdvisorRes(data)
+    );
+  }
+  getDetailsClientAdvisorRes(data) {
+    console.log('data', data)
+    this.clientDetails = data
+    this.clientData = data.clientData
+    this.userInfo = data.advisorData
   }
 }

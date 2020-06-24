@@ -8,6 +8,7 @@ import { CustomerService } from '../../../../../customer.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { RightFilterDuplicateComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BackOfficeService } from 'src/app/component/protect-component/AdviserComponent/backOffice/back-office.service';
 // import { MutualFundAllTransactionComponent } from '../mutual-fund-all-transaction/mutual-fund-all-transaction.component';
 
 @Component({
@@ -58,8 +59,13 @@ export class MfCapitalDetailedComponent implements OnInit {
   setCapitaDetails: any;
   clientId: any;
   advisorId: any;
+  clientDetails: any;
+  clientData: any;
+  userInfo: any;
+  getOrgData: any;
   constructor(private MfServiceService: MfServiceService,
     public routerActive: ActivatedRoute,
+    private backOfficeService : BackOfficeService,
     private route: Router,
     private subInjectService: SubscriptionInject, private UtilService: UtilService, private custumService: CustomerService) {
 
@@ -74,6 +80,9 @@ export class MfCapitalDetailedComponent implements OnInit {
       }
       else {
         this.advisorId = AuthService.getAdvisorId();
+        this.userInfo = AuthService.getUserInfo();
+        this.clientData = AuthService.getClientData();
+        this.getOrgData = AuthService.getOrgDetails();
         this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
       }
     });
@@ -117,6 +126,7 @@ export class MfCapitalDetailedComponent implements OnInit {
         this.grandFatheringEffect = true;
         this.getCapitalgain();
         console.log('2423425', param1)
+        this.getDetails()
       }
     });
     this.setCapitaDetails = {}
@@ -597,9 +607,24 @@ export class MfCapitalDetailedComponent implements OnInit {
         toEmail: 'abhishek@futurewise.co.in'
       }
       this.UtilService.bulkHtmlToPdf(obj)
-     // this.UtilService.htmlToPdf(para, 'MF_Capital_Gain_Detailed', false, this.fragmentData, '', '')
+      this.UtilService.htmlToPdf(para, 'MF_Capital_Gain_Detailed', true, this.fragmentData, '', '')
     }, 300);
 
 
+  }
+  getDetails() {
+    const obj = {
+      clientId: this.clientId,
+      advisorId: this.advisorId,
+    };
+    this.backOfficeService.getDetailsClientAdvisor(obj).subscribe(
+      data => this.getDetailsClientAdvisorRes(data)
+    );
+  }
+  getDetailsClientAdvisorRes(data) {
+    console.log('data', data)
+    this.clientDetails = data
+    this.clientData = data.clientData
+    this.userInfo = data.advisorData
   }
 }

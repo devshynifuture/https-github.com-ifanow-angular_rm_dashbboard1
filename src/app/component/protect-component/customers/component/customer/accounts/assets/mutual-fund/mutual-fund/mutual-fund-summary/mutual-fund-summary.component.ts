@@ -20,6 +20,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { map } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RightFilterDuplicateComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
+import { BackOfficeService } from 'src/app/component/protect-component/AdviserComponent/backOffice/back-office.service';
 
 
 @Component({
@@ -75,6 +76,7 @@ export class MutualFundSummaryComponent implements OnInit {
   getObj: any;
   advisorId: number;
   clientId: any;
+  clientDetails: any;
   @Input()
   set data(data) {
     this.inputData = data;
@@ -89,6 +91,7 @@ export class MutualFundSummaryComponent implements OnInit {
     private utilService: UtilService,
     private mfService: MfServiceService,
     private excel: ExcelGenService,
+    private backOfficeService: BackOfficeService,
     private workerService: WebworkerService,
     public dialog: MatDialog,
     public eventService: EventService,
@@ -133,6 +136,7 @@ export class MutualFundSummaryComponent implements OnInit {
         this.advisorId = parseInt(param1.advisorId)
         this.addedData = true;
         console.log('2423425', param1)
+        this.getDetails()
       }
     });
     this.dataSummary = {}
@@ -926,7 +930,22 @@ export class MutualFundSummaryComponent implements OnInit {
         toEmail: 'devshyni@futurewise.co.in'
       }
       this.utilService.bulkHtmlToPdf(obj)
-     // this.utilService.htmlToPdf(para, 'Summary', false, this.fragmentData, '', '')
+     this.utilService.htmlToPdf(para, 'Summary', false, this.fragmentData, '', '')
     }, 400);
+  }
+  getDetails() {
+    const obj = {
+      clientId: this.clientId,
+      advisorId: this.advisorId,
+    };
+    this.backOfficeService.getDetailsClientAdvisor(obj).subscribe(
+      data => this.getDetailsClientAdvisorRes(data)
+    );
+  }
+  getDetailsClientAdvisorRes(data) {
+    console.log('data', data)
+    this.clientDetails = data
+    this.clientData = data.clientData
+    this.userInfo = data.advisorData
   }
 }
