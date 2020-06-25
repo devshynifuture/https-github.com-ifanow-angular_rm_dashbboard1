@@ -203,10 +203,10 @@ export class GoalsPlanComponent implements OnInit {
         goalYear: new Date(goalSubData.goalEndDate || goalSubData.vacationEndYr).getFullYear(),
         presentValue: goalSubData.presentValue,
         futureValue: goalSubData.futureValue,
-        equity_monthly: goalSubData.sipAmoutEquity || 0,
-        debt_monthly: goalSubData.sipAmoutDebt || 0,
-        lump_equity: goalSubData.lumpSumAmountEquity || 0,
-        lump_debt: goalSubData.lumpSumAmountDebt || 0,
+        // equity_monthly: goalSubData.sipAmoutEquity || 0,
+        // debt_monthly: goalSubData.sipAmoutDebt || 0,
+        // lump_equity: goalSubData.lumpSumAmountEquity || 0,
+        // lump_debt: goalSubData.lumpSumAmountDebt || 0,
         goalProgress: (goalSubData.presentValue / goalSubData.futureValue * 100),
       }
       mapData.remainingData = goalSubData;
