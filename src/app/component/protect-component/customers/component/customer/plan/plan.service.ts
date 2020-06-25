@@ -133,6 +133,7 @@ export class PlanService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ALL_GOALS, httpParams);
   }
   deleteGoal(data) {
-    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_GOAL, data);
+    let httpParams = new HttpParams().set('goalId', data.goalId).set("goalType", data.goalType)
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_GOAL + '?' + httpParams, '');
   }
 }
