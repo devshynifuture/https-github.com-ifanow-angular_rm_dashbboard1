@@ -70,6 +70,7 @@ export class ClientBasicDetailsComponent implements OnInit {
   clientTypeList: any;
   tableGetData: any;
   taxStatusFormControl = new FormControl('', [Validators.required]);
+  relationList: any[];
 
   // advisorId;
 
@@ -183,7 +184,37 @@ export class ClientBasicDetailsComponent implements OnInit {
     else {
       this.taxStatusList = (this.basicDetailsData.residentFlag == 1) ? this.invTaxStatusList.filter(element => element.residentFlag == true) : this.invTaxStatusList.filter(element => element.residentFlag == false);
     }
+    this.relationshipTypeMethod(this.basicDetailsData.genderId, this.basicDetailsData.age)
     console.log(data);
+  }
+
+  relationshipTypeMethod(gender, age) {
+    if (gender == 1 && age > 18) {
+      this.relationList = [
+        { name: 'Son', value: 4 },
+        { name: 'Father', value: 6 },
+        { name: 'Other', value: 10 },
+      ]
+    }
+    if (gender == 1 && age <= 18) {
+      this.relationList = [
+        { name: 'Son', value: 4 },
+        { name: 'Other', value: 10 },
+      ]
+    }
+    if (gender == 2 && age > 18) {
+      this.relationList = [
+        { name: 'Daughter', value: 5 },
+        { name: 'Mother', value: 7 },
+        { name: 'Other', value: 20 },
+      ]
+    }
+    if (gender == 2 && age <= 18) {
+      this.relationList = [
+        { name: 'Daughter', value: 5 },
+        { name: 'Other', value: 10 },
+      ]
+    }
   }
 
   ngOnInit() {
