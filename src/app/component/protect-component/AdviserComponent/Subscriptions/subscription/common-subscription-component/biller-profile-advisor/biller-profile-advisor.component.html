@@ -1,7 +1,7 @@
 <div class="row bb-1 popup-header-fix-60">
     <div class="col-md-10 p-0">
-        <h4 *ngIf="display=='Add'" class="mb-0 l-22 wrapper-20">ADD BILLER PROFILE</h4>
-        <h4 *ngIf="display!='Add'" class="mb-0 l-22 wrapper-20">EDIT BILLER PROFILE</h4>
+        <h4 *ngIf="display=='Add'" class="mb-0  wrapper-20">Add biller profile</h4>
+        <h4 *ngIf="display!='Add'" class="mb-0 wrapper-20">Edit biller profile</h4>
     </div>
     <div class="col-md-2 text-right">
         <i (click)="Close(false)" class="material-icons pt-16 c-p pr-16">
@@ -10,14 +10,14 @@
     </div>
 </div>
 
-<div class="wrapper-40 pt-72" id="ui-biller">
+<div class="wrapper-40 pt-60" id="ui-biller">
     <mat-tab-group [selectedIndex]="selected" animationDuration="0ms" id="ui-biller-tabs">
         <mat-tab class="active " label="Profile">
             <div [formGroup]="profileDetailsForm" class="">
                 <div class="row pt-40 pb-44">
                     <div class="col-md-12">
-                        <div class="row pt-20">
-                            <div class="col-md-5 pr-0">
+                        <div class="row">
+                            <div class="col-md-4 pr-0">
                                 <h5 class="text-right m-0 pt-12">Company display name</h5>
                             </div>
                             <div class="col-md-7">
@@ -36,8 +36,8 @@
                             </div>
                         </div>
                         <div class="row pt-44">
-                            <div class="col-md-5 pr-0">
-                                <h5 class="text-right m-0 pt-16">GST treatment</h5>
+                            <div class="col-md-4 pr-0">
+                                <h5 class="text-right m-0 pt-12">GST treatment</h5>
                             </div>
                             <div class="col-md-7">
                                 <div class="form-group mb-0">
@@ -58,8 +58,8 @@
                             </div>
                         </div>
                         <div *ngIf="profileDetailsForm.get('gstTreatmentId').value=='1'" class="row pt-44">
-                            <div class="col-md-5 pr-0">
-                                <h5 class="text-right m-0 pt-16">GSTIN number</h5>
+                            <div class="col-md-4 pr-0">
+                                <h5 class="text-right m-0 pt-12">GSTIN number</h5>
                             </div>
                             <div class="col-md-7">
                                 <div class="form-group mb-0">
@@ -87,8 +87,8 @@
                             </div>
                         </div>
                         <div class="row pt-44">
-                            <div class="col-md-5">
-                                <h5 class="text-right m-0 pt-16">PAN</h5>
+                            <div class="col-md-4 pr-0">
+                                <h5 class="text-right m-0 pt-12">PAN</h5>
                             </div>
                             <div class="col-md-7">
                                 <div class="form-group mb-0">
@@ -114,8 +114,8 @@
                             </div>
                         </div>
                         <div class="row pt-44 pb-44">
-                            <div class="col-md-5">
-                                <h5 class="text-right m-0 pt-16">Address</h5>
+                            <div class="col-md-4 pr-0">
+                                <h5 class="text-right m-0 pt-12">Address</h5>
                             </div>
                             <div class="col-md-7">
                                 <div class="form-group mb-0">
@@ -130,8 +130,8 @@
                             </div>
                         </div>
                         <div class="row pt-90">
-                            <div class="col-md-5">
-                                <h5 class="text-right m-0 pt-16">Pincode</h5>
+                            <div class="col-md-4 pr-0">
+                                <h5 class="text-right m-0 pt-12">Pincode</h5>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group mb-0">
@@ -153,8 +153,8 @@
 
                         </div>
                         <div class="row pt-44">
-                            <div class="col-md-5">
-                                <h5 class="text-right m-0 pt-16">City</h5>
+                            <div class="col-md-4 pr-0">
+                                <h5 class="text-right m-0 pt-12">City</h5>
                             </div>
                             <div class="col-md-5">
                                 <div class="form-group mb-0">
@@ -170,8 +170,8 @@
                             </div>
                         </div>
                         <div class="row pt-44">
-                            <div class="col-md-5">
-                                <h5 class="text-right m-0 pt-16">State </h5>
+                            <div class="col-md-4 pr-0">
+                                <h5 class="text-right m-0 pt-12">State </h5>
                             </div>
                             <div class="col-md-5">
                                 <div class="form-group mb-0">
@@ -187,8 +187,8 @@
                             </div>
                         </div>
                         <div class="row pt-44">
-                            <div class="col-md-5">
-                                <h5 class="text-right m-0 pt-16">Country</h5>
+                            <div class="col-md-4 pr-0">
+                                <h5 class="text-right m-0 pt-12">Country</h5>
                             </div>
                             <div class="col-md-5">
                                 <div class="form-group mb-0">
@@ -213,7 +213,7 @@
                 <div class="row pt-40">
                     <div class="col-md-12">
                         <div class="row">
-                            <div class="col-md-5">
+                            <div class="col-md-4">
                                 <h5 class="text-right m-0 pt-8">Your logo</h5>
                             </div>
                             <div class="col-md-7 pr-0">
@@ -251,8 +251,8 @@
             <div [formGroup]="bankDetailsForm" class="row pt-48 pb-32">
                 <div class="col-md-12">
                     <div class="row">
-                        <div class="col-md-5">
-                            <h5 class="text-right m-0 pt-8">Name on bank A/C</h5>
+                        <div class="col-md-4 pr-0">
+                            <h5 class="text-right m-0 pt-12">Name on bank A/C</h5>
                         </div>
                         <div class="col-md-7">
                             <div class="form-group mb-0">
@@ -270,7 +270,7 @@
                         </div>
                     </div>
                     <div class="row pt-44">
-                        <div class="col-md-5">
+                        <div class="col-md-4 pr-0">
                             <h5 class="text-right m-0 pt-8">Bank name </h5>
                         </div>
                         <div class="col-md-7">
@@ -289,7 +289,7 @@
                         </div>
                     </div>
                     <div class="row pt-44">
-                        <div class="col-md-5">
+                        <div class="col-md-4 pr-0">
                             <h5 class="text-right m-0 pt-8">Account no.</h5>
                         </div>
                         <div class="col-md-7">
@@ -307,8 +307,8 @@
                         </div>
                     </div>
                     <div class="row pt-44">
-                        <div class="col-md-5">
-                            <h5 class="text-right m-0 pt-8">IFSC code </h5>
+                        <div class="col-md-4 pr-0">
+                            <h5 class="text-right m-0 pt-12">IFSC code </h5>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group mb-0">
@@ -330,8 +330,8 @@
                         </div>
                     </div>
                     <div class="row pt-44 pb-24">
-                        <div class="col-md-5">
-                            <h5 class="text-right m-0 pt-8">Bank address</h5>
+                        <div class="col-md-4 pr-0">
+                            <h5 class="text-right m-0 pt-12">Bank address</h5>
                         </div>
                         <div class="col-md-7 height75">
                             <div class="form-group mb-0">
@@ -345,8 +345,8 @@
                         </div>
                     </div>
                     <div class="row pt-44">
-                        <div class="col-md-5">
-                            <h5 class="text-right m-0 pt-8">Pincode</h5>
+                        <div class="col-md-4 pr-0">
+                            <h5 class="text-right m-0 pt-12">Pincode</h5>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group mb-0">
@@ -366,8 +366,8 @@
                         </div>
                     </div>
                     <div class="row pt-44">
-                        <div class="col-md-5">
-                            <h5 class="text-right m-0 pt-8">City </h5>
+                        <div class="col-md-4 pr-0">
+                            <h5 class="text-right m-0 pt-12">City </h5>
                         </div>
                         <div class="col-md-5">
                             <div class="form-group mb-0">
@@ -383,8 +383,8 @@
                         </div>
                     </div>
                     <div class="row pt-44">
-                        <div class="col-md-5">
-                            <h5 class="text-right m-0 pt-8">State </h5>
+                        <div class="col-md-4 pr-0">
+                            <h5 class="text-right m-0 pt-12">State </h5>
                         </div>
                         <div class="col-md-5">
                             <div class="form-group mb-0">
@@ -400,8 +400,8 @@
                         </div>
                     </div>
                     <div class="row pt-44">
-                        <div class="col-md-5">
-                            <h5 class="text-right m-0 pt-8">Country </h5>
+                        <div class="col-md-4 pr-0">
+                            <h5 class="text-right m-0 pt-12">Country </h5>
                         </div>
                         <div class="col-md-5">
                             <div class="form-group mb-0">
@@ -420,10 +420,10 @@
             </div>
         </mat-tab>
         <mat-tab label="Miscellaneous">
-            <div [formGroup]="MiscellaneousData" class="row pt-40 pb-40">
+            <div [formGroup]="MiscellaneousData" class="row pb-40">
                 <div class="col-md-12">
                     <div class="row pt-44">
-                        <div class="col-md-5">
+                        <div class="col-md-4 pr-0">
                             <h5 class="text-right m-0 pt-8">Footnote Description</h5>
                             <span class="text-right">This will appear in invoices</span>
                         </div>
@@ -439,7 +439,7 @@
                         </div>
                     </div>
                     <div class="row pt-100 pb-28">
-                        <div class="col-md-5">
+                        <div class="col-md-4 pr-0">
                             <h5 class="text-right m-0 pt-8">Terms & Conditions</h5>
                             <span class="text-right">This will appear in invoices</span>
                         </div>

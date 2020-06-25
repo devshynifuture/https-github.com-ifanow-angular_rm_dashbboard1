@@ -155,7 +155,9 @@
                                             {{(storeData.services.length>0)?storeData.services[0].description:''}}</span>
                                     </div>
                                     <div class="col-md-3 d-flex align-items-center justify-content-end">
-                                        <h4 class="m-0 f-14  text-right"> ₹{{formatter(storeData.subTotal)}}</h4>
+                                        <h4 class="m-0 f-14  text-right">₹<span appFormatNumber
+                                                [value]="storeData.subTotal">{{formatter(storeData.subTotal)}}</span>
+                                        </h4>
                                     </div>
                                 </div>
                             </div>
@@ -173,7 +175,9 @@
                                         <p class="text-black f-400">Sub total</p>
                                     </div>
                                     <div class="col-md-4 pr-8 text-right">
-                                        <p class="text-black f-400">₹{{formatter(storeData.subTotal)}}</p>
+                                        <p class="text-black f-400">₹<span appFormatNumber
+                                                [value]="storeData.subTotal">{{formatter(storeData.subTotal)}}</span>
+                                        </p>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -181,7 +185,9 @@
                                         <p class="text-black f-400">Discount</p>
                                     </div>
                                     <div class="col-md-4  text-right">
-                                        <p class="text-black f-400">₹{{formatter(storeData.discount)}}</p>
+                                        <p class="text-black f-400">₹<span appFormatNumber
+                                                [value]="storeData.discount">{{formatter(storeData.discount)}}</span>
+                                        </p>
                                     </div>
                                 </div>
                                 <div *ngIf="storeData.igst!=0" class="row">
@@ -190,7 +196,9 @@
                                     </div>
                                     <div class="col-md-4 pr-8">
                                         <p class="text-right">
-                                            ₹{{formatter((storeData.subTotal-storeData.discount)*18/100)}}</p>
+                                            <span appFormatNumber
+                                                [value]="(storeData.subTotal-storeData.discount)*18/100">₹{{formatter((storeData.subTotal-storeData.discount)*18/100)}}</span>
+                                        </p>
                                     </div>
                                 </div>
                                 <div *ngIf="storeData.cgst!=0" class="row">
@@ -199,7 +207,9 @@
                                     </div>
                                     <div class="col-md-4 pr-8">
                                         <p class="text-right">
-                                            ₹{{formatter((storeData.subTotal-storeData.discount)*9/100)}}</p>
+                                            ₹<span appFormatNumber
+                                                [value]="(storeData.subTotal-storeData.discount)*9/100">{{formatter((storeData.subTotal-storeData.discount)*9/100)}}</span>
+                                        </p>
                                     </div>
                                 </div>
                                 <div *ngIf="storeData.sgst!=0" class="row">
@@ -208,19 +218,26 @@
                                     </div>
                                     <div class="col-md-4 pr-8">
                                         <p class="text-right">
-                                            ₹{{formatter((storeData.subTotal-storeData.discount)*9/100)}}</p>
+                                            ₹<span appFormatNumber
+                                                [value]="(storeData.subTotal-storeData.discount)*9/100">{{formatter((storeData.subTotal-storeData.discount)*9/100)}}</span>
+                                        </p>
                                     </div>
                                 </div>
                                 <div class="row bt-1">
                                     <div class="col-md-8">
                                         <p class="f-500 roboto pt-8">Total</p>
                                     </div>
-                                    <div *ngIf="storeData.cgst!=undefined && storeData.sgst!=undefined"
+                                    <div *ngIf="storeData.cgst!=0 && storeData.sgst!=0"
                                         class="col-md-4 pr-8 text-right">
-                                        <p class="f-500 roboto pt-8">₹{{formatter(storeData.finalAmount)}}</p>
+                                        <p class="f-500 roboto pt-8">₹<span appFormatNumber
+                                                [value]="storeData.finalAmount">{{formatter(storeData.finalAmount)}}</span>
+                                        </p>
                                     </div>
-                                    <div *ngIf="storeData.igst!=undefined" class="col-md-4 pr-8 text-right">
-                                        <p class="f-500 roboto pt-8">₹{{formatter(storeData.finalAmount)}}</p>
+                                    <div *ngIf="storeData.igst!=0" class="col-md-4 pr-8 text-right">
+                                        <p class="f-500 roboto pt-8">
+                                            ₹<span appFormatNumber
+                                                [value]="storeData.finalAmount">{{formatter(storeData.finalAmount)}}</span>
+                                        </p>
                                     </div>
                                 </div>
                                 <div class="row bt-1 bb-1">
@@ -228,8 +245,10 @@
                                         <p class="f-500 roboto pt-8">Balance due</p>
                                     </div>
                                     <div class="col-md-4 pr-8">
-                                        <p class="f-500 roboto pt-8 text-right">₹{{formatter(storeData.balanceDue)}}
-                                        </p>
+                                        <p class="f-500 roboto pt-8 text-right">
+                                            ₹<span appFormatNumber
+                                                [value]="storeData.balanceDue">{{formatter(storeData.balanceDue)}}
+                                            </span></p>
                                     </div>
                                 </div>
                             </div>
@@ -402,7 +421,8 @@
                                     <span class="m-0 f-14 text-custom"> {{storeData.services[0].description}}</span>
                                 </div>
                                 <div class="col-md-3 d-flex align-items-center justify-content-end">
-                                    <h4 class="m-0 f-14  text-right"> ₹{{formatter(storeData.subTotal)}}</h4>
+                                    <h4 class="m-0 f-14  text-right"> ₹<span appFormatNumber
+                                            [value]="storeData.subTotal">{{formatter(storeData.subTotal)}}</span></h4>
                                 </div>
                             </div>
                         </div>
@@ -467,7 +487,7 @@
                                 <div class="col-md-8">
                                     <p class="f-500 roboto pt-8">Total</p>
                                 </div>
-                                <div *ngIf="storeData.cgst!=0 && storeData.sgst!=undefined" class="col-md-4 text-right">
+                                <div *ngIf="storeData.cgst!=0 && storeData.sgst!=0" class="col-md-4 text-right">
                                     <p class="f-500 roboto pt-8">₹<span appFormatNumber
                                             [value]="storeData.finalAmount">{{formatter(storeData.finalAmount)}}</span>
                                     </p>
@@ -562,13 +582,13 @@
         <app-fee-calculations [feeAmount]="storeData.subTotal" [feeCalculationData]="invoiceFeeCalculations"
             [padding]="true"></app-fee-calculations>
     </div>
-    <div class="bottom-fixed wrapper-12">
+    <!-- <div class="bottom-fixed wrapper-12">
         <div class="row">
             <div class="col-md-12">
                 <h5 (click)="Close('close', false)" class="mb-0 pt-8 pb-8 text-white c-p">Cancel</h5>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>
 <!--Add and edit invoice section-->
 <div *ngIf="showEdit" [ngClass]="!inputData?'pt-60':''">

@@ -281,8 +281,13 @@
                         <mat-form-field>
                             <mat-select formControlName="leaadStatus" class="form-control">
                                 <mat-option value='' disabled>Select lead status</mat-option>
-                                <mat-option value="2">New</mat-option>
-                                <mat-option value="3">In progress</mat-option>
+                                <mat-option value="1">New</mat-option>
+                                <mat-option value="2">Attempted to contact</mat-option>
+                                <mat-option value="3">Contacted</mat-option>
+                                <mat-option value="4">Qualified</mat-option>
+                                <mat-option value="5">Bad fit</mat-option>
+                                <mat-option value="6">Not interested</mat-option>
+                                <mat-option value="7">Lost</mat-option>
                             </mat-select>
                             <mat-hint>Optional</mat-hint>
                         </mat-form-field>
@@ -381,8 +386,9 @@
                     <p class="m-0 roboto">As per records</p>
                     <div class="form-group">
                         <mat-form-field class="ba-date">
-                            <input (click)="dobAsPerRecord.open()" [matDatepicker]="dobAsPerRecord" [max]="maxDate"
-                                class="form-control br-0 b-0" formControlName="dobAsPerRecord" matInput readonly>
+                            <input (click)="dobAsPerRecord.open()" [matDatepicker]="dobAsPerRecord"
+                                [min]="maxDateForAdultDob" [max]="maxDate" class="form-control br-0 b-0"
+                                formControlName="dobAsPerRecord" matInput readonly>
                             <mat-datepicker-toggle matSuffix [for]="dobAsPerRecord"></mat-datepicker-toggle>
                             <mat-datepicker #dobAsPerRecord></mat-datepicker>
                             <mat-hint>Optional</mat-hint>
@@ -915,9 +921,14 @@
                     <div class="form-group">
                         <mat-form-field>
                             <mat-select formControlName="leadStatus" class="form-control">
-                                <mat-option value="" disable>Select lead status</mat-option>
-                                <mat-option value="2">New</mat-option>
-                                <mat-option value="3">In progress</mat-option>
+                                <mat-option value='' disabled>Select lead status</mat-option>
+                                <mat-option value="1">New</mat-option>
+                                <mat-option value="2">Attempted to contact</mat-option>
+                                <mat-option value="3">Contacted</mat-option>
+                                <mat-option value="4">Qualified</mat-option>
+                                <mat-option value="5">Bad fit</mat-option>
+                                <mat-option value="6">Not interested</mat-option>
+                                <mat-option value="7">Lost</mat-option>
                             </mat-select>
                             <mat-hint>Optional</mat-hint>
                         </mat-form-field>

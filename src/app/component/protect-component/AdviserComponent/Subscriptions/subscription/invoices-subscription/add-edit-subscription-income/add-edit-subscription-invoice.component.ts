@@ -14,6 +14,7 @@ import { MatInput } from '@angular/material';
   styleUrls: ['./add-edit-subscription-invoice.component.scss']
 })
 export class AddEditSubscriptionInvoiceComponent implements OnInit {
+  invalidExtended;
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
     text: 'Save',
@@ -73,6 +74,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   billerName: any;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   dueDate: any;
+  selectedService: any;
 
   constructor(public enumService: EnumServiceService, private fb: FormBuilder, private subService: SubscriptionService,
     public subInjectService: SubscriptionInject) {
@@ -336,7 +338,9 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
           obj['advisorId'] = this.advisorId,
           obj['clientBillerId'] = this.storeData.clientBillerId,
           service = [{
-            serviceName: this.editPayment.value.serviceName
+            serviceName: this.editPayment.value.serviceName,
+            id: this.selectedService.id,
+            description: this.selectedService.description
           }];
         obj['services'] = service,
           this.subService.addInvoice(obj).subscribe(
@@ -381,7 +385,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   }
 
   selectService(service) {
-
+    this.selectedService = service;
     this.editPayment.get("finalAmount").setValue(service.price)
     this.finAmount = service.price
   }

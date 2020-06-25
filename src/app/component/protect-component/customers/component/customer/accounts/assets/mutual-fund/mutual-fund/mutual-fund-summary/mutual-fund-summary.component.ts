@@ -931,7 +931,7 @@ export class MutualFundSummaryComponent implements OnInit {
       }
      let response = this.utilService.bulkHtmlToPdf(obj)
      console.log('********',response)
-     //this.utilService.htmlToPdf(para, 'Summary', false, this.fragmentData, '', '')
+     //this.utilService.htmlToPdf(para, 'Summary', true, this.fragmentData, '', '')
     }, 400);
   }
   getDetails() {

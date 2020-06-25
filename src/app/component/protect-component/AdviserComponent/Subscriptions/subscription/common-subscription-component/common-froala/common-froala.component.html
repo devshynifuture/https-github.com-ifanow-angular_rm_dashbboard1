@@ -12,7 +12,7 @@
     <div class="row pt-72 bb-1">
         <div class="col-md-8 pt-4 pb-12">
             <img src="assets/images/svg/mail-light.svg" class="b-a c-p" (click)="openSendEmail()">
-            <img (click)="generatePdf()" class="b-a" src="assets/images/svg/pdf-icons.svg">
+            <img (click)="generatePdf()" class="b-a c-p" src="assets/images/svg/pdf-icons.svg">
             <img src="assets/images/svg/printer.svg" class="b-a">
             <img src="assets/images/svg/attech-light.svg" class="wrapper-9 b-a">
             <img src="assets/images/svg/delete.svg" (click)="deleteModal('DOCUMENT')" class="b-a wrapper-9 ml-8">
@@ -131,7 +131,8 @@
                     keyboard_arrow_up
                 </i></button>
             <mat-menu #menu="matMenu">
-                <button class="btn-bottom br-0 text-inherit" (click)="openSendEmail()" mat-menu-item>SAVE & SEND WITH
+                <button class="btn-bottom br-0 text-inherit" (click)="openSendEmailEsign()" mat-menu-item>SAVE & SEND
+                    WITH
                     ESIGN</button>
             </mat-menu>
             <button *ngIf="saveQuotationFlag" mat-button class="btn-bottom br-0 text-inherit pr-4 pl-4"

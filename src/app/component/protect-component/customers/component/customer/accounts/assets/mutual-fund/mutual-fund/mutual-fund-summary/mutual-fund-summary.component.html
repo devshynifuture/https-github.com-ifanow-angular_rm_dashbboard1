@@ -396,9 +396,12 @@
             <td style="text-align: left;">
                 <img width="100px" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
             </td>
-            <td style="text-align: right;">
+            <td style="text-align: left;">
+                <img width="100px" *ngIf="userInfo.reportLogoUrl" [src]="userInfo.reportLogoUrl">
+            </td>
+            <td style="text-align: center;">
                 <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;" *ngIf="userInfo">
-                    {{(userInfo.name) ? userInfo.name : '-'}}</p>
+                    {{(userInfo.companyName) ? userInfo.companyName : '-'}}</p>
                 <!-- <p style="margin: 0px; font-size: 14px;" *ngIf="clientData">Himachal Pradesh</p> -->
                 <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Number: </strong>
                     {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}</p>
@@ -425,7 +428,7 @@
                             {{(clientData.name) ? clientData.name : '-'}}</p>
 
                     </tr>
-                    <tr style="background: #F5F7F7;">
+                    <tr style="background: #f5f7f7;">
                         <td *ngIf="customDataSource.data?.schemeName == true"
                             style="width:26%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                             <b>Scheme name</b>

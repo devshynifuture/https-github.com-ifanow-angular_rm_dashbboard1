@@ -1,5 +1,5 @@
 <!--<div *ngIf="componentFlag=='servicesPlans'">-->
-<div class="bg-grey lter wrapper-20 heading-fix">
+<div class="bg-grey lter wrapper-20 heading-fix bb-1">
     <h3 class="text-center m-0 head-common">
         {{componentFlag == 'servicesPlans' ? _upperData.serviceName : _upperData.docName}}
         {{ flag == 'documents' || flag == 'service' ? _upperData.documentData.name: _upperData.docName }}</h3>
@@ -82,7 +82,7 @@
         <!-- <button (click)="openFragment('','plan')" class="btn-primary d-flex align-items-center">
                 ADD PLAN </button> -->
     </div>
-  </div>
+</div>
 <mat-toolbar class="bottom-fixed" *ngIf="servicePlanData.length > 0">
     <div class="row w-100">
         <div class="col-md-6 text-left">

@@ -96,15 +96,24 @@ export class SubscriptionDetailsComponent implements OnInit {
 
   saveChangeSubsDetails() {
     if (this.subscriptionDetails.invalid) {
-      for (let element in this.subscriptionDetails.controls) {
-        if (this.subscriptionDetails.get(element).invalid) {
-          this.inputs.find(input => !input.ngControl.valid).focus();
-          this.subscriptionDetails.controls[element].markAsTouched();
-        }
-      }
+      // for (let element in this.subscriptionDetails.controls) {
+      //   if (this.subscriptionDetails.get(element).invalid) {
+      //     this.inputs.find(input => !input.ngControl.valid).focus();
+      this.subscriptionDetails.markAllAsTouched();
+      //   }
+      // }
     } else {
       this.barButtonOptions.active = true;
-      this.subService.changeSubsDetails(this.subscriptionDetails.value).subscribe(
+      const obj =
+      {
+        id: this.subscriptionDetails.controls.id.value,
+        subscriptionNumber: this.subscriptionDetails.controls.subscriptionNumber.value,
+        startsOn: this.subscriptionDetails.controls.startsOn.value,
+        invoiceSending: this.subscriptionDetails.controls.invoiceSending.value,
+        feeMode: this.subscriptionDetails.controls.feeMode.value,
+        dueDateFrequency: this.subscriptionDetails.controls.dueDateFrequency.value
+      }
+      this.subService.changeSubsDetails(obj).subscribe(
         data => {
           this.barButtonOptions.active = false;
           this.changeSubsDetails(data)

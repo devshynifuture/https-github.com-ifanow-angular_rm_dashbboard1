@@ -47,7 +47,7 @@
                 <ng-container matColumnDef="amt">
                     <th *matHeaderCellDef class="f-18 t-12 text-right" mat-header-cell> Fee amount</th>
 
-                    <td *matCellDef="let element" class="c-p t-12 text-right" mat-cell>
+                    <!-- <td *matCellDef="let element" class="c-p t-12 text-right" mat-cell>
                         <div (click)="openFeeEditor(element)" *ngIf="element.startsOn==undefined"
                             class="bar text-primary text-underline">
                             {{isLoading ? ' ' : 'View details'}} </div>
@@ -59,6 +59,18 @@
                             <span
                                 appFormatNumber>{{element.subscriptionPricing.subscriptionAssetPricingList[2].pricing}}</span>%
                         </div>
+                    </td> -->
+                    <td *matCellDef="let element" mat-cell class="t-12 text-right">
+                        <div class="bar" *ngIf="isLoading">
+                        </div>
+                        <div class="bar text-primary text-underline c-p" (click)="Open('open',element)"
+                            *ngIf="element.startsOn==undefined && element.feeTypeId==1">
+                            {{isLoading ? ' ' : 'View details'}} </div>
+                        <div appFormatNumber *ngIf="element.startsOn && element.feeTypeId==1">
+                            ₹ {{element.pricing}}</div>
+                        <div appFormatNumber (click)="Open('open',element)"
+                            *ngIf="element.startsOn && element.feeTypeId==2" class="text-primary text-underline c-p">
+                            View details</div>
                     </td>
                 </ng-container>
 
@@ -122,10 +134,10 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="feemode">
-                    <th *matHeaderCellDef class="f-18 text-left pr-24 t-12" mat-header-cell
+                    <th *matHeaderCellDef class="f-18 t-left pr-24 t-12" mat-header-cell
                         mat-sort-header="subscriptionPricing.feeTypeId" matTooltip="Fee collection mode"
                         aria-label="Button that displays a tooltip when focused or hovered over"
-                        [ngStyle]="{'display':isLoading?'none':''}"> Fee coll...
+                        [ngStyle]="{'display':isLoading?'none':''}"> Fee collection<br> mode
                     </th>
                     <td *matCellDef="let element" class="text-left pr-8 t-12" mat-cell
                         [ngStyle]="{'display':isLoading?'none':''}">

@@ -52,7 +52,7 @@ export class EmailOnlyComponent implements OnInit {
 
   barButtonOptions1: MatProgressButtonOptions = {
     active: false,
-    text: 'SAVE TEMPLATE',
+    text: 'SAVE WITH ESIGN',
     buttonColor: 'accent',
     barColor: 'accent',
     raised: true,
@@ -98,11 +98,11 @@ export class EmailOnlyComponent implements OnInit {
 
     this.docObj = obj;
     this._inputData = inputData;
-    if (this.showfromEmail == false) {
-      this.getEmailTemplateFilterData(inputData);
-    } else {
-      this.emailBody = inputData.documentList[0].documentText;
-    }
+    // if (this.showfromEmail == false) {
+    this.getEmailTemplateFilterData(inputData);
+    // } else {
+    // this.emailBody = inputData.documentList[0].documentText;
+    // }
     this.getClientData(this._inputData.clientData)
   }
 
@@ -336,6 +336,7 @@ export class EmailOnlyComponent implements OnInit {
         toEmail: this.emailIdList,
         documentList: this._inputData.documentList,
         document_id: this._inputData.documentList[0].id,
+        attachmentName: this._inputData.documentList[0].documentName
       };
       this.barButtonOptions.active = true;
       this.subscription.sendDocumentViaEmailInPdfFormat(emailRequestData).subscribe(
@@ -343,7 +344,43 @@ export class EmailOnlyComponent implements OnInit {
       );
     }
   }
-
+  sendWithEsign() {
+    if (this._inputData.fromEmail == undefined) {
+      this.eventService.openSnackBar('Please enter to email', "Dismiss");
+      return;
+    }
+    if (this.emailIdList.length == 0) {
+      this.eventService.openSnackBar("Please enter email ");
+      return;
+    }
+    this.barButtonOptions1.active = true;
+    const inviteeList = [];
+    this.emailIdList.forEach(singleEmail => {
+      inviteeList.push({
+        name: this._inputData.clientName ? this._inputData.clientName : singleEmail.emailAddress,
+        email: singleEmail.emailAddress,
+        webhook: {
+          success: 'http://dev.ifanow.in:8080/futurewise/api/v1/1/subscription/invoice/esignSuccessResponse/post',
+          failure: 'http://dev.ifanow.in:8080/futurewise/api/v1/1/subscription/invoice/esignSuccessResponse/post1',
+          version: 2.1
+        },
+      });
+    });
+    const emailRequestData = {
+      invitee: inviteeList,
+      sub_document_id: this._inputData.documentList[0].id,
+      file: {
+        name: this._inputData.documentList[0].documentName
+      },
+      documentList: this._inputData.documentList,
+      messageBody: this.emailBody,
+      emailSubject: this.subject,
+    };
+    this.barButtonOptions.active = true;
+    this.subscription.documentEsignRequest(emailRequestData).subscribe(
+      data => this.getResponseData(data)
+    );
+  }
   removeEmailId(index) {
     // const index = this.emailIdList.indexOf(singleEmail);
 
