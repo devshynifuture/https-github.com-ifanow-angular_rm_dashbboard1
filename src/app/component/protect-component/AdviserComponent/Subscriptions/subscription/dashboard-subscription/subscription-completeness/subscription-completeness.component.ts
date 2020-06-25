@@ -42,19 +42,34 @@ export class SubscriptionCompletenessComponent implements OnInit {
   getDashboardData(data) {
     if (data && data.length > 0) {
       data.forEach((singleData) => {
+        if (singleData.stepTypeId == 1 || singleData.stepTypeId == 2) {
+          singleData['selectedTab'] = 7;
+        }
+        if (singleData.stepTypeId == 3) {
+          singleData['selectedTab'] = 2;
+        }
+        if (singleData.stepTypeId == 5) {
+          singleData['selectedTab'] = 6;
+        }
+        if (singleData.stepTypeId == 4) {
+          singleData['selectedTab'] = 4;
+        }
+        if (singleData.stepTypeId == 6) {
+          singleData['selectedTab'] = 5;
+        }
       });
-      if (data.length >= 6) {
-        data[0].selectedTab = 7;
-        data[1].selectedTab = 7;
-        data[1].selectedSettingTab = 3
-        data[2].selectedTab = 2;
-        data[3].selectedTab = 4;
-        data[4].selectedTab = 6;
-        data[5].selectedTab = 5;
-      }
+      // if (data.length>) {
+      // data[0].selectedTab = 7;
+      // data[1].selectedTab = 7;
+      // data[1].selectedSettingTab = 3
+      // data[2].selectedTab = 2;
+      // data[3].selectedTab = 4;
+      // data[4].selectedTab = 6;
+      // data[5].selectedTab = 4;
+      // }
     }
     this.dataObj = data;
-    
+
     this.showLoader = false;
 
   }
@@ -72,7 +87,7 @@ export class SubscriptionCompletenessComponent implements OnInit {
     if (value.selectedTab == 7 && ind == 0) {
       this.router.navigate(['/admin/subscription/settings', 'plans']);
     } else {
-      this.router.navigate(['/admin/subscription/settings','preferences']);
+      this.router.navigate(['/admin/subscription/settings', 'preferences']);
     }
     switch (value.selectedTab) {
       case (2):
@@ -90,11 +105,11 @@ export class SubscriptionCompletenessComponent implements OnInit {
       default:
     }
   }
-  close(){
+  close() {
     var showSubStep = false
     this.dashboard.emit(showSubStep);
   }
-  
+
   openPopup(data) {
     const Fragmentdata = {
       flag: data,
@@ -110,7 +125,7 @@ export class SubscriptionCompletenessComponent implements OnInit {
     });
   }
 
-  
+
 
 
 }

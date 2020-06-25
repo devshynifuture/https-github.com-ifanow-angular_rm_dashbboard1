@@ -246,7 +246,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
   getSchemeLevelHoldings(data) {
     if(data && ((data.mutualFundTransactions) ? data.mutualFundTransactions.length != 0 : data) && this.data.flag == 'editTransaction'){
       this.transactionArray.push(this.fb.group({
-        transactionType: [this.data.transactionTypeMasterId],
+        transactionType: [this.data.transactionTypeMasterId,[Validators.required]],
         date: [new Date(this.data.transactionDate)],
         transactionAmount: [this.data.amount],
         Units: [this.data.unit],
@@ -261,7 +261,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
       if (data && ((data.mutualFundTransactions) ? data.mutualFundTransactions.length != 0 : data) && (this.data.flag === 'editMutualFund')) {
         data.mutualFundTransactions.forEach((element: { transactionTypeMasterId: any; transactionDate: string | number | Date; amount: any; unit: any; id: any; assetMutualFundTransactionTypeMasterId :any;assetTypeTransactionId: any; isEdited: any; previousUnit: any; effect: any; }) => {
           this.transactionArray.push(this.fb.group({
-            transactionType: [element.transactionTypeMasterId],
+            transactionType: [element.transactionTypeMasterId,Validators.required],
             date: [new Date(element.transactionDate)],
             transactionAmount: [element.amount],
             Units: [element.unit],
@@ -276,7 +276,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
       } 
       else {
         this.transactionArray.push(this.fb.group({
-          transactionType: [],
+          transactionType: ['',Validators.required],
           date: [],
           transactionAmount: [],
           Units: [],
@@ -386,20 +386,20 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
       // });
       this.schemeLevelHoldingForm.markAllAsTouched()
     // }else if(this.transactionListForm.invalid == false){
-    //   if(this.transactionArray.length>0){
-    //  this.transactionArray.controls.forEach(element => {
-    //    if(element.value.transactionAmount || element.value.transactionDate || element.value.Units){
-    //     element.get('transactionType').setValue([Validators.required]);
-    //     element.get('transactionType').markAsTouched();
-    //    }
-    //   });
     //   }
+    }else if(this.transactionListForm.invalid){
+      if(this.transactionArray.length >0){
+        this.transactionArray.controls.forEach(element => {
+          if(element.value.transactionAmount || element.value.date || element.value.Units){
+            element.get('transactionType').markAsTouched();
+            }
+        });
+      }
     } else {
       this.barButtonOptions.active = true;
       let mutualFundTransactions = [];
       this.transactionArray.value.forEach(element => {
         console.log("single element", element);
-       
         let obj1;
         if (element) {
           if (this.data && this.data.flag === 'editTransaction') {
