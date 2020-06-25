@@ -11,9 +11,13 @@
                 This will automatically record email exchanges to the right clients and leads.</p>
               <p class="m-0 roboto f-400 text-custom">You can connect your gmail and gsuite accounts.<br>
                 Personal as well as shared accounts (e.g. info@abcfinancial.com) are supported.</p>
-              <button mat-stroked-button class="btn-primary mt-44" (click)="openGoogleConnectDialog()">
+              <button mat-stroked-button class="btn-primary mt-44" *ngIf="isLoggedIn"
+                (click)="openGoogleConnectDialog()">
                 CONNECT EMAIL ACCOUNT
               </button>
+              <div class="text-success f-400 pt-20" *ngIf="!isLoggedIn">
+                Connected To Google
+              </div>
               <p class="m-0 roboto f-400 text-danger pt-20" (click)="openImportantNoticeEmail()">Important note on
                 security</p>
             </div>
@@ -30,9 +34,13 @@
                 to your clients, team members from here, seamlessly.</p>
               <p class="m-0 roboto f-400 text-custom">You can connect your gmail and gsuite accounts.<br>
                 Personal as well as shared accounts (e.g. info@abcfinancial.com) are supported.</p>
-              <button mat-stroked-button class="btn-primary mt-44" (click)="openGoogleConnectDialog()">
+              <button mat-stroked-button class="btn-primary mt-44" *ngIf="isLoggedIn"
+                (click)="openGoogleConnectDialog()">
                 CONNECT EMAIL ACCOUNT
               </button>
+              <div class="text-success f-400 pt-20" *ngIf="!isLoggedIn">
+                Connected To Google
+              </div>
               <p class="m-0 roboto f-400 text-danger pt-20" (click)="openImportantNoticeEmail()">Important note on
                 security</p>
             </div>

@@ -26,10 +26,10 @@ export class EmailListingComponent implements OnInit {
   showNextPaginationBtn: boolean;
   showPrevPaginationBtn: boolean;
   navList: any;
-  importantCount: any;
-  sentCount: any;
-  draftCount: any;
-  trashCount: any;
+  importantCount: any = 0;
+  sentCount: any = 0;
+  draftCount: any = 0;
+  trashCount: any = 0;
 
 
   constructor(
@@ -92,14 +92,16 @@ export class EmailListingComponent implements OnInit {
     this.getPaginatorLengthRes(location);
   }
 
-  redirectMessages(element) {
+  redirectMessages(element, index) {
+    let gmailThread;
+    gmailThread = this.gmailThreads[index];
     console.log("this is some listing ::element;::::", element);
     if (element.labelIdsfromMessages[0].labelIds.includes('DRAFT') && this.location === 'draft') {
       this.showDraftView = true;
     } else {
       this.showDraftView = false;
     }
-    this.showDraftView ? this.openDraftView(element) : this.gotoEmailView(element);
+    this.showDraftView ? this.openDraftView(element, gmailThread) : this.gotoEmailView(element);
   }
 
   ngOnDestroy() {
@@ -128,71 +130,76 @@ export class EmailListingComponent implements OnInit {
       this.authService.setUserInfo(userInfo);
     }
 
-    this.paginatorSubscription = this.emailService.getProfile().subscribe(response => {
-      if (!response) {
+    this.paginatorSubscription = this.emailService.getProfile()
+      .subscribe(response => {
+        if (!response) {
+          this.eventService.openSnackBar("You must connect your gmail account", "Dismiss");
+          if (localStorage.getItem('successStoringToken')) {
+            localStorage.removeItem('successStoringToken');
+          }
+          this.router.navigate(['google-connect'], { relativeTo: this.activatedRoute });
+        } else {
+          // this.paginatorLength = response.threadsTotal;
+          this.isLoading = true;
+
+          this.getRightSideNavListCount(location);
+
+        }
+      }, err => {
+        this.eventService.openSnackBarNoDuration(err);
         this.eventService.openSnackBar("You must connect your gmail account", "Dismiss");
         if (localStorage.getItem('successStoringToken')) {
           localStorage.removeItem('successStoringToken');
         }
         this.router.navigate(['google-connect'], { relativeTo: this.activatedRoute });
-      } else {
-        // this.paginatorLength = response.threadsTotal;
-        this.isLoading = true;
-        this.emailService.getRightSideNavList().subscribe(responseData => {
-          this.navList = responseData;
-          console.log("check navlist :::", this.navList);
-          if (this.navList.length !== 0) {
-            this.navList.forEach(element => {
-              if (element.labelId === 'IMPORTANT') {
-                this.importantCount = element.threadsTotal;
-              }
-              if (element.labelId === 'SENT') {
-                this.sentCount = element.threadsTotal;
-              }
-              if (element.labelId === 'DRAFT') {
-                this.draftCount = element.threadsTotal;
-              }
-              if (element.labelId === 'THRASH') {
-                this.trashCount = element.threadsTotal;
-              }
-            });
+      });
+  }
 
-            if (location === 'inbox') {
-              this.paginatorLength = this.importantCount;
-            }
-            else if (location === 'sent') {
-              this.paginatorLength = this.sentCount;
-            }
-            else if (location === 'draft') {
-              this.paginatorLength = this.draftCount;
-            }
-            else if (location === 'trash') {
-              this.paginatorLength = this.trashCount;
-            }
-
-            this.totalListSize = this.paginatorLength;
-            if (this.maxListRes > this.paginatorLength) {
-              this.maxListRes = this.paginatorLength;
-            }
-            let valueOfNextPagination = this.currentList + 50;
-            if (valueOfNextPagination >= this.paginatorLength) {
-              this.showNextPaginationBtn = false;
-            } else if (valueOfNextPagination > this.paginatorLength) {
-              this.showNextPaginationBtn = false;
-            } else if (this.maxListRes < this.paginatorLength) {
-              this.showNextPaginationBtn = true;
-            }
+  getRightSideNavListCount(location) {
+    this.emailService.getRightSideNavList().subscribe(responseData => {
+      this.navList = responseData;
+      console.log("check navlist :::", this.navList);
+      if (this.navList.length !== 0) {
+        this.navList.forEach(element => {
+          switch (element.labelId) {
+            case 'IMPORTANT': this.importantCount = element.threadsTotal;
+              break;
+            case 'SENT': this.sentCount = element.threadsTotal;
+              break;
+            case 'DRAFT': this.draftCount = element.threadsTotal;
+              break;
+            case 'THRASH': this.trashCount = element.threadsTotal;
+              break;
           }
         });
+        switch (location) {
+          case 'inbox':
+            this.paginatorLength = this.importantCount;
+            break;
+          case 'sent': this.paginatorLength = this.sentCount;
+            break;
+          case 'draft': this.paginatorLength = this.draftCount;
+            break;
+          case 'trash': this.paginatorLength = this.trashCount;
+            break;
+        }
+
+        this.totalListSize = this.paginatorLength;
+        if (this.maxListRes > this.paginatorLength) {
+          this.maxListRes = this.paginatorLength;
+        }
+        let valueOfNextPagination = this.currentList + 50;
+        if (valueOfNextPagination >= this.paginatorLength) {
+          this.showNextPaginationBtn = false;
+        } else if (valueOfNextPagination > this.paginatorLength) {
+          this.showNextPaginationBtn = false;
+        } else if (this.maxListRes < this.paginatorLength) {
+          this.showNextPaginationBtn = true;
+        }
+
         this.getGmailList(location.toUpperCase(), '');
+
       }
-    }, err => {
-      this.eventService.openSnackBarNoDuration(err);
-      this.eventService.openSnackBar("You must connect your gmail account", "Dismiss");
-      if (localStorage.getItem('successStoringToken')) {
-        localStorage.removeItem('successStoringToken');
-      }
-      this.router.navigate(['google-connect'], { relativeTo: this.activatedRoute });
     });
   }
 
@@ -258,13 +265,14 @@ export class EmailListingComponent implements OnInit {
 
   }
 
-  openDraftView(dataObj) {
+  openDraftView(dataObj, gmailThread) {
+
     const threadIdsArray = [];
     this.messageListArray.forEach((item) => {
       threadIdsArray.push(item["idsOfThread"]["id"]);
     });
-    this.emailService.sendNextData({ dataObj, threadIdsArray });
-    this.emailService.openComposeEmail({ dataObj, threadIdsArray }, ComposeEmailComponent, 'draft');
+    this.emailService.sendNextData({ dataObj, threadIdsArray, gmailThread });
+    this.emailService.openComposeEmail({ dataObj, threadIdsArray, gmailThread }, ComposeEmailComponent, 'draft');
     this.showDraftView = false;
   }
 
@@ -303,6 +311,8 @@ export class EmailListingComponent implements OnInit {
         }
       });
   }
+
+
 
   // get List view
   getGmailList(data, page) {
@@ -343,12 +353,12 @@ export class EmailListingComponent implements OnInit {
           let extractSubjectFromHeaders;
           let extractAttachmentFiles = null;
           let attachmentFiles;
-          let attachmentIds = [];
+          let attachmentArrayObjects = [];
           let messageCountInAThread: number;
           let messageDates: number[] = [];
 
           parsedData = EmailUtilService.decodeGmailThreadExtractMessage(thread);
-          attachmentIds = EmailUtilService.getAttachmentIdFromGmailThread(thread);
+          attachmentArrayObjects = EmailUtilService.getAttachmentObjectFromGmailThread(thread);
           idsOfThread = EmailUtilService.getIdsOfGmailThreads(thread);
           idsOfMessages = EmailUtilService.getIdsOfGmailMessages(thread);
           dateIdsSnippetsOfMessages = EmailUtilService.getIdAndDateAndSnippetOfGmailThreadMessages(thread);
@@ -384,7 +394,7 @@ export class EmailListingComponent implements OnInit {
               message: dateIdsSnippetsOfMessages[0]['snippet']
             },
             date: `${dateIdsSnippetsOfMessages[0]['internalDate']}`,
-            attachmentIds
+            attachmentArrayObjects
           }
 
 
