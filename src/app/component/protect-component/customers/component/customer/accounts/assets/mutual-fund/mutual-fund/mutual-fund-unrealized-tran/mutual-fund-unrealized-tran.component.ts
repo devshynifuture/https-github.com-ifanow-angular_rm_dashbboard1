@@ -1004,10 +1004,11 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   }
   generatePdfBulk() {
     setTimeout(() => {
+      const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
       let para = this.unrealizedTranTemplate.nativeElement.innerHTML
       let obj = {
         htmlInput: para,
-        name: 'transaction',
+        name: (this.clientData.name)?this.clientData.name:''+'s'+this.mode+date,
         landscape: true,
         key: 'showPieChart',
         clientId: this.clientId,

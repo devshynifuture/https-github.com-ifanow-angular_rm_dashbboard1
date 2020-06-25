@@ -983,17 +983,19 @@ export class MutualFundOverviewComponent implements OnInit {
   }
 
   generatePdfBulk() {
+    const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
+
     this.svg = this.chart.getSVG();
     const para = document.getElementById('template');
     const obj = {
       htmlInput: para.innerHTML,
-      name: 'Overview`s',
+      name: (this.clientData.name)?this.clientData.name:''+'s'+'MF_Overview_Report'+date,
       landscape: true,
       key: 'showPieChart',
       clientId: this.clientId,
       advisorId: this.advisorId,
       fromEmail: 'devshyni@futurewise.co.in',
-      toEmail: 'abhishek@futurewise.co.in',
+      toEmail: 'devshyni@futurewise.co.in',
       svg: this.svg
     };
     this.UtilService.bulkHtmlToPdf(obj);
