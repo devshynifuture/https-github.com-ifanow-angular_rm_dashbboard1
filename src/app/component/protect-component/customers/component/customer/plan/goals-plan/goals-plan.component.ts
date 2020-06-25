@@ -246,7 +246,7 @@ export class GoalsPlanComponent implements OnInit {
     let fragmentData = {
       flag: flag,
       id: 1,
-      data,
+      data: this.selectedGoal,
       componentName: undefined,
       state: 'open'
     };
@@ -254,7 +254,6 @@ export class GoalsPlanComponent implements OnInit {
     switch (flag) {
       case 'openCalculators':
         fragmentData.componentName = CalculatorsComponent;
-        fragmentData['popupHeaderText'] = 'CALCULATORS - NEW HOUSE 2035';
         break;
       case 'openPreferences':
         fragmentData.componentName = PreferencesComponent;

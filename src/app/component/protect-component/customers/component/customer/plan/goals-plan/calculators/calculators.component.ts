@@ -2,6 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
+import { DatePipe } from '@angular/common';
+import { PlanService } from '../../plan.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-calculators',
@@ -16,33 +19,28 @@ export class CalculatorsComponent implements OnInit {
   incomeFG: FormGroup;
   loanFG: FormGroup;
   
-  maxAmtAvailable: number = 3481356;
-  incomeInGoalYr: number = 241577;
-  highestLoanAvailable: number = 3481356;
-  highestEMIAvailable: number = 120788;
-  loanToBeTaken: number = 3481356;
-  emiPayable: number = 120788;
-  originalGoalAmt: number = 3481356;
-  dwnPaymentAmt: number = 120788;
-  monthlyReq: number = 3481356;
-  lumpsumReq: number = 120788;
+  calculatedEMI:any = {
+  }
 
   constructor(
     private subInjectService: SubscriptionInject,
-    private fb: FormBuilder
+    private eventService: EventService, 
+    private fb: FormBuilder,
+    private datePipe: DatePipe,
+    private planService: PlanService,
   ) { }
 
   ngOnInit() {
     this.getdataForm();
 
     // TODO:- remove the below method if no use found.
-    this.incomeFG.valueChanges.pipe(
-      debounceTime(300),
-    ).subscribe(() => {
-      if(this.incomeFG.valid) {
-        console.log('Wow it works!!!!');
-      }
-    })
+    // this.incomeFG.valueChanges.pipe(
+    //   debounceTime(300),
+    // ).subscribe(() => {
+    //   if(this.incomeFG.valid) {
+    //     console.log('Wow it works!!!!');
+    //   }
+    // })
   }
 
 
@@ -65,6 +63,24 @@ export class CalculatorsComponent implements OnInit {
       this.loanFG.markAllAsTouched();
     } else {
 
+      const emiObj = {
+        netSalary: this.incomeFG.controls.income.value,
+        loanTenure: this.loanFG.controls.loanTenure.value,
+        annualInterestRate: this.loanFG.controls.interestRate.value,
+        previousEMIs: this.incomeFG.controls.otherEMI.value,
+        incomeGrowthRate: this.incomeFG.controls.growthRate.value,
+        loanAmount: this.loanFG.controls.loanAmt.value,
+        savingStartDate: this.datePipe.transform(this.data.remainingData.savingStartDate, 'yyyy/MM/dd')
+      }
+
+      this.planService.calculateEMI({loanIpJson: JSON.stringify(emiObj)}).subscribe((res) => {
+        this.calculatedEMI = {
+          ...res,
+          ...emiObj
+        };
+      }, err => {
+        this.eventService.openSnackBar(err, "Dismiss");
+      })
     }
   }
 

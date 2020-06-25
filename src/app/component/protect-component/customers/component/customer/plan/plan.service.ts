@@ -136,4 +136,12 @@ export class PlanService {
     let httpParams = new HttpParams().set('goalId', data.goalId).set("goalType", data.goalType)
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_GOAL + '?' + httpParams, '');
   }
+
+  calculateEMI(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.CALCULATE_GOAL_EMI, data);
+  }
+
+  calculateCostToDelay(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.CALCULATE_GOAL_DELAY, data);
+  }
 }
