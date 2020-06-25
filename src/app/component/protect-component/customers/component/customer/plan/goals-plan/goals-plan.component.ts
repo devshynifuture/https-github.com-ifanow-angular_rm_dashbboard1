@@ -328,11 +328,16 @@ export class GoalsPlanComponent implements OnInit {
         }
         this.plansService.deleteGoal(deleteObj).subscribe((data)=>{
           this.eventService.openSnackBar("Goal has been deleted successfully", "Dismiss");
+          this.allGoals = [];
+          this.loadAllGoals();
+          dialogRef.close()
         }, (err) => { this.eventService.openSnackBar(err, "Dismiss") })
+      },
+      negativeMethod: () => {
       }
     };
 
-    this.dialog.open(ConfirmDialogComponent, {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
       data: dialogData,
       autoFocus: false,
