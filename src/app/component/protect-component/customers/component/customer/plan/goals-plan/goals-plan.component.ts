@@ -174,8 +174,9 @@ export class GoalsPlanComponent implements OnInit {
      * 3. image for multi year goal
      */
 
+    mapData.id = goal.id;
+    mapData.goalType = goal.goalType;
     if(goal.singleOrMulti == 1) {
-      mapData.id = goal.id;
       const goalSubData = goal.singleGoalModel;
       mapData.img = goalSubData.imageUrl;
       mapData.year = (new Date(goalSubData.goalStartDate).getFullYear()) + ' - ' + (new Date(goalSubData.goalStartDate).getFullYear());
@@ -193,7 +194,6 @@ export class GoalsPlanComponent implements OnInit {
       }
       mapData.remainingData = goalSubData;
     } else {
-      mapData.id = goal.id;
       const goalSubData:any = goal.multiYearGoalPlan;
       mapData.img = goalSubData.imageUrl;
       mapData.year = (new Date(goalSubData.goalStartDate || goalSubData.vacationStartYr).getFullYear()) + ' - ' + (new Date(goalSubData.goalEndDate || goalSubData.vacationEndYr).getFullYear());
@@ -324,7 +324,7 @@ export class GoalsPlanComponent implements OnInit {
       positiveMethod: () => {
         let deleteObj = {
           goalId: this.selectedGoal.id,
-          goalType: this.selectedGoal.typeId
+          goalType: this.selectedGoal.goalType
         }
         this.plansService.deleteGoal(deleteObj).subscribe((data)=>{
           this.eventService.openSnackBar("Goal has been deleted successfully", "Dismiss");
