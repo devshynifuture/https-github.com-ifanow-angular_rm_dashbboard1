@@ -10,6 +10,7 @@ import { GoogleConnectDialogComponent } from '../google-connect-dialog/google-co
 import { UtilService } from '../../../../../../services/util.service';
 import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
 import { EmailFaqAndSecurityComponent } from '../email-faq-and-security/email-faq-and-security.component';
+import { AuthService } from '../../../../../../auth-service/authService';
 
 
 @Component({
@@ -44,12 +45,21 @@ export class EmailSettingsComponent implements OnInit {
       googleConnectEmail: ['', Validators.required]
     });
 
-    if (!(localStorage.getItem('googleOAuthToken') && localStorage.getItem('successStoringToken') && localStorage.getItem('associatedGoogleEmailId'))) {
-      localStorage.removeItem('googleOAuthToken');
-      localStorage.removeItem('successStoringToken');
-      localStorage.removeItem('associatedGoogleEmailId');
+    if (this.doesTokenStoredInLocalStorage()) {
+      this.router.navigate(['/admin/emails/inbox'], { relativeTo: this.activatedRoute });
     } else {
-      this.router.navigate(['../'], { relativeTo: this.activatedRoute })
+      this.emailService.getProfile().subscribe(res => {
+        if (res) {
+          localStorage.setItem('googleOAuthToken', 'oauthtoken');
+          localStorage.setItem('successStoringToken', 'true');
+          localStorage.setItem('associatedGoogleEmailId', AuthService.getUserInfo().userName);
+          this.router.navigate(['/admin/emails/inbox'], { relativeTo: this.activatedRoute });
+        } else {
+          this.eventService.openSnackBarNoDuration(res, 'DISMISS');
+        }
+      }, err => {
+        this.eventService.openSnackBarNoDuration(err, "DISMISS");
+      });
     }
 
     if (this.router.url == "/admin/activies/month") {
@@ -60,6 +70,24 @@ export class EmailSettingsComponent implements OnInit {
       this.isEmail = true;
     }
 
+  }
+
+  doesTokenStoredInLocalStorage(): boolean {
+    let returnVar;
+    if (localStorage.getItem('googleOAuthToken')) {
+      if (localStorage.getItem('successStoringToken')) {
+        if (localStorage.getItem('associatedGoogleEmailId')) {
+          returnVar = true;
+        } else {
+          returnVar = false;
+        }
+      } else {
+        returnVar = false;
+      }
+    } else {
+      returnVar = false;
+    }
+    return returnVar;
   }
 
   // gmailRedirectUrlCreation() {

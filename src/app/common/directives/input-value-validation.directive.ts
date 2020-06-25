@@ -1,5 +1,6 @@
 import {ValidatorType} from '../../services/util.service';
 import {Directive, ElementRef, EventEmitter, HostListener, Input, Output} from '@angular/core';
+import { element } from 'protractor';
 
 @Directive({
   selector: '[appInputValueValidation]',
@@ -42,19 +43,12 @@ export class InputValueValidationDirective {
   @HostListener('input', ['$event']) onInputChange(event) {
     let currValue = event.target.value;
     if (!this.checkCurrentValue(currValue)) {
-      event.preventDefault();
-      // if(this.prevValue) {
-      //   this._el.nativeElement.value = this.prevValue;
-      //   this.changedValue.emit(this.prevValue);
-      // } else {
-      //   this._el.nativeElement.value = '';
-      //   this.changedValue.emit('');
-      // }
       currValue = currValue.trim();
       const convertStringTochar = currValue.split('');
-      const oldValue = convertStringTochar.filter(element => this.inputValidator.test(element) == true);
-      this._el.nativeElement.value = oldValue.join('');
-      this.changedValue.emit(oldValue.join(''));
+      const oldValue = convertStringTochar.filter(element => this.inputValidator.test(element) == true).join('');
+      this._el.nativeElement.value = oldValue;
+      this.changedValue.emit(oldValue);
+      this._el.nativeElement.dispatchEvent(new Event('input'));
     }
   }
 
