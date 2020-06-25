@@ -219,6 +219,31 @@
                     </mat-radio-group>
                 </div>
             </div>
+
+            <div *ngIf="fieldFlag=='familyMember'" class="row pt-28">
+                <div class="col-md-4 text-right full-end">
+                    <h5 class="m-0"> Relation</h5>
+                </div>
+                <div class="col-md-3 p-0">
+                    <div class="form-group">
+                        <mat-form-field floatLabel="never" appearance="standard">
+                            <mat-select formControlName="relationType" class="form-control">
+                                <mat-option value='' disabled>Select option</mat-option>
+                                <mat-option *ngIf="basicDetailsData.genderId==2" [value]=2>Husband</mat-option>
+                                <mat-option *ngIf="basicDetailsData.genderId==1" [value]=3>Wife</mat-option>
+                                <mat-option [value]=6>Father</mat-option>
+                                <mat-option [value]=7>Mother</mat-option>
+                                <mat-option [value]=4>Son</mat-option>
+                                <mat-option [value]=5>Daughter</mat-option>
+                                <mat-option [value]=10>Other</mat-option>
+                            </mat-select>
+                            <!-- <mat-hint>Optional</mat-hint> -->
+                            <mat-error>This field is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+
             <div *ngIf="fieldFlag=='client'" class="row pt-44">
                 <div class="col-md-4 text-right mob-text-left mob-pl-10">
                     <h5 class="m-0 pt-12">Client owner</h5>
@@ -431,6 +456,29 @@
                             Other
                         </mat-radio-button>
                     </mat-radio-group>
+                </div>
+            </div>
+
+            <div *ngIf="fieldFlag=='familyMember'" class="row pt-28">
+                <div class="col-md-4 text-right full-end">
+                    <h5 class="m-0"> Relation</h5>
+                </div>
+                <div class="col-md-3 p-0">
+                    <div class="form-group">
+                        <mat-form-field floatLabel="never" appearance="standard">
+                            <mat-select formControlName="relationType" class="form-control">
+                                <mat-option value='' disabled>Select option</mat-option>
+                                <mat-option *ngIf="basicDetailsData.genderId==2" [value]=2>Husband</mat-option>
+                                <mat-option *ngIf="basicDetailsData.genderId==1" [value]=3>Wife</mat-option>
+                                <mat-option [value]=6>Father</mat-option>
+                                <mat-option [value]=7>Mother</mat-option>
+                                <mat-option [value]=4>Son</mat-option>
+                                <mat-option [value]=5>Daughter</mat-option>
+                                <mat-option [value]=10>Other</mat-option>
+                            </mat-select>
+                            <!-- <mat-hint>Optional</mat-hint> -->
+                        </mat-form-field>
+                    </div>
                 </div>
             </div>
 
