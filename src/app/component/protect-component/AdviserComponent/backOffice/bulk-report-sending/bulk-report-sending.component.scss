@@ -30,5 +30,6 @@
     .bulk-report-scroll {
         overflow-y: auto !important;
         height: calc(100vh - 214px);
+        overflow: hidden;
     }
 }
