@@ -40,13 +40,23 @@ export class GoogleConnectComponent implements OnInit {
       googleConnectEmail: ['', Validators.required]
     });
 
-    if (!(localStorage.getItem('googleOAuthToken') && localStorage.getItem('successStoringToken') && localStorage.getItem('associatedGoogleEmailId'))) {
-      localStorage.removeItem('googleOAuthToken');
-      localStorage.removeItem('successStoringToken');
-      localStorage.removeItem('associatedGoogleEmailId');
+    if (this.doesTokenStoredInLocalStorage()) {
+      this.router.navigate(['/admin/emails/inbox'], { relativeTo: this.activatedRoute });
     } else {
-      this.router.navigate(['../'], { relativeTo: this.activatedRoute })
+      this.emailService.getProfile().subscribe(res => {
+        if (res) {
+          localStorage.setItem('googleOAuthToken', 'oauthtoken');
+          localStorage.setItem('successStoringToken', 'true');
+          localStorage.setItem('associatedGoogleEmailId', AuthService.getUserInfo().userName);
+          this.router.navigate(['/admin/emails/inbox'], { relativeTo: this.activatedRoute });
+        } else {
+          this.eventService.openSnackBarNoDuration(res, 'DISMISS');
+        }
+      }, err => {
+        this.eventService.openSnackBarNoDuration(err, "DISMISS");
+      });
     }
+    // call for getProfile api for having connected mail
 
     if (this.router.url == "/admin/activies/month") {
       this.isEmail = false;
@@ -56,6 +66,24 @@ export class GoogleConnectComponent implements OnInit {
       this.isEmail = true;
     }
 
+  }
+
+  doesTokenStoredInLocalStorage(): boolean {
+    let returnVar;
+    if (localStorage.getItem('googleOAuthToken')) {
+      if (localStorage.getItem('successStoringToken')) {
+        if (localStorage.getItem('associatedGoogleEmailId')) {
+          returnVar = true;
+        } else {
+          returnVar = false;
+        }
+      } else {
+        returnVar = false;
+      }
+    } else {
+      returnVar = false;
+    }
+    return returnVar;
   }
 
   openImportantNoticeEmail() {
