@@ -44,9 +44,13 @@
                                     <mat-form-field>
                                         <mat-select (selectionChange)="changeGstField($event.value)"
                                             formControlName="gstTreatmentId" class="form-control">
-                                            <mat-option value='1'>Applicable</mat-option>
-                                            <mat-option value='2'>Not applicable
-                                            </mat-option>
+                                            <!-- <mat-option value='1'>Applicable</mat-option>
+                                            <mat-option value='2'>Not applicable -->
+                                            <mat-option value="1">Consumer</mat-option>
+                                            <mat-option value="2">Not registered business</mat-option>
+                                            <mat-option value="3">Overseas</mat-option>
+                                            <mat-option value="4">Registered Business</mat-option>
+                                            <!-- </mat-option> -->
                                         </mat-select>
                                         <!-- <mat-error class="f-12">This field is required</mat-error> -->
                                     </mat-form-field>
@@ -57,7 +61,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div *ngIf="profileDetailsForm.get('gstTreatmentId').value=='1'" class="row pt-44">
+                        <div *ngIf="profileDetailsForm.get('gstTreatmentId').value=='4'" class="row pt-44">
                             <div class="col-md-4 pr-0">
                                 <h5 class="text-right m-0 pt-12">GSTIN number</h5>
                             </div>

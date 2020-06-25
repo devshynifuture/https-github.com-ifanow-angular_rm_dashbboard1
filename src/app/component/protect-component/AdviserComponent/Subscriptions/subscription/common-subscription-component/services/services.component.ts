@@ -100,9 +100,9 @@ export class ServicesComponent implements OnInit {
         //   ...element,
         //   ...element.servicePricing
         // };
-        element['feeTypeId'] = element.servicePricing.billingNature
+        element['feeTypeId'] = element.servicePricing.feeTypeId
         element['billingNature'] = element.servicePricing.billingNature
-        element['billingMode'] = element.servicePricing.billingNature
+        element['billingMode'] = element.servicePricing.billingMode
         if (element.selected == true) {
           this.mappedData.push(element);
         }
@@ -130,9 +130,9 @@ export class ServicesComponent implements OnInit {
     this.isLoading = false;
     if (data) {
       data.map(element => {
-        element['feeTypeId'] = element.servicePricing.billingNature
+        element['feeTypeId'] = element.servicePricing.feeTypeId
         element['billingNature'] = element.servicePricing.billingNature
-        element['billingMode'] = element.servicePricing.billingNature
+        element['billingMode'] = element.servicePricing.billingMode
       })
       this.planServiceData = data;
       const modifiedArray = []
