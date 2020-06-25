@@ -98,11 +98,12 @@ export class EmailOnlyComponent implements OnInit {
 
     this.docObj = obj;
     this._inputData = inputData;
-    // if (this.showfromEmail == false) {
-    this.getEmailTemplateFilterData(inputData);
-    // } else {
-    // this.emailBody = inputData.documentList[0].documentText;
-    // }
+    if (!inputData.openedFrom) {
+      this.getEmailTemplateFilterData(inputData);
+    } else {
+      this.emailBody = inputData.clientData.documentText;
+      this.barButtonOptions.text = 'SAVE';
+    }
     this.getClientData(this._inputData.clientData)
   }
 
@@ -170,7 +171,9 @@ export class EmailOnlyComponent implements OnInit {
     this.orgSetting.getEmailVerification(obj).subscribe(
       data => {
         this.verifiedEmailsList = data.listItems.filter(element => element.emailVerificationStatus == 1);
-        this._inputData.fromEmail = (this.verifiedEmailsList && this.verifiedEmailsList.length == 1) ? this.verifiedEmailsList[0].emailAddress : ''
+        if(!this._inputData.fromEmail) {
+          this._inputData.fromEmail = (this.verifiedEmailsList && this.verifiedEmailsList.length == 1) ? this.verifiedEmailsList[0].emailAddress : ''
+        }
       },
       err => this.eventService.openSnackBar(err, "Dismiss")
     );

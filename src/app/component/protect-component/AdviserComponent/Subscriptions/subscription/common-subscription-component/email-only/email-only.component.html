@@ -20,7 +20,7 @@
                 <p class="m-0 text-custom">From</p>
             </div>
             <div class="col-md-9">
-                <p *ngIf="this.emailData" class="m-0 text-black">
+                <!-- <p *ngIf="this.emailData" class="m-0 text-black"> -->
                     <!-- {{(this.emailData) ? this.emailData.fromEmail : 'support@futurewise.co.in'}}</p> -->
                     <mat-select class="form-control" [(ngModel)]="_inputData.fromEmail">
                         <!-- <mat-option value="" disabled>Select Email</mat-option> -->
@@ -31,7 +31,7 @@
             </div>
         </div>
     </div>
-    <div class="pl-16 pb-12 pt-12">
+    <div class="pl-16 pb-12 pt-12" *ngIf="_inputData.openedFrom != 'settings'">
         <div class="row">
             <div class="col-md-1 d-flex align-items-center">
                 <p class="m-0 text-custom ">To</p>
@@ -99,12 +99,15 @@
 <div class="bottom-fixed wrapper-12 w-60">
     <div class="row">
         <div class="col-md-12 text-right full-end">
-            <app-progress-button *ngIf="_inputData.templateType!=3" (btnClick)="sendEmail()"
+            <app-progress-button *ngIf="_inputData.templateType!=3 && !_inputData.openedFrom" (btnClick)="sendEmail()"
+                class="br-0 text-inherit ml-12" [options]="barButtonOptions">
+            </app-progress-button>
+            <app-progress-button *ngIf="_inputData.openedFrom && _inputData.openedFrom == 'settings'" (btnClick)="saveEmailTemplate()"
                 class="br-0 text-inherit ml-12" [options]="barButtonOptions">
             </app-progress-button>
             <!-- <button (click)="sendEmail()" class="btn-primary br-0 mr-16" mat-stroked-button>Send</button> -->
             <!-- <button (click)="saveEmailTemplate()" class="btn-primary br-0" mat-stroked-button>Save template</button> -->
-            <app-progress-button *ngIf="_inputData.templateType==3" (btnClick)="sendWithEsign()"
+            <app-progress-button *ngIf="_inputData.templateType==3 && !_inputData.openedFrom" (btnClick)="sendWithEsign()"
                 class="br-0 text-inherit ml-12" [options]="barButtonOptions1">
             </app-progress-button>
         </div>
