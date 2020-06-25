@@ -81,7 +81,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
 
   sliderConfig = {
     slidesToShow: 1,
-    infinite: false,
+    infinite: true,
     variableWidth: true,
     outerEdgeLimit: true,
     "nextArrow": "<div style='position: absolute; top: 35%; right: 0; cursor: pointer;' class='nav-btn classNextArrow next-slide'><img src='/assets/images/svg/next-arrow.svg'></div>",
