@@ -8,6 +8,7 @@ import {AuthService} from 'src/app/auth-service/authService';
 import {RightFilterDuplicateComponent} from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BackOfficeService} from 'src/app/component/protect-component/AdviserComponent/backOffice/back-office.service';
+import { DatePipe } from '@angular/common';
 
 // import { MutualFundAllTransactionComponent } from '../mutual-fund-all-transaction/mutual-fund-all-transaction.component';
 
@@ -68,6 +69,7 @@ export class MfCapitalDetailedComponent implements OnInit {
   constructor(private MfServiceService: MfServiceService,
     public routerActive: ActivatedRoute,
     private backOfficeService : BackOfficeService,
+    private datePipe: DatePipe,
     private route: Router,
     private subInjectService: SubscriptionInject, private UtilService: UtilService, private custumService: CustomerService) {
 
@@ -595,12 +597,12 @@ export class MfCapitalDetailedComponent implements OnInit {
     // }
   }
   generatePdfBulk() {
-
+    const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
     setTimeout(() => {
       let para = this.mfCapitalTemplate.nativeElement.innerHTML
       let obj = {
         htmlInput: para,
-        name: 'MF_Capital_Gain_Detailed',
+        name: (this.clientData.name)?this.clientData.name:''+'s'+'MF_Capital_Gain_Detailed'+date,
         landscape: true,
         key: 'showPieChart',
         clientId: this.clientId,
