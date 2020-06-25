@@ -298,7 +298,7 @@ export class ClientUpperSubscriptionComponent implements OnInit {
     };
     if (data == 'cancelSubscription') {
       const dialogRef = this.dialog.open(DeleteSubscriptionComponent, {
-        width: '50%',
+        width: '35%',
         // height:'40%',
         data: Fragmentdata,
         autoFocus: false,

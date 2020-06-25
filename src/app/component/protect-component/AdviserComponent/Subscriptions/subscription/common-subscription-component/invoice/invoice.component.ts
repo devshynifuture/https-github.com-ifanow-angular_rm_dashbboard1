@@ -660,6 +660,7 @@ export class InvoiceComponent implements OnInit {
   }
 
   editInvoice() {
+    this.storeData['showBottomBar'] = (this.inputData) ? this.inputData.showBottomBar : undefined;
     this.showEditIn = true;
     this.showEdit = true;
   }

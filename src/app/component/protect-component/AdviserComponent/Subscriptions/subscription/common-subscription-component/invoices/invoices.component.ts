@@ -53,8 +53,8 @@ export class InvoicesComponent implements OnInit {
 
 
   ngOnInit() {
-    if(!this.isAdvisor) {
-      this.displayedColumns = this.displayedColumns.slice(1,-1)
+    if (!this.isAdvisor) {
+      this.displayedColumns = this.displayedColumns.slice(1, -1)
     }
 
     this.getInvoiceList();
@@ -202,7 +202,7 @@ export class InvoicesComponent implements OnInit {
 
   openInvoice(data, value, state) {
     data.isAdvisor = this.isAdvisor;
-
+    data['showBottomBar'] = true;
     const fragmentData = {
       flag: value,
       data: data,
