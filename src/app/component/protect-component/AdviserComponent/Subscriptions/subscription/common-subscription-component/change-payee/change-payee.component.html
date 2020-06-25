@@ -18,7 +18,7 @@
     </div>
     <div class="row change-payee pt-20">
         <div [hidden]="payeeDataRes.length <= 0" [appSkeletonLoading]="isLoading" appSkeletonLoading
-            class="col-md-6 skeletonAnimation hover c-p " *ngFor="let singlePlan of payeeDataRes;  let i = index">
+            class="col-md-6 skeletonAnimation hover c-p pb-20" *ngFor="let singlePlan of payeeDataRes;  let i = index">
             <mat-card class="p-0 b-ua relClass"
                 [ngClass]="{'ba-blue': singlePlan.selected == 1,'b-ua':singlePlan.selected == 0}"
                 (click)="selectedPayee(singlePlan.selected,singlePlan)">
