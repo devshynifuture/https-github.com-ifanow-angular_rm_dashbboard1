@@ -88,7 +88,7 @@ export class EmailViewComponent implements OnInit, OnDestroy {
         const { payload: { headers } } = response;
         const { payload: { parts } } = response;
         if (response.payload.body !== null) {
-          if (response.payload.mimeType === 'text/html' || response.payload.mimeType === 'text/plain') {
+          if (response.payload.mimeType === 'text/html') {
             this.decodedPartsDetail.push({
               item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(response.payload.body.data),
             });
@@ -103,22 +103,24 @@ export class EmailViewComponent implements OnInit, OnDestroy {
                         this.decodedPartsDetail.push({
                           item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(multiPartAlternativeElement.body.data),
                         })
-                      } else if (multiPartAlternativeElement.mimeType === 'text/plain') {
-                        this.decodedPartsDetail.push({
-                          item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(multiPartAlternativeElement.body.data),
-                        })
                       }
+                      //  else if (multiPartAlternativeElement.mimeType === 'text/plain') {
+                      //   this.decodedPartsDetail.push({
+                      //     item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(multiPartAlternativeElement.body.data),
+                      //   })
+                      // }
                     });
                   }
                 } else if (multiPartElement.mimeType === 'text/html') {
                   this.decodedPartsDetail.push({
                     item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(multiPartElement.body.data),
                   })
-                } else if (multiPartElement.mimeType === 'text/plain') {
-                  this.decodedPartsDetail.push({
-                    item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(multiPartElement.body.data),
-                  })
                 }
+                //  else if (multiPartElement.mimeType === 'text/plain') {
+                //   this.decodedPartsDetail.push({
+                //     item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(multiPartElement.body.data),
+                //   })
+                // }
               });
             }
           }
@@ -130,11 +132,12 @@ export class EmailViewComponent implements OnInit, OnDestroy {
                   this.decodedPartsDetail.push({
                     item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(multiPartAlternativeElement.body.data),
                   })
-                } else if (multiPartAlternativeElement.mimeType === 'text/plain') {
-                  this.decodedPartsDetail.push({
-                    item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(multiPartAlternativeElement.body.data),
-                  })
                 }
+                //  else if (multiPartAlternativeElement.mimeType === 'text/plain') {
+                //   this.decodedPartsDetail.push({
+                //     item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(multiPartAlternativeElement.body.data),
+                //   })
+                // }
               });
             }
           }

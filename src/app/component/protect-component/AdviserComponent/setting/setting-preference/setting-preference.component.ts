@@ -360,6 +360,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     let obj = {
       clientData: {documentText: data.body},
       showfromEmail: true,
+      openedFrom: 'settings',
       fromEmail: data.fromEmail || '',
       documentList: [],
       id: data.id,

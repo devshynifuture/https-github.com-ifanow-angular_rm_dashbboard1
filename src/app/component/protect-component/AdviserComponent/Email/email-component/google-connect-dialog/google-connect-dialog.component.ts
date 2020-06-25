@@ -31,7 +31,7 @@ export class GoogleConnectDialogComponent {
       localStorage.removeItem('successStoringToken');
       localStorage.removeItem('associatedGoogleEmailId');
     } else {
-      this.router.navigate(['../'], { relativeTo: this.activatedRoute })
+      this.router.navigate(['/admin/emails/inbox'], { relativeTo: this.activatedRoute })
     }
   }
 
@@ -49,7 +49,7 @@ export class GoogleConnectDialogComponent {
           clearInterval(lookForSuccessToken);
           redirectWindow.close();
           this.onNoClick();
-          this.router.navigate(['../'], { relativeTo: this.activatedRoute });
+          this.router.navigate(['/admin/emails/inbox'], { relativeTo: this.activatedRoute });
         }
       }, 1000);
     } else {
