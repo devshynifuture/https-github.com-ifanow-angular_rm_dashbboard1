@@ -98,11 +98,12 @@ export class EmailOnlyComponent implements OnInit {
 
     this.docObj = obj;
     this._inputData = inputData;
-    // if (this.showfromEmail == false) {
-    this.getEmailTemplateFilterData(inputData);
-    // } else {
-    // this.emailBody = inputData.documentList[0].documentText;
-    // }
+    if (!inputData.openedFrom) {
+      this.getEmailTemplateFilterData(inputData);
+    } else {
+      this.emailBody = inputData.clientData.documentText;
+      this.barButtonOptions.text = 'SAVE';
+    }
     this.getClientData(this._inputData.clientData)
   }
 
@@ -170,7 +171,9 @@ export class EmailOnlyComponent implements OnInit {
     this.orgSetting.getEmailVerification(obj).subscribe(
       data => {
         this.verifiedEmailsList = data.listItems.filter(element => element.emailVerificationStatus == 1);
-        this._inputData.fromEmail = (this.verifiedEmailsList && this.verifiedEmailsList.length == 1) ? this.verifiedEmailsList[0].emailAddress : ''
+        if (!this._inputData.fromEmail) {
+          this._inputData.fromEmail = (this.verifiedEmailsList && this.verifiedEmailsList.length == 1) ? this.verifiedEmailsList[0].emailAddress : ''
+        }
       },
       err => this.eventService.openSnackBar(err, "Dismiss")
     );
@@ -329,7 +332,7 @@ export class EmailOnlyComponent implements OnInit {
         data => this.getResponseData(data)
       );
     } else {
-      const emailRequestData = {
+      let emailRequestData = {
         messageBody: this.emailBody,
         emailSubject: this._inputData.subject,
         fromEmail: this._inputData.fromEmail,
@@ -338,6 +341,9 @@ export class EmailOnlyComponent implements OnInit {
         document_id: this._inputData.documentList[0].id,
         attachmentName: this._inputData.documentList[0].documentName
       };
+      if (this._inputData.templateType == 2) {
+        emailRequestData['quotation'] = true;
+      }
       this.barButtonOptions.active = true;
       this.subscription.sendDocumentViaEmailInPdfFormat(emailRequestData).subscribe(
         data => this.getResponseData(data)
