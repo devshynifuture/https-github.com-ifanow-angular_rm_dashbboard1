@@ -25,6 +25,11 @@ export class EmailListingComponent implements OnInit {
   currentList: number = 0;
   showNextPaginationBtn: boolean;
   showPrevPaginationBtn: boolean;
+  navList: any;
+  importantCount: any;
+  sentCount: any;
+  draftCount: any;
+  trashCount: any;
 
 
   constructor(
@@ -89,14 +94,11 @@ export class EmailListingComponent implements OnInit {
 
   redirectMessages(element) {
     console.log("this is some listing ::element;::::", element);
-    element.labelIdsfromMessages.forEach(labelArr => {
-      labelArr.labelIds.forEach(label => {
-        if (label === 'DRAFT') {
-          this.showDraftView = true;
-          // some error with this
-        }
-      });
-    });
+    if (element.labelIdsfromMessages[0].labelIds.includes('DRAFT') && this.location === 'draft') {
+      this.showDraftView = true;
+    } else {
+      this.showDraftView = false;
+    }
     this.showDraftView ? this.openDraftView(element) : this.gotoEmailView(element);
   }
 
@@ -127,7 +129,7 @@ export class EmailListingComponent implements OnInit {
     }
 
     this.paginatorSubscription = this.emailService.getProfile().subscribe(response => {
-      if (response === undefined) {
+      if (!response) {
         this.eventService.openSnackBar("You must connect your gmail account", "Dismiss");
         if (localStorage.getItem('successStoringToken')) {
           localStorage.removeItem('successStoringToken');
@@ -136,22 +138,38 @@ export class EmailListingComponent implements OnInit {
       } else {
         // this.paginatorLength = response.threadsTotal;
         this.isLoading = true;
-        this.emailUtilService.getLabelCount()
-          .subscribe(res => {
-            if (res) {
-              if (location === 'inbox') {
-                this.paginatorLength = res['importantCount'];
+        this.emailService.getRightSideNavList().subscribe(responseData => {
+          this.navList = responseData;
+          console.log("check navlist :::", this.navList);
+          if (this.navList.length !== 0) {
+            this.navList.forEach(element => {
+              if (element.labelId === 'IMPORTANT') {
+                this.importantCount = element.threadsTotal;
               }
-              else if (location === 'sent') {
-                this.paginatorLength = res['sentCount'];
+              if (element.labelId === 'SENT') {
+                this.sentCount = element.threadsTotal;
               }
-              else if (location === 'draft') {
-                this.paginatorLength = res['draftCount'];
+              if (element.labelId === 'DRAFT') {
+                this.draftCount = element.threadsTotal;
               }
-              else if (location === 'trash') {
-                this.paginatorLength = res['trashCount'];
+              if (element.labelId === 'THRASH') {
+                this.trashCount = element.threadsTotal;
               }
+            });
+
+            if (location === 'inbox') {
+              this.paginatorLength = this.importantCount;
             }
+            else if (location === 'sent') {
+              this.paginatorLength = this.sentCount;
+            }
+            else if (location === 'draft') {
+              this.paginatorLength = this.draftCount;
+            }
+            else if (location === 'trash') {
+              this.paginatorLength = this.trashCount;
+            }
+
             this.totalListSize = this.paginatorLength;
             if (this.maxListRes > this.paginatorLength) {
               this.maxListRes = this.paginatorLength;
@@ -164,8 +182,8 @@ export class EmailListingComponent implements OnInit {
             } else if (this.maxListRes < this.paginatorLength) {
               this.showNextPaginationBtn = true;
             }
-          })
-
+          }
+        });
         this.getGmailList(location.toUpperCase(), '');
       }
     }, err => {

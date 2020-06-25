@@ -190,7 +190,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
     }
     this.display = data;
     this.profileDetailsForm = this.fb.group({
-      companyDisplayName: [data.companyDisplayName, [Validators.required]],
+      companyDisplayName: [data.companyName, [Validators.required]],
       // companyName: [data.companyName, [Validators.required]],
       gstTreatmentId: [data.gstTreatmentId ? String(data.gstTreatmentId) : '1'],
       gstinNum: [(data.gstin)],
@@ -232,7 +232,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
     this.getFrormControlMisc().footnote.maxLength = 500;
     this.getFrormControlMisc().terms.maxLength = 500;
     this.logoImg = data.logoUrl;
-    if (this.profileDetailsForm.get('gstTreatmentId').value == 1) {
+    if (this.profileDetailsForm.get('gstTreatmentId').value == '4') {
       this.profileDetailsForm.get('gstinNum').setValidators([Validators.required, Validators.pattern("^([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-7]{1})([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$")]);
     }
     else {
@@ -241,7 +241,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
     this.profileDetailsForm.get('gstinNum').updateValueAndValidity()
   }
   changeGstField(value) {
-    if (value == 1) {
+    if (value == 4) {
       this.profileDetailsForm.get('gstinNum').setValidators([Validators.required, Validators.pattern("^([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-7]{1})([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$")]);
     }
     else {
