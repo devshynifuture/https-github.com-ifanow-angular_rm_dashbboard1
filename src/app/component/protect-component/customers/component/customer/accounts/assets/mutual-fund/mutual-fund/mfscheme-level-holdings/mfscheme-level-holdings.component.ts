@@ -385,15 +385,15 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
       //   element.get('Units').markAsTouched();
       // });
       this.schemeLevelHoldingForm.markAllAsTouched()
-    }else if(this.transactionListForm.invalid == false){
-      if(this.transactionArray.length>0){
-     this.transactionArray.controls.forEach(element => {
-       if(element.value.transactionAmount || element.value.transactionDate || element.value.Units){
-        element.get('transactionType').setValue([Validators.required]);
-        element.get('transactionType').markAsTouched();
-       }
-      });
-      }
+    // }else if(this.transactionListForm.invalid == false){
+    //   if(this.transactionArray.length>0){
+    //  this.transactionArray.controls.forEach(element => {
+    //    if(element.value.transactionAmount || element.value.transactionDate || element.value.Units){
+    //     element.get('transactionType').setValue([Validators.required]);
+    //     element.get('transactionType').markAsTouched();
+    //    }
+    //   });
+    //   }
     } else {
       this.barButtonOptions.active = true;
       let mutualFundTransactions = [];
