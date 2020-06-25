@@ -203,10 +203,10 @@ export class GoalsPlanComponent implements OnInit {
         goalYear: new Date(goalSubData.goalEndDate || goalSubData.vacationEndYr).getFullYear(),
         presentValue: goalSubData.presentValue,
         futureValue: goalSubData.futureValue,
-        equity_monthly: goalSubData.sipAmoutEquity || 0,
-        debt_monthly: goalSubData.sipAmoutDebt || 0,
-        lump_equity: goalSubData.lumpSumAmountEquity || 0,
-        lump_debt: goalSubData.lumpSumAmountDebt || 0,
+        // equity_monthly: goalSubData.sipAmoutEquity || 0,
+        // debt_monthly: goalSubData.sipAmoutDebt || 0,
+        // lump_equity: goalSubData.lumpSumAmountEquity || 0,
+        // lump_debt: goalSubData.lumpSumAmountDebt || 0,
         goalProgress: (goalSubData.presentValue / goalSubData.futureValue * 100),
       }
       mapData.remainingData = goalSubData;
@@ -246,7 +246,7 @@ export class GoalsPlanComponent implements OnInit {
     let fragmentData = {
       flag: flag,
       id: 1,
-      data,
+      data: this.selectedGoal,
       componentName: undefined,
       state: 'open'
     };
@@ -254,7 +254,6 @@ export class GoalsPlanComponent implements OnInit {
     switch (flag) {
       case 'openCalculators':
         fragmentData.componentName = CalculatorsComponent;
-        fragmentData['popupHeaderText'] = 'CALCULATORS - NEW HOUSE 2035';
         break;
       case 'openPreferences':
         fragmentData.componentName = PreferencesComponent;
