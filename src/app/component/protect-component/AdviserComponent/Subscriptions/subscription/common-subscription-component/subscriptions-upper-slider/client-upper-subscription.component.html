@@ -48,7 +48,7 @@
             </div>
             <div class="col-md-4 pr-0">
                 <div *ngIf="isAdvisor && subscriptionData.length > 0">
-                    <button (click)="openPlanSlider('planRightSlider','open',null)"
+                    <button *ngIf="i==0" (click)="openPlanSlider('planRightSlider','open',null)"
                         class="btn-primary br-0 right text-right addon" mat-stroked-button>ADD PLAN
                     </button>
                 </div>
