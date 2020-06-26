@@ -374,6 +374,10 @@ export class UtilService {
     };
     const browser = this.getBrowserName();
     console.log(browser);
+    if(!this.client){
+      this.client = ''
+      this.client.name = ''
+    }
     return this.http.post(
       'http://dev.ifanow.in:8080/futurewise/api/v1/web//subscription/html-to-pdf', obj,
       { responseType: 'blob' }).subscribe(
@@ -381,7 +385,7 @@ export class UtilService {
           const file = new Blob([data], { type: 'application/pdf' });
           fragData.isSpinner = false;
           // window.open(fileURL,"hello");
-          const namePdf = (this.client) ? this.client.name : '' + '\'s ' + pdfName + ' as on :' + date;
+          const namePdf = this.client.name  + '\'s ' + pdfName + ' as on :' + date;
           const a = document.createElement('a');
           a.href = window.URL.createObjectURL(file);
           a.download = namePdf + '.pdf';
