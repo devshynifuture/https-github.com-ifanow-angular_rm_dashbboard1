@@ -21,6 +21,7 @@ import { map } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RightFilterDuplicateComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
 import { BackOfficeService } from 'src/app/component/protect-component/AdviserComponent/backOffice/back-office.service';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -97,6 +98,7 @@ export class MutualFundSummaryComponent implements OnInit {
     public eventService: EventService,
     private customerService: CustomerService,
     private router: Router,
+    private datePipe: DatePipe,
     public routerActive: ActivatedRoute,
     private activatedRoute: ActivatedRoute) {
     this.routerActive.queryParamMap.subscribe((queryParamMap) => {
@@ -916,12 +918,14 @@ export class MutualFundSummaryComponent implements OnInit {
 
   }
   generatePdfBulk() {
+    const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
+
     this.showDownload = true
     setTimeout(() => {
       let para = this.summaryTemplate.nativeElement.innerHTML
       let obj = {
         htmlInput: para,
-        name: 'Summary`s',
+        name:(this.clientData.name)?this.clientData.name:''+'s'+'Summary'+date,
         landscape: true,
         key: 'showPieChart',
         clientId : this.clientId,
@@ -931,7 +935,7 @@ export class MutualFundSummaryComponent implements OnInit {
       }
      let response = this.utilService.bulkHtmlToPdf(obj)
      console.log('********',response)
-     //this.utilService.htmlToPdf(para, 'Summary', false, this.fragmentData, '', '')
+     //this.utilService.htmlToPdf(para, 'Summary', true, this.fragmentData, '', '')
     }, 400);
   }
   getDetails() {
@@ -947,6 +951,7 @@ export class MutualFundSummaryComponent implements OnInit {
     console.log('data', data)
     this.clientDetails = data
     this.clientData = data.clientData
+    this.getOrgData = data.advisorData
     this.userInfo = data.advisorData
   }
 }

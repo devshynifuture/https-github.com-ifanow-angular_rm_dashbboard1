@@ -8,7 +8,7 @@ import { SubscriptionInject } from './../../../Subscriptions/subscription-inject
 import { EmailServiceService } from './../../email-service.service';
 import { EventService } from './../../../../../../Data-service/event.service';
 import { Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Subscription, from } from 'rxjs';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material';
 import { EmailAttachmentI } from '../email.interface';
@@ -21,7 +21,8 @@ import { EmailAttachmentI } from '../email.interface';
 export class ComposeEmailComponent implements OnInit, OnDestroy {
   attachmentsIdArray: { filename: string, mimeType: string, attachmentId: string }[] = [];
   attachmentsBase64Data: { filename: string, size: number, attachmentBase64Data: string, mimeType: string }[] = [];
-  attachmentArrayDetail: { filename: string, size: number, mimeType: string, data: string, downloadUrl: string }[] = [];
+  attachmentArrayDetail: Array<any> = [];
+  advisorId: any = AuthService.getAdvisorId()
 
   constructor(private subInjectService: SubscriptionInject,
     public subscription: SubscriptionService,
@@ -65,33 +66,60 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
   emailFormValueChange;
   emailAttachments: EmailAttachmentI[] = [];
   currentDraftId;
+  gmailDraftThread;
 
   ngOnInit() {
+    console.log("compose getting value data:::::", this.data);
     this.createEmailForm();
   }
 
   initPoint() {
-    if (this.idOfMessage) {
-      this.messageDetailApi(this.idOfMessage);
-    }
     this.prevStateOfForm = this.emailForm.value;
     this.emailForm.valueChanges.subscribe(res => this.emailFormValueChange = res);
+    // if (this.data.dataToSend.choice === 'draft') {
+    //   this.emailService.getDraftThread
+    // }
 
     this.interval = setInterval(() => {
       if (!this.areTwoObjectsEquivalent(this.prevStateOfForm, this.emailFormValueChange)) {
+        let attachmentIds = [];
+        if (this.data.choice === 'draft') {
+          this.data.dataToSend.dataObj.attachmentArrayObjects.forEach(element => {
+            attachmentIds.push(element.id);
+          });
+        }
         // call update or create draft api
         const requestJson = {
           toAddress: this.emailForm.get('receiver').value ? this.emailForm.get('receiver').value : [''],
           subject: this.emailForm.get('subject').value ? this.emailForm.get('subject').value : '',
           message: this.emailForm.get('messageBody').value ? this.emailForm.get('messageBody').value : '',
-          fileData: this.emailForm.get('attachments').value ? this.emailForm.get('attachments').value : []
+          fileData: (this.emailAttachments && this.emailAttachments.length !== 0) ? this.emailAttachments : [],
+          draft: {
+            ...this.data.dataToSend.gmailThread,
+          },
+          attachmentIds,
+          attachments: this.emailAttachments,
+          bccs: this.bccArray,
+          ccs: this.ccArray,
+          draftId: this.idOfMessage,
+          email: this.from,
+          sendingType: 0,
+          userId: this.advisorId
         };
-        this.emailService.createUpdateDraft(requestJson, (this.idOfMessage !== null ? this.idOfMessage : null)).subscribe(res => {
-          console.log("this is response of create or modify draft,::", res);
-          if (res.length !== 0) {
-            this.currentDraftId = res[0].message.id;
-          }
-        });
+        let idOfDraft;
+        if (this.idOfMessage) {
+          idOfDraft = this.idOfMessage;
+        } else {
+          idOfDraft = null
+        }
+
+        console.log(requestJson, "::: this is requst json for put call of draft");
+        // this.emailService.createUpdateDraft(requestJson, idOfDraft).subscribe(res => {
+        //   console.log("this is response of create or modify draft,::", res);
+        //   if (res.length !== 0) {
+        //     this.currentDraftId = res[0].message.id;
+        //   }
+        // });
         this.prevStateOfForm = this.emailFormValueChange;
       }
     }, 4000);
@@ -375,28 +403,41 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
   getAttachmentDetails(data) {
 
     if (data !== null) {
-      // const { dataObj: { attachmentFiles } } = data;
-      // attachmentFiles.forEach(attachment => {
-      //   const { headers } = attachment;
-      //   headers.forEach(header => {
-      //     if (header.name === 'X-Attachment-Id') {
-      //       this.attachmentIdsArray.push(header.value);
-      //     }
-      //   });
-      // });
-    }
-    // this.emailService.
-    this.attachmentIdsArray.forEach(attachmentId => {
-      const obj = {
-        attachmentId,
-        email: AuthService.getUserInfo().userName,
-        messageId: data.dataObj.idsOfMessages[0],
-        userId: AuthService.getUserInfo().advisorId
-      }
-      this.emailService.getAttachmentFiles(obj).subscribe(res => {
-        console.log("attachment details:::", res)
+      // this.emailService.
+      data.dataObj.attachmentArrayObjects.forEach(attachmentObj => {
+        const obj = {
+          attachmentId: attachmentObj.id,
+          email: AuthService.getUserInfo().userName,
+          messageId: data.dataObj.idsOfMessages[0],
+          userId: AuthService.getUserInfo().advisorId
+        }
+        this.emailService.getAttachmentFiles(obj).subscribe(res => {
+          console.log("attachment details:::", res);
+          const resBase64 = res.data.replace(/\-/g, '+').replace(/_/g, '/');
+          this.creationOfUrlAndBase64File(resBase64, attachmentObj);
+        });
       });
-    })
+    }
+  }
+
+  creationOfUrlAndBase64File(resBase64, attachmentObj) {
+    let blobData = EmailUtilService.convertBase64ToBlobData(resBase64, attachmentObj.mimeType);
+
+    if (window.navigator && window.navigator.msSaveOrOpenBlob) { //IE
+      window.navigator.msSaveOrOpenBlob(blobData, attachmentObj.filename);
+    } else { // chrome
+      const blob = new Blob([blobData], { type: attachmentObj.mimeType });
+      const url = window.URL.createObjectURL(blob);
+      // window.open(url);
+
+      this.emailAttachments.push({
+        filename: attachmentObj.filename,
+        size: resBase64.size,
+        mimeType: attachmentObj.filename,
+        data: resBase64,
+        downloadUrl: url
+      });
+    }
   }
 
   close() {

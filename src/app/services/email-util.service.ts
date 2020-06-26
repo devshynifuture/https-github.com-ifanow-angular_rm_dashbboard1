@@ -1,14 +1,10 @@
 import { Injectable } from '@angular/core';
 import { GmailInboxResponseI } from '../component/protect-component/AdviserComponent/Email/email-component/email.interface';
-import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmailUtilService {
-
-  private labelCountObs = new BehaviorSubject('');
-
 
   constructor() {
   }
@@ -94,7 +90,7 @@ export class EmailUtilService {
       const { snippet } = message;
       if (parts && parts.length !== 0 && parts !== null) {
         parts.forEach((part) => {
-          if (part.mimeType === 'text/html' || part.mimeType === 'text/plain') {
+          if (part.mimeType === 'text/html') {
 
             const data = part.body.data;
 
@@ -115,7 +111,7 @@ export class EmailUtilService {
                 if (partsElement.mimeType === 'multipart/alternative') {
                   if (partsElement.hasOwnProperty('parts') && partsElement['parts'] !== null && partsElement['parts'].length !== 0) {
                     partsElement['parts'].forEach(partElement => {
-                      if (partElement.mimeType === 'text/html' || partElement.mimeType === 'text/plain' && partElement.body.data) {
+                      if (partElement.mimeType === 'text/html' && partElement.body.data) {
                         let decodedValue = EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(partElement.body.data);
                         if (decodedValue !== null) {
                           decodedPartArray.push(decodedValue);
@@ -125,7 +121,7 @@ export class EmailUtilService {
                       }
                     });
                   }
-                } else if ((partsElement.mimeType === 'text/html' || partsElement.mimeType === 'text/plain') && partsElement.body.data) {
+                } else if ((partsElement.mimeType === 'text/html') && partsElement.body.data) {
                   let decodedValue = EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(partsElement.body.data);
                   if (decodedValue !== null) {
                     decodedPartArray.push(decodedValue);
@@ -138,7 +134,7 @@ export class EmailUtilService {
           } else if (part.mimeType === 'multipart/alternative') {
             if (part.hasOwnProperty('parts') && part['parts'] !== null && part['parts'].length !== 0) {
               part['parts'].forEach(element => {
-                if ((element.mimeType === 'text/html' || element.mimeType === 'text/plain') && element.body.data) {
+                if ((element.mimeType === 'text/html') && element.body.data) {
                   let decodedValue = EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(element.body.data);
                   if (decodedValue !== null) {
                     decodedPartArray.push(decodedValue);
@@ -180,20 +176,88 @@ export class EmailUtilService {
     return labelIdsArray;
   }
 
-  static getAttachmentIdFromGmailThread(gmailThread) {
-    let attachmentIds = [];
+  static getAttachmentObjectFromGmailThread(gmailThread) {
+    let attachmentObjects = [];
     gmailThread.messages.forEach(message => {
       const { payload } = message;
-      if (payload.mimeType === 'multipart/mixed' && payload.parts.length !== 0) {
+      if (payload.mimeType === 'multipart/mixed' && payload.parts !== null) {
         const { parts } = payload;
-        parts.forEach(part => {
-          if (part.filename !== '') {
-            attachmentIds.push(part.body.attachmentId)
-          }
-        });
+        if (parts && parts.length !== 0) {
+          parts.forEach(part => {
+            if (part.filename !== '') {
+              attachmentObjects.push({
+                id: part.body.attachmentId,
+                filename: part.filename,
+                mimeType: part.mimeType
+              })
+            }
+          });
+        }
+      } else if (payload.parts !== null) {
+        const { parts } = payload;
+        if (parts.length !== 0) {
+          parts.forEach(part => {
+            if (part.filename !== '') {
+              attachmentObjects.push({
+                id: part.body.attachmentId,
+                filename: part.filename,
+                mimeType: part.mimeType
+              });
+              if (part.parts && part.parts.length !== 0) {
+                const { parts } = part;
+                parts.forEach(part => {
+                  if (part.filename !== '') {
+                    attachmentObjects.push({
+                      id: part.body.attachmentId,
+                      filename: part.filename,
+                      mimeType: part.mimeType
+                    });
+                  }
+
+                  if (part.parts && part.parts.length !== 0) {
+                    const { parts } = part;
+                    parts.forEach(part => {
+                      if (part.filename !== '') {
+                        attachmentObjects.push({
+                          id: part.body.attachmentId,
+                          filename: part.filename,
+                          mimeType: part.mimeType
+                        });
+                      }
+                      if (part.parts && part.parts.length !== 0) {
+                        const { parts } = part;
+                        parts.forEach(part => {
+                          if (part.filename !== '') {
+                            attachmentObjects.push({
+                              id: part.body.attachmentId,
+                              filename: part.filename,
+                              mimeType: part.mimeType
+                            });
+                          }
+                          if (part.parts && part.parts.length !== 0) {
+                            const { parts } = part;
+                            parts.forEach(part => {
+                              if (part.filename !== '') {
+                                attachmentObjects.push({
+                                  id: part.body.attachmentId,
+                                  filename: part.filename,
+                                  mimeType: part.mimeType
+                                });
+                              }
+                            });
+                          }
+                        });
+                      }
+                    });
+                  }
+                });
+              }
+            }
+          });
+        }
       }
     });
-    return attachmentIds;
+    return attachmentObjects;
   }
 
   static getIdAndDateAndSnippetOfGmailThreadMessages(gmailThread: GmailInboxResponseI): Object[] {
@@ -249,13 +313,5 @@ export class EmailUtilService {
       }
     });
     return returnArray;
-  }
-
-  sendLabelCount(value) {
-    this.labelCountObs.next(value);
-  }
-
-  getLabelCount() {
-    return this.labelCountObs.asObservable();
   }
 }

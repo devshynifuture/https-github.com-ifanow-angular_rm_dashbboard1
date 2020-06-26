@@ -174,8 +174,9 @@ export class GoalsPlanComponent implements OnInit {
      * 3. image for multi year goal
      */
 
+    mapData.id = goal.id;
+    mapData.goalType = goal.goalType;
     if(goal.singleOrMulti == 1) {
-      mapData.id = goal.id;
       const goalSubData = goal.singleGoalModel;
       mapData.img = goalSubData.imageUrl;
       mapData.year = (new Date(goalSubData.goalStartDate).getFullYear()) + ' - ' + (new Date(goalSubData.goalStartDate).getFullYear());
@@ -193,7 +194,6 @@ export class GoalsPlanComponent implements OnInit {
       }
       mapData.remainingData = goalSubData;
     } else {
-      mapData.id = goal.id;
       const goalSubData:any = goal.multiYearGoalPlan;
       mapData.img = goalSubData.imageUrl;
       mapData.year = (new Date(goalSubData.goalStartDate || goalSubData.vacationStartYr).getFullYear()) + ' - ' + (new Date(goalSubData.goalEndDate || goalSubData.vacationEndYr).getFullYear());
@@ -203,10 +203,10 @@ export class GoalsPlanComponent implements OnInit {
         goalYear: new Date(goalSubData.goalEndDate || goalSubData.vacationEndYr).getFullYear(),
         presentValue: goalSubData.presentValue,
         futureValue: goalSubData.futureValue,
-        equity_monthly: goalSubData.sipAmoutEquity || 0,
-        debt_monthly: goalSubData.sipAmoutDebt || 0,
-        lump_equity: goalSubData.lumpSumAmountEquity || 0,
-        lump_debt: goalSubData.lumpSumAmountDebt || 0,
+        // equity_monthly: goalSubData.sipAmoutEquity || 0,
+        // debt_monthly: goalSubData.sipAmoutDebt || 0,
+        // lump_equity: goalSubData.lumpSumAmountEquity || 0,
+        // lump_debt: goalSubData.lumpSumAmountDebt || 0,
         goalProgress: (goalSubData.presentValue / goalSubData.futureValue * 100),
       }
       mapData.remainingData = goalSubData;
@@ -246,7 +246,7 @@ export class GoalsPlanComponent implements OnInit {
     let fragmentData = {
       flag: flag,
       id: 1,
-      data,
+      data: this.selectedGoal,
       componentName: undefined,
       state: 'open'
     };
@@ -254,7 +254,6 @@ export class GoalsPlanComponent implements OnInit {
     switch (flag) {
       case 'openCalculators':
         fragmentData.componentName = CalculatorsComponent;
-        fragmentData['popupHeaderText'] = 'CALCULATORS - NEW HOUSE 2035';
         break;
       case 'openPreferences':
         fragmentData.componentName = PreferencesComponent;
@@ -324,15 +323,20 @@ export class GoalsPlanComponent implements OnInit {
       positiveMethod: () => {
         let deleteObj = {
           goalId: this.selectedGoal.id,
-          goalType: this.selectedGoal.typeId
+          goalType: this.selectedGoal.goalType
         }
         this.plansService.deleteGoal(deleteObj).subscribe((data)=>{
           this.eventService.openSnackBar("Goal has been deleted successfully", "Dismiss");
+          this.allGoals = [];
+          this.loadAllGoals();
+          dialogRef.close()
         }, (err) => { this.eventService.openSnackBar(err, "Dismiss") })
+      },
+      negativeMethod: () => {
       }
     };
 
-    this.dialog.open(ConfirmDialogComponent, {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
       data: dialogData,
       autoFocus: false,

@@ -386,28 +386,32 @@
 <div class="hide" #summaryTemplate id="template" *ngIf="showDownload">
 
     <table cellpadding="0" width="100%" cellspacing="0" border="0"
-        style="font-family: 'Roboto', sans-serif; margin: 0px auto;" align="center; page-break-before: always;">
+        style="font-family: 'Roboto', sans-serif; margin: 0px auto;"
+        align="center; page-break-before: always;border-collapse: separate;">
 
         <tr>
             <!-- <td style="text-align: left;">
                 <p style="margin: 0px; font-weight: 800;font-size: 20px;">
                     Mutual fund summary</p>
             </td> -->
-            <td style="text-align: left;">
-                <img width="100px" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
+            <td style="text-align: left;" colspan="3">
+                <img *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl" style="width: 250px;">
             </td>
-            <td style="text-align: right;">
+            <td style="text-align: left;" colspan="3">
+                <img *ngIf="userInfo.reportLogoUrl" [src]="userInfo.reportLogoUrl" style="width: 250px;">
+            </td>
+            <td style=" text-align: right;" colspan="5">
                 <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;" *ngIf="userInfo">
-                    {{(userInfo.name) ? userInfo.name : '-'}}</p>
+                    {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
                 <!-- <p style="margin: 0px; font-size: 14px;" *ngIf="clientData">Himachal Pradesh</p> -->
                 <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Number: </strong>
                     {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}</p>
-                <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email : </strong>
+                <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email: </strong>
                     {{(details) ? details.emailId : userInfo.email}}</p>
                 <p style="margin: 0px; font-size: 14px;padding-top: 12px;"> <strong> MF Summary Report -
                         {{(this.inputData) ? this.rightFilterData.reportType[0].name : (this.reponseData) ? this.setDefaultFilterData.reportType : ((this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType)}}</strong>
                 </p>
-                <p style="margin: 0px; font-size: 14px;padding-top: 12px;"> <strong> Report as on :
+                <p style="margin: 0px; font-size: 14px;padding-top: 12px;"> <strong> Report as on:
                         {{reportDate | date:'dd-MMM-yyyy' }} </strong></p>
             </td>
         </tr>
@@ -416,247 +420,245 @@
             <td colspan="2" style="padding: 10px;"></td>
         </tr>
 
+
+
+
         <tr>
+            <td style="margin: 0px; font-weight: 600;font-size: 14px;padding-top: 4px;" *ngIf="clientData">
+                Client name:
+                {{(clientData.name) ? clientData.name : '-'}}</td>
+
+        </tr>
+        <tr style="background: #f5f7f7;">
+            <td *ngIf="customDataSource.data?.schemeName == true"
+                style="width:26%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                <b>Scheme name</b>
+            </td>
+
+            <td *ngIf="customDataSource.data.amountInvested == true"
+                style="width:7%;text-align: right; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                <b>Amount invested</b>
+            </td>
+            <td *ngIf="customDataSource.data.currentValue == true"
+                style="width:6%;text-align: right; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;">
+                <b>Current value</b>
+            </td>
+            <td *ngIf="customDataSource.data.unrealizedProfit == true"
+                style="width:8%;text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7;">
+                <b>Unrealized profit</b>
+            </td>
+            <td *ngIf="customDataSource.data.absoluteReturn == true"
+                style="width:5%;text-align: right; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;">
+                <b>Abs Ret % </b>
+            </td>
+            <td *ngIf="customDataSource.data.xirr == true"
+                style="width:5%;text-align: right; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                <b>XIRR %</b>
+            </td>
+            <td *ngIf="customDataSource.data.dividendPayout == true"
+                style="width:7%;text-align: right; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;">
+                <b>Dividend payout</b>
+            </td>
+            <td *ngIf="customDataSource.data.switchOut == true"
+                style="width:9%;text-align: right; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                <b>Withdrawal<br> Switch outs</b>
+            </td>
+            <td *ngIf="customDataSource.data.balanceUnit == true"
+                style="width:7%;text-align: right; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;">
+                <b>Balance unit</b>
+            </td>
+            <td *ngIf="customDataSource.data.navDate == true"
+                style="width:9%;text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7;">
+                <b>NAV Date</b>
+            </td>
+            <td *ngIf="customDataSource.data.sipAmount == true"
+                style="width:5%;text-align: right; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;">
+                <b>SIP amount</b>
+            </td>
+        </tr>
+        <tr *ngFor=" let item of customDataSource.data">
             <td colspan="12">
-                <table cellpadding="0" cellspacing="0" border="0" bordercolor="#DADCE0" width="100%">
-                    <tr>
-                        <p style="margin: 0px; font-weight: 600;font-size: 14px;padding-top: 4px;" *ngIf="clientData">
-                            Client name :
-                            {{(clientData.name) ? clientData.name : '-'}}</p>
-
-                    </tr>
-                    <tr style="background: #F5F7F7;">
-                        <td *ngIf="customDataSource.data?.schemeName == true"
-                            style="width:26%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-                            <b>Scheme name</b>
-                        </td>
-
-                        <td *ngIf="customDataSource.data.amountInvested == true"
-                            style="width:7%;text-align: left; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-                            <b>Amount invested</b>
-                        </td>
-                        <td *ngIf="customDataSource.data.currentValue == true"
-                            style="width:6%;text-align: left; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-                            <b>Current value</b>
-                        </td>
-                        <td *ngIf="customDataSource.data.unrealizedProfit == true"
-                            style="width:8%;text-align: left; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-                            <b>Unrealized profit</b>
-                        </td>
-                        <td *ngIf="customDataSource.data.absoluteReturn == true"
-                            style="width:5%;text-align: left; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-                            <b>Abs Ret %</b>
-                        </td>
-                        <td *ngIf="customDataSource.data.xirr == true"
-                            style="width:5%;text-align: left; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-                            <b>XIRR %</b>
-                        </td>
-                        <td *ngIf="customDataSource.data.dividendPayout == true"
-                            style="width:7%;text-align: left; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-                            <b>Dividend payout</b>
-                        </td>
-                        <td *ngIf="customDataSource.data.switchOut == true"
-                            style="width:9%;text-align: left; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-                            <b>Withdrawal/Switch outs</b>
-                        </td>
-                        <td *ngIf="customDataSource.data.balanceUnit == true"
-                            style="width:7%;text-align: left; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-                            <b>Balance Unit</b>
-                        </td>
-                        <td *ngIf="customDataSource.data.navDate == true"
-                            style="width:9%;text-align: left; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-                            <b>NAV Date</b>
-                        </td>
-                        <td *ngIf="customDataSource.data.sipAmount == true"
-                            style="width:5%;text-align: left; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-                            <b>SIP amount</b>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="11">
-                            <table cellpadding="0" cellspacing="0" border="0" width="100%" bordercolor="#DADCE0"
-                                *ngFor="let item of customDataSource.data">
-                                <!-- <tr *ngIf="item.groupName && item.schemeName!='Total' ">
+                <table cellpadding="0" cellspacing="0" border="0" width="100%" bordercolor="#DADCE0">
+                    <!-- <tr *ngIf="item.groupName && item.schemeName!='Total' ">
                                     <td style="color: #008FFF; text-align: center; padding: 8px; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-left: 1px solid #dee5e7; " colspan="11">
                                         {{item.groupName}}
                                     </td>
                                 </tr> -->
-                                <!-- <div style="width: 99.85%;text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;"
+                    <!-- <div style="width: 99.85%;text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;"
                                     *ngIf="item.groupName">
                                     {{item.groupName}}
                                 </div> -->
-                                <tr *ngIf="item.groupName">
-                                    <td colspan="12"
-                                        style="text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
-                                        {{item.groupName}}</td>
-                                </tr>
-                                <tr *ngIf="item.id">
+                    <tr *ngIf="item.groupName">
+                        <td colspan="12"
+                            style="text-align: center;color: #008FFF; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
+                            {{item.groupName}}</td>
+                    </tr>
+                    <tr *ngIf="item.id">
 
-                                    <td valign="top" *ngIf="customDataSource.data.schemeName == true"
-                                        style="width:26%;font-size: 13px; padding: 8px;  border-left: 1px solid #dee5e7; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
-                                        {{item.schemeName+'|'+item.folioNumber+'|'+item.ownerName}}
-                                    </td>
+                        <td valign="top" *ngIf="customDataSource.data.schemeName == true"
+                            style="width:26%;font-size: 13px; padding: 8px;  border-left: 1px solid #dee5e7; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
+                            {{item.schemeName+' | '+item.folioNumber+' | '+item.ownerName}}
+                        </td>
 
-                                    <td valign="top" *ngIf="customDataSource.data.amountInvested == true"
-                                        style="width:7%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
-                                        appFormatNumber>
-                                        {{item.amountInvested}}
-                                    </td>
+                        <td valign="top" *ngIf="customDataSource.data.amountInvested == true"
+                            style="width:7%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;"
+                            appFormatNumber>
+                            {{item.amountInvested}}
+                        </td>
 
-                                    <td valign="top" *ngIf="customDataSource.data.currentValue == true"
-                                        style="width:6%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
-                                        appFormatNumber>
-                                        {{item.currentValue }}
-                                    </td>
+                        <td valign="top" *ngIf="customDataSource.data.currentValue == true"
+                            style="width:6%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;"
+                            appFormatNumber>
+                            {{item.currentValue }}
+                        </td>
 
-                                    <td valign="top" *ngIf="customDataSource.data.unrealizedProfit == true"
-                                        style="width:8%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
-                                        appFormatNumber>
-                                        {{item.unrealizedGain }}
-                                    </td>
+                        <td valign="top" *ngIf="customDataSource.data.unrealizedProfit == true"
+                            style="width:8%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;"
+                            appFormatNumber>
+                            {{item.unrealizedGain }}
+                        </td>
 
-                                    <td valign="top" *ngIf="customDataSource.data.absoluteReturn == true"
-                                        style="width:5%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
-                                        {{(item.absoluteReturn==0 || item.absoluteReturn =='Infinity' || item.absoluteReturn =='-Infinity' || item.absoluteReturn == 'NaN') ? 0 : (item.absoluteReturn) ? (item.absoluteReturn | number:'1.2-2') : 0}}
-                                    </td>
+                        <td valign="top" *ngIf="customDataSource.data.absoluteReturn == true"
+                            style="width:5%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;">
+                            {{(item.absoluteReturn==0 || item.absoluteReturn =='Infinity' || item.absoluteReturn =='-Infinity' || item.absoluteReturn == 'NaN') ? 0 : (item.absoluteReturn) ? (item.absoluteReturn | number:'1.2-2') : 0}}
+                        </td>
 
-                                    <td valign="top" *ngIf="customDataSource.data.xirr == true"
-                                        style="width:5%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
-                                        {{item.xirr | number:'1.2-2'}}
-                                    </td>
+                        <td valign="top" *ngIf="customDataSource.data.xirr == true"
+                            style="width:5%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;">
+                            {{item.xirr | number:'1.2-2'}}
+                        </td>
 
-                                    <td valign="top" *ngIf="customDataSource.data.dividendPayout == true"
-                                        style="width:7%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
-                                        appFormatNumber>
-                                        {{item.dividendPayout}}
-                                    </td>
-                                    <td valign="top" *ngIf="customDataSource.data.switchOut == true"
-                                        style="width:9%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
-                                        appFormatNumber>
-                                        {{item.switchOut }}
-                                    </td>
+                        <td valign="top" *ngIf="customDataSource.data.dividendPayout == true"
+                            style="width:7%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;"
+                            appFormatNumber>
+                            {{item.dividendPayout}}
+                        </td>
+                        <td valign="top" *ngIf="customDataSource.data.switchOut == true"
+                            style="width:9%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;"
+                            appFormatNumber>
+                            {{item.switchOut }}
+                        </td>
 
-                                    <td valign="top" *ngIf="customDataSource.data.balanceUnit == true"
-                                        style="width:7%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
-                                        {{item.balanceUnit | number:'1.2-3'}}
-                                    </td>
+                        <td valign="top" *ngIf="customDataSource.data.balanceUnit == true"
+                            style="width:7%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;">
+                            {{item.balanceUnit | number:'1.2-3'}}
+                        </td>
 
-                                    <td valign="top" *ngIf="customDataSource.data.navDate == true"
-                                        style="width:9%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
-                                        {{item.navDate | date:'dd/MM/yyyy'}}
-                                    </td>
+                        <td valign="top" *ngIf="customDataSource.data.navDate == true"
+                            style="width:9%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;">
+                            {{item.navDate | date:'dd/MM/yyyy'}}
+                        </td>
 
-                                    <td valign="top" *ngIf="customDataSource.data.sipAmount == true"
-                                        style="width:5%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
-                                        appFormatNumber>
-                                        {{item.sipAmount}}
-                                    </td>
-                                </tr>
-
-                                <tr *ngIf="item.schemeName=='Total'">
-                                    <td valign="top" *ngIf="customDataSource.data?.schemeName == true"
-                                        style="width:26%;font-size: 13px; padding: 8px;font-weight: 600; border-left: 1px solid #dee5e7; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
-                                        {{item.schemeName}}
-                                    </td>
-                                    <td valign="top" *ngIf="customDataSource.data.amountInvested == true"
-                                        style="width:7%;font-size: 13px; padding: 8px;font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
-                                        appFormatNumber>
-                                        {{item.totalAmountInvested }}
-                                    </td>
-                                    <td valign="top" *ngIf="customDataSource.data.currentValue == true"
-                                        style="width:6%;font-size: 13px; padding: 8px;font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
-                                        appFormatNumber>
-                                        {{item.totalCurrentValue}}
-                                    </td>
-                                    <td valign="top" *ngIf="customDataSource.data.unrealizedProfit == true"
-                                        style="width:8%;font-size: 13px; padding: 8px;font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
-                                        appFormatNumber>
-                                        {{item.totalUnrealizedGain }}
-                                    </td>
-                                    <td valign="top" *ngIf="customDataSource.data.absoluteReturn == true"
-                                        style="width:5%;font-size: 13px; padding: 8px;font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
-                                        {{item.totalAbsoluteReturn | number:'1.2-2'}}
-                                    </td>
-                                    <td valign="top" *ngIf="customDataSource.data.xirr == true"
-                                        style="width:5%;font-size: 13px; padding: 8px;font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
-                                        {{item.totalXirr | number:'1.2-2'}}
-                                    </td>
-                                    <td valign="top" *ngIf="customDataSource.data.dividendPayout == true"
-                                        style="width:7%;font-size: 13px; padding: 8px;font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
-                                        appFormatNumber>
-                                        {{item.totalDividendPayout}}
-                                    </td>
-                                    <td valign="top" *ngIf="customDataSource.data.switchOut == true"
-                                        style="width:9%;font-size: 13px; padding: 8px;font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
-                                        appFormatNumber>
-                                        {{item.totalSwitchOut}}
-                                    </td>
-                                    <td valign="top" *ngIf="customDataSource.data.balanceUnit == true"
-                                        style="width:7%;font-size: 13px; padding: 8px;font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
-                                        {{item.totalBalanceUnit | number:'1.2-3'}}
-                                    </td>
-                                    <td valign="top" *ngIf="customDataSource.data.navDate == true"
-                                        style="width:9%;font-size: 13px; padding: 8px;font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
-                                        {{item.totalNavDate}}
-                                    </td>
-                                    <td valign="top" *ngIf="customDataSource.data.sipAmount == true"
-                                        style="width:5%;font-size: 13px; padding: 8px;font-weight: 600; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
-                                        appFormatNumber>
-                                        {{item.totalSipAmount}}
-                                    </td>
-                                </tr>
-                            </table>
+                        <td valign="top" *ngIf="customDataSource.data.sipAmount == true"
+                            style="width:5%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;"
+                            appFormatNumber>
+                            {{item.sipAmount}}
                         </td>
                     </tr>
 
-                    <tr>
+                    <tr *ngIf="item.schemeName=='Total'">
                         <td valign="top" *ngIf="customDataSource.data?.schemeName == true"
-                            style="width:26%;font-size: 13px; padding: 8px; font-weight: 600; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
-                            Grand Total</td>
-                        <td valign="top" *ngIf="customDataSource.data.currentValue == true"
-                            style="width:7%;font-size: 13px; padding: 8px; font-weight: 600; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
-                            appFormatNumber>
-                            {{(mfData) ? (mfData.total_amount_invested ) : 0}}</td>
+                            style="width:26%;font-size: 13px; padding: 8px;font-weight: 600; border-left: 1px solid #dee5e7; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
+                            {{item.schemeName}}
+                        </td>
                         <td valign="top" *ngIf="customDataSource.data.amountInvested == true"
-                            style=" width:6%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
+                            style="width:7%;font-size: 13px; padding: 8px;font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;"
                             appFormatNumber>
-                            {{(mfData) ? (mfData.total_current_value ) : 0}}</td>
+                            {{item.totalAmountInvested }}
+                        </td>
+                        <td valign="top" *ngIf="customDataSource.data.currentValue == true"
+                            style="text-align: right;width:6%;font-size: 13px; padding: 8px;font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
+                            appFormatNumber>
+                            {{item.totalCurrentValue}}
+                        </td>
                         <td valign="top" *ngIf="customDataSource.data.unrealizedProfit == true"
-                            style="width:8%; font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
+                            style="text-align: right;width:8%;font-size: 13px; padding: 8px;font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
                             appFormatNumber>
-                            {{(mfData) ? (mfData.total_unrealized_gain) : 0}}</td>
+                            {{item.totalUnrealizedGain }}
+                        </td>
                         <td valign="top" *ngIf="customDataSource.data.absoluteReturn == true"
-                            style="width:5%;;font-size: 13px; padding: 8px; font-weight: 600;">
-                            {{(mfData) ? (mfData.total_absolute_return | number:'1.2-2') : '0'}}
+                            style="text-align: right;width:5%;font-size: 13px; padding: 8px;font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
+                            {{item.totalAbsoluteReturn | number:'1.2-2'}}
                         </td>
                         <td valign="top" *ngIf="customDataSource.data.xirr == true"
-                            style="width:5%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
-                            {{(mfData) ? (mfData.total_xirr | number:'1.2-2') : '0'}}
+                            style="text-align: right;width:5%;font-size: 13px; padding: 8px;font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
+                            {{item.totalXirr | number:'1.2-2'}}
                         </td>
                         <td valign="top" *ngIf="customDataSource.data.dividendPayout == true"
-                            style="width:7%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
+                            style="text-align: right;width:7%;font-size: 13px; padding: 8px;font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
                             appFormatNumber>
-                            {{mfData ? mfData.total_dividend_payout : 0}}</td>
+                            {{item.totalDividendPayout}}
+                        </td>
                         <td valign="top" *ngIf="customDataSource.data.switchOut == true"
-                            style="width:9%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
+                            style="text-align: right;width:9%;font-size: 13px; padding: 8px;font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
                             appFormatNumber>
-                            {{(grandTotal) ? grandTotal.withdrawals : 0 }}</td>
+                            {{item.totalSwitchOut}}
+                        </td>
                         <td valign="top" *ngIf="customDataSource.data.balanceUnit == true"
-                            style="width:7%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
-                            {{(grandTotal.totalBalanceUnit) ? (grandTotal.totalBalanceUnit | number:'1.2-3') : '0'}}
+                            style="text-align: right;width:7%;font-size: 13px; padding: 8px;font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
+                            {{item.totalBalanceUnit | number:'1.2-3'}}
                         </td>
                         <td valign="top" *ngIf="customDataSource.data.navDate == true"
-                            style="width:9%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
-                            {{grandTotal.totalNav}}</td>
+                            style="text-align: right;width:9%;font-size: 13px; padding: 8px;font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
+                            {{item.totalNavDate}}
+                        </td>
                         <td valign="top" *ngIf="customDataSource.data.sipAmount == true"
-                            style="width:5%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
+                            style="text-align: right;width:5%;font-size: 13px; padding: 8px;font-weight: 600; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
                             appFormatNumber>
-                            {{grandTotal.sip}}</td>
+                            {{item.totalSipAmount}}
+                        </td>
                     </tr>
-
                 </table>
             </td>
         </tr>
+
+        <tr>
+            <td valign="top" *ngIf="customDataSource.data?.schemeName == true"
+                style="border-left: 1px solid #dee5e7;width:26%;font-size: 13px; padding: 8px; font-weight: 600;  border-bottom: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                Grand Total</td>
+            <td valign="top" *ngIf="customDataSource.data.currentValue == true"
+                style="text-align: right;width:7%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
+                appFormatNumber>
+                {{(mfData) ? (mfData.total_amount_invested ) : 0}}</td>
+            <td valign="top" *ngIf="customDataSource.data.amountInvested == true"
+                style=" text-align: right;width:6%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
+                appFormatNumber>
+                {{(mfData) ? (mfData.total_current_value ) : 0}}</td>
+            <td valign="top" *ngIf="customDataSource.data.unrealizedProfit == true"
+                style="text-align: right;width:8%; font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
+                appFormatNumber>
+                {{(mfData) ? (mfData.total_unrealized_gain) : 0}}</td>
+            <td valign="top" *ngIf="customDataSource.data.absoluteReturn == true"
+                style="text-align: right;width:5%;;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
+                {{(mfData) ? (mfData.total_absolute_return | number:'1.2-2') : '0'}}
+            </td>
+            <td valign="top" *ngIf="customDataSource.data.xirr == true"
+                style="text-align: right;width:5%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
+                {{(mfData) ? (mfData.total_xirr | number:'1.2-2') : '0'}}
+            </td>
+            <td valign="top" *ngIf="customDataSource.data.dividendPayout == true"
+                style="text-align: right;width:7%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
+                appFormatNumber>
+                {{mfData ? mfData.total_dividend_payout : 0}}</td>
+            <td valign="top" *ngIf="customDataSource.data.switchOut == true"
+                style="text-align: right;width:9%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
+                appFormatNumber>
+                {{(grandTotal) ? grandTotal.withdrawals : 0 }}</td>
+            <td valign="top" *ngIf="customDataSource.data.balanceUnit == true"
+                style="text-align: right;width:7%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
+                {{(grandTotal.totalBalanceUnit) ? (grandTotal.totalBalanceUnit | number:'1.2-3') : '0'}}
+            </td>
+            <td valign="top"
+                style="text-align: right;width:9%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
+            </td>
+            <td valign="top" *ngIf="customDataSource.data.sipAmount == true"
+                style="text-align: right;width:5%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
+                appFormatNumber>
+                {{grandTotal.sip}}</td>
+        </tr>
+
+
+
     </table>
 
 </div>

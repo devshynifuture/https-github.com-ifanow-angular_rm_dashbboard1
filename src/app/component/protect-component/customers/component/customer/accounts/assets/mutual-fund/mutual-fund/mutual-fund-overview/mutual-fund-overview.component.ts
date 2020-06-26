@@ -360,7 +360,9 @@ export class MutualFundOverviewComponent implements OnInit {
       // clientId: this.clientId
     };
     this.custumService.getMutualFund(obj).subscribe(
-      data => this.getMutualFundResponse(data), (error) => {
+      data => {
+        this.getMutualFundResponse(data)
+      }, (error) => {
         this.showSummaryBar = false;
         this.dataSource.data = [];
         this.showFamilyMember = false;
@@ -981,21 +983,23 @@ export class MutualFundOverviewComponent implements OnInit {
   }
 
   generatePdfBulk() {
+    const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
+
     this.svg = this.chart.getSVG();
     const para = document.getElementById('template');
     const obj = {
       htmlInput: para.innerHTML,
-      name: 'Overview`s',
+      name: (this.clientData.name)?this.clientData.name:''+'s'+'MF_Overview_Report'+date,
       landscape: true,
       key: 'showPieChart',
       clientId: this.clientId,
       advisorId: this.advisorId,
       fromEmail: 'devshyni@futurewise.co.in',
-      toEmail: 'abhishek@futurewise.co.in',
+      toEmail: 'devshyni@futurewise.co.in',
       svg: this.svg
     };
     this.UtilService.bulkHtmlToPdf(obj);
-    // this.UtilService.htmlToPdf(para.innerHTML, 'Overview', false, this.fragmentData,'showPieChart', this.svg)
+    this.UtilService.htmlToPdf(para.innerHTML, 'Overview', false, this.fragmentData,'showPieChart', this.svg)
 
   }
 
@@ -1013,6 +1017,7 @@ export class MutualFundOverviewComponent implements OnInit {
     console.log('data', data);
     this.clientDetails = data;
     this.clientData = data.clientData;
+    this.getOrgData = data.advisorData
     this.userInfo = data.advisorData;
   }
 }

@@ -11,18 +11,20 @@
 
 
 <div class="row pt-130">
-    <div class="col-md-9">
+    <div class="col-md-10">
         <h3 class="f-18 mt-20">Send reports</h3>
     </div>
-    <div class="col-md-1 d-flex align-items-center justify-content-end">
-        <!-- (click)="openSendNow()" prod build -->
+    <!-- <div class="col-md-1 d-flex align-items-center justify-content-end">
+        
         <img (click)="refresh(true)" class="b-a p-8 mr-8 c-p" src="/assets/images/svg/reload.svg">
-    </div>
+    </div> -->
+
     <div class="col-md-2 d-flex align-items-center justify-content-end">
         <!-- (click)="openSendNow()" prod build -->
-        <button class="sendEmailBtn mt-10 bg-primary text-white" (click)="openSendNow('')" mat-button>Send Now</button>
+        <img (click)="refresh(true)" class="b-a p-8 mr-8 c-p" src="/assets/images/svg/reload.svg">
+        <button class="sendEmailBtn  btn-primary" (click)="openSendNow('')" mat-stroked-button>Send Now</button>
     </div>
-   
+
 </div>
 
 <div class="mt-44" *ngIf="dataSource.filteredData.length == 0">
@@ -59,52 +61,55 @@
 <!-- table -->
 
 <div class="row">
-    <div class="col-md-12">
-        <table mat-table [dataSource]="dataSource.data" class="mt-20 skeletonAnimation" [appSkeletonLoading]="isLoading"
-            id="tbs">
+    <div class="col-md-12 reportSending  ">
+        <div class="bulk-report-scroll">
+            <table mat-table [dataSource]="dataSource.data" class=" skeletonAnimation" [appSkeletonLoading]="isLoading"
+                id="tbs">
 
-            <ng-container matColumnDef="type">
-                <th mat-header-cell class="br" *matHeaderCellDef> Report type </th>
-                <td mat-cell class="br" *matCellDef="let element" (click)="openStatusReport(element)">
-                    <div class="bar">
-                        {{isLoading ? '' :(element.reportTypeId == 1)? 'MF Overview':(element.reportTypeId == 2)? 'MF Summary':(element.reportTypeId == 3)? 'MF All Transactions':(element.reportTypeId == 4)? 'MF Overview':(element.reportTypeId == 1)? 'MF Unrealised Transactions':(element.reportTypeId == 5)? 'MF Capital gains - Summary':(element.reportTypeId == 6)? 'MF Capital gains - Detailed':''}}
-                    </div>
-                </td>
-            </ng-container>
-
-
-            <ng-container matColumnDef="sendDate">
-                <th mat-header-cell class="br" *matHeaderCellDef> Report sent date </th>
-                <td mat-cell class="br" *matCellDef="let element" (click)="openStatusReport(element)">
-                    <div class="bar"> {{isLoading ? '' : element.createdDate | date:'dd/MM/yyyy'}} </div>
-                </td>
-            </ng-container>
+                <ng-container matColumnDef="type">
+                    <th mat-header-cell class="br" *matHeaderCellDef> Report type </th>
+                    <td mat-cell class="br" *matCellDef="let element" (click)="openStatusReport(element)">
+                        <div class="bar c-p">
+                            {{isLoading ? '' :(element.reportTypeId == 1)? 'MF Overview':(element.reportTypeId == 2)? 'MF Summary':(element.reportTypeId == 3)? 'MF All Transactions':(element.reportTypeId == 4)? 'MF Overview':(element.reportTypeId == 1)? 'MF Unrealised Transactions':(element.reportTypeId
+                            == 5)? 'MF Capital gains - Summary':(element.reportTypeId == 6)? 'MF Capital gains - Detailed':''}}
+                        </div>
+                    </td>
+                </ng-container>
 
 
-            <ng-container matColumnDef="recipients">
-                <th mat-header-cell class="br" *matHeaderCellDef> Number of recipients </th>
-                <td mat-cell class="br" *matCellDef="let element" (click)="openStatusReport(element)">
-                    <div class="bar"> {{isLoading ? '' : element.emailDeliveredCount}} </div>
-                </td>
-            </ng-container>
+                <ng-container matColumnDef="sendDate">
+                    <th mat-header-cell class="br" *matHeaderCellDef> Report sent date </th>
+                    <td mat-cell class="br c-p" *matCellDef="let element" (click)="openStatusReport(element)">
+                        <div class="bar"> {{isLoading ? '' : element.createdDate | date:'dd/MM/yyyy'}} </div>
+                    </td>
+                </ng-container>
 
 
-            <ng-container matColumnDef="emails">
-                <th mat-header-cell class="br" *matHeaderCellDef> Bounced emails </th>
-                <td mat-cell class="br" *matCellDef="let element">
-                    <div class="bar"> {{isLoading ? '' : element.emailSentCount-element.emailDeliveredCount}} </div>
-                </td>
-            </ng-container>
+                <ng-container matColumnDef="recipients">
+                    <th mat-header-cell class="br" *matHeaderCellDef> Number of recipients </th>
+                    <td mat-cell class="br" *matCellDef="let element" (click)="openStatusReport(element)">
+                        <div class="bar"> {{isLoading ? '' : element.emailDeliveredCount}} </div>
+                    </td>
+                </ng-container>
 
-            <ng-container matColumnDef="status">
-                <th mat-header-cell class="br" *matHeaderCellDef> Status </th>
-                <td mat-cell class="br" *matCellDef="let element">
-                    <div class="bar"> {{isLoading ? '' : element.isActive}} </div>
-                </td>
-            </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
+                <ng-container matColumnDef="emails">
+                    <th mat-header-cell class="br" *matHeaderCellDef> Bounced emails </th>
+                    <td mat-cell class="br" *matCellDef="let element">
+                        <div class="bar"> {{isLoading ? '' : element.emailSentCount-element.emailDeliveredCount}} </div>
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell class="br" *matHeaderCellDef> Status </th>
+                    <td mat-cell class="br" *matCellDef="let element">
+                        <div class="bar"> {{isLoading ? '' : element.isActive}} </div>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+                <tr mat-row *matRowDef=" let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
     </div>
 </div>

@@ -103,7 +103,7 @@
     .chatMsgBox {
         width: 100%;
         overflow-wrap: break-word;
-        p {
+        p, div {
             margin: 0px;
             font-size: 13px;
             background: #edffff;
@@ -113,6 +113,14 @@
             span {
                 float: right;
                 text-align: right;
+            }
+            div{
+                margin: 0px;
+                font-size: 13px;
+                background: #edffff;
+                border-radius: 5px;
+                padding: 10px;
+                text-align: left;
             }
         }
         h2 {

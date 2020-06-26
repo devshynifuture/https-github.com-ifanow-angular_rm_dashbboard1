@@ -13,6 +13,7 @@ import {PdfGenService} from 'src/app/services/pdf-gen.service';
 import {RightFilterDuplicateComponent} from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BackOfficeService} from 'src/app/component/protect-component/AdviserComponent/backOffice/back-office.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-mutual-funds-capital',
@@ -87,6 +88,7 @@ export class MutualFundsCapitalComponent implements OnInit {
   // capitalGainData: any;
   constructor(private pdfGen: PdfGenService,
               public routerActive: ActivatedRoute,
+              private datePipe: DatePipe,
               private route: Router,
               private backOfficeService: BackOfficeService,
               private excel: ExcelGenService, private UtilService: UtilService, private custumService: CustomerService, private eventService: EventService, private reconService: ReconciliationService, private MfServiceService: MfServiceService, private subInjectService: SubscriptionInject) {
@@ -548,12 +550,13 @@ export class MutualFundsCapitalComponent implements OnInit {
     // this.pdfGen.generatePdf(rows, tableTitle);
   }
   generatePdfBulk() {
-
+    const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
     setTimeout(() => {
+
       let para = this.mfCapitalTemplate.nativeElement.innerHTML
       let obj = {
         htmlInput: para,
-        name: 'MF_Capital_Gain_Summary',
+        name: (this.clientData.name)?this.clientData.name:''+'s'+'MF_Capital_Gain_Summary'+date,
         landscape: true,
         key: 'showPieChart',
         clientId : this.clientId,
@@ -562,7 +565,7 @@ export class MutualFundsCapitalComponent implements OnInit {
         toEmail: 'abhishek@futurewise.co.in'
       }
       this.UtilService.bulkHtmlToPdf(obj)
-      //this.UtilService.htmlToPdf(para, 'MF_Capital_Gain_Summary', false, this.fragmentData, '', '')
+     // this.UtilService.htmlToPdf(para, 'MF_Capital_Gain_Summary', true, this.fragmentData, '', '')
     }, 200);
 
 
@@ -580,6 +583,7 @@ export class MutualFundsCapitalComponent implements OnInit {
     console.log('data', data)
     this.clientDetails = data
     this.clientData = data.clientData
+    this.getOrgData = data.advisorData
     this.userInfo = data.advisorData
   }
 }

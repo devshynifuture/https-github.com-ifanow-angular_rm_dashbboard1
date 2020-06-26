@@ -3,7 +3,7 @@
     class="bg-white pb-44 ">
     <div class="row  popup-header bb-1">
         <div class="col-md-10 pl-0">
-            <h3 *ngIf="storeData.invoiceNumber != undefined" class="f-400 wrapper-20 mb-0">Edit Invoice of
+            <h3 *ngIf="storeData.invoiceNumber != undefined" class="f-400 wrapper-20 mb-0">Edit invoice of
                 {{storeData.invoiceNumber}}
             </h3>
             <h3 *ngIf="storeData.invoiceNumber == undefined" class="f-400 wrapper-20 mb-0">Add Invoice</h3>
@@ -45,7 +45,7 @@
             </div>
             <div class="row pt-10">
                 <div class="col-md-6 pl-0">
-                    <p class="m-0 text-custom f-12">BILLER ADDRESS</p>
+                    <p class="m-0 text-custom f-12">Biller address</p>
                     <p *ngIf="editAdd1 == false" class="m-0 text-black text-break w-90 l-21">
                         {{getFormControlEdit().billerAddress.value}}
                     </p>
@@ -53,7 +53,7 @@
                         maxlength="150" rows="5"></textarea>
                     <div class="row">
                         <div class="col-md-6 pl-0">
-                            <p (click)="onclickChangeAdd1(editAdd1)" class="m-0 text-primary c-p f-12">CHANGE</p>
+                            <p (click)="onclickChangeAdd1(editAdd1)" class="m-0 text-primary c-p f-12">Change</p>
                         </div>
                         <div class="col-md-6">
                             <p *ngIf="editAdd1" class="mb-0 f-12 text-custom text-right">
@@ -64,7 +64,7 @@
                     </div>
                 </div>
                 <div class="col-md-6 pl-0">
-                    <p class="m-0 text-custom f-12">PAYEE ADDRESS</p>
+                    <p class="m-0 text-custom f-12">Payee address </p>
                     <p *ngIf="editAdd2 == false" class="m-0 text-black text-break l-21 w-90">
                         {{storeData.billingAddress}}
                     </p>
@@ -72,7 +72,7 @@
                         maxlength="150" rows="5"></textarea>
                     <div class="row">
                         <div class="col-md-6 pl-0">
-                            <p (click)="onclickChangeAdd2(editAdd2)" class="m-0 text-primary c-p f-12">CHANGE</p>
+                            <p (click)="onclickChangeAdd2(editAdd2)" class="m-0 text-primary c-p f-12">Change</p>
                         </div>
                         <div class="col-md-6">
                             <p *ngIf="editAdd2" class="mb-0 f-12 text-custom text-right">
@@ -91,7 +91,7 @@
                 <div class="col-md-4 p-0">
                     <div class="row">
                         <div class="col-md-5 pl-0 pt-8">
-                            <h5 class="m-0 text-right">Invoice No.</h5>
+                            <h5 class="m-0 text-right">Invoice no.</h5>
                         </div>
                         <div class="col-md-7 p-0">
                             <div class="form-group mb-0">
@@ -117,7 +117,7 @@
                 <div class="col-md-4 p-0">
                     <div class="row">
                         <div class="col-md-6">
-                            <h5 class="m-0 pt-8 text-right">Invoice Date</h5>
+                            <h5 class="m-0 pt-8 text-right">Invoice date</h5>
                         </div>
                         <div class="col-md-6 p-0">
                             <div class="form-group mb-0">
@@ -138,7 +138,7 @@
                 <div class="col-md-4 p-0">
                     <div class="row">
                         <div class="col-md-6">
-                            <h5 class="m-0 pt-8 text-right">Due Date</h5>
+                            <h5 class="m-0 pt-8 text-right">Due date</h5>
                         </div>
                         <div class="col-md-6 p-0">
                             <div class="form-group mb-0">
@@ -162,7 +162,7 @@
             <div class="mt-28 b-a">
                 <div class="row bg-grey lter b-a">
                     <div class="col-md-6 p-0">
-                        <p class="m-0 text-black wrapper-16 f-500">Service Details</p>
+                        <p class="m-0 text-black wrapper-16 f-500">Service details</p>
                     </div>
                     <div class="col-md-2 p-0">
                         <p class="m-0 text-black f-500 wrapper-16">Price ₹ </p>
@@ -350,11 +350,22 @@
             </div>
         </div>
     </div>
-    <div class="row pt-44 mt-44 ">
+    <div *ngIf="copyStoreData.showBottomBar==undefined" class="row pt-44 mt-44 ">
         <div class="col-md-12 right full-end text-right">
             <h5 (click)="closeEditInv()" class="mat-stroked-button br-0 text-light mr-20">CANCEL</h5>
             <!-- <button (click)="updateInvoice()" class="btn-bottom br-0 text-inherit" mat-button>SAVE</button> -->
             <app-progress-button (btnClick)="updateInvoice()" [options]="barButtonOptions">
+            </app-progress-button>
+        </div>
+    </div>
+</div>
+<div class="bottom-fixed wrapper-12 pt-16" *ngIf="copyStoreData.showBottomBar">
+    <div class="row">
+        <div class="col-md-4">
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="closeEditInv()">Cancel</h5>
+        </div>
+        <div class="col-md-8 right text-right">
+            <app-progress-button (btnClick)="updateInvoice()" [disabled]="invalidExtended" [options]="barButtonOptions">
             </app-progress-button>
         </div>
     </div>

@@ -3,17 +3,23 @@
         <div class="col-md-12 p-0">
             <h3 class="m-0 roboto f-500">CONNECT YOUR GMAIL ACCOUNT</h3>
             <h5 class="m-0 roboto f-400 pt-16">Connect a Gmail account to begin syncing</h5>
-            <p class="m-0 text-custom text-custom roboto f-400 pb-16 pt-20">Personal as well as shared accounts
-                (e.g.info@abcfinancial.com) are supported.</p>
-            <div class="form-group">
+            <p class="m-0 text-custom text-custom roboto f-400 pb-16 pt-20">
+                Personal as well as shared accounts
+                (e.g.info@abcfinancial.com) are supported.
+            </p>
+            <div class="form-group" [formGroup]="redirectForm">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input matInput class="form-control" placeholder="Add Gmail account">
+                    <input matInput class="form-control" placeholder="Add Gmail account"
+                        formControlName="googleConnectEmail">
+                    <mat-error>
+                        This field is required
+                    </mat-error>
                 </mat-form-field>
             </div>
         </div>
         <div class="col-md-12 text-right p-0 pt-12">
-            <button mat-button class="text-custom">CANCEL</button>
-            <button mat-button class="text-primary">PROCEED</button>
+            <button mat-button class="text-custom" (click)="onNoClick()">CANCEL</button>
+            <button mat-button class="text-primary" (click)="gmailRedirectUrlCreation()">PROCEED</button>
         </div>
     </div>
 </div>

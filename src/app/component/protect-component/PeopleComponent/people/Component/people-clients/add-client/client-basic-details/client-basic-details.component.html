@@ -202,8 +202,9 @@
                     <h5 class="m-0">Gender</h5>
                 </div>
                 <div class="col-md-7 p-0 mob-text-center">
-                    <mat-radio-group formControlName="gender" aria-label="Select an option"
-                        class="d-block clientmobs f-14">
+                    <mat-radio-group formControlName="gender"
+                        (change)="relationshipTypeMethod($event.value,basicDetailsData.age)"
+                        aria-label="Select an option" class="d-block clientmobs f-14">
                         <mat-radio-button value="1"
                             [ngClass]="{'bu-primary': basicDetails.get('gender').value=='1','borderRadio':basicDetails.get('gender').value!='1','text-primary':basicDetails.get('gender').value=='1','text-custom':basicDetails.get('gender').value!='1'}"
                             class="bu-primary">Male
@@ -219,6 +220,26 @@
                     </mat-radio-group>
                 </div>
             </div>
+
+            <div *ngIf="fieldFlag=='familyMember'" class="row pt-28">
+                <div class="col-md-4 text-right full-end">
+                    <h5 class="m-0"> Relation</h5>
+                </div>
+                <div class="col-md-3 p-0">
+                    <div class="form-group">
+                        <mat-form-field floatLabel="never" appearance="standard">
+                            <mat-select formControlName="relationType" class="form-control">
+                                <mat-option value='' disabled>Select option</mat-option>
+                                <mat-option *ngFor="let relation of relationList" [value]="relation.value">
+                                    {{relation.name}}</mat-option>
+                            </mat-select>
+                            <!-- <mat-hint>Optional</mat-hint> -->
+                            <mat-error>This field is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+
             <div *ngIf="fieldFlag=='client'" class="row pt-44">
                 <div class="col-md-4 text-right mob-text-left mob-pl-10">
                     <h5 class="m-0 pt-12">Client owner</h5>
@@ -431,6 +452,24 @@
                             Other
                         </mat-radio-button>
                     </mat-radio-group>
+                </div>
+            </div>
+
+            <div *ngIf="fieldFlag=='familyMember'" class="row pt-28">
+                <div class="col-md-4 text-right full-end">
+                    <h5 class="m-0"> Relation</h5>
+                </div>
+                <div class="col-md-3 p-0">
+                    <div class="form-group">
+                        <mat-form-field floatLabel="never" appearance="standard">
+                            <mat-select formControlName="relationType" class="form-control">
+                                <mat-option value='' disabled>Select option</mat-option>
+                                <mat-option *ngFor="let relation of relationList" [value]="relation.value">
+                                    {{relation.name}}</mat-option>
+                            </mat-select>
+                            <!-- <mat-hint>Optional</mat-hint> -->
+                        </mat-form-field>
+                    </div>
                 </div>
             </div>
 

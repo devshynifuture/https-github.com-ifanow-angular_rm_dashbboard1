@@ -106,7 +106,8 @@
                 <mat-tab label="SERVICES"
                     *ngIf="upperDataSubsUpper && upperDataSubsUpper.documentData && upperDataSubsUpper.documentData.availableAt == 2">
                     <ng-template matTabContent>
-                        <app-services (changeServiceData)="getData($event)" [componentFlag]='"services"'
+                        <app-services [planData]="!sendAddedData?fragmentDataSubsUpper.data:sendAddedData"
+                            (changeServiceData)="getData($event)" [componentFlag]='"services"'
                             [upperData]="fragmentDataSubsUpper.data"></app-services>
                     </ng-template>
                 </mat-tab>

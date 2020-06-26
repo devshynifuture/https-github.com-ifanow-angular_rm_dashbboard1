@@ -1004,10 +1004,11 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   }
   generatePdfBulk() {
     setTimeout(() => {
+      const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
       let para = this.unrealizedTranTemplate.nativeElement.innerHTML
       let obj = {
         htmlInput: para,
-        name: 'transaction',
+        name: (this.clientData.name)?this.clientData.name:''+'s'+this.mode+date,
         landscape: true,
         key: 'showPieChart',
         clientId: this.clientId,
@@ -1016,7 +1017,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         toEmail: 'abhishek@futurewise.co.in'
       }
       this.utilService.bulkHtmlToPdf(obj)
-     // this.utilService.htmlToPdf(para, 'transaction', false, this.fragmentData, '', '')
+   //   this.utilService.htmlToPdf(para, 'transaction', true, this.fragmentData, '', '')
     }, 200);
   }
   getDetails() {
@@ -1032,6 +1033,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     console.log('data', data)
     this.clientDetails = data
     this.clientData = data.clientData
+    this.getOrgData = data.advisorData
     this.userInfo = data.advisorData
   }
 }
