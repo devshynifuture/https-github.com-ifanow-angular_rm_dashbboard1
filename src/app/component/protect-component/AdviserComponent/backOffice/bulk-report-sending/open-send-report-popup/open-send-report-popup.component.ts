@@ -82,6 +82,7 @@ export class OpenSendReportPopupComponent implements OnInit {
     this.backOfficeService.getClientIdByLoop(this.setObj).subscribe(
       data => {
         console.log('getClientIdByLoop ==', data)
+        this.dialogRef.close('');
       }
     );
     this.getDetails(this.dataClients)

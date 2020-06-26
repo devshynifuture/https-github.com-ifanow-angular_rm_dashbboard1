@@ -62,6 +62,7 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
   @ViewChild(MatAutocompleteTrigger, { static: false }) trigger: MatAutocompleteTrigger;
   selectedTransactionType: any;
   maximumDate: any;
+  errorMsgForScheme: boolean;
 
   constructor(
     public subInjectService: SubscriptionInject,
@@ -119,6 +120,8 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
           .pipe(
             finalize(() => {
               this.isLoadingForDropDown = false
+              this.errorMsg = 'No scheme Found';
+
             }),
           )
         )
@@ -247,9 +250,9 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
     if(data && ((data.mutualFundTransactions) ? data.mutualFundTransactions.length != 0 : data) && this.data.flag == 'editTransaction'){
       this.transactionArray.push(this.fb.group({
         transactionType: [this.data.transactionTypeMasterId,[Validators.required]],
-        date: [new Date(this.data.transactionDate)],
-        transactionAmount: [this.data.amount],
-        Units: [this.data.unit],
+        date: [new Date(this.data.transactionDate),[Validators.required]],
+        transactionAmount: [this.data.amount,[Validators.required]],
+        Units: [this.data.unit,[Validators.required]],
         id: [this.data.id],
         assetMutualFundTransactionTypeMasterId: [this.data.assetMutualFundTransactionTypeMasterId],
         isEdited: this.data.isEdited,
@@ -262,9 +265,9 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
         data.mutualFundTransactions.forEach((element: { transactionTypeMasterId: any; transactionDate: string | number | Date; amount: any; unit: any; id: any; assetMutualFundTransactionTypeMasterId :any;assetTypeTransactionId: any; isEdited: any; previousUnit: any; effect: any; }) => {
           this.transactionArray.push(this.fb.group({
             transactionType: [element.transactionTypeMasterId,Validators.required],
-            date: [new Date(element.transactionDate)],
-            transactionAmount: [element.amount],
-            Units: [element.unit],
+            date: [new Date(element.transactionDate),[Validators.required]],
+            transactionAmount: [element.amount,[Validators.required]],
+            Units: [element.unit,[Validators.required]],
             id: [element.id],
             assetMutualFundTransactionTypeMasterId: [element.assetMutualFundTransactionTypeMasterId],
             isEdited: element.isEdited,
@@ -277,9 +280,9 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
       else {
         this.transactionArray.push(this.fb.group({
           transactionType: ['',Validators.required],
-          date: [],
-          transactionAmount: [],
-          Units: [],
+          date: ['',[Validators.required]],
+          transactionAmount: ['',[Validators.required]],
+          Units: ['',[Validators.required]],
           id: [],
           assetMutualFundTransactionTypeMasterId: [],
           isEdited: false,
@@ -302,10 +305,10 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
   get transactionArray() { return this.transactionList.transactionListArray as FormArray };
   addTransactions() {
     this.transactionArray.push(this.fb.group({
-      transactionType: [],
-      date: [],
-      transactionAmount: [],
-      Units: [],
+      transactionType: ['',[Validators.required]],
+      date: ['',[Validators.required]],
+      transactionAmount: ['',[Validators.required]],
+      Units: ['',[Validators.required]],
       id: [],
       assetMutualFundTransactionTypeMasterId: [],
       isEdited: false,
@@ -370,7 +373,26 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
     console.log(value)
     this.nomineesListFM = Object.assign([], value.familyMembersList);
   }
+  checkValidation(value){
+    (!this.schemeNameControl.value) ?  this.errorMsgForScheme = true : this.errorMsgForScheme = false;
+    if(this.errorMsgForScheme){
+      this.filteredSchemeError = false;
+      this.schemeNameControl.setErrors({ incorrect: true });
+      this.schemeNameControl.markAsTouched();
+    }                                                                 
+
+  }
   saveMfSchemeLevel() {
+    (!this.schemeNameControl.value) ?  this.errorMsgForScheme = true : this.errorMsgForScheme = false;
+    if(this.errorMsgForScheme){
+      this.schemeNameControl.setErrors({ incorrect: true });
+      this.schemeNameControl.markAsTouched();
+    }
+
+    if(this.transactionArray.invalid){
+      this.transactionArray.markAllAsTouched()
+
+    }
     if (this.schemeLevelHoldingForm.invalid) {
       // this.inputs.find(input => !input.ngControl.valid).focus();
       // this.schemeLevelHoldingForm.get('ownerName').markAsTouched();

@@ -502,11 +502,13 @@
              <p style="margin: 0px; font-weight: 800;font-size: 20px;">
                  Mutual fund summary</p>
          </td> -->
-         <td style="text-align: left;" colspan="3">
+         <td style="text-align: left; " colspan="3"
+            *ngIf="getOrgData && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
             <img width="250px" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
          </td>
-         <td style="text-align: left;" *ngIf="userInfo.reportLogoUrl" colspan="3">
-            <img width="250px" *ngIf="userInfo.reportLogoUrl" [src]="userInfo.reportLogoUrl">
+         <td style="text-align: left;" colspan="3"
+            *ngIf="getOrgData && getOrgData.reportLogoUrl =='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
+            <img width="250px" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
          </td>
          <td style="text-align: right;" colspan="6">
             <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;" *ngIf="userInfo">
@@ -660,7 +662,7 @@
    </table>
    <!-- Unrealized Transactions -->
    <table *ngIf="['unrealized transactions', 'Unrealized Transactions'].includes(viewMode)"
-      style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif; page-break-before: always;">
+      style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
       <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
          <td *ngIf="customDataSource.data.no == true"
             style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
@@ -668,7 +670,7 @@
          </td>
          <td *ngIf="customDataSource.data.transactionType == true"
             style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-            <b>Transaction Type</b>
+            <b>Transaction type</b>
          </td>
          <td *ngIf="customDataSource.data.transactionDate == true"
             style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
@@ -850,7 +852,7 @@
    </table>
    <!-- All Transactions -->
    <table *ngIf="viewMode == 'All Transactions' || viewMode == 'all transactions'"
-      style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif; page-break-before: always;">
+      style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
       <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
          <td *ngIf="customDataSource.data.no == true"
             style="width:9%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
@@ -858,7 +860,7 @@
          </td>
          <td *ngIf="customDataSource.data.transactionType == true"
             style="width:15%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-            <b>Transaction Type</b>
+            <b>Transaction type</b>
          </td>
          <td *ngIf="customDataSource.data.transactionDate == true"
             style="width:15%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
