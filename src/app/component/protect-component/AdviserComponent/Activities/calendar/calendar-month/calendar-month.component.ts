@@ -59,6 +59,7 @@ export class CalendarMonthComponent implements OnInit {
     
   }
 
+  E = [];
   getEvent() {
     let eventData = {
       "calendarId": AuthService.getUserInfo().userName,
@@ -74,6 +75,30 @@ export class CalendarMonthComponent implements OnInit {
         this.formatedEvent = [];
         
         for (let e of this.eventData) {
+          if(e.rrule != null){
+            e['isRe'] = true;
+            if(e.rrule.UNTIL){
+
+              for(let i = 0; i < e.rrule.UNTIL.length; i++){
+                this.E.push( e.rrule.UNTIL.charAt(i));
+              }
+              switch (e.rrule.FREQ) {
+                case "DAILY":
+                  let y = this.E[0]+ this.E[1] + this.E[2] + this.E[3];
+                  let m = this.E[4]+ this.E[5];
+                  let d = this.E[6]+ this.E[7];
+                  e["reUntil"] = new Date(parseInt(y),parseInt(m)-1,parseInt(d));
+                  
+                  break;
+              
+                default:
+                  break;
+              }
+            }
+            else{
+              e["reUntil"] = this.startDateFormate(e.start.date);
+            }
+          }
           if(e.start){
             e["day"] = this.formateDate(!e.start.dateTime? new Date(e.created): new Date(e.start.dateTime));
             e["month"] = this.formateMonth(!e.start.dateTime ?new Date(e.created) : new Date(e.start.dateTime));
@@ -88,6 +113,18 @@ export class CalendarMonthComponent implements OnInit {
     });
 
 
+  }
+
+  startDateFormate(date){
+    this.E = [];
+    for(let i = 0; i < date.length; i++){
+      if( date.charAt(i) != "-"){
+        this.E.push( date.charAt(i));
+      }
+    }
+    let y = this.E[0]+ this.E[1] + this.E[2] + this.E[3];
+    let m = this.E[4]+ this.E[5];
+    let d = this.E[6]+ this.E[7];
   }
 
   getDaysCount(month: number, year: number, ch: string): any {
