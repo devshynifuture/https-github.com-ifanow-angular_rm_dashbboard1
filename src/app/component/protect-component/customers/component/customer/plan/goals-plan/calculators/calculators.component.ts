@@ -7,6 +7,7 @@ import { PlanService } from '../../plan.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ValidatorType } from 'src/app/services/util.service';
 import * as Highcharts from 'highcharts';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-calculators',
@@ -22,6 +23,8 @@ export class CalculatorsComponent implements OnInit {
   incomeFG: FormGroup;
   loanFG: FormGroup;
   delayFG: FormGroup;
+  advisorId:number;
+  clientId: number;
 
   delayArray = [];
   
@@ -34,7 +37,10 @@ export class CalculatorsComponent implements OnInit {
     private fb: FormBuilder,
     private datePipe: DatePipe,
     private planService: PlanService,
-  ) { }
+  ) {
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
+  }
 
   ngOnInit() {
     this.getdataForm();
@@ -152,7 +158,7 @@ export class CalculatorsComponent implements OnInit {
     },
     series: []
   }
-  createChart(){
+  createChart(res){
     let data = [{
         y: 123,
         name: this.delayFG.controls.delay1.value.display,
@@ -176,7 +182,35 @@ export class CalculatorsComponent implements OnInit {
   }
   
   calculateDelay(){
+    if(this.delayFG.invalid) {
+      this.delayFG.markAllAsTouched();
+      return;
+    }
     
+    let subData = this.data.remainingData;
+    let jsonObj = {
+      differentGoalYears: subData.differentGoalYears,
+      targetValueOfRequiredFVDebt: subData.targetValueOfRequiredFVDebt,
+      targetValueOfRequiredFVEquity: subData.targetValueOfRequiredFVEquity,
+      advisorId:this.advisorId,
+      savingStartDate: this.datePipe.transform(subData.savingStartDate, 'yyyy/MM/dd'),
+      savingEndDate: this.datePipe.transform(subData.savingStartDate, 'yyyy/MM/dd'),
+      yearStepUps:[0],
+    }
+
+    let formValue:Object = this.delayFG.value;
+
+    for(let k in formValue) {
+      if(formValue.hasOwnProperty(k))
+      jsonObj.yearStepUps.push(formValue[k]);
+    }
+
+    this.planService.calculateCostToDelay(jsonObj).subscribe(res => {
+      console.log(res);
+      this.createChart(res);
+    }, err => {
+      this.eventService.openSnackBar(err, "Dismiss");
+    })
   }
 
   // ---------------------------------- cost of delay ------------------------------------

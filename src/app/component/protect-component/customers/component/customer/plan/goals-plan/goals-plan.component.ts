@@ -182,6 +182,7 @@ export class GoalsPlanComponent implements OnInit {
       mapData.year = (new Date(goalSubData.goalStartDate).getFullYear()) + ' - ' + (new Date(goalSubData.goalStartDate).getFullYear());
       mapData.goalName = goalSubData.goalName;
       mapData.gv = goalSubData.goalFV;
+      mapData.achievedValue = goalSubData.achievedValue;
       mapData.dashboardData = {
         goalYear: new Date(goalSubData.goalStartDate).getFullYear(),
         presentValue: goalSubData.goalPresentValue,
@@ -190,28 +191,39 @@ export class GoalsPlanComponent implements OnInit {
         debt_monthly: goalSubData.debtSipAmount || 0,
         lump_equity: goalSubData.lumpsumEquityReqOnSSD || 0,
         lump_debt: goalSubData.lumpsumDebtReqOnSSD || 0,
-        goalProgress: (goalSubData.goalPresentValue / goalSubData.goalFV * 100),
+        goalProgress: (goalSubData.achievedValue / goalSubData.goalFV * 100),
       }
       mapData.remainingData = goalSubData;
     } else {
       const goalSubData:any = goal.multiYearGoalPlan;
       mapData.img = goalSubData.imageUrl;
-      mapData.year = (new Date(goalSubData.goalStartDate || goalSubData.vacationStartYr).getFullYear()) + ' - ' + (new Date(goalSubData.goalEndDate || goalSubData.vacationEndYr).getFullYear());
+      mapData.year = (new Date(goalSubData.differentGoalYears[0]).getFullYear()) + ' - ' + (new Date(goalSubData.differentGoalYears[goalSubData.differentGoalYears.length -1]).getFullYear());
       mapData.goalName = goalSubData.name;
       mapData.gv = goalSubData.futureValue;
+      mapData.achievedValue = goalSubData.achievedValue;
       mapData.dashboardData = {
         goalYear: new Date(goalSubData.goalEndDate || goalSubData.vacationEndYr).getFullYear(),
         presentValue: goalSubData.presentValue,
         futureValue: goalSubData.futureValue,
-        // equity_monthly: goalSubData.sipAmoutEquity || 0,
-        // debt_monthly: goalSubData.sipAmoutDebt || 0,
-        // lump_equity: goalSubData.lumpSumAmountEquity || 0,
-        // lump_debt: goalSubData.lumpSumAmountDebt || 0,
-        goalProgress: (goalSubData.presentValue / goalSubData.futureValue * 100),
+        equity_monthly: this.getSumOfJsonMap(goalSubData.sipAmoutEquity),
+        debt_monthly: this.getSumOfJsonMap(goalSubData.sipAmoutDebt),
+        lump_equity: this.getSumOfJsonMap(goalSubData.lumpSumAmountEquity),
+        lump_debt: this.getSumOfJsonMap(goalSubData.lumpSumAmountDebt),
+        goalProgress: (goalSubData.achievedValue / goalSubData.futureValue * 100),
       }
       mapData.remainingData = goalSubData;
     }
     return mapData;
+  }
+
+  getSumOfJsonMap(json:Object = {}) {
+    let sum = 0;
+    for(let k in json) {
+      if(json.hasOwnProperty(k)) {
+        sum+=json[k];
+      }
+    }
+    return sum;
   }
 
   loadGlobalAPIs(){

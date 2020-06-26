@@ -247,6 +247,7 @@
               </div>
               <div class="col-md-6">
                 <button mat-stroked-button class="br-0 btn-primary pl-8 pr-8 right">ADD TO GOAL</button>
+                <button mat-stroked-button class="br-0 btn-primary pl-8 pr-8 right" (click)="calculateDelay()">Calculate</button>
               </div>
             </div>
 
@@ -256,7 +257,7 @@
                 <div class="form-group">
                   <mat-form-field>
                     <mat-select class="form-control" formControlName="delay1">
-                      <mat-option [value]="opt" *ngFor="let opt of delayArray">{{opt.display}}</mat-option>
+                      <mat-option [value]="opt.value" *ngFor="let opt of delayArray">{{opt.display}}</mat-option>
                     </mat-select>
                   </mat-form-field>
                 </div>
@@ -266,7 +267,7 @@
                 <div class="form-group">
                   <mat-form-field>
                     <mat-select class="form-control" formControlName="delay2">
-                      <mat-option [value]="opt" *ngFor="let opt of delayArray">{{opt.display}}</mat-option>
+                      <mat-option [value]="opt.value" *ngFor="let opt of delayArray">{{opt.display}}</mat-option>
                     </mat-select>
                   </mat-form-field>
                 </div>
@@ -276,7 +277,7 @@
                 <div class="form-group">
                   <mat-form-field>
                     <mat-select class="form-control" formControlName="delay3">
-                      <mat-option [value]="opt" *ngFor="let opt of delayArray">{{opt.display}}</mat-option>
+                      <mat-option [value]="opt.value" *ngFor="let opt of delayArray">{{opt.display}}</mat-option>
                     </mat-select>
                   </mat-form-field>
                 </div>
@@ -286,7 +287,7 @@
                 <div class="form-group">
                   <mat-form-field>
                     <mat-select class="form-control" formControlName="delay4">
-                      <mat-option [value]="opt" *ngFor="let opt of delayArray">{{opt.display}}</mat-option>
+                      <mat-option [value]="opt.value" *ngFor="let opt of delayArray">{{opt.display}}</mat-option>
                     </mat-select>
                   </mat-form-field>
                 </div>
