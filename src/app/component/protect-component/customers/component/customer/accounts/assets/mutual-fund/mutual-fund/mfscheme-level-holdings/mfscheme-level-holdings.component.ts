@@ -376,10 +376,11 @@ export class MFSchemeLevelHoldingsComponent implements OnInit {
   checkValidation(value){
     (!this.schemeNameControl.value) ?  this.errorMsgForScheme = true : this.errorMsgForScheme = false;
     if(this.errorMsgForScheme){
+      this.filteredSchemeError = false;
       this.schemeNameControl.setErrors({ incorrect: true });
       this.schemeNameControl.markAsTouched();
     }                                                                 
-    
+
   }
   saveMfSchemeLevel() {
     (!this.schemeNameControl.value) ?  this.errorMsgForScheme = true : this.errorMsgForScheme = false;
