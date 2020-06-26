@@ -131,6 +131,7 @@ export class MutualFundOverviewComponent implements OnInit {
     console.log('advisorData', this.userInfo);
     console.log('clientData', this.clientData);
     console.log('getAdvisorDetail', this.getAdvisorDetail);
+    console.log('getOrgData',this.getOrgData)
   }
 
   uploadData(data) {
@@ -995,11 +996,11 @@ export class MutualFundOverviewComponent implements OnInit {
       clientId: this.clientId,
       advisorId: this.advisorId,
       fromEmail: 'devshyni@futurewise.co.in',
-      toEmail: 'devshyni@futurewise.co.in',
+      toEmail: 'abhishek@futurewise.co.in',
       svg: this.svg
     };
     this.UtilService.bulkHtmlToPdf(obj);
-    // this.UtilService.htmlToPdf(para.innerHTML, 'Overview', false, this.fragmentData,'showPieChart', this.svg)
+    this.UtilService.htmlToPdf(para.innerHTML, 'Overview', false, this.fragmentData,'showPieChart', this.svg)
 
   }
 
@@ -1017,6 +1018,7 @@ export class MutualFundOverviewComponent implements OnInit {
     console.log('data', data);
     this.clientDetails = data;
     this.clientData = data.clientData;
+    this.getOrgData = data.advisorData
     this.userInfo = data.advisorData;
   }
 }
