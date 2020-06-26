@@ -1,14 +1,14 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {MAT_DATE_FORMATS} from '@angular/material';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
-import {DatePipe} from '@angular/common';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {AuthService} from 'src/app/auth-service/authService';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {FormBuilder, Validators} from '@angular/forms';
-import {EventService} from 'src/app/Data-service/event.service';
-import {CustomerService} from '../../customer/customer.service';
-import {MfServiceService} from '../../customer/accounts/assets/mutual-fund/mf-service.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { MAT_DATE_FORMATS } from '@angular/material';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { DatePipe } from '@angular/common';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { AuthService } from 'src/app/auth-service/authService';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { EventService } from 'src/app/Data-service/event.service';
+import { CustomerService } from '../../customer/customer.service';
+import { MfServiceService } from '../../customer/accounts/assets/mutual-fund/mf-service.service';
 
 @Component({
   selector: 'app-right-filter-duplicate',
@@ -16,7 +16,7 @@ import {MfServiceService} from '../../customer/accounts/assets/mutual-fund/mf-se
   styleUrls: ['./right-filter-duplicate.component.scss'],
   providers: [
     [DatePipe],
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ],
 })
 export class RightFilterDuplicateComponent implements OnInit {
@@ -101,8 +101,8 @@ export class RightFilterDuplicateComponent implements OnInit {
   familyChecked: boolean;
 
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder,
-              private custumService: CustomerService, private eventService: EventService,
-              private mfService: MfServiceService, private datePipe: DatePipe,) {
+    private custumService: CustomerService, private eventService: EventService,
+    private mfService: MfServiceService, private datePipe: DatePipe, ) {
   }
 
   @Input()
@@ -379,33 +379,33 @@ export class RightFilterDuplicateComponent implements OnInit {
         a.from > b.from ? 1 : (a.from === b.from ? 0 : -1)
       );
       const calculatedFinYears = sortingYeras;
-      this.financialYears = [{from: 2010, to: 2011, selected: true, disabled: true}, {
+      this.financialYears = [{ from: 2010, to: 2011, selected: true, disabled: true }, {
         from: 2011,
         to: 2012,
         selected: true,
         disabled: true
-      }, {from: 2012, to: 2013, selected: true, disabled: true}, {
+      }, { from: 2012, to: 2013, selected: true, disabled: true }, {
         from: 2013,
         to: 2014,
         selected: true,
         disabled: true
-      }, {from: 2014, to: 2015, selected: true, disabled: true},
-        {from: 2015, to: 2016, selected: true, disabled: true}, {
-          from: 2016,
-          to: 2017,
-          selected: true,
-          disabled: true
-        }, {from: 2017, to: 2018, selected: true, disabled: true}, {
-          from: 2018,
-          to: 2019,
-          selected: true,
-          disabled: true
-        }, {from: 2019, to: 2020, selected: true, disabled: true}, {
-          from: 2020,
-          to: 2021,
-          selected: true,
-          disabled: true
-        }];
+      }, { from: 2014, to: 2015, selected: true, disabled: true },
+      { from: 2015, to: 2016, selected: true, disabled: true }, {
+        from: 2016,
+        to: 2017,
+        selected: true,
+        disabled: true
+      }, { from: 2017, to: 2018, selected: true, disabled: true }, {
+        from: 2018,
+        to: 2019,
+        selected: true,
+        disabled: true
+      }, { from: 2019, to: 2020, selected: true, disabled: true }, {
+        from: 2020,
+        to: 2021,
+        selected: true,
+        disabled: true
+      }];
       calculatedFinYears.forEach(element => {
         this.financialYears.forEach(item => {
           if (element.from == item.from) {
@@ -485,17 +485,17 @@ export class RightFilterDuplicateComponent implements OnInit {
   // }
   getSaveFilters() {
     this.saveFilters = [
-      {value: 'Current Client', selected: false}, {value: 'All Client', selected: false}];
+      { value: 'Current Client', selected: false }, { value: 'All Client', selected: false }];
 
   }
 
   getOverviewFilter() {
-    this.overviewFilter = [{name: 'Summary bar', selected: true},
-      {name: 'Scheme wise allocation', selected: true},
-      {name: 'Cashflow Status', selected: true},
-      {name: 'Family Member wise allocation', selected: true},
-      {name: 'Category wise allocation', selected: true},
-      {name: 'Sub Category wise allocation', selected: true}];
+    this.overviewFilter = [{ name: 'Summary bar', selected: true },
+    { name: 'Scheme wise allocation', selected: true },
+    { name: 'Cashflow Status', selected: true },
+    { name: 'Family Member wise allocation', selected: true },
+    { name: 'Category wise allocation', selected: true },
+    { name: 'Sub Category wise allocation', selected: true }];
   }
 
   changeFilterPeriod(value) {
@@ -524,7 +524,7 @@ export class RightFilterDuplicateComponent implements OnInit {
     });
     if (this._data.selectFilter || this._data.selectFilter == 0) {
       this.saveFilters = [
-        {value: 'Current Client', selected: (this._data.selectFilter != 0) ? true : false}, {
+        { value: 'Current Client', selected: (this._data.selectFilter != 0) ? true : false }, {
           value: 'All Client',
           selected: (this._data.selectFilter == 0) ? true : false
         }];
@@ -561,15 +561,14 @@ export class RightFilterDuplicateComponent implements OnInit {
   changeFilterFamily() {
     (this.familyMemObj.length == 0) ? this.showError = null : (this.familyMemObj.length == 1 && !this.familyMemObj[0].selected) ? this.showError = 'family member' : this.showError = null;
     const filterData = this._data.mfData.mutualFundList;
-    // filterData = filterData.filter((item: any) =>
-    //   (item.currentValue != 0 && item.currentValue > 0)
-    // );
     const amcFilteredMap = {};
     const amcFilteredArray = [];
-
-    const folioFilteredArray = [];
-    const categoryFilteredArray = [];
+    const schemeFilteredMap = {};
     const schemeFilteredArray = [];
+    const folioFilteredMap = {};
+    const folioFilteredArray = [];
+    const categoryFilteredMap = {};
+    const categoryFilteredArray = [];
     const selectedFamilyMapObj = {};
     this.checkFlag = true;
     this.familyMember.filter(function (element) {
@@ -577,7 +576,6 @@ export class RightFilterDuplicateComponent implements OnInit {
         selectedFamilyMapObj[element.familyMemberId] = element;
         element.showInFilter = true;
         filterData.filter(function (amc) {
-          // amc.mutualFund.forEach(function (mf) {
           if (amc.familyMemberId == element.familyMemberId) {
             const amcObj = amcFilteredMap[amc.amcId];
             if (amcObj) {
@@ -599,37 +597,71 @@ export class RightFilterDuplicateComponent implements OnInit {
               amcFilteredMap[amc.amcId] = obj;
               amcFilteredArray.push(obj);
             }
-            const obj4 = {
-              amc_name: amc.amcName,
-              schemeName: amc.schemeName,
-              id: amc.schemeId,
-              mutualFund: amc.mutualFund,
-              amc_id: amc.amcId,
-              selected: true,
-              showInFilter: true,
-              familyMemberId: amc.familyMemberId
+            const schemeObj = schemeFilteredMap[amc.schemeId];
+            if (schemeObj) {
+              const schemeSelectedFamMap = schemeObj.selectedFamilyMapObj;
+              schemeSelectedFamMap[element.familyMemberId] = true;
+            } else {
+              const schemeSelectedFamMap = {};
+              schemeSelectedFamMap[element.familyMemberId] = true;
+              const obj4 = {
+                amc_name: amc.amcName,
+                schemeName: amc.schemeName,
+                id: amc.schemeId,
+                mutualFund: amc.mutualFund,
+                amc_id: amc.amcId,
+                selected: true,
+                showInFilter: true,
+                familyMemberId: amc.familyMemberId,
+                selectedFamilyMapObj: schemeSelectedFamMap
+              };
+              schemeFilteredMap[amc.schemeId] = obj4;
+              schemeFilteredArray.push(obj4)
             };
-            const obj2 = {
-              folioNumber: amc.folioNumber,
-              selected: true,
-              showInFilter: true,
-              familyMemberId: amc.familyMemberId,
-              amc_id: amc.amcId,
-              id: amc.schemeId,
-            };
-            const obj3 = {
-              category: amc.categoryName,
-              categoryId: amc.categoryId,
-              selected: true,
-              showInFilter: true,
-              familyMemberId: amc.familyMemberId,
-              amc_id: amc.amcId,
-              id: amc.schemeId,
-              folioNumber: amc.folioNumber,
-            };
-            folioFilteredArray.push(obj2);
-            categoryFilteredArray.push(obj3);
-            schemeFilteredArray.push(obj4);
+            const folioObj = folioFilteredMap[amc.folioNumber];
+            if (folioObj) {
+              const folioSelectedFamMap = folioObj.selectedFamilyMapObj;
+              folioSelectedFamMap[element.familyMemberId] = true;
+            } else {
+              const folioSelectedFamMap = {};
+              folioSelectedFamMap[element.familyMemberId] = true;
+              const obj2 = {
+                folioNumber: amc.folioNumber,
+                selected: true,
+                showInFilter: true,
+                familyMemberId: amc.familyMemberId,
+                amc_id: amc.amcId,
+                id: amc.schemeId,
+                selectedFamilyMapObj: folioSelectedFamMap
+              };
+              folioFilteredMap[amc.folioNumber] = obj2;
+              folioFilteredArray.push(obj2)
+            }
+            const catObj = categoryFilteredMap[amc.categoryId];
+            if (catObj) {
+              const catSelectedFamMap = catObj.selectedFamilyMapObj;
+              catSelectedFamMap[element.familyMemberId] = true;
+            } else {
+              const catSelectedFamMap = {};
+              catSelectedFamMap[element.familyMemberId] = true;
+              const obj3 = {
+                category: amc.categoryName,
+                categoryId: amc.categoryId,
+                selected: true,
+                showInFilter: true,
+                familyMemberId: amc.familyMemberId,
+                amc_id: amc.amcId,
+                id: amc.schemeId,
+                folioNumber: amc.folioNumber,
+                selectedFamilyMapObj: catSelectedFamMap
+
+              };
+              categoryFilteredMap[amc.categoryId] = obj3;
+              categoryFilteredArray.push(obj3)
+            }
+            // folioFilteredArray.push(obj2);
+            // categoryFilteredArray.push(obj3);
+            // schemeFilteredArray.push(obj4);
           }
           // });
         });
@@ -639,9 +671,13 @@ export class RightFilterDuplicateComponent implements OnInit {
     });
     this.selectedFamilyMap = selectedFamilyMapObj;
     this.amc = amcFilteredArray;
-    this.scheme = [...new Map(schemeFilteredArray.map(item => [item.id, item])).values()];
-    this.folio = [...new Map(folioFilteredArray.map(item => [item.folioNumber, item])).values()];
-    this.category = [...new Map(categoryFilteredArray.map(item => [item.categoryId, item])).values()];
+    this.scheme = schemeFilteredArray;
+    this.folio = folioFilteredArray
+    this.category = categoryFilteredArray
+
+    // this.scheme = [...new Map(schemeFilteredArray.map(item => [item.id, item])).values()];
+    // this.folio = [...new Map(folioFilteredArray.map(item => [item.folioNumber, item])).values()];
+    // this.category = [...new Map(categoryFilteredArray.map(item => [item.categoryId, item])).values()];
     this.changeSelect('', '');
   }
 
@@ -657,10 +693,16 @@ export class RightFilterDuplicateComponent implements OnInit {
     const selectedFamilyMapObj = this.selectedFamilyMap;
     const selectedAmcMapObj = {};
     const selectedFamilyMapObj2 = {};
-
     const amcCheck = this.checkFlag;
     const famCheck = this.familyChecked;
     this.checkFlag = true;
+    const schemeFilteredMap = {};
+    const schemeFilteredArray = [];
+    const folioFilteredMap = {};
+    const folioFilteredArray = [];
+    const categoryFilteredMap = {};
+    const categoryFilteredArray = [];
+    const selectedFamilyMapObjDupl = {};
     this.amc.filter(element => {
       if (element.selected == true) {
         Object.assign(selectedFamilyMapObj2, element.selectedFamilyMapObj);
@@ -671,46 +713,84 @@ export class RightFilterDuplicateComponent implements OnInit {
           } else {
             (Object.keys(selectedFamilyMapObj).length > 0) ? famMap = selectedFamilyMapObj[element.familyMemberId] : famMap = amc.familyMemberId;
           }
-          // amc.mutualFund.forEach(mf => {
-          console.log('selectedFamilyMap : ', this.selectedFamilyMap);
-          const famObj = this.selectedFamilyMap[amc.familyMemberId];
+          let famObj;
+          (Object.keys(this.selectedFamilyMap).length > 0) ? famObj = this.selectedFamilyMap[amc.familyMemberId] : (famObj = amc, famObj.showInFilter = true);
+
 
           if (element.amc_id == amc.amcId && famObj && famObj.showInFilter) {
-            selectedAmcMapObj[element.amc_id] = element.amc_id;
+            const duplObj = {};
+            (Object.keys(selectedFamilyMapObj2).length > 0) ? selectedFamilyMapObj2 : duplObj[amc.familyMemberId] = true;
+            Object.assign(selectedFamilyMapObjDupl, duplObj);
 
-            const obj = {
-              amc_name: amc.amcName,
-              schemeName: amc.schemeName,
-              schemeCode: amc.schemeCode,
-              mutualFund: amc.mutualFund,
-              id: amc.schemeId,
-              amc_id: amc.amcId,
-              selected: true,
-              showInFilter: true,
-              familyMemberId: amc.familyMemberId
-            };
-            const obj4 = {
-              folioNumber: amc.folioNumber,
-              selected: true,
-              showInFilter: true,
-              familyMemberId: amc.familyMemberId,
-              amc_id: amc.amcId,
-              id: amc.schemeId,
-            };
-            const obj2 = {
-              category: amc.categoryName,
-              categoryId: amc.categoryId,
-              selected: true,
-              showInFilter: true,
-              familyMemberId: amc.familyMemberId,
-              amc_id: amc.amcId,
-              id: amc.schemeId,
-              folioNumber: amc.folioNumber,
 
-            };
-            filterData.push(obj);
-            filterData3.push(obj2);
-            filterData4.push(obj4);
+            selectedAmcMapObj[element.amc_id] = element;
+            const schemeObj = schemeFilteredMap[amc.schemeId];
+            if (schemeObj) {
+              const schemeSelectedAmcMap = schemeObj.selectedAmcMapObj;
+              schemeSelectedAmcMap[element.amc_id] = true;
+            } else {
+              const schemeSelectedAmcMap = {};
+              schemeSelectedAmcMap[element.amc_id] = true;
+              const obj = {
+                amc_name: amc.amcName,
+                schemeName: amc.schemeName,
+                id: amc.schemeId,
+                mutualFund: amc.mutualFund,
+                amc_id: amc.amcId,
+                selected: true,
+                showInFilter: true,
+                selectedAmcMapObj: schemeSelectedAmcMap,
+                selectedFamilyMapObj: element.selectedFamilyMapObj
+              };
+              schemeFilteredMap[amc.schemeId] = obj;
+              schemeFilteredArray.push(obj);
+            }
+
+            const folioObj = folioFilteredMap[amc.folioNumber];
+            if (folioObj) {
+              const folioSelectedAmcMap = folioObj.selectedAmcMapObj;
+              folioSelectedAmcMap[element.amc_id] = true;
+            } else {
+              const folioSelectedAmcMap = {};
+              folioSelectedAmcMap[element.amc_id] = true;
+              const obj4 = {
+                folioNumber: amc.folioNumber,
+                selected: true,
+                showInFilter: true,
+                familyMemberId: amc.familyMemberId,
+                amc_id: amc.amcId,
+                id: amc.schemeId,
+                selectedAmcMapObj: folioSelectedAmcMap,
+                selectedFamilyMapObj: element.selectedFamilyMapObj
+
+              };
+              folioFilteredMap[amc.folioNumber] = obj4;
+              folioFilteredArray.push(obj4)
+            }
+            const catObj = categoryFilteredMap[amc.categoryId];
+            if (catObj) {
+              const catSelectedAmcMap = catObj.selectedAmcMapObj;
+              catSelectedAmcMap[element.amc_id] = true;
+            } else {
+              const catSelectedAmcMap = {};
+              catSelectedAmcMap[element.amc_id] = true;
+              const obj2 = {
+                category: amc.categoryName,
+                categoryId: amc.categoryId,
+                selected: true,
+                showInFilter: true,
+                familyMemberId: amc.familyMemberId,
+                amc_id: amc.amcId,
+                id: amc.schemeId,
+                folioNumber: amc.folioNumber,
+                selectedAmcMapObj: catSelectedAmcMap,
+                selectedFamilyMapObj: element.selectedFamilyMapObj
+
+
+              };
+              categoryFilteredMap[amc.categoryId] = obj2;
+              categoryFilteredArray.push(obj2)
+            }
           }
         });
       } else {
@@ -718,28 +798,330 @@ export class RightFilterDuplicateComponent implements OnInit {
       }
     });
     this.selectedAmcMap = selectedAmcMapObj;
-    // filterData1 = [];
-    // Object.keys(selectedFamilyMapObj2).forEach(singleFmId => {
-    //   filterData1.push({familyMemberId: singleFmId});
-    // });
-    this.filterOnlySelected(selectedFamilyMapObj2, this.familyMember, 'familyMemberId');
+    let selectedFamObj;
+    (Object.keys(selectedFamilyMapObj2).length > 0) ? selectedFamObj = selectedFamilyMapObj2 : selectedFamObj = selectedFamilyMapObjDupl;
 
-    // this.FilterAmcOnlySelcted(filterData1, this.familyMember, 'familyMemberId', 'familyMemberId');
-    // const tempFam = [];
-    // tempFam.push(...this.familyMember);
-    // this.familyMember = tempFam;
-    this.scheme = [...new Map(filterData.map(item => [item.id, item])).values()];
-    this.folio = [...new Map(filterData4.map(item => [item.folioNumber, item])).values()];
-    this.category = [...new Map(filterData3.map(item => [item.categoryId, item])).values()];
+    this.filterOnlySelected(selectedFamObj, this.familyMember, 'familyMemberId');
+    this.scheme = schemeFilteredArray;
+    this.folio = folioFilteredArray;
+    this.category = categoryFilteredArray;
     this.changeSelect('', '');
   }
+  changeFilterScheme() {
+    (this.schemeObj.length == 0) ? this.showError = null : (this.schemeObj.length == 1 && !this.schemeObj[0].selected) ? this.showError = 'scheme' : this.showError = null;
+    let filterData = [];
+    const filterData2 = this._data.mfData.mutualFundList;
+    let filterData1 = [];
+    const filterData3 = [];
+    const filterData4 = [];
+    this.checkFlag = true;
+    let famMap = {};
+    let amcMAp = {};
+    const selectedFamilyMapObj2 = {};
+    const selectedAmcMapObj2 = {};
+    const schemeCheck = this.checkFlag;
+    const famCheck = this.familyChecked;
+    const amcCheck = this.amcChecked;
+    const whichFilterAmc = this.whichFilter;
+    const selectedFamilyMapObj = this.selectedFamilyMap;
+    const selectedAmcMapObj = this.selectedAmcMap;
+    const selectedSchemeMapObj = {};
+    const amcFilteredMap = {};
+    const amcFilteredArray = [];
+    const folioFilteredMap = {};
+    const folioFilteredArray = [];
+    const categoryFilteredMap = {};
+    const categoryFilteredArray = [];
+    const selectedFamilyMapObjDupl = {};
+    const selectedAmcMapObjDupl = {};
+    this.scheme.filter(element => {
+      if (element.selected == true) {
+        Object.assign(selectedFamilyMapObj2, element.selectedFamilyMapObj);
+        Object.assign(selectedAmcMapObj2, element.selectedAmcMapObj);
 
+        element.showInFilter = true;
+        filterData2.forEach(amc => {
+          if ((famCheck && amcCheck && schemeCheck) && whichFilterAmc == 'scheme') {
+            famMap = amc.familyMemberId;
+            amcMAp = amc.amcId;
+          } else {
+            (Object.keys(selectedFamilyMapObj).length > 0) ? famMap = selectedFamilyMapObj[element.familyMemberId] : famMap = amc.familyMemberId;
+            (Object.keys(selectedAmcMapObj).length > 0) ? amcMAp = selectedAmcMapObj[element.amc_id] : amcMAp = amc.amcId;
+          }
+          let famObj;
+          let amcObj;
+          (Object.keys(this.selectedFamilyMap).length > 0) ? famObj = this.selectedFamilyMap[amc.familyMemberId] : (famObj = amc, famObj.showInFilter = true);
+          (Object.keys(this.selectedAmcMap).length > 0) ? amcObj = this.selectedAmcMap[amc.amcId] : (amcObj = amc, amcObj.showInFilter = true);
+
+
+          if (element.id == amc.schemeId && famObj && famObj.showInFilter && amcObj && amcObj.showInFilter) {
+            const duplObj = {}; const duplAmc = {};
+            (Object.keys(selectedFamilyMapObj2).length > 0) ? selectedFamilyMapObj2 : duplObj[amc.familyMemberId] = true;
+            Object.assign(selectedFamilyMapObjDupl, duplObj);
+            (Object.keys(selectedAmcMapObj2).length > 0) ? selectedAmcMapObj2 : duplAmc[amc.amcId] = true;
+            Object.assign(selectedAmcMapObjDupl, duplAmc);
+            selectedSchemeMapObj[element.id] = element;
+
+            const amcObj = amcFilteredMap[amc.amcId];
+            if (amcObj) {
+              const amcSelectedSchemeMap = amcObj.selectedSchemeMapObj;
+              amcSelectedSchemeMap[element.id] = true;
+            } else {
+              const amcSelectedSchemeMap = {};
+              amcSelectedSchemeMap[element.id] = true;
+              const obj = {
+                amc_name: amc.amcName,
+                schemeName: amc.schemeName,
+                id: amc.schemeId,
+                mutualFund: amc.mutualFund,
+                amc_id: amc.amcId,
+                selected: true,
+                showInFilter: true,
+                selectedSchemeMapObj: amcSelectedSchemeMap,
+                selectedFamilyMapObj: element.selectedFamilyMapObj,
+                selectedAmcMapObj: element.selectedAmcMapObj,
+              };
+              amcFilteredMap[amc.amcId] = obj;
+              amcFilteredArray.push(obj);
+            }
+            const folioObj = folioFilteredMap[amc.folioNumber];
+            if (folioObj) {
+              const folioSelectedSchemeMap = folioObj.selectedSchemeMapObj;
+              folioSelectedSchemeMap[element.id] = true;
+            } else {
+              const folioSelectedSchemeMap = {};
+              folioSelectedSchemeMap[element.id] = true;
+              const obj4 = {
+                folioNumber: amc.folioNumber,
+                selected: true,
+                showInFilter: true,
+                familyMemberId: amc.familyMemberId,
+                amc_id: amc.amcId,
+                id: amc.schemeId,
+                selectedSchemeMapObj: folioSelectedSchemeMap,
+                selectedFamilyMapObj: element.selectedFamilyMapObj,
+                selectedAmcMapObj: element.selectedAmcMapObj,
+
+              };
+              folioFilteredMap[amc.folioNumber] = obj4;
+              folioFilteredArray.push(obj4)
+            }
+            const catObj = categoryFilteredMap[amc.categoryId];
+            if (catObj) {
+              const catSelectedSchemeMap = catObj.selectedSchemeMapObj;
+              catSelectedSchemeMap[element.id] = true;
+            } else {
+              const catSelectedSchemeMap = {};
+              catSelectedSchemeMap[element.id] = true;
+              const obj2 = {
+                category: amc.categoryName,
+                categoryId: amc.categoryId,
+                selected: true,
+                showInFilter: true,
+                familyMemberId: amc.familyMemberId,
+                amc_id: amc.amcId,
+                id: amc.schemeId,
+                folioNumber: amc.folioNumber,
+                selectedSchemeMapObj: catSelectedSchemeMap,
+                selectedFamilyMapObj: element.selectedFamilyMapObj,
+                selectedAmcMapObj: element.selectedAmcMapObj,
+
+
+              };
+              categoryFilteredMap[amc.categoryId] = obj2;
+              categoryFilteredArray.push(obj2)
+            }
+          }
+
+        });
+      } else {
+        element.showInFilter = false;
+      }
+    });
+    this.selectedSchemeMap = selectedSchemeMapObj;
+    let selectedFamObj;
+    let selectedAmcObj;
+    (Object.keys(selectedFamilyMapObj2).length > 0) ? selectedFamObj = selectedFamilyMapObj2 : selectedFamObj = selectedFamilyMapObjDupl;
+    (Object.keys(selectedAmcMapObj2).length > 0) ? selectedAmcObj = selectedAmcMapObj2 : selectedAmcObj = selectedAmcMapObjDupl;
+    this.filterOnlySelected(selectedFamObj, this.familyMember, 'familyMemberId');
+    console.log(' this.amc pre : ', this.amc);
+    this.filterOnlySelected(selectedAmcObj, this.amc, 'amc_id');
+    console.log(' this.amc : ', this.amc);
+    this.folio = folioFilteredArray;
+    this.category = categoryFilteredArray;
+    this.changeSelect('', '');
+  }
+  changeFilterFolio() {
+    (this.folioObj.length == 0) ? this.showError = null : (this.folioObj.length == 1 && !this.folioObj[0].selected) ? this.showError = 'folio' : this.showError = null;
+    let filterData = [];
+    const filterData2 = this._data.mfData.mutualFundList;
+    let filterData1 = [];
+    const filterData3 = [];
+    let filterData4 = [];
+    this.checkFlag = true;
+    let famMap = {};
+    let amcMAp = {};
+    let schemeMap = {};
+    const folioCheck = this.checkFlag;
+    const famCheck = this.familyChecked;
+    const amcCheck = this.amcChecked;
+    const schemeCheck = this.schemeChecked;
+
+    const whichFilterAmc = this.whichFilter;
+    const selectedFamilyMapObj = this.selectedFamilyMap;
+    const selectedAmcMapObj = this.selectedAmcMap;
+    const selectedSchemeMapObj = this.selectedSchemeMap;
+    const selectedFolioMapObj = {};
+    const selectedFamilyMapObj2 = {};
+    const selectedAmcMapObj2 = {};
+    const selectedSchemeMapObj2 = {};
+    const amcFilteredMap = {};
+    const amcFilteredArray = [];
+    const schemeFilteredMap = {};
+    const schemeFilteredArray = [];
+    const folioFilteredMap = {};
+    const folioFilteredArray = [];
+    const categoryFilteredMap = {};
+    const categoryFilteredArray = [];
+    const selectedFamilyMapObjDupl = {};
+    const selectedAmcMapObjDupl = {};
+    const selectedSchemeMapObjDupl = {};
+    this.folio.filter(element => {
+      if (element.selected == true) {
+        Object.assign(selectedFamilyMapObj2, element.selectedFamilyMapObj);
+        Object.assign(selectedAmcMapObj2, element.selectedAmcMapObj);
+        Object.assign(selectedSchemeMapObj2, element.selectedSchemeMapObj);
+
+        element.showInFilter = true;
+        filterData2.forEach(amc => {
+          if ((famCheck && amcCheck && schemeCheck && folioCheck) && whichFilterAmc == 'folio') {
+            famMap = amc.familyMemberId;
+            amcMAp = amc.amcId;
+            schemeMap = amc.schemeId;
+          } else {
+            (Object.keys(selectedFamilyMapObj).length > 0) ? famMap = selectedFamilyMapObj[element.familyMemberId] : famMap = amc.familyMemberId;
+            (Object.keys(selectedAmcMapObj).length > 0) ? amcMAp = selectedAmcMapObj[element.amc_id] : amcMAp = amc.amcId;
+            (Object.keys(selectedSchemeMapObj).length > 0) ? schemeMap = selectedSchemeMapObj[element.id] : schemeMap = amc.schemeId;
+          }
+          let famObj;
+          let amcObj;
+          let schemeObj;
+          (Object.keys(this.selectedFamilyMap).length > 0) ? famObj = this.selectedFamilyMap[amc.familyMemberId] : (famObj = amc, famObj.showInFilter = true);
+          (Object.keys(this.selectedAmcMap).length > 0) ? amcObj = this.selectedAmcMap[amc.amcId] : (amcObj = amc, amcObj.showInFilter = true);
+          (Object.keys(this.selectedSchemeMap).length > 0) ? schemeObj = this.selectedSchemeMap[amc.schemeId] : (schemeObj = amc, schemeObj.showInFilter = true);
+
+
+          if (element.folioNumber == amc.folioNumber && famObj && famObj.showInFilter && amcObj && amcObj.showInFilter && schemeObj && schemeObj.showInFilter) {
+            selectedFolioMapObj[element.folioNumber] = element;
+            const duplObj = {}; const duplAmc = {}; const duplScheme = {};
+            (Object.keys(selectedFamilyMapObj2).length > 0) ? selectedFamilyMapObj2 : duplObj[amc.familyMemberId] = true;
+            Object.assign(selectedFamilyMapObjDupl, duplObj);
+            (Object.keys(selectedAmcMapObj2).length > 0) ? selectedAmcMapObj2 : duplAmc[amc.amcId] = true;
+            Object.assign(selectedAmcMapObjDupl, duplAmc);
+            (Object.keys(selectedSchemeMapObj2).length > 0) ? selectedSchemeMapObj2 : duplScheme[amc.schemeId] = true;
+            Object.assign(selectedSchemeMapObjDupl, duplScheme);
+
+            const amcObj = amcFilteredMap[amc.amcId];
+            if (amcObj) {
+              const amcSelectedFolioMap = amcObj.selectedFolioMapObj;
+              amcSelectedFolioMap[element.folioNumber] = true;
+            } else {
+              const amcSelectedFolioMap = {};
+              amcSelectedFolioMap[element.folioNumber] = true;
+              const obj = {
+                amc_name: amc.amcName,
+                schemeName: amc.schemeName,
+                id: amc.schemeId,
+                mutualFund: amc.mutualFund,
+                amc_id: amc.amcId,
+                selected: true,
+                showInFilter: true,
+                selectedFolioMapObj: amcSelectedFolioMap,
+                selectedFamilyMapObj: element.selectedFamilyMapObj,
+                selectedAmcMapObj: element.selectedAmcMapObj,
+                selectedSchemeMapObj: element.selectedSchemeMapObj
+              };
+              amcFilteredMap[amc.amcId] = obj;
+              amcFilteredArray.push(obj);
+            }
+            const schemeObj = schemeFilteredMap[amc.schemeId];
+            if (schemeObj) {
+              const schemeSelectedFolioMap = schemeObj.selectedFolioMapObj;
+              schemeSelectedFolioMap[element.folioNumber] = true;
+            } else {
+              const schemeSelectedFolioMap = {};
+              schemeSelectedFolioMap[element.folioNumber] = true;
+              const obj = {
+                amc_name: amc.amcName,
+                schemeName: amc.schemeName,
+                id: amc.schemeId,
+                mutualFund: amc.mutualFund,
+                amc_id: amc.amcId,
+                selected: true,
+                showInFilter: true,
+                selectedFolioMapObj: schemeSelectedFolioMap,
+                selectedFamilyMapObj: element.selectedFamilyMapObj,
+                selectedAmcMapObj: element.selectedAmcMapObj,
+                selectedSchemeMapObj: element.selectedSchemeMapObj
+              };
+              schemeFilteredMap[amc.schemeId] = obj;
+              schemeFilteredArray.push(obj);
+            }
+            const obj1 = {
+              name: amc.ownerName,
+              familyMemberId: amc.familyMemberId,
+              selected: true, showInFilter: true
+            };
+            const catObj = categoryFilteredMap[amc.categoryId];
+            if (catObj) {
+              const catSelectedFolioMap = catObj.selectedFolioMapObj;
+              catSelectedFolioMap[element.folioNumber] = true;
+            } else {
+              const catSelectedFolioMap = {};
+              catSelectedFolioMap[element.folioNumber] = true;
+              const obj2 = {
+                category: amc.categoryName,
+                categoryId: amc.categoryId,
+                selected: true,
+                showInFilter: true,
+                familyMemberId: amc.familyMemberId,
+                amc_id: amc.amcId,
+                id: amc.schemeId,
+                folioNumber: amc.folioNumber,
+                selectedFolioMapObj: catSelectedFolioMap,
+                selectedFamilyMapObj: element.selectedFamilyMapObj,
+                selectedAmcMapObj: element.selectedAmcMapObj,
+                selectedSchemeMapObj: element.selectedSchemeMapObj
+
+
+              };
+              categoryFilteredMap[amc.categoryId] = obj2;
+              categoryFilteredArray.push(obj2)
+            }
+          }
+        });
+      } else {
+        element.showInFilter = false;
+      }
+    });
+    this.selectedFolioMap = selectedFolioMapObj;
+    let selectedFamObj;
+    let selectedAmcObj;
+    let selectedSchemeObj;
+    (Object.keys(selectedFamilyMapObj2).length > 0) ? selectedFamObj = selectedFamilyMapObj2 : selectedFamObj = selectedFamilyMapObjDupl;
+    (Object.keys(selectedAmcMapObj2).length > 0) ? selectedAmcObj = selectedAmcMapObj2 : selectedAmcObj = selectedAmcMapObjDupl;
+    (Object.keys(selectedSchemeMapObj2).length > 0) ? selectedSchemeObj = selectedSchemeMapObj2 : selectedSchemeObj = selectedSchemeMapObjDupl;
+
+    this.filterOnlySelected(selectedFamObj, this.familyMember, 'familyMemberId');
+    this.filterOnlySelected(selectedAmcObj, this.amc, 'amc_id');
+    this.filterOnlySelected(selectedSchemeObj, this.scheme, 'id');
+    this.category = categoryFilteredArray;
+    console.log(this.amc);
+    this.changeSelect('', '');
+  }
   changeFilterCategory(data) {
     (this.categoryObj.length == 0) ? this.showError = null : (this.categoryObj.length == 1 && !this.categoryObj[0].selected) ? this.showError = 'category' : this.showError = null;
     const filterData = this._data.mfData.mutualFundList;
-    // filterData = filterData.filter((item: any) =>
-    //   (item.currentValue != 0 && item.currentValue > 0)
-    // );
     let filterData1 = [];
     let filterData2 = [];
     let filterData3 = [];
@@ -754,16 +1136,29 @@ export class RightFilterDuplicateComponent implements OnInit {
     let amcMAp = {};
     let schemeMap = {};
     let folioMap = {};
+    const selectedFamilyMapObj2 = {};
+    const selectedAmcMapObj2 = {};
+    const selectedSchemeMapObj2 = {};
+    const selectedFolioMapObj2 = {};
     const whichFilterAmc = this.whichFilter;
     const selectedFamilyMapObj = this.selectedFamilyMap;
     const selectedAmcMapObj = this.selectedAmcMap;
     const selectedSchemeMapObj = this.selectedSchemeMap;
     const selectedFolioMapObj = this.selectedFolioMap;
+    const selectedFamilyMapObjDupl = {};
+    const selectedAmcMapObjDupl = {};
+    const selectedSchemeMapObjDupl = {};
+    const selectedFolioMapObjDupl = {};
 
-    data.filter(function (element) {
+    data.filter(element => {
       if (element.selected == true) {
         element.showInFilter = true;
-        filterData.filter(function (amc) {
+        Object.assign(selectedFamilyMapObj2, element.selectedFamilyMapObj);
+        Object.assign(selectedAmcMapObj2, element.selectedAmcMapObj);
+        Object.assign(selectedSchemeMapObj2, element.selectedSchemeMapObj);
+        Object.assign(selectedFolioMapObj2, element.selectedFolioMapObj);
+
+        filterData.filter(amc => {
           if ((famCheck && amcCheck && schemeCheck && folioCheck && catCheck) && whichFilterAmc == 'category') {
             famMap = amc.familyMemberId;
             amcMAp = amc.amcId;
@@ -776,9 +1171,27 @@ export class RightFilterDuplicateComponent implements OnInit {
             (Object.keys(selectedSchemeMapObj).length > 0) ? schemeMap = selectedSchemeMapObj[element.id] : schemeMap = amc.schemeId;
             (Object.keys(selectedFolioMapObj).length > 0) ? folioMap = selectedFolioMapObj[element.folioNumber] : folioMap = amc.folioNumber;
           }
+          let famObj;
+          let amcObj;
+          let schemeObj;
+          let folioObj;
+          (Object.keys(this.selectedFamilyMap).length > 0) ? famObj = this.selectedFamilyMap[amc.familyMemberId] : (famObj = amc, famObj.showInFilter = true);
+          (Object.keys(this.selectedAmcMap).length > 0) ? amcObj = this.selectedAmcMap[amc.amcId] : (amcObj = amc, amcObj.showInFilter = true);
+          (Object.keys(this.selectedSchemeMap).length > 0) ? schemeObj = this.selectedSchemeMap[amc.schemeId] : (schemeObj = amc, schemeObj.showInFilter = true);
+          (Object.keys(this.selectedFolioMap).length > 0) ? folioObj = this.selectedFolioMap[amc.folioNumber] : (folioObj = amc, folioObj.showInFilter = true);
 
 
-          if (amc.categoryId == element.categoryId && famMap == amc.familyMemberId && amcMAp == amc.amcId && schemeMap == amc.schemeId && folioMap == amc.folioNumber) {
+          if (amc.categoryId == element.categoryId && famObj && famObj.showInFilter && amcObj && amcObj.showInFilter && schemeObj && schemeObj.showInFilter && folioObj && folioObj.showInFilter) {
+            const duplObj = {}; const duplAmc = {}; const duplScheme = {}; const duplFolio = {};
+            (Object.keys(selectedFamilyMapObj2).length > 0) ? selectedFamilyMapObj2 : duplObj[amc.familyMemberId] = true;
+            Object.assign(selectedFamilyMapObjDupl, duplObj);
+            (Object.keys(selectedAmcMapObj2).length > 0) ? selectedAmcMapObj2 : duplAmc[amc.amcId] = true;
+            Object.assign(selectedAmcMapObjDupl, duplAmc);
+            (Object.keys(selectedSchemeMapObj2).length > 0) ? selectedSchemeMapObj2 : duplScheme[amc.schemeId] = true;
+            Object.assign(selectedSchemeMapObjDupl, duplScheme);
+            (Object.keys(selectedFolioMapObj2).length > 0) ? selectedFolioMapObj2 : duplFolio[amc.folioNumber] = true;
+            Object.assign(selectedFolioMapObjDupl, duplFolio);
+
             const obj = {
               amc_name: amc.amcName,
               schemeName: amc.schemeName,
@@ -830,141 +1243,24 @@ export class RightFilterDuplicateComponent implements OnInit {
         element.showInFilter = false;
       }
     });
-    // let filterFamData = filterData3;
-    // this.familyMember.forEach(element => {
-    //   if (element.selected == true) {
-    //     filterFamData = filterFamData.filter(item => item.familyMemberId === element.familyMemberId);
-    //   }
-    // });
-    filterData3 = [...new Map(filterData3.map(item => [item.familyMemberId, item])).values()];
-    filterData1 = [...new Map(filterData1.map(item => [item.amc_id, item])).values()];
-    filterData4 = [...new Map(filterData4.map(item => [item.id, item])).values()];
-    filterData2 = [...new Map(filterData2.map(item => [item.folioNumber, item])).values()];
+    let selectedFamObj;
+    let selectedAmcObj;
+    let selectedSchemeObj;
+    let selectedFolioObj;
 
-    this.FilterAmcOnlySelcted(filterData3, this.familyMember, 'familyMemberId', 'familyMemberId');
-    this.FilterAmcOnlySelcted(filterData1, this.amc, 'amc_id', 'amc_id');
-    this.FilterAmcOnlySelcted(filterData4, this.scheme, 'id', 'id');
-    this.FilterAmcOnlySelcted(filterData2, this.folio, 'folioNumber', 'folioNumber');
+    (Object.keys(selectedFamilyMapObj2).length > 0) ? selectedFamObj = selectedFamilyMapObj2 : selectedFamObj = selectedFamilyMapObjDupl;
+    (Object.keys(selectedAmcMapObj2).length > 0) ? selectedAmcObj = selectedAmcMapObj2 : selectedAmcObj = selectedAmcMapObjDupl;
+    (Object.keys(selectedSchemeMapObj2).length > 0) ? selectedSchemeObj = selectedSchemeMapObj2 : selectedSchemeObj = selectedSchemeMapObjDupl;
+    (Object.keys(selectedFolioMapObj2).length > 0) ? selectedFolioObj = selectedFolioMapObj2 : selectedFolioObj = selectedFolioMapObjDupl;
 
-    // this.scheme = [...new Map(filterData1.map(item => [item.id, item])).values()];
-    // this.amc = [...new Map(filterData1.map(item => [item.amc_id, item])).values()];
-    // this.folio = [...new Map(filterData2.map(item => [item.folioNumber, item])).values()];
-    // this.familyMember = [...new Map(filterFamData.map(item => [item.familyMemberId, item])).values()];
+    this.filterOnlySelected(selectedFamObj, this.familyMember, 'familyMemberId');
+    this.filterOnlySelected(selectedAmcObj, this.amc, 'amc_id');
+    this.filterOnlySelected(selectedSchemeObj, this.scheme, 'id');
+    this.filterOnlySelected(selectedFolioObj, this.folio, 'folioNumber');
     this.changeSelect('', '');
   }
 
-  changeFilterFolio() {
-    (this.folioObj.length == 0) ? this.showError = null : (this.folioObj.length == 1 && !this.folioObj[0].selected) ? this.showError = 'folio' : this.showError = null;
-    let filterData = [];
-    const filterData2 = this._data.mfData.mutualFundList;
-    let filterData1 = [];
-    const filterData3 = [];
-    let filterData4 = [];
-    this.checkFlag = true;
-    let famMap = {};
-    let amcMAp = {};
-    let schemeMap = {};
-    const folioCheck = this.checkFlag;
-    const famCheck = this.familyChecked;
-    const amcCheck = this.amcChecked;
-    const schemeCheck = this.schemeChecked;
 
-    const whichFilterAmc = this.whichFilter;
-    const selectedFamilyMapObj = this.selectedFamilyMap;
-    const selectedAmcMapObj = this.selectedAmcMap;
-    const selectedSchemeMapObj = this.selectedSchemeMap;
-    const selectedFolioMapObj = {};
-    this.folio.filter(function (element) {
-      if (element.selected == true) {
-        element.showInFilter = true;
-        filterData2.forEach(amc => {
-          if ((famCheck && amcCheck && schemeCheck && folioCheck) && whichFilterAmc == 'folio') {
-            famMap = amc.familyMemberId;
-            amcMAp = amc.amcId;
-            schemeMap = amc.schemeId;
-          } else {
-            (Object.keys(selectedFamilyMapObj).length > 0) ? famMap = selectedFamilyMapObj[element.familyMemberId] : famMap = amc.familyMemberId;
-            (Object.keys(selectedAmcMapObj).length > 0) ? amcMAp = selectedAmcMapObj[element.amc_id] : amcMAp = amc.amcId;
-            (Object.keys(selectedSchemeMapObj).length > 0) ? schemeMap = selectedSchemeMapObj[element.id] : schemeMap = amc.schemeId;
-          }
-          // amc.mutualFund.forEach(mf => {
-
-          if (element.folioNumber == amc.folioNumber && famMap == amc.familyMemberId && amcMAp == amc.amcId && schemeMap == amc.schemeId) {
-            selectedFolioMapObj[element.folioNumber] = element.folioNumber;
-            const obj = {
-              amc_name: amc.amcName,
-              schemeName: amc.schemeName,
-              schemeCode: amc.schemeCode,
-              mutualFund: amc.mutualFund,
-              id: amc.schemeId,
-              familyMemberId: amc.familyMemberId,
-              amc_id: amc.amcId,
-              selected: true,
-              showInFilter: true
-
-            };
-            const obj3 = {
-              amc_name: amc.amcName,
-              schemeName: amc.schemeName,
-              schemeCode: amc.schemeCode,
-              mutualFund: amc.mutualFund,
-              id: amc.schemeId,
-              amc_id: amc.amcId,
-              selected: true,
-              showInFilter: true,
-              familyMemberId: amc.familyMemberId,
-
-
-            };
-            const obj1 = {
-              name: amc.ownerName,
-              familyMemberId: amc.familyMemberId,
-              selected: true, showInFilter: true
-            };
-
-            const obj2 = {
-              category: amc.categoryName,
-              categoryId: amc.categoryId,
-              selected: true, showInFilter: true, familyMemberId: amc.familyMemberId,
-              amc_id: amc.amcId,
-              id: amc.schemeId,
-              folioNumber: amc.folioNumber,
-            };
-            filterData.push(obj);
-            filterData4.push(obj3);
-            filterData1.push(obj1);
-            filterData3.push(obj2);
-          }
-          // });
-        });
-      } else {
-        element.showInFilter = false;
-      }
-    });
-    this.selectedFolioMap = selectedFolioMapObj;
-    // let filterFamData = filterData1;
-    // filterFamData = [...new Map(filterFamData.map(item => [item.familyMemberId, item])).values()];
-    // this.familyMember.forEach(element => {
-    //   if (element.selected == true) {
-    //     filterFamData = filterFamData.filter(item => item.familyMemberId === element.familyMemberId);
-    //   }
-    // });
-    filterData1 = [...new Map(filterData1.map(item => [item.familyMemberId, item])).values()];
-    filterData = [...new Map(filterData.map(item => [item.amc_id, item])).values()];
-    filterData4 = [...new Map(filterData4.map(item => [item.id, item])).values()];
-
-    this.FilterAmcOnlySelcted(filterData1, this.familyMember, 'familyMemberId', 'familyMemberId');
-    this.FilterAmcOnlySelcted(filterData, this.amc, 'amc_id', 'amc_id');
-    this.FilterAmcOnlySelcted(filterData4, this.scheme, 'id', 'id');
-
-    // this.category = this.matchDataFunction(filterData3,this.category,'categoryId','categoryId');
-    // this.scheme = [...new Map(filterData.map(item => [item.id, item])).values()];
-    // this.amc = [...new Map(filterData.map(item => [item.amc_id, item])).values()];
-    // this.familyMember = [...new Map(filterFamData.map(item => [item.familyMemberId, item])).values()];
-    this.category = [...new Map(filterData3.map(item => [item.categoryId, item])).values()];
-    console.log(this.amc);
-    this.changeSelect('', '');
-  }
 
   filterOnlySelected(filterMap, orgData, orgId) {
     orgData.forEach(item => item.selected = false);
@@ -978,8 +1274,6 @@ export class RightFilterDuplicateComponent implements OnInit {
         });
       }
     }
-    // orgData = [...new Map(orgData.map(item => [item[orgId], item])).values()];
-    // return orgData;
   }
 
   FilterAmcOnlySelcted(filterData, orgData, filterId, orgId) {
@@ -1022,108 +1316,7 @@ export class RightFilterDuplicateComponent implements OnInit {
     return newARr;
   }
 
-  changeFilterScheme() {
-    (this.schemeObj.length == 0) ? this.showError = null : (this.schemeObj.length == 1 && !this.schemeObj[0].selected) ? this.showError = 'scheme' : this.showError = null;
-    let filterData = [];
-    const filterData2 = this._data.mfData.mutualFundList;
-    let filterData1 = [];
-    const filterData3 = [];
-    const filterData4 = [];
-    this.checkFlag = true;
-    let famMap = {};
-    let amcMAp = {};
-    const schemeCheck = this.checkFlag;
-    const famCheck = this.familyChecked;
-    const amcCheck = this.amcChecked;
-    const whichFilterAmc = this.whichFilter;
-    const selectedFamilyMapObj = this.selectedFamilyMap;
-    const selectedAmcMapObj = this.selectedAmcMap;
-    const selectedSchemeMapObj = {};
-    this.scheme.filter(function (element) {
-      if (element.selected == true) {
-        element.showInFilter = true;
-        filterData2.forEach(amc => {
-          if ((famCheck && amcCheck && schemeCheck) && whichFilterAmc == 'scheme') {
-            famMap = amc.familyMemberId;
-            amcMAp = amc.amcId;
-          } else {
-            (Object.keys(selectedFamilyMapObj).length > 0) ? famMap = selectedFamilyMapObj[element.familyMemberId] : famMap = amc.familyMemberId;
-            (Object.keys(selectedAmcMapObj).length > 0) ? amcMAp = selectedAmcMapObj[element.amc_id] : amcMAp = amc.amcId;
-          }
-          // amc.mutualFund.forEach(mf => {
 
-          if (element.id == amc.schemeId && famMap == amc.familyMemberId && amcMAp == amc.amcId) {
-            selectedSchemeMapObj[element.id] = element.id;
-
-            const obj = {
-              amc_name: amc.amcName,
-              schemeName: amc.schemeName,
-              schemeCode: amc.schemeCode,
-              mutualFund: amc.mutualFund,
-              id: amc.schemeId,
-              amc_id: amc.amcId,
-              selected: true, showInFilter: true,
-              familyMemberId: amc.familyMemberId
-
-            };
-            const obj1 = {
-              name: amc.ownerName,
-              familyMemberId: amc.familyMemberId,
-              selected: true, showInFilter: true,
-              amc_id: amc.amcId,
-              id: amc.schemeId,
-            };
-            const obj4 = {
-              folioNumber: amc.folioNumber,
-              selected: true, showInFilter: true,
-              familyMemberId: amc.familyMemberId,
-              amc_id: amc.amcId,
-              id: amc.schemeId,
-            };
-            const obj2 = {
-              category: amc.categoryName,
-              categoryId: amc.categoryId,
-              selected: true, showInFilter: true,
-              familyMemberId: amc.familyMemberId,
-              amc_id: amc.amcId,
-              id: amc.schemeId,
-            };
-            filterData.push(obj);
-            filterData1.push(obj1);
-            filterData3.push(obj2);
-            filterData4.push(obj4);
-          }
-          // });
-        });
-      } else {
-        element.showInFilter = false;
-      }
-    });
-    // let filterFamData = filterData1;
-    // filterFamData = [...new Map(filterFamData.map(item => [item.familyMemberId, item])).values()];
-    // this.familyMember.forEach(element => {
-    //   if (element.selected == true) {
-    //     filterFamData = filterFamData.filter(item => item.familyMemberId === element.familyMemberId);
-    //   }
-    // });
-    this.selectedSchemeMap = selectedSchemeMapObj;
-    filterData1 = [...new Map(filterData1.map(item => [item.familyMemberId, item])).values()];
-
-    filterData = [...new Map(filterData.map(item => [item.amc_id, item])).values()];
-
-    this.FilterAmcOnlySelcted(filterData1, this.familyMember, 'familyMemberId', 'familyMemberId');
-    console.log(' this.amc pre : ', this.amc);
-    this.FilterAmcOnlySelcted(filterData, this.amc, 'amc_id', 'amc_id');
-    console.log(' this.amc : ', this.amc);
-    // this.folio = this.matchDataFunction(filterData4,this.folio,'folioNumber','folioNumber');
-    // this.category = this.matchDataFunction(filterData3,this.category,'categoryId','categoryId');
-    // this.amc = [...new Map(filterData.map(item => [item.amc_id, item])).values()];
-    // this.familyMember = [...new Map(filterFamData.map(item => [item.familyMemberId, item])).values()];
-    this.folio = [...new Map(filterData4.map(item => [item.folioNumber, item])).values()];
-    this.category = [...new Map(filterData3.map(item => [item.categoryId, item])).values()];
-
-    this.changeSelect('', '');
-  }
 
   changeReportFilter(value) {
     this.reportType.forEach(element => {
@@ -1525,6 +1718,6 @@ export class RightFilterDuplicateComponent implements OnInit {
 
 
   Close(data) {
-    this.subInjectService.changeNewRightSliderState({state: 'close', data});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', data });
   }
 }

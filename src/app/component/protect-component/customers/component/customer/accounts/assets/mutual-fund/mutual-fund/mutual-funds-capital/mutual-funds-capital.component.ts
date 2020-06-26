@@ -85,6 +85,8 @@ export class MutualFundsCapitalComponent implements OnInit {
   clientDetails: any;
   clientData: any;
   getOrgData: any;
+  familyMemberId: number;
+  familyList: any[];
   // capitalGainData: any;
   constructor(private pdfGen: PdfGenService,
               public routerActive: ActivatedRoute,
@@ -135,6 +137,9 @@ export class MutualFundsCapitalComponent implements OnInit {
         let param1 = queryParamMap['params'];
         this.clientId = parseInt(param1.clientId)
         this.advisorId = parseInt(param1.advisorId)
+        this.familyMemberId = parseInt(param1.familyMemberId)
+        this.familyList = []
+        this.familyList.push(this.familyMemberId)
         this.fromDateYear = (param1.from);
         this.toDateYear = (param1.to);
         console.log('2423425', param1)
@@ -545,7 +550,7 @@ export class MutualFundsCapitalComponent implements OnInit {
 
     let para = document.getElementById('template');
     // this.util.htmlToPdf(para.innerHTML, 'Test', this.fragmentData);
-    this.UtilService.htmlToPdf(para.innerHTML, 'CapitalGain', 'true', this.fragmentData, '', '');
+    this.UtilService.htmlToPdf(para.innerHTML, 'MF capital gain summary', 'true', this.fragmentData, '', '');
     // let rows = this.tableEl._elementRef.nativeElement.rows;
     // this.pdfGen.generatePdf(rows, tableTitle);
   }
@@ -556,7 +561,7 @@ export class MutualFundsCapitalComponent implements OnInit {
       let para = this.mfCapitalTemplate.nativeElement.innerHTML
       let obj = {
         htmlInput: para,
-        name: (this.clientData.name)?this.clientData.name:''+'s'+'MF_Capital_Gain_Summary'+date,
+        name: (this.clientData.name)?this.clientData.name:''+'s'+'MF capital gain summary'+date,
         landscape: true,
         key: 'showPieChart',
         clientId : this.clientId,
