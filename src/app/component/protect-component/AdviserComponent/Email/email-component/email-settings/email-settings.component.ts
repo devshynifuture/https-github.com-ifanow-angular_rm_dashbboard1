@@ -19,7 +19,7 @@ import { AuthService } from '../../../../../../auth-service/authService';
   styleUrls: ['./email-settings.component.scss']
 })
 export class EmailSettingsComponent implements OnInit {
-  loggedIn: boolean;
+  isLoggedIn: boolean;
 
   constructor(private route: ActivatedRoute,
     private fb: FormBuilder,
@@ -47,7 +47,7 @@ export class EmailSettingsComponent implements OnInit {
     });
 
     if (this.doesTokenStoredInLocalStorage()) {
-      this.loggedIn = true;
+      this.isLoggedIn = true;
     } else {
       this.emailService.getProfile().subscribe(res => {
         if (res) {
@@ -55,14 +55,14 @@ export class EmailSettingsComponent implements OnInit {
           localStorage.setItem('successStoringToken', 'true');
           localStorage.setItem('associatedGoogleEmailId', AuthService.getUserInfo().userName);
           this.router.navigate(['/admin/emails/inbox'], { relativeTo: this.activatedRoute });
-          this.loggedIn = true;
+          this.isLoggedIn = true;
         } else {
           this.eventService.openSnackBarNoDuration(res, 'DISMISS');
-          this.loggedIn = false;
+          this.isLoggedIn = false;
         }
       }, err => {
         this.eventService.openSnackBarNoDuration(err, "DISMISS");
-        this.loggedIn = false;
+        this.isLoggedIn = false;
       });
     }
 
