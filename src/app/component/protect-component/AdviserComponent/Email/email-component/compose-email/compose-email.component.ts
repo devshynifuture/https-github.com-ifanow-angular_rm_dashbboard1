@@ -25,6 +25,8 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
   attachmentArrayDetail: Array<any> = [];
   advisorId: any = AuthService.getAdvisorId()
   currentDraftGmailThread: any = '';
+  isLoadingForAttachment: boolean;
+  refreshRequired: boolean = false;
 
   constructor(private subInjectService: SubscriptionInject,
     public subscription: SubscriptionService,
@@ -69,60 +71,140 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
   emailAttachments: EmailAttachmentI[] = [];
   currentDraftId = '';
   gmailDraftThread;
+  choice;
 
   ngOnInit() {
     console.log("compose getting value data:::::", this.data);
+    this.choice = this.data.choice;
+    if (this.data.choice === 'draft') {
+
+      let messages = this.data.dataToSend.gmailThread.messages;
+      messages = messages[0];
+      this.data.dataToSend.gmailThread.messages = messages;
+      this.currentDraftGmailThread = this.data.dataToSend.gmailThread;
+    }
     this.createEmailForm();
+
   }
 
   initPoint() {
     this.prevStateOfForm = this.emailForm.value;
-    // let idOfDraft;
-    // let requestJson;
-    // let draftRequestJson;
-    // let attachmentIds = [];
-    // if (this.data.choice === 'draft') {
-    //   this.data.dataToSend.dataObj.attachmentArrayObjects.forEach(element => {
-    //     attachmentIds.push(element.id);
-    //   });
-    // }
-
-    // if(this.data.dataToSend==null){
-    //   // create draft
-    //   const createRequestJson = {
-    //     toAddress: this.emailForm.get('receiver').value ? this.emailForm.get('receiver').value : [''],
-    //     subject: this.emailForm.get('subject').value ? this.emailForm.get('subject').value : '',
-    //     message: this.emailForm.get('messageBody').value ? this.emailForm.get('messageBody').value : '',
-    //     fileData: (this.emailAttachments && this.emailAttachments.length !== 0) ? this.emailAttachments : [],
-    //     attachmentIds,
-    //     attachments: this.emailAttachments,
-    //     bccs: this.bccArray,
-    //     ccs: this.ccArray,
-    //   }
-    // }
-
+    let idOfDraft;
+    let requestJson;
+    let draftRequestJson;
+    let attachmentIds = [];
+    if (this.data.choice === 'draft') {
+      this.data.dataToSend.dataObj.attachmentArrayObjects.forEach(element => {
+        attachmentIds.push(element.id);
+      });
+    }
     // for updation draft
-    // this.emailForm.valueChanges.pipe(
-    //   debounceTime(5000)
-    // ).subscribe(res=>{
+    this.emailForm.valueChanges.pipe(
+      debounceTime(5000)
+    ).subscribe(res => {
+      if (this.data.dataToSend == null && this.choice === 'email') {
+        // create draft
+        const createRequestJson = {
+          toAddress: this.emailForm.get('receiver').value ? this.emailForm.get('receiver').value : [''],
+          subject: this.emailForm.get('subject').value ? this.emailForm.get('subject').value : '',
+          message: this.emailForm.get('messageBody').value ? this.emailForm.get('messageBody').value : '',
+          fileData: (this.emailAttachments && this.emailAttachments.length !== 0) ? this.emailAttachments : [],
+          attachmentIds,
+          attachments: this.emailAttachments,
+          bccs: this.bccArray,
+          ccs: this.ccArray,
+        }
 
-    //   if (this.data.dataToSend && this.currentDraftGmailThread === '') {
-    //     draftRequestJson = {
+        this.emailService.createDraft(createRequestJson).subscribe(res => {
+          if (res) {
+            console.log(res);
+            this.currentDraftId = res.message.id;
+            this.currentDraftGmailThread = res;
+            this.choice = 'draft';
+            this.refreshRequired = true;
+          }
+        })
+      }
+
+      if (this.currentDraftGmailThread !== '' && this.choice === 'draft') {
+        if (this.idOfMessage !== null && this.currentDraftId === '') {
+          idOfDraft = this.idOfMessage;
+        } else if (this.currentDraftId !== '') {
+          idOfDraft = this.currentDraftId;
+        }
+
+        draftRequestJson = {
+          toAddress: this.emailForm.get('receiver').value ? this.emailForm.get('receiver').value : [''],
+          subject: this.emailForm.get('subject').value ? this.emailForm.get('subject').value : '',
+          message: this.emailForm.get('messageBody').value ? this.emailForm.get('messageBody').value : '',
+          fileData: (this.emailAttachments && this.emailAttachments.length !== 0) ? this.emailAttachments : [],
+          draft: {
+            ...this.currentDraftGmailThread,
+          },
+          attachmentIds,
+          attachments: this.emailAttachments,
+          bccs: this.bccArray,
+          ccs: this.ccArray,
+          draftId: idOfDraft,
+          sendingType: 0,
+        };
+
+        this.emailService.updateDraft(draftRequestJson, idOfDraft).subscribe(res => {
+          if (res) {
+            this.currentDraftGmailThread = res.drafts[0];
+            this.currentDraftId = res.drafts[0].message.id;
+          }
+        });
+      }
+
+
+    });
+
+    // this.emailForm.valueChanges.subscribe(res => this.emailFormValueChange = res);
+    // if (this.data.dataToSend.choice === 'draft') {
+    //   this.emailService.getDraftThread
+    // }
+
+    // this.interval = setInterval(() => {
+    //   if (!this.areTwoObjectsEquivalent(this.prevStateOfForm, this.emailFormValueChange)) {
+    //     let idOfDraft;
+    //     let requestJson;
+    //     let attachmentIds = [];
+    //     if (this.data.choice === 'draft') {
+    //       this.data.dataToSend.dataObj.attachmentArrayObjects.forEach(element => {
+    //         attachmentIds.push(element.id);
+    //       });
+    //     }
+
+    //     const createRequestJson = {
     //       toAddress: this.emailForm.get('receiver').value ? this.emailForm.get('receiver').value : [''],
     //       subject: this.emailForm.get('subject').value ? this.emailForm.get('subject').value : '',
     //       message: this.emailForm.get('messageBody').value ? this.emailForm.get('messageBody').value : '',
     //       fileData: (this.emailAttachments && this.emailAttachments.length !== 0) ? this.emailAttachments : [],
-    //       draft: {
-    //         ...this.data.dataToSend.gmailThread,
-    //       },
     //       attachmentIds,
     //       attachments: this.emailAttachments,
     //       bccs: this.bccArray,
     //       ccs: this.ccArray,
-    //       draftId: this.idOfMessage,
-    //       sendingType: 0,
-    //     };
-    //   }  else if (this.currentDraftGmailThread !== '') {
+    //     }
+    //     // call update or create draft api
+    //     let draftRequestJson;
+    //     if (this.data.dataToSend && this.currentDraftGmailThread === '') {
+    //       draftRequestJson = {
+    //         toAddress: this.emailForm.get('receiver').value ? this.emailForm.get('receiver').value : [''],
+    //         subject: this.emailForm.get('subject').value ? this.emailForm.get('subject').value : '',
+    //         message: this.emailForm.get('messageBody').value ? this.emailForm.get('messageBody').value : '',
+    //         fileData: (this.emailAttachments && this.emailAttachments.length !== 0) ? this.emailAttachments : [],
+    //         draft: {
+    //           ...this.data.dataToSend.gmailThread,
+    //         },
+    //         attachmentIds,
+    //         attachments: this.emailAttachments,
+    //         bccs: this.bccArray,
+    //         ccs: this.ccArray,
+    //         draftId: this.idOfMessage,
+    //         sendingType: 0,
+    //       };
+    //     } else if (this.currentDraftGmailThread !== '') {
     //       draftRequestJson = {
     //         toAddress: this.emailForm.get('receiver').value ? this.emailForm.get('receiver').value : [''],
     //         subject: this.emailForm.get('subject').value ? this.emailForm.get('subject').value : '',
@@ -138,101 +220,37 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
     //         draftId: this.idOfMessage,
     //         sendingType: 0,
     //       };
+    //     } else {
+    //       draftRequestJson = {}
     //     }
 
+    //     if (this.idOfMessage && this.currentDraftId === '') {
+    //       idOfDraft = this.idOfMessage;
+    //       requestJson = draftRequestJson;
+    //     } else if (this.currentDraftId !== '') {
+    //       idOfDraft = this.currentDraftId;
+    //       requestJson = draftRequestJson;
+    //     } else {
+    //       idOfDraft = null;
+    //       requestJson = createRequestJson;
+    //     }
 
-    // });
+    //     console.log(requestJson, "::: this is requst json for put call of draft");
+    //     this.emailService.createUpdateDraft(requestJson, idOfDraft).subscribe(res => {
+    //       console.log("this is response of create or modify draft,::", res);
 
-    this.emailForm.valueChanges.subscribe(res => this.emailFormValueChange = res);
-    // if (this.data.dataToSend.choice === 'draft') {
-    //   this.emailService.getDraftThread
-    // }
-
-    this.interval = setInterval(() => {
-      if (!this.areTwoObjectsEquivalent(this.prevStateOfForm, this.emailFormValueChange)) {
-        let idOfDraft;
-        let requestJson;
-        let attachmentIds = [];
-        if (this.data.choice === 'draft') {
-          this.data.dataToSend.dataObj.attachmentArrayObjects.forEach(element => {
-            attachmentIds.push(element.id);
-          });
-        }
-
-        const createRequestJson = {
-          toAddress: this.emailForm.get('receiver').value ? this.emailForm.get('receiver').value : [''],
-          subject: this.emailForm.get('subject').value ? this.emailForm.get('subject').value : '',
-          message: this.emailForm.get('messageBody').value ? this.emailForm.get('messageBody').value : '',
-          fileData: (this.emailAttachments && this.emailAttachments.length !== 0) ? this.emailAttachments : [],
-          attachmentIds,
-          attachments: this.emailAttachments,
-          bccs: this.bccArray,
-          ccs: this.ccArray,
-        }
-        // call update or create draft api
-        let draftRequestJson;
-        if (this.data.dataToSend && this.currentDraftGmailThread === '') {
-          draftRequestJson = {
-            toAddress: this.emailForm.get('receiver').value ? this.emailForm.get('receiver').value : [''],
-            subject: this.emailForm.get('subject').value ? this.emailForm.get('subject').value : '',
-            message: this.emailForm.get('messageBody').value ? this.emailForm.get('messageBody').value : '',
-            fileData: (this.emailAttachments && this.emailAttachments.length !== 0) ? this.emailAttachments : [],
-            draft: {
-              ...this.data.dataToSend.gmailThread,
-            },
-            attachmentIds,
-            attachments: this.emailAttachments,
-            bccs: this.bccArray,
-            ccs: this.ccArray,
-            draftId: this.idOfMessage,
-            sendingType: 0,
-          };
-        } else if (this.currentDraftGmailThread !== '') {
-          draftRequestJson = {
-            toAddress: this.emailForm.get('receiver').value ? this.emailForm.get('receiver').value : [''],
-            subject: this.emailForm.get('subject').value ? this.emailForm.get('subject').value : '',
-            message: this.emailForm.get('messageBody').value ? this.emailForm.get('messageBody').value : '',
-            fileData: (this.emailAttachments && this.emailAttachments.length !== 0) ? this.emailAttachments : [],
-            draft: {
-              ...this.currentDraftGmailThread,
-            },
-            attachmentIds,
-            attachments: this.emailAttachments,
-            bccs: this.bccArray,
-            ccs: this.ccArray,
-            draftId: this.idOfMessage,
-            sendingType: 0,
-          };
-        } else {
-          draftRequestJson = {}
-        }
-
-        if (this.idOfMessage && this.currentDraftId === '') {
-          idOfDraft = this.idOfMessage;
-          requestJson = draftRequestJson;
-        } else if (this.currentDraftId !== '') {
-          idOfDraft = this.currentDraftId;
-          requestJson = draftRequestJson;
-        } else {
-          idOfDraft = null;
-          requestJson = createRequestJson;
-        }
-
-        console.log(requestJson, "::: this is requst json for put call of draft");
-        this.emailService.createUpdateDraft(requestJson, idOfDraft).subscribe(res => {
-          console.log("this is response of create or modify draft,::", res);
-
-          if (res.length !== 0) {
-            this.currentDraftId = res[0].message.id;
-            this.currentDraftGmailThread = res[0];
-          }
-        });
-        this.prevStateOfForm = this.emailFormValueChange;
-      }
-    }, 4000);
+    //       if (res.length !== 0) {
+    //         this.currentDraftId = res[0].message.id;
+    //         this.currentDraftGmailThread = res[0];
+    //       }
+    //     });
+    //     this.prevStateOfForm = this.emailFormValueChange;
+    //   }
+    // }, 4000);
   }
 
   messageDetailApi(id) {
+    this.isLoadingForAttachment = true;
     this.emailService.gmailMessageDetail(id).subscribe(res => {
 
       // based on gmail api explorer response
@@ -265,16 +283,17 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
         messageId: this.idOfMessage
       }
       let attachmentBase64Array = [];
-      this.emailService.getAttachmentFiles(obj).subscribe(res => {
-        // according to gmail attachment get 
-        const obj = {
-          filename: attachment.filename,
-          mimeType: attachment.mimeType,
-          size: res.size,
-          attachmentBase64Data: res.body.replace(/\-/g, '+').replace(/_/g, '/')
-        }
-        attachmentBase64Array.push(obj);
-      })
+      this.emailService.getAttachmentFiles(obj)
+        .subscribe(res => {
+          // according to gmail attachment get 
+          const obj = {
+            filename: attachment.filename,
+            mimeType: attachment.mimeType,
+            size: res.size,
+            attachmentBase64Data: res.body.replace(/\-/g, '+').replace(/_/g, '/')
+          }
+          attachmentBase64Array.push(obj);
+        })
 
       attachmentBase64Array.forEach(attachment => {
         let blobData = EmailUtilService.convertBase64ToBlobData(attachment.attachmentBase64Data, attachment.mimeType);
@@ -510,8 +529,9 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
   getAttachmentDetails(data) {
 
     if (data !== null) {
+      this.isLoadingForAttachment = true;
       // this.emailService.
-      data.dataObj.attachmentArrayObjects.forEach(attachmentObj => {
+      data.dataObj.attachmentArrayObjects.forEach((attachmentObj, index) => {
         const obj = {
           attachmentId: attachmentObj.id,
           email: AuthService.getUserInfo().userName,
@@ -519,6 +539,9 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
           userId: AuthService.getUserInfo().advisorId
         }
         this.emailService.getAttachmentFiles(obj).subscribe(res => {
+          if (index === (data.dataObj.attachmentArrayObjects.length - 1)) {
+            this.isLoadingForAttachment = false;
+          }
           console.log("attachment details:::", res);
           const resBase64 = res.data.replace(/\-/g, '+').replace(/_/g, '/');
           this.creationOfUrlAndBase64File(resBase64, attachmentObj);
@@ -548,42 +571,41 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
   }
 
   close() {
-    this.subInjectService.changeUpperRightSliderState({ state: 'close' });
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: this.refreshRequired });
   }
 
   closeWithDraftCreateOrUpdate(): void {
     clearInterval(this.interval);
-    if ((!this.data && this.data === null) && this.didFormChanged) {
-      // call create api from compose
+    // if ((!this.data && this.data === null) && this.didFormChanged) {
+    //   // call create api from compose
 
-      const requestJson = {
-        toAddress: this.emailForm.get('receiver').value ? this.emailForm.get('receiver').value : [''],
-        subject: this.emailForm.get('subject').value ? this.emailForm.get('subject').value : '',
-        message: this.emailForm.get('messageBody').value ? this.emailForm.get('messageBody').value : '',
-        fileData: this.emailForm.get('attachments').value ? this.emailForm.get('attachments').value : []
-      };
+    //   const requestJson = {
+    //     toAddress: this.emailForm.get('receiver').value ? this.emailForm.get('receiver').value : [''],
+    //     subject: this.emailForm.get('subject').value ? this.emailForm.get('subject').value : '',
+    //     message: this.emailForm.get('messageBody').value ? this.emailForm.get('messageBody').value : '',
+    //     fileData: this.emailForm.get('attachments').value ? this.emailForm.get('attachments').value : []
+    //   };
 
-      this.emailService.createUpdateDraft(requestJson, null).subscribe(res => {
-      })
+    //   this.emailService.createUpdateDraft(requestJson, null).subscribe(res => {
+    //   })
 
-    } else if ((this.data && this.data !== null) && this.didFormChanged) {
-      // call update api
-      const requestJson = {
-        toAddress: this.emailForm.get('receiver').value ? this.emailForm.get('receiver').value : [''],
-        subject: this.emailForm.get('subject').value ? this.emailForm.get('subject').value : '',
-        message: this.emailForm.get('messageBody').value ? this.emailForm.get('messageBody').value : '',
-        fileData: this.emailForm.get('attachments').value ? this.emailForm.get('attachments').value : []
-      };
-      this.emailService.createUpdateDraft(requestJson, this.idOfMessage).subscribe(res => {
-      })
+    // } else if ((this.data && this.data !== null) && this.didFormChanged) {
+    //   // call update api
+    //   const requestJson = {
+    //     toAddress: this.emailForm.get('receiver').value ? this.emailForm.get('receiver').value : [''],
+    //     subject: this.emailForm.get('subject').value ? this.emailForm.get('subject').value : '',
+    //     message: this.emailForm.get('messageBody').value ? this.emailForm.get('messageBody').value : '',
+    //     fileData: this.emailForm.get('attachments').value ? this.emailForm.get('attachments').value : []
+    //   };
+    //   this.emailService.createUpdateDraft(requestJson, this.idOfMessage).subscribe(res => {
+    //   })
 
-    } else if ((this.data && this.data !== null) && !this.didFormChanged) {
-      // close the dialog
-    }
+    // } else if ((this.data && this.data !== null) && !this.didFormChanged) {
+    //   // close the dialog
+    // }
 
-    this.subInjectService.changeUpperRightSliderState({ state: 'close' });
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    // this.subInjectService.changeUpperRightSliderState({ state: 'close' });
+    // this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 
   // handleCloseMail() {

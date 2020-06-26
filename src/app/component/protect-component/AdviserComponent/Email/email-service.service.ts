@@ -15,6 +15,7 @@ import { HttpService } from './../../../../http-service/http-service';
 export class EmailServiceService {
   private dataSourceOneMailView = new BehaviorSubject<Object>('');
   private draftObs = new BehaviorSubject('');
+  private refreshListObs = new BehaviorSubject(false);
 
   data = this.dataSourceOneMailView.asObservable();
   paginatorLength;
@@ -200,7 +201,11 @@ export class EmailServiceService {
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+
+          }
           rightSideDataSub.unsubscribe();
+
         }
       }
     );
