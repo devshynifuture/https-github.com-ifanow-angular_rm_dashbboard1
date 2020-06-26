@@ -64,10 +64,10 @@ export class CalculatorsComponent implements OnInit {
     });
 
     this.delayFG = this.fb.group({
-      delay1: ['', [Validators.required]],
-      delay2: ['', [Validators.required]],
-      delay3: ['', [Validators.required]],
-      delay4: ['', [Validators.required]],
+      delay1: [0, [Validators.required]],
+      delay2: [0, [Validators.required]],
+      delay3: [0, [Validators.required]],
+      delay4: [0, [Validators.required]],
     })
   }
 
@@ -142,7 +142,7 @@ export class CalculatorsComponent implements OnInit {
         enabled: false
     },
     title: {
-      text: 'Monthly Bar Chart'
+      text: ''
     },
     xAxis: {
         type: 'category',
@@ -158,29 +158,31 @@ export class CalculatorsComponent implements OnInit {
     legend: {
       enabled: false,
     },
-    series: []
+    series: [{data: []}]
   }
   createChart(res){
-    let data = [{
-        y: 123,
-        name: this.delayFG.controls.delay1.value.display,
-        color: 'green'
-    }, {
-        y: 60,
-        name:  this.delayFG.controls.delay1.value.display,
-        color: 'blue'
-    }, {
-        y: 43,
-        name:  this.delayFG.controls.delay1.value.display,
-        color: 'yellow'
-    }, {
-        y: 55,
-        name:  this.delayFG.controls.delay1.value.display,
-        color: 'red'
-    }];
-    this.options.series.push(data);
-    Highcharts.chart('monthly-chart-container', this.options);
-    Highcharts.chart('lumpsum-chart-container', this.options);
+    const colors = ['green', 'blue', 'yellow', 'red'];
+
+    let lumpsumSeries = JSON.parse(JSON.stringify(this.options));
+    let sipSeries = JSON.parse(JSON.stringify(this.options));
+    let count = 0;
+    for(let k in res) {
+      if(res.hasOwnProperty(k)) {
+        lumpsumSeries.series[0].data.push({
+          y: Math.round(res[k].lumpsum_total),
+          name: k + ' years',
+          color: colors[count]
+        })
+        sipSeries.series[0].data.push({
+          y: Math.round(res[k].sip_total),
+          name: k + ' years',
+          color: colors[count]
+        })
+        count++;
+      }
+    }
+    Highcharts.chart('monthly-chart-container', sipSeries);
+    Highcharts.chart('lumpsum-chart-container', lumpsumSeries);
   }
   
   calculateDelay(){
@@ -191,20 +193,21 @@ export class CalculatorsComponent implements OnInit {
 
     let subData = this.data.remainingData;
     let jsonObj = {
-      differentGoalYears: subData.differentGoalYears,
+      differentGoalYears: subData.differentGoalYears.map(year => this.datePipe.transform(year, AppConstants.DATE_FORMAT)),
       targetValueOfRequiredFVDebt: subData.targetValueOfRequiredFVDebt,
       targetValueOfRequiredFVEquity: subData.targetValueOfRequiredFVEquity,
       advisorId:this.advisorId,
       savingStartDate: this.datePipe.transform(subData.savingStartDate, AppConstants.DATE_FORMAT),
-      savingEndDate: this.datePipe.transform(subData.savingStartDate, AppConstants.DATE_FORMAT),
+      savingEndDate: this.datePipe.transform(subData.savingEndDate, AppConstants.DATE_FORMAT),
       yearStepUps:[0],
     }
 
     let formValue:Object = this.delayFG.value;
 
     for(let k in formValue) {
-      if(formValue.hasOwnProperty(k))
-      jsonObj.yearStepUps.push(formValue[k]);
+      if(formValue.hasOwnProperty(k)){
+        jsonObj.yearStepUps.push(formValue[k]);
+      }
     }
 
     this.planService.calculateCostToDelay(jsonObj).subscribe(res => {
@@ -212,7 +215,7 @@ export class CalculatorsComponent implements OnInit {
       this.showDelayChart = true;
       setTimeout(() => {
         this.createChart(res);
-      });
+      }, 100);
     }, err => {
       this.eventService.openSnackBar(err, "Dismiss");
     })
@@ -237,7 +240,6 @@ export class CalculatorsComponent implements OnInit {
     }
 
     this.planService.calculateCostToDelay(jsonObj).subscribe(res => {
-      console.log(res);
       this.eventService.openSnackBar("Cost of delay added to goal", "Dismiss");
     }, err => {
       this.eventService.openSnackBar(err, "Dismiss");
