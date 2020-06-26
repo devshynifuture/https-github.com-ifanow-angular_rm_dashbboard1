@@ -1,7 +1,8 @@
 <div class="row p-8 w-100 pb-0">
 
     <div class="col-md-1 pl-2 pr-0">
-        <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+        <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
 
             <i [matMenuTriggerFor]="menu1" class="material-icons">
                 arrow_drop_down
@@ -21,17 +22,20 @@
 
     <div class="col-md-3 p-0">
         <div class="pt-8">
-            <img src="/assets/images/svg/refresh.svg" class="mr-20 c-p" matTooltip="Refresh">
-            <img src="/assets/images/svg/double-drawer.svg" class="mr-20 c-p" matTooltip="Archive">
-            <img src="/assets/images/svg/delete.svg" (click)="multipleMoveToTrash()" class="mr-20 c-p" matTooltip="Move to Trash">
-            <mat-icon [matMenuTriggerFor]="menu" class="c-p pab">more_vert</mat-icon>
+            <img src="/assets/images/svg/refresh.svg" class="mr-20 c-p" matTooltip="Refresh" (click)="initPoint()">
+
+            <img src="/assets/images/svg/double-drawer.svg" class="mr-20 c-p" matTooltip="Archive" *ngIf="showOptions">
+            <img src="/assets/images/svg/delete.svg" (click)="multipleMoveToTrash()" *ngIf="showOptions"
+                class="mr-20 c-p" matTooltip="Move to Trash">
+            <mat-icon *ngIf="showOptions" [matMenuTriggerFor]="menu" class="c-p pab">more_vert</mat-icon>
             <mat-menu #menu="matMenu">
                 <button mat-menu-item>Make as read</button>
                 <button mat-menu-item>Make as unread</button>
                 <button mat-menu-item *ngIf="trashAction" (click)="moveThreadsFromTrash()">
                     Remove from Trash
                 </button>
-                <button *ngIf="selectedThreadsArray.length != 0 && trashAction" mat-menu-item (click)="deleteThreadsForeverFromTrash()">
+                <button *ngIf="selectedThreadsArray.length != 0 && trashAction" mat-menu-item
+                    (click)="deleteThreadsForeverFromTrash()">
                     Delete selected forever
                 </button>
             </mat-menu>
@@ -72,7 +76,9 @@
                     <th mat-header-cell *matHeaderCellDef>
                     </th>
                     <td mat-cell *matCellDef="let row">
-                        <mat-checkbox (click)="$event.stopPropagation(); highlightSelectedRow(row)" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+                        <mat-checkbox (click)="$event.stopPropagation(); highlightSelectedRow(row)"
+                            (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)"
+                            [aria-label]="checkboxLabel(row)">
                         </mat-checkbox>
                     </td>
                 </ng-container>
@@ -88,7 +94,8 @@
                 <!-- subject and message Column -->
                 <ng-container matColumnDef="subjectMessage">
                     <th mat-header-cell *matHeaderCellDef> </th>
-                    <td mat-cell *matCellDef="let element; index as i" class="d-flex " (click)="redirectMessages(element, i)">
+                    <td mat-cell *matCellDef="let element; index as i" class="d-flex "
+                        (click)="redirectMessages(element, i)">
                         {{element.subjectMessage.subject | truncate:30}}
                         <p class="m-0 pl-12 text-primitive">
                             {{element.subjectMessage.message | truncate:50}}
@@ -115,7 +122,8 @@
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;" appShowListActions [ngClass]="selectedThreadsArray.includes(row) ? 'selected-tr': ''" class="c-p">
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;" appShowListActions
+                    [ngClass]="selectedThreadsArray.includes(row) ? 'selected-tr': ''" class="c-p">
                 </tr>
             </table>
         </div>

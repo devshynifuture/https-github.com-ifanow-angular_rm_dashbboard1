@@ -32,6 +32,7 @@ export class EmailListingComponent implements OnInit {
   sentCount: any = 0;
   draftCount: any = 0;
   trashCount: any = 0;
+  showOptions: boolean = false;
 
 
   constructor(
@@ -542,10 +543,12 @@ export class EmailListingComponent implements OnInit {
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle(): void {
+    this.showOptions = !this.showOptions;
     if (this.isAllSelected()) {
       this.selection.clear();
       this.selectedThreadsArray = [];
     } else {
+
       this.dataSource.data.forEach(row => {
         this.selection.select(row);
         this.selectedThreadsArray.push(row);
@@ -571,6 +574,7 @@ export class EmailListingComponent implements OnInit {
 
   // ui select highlight
   highlightSelectedRow(row: ExtractedGmailDataI): void {
+    this.showOptions = !this.showOptions;
     if (this.selectedThreadsArray.includes(row)) {
       let indexOf = this.selectedThreadsArray.indexOf(row);
       let removedRow = this.selectedThreadsArray.splice(indexOf, 1);
