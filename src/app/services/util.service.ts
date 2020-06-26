@@ -367,6 +367,7 @@ export class UtilService {
   }
 
   htmlToPdf(inputData, pdfName, landscape, fragData: any = {}, key = null, svg = null) {
+    this.client = AuthService.getClientData();
     const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
     const obj = {
       htmlInput: inputData,
@@ -400,6 +401,7 @@ export class UtilService {
   }
 
   bulkHtmlToPdf(data) {
+    this.client = AuthService.getClientData();
     const obj = {
       htmlInput: data.htmlInput,
       name: data.name,
