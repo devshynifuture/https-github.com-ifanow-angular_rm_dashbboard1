@@ -85,6 +85,8 @@ export class MutualFundsCapitalComponent implements OnInit {
   clientDetails: any;
   clientData: any;
   getOrgData: any;
+  familyMemberId: number;
+  familyList: any[];
   // capitalGainData: any;
   constructor(private pdfGen: PdfGenService,
               public routerActive: ActivatedRoute,
@@ -135,6 +137,9 @@ export class MutualFundsCapitalComponent implements OnInit {
         let param1 = queryParamMap['params'];
         this.clientId = parseInt(param1.clientId)
         this.advisorId = parseInt(param1.advisorId)
+        this.familyMemberId = parseInt(param1.familyMemberId)
+        this.familyList = []
+        this.familyList.push(this.familyMemberId)
         this.fromDateYear = (param1.from);
         this.toDateYear = (param1.to);
         console.log('2423425', param1)

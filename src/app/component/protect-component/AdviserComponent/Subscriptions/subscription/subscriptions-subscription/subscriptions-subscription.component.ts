@@ -183,7 +183,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
           this.isLoading = false;
           // getSubSummarySubscription.unsubscribe();
         }
-        this.getSubSummaryRes(this.tableData);
+        this.getSubSummaryRes(this.getData);
 
       }, (error) => {
         this.errorMessage();
@@ -482,7 +482,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
           data => {
             this.deletedData(data);
             dialogRef.close(subData);
-            this.getClientSubData(false, false);
+            this.getClientSubData(false, true);
           }
         );
 
