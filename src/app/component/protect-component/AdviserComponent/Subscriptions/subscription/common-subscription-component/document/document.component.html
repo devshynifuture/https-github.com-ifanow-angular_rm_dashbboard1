@@ -357,7 +357,7 @@
                                 </th>
                                 <td mat-cell *matCellDef="let element" class="text-left">
                                     <div class="bar">
-                                        {{element.cdate | date:'dd/MM/yyyy'}} </div>
+                                        {{element.signedDate  | date:'dd/MM/yyyy'}} </div>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="status">
@@ -370,6 +370,7 @@
                                         <span *ngIf="element.status==1" class="text-primary t-10 f-500">READY TO
                                             SEND</span>
                                         <span *ngIf="element.status==2" class="text-primary t-10 f-500">SENT</span>
+                                        <span *ngIf="element.status==3" class="text-primary t-10 f-500">ESIGNED</span>
                                         <!-- <span *ngIf="element.status==2" class="text-danger t-10 f-500">NOT
                                             APPROVED</span>
                                         <span *ngIf="element.status==3" class="text-success t-10 f-500">APPROVED</span> -->
