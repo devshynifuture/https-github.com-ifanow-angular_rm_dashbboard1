@@ -40,7 +40,6 @@
             </div>
         </div>
 
-        <!-- house design -->
         <div class="col-width-78" *ngIf="allGoals.length > 0">
             <div class="row bb-grey pt-28 pb-8">
                 <div class="col-md-12 p-0">
@@ -65,7 +64,7 @@
                                     <h5 class="f-12 m-0 text-primitive">ACHIEVED</h5>
                                     <h3 class="m-0">
                                         <div class="bar">₹<span
-                                                appFormatNumber [value]="selectedGoal.dashboardData.presentValue">{{selectedGoal.dashboardData.presentValue}}</span>
+                                                appFormatNumber [value]="selectedGoal.achievedValue">{{selectedGoal.achievedValue}}</span>
                                         </div>
                                     </h3>
                                 </div>
@@ -90,18 +89,18 @@
                                     <p class="m-0 text-black roboto p-12 f-500 br bb">Monthly</p>
                                     <p class="m-0 text-black roboto p-12 bg-white br bb">
                                         <span class="bar"
-                                            appFormatNumber>{{selectedGoal.dashboardData.equity_monthly}}</span>
+                                            appFormatNumber [value]="selectedGoal.dashboardData.equity_monthly">{{selectedGoal.dashboardData.equity_monthly}}</span>
                                     </p>
 
                                     <p class="m-0 text-black roboto p-12 bg-white br"><span class="bar"
-                                            appFormatNumber>{{selectedGoal.dashboardData.debt_monthly}}</span></p>
+                                            appFormatNumber [value]="selectedGoal.dashboardData.debt_monthly">{{selectedGoal.dashboardData.debt_monthly}}</span></p>
                                 </div>
                                 <div class="col-md-3 p-0">
                                     <p class="m-0 text-black roboto p-12 f-500 bb">Lumpsum</p>
                                     <p class="m-0 text-black roboto p-12 bg-white bb"><span class="bar"
-                                            appFormatNumber>{{selectedGoal.dashboardData.lump_equity}}</span></p>
+                                            appFormatNumber [value]="selectedGoal.dashboardData.lump_equity">{{selectedGoal.dashboardData.lump_equity}}</span></p>
                                     <p class="m-0 text-black roboto p-12 bg-white"><span class="bar"
-                                            appFormatNumber>{{selectedGoal.dashboardData.lump_debt}}</span></p>
+                                            appFormatNumber [value]="selectedGoal.dashboardData.lump_debt">{{selectedGoal.dashboardData.lump_debt}}</span></p>
                                 </div>
                             </div>
                         </div>

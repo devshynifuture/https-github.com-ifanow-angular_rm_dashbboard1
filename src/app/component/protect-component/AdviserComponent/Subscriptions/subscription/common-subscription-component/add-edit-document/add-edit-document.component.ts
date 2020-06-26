@@ -81,7 +81,7 @@ export class AddEditDocumentComponent implements OnInit {
 
     }
     (inputData.documentTypeId) ? this.blankDocumentProperties.controls.docType.enable() : (inputData == "") ? this.blankDocumentProperties.controls.docType.enable() : this.blankDocumentProperties.controls.docType.disable();
-
+    this.selectedOption = inputData.documentTypeId;
     this.blankDocumentProperties.controls.docName.setValue(inputData.name);
     this.blankDocumentProperties.controls.docAvailability.setValue(this.selectedOption);
 
@@ -113,12 +113,12 @@ export class AddEditDocumentComponent implements OnInit {
 
   saveDocuments() {
     if (this.blankDocumentProperties.invalid) {
-      for (let element in this.blankDocumentProperties.controls) {
-        if (this.blankDocumentProperties.get(element).invalid) {
-          this.inputs.find(input => !input.ngControl.valid).focus();
-          this.blankDocumentProperties.controls[element].markAsTouched();
-        }
-      }
+      // for (let element in this.blankDocumentProperties.controls) {
+      //   if (this.blankDocumentProperties.get(element).invalid) {
+      // this.inputs.find(input => !input.ngControl.valid).focus();
+      this.blankDocumentProperties.markAllAsTouched();
+      //   }
+      // }
     } else {
       this.barButtonOptions.active = true;
       if (this._inputData.documentRepositoryId == undefined) {
@@ -134,7 +134,6 @@ export class AddEditDocumentComponent implements OnInit {
           availableAt: this.selectedOption ? parseInt(this.selectedOption) : 0,
           mappingId: this._inputData.docType == '3' ? 5 : 0,
           docType: this.blankDocumentProperties.controls.docType.value
-
         };
 
         this.subService.addSettingDocument(obj).subscribe(

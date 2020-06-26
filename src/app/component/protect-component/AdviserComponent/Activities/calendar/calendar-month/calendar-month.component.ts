@@ -88,7 +88,6 @@ export class CalendarMonthComponent implements OnInit {
               switch (e.rrule.FREQ) {
                 case "DAILY":
                   e["reUntil"] = new Date(parseInt(y),parseInt(m)-1,parseInt(d));
-                  
                   break;
               
                 default:
@@ -97,11 +96,24 @@ export class CalendarMonthComponent implements OnInit {
             }
             else{
               if(e.start.date != null){
-                e["reUntil"] = this.startDateFormate(e.start.date).setFullYear(2);
+                e['reStart'] = this.startDateFormate(e.start.date);
+                e["reUntil"] =new Date(this.startDateFormate(e.start.date).setFullYear(this.startDateFormate(e.start.date).getFullYear() + 2));
+              }
+              else if(e.rrule.COUNT){
+                e['reStart'] = new Date(e.start.dateTime);
+                e["reUntil"] = new Date(new Date(e.start.dateTime).setDate(new Date(e.start.dateTime).getDate() + parseInt(e.rrule.COUNT)));
               }
               else{
-                e["reUntil"] = this.startDateFormate(e.start.dateTime).setFullYear(2);
+                e['reStart'] = new Date(e.start.dateTime);
+                e["reUntil"] = new Date(new Date(e.start.dateTime).setFullYear(new Date(e.start.dateTime).getFullYear() + 2));
               }
+            }
+          }
+          else{
+            e['isRe'] = false;
+            if(e.start){
+            e['reStart'] = new Date(e.start.dateTime);
+            e["reUntil"] = new Date(e.end.dateTime);
             }
           }
           if(e.start){
@@ -114,10 +126,22 @@ export class CalendarMonthComponent implements OnInit {
             // console.log(this.formatedEvent,"formatedEvent calender1",);
           }
         }
+        console.log("events recurring",this.formatedEvent);
       }
     });
 
+    
+  }
 
+  dateTimeEvent(year,month,date){
+    let dateBe;
+    if(year != null){
+      dateBe = new Date(year,month,date);
+    }
+    else{
+      dateBe = new Date(date);
+    }
+   return new Date(dateBe).getTime();
   }
 
   startDateFormate(date){

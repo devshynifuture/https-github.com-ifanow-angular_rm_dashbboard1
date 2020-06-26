@@ -276,6 +276,7 @@ export class PreferencesSettingsComponent implements OnInit {
       upperSliderData => {
         if (UtilService.isDialogClose(upperSliderData)) {
           // this.getClientSubscriptionList();
+          this.getTemplate();
           subscription.unsubscribe();
         }
       }

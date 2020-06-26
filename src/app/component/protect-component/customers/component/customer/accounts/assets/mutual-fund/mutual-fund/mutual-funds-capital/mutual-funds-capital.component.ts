@@ -85,6 +85,8 @@ export class MutualFundsCapitalComponent implements OnInit {
   clientDetails: any;
   clientData: any;
   getOrgData: any;
+  familyMemberId: number;
+  familyList =[];
   // capitalGainData: any;
   constructor(private pdfGen: PdfGenService,
               public routerActive: ActivatedRoute,
@@ -133,8 +135,14 @@ export class MutualFundsCapitalComponent implements OnInit {
     this.routerActive.queryParamMap.subscribe((queryParamMap) => {
       if (queryParamMap.has('clientId')) {
         let param1 = queryParamMap['params'];
-        this.clientId = parseInt(param1.clientId)
+        this.clientId = parseInt(param1.clientId) 
         this.advisorId = parseInt(param1.advisorId)
+        this.familyMemberId = parseInt(param1.familyMemberId)
+        this.familyList = []
+        const obj={
+        id:this.familyMemberId
+        }
+        this.familyList.push(obj)
         this.fromDateYear = (param1.from);
         this.toDateYear = (param1.to);
         console.log('2423425', param1)
@@ -352,6 +360,9 @@ export class MutualFundsCapitalComponent implements OnInit {
       if (this.rightFilterData) {
         mutualFund = this.MfServiceService.filterArray(mutualFund, 'familyMemberId', this.rightFilterData.family_member_list, 'id');
       }
+      if(this.familyList.length > 0){
+        this.mfList = this.MfServiceService.filterArray(this.mfList, 'familyMemberId', this.familyList, 'id');
+      }
       mutualFund.forEach(element => {
         if (element.dividendTransactions) {
           element.dividendTransactions.forEach(ele => {
@@ -406,6 +417,9 @@ export class MutualFundsCapitalComponent implements OnInit {
       this.mfList = this.MfServiceService.filter(data, 'mutualFund');
       if (this.rightFilterData) {
         this.mfList = this.MfServiceService.filterArray(this.mfList, 'familyMemberId', this.rightFilterData.family_member_list, 'id');
+      }
+      if(this.familyList.length > 0){
+        this.mfList = this.MfServiceService.filterArray(this.mfList, 'familyMemberId', this.familyList, 'id');
       }
       this.mfList.forEach(element => {
         if (element.redemptionTransactions) {
