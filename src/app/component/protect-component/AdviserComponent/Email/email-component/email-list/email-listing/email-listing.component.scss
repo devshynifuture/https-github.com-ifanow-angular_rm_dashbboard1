@@ -26,3 +26,8 @@
     width: auto !important;
     height: auto !important;
 }
+
+.email-list-scroll {
+    overflow-y: auto !important;
+    height: calc(100vh - 214px);
+}

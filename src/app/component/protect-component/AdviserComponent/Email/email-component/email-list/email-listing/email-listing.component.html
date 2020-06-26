@@ -62,7 +62,7 @@
 </div>
 
 <div class="row">
-    <div class="col-md-12 p-0">
+    <div class="col-md-12 p-0 email-list-scroll">
 
 
         <div *ngIf="isLoading == false">
@@ -81,7 +81,7 @@
                 <ng-container matColumnDef="emailers">
                     <th mat-header-cell *matHeaderCellDef> </th>
                     <td mat-cell *matCellDef="let element; index as i" (click)="redirectMessages(element, i)">
-                        {{element.emailers | truncate:30}} {{ element.messageCount
+                        {{element.emailers | truncate:25}} {{ element.messageCount
                         <=1 ? '': element.messageCount }} </td>
                 </ng-container>
 
@@ -89,9 +89,9 @@
                 <ng-container matColumnDef="subjectMessage">
                     <th mat-header-cell *matHeaderCellDef> </th>
                     <td mat-cell *matCellDef="let element; index as i" class="d-flex " (click)="redirectMessages(element, i)">
-                        {{element.subjectMessage.subject | truncate:30}}
+                        {{element.subjectMessage.subject | truncate:25}}
                         <p class="m-0 pl-12 text-primitive">
-                            {{element.subjectMessage.message | truncate:50}}
+                            {{element.subjectMessage.message | truncate:30}}
                         </p>
                     </td>
                 </ng-container>
