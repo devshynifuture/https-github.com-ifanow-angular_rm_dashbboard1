@@ -17,6 +17,7 @@ import { PlaceHolder } from '../interfaces/place-holder.interface';
 })
 export class UtilService {
   responseData: any;
+  client: any;
 
   constructor(
     private eventService: EventService,
@@ -24,11 +25,13 @@ export class UtilService {
     private subService: SubscriptionService,
     private datePipe: DatePipe
   ) {
+    this.client = AuthService.getClientData();
+
   }
 
   private static decimalPipe = new DecimalPipe('en-US');
 
-  client = AuthService.getClientData();
+
   @Input()
   public positiveMethod: Function;
   fragmentData: any;
@@ -364,6 +367,7 @@ export class UtilService {
   }
 
   htmlToPdf(inputData, pdfName, landscape, fragData: any = {}, key = null, svg = null) {
+    this.client = AuthService.getClientData();
     const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
     const obj = {
       htmlInput: inputData,
@@ -374,7 +378,7 @@ export class UtilService {
     };
     const browser = this.getBrowserName();
     console.log(browser);
-    if(!this.client){
+    if (!this.client) {
       this.client = {}
       this.client.name = ''
     }
@@ -385,7 +389,7 @@ export class UtilService {
           const file = new Blob([data], { type: 'application/pdf' });
           fragData.isSpinner = false;
           // window.open(fileURL,"hello");
-          const namePdf = this.client.name  + '\'s ' + pdfName + ' as on :' + date;
+          const namePdf = this.client.name + '\'s ' + pdfName + ' as on :' + date;
           const a = document.createElement('a');
           a.href = window.URL.createObjectURL(file);
           a.download = namePdf + '.pdf';
@@ -397,6 +401,7 @@ export class UtilService {
   }
 
   bulkHtmlToPdf(data) {
+    this.client = AuthService.getClientData();
     const obj = {
       htmlInput: data.htmlInput,
       name: data.name,
@@ -405,15 +410,15 @@ export class UtilService {
       clientId: data.clientId,
       advisorId: data.advisorId
     };
-    
+
     return this.http.post(
       'http://dev.ifanow.in:8080/futurewise/api/v1/web/pdfAndEmail/bulk-mail/html-to-pdf', obj,
-      ).subscribe(
-        data => {
-          console.log('done email', data);
-          this.responseData = data
-          alert(this.responseData.status);
-        });
+    ).subscribe(
+      data => {
+        console.log('done email', data);
+        this.responseData = data
+        alert(this.responseData.status);
+      });
   }
 
   /**

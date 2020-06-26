@@ -1,14 +1,14 @@
-import {EventService} from './../../../../../../../../Data-service/event.service';
-import {AuthService} from './../../../../../../../../auth-service/authService';
-import {EmailServiceService} from './../../../../email-service.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Component, OnInit} from '@angular/core';
-import {Validators, FormBuilder} from '@angular/forms';
-import {MatDialog} from '@angular/material';
-import {GoogleConnectDialogComponent} from '../../../google-connect-dialog/google-connect-dialog.component';
-import {UtilService} from '../../../../../../../../services/util.service';
-import {SubscriptionInject} from '../../../../../Subscriptions/subscription-inject.service';
-import {EmailFaqAndSecurityComponent} from '../../../email-faq-and-security/email-faq-and-security.component';
+import { EventService } from './../../../../../../../../Data-service/event.service';
+import { AuthService } from './../../../../../../../../auth-service/authService';
+import { EmailServiceService } from './../../../../email-service.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Validators, FormBuilder } from '@angular/forms';
+import { MatDialog } from '@angular/material';
+import { GoogleConnectDialogComponent } from '../../../google-connect-dialog/google-connect-dialog.component';
+import { UtilService } from '../../../../../../../../services/util.service';
+import { SubscriptionInject } from '../../../../../Subscriptions/subscription-inject.service';
+import { EmailFaqAndSecurityComponent } from '../../../email-faq-and-security/email-faq-and-security.component';
 
 @Component({
   selector: 'app-google-connect',
@@ -18,13 +18,13 @@ import {EmailFaqAndSecurityComponent} from '../../../email-faq-and-security/emai
 export class GoogleConnectComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
-              private fb: FormBuilder,
-              private router: Router,
-              private activatedRoute: ActivatedRoute,
-              private emailService: EmailServiceService,
-              private eventService: EventService,
-              public dialog: MatDialog,
-              private subInjectService: SubscriptionInject) {
+    private fb: FormBuilder,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private emailService: EmailServiceService,
+    private eventService: EventService,
+    public dialog: MatDialog,
+    private subInjectService: SubscriptionInject) {
   }
 
 
@@ -43,14 +43,15 @@ export class GoogleConnectComponent implements OnInit {
     });
 
     if (this.doesTokenStoredInLocalStorage()) {
-      this.router.navigate(['/admin/emails/inbox'], {relativeTo: this.activatedRoute});
+      this.router.navigate(['/admin/emails/inbox'], { relativeTo: this.activatedRoute });
     } else {
+      // call for getProfile api for having connected mail
       this.emailService.getProfile().subscribe(res => {
         if (res) {
           localStorage.setItem('googleOAuthToken', 'oauthtoken');
           localStorage.setItem('successStoringToken', 'true');
           localStorage.setItem('associatedGoogleEmailId', AuthService.getUserInfo().userName);
-          this.router.navigate(['/admin/emails/inbox'], {relativeTo: this.activatedRoute});
+          this.router.navigate(['/admin/emails/inbox'], { relativeTo: this.activatedRoute });
         } else {
           this.eventService.openSnackBarNoDuration(res, 'DISMISS');
         }
@@ -58,7 +59,6 @@ export class GoogleConnectComponent implements OnInit {
         this.eventService.openSnackBarNoDuration(err, 'DISMISS');
       });
     }
-    // call for getProfile api for having connected mail
 
     if (this.router.url == '/admin/activies/month') {
       this.isEmail = false;

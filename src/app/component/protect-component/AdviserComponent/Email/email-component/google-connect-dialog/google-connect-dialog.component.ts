@@ -37,7 +37,9 @@ export class GoogleConnectDialogComponent {
 
 
   gmailRedirectUrlCreation() {
-    const hitGmailUrl = 'https://accounts.google.com/o/oauth2/v2/auth?client_id=579886643607-h1m21go2dct12nva48pi5mr7meejv7nh.apps.googleusercontent.com&response_type=code&scope=https://mail.google.com+https://www.googleapis.com/auth/calendar&redirect_uri=http://localhost:4200/redirect&access_type=offline';
+    let redirect_uri = window.location.origin;
+    const hitGmailUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=579886643607-h1m21go2dct12nva48pi5mr7meejv7nh.apps.googleusercontent.com&response_type=code&scope=https://mail.google.com+https://www.googleapis.com/auth/calendar&redirect_uri=${redirect_uri}/redirect&access_type=offline`;
+
 
     localStorage.removeItem('associatedGoogleEmailId');
     // compare it with authEmail id
