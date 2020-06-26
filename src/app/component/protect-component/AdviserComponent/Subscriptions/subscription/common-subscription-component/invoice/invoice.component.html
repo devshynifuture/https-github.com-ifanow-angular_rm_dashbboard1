@@ -76,7 +76,7 @@
                             class="b-a wrapper-9 ml-8 c-p" src="assets/images/svg/delete.svg">
                     </div>
                     <div class="right text-right" [ngClass]="storeData.status !=1? 'col-md-4' : 'col-md-2'">
-                        <button (click)="recordPayment()" class="btn-primary br-0 " *ngIf="rpyment==true"
+                        <button (click)="recordPayment()" class="btn-primary br-0 h-40" *ngIf="rpyment==true"
                             mat-stroked-button>RECORD
                             PAYMENT
                         </button>
@@ -137,7 +137,7 @@
                         </div>
                         <div class="p-9">
                             <div class="b-a">
-                                <div class="row bg-grey lter b-t b-b p-16 pr-0 pl-0">
+                                <div class="row bg-grey lter b-b p-16 pr-0 pl-0">
                                     <div class="col-md-9">
                                         <h4 class="m-0 f-14 f-500"> Service Details
 
@@ -345,7 +345,7 @@
         </div>
         <div class="right text-right" [ngClass]="storeData.status !=1? 'col-md-4' : 'col-md-5'"
             *ngIf="storeData.isAdvisor">
-            <button (click)="recordPayment()" class="btn-primary br-0 mb-8" *ngIf="rpyment==true"
+            <button (click)="recordPayment()" class="btn-primary br-0 mb-8 h-40" *ngIf="rpyment==true"
                 mat-stroked-button>RECORD
                 PAYMENT
             </button>
@@ -516,13 +516,13 @@
                </div> -->
                     </div>
                     <div class="wrapper-9">
-                        <div *ngIf="storeData.auto == true" class="row b-a bg-grey lter ">
+                        <div *ngIf="storeData.auto == true" class="row b-a bg-grey lter pt-16 pb-16">
                             <div class="col-md-10 d-flex  align-items-center">
                                 <p class="m-0 text-black f-500  ">Fee calculation - Attachment</p>
                             </div>
-                            <div class="col-md-2 wrapper-9 text-right">
+                            <div class="col-md-2 text-right">
                                 <!-- <button (click)="OpenFeeCalc()" class="btn-primary br-0" mat-stroked-button>View -->
-                                <app-progress-button (btnClick)="OpenFeeCalc()" class="br-0 text-inherit ml-12"
+                                <app-progress-button (btnClick)="OpenFeeCalc()" class="br-0 text-inherit"
                                     [options]="barButtonOptions">
                                 </app-progress-button>
                                 <!-- </button> -->
