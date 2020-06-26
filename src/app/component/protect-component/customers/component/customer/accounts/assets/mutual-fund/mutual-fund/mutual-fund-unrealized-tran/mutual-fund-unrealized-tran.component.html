@@ -495,7 +495,7 @@
    </div>
 </div>
 <!-- -------------------- pdf ---------------------------- -->
-<div #unrealizedTranTemplate id="template" class="hide" *ngIf="showDownload == true">
+<div #unrealizedTranTemplate id="template" >
    <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif; ">
       <tr>
          <!-- <td style="text-align: left;">
@@ -508,9 +508,6 @@
         <td style="text-align: left;" *ngIf="getOrgData && getOrgData.reportLogoUrl =='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
             <img width="250px" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
         </td>
-         <td style="text-align: left;" *ngIf="userInfo.reportLogoUrl" colspan="3">
-            <img width="250px" *ngIf="userInfo.reportLogoUrl" [src]="userInfo.reportLogoUrl">
-         </td>
          <td style="text-align: right;" colspan="6">
             <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;" *ngIf="userInfo">
                {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
