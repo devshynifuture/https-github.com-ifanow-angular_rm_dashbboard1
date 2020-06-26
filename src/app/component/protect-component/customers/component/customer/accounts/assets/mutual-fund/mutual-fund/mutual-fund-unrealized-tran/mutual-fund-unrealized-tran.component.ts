@@ -82,7 +82,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   getOrgData: any;
   clientDetails: any;
   reportName: any;
-  fragmentData: any;
+  fragmentData = { isSpinner: false };
 
   constructor(public dialog: MatDialog, private datePipe: DatePipe,
     private subInjectService: SubscriptionInject, private utilService: UtilService,
@@ -999,8 +999,6 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   generatePdf() {
     this.showDownload = true;
     this.fragmentData.isSpinner = true;
-    this.fragmentData.mode = {}
-    this.fragmentData.mode = this.mode
     setTimeout(() => {
       const para = document.getElementById('template');
       this.returnValue = this.utilService.htmlToPdf(para.innerHTML, this.reportName, 'true', this.fragmentData, '', '');
