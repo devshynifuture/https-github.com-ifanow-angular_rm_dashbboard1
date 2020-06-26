@@ -131,6 +131,7 @@ export class MutualFundOverviewComponent implements OnInit {
     console.log('advisorData', this.userInfo);
     console.log('clientData', this.clientData);
     console.log('getAdvisorDetail', this.getAdvisorDetail);
+    console.log('getOrgData',this.getOrgData)
   }
 
   uploadData(data) {
