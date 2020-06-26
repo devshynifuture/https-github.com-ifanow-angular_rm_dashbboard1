@@ -30,14 +30,14 @@
             </div>
         </div>
     </div>
-    <div class="pl-28 pb-12 pt-24" *ngIf="_inputData.openedFrom != 'settings'">
+    <div class="pl-28 pb-12 pt-24 new-email-chips-height" *ngIf="_inputData.openedFrom != 'settings'">
         <div class="row">
             <div class="col-md-1 d-flex align-items-center">
                 <p class="m-0 text-black roboto f-400">To</p>
             </div>
 
-            <div class="col-md-9 pl-0">
-                <mat-form-field class="heightAuto ">
+            <div class="col-md-9 pl-0" id="new-mail-chips">
+                <mat-form-field class="h-auto form-control">
                     <mat-chip-list #chipListEmail>
                         <mat-chip [removable]="true" *ngFor="let singleEmailId of emailIdList; let i = index"
                             [selectable]="false" (removed)="removeEmailId(i)">
@@ -45,22 +45,21 @@
                             <mat-icon matChipRemove>cancel</mat-icon>
                         </mat-chip>
                         <input [matChipInputFor]="chipListEmail" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                            [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="add($event)" [autofocus]="true"
-                            class="form-control">
+                            [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="add($event)" [autofocus]="true">
                     </mat-chip-list>
                 </mat-form-field>
             </div>
         </div>
     </div>
 
-    <div class="pl-28 pb-12 pt-12">
+    <div class="pl-28 pb-12 pt-24">
         <div class="row">
             <div class="col-md-1 d-flex align-items-center pl-0">
-                <p class="m-0 text-black roboto f-400">Subject</p>
+                <p class="m-0 text-black roboto f-400 pt-8">Subject</p>
             </div>
             <div class="col-md-9 pl-0">
                 <mat-form-field>
-                    <input [(ngModel)]="_inputData.subject" class="form-control h-40"
+                    <input matInput [(ngModel)]="_inputData.subject" class="form-control h-40"
                         [readonly]="_inputData.subjectChange">
                 </mat-form-field>
             </div>

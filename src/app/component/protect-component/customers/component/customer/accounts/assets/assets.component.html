@@ -7,11 +7,11 @@
 
             <mat-nav-list class="width-220 pt-0" id="d">
 
-                <div class="col-md-12 p-0 pt-8 ">
+                <div class="p-0 pt-8 ">
                     <!-- <div class="leftside-overlay-toggle-button" (click)="sidenav.toggle()" *ngIf="sidenavState">
   <i class="material-icons f-30 text-custom"> keyboard_arrow_right </i>
   </div> -->
-                    <ul class="vertical-menu " [ngClass]="{'w-228': sidenavState || !sidenavState}">
+                    <ul class="vertical-menu ">
                         <li *ngFor="let singleAssetType of assetSideBarData"
                             (click)="viewMode =singleAssetType.viewmode;sidenavState = false"
                             [ngClass]="{'activeColor lt':viewMode ==singleAssetType.viewmode}" class=" c-p">
