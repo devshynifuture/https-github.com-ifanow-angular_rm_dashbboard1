@@ -11,6 +11,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { EmailServiceService } from './../../../email-service.service';
 import { ExtractedGmailDataI, MessageListArray, GmailInboxResponseI } from '../../email.interface';
 import { EmailUtilService } from 'src/app/services/email-util.service';
+import { UtilService } from '../../../../../../../services/util.service';
+import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-email-listing',
@@ -30,6 +32,7 @@ export class EmailListingComponent implements OnInit {
   sentCount: any = 0;
   draftCount: any = 0;
   trashCount: any = 0;
+  showOptions: boolean = false;
 
 
   constructor(
@@ -39,7 +42,8 @@ export class EmailListingComponent implements OnInit {
     private dialog: MatDialog,
     private eventService: EventService,
     private authService: AuthService,
-    private emailUtilService: EmailUtilService) { }
+    private emailUtilService: EmailUtilService,
+    private subInjectService: SubscriptionInject) { }
 
   paginatorLength;
   paginatorSubscription;
@@ -65,6 +69,10 @@ export class EmailListingComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   ngOnInit() {
+    this.initPoint();
+  }
+
+  initPoint() {
     let location;
 
     if (this.router.url === '/') {
@@ -91,6 +99,7 @@ export class EmailListingComponent implements OnInit {
 
     this.getPaginatorLengthRes(location);
   }
+
 
   redirectMessages(element, index) {
     let gmailThread;
@@ -188,7 +197,7 @@ export class EmailListingComponent implements OnInit {
         if (this.maxListRes > this.paginatorLength) {
           this.maxListRes = this.paginatorLength;
         }
-        let valueOfNextPagination = this.currentList + 50;
+        let valueOfNextPagination = this.maxListRes + 50;
         if (valueOfNextPagination >= this.paginatorLength) {
           this.showNextPaginationBtn = false;
         } else if (valueOfNextPagination > this.paginatorLength) {
@@ -271,6 +280,28 @@ export class EmailListingComponent implements OnInit {
     this.messageListArray.forEach((item) => {
       threadIdsArray.push(item["idsOfThread"]["id"]);
     });
+
+    const fragmentData = {
+      flag: 'composeEmail',
+      data: { dataToSend: dataObj, choice: 'draft' },
+      id: 1,
+      state: 'open35',
+      componentName: ComposeEmailComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            this.initPoint();
+          }
+          rightSideDataSub.unsubscribe();
+
+        }
+      }
+    );
+
+
+
     this.emailService.sendNextData({ dataObj, threadIdsArray, gmailThread });
     this.emailService.openComposeEmail({ dataObj, threadIdsArray, gmailThread }, ComposeEmailComponent, 'draft');
     this.showDraftView = false;
@@ -415,7 +446,7 @@ export class EmailListingComponent implements OnInit {
   }
 
   nextPagesList() {
-    let aheadPaginatorVal = this.currentList + 50;
+    let aheadPaginatorVal = this.maxListRes + 50;
     if (aheadPaginatorVal <= this.paginatorLength) {
       this.totalListSize = this.totalListSize - 50;
       this.currentList = this.maxListRes + 1;
@@ -439,21 +470,25 @@ export class EmailListingComponent implements OnInit {
   }
 
   previousPagesList() {
-    if (this.currentList > 1) {
-      this.totalListSize = this.totalListSize + 50;
-      this.currentList = this.maxListRes - 1;
+    if (this.maxListRes >= 50) {
+      this.totalListSize = this.totalListSize - 50;
+      this.currentList = this.maxListRes - 51;
       this.maxListRes = this.maxListRes - 50;
       // if(this.currentList === 1){
 
       // }
-      if (this.maxListRes <= this.paginatorLength) {
-        this.maxListRes = this.paginatorLength;
-      }
-      if (this.currentList <= this.paginatorLength) {
-        this.currentList = 1;
-        this.maxListRes = 50;
-      }
+      // if (this.maxListRes <= this.paginatorLength) {
+      //   this.maxListRes = this.paginatorLength;
+      // }
+      // if (this.currentList <= this.paginatorLength) {
+      //   this.currentList = 1;
+      //   this.maxListRes = 50;
+      // }
       this.isLoading = true;
+      if (this.currentList <= 1) {
+        this.currentList = 1;
+        this.showNextPaginationBtn = true;
+      }
       this.getGmailList(this.router.url.split('/')[3].toUpperCase(), 'prev');
     } else {
       this.showPrevPaginationBtn = false;
@@ -508,10 +543,12 @@ export class EmailListingComponent implements OnInit {
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle(): void {
+    this.showOptions = !this.showOptions;
     if (this.isAllSelected()) {
       this.selection.clear();
       this.selectedThreadsArray = [];
     } else {
+
       this.dataSource.data.forEach(row => {
         this.selection.select(row);
         this.selectedThreadsArray.push(row);
@@ -537,6 +574,7 @@ export class EmailListingComponent implements OnInit {
 
   // ui select highlight
   highlightSelectedRow(row: ExtractedGmailDataI): void {
+    this.showOptions = !this.showOptions;
     if (this.selectedThreadsArray.includes(row)) {
       let indexOf = this.selectedThreadsArray.indexOf(row);
       let removedRow = this.selectedThreadsArray.splice(indexOf, 1);
