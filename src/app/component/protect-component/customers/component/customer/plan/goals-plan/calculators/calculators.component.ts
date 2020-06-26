@@ -8,6 +8,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { ValidatorType } from 'src/app/services/util.service';
 import * as Highcharts from 'highcharts';
 import { AuthService } from 'src/app/auth-service/authService';
+import { AppConstants } from 'src/app/services/app-constants';
 
 @Component({
   selector: 'app-calculators',
@@ -25,6 +26,7 @@ export class CalculatorsComponent implements OnInit {
   delayFG: FormGroup;
   advisorId:number;
   clientId: number;
+  showDelayChart:boolean = false;
 
   delayArray = [];
   
@@ -83,7 +85,7 @@ export class CalculatorsComponent implements OnInit {
         previousEMIs: this.incomeFG.controls.otherEMI.value,
         incomeGrowthRate: this.incomeFG.controls.growthRate.value,
         loanAmount: this.loanFG.controls.loanAmt.value,
-        savingStartDate: this.datePipe.transform(this.data.remainingData.savingStartDate, 'yyyy/MM/dd'),
+        savingStartDate: this.datePipe.transform(this.data.remainingData.savingStartDate, AppConstants.DATE_FORMAT),
         goalAmount: this.data.gv
       }
 
@@ -186,15 +188,15 @@ export class CalculatorsComponent implements OnInit {
       this.delayFG.markAllAsTouched();
       return;
     }
-    
+
     let subData = this.data.remainingData;
     let jsonObj = {
       differentGoalYears: subData.differentGoalYears,
       targetValueOfRequiredFVDebt: subData.targetValueOfRequiredFVDebt,
       targetValueOfRequiredFVEquity: subData.targetValueOfRequiredFVEquity,
       advisorId:this.advisorId,
-      savingStartDate: this.datePipe.transform(subData.savingStartDate, 'yyyy/MM/dd'),
-      savingEndDate: this.datePipe.transform(subData.savingStartDate, 'yyyy/MM/dd'),
+      savingStartDate: this.datePipe.transform(subData.savingStartDate, AppConstants.DATE_FORMAT),
+      savingEndDate: this.datePipe.transform(subData.savingStartDate, AppConstants.DATE_FORMAT),
       yearStepUps:[0],
     }
 
@@ -207,7 +209,36 @@ export class CalculatorsComponent implements OnInit {
 
     this.planService.calculateCostToDelay(jsonObj).subscribe(res => {
       console.log(res);
-      this.createChart(res);
+      this.showDelayChart = true;
+      setTimeout(() => {
+        this.createChart(res);
+      });
+    }, err => {
+      this.eventService.openSnackBar(err, "Dismiss");
+    })
+  }
+
+  saveDelayToGoal(){
+    if(this.delayFG.invalid) {
+      this.delayFG.markAllAsTouched();
+      return;
+    }
+    let jsonObj = {
+      goalId: this.data.id,
+      goalType: this.data.goalType,
+      yearStepUps:[0],
+    }
+
+    let formValue:Object = this.delayFG.value;
+
+    for(let k in formValue) {
+      if(formValue.hasOwnProperty(k))
+      jsonObj.yearStepUps.push(formValue[k]);
+    }
+
+    this.planService.calculateCostToDelay(jsonObj).subscribe(res => {
+      console.log(res);
+      this.eventService.openSnackBar("Cost of delay added to goal", "Dismiss");
     }, err => {
       this.eventService.openSnackBar(err, "Dismiss");
     })

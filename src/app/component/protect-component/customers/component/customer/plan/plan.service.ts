@@ -144,4 +144,8 @@ export class PlanService {
   calculateCostToDelay(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.CALCULATE_GOAL_DELAY, data);
   }
+
+  saveCostToDelay(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.SAVE_COST_DELAY_TO_GOAL, data);
+  }
 }
