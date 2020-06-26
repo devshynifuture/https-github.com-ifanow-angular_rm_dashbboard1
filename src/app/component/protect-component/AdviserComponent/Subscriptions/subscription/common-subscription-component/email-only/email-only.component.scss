@@ -1,11 +1,26 @@
 .heightAuto {
-    height: auto !important;
+  height: auto !important;
 }
 
 ::ng-deep .fr-box.fr-basic .fr-wrapper {
-    margin-bottom: 0px !important;
+  margin-bottom: 0px !important;
 }
 
 .custom-email {
-    margin-bottom: 120px;
+  margin-bottom: 120px;
+}
+
+::ng-deep #new-mail-chips {
+  .mat-chip-list-wrapper {
+    margin: -13px;
+
+  }
+
+  input.mat-chip-input {
+    height: auto;
+  }
+
+  .mat-form-field-wrapper {
+    padding-bottom: 0px !important;
+  }
 }

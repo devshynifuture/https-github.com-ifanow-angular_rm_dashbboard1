@@ -502,9 +502,12 @@
              <p style="margin: 0px; font-weight: 800;font-size: 20px;">
                  Mutual fund summary</p>
          </td> -->
-         <td style="text-align: left;" colspan="3">
+         <td style="text-align: left;" *ngIf="getOrgData && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
             <img width="250px" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
-         </td>
+        </td>
+        <td style="text-align: left;" *ngIf="getOrgData && getOrgData.reportLogoUrl =='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
+            <img width="250px" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
+        </td>
          <td style="text-align: left;" *ngIf="userInfo.reportLogoUrl" colspan="3">
             <img width="250px" *ngIf="userInfo.reportLogoUrl" [src]="userInfo.reportLogoUrl">
          </td>

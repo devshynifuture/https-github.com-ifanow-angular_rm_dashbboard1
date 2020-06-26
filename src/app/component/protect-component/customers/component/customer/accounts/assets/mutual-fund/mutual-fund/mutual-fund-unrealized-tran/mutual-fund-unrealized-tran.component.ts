@@ -46,7 +46,6 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   @ViewChild('unrealizedTranTemplate', { static: false }) unrealizedTranTemplate;
   rightFilterData: any = { reportType: '' };
   adviorData: any;
-  fragmentData = { isSpinner: false };
   @Output() changeInput = new EventEmitter();
   advisorData: any;
   // displayedColumns: string[];
@@ -83,12 +82,13 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   getOrgData: any;
   clientDetails: any;
   reportName: any;
+  fragmentData = { isSpinner: false };
 
   constructor(public dialog: MatDialog, private datePipe: DatePipe,
     private subInjectService: SubscriptionInject, private utilService: UtilService,
     private mfService: MfServiceService, private excel: ExcelGenService,
     private route: Router,
-    private backOfficeService : BackOfficeService,
+    private backOfficeService: BackOfficeService,
     public routerActive: ActivatedRoute,
     private custumService: CustomerService, private eventService: EventService,
               /*private changeDetectorRef: ChangeDetectorRef*/) {
@@ -165,6 +165,12 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         this.getDetails()
       }
     });
+    if (this.viewMode == 'Unrealized Transactions') {
+
+      this.reportName = 'MF_Unrealised_Trasaction_Report'
+    } else {
+      this.reportName = 'MF_All_Trasaction_Report'
+    }
     this.dataTransaction = {}
     this.dataTransaction.viewMode = {}
     this.dataTransaction.columnHeader = {}
@@ -995,7 +1001,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     this.fragmentData.isSpinner = true;
     setTimeout(() => {
       const para = document.getElementById('template');
-      this.returnValue = this.utilService.htmlToPdf(para.innerHTML, 'Test', 'true', this.fragmentData, '', '');
+      this.returnValue = this.utilService.htmlToPdf(para.innerHTML, this.reportName, 'true', this.fragmentData, '', '');
     }, 200);
 
     // if(data){
@@ -1008,7 +1014,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       let para = this.unrealizedTranTemplate.nativeElement.innerHTML
       let obj = {
         htmlInput: para,
-        name: (this.clientData.name)?this.clientData.name:''+'s'+this.mode+date,
+        name: (this.clientData.name) ? this.clientData.name : '' + 's' + this.mode + date,
         landscape: true,
         key: 'showPieChart',
         clientId: this.clientId,
@@ -1017,7 +1023,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         toEmail: 'abhishek@futurewise.co.in'
       }
       this.utilService.bulkHtmlToPdf(obj)
-   //   this.utilService.htmlToPdf(para, 'transaction', true, this.fragmentData, '', '')
+      //   this.utilService.htmlToPdf(para, 'transaction', true, this.fragmentData, '', '')
     }, 200);
   }
   getDetails() {

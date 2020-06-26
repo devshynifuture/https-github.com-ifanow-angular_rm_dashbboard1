@@ -1,19 +1,20 @@
-<div class="p-20 pb-0">
-    <div class="row  ">
-        <div class="col-md-12 p-0">
-            <h4 class="mb-10  f-20">
-                Have you cross checked everything?
-            </h4>
-            <p class="f-16">If yes, let’s go ahead and send the reports.</p>
+<div class="posRelavativeClass">
+    <div class="p-20 pb-0">
+        <div class="row  ">
+            <div class="col-md-12 p-0">
+                <h4 class="mb-10  f-20">
+                    Have you cross checked everything?
+                </h4>
+                <p class="f-16">If yes, let’s go ahead and send the reports.</p>
+            </div>
+
         </div>
-
     </div>
-</div>
-<div class="text-center">
-    <img src="assets/images/svg/loader-optimize.gif">
-</div>
+    <div class="text-center">
+        <img src="assets/images/svg/loader-optimize.gif">
+    </div>
 
-<!-- <div *ngIf="callBulk == true && data.reportType == 'overview'">
+    <!-- <div *ngIf="callBulk == true && data.reportType == 'overview'">
     <app-bulk-overview [data]="clientsSend"></app-bulk-overview>
 
 </div>
@@ -31,12 +32,15 @@
     <app-bulk-capital-gain-detailed [data]="clientsSend"></app-bulk-capital-gain-detailed>
 </div> -->
 
-<div class="row pt-16 pb-16">
-    <div class="col-md-12 text-right">
-        <button class="br-0 text-inherit f-14" mat-button [mat-dialog-close]="data.investor">
-            CANCEL
-        </button>
-        <button class="f-14 ml-12" class="btn-primary" (click)="sendClientId()" mat-stroked-button cdkFocusInitial>Send
-            now</button>
+    <div class="row posAbsulateClass pt-16 pb-16">
+        <div class="col-md-12 text-right">
+            <button class="br-0 text-primitive f-14" mat-button [mat-dialog-close]="data.investor">
+                CANCEL
+            </button>
+            <button class="text-primary f-14 ml-12 sendNowBtn " (click)="sendClientId()" mat-stroked-button cdkFocusInitial>
+                SEND NOW
+            </button>
+        </div>
     </div>
+
 </div>
