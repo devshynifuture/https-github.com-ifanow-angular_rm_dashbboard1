@@ -905,10 +905,12 @@
         align="center; page-break-before: always;">
 
         <tr>
-            <td style="text-align: left;" *ngIf="getOrgData && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
+            <td style="text-align: left;"
+                *ngIf="getOrgData && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
                 <img width="250px" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
             </td>
-            <td style="text-align: left;" *ngIf="getOrgData && getOrgData.reportLogoUrl =='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
+            <td style="text-align: left;"
+                *ngIf="getOrgData && getOrgData.reportLogoUrl =='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
                 <img width="250px" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
             </td>
             <td style="text-align: right;">
@@ -938,22 +940,15 @@
             <td colspan="2" style="border-bottom: transparent;" valign="top">
                 <table cellpadding="0" cellspacing="0" border="0" width="100%">
                     <tr>
-                        <p style="margin: 0px; font-weight: 400; font-size: 14px;padding-top: 4px;" *ngIf="clientData">
+                        <p style="margin: 0px; font-weight: 700; font-size: 14px;padding-top: 4px;" *ngIf="clientData">
                             Client name: {{(clientData.name) ? clientData.name : '-'}}</p>
                         <p style="margin: 0px; font-weight: 600; font-size: 18px; padding-top: 4px;"
                             *ngIf="clientData && showSummaryBar ">
                             Summary</p>
                     </tr>
-                    <tr *ngIf="showSummaryBar">
-                        <td
-                            style=" padding-top: 15px; padding-bottom: 10px; padding-left: 15px; border-right: 1px solid #dee5e7; border-top: 1px solid #dee5e7;border-left: 1px solid #dee5e7;">
-                            <p style="font-size: 14px; margin: 0px;">Current value </p>
-                            <h2 style="margin: 0px; font-size: 24px; color: #000000;"> <span appFormatNumber
-                                    *ngIf="mfData.total_current_value">{{(mfData)?(mfData.total_current_value):0}}</span>
-                            </h2>
-
-                        </td>
-                    </tr>
+                    <!-- <tr *ngIf="showSummaryBar">
+                     
+                    </tr> -->
 
                     <tr *ngIf="showSummaryBar">
                         <td>
@@ -961,6 +956,13 @@
                                 style="padding: 16px 15px;border: 1px solid #dee5e7;border-bottom: 0px;" cellpadding="0"
                                 cellspacing="0" width="100%">
                                 <tr>
+                                    <td valign="top">
+                                        <p style="font-size: 14px;color: #757575; margin: 0px;">Current value </p>
+                                        <h2 style="margin: 0px; font-size: 24px; color: #000000;"> <span appFormatNumber
+                                                *ngIf="mfData.total_current_value">{{(mfData)?(mfData.total_current_value):0}}</span>
+                                        </h2>
+
+                                    </td>
                                     <td valign="top">
                                         <p style="font-size: 14px; color: #757575; margin: 0px;">Amount invested</p>
                                         <h2 style="margin: 0px; font-size: 24px; color: #000000;">
@@ -1071,7 +1073,7 @@
         <tr *ngIf="showSchemeWise">
             <td valign="top" colspan="2">
                 <h3
-                    style="background: #F5F7F7; border: 1px solid #dee5e7; border-bottom: transparent; margin: 0px; padding: 10px; font-size: 16px;">
+                    style="background: #F5F7F7; border: 1px solid #dee5e7; border-bottom: transparent; margin: 0px; padding: 8px; font-size: 16px;">
                     Scheme wise allocation
                 </h3>
 
@@ -1100,44 +1102,44 @@
 
                     <tr *ngFor="let item of dataSource2.data">
                         <td
-                            style="font-size: 13px; padding: 5px;border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7; border-left: 1px solid #dee5e7;">
+                            style="font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7; border-left: 1px solid #dee5e7;">
                             {{(item.schemeName) ? item.schemeName : 'N.A'}}</td>
-                        <td style="text-align: right;font-size: 13px; padding: 5px;border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7;"
+                        <td style="text-align: right;font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7;"
                             appFormatNumber>{{(item.amountInvested) ? item.amountInvested : 0}}</td>
-                        <td style="text-align: right;font-size: 13px; padding: 5px;border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7;"
+                        <td style="text-align: right;font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7;"
                             appFormatNumber>
                             {{(item.currentValue==0 || item.currentValue =='Infinity' || item.currentValue =='-Infinity') ? 0 : item.currentValue ? item.currentValue : 0}}
                         </td>
                         <td
-                            style="text-align: right;font-size: 13px; padding: 5px;border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7;">
+                            style="text-align: right;font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7;">
                             {{(item.absoluteReturn==0 || item.absoluteReturn =='Infinity' || item.absoluteReturn =='-Infinity' || item.absoluteReturn == 'NaN') ? 0 : (item.absoluteReturn) ? (item.absoluteReturn | number:'1.2-2') : 0}}
                         </td>
                         <td
-                            style="text-align: right;font-size: 13px; padding: 5px;border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7;">
+                            style="text-align: right;font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7;">
                             {{(item.xirr) ? (item.xirr | number:'1.2-2') : 0}} </td>
                         <td
-                            style="text-align: right;font-size: 13px; padding: 5px;border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7;">
+                            style="text-align: right;font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7;">
                             {{(item.allocatedPercentage) ? (item.allocatedPercentage | number:'1.2-2') : 0 }}</td>
                     </tr>
 
                     <tr>
                         <td
-                            style="text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">
+                            style="font-weight:bold;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 700;">
                             Total
                         </td>
-                        <td style="text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;"
+                        <td style="font-weight:bold;text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 700;"
                             appFormatNumber [value]="mfData.total_amount_invested">
                         </td>
-                        <td style="text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;"
+                        <td style="font-weight:bold;text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 700;"
                             appFormatNumber [value]="mfData.total_current_value">
                         </td>
                         <td
-                            style="text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">
+                            style="font-weight:bold;text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 700;">
                             {{mfData.total_absolute_return | number:'1.2-2'}}</td>
                         <td
-                            style="text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">
+                            style="font-weight:bold;text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 700;">
                             {{mfData.total_xirr | number:'1.2-2'}}</td>
-                        <td style="text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;"
+                        <td style="font-weight:bold;text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 700;"
                             appFormatNumber>
                             {{(totalValue.allocationPer ) ? (totalValue.allocationPer | number:'1.2-2') : 0}}</td>
                     </tr>
@@ -1154,78 +1156,88 @@
         <tr *ngIf="showCashFlow">
             <td valign="top" colspan="2">
                 <h3
-                    style="background: #F5F7F7; border: 1px solid #dee5e7; border-bottom: transparent; margin: 0px; padding: 10px; font-size: 16px; page-break-before: always;">
+                    style="background: #F5F7F7; border: 1px solid #dee5e7; border-bottom: transparent; margin: 0px; padding: 8px; font-size: 16px; page-break-before: always;">
                     Cashflow status
                 </h3>
                 <table cellpadding="0" cellspacing="0" border="0" style="border: 1px solid #DADCE0;border-bottom: 0px;"
                     width="100%">
                     <tr>
-                        <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: left;">
+                        <td
+                            style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px;padding-left: 8px; text-align: left;">
                             a. Investment</td>
-                        <td style="font-size: 13px;border-bottom: 1px solid #dee5e7; padding: 5px; text-align: right;"
+                        <td style="font-size: 13px;border-bottom: 1px solid #dee5e7; padding: 5px;padding-left: 8px; text-align: right;"
                             appFormatNumber [value]="mfData.total_cashflow_amount_inv"></td>
                     </tr>
                     <tr>
-                        <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: left;">
+                        <td
+                            style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px;padding-left: 8px; text-align: left;">
                             b. Switch In
                         </td>
-                        <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: right;"
+                        <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px;padding-left: 8px; text-align: right;"
                             appFormatNumber [value]="mfData.total_switch_in"></td>
                     </tr>
 
                     <tr>
-                        <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: left;">
+                        <td
+                            style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px;padding-left: 8px; text-align: left;">
                             c. Switch Out
                         </td>
-                        <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: right;"
+                        <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px;padding-left: 8px; text-align: right;"
                             appFormatNumber [value]="mfData.total_switch_out"></td>
                     </tr>
 
                     <tr>
-                        <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: left;">
+                        <td
+                            style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px;padding-left: 8px; text-align: left;">
                             d. Redemption
                         </td>
-                        <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: right;"
+                        <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px;padding-left: 8px; text-align: right;"
                             appFormatNumber [value]="mfData.total_redemption"></td>
                     </tr>
 
                     <tr>
-                        <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: left;">
+                        <td
+                            style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px;padding-left: 8px; text-align: left;">
                             e. Dividend Payout
                         </td>
-                        <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: right;"
+                        <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px;padding-left: 8px; text-align: right;"
                             appFormatNumber [value]="mfData.total_dividend_payout"></td>
                     </tr>
 
                     <tr>
-                        <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: left;">
+                        <td
+                            style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px;padding-left: 8px; text-align: left;">
                             f. Net Investment (a+b-c-d-e)
                         </td>
-                        <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: right;"
+                        <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px;padding-left: 8px; text-align: right;"
                             appFormatNumber [value]="mfData.total_net_investment"></td>
                     </tr>
 
                     <tr>
-                        <td style="font-size: 13px;  border-bottom: 1px solid #dee5e7; padding: 5px; text-align: left;">
+                        <td
+                            style="font-size: 13px;  border-bottom: 1px solid #dee5e7; padding: 5px;padding-left: 8px; text-align: left;">
                             g. Market Value
                         </td>
-                        <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: right;"
+                        <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px;padding-left: 8px; text-align: right;"
                             appFormatNumber [value]="mfData.total_market_value"></td>
                     </tr>
 
                     <tr>
-                        <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: left;">
+                        <td
+                            style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px;padding-left: 8px;; text-align: left;">
                             h. Net Gain (g-f)
                         </td>
-                        <td style="font-size: 13px;  border-bottom: 1px solid #dee5e7; padding: 5px; text-align: right;"
+                        <td style="font-size: 13px;  border-bottom: 1px solid #dee5e7; padding: 5px;padding-left: 8px; text-align: right;"
                             appFormatNumber [value]="total_net_Gain"></td>
                     </tr>
 
                     <tr>
-                        <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: left;">
+                        <td
+                            style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px;padding-left: 8px; text-align: left;">
                             i. Lifetime XIRR (All Transactions)
                         </td>
-                        <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px; text-align: right;">
+                        <td
+                            style="font-size: 13px; border-bottom: 1px solid #dee5e7;padding: 5px;padding-left: 8px; text-align: right;">
                             {{(mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : 0}}</td>
                     </tr>
 
@@ -1245,7 +1257,7 @@
         <tr *ngIf="showSubCategory">
             <td valign="top" colspan="2">
                 <h3
-                    style="background: #F5F7F7; border: 1px solid #dee5e7;border-bottom: 0px; margin: 0px; padding: 10px; font-size: 16px;">
+                    style="background: #F5F7F7; border: 1px solid #dee5e7;border-bottom: 0px; margin: 0px; padding: 8px; font-size: 16px;">
                     Sub category wise allocation
                 </h3>
 
@@ -1274,45 +1286,45 @@
 
                     <tr *ngFor="let item of dataSource3.data">
                         <td
-                            style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-left: 1px solid #dee5e7;">
+                            style="font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  border-left: 1px solid #dee5e7;">
                             {{(item.subCategory) ? item.subCategory : 'N.A'}}</td>
-                        <td style="text-align: right;font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  "
+                        <td style="text-align: right;font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  "
                             appFormatNumber>{{(item.amountInvested) ?item.amountInvested : 0}}</td>
-                        <td style="text-align: right;font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  "
+                        <td style="text-align: right;font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  "
                             appFormatNumber>
                             {{(item.currentValue==0 || item.currentValue =='Infinity' || item.currentValue =='-Infinity') ? 0 : item.currentValue ? item.currentValue : 0}}
                         </td>
                         <td
-                            style="text-align: right;font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  ">
+                            style="text-align: right;font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  ">
                             {{(item.absoluteReturn==0 || item.absoluteReturn =='Infinity' || item.absoluteReturn =='-Infinity' || item.absoluteReturn == 'NaN') ? 0 : (item.absoluteReturn) ? (item.absoluteReturn | number:'1.2-2') : 0}}
                         </td>
                         <td
-                            style="text-align: right;font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  ">
+                            style="text-align: right;font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  ">
                             {{(item.xirr) ? (item.xirr | number:'1.2-2') : 0}}</td>
                         <td
-                            style="text-align: right;font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  ">
+                            style="text-align: right;font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  ">
                             {{(item.allocatedPercentage) ? (item.allocatedPercentage | number:'1.2-2') : 0 }}</td>
                     </tr>
 
                     <tr>
                         <td
-                            style="text-align: left;border-top: 1px solid #dee5e7; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;  font-weight: 500;">
+                            style="text-align: left;border-top: 1px solid #dee5e7; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7;  font-weight: 700;">
                             Total
                         </td>
-                        <td style="text-align: right;border-top: 1px solid #dee5e7; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7;  font-weight: 500;border-bottom: 1px solid #dee5e7;"
+                        <td style="text-align: right;border-top: 1px solid #dee5e7; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7;  font-weight: 700;border-bottom: 1px solid #dee5e7;"
                             appFormatNumber [value]="mfData.total_amount_invested">
                         </td>
-                        <td style="text-align: right;border-top: 1px solid #dee5e7; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7;  font-weight: 500;border-bottom: 1px solid #dee5e7;"
+                        <td style="text-align: right;border-top: 1px solid #dee5e7; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7;  font-weight: 700;border-bottom: 1px solid #dee5e7;"
                             appFormatNumber [value]="mfData.total_current_value">
                         </td>
                         <td
-                            style="text-align: right;border-top: 1px solid #dee5e7; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7;  font-weight: 500;border-bottom: 1px solid #dee5e7;">
+                            style="text-align: right;border-top: 1px solid #dee5e7; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7;  font-weight: 700;border-bottom: 1px solid #dee5e7;">
                             {{(mfData.total_absolute_return) ? (mfData.total_absolute_return | number:'1.2-2') : 0}}
                         </td>
                         <td
-                            style="text-align: right;border-top: 1px solid #dee5e7; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7;  font-weight: 500;border-bottom: 1px solid #dee5e7;">
+                            style="text-align: right;border-top: 1px solid #dee5e7; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7;  font-weight: 700;border-bottom: 1px solid #dee5e7;">
                             {{(mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : 0}}</td>
-                        <td style="text-align: right;border-top: 1px solid #dee5e7; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7;  font-weight: 500;border-bottom: 1px solid #dee5e7;"
+                        <td style="text-align: right;border-top: 1px solid #dee5e7; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7;  font-weight: 700;border-bottom: 1px solid #dee5e7;"
                             appFormatNumber>
                             {{(totalValue.allocationPer ) ? (totalValue.allocationPer | number:'1.2-2') : 0}}</td>
                     </tr>
@@ -1330,7 +1342,7 @@
         <tr *ngIf="showFamilyMember">
             <td valign="top" colspan="2">
                 <h3
-                    style="background: #F5F7F7; border: 1px solid #dee5e7;border-bottom: 0px;  margin: 0px; padding: 10px; font-size: 16px;">
+                    style="background: #F5F7F7; border: 1px solid #dee5e7;border-bottom: 0px;  margin: 0px; padding: 8px; font-size: 16px;">
                     Family member wise allocation
 
                 </h3>
@@ -1342,7 +1354,7 @@
                             style="text-align: left; font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;    border-left: 1px solid #dee5e7;">
                             Family Member Name </th>
                         <th
-                            style="text-align: right; font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;">
+                            style="text-align: right; font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;">
                             Amount invested</th>
                         <th
                             style="text-align: right; font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;">
@@ -1360,43 +1372,43 @@
 
                     <tr *ngFor="let item of dataSource.data">
                         <td
-                            style="font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;   border-left: 1px solid #dee5e7;">
+                            style="font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;   border-left: 1px solid #dee5e7;">
                             {{(item.name) ? item.name : 'N.A'}}</td>
-                        <td style="text-align: right;font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  "
+                        <td style="text-align: right;font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  "
                             appFormatNumber>{{(item.amountInv) ? item.amountInv : 0}}</td>
-                        <td style="text-align: right;font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  "
+                        <td style="text-align: right;font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  "
                             appFormatNumber>{{(item.currentValue) ? item.currentValue : 0}}</td>
                         <td
-                            style="text-align: right;font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  ">
+                            style="text-align: right;font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  ">
                             {{(item.absoluteReturn==0 || item.absoluteReturn =='Infinity' || item.absoluteReturn =='-Infinity' || item.absoluteReturn == 'NaN') ? 0 : (item.absoluteReturn) ? (item.absoluteReturn | number:'1.2-2') : 0}}
                         </td>
                         <td
-                            style="text-align: right;font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  ">
+                            style="text-align: right;font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  ">
                             {{(item.xirr) ? (item.xirr | number:'1.2-2') : 0}}</td>
                         <td
-                            style="text-align: right;font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  ">
+                            style="text-align: right;font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  ">
                             {{(item.allocatedPercentage) ? (item.allocatedPercentage | number:'1.2-2') : 0 }}</td>
                     </tr>
 
                     <tr>
                         <td
-                            style="text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;border-top: 1px solid #dee5e7; font-weight: 500;">
+                            style="text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;border-top: 1px solid #dee5e7; font-weight: 700;">
                             Total
                         </td>
-                        <td style="text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;border-top: 1px solid #dee5e7;"
+                        <td style="text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 700;border-top: 1px solid #dee5e7;"
                             appFormatNumber [value]="mfData.total_amount_invested">
                         </td>
-                        <td style="text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;border-top: 1px solid #dee5e7;"
+                        <td style="text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 700;border-top: 1px solid #dee5e7;"
                             appFormatNumber [value]="mfData.total_current_value">
                         </td>
                         <td
-                            style="text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;border-top: 1px solid #dee5e7;">
+                            style="text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 700;border-top: 1px solid #dee5e7;">
                             {{(mfData.total_absolute_return) ? (mfData.total_absolute_return | number:'1.2-2') : 0}}
                         </td>
                         <td
-                            style="text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;border-top: 1px solid #dee5e7;">
+                            style="text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 700;border-top: 1px solid #dee5e7;">
                             {{(mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : 0}}</td>
-                        <td style="text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;border-top: 1px solid #dee5e7;"
+                        <td style="text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 700;border-top: 1px solid #dee5e7;"
                             appFormatNumber>
                             {{(totalValue.allocationPer) ? (totalValue.allocationPer | number:'1.2-2') : 0}}</td>
                     </tr>
@@ -1414,7 +1426,7 @@
         <tr *ngIf="showCategory">
             <td valign="top" colspan="2">
                 <h3
-                    style="background: #F5F7F7; border: 1px solid #dee5e7; border-bottom: transparent; margin: 0px; padding: 10px; font-size: 16px;">
+                    style="background: #F5F7F7; border: 1px solid #dee5e7; border-bottom: transparent; margin: 0px; padding: 8px; font-size: 16px;">
                     Category wise allocation
                 </h3>
 
@@ -1443,43 +1455,43 @@
 
                     <tr *ngFor="let item of dataSource4.data">
                         <td
-                            style="font-size: 13px; padding: 5px; border-left: 1px solid #dee5e7;  border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  ">
+                            style="font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7;  border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  ">
                             {{(item.category) ? item.category : 'N.A'}}</td>
-                        <td style="text-align: right;font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7; "
+                        <td style="text-align: right;font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7; "
                             appFormatNumber>{{(item.amountInvested) ? item.amountInvested : 0}}</td>
-                        <td style="text-align: right;font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  "
+                        <td style="text-align: right;font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  "
                             appFormatNumber>{{(item.currentValue) ? item.currentValue : 0}}</td>
                         <td
-                            style="text-align: right;font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7; ">
+                            style="text-align: right;font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7; ">
                             {{(item.absoluteReturn==0 || item.absoluteReturn =='Infinity' || item.absoluteReturn =='-Infinity' || item.absoluteReturn == 'NaN') ? 0 : (item.absoluteReturn) ? (item.absoluteReturn | number:'1.2-2') : 0}}
                         </td>
                         <td
-                            style="text-align: right;font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  ">
+                            style="text-align: right;font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7;  ">
                             {{(item.xirr) ? (item.xirr | number:'1.2-2') : 0}}</td>
                         <td
-                            style="text-align: right;font-size: 13px; padding: 5px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7; ">
+                            style="text-align: right;font-size: 13px; padding: 8px;border-top: 1px solid #dee5e7;  border-right: 1px solid #dee5e7; ">
                             {{(item.allocatedPercentage) ? (item.allocatedPercentage | number:'1.2-2') : 0 }}</td>
                     </tr>
 
                     <tr>
                         <td
-                            style="text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7;border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">
+                            style="text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7;border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 700;">
                             Total
                         </td>
-                        <td style="text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7;border-top: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;"
+                        <td style="text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7;border-top: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 700;"
                             appFormatNumber [value]="mfData.total_amount_invested">
                         </td>
-                        <td style="text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7;border-top: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;"
+                        <td style="text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7;border-top: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 700;"
                             appFormatNumber [value]="mfData.total_current_value">
                         </td>
                         <td
-                            style="text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7;border-top: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">
+                            style="text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7;border-top: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 700;">
                             {{(mfData.total_absolute_return) ? (mfData.total_absolute_return | number:'1.2-2') : 0}}
                         </td>
                         <td
-                            style="text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7;border-top: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;">
+                            style="text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7;border-top: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 700;">
                             {{(mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : 0}}</td>
-                        <td style="text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7;border-top: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 500;"
+                        <td style="text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7;border-top: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 700;"
                             appFormatNumber>
                             {{(totalValue.allocationPer ) ? (totalValue.allocationPer | number:'1.2-2') : 0}}</td>
                     </tr>
