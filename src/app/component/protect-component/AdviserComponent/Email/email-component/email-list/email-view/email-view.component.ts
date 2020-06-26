@@ -94,10 +94,10 @@ export class EmailViewComponent implements OnInit, OnDestroy {
             });
           }
           else if (response.payload.mimeType === 'multipart/mixed') {
-            if (parts.length !== 0) {
+            if (parts && parts.length !== 0) {
               parts.forEach(multiPartElement => {
                 if (multiPartElement.mimeType === 'multipart/alternative') {
-                  if (multiPartElement.parts.length !== 0) {
+                  if (multiPartElement.parts && multiPartElement.parts.length !== 0) {
                     multiPartElement.parts.forEach(multiPartAlternativeElement => {
                       if (multiPartAlternativeElement.mimeType === 'text/html') {
                         this.decodedPartsDetail.push({
@@ -141,30 +141,72 @@ export class EmailViewComponent implements OnInit, OnDestroy {
               });
             }
           }
-          if (response.payload.mimeType === 'multipart/mixed' || response.payload.mimeType === 'multipart/alternative') {
-            if (parts.length != 0) {
-              this.isLoadingForAttachment = true;
-              parts.forEach((part, index) => {
-                if (part.filename !== null) {
-                  const obj = {
-                    userId: AuthService.getUserInfo().advisorId,
-                    email: AuthService.getUserInfo().userName,
-                    attachmentId: part.body.attachmentId,
-                    messageId: this.messageId
-                  }
-                  this.emailService.getAttachmentFiles(obj).subscribe(res => {
-                    if (res) {
-                      const resBase64 = res.data.replace(/\-/g, '+').replace(/_/g, '/');
-                      this.creationOfUrlAndBase64File(resBase64, part);
+
+          else {
+            if (response.payload.hasOwnProperty('parts') && response.payload.parts.length !== 0) {
+              response.payload.parts.forEach(part => {
+                const { parts } = part;
+                if (part.body.data !== null) {
+                  this.decodedPartsDetail.push({
+                    item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data),
+                  })
+                }
+                if (part.parts && part.parts.length !== 0) {
+                  parts.forEach(part => {
+                    const { parts } = part;
+                    if (part.body.data !== null) {
+                      this.decodedPartsDetail.push({
+                        item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data),
+                      })
                     }
-                    if (index === (parts.length - 1)) {
-                      this.isLoadingForAttachment = false;
+                    if (part.parts && part.parts.length !== 0) {
+                      parts.forEach(part => {
+                        const { parts } = part;
+                        if (part.body.data !== null) {
+                          this.decodedPartsDetail.push({
+                            item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data),
+                          })
+                        }
+                        if (part.parts && part.parts.length !== 0) {
+                          parts.forEach(part => {
+                            if (part.body.data !== null) {
+                              this.decodedPartsDetail.push({
+                                item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data),
+                              });
+                            }
+                          });
+                        }
+                      });
                     }
                   });
                 }
               });
             }
           }
+
+          if (parts && parts.length != 0) {
+            this.isLoadingForAttachment = true;
+            parts.forEach((part, index) => {
+              if (part.filename !== null) {
+                const obj = {
+                  userId: AuthService.getUserInfo().advisorId,
+                  email: AuthService.getUserInfo().userName,
+                  attachmentId: part.body.attachmentId,
+                  messageId: this.messageId
+                }
+                this.emailService.getAttachmentFiles(obj).subscribe(res => {
+                  if (res) {
+                    const resBase64 = res.data.replace(/\-/g, '+').replace(/_/g, '/');
+                    this.creationOfUrlAndBase64File(resBase64, part);
+                  }
+                  if (index === (parts.length - 1)) {
+                    this.isLoadingForAttachment = false;
+                  }
+                });
+              }
+            });
+          }
+
         }
 
         headers.forEach(header => {

@@ -176,20 +176,88 @@ export class EmailUtilService {
     return labelIdsArray;
   }
 
-  static getAttachmentIdFromGmailThread(gmailThread) {
-    let attachmentIds = [];
+  static getAttachmentObjectFromGmailThread(gmailThread) {
+    let attachmentObjects = [];
     gmailThread.messages.forEach(message => {
       const { payload } = message;
-      if (payload.mimeType === 'multipart/mixed' && payload.parts.length !== 0) {
+      if (payload.mimeType === 'multipart/mixed' && payload.parts !== null) {
         const { parts } = payload;
-        parts.forEach(part => {
-          if (part.filename !== '') {
-            attachmentIds.push(part.body.attachmentId)
-          }
-        });
+        if (parts && parts.length !== 0) {
+          parts.forEach(part => {
+            if (part.filename !== '') {
+              attachmentObjects.push({
+                id: part.body.attachmentId,
+                filename: part.filename,
+                mimeType: part.mimeType
+              })
+            }
+          });
+        }
+      } else if (payload.parts !== null) {
+        const { parts } = payload;
+        if (parts.length !== 0) {
+          parts.forEach(part => {
+            if (part.filename !== '') {
+              attachmentObjects.push({
+                id: part.body.attachmentId,
+                filename: part.filename,
+                mimeType: part.mimeType
+              });
+              if (part.parts && part.parts.length !== 0) {
+                const { parts } = part;
+                parts.forEach(part => {
+                  if (part.filename !== '') {
+                    attachmentObjects.push({
+                      id: part.body.attachmentId,
+                      filename: part.filename,
+                      mimeType: part.mimeType
+                    });
+                  }
+
+                  if (part.parts && part.parts.length !== 0) {
+                    const { parts } = part;
+                    parts.forEach(part => {
+                      if (part.filename !== '') {
+                        attachmentObjects.push({
+                          id: part.body.attachmentId,
+                          filename: part.filename,
+                          mimeType: part.mimeType
+                        });
+                      }
+                      if (part.parts && part.parts.length !== 0) {
+                        const { parts } = part;
+                        parts.forEach(part => {
+                          if (part.filename !== '') {
+                            attachmentObjects.push({
+                              id: part.body.attachmentId,
+                              filename: part.filename,
+                              mimeType: part.mimeType
+                            });
+                          }
+                          if (part.parts && part.parts.length !== 0) {
+                            const { parts } = part;
+                            parts.forEach(part => {
+                              if (part.filename !== '') {
+                                attachmentObjects.push({
+                                  id: part.body.attachmentId,
+                                  filename: part.filename,
+                                  mimeType: part.mimeType
+                                });
+                              }
+                            });
+                          }
+                        });
+                      }
+                    });
+                  }
+                });
+              }
+            }
+          });
+        }
       }
     });
-    return attachmentIds;
+    return attachmentObjects;
   }
 
   static getIdAndDateAndSnippetOfGmailThreadMessages(gmailThread: GmailInboxResponseI): Object[] {
