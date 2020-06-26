@@ -10,6 +10,7 @@ import { FormGroup } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { AuthService } from '../auth-service/authService';
 import { PlaceHolder } from '../interfaces/place-holder.interface';
+import { quotationTemplate } from './quotationTemplate';
 
 
 @Injectable({
@@ -527,7 +528,30 @@ export class UtilService {
     const height = document.querySelector('.right_sidenav').scrollHeight;
     document.querySelector('.right_sidenav').scrollTop = height;
   }
+
+  static getDocumentTemplates(documentType) {
+    let froalaTemplate
+    if (documentType == 1) {
+
+    }
+    else if (documentType == 2) {
+
+    }
+    else if (documentType == 7) {
+
+    }
+    else if (documentType == 7) {
+      return quotationTemplate
+    }
+    else {
+      return 'docText';
+    }
+  }
+
+
+
 }
+
 
 export class ValidatorType {
 
