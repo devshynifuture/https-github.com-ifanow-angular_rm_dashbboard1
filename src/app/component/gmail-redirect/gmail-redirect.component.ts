@@ -36,6 +36,8 @@ export class GmailRedirectComponent implements OnInit {
 
   ngOnInit() {
     this.REDIRECT_URI = window.location.origin + '/redirect';
+    console.log(this.REDIRECT_URI);
+
     this.advisorId = AuthService.getAdvisorId();
     this.emailId = AuthService.getUserInfo().userName;
     this.route.queryParams
@@ -51,6 +53,9 @@ export class GmailRedirectComponent implements OnInit {
         const bodyData = 'code=' + params.code + '&client_id=' + this.CLIENT_ID
           + '&client_secret=' + this.CLIENT_SECRET + '&grant_type=' + this.GRANT_TYPE
           + '&redirect_uri=' + this.REDIRECT_URI;
+
+        console.log("this is something i need to see", bodyData);
+
         const httpOptions = {
           headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
         };
