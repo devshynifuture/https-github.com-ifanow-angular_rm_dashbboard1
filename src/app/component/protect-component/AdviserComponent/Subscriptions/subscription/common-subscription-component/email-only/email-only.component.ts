@@ -52,7 +52,7 @@ export class EmailOnlyComponent implements OnInit {
 
   barButtonOptions1: MatProgressButtonOptions = {
     active: false,
-    text: 'SAVE WITH ESIGN',
+    text: 'SEND WITH ESIGN',
     buttonColor: 'accent',
     barColor: 'accent',
     raised: true,
@@ -220,7 +220,8 @@ export class EmailOnlyComponent implements OnInit {
     const data = {
       advisorId: this._inputData.advisorId,
       clientId: this._inputData.clientData.clientId,
-      templateType: this._inputData.templateType
+      templateType: this._inputData.templateType,
+      id: this._inputData.documentList[0].id
     };
     this.subscription.getEmailTemplateFilterData(data).subscribe(responseData => {
       this.emailData = responseData;
