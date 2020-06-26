@@ -24,7 +24,8 @@ export class PreferenceEmailInvoiceComponent implements OnInit {
   heading: string;
   fragmentData: any;
 
-  constructor(private eventService: EventService, public subService: SubscriptionService, public dialog: MatDialog, private render: Renderer2) {
+  constructor(private eventService: EventService, public authService: AuthService,
+    public subService: SubscriptionService, public dialog: MatDialog, private render: Renderer2) {
 
   }
 

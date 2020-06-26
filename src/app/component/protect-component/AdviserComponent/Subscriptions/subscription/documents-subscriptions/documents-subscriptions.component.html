@@ -117,7 +117,7 @@
                     aria-label="Button that displays a tooltip when focused or hovered over"> Client sign...
                 </th>
                 <td *matCellDef="let element" mat-cell>
-                    <div class="bar"> {{element.clientsign | date:'dd/MM/yyyy'}} </div>
+                    <div class="bar"> {{element.signedDate | date:'dd/MM/yyyy'}} </div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="status">
@@ -128,6 +128,7 @@
                             <span *ngIf="element.status==1" class="text-primary t-10 f-500 c-p">READY TO
                                 SEND</span>
                             <span *ngIf="element.status==2" class="text-primary t-10 f-500 c-p">SENT</span>
+                            <span *ngIf="element.status==3" class="text-primary t-10 f-500">ESIGNED</span>
                             <!-- <span *ngIf="element.status==2" class="text-danger t-10 f-500 c-p">NOT APPROVED</span>
                             <span *ngIf="element.status==3" class="text-success t-10 f-500 c-p">APPROVED</span> -->
                         </span>

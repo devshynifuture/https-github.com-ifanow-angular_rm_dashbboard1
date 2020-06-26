@@ -16,20 +16,22 @@
 <div [formGroup]="subscriptionDetails" class="wrapper-20 pt-90 mb-44 pb-44">
     <div class="row pt-24">
         <div class="col-md-5">
-            <h5 class="text-right m-0 pt-8">Subscription #</h5>
+            <h5 class="text-right m-0 pt-20">Subscription #</h5>
         </div>
         <div class="col-md-3">
-            <div class="form-group mb-0">
-                <input [readonly]="!isEdite" class="form-control br-0" formControlName="subscriptionNumber"
-                    placeholder="SUB-0001" type="text">
-            </div>
-            <mat-error
-                [ngClass]="{'v-h':subscriptionDetails.get('subscriptionNumber').untouched || subscriptionDetails.get('subscriptionNumber').valid}"
-                class="f-12">Subscription code is required
-            </mat-error>
+            <mat-form-field floatLabel="never" appearance="standard">
+                <div class="form-group">
+                    <input matInput [readonly]="!isEdite" class="form-control br-0" formControlName="subscriptionNumber"
+                        placeholder="SUB-0001" type="text">
+                </div>
+                <mat-error
+                    [ngClass]="{'v-h':subscriptionDetails.get('subscriptionNumber').untouched || subscriptionDetails.get('subscriptionNumber').valid}"
+                    class="f-12">Subscription code is required
+                </mat-error>
+            </mat-form-field>
         </div>
     </div>
-    <div class="row pt-8">
+    <div class="row pt-40">
         <div class="col-md-5">
             <h5 class="text-right m-0 pt-8">Activation date</h5>
         </div>
@@ -48,7 +50,7 @@
             </mat-error>
         </div>
     </div>
-    <div class="row pt-8">
+    <div class="row pt-16">
         <div class="col-md-5">
             <h5 class="text-right m-0 pt-8">Invoice sending mode</h5>
         </div>
@@ -71,37 +73,41 @@
             <h5 class="text-right m-0 pt-8">Fee collection mode</h5>
         </div>
         <div class="col-md-3 mb-0">
-            <div class="form-group mb-0">
-                <!-- <input readonly *ngIf="!isEdite" class="form-control br-0" formControlName="feeCollectionMode"  type="text"> -->
-                <select class="form-control br-0" formControlName="feeMode" id="Category" id="sel1">
-                    <option *ngFor="let feeMode of feeMode" [disabled]="!isEdite && _payeeData.feeMode != feeMode.value"
-                        value="{{feeMode.value}}">
-                        {{feeMode.name}}</option>
-                </select>
-            </div>
-            <mat-error
-                [ngClass]="{'v-h':subscriptionDetails.get('feeMode').untouched || subscriptionDetails.get('feeMode').valid}"
-                class="f-12 ">Fee mode is required
-            </mat-error>
+            <mat-form-field>
+                <div class="form-group mb-0">
+                    <!-- <input readonly *ngIf="!isEdite" class="form-control br-0" formControlName="feeCollectionMode"  type="text"> -->
+                    <mat-select class="form-control br-0" formControlName="feeMode" id="Category" id="sel1">
+                        <mat-option *ngFor="let feeMode of feeMode"
+                            [disabled]="!isEdite && _payeeData.feeMode != feeMode.value" value="{{feeMode.value}}">
+                            {{feeMode.name}}</mat-option>
+                    </mat-select>
+                </div>
+                <mat-error
+                    [ngClass]="{'v-h':subscriptionDetails.get('feeMode').untouched || subscriptionDetails.get('feeMode').valid}"
+                    class="f-12 ">Fee mode is required
+                </mat-error>
+            </mat-form-field>
         </div>
     </div>
-    <div class="row pt-24">
+    <div class="row pt-32">
         <div class="col-md-5">
             <h5 class="text-right m-0 pt-8">Due date frequency</h5>
         </div>
         <div class="col-md-3">
-            <div class="form-group mb-0">
-                <!-- <input readonly *ngIf="!isEdite" class="form-control br-0" formControlName="dueDateFrequency"  type="text"> -->
-                <select class="form-control br-0" formControlName="dueDateFrequency" id="sel1">
-                    <option [disabled]="!isEdite" value="5">After 5 Days</option>
-                    <option [disabled]="!isEdite" value="10">After 10 Days</option>
-                    <option [disabled]="!isEdite" value="15">After 15 Days</option>
-                </select>
-            </div>
-            <mat-error
-                [ngClass]="{'v-h':subscriptionDetails.get('dueDateFrequency').untouched || subscriptionDetails.get('dueDateFrequency').valid}"
-                class="f-12"> Due date is required
-            </mat-error>
+            <mat-form-field>
+                <div class="form-group mb-0">
+                    <!-- <input readonly *ngIf="!isEdite" class="form-control br-0" formControlName="dueDateFrequency"  type="text"> -->
+                    <mat-select class="form-control br-0" formControlName="dueDateFrequency" id="sel1">
+                        <mat-option [disabled]="!isEdite" value="5">After 5 Days</mat-option>
+                        <mat-option [disabled]="!isEdite" value="10">After 10 Days</mat-option>
+                        <mat-option [disabled]="!isEdite" value="15">After 15 Days</mat-option>
+                    </mat-select>
+                </div>
+                <mat-error
+                    [ngClass]="{'v-h':subscriptionDetails.get('dueDateFrequency').untouched || subscriptionDetails.get('dueDateFrequency').valid}"
+                    class="f-12"> Due date is required
+                </mat-error>
+            </mat-form-field>
         </div>
     </div>
 </div>

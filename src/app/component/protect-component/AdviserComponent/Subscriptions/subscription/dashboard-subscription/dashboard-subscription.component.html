@@ -208,7 +208,8 @@
 
                                     </div>
                                 </div>
-                                <div *ngIf="dataSource.length >0" class="overflow-hidden h-513 mt-12">
+                                <div *ngIf="dataSource.length >0" [ngClass]="{'ox-hide': isLoadingSubSummary}"
+                                    class="overflow-hidden h-513 mt-12">
 
 
                                     <table [appSkeletonLoading]="isLoadingSubSummary" [dataSource]="dataSource"

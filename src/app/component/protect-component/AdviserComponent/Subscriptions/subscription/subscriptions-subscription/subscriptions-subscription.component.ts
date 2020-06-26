@@ -169,7 +169,8 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
         if (data != undefined) {
           data.forEach(element => {
             element['feeTypeId'] = element.subscriptionPricing.feeTypeId;
-            element['pricing'] = element.subscriptionPricing.subscriptionAssetPricingList[(element.feeTypeId == 1) ? 0 : 2].pricing
+            element['pricing'] == (element.subscriptionPricing.feeTypeId == 1) ? element.subscriptionPricing.subscriptionAssetPricingList[0].pricing : '';
+
           });
           this.lastDataId = data[data.length - 1].id;
           // obj.offset = this.lastDataId;
@@ -183,7 +184,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
           this.isLoading = false;
           // getSubSummarySubscription.unsubscribe();
         }
-        this.getSubSummaryRes(this.tableData);
+        this.getSubSummaryRes(this.getData);
 
       }, (error) => {
         this.errorMessage();
@@ -482,7 +483,7 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
           data => {
             this.deletedData(data);
             dialogRef.close(subData);
-            this.getClientSubData(false, false);
+            this.getClientSubData(false, true);
           }
         );
 

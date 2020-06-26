@@ -66,6 +66,8 @@ export class MfCapitalDetailedComponent implements OnInit {
   clientData: any;
   userInfo: any;
   getOrgData: any;
+  familyMemberId: number;
+  familyList = [];
   constructor(private MfServiceService: MfServiceService,
     public routerActive: ActivatedRoute,
     private backOfficeService : BackOfficeService,
@@ -78,9 +80,16 @@ export class MfCapitalDetailedComponent implements OnInit {
         let param1 = queryParamMap['params'];
         this.clientId = parseInt(param1.clientId)
         this.advisorId = parseInt(param1.advisorId)
+        this.familyMemberId = parseInt(param1.familyMemberId)
+
         this.fromDateYear = param1.from,
           this.toDateYear = param1.to,
           console.log('2423425', param1)
+          this.familyList = []
+          const obj={
+          id:this.familyMemberId
+          }
+          this.familyList.push(obj)
       }
       else {
         this.advisorId = AuthService.getAdvisorId();
@@ -313,6 +322,9 @@ export class MfCapitalDetailedComponent implements OnInit {
       if (this.rightFilterData) {
         mfList = this.MfServiceService.filterArray(mfList, 'familyMemberId', this.rightFilterData.family_member_list, 'id');
       }
+      if(this.familyList.length > 0){
+        this.mfList = this.MfServiceService.filterArray(this.mfList, 'familyMemberId', this.familyList, 'id');
+      }
       mfList.forEach(element => {
         const startObj = {
           schemeName: element.schemeName,
@@ -533,6 +545,9 @@ export class MfCapitalDetailedComponent implements OnInit {
       if (this.rightFilterData) {
         mutualFund = this.MfServiceService.filterArray(mutualFund, 'familyMemberId', this.rightFilterData.family_member_list, 'id');
       }
+      if(this.familyList.length > 0){
+        this.mutualFund = this.MfServiceService.filterArray(this.mutualFund, 'familyMemberId', this.familyList, 'id');
+      }
       mutualFund.forEach(element => {
         if (element.dividendTransactions) {
           element.dividendTransactions.forEach(ele => {
@@ -582,7 +597,7 @@ export class MfCapitalDetailedComponent implements OnInit {
   generatePdf() {
     this.fragmentData.isSpinner = true
     const para = document.getElementById('template');
-    this.UtilService.htmlToPdf(para.innerHTML, 'capitalGain', 'true', this.fragmentData, '', '');
+    this.UtilService.htmlToPdf(para.innerHTML, 'MF capital gain detailed', 'true', this.fragmentData, '', '');
   }
   Excel(tableTitle) {
     this.showDownload = true
@@ -602,7 +617,7 @@ export class MfCapitalDetailedComponent implements OnInit {
       let para = this.mfCapitalTemplate.nativeElement.innerHTML
       let obj = {
         htmlInput: para,
-        name: (this.clientData.name)?this.clientData.name:''+'s'+'MF_Capital_Gain_Detailed'+date,
+        name: (this.clientData.name)?this.clientData.name:''+'s'+'MF capital gain detailed'+date,
         landscape: true,
         key: 'showPieChart',
         clientId: this.clientId,
