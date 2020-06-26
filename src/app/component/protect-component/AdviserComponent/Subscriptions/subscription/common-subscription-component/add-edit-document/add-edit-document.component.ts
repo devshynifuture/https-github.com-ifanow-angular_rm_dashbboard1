@@ -96,8 +96,9 @@ export class AddEditDocumentComponent implements OnInit {
     // this.blankDocumentProperties.controls.docName.setValue(inputData.name);
     // this.blankDocumentProperties.controls.docAvailability.setValue(data);
     // if (this.inputData.add) {
-    (this._inputData.addFlag == false) ? this.blankDocumentProperties.controls.docType.disable() : '';
-    (this.blankDocumentProperties.controls.docType.value == 9) ? this.blankDocumentProperties.controls.docType.disable() : '';
+    (this.addTemplate != 'blank') ? this.blankDocumentProperties.controls.docType.disable() : ''
+    // (this._inputData.addFlag == false) ? this.blankDocumentProperties.controls.docType.disable() : '';
+    // (this.blankDocumentProperties.controls.docType.value == 9) ? this.blankDocumentProperties.controls.docType.disable() : '';
     // }
   }
 
@@ -138,7 +139,7 @@ export class AddEditDocumentComponent implements OnInit {
           name: this.blankDocumentProperties.controls.docName.value,
           // documentTypeId: parseInt(this.blankDocumentProperties.controls.docType.value),
           documentTypeId: this.blankDocumentProperties.controls.docType.value.toString(),
-          docText: this.addTemplate,
+          docText: (this.addTemplate == 'blank') ? '' : this.addTemplate,
           description: this.blankDocumentProperties.controls.docName.value,
           public: true,
           quotation: this.blankDocumentProperties.controls.docType.value == 7 ? true : false,
