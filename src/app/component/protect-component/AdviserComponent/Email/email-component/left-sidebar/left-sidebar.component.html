@@ -1,56 +1,54 @@
 <!-- <mat-action-list class="p-2" *ngIf="navList != null && navList != 'undefined'"> -->
 <div class="sticky-top">
-  <div class="p-16 pb-4">
-    <button mat-stroked-button class="btn-primary br-0 w-100" (click)="openCompose()">Compose</button>
-  </div>
-  <mat-action-list class="pt-0">
-    <mat-list class="">
-      <mat-list-item routerLink="inbox" #rlaInbox="routerLinkActive" routerLinkActive="text-primary" class="row c-p">
-        <div class="col-md-12 d-flex align-items-center">
-          <img [src]="rlaInbox.isActive ? '/assets/images/svg/crm-inbox.svg': '/assets/images/svg/crm-sent.svg'">
+    <div class="p-16 pb-4">
+        <button mat-stroked-button class="btn-primary br-0 w-100" (click)="openCompose()">Compose</button>
+    </div>
+    <mat-action-list class="pt-0">
+        <mat-list class="">
+            <mat-list-item routerLink="inbox" #rlaInbox="routerLinkActive" routerLinkActive="text-primary" class="row c-p">
+                <div class="col-md-12 d-flex align-items-center">
+                    <img [src]="rlaInbox.isActive ? '/assets/images/svg/crm-inbox.svg': '/assets/images/svg/crm-sent.svg'">
 
-          <h5 mat-line class="mb-0 ml-28 f-14">Inbox</h5>
-        </div>
-      </mat-list-item>
+                    <h5 mat-line class="mb-0 ml-28 f-14">Inbox</h5>
+                </div>
+            </mat-list-item>
 
-      <mat-list-item routerLink="sent" #rlaSent="routerLinkActive" routerLinkActive="text-primary" class="row c-p">
-        <div class="col-md-12 d-flex align-items-center">
-          <img [src]="rlaInbox.isActive ? '/assets/images/svg/crm-sent.svg': '/assets/images/svg/crm-inbox.svg'">
-          <h5 mat-line class="mb-0 ml-28 f-14 ">Sent</h5>
-        </div>
-      </mat-list-item>
+            <mat-list-item routerLink="sent" #rlaSent="routerLinkActive" routerLinkActive="text-primary" class="row c-p">
+                <div class="col-md-12 d-flex align-items-center">
+                    <img [src]="rlaInbox.isActive ? '/assets/images/svg/crm-sent.svg': '/assets/images/svg/crm-sent.svg'">
+                    <h5 mat-line class="mb-0 ml-28 f-14 ">Sent</h5>
+                </div>
+            </mat-list-item>
 
-      <mat-list-item routerLink="draft" #rlaDraft="routerLinkActive" routerLinkActive="text-primary" class="row c-p">
-        <div class="col-md-12 d-flex align-items-center">
-          <img [src]="rlaDraft.isActive ? '/assets/images/svg/crm-archive.svg': '/assets/images/svg/crm-sent.svg'">
-          <h5 mat-line class="mb-0 ml-28 f-14 ">Drafts</h5>
-        </div>
-      </mat-list-item>
+            <mat-list-item routerLink="draft" #rlaDraft="routerLinkActive" routerLinkActive="text-primary" class="row c-p">
+                <div class="col-md-12 d-flex align-items-center">
+                    <img [src]="rlaDraft.isActive ? '/assets/images/svg/crm-archive.svg': '/assets/images/svg/crm-drafts-icon.svg'">
+                    <h5 mat-line class="mb-0 ml-28 f-14 ">Drafts</h5>
+                </div>
+            </mat-list-item>
 
 
-      <mat-list-item routerLinkActive="text-primary" #rlaStarred="routerLinkActive" routerLink="starred"
-        class="row c-p">
-        <div class="col-md-12 d-flex align-items-center">
-          <img [src]="rlaStarred.isActive? '/assets/images/svg/crm-archive.svg': '/assets/images/svg/crm-sent.svg'">
-          <h5 mat-line class="mb-0 ml-28 f-14 ">Starred</h5>
-        </div>
-      </mat-list-item>
+            <mat-list-item routerLinkActive="text-primary" #rlaStarred="routerLinkActive" routerLink="starred" class="row c-p">
+                <div class="col-md-12 d-flex align-items-center">
+                    <img [src]="rlaStarred.isActive? '/assets/images/svg/crm-archive.svg': '/assets/images/svg/crm-archive.svg'">
+                    <h5 mat-line class="mb-0 ml-28 f-14 ">Starred</h5>
+                </div>
+            </mat-list-item>
 
-      <mat-list-item routerLinkActive="text-primary" #rlaTrash="routerLinkActive" routerLink="trash" class="row c-p">
-        <div class="col-md-12 d-flex align-items-center">
-          <img [src]="rlaTrash.isActive ? '/assets/images/svg/crm-trash.svg': '/assets/images/svg/crm-sent.svg'">
-          <h5 mat-line class="mb-0 ml-28 f-14 ">Trash</h5>
-        </div>
-      </mat-list-item>
+            <mat-list-item routerLinkActive="text-primary" #rlaTrash="routerLinkActive" routerLink="trash" class="row c-p">
+                <div class="col-md-12 d-flex align-items-center">
+                    <img [src]="rlaTrash.isActive ? '/assets/images/svg/crm-trash.svg': '/assets/images/svg/crm-trash.svg'">
+                    <h5 mat-line class="mb-0 ml-28 f-14 ">Trash</h5>
+                </div>
+            </mat-list-item>
 
-      <mat-list-item routerLinkActive="text-primary" #rlaEmailSetting routerLink="email-settings"
-        class="row c-p bottom-0">
-        <div class="col-md-12 d-flex align-items-center">
-          <img [src]="rlaEmailSetting.isActive ? '/assets/images/svg/crm-trash.svg': '/assets/images/svg/crm-sent.svg'">
-          <h5 mat-line class="mb-0 ml-28 f-14 ">Email Settings</h5>
-        </div>
-      </mat-list-item>
-    </mat-list>
+            <mat-list-item routerLinkActive="text-primary" #rlaEmailSetting routerLink="email-settings" class="row c-p bottom-0">
+                <div class="col-md-12 d-flex align-items-center">
+                    <img [src]="rlaEmailSetting.isActive ? '/assets/images/svg/crm-trash.svg': '/assets/images/svg/crm-setting-icon.svg'">
+                    <h5 mat-line class="mb-0 ml-28 f-14 ">Email Settings</h5>
+                </div>
+            </mat-list-item>
+        </mat-list>
 
-  </mat-action-list>
+    </mat-action-list>
 </div>

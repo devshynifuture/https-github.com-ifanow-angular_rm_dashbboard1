@@ -29,5 +29,13 @@
 
 .email-list-scroll {
     overflow-y: auto !important;
-    height: calc(100vh - 214px);
+    height: calc(100vh - 67px);
+    #table-low tr {
+        border-bottom: 1px solid #DADCE0;
+        border-top: transparent;
+    }
+}
+
+.borderBottom {
+    border-bottom: 1px solid #DADCE0;
 }

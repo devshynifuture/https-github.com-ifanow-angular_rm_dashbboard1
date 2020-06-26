@@ -1,4 +1,4 @@
-<div class="row p-10">
+<div class="row borderBottom p-10">
 
     <div class="col-md-1 d-flex align-items-center pl-2 pr-0">
         <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
