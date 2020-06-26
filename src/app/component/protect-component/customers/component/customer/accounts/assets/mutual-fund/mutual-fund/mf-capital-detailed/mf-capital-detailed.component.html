@@ -348,7 +348,7 @@
             <div *ngIf="dataSource.data.length == 0" [ngClass]="{'account-empty-state': dataSource.data.length == 0}"
                 class="w-100 d-flex flex-column align-items-center ">
                 <!-- <img class="width400" src="assets/images/svg/noDataFound.svg"> -->
-                <h4 class="text-center pt-12">No Data Found</h4>
+                <h4 class="text-center pt-12"> No capital gains for {{fromDateYear}}-{{toDateYear}}</h4>
                 <!-- <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddInsurance(null)">ADD NEW</button> -->
             </div>
         </div>
@@ -681,7 +681,7 @@
             <div *ngIf="dataSource1.data.length == 0" [ngClass]="{'account-empty-state': dataSource1.data.length == 0}"
                 class="w-100 d-flex flex-column align-items-center">
                 <!-- <img class="width400" src="assets/images/svg/noDataFound.svg"> -->
-                <h4 class="text-center pt-12">No Data Found</h4>
+                <h4 class="text-center pt-12"> No capital gains for {{fromDateYear}}-{{toDateYear}}</h4>
                 <!-- <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddInsurance(null)">ADD NEW</button> -->
             </div>
         </div>
@@ -928,7 +928,7 @@
                     [ngClass]="{'account-empty-state': dataSource2.data.length == 0}"
                     class="w-100 d-flex flex-column align-items-center">
                     <!-- <img class="width400" src="assets/images/svg/noDataFound.svg"> -->
-                    <h4 class="text-center pt-12">No Data Found</h4>
+                    <h4 class="text-center pt-12"> No capital gains for {{fromDateYear}}-{{toDateYear}}</h4>
                     <!-- <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddInsurance(null)">ADD NEW</button> -->
                 </div>
             </div>
@@ -970,8 +970,8 @@
                     <p style="margin: 0px; font-size: 14px;padding-top: 12px;"> <strong> MF Capital gain Detailed
                             Report</strong>
                     </p>
-                    <p style="margin: 0px; font-size: 14px;padding-top: 12px;"> <strong> Report as on:
-                            {{reportDate | date:'dd-MMM-yyyy' }} </strong></p>
+                    <p style="margin: 0px; font-size: 14px;padding-top: 12px;"> <strong> Finacial year:
+                            {{fromDateYear-toDateYear}} </strong></p>
                 </td>
             </tr>
 
@@ -997,7 +997,7 @@
 
                 <td style="font-weight: 600; text-align: center;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; font-family: Roboto,sans-serif;"
                     colspan="17">
-                    No Data Found
+                    No capital gains for {{fromDateYear}}-{{toDateYear}}
                 </td>
             </tr>
 
@@ -1373,7 +1373,7 @@
             <tr *ngIf="dataSource1.data?.length == 0">
                 <td style="font-weight: 600; text-align: center;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; font-family: Roboto,sans-serif;"
                     colspan="17">
-                    No Data Found
+                    No capital gains for {{fromDateYear}}-{{toDateYear}}
                 </td>
             </tr>
 
@@ -1819,7 +1819,7 @@
             <tr *ngIf="dataSource2.data.length == 0">
                 <td style="font-weight: 600; text-align: center;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; font-family: Roboto,sans-serif;"
                     colspan="17">
-                    No Data Found
+                    No capital gains for {{fromDateYear}}-{{toDateYear}}
                 </td>
             </tr>
 

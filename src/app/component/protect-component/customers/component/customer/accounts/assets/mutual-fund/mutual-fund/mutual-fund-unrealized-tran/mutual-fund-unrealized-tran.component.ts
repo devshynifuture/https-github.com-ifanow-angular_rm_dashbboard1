@@ -167,9 +167,9 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     });
     if (this.viewMode == 'Unrealized Transactions') {
 
-      this.reportName = 'MF_Unrealised_Trasaction_Report'
+      this.reportName = 'MF unrealised trasaction report'
     } else {
-      this.reportName = 'MF_All_Trasaction_Report'
+      this.reportName = 'MF all trasaction report'
     }
     this.dataTransaction = {}
     this.dataTransaction.viewMode = {}
