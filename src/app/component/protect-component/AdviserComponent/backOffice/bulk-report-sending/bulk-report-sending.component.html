@@ -99,7 +99,7 @@
                 <ng-container matColumnDef="status">
                     <th mat-header-cell class="br" *matHeaderCellDef> Status </th>
                     <td mat-cell class="br c-p" *matCellDef="let element">
-                        <div class="bar"> {{isLoading ? '' : element.isActive}} </div>
+                        <div class="bar"> {{isLoading ? '' : (element.isActive)?'Sending':'Sent'}} </div>
                     </td>
                 </ng-container>
 
