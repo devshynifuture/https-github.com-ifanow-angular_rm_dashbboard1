@@ -375,7 +375,7 @@ export class UtilService {
     const browser = this.getBrowserName();
     console.log(browser);
     if(!this.client){
-      this.client = ''
+      this.client = {}
       this.client.name = ''
     }
     return this.http.post(

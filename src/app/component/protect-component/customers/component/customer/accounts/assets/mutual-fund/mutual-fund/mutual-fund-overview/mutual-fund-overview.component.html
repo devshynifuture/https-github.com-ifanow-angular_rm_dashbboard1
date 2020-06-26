@@ -905,10 +905,10 @@
         align="center; page-break-before: always;">
 
         <tr>
-            <td style="text-align: left;" *ngIf="getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
+            <td style="text-align: left;" *ngIf="getOrgData && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
                 <img width="250px" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
             </td>
-            <td style="text-align: left;" *ngIf="getOrgData.reportLogoUrl =='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
+            <td style="text-align: left;" *ngIf="getOrgData && getOrgData.reportLogoUrl =='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
                 <img width="250px" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
             </td>
             <td style="text-align: right;">
