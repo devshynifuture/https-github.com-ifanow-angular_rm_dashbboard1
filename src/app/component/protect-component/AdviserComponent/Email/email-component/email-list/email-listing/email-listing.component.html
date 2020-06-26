@@ -1,6 +1,5 @@
-<div class="row p-8 w-100 pb-0">
-
-    <div class="col-md-1 pl-2 pr-0">
+<div class="row p-10  ">
+    <div class="col-md-1 d-flex align-items-center pl-2 pr-0">
         <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
 
             <i [matMenuTriggerFor]="menu1" class="material-icons">
@@ -38,19 +37,20 @@
         </div>
     </div>
 
-    <div class="col-md-5"></div>
-    <div class="col-md-3 text-right">
+
+    <div class="col-md-8 pr-0 text-right">
 
         <span class="text-primitive">
             {{ currentList }} - {{ maxListRes }} of {{ paginatorLength }}
         </span>
         <span>
-            <button mat-icon-button (click)="previousPagesList()" [disabled]="!showPrevPaginationBtn">
+            <button class="matIconBtn mr-10" mat-icon-button (click)="previousPagesList()"
+                [disabled]="!showPrevPaginationBtn">
                 <mat-icon>
                     chevron_left
                 </mat-icon>
             </button>
-            <button mat-icon-button (click)="nextPagesList()" [disabled]="!showNextPaginationBtn">
+            <button class="matIconBtn" mat-icon-button (click)="nextPagesList()" [disabled]="!showNextPaginationBtn">
                 <mat-icon>
                     chevron_right
                 </mat-icon>
@@ -100,7 +100,7 @@
                 <ng-container matColumnDef="date">
                     <th mat-header-cell *matHeaderCellDef>
                     </th>
-                    <td mat-cell *matCellDef="let element" class="  w-10 pr-6 text-right">
+                    <td mat-cell *matCellDef="let element" class="p-no text-right">
                         <span class="d-block" data-show="date">
                             {{element.date | gmailDate}}
                         </span>
