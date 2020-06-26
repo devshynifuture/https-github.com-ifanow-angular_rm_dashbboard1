@@ -55,5 +55,7 @@ export class AppConstants {
   public static RELATIONSHIP_HUSBAND = 2;
   public static RELATIONSHIP_SELF = 0;
 
+  public static DATE_FORMAT = 'yyyy-MM-dd';
+
   public static EMAIL_DOMAINS = ['gmail.com','hotmail.com','mail.com','outlook.com','yahoo.com','yahoo.co.in','rediffmail.com'];
 }
