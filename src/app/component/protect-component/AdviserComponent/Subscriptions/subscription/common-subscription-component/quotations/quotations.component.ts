@@ -41,6 +41,13 @@ export class QuotationsComponent implements OnInit {
     // this.subInjectService.closeRightSlider.subscribe(
     //   data => this.getQuotationDesignData(data)
     // );
+    this.subInjectService.singleProfileData.subscribe(
+      data => {
+        if (data) {
+          this.getQuotationsList();
+        }
+      }
+    )
   }
 
   isLoading = false;

@@ -145,7 +145,9 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
     // }
     this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: flag });
     this.subInjectService.changeUpperRightSliderState({ state: 'close', data, refreshRequired: flag });
-
+    if (flag != close && this.storeData.quotation) {
+      this.subInjectService.addSingleProfile(true);
+    }
     // this.subInjectService.changeUpperRightSliderState({value:'close'})
     // this.subInjectService.changeUpperRightSliderState({value:'close'})
   }
