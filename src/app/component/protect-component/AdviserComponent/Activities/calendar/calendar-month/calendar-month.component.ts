@@ -78,15 +78,15 @@ export class CalendarMonthComponent implements OnInit {
           if(e.rrule != null){
             e['isRe'] = true;
             if(e.rrule.UNTIL){
-
+              this.E = [];
               for(let i = 0; i < e.rrule.UNTIL.length; i++){
                 this.E.push( e.rrule.UNTIL.charAt(i));
               }
+              let y = this.E[0]+ this.E[1] + this.E[2] + this.E[3];
+              let m = this.E[4]+ this.E[5];
+              let d = this.E[6]+ this.E[7];
               switch (e.rrule.FREQ) {
                 case "DAILY":
-                  let y = this.E[0]+ this.E[1] + this.E[2] + this.E[3];
-                  let m = this.E[4]+ this.E[5];
-                  let d = this.E[6]+ this.E[7];
                   e["reUntil"] = new Date(parseInt(y),parseInt(m)-1,parseInt(d));
                   
                   break;
@@ -96,7 +96,12 @@ export class CalendarMonthComponent implements OnInit {
               }
             }
             else{
-              e["reUntil"] = this.startDateFormate(e.start.date);
+              if(e.start.date != null){
+                e["reUntil"] = this.startDateFormate(e.start.date).setFullYear(2);
+              }
+              else{
+                e["reUntil"] = this.startDateFormate(e.start.dateTime).setFullYear(2);
+              }
             }
           }
           if(e.start){
@@ -119,12 +124,14 @@ export class CalendarMonthComponent implements OnInit {
     this.E = [];
     for(let i = 0; i < date.length; i++){
       if( date.charAt(i) != "-"){
-        this.E.push( date.charAt(i));
+        this.E.push(date.charAt(i));
       }
     }
     let y = this.E[0]+ this.E[1] + this.E[2] + this.E[3];
     let m = this.E[4]+ this.E[5];
     let d = this.E[6]+ this.E[7];
+
+    return new Date(parseInt(y),parseInt(m)-1,parseInt(d));
   }
 
   getDaysCount(month: number, year: number, ch: string): any {
