@@ -132,6 +132,25 @@ export class EmailServiceService {
     return this.http.get(apiConfig.GMAIL_URL + appConfig.GET_ATTACHMENTS, data);
   }
 
+  createDraft(body) {
+    const userInfo = AuthService.getUserInfo();
+    return this.http.post(apiConfig.GMAIL_URL + appConfig.CREATE_DRAFT, {
+      email: userInfo.email,
+      userId: userInfo.advisorId,
+      ...body
+    });
+  }
+
+  updateDraft(body, id) {
+    const userInfo = AuthService.getUserInfo();
+    return this.http.put(apiConfig.GMAIL_URL + appConfig.UPDATE_DRAFT, {
+      email: userInfo.email,
+      userId: userInfo.advisorId,
+      ...body,
+      id
+    });
+  }
+
   createUpdateDraft(body, id) {
     const userInfo = AuthService.getUserInfo();
 
