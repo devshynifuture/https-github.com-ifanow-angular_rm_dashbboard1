@@ -382,6 +382,7 @@ export class InvoiceComponent implements OnInit {
   getInvoiceData(data) {
     this.copyStoreData = data;
     this.storeData = data;
+    this.getFeeCalcultationData();
     if (data.status == 5 || data.status == 6) {
       this.moreStatus = data.status;
     } else {
@@ -577,9 +578,8 @@ export class InvoiceComponent implements OnInit {
     return this.rPayment.controls;
   }
 
-
-  OpenFeeCalc() {
-    this.barButtonOptions.active = true;
+  getFeeCalcultationData() {
+    // this.barButtonOptions.active = true;
     const obj =
     {
       invoiceId: this.storeData.id
@@ -587,12 +587,15 @@ export class InvoiceComponent implements OnInit {
     this.subService.getInvoiceFeeCalculations(obj).subscribe(
       data => {
         if (data) {
-          this.feeCalc = true;
-          this.barButtonOptions.active = false;
+          // this.barButtonOptions.active = false;
           this.invoiceFeeCalculations = data
         }
       }
     )
+  }
+
+  OpenFeeCalc() {
+    this.feeCalc = true;
   }
 
   recordPayment() {
