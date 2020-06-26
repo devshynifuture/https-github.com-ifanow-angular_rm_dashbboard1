@@ -17,7 +17,7 @@
             <div class="form-group mb-0">
                 <mat-form-field>
                     <mat-select class="form-control br-0" formControlName="docType" id="sel1">
-                        <mat-option disabled hidden selected value="">Select document type</mat-option>
+                        <mat-option disabled value="">Select document type</mat-option>
                         <mat-option value="1">Letter of engagement</mat-option>
                         <mat-option value="2">Details of client</mat-option>
                         <mat-option value="3">Material information about advisor/company</mat-option>
@@ -27,9 +27,7 @@
                         <mat-option value="7">Quotation</mat-option>
 
                     </mat-select>
-                    <mat-error
-                        [ngClass]="{'v-h':!(isDocType && getFormControl().docType.invalid || getFormControl().docType.touched && getFormControl().docType.invalid)}"
-                        class="f-12">Document type is required</mat-error>
+                    <mat-error class="f-12">Document type is required</mat-error>
                 </mat-form-field>
                 <!-- <input type="email" formControlName="docType" class="form-control br-0"> -->
 
@@ -45,26 +43,26 @@
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input type="email" matInput #docName formControlName="docName" maxlength="40"
                         class="form-control br-0" placeholder="Enter Document name">
-                    <mat-error
-                        [ngClass]="{'v-h':!(isDocName && getFormControl().docName.invalid || getFormControl().docName.touched && getFormControl().docName.invalid)}"
-                        class="f-12">Document name is required</mat-error>
+                    <mat-error class="f-12">Document name is required</mat-error>
                     <mat-hint align="end" class="f-12">{{docName.value.length}} / 40</mat-hint>
                 </mat-form-field>
             </div>
         </div>
     </div>
-    <div class="row pt-44" *ngIf="_inputData.documentType!='quotation'">
+    <div class="row pt-44" *ngIf="blankDocumentProperties.get('docType')!='7'">
         <div class="col-md-5">
             <h5 class="m-0 text-right pt-8">Document availability</h5>
             <p class="f-12 text-custom pt-4 right">Select one option</p>
         </div>
-        <div class="col-md-5">
+        <div [ngClass]="{'pe-none': _inputData.addFlag==false}" class="col-md-5">
             <mat-radio-group formControlName="docAvailability">
-                <div class="row c-p" [ngClass]="{'b-ua':selectedOption!='1','ba-blue':selectedOption=='1'}"
+                <div class="row c-p"
+                    [ngClass]="{'b-ua':blankDocumentProperties.get('docAvailability').value!='1','ba-blue':blankDocumentProperties.get('docAvailability').value=='1'}"
                     (click)="selectDocument('1')">
-                    <div [ngClass]="{'border-right-1':selectedOption!='1','br-blue-2':selectedOption=='1'}"
+                    <div [ngClass]="{'border-right-1':blankDocumentProperties.get('docAvailability').value!='1','br-blue-2':blankDocumentProperties.get('docAvailability').value=='1'}"
                         class="col-md-3 text-center pl-12 pr-12">
-                        <h5 [ngClass]="{'text-primary': selectedOption=='1'}" class="m-0 text-custom pt-24">Plan</h5>
+                        <h5 [ngClass]="{'text-primary': blankDocumentProperties.get('docAvailability').value=='1'}"
+                            class="m-0 text-custom pt-24">Plan</h5>
                         <mat-radio-button value="1" class="m-n0"></mat-radio-button>
                     </div>
                     <div class="col-md-9 pb-12">
@@ -72,14 +70,14 @@
                             for more than one plan.</h5>
                     </div>
                 </div>
-                <div class="row c-p"
-                    [hidden]="documentType=='quotations' || blankDocumentProperties.get('docType').value=='7'"
-                    [ngClass]="{'b-ua':selectedOption!='2','ba-blue':selectedOption=='2'}"
+                <div class="row c-p" [hidden]=" blankDocumentProperties.get('docType').value=='7'"
+                    [ngClass]="{'b-ua':blankDocumentProperties.get('docAvailability').value!='2','ba-blue':blankDocumentProperties.get('docAvailability').value=='2'}"
                     (click)="selectDocument('2')">
-                    <div [ngClass]="{'border-right-1':selectedOption!='2','br-blue-2':selectedOption=='2'}"
+                    <div [ngClass]="{'border-right-1':blankDocumentProperties.get('docAvailability').value!='2','br-blue-2':blankDocumentProperties.get('docAvailability').value=='2'}"
                         class="col-md-3  text-center pl-12 pr-12">
 
-                        <h5 [ngClass]="{'text-primary': selectedOption=='2'}" class="m-0 text-custom pt-24 ">Service
+                        <h5 [ngClass]="{'text-primary': blankDocumentProperties.get('docAvailability').value=='2'}"
+                            class="m-0 text-custom pt-24 ">Service
                         </h5>
                         <mat-radio-button value="2" class="m-n0"></mat-radio-button>
                     </div>
@@ -88,13 +86,13 @@
                             it for more than one service.</h5>
                     </div>
                 </div>
-                <div class="row c-p"
-                    [hidden]="documentType=='quotations' || blankDocumentProperties.get('docType').value=='7'"
-                    [ngClass]="{'b-ua':selectedOption!='3','ba-blue':selectedOption=='3'}"
+                <div class="row c-p" [hidden]="blankDocumentProperties.get('docType').value=='7'"
+                    [ngClass]="{'b-ua':blankDocumentProperties.get('docAvailability').value!='3','ba-blue':blankDocumentProperties.get('docAvailability').value=='3'}"
                     (click)="selectDocument('3')">
-                    <div [ngClass]="{'border-right-1':selectedOption!='3','br-blue-2':selectedOption=='3'}"
+                    <div [ngClass]="{'border-right-1':blankDocumentProperties.get('docAvailability').value!='3','br-blue-2':blankDocumentProperties.get('docAvailability').value=='3'}"
                         class="col-md-3  text-center pl-12 pr-12">
-                        <h5 [ngClass]="{'text-primary': selectedOption=='3'}" class="m-0 text-custom pt-24">Global</h5>
+                        <h5 [ngClass]="{'text-primary': blankDocumentProperties.get('docAvailability').value=='3'}"
+                            class="m-0 text-custom pt-24">Global</h5>
                         <mat-radio-button value="3" class="m-n0"></mat-radio-button>
                     </div>
                     <div class="col-md-9 pb-12">
@@ -106,7 +104,7 @@
         </div>
 
     </div>
-    <div *ngIf="_inputData.documentType=='quotation'" class="row pt-44">
+    <div *ngIf="blankDocumentProperties.get('docType')=='7'" class="row pt-44">
         <div class="col-md-5">
             <h5 class="m-0 text-right pt-8">Select Plan</h5>
             <p class="f-12 m-0 text-custom right text-right pl-44 ml-44 roboto">Quotations are only available at Plan

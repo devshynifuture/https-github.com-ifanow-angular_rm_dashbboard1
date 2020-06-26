@@ -70,10 +70,10 @@
                             src="assets/images/svg/mail-light.svg">
                         <img matTooltip="Download PDF" (click)="generatePdf()" class="b-a c-p"
                             src="assets/images/svg/pdf-icons.svg">
-                        <img matTooltip="Print" (click)="printPage(invoiceTemplate)" class="b-a c-p"
-                            src="assets/images/svg/printer.svg">
-                        <img matTooltip="Delete" (click)="deleteModal('INVOICE',storeData.id)"
-                            class="b-a wrapper-9 ml-8 c-p" src="assets/images/svg/delete.svg">
+                        <!-- <img matTooltip="Print" (click)="printPage(invoiceTemplate)" class="b-a c-p"
+                            src="assets/images/svg/printer.svg"> -->
+                        <!-- <img matTooltip="Delete" (click)="deleteModal('INVOICE',storeData.id)"
+                            class="b-a wrapper-9 ml-8 c-p" src="assets/images/svg/delete.svg"> -->
                     </div>
                     <div class="right text-right" [ngClass]="storeData.status !=1? 'col-md-4' : 'col-md-2'">
                         <button (click)="recordPayment()" class="btn-primary br-0 h-40" *ngIf="rpyment==true"
@@ -338,10 +338,10 @@
             <img matTooltip="Email" (click)="openSendEmail('upper')" class="b-a c-p" *ngIf="storeData.isAdvisor"
                 src="assets/images/svg/mail-light.svg">
             <img matTooltip="Download PDF" class="b-a c-p" src="assets/images/svg/pdf-icons.svg">
-            <img matTooltip="Print" (click)="printPage(invoiceTemplate)" class="b-a c-p"
+            <!-- <img matTooltip="Print" (click)="printPage(invoiceTemplate)" class="b-a c-p"
                 src="assets/images/svg/printer.svg">
             <img matTooltip="Delete" (click)="deleteModal('INVOICE',element)" class="b-a wrapper-9 ml-8 c-p"
-                *ngIf="storeData.isAdvisor" src="assets/images/svg/delete.svg">
+                *ngIf="storeData.isAdvisor" src="assets/images/svg/delete.svg"> -->
         </div>
         <div class="right text-right" [ngClass]="storeData.status !=1? 'col-md-4' : 'col-md-5'"
             *ngIf="storeData.isAdvisor">

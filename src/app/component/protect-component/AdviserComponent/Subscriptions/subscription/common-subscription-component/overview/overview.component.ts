@@ -9,6 +9,7 @@ import { SubscriptionService } from '../../../subscription.service';
 import { AddPlanDetailComponent } from '../add-structure/add-plan-detail.component';
 import { AddEditDocumentComponent } from '../add-edit-document/add-edit-document.component';
 import { Router } from '@angular/router';
+import { quotationTemplate, detailsOfClientTemplate, redressalofGrievance, letterOfEngagement, scopeofService } from '../../../documentTemplate';
 
 @Component({
   selector: 'app-overview',
@@ -23,7 +24,11 @@ export class OverviewComponent implements OnInit {
     private eventService: EventService,
     private subinject: SubscriptionInject, public subInjectService: SubscriptionInject) {
   }
-
+  quotationTemplate = quotationTemplate;
+  detailsOfClientTemplate = detailsOfClientTemplate;
+  redressalofGrievance = redressalofGrievance;
+  letterOfEngagement = letterOfEngagement;
+  scopeofService = scopeofService;
   _upperData;
   @Input() componentFlag: string;
 
@@ -55,17 +60,22 @@ export class OverviewComponent implements OnInit {
     this.overviewDesign = 'false';
   }
 
-  openForm(data, value) {
+  openForm(data, value, template) {
     let component;
+    const obj =
+    {
+      value: data,
+      template: template
+    };
     (value == "addPlan") ? component = AddPlanDetailComponent : component = AddEditDocumentComponent
     const fragmentData = {
       flag: value,
-      data,
+      data: obj,
       id: 1,
       state: 'open',
       componentName: component
     };
-    
+
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         if (UtilService.isDialogClose(sideBarData)) {
@@ -122,8 +132,8 @@ export class OverviewComponent implements OnInit {
   deletedData(data) {
     if (data == true) {
       // this.upperData = "plan";
-      this.router.navigate(['/admin/subscription/settings','plans']);
-      this.eventService.changeUpperSliderState({ state: 'close', refreshRequired:true });
+      this.router.navigate(['/admin/subscription/settings', 'plans']);
+      this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: true });
       this.eventService.openSnackBar('Deleted successfully!', 'Dismiss');
     }
   }
