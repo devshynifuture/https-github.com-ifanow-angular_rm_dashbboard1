@@ -127,7 +127,7 @@ export class AddEditDocumentComponent implements OnInit {
           name: this.blankDocumentProperties.controls.docName.value,
           // documentTypeId: parseInt(this.blankDocumentProperties.controls.docType.value),
           documentTypeId: this.blankDocumentProperties.controls.docType.value.toString(),
-          docText: 'docText',
+          docText: UtilService.getDocumentTemplates(this.blankDocumentProperties.controls.docType.value),
           description: this.blankDocumentProperties.controls.docName.value,
           public: true,
           quotation: this.blankDocumentProperties.controls.docType.value == 7 ? true : false,
