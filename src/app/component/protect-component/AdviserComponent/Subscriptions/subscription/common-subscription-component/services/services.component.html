@@ -121,16 +121,16 @@
                                         <p *ngIf="isLoading" class="text-primitive f-12">
                                             FEES</p>
 
-                                        <p *ngIf="serviceData&&serviceData.feeTypeId==2" class="text-primitive f-12">
-                                            OTHER ASSET FEES</p>
+                                        <!-- <p *ngIf="serviceData&&serviceData.feeTypeId==2" class="text-primitive f-12">
+                                            OTHER ASSET FEES</p> -->
                                         <div class="relClass">
                                             <div class="bar" [ngClass]="{'height24': isLoading}">
                                                 <h3 class="m-0 proxima" *ngIf="serviceData&&serviceData.feeTypeId==1">
                                                     ₹{{serviceData.averageFees}}
                                                 </h3>
-                                                <h3 class="m-0 proxima" *ngIf="serviceData&&serviceData.feeTypeId==2">
-                                                    {{serviceData.averageFees}}%
-                                                </h3>
+                                                <!-- <h3 class="m-0 proxima" *ngIf="serviceData&&serviceData.feeTypeId==2">
+                                                    {{serviceData.averageFees}}% -->
+                                                <!-- </h3> -->
                                             </div>
                                         </div>
                                     </div>

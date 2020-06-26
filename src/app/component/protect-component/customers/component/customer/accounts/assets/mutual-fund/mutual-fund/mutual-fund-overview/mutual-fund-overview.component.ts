@@ -131,6 +131,7 @@ export class MutualFundOverviewComponent implements OnInit {
     console.log('advisorData', this.userInfo);
     console.log('clientData', this.clientData);
     console.log('getAdvisorDetail', this.getAdvisorDetail);
+    console.log('getOrgData',this.getOrgData)
   }
 
   uploadData(data) {
@@ -983,11 +984,13 @@ export class MutualFundOverviewComponent implements OnInit {
   }
 
   generatePdfBulk() {
+    const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
+
     this.svg = this.chart.getSVG();
     const para = document.getElementById('template');
     const obj = {
       htmlInput: para.innerHTML,
-      name: 'Overview`s',
+      name: (this.clientData.name)?this.clientData.name:''+'s'+'MF_Overview_Report'+date,
       landscape: true,
       key: 'showPieChart',
       clientId: this.clientId,
@@ -997,7 +1000,7 @@ export class MutualFundOverviewComponent implements OnInit {
       svg: this.svg
     };
     this.UtilService.bulkHtmlToPdf(obj);
-    // this.UtilService.htmlToPdf(para.innerHTML, 'Overview', false, this.fragmentData,'showPieChart', this.svg)
+    this.UtilService.htmlToPdf(para.innerHTML, 'Overview', false, this.fragmentData,'showPieChart', this.svg)
 
   }
 
@@ -1015,6 +1018,7 @@ export class MutualFundOverviewComponent implements OnInit {
     console.log('data', data);
     this.clientDetails = data;
     this.clientData = data.clientData;
+    this.getOrgData = data.advisorData
     this.userInfo = data.advisorData;
   }
 }

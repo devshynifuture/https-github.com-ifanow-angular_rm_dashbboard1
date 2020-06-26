@@ -1,42 +1,43 @@
 <div class="custom-email">
-    <div class="bg-dark wrapper-8 pt-12">
+    <div class="wrapper-16 bb-1 popup-header-fix w-60">
         <div class="row">
-            <div class="col-md-11">
-                <p class="m-0 text-white pt-4" *ngIf="!_inputData.email_header">New email</p>
-                <p class="m-0 text-white pt-4" *ngIf="_inputData.email_header">{{_inputData.email_header}}</p>
+            <div class="col-md-11 pl-0">
+                <h5 class="m-0 text-black pt-4 f-16 roboto f-400" *ngIf="!_inputData.email_header">New email</h5>
+                <h5 class="m-0 text-black pt-4 f-16 roboto f-400" *ngIf="_inputData.email_header">
+                    {{_inputData.email_header}}
+                </h5>
             </div>
-            <div class="col-md-1 p-0 text-center">
-                <i (click)="close(false)" class="material-icons text-white c-p">
+            <div class="col-md-1 full-end">
+                <i (click)="close(false)" class="material-icons text-black c-p">
                     clear
                 </i>
             </div>
         </div>
     </div>
-    <div class="pl-16 pb-12 pt-12">
+    <div class="pl-28 pb-12 pt-90">
         <div class="row">
             <div class="col-md-1 d-flex align-items-center">
-                <p class="m-0 text-custom">From</p>
+                <p class="m-0 text-black roboto f-400">From</p>
             </div>
-            <div class="col-md-9">
-                <p *ngIf="this.emailData" class="m-0 text-black">
-                    <!-- {{(this.emailData) ? this.emailData.fromEmail : 'support@futurewise.co.in'}}</p> -->
-                    <mat-select class="form-control" [(ngModel)]="_inputData.fromEmail">
-                        <!-- <mat-option value="" disabled>Select Email</mat-option> -->
-                        <mat-option *ngFor="let verifiedEmail of verifiedEmailsList"
-                            [value]="verifiedEmail.emailAddress">
-                            {{verifiedEmail.emailAddress}}</mat-option>
-                    </mat-select>
+            <div class="col-md-9 pl-0">
+                <!-- <p *ngIf="this.emailData" class="m-0 text-black"> -->
+                <!-- {{(this.emailData) ? this.emailData.fromEmail : 'support@futurewise.co.in'}}</p> -->
+                <mat-select class="form-control" [(ngModel)]="_inputData.fromEmail">
+                    <!-- <mat-option value="" disabled>Select Email</mat-option> -->
+                    <mat-option *ngFor="let verifiedEmail of verifiedEmailsList" [value]="verifiedEmail.emailAddress">
+                        {{verifiedEmail.emailAddress}}</mat-option>
+                </mat-select>
             </div>
         </div>
     </div>
-    <div class="pl-16 pb-12 pt-12">
+    <div class="pl-28 pb-12 pt-24" *ngIf="_inputData.openedFrom != 'settings'">
         <div class="row">
             <div class="col-md-1 d-flex align-items-center">
-                <p class="m-0 text-custom ">To</p>
+                <p class="m-0 text-black roboto f-400">To</p>
             </div>
 
-            <div class="col-md-11">
-                <mat-form-field class="heightAuto">
+            <div class="col-md-9 pl-0">
+                <mat-form-field class="heightAuto ">
                     <mat-chip-list #chipListEmail>
                         <mat-chip [removable]="true" *ngFor="let singleEmailId of emailIdList; let i = index"
                             [selectable]="false" (removed)="removeEmailId(i)">
@@ -44,37 +45,43 @@
                             <mat-icon matChipRemove>cancel</mat-icon>
                         </mat-chip>
                         <input [matChipInputFor]="chipListEmail" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                            [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="add($event)" [autofocus]="true">
+                            [matChipInputAddOnBlur]="true" (matChipInputTokenEnd)="add($event)" [autofocus]="true"
+                            class="form-control">
                     </mat-chip-list>
                 </mat-form-field>
             </div>
         </div>
     </div>
-    <div class="wrapper-16 pt-0 pb-0">
+
+    <div class="pl-28 pb-12 pt-12">
         <div class="row">
             <div class="col-md-1 d-flex align-items-center pl-0">
-                <p class="m-0 text-custom ">Subject</p>
+                <p class="m-0 text-black roboto f-400">Subject</p>
             </div>
-            <div class="col-md-9 pr-0">
-                <input [(ngModel)]="_inputData.subject" class="form-control" type="text"
-                    [readonly]="_inputData.subjectChange">
+            <div class="col-md-9 pl-0">
+                    <input [(ngModel)]="_inputData.subject" class="form-control h-40"
+                        [readonly]="_inputData.subjectChange">
             </div>
         </div>
-
-        <div class="form-group mb-0 mt-8" *ngIf="!_inputData.bodyChange">
-            <app-froala [(model)]="emailBody" modelChange="saveData($event)"></app-froala>
-        </div>
-        <div *ngIf="_inputData.bodyChange" class="col-md-12 pl-0 pr-0 mt-16 pt-16 b-t" [innerHTML]="emailBody"
-            style="min-height: 550px;"></div>
     </div>
-
-    <div *ngIf="docObj" class="row">
-        <div class="col-md-10">
-            <div class="row">
-                <div class="col-md-12 ">
-                    <p class="mb-10 text-custom pt-12">Attachment</p>
+    <div class="pl-28 pb-12">
+        <div class="row pt-24">
+            <div class="col-md-12 pl-0">
+                <div class="form-group mb-0 mt-8" *ngIf="!_inputData.bodyChange">
+                    <app-froala [(model)]="emailBody" modelChange="saveData($event)"></app-froala>
                 </div>
-                <div class="col-md-12">
+                <div *ngIf="_inputData.bodyChange" class="col-md-12 pl-0 pr-0 mt-16 pt-16 b-t" [innerHTML]="emailBody"
+                    style="min-height: 550px;"></div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="docObj" class="row" class="pl-28 pb-12 pt-12">
+        <div class="col-md-10 pl-0">
+            <div class="row">
+                <div class="col-md-12 pl-0">
+                    <p class="mb-10 text-black f-400 pt-12">Attachment</p>
+                </div>
+                <div class="col-md-12 pl-0">
                     <mat-chip-list #chipList aria-label="docName selection">
                         <mat-chip (removed)="remove(i)" *ngFor="let doc of docObj ; let i = index">
                             {{doc.documentName}}
@@ -97,12 +104,16 @@
 <div class="bottom-fixed wrapper-12 w-60">
     <div class="row">
         <div class="col-md-12 text-right full-end">
-            <app-progress-button (btnClick)="sendEmail()" class="br-0 text-inherit ml-12" [options]="barButtonOptions">
+            <app-progress-button *ngIf="_inputData.templateType!=3 && !_inputData.openedFrom" (btnClick)="sendEmail()"
+                class="br-0 text-inherit ml-12" [options]="barButtonOptions">
+            </app-progress-button>
+            <app-progress-button *ngIf="_inputData.openedFrom && _inputData.openedFrom == 'settings'"
+                (btnClick)="saveEmailTemplate()" class="br-0 text-inherit ml-12" [options]="barButtonOptions">
             </app-progress-button>
             <!-- <button (click)="sendEmail()" class="btn-primary br-0 mr-16" mat-stroked-button>Send</button> -->
             <!-- <button (click)="saveEmailTemplate()" class="btn-primary br-0" mat-stroked-button>Save template</button> -->
-            <app-progress-button (btnClick)="saveEmailTemplate()" class="br-0 text-inherit ml-12"
-                [options]="barButtonOptions1">
+            <app-progress-button *ngIf="_inputData.templateType==3 && !_inputData.openedFrom"
+                (btnClick)="sendWithEsign()" class="br-0 text-inherit ml-12" [options]="barButtonOptions1">
             </app-progress-button>
         </div>
     </div>

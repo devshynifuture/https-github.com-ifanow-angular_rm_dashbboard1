@@ -582,13 +582,13 @@
         <app-fee-calculations [feeAmount]="storeData.subTotal" [feeCalculationData]="invoiceFeeCalculations"
             [padding]="true"></app-fee-calculations>
     </div>
-    <div class="bottom-fixed wrapper-12">
+    <!-- <div class="bottom-fixed wrapper-12">
         <div class="row">
             <div class="col-md-12">
                 <h5 (click)="Close('close', false)" class="mb-0 pt-8 pb-8 text-white c-p">Cancel</h5>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>
 <!--Add and edit invoice section-->
 <div *ngIf="showEdit" [ngClass]="!inputData?'pt-60':''">

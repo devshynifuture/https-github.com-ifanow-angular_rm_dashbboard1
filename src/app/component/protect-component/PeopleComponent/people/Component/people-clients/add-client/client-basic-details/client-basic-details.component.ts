@@ -70,6 +70,7 @@ export class ClientBasicDetailsComponent implements OnInit {
   clientTypeList: any;
   tableGetData: any;
   taxStatusFormControl = new FormControl('', [Validators.required]);
+  relationList: any[];
 
   // advisorId;
 
@@ -183,7 +184,50 @@ export class ClientBasicDetailsComponent implements OnInit {
     else {
       this.taxStatusList = (this.basicDetailsData.residentFlag == 1) ? this.invTaxStatusList.filter(element => element.residentFlag == true) : this.invTaxStatusList.filter(element => element.residentFlag == false);
     }
+    this.relationshipTypeMethod(this.basicDetailsData.genderId, this.basicDetailsData.age)
     console.log(data);
+  }
+
+  relationshipTypeMethod(gender, age) {
+    if (gender == 1 && age > 18) {
+      this.relationList = [
+        { name: 'Son', value: 4 },
+        { name: 'Husband', value: 2 },
+        { name: 'Father', value: 6 },
+        { name: 'Other', value: 10 },
+      ]
+    }
+    if (gender == 1 && age <= 18) {
+      this.relationList = [
+        { name: 'Son', value: 4 },
+        { name: 'Other', value: 10 },
+      ]
+    }
+    if (gender == 2 && age > 18) {
+      this.relationList = [
+        { name: 'Daughter', value: 5 },
+        { name: 'Wife', value: 3 },
+        { name: 'Mother', value: 7 },
+        { name: 'Other', value: 20 },
+      ]
+    }
+    if (gender == 2 && age <= 18) {
+      this.relationList = [
+        { name: 'Daughter', value: 5 },
+        { name: 'Other', value: 10 },
+      ]
+    }
+    if (gender == 3) {
+      this.relationList = [
+        { name: 'Wife', value: 3 },
+        { name: 'Husband', value: 2 },
+        { name: 'Son', value: 4 },
+        { name: 'Daughter', value: 5 },
+        { name: 'Father', value: 6 },
+        { name: 'Mother', value: 7 },
+        { name: 'Other', value: 20 },
+      ]
+    }
   }
 
   ngOnInit() {
@@ -213,6 +257,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       username: [{ value: data.userName, disabled: true }],
       dobAsPerRecord: [(data.dateOfBirth == null) ? '' : new Date(data.dateOfBirth)],
       gender: [(data.genderId) ? String(data.genderId) : '1'],
+      relationType: [(data.relationshipId != 0) ? data.relationshipId : ''],
       leadSource: [(data.leadSource) ? data.leadSource : ''],
       leaadStatus: [(data.leadStatus) ? String(data.leadStatus) : ''],
       leadRating: [(data.leadRating) ? String(data.leadRating) : ''],
@@ -225,6 +270,10 @@ export class ClientBasicDetailsComponent implements OnInit {
       this.basicDetails.controls.email.setValidators([Validators.required, Validators.pattern(this.validatorType.EMAIL)]);
       this.basicDetails.controls.pan.setValidators([Validators.required, Validators.pattern(this.validatorType.PAN)]);
     }
+    else {
+      this.basicDetails.controls.relationType.setValidators([Validators.required]);
+      this.basicDetails.controls.relationType.updateValueAndValidity();
+    }
     this.basicDetails.controls.email.updateValueAndValidity();
     this.basicDetails.controls.pan.updateValueAndValidity();
   }
@@ -235,6 +284,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       minorFullName: [data.name, [Validators.required]],
       dobAsPerRecord: [(data.dateOfBirth == null) ? '' : new Date(data.dateOfBirth)],
       gender: [(data.genderId) ? String(data.genderId) : '1'],
+      relationType: [(data.relationshipId != 0) ? data.relationshipId : ''],
       gFullName: [(data.guardianData) ? data.guardianData.name : '', [Validators.required]],
       gDobAsPerRecord: [(data.guardianData) ? new Date(data.guardianData.birthDate) : ''],
       gGender: [(data.guardianData) ? String(data.genderId) : '1'],
@@ -253,6 +303,10 @@ export class ClientBasicDetailsComponent implements OnInit {
     if (this.fieldFlag == 'client' && this.basicDetailsData.name) {
       this.minorForm.controls.gEmail.disable();
       this.minorForm.controls.pan.disable();
+    }
+    if (this.fieldFlag == 'familyMember') {
+      this.minorForm.controls.relationType.setValidators([Validators.required]);
+      this.minorForm.controls.relationType.updateValueAndValidity();
     }
     this.minorForm.controls.gEmail.updateValueAndValidity();
     this.minorForm.controls.pan.updateValueAndValidity();
@@ -614,7 +668,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       pan: (this.invTypeCategory == '1') ? this.basicDetails.controls.pan.value : this.minorForm.value.pan,
       residentFlag: parseInt(this.invTaxStatus),
       taxStatusId: taxStatusId,
-      relationshipId: this.basicDetailsData.relationshipId,
+      relationshipId: (this.invTypeCategory == '1') ? this.basicDetails.controls.relationType.value : this.minorForm.controls.relationType.value,
       familyMemberType: parseInt(this.invTypeCategory),
       isKycCompliant: 1,
       aadhaarNumber: null,

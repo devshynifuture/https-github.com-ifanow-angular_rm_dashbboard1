@@ -95,14 +95,14 @@
                                     class="f-12 mb-0 text-primitive">
                                     FEES
                                 </p>
-                                <p *ngIf="singleService.servicePricing&&singleService.servicePricing.feeTypeId==2"
-                                    class="f-12 mb-0 text-primitive">OTHER ASSET FEES</p>
+                                <!-- <p *ngIf="singleService.servicePricing&&singleService.servicePricing.feeTypeId==2"
+                                    class="f-12 mb-0 text-primitive">OTHER ASSET FEES</p> -->
                                 <div class="relClass">
                                     <div class="bar" [ngClass]="{'height23': isLoading}">
-                                        <h4 *ngIf="singleService.servicePricing&&singleService.servicePricing.feeTypeId==2"
+                                        <!-- <h4 *ngIf="singleService.servicePricing&&singleService.servicePricing.feeTypeId==2"
                                             class="m-0 p-0 text-lighter lh-16 f-16">
                                             {{singleService.averageFees}}%/<span>{{singleService.billEveryMode}}</span>
-                                        </h4>
+                                        </h4> -->
                                         <h4 *ngIf="singleService.servicePricing&&singleService.servicePricing.feeTypeId==1"
                                             class="m-0 p-0 text-lighter lh-16 f-16">
                                             ₹{{singleService.averageFees}}/<span>{{singleService.billEveryMode}}</span>

@@ -24,7 +24,7 @@ export class GmailRedirectComponent implements OnInit {
   RESPONSE_TYPE = 'code';
   SCOPE = 'htpps://mail.google.com';
   GRANT_TYPE = 'authorization_code';
-  REDIRECT_URI = 'http://localhost:4200/redirect';
+  REDIRECT_URI = '';
   advisorId;
   emailId;
   isSuccess: boolean = false;

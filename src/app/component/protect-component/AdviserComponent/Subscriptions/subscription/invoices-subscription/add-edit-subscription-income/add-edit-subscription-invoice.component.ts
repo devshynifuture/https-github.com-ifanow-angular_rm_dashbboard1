@@ -14,6 +14,7 @@ import { MatInput } from '@angular/material';
   styleUrls: ['./add-edit-subscription-invoice.component.scss']
 })
 export class AddEditSubscriptionInvoiceComponent implements OnInit {
+  invalidExtended;
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
     text: 'Save',

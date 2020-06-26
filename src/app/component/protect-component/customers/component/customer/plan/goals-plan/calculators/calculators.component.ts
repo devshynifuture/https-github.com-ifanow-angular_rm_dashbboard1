@@ -2,6 +2,11 @@ import { Component, OnInit, Input } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
+import { DatePipe } from '@angular/common';
+import { PlanService } from '../../plan.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ValidatorType } from 'src/app/services/util.service';
+import * as Highcharts from 'highcharts';
 
 @Component({
   selector: 'app-calculators',
@@ -12,39 +17,31 @@ export class CalculatorsComponent implements OnInit {
   
   @Input() data: any = {};
   @Input() popupHeaderText: string = 'CALCULATORS';
+  validatorType = ValidatorType;
   
   incomeFG: FormGroup;
   loanFG: FormGroup;
+  delayFG: FormGroup;
+
+  delayArray = [];
   
-  maxAmtAvailable: number = 3481356;
-  incomeInGoalYr: number = 241577;
-  highestLoanAvailable: number = 3481356;
-  highestEMIAvailable: number = 120788;
-  loanToBeTaken: number = 3481356;
-  emiPayable: number = 120788;
-  originalGoalAmt: number = 3481356;
-  dwnPaymentAmt: number = 120788;
-  monthlyReq: number = 3481356;
-  lumpsumReq: number = 120788;
+  calculatedEMI:any = {
+  }
 
   constructor(
     private subInjectService: SubscriptionInject,
-    private fb: FormBuilder
+    private eventService: EventService, 
+    private fb: FormBuilder,
+    private datePipe: DatePipe,
+    private planService: PlanService,
   ) { }
 
   ngOnInit() {
     this.getdataForm();
-
-    // TODO:- remove the below method if no use found.
-    this.incomeFG.valueChanges.pipe(
-      debounceTime(300),
-    ).subscribe(() => {
-      if(this.incomeFG.valid) {
-        console.log('Wow it works!!!!');
-      }
-    })
+    for (let index = 0; index < 10; index++) {
+      this.delayArray.push({value: index+1, display: index + 1 + ' Years'});
+    }
   }
-
 
   getdataForm() {
     this.incomeFG = this.fb.group({
@@ -56,15 +53,42 @@ export class CalculatorsComponent implements OnInit {
       loanAmt: [this.data ? this.data.loanAmt : '', [Validators.required, Validators.pattern('[0-9]*')]],
       loanTenure: [this.data ? this.data.loanTenure : '', [Validators.required, Validators.pattern('[0-9]*')]],
       interestRate: [this.data ? this.data.interestRate : '', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]],
+    });
+
+    this.delayFG = this.fb.group({
+      delay1: ['', [Validators.required]],
+      delay2: ['', [Validators.required]],
+      delay3: ['', [Validators.required]],
+      delay4: ['', [Validators.required]],
     })
   }
 
+  // ---------------------------------- calculator ---------------------------------------
   calculate(){
     if(this.incomeFG.invalid || this.loanFG.invalid) {
       this.incomeFG.markAllAsTouched();
       this.loanFG.markAllAsTouched();
     } else {
 
+      const emiObj = {
+        netSalary: this.incomeFG.controls.income.value,
+        loanTenure: this.loanFG.controls.loanTenure.value,
+        annualInterestRate: this.loanFG.controls.interestRate.value,
+        previousEMIs: this.incomeFG.controls.otherEMI.value,
+        incomeGrowthRate: this.incomeFG.controls.growthRate.value,
+        loanAmount: this.loanFG.controls.loanAmt.value,
+        savingStartDate: this.datePipe.transform(this.data.remainingData.savingStartDate, 'yyyy/MM/dd'),
+        goalAmount: this.data.gv
+      }
+
+      this.planService.calculateEMI({loanIpJson: JSON.stringify(emiObj)}).subscribe((res) => {
+        this.calculatedEMI = {
+          ...res,
+          ...emiObj
+        };
+      }, err => {
+        this.eventService.openSnackBar(err, "Dismiss");
+      })
     }
   }
 
@@ -78,6 +102,84 @@ export class CalculatorsComponent implements OnInit {
       this.subInjectService.changeNewRightSliderState({ state: 'close', data: data, refreshRequired: true })
     }
   }
+
+  resetIncome(){
+    this.incomeFG.controls.income.setValue('');
+  }
+
+  resetIncomeFG(){
+    this.incomeFG.reset();
+  }
+  // ---------------------------------- calculator ---------------------------------------
+
+  // ---------------------------------- cost of delay ------------------------------------
+  
+  // options set for bar charts
+  // Reference - https://api.highcharts.com/highcharts/
+  options: any = {
+    chart: {
+      type: 'bar',
+      height: 200
+    },
+    plotOptions: {
+      bar: {
+          dataLabels: {
+              enabled: true,
+              align: 'left',
+              inside: false
+          }
+      }
+    },
+    credits: {
+        enabled: false
+    },
+    title: {
+      text: 'Monthly Bar Chart'
+    },
+    xAxis: {
+        type: 'category',
+        lineWidth: 0,
+        tickWidth: 0
+    },
+    yAxis:{
+      visible: false
+    },
+    tooltip: {
+      enabled: false,
+    },
+    legend: {
+      enabled: false,
+    },
+    series: []
+  }
+  createChart(){
+    let data = [{
+        y: 123,
+        name: this.delayFG.controls.delay1.value.display,
+        color: 'green'
+    }, {
+        y: 60,
+        name:  this.delayFG.controls.delay1.value.display,
+        color: 'blue'
+    }, {
+        y: 43,
+        name:  this.delayFG.controls.delay1.value.display,
+        color: 'yellow'
+    }, {
+        y: 55,
+        name:  this.delayFG.controls.delay1.value.display,
+        color: 'red'
+    }];
+    this.options.series.push(data);
+    Highcharts.chart('monthly-chart-container', this.options);
+    Highcharts.chart('lumpsum-chart-container', this.options);
+  }
+  
+  calculateDelay(){
+    
+  }
+
+  // ---------------------------------- cost of delay ------------------------------------
 
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });

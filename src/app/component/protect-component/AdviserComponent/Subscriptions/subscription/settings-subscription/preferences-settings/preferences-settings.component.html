@@ -46,7 +46,7 @@
                             <div class="row b-a bg-grey lter pt-20 pb-16">
                                 <div class="col-md-9 relClass">
                                     <div class="bar">
-                                        <h3 class="mb-0 d-inline-block">{{singleBillerProfile.companyDisplayName}}</h3>
+                                        <h3 class="mb-0 d-inline-block">{{singleBillerProfile.companyName}}</h3>
                                     </div>
                                 </div>
 
@@ -90,7 +90,8 @@
                                             </div>
                                             <p class="f-12 pt-24">ADDRESS</p>
                                             <div class="bar">
-                                                <h5>{{singleBillerProfile.billerAddress?singleBillerProfile.billerAddress:'N/A'}}
+                                                <h5><span
+                                                        *ngIf="!isLoading">{{singleBillerProfile.billerAddress?singleBillerProfile.billerAddress:'N/A'}}</span>
                                                 </h5>
                                             </div>
                                         </div>
@@ -349,7 +350,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row pt-12">
                             <div class="col-md-12">
                                 <h4>Email templates</h4>
                             </div>

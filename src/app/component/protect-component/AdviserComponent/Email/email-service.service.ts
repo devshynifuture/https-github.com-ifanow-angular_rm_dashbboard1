@@ -14,6 +14,8 @@ import { HttpService } from './../../../../http-service/http-service';
 })
 export class EmailServiceService {
   private dataSourceOneMailView = new BehaviorSubject<Object>('');
+  private draftObs = new BehaviorSubject('');
+
   data = this.dataSourceOneMailView.asObservable();
   paginatorLength;
 
@@ -122,181 +124,6 @@ export class EmailServiceService {
     });
   }
 
-  // needs to work on email body attachments and to from of http Params
-  // createDraft({ to, from, emailBody, attachments, subject }) {
-  //   const userInfo = AuthService.getUserInfo();
-
-
-  //   const obj =
-  //   {
-  //     "attachmentIds": [
-  //       ""
-  //     ],
-  //     "bccs": [
-  //       ""
-  //     ],
-  //     "ccs": [
-  //       ""
-  //     ],
-  //     "contentType": "",
-  //     "draft": {
-  //       "historyId": "",
-  //       "id": "",
-  //       "messages": {
-  //         "historyId": 0,
-  //         "id": "",
-  //         "internalDate": 0,
-  //         "labelIds": [
-  //           "DRAFT"
-  //         ],
-  //         "payload": {
-  //           "body": {
-  //             "data": emailBody,
-  //             "size": 0
-  //           },
-  //           "fileName": "",
-  //           "headers": [
-  //             {
-  //               "name": "",
-  //               "value": ""
-  //             }
-  //           ],
-  //           "mimeType": "",
-  //           "partId": "",
-  //           "parts": [
-  //             {
-  //               "body": {
-  //                 "data": "",
-  //                 "size": 0
-  //               },
-  //               "fileName": "",
-  //               "headers": [
-  //                 {
-  //                   "name": "",
-  //                   "value": ""
-  //                 }
-  //               ],
-  //               "mimeType": "",
-  //               "partId": ""
-  //             }
-  //           ]
-  //         },
-  //         "sizeEstimate": 0,
-  //         "snippet": "",
-  //         "threadId": ""
-  //       },
-  //       "threadId": ""
-  //     },
-  //     "email": userInfo.emailId,
-  //     "fileData": [
-  //       {
-  //         "data": "",
-  //         "filename": "",
-  //         "mimeType": "",
-  //         "partId": "",
-  //         "size": 0
-  //       }
-  //     ],
-  //     "id": "0",
-  //     "message": emailBody,
-  //     "subject": subject,
-  //     "toAddress": [
-  //       to
-  //     ],
-  //     "userId": 2727
-  //   };
-
-  //   return this.http.post(apiConfig.GMAIL_URL + appConfig.CREATE_DRAFT, {
-  //     ...obj
-  //   });
-  // }
-
-  // updateDraft({ id, to, from, emailBody, attachments, subject }) {
-  //   const userInfo = AuthService.getUserInfo();
-  //   const Obj = {
-  //     "attachmentIds": [
-  //       ""
-  //     ],
-  //     "bccs": [
-  //       ""
-  //     ],
-  //     "ccs": [
-  //       ""
-  //     ],
-  //     "contentType": "",
-  //     "draft": {
-  //       "historyId": "",
-  //       "id": "",
-  //       "messages": {
-  //         "historyId": 0,
-  //         "id": "",
-  //         "internalDate": 0,
-  //         "labelIds": [
-  //           "DRAFT"
-  //         ],
-  //         "payload": {
-  //           "body": {
-  //             "data": "",
-  //             "size": 0
-  //           },
-  //           "fileName": "",
-  //           "headers": [
-  //             {
-  //               "name": "",
-  //               "value": ""
-  //             }
-  //           ],
-  //           "mimeType": "",
-  //           "partId": "",
-  //           "parts": [
-  //             {
-  //               "body": {
-  //                 "data": "",
-  //                 "size": 0
-  //               },
-  //               "fileName": "",
-  //               "headers": [
-  //                 {
-  //                   "name": "",
-  //                   "value": ""
-  //                 }
-  //               ],
-  //               "mimeType": "",
-  //               "partId": ""
-  //             }
-  //           ]
-  //         },
-  //         "sizeEstimate": 0,
-  //         "snippet": "",
-  //         "threadId": ""
-  //       },
-  //       "threadId": ""
-  //     },
-  //     "email": userInfo.emailId,
-  //     "fileData": [
-  //       {
-  //         "data": "",
-  //         "filename": "",
-  //         "mimeType": "",
-  //         "partId": "",
-  //         "size": 0
-  //       }
-  //     ],
-  //     "id": id,
-  //     "message": emailBody,
-  //     "subject": subject,
-  //     "toAddress": [
-  //       to
-  //     ],
-  //     "userId": 2727
-  //   };
-  //   return this.http.post(apiConfig.GMAIL_URL + appConfig.UPDATE_DRAFT, {
-  //     email: userInfo.emailId,
-  //     userId: userInfo.advisorId,
-  //     ...Obj
-  //   });
-  // }
-
   sendEmail(data) {
     return this.http.post(apiConfig.GMAIL_URL + appConfig.SEND_EMAIL, data);
   }
@@ -379,5 +206,13 @@ export class EmailServiceService {
 
   sendNextData(data: Object) {
     this.dataSourceOneMailView.next(data);
+  }
+
+  getDraftThread() {
+    return this.draftObs.asObservable();
+  }
+
+  sendDraftThread(value) {
+    this.draftObs.next(value);
   }
 }
