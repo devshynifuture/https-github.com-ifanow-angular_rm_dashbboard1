@@ -1,22 +1,33 @@
 .btn-custom-compose {
-  background: rgb(81, 162, 255);
-  color: white;
-  width: 100%;
-  text-align: center;
-
-  p {
-    color: white;
-  }
-
-  &:hover,
-  &:active,
-  &:focus {
-    color: white;
     background: rgb(81, 162, 255);
-  }
+    color: white;
+    width: 100%;
+    text-align: center;
+    p {
+        color: white;
+    }
+    &:hover,
+    &:active,
+    &:focus {
+        color: white;
+        background: rgb(81, 162, 255);
+    }
 }
 
 ::ng-deep .mat-checkbox-frame,
 ::ng-deep .mat-select-arrow {
-  border-color: #D9DEE1;
+    border-color: #D9DEE1;
+}
+
+.sticky-top {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 63px;
+    z-index: 1020;
+}
+
+.bottom-0 {
+    position: fixed;
+    bottom: 0px;
+    border-top: 1px solid #DADCE0;
 }
