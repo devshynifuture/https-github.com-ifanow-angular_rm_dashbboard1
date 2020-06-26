@@ -629,6 +629,7 @@ export class MfCapitalDetailedComponent implements OnInit {
     console.log('data', data)
     this.clientDetails = data
     this.clientData = data.clientData
+    this.getOrgData = data.advisorData
     this.userInfo = data.advisorData
   }
 }

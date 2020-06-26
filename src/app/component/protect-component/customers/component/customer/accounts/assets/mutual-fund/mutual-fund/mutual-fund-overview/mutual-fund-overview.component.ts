@@ -999,7 +999,7 @@ export class MutualFundOverviewComponent implements OnInit {
       svg: this.svg
     };
     this.UtilService.bulkHtmlToPdf(obj);
-    // this.UtilService.htmlToPdf(para.innerHTML, 'Overview', false, this.fragmentData,'showPieChart', this.svg)
+    this.UtilService.htmlToPdf(para.innerHTML, 'Overview', false, this.fragmentData,'showPieChart', this.svg)
 
   }
 
@@ -1017,6 +1017,7 @@ export class MutualFundOverviewComponent implements OnInit {
     console.log('data', data);
     this.clientDetails = data;
     this.clientData = data.clientData;
+    this.getOrgData = data.advisorData
     this.userInfo = data.advisorData;
   }
 }
