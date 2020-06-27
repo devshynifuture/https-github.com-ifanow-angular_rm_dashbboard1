@@ -64,8 +64,8 @@ export class RecordPaymentComponent implements OnInit {
     this.getRecordPayment(this.InvRecordData);
   }
 
-  roundOff(data: Number) {
-    return UtilService.roundOffToNearest1();
+  roundOff(data: number) {
+    return UtilService.roundOffToNearest1(data);
   }
 
   getRecordPayment(data) {
