@@ -39,7 +39,9 @@ export class RecordPaymentComponent implements OnInit {
     }];
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
-  constructor(public subService: SubscriptionService, private fb: FormBuilder, public enumService: EnumServiceService, public AuthService: AuthService, public utils: UtilService) {
+  constructor(public subService: SubscriptionService, private fb: FormBuilder,
+              public enumService: EnumServiceService, public AuthService: AuthService,
+              public utils: UtilService) {
   }
 
   @Input() InvRecordData;
@@ -60,6 +62,10 @@ export class RecordPaymentComponent implements OnInit {
     }
     this.advisorId = AuthService.getAdvisorId();
     this.getRecordPayment(this.InvRecordData);
+  }
+
+  roundOff(data: Number) {
+    return UtilService.roundOffToNearest1();
   }
 
   getRecordPayment(data) {

@@ -19,7 +19,7 @@
               This feild is required
             </mat-error>
             <mat-error *ngIf="(rPayment.get('amountReceived').errors?.max)" class="f-12">
-              Should be less than or equal to {{UtilService.roundOff(this.balDue)}}
+              Should be less than or equal to {{roundOff(this.balDue)}}
             </mat-error>
           </mat-form-field>
         </div>
