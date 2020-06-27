@@ -2,7 +2,12 @@
     <div class="wrapper-16 bb-1 popup-header-fix w-60">
         <div class="row">
             <div class="col-md-11 pl-0">
-                <h5 class="m-0 text-black pt-4 f-16 roboto f-400" *ngIf="!_inputData.email_header">New email</h5>
+                <h5 class="m-0 text-black pt-4 f-16 roboto f-400" *ngIf="_inputData.templateType==1">Invoice email</h5>
+                <h5 class="m-0 text-black pt-4 f-16 roboto f-400" *ngIf="_inputData.templateType==2">Quotation email
+                </h5>
+                <h5 class="m-0 text-black pt-4 f-16 roboto f-400"
+                    *ngIf="_inputData.templateType==3 || _inputData.templateType==4">Document email</h5>
+                <!-- <h5 class="m-0 text-black pt-4 f-16 roboto f-400" *ngIf="!_inputData.email_header">New email</h5> -->
                 <h5 class="m-0 text-black pt-4 f-16 roboto f-400" *ngIf="_inputData.email_header">
                     {{_inputData.email_header}}
                 </h5>
@@ -105,8 +110,12 @@
 <div class="bottom-fixed wrapper-12 w-60">
     <div class="row">
         <div class="col-md-12 text-right full-end">
-            <app-progress-button *ngIf="_inputData.templateType!=3 && !_inputData.openedFrom" (btnClick)="sendEmail()"
-                class="br-0 text-inherit ml-12" [options]="barButtonOptions">
+            <app-progress-button
+                *ngIf="_inputData.templateType==2 || _inputData.templateType==4 && !_inputData.openedFrom"
+                (btnClick)="sendEmail()" class="br-0 text-inherit ml-12" [options]="barButtonOptions">
+            </app-progress-button>
+            <app-progress-button *ngIf="_inputData.templateType==1 && !_inputData.openedFrom"
+                (btnClick)="sendInvoiceEmail()" class="br-0 text-inherit ml-12" [options]="barButtonOptions">
             </app-progress-button>
             <app-progress-button *ngIf="_inputData.openedFrom && _inputData.openedFrom == 'settings'"
                 (btnClick)="saveEmailTemplate()" class="br-0 text-inherit ml-12" [options]="barButtonOptions">

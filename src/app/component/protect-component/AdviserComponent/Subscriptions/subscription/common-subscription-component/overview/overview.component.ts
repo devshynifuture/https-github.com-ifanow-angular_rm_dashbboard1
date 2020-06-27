@@ -1,15 +1,21 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { MatDialogRef, MatDialog } from '@angular/material';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { UtilService } from 'src/app/services/util.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { SubscriptionService } from '../../../subscription.service';
-import { AddPlanDetailComponent } from '../add-structure/add-plan-detail.component';
-import { AddEditDocumentComponent } from '../add-edit-document/add-edit-document.component';
-import { Router } from '@angular/router';
-import { quotationTemplate, detailsOfClientTemplate, redressalofGrievance, letterOfEngagement, scopeofService } from '../../../documentTemplate';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {MatDialog} from '@angular/material';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {UtilService} from 'src/app/services/util.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {SubscriptionService} from '../../../subscription.service';
+import {AddPlanDetailComponent} from '../add-structure/add-plan-detail.component';
+import {AddEditDocumentComponent} from '../add-edit-document/add-edit-document.component';
+import {Router} from '@angular/router';
+import {
+  detailsOfClientTemplate,
+  letterOfEngagement,
+  quotationTemplate,
+  redressalofGrievance,
+  scopeofService
+} from '../../../documentTemplate';
 
 @Component({
   selector: 'app-overview',
@@ -20,10 +26,12 @@ export class OverviewComponent implements OnInit {
   overviewDesign: any = 'true';
   advisorId: any;
   @Output() changePlanData = new EventEmitter();
+
   constructor(public dialog: MatDialog, private subService: SubscriptionService, private router: Router,
-    private eventService: EventService,
-    private subinject: SubscriptionInject, public subInjectService: SubscriptionInject) {
+              private eventService: EventService,
+              private subinject: SubscriptionInject, public subInjectService: SubscriptionInject) {
   }
+
   quotationTemplate = quotationTemplate;
   detailsOfClientTemplate = detailsOfClientTemplate;
   redressalofGrievance = redressalofGrievance;
@@ -38,7 +46,7 @@ export class OverviewComponent implements OnInit {
     if (upperData && upperData.documentData) {
       this.changeDisplay();
     }
-  };
+  }
 
   get upperData() {
     return this._upperData;
@@ -53,7 +61,7 @@ export class OverviewComponent implements OnInit {
   }
 
   dialogClose() {
-    this.eventService.changeUpperSliderState({ state: 'close' });
+    this.eventService.changeUpperSliderState({state: 'close'});
   }
 
   changeDisplay() {
@@ -62,12 +70,11 @@ export class OverviewComponent implements OnInit {
 
   openForm(data, value, template) {
     let component;
-    const obj =
-    {
+    const obj = {
       value: data,
-      template: template
+      template
     };
-    (value == "addPlan") ? component = AddPlanDetailComponent : component = AddEditDocumentComponent
+    (value == 'addPlan') ? component = AddPlanDetailComponent : component = AddEditDocumentComponent;
     const fragmentData = {
       flag: value,
       data: obj,
@@ -80,9 +87,9 @@ export class OverviewComponent implements OnInit {
       sideBarData => {
         if (UtilService.isDialogClose(sideBarData)) {
           if (sideBarData.data) {
-            this.upperData = sideBarData.data
-            this._upperData = sideBarData.data
-            this.changePlanData.emit(this.upperData)
+            this.upperData = sideBarData.data;
+            this._upperData = sideBarData.data;
+            this.changePlanData.emit(this.upperData);
           }
           rightSideDataSub.unsubscribe();
         }
@@ -91,7 +98,7 @@ export class OverviewComponent implements OnInit {
   }
 
   deleteModal(singlePlan, value) {
-    this.singlePlanData = singlePlan
+    this.singlePlanData = singlePlan;
     const dialogData = {
       data: value,
       header: 'DELETE',
@@ -133,7 +140,7 @@ export class OverviewComponent implements OnInit {
     if (data == true) {
       // this.upperData = "plan";
       this.router.navigate(['/admin/subscription/settings', 'plans']);
-      this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: true });
+      this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
       this.eventService.openSnackBar('Deleted successfully!', 'Dismiss');
     }
   }

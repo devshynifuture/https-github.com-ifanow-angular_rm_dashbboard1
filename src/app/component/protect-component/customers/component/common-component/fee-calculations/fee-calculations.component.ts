@@ -30,8 +30,10 @@ export class FeeCalculationsComponent implements OnInit {
   share: any;
   @Input() feeAmount;
   splitRatioValue: any;
+  feeCalculationDataLength: any;
   @Input() set feeCalculationData(data) {
     if (data.invoiceFeeCalculation) {
+      this.feeCalculationDataLength = data.invoiceFeeCalculation.length;
       let feeCalculationData = data.invoiceFeeCalculation;
       this.share = data.share
       feeCalculationData.forEach(element => {
