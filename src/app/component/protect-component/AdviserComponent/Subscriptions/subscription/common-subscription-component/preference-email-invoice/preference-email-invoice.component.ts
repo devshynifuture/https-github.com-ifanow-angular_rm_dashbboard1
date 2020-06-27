@@ -1,10 +1,10 @@
-import { Component, Inject, OnInit, Renderer2 } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog } from '@angular/material';
-import { EventService } from '../../../../../../../Data-service/event.service';
-import { FormControl, FormGroup } from '@angular/forms';
-import { SubscriptionService } from '../../../subscription.service';
-import { HowToUseDialogComponent } from '../how-to-use-dialog/how-to-use-dialog.component';
-import { AuthService } from "../../../../../../../auth-service/authService";
+import {Component, OnInit, Renderer2} from '@angular/core';
+import {MatDialog} from '@angular/material';
+import {EventService} from '../../../../../../../Data-service/event.service';
+import {FormControl, FormGroup} from '@angular/forms';
+import {SubscriptionService} from '../../../subscription.service';
+import {HowToUseDialogComponent} from '../how-to-use-dialog/how-to-use-dialog.component';
+import {AuthService} from "../../../../../../../auth-service/authService";
 
 @Component({
   selector: 'app-preference-email-invoice',
@@ -14,7 +14,7 @@ import { AuthService } from "../../../../../../../auth-service/authService";
 export class PreferenceEmailInvoiceComponent implements OnInit {
   model: any;
   storeData: any;
-
+  logoText = '';
   advisorId;
 
   mailForm = new FormGroup({
@@ -25,22 +25,24 @@ export class PreferenceEmailInvoiceComponent implements OnInit {
   fragmentData: any;
 
   constructor(private eventService: EventService, public authService: AuthService,
-    public subService: SubscriptionService, public dialog: MatDialog, private render: Renderer2) {
+              public subService: SubscriptionService, public dialog: MatDialog, private render: Renderer2) {
 
   }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
   }
+
   get data() {
     return this.fragmentData;
   }
 
   set data(data) {
-    this.fragmentData = { data };
+    this.fragmentData = {data};
     this.heading = (this.fragmentData.data.id == 1) ? 'Invoice' : (this.fragmentData.data.id == 2) ? 'Quotations' : (this.fragmentData.data.id == 3) ? ' Documents with esign request' : ' Documents without eSign request';
     this.storeData = this.fragmentData.data;
   }
+
   copyName(value) {
     const tag = this.render.createElement('input');
     tag.value = value;
@@ -51,6 +53,7 @@ export class PreferenceEmailInvoiceComponent implements OnInit {
     document.body.removeChild(tag);
     this.eventService.openSnackBar('Text copied', 'Dismiss');
   }
+
   // Begin ControlValueAccesor methods.
   onChange = (_) => {
   }
@@ -74,7 +77,7 @@ export class PreferenceEmailInvoiceComponent implements OnInit {
   //   this.dialogRef.close();
   // }
   dialogClose() {
-    this.eventService.changeUpperSliderState({ state: 'close' });
+    this.eventService.changeUpperSliderState({state: 'close'});
     // this.dialogRef.close();
   }
 
