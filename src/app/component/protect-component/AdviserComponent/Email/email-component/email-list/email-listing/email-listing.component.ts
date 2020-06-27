@@ -33,6 +33,7 @@ export class EmailListingComponent implements OnInit {
   draftCount: any = 0;
   trashCount: any = 0;
   showOptions: boolean = false;
+  starredCount: any;
 
 
   constructor(
@@ -73,6 +74,7 @@ export class EmailListingComponent implements OnInit {
   }
 
   initPoint() {
+    this.isLoading = true;
     let location;
 
     if (this.router.url === '/') {
@@ -142,6 +144,7 @@ export class EmailListingComponent implements OnInit {
     this.paginatorSubscription = this.emailService.getProfile()
       .subscribe(response => {
         if (!response) {
+          this.isLoading = false;
           this.eventService.openSnackBar("You must connect your gmail account", "Dismiss");
           if (localStorage.getItem('successStoringToken')) {
             localStorage.removeItem('successStoringToken');
@@ -149,10 +152,7 @@ export class EmailListingComponent implements OnInit {
           this.router.navigate(['google-connect'], { relativeTo: this.activatedRoute });
         } else {
           // this.paginatorLength = response.threadsTotal;
-          this.isLoading = true;
-
           this.getRightSideNavListCount(location);
-
         }
       }, err => {
         this.eventService.openSnackBarNoDuration(err);
@@ -165,6 +165,7 @@ export class EmailListingComponent implements OnInit {
   }
 
   getRightSideNavListCount(location) {
+    this.isLoading = true;
     this.emailService.getRightSideNavList().subscribe(responseData => {
       this.navList = responseData;
       console.log("check navlist :::", this.navList);
@@ -179,6 +180,8 @@ export class EmailListingComponent implements OnInit {
               break;
             case 'THRASH': this.trashCount = element.threadsTotal;
               break;
+            case 'STARRED': this.starredCount = element.threadsTotal;
+              break;
           }
         });
         switch (location) {
@@ -190,6 +193,8 @@ export class EmailListingComponent implements OnInit {
           case 'draft': this.paginatorLength = this.draftCount;
             break;
           case 'trash': this.paginatorLength = this.trashCount;
+            break;
+          case 'starred': this.paginatorLength = this.starredCount;
             break;
         }
 
@@ -347,6 +352,7 @@ export class EmailListingComponent implements OnInit {
 
   // get List view
   getGmailList(data, page) {
+    this.showNextPaginationBtn = false;
     if (data === 'INBOX') {
       data = 'IMPORTANT';
     }
@@ -439,6 +445,7 @@ export class EmailListingComponent implements OnInit {
         // this.messageDetailArray = tempArray;
 
         this.isLoading = false;
+        this.showNextPaginationBtn = true;
         this.dataSource = new MatTableDataSource<MessageListArray>(this.messageListArray);
         this.dataSource.paginator = this.paginator;
 
@@ -447,7 +454,7 @@ export class EmailListingComponent implements OnInit {
 
   nextPagesList() {
     let aheadPaginatorVal = this.maxListRes + 50;
-    if (aheadPaginatorVal <= this.paginatorLength) {
+    if (aheadPaginatorVal <= this.paginatorLength || this.maxListRes <= this.paginatorLength) {
       this.totalListSize = this.totalListSize - 50;
       this.currentList = this.maxListRes + 1;
       this.maxListRes = this.maxListRes + 50;
@@ -456,10 +463,6 @@ export class EmailListingComponent implements OnInit {
       }
       if (this.maxListRes >= this.paginatorLength) {
         this.maxListRes = this.paginatorLength;
-      }
-      if (this.currentList >= this.paginatorLength) {
-        this.currentList = 1;
-        this.maxListRes = 50;
       }
       this.isLoading = true;
       this.getGmailList(this.router.url.split('/')[3].toUpperCase(), 'next');
@@ -470,29 +473,14 @@ export class EmailListingComponent implements OnInit {
   }
 
   previousPagesList() {
-    if (this.maxListRes >= 50) {
-      this.totalListSize = this.totalListSize - 50;
-      this.currentList = this.maxListRes - 51;
-      this.maxListRes = this.maxListRes - 50;
-      // if(this.currentList === 1){
 
-      // }
-      // if (this.maxListRes <= this.paginatorLength) {
-      //   this.maxListRes = this.paginatorLength;
-      // }
-      // if (this.currentList <= this.paginatorLength) {
-      //   this.currentList = 1;
-      //   this.maxListRes = 50;
-      // }
-      this.isLoading = true;
-      if (this.currentList <= 1) {
-        this.currentList = 1;
-        this.showNextPaginationBtn = true;
-      }
-      this.getGmailList(this.router.url.split('/')[3].toUpperCase(), 'prev');
-    } else {
-      this.showPrevPaginationBtn = false;
-    }
+    this.totalListSize = 0 + 50;
+    this.maxListRes = 50;
+    this.currentList = 1;
+
+    this.isLoading = true;
+
+    this.getGmailList(this.router.url.split('/')[3].toUpperCase(), 'prev');
 
   }
 
