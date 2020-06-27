@@ -4,6 +4,7 @@ import { calendarService } from './../calendar.service';
 import { AuthService } from '../../../../../../auth-service/authService';
 import { EventDialog } from './../event-dialog';
 import { Subscription } from 'rxjs';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-calendar-month',
@@ -34,7 +35,7 @@ export class CalendarMonthComponent implements OnInit {
   currentYear: any;
   excessAllow: any;
   private unSubcrip: Subscription;
-  constructor(public dialog: MatDialog, private calenderService: calendarService) { }
+  constructor(public dialog: MatDialog, private calenderService: calendarService, private datePipe: DatePipe) { }
 
   ngOnInit() {
     this.currentMonth = new Date().getMonth();
@@ -76,7 +77,7 @@ export class CalendarMonthComponent implements OnInit {
         
         for (let e of this.eventData) {
           if(e.rrule != null){
-            e['isRe'] = true;
+            e['isRe'] = e.rrule.FREQ;
             if(e.rrule.UNTIL){
               this.E = [];
               for(let i = 0; i < e.rrule.UNTIL.length; i++){
@@ -89,7 +90,8 @@ export class CalendarMonthComponent implements OnInit {
                 case "DAILY":
                   e["reUntil"] = new Date(parseInt(y),parseInt(m)-1,parseInt(d));
                   break;
-              
+                case "WEEKLY":
+                  break;
                 default:
                   break;
               }
@@ -101,7 +103,7 @@ export class CalendarMonthComponent implements OnInit {
               }
               else if(e.rrule.COUNT){
                 e['reStart'] = new Date(e.start.dateTime);
-                e["reUntil"] = new Date(new Date(e.start.dateTime).setDate(new Date(e.start.dateTime).getDate() + parseInt(e.rrule.COUNT)));
+                e["reUntil"] = new Date(new Date(e.start.dateTime).setDate(new Date(e.start.dateTime).getDate() + parseInt(e.rrule.COUNT) - 1));
               }
               else{
                 e['reStart'] = new Date(e.start.dateTime);
@@ -110,7 +112,7 @@ export class CalendarMonthComponent implements OnInit {
             }
           }
           else{
-            e['isRe'] = false;
+            e['isRe'] = undefined;
             if(e.start){
             e['reStart'] = new Date(e.start.dateTime);
             e["reUntil"] = new Date(e.end.dateTime);
@@ -142,6 +144,11 @@ export class CalendarMonthComponent implements OnInit {
       dateBe = new Date(date);
     }
    return new Date(dateBe).getTime();
+  }
+
+  getDay(year,month,day){
+    let d = new Date(year,month,day);
+    return this.datePipe.transform(d, 'EEE')
   }
 
   startDateFormate(date){
