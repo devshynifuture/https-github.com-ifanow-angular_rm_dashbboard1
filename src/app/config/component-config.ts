@@ -416,6 +416,7 @@ export const appConfig = {
   CREATE_QUOTATION: 'subscription/quotation/add',
   CLIENTLIST_WITH_SUBSCRIPTION: 'subscription/clients/with/subscriptions/get',
   GET_INVOICE_FEE_CALCULATIONS: 'subscription/invoice/fee-calculation/get',
+  SEND_INVOICE_EMAIL: 'pdfAndEmail/send',
   // Plan Module
 
   GET_INCOME_LIST: 'account/income/get',
