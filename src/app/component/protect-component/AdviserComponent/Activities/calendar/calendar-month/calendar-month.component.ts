@@ -5,6 +5,7 @@ import { AuthService } from '../../../../../../auth-service/authService';
 import { EventDialog } from './../event-dialog';
 import { Subscription } from 'rxjs';
 import { DatePipe } from '@angular/common';
+import { threadId } from 'worker_threads';
 
 @Component({
   selector: 'app-calendar-month',
@@ -13,6 +14,7 @@ import { DatePipe } from '@angular/common';
 })
 export class CalendarMonthComponent implements OnInit {
   viewDate: any;
+  dayCount:number = 0;
   numbersOfDays: any;
   lastMonthDays: any;
   nextMonthDays: any;
@@ -48,6 +50,7 @@ export class CalendarMonthComponent implements OnInit {
     // this.excessAllow = localStorage.getItem('successStoringToken')
     this.unSubcrip = this.calenderService.updateDayArr().subscribe((data: any) => {
       this.daysArr = data[0];
+      this.dayCount = 0;
       this.month = data[1].month;
       this.year = data[1].year;
       this.numbersOfDays = data[1].numbersOfDays;
@@ -134,59 +137,175 @@ export class CalendarMonthComponent implements OnInit {
 
 
   }
-  eInt:any;
-  validateDays(eDays, day , interval) {
-    this.E = [];
-    let d;
-    eDays +=',';
-    if(this.E.length <= 0){
-    for (let i = 0; i < eDays.length; i++) {
-      if (eDays.charAt(i) != ",") {
-        if(d){
-          d += eDays.charAt(i);
-        }else{
-          d = eDays.charAt(i);
+
+  validateMonthDays(eDays, cDate, startDate, interval) {
+    if (eDays) {
+      let d = new Date(cDate);
+      // let getTot = this.getDaysCount(this.month, this.year, "currentMonthDays"); //Get total days in a month
+      // let dayCount: number = 0;
+      let dayNum = eDays.charAt(0);
+      let monthDay = eDays.charAt(1) + eDays.charAt(2);
+
+      // for (let i = 1; i <= getTot; i++) {    //looping through days in month
+        // let newDate = new Date(d.getFullYear(), d.getMonth(), i)
+        switch (monthDay) {
+          case "SU":
+            if (d.getDay() == 0) {   //if Sunday
+              this.dayCount+= 1
+              if (this.dayCount == dayNum) {
+                return false;
+              }
+              else {
+                return true;
+              }
+            }
+            else {
+              return true;
+            }
+          case "MO":
+            if (d.getDay() == 1) {   //if Sunday
+              this.dayCount+= 1
+              if (this.dayCount == dayNum) {
+                return false;
+              }
+              else {
+                return true;
+              }
+            }
+            else {
+              return true;
+            }
+          case "TU":
+            if (d.getDay() == 2) {   //if Sunday
+              this.dayCount+= 1
+              if (this.dayCount == dayNum) {
+                return false;
+              }
+              else {
+                return true;
+              }
+            }
+            else {
+              return true;
+            }
+          case "WE":
+            if (d.getDay() == 3) {   //if Sunday
+              this.dayCount+= 1
+              if (this.dayCount == dayNum) {
+                return false;
+              }
+              else {
+                return true;
+              }
+            }
+            else {
+              return true;
+            }
+          case "TH":
+            if (d.getDay() == 4) {   //if Sunday
+              this.dayCount+= 1
+              if (this.dayCount == dayNum) {
+                return false;
+              }
+              else {
+                return true;
+              }
+            }
+            else {
+              return true;
+            }
+          case "FR":
+            if (d.getDay() == 5) {   //if Sunday
+              this.dayCount+= 1
+              if (this.dayCount == dayNum) {
+                return false;
+              }
+              else {
+                return true;
+              }
+            }
+            else {
+              return true;
+            }
+          case "SA":
+            if (d.getDay() == 6) {   //if Sunday
+              this.dayCount+= 1
+              if (this.dayCount == dayNum) {
+                return false;
+              }
+              else {
+                return true;
+              }
+            }
+            else {
+              return true;
+            }
+            
         }
+      // }
+    }
+    else {
+      if (this.formateDate(cDate) == startDate) {
+        return false;
       }
       else {
-        switch (d) {
-          case "SU":
-            // return day == 'Sun'?false:true;
-            this.E.push('Sun');
-            break;
-          case "MO":
-            // return day == 'Mon'?false:true;
-            this.E.push('Mon');
-            break;
-          case "TU":
-            // return day == 'Tus'?false:true;
-            this.E.push('Tue');
-            break;
-          case "WE":
-            // return day == 'Wed'?false:true;
-            this.E.push('Wed');
-            break;
-          case "TH":
-            // return day == 'Thu'?false:true;
-            this.E.push('Thu');
-            break;
-          case "FR":
-            // return day == 'Fri'?false:true;
-            this.E.push('Fri');
-            break;
-          case "SA":
-            // return day == 'Sat'?false:true;
-            this.E.push('Sat');
-            break;
-        }
-
-        d='';
+        return true;
       }
     }
   }
-   
-      return this.E.includes(day)?false:true;
-    
+
+  validateWeekDays(eDays, day, interval) {
+    this.E = [];
+    let d;
+    eDays += ',';
+    if (this.E.length <= 0) {
+      for (let i = 0; i < eDays.length; i++) {
+        if (eDays.charAt(i) != ",") {
+          if (d) {
+            d += eDays.charAt(i);
+          } else {
+            d = eDays.charAt(i);
+          }
+        }
+        else {
+          switch (d) {
+            case "SU":
+              // return day == 'Sun'?false:true;
+              this.E.push('Sun');
+              break;
+            case "MO":
+              // return day == 'Mon'?false:true;
+              this.E.push('Mon');
+              break;
+            case "TU":
+              // return day == 'Tus'?false:true;
+              this.E.push('Tue');
+              break;
+            case "WE":
+              // return day == 'Wed'?false:true;
+              this.E.push('Wed');
+              break;
+            case "TH":
+              // return day == 'Thu'?false:true;
+              this.E.push('Thu');
+              break;
+            case "FR":
+              // return day == 'Fri'?false:true;
+              this.E.push('Fri');
+              break;
+            case "SA":
+              // return day == 'Sat'?false:true;
+              this.E.push('Sat');
+              break;
+          }
+
+          d = '';
+        }
+      }
+    }
+
+    return this.E.includes(day) ? false : true;
+
   }
   dateTimeEvent(year, month, date) {
     let dateBe;
