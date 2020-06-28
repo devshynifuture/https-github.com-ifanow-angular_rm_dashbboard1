@@ -1,5 +1,5 @@
-import { Component,OnInit } from '@angular/core';
-import { MatDialog} from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { calendarService } from './../calendar.service';
 import { AuthService } from '../../../../../../auth-service/authService';
 import { EventDialog } from './../event-dialog';
@@ -23,7 +23,7 @@ export class CalendarMonthComponent implements OnInit {
   dialogData: any
   currentMonth;
   addLastMonthDays;
-  daysArr:any = [];
+  daysArr: any = [];
   formatedEvent = []
   eventData: any = [];
   eventTitle;
@@ -48,16 +48,16 @@ export class CalendarMonthComponent implements OnInit {
     // this.excessAllow = localStorage.getItem('successStoringToken')
     this.unSubcrip = this.calenderService.updateDayArr().subscribe((data: any) => {
       this.daysArr = data[0];
-      this.month=data[1].month;
-      this.year=data[1].year;
-      this.numbersOfDays= data[1].numbersOfDays;
-      this.lastMonthDays= data[1].lastMonthDays;
-      this.nextMonthDays =data[1].nextMonthDays;
-      this.viewDate =data[1].nextMonthDays;
-      this.addLastMonthDays =data[1].addLastMonthDays;
-      console.log(this.daysArr,"this.daysArr....");
+      this.month = data[1].month;
+      this.year = data[1].year;
+      this.numbersOfDays = data[1].numbersOfDays;
+      this.lastMonthDays = data[1].lastMonthDays;
+      this.nextMonthDays = data[1].nextMonthDays;
+      this.viewDate = data[1].nextMonthDays;
+      this.addLastMonthDays = data[1].addLastMonthDays;
+      console.log(this.daysArr, "this.daysArr....");
     });
-    
+
   }
 
   E = [];
@@ -67,28 +67,28 @@ export class CalendarMonthComponent implements OnInit {
       "userId": AuthService.getUserInfo().advisorId
     }
     this.calenderService.getEvent(eventData).subscribe((data) => {
-      
+
       if (data != undefined) {
-        
+
         this.eventData = data;
-        
-        console.log(data,"events calender",this.eventData);
+
+        console.log(data, "events calender", this.eventData);
         this.formatedEvent = [];
-        
+
         for (let e of this.eventData) {
-          if(e.rrule != null){
+          if (e.rrule != null) {
             e['isRe'] = e.rrule.FREQ;
-            if(e.rrule.UNTIL){
+            if (e.rrule.UNTIL) {
               this.E = [];
-              for(let i = 0; i < e.rrule.UNTIL.length; i++){
-                this.E.push( e.rrule.UNTIL.charAt(i));
+              for (let i = 0; i < e.rrule.UNTIL.length; i++) {
+                this.E.push(e.rrule.UNTIL.charAt(i));
               }
-              let y = this.E[0]+ this.E[1] + this.E[2] + this.E[3];
-              let m = this.E[4]+ this.E[5];
-              let d = this.E[6]+ this.E[7];
+              let y = this.E[0] + this.E[1] + this.E[2] + this.E[3];
+              let m = this.E[4] + this.E[5];
+              let d = this.E[6] + this.E[7];
               switch (e.rrule.FREQ) {
                 case "DAILY":
-                  e["reUntil"] = new Date(parseInt(y),parseInt(m)-1,parseInt(d));
+                  e["reUntil"] = new Date(parseInt(y), parseInt(m) - 1, parseInt(d));
                   break;
                 case "WEEKLY":
                   break;
@@ -96,73 +96,126 @@ export class CalendarMonthComponent implements OnInit {
                   break;
               }
             }
-            else{
-              if(e.start.date != null){
+            else {
+              if (e.start.date != null) {
                 e['reStart'] = this.startDateFormate(e.start.date);
-                e["reUntil"] =new Date(this.startDateFormate(e.start.date).setFullYear(this.startDateFormate(e.start.date).getFullYear() + 2));
+                e["reUntil"] = new Date(this.startDateFormate(e.start.date).setFullYear(this.startDateFormate(e.start.date).getFullYear() + 2));
               }
-              else if(e.rrule.COUNT){
+              else if (e.rrule.COUNT) {
                 e['reStart'] = new Date(e.start.dateTime);
                 e["reUntil"] = new Date(new Date(e.start.dateTime).setDate(new Date(e.start.dateTime).getDate() + parseInt(e.rrule.COUNT) - 1));
               }
-              else{
+              else {
                 e['reStart'] = new Date(e.start.dateTime);
                 e["reUntil"] = new Date(new Date(e.start.dateTime).setFullYear(new Date(e.start.dateTime).getFullYear() + 2));
               }
             }
           }
-          else{
+          else {
             e['isRe'] = undefined;
-            if(e.start){
-            e['reStart'] = new Date(e.start.dateTime);
-            e["reUntil"] = new Date(e.end.dateTime);
+            if (e.start) {
+              e['reStart'] = new Date(e.start.dateTime);
+              e["reUntil"] = new Date(e.end.dateTime);
             }
           }
-          if(e.start){
-            e["day"] = this.formateDate(!e.start.dateTime? new Date(e.created): new Date(e.start.dateTime));
-            e["month"] = this.formateMonth(!e.start.dateTime ?new Date(e.created) : new Date(e.start.dateTime));
+          if (e.start) {
+            e["day"] = this.formateDate(!e.start.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
+            e["month"] = this.formateMonth(!e.start.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
             e["year"] = this.formateYear(!e.start.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
-            e["startTime"] = this.formateTime(!e.start.dateTime? new Date(e.created) : new Date(e.start.dateTime));
+            e["startTime"] = this.formateTime(!e.start.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
             e["endTime"] = this.formateTime(!e.end.dateTime ? new Date(e.created) : new Date(e.end.dateTime));
             this.formatedEvent.push(e);
             // console.log(this.formatedEvent,"formatedEvent calender1",);
           }
         }
-        console.log("events recurring",this.formatedEvent);
+        console.log("events recurring", this.formatedEvent);
       }
     });
 
+
+  }
+  eInt:any;
+  validateDays(eDays, day , interval) {
+    this.E = [];
+    let d;
+    eDays +=',';
+    if(this.E.length <= 0){
+    for (let i = 0; i < eDays.length; i++) {
+      if (eDays.charAt(i) != ",") {
+        if(d){
+          d += eDays.charAt(i);
+        }else{
+          d = eDays.charAt(i);
+        }
+      }
+      else {
+        switch (d) {
+          case "SU":
+            // return day == 'Sun'?false:true;
+            this.E.push('Sun');
+            break;
+          case "MO":
+            // return day == 'Mon'?false:true;
+            this.E.push('Mon');
+            break;
+          case "TU":
+            // return day == 'Tus'?false:true;
+            this.E.push('Tue');
+            break;
+          case "WE":
+            // return day == 'Wed'?false:true;
+            this.E.push('Wed');
+            break;
+          case "TH":
+            // return day == 'Thu'?false:true;
+            this.E.push('Thu');
+            break;
+          case "FR":
+            // return day == 'Fri'?false:true;
+            this.E.push('Fri');
+            break;
+          case "SA":
+            // return day == 'Sat'?false:true;
+            this.E.push('Sat');
+            break;
+        }
+
+        d='';
+      }
+    }
+  }
+   
+      return this.E.includes(day)?false:true;
     
   }
-
-  dateTimeEvent(year,month,date){
+  dateTimeEvent(year, month, date) {
     let dateBe;
-    if(year != null){
-      dateBe = new Date(year,month,date);
+    if (year != null) {
+      dateBe = new Date(year, month, date);
     }
-    else{
+    else {
       dateBe = new Date(date);
     }
-   return new Date(dateBe).getTime();
+    return new Date(dateBe).getTime();
   }
 
-  getDay(year,month,day){
-    let d = new Date(year,month,day);
+  getDay(year, month, day) {
+    let d = new Date(year, month, day);
     return this.datePipe.transform(d, 'EEE')
   }
 
-  startDateFormate(date){
+  startDateFormate(date) {
     this.E = [];
-    for(let i = 0; i < date.length; i++){
-      if( date.charAt(i) != "-"){
+    for (let i = 0; i < date.length; i++) {
+      if (date.charAt(i) != "-") {
         this.E.push(date.charAt(i));
       }
     }
-    let y = this.E[0]+ this.E[1] + this.E[2] + this.E[3];
-    let m = this.E[4]+ this.E[5];
-    let d = this.E[6]+ this.E[7];
+    let y = this.E[0] + this.E[1] + this.E[2] + this.E[3];
+    let m = this.E[4] + this.E[5];
+    let d = this.E[6] + this.E[7];
 
-    return new Date(parseInt(y),parseInt(m)-1,parseInt(d));
+    return new Date(parseInt(y), parseInt(m) - 1, parseInt(d));
   }
 
   getDaysCount(month: number, year: number, ch: string): any {
@@ -354,7 +407,7 @@ export class CalendarMonthComponent implements OnInit {
           })
         }
       }
-      if(result == 'delete'){
+      if (result == 'delete') {
         this.getEvent();
       }
     });
@@ -400,6 +453,6 @@ export class CalendarMonthComponent implements OnInit {
   ngOnDestroy() {
     this.unSubcrip.unsubscribe();
     console.log("unsubscribe");
-    
+
   }
 }
