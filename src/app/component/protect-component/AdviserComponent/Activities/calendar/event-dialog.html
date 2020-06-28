@@ -6,7 +6,7 @@
         <form [formGroup]="eventForm">
             <div class="row">
                 <div class="col-md-8 p-0">
-                    <h5 class="m-0 text-black roboto">Title</h5>
+                    <h5 class="mb-4 f-14 text-black roboto">Title</h5>
                     <div class="form-group">
                         <mat-form-field>
                             <input matInput formControlName="title" class="form-control br-0">
@@ -15,15 +15,15 @@
                 </div>
             </div>
             <div class="row pt-12">
-                <div class="col-md-8 p-0">
-                    <h5 class="m-0 mb-2 text-black roboto">Description</h5>
+                <div class="col-md-12 p-0">
+                    <h5 class="mb-4 mb-2 f-14 text-black roboto">Description</h5>
                     <app-froala [(model)]="eventData.description" (modelChange)="descriptionData($event)"></app-froala>
                 </div>
             </div>
 
             <div class="row pt-70">
                 <div class="col-md-8 p-0">
-                    <h5 class="m-0 mb-2 text-black roboto" style="margin-top:-46px !important">Event address</h5>
+                    <h5 class="mb-4  f-14 text-black roboto">Event address</h5>
                     <div class="form-group">
                         <mat-form-field>
                             <textarea matInput rows="4" formControlName="location" class="form-control p-8"></textarea>
@@ -36,7 +36,7 @@
 
                 <div class="row">
                     <div class="col-md-4 pl-0">
-                        <h5 class="m-0 roboto text-black ">Start date</h5>
+                        <h5 class="mb-4 f-14 roboto text-black ">Start date</h5>
                         <div class="form-group">
                             <mat-form-field class="date-input">
                                 <input (click)="picker.open()" (dateChange)="setEndDate()" readonly matInput formControlName="startDateTime" class="form-control" [value]="this.eventData.start.dateTime == undefined ? startDate : this.eventData.start.dateTime" [min]="startDate" [matDatepicker]="picker">
@@ -48,18 +48,18 @@
                     </div>
                     <div class="col-md-4 pl-0" *ngIf="showTime">
                         <div class="row pl-0">
-                            <div class="col-md-6 pl-0">
-                                <mat-form-field class="form-group">
-                                    <h5 class="text-black f-12 " style="margin-bottom: 18px;">Start time</h5>
+                            <div class="col-md-6 pl-0 form-group">
+                                <h5 class="text-black mb-4 f-14 ">Start time</h5>
+                                <mat-form-field>
                                     <!-- <mat-label>Start time</mat-label> -->
                                     <select matNativeControl class="form-control" formControlName="startTime" (change)="setTime('start')">
                                         <option *ngFor="let time of timeArr" [value]="time">{{time}}</option>
                                     </select>
                                 </mat-form-field>
                             </div>
-                            <div class="col-md-6 pl-0">
-                                <mat-form-field class="form-group">
-                                    <h5 class="text-black f-12 " style="margin-bottom: 18px;">End time</h5>
+                            <div class="col-md-6 form-group pl-0">
+                                <h5 class="text-black mb-4 f-14 ">End time</h5>
+                                <mat-form-field>
                                     <!-- <mat-label>End time</mat-label> -->
                                     <select matNativeControl class="form-control" formControlName="endTime" (change)="setTime('end')">
                                         <option *ngFor="let time of timeArr" [value]="time"
@@ -70,7 +70,7 @@
                         </div>
                     </div>
                     <div class="col-md-4 pr-0">
-                        <h5 class="m-0 text-black roboto">End date</h5>
+                        <h5 class="mb-4 text-black f-14 roboto">End date</h5>
                         <div class="form-group">
                             <mat-form-field class="date-input">
                                 <input (click)="epicker.open()" readonly class="form-control" matInput formControlName="endDateTime" [min]="eventForm.value.startDateTime._d == null?startDate : eventForm.value.startDateTime._d" [matDatepicker]="epicker">
@@ -80,7 +80,7 @@
                             </mat-form-field>
                         </div>
                     </div>
-                    <div class="col-md-3 pr-0 " style="margin-top: 27px;" *ngIf="!showTime">
+                    <div class="col-md-3 pr-0 " *ngIf="!showTime">
                         <button (click)="addTime()">Add Time</button>
                     </div>
                 </div>
@@ -88,7 +88,7 @@
             </div>
             <div class="row pt-6">
                 <div class="col-md-10 p-0">
-                    <h5 class="m-0 text-black roboto">Attendee List </h5>
+                    <h5 class="m-0 text-black f-14 roboto">Attendee List </h5>
                     <div class="row pl-0">
                         <div class="col-md-10 pl-0 ">
                             <div class="form-group">

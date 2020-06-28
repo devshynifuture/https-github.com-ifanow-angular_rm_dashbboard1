@@ -14,7 +14,7 @@ import { threadId } from 'worker_threads';
 })
 export class CalendarMonthComponent implements OnInit {
   viewDate: any;
-  dayCount:number = 0;
+  dayCount: number = 0;
   numbersOfDays: any;
   lastMonthDays: any;
   nextMonthDays: any;
@@ -147,101 +147,101 @@ export class CalendarMonthComponent implements OnInit {
       let monthDay = eDays.charAt(1) + eDays.charAt(2);
 
       // for (let i = 1; i <= getTot; i++) {    //looping through days in month
-        // let newDate = new Date(d.getFullYear(), d.getMonth(), i)
-        switch (monthDay) {
-          case "SU":
-            if (d.getDay() == 0) {   //if Sunday
-              this.dayCount+= 1
-              if (this.dayCount == dayNum) {
-                return false;
-              }
-              else {
-                return true;
-              }
+      // let newDate = new Date(d.getFullYear(), d.getMonth(), i)
+      switch (monthDay) {
+        case "SU":
+          if (d.getDay() == 0) {   //if Sunday
+            this.dayCount += 1
+            if (this.dayCount == dayNum) {
+              return false;
             }
             else {
               return true;
             }
-          case "MO":
-            if (d.getDay() == 1) {   //if Sunday
-              this.dayCount+= 1
-              if (this.dayCount == dayNum) {
-                return false;
-              }
-              else {
-                return true;
-              }
+          }
+          else {
+            return true;
+          }
+        case "MO":
+          if (d.getDay() == 1) {   //if Sunday
+            this.dayCount += 1
+            if (this.dayCount == dayNum) {
+              return false;
             }
             else {
               return true;
             }
-          case "TU":
-            if (d.getDay() == 2) {   //if Sunday
-              this.dayCount+= 1
-              if (this.dayCount == dayNum) {
-                return false;
-              }
-              else {
-                return true;
-              }
+          }
+          else {
+            return true;
+          }
+        case "TU":
+          if (d.getDay() == 2) {   //if Sunday
+            this.dayCount += 1
+            if (this.dayCount == dayNum) {
+              return false;
             }
             else {
               return true;
             }
-          case "WE":
-            if (d.getDay() == 3) {   //if Sunday
-              this.dayCount+= 1
-              if (this.dayCount == dayNum) {
-                return false;
-              }
-              else {
-                return true;
-              }
+          }
+          else {
+            return true;
+          }
+        case "WE":
+          if (d.getDay() == 3) {   //if Sunday
+            this.dayCount += 1
+            if (this.dayCount == dayNum) {
+              return false;
             }
             else {
               return true;
             }
-          case "TH":
-            if (d.getDay() == 4) {   //if Sunday
-              this.dayCount+= 1
-              if (this.dayCount == dayNum) {
-                return false;
-              }
-              else {
-                return true;
-              }
+          }
+          else {
+            return true;
+          }
+        case "TH":
+          if (d.getDay() == 4) {   //if Sunday
+            this.dayCount += 1
+            if (this.dayCount == dayNum) {
+              return false;
             }
             else {
               return true;
             }
-          case "FR":
-            if (d.getDay() == 5) {   //if Sunday
-              this.dayCount+= 1
-              if (this.dayCount == dayNum) {
-                return false;
-              }
-              else {
-                return true;
-              }
+          }
+          else {
+            return true;
+          }
+        case "FR":
+          if (d.getDay() == 5) {   //if Sunday
+            this.dayCount += 1
+            if (this.dayCount == dayNum) {
+              return false;
             }
             else {
               return true;
             }
-          case "SA":
-            if (d.getDay() == 6) {   //if Sunday
-              this.dayCount+= 1
-              if (this.dayCount == dayNum) {
-                return false;
-              }
-              else {
-                return true;
-              }
+          }
+          else {
+            return true;
+          }
+        case "SA":
+          if (d.getDay() == 6) {   //if Sunday
+            this.dayCount += 1
+            if (this.dayCount == dayNum) {
+              return false;
             }
             else {
               return true;
             }
-            
-        }
+          }
+          else {
+            return true;
+          }
+
+      }
       // }
     }
     else {
@@ -481,33 +481,33 @@ export class CalendarMonthComponent implements OnInit {
   openDialog(eventData): void {
 
     const dialogRef = this.dialog.open(EventDialog, {
-      width: '50%',
+      width: '600px',
       data: eventData
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result != undefined && result != 'delete') {
         this.dialogData =
-        {
-          "calendarId": AuthService.getUserInfo().userName,
-          "userId": AuthService.getUserInfo().advisorId,
-          "eventId": result.eventId,
-          "summary": result.title,
-          "location": result.location,
-          "description": result.description,
-          "start": {
-            "dateTime": "",
-            "timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
-          },
-          "end": {
-            "dateTime": "",
-            "timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
-          },
-          "recurrence": [
-            "RRULE:FREQ=DAILY;COUNT=2"
-          ],
-          "attendees": result.attendeesList
-        }
+          {
+            "calendarId": AuthService.getUserInfo().userName,
+            "userId": AuthService.getUserInfo().advisorId,
+            "eventId": result.eventId,
+            "summary": result.title,
+            "location": result.location,
+            "description": result.description,
+            "start": {
+              "dateTime": "",
+              "timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
+            },
+            "end": {
+              "dateTime": "",
+              "timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
+            },
+            "recurrence": [
+              "RRULE:FREQ=DAILY;COUNT=2"
+            ],
+            "attendees": result.attendeesList
+          }
 
 
         this.startTime = result.startTime;
