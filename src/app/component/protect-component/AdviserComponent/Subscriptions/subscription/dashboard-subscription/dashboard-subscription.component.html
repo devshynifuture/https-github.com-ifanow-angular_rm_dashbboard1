@@ -15,7 +15,7 @@
                     <i class="material-icons right text-right"> arrow_forward </i></button>
             </div>
         </div>
-        <div [ngClass]="showLetsBegin==true ? 'pt-40': 'pt-40' " class=" subscription-summary">
+        <div [ngClass]="{'pt-90':showLetsBegin,'pt-40':showLetsBegin==false}" class=" subscription-summary">
             <div class="row">
                 <div class="col-md-4 pl-0 relClass">
                     <div class="bar">
@@ -208,7 +208,8 @@
 
                                     </div>
                                 </div>
-                                <div *ngIf="dataSource.length >0" class="overflow-hidden h-513 mt-12">
+                                <div *ngIf="dataSource.length >0" [ngClass]="{'ox-hide': isLoadingSubSummary}"
+                                    class="overflow-hidden h-513 mt-12">
 
 
                                     <table [appSkeletonLoading]="isLoadingSubSummary" [dataSource]="dataSource"

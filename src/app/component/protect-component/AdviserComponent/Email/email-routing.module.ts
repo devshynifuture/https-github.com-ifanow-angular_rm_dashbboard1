@@ -27,10 +27,11 @@ const routes: Routes = [
           .then(m => m.EmailListModule)
         // component: EmailDraftComponent
       },
-      // {
-      //   path: 'archive',
-      //   component: EmailArchiveComponent
-      // },
+      {
+        path: 'starred',
+        loadChildren: () => import('./email-component/email-list/email-list.module')
+          .then(m => m.EmailListModule)
+      },
       {
         path: 'trash',
         loadChildren: () => import('./email-component/email-list/email-list.module')

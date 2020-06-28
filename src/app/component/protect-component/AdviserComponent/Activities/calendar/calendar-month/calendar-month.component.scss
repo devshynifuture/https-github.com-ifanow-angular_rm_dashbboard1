@@ -9,7 +9,7 @@
       position: relative;
       width: 14.28%;
       text-align: center;
-  
+       overflow: hidden;
       p {
         cursor: pointer;
       }
@@ -18,8 +18,14 @@
         border-right: 0px !important;
       }
     }
-  
-    
+    .column:hover {
+    overflow: visible;
+    }
+    .eInfo:hover {
+        position: absolute;
+        overflow-y: visible;
+        background: #FFFFFF;
+    }
     #ui-calendar{
       position: relative;
       .main-header {

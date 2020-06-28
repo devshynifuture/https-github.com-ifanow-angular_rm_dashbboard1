@@ -84,7 +84,9 @@ export class ReconciliationService {
     getTeamMemberListValues(data) {
         return this.http.get(apiConfig.MAIN_URL + appConfig.GET_BACKOFFICE_TEAM_MEMBER_LIST, data);
     }
-
+    getSubAdvisorListValues(data) {
+        return this.http.get(apiConfig.MAIN_URL + appConfig.GET_SUB_ADVISOR_LIST, data);
+    }
     // post functions
 
     postBackOfficeUnmatchedFoliosData(data) {

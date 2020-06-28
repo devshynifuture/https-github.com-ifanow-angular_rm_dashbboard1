@@ -11,6 +11,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { EmailServiceService } from './../../../email-service.service';
 import { ExtractedGmailDataI, MessageListArray, GmailInboxResponseI } from '../../email.interface';
 import { EmailUtilService } from 'src/app/services/email-util.service';
+import { UtilService } from '../../../../../../../services/util.service';
+import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-email-listing',
@@ -30,6 +32,8 @@ export class EmailListingComponent implements OnInit {
   sentCount: any = 0;
   draftCount: any = 0;
   trashCount: any = 0;
+  showOptions: boolean = false;
+  starredCount: any;
 
 
   constructor(
@@ -39,7 +43,8 @@ export class EmailListingComponent implements OnInit {
     private dialog: MatDialog,
     private eventService: EventService,
     private authService: AuthService,
-    private emailUtilService: EmailUtilService) { }
+    private emailUtilService: EmailUtilService,
+    private subInjectService: SubscriptionInject) { }
 
   paginatorLength;
   paginatorSubscription;
@@ -65,6 +70,11 @@ export class EmailListingComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   ngOnInit() {
+    this.initPoint();
+  }
+
+  initPoint() {
+    this.isLoading = true;
     let location;
 
     if (this.router.url === '/') {
@@ -91,6 +101,7 @@ export class EmailListingComponent implements OnInit {
 
     this.getPaginatorLengthRes(location);
   }
+
 
   redirectMessages(element, index) {
     let gmailThread;
@@ -133,6 +144,7 @@ export class EmailListingComponent implements OnInit {
     this.paginatorSubscription = this.emailService.getProfile()
       .subscribe(response => {
         if (!response) {
+          this.isLoading = false;
           this.eventService.openSnackBar("You must connect your gmail account", "Dismiss");
           if (localStorage.getItem('successStoringToken')) {
             localStorage.removeItem('successStoringToken');
@@ -140,10 +152,7 @@ export class EmailListingComponent implements OnInit {
           this.router.navigate(['google-connect'], { relativeTo: this.activatedRoute });
         } else {
           // this.paginatorLength = response.threadsTotal;
-          this.isLoading = true;
-
           this.getRightSideNavListCount(location);
-
         }
       }, err => {
         this.eventService.openSnackBarNoDuration(err);
@@ -156,6 +165,7 @@ export class EmailListingComponent implements OnInit {
   }
 
   getRightSideNavListCount(location) {
+    this.isLoading = true;
     this.emailService.getRightSideNavList().subscribe(responseData => {
       this.navList = responseData;
       console.log("check navlist :::", this.navList);
@@ -170,6 +180,8 @@ export class EmailListingComponent implements OnInit {
               break;
             case 'THRASH': this.trashCount = element.threadsTotal;
               break;
+            case 'STARRED': this.starredCount = element.threadsTotal;
+              break;
           }
         });
         switch (location) {
@@ -182,13 +194,15 @@ export class EmailListingComponent implements OnInit {
             break;
           case 'trash': this.paginatorLength = this.trashCount;
             break;
+          case 'starred': this.paginatorLength = this.starredCount;
+            break;
         }
 
         this.totalListSize = this.paginatorLength;
         if (this.maxListRes > this.paginatorLength) {
           this.maxListRes = this.paginatorLength;
         }
-        let valueOfNextPagination = this.currentList + 50;
+        let valueOfNextPagination = this.maxListRes + 50;
         if (valueOfNextPagination >= this.paginatorLength) {
           this.showNextPaginationBtn = false;
         } else if (valueOfNextPagination > this.paginatorLength) {
@@ -271,6 +285,28 @@ export class EmailListingComponent implements OnInit {
     this.messageListArray.forEach((item) => {
       threadIdsArray.push(item["idsOfThread"]["id"]);
     });
+
+    const fragmentData = {
+      flag: 'composeEmail',
+      data: { dataToSend: dataObj, choice: 'draft' },
+      id: 1,
+      state: 'open35',
+      componentName: ComposeEmailComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            this.initPoint();
+          }
+          rightSideDataSub.unsubscribe();
+
+        }
+      }
+    );
+
+
+
     this.emailService.sendNextData({ dataObj, threadIdsArray, gmailThread });
     this.emailService.openComposeEmail({ dataObj, threadIdsArray, gmailThread }, ComposeEmailComponent, 'draft');
     this.showDraftView = false;
@@ -316,6 +352,7 @@ export class EmailListingComponent implements OnInit {
 
   // get List view
   getGmailList(data, page) {
+    this.showNextPaginationBtn = false;
     if (data === 'INBOX') {
       data = 'IMPORTANT';
     }
@@ -408,6 +445,7 @@ export class EmailListingComponent implements OnInit {
         // this.messageDetailArray = tempArray;
 
         this.isLoading = false;
+        this.showNextPaginationBtn = true;
         this.dataSource = new MatTableDataSource<MessageListArray>(this.messageListArray);
         this.dataSource.paginator = this.paginator;
 
@@ -415,8 +453,8 @@ export class EmailListingComponent implements OnInit {
   }
 
   nextPagesList() {
-    let aheadPaginatorVal = this.currentList + 50;
-    if (aheadPaginatorVal <= this.paginatorLength) {
+    let aheadPaginatorVal = this.maxListRes + 50;
+    if (aheadPaginatorVal <= this.paginatorLength || this.maxListRes <= this.paginatorLength) {
       this.totalListSize = this.totalListSize - 50;
       this.currentList = this.maxListRes + 1;
       this.maxListRes = this.maxListRes + 50;
@@ -425,10 +463,6 @@ export class EmailListingComponent implements OnInit {
       }
       if (this.maxListRes >= this.paginatorLength) {
         this.maxListRes = this.paginatorLength;
-      }
-      if (this.currentList >= this.paginatorLength) {
-        this.currentList = 1;
-        this.maxListRes = 50;
       }
       this.isLoading = true;
       this.getGmailList(this.router.url.split('/')[3].toUpperCase(), 'next');
@@ -439,25 +473,14 @@ export class EmailListingComponent implements OnInit {
   }
 
   previousPagesList() {
-    if (this.currentList > 1) {
-      this.totalListSize = this.totalListSize + 50;
-      this.currentList = this.maxListRes - 1;
-      this.maxListRes = this.maxListRes - 50;
-      // if(this.currentList === 1){
 
-      // }
-      if (this.maxListRes <= this.paginatorLength) {
-        this.maxListRes = this.paginatorLength;
-      }
-      if (this.currentList <= this.paginatorLength) {
-        this.currentList = 1;
-        this.maxListRes = 50;
-      }
-      this.isLoading = true;
-      this.getGmailList(this.router.url.split('/')[3].toUpperCase(), 'prev');
-    } else {
-      this.showPrevPaginationBtn = false;
-    }
+    this.totalListSize = 0 + 50;
+    this.maxListRes = 50;
+    this.currentList = 1;
+
+    this.isLoading = true;
+
+    this.getGmailList(this.router.url.split('/')[3].toUpperCase(), 'prev');
 
   }
 
@@ -508,10 +531,12 @@ export class EmailListingComponent implements OnInit {
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle(): void {
+    this.showOptions = !this.showOptions;
     if (this.isAllSelected()) {
       this.selection.clear();
       this.selectedThreadsArray = [];
     } else {
+
       this.dataSource.data.forEach(row => {
         this.selection.select(row);
         this.selectedThreadsArray.push(row);
@@ -537,6 +562,7 @@ export class EmailListingComponent implements OnInit {
 
   // ui select highlight
   highlightSelectedRow(row: ExtractedGmailDataI): void {
+    this.showOptions = !this.showOptions;
     if (this.selectedThreadsArray.includes(row)) {
       let indexOf = this.selectedThreadsArray.indexOf(row);
       let removedRow = this.selectedThreadsArray.splice(indexOf, 1);

@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material';
 import { UtilService } from 'src/app/services/util.service';
 import { EmailOnlyComponent } from '../email-only/email-only.component';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { EventService } from 'src/app/Data-service/event.service';
 
 
 export interface PeriodicElement {
@@ -73,7 +74,8 @@ export class InvoiceComponent implements OnInit {
   @ViewChild('invoiceTemplate', { static: false }) invoiceTemplate: ElementRef;
 
   constructor(public utils: UtilService, public enumService: EnumServiceService, public subInjectService: SubscriptionInject,
-    private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService, public dialog: MatDialog) {
+    private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService, public dialog: MatDialog,
+    private eventService: EventService) {
     this.dataSub = this.subInjectService.singleProfileData.subscribe(
       data => this.getInvoiceData(data)
     );
@@ -382,6 +384,7 @@ export class InvoiceComponent implements OnInit {
   getInvoiceData(data) {
     this.copyStoreData = data;
     this.storeData = data;
+    this.getFeeCalcultationData();
     if (data.status == 5 || data.status == 6) {
       this.moreStatus = data.status;
     } else {
@@ -577,8 +580,13 @@ export class InvoiceComponent implements OnInit {
     return this.rPayment.controls;
   }
 
+  getFeeCalcultationData() {
+    // this.barButtonOptions.active = true;
+
+  }
 
   OpenFeeCalc() {
+    this.feeCalc = true;
     this.barButtonOptions.active = true;
     const obj =
     {
@@ -587,10 +595,12 @@ export class InvoiceComponent implements OnInit {
     this.subService.getInvoiceFeeCalculations(obj).subscribe(
       data => {
         if (data) {
-          this.feeCalc = true;
           this.barButtonOptions.active = false;
           this.invoiceFeeCalculations = data
         }
+      }, err => {
+        this.eventService.openSnackBar(err, "Dismiss");
+        this.barButtonOptions.active = false;
       }
     )
   }

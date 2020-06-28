@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter, ViewChildren, QueryList } from '@angular/core';
 import { SubscriptionInject } from '../../../subscription-inject.service';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { SubscriptionService } from '../../../subscription.service';
 import { AuthService } from '../../../../../../../auth-service/authService';
 import { UtilService } from '../../../../../../../services/util.service';
@@ -41,23 +41,29 @@ export class AddEditDocumentComponent implements OnInit {
   isDocName;
   _inputData;
   @Input() fragmentData;
-  blankDocumentProperties = this.fb.group({
-    docType: ['', [Validators.required]],
-    docName: ['', [Validators.required]],
-    docAvailability: [1, [Validators.required]],
-    selectPlan: []
-  });
   @Input() documentType;
   @Output() changeDocumentData = new EventEmitter();
+  addTemplate: any;
+  blankDocumentProperties: FormGroup;
   @Input()
   set data(inputData) {
-    this._inputData = inputData;
+    // this._inputData = inputData.value;
     this.documentType;
+    if (inputData.template) {
+      this.addTemplate = inputData.template;
+      inputData['addFlag'] = true;
+      this._inputData = inputData;
+      this.setFormData({ documentTypeId: inputData.value });
+    }
+    else {
+      inputData['addFlag'] = false;
+      this._inputData = inputData;
+      this.setFormData(inputData);
+    }
     // obj.outstandingCheck.toString();
     // availableAt
-    this.selectedOption = '1';
+    // this.selectedOption = '1';
     // this.selectedOption = inputData ? (inputData.public ? (inputData.public === 1 ? '3' : inputData.mappingType) : '3') : '1';
-    this.setFormData(inputData);
   }
 
   get inputData() {
@@ -70,30 +76,35 @@ export class AddEditDocumentComponent implements OnInit {
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
-    this.createForm();
     this.setValidation(false);
   }
 
   setFormData(inputData) {
-    let data = (inputData.documentTypeId) ? inputData.documentTypeId.toString() : inputData;
-    this.blankDocumentProperties.controls.docType.setValue(data);
-    if (inputData == "") {
+    this.blankDocumentProperties = this.fb.group({
+      docType: [(inputData.documentTypeId) ? String(inputData.documentTypeId) : '', [Validators.required]],
+      docName: [inputData.description ? inputData.description : '', [Validators.required]],
+      docAvailability: [(inputData.availableAt) ? String(inputData.availableAt) : '1', [Validators.required]],
+      selectPlan: []
+    });
+    // let data = (inputData.documentTypeId) ? inputData.documentTypeId.toString() : inputData.value;
+    // this.blankDocumentProperties.controls.docType.setValue(data);
+    // if (inputData == "") {
 
-    }
-    (inputData.documentTypeId) ? this.blankDocumentProperties.controls.docType.enable() : (inputData == "") ? this.blankDocumentProperties.controls.docType.enable() : this.blankDocumentProperties.controls.docType.disable();
-
-    this.blankDocumentProperties.controls.docName.setValue(inputData.name);
-    this.blankDocumentProperties.controls.docAvailability.setValue(this.selectedOption);
-
+    // }
+    // (inputData.documentTypeId) ? this.blankDocumentProperties.controls.docType.enable() : (inputData == "") ? this.blankDocumentProperties.controls.docType.enable() : this.blankDocumentProperties.controls.docType.disable();
+    // this.selectedOption = inputData.documentTypeId;
+    // this.blankDocumentProperties.controls.docName.setValue(inputData.name);
+    // this.blankDocumentProperties.controls.docAvailability.setValue(data);
+    // if (this.inputData.add) {
+    (this.addTemplate != 'blank') ? this.blankDocumentProperties.controls.docType.disable() : ''
+    // (this._inputData.addFlag == false) ? this.blankDocumentProperties.controls.docType.disable() : '';
+    // (this.blankDocumentProperties.controls.docType.value == 9) ? this.blankDocumentProperties.controls.docType.disable() : '';
+    // }
   }
 
   setValidation(flag) {
     this.isDocName = flag;
     // this.is
-  }
-
-  createForm() {
-
   }
 
   getFormControl() {
@@ -113,28 +124,28 @@ export class AddEditDocumentComponent implements OnInit {
 
   saveDocuments() {
     if (this.blankDocumentProperties.invalid) {
-      for (let element in this.blankDocumentProperties.controls) {
-        if (this.blankDocumentProperties.get(element).invalid) {
-          this.inputs.find(input => !input.ngControl.valid).focus();
-          this.blankDocumentProperties.controls[element].markAsTouched();
-        }
-      }
+      // for (let element in this.blankDocumentProperties.controls) {
+      //   if (this.blankDocumentProperties.get(element).invalid) {
+      // this.inputs.find(input => !input.ngControl.valid).focus();
+      this.blankDocumentProperties.markAllAsTouched();
+      //   }
+      // }
     } else {
       this.barButtonOptions.active = true;
-      if (this._inputData.documentRepositoryId == undefined) {
+      if (this._inputData.addFlag) {
+        const docText = UtilService.getDocumentTemplates(this.blankDocumentProperties.controls.docType.value);
         const obj = {
           advisorId: this.advisorId,
           name: this.blankDocumentProperties.controls.docName.value,
           // documentTypeId: parseInt(this.blankDocumentProperties.controls.docType.value),
           documentTypeId: this.blankDocumentProperties.controls.docType.value.toString(),
-          docText: 'docText',
+          docText: (this.addTemplate == 'blank') ? '' : this.addTemplate,
           description: this.blankDocumentProperties.controls.docName.value,
           public: true,
           quotation: this.blankDocumentProperties.controls.docType.value == 7 ? true : false,
-          availableAt: this.selectedOption ? parseInt(this.selectedOption) : 0,
-          mappingId: this._inputData.docType == '3' ? 5 : 0,
+          availableAt: this.blankDocumentProperties.controls.docAvailability.value,
+          mappingId: this.blankDocumentProperties.controls.docType.value == '3' ? 5 : 0,
           docType: this.blankDocumentProperties.controls.docType.value
-
         };
 
         this.subService.addSettingDocument(obj).subscribe(
@@ -149,8 +160,8 @@ export class AddEditDocumentComponent implements OnInit {
         );
       } else {
         const obj = {
-          advisorId: this._inputData.advisorId,
-          availableAt: this.selectedOption ? parseInt(this.selectedOption) : 0,
+          advisorId: this.advisorId,
+          availableAt: this.blankDocumentProperties.controls.docAvailability.value,
           description: this.blankDocumentProperties.controls.docName.value,
           docText: this._inputData.docText,
           documentRepositoryId: this._inputData.documentRepositoryId, // pass here advisor id for Invoice advisor
