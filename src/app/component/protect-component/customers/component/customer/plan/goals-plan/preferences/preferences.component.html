@@ -9,9 +9,9 @@
 </div>
 <div class="row" id="goal-preferences">
     <div class="col-md-12 p-0">
-        <mat-tab-group animationDuration="0ms" mat-align-tabs="center">
+        <mat-tab-group animationDuration="0ms" mat-align-tabs="center" [(selectedIndex)]="selected">
             <mat-tab label="Key parameters">
-                <div class="wrapper-28">
+                <div class="wrapper-28" [formGroup]="goalDetailsFG">
                     <div class="row pb-16">
                         <div class="col-md-4">
                             <p class="roboto mb-0 text-right pt-16">Goal amount</p>
@@ -19,28 +19,13 @@
                         <div class="col-md-4 p-0">
                             <div class="form-group mb-0">
                                 <mat-form-field>
-                                    <input matInput #amountInvest type="text" class="form-control br-0 rupess">
+                                    <input matInput type="text" class="form-control br-0 rupess" formControlName="goalValue"
+                                    appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY">
                                 </mat-form-field>
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="row pt-32 pb-16">
-            <div class="col-md-4">
-                <p class="roboto mb-0 text-right pt-16">Inflation rate</p>
-            </div>
-            <div class="col-md-6 pl-0">
-                <div id="custom-slider">
-                    <mat-slider></mat-slider>
-                    </div>
-            </div>
-            <div class="col-md-2 pl-8 pr-0">
-                    <div class="form-group mb-0">
-                            <mat-form-field class="w-100">
-                                <input matInput #amountInvest type="text" class="form-control br-0" value="7.6%">
-                            </mat-form-field>
-                        </div>
-            </div>
-        </div> -->
+                    
                     <div class="row pt-16 btl-1">
                         <div class="col-md-4 pl-0 pr-8 text-right">
                             <p class="roboto mb-0 pt-16">Savings start date
@@ -51,10 +36,9 @@
                         <div class="col-md-4 p-0">
                             <div class="form-group mb-0">
                                 <mat-form-field>
-                                    <mat-select class="form-control br-0 br-none">
+                                    <mat-select class="form-control br-0 br-none" formControlName="savingStartDateMonth">
                                         <mat-option value="" disabled>Select option</mat-option>
-                                        <mat-option value="1">Bank FD</mat-option>
-                                        <mat-option value="2">Corporate FD</mat-option>
+                                        <mat-option [value]="month.number" *ngFor="let month of months">{{month.long}}</mat-option>
                                     </mat-select>
                                 </mat-form-field>
                             </div>
@@ -62,16 +46,15 @@
                         <div class="col-md-4 p-0">
                             <div class="form-group mb-0">
                                 <mat-form-field>
-                                    <mat-select class="form-control br-0">
+                                    <mat-select class="form-control br-0" formControlName="savingStartDateYear">
                                         <mat-option value="" disabled>Select option</mat-option>
-                                        <mat-option value="1">Bank FD</mat-option>
-                                        <mat-option value="2">Corporate FD</mat-option>
+                                        <mat-option [value]="year" *ngFor="let year of years">{{year}}</mat-option>
                                     </mat-select>
                                 </mat-form-field>
                             </div>
                         </div>
                     </div>
-                    <div class="row pt-16 pb-16">
+                    <div class="row pt-16 pb-16" *ngIf="data.singleOrMulti == 2">
                         <div class="col-md-4 pl-0 pr-8 text-right">
                             <p class="roboto mb-0 pt-16">Savings end date
                                 <img src="/assets/images/svg/info.svg" matTooltip="Info about the action"
@@ -81,10 +64,9 @@
                         <div class="col-md-4 p-0">
                             <div class="form-group mb-0">
                                 <mat-form-field>
-                                    <mat-select class="form-control br-0 br-none">
+                                    <mat-select class="form-control br-0" formControlName="savingEndDateMonth">
                                         <mat-option value="" disabled>Select option</mat-option>
-                                        <mat-option value="1">Bank FD</mat-option>
-                                        <mat-option value="2">Corporate FD</mat-option>
+                                        <mat-option [value]="month.number" *ngFor="let month of months">{{month.long}}</mat-option>
                                     </mat-select>
                                 </mat-form-field>
                             </div>
@@ -92,10 +74,9 @@
                         <div class="col-md-4 p-0">
                             <div class="form-group mb-0">
                                 <mat-form-field>
-                                    <mat-select class="form-control br-0">
+                                    <mat-select class="form-control br-0 br-none" formControlName="savingEndDateYear">
                                         <mat-option value="" disabled>Select option</mat-option>
-                                        <mat-option value="1">Bank FD</mat-option>
-                                        <mat-option value="2">Corporate FD</mat-option>
+                                        <mat-option [value]="year" *ngFor="let year of years">{{year}}</mat-option>
                                     </mat-select>
                                 </mat-form-field>
                             </div>
@@ -110,10 +91,9 @@
                         <div class="col-md-4 p-0">
                             <div class="form-group mb-0">
                                 <mat-form-field>
-                                    <mat-select class="form-control br-0 br-none">
+                                    <mat-select class="form-control br-0" formControlName="goalStartDateMonth">
                                         <mat-option value="" disabled>Select option</mat-option>
-                                        <mat-option value="1">Bank FD</mat-option>
-                                        <mat-option value="2">Corporate FD</mat-option>
+                                        <mat-option [value]="month.number" *ngFor="let month of months">{{month.long}}</mat-option>
                                     </mat-select>
                                 </mat-form-field>
                             </div>
@@ -121,10 +101,36 @@
                         <div class="col-md-4 p-0">
                             <div class="form-group mb-0">
                                 <mat-form-field>
-                                    <mat-select class="form-control br-0">
+                                    <mat-select class="form-control br-0 br-none" formControlName="goalStartDateYear">
                                         <mat-option value="" disabled>Select option</mat-option>
-                                        <mat-option value="1">Bank FD</mat-option>
-                                        <mat-option value="2">Corporate FD</mat-option>
+                                        <mat-option [value]="year" *ngFor="let year of years">{{year}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-16 pb-16 btl-1" *ngIf="data.singleOrMulti == 2">
+                        <div class="col-md-4 pl-0 pr-8 text-right">
+                            <p class="roboto mb-0 pt-16 ">Goal end date
+                                <img src="/assets/images/svg/info.svg">
+                            </p>
+                        </div>
+                        <div class="col-md-4 p-0">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <mat-select class="form-control br-0" formControlName="goalEndDateMonth">
+                                        <mat-option value="" disabled>Select option</mat-option>
+                                        <mat-option [value]="month.number" *ngFor="let month of months">{{month.long}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-md-4 p-0">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <mat-select class="form-control br-0 br-none" formControlName="goalEndDateYear">
+                                        <mat-option value="" disabled>Select option</mat-option>
+                                        <mat-option [value]="year" *ngFor="let year of years">{{year}}</mat-option>
                                     </mat-select>
                                 </mat-form-field>
                             </div>
@@ -139,7 +145,7 @@
                             </p>
                         </div>
                         <div class="col-md-4 p-0">
-
+                            {{data.remainingData.goalAdditionDate | date: 'dd/MM/yyyy'}}
                         </div>
 
                     </div>
@@ -155,10 +161,10 @@
                         <div class="col-md-8 p-0">
                             <div class="form-group mb-0">
                                 <mat-form-field>
-                                    <mat-select class="form-control br-0">
-                                        <mat-option value="">Group all years together</mat-option>
-                                        <mat-option value="1">Bank FD</mat-option>
-                                        <mat-option value="2">Corporate FD</mat-option>
+                                    <mat-select class="form-control br-0" formControlName="savingStatus">
+                                        <mat-option value="" disabled>Select option</mat-option>
+                                        <mat-option value="1">Breakup</mat-option>
+                                        <mat-option value="2">No Breakup</mat-option>
                                     </mat-select>
                                 </mat-form-field>
                             </div>
@@ -173,49 +179,20 @@
                         </div>
                         <div class="col-md-6 pl-0">
                             <div id="custom-slider">
-                                <mat-slider></mat-slider>
+                                <mat-slider min="0" max="100" formControlName="stepUp" [value]="goalDetailsFG.get('stepUp').value"></mat-slider>
                             </div>
                         </div>
                         <div class="col-md-2 pl-8 pr-0">
                             <div class="form-group mb-0">
                                 <mat-form-field class="w-100">
-                                    <input matInput #amountInvest type="text" class="form-control br-0" value="7.6%">
+                                    <input matInput type="text" class="form-control br-0" formControlName="stepUp"
+                                    [value]="goalDetailsFG.get('stepUp').value"
+                                    appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY">
                                 </mat-form-field>
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="row pt-16 pb-16">
-                            <div class="col-md-4 pl-0 pr-8 text-right">
-                                <p class="roboto mb-0 pt-16">Goal addition date
-                                    <img src="/assets/images/svg/info.svg" matTooltip="This is the date from which the goal calculations begin. by default, this is the date when the goal was first saved. This date cannot be greater than the goal start date. You should ideally change this date only if a goal has been reset and calculations need to be redone."
-                                    aria-label="Button that displays a tooltip when focused or hovered over">
-                             </p>
-                            </div>
-                            <div class="col-md-4 p-0">
-                                   
-                            </div>
-                           
-                        </div> -->
-
-
-                    <!-- <div class="row pt-32 pb-16">
-                            <div class="col-md-4 pr-8 text-right">
-                                <p class="roboto mb-0 text-right pt-16">Step up <img src="/assets/images/svg/info.svg" matTooltip="Info about the action"
-                                    aria-label="Button that displays a tooltip when focused or hovered over"></p>
-                            </div>
-                            <div class="col-md-6 pl-0">
-                                <div id="custom-slider">
-                                    <mat-slider></mat-slider>
-                                    </div>
-                            </div>
-                            <div class="col-md-2 pl-8 pr-0">
-                                    <div class="form-group mb-0">
-                                            <mat-form-field class="w-100">
-                                                <input matInput #amountInvest type="text" class="form-control br-0" value="7.6%">
-                                            </mat-form-field>
-                                        </div>
-                            </div>
-                        </div> -->
+                    
                     <div class="row pt-16 pb-16 btl-1">
                         <div class="col-md-4 pl-0 pr-8 text-right">
                             <p class="roboto mb-0 pt-16">Freeze calculations
@@ -225,10 +202,10 @@
                             </p>
                         </div>
                         <div class="col-md-1 p-0 pt-12">
-                            <mat-checkbox id="custom-checkbox"></mat-checkbox>
+                            <mat-checkbox id="custom-checkbox" formControlName="freezeCalculation"></mat-checkbox>
                         </div>
                         <div class="col-md-7 pr-0 right">
-                            <p class="m-0 text-primitive pt-16">Last Freeze date: 23/09/2019</p>
+                            <p class="m-0 text-primitive pt-16">Last Freeze date: {{data.remainingData.lastFreezedDate | date: 'dd/MM/yyyy'}}</p>
                         </div>
                     </div>
                     <div class="row pt-16 pb-16">
@@ -239,8 +216,8 @@
                         <div class="col-md-8 pr-0 right">
                             <div class="form-group mb-0">
                                 <mat-form-field>
-                                    <input matInput #amountInvest type="text" class="form-control br-0"
-                                        value="Rahul's retriment">
+                                    <input matInput type="text" class="form-control br-0"
+                                        formControlName="name">
                                 </mat-form-field>
                             </div>
                         </div>
@@ -253,8 +230,8 @@
                         <div class="col-md-8 pr-0 right">
                             <div class="form-group mb-0">
                                 <mat-form-field>
-                                    <input matInput #amountInvest type="text" class="form-control br-0"
-                                        value="Rahul's retriment">
+                                    <input matInput type="text" class="form-control br-0"
+                                        formControlName="notes">
                                 </mat-form-field>
                             </div>
                         </div>
@@ -267,34 +244,25 @@
                         </div>
 
                         <div class="col-md-8 pr-0 pt-16">
-                            <mat-checkbox id="custom-checkbox"></mat-checkbox>
+                            <mat-checkbox formControlName="archiveGoal"></mat-checkbox>
                         </div>
                     </div>
                 </div>
             </mat-tab>
             <mat-tab label="Asset allocation">
-                <div class="wrapper-28">
+                <div class="wrapper-28" [formGroup]="assetAllocationFG">
                     <div class="row">
                         <div class="col-md-12">
-                            <mat-radio-group aria-label="Select an option" id="custom-radio">
+                            <mat-radio-group aria-label="Select an option" formControlName="straticOrTactical">
                                 <mat-radio-button value="1" class="b-a-custom text-primary">Strategic</mat-radio-button>
                                 <mat-radio-button value="2" class="b-a text-primitive">Tactical</mat-radio-button>
                             </mat-radio-group>
                         </div>
                     </div>
-
-                    <!-- onclick Tactical -->
-                    <!-- <div class="row pt-28">
-                <div class="col-md-12">
-                    <p class="m-0 roboto text-black">The asset allocation in case of “Tactical” is decided based on current market dynamics. </p>
-                    <p class="m-0 roboto text-black pt-16">The tactical asset allocation is fetched from the global asset allocation assumptions set by you and are updated only when you update the same. </p>
-                    <p class="m-0 roboto text-black pt-16">You can move a goal portfolio from Tactical to Strategic and vice versa at any time.</p>
-                </div>
-            </div> -->
-                    <!-- close -->
+                    
                     <div class="row pt-32 pb-16">
                         <div class="col-md-12 pl-8 pr-0">
-                            <mat-radio-group aria-label="Select an option" id="custom-radio">
+                            <mat-radio-group aria-label="Select an option" name="allocation_type" formControlName="staticOrProgressive">
                                 <mat-radio-button value="1" class="text-primary">Static asset allocation
                                 </mat-radio-button>
                             </mat-radio-group>
@@ -305,23 +273,23 @@
                             <p class="m-0 roboto text-black">Equity bifurcation</p>
                             <div class="form-group mb-0">
                                 <mat-form-field class="w-100">
-                                    <input matInput #amountInvest type="text" class="form-control br-0">
+                                    <input matInput formControlName="equityAllocation" type="text" class="form-control br-0">
                                 </mat-form-field>
                             </div>
                         </div>
                         <div class="col-md-6 pr-0">
-                            <p class="m-0 roboto text-black">Equity bifurcation</p>
+                            <p class="m-0 roboto text-black">Debt bifurcation</p>
                             <div class="form-group mb-0">
                                 <mat-form-field class="w-100">
-                                    <input matInput #amountInvest type="text" class="form-control br-0">
+                                    <input matInput formControlName="debtAllocation" type="text" class="form-control br-0">
                                 </mat-form-field>
                             </div>
                         </div>
                     </div>
                     <div class="row pt-32 pb-16">
                         <div class="col-md-12 pl-8 pr-0">
-                            <mat-radio-group aria-label="Select an option" id="custom-radio">
-                                <mat-radio-button value="1" class="">Progressive asset allocation</mat-radio-button>
+                            <mat-radio-group aria-label="Select an option" name="allocation_type" formControlName="staticOrProgressive">
+                                <mat-radio-button value="2" class="">Progressive asset allocation</mat-radio-button>
                             </mat-radio-group>
                         </div>
                     </div>
@@ -359,70 +327,6 @@
                         </div>
                     </div>
 
-                    <!-- add more ui -->
-                    <!-- <div class="row">
-                    <div class="col-md-6">
-                       
-                        <div class="form-group mb-0">
-                            <mat-form-field>
-                                <mat-select class="form-control br-0">
-                                    <mat-option value="">3 years before goal</mat-option>
-                                    <mat-option value="1">Bank FD</mat-option>
-                                    <mat-option value="2">Corporate FD</mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
-                        <div class="col-md-11 text-right">
-                            <p class="f-12 m-0 pt-4 roboto text-primitive">Apr 2031 - Apr 2034</p>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group mb-0">
-                            <mat-form-field class="w-100">
-                                <input matInput #amountInvest type="text" class="form-control br-0" value="50%">
-                            </mat-form-field>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group mb-0">
-                            <mat-form-field class="w-100">
-                                <input matInput #amountInvest type="text" class="form-control br-0" value="50%">
-                            </mat-form-field>
-                        </div>  
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                       
-                        <div class="form-group mb-0">
-                            <mat-form-field>
-                                <mat-select class="form-control br-0">
-                                    <mat-option value="">1 year before goal</mat-option>
-                                    <mat-option value="1">Bank FD</mat-option>
-                                    <mat-option value="2">Corporate FD</mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
-                        <div class="col-md-11 text-right">
-                            <p class="f-12 m-0 pt-4 roboto text-primitive">Apr 2034 - Apr 2035</p>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group mb-0">
-                            <mat-form-field class="w-100">
-                                <input matInput #amountInvest type="text" class="form-control br-0" value="0%">
-                            </mat-form-field>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group mb-0">
-                            <mat-form-field class="w-100">
-                                <input matInput #amountInvest type="text" class="form-control br-0" value="100%">
-                            </mat-form-field>
-                        </div>  
-                    </div>
-                </div> -->
-                    <!-- close  -->
                     <div class="row pt-32">
                         <div class="col-md-12">
                             <h5 class="m-0 text-primitive c-p">+ Add stage</h5>
@@ -484,7 +388,7 @@
             <h4 class="mb-0 pt-8 text-white c-p f-16" (click)="close()">Cancel</h4>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit">Save</button>
+            <button mat-button class="btn-bottom br-0 text-inherit" (click)="save()">Save</button>
         </div>
     </div>
 </div>
