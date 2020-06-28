@@ -17,6 +17,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import * as Highcharts from 'highcharts';
 import { MatDialog } from '@angular/material';
+import { P } from '@angular/cdk/keycodes';
 
 export interface PeriodicElement {
   position: string;
@@ -40,6 +41,7 @@ export class GoalsPlanComponent implements OnInit {
   }
   selectedGoal:any = {};
   allGoals: any[] = [];
+  hasCostOfDelay:boolean = false;
 
   // options set for bar charts
   // Reference - https://api.highcharts.com/highcharts/
@@ -61,7 +63,7 @@ export class GoalsPlanComponent implements OnInit {
         enabled: false
     },
     title: {
-      text: 'Monthly Bar Chart'
+      text: ''
     },
     xAxis: {
         type: 'category',
@@ -77,25 +79,7 @@ export class GoalsPlanComponent implements OnInit {
     legend: {
       enabled: false,
     },
-    series: [{
-        data: [{
-            y: 123,
-            name: 'Gabriel',
-            color: 'green'
-        }, {
-            y: 60,
-            name: 'Marie',
-            color: 'blue'
-        }, {
-            y: 43,
-            name: 'Adam',
-            color: 'yellow'
-        }, {
-            y: 55,
-            name: 'Camille',
-            color: 'red'
-        }],
-    }]
+    series: [{data: []}]
   }
 
   // options set for donut chart
@@ -159,10 +143,44 @@ export class GoalsPlanComponent implements OnInit {
           this.allGoals = data.map(goal => this.mapGoalDashboardData(goal));
           // let dom render first
           this.loadSelectedGoalData(this.allGoals[0]);
-        });
+        }, 100);
       }
     }, err => this.eventService.openSnackBar(err, "Dismiss"))
   }
+
+
+  createChart(res){
+    const colors = ['green', 'blue', 'yellow', 'red'];
+    const costDelay:Object = res.remainingData.costDelay;
+    if(costDelay && costDelay.hasOwnProperty(0)) {
+      this.hasCostOfDelay = true;
+    } else {
+      this.hasCostOfDelay = false;
+      return;
+    }
+
+    let lumpsumSeries = JSON.parse(JSON.stringify(this.options));
+    let sipSeries = JSON.parse(JSON.stringify(this.options));
+    let count = 0;
+    for(let k in costDelay) {
+      if(costDelay.hasOwnProperty(k)) {
+        lumpsumSeries.series[0].data.push({
+          y: Math.round(costDelay[k].lumpsum_total),
+          name: k + ' years',
+          color: colors[count]
+        })
+        sipSeries.series[0].data.push({
+          y: Math.round(costDelay[k].sip_total),
+          name: k + ' years',
+          color: colors[count]
+        })
+        count++;
+      }
+    }
+    Highcharts.chart('monthly-chart-container-main', sipSeries);
+    Highcharts.chart('lumpsum-chart-container-main', lumpsumSeries);
+  }
+  
 
   mapGoalDashboardData(goal:any) {
     let mapData:any = {};
@@ -176,12 +194,15 @@ export class GoalsPlanComponent implements OnInit {
 
     mapData.id = goal.id;
     mapData.goalType = goal.goalType;
+    mapData.singleOrMulti = goal.singleOrMulti;
     if(goal.singleOrMulti == 1) {
       const goalSubData = goal.singleGoalModel;
       mapData.img = goalSubData.imageUrl;
       mapData.year = (new Date(goalSubData.goalStartDate).getFullYear()) + ' - ' + (new Date(goalSubData.goalStartDate).getFullYear());
       mapData.goalName = goalSubData.goalName;
       mapData.gv = goalSubData.goalFV;
+      mapData.goalStartDate = goalSubData.goalStartDate;
+      mapData.goalEndDate = goalSubData.goalStartDate; // because start hote hi khatam ho gaya
       mapData.achievedValue = goalSubData.achievedValue;
       mapData.dashboardData = {
         goalYear: new Date(goalSubData.goalStartDate).getFullYear(),
@@ -194,6 +215,7 @@ export class GoalsPlanComponent implements OnInit {
         goalProgress: (goalSubData.achievedValue / goalSubData.goalFV * 100),
       }
       mapData.remainingData = goalSubData;
+      mapData.remainingData.differentGoalYears = [goalSubData.goalStartDate];
     } else {
       const goalSubData:any = goal.multiYearGoalPlan;
       mapData.img = goalSubData.imageUrl;
@@ -201,6 +223,8 @@ export class GoalsPlanComponent implements OnInit {
       mapData.goalName = goalSubData.name;
       mapData.gv = goalSubData.futureValue;
       mapData.achievedValue = goalSubData.achievedValue;
+      mapData.goalStartDate = goalSubData.differentGoalYears[0];
+      mapData.goalEndDate = goalSubData.differentGoalYears[goalSubData.differentGoalYears.length -1];
       mapData.dashboardData = {
         goalYear: new Date(goalSubData.goalEndDate || goalSubData.vacationEndYr).getFullYear(),
         presentValue: goalSubData.presentValue,
@@ -278,13 +302,10 @@ export class GoalsPlanComponent implements OnInit {
       case 'openEdit':
         fragmentData.componentName = EditNoteGoalComponent;
         fragmentData.state = 'open65';
-        // fragmentData['popupHeaderText'] = '';
         break;
       case 'openKeyinfo':
         fragmentData.componentName = KeyInfoComponent;
         fragmentData.state = 'open25';
-
-        // TODO:- remove .data as its for demo purpose only
         fragmentData.data = this.selectedGoal.dashboardData;
         break;
       case 'openallocations':
@@ -320,8 +341,9 @@ export class GoalsPlanComponent implements OnInit {
 
   loadSelectedGoalData(goalData) {
     this.selectedGoal = goalData;
-    Highcharts.chart('monthly-chart-container', this.options);
-    Highcharts.chart('lumpsum-chart-container', this.options);
+    setTimeout(() => {
+      this.createChart(this.selectedGoal);
+    });
     Highcharts.chart('donut-chart-container', this.donutOptions);
   }
 

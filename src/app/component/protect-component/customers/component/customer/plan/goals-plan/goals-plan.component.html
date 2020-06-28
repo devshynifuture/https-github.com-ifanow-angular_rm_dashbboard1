@@ -152,14 +152,14 @@
                         </div>
                     </div>
 
-                    <div class="row pt-28">
+                    <div class="row pt-28" [hidden]="!hasCostOfDelay">
                         <div class="col-md-12 p-0">
                             <h5 class="m-0 f-500 text-black pb-8">Cost of delay</h5>
                         </div>
                     </div>
-                    <div class="row b-a">
-                        <div class="col-md-6" id="monthly-chart-container"></div>
-                        <div class="col-md-6" id="lumpsum-chart-container"></div>
+                    <div class="row b-a" [hidden]="!hasCostOfDelay">
+                        <div class="col-md-6" id="monthly-chart-container-main"></div>
+                        <div class="col-md-6" id="lumpsum-chart-container-main"></div>
                     </div>
                     <div class="row pt-24 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                         <div class="col-md-9 p-0">

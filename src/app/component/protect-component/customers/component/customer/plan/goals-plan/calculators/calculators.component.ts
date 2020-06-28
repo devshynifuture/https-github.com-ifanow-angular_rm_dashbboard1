@@ -46,8 +46,16 @@ export class CalculatorsComponent implements OnInit {
 
   ngOnInit() {
     this.getdataForm();
-    for (let index = 0; index < 10; index++) {
+    const yearGap = (new Date(this.data.goalStartDate).getFullYear()) - (new Date().getFullYear());
+    for (let index = 0; index < yearGap; index++) {
       this.delayArray.push({value: index+1, display: index + 1 + ' Years'});
+    }
+
+    
+    const costDelay:Object = this.data.remainingData.costDelay;
+    if(costDelay && costDelay.hasOwnProperty(0)) {
+      this.showDelayChart = true;
+      this.createChart(costDelay);
     }
   }
 
@@ -64,15 +72,15 @@ export class CalculatorsComponent implements OnInit {
     });
 
     this.delayFG = this.fb.group({
-      delay1: [0, [Validators.required]],
-      delay2: [0, [Validators.required]],
-      delay3: [0, [Validators.required]],
-      delay4: [0, [Validators.required]],
+      delay1: ['', [Validators.required]],
+      delay2: ['', [Validators.required]],
+      delay3: ['', [Validators.required]],
+      delay4: ['', [Validators.required]],
     })
   }
 
   // ---------------------------------- calculator ---------------------------------------
-  calculate(){
+  calculateEMI(){
     if(this.incomeFG.invalid || this.loanFG.invalid) {
       this.incomeFG.markAllAsTouched();
       this.loanFG.markAllAsTouched();
@@ -85,7 +93,7 @@ export class CalculatorsComponent implements OnInit {
         previousEMIs: this.incomeFG.controls.otherEMI.value,
         incomeGrowthRate: this.incomeFG.controls.growthRate.value,
         loanAmount: this.loanFG.controls.loanAmt.value,
-        savingStartDate: this.datePipe.transform(this.data.remainingData.savingStartDate, AppConstants.DATE_FORMAT),
+        goalStartDate: this.datePipe.transform(this.data.remainingData.goalStartDate, AppConstants.DATE_FORMAT_DASHED),
         goalAmount: this.data.gv
       }
 
@@ -94,6 +102,33 @@ export class CalculatorsComponent implements OnInit {
           ...res,
           ...emiObj
         };
+      }, err => {
+        this.eventService.openSnackBar(err, "Dismiss");
+      })
+    }
+  }
+
+  saveEMIToGoal(){
+    if(this.incomeFG.invalid || this.loanFG.invalid) {
+      this.incomeFG.markAllAsTouched();
+      this.loanFG.markAllAsTouched();
+    } else {
+
+      const emiObj = {
+        netSalary: this.incomeFG.controls.income.value,
+        loanTenure: this.loanFG.controls.loanTenure.value,
+        annualInterestRate: this.loanFG.controls.interestRate.value,
+        previousEMIs: this.incomeFG.controls.otherEMI.value,
+        incomeGrowthRate: this.incomeFG.controls.growthRate.value,
+        loanAmount: this.loanFG.controls.loanAmt.value,
+        goalStartDate: this.datePipe.transform(this.data.remainingData.goalStartDate, AppConstants.DATE_FORMAT_DASHED),
+        goalAmount: this.data.gv,
+        goalId: this.data.remainingData.id,
+        goalType: this.data.goalType
+      }
+
+      this.planService.saveEMIToGoal({loanIpJson: JSON.stringify(emiObj)}).subscribe((res) => {
+        this.eventService.openSnackBar("EMI saved to goal", "Dismiss");
       }, err => {
         this.eventService.openSnackBar(err, "Dismiss");
       })
@@ -193,12 +228,12 @@ export class CalculatorsComponent implements OnInit {
 
     let subData = this.data.remainingData;
     let jsonObj = {
-      differentGoalYears: subData.differentGoalYears.map(year => this.datePipe.transform(year, AppConstants.DATE_FORMAT)),
+      differentGoalYears: subData.differentGoalYears.map(year => this.datePipe.transform(year, AppConstants.DATE_FORMAT_DASHED)),
       targetValueOfRequiredFVDebt: subData.targetValueOfRequiredFVDebt,
       targetValueOfRequiredFVEquity: subData.targetValueOfRequiredFVEquity,
       advisorId:this.advisorId,
-      savingStartDate: this.datePipe.transform(subData.savingStartDate, AppConstants.DATE_FORMAT),
-      savingEndDate: this.datePipe.transform(subData.savingEndDate, AppConstants.DATE_FORMAT),
+      savingStartDate: this.datePipe.transform(subData.savingStartDate, AppConstants.DATE_FORMAT_DASHED),
+      savingEndDate: this.datePipe.transform(subData.savingEndDate, AppConstants.DATE_FORMAT_DASHED),
       yearStepUps:[0],
     }
 
@@ -226,9 +261,12 @@ export class CalculatorsComponent implements OnInit {
       this.delayFG.markAllAsTouched();
       return;
     }
+    let subData = this.data.remainingData;
     let jsonObj = {
-      goalId: this.data.id,
+      goalId: subData.id,
       goalType: this.data.goalType,
+      savingStartDate: this.datePipe.transform(subData.savingStartDate, AppConstants.DATE_FORMAT_DASHED),
+      savingEndDate: this.datePipe.transform(subData.savingEndDate, AppConstants.DATE_FORMAT_DASHED),
       yearStepUps:[0],
     }
 
@@ -239,7 +277,7 @@ export class CalculatorsComponent implements OnInit {
       jsonObj.yearStepUps.push(formValue[k]);
     }
 
-    this.planService.calculateCostToDelay(jsonObj).subscribe(res => {
+    this.planService.saveCostToDelay(jsonObj).subscribe(res => {
       this.eventService.openSnackBar("Cost of delay added to goal", "Dismiss");
     }, err => {
       this.eventService.openSnackBar(err, "Dismiss");

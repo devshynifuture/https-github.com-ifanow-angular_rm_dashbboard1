@@ -21,7 +21,7 @@
               <h5 class="m-0 pt-8 f-500 text-black">OUTPUT</h5>
             </div>
             <div class="col-md-3 pr-0">
-              <button mat-stroked-button class="br-0 btn-primary pl-8 pr-8 right" (click)="saveToGoal()"><img
+              <button mat-stroked-button class="br-0 btn-primary pl-8 pr-8 right" (click)="saveEMIToGoal()"><img
                   src="/assets/images/svg/plus.svg" class="pr-8">ADD TO GOAL</button>
             </div>
           </div>
@@ -38,6 +38,7 @@
                         <input matInput type="text" class="form-control br-0" placeholder="₹ 1,12,000"
                           appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
                           formControlName="income">
+                          <mat-error>This field is required</mat-error>
                         <div (click)="resetIncome()">Reset</div>
                       </mat-form-field>
                     </div>
@@ -53,6 +54,7 @@
                         <input matInput type="text" class="form-control br-0 percentage" placeholder="9.00"
                           appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
                           formControlName="growthRate">
+                          <mat-error>This field is required</mat-error>
                       </mat-form-field>
                     </div>
 
@@ -68,6 +70,7 @@
                         <input matInput type="text" class="form-control br-0" placeholder="₹ 1,12,000" 
                           appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
                           formControlName="otherEMI">
+                          <mat-error>This field is required</mat-error>
                         <div (click)="resetIncomeFG()">Reset</div>
                       </mat-form-field>
                     </div>
@@ -87,6 +90,7 @@
                         <input matInput type="text" class="form-control br-0" placeholder="₹ 1,12,000"
                           appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
                           formControlName="loanAmt">
+                          <mat-error>This field is required</mat-error>
                       </mat-form-field>
                     </div>
 
@@ -102,6 +106,7 @@
                         <input matInput type="text" class="form-control br-0" placeholder="14"
                           appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
                           formControlName="loanTenure">
+                          <mat-error>This field is required</mat-error>
                       </mat-form-field>
                     </div>
                   </div>
@@ -116,13 +121,14 @@
                         <input matInput type="text" class="form-control br-0 percentage" placeholder="11.5"
                           appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
                           formControlName="interestRate">
+                          <mat-error>This field is required</mat-error>
                       </mat-form-field>
                     </div>
                   </div>
                 </div>
                 <div class="row pt-28">
                   <div class="col-md-12 text-right">
-                    <button mat-stroked-button class="btn-primary-outline" (click)="calculate()">Calculate</button>
+                    <button mat-stroked-button class="btn-primary-outline" (click)="calculateEMI()">Calculate</button>
                   </div>
                 </div>
               </div>
@@ -298,13 +304,13 @@
               </div>
             </div>
 
-            <div class="row pt-20" *ngIf="showDelayChart">
+            <div class="row pt-20" [hidden]="!showDelayChart">
               <div class="col-md-12">
                 <h5 class="m-0 f-500 pt-8 text-black">OUTPUT</h5>
               </div>
             </div>
 
-            <div class="row" *ngIf="showDelayChart">
+            <div class="row" [hidden]="!showDelayChart">
               <div class="col-md-6">
                 <p class="roboto f-500">Monthly requirements</p>
                 <div id="monthly-chart-container"></div>
