@@ -1,15 +1,16 @@
 // tslint:disable:radix
 // tslint:disable:triple-equals
 
-import { ElementRef, Injectable, Input } from '@angular/core';
-import { DatePipe, DecimalPipe } from '@angular/common';
-import { EventService } from '../Data-service/event.service';
-import { HttpClient } from '@angular/common/http';
-import { SubscriptionService } from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
-import { FormGroup } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs';
-import { AuthService } from '../auth-service/authService';
-import { PlaceHolder } from '../interfaces/place-holder.interface';
+import {ElementRef, Injectable, Input} from '@angular/core';
+import {DatePipe, DecimalPipe} from '@angular/common';
+import {EventService} from '../Data-service/event.service';
+import {HttpClient} from '@angular/common/http';
+import {SubscriptionService} from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
+import {FormGroup} from '@angular/forms';
+import {BehaviorSubject} from 'rxjs';
+import {AuthService} from '../auth-service/authService';
+import {PlaceHolder} from '../interfaces/place-holder.interface';
+import {quotationTemplate} from './quotationTemplate';
 
 
 @Injectable({
@@ -94,7 +95,7 @@ export class UtilService {
   static convertObjectToCustomArray(inputObject: object, keyNameForOutput: string, keyValueForOutput: string): object[] {
     const outputArray = [];
     Object.keys(inputObject).map(key => {
-      const object = { selected: false };
+      const object = {selected: false};
       object[keyNameForOutput] = inputObject[key];
       object[keyValueForOutput] = key;
 
@@ -160,6 +161,10 @@ export class UtilService {
     // console.log(' roundedOffString', this.decimalPipe.transform(data, '9.0-2', null).replace(/,/g, ''));
 
     return parseFloat(this.decimalPipe.transform(data, '9.0-' + noOfPlaces, null).replace(/,/g, ''));
+  }
+
+  static roundOffToNearest1(data: number) {
+    return Math.round(data);
   }
 
   static mutualFundRoundAndFormat(data, noOfPlaces: number = 0) {
@@ -379,25 +384,25 @@ export class UtilService {
     const browser = this.getBrowserName();
     console.log(browser);
     if (!this.client) {
-      this.client = {}
-      this.client.name = ''
+      this.client = {};
+      this.client.name = '';
     }
     return this.http.post(
       'http://dev.ifanow.in:8080/futurewise/api/v1/web//subscription/html-to-pdf', obj,
-      { responseType: 'blob' }).subscribe(
-        data => {
-          const file = new Blob([data], { type: 'application/pdf' });
-          fragData.isSpinner = false;
-          // window.open(fileURL,"hello");
-          const namePdf = this.client.name + '\'s ' + pdfName + ' as on ' + date;
-          const a = document.createElement('a');
-          a.href = window.URL.createObjectURL(file);
-          a.download = namePdf + '.pdf';
-          a.click();
-          // a.download = fileURL;
-          return (this.fileURL) ? this.fileURL : null;
-        }
-      );
+      {responseType: 'blob'}).subscribe(
+      data => {
+        const file = new Blob([data], {type: 'application/pdf'});
+        fragData.isSpinner = false;
+        // window.open(fileURL,"hello");
+        const namePdf = this.client.name + '\'s ' + pdfName + ' as on ' + date;
+        const a = document.createElement('a');
+        a.href = window.URL.createObjectURL(file);
+        a.download = namePdf + '.pdf';
+        a.click();
+        // a.download = fileURL;
+        return (this.fileURL) ? this.fileURL : null;
+      }
+    );
   }
 
   bulkHtmlToPdf(data) {
@@ -416,7 +421,7 @@ export class UtilService {
     ).subscribe(
       data => {
         console.log('done email', data);
-        this.responseData = data
+        this.responseData = data;
         alert(this.responseData.status);
       });
   }
@@ -453,8 +458,8 @@ export class UtilService {
     for (let i = 0; i < byteString.length; i++) {
       ia[i] = byteString.charCodeAt(i);
     }
-    const imageBlob = new Blob([ia], { type: mimeString });
-    return new File([imageBlob], imageName, { type: 'image/png' });
+    const imageBlob = new Blob([ia], {type: mimeString});
+    return new File([imageBlob], imageName, {type: 'image/png'});
   }
 
   /**
@@ -527,7 +532,25 @@ export class UtilService {
     const height = document.querySelector('.right_sidenav').scrollHeight;
     document.querySelector('.right_sidenav').scrollTop = height;
   }
+
+  static getDocumentTemplates(documentType) {
+    let froalaTemplate;
+    if (documentType == 1) {
+
+    } else if (documentType == 2) {
+
+    } else if (documentType == 7) {
+
+    } else if (documentType == 7) {
+      return quotationTemplate;
+    } else {
+      return 'docText';
+    }
+  }
+
+
 }
+
 
 export class ValidatorType {
 

@@ -30,19 +30,22 @@
                     </div>-->
 
                     <div class="col-md-5 p-0">
-                        <div class="form-group">
-                            <select class="form-control br-0 bltb-0" formControlName="Duration" id="sel1">
-                                <option value="1">Monthly</option>
-                                <option value="3">Quarterly</option>
-                                <option value="6">Half-yearly</option>
-                                <option value="12">Yearly</option>
-                            </select>
-                        </div>
+                        <mat-form-field>
+                            <div class="form-group">
+                                <mat-select class="form-control br-0 bltb-0" formControlName="Duration" id="sel1">
+                                    <mat-option value="1">Monthly</mat-option>
+                                    <mat-option value="3">Quarterly</mat-option>
+                                    <mat-option value="6">Half-yearly</mat-option>
+                                    <mat-option value="12">Yearly</mat-option>
+                                </mat-select>
+                            </div>
+
+                            <mat-error
+                                *ngIf="isBillValid && variableFeeStructureForm.get('Duration') .invalid ||variableFeeStructureForm.get('Duration') .touched &&variableFeeStructureForm.get('Duration') .invalid"
+                                class="f-12">Field is required
+                            </mat-error>
+                        </mat-form-field>
                     </div>
-                    <mat-error
-                        *ngIf="isBillValid && variableFeeStructureForm.get('Duration') .invalid ||variableFeeStructureForm.get('Duration') .touched &&variableFeeStructureForm.get('Duration') .invalid"
-                        class="f-12">Field is required
-                    </mat-error>
                 </div>
             </div>
 

@@ -16,7 +16,7 @@
     </div>
     <div class="row pt-40">
         <div class="col-md-3 pr-0">
-            <h5 class="m-0 text-right pt-8">Display name</h5>
+            <h5 class="m-0 text-right pt-20">Display name</h5>
         </div>
         <div class="col-md-8">
             <div class="form-group">
@@ -94,23 +94,21 @@
                             <h5 class="m-0 text-right">Invoice no.</h5>
                         </div>
                         <div class="col-md-7 p-0">
-                            <div class="form-group mb-0">
-                                <input class="form-control br-0" formControlName="invoiceNumber" maxlength="20"
-                                    type="text">
-                            </div>
-                            <div class="col-md-12 pl-0">
-                                <!-- for prod build <mat-error
-                                    *ngIf="getFormControlEdit().invoiceNumber.touched && getFormControlEdit().invoiceNumber.required"
-                                    class="f-12">
-                                    Invoice no. is required
-                                </mat-error> -->
-                            </div>
-                            <div class="col-md-12">
-                                <p class="mb-0 f-12 text-custom text-right pt-4">
-                                    {{getFormControlEdit().invoiceNumber.value?.length ? getFormControlEdit().invoiceNumber.value.length : 0}}
-                                    /20
-                                </p>
-                            </div>
+                            <mat-form-field>
+                                <div class="form-group mb-0">
+
+                                    <input class="form-control br-0" matInput formControlName="invoiceNumber"
+                                        maxlength="20" type="text">
+
+                                </div>
+
+                                <div class="col-md-12 pr-0">
+                                    <p class="mb-0 f-12 text-custom text-right pt-4">
+                                        {{getFormControlEdit().invoiceNumber.value?.length ? getFormControlEdit().invoiceNumber.value.length : 0}}
+                                        /20
+                                    </p>
+                                </div>
+                            </mat-form-field>
                         </div>
                     </div>
                 </div>
@@ -176,54 +174,60 @@
                 </div>
                 <div class="row bg-white pb-8 pt-8">
                     <div class="col-md-6 pl-0">
-                        <div class="row">
-                            <div class="form-group mb-0 ml-8 w-100">
-                                <input [matAutocomplete]="auto" [readonly]="storeData.invoiceNumber != undefined"
-                                    aria-label="State" class="form-control w-100 br-0 pl-8"
-                                    formControlName="serviceName" list="serviceName" matInput
-                                    placeholder="You can search service">
-                                <mat-autocomplete #auto="matAutocomplete">
-                                    <mat-option *ngFor="let s of serviceList" [value]="s.serviceName"
-                                        (click)="selectService(s)">
-                                        <span>{{s.serviceName}}</span>
-                                    </mat-option>
-                                </mat-autocomplete>
-                            </div>
+                        <div class="row service-deatils">
+                            <mat-form-field floatLabel="never" appearance="standard">
+                                <div class="form-group mb-0 ml-8 w-100">
+                                    <input [matAutocomplete]="auto" [readonly]="storeData.invoiceNumber != undefined"
+                                        aria-label="State" class="form-control w-100 br-0 pl-8"
+                                        formControlName="serviceName" list="serviceName" matInput
+                                        placeholder="You can search service">
+                                    <mat-autocomplete #auto="matAutocomplete">
+                                        <mat-option *ngFor="let s of serviceList" [value]="s.serviceName"
+                                            (click)="selectService(s)">
+                                            <span>{{s.serviceName}}</span>
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </div>
+                                <div class="col-md-8">
+                                    <mat-error
+                                        *ngIf="getFormControlEdit().serviceName.touched && getFormControlEdit().serviceName.invalid"
+                                        class="f-12">
+                                        Service name is required
+                                    </mat-error>
+                                </div>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-md-2 pl-0">
+                        <mat-form-field>
+                            <input #finalAmountInput [(ngModel)]="finalAmount" matInput
+                                [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation
+                                class="form-control br-0" formControlName="finalAmount" type="number">
                             <div class="col-md-8">
                                 <mat-error
-                                    *ngIf="getFormControlEdit().serviceName.touched && getFormControlEdit().serviceName.invalid"
+                                    *ngIf=" getFormControlEdit().finalAmount.invalid && getFormControlEdit().finalAmount.touched "
                                     class="f-12">
-                                    Service name is required
+                                    Price is required
                                 </mat-error>
                             </div>
-                        </div>
+                        </mat-form-field>
                     </div>
                     <div class="col-md-2 pl-0">
-                        <input #finalAmountInput [(ngModel)]="finalAmount" [inputValidator]="validatorType.NUMBER_ONLY"
-                            appInputValueValidation class="form-control br-0" formControlName="finalAmount"
-                            type="number">
-                        <div class="col-md-8">
-                            <mat-error
-                                *ngIf=" getFormControlEdit().finalAmount.invalid && getFormControlEdit().finalAmount.touched "
-                                class="f-12">
-                                Price is required
-                            </mat-error>
-                        </div>
-                    </div>
-                    <div class="col-md-2 pl-0">
-                        <!--            (change)="changeTaxStatus($event.target.value)"-->
-                        <select class="form-control" formControlName="taxStatus" id="serviceName">
-                            <!-- <option value="select">Select tax type</option> -->
-                            <option value="IGST(18%)">IGST(18%)</option>
-                            <option value="SGST(9%)|CGST(9%)">SGST(9%) | CGST(9%)</option>
-                        </select>
-                        <div class="col-md-8">
-                            <mat-error
-                                *ngIf=" getFormControlEdit().taxStatus.invalid || (getFormControlEdit().taxStatus.touched && getFormControlEdit().taxStatus.invalid)"
-                                class="f-12">
-                                Tax status is required
-                            </mat-error>
-                        </div>
+                        <mat-form-field>
+                            <!--            (change)="changeTaxStatus($event.target.value)"-->
+                            <mat-select class="form-control" formControlName="taxStatus" id="serviceName">
+                                <!-- <option value="select">Select tax type</option> -->
+                                <mat-option value="IGST(18%)">IGST(18%)</mat-option>
+                                <mat-option value="SGST(9%)|CGST(9%)">SGST(9%) | CGST(9%)</mat-option>
+                            </mat-select>
+                            <div class="col-md-8">
+                                <mat-error
+                                    *ngIf=" getFormControlEdit().taxStatus.invalid || (getFormControlEdit().taxStatus.touched && getFormControlEdit().taxStatus.invalid)"
+                                    class="f-12">
+                                    Tax status is required
+                                </mat-error>
+                            </div>
+                        </mat-form-field>
                     </div>
                     {{storeData.taxStatus}}
                     <div class="col-md-2 d-flex align-items-center justify-content-end">
@@ -254,9 +258,12 @@
             <h5 class="m-0">Discount ₹</h5>
         </div>
         <div class="col-md-2 pr-24">
-            <input (changedValue)="discount = $event" [(ngModel)]="discount"
-                [inputValidator]="validatorType.NUMBER_ONLY" [maxValue]="finalAmountInput.value" appInputValueValidation
-                class="form-control br-0 text-right" formControlName="discount" type="number">
+            <mat-form-field>
+                <input (changedValue)="discount = $event" matInput [(ngModel)]="discount"
+                    [inputValidator]="validatorType.NUMBER_ONLY" [maxValue]="finalAmountInput.value"
+                    appInputValueValidation class="form-control br-0 text-right" formControlName="discount"
+                    type="number">
+            </mat-form-field>
         </div>
     </div>
     <div class="row pt-20 pb-12">

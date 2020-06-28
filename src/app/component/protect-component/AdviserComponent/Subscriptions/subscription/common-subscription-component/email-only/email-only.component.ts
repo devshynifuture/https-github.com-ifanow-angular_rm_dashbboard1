@@ -11,6 +11,7 @@ import { OrgSettingServiceService } from '../../../../setting/org-setting-servic
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { element } from 'protractor';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-email-only',
@@ -140,7 +141,7 @@ export class EmailOnlyComponent implements OnInit {
 
   constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
     public subscription: SubscriptionService, private orgSetting: OrgSettingServiceService,
-    private fb: FormBuilder, private peopleService: PeopleService) {
+    private fb: FormBuilder, private peopleService: PeopleService, private datePipe: DatePipe) {
     this.advisorId = AuthService.getAdvisorId();
     this.userId = AuthService.getUserId()
   }
@@ -350,6 +351,44 @@ export class EmailOnlyComponent implements OnInit {
         data => this.getResponseData(data)
       );
     }
+  }
+  sendInvoiceEmail() {
+    if (this._inputData.fromEmail == undefined) {
+      this.eventService.openSnackBar('Please enter to email', "Dismiss");
+      return;
+    }
+    if (this.emailIdList.length == 0) {
+      this.eventService.openSnackBar("Please enter email ");
+      return;
+    }
+    if (this._inputData && this._inputData.documentList.length > 0) {
+    } else {
+      this.eventService.openSnackBar('Please select a invoice to send email.', "Dismiss");
+      return;
+    }
+    this._inputData.documentList[0].fromDate = new Date(this._inputData.documentList[0].fromDate);
+    this._inputData.documentList[0].dueDate = new Date(this._inputData.documentList[0].dueDate);
+    this._inputData.documentList[0].invoiceDate = new Date(this._inputData.documentList[0].invoiceDate);
+    this._inputData.documentList[0].toDate = new Date(this._inputData.documentList[0].toDate);
+    this.barButtonOptions.active = true;
+    let invoiceObj = {
+      messageBody: this.emailBody,
+      emailSubject: this._inputData.subject,
+      fromEmail: this._inputData.fromEmail,
+      toEmail: this.emailIdList,
+      invoices: this._inputData.documentList,
+      document_id: this._inputData.documentList[0].id,
+      attachmentName: this._inputData.documentList[0].documentName
+    };
+    this.subscription.sendInvoiceEmail(invoiceObj).subscribe(
+      data => {
+        this.barButtonOptions.active = false;
+        this.getResponseData(data);
+      }, err => {
+        this.barButtonOptions.active = false;
+        this.eventService.openSnackBar(err, "Dismiss");
+      }
+    )
   }
   sendWithEsign() {
     if (this._inputData.fromEmail == undefined) {

@@ -24,7 +24,7 @@ export class DocumentsSettingsComponent implements OnInit {
   Questions = [{ question: 'Can I create my own template for Quotations?' },
   { question: 'Can I create my own template for Consent T&C?' },
   { question: 'What are the Future subscriptions?' }]
-  documentSettingData:any = [{},{}];
+  documentSettingData: any = [{}, {}];
   isLoading = false;
   //showLoader;
 
@@ -39,7 +39,7 @@ export class DocumentsSettingsComponent implements OnInit {
     // this.openFragment('documents');
     // (SubscriptionDataService.getLoderFlag(5) == false) ? this.documentSettingData = undefined : this.documentSettingData = [{}, {}, {}]
     this.getDocumentsSetting();
-    
+
   }
 
   getDocumentsSetting() {
@@ -62,7 +62,7 @@ export class DocumentsSettingsComponent implements OnInit {
     );
   }
   /**this function is used for calling get api in documentSetting component */
-  
+
   getDocumentsSettingResponse(data) {
     if (data == undefined) {
       this.documentSettingData = [];
@@ -73,14 +73,16 @@ export class DocumentsSettingsComponent implements OnInit {
       this.documentSettingData = data;
     }
     //this.showLoader = false;
-    
+
   }
 
   display(data) {
     // this.getDocumentsSetting();
     if (data != undefined) {
-      const tempList = this.documentSettingData.filter(d => d.documentRepositoryId != data);
-      this.documentSettingData = tempList;
+      this.documentSettingData = [{}, {}];
+      this.getDocumentsSetting();
+      // const tempList = this.documentSettingData.filter(d => d.documentRepositoryId != data);
+      // this.documentSettingData = tempList;
     }
 
   }
