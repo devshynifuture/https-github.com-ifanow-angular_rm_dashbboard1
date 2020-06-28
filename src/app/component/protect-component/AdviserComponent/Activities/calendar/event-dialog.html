@@ -1,6 +1,7 @@
 <div class="p-24" *ngIf="isEditAdd">
     <h1 mat-dialog-title class="m-0" *ngIf="!isEditable">Add New Event</h1>
-    <h1 mat-dialog-title class="m-0" *ngIf="isEditable"><span style="font-size: 80px; color:#84BDF3; line-height: 0px;">.</span>Edit Event</h1>
+    <h1 mat-dialog-title class="m-0" *ngIf="isEditable">Edit Event</h1>
+
     <div mat-dialog-content class="p-24">
         <form [formGroup]="eventForm">
             <div class="row">
@@ -157,8 +158,8 @@
 
 <div class="p-24" *ngIf="!isEditAdd">
     <div mat-dialog-title class="m-0">
-        <h5 class="m-0"><strong><span
-                    style="font-size: 80px; color:#84BDF3; line-height: 0px;">.</span>{{eventData.summary}}</strong>
+        <h5 class="m-0">
+            {{eventData.summary}}
         </h5>
         <p *ngIf="eventData.start.dateTime != null && eventData.start.dateTime != null" class="mt-4">
             <span>{{eventData.start.dateTime | date : 'MMMM d, y'}}</span><span *ngIf="eventData.start.dateTime != null">, {{eventData.startTime}}</span> - <span *ngIf="showBothDate">{{eventData.end.dateTime | date : 'MMMM d, y'}}, </span><span *ngIf="eventData.end.dateTime != null">{{eventData.endTime}}</span></p>
