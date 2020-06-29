@@ -383,7 +383,7 @@
 
 
 
-<div class="hide" #summaryTemplate id="template" *ngIf="showDownload">
+<div #summaryTemplate id="template">
 
     <table cellpadding="0" width="100%" cellspacing="0" border="0"
         style="font-family: 'Roboto', sans-serif; margin: 0px auto;"
@@ -399,7 +399,7 @@
                 <img width="250px" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
             </td>
             <td style="text-align: left;" colspan="3"
-                *ngIf="getOrgData && getOrgData.reportLogoUrl =='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl ==null">
+                *ngIf="getOrgData">
                 <img width="250px" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
             </td>
             <td style=" text-align: right;" colspan="8">
