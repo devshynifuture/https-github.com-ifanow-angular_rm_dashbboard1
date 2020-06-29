@@ -1,16 +1,16 @@
-import { Component, Input, OnInit, ViewChildren, QueryList } from '@angular/core';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionService } from '../../../subscription.service';
-import { AuthService } from '../../../../../../../auth-service/authService';
-import { EventService } from 'src/app/Data-service/event.service';
-import { HttpClient } from '@angular/common/http';
-import { PhotoCloudinaryUploadService } from '../../../../../../../services/photo-cloudinary-upload.service';
-import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
-import { UtilService, ValidatorType } from '../../../../../../../services/util.service';
-import { PostalService } from 'src/app/services/postal.service';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-import { MatInput } from '@angular/material';
+import {Component, Input, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionService} from '../../../subscription.service';
+import {AuthService} from '../../../../../../../auth-service/authService';
+import {EventService} from 'src/app/Data-service/event.service';
+import {HttpClient} from '@angular/common/http';
+import {PhotoCloudinaryUploadService} from '../../../../../../../services/photo-cloudinary-upload.service';
+import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
+import {UtilService, ValidatorType} from '../../../../../../../services/util.service';
+import {PostalService} from 'src/app/services/postal.service';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import {MatInput} from '@angular/material';
 
 @Component({
   selector: 'app-biller-profile-advisor',
@@ -19,6 +19,9 @@ import { MatInput } from '@angular/material';
   styleUrls: ['./biller-profile-advisor.component.scss']
 })
 export class BillerProfileAdvisorComponent implements OnInit {
+
+  // validatorType = ValidatorType;
+
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
     text: 'Save',
@@ -33,7 +36,10 @@ export class BillerProfileAdvisorComponent implements OnInit {
     // buttonIcon: {
     //   fontIcon: 'favorite'
     // }
-  }
+  };
+  logoImg: any = '';
+  pinInvalid = false;
+  ifsciInvalid: boolean;
 
   validatorType = ValidatorType;
   billerProfileForm: any;
@@ -60,7 +66,13 @@ export class BillerProfileAdvisorComponent implements OnInit {
   profileDetailsForm: any;
   bankDetailsForm: any;
   MiscellaneousData: any;
-  logoImg: any = "";
+
+  constructor(public utils: UtilService, public subInjectService: SubscriptionInject,
+              private fb: FormBuilder,
+              private subService: SubscriptionService, private postalService: PostalService,
+              private eventService: EventService, private http: HttpClient) {
+  }
+
   imageData: File;
   uploadedImage: any;
   postalData: Object;
@@ -72,21 +84,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
   ifscFlag: boolean;
   pincodeFlag: boolean;
 
-  // validatorType = ValidatorType;
-
-  constructor(public utils: UtilService, public subInjectService: SubscriptionInject, private fb: FormBuilder,
-    private subService: SubscriptionService, private postalService: PostalService,
-    private eventService: EventService, private http: HttpClient) {
-  }
-
   @Input() Selected;
-
-  @Input()
-  set data(data) {
-    this.inputData = data;
-    this.logoImg = data.logoUrl;
-    this.getSingleBillerProfileData(data);
-  }
 
   logUrl = this.fb.group({
     url: [, [Validators.required]]
@@ -94,6 +92,13 @@ export class BillerProfileAdvisorComponent implements OnInit {
 
   get data() {
     return this.inputData;
+  }
+
+  @Input()
+  set data(data) {
+    this.inputData = data;
+    this.logoImg = data.logoUrl;
+    this.getSingleBillerProfileData(data);
   }
 
   ngOnInit() {
@@ -194,7 +199,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
       // companyName: [data.companyName, [Validators.required]],
       gstTreatmentId: [data.gstTreatmentId ? String(data.gstTreatmentId) : '1'],
       gstinNum: [(data.gstin)],
-      panNum: [(data.pan), [Validators.required, Validators.pattern("^[A-Za-z]{5}[0-9]{4}[A-z]{1}")]],
+      panNum: [(data.pan), [Validators.required, Validators.pattern('^[A-Za-z]{5}[0-9]{4}[A-z]{1}')]],
       Address: [(data.billerAddress), [Validators.required]],
       state: [(data.state), [Validators.required]],
       pincode: [(data.zipCode), [Validators.required, Validators.minLength(6)]],
@@ -233,21 +238,20 @@ export class BillerProfileAdvisorComponent implements OnInit {
     this.getFrormControlMisc().terms.maxLength = 500;
     this.logoImg = data.logoUrl;
     if (this.profileDetailsForm.get('gstTreatmentId').value == '4') {
-      this.profileDetailsForm.get('gstinNum').setValidators([Validators.required, Validators.pattern("^([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-7]{1})([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$")]);
-    }
-    else {
+      this.profileDetailsForm.get('gstinNum').setValidators([Validators.required, Validators.pattern('^([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-7]{1})([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$')]);
+    } else {
       this.profileDetailsForm.get('gstinNum').setValidators(null);
     }
-    this.profileDetailsForm.get('gstinNum').updateValueAndValidity()
+    this.profileDetailsForm.get('gstinNum').updateValueAndValidity();
   }
+
   changeGstField(value) {
     if (value == 4) {
-      this.profileDetailsForm.get('gstinNum').setValidators([Validators.required, Validators.pattern("^([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-7]{1})([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$")]);
-    }
-    else {
+      this.profileDetailsForm.get('gstinNum').setValidators([Validators.required, Validators.pattern('^([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-7]{1})([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$')]);
+    } else {
       this.profileDetailsForm.get('gstinNum').setValidators(null);
     }
-    this.profileDetailsForm.get('gstinNum').updateValueAndValidity()
+    this.profileDetailsForm.get('gstinNum').updateValueAndValidity();
   }
 
   toUpperCase(formControl, event) {
@@ -261,7 +265,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
   }
 
   Close(data) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: data });
+    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: data});
 
   }
 
@@ -269,15 +273,15 @@ export class BillerProfileAdvisorComponent implements OnInit {
     switch (true) {
       case (this.profileDetailsForm.valid && value == 0):
         this.selected = 1;
-        this.barButtonOptions.text = "UPLOAD LOGO";
+        this.barButtonOptions.text = 'UPLOAD LOGO';
         break;
       case (/*this.logUrl.valid &&*/ value == 1):
         this.selected = 2;
-        this.barButtonOptions.text = "SAVE & NEXT";
+        this.barButtonOptions.text = 'SAVE & NEXT';
         break;
       case (this.bankDetailsForm.valid && value == 2):
         this.selected = 3;
-        this.barButtonOptions.text = "SAVE";
+        this.barButtonOptions.text = 'SAVE';
         break;
       case (this.MiscellaneousData.valid && value == 3):
         this.submitBillerForm();
@@ -288,48 +292,46 @@ export class BillerProfileAdvisorComponent implements OnInit {
   }
 
   getBankAddress(ifsc) {
-    let obj = {
-      ifsc: ifsc
-    }
+    const obj = {
+      ifsc
+    };
     this.ifscFlag = true;
-    if (ifsc != "") {
+    if (ifsc != '') {
       this.subService.getBankAddress(obj).subscribe(data => {
-        this.bankData(data)
-        // this.PinData(data, 'bankDetailsForm')
+          this.bankData(data);
+          // this.PinData(data, 'bankDetailsForm')
 
-      },
+        },
         err => {
           this.ifscFlag = false;
-          this.bankData(err)
-        })
+          this.bankData(err);
+        });
     }
   }
 
-  pinInvalid: boolean = false;
-
   getPostalPin(value, state) {
-    let obj = {
+    const obj = {
       zipCode: value
-    }
+    };
     this.pincodeFlag = true;
-    if (value != "") {
+    if (value != '') {
       this.postalService.getPostalPin(value).subscribe(data => {
-        this.PinData(data, state)
-      })
-    }
-    else {
+        this.PinData(data, state);
+      });
+    } else {
       this.pinInvalid = false;
       this.pincodeFlag = false;
     }
   }
+
   PinData(data, state) {
     this.pincodeFlag = false;
-    if (data[0].Status == "Error") {
+    if (data[0].Status == 'Error') {
       this.pinInvalid = true;
       this.getFormControlProfile().ifscCode.setErrors(this.pinInvalid);
-      this.getFormControlProfile().city.setValue("");
-      this.getFormControlProfile().country.setValue("");
-      this.getFormControlProfile().state.setValue("");
+      this.getFormControlProfile().city.setValue('');
+      this.getFormControlProfile().country.setValue('');
+      this.getFormControlProfile().state.setValue('');
     } else {
       this.getFormControlProfile().city.setValue(data[0].PostOffice[0].District);
       this.getFormControlProfile().country.setValue(data[0].PostOffice[0].Country);
@@ -337,33 +339,32 @@ export class BillerProfileAdvisorComponent implements OnInit {
       this.pinInvalid = false;
     }
   }
-  ifsciInvalid: boolean;
+
   bankData(data) {
     this.ifscFlag = false;
     if (data.status != undefined) {
       this.ifsciInvalid = true;
       this.getFormControlBank().ifscCode.setErrors(this.ifsciInvalid);
-      this.getFormControlBank().cityB.setValue("")
-      this.getFormControlBank().countryB.setValue("")
-      this.getFormControlBank().stateB.setValue("")
-      this.getFormControlBank().address.setValue("")
-      this.getFormControlBank().pincodeB.setValue("")
-    }
-    else {
+      this.getFormControlBank().cityB.setValue('');
+      this.getFormControlBank().countryB.setValue('');
+      this.getFormControlBank().stateB.setValue('');
+      this.getFormControlBank().address.setValue('');
+      this.getFormControlBank().pincodeB.setValue('');
+    } else {
       let pincode;
       pincode = data.address.match(/\d/g);
-      pincode = pincode.join("");
-      pincode = pincode.substring(pincode.length - 6, pincode.length)
-      data.address = data.address.replace(String(pincode), '')
-      data.address = data.address.replace('-', '')
-      let bankPin = data.address.split('A');
-      this.getFormControlBank().pincodeB.setValue(bankPin[bankPin.length - 1])
-      this.getFormControlBank().cityB.setValue(data.district)
-      this.getFormControlBank().countryB.setValue("India")
-      this.getFormControlBank().stateB.setValue(data.state)
-      this.getFormControlBank().address.setValue(data.address)
-      this.getFormControlBank().bankName.setValue(data.bankcode)
-      this.getFormControlBank().pincodeB.setValue(pincode)
+      pincode = pincode.join('');
+      pincode = pincode.substring(pincode.length - 6, pincode.length);
+      data.address = data.address.replace(String(pincode), '');
+      data.address = data.address.replace('-', '');
+      const bankPin = data.address.split('A');
+      this.getFormControlBank().pincodeB.setValue(bankPin[bankPin.length - 1]);
+      this.getFormControlBank().cityB.setValue(data.district);
+      this.getFormControlBank().countryB.setValue('India');
+      this.getFormControlBank().stateB.setValue(data.state);
+      this.getFormControlBank().address.setValue(data.address);
+      this.getFormControlBank().bankName.setValue(data.bank);
+      this.getFormControlBank().pincodeB.setValue(pincode);
       this.ifsciInvalid = false;
     }
   }
@@ -371,13 +372,13 @@ export class BillerProfileAdvisorComponent implements OnInit {
   back() {
     this.selected--;
     if (this.selected == 2) {
-      this.barButtonOptions.text = "UPLOAD LOGO";
+      this.barButtonOptions.text = 'UPLOAD LOGO';
     }
 
   }
 
   validURL(str) {
-    var pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
+    const pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
       '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
       '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
       '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
@@ -399,36 +400,13 @@ export class BillerProfileAdvisorComponent implements OnInit {
       return;
     } else if (this.bankDetailsForm.invalid) {
       this.bankDetailsForm.markAllAsTouched();
-      return
-    }
-    // if (this.profileDetailsForm.invalid) {
-    //   this.profileDetailsForm.get("companyDisplayName").markAsTouched();
-    //   this.profileDetailsForm.get("gstinNum").markAsTouched();
-    //   this.profileDetailsForm.get("panNum").markAsTouched();
-    //   this.profileDetailsForm.get("Address").markAsTouched();
-    //   this.profileDetailsForm.get("city").markAsTouched();
-    //   this.profileDetailsForm.get("state").markAsTouched();
-    //   this.profileDetailsForm.get("country").markAsTouched();
-    //   this.profileDetailsForm.get("pincode").markAsTouched();
-    // }
-    // else if (this.bankDetailsForm.invalid) {
-    //   this.bankDetailsForm.get("nameOnBank").markAsTouched();
-    //   this.bankDetailsForm.get("bankName").markAsTouched();
-    //   this.bankDetailsForm.get("acNo").markAsTouched();
-    //   this.bankDetailsForm.get("ifscCode").markAsTouched();
-    //   this.bankDetailsForm.get("address").markAsTouched();
-    //   this.bankDetailsForm.get("cityB").markAsTouched();
-    //   this.bankDetailsForm.get("stateB").markAsTouched();
-    //   this.bankDetailsForm.get("pincodeB").markAsTouched();
-    //   this.bankDetailsForm.get("countryB").markAsTouched();
-    // }
-    else {
+      return;
+    } else {
       this.barButtonOptions.active = true;
 
       if (!this.validURL(this.logoImg) && this.logoImg != undefined) {
         this.uploadImage();
-      }
-      else {
+      } else {
         this.addEditBillerForm();
 
       }
@@ -450,7 +428,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
       companyDisplayName: this.profileDetailsForm.controls.companyDisplayName.value,
       country: this.profileDetailsForm.controls.country.value,
       footnote: this.MiscellaneousData.controls.footnote.value,
-      gstin: (this.profileDetailsForm.controls.gstTreatmentId.value == '1') ? this.profileDetailsForm.controls.gstinNum.value : null,
+      gstin: (this.profileDetailsForm.controls.gstTreatmentId.value == '4') ? this.profileDetailsForm.controls.gstinNum.value : null,
       gstTreatmentId: this.profileDetailsForm.controls.gstTreatmentId.value,
       ifscCode: this.bankDetailsForm.controls.ifscCode.value,
       logoUrl: this.logoImg,
@@ -482,8 +460,10 @@ export class BillerProfileAdvisorComponent implements OnInit {
       );
     }
   }
+
   getPostalRes(data) {
   }
+
   closeTab(data) {
     this.barButtonOptions.active = false;
     if (data == true) {

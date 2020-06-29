@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
@@ -14,7 +14,7 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
   templateUrl: './add-karvy-details.component.html',
   styleUrls: ['./add-karvy-details.component.scss']
 })
-export class AddKarvyDetailsComponent implements OnInit {
+export class AddKarvyDetailsComponent implements OnInit, OnDestroy {
 
   @Input() data:any;
 
@@ -33,6 +33,7 @@ export class AddKarvyDetailsComponent implements OnInit {
     disabled: false,
     fullWidth: false,
   };
+  subscription = new Subscription();
 
   constructor(
     private subInjectService: SubscriptionInject, 
@@ -46,6 +47,23 @@ export class AddKarvyDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.createForm();
+    this.formListeners();
+  }
+
+  ngOnDestroy(){
+    this.subscription.unsubscribe();
+  }
+
+  formListeners(){
+    this.subscription.add(
+      this.karvyFG.controls.arnRiaDetailsId.valueChanges.subscribe(id => {
+        const arn = this.data.arnData.find(data => data.id == id);
+        if(arn.registeredPan && arn.renewalDate) {
+          const loginDate = new Date(arn.renewalDate).getDate() + ('0' + new Date(arn.renewalDate).getMonth() + 1).slice(-2);
+          this.karvyFG.controls.loginPassword.setValue(arn.registeredPan.slice(0,4) + loginDate);
+        }
+      })
+    )
   }
 
   createForm() {

@@ -88,7 +88,7 @@
             </div>
         </div>
     </div>
-    <app-add-holder-names *ngIf="bankList" [holderListInput]="bankList.holderNameList"
+    <app-add-holder-names *ngIf="bankList" [clientName]="clientName" [holderListInput]="bankList.holderNameList"
         (holderList)="getHolderList($event)">
     </app-add-holder-names>
     <div class="row pt-28">

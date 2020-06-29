@@ -1,7 +1,7 @@
 <div class="row borderBottom p-10">
 
     <div class="col-md-1 d-flex align-items-center pl-2 pr-0">
-        <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+        <mat-checkbox [disabled]="isLoading" (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
 
             <i [matMenuTriggerFor]="menu1" class="material-icons">
                 arrow_drop_down
@@ -21,7 +21,8 @@
 
     <div class="col-md-3 p-0">
         <div class="pt-8">
-            <img src="/assets/images/svg/refresh.svg" class="mr-20 c-p" matTooltip="Refresh" (click)="initPoint()">
+            <img [ngClass]="isLoading? 'd-none': ''" src="/assets/images/svg/refresh.svg" class="mr-20 c-p" matTooltip="Refresh" (click)="initPoint()">
+
             <img src="/assets/images/svg/double-drawer.svg" class="mr-20 c-p" matTooltip="Archive" *ngIf="showOptions">
             <img src="/assets/images/svg/delete.svg" (click)="multipleMoveToTrash()" *ngIf="showOptions" class="mr-20 c-p" matTooltip="Move to Trash">
             <mat-icon *ngIf="showOptions" [matMenuTriggerFor]="menu" class="c-p pab">more_vert</mat-icon>
@@ -67,6 +68,9 @@
 
 
         <div *ngIf="isLoading == false">
+            <div *ngIf="location === 'trash'" class="text-primitive p-5 bb text-center">
+                Messages that have been in Trash more than 30 days will be automatically deleted.
+            </div>
             <table mat-table *ngIf="dataSource" id="table-low" [dataSource]="dataSource" class=" ">
                 <!-- Checkbox Column -->
                 <ng-container matColumnDef="select">

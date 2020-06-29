@@ -188,7 +188,7 @@ export class TermsAgreementComponent implements OnInit {
       }
     }
     const dialogRef = this.dialog.open(DocumentPreviewComponent, {
-      width: '1800px',
+      width: '65vw',
       height: '900px',
       data: obj,
     });

@@ -16,14 +16,14 @@ export class AddHolderNamesComponent implements OnInit {
   holderNamesForm;
   validatorType = ValidatorType;
   @Output() holderList = new EventEmitter;
-
+  @Input() clientName;
   @Input() set holderListInput(data) {
     console.log(data);
     this.holderNamesForm = this.fb.group({
       holderNameList: new FormArray([])
     });
     if (data == undefined || data.length == 0) {
-      data = {};
+      data = { name: this.clientName };
       this.addHolders(data);
       this.holderListResponse = data;
       return;
