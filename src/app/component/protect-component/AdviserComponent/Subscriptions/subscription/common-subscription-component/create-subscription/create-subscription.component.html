@@ -34,9 +34,7 @@
                                 <input matInput class="form-control br-0" formControlName="subscription"
                                     placeholder="SUB-0001" type="text">
                             </div>
-                            <mat-error
-                                [ngClass]="{'v-h':subscriptionDetails.get('subscription').untouched || subscriptionDetails.get('subscription').valid}"
-                                class="f-12">Subscription code is required
+                            <mat-error class="f-12">Subscription code is required
                             </mat-error>
                         </mat-form-field>
                     </div>
@@ -87,13 +85,12 @@
                             <div class="form-group mb-0">
                                 <mat-select class="form-control br-0" formControlName="feeCollectionMode" id="Category"
                                     id="sel1">
+                                    <mat-option value='' disabled>Select option</mat-option>
                                     <mat-option *ngFor="let feeMode of feeCollectionMode" value="{{feeMode.value}}">
                                         {{feeMode.name}}</mat-option>
                                 </mat-select>
                             </div>
-                            <mat-error
-                                [ngClass]="{'v-h':subscriptionDetails.get('feeCollectionMode').untouched || subscriptionDetails.get('feeCollectionMode').valid}"
-                                class="f-12 ">Fee mode is required
+                            <mat-error class="f-12 ">This field is required
                             </mat-error>
                         </mat-form-field>
                     </div>
@@ -106,15 +103,14 @@
                         <mat-form-field>
                             <div class="form-group mb-0">
                                 <mat-select class="form-control br-0" formControlName="dueDateFrequency" id="sel1">
+                                    <mat-option value='' disabled>Select option</mat-option>
                                     <mat-option value="5">After 5 Days</mat-option>
                                     <mat-option value="10">After 10 Days</mat-option>
                                     <mat-option value="15">After 15 Days</mat-option>
 
                                 </mat-select>
                             </div>
-                            <mat-error
-                                [ngClass]="{'v-h':subscriptionDetails.get('dueDateFrequency').untouched || subscriptionDetails.get('dueDateFrequency').valid}"
-                                class="f-12"> Due date is required
+                            <mat-error class="f-12"> This field is required
                             </mat-error>
                         </mat-form-field>
                     </div>
@@ -126,15 +122,14 @@
                         <h5 (click)="Close(false)" class="mb-0 pt-8 text-white c-p">Cancel</h5>
                     </div>
                     <div class="col-md-8 right text-right">
-                        <button (click)="goBack()" *ngIf="subscriptionDetails.valid"
-                            class="btn-default mr-12 br-0 text-inherit" mat-raised-button>PREVIOUS
+                        <button (click)="goBack()" class="btn-default mr-12 br-0 text-inherit"
+                            mat-raised-button>PREVIOUS
                         </button>
-                        <button (click)="goForward()" *ngIf="subscriptionDetails.valid"
-                            class="btn-bottom br-0 text-inherit" mat-button>NEXT
+                        <button (click)="goForward()" class="btn-bottom br-0 text-inherit" mat-button>NEXT
                         </button>
-                        <button (click)="goForward()" *ngIf="subscriptionDetails.invalid"
+                        <!-- <button (click)="goForward()" *ngIf="subscriptionDetails.invalid"
                             [disabled]="subscriptionDetails.invalid" class="btn-bottom br-0 text-inherit" disabled>NEXT
-                        </button>
+                        </button> -->
                     </div>
                 </div>
             </div>
@@ -205,8 +200,8 @@
                         <h5 (click)="Close(false)" class="mb-0 pt-8 text-white c-p">Cancel</h5>
                     </div>
                     <div class="col-md-8 right text-right">
-                        <button (click)="goBack()" *ngIf="subscriptionDetails.valid"
-                            class="btn-default mr-12 br-0 text-inherit" mat-raised-button>PREVIOUS
+                        <button (click)="goBack()" class="btn-default mr-12 br-0 text-inherit"
+                            mat-raised-button>PREVIOUS
                         </button>
                         <button (click)="goForward()" class="btn-bottom br-0 text-inherit" mat-button>
                             NEXT
