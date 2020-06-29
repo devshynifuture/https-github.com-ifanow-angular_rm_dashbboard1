@@ -70,7 +70,7 @@ export class PreferencesComponent implements OnInit {
       advisorId: [this.data.remainingData.advisorId],
       equityAllocation: ['', [Validators.required]],
       debtAllocation: ['', [Validators.required]],
-      straticOrTactical: [this.data.remainingData.strategicOrTactical, [Validators.required]],
+      strategicOrTactical: [this.data.remainingData.strategicOrTactical, [Validators.required]],
       staticOrProgressive: [this.data.remainingData.staticOrProgressive, [Validators.required]],
       goalId: [this.data.remainingData.id],
       goalType: [this.data.goalType],
@@ -110,6 +110,10 @@ export class PreferencesComponent implements OnInit {
     }
     const remainingData = this.data.remainingData;
     let obj = this.assetAllocationFG.value;
+    obj.equityAllocation = parseInt(obj.equityAllocation);
+    obj.debtAllocation = parseInt(obj.debtAllocation);
+    obj.strategicOrTactical = parseInt(obj.strategicOrTactical);
+    obj.staticOrProgressive = parseInt(obj.staticOrProgressive);
     console.log(obj)
     this.planService.saveAssetPreference(obj).subscribe(res => {
       this.eventService.openSnackBar("Asset allocation preference saved", "Dismiss");
