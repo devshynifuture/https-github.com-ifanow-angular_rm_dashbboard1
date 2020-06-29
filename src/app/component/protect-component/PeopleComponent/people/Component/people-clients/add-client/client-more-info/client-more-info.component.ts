@@ -79,7 +79,7 @@ export class ClientMoreInfoComponent implements OnInit {
         return;
       } else {
         this.occupationList = [
-          {name: 'Goverment', value: 1},
+          {name: 'Government', value: 1},
           {name: 'Service', value: 2},
           {name: 'Private sector', value: 3},
           {name: 'Business', value: 4},
