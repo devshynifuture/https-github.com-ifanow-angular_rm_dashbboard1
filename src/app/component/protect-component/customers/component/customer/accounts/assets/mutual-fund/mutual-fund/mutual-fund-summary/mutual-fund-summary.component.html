@@ -399,7 +399,7 @@
                 <img width="250px" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
             </td>
             <td style="text-align: left;" colspan="3"
-                *ngIf="getOrgData && getOrgData.reportLogoUrl =='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
+                *ngIf="getOrgData && getOrgData.reportLogoUrl =='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl ==null">
                 <img width="250px" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
             </td>
             <td style=" text-align: right;" colspan="8">
