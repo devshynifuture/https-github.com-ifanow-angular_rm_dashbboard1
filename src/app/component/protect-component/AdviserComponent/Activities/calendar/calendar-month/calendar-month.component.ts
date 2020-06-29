@@ -37,6 +37,7 @@ export class CalendarMonthComponent implements OnInit {
   currentYear: any;
   excessAllow: any;
   private unSubcrip: Subscription;
+  back:boolean = false;
   constructor(public dialog: MatDialog, private calenderService: calendarService, private datePipe: DatePipe) { }
 
   ngOnInit() {
@@ -50,15 +51,23 @@ export class CalendarMonthComponent implements OnInit {
     // this.excessAllow = localStorage.getItem('successStoringToken')
     this.unSubcrip = this.calenderService.updateDayArr().subscribe((data: any) => {
       this.daysArr = data[0];
-      this.dayCount = 0;
+      this.back = data[1].back;
+      this.sun = [];
+      this.mon = [];
+      this.tue = [];
+      this.wed = [];
+      this.thu = [];
+      this.fri = [];
+      this.sat = [];
       this.month = data[1].month;
       this.year = data[1].year;
+      this.addDaysOfMomth();
       this.numbersOfDays = data[1].numbersOfDays;
       this.lastMonthDays = data[1].lastMonthDays;
       this.nextMonthDays = data[1].nextMonthDays;
       this.viewDate = data[1].nextMonthDays;
       this.addLastMonthDays = data[1].addLastMonthDays;
-      console.log(this.daysArr, "this.daysArr....");
+      console.log(this.daysArr,  this.month, "this.daysArr....");
     });
 
   }
@@ -137,115 +146,74 @@ export class CalendarMonthComponent implements OnInit {
 
 
   }
-
+ sun:any = [];
+ mon:any = [];
+ tue:any = [];
+ wed:any = [];
+ thu:any = [];
+ fri:any = [];
+ sat:any = [];
+ addDaysOfMomth(){
+   let d:any;
+   let m;
+  for(let i = 1; i < this.numbersOfDays; i++){
+    // if(this.back){
+    //   m = this.month == 0?11:this.month-1;
+    // }
+    // else{
+    //   m = this.month == 0?1:this.month;
+    // }
+    d = new Date(this.year,this.month,i);
+    switch (d.getDay()) {
+      case 0:
+        this.sun.push(d);
+        break;
+      case 1:
+        this.mon.push(d);
+        break;
+      case 2:
+        this.tue.push(d);
+        break;
+      case 3:
+        this.wed.push(d);
+        break;
+      case 4:
+        this.thu.push(d);
+        break;
+      case 5:
+        this.fri.push(d);
+        break;
+      case 6:
+        this.sat.push(d);
+        break;
+    }
+  }
+ }
   validateMonthDays(eDays, cDate, startDate, interval) {
     if (eDays) {
       let d = new Date(cDate);
-      // let getTot = this.getDaysCount(this.month, this.year, "currentMonthDays"); //Get total days in a month
-      // let dayCount: number = 0;
-      let dayNum = eDays.charAt(0);
+      let dayNum =parseInt(eDays.charAt(0));
       let monthDay = eDays.charAt(1) + eDays.charAt(2);
-
-      // for (let i = 1; i <= getTot; i++) {    //looping through days in month
-      // let newDate = new Date(d.getFullYear(), d.getMonth(), i)
-      switch (monthDay) {
-        case "SU":
-          if (d.getDay() == 0) {   //if Sunday
-            this.dayCount += 1
-            if (this.dayCount == dayNum) {
-              return false;
-            }
-            else {
-              return true;
-            }
-          }
-          else {
-            return true;
-          }
-        case "MO":
-          if (d.getDay() == 1) {   //if Sunday
-            this.dayCount += 1
-            if (this.dayCount == dayNum) {
-              return false;
-            }
-            else {
-              return true;
-            }
-          }
-          else {
-            return true;
-          }
-        case "TU":
-          if (d.getDay() == 2) {   //if Sunday
-            this.dayCount += 1
-            if (this.dayCount == dayNum) {
-              return false;
-            }
-            else {
-              return true;
-            }
-          }
-          else {
-            return true;
-          }
-        case "WE":
-          if (d.getDay() == 3) {   //if Sunday
-            this.dayCount += 1
-            if (this.dayCount == dayNum) {
-              return false;
-            }
-            else {
-              return true;
-            }
-          }
-          else {
-            return true;
-          }
-        case "TH":
-          if (d.getDay() == 4) {   //if Sunday
-            this.dayCount += 1
-            if (this.dayCount == dayNum) {
-              return false;
-            }
-            else {
-              return true;
-            }
-          }
-          else {
-            return true;
-          }
-        case "FR":
-          if (d.getDay() == 5) {   //if Sunday
-            this.dayCount += 1
-            if (this.dayCount == dayNum) {
-              return false;
-            }
-            else {
-              return true;
-            }
-          }
-          else {
-            return true;
-          }
-        case "SA":
-          if (d.getDay() == 6) {   //if Sunday
-            this.dayCount += 1
-            if (this.dayCount == dayNum) {
-              return false;
-            }
-            else {
-              return true;
-            }
-          }
-          else {
-            return true;
-          }
-
-      }
-      // }
+    
+        switch (monthDay) {
+          case "SU":
+            return new Date(this.sun[dayNum - 1]).getTime() == new Date(d).getTime()? false : true;
+          case "MO":
+            return new Date(this.mon[dayNum - 1]).getTime() == new Date(d).getTime()? false : true;
+          case "TU":
+            return new Date(this.tue[dayNum - 1]).getTime() == new Date(d).getTime()? false : true;
+          case "WE":
+            return new Date(this.wed[dayNum - 1]).getTime() == new Date(d).getTime()? false : true;
+          case "TH":
+            return new Date(this.thu[dayNum - 1]).getTime() == new Date(d).getTime()? false : true;
+          case "FR":
+            return new Date(this.fri[dayNum - 1]).getTime() == new Date(d).getTime()? false : true;
+          case "SA":
+            return new Date(this.sat[dayNum - 1]).getTime() == new Date(d).getTime()? false : true;
+        }
     }
     else {
-      if (this.formateDate(cDate) == startDate) {
+      if (this.formateDate(cDate) == this.formateDate(startDate)) {
         return false;
       }
       else {

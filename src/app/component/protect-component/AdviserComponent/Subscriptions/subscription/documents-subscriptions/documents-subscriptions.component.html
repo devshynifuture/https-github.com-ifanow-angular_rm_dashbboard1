@@ -117,7 +117,10 @@
                     aria-label="Button that displays a tooltip when focused or hovered over"> Client sign...
                 </th>
                 <td *matCellDef="let element" mat-cell>
-                    <div class="bar"> {{element.signedDate | date:'dd/MM/yyyy'}} </div>
+                    <div class="bar">
+                        <span *ngIf="element.signedDate">{{element.signedDate  | date:'dd/MM/yyyy'}}</span>
+                        <span *ngIf="element.signedDate==undefined && !isLoading">N/A</span>
+                    </div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="status">

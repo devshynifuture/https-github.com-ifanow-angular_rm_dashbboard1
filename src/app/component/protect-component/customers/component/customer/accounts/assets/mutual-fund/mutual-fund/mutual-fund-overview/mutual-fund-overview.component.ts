@@ -991,12 +991,12 @@ export class MutualFundOverviewComponent implements OnInit {
     const obj = {
       htmlInput: para.innerHTML,
       name: (this.clientData.name)?this.clientData.name:''+'s'+'MF_Overview_Report'+date,
-      landscape: true,
+      landscape: false,
       key: 'showPieChart',
       clientId: this.clientId,
       advisorId: this.advisorId,
       fromEmail: 'devshyni@futurewise.co.in',
-      toEmail: 'abhishek@futurewise.co.in',
+      toEmail: 'devshyni@futurewise.co.in',
       svg: this.svg
     };
     this.UtilService.bulkHtmlToPdf(obj);

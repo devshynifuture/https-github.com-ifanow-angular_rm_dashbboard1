@@ -931,7 +931,7 @@ export class MutualFundSummaryComponent implements OnInit {
         clientId : this.clientId,
         advisorId : this.advisorId,
         fromEmail: 'devshyni@futurewise.co.in',
-        toEmail: 'abhishek@futurewise.co.in'
+        toEmail: 'devshyni@futurewise.co.in'
       }
      let response = this.utilService.bulkHtmlToPdf(obj)
      console.log('********',response)

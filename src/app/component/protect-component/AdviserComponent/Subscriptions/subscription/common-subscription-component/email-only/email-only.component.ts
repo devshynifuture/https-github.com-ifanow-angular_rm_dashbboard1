@@ -4,14 +4,15 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { SubscriptionInject } from '../../../subscription-inject.service';
 import { SubscriptionService } from '../../../subscription.service';
 import { AuthService } from '../../../../../../../auth-service/authService';
-import { ValidatorType } from '../../../../../../../services/util.service';
-import { MatChipInputEvent } from '@angular/material';
+import { ValidatorType, UtilService } from '../../../../../../../services/util.service';
+import { MatChipInputEvent, MatDialog } from '@angular/material';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { OrgSettingServiceService } from '../../../../setting/org-setting-service.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { element } from 'protractor';
 import { DatePipe } from '@angular/common';
+import { DocumentPreviewComponent } from '../document-preview/document-preview.component';
 
 @Component({
   selector: 'app-email-only',
@@ -80,7 +81,8 @@ export class EmailOnlyComponent implements OnInit {
         if (element) {
           const obj1 = {
             id: element.id,
-            documentName: element.invoiceNumber
+            documentName: element.invoiceNumber,
+            documentText: element.documentText
           };
           obj.push(obj1);
         }
@@ -90,7 +92,9 @@ export class EmailOnlyComponent implements OnInit {
         if (element) {
           const obj1 = {
             id: element.id,
-            documentName: element.documentName
+            documentName: element.documentName,
+            documentText: element.documentText
+
           };
           obj.push(obj1);
         }
@@ -141,7 +145,8 @@ export class EmailOnlyComponent implements OnInit {
 
   constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
     public subscription: SubscriptionService, private orgSetting: OrgSettingServiceService,
-    private fb: FormBuilder, private peopleService: PeopleService, private datePipe: DatePipe) {
+    private fb: FormBuilder, private peopleService: PeopleService, private datePipe: DatePipe
+    , public dialog: MatDialog, private utilservice: UtilService) {
     this.advisorId = AuthService.getAdvisorId();
     this.userId = AuthService.getUserId()
   }
@@ -466,6 +471,25 @@ export class EmailOnlyComponent implements OnInit {
 
   remove(singleEmail): void {
     this.docObj.splice(singleEmail, 1);
+  }
+
+  previewDocument(data) {
+    let obj =
+    {
+      data: data.documentText,
+      cancelButton: () => {
+        this.utilservice.htmlToPdf(data.documentText, 'document', '');
+        dialogRef.close();
+      }
+    }
+    const dialogRef = this.dialog.open(DocumentPreviewComponent, {
+      width: '65vw',
+      height: '900px',
+      data: obj,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+    });
 
   }
 }
