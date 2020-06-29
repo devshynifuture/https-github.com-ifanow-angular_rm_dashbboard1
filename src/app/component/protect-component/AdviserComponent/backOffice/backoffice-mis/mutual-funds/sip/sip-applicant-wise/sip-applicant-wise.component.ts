@@ -211,7 +211,7 @@ export class SipApplicantWiseComponent implements OnInit {
     }
   }
   clientWiseExcelSheet(index) {
-    ExcelMisSipService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, this.arrayOfExcelData, 'Client wise MIS Report', 'client-wise-aum-mis', {
+    ExcelMisSipService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, this.arrayOfExcelData, 'MIS Report - Applicant wise SIP', 'client-wise-aum-mis', {
       clientList: false,
       investorList: false,
       schemeList: false,
@@ -267,7 +267,7 @@ export class SipApplicantWiseComponent implements OnInit {
       });
     });
 
-    ExcelMisSipService.exportExcel(this.arrayOfHeaderStyles[1], this.arrayOfHeaders[1], newarr, [], 'Applicant wise mis SIP report', this.applicantTotalArr);
+    ExcelMisSipService.exportExcel(this.arrayOfHeaderStyles[1], this.arrayOfHeaders[1], newarr, [], 'MIS - Report Applicant wise SIP', this.applicantTotalArr);
     // ExcelMisService.exportExcel(this.arrayOfHeaderStyles[3], this.arrayOfHeaders[3], newarr, [], 'Scheme Folio Wise', this.scheme2WiseTotal);
   }
   excelInitClientList() {
