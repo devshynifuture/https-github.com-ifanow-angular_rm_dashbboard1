@@ -174,8 +174,7 @@
                 <div class="col-md-3">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput autocomplete="off" formControlName="scssNumber" appInputValueValidation
-                                [inputValidator]="validatorType.NUMBER_ONLY" #amountInvest type="text" maxlength="20"
+                            <input matInput autocomplete="off" formControlName="scssNumber"  #amountInvest type="text" maxlength="20"
                                 class="form-control br-0 rupess">
                             <mat-error *ngIf="scssSchemeForm.get('amtInvested').errors?.required" class="f-12">
                                 This field is required
