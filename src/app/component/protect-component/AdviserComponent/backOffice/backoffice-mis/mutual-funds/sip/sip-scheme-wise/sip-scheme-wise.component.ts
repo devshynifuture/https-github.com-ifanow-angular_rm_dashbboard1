@@ -478,7 +478,7 @@ export class SipSchemeWiseComponent implements OnInit {
   }
 
   schemeWiseExcelReport(index) {
-    ExcelMisSipService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, this.arrayOfExcelData, 'Category wise MIS Report SIP', 'category-wise-aum-mis', {
+    ExcelMisSipService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, this.arrayOfExcelData, 'MIS Report - Scheme wise SIP', 'category-wise-aum-mis', {
       clientList: false,
       subCatList: false,
       schemeList: false
@@ -494,7 +494,7 @@ export class SipSchemeWiseComponent implements OnInit {
       }
     });
 
-    ExcelMisSipService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'Category wise MIS Report SIP', 'category-wise-aum-mis', {
+    ExcelMisSipService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'MIS Report - Scheme wise SIP', 'category-wise-aum-mis', {
       clientList: true,
       subCatList: false,
       schemeList: false
@@ -519,7 +519,7 @@ export class SipSchemeWiseComponent implements OnInit {
       });
     });
 
-    ExcelMisSipService.exportExcel(this.arrayOfHeaderStyles[2], this.arrayOfHeaders[2], newarr, [], 'Category wise MIS Report SIP', this.schemeTotalList);
+    ExcelMisSipService.exportExcel(this.arrayOfHeaderStyles[2], this.arrayOfHeaders[2], newarr, [], 'MIS Report - Scheme wise SIP', this.schemeTotalList);
     // ExcelMisSipService.exportExcel(this.arrayOfHeaderStyles[3], this.arrayOfHeaders[3], newarr, [], 'AMC wise MIS report', this.applicantWiseTotal);
   }
 }

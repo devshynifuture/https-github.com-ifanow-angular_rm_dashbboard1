@@ -30,7 +30,7 @@
                 <mat-select formControlName="type" class="form-control br-0">
                     <!-- <mat-option value="1">Deposit</mat-option>
                         <mat-option value="2">Withdrawal</mat-option> -->
-                    <mat-option *ngFor="let singleOption of transactionViewData.optionList" [value]="singleOption.value">
+                    <mat-option *ngFor="let singleOption of transactionViewData.optionList" (click)="setMax(singleOption.value,i)" [value]="singleOption.value">
                         {{singleOption.name}}</mat-option>
                 </mat-select>
                 <mat-error>

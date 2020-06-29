@@ -1,10 +1,10 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {BackOfficeService} from '../../../../back-office.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {AumComponent} from '../aum.component';
-import {AuthService} from 'src/app/auth-service/authService';
-import {ExcelMisService} from '../excel-mis.service';
-import {MfServiceService} from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { BackOfficeService } from '../../../../back-office.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AumComponent } from '../aum.component';
+import { AuthService } from 'src/app/auth-service/authService';
+import { ExcelMisService } from '../excel-mis.service';
+import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
 
 @Component({
   selector: 'app-category-wise',
@@ -429,7 +429,7 @@ export class CategoryWiseComponent implements OnInit {
   }
 
   categoryWiseExcelSheet() {
-    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, this.arrayOfExcelData, 'Category wise MIS Report', 'category-wise-aum-mis', {
+    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, this.arrayOfExcelData, 'MIS Report - Category wise AUM', 'category-wise-aum-mis', {
       categoryList: false,
       subCatList: false,
       schemeList: false,
@@ -450,7 +450,7 @@ export class CategoryWiseComponent implements OnInit {
       }
     });
 
-    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'Category wise MIS Report', 'category-wise-aum-mis', {
+    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'MIS Report - Category wise AUM', 'category-wise-aum-mis', {
       categoryList: true,
       subCatList: false,
       schemeList: false,
@@ -470,7 +470,7 @@ export class CategoryWiseComponent implements OnInit {
         field5: element.weightInPerc,
       });
     })
-    ExcelMisService.exportExcel(this.arrayOfHeaderStyles[3], this.arrayOfHeaders[3], newarr, [], 'Applicant Wise MIS Report', this.applicantWiseTotalArr);
+    ExcelMisService.exportExcel(this.arrayOfHeaderStyles[3], this.arrayOfHeaders[3], newarr, [], 'MIS Report - Category Wise AUM', this.applicantWiseTotalArr);
   }
 
   schemeWiseExcelSheet(index) {
@@ -487,7 +487,7 @@ export class CategoryWiseComponent implements OnInit {
         }
       }
     });
-    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'Category wise MIS Report', 'category-wise-aum-mis', {
+    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'MIS Report - Category wise AUM', 'category-wise-aum-mis', {
       categoryList: true,
       subCatList: true,
       schemeList: false,

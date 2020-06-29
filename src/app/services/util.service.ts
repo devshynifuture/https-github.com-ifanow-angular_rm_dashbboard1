@@ -557,6 +557,7 @@ export class ValidatorType {
 
   // static NUMBER_ONLY = new RegExp(/^\d{1,6}(\.\d{1,2})?$/);
   static NUMBER_ONLY = new RegExp(/^\d+(\.\d{0,4})?$/);
+  static NUMBER_SEPCIALCHAR = new RegExp(/^[0-9*#_@$/+-]+$/);
   static NUMBER_ONLY_WITH_FOUR_DECIMAL = new RegExp(/^[0-9]+(\.{1}[0-9]{1,4})?$/);
   static NUMBER_ONLY_WITH_FORWARD_SLASH = new RegExp(/^[0-9\.\-\/]+$/);
   static NUMBER_ONLY_WITHOUT_DOT = new RegExp(/^\d+(\\d{0,4})?$/);

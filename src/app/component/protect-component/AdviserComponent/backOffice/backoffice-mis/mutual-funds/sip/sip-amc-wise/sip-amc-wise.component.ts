@@ -589,7 +589,7 @@ export class SipAmcWiseComponent implements OnInit {
 
   }
   amcWiseExcelReport() {
-    ExcelMisSipService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, this.arrayOfExcelData, 'AMC wise MIS report', 'amc-wise-aum-mis', {
+    ExcelMisSipService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, this.arrayOfExcelData, 'MIS report - AMC wise SIP', 'amc-wise-aum-mis', {
       amcList: false,
       schemeList: false,
       investorList: false,
@@ -606,7 +606,7 @@ export class SipAmcWiseComponent implements OnInit {
         element.schemeList = [];
       }
     });
-    ExcelMisSipService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'AMC wise MIS report', 'amc-wise-aum-mis', {
+    ExcelMisSipService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'MIS report - AMC wise SIP', 'amc-wise-aum-mis', {
       amcList: true,
       schemeList: false,
       investorList: false,
@@ -627,7 +627,7 @@ export class SipAmcWiseComponent implements OnInit {
       }
     });
 
-    ExcelMisSipService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'AMC wise MIS report', 'amc-wise-aum-mis', {
+    ExcelMisSipService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'MIS report - AMC wise SIP', 'amc-wise-aum-mis', {
       amcList: true,
       schemeList: true,
       investorList: false,
@@ -658,7 +658,7 @@ export class SipAmcWiseComponent implements OnInit {
       sumWeightInPercTotal += element.weightInPerc;
     });
     this.applicantWiseTotal = ['', '', '', '', '', '', '', '', 'Total', sumSipAmtTotal, sumWeightInPercTotal];
-    ExcelMisSipService.exportExcel(this.arrayOfHeaderStyles[3], this.arrayOfHeaders[3], newarr, [], 'AMC wise MIS report', this.applicantWiseTotal);
+    ExcelMisSipService.exportExcel(this.arrayOfHeaderStyles[3], this.arrayOfHeaders[3], newarr, [], 'MIS report - AMC wise SIP', this.applicantWiseTotal);
     // ExcelMisService.exportExcel(this.arrayOfHeaderStyles[3], this.arrayOfHeaders[3], newarr, [], 'Applicant Wise MIS Report', this.applicantWiseTotalArr);
   }
 }
