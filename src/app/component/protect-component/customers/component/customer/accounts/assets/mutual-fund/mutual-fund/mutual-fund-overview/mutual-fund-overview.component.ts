@@ -991,7 +991,7 @@ export class MutualFundOverviewComponent implements OnInit {
     const obj = {
       htmlInput: para.innerHTML,
       name: (this.clientData.name)?this.clientData.name:''+'s'+'MF_Overview_Report'+date,
-      landscape: true,
+      landscape: false,
       key: 'showPieChart',
       clientId: this.clientId,
       advisorId: this.advisorId,

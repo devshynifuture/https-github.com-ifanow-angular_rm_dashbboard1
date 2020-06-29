@@ -208,7 +208,8 @@ export class ClientUpperSubscriptionComponent implements OnInit {
     } else if (data.length > 0) {
       for (const d of data) {
         d['feeTypeId'] = d.subscriptionPricing.feeTypeId;
-        d['pricing'] = d.subscriptionPricing.subscriptionAssetPricingList[0].pricing
+        d['pricing'] = (d.subscriptionPricing.feeTypeId == 1) ? d.subscriptionPricing.subscriptionAssetPricingList[0].pricing : '';
+        // d['pricing'] = d.subscriptionPricing.subscriptionAssetPricingList[0].pricing
         if (d.subscriptionPricing.feeTypeId == 1) {
           d.serviceTypeName = 'FIXED';
         } else {

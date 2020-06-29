@@ -135,8 +135,11 @@
                     WITH
                     ESIGN</button>
             </mat-menu>
-            <button *ngIf="saveQuotationFlag" mat-button class="btn-bottom br-0 text-inherit pr-4 pl-4"
-                (click)="createQuotation()">SAVE</button>
+            <!-- <button *ngIf="saveQuotationFlag" mat-button class="btn-bottom br-0 text-inherit pr-4 pl-4"
+                (click)="createQuotation()">SAVE</button> -->
+            <app-progress-button *ngIf="saveQuotationFlag" (btnClick)="createQuotation()"
+                class="br-0 text-inherit ml-12" [options]="barButtonOptions">
+            </app-progress-button>
         </div>
     </div>
 </div>
