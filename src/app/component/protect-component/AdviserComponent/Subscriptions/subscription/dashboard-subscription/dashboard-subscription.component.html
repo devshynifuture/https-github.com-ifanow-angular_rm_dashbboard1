@@ -81,7 +81,8 @@
                                             <p class="f-13 mb-12">{{invoice.invoiceNumber}}</p>
                                         </div>
                                         <div class="col-md-4 p-0">
-                                            <p class="f-15 mb-28">₹{{invoice.finalAmount}}</p>
+                                            <p class="f-15 mb-28">₹<span [value]="invoice.finalAmount"
+                                                    appFormatNumber>{{invoice.finalAmount}}</span></p>
                                             <p class="f-13 mb-12">{{invoice.invoiceDate | date:'dd/MM/yyyy'}}</p>
                                         </div>
                                     </div>
