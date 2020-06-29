@@ -91,7 +91,6 @@ export class ClientMoreInfoComponent implements OnInit {
         } else if (this.moreInfoData.clientType == 2) {
           this.moreInfoData.categoryTypeflag = 'familyMinor';
           this.moreInfoData.invCategory = '2';
-
         } else {
           this.moreInfoData.categoryTypeflag = 'clientNonIndividual';
           this.moreInfoData.invCategory = '3';
