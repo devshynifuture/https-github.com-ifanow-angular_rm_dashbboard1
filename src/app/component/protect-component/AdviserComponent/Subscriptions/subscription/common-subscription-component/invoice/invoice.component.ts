@@ -714,6 +714,8 @@ export class InvoiceComponent implements OnInit {
   }
 
   openSendEmail(input) {
+    let para = document.getElementById('template');
+    this.storeData['documentText'] = para.innerHTML;
     const data = {
       showfromEmail: false,
       advisorId: this.advisorId,
