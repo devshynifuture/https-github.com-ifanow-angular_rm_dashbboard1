@@ -124,9 +124,13 @@
                 </tr>
             </table>
         </div>
-        <div class="text-center" *ngIf="isLoading == true">
-            <mat-spinner class="loader" [diameter]="30"></mat-spinner>
+
+        <div class="row" *ngIf="isLoading == true">
+            <div class="col-md-12 d-flex align-items-center">
+                <mat-spinner class="loader" [diameter]="30"></mat-spinner>
+            </div>
         </div>
+
 
     </div>
 </div>

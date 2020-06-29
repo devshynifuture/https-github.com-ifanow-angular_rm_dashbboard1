@@ -3,28 +3,19 @@
 <!-- <button mat-button (click)="openComposeEmail(null)">Compose</button> -->
 <!-- <button mat-raised-button (click)="openBottomSheet()">Reply</button> -->
 
+<div class="row">
+    <div class="col-md-4 d-flex align-items-center">
+        <img class="c-p" (click)="goBack()" src="/assets/images/svg/left-arrows.svg">
+        <img src="/assets/images/svg/refresh.svg" class="mr-20 c-p">
+        <img src="/assets/images/svg/double-drawer.svg" class="mr-20 c-p">
+        <img src="/assets/images/svg/delete.svg" class="mr-20 c-p">
+    </div>
+</div>
 
 <div class="chatBox">
-    <div class="row">
-        <div class="col-md-12">
 
 
-            <img class="c-p" (click)="goBack()" src="/assets/images/svg/left-arrows.svg">
-
-            <img src="/assets/images/svg/refresh.svg" class="mr-20 c-p">
-
-            <img src="/assets/images/svg/double-drawer.svg" class="mr-20 c-p">
-
-            <img src="/assets/images/svg/delete.svg" class="mr-20 c-p">
-
-
-
-        </div>
-
-
-    </div>
-
-    <h2>{{ subject }}</h2>
+    <h4 class="f-14">{{ subject }}</h4>
 
     <!-- <div *ngIf="!isAttachmentBasedEmail">
         <div class="messengerDiv" *ngFor="let part of body; let i=index"> -->
