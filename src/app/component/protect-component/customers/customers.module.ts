@@ -22,6 +22,7 @@ import {AdvisorAndOrganizationInfoService} from './resolvers/advisor-and-organiz
 import {TransactionEntryModule} from '../AdviserComponent/transactions/transaction.entry.module';
 import {SubscriptionEntry} from "../AdviserComponent/Subscriptions/subscription.entry.module";
 import {SubscriptionUpperEntry} from "../AdviserComponent/Subscriptions/subscription-upper-entry-module";
+import { CustomerEmailComponent } from './component/customer/customer-email/customer-email.component';
 
 
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
@@ -30,7 +31,7 @@ import {SubscriptionUpperEntry} from "../AdviserComponent/Subscriptions/subscrip
 
 
 @NgModule({
-  declarations: [CustomerComponent, TransactionSuccessfulComponent],
+  declarations: [CustomerComponent, TransactionSuccessfulComponent, CustomerEmailComponent],
   imports: [
     // BrowserModule,
     CommonModule,
