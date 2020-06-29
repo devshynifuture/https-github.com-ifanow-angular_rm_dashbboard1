@@ -22,7 +22,6 @@
     <div class="col-md-3 p-0">
         <div class="pt-8">
             <img src="/assets/images/svg/refresh.svg" class="mr-20 c-p" matTooltip="Refresh" (click)="initPoint()">
-
             <img src="/assets/images/svg/double-drawer.svg" class="mr-20 c-p" matTooltip="Archive" *ngIf="showOptions">
             <img src="/assets/images/svg/delete.svg" (click)="multipleMoveToTrash()" *ngIf="showOptions" class="mr-20 c-p" matTooltip="Move to Trash">
             <mat-icon *ngIf="showOptions" [matMenuTriggerFor]="menu" class="c-p pab">more_vert</mat-icon>
