@@ -29,11 +29,9 @@ import { FormTestComponent } from './test/form-test/form-test.component';
 import { CustomDirectiveModule } from './common/directives/common-directive.module';
 import { BackofficeDashboardComponent } from './component/protect-component/AdviserComponent/backOffice/backoffice-dashboard/backoffice-dashboard.component';
 import { ScrollDispatchModule } from '@angular/cdk/scrolling';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
-import { HttpCancelService } from './services/http-cancel.service';
-import { ManageHttpInterceptor } from './Interceptor/manage-http.interceptor';
+
 
 @NgModule({
   declarations: [
@@ -89,8 +87,8 @@ import { ManageHttpInterceptor } from './Interceptor/manage-http.interceptor';
     AuthService,
     HttpService,
     DatePipe,
-    HttpCancelService,
-    { provide: HTTP_INTERCEPTORS, useClass: ManageHttpInterceptor, multi: true }
+    // HttpCancelService,
+    // { provide: HTTP_INTERCEPTORS, useClass: ManageHttpInterceptor, multi: true }
   ],
 
   bootstrap: [AppComponent]
