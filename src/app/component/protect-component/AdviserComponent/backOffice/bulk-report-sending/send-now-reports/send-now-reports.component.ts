@@ -70,8 +70,6 @@ export class SendNowReportsComponent implements OnInit {
   proceed() {
     if(this.selectedReportType == "capitalGainSummary" || this.selectedReportType == "capitalGainDetailed"){
       if(this.date.to){
-
-      }else{
         this.date = this.default
       }
     }
@@ -82,8 +80,8 @@ export class SendNowReportsComponent implements OnInit {
       this.date.fromDate.setFullYear(this.date.fromDate.getFullYear() - 1);
       this.date.toDate = new Date();
     }
-    this.date.fromDate=this.datePipe.transform(this.date.fromDate, 'yyyy/MM/dd')
-    this.date.toDate=this.datePipe.transform(this.date.toDate, 'yyyy/MM/dd')
+    this.date.fromDate=this.datePipe.transform(this.date.fromDate, 'yyyy-MM-dd')
+    this.date.toDate=this.datePipe.transform(this.date.toDate, 'yyyy-MM-dd')
     const dialogRef = this.dialog.open(OpenSendReportPopupComponent, {
       width: '400px',
       height: '500px',
