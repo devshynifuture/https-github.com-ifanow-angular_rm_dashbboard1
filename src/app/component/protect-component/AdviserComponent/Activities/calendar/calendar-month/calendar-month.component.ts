@@ -14,7 +14,7 @@ import { threadId } from 'worker_threads';
 })
 export class CalendarMonthComponent implements OnInit {
   viewDate: any;
-  dayCount:number = 0;
+  dayCount: number = 0;
   numbersOfDays: any;
   lastMonthDays: any;
   nextMonthDays: any;
@@ -449,33 +449,33 @@ export class CalendarMonthComponent implements OnInit {
   openDialog(eventData): void {
 
     const dialogRef = this.dialog.open(EventDialog, {
-      width: '50%',
+      width: '600px',
       data: eventData
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result != undefined && result != 'delete') {
         this.dialogData =
-        {
-          "calendarId": AuthService.getUserInfo().userName,
-          "userId": AuthService.getUserInfo().advisorId,
-          "eventId": result.eventId,
-          "summary": result.title,
-          "location": result.location,
-          "description": result.description,
-          "start": {
-            "dateTime": "",
-            "timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
-          },
-          "end": {
-            "dateTime": "",
-            "timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
-          },
-          "recurrence": [
-            "RRULE:FREQ=DAILY;COUNT=2"
-          ],
-          "attendees": result.attendeesList
-        }
+          {
+            "calendarId": AuthService.getUserInfo().userName,
+            "userId": AuthService.getUserInfo().advisorId,
+            "eventId": result.eventId,
+            "summary": result.title,
+            "location": result.location,
+            "description": result.description,
+            "start": {
+              "dateTime": "",
+              "timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
+            },
+            "end": {
+              "dateTime": "",
+              "timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
+            },
+            "recurrence": [
+              "RRULE:FREQ=DAILY;COUNT=2"
+            ],
+            "attendees": result.attendeesList
+          }
 
 
         this.startTime = result.startTime;

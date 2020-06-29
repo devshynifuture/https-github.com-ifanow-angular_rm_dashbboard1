@@ -44,6 +44,7 @@ import { EmailOnlyComponent } from '../email-only/email-only.component';
 import { AuthService } from '../../../../../../../auth-service/authService';
 import { PdfService } from '../../../../../../../services/pdf.service';
 import { SubscriptionDataService } from '../../../subscription-data.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 // import { escapeRegExp } from '';
 
 // import html2canvas from 'html2canvas';
@@ -79,6 +80,22 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
   quotationData: any;
   saveQuotationFlag: any;
   sendEmailFlag: any;
+
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
 
   constructor(public subscription: SubscriptionService, public subInjectService: SubscriptionInject,
     public eventService: EventService, public dialog: MatDialog, private utilService: UtilService,
@@ -408,6 +425,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
   }
 
   createQuotation() {
+    this.barButtonOptions.active = true;
     const obj =
     {
       "planId": this.storeData.planId,
@@ -418,10 +436,12 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
     }
     this.subscription.createQuotation(obj).subscribe(
       data => {
+        this.barButtonOptions.active = false;
         this.eventService.openSnackBar("Quotation added sucessfully", "Dismiss");
         this.Close('close', true)
       },
       err => {
+        this.barButtonOptions.active = false;
         this.eventService.openSnackBar(err, "Dismiss");
       }
     )
