@@ -12,7 +12,7 @@
                         *ngIf="roleObj.advisorOrClientRole == 1">PREFERENCES</a>
                     <a [routerLink]="['/admin/setting/activity']" routerLinkActive="active" mat-tab-link
                         *ngIf="roleObj.advisorOrClientRole == 1">ACTIVITY</a>
-                    <!-- <a class="minWidth70" [routerLink]="['/admin/setting/plan']" routerLinkActive="active" mat-tab-link *ngIf="roleObj.advisorOrClientRole == 1">PLAN</a> -->
+                    <a class="minWidth70" [routerLink]="['/admin/setting/plan']" routerLinkActive="active" mat-tab-link *ngIf="roleObj.advisorOrClientRole == 1">PLAN</a>
                     <a [routerLink]="['/admin/setting/users&roles']" routerLinkActive="active" mat-tab-link
                         *ngIf="roleObj.advisorOrClientRole == 1">USERS & ROLES</a>
                     <a class="minWidth130" [routerLink]="['/admin/setting/backoffice']" routerLinkActive="active"

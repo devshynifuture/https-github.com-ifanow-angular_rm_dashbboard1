@@ -141,11 +141,27 @@ export class PlanService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.CALCULATE_GOAL_EMI, data);
   }
 
+  saveEMIToGoal(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.SAVE_GOAL_EMI, data);
+  }
+
   calculateCostToDelay(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.CALCULATE_GOAL_DELAY, data);
   }
 
   saveCostToDelay(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.SAVE_COST_DELAY_TO_GOAL, data);
+  }
+
+  saveMultiGoalPreference(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_MULTI_YEAR_GOAL_PREFERENCE, data);
+  }
+
+  saveSingleGoalPreference(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_SINGLE_YEAR_GOAL_PREFERENCE, data);
+  }
+
+  saveAssetPreference(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.SAVE_ASSET_ALLOCATION_PREFERENCE, data);
   }
 }
