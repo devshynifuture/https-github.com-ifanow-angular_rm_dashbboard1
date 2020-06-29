@@ -91,7 +91,7 @@ export class EmailListingComponent implements OnInit {
 
     this.totalListSize = this.totalListSize - 50;
     this.currentList = this.maxListRes + 1;
-    this.maxListRes = this.maxListRes + 50;
+    // this.maxListRes = this.maxListRes + 50;
 
     if (this.currentList <= 1) {
       this.showPrevPaginationBtn = false;
@@ -178,7 +178,7 @@ export class EmailListingComponent implements OnInit {
               break;
             case 'DRAFT': this.draftCount = element.threadsTotal;
               break;
-            case 'THRASH': this.trashCount = element.threadsTotal;
+            case 'TRASH': this.trashCount = element.threadsTotal;
               break;
             case 'STARRED': this.starredCount = element.threadsTotal;
               break;
@@ -199,9 +199,14 @@ export class EmailListingComponent implements OnInit {
         }
 
         this.totalListSize = this.paginatorLength;
-        if (this.maxListRes > this.paginatorLength) {
+        if (this.paginatorLength <= 50) {
           this.maxListRes = this.paginatorLength;
+          this.showNextPaginationBtn = false;
+          this.showPrevPaginationBtn = false;
+        } else if (this.paginatorLength > 50) {
+          this.maxListRes = this.maxListRes + 50;
         }
+
         let valueOfNextPagination = this.maxListRes + 50;
         if (valueOfNextPagination >= this.paginatorLength) {
           this.showNextPaginationBtn = false;
@@ -230,17 +235,19 @@ export class EmailListingComponent implements OnInit {
         header: 'DELETE',
         body: 'Are you sure you want to delete the selected mails?',
         body2: 'This cannot be undone.',
-        btnYes: 'DELETE',
-        btnNo: 'CANCEL',
+        btnNo: 'DELETE',
+        btnYes: 'CANCEL',
         positiveMethod: () => {
-          const deleteFromTrashSubscription = this.emailService.deleteThreadsFromTrashForever(ids)
+          this.emailService.deleteThreadsFromTrashForever(ids)
             .subscribe(response => {
-              deleteFromTrashSubscription.unsubscribe();
-              this.ngOnInit();
+              this.selection.clear();
+              dialogRef.close();
+              this.initPoint();
             }, error => console.error(error));
 
         },
         negativeMethod: () => {
+          dialogRef.close();
         }
 
       }
@@ -253,6 +260,7 @@ export class EmailListingComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
 
       });
+
     } else {
       const dialogData = {
         header: 'Warning',
@@ -261,6 +269,7 @@ export class EmailListingComponent implements OnInit {
         // btnYes: '',
         btnNo: 'CANCEL',
         positiveMethod: () => {
+          dialogRef.close()
         },
         negativeMethod: () => {
         }
@@ -353,6 +362,7 @@ export class EmailListingComponent implements OnInit {
   // get List view
   getGmailList(data, page) {
     this.showNextPaginationBtn = false;
+    this.showPrevPaginationBtn = false;
     if (data === 'INBOX') {
       data = 'IMPORTANT';
     }
@@ -437,7 +447,6 @@ export class EmailListingComponent implements OnInit {
 
           // tempArray.push(Obj);
           tempArray1.push(Obj1);
-          console.log("this is what i need", Obj1);
         });
 
 
@@ -445,7 +454,12 @@ export class EmailListingComponent implements OnInit {
         // this.messageDetailArray = tempArray;
 
         this.isLoading = false;
-        this.showNextPaginationBtn = true;
+        if (this.maxListRes < this.paginatorLength) {
+          this.showNextPaginationBtn = true;
+        }
+        if (this.currentList > 50) {
+          this.showPrevPaginationBtn = true;
+        }
         this.dataSource = new MatTableDataSource<MessageListArray>(this.messageListArray);
         this.dataSource.paginator = this.paginator;
 
@@ -524,19 +538,18 @@ export class EmailListingComponent implements OnInit {
     const numSelected = this.selection.selected.length;
     if (this.dataSource) {
       const numRows = this.dataSource.data.length;
-
       return numSelected === numRows;
     }
   }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle(): void {
-    this.showOptions = !this.showOptions;
     if (this.isAllSelected()) {
       this.selection.clear();
       this.selectedThreadsArray = [];
+      this.showOptions = false;
     } else {
-
+      this.showOptions = true;
       this.dataSource.data.forEach(row => {
         this.selection.select(row);
         this.selectedThreadsArray.push(row);
@@ -562,11 +575,15 @@ export class EmailListingComponent implements OnInit {
 
   // ui select highlight
   highlightSelectedRow(row: ExtractedGmailDataI): void {
-    this.showOptions = !this.showOptions;
     if (this.selectedThreadsArray.includes(row)) {
-      let indexOf = this.selectedThreadsArray.indexOf(row);
-      let removedRow = this.selectedThreadsArray.splice(indexOf, 1);
+
+      let index = this.selectedThreadsArray.indexOf(row);
+      this.selectedThreadsArray.splice(index, 1);
+      if (this.selectedThreadsArray.length == 0) {
+        this.showOptions = false;
+      }
     } else {
+      this.showOptions = true;
       this.selectedThreadsArray.push(row);
     }
   }
