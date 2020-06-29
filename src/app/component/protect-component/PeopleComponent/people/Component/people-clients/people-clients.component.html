@@ -120,7 +120,7 @@
                 <tr mat-row *matRowDef=" let row; columns: displayedColumns;"></tr>
             </table>
             <div class="col-md-12 d-flex justify-content-center align-items-center">
-                <mat-spinner [diameter]="30"></mat-spinner>
+                <mat-spinner *ngIf="infiniteScrollingFlag" [diameter]="30"></mat-spinner>
             </div>
         </div>
         <div *ngIf="clientDatasource.data.length==0" class="row pt-32">
