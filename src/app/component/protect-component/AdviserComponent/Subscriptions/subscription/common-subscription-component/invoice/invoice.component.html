@@ -30,7 +30,7 @@
     <div class="row ">
       <div class="col-md-4 p-0 max-height-100">
         <div (click)="passInvoice(strData,i,$event)" *ngFor="let strData of dataInvoices let i=index"
-             [ngClass]="(strData.id==storeData.id)?'bg-grey lter':'b-b'" class="invoiceSpacing b-b c-p">
+          [ngClass]="(strData.id==storeData.id)?'bg-grey lter':'b-b'" class="invoiceSpacing b-b c-p">
           <div class="row">
             <div class="col-md-8 pl-0">
               <p class="m-0 f-15">{{strData.clientName}}</p>
@@ -52,7 +52,7 @@
                 <span *ngIf="strData.status==1" class="text-success t-10 f-500 c-p">PAID</span>
                 <span *ngIf="strData.status==2" class="text-danger t-10 f-500 c-p">OVERDUE</span>
                 <span *ngIf="strData.status==3" class="text-warning t-10 f-500 c-p">PARTIALLY
-                                    PAID</span>
+                  PAID</span>
                 <span *ngIf="strData.status==4" class="text-primary t-10 f-500 c-p">SENT</span>
                 <span *ngIf="strData.status==5" class="text-lighter t-10 f-500 c-p">VOID</span>
                 <span *ngIf="strData.status==6" class="text-balck t-10 f-500 c-p">WRITE OFF</span>
@@ -65,11 +65,11 @@
         <div *ngIf="showRecord==false && feeCalc==false" class="row pt-16">
           <div class="col-md-6 text-custom">
             <img (click)="editInvoice()" *ngIf="storeData.status != 1" class="c-p" matTooltip="Edit"
-                 src="assets/images/svg/pencil.svg">
+              src="assets/images/svg/pencil.svg">
             <img (click)="openSendEmail(null)" class="b-a c-p" matTooltip="Email"
-                 src="assets/images/svg/mail-light.svg">
+              src="assets/images/svg/mail-light.svg">
             <img (click)="generatePdf()" class="b-a c-p" matTooltip="Download PDF"
-                 src="assets/images/svg/pdf-icons.svg">
+              src="assets/images/svg/pdf-icons.svg">
             <!-- <img matTooltip="Print" (click)="printPage(invoiceTemplate)" class="b-a c-p"
                 src="assets/images/svg/printer.svg"> -->
             <!-- <img matTooltip="Delete" (click)="deleteModal('INVOICE',storeData.id)"
@@ -77,14 +77,14 @@
           </div>
           <div [ngClass]="storeData.status !=1? 'col-md-4' : 'col-md-2'" class="right text-right">
             <button (click)="recordPayment()" *ngIf="rpyment==true" class="btn-primary br-0 h-40"
-                    mat-stroked-button>RECORD
+              mat-stroked-button>RECORD
               PAYMENT
             </button>
           </div>
           <div *ngIf="storeData.status!=1" class="col-md-2 right text-right pl-0">
             <mat-form-field>
               <mat-select (selectionChange)="addStatus(storeData,$event)" [(ngModel)]="moreStatus"
-                          class="form-control br-0" id="sel1">
+                class="form-control br-0" id="sel1">
                 <mat-option [value]="''" disabled>More</mat-option>
                 <mat-option [value]="5">Void</mat-option>
                 <mat-option [value]="6">Write off</mat-option>
@@ -93,8 +93,7 @@
           </div>
         </div>
         <div #invoiceTemplate *ngIf="showRecord==false && feeCalc==false"
-             class="b-a m-16 mt-12 pb-28 scrollArrow max-height-100"
-             id="template">
+          class="b-a m-16 mt-12 pb-28 scrollArrow max-height-100" id="template">
           <div class="p-16">
             <div class="row">
               <div class="col-md-8">
@@ -129,7 +128,7 @@
                   <span *ngIf="storeData.status==1" class="text-success t-10 f-500 c-p">PAID</span>
                   <span *ngIf="storeData.status==2" class="text-danger t-10 f-500 c-p">OVERDUE</span>
                   <span *ngIf="storeData.status==3" class="text-warning t-10 f-500 c-p">PARTIALLY
-                                        PAID</span>
+                    PAID</span>
                   <span *ngIf="storeData.status==4" class="text-primary t-10 f-500 c-p">SENT</span>
                   <span *ngIf="storeData.status==5" class="text-lighter t-10 f-500 c-p">VOID</span>
                   <span *ngIf="storeData.status==6" class="text-balck t-10 f-500 c-p">WRITE OFF</span>
@@ -153,11 +152,11 @@
                     <h4 class="m-0 f-14">
                       {{(storeData.services.length > 0) ? storeData.services[0].serviceName : ''}}</h4>
                     <span class="m-0 f-14 text-custom">
-                                            {{(storeData.services.length > 0) ? storeData.services[0].description : ''}}</span>
+                      {{(storeData.services.length > 0) ? storeData.services[0].description : ''}}</span>
                   </div>
                   <div class="col-md-3 d-flex align-items-center justify-content-end">
                     <h4 class="m-0 f-14  text-right">₹<span [value]="storeData.subTotal"
-                                                            appFormatNumber>{{formatter(storeData.subTotal)}}</span>
+                        appFormatNumber>{{formatter(storeData.subTotal)}}</span>
                     </h4>
                   </div>
                 </div>
@@ -177,7 +176,7 @@
                   </div>
                   <div class="col-md-4 pr-8 text-right">
                     <p class="text-black f-400">₹<span [value]="storeData.subTotal"
-                                                       appFormatNumber>{{formatter(storeData.subTotal)}}</span>
+                        appFormatNumber>{{formatter(storeData.subTotal)}}</span>
                     </p>
                   </div>
                 </div>
@@ -187,7 +186,7 @@
                   </div>
                   <div class="col-md-4  text-right">
                     <p class="text-black f-400">₹<span [value]="storeData.discount"
-                                                       appFormatNumber>{{formatter(storeData.discount)}}</span>
+                        appFormatNumber>{{formatter(storeData.discount)}}</span>
                     </p>
                   </div>
                 </div>
@@ -197,8 +196,8 @@
                   </div>
                   <div class="col-md-4 pr-8">
                     <p class="text-right">
-                                            <span appFormatNumber
-                                                  [value]="(storeData.subTotal-storeData.discount)*18/100">₹{{formatter((storeData.subTotal - storeData.discount) * 18 / 100)}}</span>
+                      <span appFormatNumber
+                        [value]="(storeData.subTotal-storeData.discount)*18/100">₹{{formatter((storeData.subTotal - storeData.discount) * 18 / 100)}}</span>
                     </p>
                   </div>
                 </div>
@@ -209,7 +208,7 @@
                   <div class="col-md-4 pr-8">
                     <p class="text-right">
                       ₹<span [value]="(storeData.subTotal-storeData.discount)*9/100"
-                             appFormatNumber>{{formatter((storeData.subTotal - storeData.discount) * 9 / 100)}}</span>
+                        appFormatNumber>{{formatter((storeData.subTotal - storeData.discount) * 9 / 100)}}</span>
                     </p>
                   </div>
                 </div>
@@ -220,7 +219,7 @@
                   <div class="col-md-4 pr-8">
                     <p class="text-right">
                       ₹<span [value]="(storeData.subTotal-storeData.discount)*9/100"
-                             appFormatNumber>{{formatter((storeData.subTotal - storeData.discount) * 9 / 100)}}</span>
+                        appFormatNumber>{{formatter((storeData.subTotal - storeData.discount) * 9 / 100)}}</span>
                     </p>
                   </div>
                 </div>
@@ -228,16 +227,14 @@
                   <div class="col-md-8">
                     <p class="f-500 roboto pt-8">Total</p>
                   </div>
-                  <div *ngIf="storeData.cgst!=0 && storeData.sgst!=0"
-                       class="col-md-4 pr-8 text-right">
+                  <div *ngIf="storeData.cgst!=0 && storeData.sgst!=0" class="col-md-4 pr-8 text-right">
                     <p class="f-500 roboto pt-8">₹<span [value]="storeData.finalAmount"
-                                                        appFormatNumber>{{formatter(storeData.finalAmount)}}</span>
+                        appFormatNumber>{{formatter(storeData.finalAmount)}}</span>
                     </p>
                   </div>
                   <div *ngIf="storeData.igst!=0" class="col-md-4 pr-8 text-right">
                     <p class="f-500 roboto pt-8">
-                      ₹<span [value]="storeData.finalAmount"
-                             appFormatNumber>{{formatter(storeData.finalAmount)}}</span>
+                      ₹<span [value]="storeData.finalAmount" appFormatNumber>{{formatter(storeData.finalAmount)}}</span>
                     </p>
                   </div>
                 </div>
@@ -247,9 +244,8 @@
                   </div>
                   <div class="col-md-4 pr-8">
                     <p class="f-500 roboto pt-8 text-right">
-                      ₹<span [value]="storeData.balanceDue"
-                             appFormatNumber>{{formatter(storeData.balanceDue)}}
-                                            </span></p>
+                      ₹<span [value]="storeData.balanceDue" appFormatNumber>{{formatter(storeData.balanceDue)}}
+                      </span></p>
                   </div>
                 </div>
               </div>
@@ -269,8 +265,7 @@
                   <h5 class="m-0 text-black">Payments recieved</h5>
                 </div>
               </div>
-              <table *ngIf="showPaymentRecive == true" [dataSource]="dataSource" class="" id="table-low"
-                     mat-table>
+              <table *ngIf="showPaymentRecive == true" [dataSource]="dataSource" class="" id="table-low" mat-table>
                 <ng-container matColumnDef="date">
                   <th *matHeaderCellDef mat-header-cell>Date</th>
                   <td *matCellDef="let element" mat-cell> {{element.paymentDate | date:'dd/MM/yyyy'}}
@@ -286,8 +281,7 @@
                 </ng-container>
                 <ng-container matColumnDef="amount">
                   <th *matHeaderCellDef mat-header-cell> Amount(₹)</th>
-                  <td *matCellDef="let element" mat-cell><span
-                    appFormatNumber>{{element.amountReceived}}</span></td>
+                  <td *matCellDef="let element" mat-cell><span appFormatNumber>{{element.amountReceived}}</span></td>
                 </ng-container>
                 <ng-container matColumnDef="icons">
                   <th *matHeaderCellDef class="f-18 t-2" mat-header-cell></th>
@@ -308,8 +302,7 @@
         </div>
         <!--record payment div start-->
         <div *ngIf="showRecord==true">
-          <app-record-payment (outputData)='display($event)' [InvRecordData]="sendRecordPaymentData"
-                              [padding]="false">
+          <app-record-payment (outputData)='display($event)' [InvRecordData]="sendRecordPaymentData" [padding]="false">
           </app-record-payment>
         </div>
         <!--Fee calculation Div start-->
@@ -334,27 +327,27 @@
   </div>
   <div *ngIf="showRecord==false && feeCalc==false" class="row pt-72">
     <div class="col-md-6 text-custom ">
-      <img (click)="editInvoice()" *ngIf="storeData.isAdvisor && storeData.status != 1" class="c-p"
-           matTooltip="Edit" src="assets/images/svg/pencil.svg">
+      <img (click)="editInvoice()" *ngIf="storeData.isAdvisor && storeData.status != 1" class="c-p" matTooltip="Edit"
+        src="assets/images/svg/pencil.svg">
       <img (click)="openSendEmail('upper')" *ngIf="storeData.isAdvisor" class="b-a c-p" matTooltip="Email"
-           src="assets/images/svg/mail-light.svg">
-      <img *ngIf="storeData.isAdvisor" class="b-a c-p" matTooltip="Download PDF" src="assets/images/svg/pdf-icons.svg">
+        src="assets/images/svg/mail-light.svg">
+      <img *ngIf="storeData.isAdvisor" (click)="generatePdf()" class="b-a c-p" matTooltip="Download PDF"
+        src="assets/images/svg/pdf-icons.svg">
       <!-- <img matTooltip="Print" (click)="printPage(invoiceTemplate)" class="b-a c-p"
           src="assets/images/svg/printer.svg">
       <img matTooltip="Delete" (click)="deleteModal('INVOICE',element)" class="b-a wrapper-9 ml-8 c-p"
           *ngIf="storeData.isAdvisor" src="assets/images/svg/delete.svg"> -->
     </div>
-    <div *ngIf="storeData.isAdvisor" [ngClass]="storeData.status !=1? 'col-md-4' : 'col-md-5'"
-         class="right text-right">
+    <div *ngIf="storeData.isAdvisor" [ngClass]="storeData.status !=1? 'col-md-4' : 'col-md-5'" class="right text-right">
       <button (click)="recordPayment()" *ngIf="rpyment==true" class="btn-primary br-0 mb-8 h-40"
-              mat-stroked-button>RECORD
+        mat-stroked-button>RECORD
         PAYMENT
       </button>
     </div>
     <div *ngIf="storeData.isAdvisor && storeData.status!=1" class="col-md-2 right text-right pl-0">
       <mat-form-field>
-        <mat-select (selectionChange)="addStatus(storeData,$event)" [(ngModel)]="moreStatus"
-                    class="form-control br-0" id="sel1">
+        <mat-select (selectionChange)="addStatus(storeData,$event)" [(ngModel)]="moreStatus" class="form-control br-0"
+          id="sel1">
           <mat-option [value]="''" disabled selected>More</mat-option>
           <mat-option [value]="5">Void</mat-option>
           <mat-option [value]="6">Write off</mat-option>
@@ -362,7 +355,7 @@
       </mat-form-field>
     </div>
   </div>
-  <div *ngIf="showRecord==false && feeCalc==false" class="b-a scrollArrow m-20 mb-100 pb-28">
+  <div id="template" *ngIf="showRecord==false && feeCalc==false" class="b-a scrollArrow m-20 mb-100 pb-28">
     <div class="row">
       <div class="col-md-9">
         <h1 class="f-42 text-custom pt-48 f-700">INVOICE</h1>
@@ -423,7 +416,7 @@
                 </div>
                 <div class="col-md-3 d-flex align-items-center justify-content-end">
                   <h4 class="m-0 f-14  text-right"> ₹<span [value]="storeData.subTotal"
-                                                           appFormatNumber>{{formatter(storeData.subTotal)}}</span>
+                      appFormatNumber>{{formatter(storeData.subTotal)}}</span>
                   </h4>
                 </div>
               </div>
@@ -443,7 +436,7 @@
                 </div>
                 <div class="col-md-4 text-right">
                   <p class="text-black f-400">₹<span [value]="storeData.subTotal"
-                                                     appFormatNumber>{{formatter(storeData.subTotal)}}</span>
+                      appFormatNumber>{{formatter(storeData.subTotal)}}</span>
                   </p>
                 </div>
               </div>
@@ -453,7 +446,7 @@
                 </div>
                 <div class="col-md-4 text-right">
                   <p class="text-black f-400">₹<span [value]="storeData.discount"
-                                                     appFormatNumber>{{formatter(storeData.discount)}}</span>
+                      appFormatNumber>{{formatter(storeData.discount)}}</span>
                   </p>
                 </div>
               </div>
@@ -463,7 +456,7 @@
                 </div>
                 <div class="col-md-4">
                   <p class="text-right">₹<span [value]="(storeData.subTotal-storeData.discount)*18/100"
-                                               appFormatNumber>{{formatter((storeData.subTotal - storeData.discount) * 18 / 100)}}</span>
+                      appFormatNumber>{{formatter((storeData.subTotal - storeData.discount) * 18 / 100)}}</span>
                   </p>
                 </div>
               </div>
@@ -473,8 +466,8 @@
                 </div>
                 <div class="col-md-4">
                   <p class="text-right">₹<span [value]="(storeData.subTotal-storeData.discount)*9/100"
-                                               appFormatNumber>{{formatter((storeData.subTotal - storeData.discount) * 9 / 100)}}
-                                        </span></p>
+                      appFormatNumber>{{formatter((storeData.subTotal - storeData.discount) * 9 / 100)}}
+                    </span></p>
                 </div>
               </div>
               <div *ngIf="storeData.sgst!=0" class="row">
@@ -483,8 +476,8 @@
                 </div>
                 <div class="col-md-4">
                   <p class="text-right">₹<span [value]="(storeData.subTotal-storeData.discount)*9/100"
-                                               appFormatNumber>{{formatter((storeData.subTotal - storeData.discount) * 9 / 100)}}
-                                        </span></p>
+                      appFormatNumber>{{formatter((storeData.subTotal - storeData.discount) * 9 / 100)}}
+                    </span></p>
                 </div>
               </div>
               <div class="row bt-1">
@@ -493,12 +486,12 @@
                 </div>
                 <div *ngIf="storeData.cgst!=0 && storeData.sgst!=0" class="col-md-4 text-right">
                   <p class="f-500 roboto pt-8">₹<span [value]="storeData.finalAmount"
-                                                      appFormatNumber>{{formatter(storeData.finalAmount)}}</span>
+                      appFormatNumber>{{formatter(storeData.finalAmount)}}</span>
                   </p>
                 </div>
                 <div *ngIf="storeData.igst!=0" class="col-md-4 text-right">
                   <p class="f-500 roboto pt-8">₹<span [value]="storeData.finalAmount"
-                                                      appFormatNumber>{{formatter(storeData.finalAmount)}}</span>
+                      appFormatNumber>{{formatter(storeData.finalAmount)}}</span>
                   </p>
                 </div>
               </div>
@@ -509,7 +502,7 @@
                 <div class="col-md-4 text-right">
                   <!-- <p class="f-500 roboto pt-8 ">{{formatter(storeData.balanceDue)}}</p> -->
                   <p class="f-500 roboto pt-8 ">₹<span [value]="storeData.balanceDue"
-                                                       appFormatNumber>{{formatter(storeData.balanceDue)}}</span>
+                      appFormatNumber>{{formatter(storeData.balanceDue)}}</span>
                   </p>
 
                 </div>
@@ -526,8 +519,7 @@
               </div>
               <div class="col-md-2 text-right">
                 <!-- <button (click)="OpenFeeCalc()" class="btn-primary br-0" mat-stroked-button>View -->
-                <app-progress-button (btnClick)="OpenFeeCalc()" [options]="barButtonOptions"
-                                     class="br-0 text-inherit">
+                <app-progress-button (btnClick)="OpenFeeCalc()" [options]="barButtonOptions" class="br-0 text-inherit">
                 </app-progress-button>
                 <!-- </button> -->
               </div>
@@ -537,8 +529,7 @@
                 <h5 class="m-0 text-black">Payments recieved</h5>
               </div>
             </div>
-            <table *ngIf="showPaymentRecive == true" [dataSource]="dataSource" class="" id="table-low"
-                   mat-table>
+            <table *ngIf="showPaymentRecive == true" [dataSource]="dataSource" class="" id="table-low" mat-table>
               <ng-container matColumnDef="date">
                 <th *matHeaderCellDef mat-header-cell>Date</th>
                 <td *matCellDef="let element" mat-cell> {{element.paymentDate | date:'dd/MM/yyyy'}}
@@ -554,8 +545,7 @@
               </ng-container>
               <ng-container matColumnDef="amount">
                 <th *matHeaderCellDef mat-header-cell> Amount(₹)</th>
-                <td *matCellDef="let element" mat-cell><span
-                  appFormatNumber>{{element.amountReceived}}</span></td>
+                <td *matCellDef="let element" mat-cell><span appFormatNumber>{{element.amountReceived}}</span></td>
               </ng-container>
               <ng-container matColumnDef="icons">
                 <th *matHeaderCellDef class="f-18 t-2" mat-header-cell></th>
@@ -584,7 +574,7 @@
   <!--fee calc in client invoice-->
   <div *ngIf="feeCalc==true">
     <app-fee-calculations [feeAmount]="storeData.subTotal" [feeCalculationData]="invoiceFeeCalculations"
-                          [padding]="true"></app-fee-calculations>
+      [padding]="true"></app-fee-calculations>
   </div>
   <!-- <div class="bottom-fixed wrapper-12">
       <div class="row">
@@ -597,8 +587,7 @@
 <!--Add and edit invoice section-->
 <div *ngIf="showEdit" [ngClass]="!inputData?'pt-60':''">
   <app-add-edit-subscription-invoice (cancelAddInvoice)="getAddCancelFlag($event)"
-                                     (cancelEditInvoice)="getCancelFlag($event)" (valueChange)='display($event)'
-                                     [data]="storeData"
-                                     [invoiceInSub]="invoiceInSub" [invoiceValue]="invoiceValue">
+    (cancelEditInvoice)="getCancelFlag($event)" (valueChange)='display($event)' [data]="storeData"
+    [invoiceInSub]="invoiceInSub" [invoiceValue]="invoiceValue">
   </app-add-edit-subscription-invoice>
 </div>
