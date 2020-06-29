@@ -163,12 +163,4 @@ export const scopeofService = `
 <p>Service fee:</p>
 <p>$service_fee</p>
 <p data-f-id="pbf" style="text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;"></p>
-<br>
-<p>DETAILS OF CLIENT</p>
-<p>Full Name : $client_name</p>
-<p>Residential address : $client_address</p>
-<p>Email ID: $client_email</p>
-<p>Mobile No.: $client_mobile</p>
-<p>PAN: $client_PAN</p>
-<p data-f-id="pbf" style="text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;"></p>
 `
