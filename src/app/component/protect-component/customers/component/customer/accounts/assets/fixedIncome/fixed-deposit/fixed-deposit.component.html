@@ -313,7 +313,7 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input matInput autocomplete="off" #fdNo type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="18" class="form-control br-0" formControlName="fdNo">
+                            <input matInput autocomplete="off" #fdNo type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_SEPCIALCHAR" maxlength="18" class="form-control br-0" formControlName="fdNo">
                             <mat-hint align="start" class="f-12">Optional</mat-hint>
                             <mat-hint align="end" class="f-12">{{fdNo.value.length}}/18</mat-hint>
                         </mat-form-field>

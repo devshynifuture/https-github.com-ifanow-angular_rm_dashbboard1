@@ -259,7 +259,7 @@ export class ClientWiseComponent implements OnInit {
   }
 
   clientWiseExcelSheet(index) {
-    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, this.arrayOfExcelData, 'Client wise MIS Report', 'client-wise-aum-mis', {
+    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, this.arrayOfExcelData, 'MIS Report - Client wise AUM', 'client-wise-aum-mis', {
       clientList: false,
       investorList: false,
       schemeList: false,
@@ -277,7 +277,7 @@ export class ClientWiseComponent implements OnInit {
       }
     });
 
-    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'Client wise MIS Report', 'client-wise-aum-mis', {
+    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'MIS Report - Client wise AUM', 'client-wise-aum-mis', {
       clientList: true,
       investorList: false,
       schemeList: false,
@@ -298,7 +298,7 @@ export class ClientWiseComponent implements OnInit {
         }
       }
     });
-    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'Client wise MIS Report', 'client-wise-aum-mis', {
+    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'MIS Report - Client wise AUM', 'client-wise-aum-mis', {
       clientList: true,
       investorList: true,
       schemeList: false,
@@ -319,7 +319,7 @@ export class ClientWiseComponent implements OnInit {
         field6: element.weightInPerc
       });
     });
-    ExcelMisService.exportExcel(this.arrayOfHeaderStyles[3], this.arrayOfHeaders[3], newarr, [], 'Scheme Folio Wise', this.scheme2WiseTotal);
+    ExcelMisService.exportExcel(this.arrayOfHeaderStyles[3], this.arrayOfHeaders[3], newarr, [], 'MIS Report - Client Wise AUM', this.scheme2WiseTotal);
   }
 
   exportToExcelSheet(choice, index) {
