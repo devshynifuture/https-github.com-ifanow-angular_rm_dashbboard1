@@ -34,7 +34,7 @@
 }
 
 .placeholder-scroll {
-  height: 300px;
+  height: calc(100vh - 320px);
   overflow: auto;
 }
 
