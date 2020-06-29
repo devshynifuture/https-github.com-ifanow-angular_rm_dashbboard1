@@ -1898,3 +1898,25 @@ ngx-slick-carousel>.slick-disabled {
   line-height: 30px;
   font-size: 14px;
 }
+
+#ui-overview-email {
+
+  height: calc(100vh - 125px);
+
+  .fixed-emails {
+    position: fixed;
+    width: calc(100vw - 85vw);
+  }
+
+  #table-low {
+    border: 0px;
+
+    tr {
+      border-left: 0px !important;
+    }
+
+    thead {
+      display: none
+    }
+  }
+}
