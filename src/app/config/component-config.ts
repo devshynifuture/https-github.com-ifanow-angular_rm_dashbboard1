@@ -285,8 +285,12 @@ export const appConfig = {
   GET_ALL_GOALS: 'goal-planning/goal/list/get',
   DELETE_GOAL: 'goal-planning/goal/delete',
   CALCULATE_GOAL_EMI: 'goal-planning/loan/calculate',
+  SAVE_GOAL_EMI: 'goal-planning/loan-info/save',
   CALCULATE_GOAL_DELAY: 'goal-planning/cost-delay/calculate',
-  SAVE_COST_DELAY_TO_GOAL: '/cost-delay/save',
+  SAVE_COST_DELAY_TO_GOAL: 'goal-planning/cost-delay/save',
+  EDIT_MULTI_YEAR_GOAL_PREFERENCE: 'goal-planning/multi-year/edit',
+  EDIT_SINGLE_YEAR_GOAL_PREFERENCE: 'goal-planning/single-year/edit',
+  SAVE_ASSET_ALLOCATION_PREFERENCE: 'goal-planning/asset-allocation/update',
   CALCULATE_TOTAL_VALUES: 'account/asset/summary',
   GET_SUMMARY_LIST: 'account/asset/summary/list',
   GET_CASHFLOW_LIST: 'cashflow/monthly/list/get',
@@ -416,6 +420,7 @@ export const appConfig = {
   CREATE_QUOTATION: 'subscription/quotation/add',
   CLIENTLIST_WITH_SUBSCRIPTION: 'subscription/clients/with/subscriptions/get',
   GET_INVOICE_FEE_CALCULATIONS: 'subscription/invoice/fee-calculation/get',
+  SEND_INVOICE_EMAIL: 'pdfAndEmail/send',
   // Plan Module
 
   GET_INCOME_LIST: 'account/income/get',
