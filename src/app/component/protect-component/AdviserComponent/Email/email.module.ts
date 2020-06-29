@@ -15,6 +15,9 @@ import { EmailEntryModule } from './email.entry.module';
 
 // import { GoogleConnectDialogComponent } from './email-component/google-connect-dialog/google-connect-dialog.component';
 import { EmailSettingsComponent } from './email-component/email-settings/email-settings.component';
+import { HttpCancelService } from '../../../../services/http-cancel.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ManageHttpInterceptor } from '../../../../Interceptor/manage-http.interceptor';
 
 
 @NgModule({
@@ -35,9 +38,13 @@ import { EmailSettingsComponent } from './email-component/email-settings/email-s
     EmailRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    EmailEntryModule
+    EmailEntryModule,
   ],
   exports: [
+  ],
+  providers: [
+    HttpCancelService,
+    { provide: HTTP_INTERCEPTORS, useClass: ManageHttpInterceptor, multi: true }
   ]
 })
 export class EmailModule { }
