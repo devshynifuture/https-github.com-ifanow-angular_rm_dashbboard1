@@ -18,7 +18,7 @@ import { pieChart } from './highChart-pichart';
   styleUrls: ['./asset-stocks.component.scss']
 })
 export class AssetStocksComponent implements OnInit {
-  displayedColumns25 = ['scrip', 'owner', 'bal', 'price', 'mprice', 'amt', 'cvalue', 'gain', 'ret',
+  displayedColumns25 = ['scrip', 'bal', 'price', 'mprice', 'amt', 'cvalue', 'gain', 'ret',
      'dividend', 'icons'];
 
   footerColumns = ['scrip', /*'owner', 'bal', 'price', 'mprice',*/ 'amt', 'cvalue', 'gain', 'ret',

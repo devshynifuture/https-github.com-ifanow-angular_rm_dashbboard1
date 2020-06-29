@@ -150,7 +150,8 @@ presentCalendar:any = [];
       lastMonthDays: this.lastMonthDays,
       nextMonthDays :this.nextMonthDays,
       viewDate :this.viewDate,
-      addLastMonthDays : this.addLastMonthDays
+      addLastMonthDays : this.addLastMonthDays,
+      back:this.back
     }]
 
     this.calenderService.getDayArr(this.presentCalendar);
@@ -178,6 +179,8 @@ presentCalendar:any = [];
     }
     // this.viewDate = new Date(this.viewDate.setMonth(this.viewDate.getMonth() + 1))
     this.daysArr = [];
+    this.back = false;
+
     // if(this.currentMonth != this.month){
     //   this.curruntDayIndex = 41;
     // }else{
@@ -185,7 +188,7 @@ presentCalendar:any = [];
     // }
     this.updatecalendar();
   }
-
+ back:boolean= false;
   lastMonth() {
     switch (this.router.url) {
       case '/admin/activies/day':
@@ -198,6 +201,7 @@ presentCalendar:any = [];
         this.viewDate = new Date(this.viewDate.setMonth(this.viewDate.getMonth() - 1))
         break;
     }
+    this.back = true;
     // this.viewDate = new Date(this.viewDate.setMonth(this.viewDate.getMonth() - 1))
     this.daysArr = [];
     this.updatecalendar();

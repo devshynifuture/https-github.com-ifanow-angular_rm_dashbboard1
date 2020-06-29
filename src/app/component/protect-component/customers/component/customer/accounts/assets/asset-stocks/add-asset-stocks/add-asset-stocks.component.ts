@@ -85,23 +85,23 @@ export class AddAssetStocksComponent implements OnInit {
     
   }
  editMood:boolean = false;
-  setForm(formData){
-    this.editApiData = formData;
-    this.editApiData['portfolioId'] = formData.id;
-    if(formData.stockList.length > 0){
-      this.editMood = true;
-      this.assetForm.get('valueAsOn').setValue(new Date(formData.stockList[0].valueAsOn));
-      this.assetForm.get('currentMarketValue').setValue(formData.stockList[0].currentMarketValue);
-      this.assetForm.get('amtInvested').setValue(formData.stockList[0].amountInvested);
-      this.editApiData.id = formData.stockList[0].id;
-    }
-    else{
-      this.editMood = false;
-      this.editApiData.id = 0;
-    }
-    // this.assetForm.get('valueAsOn').setValue(formData);
-    this.editApiData['portfolioOwner'] = formData.ownerList;
-  }
+  // setForm(formData){
+  //   this.editApiData = formData;
+  //   this.editApiData['portfolioId'] = formData.id;
+  //   if(formData.stockList.length > 0){
+  //     this.editMood = true;
+  //     this.assetForm.get('valueAsOn').setValue(new Date(formData.stockList[0].valueAsOn));
+  //     this.assetForm.get('currentMarketValue').setValue(formData.stockList[0].currentMarketValue);
+  //     this.assetForm.get('amtInvested').setValue(formData.stockList[0].amountInvested);
+  //     this.editApiData.id = formData.stockList[0].id;
+  //   }
+  //   else{
+  //     this.editMood = false;
+  //     this.editApiData.id = 0;
+  //   }
+  //   // this.assetForm.get('valueAsOn').setValue(formData);
+  //   this.editApiData['portfolioOwner'] = formData.ownerList;
+  // }
 // ===================owner-nominee directive=====================//
 display(value) {
   console.log('value selected', value)
