@@ -120,8 +120,9 @@
             <div class="form-group mb-0">
                 <mat-form-field>
                     <input matInput autocomplete="off" aria-label="State" formControlName="portfolioName" [matAutocomplete]="auto" class="form-control br-0 pl-8">
+                    <!-- (click)="setForm(singlePorfolio)"  -->
                     <mat-autocomplete #auto="matAutocomplete" >
-                        <mat-option *ngFor="let singlePorfolio of familyMemberPortfolio" [value]="singlePorfolio.portfolioName" (click)="setForm(singlePorfolio)" >
+                        <mat-option *ngFor="let singlePorfolio of familyMemberPortfolio" [value]="singlePorfolio.portfolioName" >
                             {{ singlePorfolio.portfolioName}}
                         </mat-option>
                         
