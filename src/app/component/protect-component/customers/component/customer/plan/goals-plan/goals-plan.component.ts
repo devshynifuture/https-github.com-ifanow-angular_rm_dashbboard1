@@ -84,7 +84,7 @@ export class GoalsPlanComponent implements OnInit {
 
   // options set for donut chart
   // TODO:- remove 'series' legend from the tooltip
-  donutOptions:any = {
+  donutOptions = {
     chart: {
         type: 'pie',
         height: 170
@@ -108,15 +108,7 @@ export class GoalsPlanComponent implements OnInit {
     legend:{
       floating: true,
     },
-    series: [{
-        data: [["Loan Amt",6],["Down Amt",4]],
-        size: '100%',
-        innerSize: '55%',
-        showInLegend:true,
-        dataLabels: {
-            enabled: false
-        }
-    }]
+    series: []
 }
 
   constructor(
@@ -179,6 +171,21 @@ export class GoalsPlanComponent implements OnInit {
     }
     Highcharts.chart('monthly-chart-container-main', sipSeries);
     Highcharts.chart('lumpsum-chart-container-main', lumpsumSeries);
+
+    if(res.remainingData.loan) {
+      const loan = res.remainingData.loan;
+      const chart = {
+        data: [["Loan Amt", parseInt(loan.loanAmount)],["Down Amt",parseInt(loan.downPayment)]],
+        size: '100%',
+        innerSize: '55%',
+        showInLegend:true,
+        dataLabels: {
+            enabled: false
+        }
+    }
+    this.donutOptions.series = [chart];
+      Highcharts.chart('donut-chart-container', this.donutOptions);
+    }
   }
   
 
@@ -344,7 +351,6 @@ export class GoalsPlanComponent implements OnInit {
     setTimeout(() => {
       this.createChart(this.selectedGoal);
     });
-    Highcharts.chart('donut-chart-container', this.donutOptions);
   }
 
   deleteGoal() {

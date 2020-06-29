@@ -127,7 +127,7 @@ export class CalculatorsComponent implements OnInit {
         goalType: this.data.goalType
       }
 
-      this.planService.saveEMIToGoal({loanIpJson: JSON.stringify(emiObj)}).subscribe((res) => {
+      this.planService.saveEMIToGoal(emiObj).subscribe((res) => {
         this.eventService.openSnackBar("EMI saved to goal", "Dismiss");
       }, err => {
         this.eventService.openSnackBar(err, "Dismiss");
