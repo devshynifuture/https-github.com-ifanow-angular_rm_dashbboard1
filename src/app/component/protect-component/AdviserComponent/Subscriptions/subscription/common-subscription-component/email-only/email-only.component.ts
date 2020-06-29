@@ -81,7 +81,8 @@ export class EmailOnlyComponent implements OnInit {
         if (element) {
           const obj1 = {
             id: element.id,
-            documentName: element.invoiceNumber
+            documentName: element.invoiceNumber,
+            documentText: element.documentText
           };
           obj.push(obj1);
         }
