@@ -96,6 +96,17 @@ export class AssetStocksComponent implements OnInit {
       this.categories.OTHERS.perrcentage = data.categories.OTHERS.currentValue == 0? 0 :data.categories.OTHERS.perrcentage;
       
     }
+    if(data.emptyPortfolioList.length > 0){
+      let deleteArr=[]
+     data.emptyPortfolioList.forEach(ep => {
+       deleteArr.push(ep.id)
+     });
+     this.cusService.deletePortfolio(deleteArr).subscribe(data => {
+       console.log("emty porfolio deleted");
+     },
+     error => this.eventService.showErrorMessage(error)
+     )
+   }
     if (data.portfolios.length != 0) {
       this.isLoading = false;
       this.assetStockData = data;
@@ -109,17 +120,7 @@ export class AssetStocksComponent implements OnInit {
      else{
       this.gain = false;
      }
-     if(data.emptyPortfolioList.length > 0){
-       let deleteArr=[]
-      data.emptyPortfolioList.forEach(ep => {
-        deleteArr.push(ep.id)
-      });
-      this.cusService.deletePortfolio(deleteArr).subscribe(data => {
-        console.log("emty porfolio deleted");
-      },
-      error => this.eventService.showErrorMessage(error)
-      )
-    }
+     
       this.portfolioData.forEach(p => {
         
         p.categoryWiseStockList.forEach((s, i) => {
