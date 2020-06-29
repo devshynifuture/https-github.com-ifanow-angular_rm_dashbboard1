@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray, ValidatorFn, AbstractControl } from '@angular/forms';
 import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -7,13 +7,14 @@ import { ValidatorType } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { AppConstants } from 'src/app/services/app-constants';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-add-cams-fundsnet',
   templateUrl: './add-cams-fundsnet.component.html',
   styleUrls: ['./add-cams-fundsnet.component.scss']
 })
-export class AddCamsFundsnetComponent implements OnInit {
+export class AddCamsFundsnetComponent implements OnInit, OnDestroy {
 
   @Input() data:any;
 
@@ -34,6 +35,7 @@ export class AddCamsFundsnetComponent implements OnInit {
     disabled: false,
     fullWidth: false,
   };
+  subscription = new Subscription();
 
   constructor(
     private subInjectService: SubscriptionInject, 
@@ -48,6 +50,23 @@ export class AddCamsFundsnetComponent implements OnInit {
   ngOnInit() {
     this.createForm();
     this.is_add = !Object.keys(this.data.mainData).length;
+    this.formListeners();
+  }
+
+  ngOnDestroy(){
+    this.subscription.unsubscribe();
+  }
+
+  formListeners(){
+    this.subscription.add(
+      this.camsFundFG.controls.arnRiaDetailsId.valueChanges.subscribe(id => {
+        const arn = this.data.arnData.find(data => data.id == id);
+        if(arn.registeredPan && arn.renewalDate) {
+          const loginDate = new Date(arn.renewalDate).getDate() + ('0' + new Date(arn.renewalDate).getMonth() + 1).slice(-2);
+          this.camsFundFG.controls.loginPassword.setValue(arn.registeredPan.slice(0,4) + loginDate);
+        }
+      })
+    )
   }
 
   createForm() {

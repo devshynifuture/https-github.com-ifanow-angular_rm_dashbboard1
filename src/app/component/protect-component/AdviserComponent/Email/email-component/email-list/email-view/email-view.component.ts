@@ -1,18 +1,18 @@
-import { AuthService } from './../../../../../../../auth-service/authService';
-import { EventService } from './../../../../../../../Data-service/event.service';
+import {AuthService} from './../../../../../../../auth-service/authService';
+import {EventService} from './../../../../../../../Data-service/event.service';
 // import { EmailUtilService } from './../../../../../../../services/email-util.service';
-import { ComposeEmailComponent } from './../../compose-email/compose-email.component';
+import {ComposeEmailComponent} from './../../compose-email/compose-email.component';
 // import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
 // import { UtilService } from '../../../../../../../services/util.service';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { EmailServiceService } from '../../../email-service.service';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { EmailReplyComponent } from '../email-reply/email-reply.component';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {EmailServiceService} from '../../../email-service.service';
+import {MatBottomSheet} from '@angular/material/bottom-sheet';
+import {EmailReplyComponent} from '../email-reply/email-reply.component';
 // import { EmailAddTaskComponent } from '../email-add-task/email-add-task.component';
-import { Location } from '@angular/common';
-import { Subscription } from 'rxjs';
-import { EmailUtilService } from 'src/app/services/email-util.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import {Location} from '@angular/common';
+import {Subscription} from 'rxjs';
+import {EmailUtilService} from 'src/app/services/email-util.service';
+import {ActivatedRoute, Router} from '@angular/router';
 
 // import { DomSanitizer } from '@angular/platform-browser';
 
@@ -52,11 +52,12 @@ export class EmailViewComponent implements OnInit, OnDestroy {
   isLoadingForAttachment: boolean;
 
   constructor(private emailService: EmailServiceService,
-    private _bottomSheet: MatBottomSheet,
-    private location: Location,
-    private eventService: EventService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute) { }
+              private _bottomSheet: MatBottomSheet,
+              private location: Location,
+              private eventService: EventService,
+              private router: Router,
+              private activatedRoute: ActivatedRoute) {
+  }
 
   ngOnInit() {
     this.getEmailThread();
@@ -82,18 +83,17 @@ export class EmailViewComponent implements OnInit, OnDestroy {
         this.isLoading = false;
         console.log("detailed message::", response);
         // gmail api explorer based integration
-        const { id } = response;
+        const {id} = response;
         this.messageId = id;
 
-        const { payload: { headers } } = response;
-        const { payload: { parts } } = response;
+        const {payload: {headers}} = response;
+        const {payload: {parts}} = response;
         if (response.payload.body !== null) {
           if (response.payload.mimeType === 'text/html') {
             this.decodedPartsDetail.push({
               item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(response.payload.body.data),
             });
-          }
-          else if (response.payload.mimeType === 'multipart/mixed') {
+          } else if (response.payload.mimeType === 'multipart/mixed') {
             if (parts && parts.length !== 0) {
               parts.forEach(multiPartElement => {
                 if (multiPartElement.mimeType === 'multipart/alternative') {
@@ -123,8 +123,7 @@ export class EmailViewComponent implements OnInit, OnDestroy {
                 // }
               });
             }
-          }
-          else if (response.payload.mimeType === 'multipart/alternative') {
+          } else if (response.payload.mimeType === 'multipart/alternative') {
 
             if (response.payload.hasOwnProperty('parts') && response.payload.parts.length !== 0) {
               response.payload.parts.forEach(multiPartAlternativeElement => {
@@ -140,12 +139,10 @@ export class EmailViewComponent implements OnInit, OnDestroy {
                 // }
               });
             }
-          }
-
-          else {
+          } else {
             if (response.payload.hasOwnProperty('parts') && response.payload.parts.length !== 0) {
               response.payload.parts.forEach(part => {
-                const { parts } = part;
+                const {parts} = part;
                 if (part.body.data !== null) {
                   this.decodedPartsDetail.push({
                     item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data),
@@ -153,7 +150,7 @@ export class EmailViewComponent implements OnInit, OnDestroy {
                 }
                 if (part.parts && part.parts.length !== 0) {
                   parts.forEach(part => {
-                    const { parts } = part;
+                    const {parts} = part;
                     if (part.body.data !== null) {
                       this.decodedPartsDetail.push({
                         item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data),
@@ -161,7 +158,7 @@ export class EmailViewComponent implements OnInit, OnDestroy {
                     }
                     if (part.parts && part.parts.length !== 0) {
                       parts.forEach(part => {
-                        const { parts } = part;
+                        const {parts} = part;
                         if (part.body.data !== null) {
                           this.decodedPartsDetail.push({
                             item: EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(part.body.data),
@@ -243,7 +240,7 @@ export class EmailViewComponent implements OnInit, OnDestroy {
     if (window.navigator && window.navigator.msSaveOrOpenBlob) { //IE
       window.navigator.msSaveOrOpenBlob(blobData, part.filename);
     } else { // chrome
-      const blob = new Blob([blobData], { type: part.mimeType });
+      const blob = new Blob([blobData], {type: part.mimeType});
       const url = window.URL.createObjectURL(blob);
       // window.open(url);
 
@@ -267,7 +264,7 @@ export class EmailViewComponent implements OnInit, OnDestroy {
       console.log("this is what im getting from listing:::", this.emailObj);
       if (!this.emailObj) {
         this.eventService.openSnackBar("No email data !", "Dismiss");
-        this.router.navigate(['../'], { relativeTo: this.activatedRoute });
+        this.router.navigate(['../'], {relativeTo: this.activatedRoute});
       }
       if (this.emailObj) {
 
@@ -308,9 +305,9 @@ export class EmailViewComponent implements OnInit, OnDestroy {
           // }
           // });
         }
-        let { parsedData: { headers } } = this.emailObj;
+        let {parsedData: {headers}} = this.emailObj;
 
-        let { messageHeaders } = this.emailObj;
+        let {messageHeaders} = this.emailObj;
         this.messagesHeaders = messageHeaders;
 
         // if (this.messagesHeaders.length !== 0) {
@@ -327,10 +324,10 @@ export class EmailViewComponent implements OnInit, OnDestroy {
           return header.name === 'From';
         })
 
-        let { parsedData: { decodedPart } } = this.emailObj;
+        let {parsedData: {decodedPart}} = this.emailObj;
         this.decodedPart = decodedPart;
 
-        let { messageDates } = this.emailObj;
+        let {messageDates} = this.emailObj;
 
         let extractHtmlValue;
         if (decodedPart.length > 2) {
@@ -346,7 +343,7 @@ export class EmailViewComponent implements OnInit, OnDestroy {
         }
 
         extractHtmlValue = extractHtmlValue.map((item, index) => {
-          return { item, date: messageDates[index] }
+          return {item, date: messageDates[index]}
         })
 
         this.body = extractHtmlValue;
@@ -368,8 +365,8 @@ export class EmailViewComponent implements OnInit, OnDestroy {
     // id param to work on
     const messageToTrashSubscription = this.emailService.moveMessageToTrashFromView()
       .subscribe(response => {
-        messageToTrashSubscription.unsubscribe();
-      },
+          messageToTrashSubscription.unsubscribe();
+        },
         error => {
         })
   }
@@ -378,8 +375,8 @@ export class EmailViewComponent implements OnInit, OnDestroy {
     // need to pass ids
     const messageFromTrashSubscription = this.emailService.moveMessagesFromTrashToList()
       .subscribe(response => {
-        messageFromTrashSubscription.unsubscribe();
-      },
+          messageFromTrashSubscription.unsubscribe();
+        },
         error => {
         });
   }
@@ -388,7 +385,8 @@ export class EmailViewComponent implements OnInit, OnDestroy {
     // need to pass ids
     const deleteMessageSubscription = this.emailService.deleteMessageFromView().subscribe(response => {
       deleteMessageSubscription.unsubscribe();
-    }, error => { });
+    }, error => {
+    });
   }
 
   openBottomSheet() {
