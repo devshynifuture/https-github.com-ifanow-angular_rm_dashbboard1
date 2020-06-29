@@ -394,13 +394,18 @@
                 <p style="margin: 0px; font-weight: 800;font-size: 20px;">
                     Mutual fund summary</p>
             </td> -->
-            <td style="text-align: left;" colspan="3"
+            <!-- <td style="text-align: left;" colspan="3"
                 *ngIf="getOrgData && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
                 <img width="250px" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
-            </td>
+            </td> -->
             <td style="text-align: left;" colspan="3"
                 *ngIf="getOrgData">
-                <img width="250px" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
+                <div *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
+                    <img width="250px" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
+                </div>
+                <div *ngIf="getOrgData && getOrgData.reportLogoUrl == null">
+                    <img width="250px" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
+                </div>
             </td>
             <td style=" text-align: right;" colspan="8">
                 <p style="margin: 0px; font-weight: 600; font-size: 20px;padding-top: 12px;" *ngIf="userInfo">
