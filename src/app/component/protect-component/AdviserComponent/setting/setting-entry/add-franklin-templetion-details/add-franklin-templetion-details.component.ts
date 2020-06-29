@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
@@ -14,7 +14,7 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
   templateUrl: './add-franklin-templetion-details.component.html',
   styleUrls: ['./add-franklin-templetion-details.component.scss']
 })
-export class AddFranklinTempletionDetailsComponent implements OnInit {
+export class AddFranklinTempletionDetailsComponent implements OnInit, OnDestroy {
 
   @Input() data:any;
 
@@ -43,9 +43,27 @@ export class AddFranklinTempletionDetailsComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.formPlaceHolder = AppConstants.formPlaceHolders;
   }
+  subscription = new Subscription();
 
   ngOnInit() {
     this.createForm();
+    this.formListeners();
+  }
+
+  ngOnDestroy(){
+    this.subscription.unsubscribe();
+  }
+
+  formListeners(){
+    this.subscription.add(
+      this.franklinFG.controls.arnRiaDetailsId.valueChanges.subscribe(id => {
+        const arn = this.data.arnData.find(data => data.id == id);
+        if(arn.registeredPan && arn.renewalDate) {
+          const loginDate = new Date(arn.renewalDate).getDate() + ('0' + new Date(arn.renewalDate).getMonth() + 1).slice(-2);
+          this.franklinFG.controls.loginPassword.setValue(arn.registeredPan.slice(0,4) + loginDate);
+        }
+      })
+    )
   }
 
   createForm() {

@@ -1,16 +1,16 @@
-import { ValidatorType } from './../../../../../../../services/util.service';
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionService } from '../../../subscription.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { EnumServiceService } from '../../../../../../../services/enum-service.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
-import { UtilService } from 'src/app/services/util.service';
-import { EmailOnlyComponent } from '../email-only/email-only.component';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-import { EventService } from 'src/app/Data-service/event.service';
+import {ValidatorType} from './../../../../../../../services/util.service';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionService} from '../../../subscription.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {EnumServiceService} from '../../../../../../../services/enum-service.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog} from '@angular/material';
+import {UtilService} from 'src/app/services/util.service';
+import {EmailOnlyComponent} from '../email-only/email-only.component';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import {EventService} from 'src/app/Data-service/event.service';
 
 
 export interface PeriodicElement {
@@ -66,23 +66,13 @@ export class InvoiceComponent implements OnInit {
 
   // invoiceTemplate
   gstTreatment = [
-    { name: 'Registered Business - Regular', value: 0 },
-    { name: 'Registered Business - Composition', value: 1 },
-    { name: 'Unregistered Business', value: 2 }
+    {name: 'Registered Business - Regular', value: 0},
+    {name: 'Registered Business - Composition', value: 1},
+    {name: 'Unregistered Business', value: 2}
   ];
 
-  @ViewChild('invoiceTemplate', { static: false }) invoiceTemplate: ElementRef;
-
-  constructor(public utils: UtilService, public enumService: EnumServiceService, public subInjectService: SubscriptionInject,
-    private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService, public dialog: MatDialog,
-    private eventService: EventService) {
-    this.dataSub = this.subInjectService.singleProfileData.subscribe(
-      data => this.getInvoiceData(data)
-    );
-    this.subInjectService.singleProfileData.subscribe(
-      data => this.getRecordPayment(data)
-    );
-  }
+  @ViewChild('invoiceTemplate', {static: false}) invoiceTemplate: ElementRef;
+  showErr = false;
 
   get data() {
     return this.inputData;
@@ -112,7 +102,18 @@ export class InvoiceComponent implements OnInit {
   ismodeValid: boolean;
   isgstValid: boolean;
   isClientName = false;
-  showErr = false
+
+  constructor(public utils: UtilService, public enumService: EnumServiceService, public subInjectService: SubscriptionInject,
+              private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService, public dialog: MatDialog,
+              private eventService: EventService) {
+    this.dataSub = this.subInjectService.singleProfileData.subscribe(
+      data => this.getInvoiceData(data)
+    );
+    this.subInjectService.singleProfileData.subscribe(
+      data => this.getRecordPayment(data)
+    );
+  }
+
   isServiceName = false;
   isInvoiceNumber = false;
   isDueDate = false;
@@ -166,7 +167,7 @@ export class InvoiceComponent implements OnInit {
     this.showPaymentRecive = false;
     this.advisorId = AuthService.getAdvisorId();
     this.getClients();
-    this.showErr = false
+    this.showErr = false;
     this.getServicesList();
     this.feeCollectionMode = this.enumService.getFeeCollectionModeData();
     // this.getPayReceive(data);
@@ -187,6 +188,7 @@ export class InvoiceComponent implements OnInit {
       this.editPayment.controls.serviceName.enable();
 
     }
+    console.log('invoicecomponent ngoninit invoiceInSub : ', this.invoiceInSub);
   }
 
   keyPress(event: any) {
@@ -197,18 +199,21 @@ export class InvoiceComponent implements OnInit {
       event.preventDefault();
     }
   }
+
   addStatus(value, status) {
-    let obj = {
+    const obj = {
       id: value.id,
       status: status.value
-    }
+    };
     this.subService.getInvoiceStatus(obj).subscribe(
       data => this.getInvoiceStatusRes(data)
     );
   }
+
   getInvoiceStatusRes(data) {
     this.Close('close', true);
   }
+
   dontAllowTyping(event, maxLength: number) {
     if (event.target.value.length > maxLength) {
       event.preventDefault();
@@ -266,8 +271,8 @@ export class InvoiceComponent implements OnInit {
       dueDate = new Date((this.editPayment.get('dueDate').value._d) ? this.editPayment.get('dueDate').value._d : this.editPayment.get('dueDate').value).getTime();
       (invoiceDate == undefined && dueDate == undefined) ? ''
         : (dueDate <= invoiceDate)
-          ? this.showDateError = "invoice date should be greater than due" :
-          this.showDateError = undefined;
+        ? this.showDateError = 'invoice date should be greater than due' :
+        this.showDateError = undefined;
     }
   }
 
@@ -375,8 +380,8 @@ export class InvoiceComponent implements OnInit {
   }
 
   getRecordPayment(data) {
-    this.recordData = data
-    if (data != "") {
+    this.recordData = data;
+    if (data != '') {
       this.getPayReceive(data.id);
     }
   }
@@ -388,10 +393,10 @@ export class InvoiceComponent implements OnInit {
     if (data.status == 5 || data.status == 6) {
       this.moreStatus = data.status;
     } else {
-      this.moreStatus = "";
+      this.moreStatus = '';
     }
     if (this.storeData.balanceDue == 0 || this.storeData.status == 1) {
-      this.rpyment = false
+      this.rpyment = false;
     } else {
       this.rpyment = true;
     }
@@ -421,10 +426,10 @@ export class InvoiceComponent implements OnInit {
     });
     this.editPayment.controls.invoiceNumber.disable();
     this.editPayment.controls.finalAmount.disable();
-    this.igstTaxAmount = data.igstTaxAmount
-    this.cgstTaxAmount = data.cgstTaxAmount
-    this.sgstTaxAmount = data.sgstTaxAmount
-    this.taxStatus = this.editPayment.controls.taxStatus.value
+    this.igstTaxAmount = data.igstTaxAmount;
+    this.cgstTaxAmount = data.cgstTaxAmount;
+    this.sgstTaxAmount = data.sgstTaxAmount;
+    this.taxStatus = this.editPayment.controls.taxStatus.value;
     this.getFormControledit().clientName.maxLength = 10;
     this.getFormControledit().billerAddress.maxLength = 150;
     this.getFormControledit().billingAddress.maxLength = 150;
@@ -455,11 +460,11 @@ export class InvoiceComponent implements OnInit {
   }
 
   updateInvoice() {
-    this.showErr = false
-    if (this.editPayment.value.discount == "") {
-      this.editPayment.value.discount = 0
+    this.showErr = false;
+    if (this.editPayment.value.discount == '') {
+      this.editPayment.value.discount = 0;
     }
-    this.changeTaxStatus(this.editPayment.value.taxStatus)
+    this.changeTaxStatus(this.editPayment.value.taxStatus);
 
     if (this.editPayment.get('dueDate').invalid) {
       this.editPayment.get('dueDate').markAsTouched();
@@ -471,7 +476,7 @@ export class InvoiceComponent implements OnInit {
       this.editPayment.get('taxStatus').markAsTouched();
       return;
     } else if (isNaN(this.editPayment.controls.finalAmount.value)) {
-      this.showErr = true
+      this.showErr = true;
       return;
     } else {
       if (this.editPayment.value.id == 0 || this.editPayment.value.id == null) {
@@ -563,7 +568,7 @@ export class InvoiceComponent implements OnInit {
   }
 
   getAddCancelFlag(data) {
-    this.cancelInvoiceSubscription.emit(data)
+    this.cancelInvoiceSubscription.emit(data);
   }
 
   addInvoiceRes(data) {
@@ -588,21 +593,20 @@ export class InvoiceComponent implements OnInit {
   OpenFeeCalc() {
     this.feeCalc = true;
     this.barButtonOptions.active = true;
-    const obj =
-    {
+    const obj = {
       invoiceId: this.storeData.id
-    }
+    };
     this.subService.getInvoiceFeeCalculations(obj).subscribe(
       data => {
         if (data) {
           this.barButtonOptions.active = false;
-          this.invoiceFeeCalculations = data
+          this.invoiceFeeCalculations = data;
         }
       }, err => {
-        this.eventService.openSnackBar(err, "Dismiss");
+        this.eventService.openSnackBar(err, 'Dismiss');
         this.barButtonOptions.active = false;
       }
-    )
+    );
   }
 
   recordPayment() {
@@ -627,7 +631,7 @@ export class InvoiceComponent implements OnInit {
       this.storeData.balanceDue = (value.balanceDue) ? value.balanceDue : '';
       this.storeData.status = value.status;
       if (value.status == 1) {
-        this.rpyment = false
+        this.rpyment = false;
       }
     }
     this.showRecord = false;
@@ -649,14 +653,14 @@ export class InvoiceComponent implements OnInit {
 
   passInvoice(data, index, event) {
     if (data.balanceDue == 0 || this.storeData.status == 1) {
-      this.rpyment = false
+      this.rpyment = false;
     } else {
-      this.rpyment = true
+      this.rpyment = true;
     }
     if (data.status == 5 || data.status == 6) {
       this.moreStatus = data.status;
     } else {
-      this.moreStatus = "";
+      this.moreStatus = '';
     }
     this.recordData = data;
     this.storeData = data;
@@ -670,7 +674,7 @@ export class InvoiceComponent implements OnInit {
   }
 
   editInvoice() {
-    this.storeData['showBottomBar'] = (this.inputData) ? this.inputData.showBottomBar : undefined;
+    this.storeData.showBottomBar = (this.inputData) ? this.inputData.showBottomBar : undefined;
     this.showEditIn = true;
     this.showEdit = true;
   }
@@ -689,7 +693,7 @@ export class InvoiceComponent implements OnInit {
     const closeObj = {
       dataString: this.invoiceInSub,
       closingState: Dismiss
-    }
+    };
     if (this.showRecord == true) {
       this.showRecord = false;
       const obj = {
@@ -703,8 +707,8 @@ export class InvoiceComponent implements OnInit {
       this.feeCalc = false;
     } else {
       (this.invoiceTab == 'invoiceUpperSlider') ? this.subInjectService.rightSliderData(state) : this.subInjectService.rightSideData(state);
-      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
-      this.subInjectService.changeUpperRightSliderState({ state: 'close' });
+      this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: true});
+      this.subInjectService.changeUpperRightSliderState({state: 'close'});
       this.valueChange.emit(closeObj);
     }
 
@@ -728,7 +732,7 @@ export class InvoiceComponent implements OnInit {
         docText: '',
       }],
       isInv: true
-    }
+    };
     if (input == 'upper') {
       this.OpenEmailUpper(data, 'email');
     } else {
@@ -775,11 +779,11 @@ export class InvoiceComponent implements OnInit {
   // }
   OpenEmailUpper(data, value) {
     if (this.isLoading) {
-      return
+      return;
     }
     const fragmentData = {
       flag: value,
-      data: data,
+      data,
       id: 1,
       state: 'open',
       componentName: EmailOnlyComponent
@@ -828,8 +832,8 @@ export class InvoiceComponent implements OnInit {
   }
 
   generatePdf() {
-    let para = document.getElementById('template');
-    this.utils.htmlToPdf(para.innerHTML, 'Test', '')
+    const para = document.getElementById('template');
+    this.utils.htmlToPdf(para.innerHTML, 'Test', '');
   }
 
 
