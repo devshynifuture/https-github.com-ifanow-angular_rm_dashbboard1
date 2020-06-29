@@ -18,6 +18,7 @@ import { CustomCommonModule } from 'src/app/common/custom.common.module';
 
 
 
+
 @NgModule({
   declarations: [
     EmailListComponent,
@@ -28,6 +29,7 @@ import { CustomCommonModule } from 'src/app/common/custom.common.module';
     TruncateStringPipe,
     DomSanitizerPipe,
     ShowListActionsDirective,
+
   ],
   imports: [
     CommonModule,

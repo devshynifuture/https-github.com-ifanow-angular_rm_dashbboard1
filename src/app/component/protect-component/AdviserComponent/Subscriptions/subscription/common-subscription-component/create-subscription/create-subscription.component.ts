@@ -96,8 +96,8 @@ export class CreateSubscriptionComponent implements OnInit {
     subscription: [, [Validators.required]],
     activationDate: [new Date(), [Validators.required]],
     invoiceSendingMode: [1, [Validators.required]],
-    feeCollectionMode: [1, [Validators.required]],
-    dueDateFrequency: [5, [Validators.required]]
+    feeCollectionMode: ['', [Validators.required]],
+    dueDateFrequency: ['', [Validators.required]]
   });
   subscriptionDetailsStepper = this.fb.group({
     subscriptionDetailsStepper: ['', [Validators.required]]
@@ -139,6 +139,10 @@ export class CreateSubscriptionComponent implements OnInit {
   }
 
   goForward(/*stepper: MatStepper*/) {
+    if (this.subscriptionDetails.invalid && this.stepper.selectedIndex == 1) {
+      this.subscriptionDetails.markAllAsTouched();
+      return;
+    }
     if (this.stepper) {
       this.stepper.next();
     }

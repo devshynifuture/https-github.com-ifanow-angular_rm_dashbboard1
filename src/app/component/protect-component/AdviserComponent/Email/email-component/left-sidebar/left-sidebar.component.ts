@@ -2,6 +2,8 @@ import { ComposeEmailComponent } from './../compose-email/compose-email.componen
 import { ActivatedRoute, Router } from '@angular/router';
 import { EmailServiceService } from './../../email-service.service';
 import { Component, OnInit } from '@angular/core';
+import { EventService } from '../../../../../../Data-service/event.service';
+import { AuthService } from '../../../../../../auth-service/authService';
 
 @Component({
   selector: 'app-left-sidebar',
@@ -9,36 +11,53 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./left-sidebar.component.scss']
 })
 export class LeftSidebarComponent implements OnInit {
+  paginatorSubscription: any;
+  isAllowedToCompose: boolean;
+  isLoading: boolean;
 
-  constructor(private emailService: EmailServiceService) { }
+  constructor(
+    private emailService: EmailServiceService,
+    private eventService: EventService,
+    private authService: AuthService
+  ) { }
 
 
   ngOnInit() {
+    this.isUserAuthenticated();
   }
 
-  // loadList(obj) {
-  //   switch (obj.name.toLowerCase()) {
-  //     case 'inbox':
-  //       this.router.navigate(['inbox'], { relativeTo: this.activatedRoute });
-  //       break;
-  //     case 'sent':
-  //       this.router.navigate(['sent'], { relativeTo: this.activatedRoute });
-  //       break;
-  //     case 'draft':
-  //       this.router.navigate(['draft'], { relativeTo: this.activatedRoute });
-  //       break;
-  //     case 'trash':
-  //       this.router.navigate(['trash'], { relativeTo: this.activatedRoute });
-  //       break;
-  //     // case 'spam': this.router.navigate(['spam'], { relativeTo: this.activatedRoute });
-  //     //   break;
-  //     default:
-  //       this.router.navigate(['inbox'], { relativeTo: this.activatedRoute });
-  //   }
-  // }
+  isUserAuthenticated() {
+    if (localStorage.getItem('associatedGoogleEmailId')) {
+      const userInfo = AuthService.getUserInfo();
+      userInfo['email'] = localStorage.getItem('associatedGoogleEmailId');
+      this.authService.setUserInfo(userInfo);
+    }
 
+    this.paginatorSubscription = this.emailService.getProfile()
+      .subscribe(response => {
+        if (!response) {
+          this.eventService.openSnackBar("You must connect your gmail account", "Dismiss");
+          if (localStorage.getItem('successStoringToken')) {
+            localStorage.removeItem('successStoringToken');
+          }
+          this.isAllowedToCompose = false;
+        } else {
+          this.isAllowedToCompose = true;
+        }
+      }, err => {
+        this.eventService.openSnackBar("You must connect your gmail account", "Dismiss");
+        if (localStorage.getItem('successStoringToken')) {
+          localStorage.removeItem('successStoringToken');
+        }
+        this.isAllowedToCompose = false;
+      });
+  }
   openCompose() {
-    this.emailService.openComposeEmail(null, ComposeEmailComponent, 'email');
+    if (this.isAllowedToCompose) {
+      this.emailService.openComposeEmail(null, ComposeEmailComponent, 'email');
+    } else {
+      this.eventService.openSnackBar("You must connect your gmail account", "Dismiss");
+    }
   }
 
 }
