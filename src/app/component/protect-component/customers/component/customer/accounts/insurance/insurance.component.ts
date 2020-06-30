@@ -1,24 +1,25 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {UtilService} from 'src/app/services/util.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {CustomerService} from '../../customer.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
-import {EventService} from 'src/app/Data-service/event.service';
-import {AddInsuranceComponent} from '../../../common-component/add-insurance/add-insurance.component';
-import {AddHealthInsuranceAssetComponent} from './add-health-insurance-asset/add-health-insurance-asset.component';
-import {AddPersonalAccidentInAssetComponent} from './add-personal-accident-in-asset/add-personal-accident-in-asset.component';
-import {AddCriticalIllnessInAssetComponent} from './add-critical-illness-in-asset/add-critical-illness-in-asset.component';
-import {AddMotorInsuranceInAssetComponent} from './add-motor-insurance-in-asset/add-motor-insurance-in-asset.component';
-import {AddTravelInsuranceInAssetComponent} from './add-travel-insurance-in-asset/add-travel-insurance-in-asset.component';
-import {AddHomeInsuranceInAssetComponent} from './add-home-insurance-in-asset/add-home-insurance-in-asset.component';
-import {AddFireAndPerilsInsuranceInAssetComponent} from './add-fire-and-perils-insurance-in-asset/add-fire-and-perils-insurance-in-asset.component';
-import {ExcelGenService} from 'src/app/services/excel-gen.service';
-import {DetailedViewLifeInsuranceComponent} from '../assets/smallSavingScheme/common-component/detailed-view-life-insurance/detailed-view-life-insurance.component';
-import {DetailedViewGeneralInsuranceComponent} from '../assets/smallSavingScheme/common-component/detailed-view-general-insurance/detailed-view-general-insurance.component';
-import {PdfGenService} from 'src/app/services/pdf-gen.service';
-import {FileUploadServiceService} from '../assets/file-upload-service.service';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { CustomerService } from '../../customer.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AddInsuranceComponent } from '../../../common-component/add-insurance/add-insurance.component';
+import { AddHealthInsuranceAssetComponent } from './add-health-insurance-asset/add-health-insurance-asset.component';
+import { AddPersonalAccidentInAssetComponent } from './add-personal-accident-in-asset/add-personal-accident-in-asset.component';
+import { AddCriticalIllnessInAssetComponent } from './add-critical-illness-in-asset/add-critical-illness-in-asset.component';
+import { AddMotorInsuranceInAssetComponent } from './add-motor-insurance-in-asset/add-motor-insurance-in-asset.component';
+import { AddTravelInsuranceInAssetComponent } from './add-travel-insurance-in-asset/add-travel-insurance-in-asset.component';
+import { AddHomeInsuranceInAssetComponent } from './add-home-insurance-in-asset/add-home-insurance-in-asset.component';
+import { AddFireAndPerilsInsuranceInAssetComponent } from './add-fire-and-perils-insurance-in-asset/add-fire-and-perils-insurance-in-asset.component';
+import { ExcelGenService } from 'src/app/services/excel-gen.service';
+import { DetailedViewLifeInsuranceComponent } from '../assets/smallSavingScheme/common-component/detailed-view-life-insurance/detailed-view-life-insurance.component';
+import { DetailedViewGeneralInsuranceComponent } from '../assets/smallSavingScheme/common-component/detailed-view-general-insurance/detailed-view-general-insurance.component';
+import { PdfGenService } from 'src/app/services/pdf-gen.service';
+import { FileUploadServiceService } from '../assets/file-upload-service.service';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 
 @Component({
   selector: 'app-insurance',
@@ -34,7 +35,7 @@ export class InsuranceComponent implements OnInit {
 
   [x: string]: any;
 
-  displayedColumns = ['no', 'life', 'name', 'sum', 'cvalue', 'premium', 'term', 'pterm','Duration', 'desc','number', 'status', 'icons'];
+  displayedColumns = ['no', 'life', 'name', 'sum', 'cvalue', 'premium', 'term', 'pterm', 'Duration', 'desc', 'number', 'status', 'icons'];
   displayedColumns1 = ['no', 'owner', 'cvalue', 'amt', 'mvalue', 'rate', 'mdate', 'type', 'ppf', 'desc', 'status', 'icons'];
   displayedColumns2 = ['no', 'life', 'insurerName', 'sumInsured', 'premiumAmount', 'policyExpiryDate', 'Duration', 'planName', 'policyNumber', 'status', 'icons'];
 
@@ -50,24 +51,24 @@ export class InsuranceComponent implements OnInit {
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
   data2: Array<any> = [{}, {}, {}];
-  fragmentData = {isSpinner: false};
+  fragmentData = { isSpinner: false };
   dataSourceGeneralInsurance = new MatTableDataSource(this.data);
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
-  lifeInsuranceList = [{name: 'Term', id: 1, count: ''}, {name: 'Traditional', id: 2, count: ''}, {name: 'ULIP', id: 3, count: ''}];
-  generalLifeInsuranceList = [{name: 'Health', id: 5, count: ''},
-    {name: 'Personal accident', id: 7, count: ''},
-    {name: 'Critical illness', id: 6, count: ''},
-    {name: 'Motor', id: 4, count: ''},
-    {name: 'Travel', id: 8, count: ''},
-    {name: 'Home', id: 9, count: ''},
-    {name: 'Fire & special perils', id: 10, count: ''}];
-  allInsurance = [{name: 'Term', id: 1}, {name: 'Traditional', id: 2}, {name: 'ULIP', id: 3}, {
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  lifeInsuranceList = [{ name: 'Term', id: 1, count: '' }, { name: 'Traditional', id: 2, count: '' }, { name: 'ULIP', id: 3, count: '' }];
+  generalLifeInsuranceList = [{ name: 'Health', id: 5, count: '' },
+  { name: 'Personal accident', id: 7, count: '' },
+  { name: 'Critical illness', id: 6, count: '' },
+  { name: 'Motor', id: 4, count: '' },
+  { name: 'Travel', id: 8, count: '' },
+  { name: 'Home', id: 9, count: '' },
+  { name: 'Fire & special perils', id: 10, count: '' }];
+  allInsurance = [{ name: 'Term', id: 1 }, { name: 'Traditional', id: 2 }, { name: 'ULIP', id: 3 }, {
     name: 'Health',
     id: 5
-  }, {name: 'Personal accident', id: 7}, {name: 'Critical illness', id: 6}, {
+  }, { name: 'Personal accident', id: 7 }, { name: 'Critical illness', id: 6 }, {
     name: 'Motor',
     id: 4
-  }, {name: 'Travel', id: 8}, {name: 'Home', id: 9}, {name: 'Fire & special perils', id: 10}];
+  }, { name: 'Travel', id: 8 }, { name: 'Home', id: 9 }, { name: 'Fire & special perils', id: 10 }];
   viewMode;
   dislayList: any;
   sumAssured = 0;
@@ -77,10 +78,10 @@ export class InsuranceComponent implements OnInit {
   totalPremiunAmountLifeIns = 0;
   totalSumAssuredLifeIns = 0;
   showInsurance: any;
-  @ViewChild('tableEl', {static: false}) tableEl;
-  @ViewChild('tableEl2', {static: false}) tableEl2;
-  @ViewChild('lifeInsurance', {static: false}) lifeInsurance: ElementRef;
-  @ViewChild('generalInsurance', {static: false}) generalInsurance: ElementRef;
+  @ViewChild('tableEl', { static: false }) tableEl;
+  @ViewChild('tableEl2', { static: false }) tableEl2;
+  @ViewChild('lifeInsurance', { static: false }) lifeInsurance: ElementRef;
+  @ViewChild('generalInsurance', { static: false }) generalInsurance: ElementRef;
   lifeInsuranceCount: any;
   generalInsuranceCount: any;
   showType = 'Plan type';
@@ -95,8 +96,9 @@ export class InsuranceComponent implements OnInit {
   myFiles;
 
   constructor(private eventService: EventService, public dialog: MatDialog,
-              private fileUpload: FileUploadServiceService,
-              private subInjectService: SubscriptionInject, private cusService: CustomerService, private utils: UtilService, private excelGen: ExcelGenService, private pdfGen: PdfGenService) {
+    private fileUpload: FileUploadServiceService,
+    private subInjectService: SubscriptionInject, private cusService: CustomerService, private utils: UtilService, private excelGen: ExcelGenService, private pdfGen: PdfGenService,
+    private enumDataService: EnumDataService) {
     this.clientData = AuthService.getClientData();
 
   }
@@ -116,15 +118,16 @@ export class InsuranceComponent implements OnInit {
     this.getInsuranceData(1);
     this.lifeInsuranceFlag = true;
     this.generalInsuranceFlag = false;
+    this.enumDataService.setBankAccountTypes();
   }
-  changeExpression(){
-    this.isExpandedLife=true;
+  changeExpression() {
+    this.isExpandedLife = true;
     this.isExpandedGeneral = false;
 
   }
-  changeExpressionGeneral(){
+  changeExpressionGeneral() {
     this.isExpandedGeneral = true;
-    this.isExpandedLife=false;
+    this.isExpandedLife = false;
   }
   fetchData(value, fileName, element) {
     this.isLoadingUpload = true;
@@ -228,7 +231,7 @@ export class InsuranceComponent implements OnInit {
     let dataFiltered;
 
     if (this.insuranceTypeId == 1) {
-      dataFiltered = this.lifeInsuranceFilter.filter(function(item) {
+      dataFiltered = this.lifeInsuranceFilter.filter(function (item) {
         return item[key] === value;
       });
       if (dataFiltered.length > 0) {
@@ -246,7 +249,7 @@ export class InsuranceComponent implements OnInit {
         this.eventService.openSnackBar('No data found', 'Dismiss');
       }
     } else {
-      dataFiltered = this.generalInsuranceDataFilter.filter(function(item) {
+      dataFiltered = this.generalInsuranceDataFilter.filter(function (item) {
         return item[key] === value;
       });
       if (dataFiltered.length > 0) {
@@ -420,8 +423,10 @@ export class InsuranceComponent implements OnInit {
             singleInsuranceData.displayHolderName = singleInsuranceData.insuredMembers[0].name;
             if (singleInsuranceData.insuredMembers.length > 1) {
               for (let i = 1; i < singleInsuranceData.insuredMembers.length; i++) {
-                const firstName = (singleInsuranceData.insuredMembers[i].name as string).split(' ')[0];
-                singleInsuranceData.displayHolderName += ', ' + firstName;
+                if (singleInsuranceData.insuredMembers[i].name) {
+                  const firstName = (singleInsuranceData.insuredMembers[i].name as string).split(' ')[0];
+                  singleInsuranceData.displayHolderName += ', ' + firstName;
+                }
               }
             }
           } else {
@@ -442,7 +447,7 @@ export class InsuranceComponent implements OnInit {
             if (element.policyTypeId) {
               if (ele.id == element.policyTypeId) {
                 element.policyType = ele.policy_type;
-                if(element.policyType == 'Multi-trip Travel Insurance Plan') {
+                if (element.policyType == 'Multi-trip Travel Insurance Plan') {
                   element.policyType = 'Multi Trip Travel Insurance Plan';
                 }
                 this.showType = 'Plan type';
@@ -453,7 +458,7 @@ export class InsuranceComponent implements OnInit {
 
           });
           (element.insuredMembers.length == 0) ? this.showPolicyHolder = 'Name of policy holder' : this.showPolicyHolder = 'Name of insured members';
-          if(this.insuranceSubTypeId == 4){
+          if (this.insuranceSubTypeId == 4) {
             element.planName = element.policyName;
           }
         }
@@ -476,7 +481,7 @@ export class InsuranceComponent implements OnInit {
         } else {
           element.sumAssured = element.sumInsuredIdv;
         }
-        if (element.addOns && element.addOns.length > 0) {
+        if (element.addOns && !element.sumAssured && element.addOns.length > 0) {
           element.addOns.forEach(ele => {
             element.sumAssured += ele.addOnSumInsured;
           });
@@ -557,9 +562,9 @@ export class InsuranceComponent implements OnInit {
   }
 
   getInsuranceTypeData(typeId, typeSubId) {
-    if (typeSubId == 4){
-      this.displayedColumns2 = ['no', 'life', 'insurerName', 'sumInsured', 'premiumAmount', 'policyExpiryDate', 'Duration', 'planName', 'policyNumber','vehicleModel','status', 'icons'];
-    }else{
+    if (typeSubId == 4) {
+      this.displayedColumns2 = ['no', 'life', 'insurerName', 'sumInsured', 'premiumAmount', 'policyExpiryDate', 'Duration', 'planName', 'policyNumber', 'vehicleModel', 'status', 'icons'];
+    } else {
       this.displayedColumns2 = ['no', 'life', 'insurerName', 'sumInsured', 'premiumAmount', 'policyExpiryDate', 'Duration', 'planName', 'policyNumber', 'status', 'icons'];
     }
     this.lifeInsuranceFlag = false;
@@ -644,7 +649,7 @@ export class InsuranceComponent implements OnInit {
       this.insuranceSubTypeId = 0;
       // this.generalLifeInsuranceList = [];
       this.lifeInsuranceList = [];
-      [{name: 'Term', id: 1, count: ''}, {name: 'Traditional', id: 2, count: ''}, {name: 'ULIP', id: 3, count: ''}].map((i) => {
+      [{ name: 'Term', id: 1, count: '' }, { name: 'Traditional', id: 2, count: '' }, { name: 'ULIP', id: 3, count: '' }].map((i) => {
         this.lifeInsuranceList.push(i);
       });
     } else {
@@ -652,10 +657,10 @@ export class InsuranceComponent implements OnInit {
       this.lifeInsuranceFlag = false;
       this.generalInsuranceFlag = true;
       this.generalLifeInsuranceList = [];
-      [{name: 'Health', id: 5, count: ''}, {name: 'Personal accident', id: 7, count: ''}, {name: 'Critical illness', id: 6, count: ''}, {
+      [{ name: 'Health', id: 5, count: '' }, { name: 'Personal accident', id: 7, count: '' }, { name: 'Critical illness', id: 6, count: '' }, {
         name: 'Motor',
         id: 4, count: ''
-      }, {name: 'Travel', id: 8, count: ''}, {name: 'Home', id: 9, count: ''}, {
+      }, { name: 'Travel', id: 8, count: '' }, { name: 'Home', id: 9, count: '' }, {
         name: 'Fire & special perils',
         id: 10,
         count: ''

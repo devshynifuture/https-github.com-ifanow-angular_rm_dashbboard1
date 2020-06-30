@@ -27,6 +27,7 @@ export class CalculatorsComponent implements OnInit {
   advisorId:number;
   clientId: number;
   showDelayChart:boolean = false;
+  currentTab = 0;
 
   delayArray = [];
   
@@ -50,25 +51,20 @@ export class CalculatorsComponent implements OnInit {
     for (let index = 0; index < yearGap; index++) {
       this.delayArray.push({value: index+1, display: index + 1 + ' Years'});
     }
-
-    
-    const costDelay:Object = this.data.remainingData.costDelay;
-    if(costDelay && costDelay.hasOwnProperty(0)) {
-      this.showDelayChart = true;
-      this.createChart(costDelay);
-    }
   }
 
   getdataForm() {
+    let loan = this.data.remainingData.loan;
+    this.calculatedEMI = loan;
     this.incomeFG = this.fb.group({
-      income: [this.data ? this.data.income : '', [Validators.required, Validators.pattern('[0-9]*')]],
-      growthRate: [this.data ? this.data.growth : '', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]],
-      otherEMI: [this.data ? this.data.otherEMI : '', [Validators.required, Validators.pattern('[0-9]*')]],
+      income: [loan ? loan.netSalary : '', [Validators.required, Validators.pattern('[0-9]*')]],
+      growthRate: [loan ? loan.incomeGrowthRate : '', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]],
+      otherEMI: [loan ? loan.previousEMIs : '', [Validators.required, Validators.pattern('[0-9]*')]],
     });
     this.loanFG = this.fb.group({
-      loanAmt: [this.data ? this.data.loanAmt : '', [Validators.required, Validators.pattern('[0-9]*')]],
-      loanTenure: [this.data ? this.data.loanTenure : '', [Validators.required, Validators.pattern('[0-9]*')]],
-      interestRate: [this.data ? this.data.interestRate : '', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]],
+      loanAmt: [loan ? loan.loanAmount : '', [Validators.required, Validators.pattern('[0-9]*')]],
+      loanTenure: [loan ? loan.loanTenure : '', [Validators.required, Validators.pattern('[0-9]*')]],
+      interestRate: [loan ? loan.annualInterestRate : '', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]],
     });
 
     this.delayFG = this.fb.group({
@@ -102,6 +98,7 @@ export class CalculatorsComponent implements OnInit {
           ...res,
           ...emiObj
         };
+        this.subInjectService.setRefreshRequired();
       }, err => {
         this.eventService.openSnackBar(err, "Dismiss");
       })
@@ -127,8 +124,9 @@ export class CalculatorsComponent implements OnInit {
         goalType: this.data.goalType
       }
 
-      this.planService.saveEMIToGoal({loanIpJson: JSON.stringify(emiObj)}).subscribe((res) => {
+      this.planService.saveEMIToGoal(emiObj).subscribe((res) => {
         this.eventService.openSnackBar("EMI saved to goal", "Dismiss");
+        this.subInjectService.setRefreshRequired();
       }, err => {
         this.eventService.openSnackBar(err, "Dismiss");
       })
@@ -142,7 +140,7 @@ export class CalculatorsComponent implements OnInit {
         ...this.data,
       }
   
-      this.subInjectService.changeNewRightSliderState({ state: 'close', data: data, refreshRequired: true })
+      this.subInjectService.closeNewRightSlider({ state: 'close', data: data, refreshRequired: true })
     }
   }
 
@@ -279,6 +277,7 @@ export class CalculatorsComponent implements OnInit {
 
     this.planService.saveCostToDelay(jsonObj).subscribe(res => {
       this.eventService.openSnackBar("Cost of delay added to goal", "Dismiss");
+      this.subInjectService.setRefreshRequired();
     }, err => {
       this.eventService.openSnackBar(err, "Dismiss");
     })
@@ -286,7 +285,40 @@ export class CalculatorsComponent implements OnInit {
 
   // ---------------------------------- cost of delay ------------------------------------
 
+  save() {
+    switch(this.currentTab) {
+      case 0:
+        this.saveEMIToGoal();
+        break;
+      case 1:
+        break;
+      case 2:
+        break;
+      case 4:
+        this.saveDelayToGoal();
+        break;
+
+      default:
+        console.error('Unexpected switch case found');
+    }
+  }
+
+  initializePage(pg) {
+    switch(pg) {
+      case 0:
+      case 4:
+        const costDelay:Object = this.data.remainingData.costDelay;
+        if(costDelay && costDelay.hasOwnProperty(0)) {
+          this.showDelayChart = true;
+          setTimeout(() => {
+            this.createChart(costDelay);
+          }, 100);
+        }
+      break;
+    }
+  }
+
   close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.closeNewRightSlider({ state: 'close' });
   }
 }
