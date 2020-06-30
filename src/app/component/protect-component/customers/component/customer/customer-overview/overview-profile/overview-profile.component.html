@@ -227,8 +227,26 @@
                                     <p class=" text-primitive m-0 f-12 ">KYC STATUS</p>
                                     <p class=" f-14 roboto f-500 m-0 "> Not verified</p>
                                 </div> -->
-
-                                <div class=" basicDetaisList ">
+                                <div *ngIf="clientOverviewData.clientType==3" class=" basicDetaisList ">
+                                    <p class=" text-primitive m-0 f-12 ">OCCUPTATION</p>
+                                    <div class="relClass">
+                                        <div class="bar height23">
+                                            <p class=" f-14 roboto f-500 m-0 ">
+                                                <span *ngIf="!letsideBarLoader">
+                                                    <span *ngIf="clientOverviewData.occupationId==1">Government</span>
+                                                    <span *ngIf="clientOverviewData.occupationId==2">Service</span>
+                                                    <span *ngIf="clientOverviewData.occupationId==3">Private
+                                                        sector</span>
+                                                    <span *ngIf="clientOverviewData.occupationId==4">Business</span>
+                                                    <span *ngIf="clientOverviewData.occupationId==5">Self
+                                                        Employed</span>
+                                                </span>
+                                            </p>
+                                            <!-- </span> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngIf="clientOverviewData.clientType!=3" class=" basicDetaisList ">
                                     <p class=" text-primitive m-0 f-12 ">GENDER</p>
                                     <div class="relClass">
                                         <div class="bar height23">
@@ -240,6 +258,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
 
                             <div [appSkeletonLoading]="letsideBarLoader" appSkeletonLoading
@@ -269,7 +288,7 @@
                                     </div>
                                 </div>
 
-                                <div class=" basicDetaisList ">
+                                <div *ngIf="clientOverviewData.clientType!=3" class=" basicDetaisList ">
                                     <p class=" text-primitive m-0 f-12 ">AADHAAR</p>
                                     <div class="relClass">
                                         <div class="bar height23">
@@ -300,8 +319,32 @@
                                         <!-- </div> -->
                                     </div>
                                 </div>
-
-                                <div class=" basicDetaisList ">
+                                <div *ngIf="clientOverviewData.clientType==3" class=" basicDetaisList ">
+                                    <p class=" text-primitive m-0 f-12 ">COMPANY STATUS</p>
+                                    <div class="relClass">
+                                        <div class="bar height23">
+                                            <span *ngIf="!letsideBarLoader">
+                                                <p class=" f-14 roboto f-500 m-0 ">
+                                                    <span *ngIf="clientOverviewData.companyStatus==1">Private
+                                                        limited</span>
+                                                    <span *ngIf="clientOverviewData.companyStatus==2">Public
+                                                        limited</span>
+                                                    <span
+                                                        *ngIf="clientOverviewData.companyStatus==3">Partnership/LLP</span>
+                                                    <span *ngIf="clientOverviewData.companyStatus==4">Trust</span>
+                                                    <span *ngIf="clientOverviewData.companyStatus==5">Society</span>
+                                                    <span *ngIf="clientOverviewData.companyStatus==6"> Association of
+                                                        persons</span>
+                                                    <span *ngIf="clientOverviewData.companyStatus==7">Hindu undivided
+                                                        family (HUF)</span>
+                                                    <span *ngIf="clientOverviewData.companyStatus==8"> Body of
+                                                        individuals</span>
+                                                </p>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngIf="clientOverviewData.clientType!=3" class=" basicDetaisList ">
                                     <p class=" text-primitive m-0 f-12 ">MARITAL STATUS</p>
                                     <div class="relClass">
                                         <div class="bar height23">
