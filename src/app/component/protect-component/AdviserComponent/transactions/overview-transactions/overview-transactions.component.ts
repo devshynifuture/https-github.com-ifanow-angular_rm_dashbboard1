@@ -1,19 +1,20 @@
-import {UtilService} from '../../../../../services/util.service';
-import {SubscriptionInject} from '../../Subscriptions/subscription-inject.service';
-import {Component, OnInit} from '@angular/core';
-import {OnlineTransactionComponent} from './doTransaction/online-transaction/online-transaction.component';
-import {AuthService} from 'src/app/auth-service/authService';
-import {EventService} from 'src/app/Data-service/event.service';
-import {KnowYourCustomerComponent} from './know-your-customer/know-your-customer.component';
-import {IinUccCreationComponent} from './IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component';
-import {AddMandateComponent} from './MandateCreation/add-mandate/add-mandate.component';
-import {HttpHeaders, HttpParams} from '@angular/common/http';
-import {HttpService} from 'src/app/http-service/http-service';
-import {TransactionMobileViewComponent} from '../transaction-mobile-view/transaction-mobile-view.component';
-import {MatDialog} from '@angular/material';
-import {OnlineTransactionService} from '../online-transaction.service';
-import {TransactionDetailComponent} from '../transactions-list/transaction-detail/transaction-detail.component';
-import {TransactionEnumService} from '../transaction-enum.service';
+import { UtilService } from '../../../../../services/util.service';
+import { SubscriptionInject } from '../../Subscriptions/subscription-inject.service';
+import { Component, OnInit } from '@angular/core';
+import { OnlineTransactionComponent } from './doTransaction/online-transaction/online-transaction.component';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
+import { KnowYourCustomerComponent } from './know-your-customer/know-your-customer.component';
+import { IinUccCreationComponent } from './IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component';
+import { AddMandateComponent } from './MandateCreation/add-mandate/add-mandate.component';
+import { HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpService } from 'src/app/http-service/http-service';
+import { TransactionMobileViewComponent } from '../transaction-mobile-view/transaction-mobile-view.component';
+import { MatDialog } from '@angular/material';
+import { OnlineTransactionService } from '../online-transaction.service';
+import { TransactionDetailComponent } from '../transactions-list/transaction-detail/transaction-detail.component';
+import { TransactionEnumService } from '../transaction-enum.service';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 
 @Component({
   selector: 'app-overview-transactions',
@@ -48,12 +49,13 @@ export class OverviewTransactionsComponent implements OnInit {
 
 
   constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject,
-              public eventService: EventService, private http: HttpService,
-              private tranService: OnlineTransactionService) {
+    public eventService: EventService, private http: HttpService,
+    private tranService: OnlineTransactionService, private enumDataService: EnumDataService) {
     this.advisorId = AuthService.getAdvisorId();
   }
 
   ngOnInit() {
+    this.enumDataService.setBankAccountTypes();
     this.finalStartDate = UtilService.getStartOfTheDay(new Date((new Date()).valueOf() - 1000 * 60 * 60 * 24 * 7)).getTime();
     this.finalEndDate = UtilService.getEndOfDay(new Date()).getTime();
     this.getAllTransactionList();
@@ -64,7 +66,7 @@ export class OverviewTransactionsComponent implements OnInit {
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 
   openMobileErrorCopyTransactionPopup() {

@@ -74,6 +74,7 @@ export class CompanyMoreInfoComponent implements OnInit {
       pan: [data.pan, [Validators.pattern(this.validatorType.PAN)]],
       designation: [(data.occupationId) ? String(data.occupationId) : ''],
       gender: [(data.genderId) ? String(data.genderId) : '1'],
+      anniversaryDate: [new Date(data.anniversaryDate)]
     });
     console.log(this.moreInfoForm)
   }
@@ -159,6 +160,7 @@ export class CompanyMoreInfoComponent implements OnInit {
       name: this.moreInfoForm.value.name,
       bioRemarkId: this.moreInfoData.bioRemarkId,
       remarks: this.moreInfoForm.controls.myNotes.value,
+      anniversaryDate: this.datePipe.transform(this.moreInfoForm.value.anniversaryDate._d, 'dd/MM/yyyy')
     };
     if (this.moreInfoData.companyPersonDetailId) {
       this.peopleService.updateCompanyPersonDetail(obj).subscribe(
