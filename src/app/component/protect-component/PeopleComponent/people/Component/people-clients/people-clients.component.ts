@@ -176,6 +176,9 @@ export class PeopleClientsComponent implements OnInit {
             dialogRef.close();
             this.enumDataService.searchClientList();
             this.enumDataService.searchClientAndFamilyMember();
+            this.isLoading = true;
+            this.finalClientList = [];
+            this.clientDatasource.data = [{}, {}, {}];
             this.getClientList(0);
           },
           error => this.eventService.showErrorMessage(error)
