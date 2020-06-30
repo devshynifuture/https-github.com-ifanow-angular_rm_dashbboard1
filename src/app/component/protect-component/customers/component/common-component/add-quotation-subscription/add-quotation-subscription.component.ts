@@ -1,17 +1,13 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { AuthService } from 'src/app/auth-service/authService';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { SubscriptionService } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription.service';
-import { SubscriptionUpperSliderComponent } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/upper-slider/subscription-upper-slider.component';
-import { EventService } from 'src/app/Data-service/event.service';
-import { UtilService } from 'src/app/services/util.service';
-import { CommonFroalaComponent } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/common-froala/common-froala.component';
-import { Router } from '@angular/router';
-import { escapeRegExp } from '@angular/compiler/src/util';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-import { identifierModuleUrl } from '@angular/compiler';
-import { SettingsService } from 'src/app/component/protect-component/AdviserComponent/setting/settings.service';
-import { element } from 'protractor';
+import {Component, Input, OnInit} from '@angular/core';
+import {AuthService} from 'src/app/auth-service/authService';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {SubscriptionService} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {UtilService} from 'src/app/services/util.service';
+import {CommonFroalaComponent} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/common-froala/common-froala.component';
+import {Router} from '@angular/router';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import {SettingsService} from 'src/app/component/protect-component/AdviserComponent/setting/settings.service';
 
 @Component({
   selector: 'app-add-quotation-subscription',
@@ -91,7 +87,7 @@ export class AddQuotationSubscriptionComponent implements OnInit {
       return;
     }
     data.quotation['planId'] = data.id;
-    data.quotation.documentText = data.quotation.documentText.replace(new RegExp(escapeRegExp('$plan_name'), 'g'), data.name);
+    data.quotation.documentText = data.quotation.documentText.replace(new RegExp(UtilService.escapeRegExp('$plan_name'), 'g'), data.name);
     data = data['quotation'];
     data['feeStructureFlag'] = data.documentText.includes('$service_fee');
     // data['feeStructureFlag'] = data.documentText.includes('$service_name');
@@ -175,7 +171,7 @@ export class AddQuotationSubscriptionComponent implements OnInit {
 
                    <td style="padding: 24px; border: none;">
                    ${(element.servicePricing.feeTypeId == 1) ? ` <p style="font-size: 12px; margin:0px;">FEES</p>
-                       <h4 style="margin: 0px; padding: 0px; font-size: 18px;">₹${element.averageFees}</h4>` : ''} 
+                       <h4 style="margin: 0px; padding: 0px; font-size: 18px;">₹${element.averageFees}</h4>` : ''}
                    </td>
                </tr>
            </table>
@@ -217,7 +213,7 @@ export class AddQuotationSubscriptionComponent implements OnInit {
                            </tr>
                        </table>
                    </td>
-                   </tr>`: ''}
+                   </tr>` : ''}
            </table>
        </td>
    </tr>
@@ -227,8 +223,8 @@ export class AddQuotationSubscriptionComponent implements OnInit {
       this.feeStructureHtmlData += feeStructureTable;
       servicesName += element.serviceName + ', ';
     });
-    quotationData.documentText = quotationData.documentText.replace(new RegExp(escapeRegExp('$service_fee'), 'g'), this.feeStructureHtmlData);
-    quotationData.documentText = quotationData.documentText.replace(new RegExp(escapeRegExp('$service_name'), 'g'), servicesName);
+    quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$service_fee'), 'g'), this.feeStructureHtmlData);
+    quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$service_name'), 'g'), servicesName);
     this.getOrgProfiles(quotationData);
 
   }
@@ -242,9 +238,9 @@ export class AddQuotationSubscriptionComponent implements OnInit {
       data => {
         if (data) {
           this.orgDetails = data;
-          quotationData.documentText = quotationData.documentText.replace(new RegExp(escapeRegExp('$organization_profile_mobile'), 'g'), this.orgDetails.mobileNumber);
-          quotationData.documentText = quotationData.documentText.replace(new RegExp(escapeRegExp('$organization_profile_email'), 'g'), this.orgDetails.email);
-          quotationData.documentText = quotationData.documentText.replace(new RegExp(escapeRegExp('$company_name'), 'g'), (this.orgDetails.companyName) ? this.orgDetails.companyName : AuthService.getUserInfo().name);
+          quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$organization_profile_mobile'), 'g'), this.orgDetails.mobileNumber);
+          quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$organization_profile_email'), 'g'), this.orgDetails.email);
+          quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$company_name'), 'g'), (this.orgDetails.companyName) ? this.orgDetails.companyName : AuthService.getUserInfo().name);
           // $logo_for_reports
           this.getProfileBillerData(quotationData);
         }
@@ -258,11 +254,11 @@ export class AddQuotationSubscriptionComponent implements OnInit {
         if (data) {
           this.billerInfo = data.filter(element => element.primary == true);
           this.billerInfo = this.billerInfo[0];
-          quotationData.documentText = quotationData.documentText.replace(new RegExp(escapeRegExp('$biller_profile_address'), 'g'), this.billerInfo.billerAddress);
-          quotationData.documentText = quotationData.documentText.replace(new RegExp(escapeRegExp('$biller_profile_city'), 'g'), this.billerInfo.city);
-          quotationData.documentText = quotationData.documentText.replace(new RegExp(escapeRegExp('$biller_profile_pin'), 'g'), this.billerInfo.zipCode);
-          quotationData.documentText = quotationData.documentText.replace(new RegExp(escapeRegExp('$company_display_name'), 'g'), this.billerInfo.companyDisplayName);
-          // quotationData.documentText = quotationData.documentText.replace(new RegExp(escapeRegExp('$biller_profile_address'), 'g'), this.billerInfo.mobileNumber);
+          quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$biller_profile_address'), 'g'), this.billerInfo.billerAddress);
+          quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$biller_profile_city'), 'g'), this.billerInfo.city);
+          quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$biller_profile_pin'), 'g'), this.billerInfo.zipCode);
+          quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$company_display_name'), 'g'), this.billerInfo.companyDisplayName);
+          // quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$biller_profile_address'), 'g'), this.billerInfo.mobileNumber);
           this.openFroala(quotationData, 'openQuotation');
         }
       },
