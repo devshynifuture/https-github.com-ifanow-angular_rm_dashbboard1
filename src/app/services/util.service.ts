@@ -549,6 +549,24 @@ export class UtilService {
     }
   }
 
+  /**
+   * Compares and returns int value based on date comparision
+   * @param date1 date object or date string
+   * @param date2 date object or date string
+   * @returns 0 if dates are equal, 1 if second is greater than first, -1 otherwise
+   */
+  public static compareDates(date1, date2) {
+    const firstD = new Date(date1).getTime();
+    const secondD = new Date(date2).getTime();
+
+    if(firstD === secondD) {
+      return 0;
+    } else if(firstD > secondD) {
+      return -1;
+    } else {
+      return 1;
+    }
+  }
 
 }
 
