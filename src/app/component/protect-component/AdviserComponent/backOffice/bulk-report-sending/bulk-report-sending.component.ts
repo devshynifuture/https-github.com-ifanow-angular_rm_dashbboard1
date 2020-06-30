@@ -6,6 +6,8 @@ import { StatusReportComponent } from './status-report/status-report.component';
 import { BackOfficeService } from '../back-office.service';
 import { MatTableDataSource } from '@angular/material';
 import { AuthService } from 'src/app/auth-service/authService';
+import { CustomiseSettingComponent } from './customise-setting/customise-setting.component';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-bulk-report-sending',
@@ -23,6 +25,7 @@ export class BulkReportSendingComponent implements OnInit {
   constructor(
     private subInjectService: SubscriptionInject,
     private backOfficeService: BackOfficeService,
+    private eventService : EventService,
   ) {
     this.advisorId = AuthService.getAdvisorId();
   }
@@ -94,7 +97,26 @@ export class BulkReportSendingComponent implements OnInit {
       }
     );
   }
+  openCustmiseSetting(){
+    const fragmentData = {
+      flag: 'addNewCustomer',
+      id: 1,
+      direction: 'top',
+      componentName: CustomiseSettingComponent,
+      state: 'open'
+    };
+    // this.router.navigate(['/subscription-upper'])
+    AuthService.setSubscriptionUpperSliderData(fragmentData);
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          // this.getClientSubscriptionList();
+          subscription.unsubscribe();
+        }
+      }
+    );
 
+  }
 }
 
 export interface PeriodicElement {

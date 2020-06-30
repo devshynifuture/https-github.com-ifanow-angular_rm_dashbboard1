@@ -11,7 +11,7 @@ import { CustomiseSettingComponent } from './customise-setting/customise-setting
 
 
 @NgModule({
-  declarations: [BulkReportSendingComponent, CustomiseSettingComponent, ],
+  declarations: [BulkReportSendingComponent, ],
   imports: [
     CommonModule,
     BulkReportSendingRoutingModule,
