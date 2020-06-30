@@ -164,7 +164,8 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input autocomplete="off" matInput #rdNo type="text" (keypress)="keyPressRdNumber($event)" maxlength="18" class="form-control br-0" formControlName="rdNo">
+                        <!-- (keypress)="keyPressRdNumber($event)" -->
+                        <input autocomplete="off" matInput #rdNo type="text"  maxlength="18" class="form-control br-0" formControlName="rdNo">
                         <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{rdNo.value.length}}/18</mat-hint>
                     </mat-form-field>

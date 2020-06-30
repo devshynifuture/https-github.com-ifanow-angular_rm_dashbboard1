@@ -69,6 +69,18 @@ export class AddTransactionComponent implements OnInit {
     console.log(this.commencementDate)
   }
 
+  setMax(type, index){
+    console.log(type,"type 123",this.getTransFormList.controls[index]);
+    if(type == 1){
+      this.getTransFormList.controls[index].get('amount').setValidators([Validators.required, Validators.max(150000)]);
+      this.getTransFormList.controls[index].get('amount').updateValueAndValidity();
+    }
+    else{
+      this.getTransFormList.controls[index].get('amount').setValidators([Validators.required]);
+      this.getTransFormList.controls[index].get('amount').updateValueAndValidity();
+    }
+  }
+
   addTransaction() {
     console.log(this.getTransFormList)
     console.log('commencementDate == ', this.commencementDate)

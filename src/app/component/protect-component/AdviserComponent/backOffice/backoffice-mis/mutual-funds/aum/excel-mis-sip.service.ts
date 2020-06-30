@@ -1223,13 +1223,7 @@ export class ExcelMisSipService {
         last.font = { bold: true };
 
         const buf = await wb.xlsx.writeBuffer();
-        let name;
-        if (userData.hasOwnProperty('fullName')) {
-            name = userData.fullName;
-        } else {
-            name = userData.name;
-        }
-        saveAs(new Blob([buf]), name + '-' + metaData + '-' + new Date() + '.xlsx');
+        saveAs(new Blob([buf]), metaData + '-' + new Date().getDate() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getFullYear() + '.xlsx');
 
     }
 
