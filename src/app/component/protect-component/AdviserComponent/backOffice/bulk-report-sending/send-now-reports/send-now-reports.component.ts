@@ -25,6 +25,8 @@ export class SendNowReportsComponent implements OnInit {
   selectedReportType: any;
   fromDate: Date;
   toDate: Date;
+  maxDate = new Date();
+  minDate = new Date();
   financialYears: { from: number; to: number; selected: boolean; disabled: boolean; }[];
   date: any;
   default: any;
@@ -60,7 +62,7 @@ export class SendNowReportsComponent implements OnInit {
       }
 
     });
-
+    this.date = this.default
   }
   close() {
     this.subInjectService.changeNewRightSliderState({

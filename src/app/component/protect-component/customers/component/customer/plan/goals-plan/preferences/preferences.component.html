@@ -21,6 +21,7 @@
                                 <mat-form-field>
                                     <input matInput type="text" class="form-control br-0 rupess" formControlName="goalValue"
                                     appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY">
+                                    <mat-error>This field is required</mat-error>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -40,6 +41,7 @@
                                         <mat-option value="" disabled>Select option</mat-option>
                                         <mat-option [value]="month.number" *ngFor="let month of months">{{month.long}}</mat-option>
                                     </mat-select>
+                                    <mat-error>This field is required</mat-error>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -50,8 +52,12 @@
                                         <mat-option value="" disabled>Select option</mat-option>
                                         <mat-option [value]="year" *ngFor="let year of years">{{year}}</mat-option>
                                     </mat-select>
+                                    <mat-error>This field is required</mat-error>
                                 </mat-form-field>
                             </div>
+                        </div>
+                        <div class="col-md-12" *ngIf="savingsSDError">
+                            <mat-error >Savings start date cannot be greater than savings end date</mat-error>
                         </div>
                     </div>
                     <div class="row pt-16 pb-16">
@@ -68,6 +74,7 @@
                                         <mat-option value="" disabled>Select option</mat-option>
                                         <mat-option [value]="month.number" *ngFor="let month of months">{{month.long}}</mat-option>
                                     </mat-select>
+                                    <mat-error>This field is required</mat-error>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -78,8 +85,12 @@
                                         <mat-option value="" disabled>Select option</mat-option>
                                         <mat-option [value]="year" *ngFor="let year of years">{{year}}</mat-option>
                                     </mat-select>
+                                    <mat-error>This field is required</mat-error>
                                 </mat-form-field>
                             </div>
+                        </div>
+                        <div class="col-md-12" *ngIf="savingsEDError">
+                            <mat-error >Savings end date cannot be greater than goal end date</mat-error>
                         </div>
                     </div>
                     <div class="row pt-16 pb-16 btl-1">
@@ -95,6 +106,7 @@
                                         <mat-option value="" disabled>Select option</mat-option>
                                         <mat-option [value]="month.number" *ngFor="let month of months">{{month.long}}</mat-option>
                                     </mat-select>
+                                    <mat-error>This field is required</mat-error>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -103,10 +115,14 @@
                                 <mat-form-field>
                                     <mat-select class="form-control br-0 br-none" formControlName="goalStartDateYear">
                                         <mat-option value="" disabled>Select option</mat-option>
-                                        <mat-option [value]="year" *ngFor="let year of years">{{year}}</mat-option>
+                                        <mat-option [value]="year" *ngFor="let year of goalStartYears">{{year}}</mat-option>
                                     </mat-select>
+                                    <mat-error>This field is required</mat-error>
                                 </mat-form-field>
                             </div>
+                        </div>
+                        <div class="col-md-12" *ngIf="goalSDError">
+                            <mat-error >Goal start date cannot be greater than goal end date</mat-error>
                         </div>
                     </div>
                     <div class="row pt-16 pb-16 btl-1" *ngIf="data.singleOrMulti == 2">
@@ -122,6 +138,7 @@
                                         <mat-option value="" disabled>Select option</mat-option>
                                         <mat-option [value]="month.number" *ngFor="let month of months">{{month.long}}</mat-option>
                                     </mat-select>
+                                    <mat-error>This field is required</mat-error>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -130,8 +147,9 @@
                                 <mat-form-field>
                                     <mat-select class="form-control br-0 br-none" formControlName="goalEndDateYear">
                                         <mat-option value="" disabled>Select option</mat-option>
-                                        <mat-option [value]="year" *ngFor="let year of years">{{year}}</mat-option>
+                                        <mat-option [value]="year" *ngFor="let year of goalStartYears">{{year}}</mat-option>
                                     </mat-select>
+                                    <mat-error>This field is required</mat-error>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -166,16 +184,20 @@
                                         <mat-option value="1">Breakup</mat-option>
                                         <mat-option value="2">No Breakup</mat-option>
                                     </mat-select>
+                                    <mat-error>This field is required</mat-error>
                                 </mat-form-field>
                             </div>
                         </div>
 
                     </div>
-                    <div class="row pt-32 pb-16" *ngIf="data.singleOrMulti == 2">
+                    <div class="row pt-32 pb-16">
                         <div class="col-md-4 pr-8 text-right">
-                            <p class="roboto mb-0 text-right pt-16">Step up <img src="/assets/images/svg/info.svg"
+                            <p class="roboto mb-0 text-right pt-16">
+                                Step up 
+                                <img src="/assets/images/svg/info.svg"
                                     matTooltip="Info about the action"
-                                    aria-label="Button that displays a tooltip when focused or hovered over"></p>
+                                    aria-label="Button that displays a tooltip when focused or hovered over">
+                            </p>
                         </div>
                         <div class="col-md-6 pl-0">
                             <div id="custom-slider">
@@ -188,6 +210,7 @@
                                     <input matInput type="text" class="form-control br-0" formControlName="stepUp"
                                     [value]="goalDetailsFG.get('stepUp').value"
                                     appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY">
+                                    <mat-error>This field is required</mat-error>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -218,6 +241,7 @@
                                 <mat-form-field>
                                     <input matInput type="text" class="form-control br-0"
                                         formControlName="name">
+                                        <mat-error>This field is required</mat-error>
                                 </mat-form-field>
                             </div>
                         </div>
