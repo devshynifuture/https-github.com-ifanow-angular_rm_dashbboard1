@@ -283,11 +283,13 @@
                                 </div>
 
                                 <div class=" basicDetaisList ">
-                                    <p class=" text-primitive m-0 f-12 ">TAX STATUS</p>
+                                    <p class=" text-primitive m-0 f-12 ">RESIDENTAL STATUS</p>
                                     <div class="relClass">
                                         <div class="bar height23">
                                             <p *ngIf="!letsideBarLoader" class=" f-14 roboto f-500 m-0 ">
-                                                Resident</p>
+                                                <span *ngIf="clientOverviewData.residentFlag==1">Resident</span>
+                                                <span *ngIf="clientOverviewData.residentFlag==2">Non-resident</span>
+                                            </p>
                                         </div>
                                     </div>
                                     <div class="relClass">
