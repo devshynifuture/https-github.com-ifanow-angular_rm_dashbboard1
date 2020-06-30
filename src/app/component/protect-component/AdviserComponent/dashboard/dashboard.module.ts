@@ -5,10 +5,11 @@ import { MaterialModule } from '../../../../material/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CustomDirectiveModule } from '../../../../common/directives/common-directive.module';
 import { DashboardRoutingModule } from './dashboard-routing.module';
+import { DashboardGuideDialogComponent } from './dashboard-guide-dialog/dashboard-guide-dialog.component';
 
 @NgModule({
   declarations: [
-    DashboardComponent
+    DashboardComponent,
   ],
   imports: [
     CommonModule,
