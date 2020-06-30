@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./customise-setting.component.scss']
 })
 export class CustomiseSettingComponent implements OnInit {
+  displayedColumns: string[] = ['name', 'mfoverview', 'mfsummary', 'mftransaction', 'mfunrealised', 'mfcapitalgain', 'mfcapitalgaindetailed'];
+  dataSource = ELEMENT_DATA;
 
   constructor() { }
 
@@ -13,3 +15,20 @@ export class CustomiseSettingComponent implements OnInit {
   }
 
 }
+
+export interface PeriodicElement {
+  name: string;
+  mfoverview: string;
+  mfsummary: string;
+  mftransaction: string;
+  mfunrealised: string;
+  mfcapitalgain: string;
+  mfcapitalgaindetailed: string;
+
+}
+
+const ELEMENT_DATA: PeriodicElement[] = [
+  { name: 'Ronak hindocha', mfoverview: ' ', mfsummary: '', mftransaction: '', mfunrealised: '', mfcapitalgain: '', mfcapitalgaindetailed: '' },
+
+
+];

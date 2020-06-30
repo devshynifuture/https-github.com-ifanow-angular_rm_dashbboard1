@@ -1,155 +1,150 @@
-<div class="p-24" *ngIf="isEditAdd">
-    <h1 mat-dialog-title class="m-0" *ngIf="!isEditable">Add New Event</h1>
-    <h1 mat-dialog-title class="m-0" *ngIf="isEditable">Edit Event</h1>
+<div class="p-20" *ngIf="isEditAdd">
+    <h1 class=" f-22" *ngIf="!isEditable">Add New Event</h1>
+    <h1 class=" f-22" *ngIf="isEditable">Edit Event</h1>
 
-    <div mat-dialog-content class="p-24">
-        <form [formGroup]="eventForm">
-            <div class="row">
-                <div class="col-md-8 p-0">
-                    <h5 class="mb-4 f-14 text-black roboto">Title</h5>
-                    <div class="form-group">
-                        <mat-form-field>
-                            <input matInput formControlName="title" class="form-control br-0">
-                        </mat-form-field>
-                    </div>
-                </div>
-            </div>
-            <div class="row pt-12">
-                <div class="col-md-12 p-0">
-                    <h5 class="mb-4 mb-2 f-14 text-black roboto">Description</h5>
-                    <app-froala [(model)]="eventData.description" (modelChange)="descriptionData($event)"></app-froala>
-                </div>
-            </div>
+    <form [formGroup]="eventForm">
 
-            <div class="row pt-70">
-                <div class="col-md-8 p-0">
-                    <h5 class="mb-4  f-14 text-black roboto">Event address</h5>
-                    <div class="form-group">
-                        <mat-form-field>
-                            <textarea matInput rows="4" formControlName="location" class="form-control p-8"></textarea>
-                        </mat-form-field>
-                    </div>
-                </div>
-            </div>
-
-            <div class="pt-80">
-
-                <div class="row">
-                    <div class="col-md-4 pl-0">
-                        <h5 class="mb-4 f-14 roboto text-black ">Start date</h5>
-                        <div class="form-group">
-                            <mat-form-field class="date-input">
-                                <input (click)="picker.open()" (dateChange)="setEndDate()" readonly matInput formControlName="startDateTime" class="form-control" [value]="this.eventData.start.dateTime == undefined ? startDate : this.eventData.start.dateTime" [min]="startDate" [matDatepicker]="picker">
-                                <mat-datepicker-toggle matSuffix style="margin-top: -18px;" [for]="picker">
-                                </mat-datepicker-toggle>
-                                <mat-datepicker #picker></mat-datepicker>
-                            </mat-form-field>
-                        </div>
-                    </div>
-                    <div class="col-md-4 pl-0" *ngIf="showTime">
-                        <div class="row pl-0">
-                            <div class="col-md-6 pl-0 form-group">
-                                <h5 class="text-black mb-4 f-14 ">Start time</h5>
-                                <mat-form-field>
-                                    <!-- <mat-label>Start time</mat-label> -->
-                                    <select matNativeControl class="form-control" formControlName="startTime" (change)="setTime('start')">
-                                        <option *ngFor="let time of timeArr" [value]="time">{{time}}</option>
-                                    </select>
-                                </mat-form-field>
-                            </div>
-                            <div class="col-md-6 form-group pl-0">
-                                <h5 class="text-black mb-4 f-14 ">End time</h5>
-                                <mat-form-field>
-                                    <!-- <mat-label>End time</mat-label> -->
-                                    <select matNativeControl class="form-control" formControlName="endTime" (change)="setTime('end')">
-                                        <option *ngFor="let time of timeArr" [value]="time"
-                                            [hidden]="eventForm.value.startTime > time"> {{time}} </option>
-                                    </select>
-                                </mat-form-field>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 pr-0">
-                        <h5 class="mb-4 text-black f-14 roboto">End date</h5>
-                        <div class="form-group">
-                            <mat-form-field class="date-input">
-                                <input (click)="epicker.open()" readonly class="form-control" matInput formControlName="endDateTime" [min]="eventForm.value.startDateTime._d == null?startDate : eventForm.value.startDateTime._d" [matDatepicker]="epicker">
-                                <mat-datepicker-toggle matSuffix style="margin-top: -18px;" [for]="epicker">
-                                </mat-datepicker-toggle>
-                                <mat-datepicker #epicker></mat-datepicker>
-                            </mat-form-field>
-                        </div>
-                    </div>
-                    <div class="col-md-3 pr-0 " *ngIf="!showTime">
-                        <button (click)="addTime()">Add Time</button>
-                    </div>
-                </div>
-
-            </div>
-            <div class="row pt-6">
-                <div class="col-md-10 p-0">
-                    <h5 class="m-0 text-black f-14 roboto">Attendee List </h5>
-                    <div class="row pl-0">
-                        <div class="col-md-10 pl-0 ">
-                            <div class="form-group">
-                                <mat-form-field>
-                                    <input matInput formControlName="attendee" class="form-control br-0 ">
-                                    <mat-error *ngIf="eventForm.controls['attendee'].hasError('pattern')">Email is valid
-                                    </mat-error>
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="col-md-2 pl-0">
-                            <img src="/assets/images/svg/plus.svg" (click)="addAttendee()" [hidden]="eventForm.controls['attendee'].hasError('pattern') || this.eventForm.get('attendee').value == ''">
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-10 pl-0 mt-8" *ngIf="attendeesArr.length > 0">
-                    <div class="row pl-0" *ngFor="let member of attendeesArr">
-                        <div class="col-md-10 pl-0 ">
-                            {{member.email}}
-                        </div>
-                        <div class="col-md-2 pl-0 ">
-                            <img src="assets/images/svg/delete.svg" (click)="removeMember(member)">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row pl-0">
-                <div class="col-md-10 pl-0 ">
-                    <button mat-stroked-button class="btn-primary">
-                        <input style="display: none;" (change)="getFileDetails($event)" id="file-3" multiple
-                            type="file">
-                        <!-- <label class="uploadLabel c-p f-14 c-p" for="file-3">
-                            <img class="mr-8" src="/assets/images/svg/upload-document-icon.svg">
-                            <span></span>
-                        </label> -->
-                        Attach files
-                    </button>
-                </div>
-                <div class="col-md-10 pl-0 mt-8" *ngIf="myFiles.length > 0">
-                    <div class="row pl-0" *ngFor="let file of myFiles, let i = index">
-                        <div class="col-md-10 pl-0 ">
-                            {{i+1}}. {{file.name}}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
-        <!-- <input matInput [(ngModel)]="data.animal"> -->
         <div class="row">
-            <div class="col-md-8 p-0 full-end">
-                <div mat-dialog-actions class="text-right">
-                    <button mat-button (click)="onNoClick()">Cancel</button>
-                    <button mat-button [mat-dialog-close]="eventForm.value" cdkFocusInitial class="text-primary">Save</button>
+            <div class="col-md-8 p-0">
+                <h5 class="mb-4 f-14 text-black roboto">Title</h5>
+                <div class="form-group">
+                    <mat-form-field>
+                        <input matInput formControlName="title" class="form-control br-0">
+                    </mat-form-field>
                 </div>
             </div>
         </div>
 
+        <div class="row pt-12">
+            <div class="col-md-12 p-0 newTextarea">
+                <h5 class="mb-4 mb-2 f-14 text-black roboto">Description</h5>
+                <app-froala [(model)]="eventData.description" (modelChange)="descriptionData($event)"></app-froala>
+            </div>
+        </div>
+
+        <div class="row pt-12">
+            <div class="col-md-8 p-0">
+                <h5 class="mb-4  f-14 text-black roboto">Event address</h5>
+                <div class="form-group heightTextarea">
+                    <mat-form-field>
+                        <textarea matInput rows="4" formControlName="location" class="form-control  "></textarea>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+        <div class="row pt-12">
+            <div class="col-md-4 pl-0">
+                <h5 class="mb-4 f-14 roboto text-black ">Start date</h5>
+                <div class="form-group">
+                    <mat-form-field class="ba-date">
+                        <input class="form-control b-0" (click)="picker.open()" (dateChange)="setEndDate()" readonly matInput formControlName="startDateTime" [value]="this.eventData.start.dateTime == undefined ? startDate : this.eventData.start.dateTime" [min]="startDate" [matDatepicker]="picker">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-4 pl-0" *ngIf="showTime">
+                <div class="row pl-0">
+                    <div class="col-md-6 pl-0 ">
+                        <h5 class="text-black mb-4 f-14 ">Start time</h5>
+                        <div class="form-group">
+                            <mat-form-field>
+                                <mat-select matNativeControl formControlName="startTime" (change)="setTime('start')">
+                                    <option *ngFor="let time of timeArr" [value]="time">{{time}}</option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-md-6  pl-0">
+                        <h5 class="text-black mb-4 f-14 ">End time</h5>
+                        <div class="form-group">
+                            <mat-form-field>
+                                <mat-select matNativeControl formControlName="endTime" (change)="setTime('end')">
+                                    <option *ngFor="let time of timeArr" [value]="time" [hidden]="eventForm.value.startTime > time"> {{time}} </option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 pr-0">
+                <h5 class="mb-4 text-black f-14 roboto">End date</h5>
+                <div class="form-group">
+                    <mat-form-field class="ba-date">
+                        <input (click)="epicker.open()" readonly class="form-control b-0" matInput formControlName="endDateTime" [min]="eventForm.value.startDateTime._d == null?startDate : eventForm.value.startDateTime._d" [matDatepicker]="epicker">
+                        <mat-datepicker-toggle matSuffix style="margin-top: -18px;" [for]="epicker">
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #epicker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-3 pr-0 " *ngIf="!showTime">
+                <button (click)="addTime()">Add Time</button>
+            </div>
+        </div>
+
+        <div class="row pt-6">
+            <div class="col-md-10 p-0">
+                <h5 class="mb-4 text-black f-14 roboto">Attendee List </h5>
+                <div class="row pl-0">
+                    <div class="col-md-10 pl-0 ">
+                        <div class="form-group">
+                            <mat-form-field>
+                                <input matInput formControlName="attendee" class="form-control br-0 ">
+                                <mat-error *ngIf="eventForm.controls['attendee'].hasError('pattern')">Email is valid
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-md-2 pl-0">
+                        <img src="/assets/images/svg/plus.svg" (click)="addAttendee()" [hidden]="eventForm.controls['attendee'].hasError('pattern') || this.eventForm.get('attendee').value == ''">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-10 pl-0 mt-8" *ngIf="attendeesArr.length > 0">
+                <div class="row pl-0" *ngFor="let member of attendeesArr">
+                    <div class="col-md-10 pl-0 ">
+                        {{member.email}}
+                    </div>
+                    <div class="col-md-2 pl-0 ">
+                        <img src="assets/images/svg/delete.svg" (click)="removeMember(member)">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row pl-0">
+            <div class="col-md-10 pl-0 ">
+                <button mat-stroked-button class="btn-primary">
+                    <input style="display: none;" (change)="getFileDetails($event)" id="file-3" multiple type="file">
+                    <!-- <label class="uploadLabel c-p f-14 c-p" for="file-3">
+                            <img class="mr-8" src="/assets/images/svg/upload-document-icon.svg">
+                            <span></span>
+                        </label> -->
+                    Attach files
+                </button>
+            </div>
+            <div class="col-md-10 pl-0 mt-8" *ngIf="myFiles.length > 0">
+                <div class="row pl-0" *ngFor="let file of myFiles, let i = index">
+                    <div class="col-md-10 pl-0 ">
+                        {{i+1}}. {{file.name}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!-- <input matInput [(ngModel)]="data.animal"> -->
+    <div class="row">
+        <div class="col-md-8 p-0 full-end">
+            <div mat-dialog-actions class="text-right">
+                <button mat-button (click)="onNoClick()">Cancel</button>
+                <button mat-button [mat-dialog-close]="eventForm.value" cdkFocusInitial class="text-primary">Save</button>
+            </div>
+        </div>
     </div>
 
 </div>
