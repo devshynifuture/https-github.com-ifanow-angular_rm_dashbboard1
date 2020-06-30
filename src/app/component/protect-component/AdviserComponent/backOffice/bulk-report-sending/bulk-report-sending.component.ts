@@ -44,6 +44,9 @@ export class BulkReportSendingComponent implements OnInit {
         console.log('getOrderList ==', data)
         this.isLoading = false
         this.dataSource.data = data
+        if(data == null){
+          this.dataSource.data = []
+        }
         console.log(this.dataSource)
       }
     );
