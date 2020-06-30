@@ -221,6 +221,26 @@
                                     </h5>
                                 </div>
                             </div>
+                            <div class="row pt-16 relClass">
+                                <div class="col-md-4 p-0">
+                                    <p class="m-0 f-12 text-primitive">LOAN TENURE</p>
+                                    <h5 class="m-0">
+                                        <span class="bar">₹<span appFormatNumber [value]="selectedGoal.remainingData.loan.loanTenure">{{selectedGoal.remainingData.loan.loanTenure}}</span></span>
+                                    </h5>
+                                </div>
+                                <div class="col-md-4 p-0">
+                                    <p class="m-0 f-12 text-primitive">EMI PAYABLE</p>
+                                    <h5 class="m-0">
+                                        <span class="bar">₹<span appFormatNumber [value]="selectedGoal.remainingData.loan.emi">{{selectedGoal.remainingData.loan.emi}}</span></span>
+                                    </h5>
+                                </div>
+                                <div class="col-md-4 p-0">
+                                    <p class="m-0 f-12 text-primitive">LOAN TO BE TAKEN</p>
+                                    <h5 class="m-0">
+                                        <span class="bar">₹<span appFormatNumber [value]="selectedGoal.remainingData.loan.loanAmount">{{selectedGoal.remainingData.loan.loanAmount}}</span></span>
+                                    </h5>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-md-2 pl-0">
                             <div id="donut-chart-container"></div>

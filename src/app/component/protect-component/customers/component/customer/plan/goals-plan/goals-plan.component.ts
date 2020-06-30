@@ -97,7 +97,7 @@ export class GoalsPlanComponent implements OnInit {
     },
     yAxis: {
         title: {
-            text: 'Total percent market share'
+            text: ''
         }
     },
     plotOptions: {
@@ -106,7 +106,7 @@ export class GoalsPlanComponent implements OnInit {
         }
     },
     legend:{
-      floating: true,
+      floating: false,
     },
     series: []
 }
@@ -129,10 +129,11 @@ export class GoalsPlanComponent implements OnInit {
 
   // load all goals created for the client and select the first goal
   loadAllGoals(){
-    this.plansService.getAllGoals(this.advisor_client_id).subscribe((data)=>{
+    this.allGoals = [];
+    this.plansService.getAllGoals(this.advisor_client_id).subscribe((data:any[])=>{
       if (data) {
         setTimeout(() => {
-          this.allGoals = data.map(goal => this.mapGoalDashboardData(goal));
+          this.allGoals = data.reverse().map(goal => this.mapGoalDashboardData(goal));
           // let dom render first
           this.loadSelectedGoalData(this.allGoals[0]);
         }, 100);
@@ -276,10 +277,11 @@ export class GoalsPlanComponent implements OnInit {
       state: 'open'
     };
 
-    this.eventService.changeUpperSliderState(fragmentData).subscribe(
+    const sub = this.eventService.changeUpperSliderState(fragmentData).subscribe(
       upperSliderData => {
         if (UtilService.isRefreshRequired(upperSliderData)) {
           this.loadAllGoals();
+          sub.unsubscribe();
         }
       }
     );
@@ -331,19 +333,13 @@ export class GoalsPlanComponent implements OnInit {
     }
 
     const subscription = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(sideBarData => {
-        if (UtilService.isDialogClose(sideBarData)) {
-          if(UtilService.isRefreshRequired(sideBarData)) {
-            switch (flag) {
-              case 'openCalculators':
-                // TODO:- add the save data method and then show snackbar
-                // sideBarData.data is the form value
-                this.eventService.openSnackBar('Goal calculation added successfully', 'OK');
-                break;
-            }
-          }
-          subscription.unsubscribe();
+      if (UtilService.isDialogClose(sideBarData)) {
+        if(UtilService.isRefreshRequired(sideBarData)) {
+          this.loadAllGoals();
         }
-      });
+        subscription.unsubscribe();
+      }
+    });
   }
 
   loadSelectedGoalData(goalData) {
