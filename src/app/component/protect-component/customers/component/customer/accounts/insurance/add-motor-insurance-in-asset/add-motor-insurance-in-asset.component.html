@@ -87,8 +87,8 @@
         </div>
         <div class="col-md-3 form-group">
             <mat-form-field floatLabel="never" appearance="standard">
-                <input matInput type="text"  [maxLength]="20" formControlName="policyNum" #policyNum  autocomplete="off" class="form-control br-0" placeholder="Enter Policy number">
-                <mat-hint align="end" class="f-12">{{policyNum.value.length}}/20</mat-hint>
+                <input matInput type="text"  [maxLength]="30" formControlName="policyNum" #policyNum  autocomplete="off" class="form-control br-0" placeholder="Enter Policy number" placeholder="Enter Policy number">
+                <mat-hint align="end" class="f-12">{{policyNum.value.length}}/30</mat-hint>
                 <mat-error>This field is required
                 </mat-error>
             </mat-form-field>
@@ -259,8 +259,8 @@
             </div>
             <div class="col-md-3 form-group  ">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input matInput type="text" [maxLength]="20" formControlName="modelName" #modelName appInputValueValidation autocomplete="off" class="form-control br-0">
-                    <mat-hint align="end" class="f-12">{{modelName.value.length}}/20</mat-hint>
+                    <input matInput type="text" [maxLength]="30" formControlName="modelName" #modelName  autocomplete="off" class="form-control br-0">
+                    <mat-hint align="end" class="f-12">{{modelName.value.length}}/30</mat-hint>
 
                 </mat-form-field>
             </div>

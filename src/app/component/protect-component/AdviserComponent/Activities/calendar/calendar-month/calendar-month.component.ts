@@ -37,7 +37,7 @@ export class CalendarMonthComponent implements OnInit {
   currentYear: any;
   excessAllow: any;
   private unSubcrip: Subscription;
-  back:boolean = false;
+  back: boolean = false;
   constructor(public dialog: MatDialog, private calenderService: calendarService, private datePipe: DatePipe) { }
 
   ngOnInit() {
@@ -67,7 +67,7 @@ export class CalendarMonthComponent implements OnInit {
       this.nextMonthDays = data[1].nextMonthDays;
       this.viewDate = data[1].nextMonthDays;
       this.addLastMonthDays = data[1].addLastMonthDays;
-      console.log(this.daysArr,  this.month, "this.daysArr....");
+      console.log(this.daysArr, this.month, "this.daysArr....");
     });
 
   }
@@ -146,71 +146,71 @@ export class CalendarMonthComponent implements OnInit {
 
 
   }
- sun:any = [];
- mon:any = [];
- tue:any = [];
- wed:any = [];
- thu:any = [];
- fri:any = [];
- sat:any = [];
- addDaysOfMomth(){
-   let d:any;
-   let m;
-  for(let i = 1; i < this.numbersOfDays; i++){
-    // if(this.back){
-    //   m = this.month == 0?11:this.month-1;
-    // }
-    // else{
-    //   m = this.month == 0?1:this.month;
-    // }
-    d = new Date(this.year,this.month,i);
-    switch (d.getDay()) {
-      case 0:
-        this.sun.push(d);
-        break;
-      case 1:
-        this.mon.push(d);
-        break;
-      case 2:
-        this.tue.push(d);
-        break;
-      case 3:
-        this.wed.push(d);
-        break;
-      case 4:
-        this.thu.push(d);
-        break;
-      case 5:
-        this.fri.push(d);
-        break;
-      case 6:
-        this.sat.push(d);
-        break;
+  sun: any = [];
+  mon: any = [];
+  tue: any = [];
+  wed: any = [];
+  thu: any = [];
+  fri: any = [];
+  sat: any = [];
+  addDaysOfMomth() {
+    let d: any;
+    let m;
+    for (let i = 1; i < this.numbersOfDays; i++) {
+      // if(this.back){
+      //   m = this.month == 0?11:this.month-1;
+      // }
+      // else{
+      //   m = this.month == 0?1:this.month;
+      // }
+      d = new Date(this.year, this.month, i);
+      switch (d.getDay()) {
+        case 0:
+          this.sun.push(d);
+          break;
+        case 1:
+          this.mon.push(d);
+          break;
+        case 2:
+          this.tue.push(d);
+          break;
+        case 3:
+          this.wed.push(d);
+          break;
+        case 4:
+          this.thu.push(d);
+          break;
+        case 5:
+          this.fri.push(d);
+          break;
+        case 6:
+          this.sat.push(d);
+          break;
+      }
     }
   }
- }
   validateMonthDays(eDays, cDate, startDate, interval) {
     if (eDays) {
       let d = new Date(cDate);
-      let dayNum =parseInt(eDays.charAt(0));
+      let dayNum = parseInt(eDays.charAt(0));
       let monthDay = eDays.charAt(1) + eDays.charAt(2);
-    
-        switch (monthDay) {
-          case "SU":
-            return new Date(this.sun[dayNum - 1]).getTime() == new Date(d).getTime()? false : true;
-          case "MO":
-            return new Date(this.mon[dayNum - 1]).getTime() == new Date(d).getTime()? false : true;
-          case "TU":
-            return new Date(this.tue[dayNum - 1]).getTime() == new Date(d).getTime()? false : true;
-          case "WE":
-            return new Date(this.wed[dayNum - 1]).getTime() == new Date(d).getTime()? false : true;
-          case "TH":
-            return new Date(this.thu[dayNum - 1]).getTime() == new Date(d).getTime()? false : true;
-          case "FR":
-            return new Date(this.fri[dayNum - 1]).getTime() == new Date(d).getTime()? false : true;
-          case "SA":
-            return new Date(this.sat[dayNum - 1]).getTime() == new Date(d).getTime()? false : true;
-        }
+
+      switch (monthDay) {
+        case "SU":
+          return new Date(this.sun[dayNum - 1]).getTime() == new Date(d).getTime() ? false : true;
+        case "MO":
+          return new Date(this.mon[dayNum - 1]).getTime() == new Date(d).getTime() ? false : true;
+        case "TU":
+          return new Date(this.tue[dayNum - 1]).getTime() == new Date(d).getTime() ? false : true;
+        case "WE":
+          return new Date(this.wed[dayNum - 1]).getTime() == new Date(d).getTime() ? false : true;
+        case "TH":
+          return new Date(this.thu[dayNum - 1]).getTime() == new Date(d).getTime() ? false : true;
+        case "FR":
+          return new Date(this.fri[dayNum - 1]).getTime() == new Date(d).getTime() ? false : true;
+        case "SA":
+          return new Date(this.sat[dayNum - 1]).getTime() == new Date(d).getTime() ? false : true;
+      }
     }
     else {
       if (this.formateDate(cDate) == this.formateDate(startDate)) {
@@ -450,6 +450,7 @@ export class CalendarMonthComponent implements OnInit {
 
     const dialogRef = this.dialog.open(EventDialog, {
       width: '600px',
+      height: '500px',
       data: eventData
     });
 

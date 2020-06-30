@@ -1,5 +1,5 @@
-import { Component,OnInit } from '@angular/core';
-import { MatDialog} from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { calendarService } from './calendar.service';
 import { AuthService } from '../../../../../auth-service/authService';
 import { EventDialog } from './event-dialog';
@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 export interface DialogData {
   [x: string]: any;
   animal: string;
-  name: string; 
+  name: string;
 }
 
 @Component({
@@ -45,8 +45,8 @@ export class CalendarComponent implements OnInit {
   currentYear: any;
   excessAllow: any;
   constructor(public dialog: MatDialog, private calenderService: calendarService, private router: Router) {
-    
-   }
+
+  }
 
   ngOnInit() {
     this.currentMonth = new Date().getMonth();
@@ -57,8 +57,8 @@ export class CalendarComponent implements OnInit {
     this.updatecalendar();
     // this.getEvent();
     this.curruntDayIndex = this.daysArr.indexOf(this.selectedDate);
-    console.log(this.router.url,"router test");
-    
+    console.log(this.router.url, "router test");
+
     this.excessAllow = localStorage.getItem('successStoringToken')
   }
 
@@ -68,14 +68,14 @@ export class CalendarComponent implements OnInit {
   //     "userId": AuthService.getUserInfo().advisorId
   //   }
   //   this.calenderService.getEvent(eventData).subscribe((data) => {
-      
+
   //     if (data != undefined) {
-        
+
   //       this.eventData = data;
-        
+
   //       console.log(data,"events calender",this.eventData);
   //       this.formatedEvent = [];
-        
+
   //       for (let e of this.eventData) {
   //         if(e.start){
   //           e["day"] = this.formateDate(!e.start.dateTime? new Date(e.created): new Date(e.start.dateTime));
@@ -104,11 +104,11 @@ export class CalendarComponent implements OnInit {
 
   }
 
-  
 
-  
+
+
   curruntDayIndex: any;
-presentCalendar:any = [];
+  presentCalendar: any = [];
   updatecalendar() {
     this.month = this.viewDate.getMonth();
     this.year = this.viewDate.getFullYear();
@@ -140,18 +140,18 @@ presentCalendar:any = [];
       this.daysArr.push(fd);
     }
 
-    this.presentCalendar=[this.daysArr,
+    this.presentCalendar = [this.daysArr,
     {
       // day:this.formateDate(this.viewDate),
-      month:this.month,
-      year:this.year,
+      month: this.month,
+      year: this.year,
       selectedDate: this.selectedDate,
       numbersOfDays: this.numbersOfDays,
       lastMonthDays: this.lastMonthDays,
-      nextMonthDays :this.nextMonthDays,
-      viewDate :this.viewDate,
-      addLastMonthDays : this.addLastMonthDays,
-      back:this.back
+      nextMonthDays: this.nextMonthDays,
+      viewDate: this.viewDate,
+      addLastMonthDays: this.addLastMonthDays,
+      back: this.back
     }]
 
     this.calenderService.getDayArr(this.presentCalendar);
@@ -161,7 +161,7 @@ presentCalendar:any = [];
     this.viewDate = new Date();
     this.daysArr = [];
     this.updatecalendar();
-    
+
   }
 
   nextMonth() {
@@ -188,7 +188,7 @@ presentCalendar:any = [];
     // }
     this.updatecalendar();
   }
- back:boolean= false;
+  back: boolean = false;
   lastMonth() {
     switch (this.router.url) {
       case '/admin/activies/day':
@@ -315,32 +315,33 @@ presentCalendar:any = [];
 
     const dialogRef = this.dialog.open(EventDialog, {
       width: '50%',
+
       data: eventData
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result != undefined) {
         this.dialogData =
-        {
-          "calendarId": AuthService.getUserInfo().userName,
-          "userId": AuthService.getUserInfo().advisorId,
-          "eventId": result.eventId,
-          "summary": result.title,
-          "location": result.location,
-          "description": result.description,
-          "start": {
-            "dateTime": "",
-            "timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
-          },
-          "end": {
-            "dateTime": "",
-            "timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
-          },
-          "recurrence": [
-            "RRULE:FREQ=DAILY;COUNT=2"
-          ],
-          "attendees": result.attendeesList
-        }
+          {
+            "calendarId": AuthService.getUserInfo().userName,
+            "userId": AuthService.getUserInfo().advisorId,
+            "eventId": result.eventId,
+            "summary": result.title,
+            "location": result.location,
+            "description": result.description,
+            "start": {
+              "dateTime": "",
+              "timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
+            },
+            "end": {
+              "dateTime": "",
+              "timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
+            },
+            "recurrence": [
+              "RRULE:FREQ=DAILY;COUNT=2"
+            ],
+            "attendees": result.attendeesList
+          }
 
 
         this.startTime = result.startTime;

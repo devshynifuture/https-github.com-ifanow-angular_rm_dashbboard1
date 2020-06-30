@@ -498,7 +498,7 @@
                                         <div class="bar">
                                             <span class="text-primary" *ngIf="element.statusId == 'LIVE'">
                                                 {{'LIVE'}} </span>
-                                            <span *ngIf="element.statusId == 'EXPIRED'" class="text-success">
+                                            <span *ngIf="element.statusId == 'EXPIRED'" class="text-danger">
                                                 {{'EXPIRED'}} </span>
                                         </div>
                                     </td>
@@ -819,7 +819,7 @@
                 style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 <span class="text-primary" *ngIf="item.statusId == 'LIVE'">
                     {{'LIVE'}} </span>
-                <span *ngIf="item.statusId == 'EXPIRED'" class="text-success">
+                <span *ngIf="item.statusId == 'EXPIRED'" class="text-danger">
                     {{'EXPIRED'}} </span>
             </td>
 
