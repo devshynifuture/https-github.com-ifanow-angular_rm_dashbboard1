@@ -116,4 +116,5 @@ export class OpenSendReportPopupComponent implements OnInit {
     this.dialogRef.close('');
 
   }
+  
 }

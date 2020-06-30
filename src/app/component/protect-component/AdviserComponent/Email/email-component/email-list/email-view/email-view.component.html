@@ -3,82 +3,22 @@
 <!-- <button mat-button (click)="openComposeEmail(null)">Compose</button> -->
 <!-- <button mat-raised-button (click)="openBottomSheet()">Reply</button> -->
 
+<div class="row">
+    <div class="col-md-4 d-flex align-items-center">
+        <img class="c-p mr-28" (click)="goBack()" src="/assets/images/svg/left-arrows.svg">
+        <img src="/assets/images/svg/refresh.svg" class="mr-20 c-p">
+        <img src="/assets/images/svg/double-drawer.svg" class="mr-20 c-p">
+        <img src="/assets/images/svg/delete.svg" class="mr-20 c-p">
+    </div>
+</div>
 
 <div class="chatBox">
-    <div class="row">
-        <div class="col-md-12">
-            <button mat-icon-button (click)="goBack()">
-                <mat-icon>arrow_left</mat-icon>
-            </button>
-            <button mat-icon-button (click)="goBack()">
-                <mat-icon>arrow_left</mat-icon>
-            </button>
-        </div>
-    </div>
 
-    <h2>{{ subject }}</h2>
 
-    <!-- <div *ngIf="!isAttachmentBasedEmail">
-        <div class="messengerDiv" *ngFor="let part of body; let i=index"> -->
-    <!-- Vaibhav new design  -->
-
-    <!-- <div class="d-flex" [ngClass]="i % 2 == 0 ? 'userOne': 'userTwo'">
-                <div class="avatar">
-                    <img class="header-img" src="https://pbs.twimg.com/profile_images/1115218540636672001/HAgVhGPX.jpg">
-                </div>
-                <div class="chatMsgBox">
-                    <h2 *ngIf="decodedPart.length > 2; else elsePart1">
-                        {{messagesHeaders[i].includes('<') ?  messagesHeaders[i].split('<')[0] : messagesHeaders[i]}}
-                    </h2>
-                    <ng-template #elsePart1>
-                        <h2> {{ messagesHeaders[i] }}</h2>
-                    </ng-template>
-                    <h5 class="f-12" *ngIf="decodedPart.length > 2; else elsePart2">
-                        {{ messagesHeaders[i].includes('<') ?  messagesHeaders[i].split('<')[1].split('>')[0]  : messagesHeaders[i]}}
-                    </h5>
-
-                    <ng-template #elsePart2>
-                        <h5 class="f-12">
-                            {{ messagesHeaders[i] }}
-                        </h5>
-                    </ng-template>
-                    <p [innerHTML]="part.item">
-                    </p>
-                    <p>
-                        <span>{{ part.date | date: 'dd/MM/yyyy' }}</span>
-                    </p> -->
-    <!-- <button class="text-primitive" mat-stroked-button (click)="replyToMessage(body)">
-                        <mat-icon>reply</mat-icon> Reply
-                    </button>
-                    <button class="text-primitive" mat-stroked-button (click)="forwardMessage(body)">
-                        Forward <mat-icon>forward</mat-icon>
-                    </button> -->
-    <!-- </div>
-            </div> -->
-
-    <!-- <div class="userTwo d-flex">
-                <div class="avatar">
-                    <img class="header-img" src="https://pbs.twimg.com/profile_images/1115218540636672001/HAgVhGPX.jpg">
-                </div>
-                <div class="chatMsgBox">
-                    <h2> Ronak Hindocha </h2>
-                    <h5 class="f-12">
-                        ronak@futurewise.co.in
-                    </h5>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. At deleniti inventore quas harum ipsam
-                        praesentium nisi, atque facilis molestiae labore persp
-                        <span> 10.00 AM</span>
-                    </p>
-                </div>
-            </div> -->
-
-    <!-- </div>
-    </div> -->
+    <h4 class="f-22">{{ subject }}</h4>
 
     <div *ngIf="isAttachmentBasedEmail">
         <div class="messengerDiv" *ngFor="let part of decodedPartsDetail; let i=index">
-            <!-- Vaibhav new design  -->
-
             <div class="d-flex" [ngClass]="i % 2 == 0 ? 'userOne': 'userTwo'" *ngIf="part.item">
                 <div class="avatar">
                     <img class="header-img" src="https://pbs.twimg.com/profile_images/1115218540636672001/HAgVhGPX.jpg">
@@ -92,57 +32,20 @@
                     <p>
                         <span>{{ part.date | date: 'dd/MM/yyyy' }}</span>
                     </p>
-                    <!-- <button class="text-primitive" mat-stroked-button (click)="replyToMessage(body)">
-                        <mat-icon>reply</mat-icon> Reply
-                    </button>
-                    <button class="text-primitive" mat-stroked-button (click)="forwardMessage(body)">
-                        Forward <mat-icon>forward</mat-icon>
-                    </button> -->
                 </div>
             </div>
-
-            <!-- <div class="userTwo d-flex">
-                <div class="avatar">
-                    <img class="header-img" src="https://pbs.twimg.com/profile_images/1115218540636672001/HAgVhGPX.jpg">
-                </div>
-                <div class="chatMsgBox">
-                    <h2> Ronak Hindocha </h2>
-                    <h5 class="f-12">
-                        ronak@futurewise.co.in
-                    </h5>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. At deleniti inventore quas harum ipsam
-                        praesentium nisi, atque facilis molestiae labore persp
-                        <span> 10.00 AM</span>
-                    </p>
-                </div>
-            </div> -->
 
         </div>
     </div>
 
-    <!-- <div class="typeMessageBox">
-        <div class="row">
-            <div class="col-md-11">
-                <mat-form-field class="example-width">
-                    <input class="form-control" matInput value=" ">
-                </mat-form-field>
-            </div>
-            <div class="col-md-1 p-0">
-                <div class="enterButton">
-                    <i class="material-icons ">
-                        near_me
-                    </i>
-                </div>
-            </div>
-        </div>
-    </div> -->
+
 </div>
 <div class="row" *ngIf="attachmentArrayDetail.length!==0">
     <h4 class="p-12">
         Attachments:
     </h4>
     <mat-action-list class="p-12 w-100">
-        <!-- just need to replace attachmentArray with attachmentArrayDetail -->
+
         <button mat-list-item class="c-p border-background" *ngFor="let attachment of attachmentArrayDetail" (click)="attachmentDownload(attachment)">
             <div class="col-md-11 text-primary">
                 {{ attachment.filename }}
