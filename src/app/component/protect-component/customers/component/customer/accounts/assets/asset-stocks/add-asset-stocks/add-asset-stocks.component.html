@@ -71,8 +71,8 @@
             <h5 class="m-0 pt-8">Current market value</h5>
             <p class="m-0 f-12 text-custom">This has to be updated manually at all times</p>
         </div>
-        <div class="col-md-5">
-            <div class="form-group mb-0">
+        <div class="col-md-3">
+            <div class="form-group mb-0 iconRupess">
                 <mat-form-field>
                     <input matInput autocomplete="off" formControlName="currentMarketValue" type="number" #institution
                         maxlength="30" class="form-control rupess br-0">
@@ -86,7 +86,7 @@
             <h5 class="m-0 pt-8">Value as on</h5>
         </div>
         <div class="col-md-3">
-            <div class="form-group mb-0">
+            <div class="form-group mb-0 ">
                 <mat-form-field class="ba-date">
                     <input matInput (click)="balanceAsOn.open()" (input)="preventDefault($event)" autocomplete="off" [max]="maxDate"
                         formControlName="valueAsOn" class="form-control br-0 b-0" [matDatepicker]="balanceAsOn">
@@ -103,7 +103,7 @@
             <h5 class="m-0 pt-8">Amount invested</h5>
         </div>
         <div class="col-md-3">
-            <div class="form-group mb-0">
+            <div class="form-group mb-0 iconRupess">
                 <mat-form-field>
                     <input matInput autocomplete="off" formControlName="amtInvested" type="number" #institution
                         maxlength="30" class="form-control rupess br-0">
