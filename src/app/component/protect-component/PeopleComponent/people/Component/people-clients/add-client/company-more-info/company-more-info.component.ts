@@ -154,13 +154,13 @@ export class CompanyMoreInfoComponent implements OnInit {
       roleId: 0,
       genderId: this.moreInfoForm.value.gender,
       aadhaarNumber: this.moreInfoForm.controls.adhaarNo.value,
-      dateOfBirth: this.datePipe.transform(this.moreInfoForm.value.dateOfBirth._d, 'dd/MM/yyyy'),
+      dateOfBirth: this.datePipe.transform((this.moreInfoForm.value.dateOfBirth._d) ? this.moreInfoForm.value.dateOfBirth._d : this.moreInfoForm.value.dateOfBirth, 'dd/MM/yyyy'),
       userId: (this.moreInfoData && this.moreInfoData.length > 0) ? this.moreInfoData.clientId : this.companyIndividualData.clientId,
       mobileList,
       name: this.moreInfoForm.value.name,
       bioRemarkId: this.moreInfoData.bioRemarkId,
       remarks: this.moreInfoForm.controls.myNotes.value,
-      anniversaryDate: this.datePipe.transform(this.moreInfoForm.value.anniversaryDate._d, 'dd/MM/yyyy')
+      anniversaryDate: this.datePipe.transform((this.moreInfoForm.value.anniversaryDate._d) ? this.moreInfoForm.value.anniversaryDate._d : this.moreInfoForm.value.anniversaryDate, 'dd/MM/yyyy')
     };
     if (this.moreInfoData.companyPersonDetailId) {
       this.peopleService.updateCompanyPersonDetail(obj).subscribe(
