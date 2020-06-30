@@ -6,8 +6,25 @@
     </div>
     <div class="row pt-28">
         <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-20">Name</h5>
+            <h5 class="m-0 pt-20">Display name</h5>
             <p class="m-0 f-12 text-custom">This will display everywhere</p>
+        </div>
+        <div class="col-md-6 p-0">
+            <div class="form-group">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input (input)="capitalise($event)" placeholder="Enter name" autocomplete="off"
+                        formControlName="displayName" #Name appInputValueValidation
+                        [inputValidator]="validatorType.TEXT_ONLY" matInput [maxLength]="50" class="form-control">
+                    <mat-hint align="end">{{Name.value.length}}/50</mat-hint>
+                    <mat-hint>Optional</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-28">
+        <div class="col-md-4 text-right">
+            <h5 class="m-0 pt-20">Authorized person Name</h5>
+            <!-- <p class="m-0 f-12 text-custom">This will display everywhere</p> -->
         </div>
         <div class="col-md-6 p-0">
             <div class="form-group">
@@ -87,10 +104,10 @@
                 <mat-form-field>
                     <mat-select formControlName="designation" class="form-control">
                         <mat-option value='' disabled>Select option</mat-option>
-                        <mat-option value="1">Goverment</mat-option>
-                        <mat-option value="2">Service</mat-option>
-                        <mat-option value="3">Private sector</mat-option>
-                        <mat-option value="4">Business</mat-option>
+                        <mat-option value="1">Proprietor</mat-option>
+                        <mat-option value="2">Partner</mat-option>
+                        <mat-option value="3">Director</mat-option>
+                        <mat-option value="4">Manager</mat-option>
                     </mat-select>
                     <mat-hint>Optional</mat-hint>
                 </mat-form-field>
@@ -143,6 +160,22 @@
             <div class="form-group mb-0">
                 <mat-form-field class="ba-date">
                     <input [matDatepicker]="anniversaryDate" [max]="maxDate" formControlName="dateOfBirth"
+                        (click)="anniversaryDate.open()" class="form-control br-0 b-0" matInput readonly>
+                    <mat-datepicker-toggle matSuffix [for]="anniversaryDate"></mat-datepicker-toggle>
+                    <mat-datepicker #anniversaryDate></mat-datepicker>
+                    <mat-hint>Optional</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="moreInfoForm.get('maritalStatus').value=='1'" class="row pt-32">
+        <div class="col-md-4 text-right">
+            <h5 class="m-0 pt-8">Anniversary date</h5>
+        </div>
+        <div class="col-md-3 p-0">
+            <div class="form-group mb-0">
+                <mat-form-field class="ba-date">
+                    <input [matDatepicker]="anniversaryDate" [max]="maxDate" formControlName="anniversaryDate"
                         (click)="anniversaryDate.open()" class="form-control br-0 b-0" matInput readonly>
                     <mat-datepicker-toggle matSuffix [for]="anniversaryDate"></mat-datepicker-toggle>
                     <mat-datepicker #anniversaryDate></mat-datepicker>

@@ -199,7 +199,8 @@
                                 </div>
 
                                 <div class=" basicDetaisList ">
-                                    <p class=" text-primitive m-0 f-12 ">MOBILE</p>
+                                    <p class=" text-primitive m-0 f-12 "><span *ngIf="clientData.clientType==3">COMPANY
+                                        </span>MOBILE</p>
                                     <div class="relClass">
                                         <div class="bar height23">
                                             <p class=" f-14 roboto f-500 m-0 ">
@@ -212,7 +213,8 @@
                                 </div>
 
                                 <div class=" basicDetaisList ">
-                                    <p class=" text-primitive m-0 f-12 ">PAN</p>
+                                    <p class=" text-primitive m-0 f-12 "><span *ngIf="clientData.clientType==3">COMPANY
+                                        </span>PAN</p>
                                     <div class="relClass">
                                         <div class="bar height23">
                                             <p class=" f-14 roboto f-500 m-0 "><span *ngIf="!letsideBarLoader">
@@ -227,8 +229,10 @@
                                     <p class=" text-primitive m-0 f-12 ">KYC STATUS</p>
                                     <p class=" f-14 roboto f-500 m-0 "> Not verified</p>
                                 </div> -->
-                                <div *ngIf="clientOverviewData.clientType==3" class=" basicDetaisList ">
-                                    <p class=" text-primitive m-0 f-12 ">OCCUPTATION</p>
+                                <div *ngIf="clientData.clientType==3 || clientData.clientType==4"
+                                    class=" basicDetaisList ">
+                                    <p class=" text-primitive m-0 f-12 "><span *ngIf="clientData.clientType==3">COMPANY
+                                        </span>OCCUPTATION</p>
                                     <div class="relClass">
                                         <div class="bar height23">
                                             <p class=" f-14 roboto f-500 m-0 ">
@@ -246,7 +250,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div *ngIf="clientOverviewData.clientType!=3" class=" basicDetaisList ">
+                                <div *ngIf="clientData.clientType==1 || clientData.clientType==2"
+                                    class=" basicDetaisList ">
                                     <p class=" text-primitive m-0 f-12 ">GENDER</p>
                                     <div class="relClass">
                                         <div class="bar height23">
@@ -264,7 +269,8 @@
                             <div [appSkeletonLoading]="letsideBarLoader" appSkeletonLoading
                                 class=" col-md-6 pl-0 skeletonAnimation">
                                 <div class=" basicDetaisList ">
-                                    <p class=" text-primitive m-0 f-12 ">EMAIL</p>
+                                    <p class=" text-primitive m-0 f-12 "><span *ngIf="clientData.clientType==3">COMPANY
+                                        </span>EMAIL</p>
                                     <div class="relClass">
                                         <div class="bar height23">
                                             <p class=" f-14 roboto f-500 m-0 ">
@@ -288,7 +294,7 @@
                                     </div>
                                 </div>
 
-                                <div *ngIf="clientOverviewData.clientType!=3" class=" basicDetaisList ">
+                                <div *ngIf="clientData.clientType!=3" class=" basicDetaisList ">
                                     <p class=" text-primitive m-0 f-12 ">AADHAAR</p>
                                     <div class="relClass">
                                         <div class="bar height23">
@@ -307,7 +313,7 @@
                                         <div class="bar height23">
                                             <p *ngIf="!letsideBarLoader" class=" f-14 roboto f-500 m-0 ">
                                                 <span *ngIf="clientOverviewData.residentFlag==1">Resident</span>
-                                                <span *ngIf="clientOverviewData.residentFlag==2">Non-resident</span>
+                                                <span *ngIf="clientOverviewData.residentFlag==0">Non-resident</span>
                                             </p>
                                         </div>
                                     </div>
@@ -319,7 +325,7 @@
                                         <!-- </div> -->
                                     </div>
                                 </div>
-                                <div *ngIf="clientOverviewData.clientType==3" class=" basicDetaisList ">
+                                <div *ngIf="clientData.clientType==3" class=" basicDetaisList ">
                                     <p class=" text-primitive m-0 f-12 ">COMPANY STATUS</p>
                                     <div class="relClass">
                                         <div class="bar height23">
@@ -344,7 +350,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div *ngIf="clientOverviewData.clientType!=3" class=" basicDetaisList ">
+                                <div *ngIf="clientData.clientType==1 || clientData.clientType==2"
+                                    class=" basicDetaisList ">
                                     <p class=" text-primitive m-0 f-12 ">MARITAL STATUS</p>
                                     <div class="relClass">
                                         <div class="bar height23">
