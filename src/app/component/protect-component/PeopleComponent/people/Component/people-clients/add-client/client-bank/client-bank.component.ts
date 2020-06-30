@@ -37,6 +37,7 @@ export class ClientBankComponent implements OnInit {
     // }
   };
   disableBtn: boolean;
+  clientName: any;
   constructor(private cusService: CustomerService, private eventService: EventService,
     private fb: FormBuilder, private subInjectService: SubscriptionInject,
     private subService: SubscriptionService, private postalService: PostalService,
@@ -56,6 +57,7 @@ export class ClientBankComponent implements OnInit {
 
   @Input() set data(data) {
     this.userData = data;
+    this.clientName = data.displayName
     this.fieldFlag;
     this.createBankForm(data);
     (this.userData.bankData) ? this.bankList = this.userData.bankData : '';
@@ -112,7 +114,7 @@ export class ClientBankComponent implements OnInit {
       bankName: [data.bankName, [Validators.required]],
       micrName: [data.micrNo],
       accNumber: [data.accountNumber, [Validators.required]],
-      accType: [(data.accountType) ? data.accountType : '', [Validators.required]],
+      accType: [(data.accountType) ? String(data.accountType) : '', [Validators.required]],
       branchName: [data.branchName, [Validators.required]],
       branchCountry: [(data.address) ? data.address.country : '', [Validators.required]],
       branchPinCode: [(data.address) ? data.address.pinCode : '', [Validators.required]],

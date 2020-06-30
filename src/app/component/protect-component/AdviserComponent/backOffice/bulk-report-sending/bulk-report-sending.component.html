@@ -19,7 +19,7 @@
         <img (click)="refresh(true)" class="b-a p-8 mr-8 c-p" src="/assets/images/svg/reload.svg">
     </div> -->
 
-    <div class="col-md-2 d-flex align-items-center justify-content-end">
+    <div class="col-md-2 d-flex align-items-center justify-content-end" *ngIf="dataSource.filteredData.length > 0">
         <!-- (click)="openSendNow()" prod build -->
         <img (click)="refresh(true)" class="b-a p-8 mr-8 c-p" src="/assets/images/svg/reload.svg">
         <button class="sendEmailBtn  btn-primary" (click)="openSendNow('')" mat-stroked-button>Send Now</button>
@@ -57,7 +57,7 @@
 
 <!-- table -->
 
-<div class="row">
+<div class="row" *ngIf="dataSource.filteredData.length > 0">
     <div class="col-md-12 reportSending  ">
         <div class="bulk-report-scroll">
             <table mat-table [dataSource]="dataSource.data" class=" skeletonAnimation" [appSkeletonLoading]="isLoading" id="tbs">

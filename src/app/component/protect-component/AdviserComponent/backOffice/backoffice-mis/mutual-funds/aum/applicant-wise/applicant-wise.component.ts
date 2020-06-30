@@ -214,7 +214,7 @@ export class ApplicantWiseComponent implements OnInit {
   }
 
   applicantWiseExcelSheet() {
-    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, this.arrayOfExcelData, 'Applicant wise MIS Report', 'applicant-wise-aum-mis', {
+    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, this.arrayOfExcelData, 'MIS Report - Applicant wise AUM', 'applicant-wise-aum-mis', {
       applicantList: false,
       categoryList: false,
       suCategoryList: false,
@@ -233,7 +233,7 @@ export class ApplicantWiseComponent implements OnInit {
         element.categoryList = [];
       }
     });
-    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'Applicant wise MIS Report', 'applicant-wise-aum-mis', {
+    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'MIS Report - Applicant wise AUM', 'applicant-wise-aum-mis', {
       applicantList: true,
       categoryList: false,
       subCategoryList: false,
@@ -257,7 +257,7 @@ export class ApplicantWiseComponent implements OnInit {
       }
     });
 
-    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'Applicant wise MIS Report', 'applicant-wise-aum-mis', {
+    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'MIS Report - Applicant wise AUM', 'applicant-wise-aum-mis', {
       applicantList: true,
       categoryList: true,
       subCategoryList: false,
@@ -282,7 +282,7 @@ export class ApplicantWiseComponent implements OnInit {
         });
       }
     });
-    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'Applicant wise MIS Report', 'applicant-wise-aum-mis', {
+    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'MIS Report - Applicant wise AUM', 'applicant-wise-aum-mis', {
       applicantList: true,
       categoryList: true,
       subCategoryList: true,
@@ -304,7 +304,7 @@ export class ApplicantWiseComponent implements OnInit {
         field6: element.weightInPerc
       });
     });
-    ExcelMisService.exportExcel(this.arrayOfHeaderStyles[4], this.arrayOfHeaders[4], newarr, [], 'applicant-wise-aum-mis', this.schemeWiseTotal);
+    ExcelMisService.exportExcel(this.arrayOfHeaderStyles[4], this.arrayOfHeaders[4], newarr, [], 'MIS Report - Applicant wise AUM', this.schemeWiseTotal);
   }
 
   exportToExcelSheet(choice, index) {

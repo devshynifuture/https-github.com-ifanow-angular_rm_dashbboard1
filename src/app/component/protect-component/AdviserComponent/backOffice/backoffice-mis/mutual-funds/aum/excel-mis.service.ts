@@ -61,7 +61,7 @@ export class ExcelMisService {
         } else {
             name = userData.name;
         }
-        saveAs(new Blob([buf]), name + '-' + metaData + '-' + new Date() + '.xlsx');
+        saveAs(new Blob([buf]), name + '-' + metaData + '.xlsx');
     }
 
     static async exportExcel2(arrayOfHeaders, arrayOfHeaderStyle, arrayOfExcelData, metaData, choice, excluded, totalArray?) {
@@ -84,7 +84,8 @@ export class ExcelMisService {
 
         ws.getCell('A1').value = 'Type of report - ' + metaData;
         ws.getCell('A2').value = `Client name - ` + username;
-        ws.getCell('A3').value = 'Report as on - ' + new Date();
+
+        ws.getCell('A3').value = 'Report as on - ' + new Date().toDateString();
 
         const head = ws.getRow(5);
         head.font = { bold: true };
@@ -1133,7 +1134,10 @@ export class ExcelMisService {
         } else {
             name = userData.name;
         }
-        saveAs(new Blob([buf]), name + '-' + metaData + '-' + new Date() + '.xlsx');
+        let date = new Date().getDate();
+        let month = new Date().getMonth() + 1;
+        saveAs(new Blob([buf]), metaData + '-' + `${String(date).length === 1 ? '0' : ''}${date}` + '-' + `${String(month).length === 1 ? '0' : ''}${month}` + '-' + new Date().getFullYear() + '.xlsx');
+        // saveAs(new Blob([buf]), metaData + '-' + new Date().getDate() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getFullYear() + '.xlsx');
 
     }
 
