@@ -25,7 +25,7 @@
             <div [ngClass]="travelInsuranceForm.value.getCoOwnerName.length > 1?'col-md-3' : 'col-md-5'">
                 <div class="form-group  ">
                     <mat-form-field>
-                        <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData' (selectionChange)="disabledMember($event.value,'owner')" (valueChange3)='displayControler($event)'  (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
+                        <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData' (selectionChange)="disabledMember($event.value,'owner')" (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
                             <mat-option value='' disabled>Select family members</mat-option>
                             <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" [value]="f.userName">
                                 <span>{{f.userName}}</span>
@@ -166,8 +166,8 @@
         </div>
         <div class="col-md-3 form-group">
             <mat-form-field floatLabel="never" appearance="standard">
-                <input class="form-control" matInput type="text" [maxLength]="20" formControlName="policyNum" #policyNum autocomplete="off" class="form-control br-0" placeholder="Enter Policy number">
-                <mat-hint align="end" class="f-12">{{policyNum.value.length}}/20</mat-hint>
+                <input class="form-control" matInput type="text" [maxLength]="30" formControlName="policyNum" #policyNum autocomplete="off" class="form-control br-0" placeholder="Enter Policy number">
+                <mat-hint align="end" class="f-12">{{policyNum.value.length}}/30</mat-hint>
                 <mat-error>This field is required
                 </mat-error>
             </mat-form-field>
@@ -426,7 +426,7 @@
         </div>
 
         <div class="row pt-32">
-            <div class="col-md-5 pr-0 text-right">
+            <div class="col-md-4 pr-0 text-right">
                 <h5 class="m-0 pt-20 ">Linked bank account</h5>
             </div>
             <div class="col-md-5 form-group">
