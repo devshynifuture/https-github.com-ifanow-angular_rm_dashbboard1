@@ -27,6 +27,7 @@ export class CalculatorsComponent implements OnInit {
   advisorId:number;
   clientId: number;
   showDelayChart:boolean = false;
+  currentTab = 0;
 
   delayArray = [];
   
@@ -49,13 +50,6 @@ export class CalculatorsComponent implements OnInit {
     const yearGap = (new Date(this.data.goalStartDate).getFullYear()) - (new Date().getFullYear());
     for (let index = 0; index < yearGap; index++) {
       this.delayArray.push({value: index+1, display: index + 1 + ' Years'});
-    }
-
-    
-    const costDelay:Object = this.data.remainingData.costDelay;
-    if(costDelay && costDelay.hasOwnProperty(0)) {
-      this.showDelayChart = true;
-      this.createChart(costDelay);
     }
   }
 
@@ -102,6 +96,7 @@ export class CalculatorsComponent implements OnInit {
           ...res,
           ...emiObj
         };
+        this.subInjectService.setRefreshRequired();
       }, err => {
         this.eventService.openSnackBar(err, "Dismiss");
       })
@@ -127,8 +122,9 @@ export class CalculatorsComponent implements OnInit {
         goalType: this.data.goalType
       }
 
-      this.planService.saveEMIToGoal({loanIpJson: JSON.stringify(emiObj)}).subscribe((res) => {
+      this.planService.saveEMIToGoal(emiObj).subscribe((res) => {
         this.eventService.openSnackBar("EMI saved to goal", "Dismiss");
+        this.subInjectService.setRefreshRequired();
       }, err => {
         this.eventService.openSnackBar(err, "Dismiss");
       })
@@ -142,7 +138,7 @@ export class CalculatorsComponent implements OnInit {
         ...this.data,
       }
   
-      this.subInjectService.changeNewRightSliderState({ state: 'close', data: data, refreshRequired: true })
+      this.subInjectService.closeNewRightSlider({ state: 'close', data: data, refreshRequired: true })
     }
   }
 
@@ -279,6 +275,7 @@ export class CalculatorsComponent implements OnInit {
 
     this.planService.saveCostToDelay(jsonObj).subscribe(res => {
       this.eventService.openSnackBar("Cost of delay added to goal", "Dismiss");
+      this.subInjectService.setRefreshRequired();
     }, err => {
       this.eventService.openSnackBar(err, "Dismiss");
     })
@@ -286,7 +283,40 @@ export class CalculatorsComponent implements OnInit {
 
   // ---------------------------------- cost of delay ------------------------------------
 
+  save() {
+    switch(this.currentTab) {
+      case 0:
+        this.saveEMIToGoal();
+        break;
+      case 1:
+        break;
+      case 2:
+        break;
+      case 4:
+        this.saveDelayToGoal();
+        break;
+
+      default:
+        console.error('Unexpected switch case found');
+    }
+  }
+
+  initializePage(pg) {
+    switch(pg) {
+      case 0:
+      case 4:
+        const costDelay:Object = this.data.remainingData.costDelay;
+        if(costDelay && costDelay.hasOwnProperty(0)) {
+          this.showDelayChart = true;
+          setTimeout(() => {
+            this.createChart(costDelay);
+          }, 100);
+        }
+      break;
+    }
+  }
+
   close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.closeNewRightSlider({ state: 'close' });
   }
 }

@@ -21,6 +21,7 @@ import { MarketPlaceEntryModule } from '../../protect-component/Advisor-Marketpl
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MY_FORMATS2 } from '../../../constants/date-format.constant';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
+import { DashboardEntryModule } from '../../protect-component/AdviserComponent/dashboard/dashboard-entry.module';
 
 @NgModule({
   declarations: [
@@ -43,14 +44,22 @@ import { CustomDirectiveModule } from 'src/app/common/directives/common-directiv
     ActivitesEntryModule,
     BackofficeAumReconciliationEntryModule,
     MarketPlaceEntryModule,
-    CustomDirectiveModule
+    CustomDirectiveModule,
+    DashboardEntryModule
   ],
-  entryComponents: [SubscriptionEntry.getComponentList(),
-  SupportEntryModule.getComponentList(), SettingEntryModule.getComponentList(),
-  PeopleEntryModule.getComponentList(), MarketPlaceEntryModule.getComponentList()],
-  providers: [DynamicComponentService,
+  entryComponents: [
+    SubscriptionEntry.getComponentList(),
+    SupportEntryModule.getComponentList(),
+    SettingEntryModule.getComponentList(),
+    PeopleEntryModule.getComponentList(),
+    MarketPlaceEntryModule.getComponentList(),
+    DashboardEntryModule.getComponentList()
+  ],
+  providers: [
+    DynamicComponentService,
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 }]
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 }
+  ]
 })
 export class LeftsidebarModule {
 }

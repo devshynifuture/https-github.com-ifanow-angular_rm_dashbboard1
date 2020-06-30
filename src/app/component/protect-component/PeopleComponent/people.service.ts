@@ -151,4 +151,8 @@ export class PeopleService {
   getClientBasedOnEmail(data) {
     return this.http.getEncoded(apiConfig.USER + appConfig.SEARCH_CLIENT_BASED_ON_EMAIL, data, 1);
   }
+
+  getbankAccountTypes(data) {
+    return this.http.get(apiConfig.USER + appConfig.GET_BANK_ACCOUNT_TYPE, data);
+  }
 }

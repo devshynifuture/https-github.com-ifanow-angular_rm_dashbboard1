@@ -420,8 +420,10 @@ export class InsuranceComponent implements OnInit {
             singleInsuranceData.displayHolderName = singleInsuranceData.insuredMembers[0].name;
             if (singleInsuranceData.insuredMembers.length > 1) {
               for (let i = 1; i < singleInsuranceData.insuredMembers.length; i++) {
-                const firstName = (singleInsuranceData.insuredMembers[i].name as string).split(' ')[0];
-                singleInsuranceData.displayHolderName += ', ' + firstName;
+                if(singleInsuranceData.insuredMembers[i].name){
+                  const firstName = (singleInsuranceData.insuredMembers[i].name as string).split(' ')[0];
+                  singleInsuranceData.displayHolderName += ', ' + firstName;
+                }
               }
             }
           } else {
@@ -476,7 +478,7 @@ export class InsuranceComponent implements OnInit {
         } else {
           element.sumAssured = element.sumInsuredIdv;
         }
-        if (element.addOns && element.addOns.length > 0) {
+        if (element.addOns && !element.sumAssured && element.addOns.length > 0) {
           element.addOns.forEach(ele => {
             element.sumAssured += ele.addOnSumInsured;
           });

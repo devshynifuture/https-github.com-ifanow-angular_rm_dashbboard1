@@ -425,7 +425,25 @@
             </div>
         </div>
 
-
+        <div class="row pt-32">
+            <div class="col-md-5 pr-0 text-right">
+                <h5 class="m-0 pt-20 ">Linked bank account</h5>
+            </div>
+            <div class="col-md-5 form-group">
+                <mat-form-field>
+                    <mat-select class="form-control" formControlName="bankAccount" matInput>
+                        <mat-option *ngFor="let option of bankList ;index as i" [value]="option.id">
+                            {{option.bankNameAndLast4Digit}}</mat-option>
+                    </mat-select>
+                    <mat-error>This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-1 p-0 pt-8 d-flex">
+                <!--  prod build appBankAccount appBankAccount  [data]="bankAccountDetails"  [data]="bankAccountDetails" (inputChange)='bankAccountList($event.value)' -->
+                <i class="material-icons text-primitive c-p float-left" (click)="openDialog(null)">add</i>
+            </div>
+        </div>
     </div>
 
 </div>

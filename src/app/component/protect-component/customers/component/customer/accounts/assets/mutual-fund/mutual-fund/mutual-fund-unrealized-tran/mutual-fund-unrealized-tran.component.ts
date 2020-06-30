@@ -1020,7 +1020,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         clientId: this.clientId,
         advisorId: this.advisorId,
         fromEmail: 'devshyni@futurewise.co.in',
-        toEmail: 'abhishek@futurewise.co.in'
+        toEmail: 'futurewisejunkmail@gmail.com'
       }
       this.utilService.bulkHtmlToPdf(obj)
         this.utilService.htmlToPdf(para, 'transaction', true, this.fragmentData, '', '')

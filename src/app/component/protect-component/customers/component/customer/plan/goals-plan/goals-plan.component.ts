@@ -84,7 +84,7 @@ export class GoalsPlanComponent implements OnInit {
 
   // options set for donut chart
   // TODO:- remove 'series' legend from the tooltip
-  donutOptions:any = {
+  donutOptions = {
     chart: {
         type: 'pie',
         height: 170
@@ -97,7 +97,7 @@ export class GoalsPlanComponent implements OnInit {
     },
     yAxis: {
         title: {
-            text: 'Total percent market share'
+            text: ''
         }
     },
     plotOptions: {
@@ -106,17 +106,9 @@ export class GoalsPlanComponent implements OnInit {
         }
     },
     legend:{
-      floating: true,
+      floating: false,
     },
-    series: [{
-        data: [["Loan Amt",6],["Down Amt",4]],
-        size: '100%',
-        innerSize: '55%',
-        showInLegend:true,
-        dataLabels: {
-            enabled: false
-        }
-    }]
+    series: []
 }
 
   constructor(
@@ -137,10 +129,11 @@ export class GoalsPlanComponent implements OnInit {
 
   // load all goals created for the client and select the first goal
   loadAllGoals(){
-    this.plansService.getAllGoals(this.advisor_client_id).subscribe((data)=>{
+    this.allGoals = [];
+    this.plansService.getAllGoals(this.advisor_client_id).subscribe((data:any[])=>{
       if (data) {
         setTimeout(() => {
-          this.allGoals = data.map(goal => this.mapGoalDashboardData(goal));
+          this.allGoals = data.reverse().map(goal => this.mapGoalDashboardData(goal));
           // let dom render first
           this.loadSelectedGoalData(this.allGoals[0]);
         }, 100);
@@ -179,6 +172,21 @@ export class GoalsPlanComponent implements OnInit {
     }
     Highcharts.chart('monthly-chart-container-main', sipSeries);
     Highcharts.chart('lumpsum-chart-container-main', lumpsumSeries);
+
+    if(res.remainingData.loan) {
+      const loan = res.remainingData.loan;
+      const chart = {
+        data: [["Loan Amt", parseInt(loan.loanAmount)],["Down Amt",parseInt(loan.downPayment)]],
+        size: '100%',
+        innerSize: '55%',
+        showInLegend:true,
+        dataLabels: {
+            enabled: false
+        }
+    }
+    this.donutOptions.series = [chart];
+      Highcharts.chart('donut-chart-container', this.donutOptions);
+    }
   }
   
 
@@ -269,10 +277,11 @@ export class GoalsPlanComponent implements OnInit {
       state: 'open'
     };
 
-    this.eventService.changeUpperSliderState(fragmentData).subscribe(
+    const sub = this.eventService.changeUpperSliderState(fragmentData).subscribe(
       upperSliderData => {
         if (UtilService.isRefreshRequired(upperSliderData)) {
           this.loadAllGoals();
+          sub.unsubscribe();
         }
       }
     );
@@ -324,19 +333,13 @@ export class GoalsPlanComponent implements OnInit {
     }
 
     const subscription = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(sideBarData => {
-        if (UtilService.isDialogClose(sideBarData)) {
-          if(UtilService.isRefreshRequired(sideBarData)) {
-            switch (flag) {
-              case 'openCalculators':
-                // TODO:- add the save data method and then show snackbar
-                // sideBarData.data is the form value
-                this.eventService.openSnackBar('Goal calculation added successfully', 'OK');
-                break;
-            }
-          }
-          subscription.unsubscribe();
+      if (UtilService.isDialogClose(sideBarData)) {
+        if(UtilService.isRefreshRequired(sideBarData)) {
+          this.loadAllGoals();
         }
-      });
+        subscription.unsubscribe();
+      }
+    });
   }
 
   loadSelectedGoalData(goalData) {
@@ -344,7 +347,6 @@ export class GoalsPlanComponent implements OnInit {
     setTimeout(() => {
       this.createChart(this.selectedGoal);
     });
-    Highcharts.chart('donut-chart-container', this.donutOptions);
   }
 
   deleteGoal() {
