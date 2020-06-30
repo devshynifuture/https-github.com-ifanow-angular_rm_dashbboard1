@@ -6,11 +6,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/app/material/material';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 import { OpenUrlsComponent } from './open-urls/open-urls.component';
+import { CustomiseSettingComponent } from './customise-setting/customise-setting.component';
 
 
 
 @NgModule({
-  declarations: [BulkReportSendingComponent, ],
+  declarations: [BulkReportSendingComponent, CustomiseSettingComponent, ],
   imports: [
     CommonModule,
     BulkReportSendingRoutingModule,
