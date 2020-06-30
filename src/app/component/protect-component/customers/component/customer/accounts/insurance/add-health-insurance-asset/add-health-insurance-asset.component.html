@@ -193,8 +193,8 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input #policyNum [maxLength]="20" autocomplete="off" class="form-control br-0" formControlName="policyNum" matInput type="text">
-                        <mat-hint align="end" class="f-12">{{policyNum.value.length}}/20</mat-hint>
+                        <input #policyNum [maxLength]="30" autocomplete="off" class="form-control br-0" formControlName="policyNum" matInput type="text" placeholder="Enter Policy number">
+                        <mat-hint align="end" class="f-12">{{policyNum.value.length}}/30</mat-hint>
                         <mat-error>This field is required
                         </mat-error>
                     </mat-form-field>

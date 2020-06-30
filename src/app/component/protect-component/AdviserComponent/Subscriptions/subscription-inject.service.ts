@@ -26,6 +26,7 @@ export class SubscriptionInject {
 
 
   private refreshObservable = new BehaviorSubject<boolean>(false);
+  private sliderDataObservable = new BehaviorSubject<any>('');
 
   rightSideData(msg) {
     this.openCloseRightSlider.next(msg);
@@ -57,6 +58,10 @@ export class SubscriptionInject {
     this.refreshObservable.next(true);
   }
 
+  setSliderData(data){
+    this.sliderDataObservable.next(data);
+  }
+
   openNewRightSlider(sliderData: any) {
     this.newRightSliderData.next(sliderData);
     return this.newRightSliderDataObs;
@@ -65,9 +70,11 @@ export class SubscriptionInject {
   closeNewRightSlider(sliderObj: any) {
     const sliderCloseObj = {
       refreshRequired: this.refreshObservable.getValue(),
+      data: this.sliderDataObservable.getValue(),
       ...sliderObj
     };
     this.refreshObservable.next(false);
+    this.sliderDataObservable.next('');
     this.newRightSliderData.next(sliderCloseObj);
   }
 

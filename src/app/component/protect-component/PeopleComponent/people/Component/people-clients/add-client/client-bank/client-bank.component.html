@@ -79,10 +79,6 @@
                         <mat-option value='' disabled>Select account type</mat-option>
                         <mat-option *ngFor="let account of accountTypes" [value]=account.id>{{account.name}}
                         </mat-option>
-                        <!-- <mat-option value='2'>Current</mat-option>
-                        <mat-option value='3'>Cash credit</mat-option>
-                        <mat-option value='4'>NRE</mat-option>
-                        <mat-option value='5'>NRO</mat-option> -->
                     </mat-select>
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>

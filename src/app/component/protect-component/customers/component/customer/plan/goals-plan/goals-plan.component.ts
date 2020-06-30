@@ -363,8 +363,8 @@ export class GoalsPlanComponent implements OnInit {
         }
         this.plansService.deleteGoal(deleteObj).subscribe((data)=>{
           this.eventService.openSnackBar("Goal has been deleted successfully", "Dismiss");
-          this.allGoals = [];
-          this.loadAllGoals();
+          this.allGoals = this.allGoals.filter(goal => goal.id != this.selectedGoal.id);
+          this.loadSelectedGoalData(this.allGoals[0]);
           dialogRef.close()
         }, (err) => { this.eventService.openSnackBar(err, "Dismiss") })
       },

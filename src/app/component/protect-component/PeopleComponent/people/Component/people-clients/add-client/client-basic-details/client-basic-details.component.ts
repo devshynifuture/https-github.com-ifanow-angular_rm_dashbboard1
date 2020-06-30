@@ -153,7 +153,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         this.hideDematTab.emit(true);
         this.invTaxStatusList = this.enumService.getIndividualTaxList();
         this.createIndividualForm(this.basicDetailsData);
-      } else if (this.fieldFlag == 'client' && this.invTypeCategory == '2') {
+      } else if (this.invTypeCategory == '2') {
         this.hideDematTab.emit(false);
         this.invTaxStatusList = this.enumService.getMinorTaxList();
         this.createMinorForm(this.basicDetailsData);
@@ -166,12 +166,12 @@ export class ClientBasicDetailsComponent implements OnInit {
         this.clientTypeList = (this.basicDetailsData.clientType == 1) ? {
           name: 'Individual',
           value: '1'
-        } : (this.basicDetailsData.clientType == 2) ? { name: 'Minor', value: '2' } : { name: 'Non-individual', value: '3' };
+        } : (this.basicDetailsData.clientType == 2) ? { name: 'Minor', value: '2' } : (this.basicDetailsData.clientType == 3) ? { name: 'Non-individual', value: '3' } : { name: 'Sole proprietorship', value: '4' };
       } else {
-        this.clientTypeList = (this.basicDetailsData.clientType == 1) ? { name: 'Individual', value: '1' } : {
+        this.clientTypeList = (this.basicDetailsData.clientType == 1) ? { name: 'Individual', value: '1' } : (this.basicDetailsData.clientType == 3) ? {
           name: 'Non-individual',
           value: '3'
-        };
+        } : { name: 'Sole proprietorship', value: '4' };
       }
       // (data.clientType == 1 || data.clientType == 0) ? this.createIndividualForm(data) : this.createNonIndividualForm(data);
       this.getClientOrLeadData(this.basicDetailsData);
@@ -337,6 +337,10 @@ export class ClientBasicDetailsComponent implements OnInit {
       clientOwner: [this.selectedClientOwner, (this.fieldFlag == 'client') ? [Validators.required] : null],
       role: [(data.roleId) ? data.roleId : '', Validators.required]
     });
+    if (this.invTypeCategory == 4) {
+      this.nonIndividualForm.controls.comStatus.setValidators(null);
+      this.nonIndividualForm.controls.comStatus.updateValueAndValidity();
+    }
   }
 
   capitalise(event) {
@@ -385,7 +389,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       this.hideDematTab.emit(true);
       // this.invTaxStatusList = this.enumService.getIndividualTaxList();
       console.log(this.invTaxStatusList);
-    } else if (event.value == '2' && (this.fieldFlag == 'familyMember' || this.fieldFlag == 'client')) {
+    } else if (event.value == '2') {
       this.createMinorForm(this.basicDetailsData);
       this.mobileNumberFlag = 'Mobile number';
       // console.log(this.invTaxStatusList);
@@ -418,14 +422,19 @@ export class ClientBasicDetailsComponent implements OnInit {
       this.basicDetails.markAllAsTouched();
       return;
     }
-    if (this.fieldFlag == 'client' && this.invTypeCategory == '2' && this.minorForm.invalid) {
+    if (this.invTypeCategory == '2' && this.minorForm.invalid) {
       this.minorForm.markAllAsTouched();
       return;
     }
-    if (((this.fieldFlag == 'client' && this.invTypeCategory == '3') || (this.fieldFlag == 'lead' && this.invTypeCategory == '3')) && this.nonIndividualForm.invalid) {
+    if (this.invTypeCategory == '3' && this.nonIndividualForm.invalid) {
       this.nonIndividualForm.markAllAsTouched();
       return;
-    } else if (this.mobileData.invalid) {
+    }
+    if (this.invTypeCategory == '4' && this.nonIndividualForm.invalid) {
+      this.nonIndividualForm.markAllAsTouched();
+      return;
+    }
+    else if (this.mobileData.invalid) {
       this.mobileData.markAllAsTouched();
     } else {
       // let taxStatusId = (this.invTypeCategory == '1') ? this.basicDetails.value.taxStatus : (this.invTypeCategory == '2') ? this.minorForm.value.taxStatus : this.nonIndividualForm.value.taxStatus;
@@ -507,7 +516,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         }
       }
 
-      if (this.invTypeCategory == 3) {
+      if (this.invTypeCategory == 3 || this.invTypeCategory == 4) {
         obj['dateOfBirth'] = this.datePipe.transform(this.nonIndividualForm.value.dateOfIncorporation, 'dd/MM/yyyy')
         obj =
         {

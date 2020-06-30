@@ -1,18 +1,19 @@
-import {Component, Input, OnInit, QueryList, ViewChildren} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import {DatePipe} from '@angular/common';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {NomineeDetailsIinComponent} from '../nominee-details-iin/nominee-details-iin.component';
-import {PostalService} from 'src/app/services/postal.service';
-import {ProcessTransactionService} from '../../../doTransaction/process-transaction.service';
-import {ContactDetailsInnComponent} from '../contact-details-inn/contact-details-inn.component';
-import {MatInput} from '@angular/material';
-import {AuthService} from 'src/app/auth-service/authService';
-import {SubscriptionService} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription.service';
-import {EnumServiceService} from 'src/app/services/enum-service.service';
+import { Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { DatePipe } from '@angular/common';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { NomineeDetailsIinComponent } from '../nominee-details-iin/nominee-details-iin.component';
+import { PostalService } from 'src/app/services/postal.service';
+import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
+import { ContactDetailsInnComponent } from '../contact-details-inn/contact-details-inn.component';
+import { MatInput } from '@angular/material';
+import { AuthService } from 'src/app/auth-service/authService';
+import { SubscriptionService } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription.service';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 
 @Component({
   selector: 'app-bank-details-iin',
@@ -22,15 +23,17 @@ import {EnumServiceService} from 'src/app/services/enum-service.service';
 export class BankDetailsIINComponent implements OnInit {
   bankListArr: any;
   activeDetailsClass = 'first';
+  accountTypes: any;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
-              private postalService: PostalService,
-              private processTransaction: ProcessTransactionService,
-              private cusService: CustomerService,
-              private subService: SubscriptionService,
-              private enumService: EnumServiceService,
-              private datePipe: DatePipe, public utils: UtilService,
-              public eventService: EventService) {
+    private postalService: PostalService,
+    private processTransaction: ProcessTransactionService,
+    private cusService: CustomerService,
+    private subService: SubscriptionService,
+    private enumService: EnumServiceService,
+    private datePipe: DatePipe, public utils: UtilService,
+    public eventService: EventService,
+    private enumDataService: EnumDataService) {
     this.clientId = AuthService.getClientId();
   }
 
@@ -98,6 +101,7 @@ export class BankDetailsIINComponent implements OnInit {
 
   // @Output() changedValue = new EventEmitter();
   ngOnInit() {
+    this.accountTypes = this.enumDataService.getBankAccountTypes();
     if (this.firstHolderBank) {
     } else {
       this.getdataForm('');
@@ -167,8 +171,8 @@ export class BankDetailsIINComponent implements OnInit {
     if (ifsc != '') {
       this.isIfsc = true;
       this.subService.getBankAddress(obj).subscribe(data => {
-          this.bankData(data);
-        },
+        this.bankData(data);
+      },
         err => {
           this.isIfsc = false;
         });
