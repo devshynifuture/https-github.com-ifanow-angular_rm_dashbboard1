@@ -10,6 +10,7 @@ import { CustomerService } from 'src/app/component/protect-component/customers/c
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 
 @Component({
   selector: 'app-client-bank',
@@ -38,10 +39,12 @@ export class ClientBankComponent implements OnInit {
   };
   disableBtn: boolean;
   clientName: any;
+  accountTypes: any;
   constructor(private cusService: CustomerService, private eventService: EventService,
     private fb: FormBuilder, private subInjectService: SubscriptionInject,
     private subService: SubscriptionService, private postalService: PostalService,
-    private peopleService: PeopleService, private utilService: UtilService, public dialog: MatDialog) {
+    private peopleService: PeopleService, private utilService: UtilService, public dialog: MatDialog,
+    private enumDataservice: EnumDataService) {
   }
 
   bankForm;
@@ -114,7 +117,7 @@ export class ClientBankComponent implements OnInit {
       bankName: [data.bankName, [Validators.required]],
       micrName: [data.micrNo],
       accNumber: [data.accountNumber, [Validators.required]],
-      accType: [(data.accountType) ? String(data.accountType) : '', [Validators.required]],
+      accType: [(data.accountType) ? data.accountType : '', [Validators.required]],
       branchName: [data.branchName, [Validators.required]],
       branchCountry: [(data.address) ? data.address.country : '', [Validators.required]],
       branchPinCode: [(data.address) ? data.address.pinCode : '', [Validators.required]],
@@ -126,6 +129,7 @@ export class ClientBankComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.accountTypes = this.enumDataservice.getBankAccountTypes();
   }
 
   getBankAddress(ifsc) {

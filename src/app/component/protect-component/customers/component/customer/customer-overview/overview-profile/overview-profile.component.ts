@@ -58,6 +58,7 @@ export class OverviewProfileComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.enumDataService.setBankAccountTypes();
     this.clientData = AuthService.getClientData();
     this.enumDataService.getRoles();
     this.enumDataService.getProofType();

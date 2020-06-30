@@ -67,6 +67,7 @@ export class EnumDataService {
     { assetShortName: 'Gold', assetName: 'GOLD', assetType: 32 },
     { assetShortName: 'Others', assetName: 'Others', assetType: 33 },
   ]
+  accountTypes: any;
 
   constructor(private enumService: EnumServiceService, private subService: SubscriptionService,
     private onlineTransactionService: OnlineTransactionService, private custumService: CustomerService,
@@ -78,19 +79,19 @@ export class EnumDataService {
   bankList: any = [];
   advisorId: any;
   clientData: any;
-  userData:any;
+  userData: any;
   getAccountList(userData) {
     let self = this;
-    if(userData != null){
+    if (userData != null) {
       self.userData = userData;
     }
     return new Promise(function (resolve, reject) {
       // this.advisorId = AuthService.getAdvisorId();
       // this.clientData = AuthService.getClientData();
-  
+
       const obj = {
         "userId": self.userData[0].id,
-        "userType": self.userData[0].userType 
+        "userType": self.userData[0].userType
       };
       self.custumService.getBankList(obj).subscribe(
         (data) => {
@@ -98,7 +99,7 @@ export class EnumDataService {
           resolve(data);
           self.enumService.addBank(self.bankList);
         },
-        (err)=>{
+        (err) => {
           reject('failed')
         }
       );
@@ -139,6 +140,20 @@ export class EnumDataService {
     );
   }
 
+  setBankAccountTypes() {
+    const obj = {}
+    this.peopleService.getbankAccountTypes(obj).subscribe(
+      data => {
+        if (data) {
+          this.accountTypes = data;
+        }
+      }
+    )
+  }
+
+  getBankAccountTypes() {
+    return this.accountTypes;
+  }
   searchClientAndFamilyMember() {
     const obj = {
       advisorId: AuthService.getAdvisorId(),
