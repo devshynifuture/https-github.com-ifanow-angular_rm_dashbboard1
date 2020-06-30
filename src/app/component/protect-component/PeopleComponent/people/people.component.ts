@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {EnumDataService} from 'src/app/services/enum-data.service';
+import { Component, OnInit } from '@angular/core';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
@@ -9,7 +9,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 })
 export class PeopleComponent implements OnInit {
 
-  roleObj:any;
+  roleObj: any;
 
   constructor(private enumDataService: EnumDataService) {
     this.roleObj = AuthService.getUserRoleType();
@@ -21,6 +21,7 @@ export class PeopleComponent implements OnInit {
     this.enumDataService.getProofType();
     // this.enumDataService.getAccountList();
     this.enumDataService.getClientRole();
+    this.enumDataService.setBankAccountTypes();
   }
 
 }

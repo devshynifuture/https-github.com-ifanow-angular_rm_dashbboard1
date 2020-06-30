@@ -46,7 +46,7 @@ export class PreferencesComponent implements OnInit {
   setForms(){
     const remainingData = this.data.remainingData;
     this.goalDetailsFG = this.fb.group({
-      goalValue: [Math.round(remainingData.futureValue), [Validators.required]],
+      goalValue: [Math.round(this.preferenceService.getGoalValueForForm(this.data)), [Validators.required]],
       savingStartDateYear: [new Date(remainingData.savingStartDate).getFullYear(), [Validators.required]],
       savingStartDateMonth: [('0' + (new Date(remainingData.savingStartDate).getMonth() + 1)).slice(-2), [Validators.required]],
       savingEndDateYear: [new Date(remainingData.savingEndDate).getFullYear(), [Validators.required]],
@@ -54,14 +54,14 @@ export class PreferencesComponent implements OnInit {
       goalStartDateYear: [new Date(remainingData.goalStartDate).getFullYear(), [Validators.required]],
       goalStartDateMonth: [('0' + (new Date(remainingData.goalStartDate).getMonth() + 1)).slice(-2), [Validators.required]],
       savingStatus: [remainingData.savingType, [Validators.required]],
-      stepUp: [remainingData.stepUp, [Validators.required]],
       freezeCalculation: [remainingData.freezed],
-      notes: [remainingData.notes],
+      notes: [remainingData.notes || remainingData.goalNote],
       name: [this.data.goalName, [Validators.required]],
       archiveGoal: [],
     })
 
     if(this.data.singleOrMulti == 2) {
+      this.goalDetailsFG.addControl('stepUp',this.fb.control(remainingData.stepUp, [Validators.required]));
       this.goalDetailsFG.addControl('goalEndDateYear',this.fb.control(new Date(remainingData.goalEndDate).getFullYear(), [Validators.required]));
       this.goalDetailsFG.addControl('goalEndDateMonth',this.fb.control(('0' + (new Date(remainingData.goalEndDate).getMonth() + 1)).slice(-2), [Validators.required]));
     }
@@ -96,6 +96,7 @@ export class PreferencesComponent implements OnInit {
 
     observer.subscribe(res => {
       this.eventService.openSnackBar("Preference saved", "Dismiss");
+      this.subInjectService.setRefreshRequired();
     }, err => {
       this.eventService.openSnackBar(err, "Dismiss");
     })
@@ -117,6 +118,7 @@ export class PreferencesComponent implements OnInit {
     console.log(obj)
     this.planService.saveAssetPreference(obj).subscribe(res => {
       this.eventService.openSnackBar("Asset allocation preference saved", "Dismiss");
+      this.subInjectService.setRefreshRequired();
     }, err => {
       this.eventService.openSnackBar(err, "Dismiss");
     })
@@ -138,7 +140,7 @@ export class PreferencesComponent implements OnInit {
 
   close() {
     // this.addMoreFlag = false;
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.closeNewRightSlider({ state: 'close' });
   }
 }
 export interface PeriodicElement {

@@ -9,7 +9,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthService } from './auth-service/authService';
-import { DashboardComponent } from './component/protect-component/AdviserComponent/dashboard/dashboard.component';
 import { HttpService } from './http-service/http-service';
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
 import { CustomFormInputComponent } from './common/custom-form-input/custom-form-input.component';
@@ -36,7 +35,6 @@ import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardComponent,
     // ConfirmDialogComponent,
     DialogComponent,
     CustomFormInputComponent,

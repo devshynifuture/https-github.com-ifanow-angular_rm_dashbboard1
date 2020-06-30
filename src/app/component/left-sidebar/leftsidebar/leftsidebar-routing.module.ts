@@ -28,6 +28,10 @@ const routes: Routes = [
 
       },
       {
+        path: 'dashboard',
+        loadChildren: () => import('src/app/component/protect-component/AdviserComponent/dashboard/dashboard.module').then(m => m.DashboardModule)
+      },
+      {
         path: 'people',
         loadChildren: () => import('src/app/component/protect-component/PeopleComponent/people/people.module').then(m => m.PeopleModule)
       },
