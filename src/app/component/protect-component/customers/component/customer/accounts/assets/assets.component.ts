@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../customer.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UpperCustomerComponent } from '../../../common-component/upper-customer/upper-customer.component';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 
 @Component({
   selector: 'app-assets',
@@ -42,7 +43,7 @@ export class AssetsComponent implements OnInit {
     public dialog: MatDialog,
     private cusService: CustomerService,
     private route: ActivatedRoute,
-    private router: Router) {
+    private router: Router, private enumDataService: EnumDataService) {
   }
 
   close() {
@@ -120,6 +121,7 @@ export class AssetsComponent implements OnInit {
 
   ngOnInit() {
     // this.viewMode = 'tab2';
+    this.enumDataService.setBankAccountTypes();
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
     this.getAssetCountGLobalData();
