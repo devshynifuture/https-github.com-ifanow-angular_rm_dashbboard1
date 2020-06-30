@@ -14,7 +14,7 @@
                 <mat-option value='1'>Individual</mat-option>
                 <mat-option value='2'>Minor</mat-option>
                 <mat-option value='3'>Non-individual</mat-option>
-                <mat-option value='4'>Proprietorship</mat-option>
+                <!-- <mat-option value='4'>Proprietorship</mat-option> -->
               </mat-select>
               <mat-select (selectionChange)="changeInvestorType($event)" *ngIf="basicDetailsData.userId"
                 [(ngModel)]="invTypeCategory" class="form-control">
@@ -30,7 +30,7 @@
                 [(ngModel)]="invTypeCategory" class="form-control">
                 <mat-option value='1'>Individual</mat-option>
                 <mat-option value='3'>Non-individual</mat-option>
-                <mat-option value='4'>Proprietorship</mat-option>
+                <!-- <mat-option value='4'>Proprietorship</mat-option> -->
               </mat-select>
               <mat-select (selectionChange)="changeInvestorType($event)" *ngIf="basicDetailsData.userId"
                 [(ngModel)]="invTypeCategory" class="form-control">
