@@ -714,6 +714,13 @@ button.primary-sm {
   pointer-events: none !important;
 }
 
+.bottom-0 {
+  position: fixed;
+  bottom: 0px;
+  border-top: 1px solid #DADCE0;
+  width: 13.7%;
+}
+
 @media(max-width:1100px) {
   .mat-stroked-button {
     min-width: auto !important;

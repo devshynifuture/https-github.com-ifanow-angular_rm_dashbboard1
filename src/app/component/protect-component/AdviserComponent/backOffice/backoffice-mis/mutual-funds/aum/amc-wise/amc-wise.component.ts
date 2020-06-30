@@ -177,7 +177,7 @@ export class AmcWiseComponent implements OnInit {
       })
     });
 
-    ExcelMisService.exportExcel(this.arrayOfHeaderStyles[2], this.arrayOfHeaders[2], newArray, [], 'category-wise-aum-mis', this.applicantWiseTotal);
+    ExcelMisService.exportExcel(this.arrayOfHeaderStyles[2], this.arrayOfHeaders[2], newArray, [], 'Mis Report - AMC wise AUM', this.applicantWiseTotal);
   }
 
   schemeWiseExcelReport(index) {
@@ -190,7 +190,7 @@ export class AmcWiseComponent implements OnInit {
         element.schemeList = [];
       }
     });
-    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'amc-wise-aum-mis', 'amc-wise-aum-mis', {
+    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'MIS Report - AMC wise AUM', 'amc-wise-aum-mis', {
       amcList: true,
       schemeList: false,
       applicantList: false
@@ -198,73 +198,12 @@ export class AmcWiseComponent implements OnInit {
   }
 
   amcWiseExcelReport() {
-    // this.arrayOfExcelData.forEach(element => {
-    //   element.totalAum =this.mutualFundRoundAndFormat(element.totalAum, 0)
-    // });
-    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, this.arrayOfExcelData, 'amc-wise-aum-mis', 'amc-wise-aum-mis', {
+    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, this.arrayOfExcelData, 'MIS Report - AMC wise AUM', 'amc-wise-aum-mis', {
       amcList: false,
       schemeList: false,
       applicantList: false
     }, this.amcWiseTotal);
   }
-
-  // initializeExcelSheet() {
-  //   let dataValue = [];
-  //   this.arrayOfExcelData[0] = [];
-  //   this.arrayOfExcelData[1] = [];
-  //   // this.arrayOfExcelData[2] = [];
-  //   // this.arrayOfExcelData[3] = [];
-  //   this.amcList.forEach((element, index1) => {
-  //     dataValue = [
-  //       index1 + 1,
-  //       element.name,
-  //       element.totalAum,
-  //       element.weightInPercentage
-  //     ];
-  //     this.arrayOfExcelData[0].push(Object.assign(dataValue));
-  //     if (element.hasOwnProperty('schemes') && element.schemes.length !== 0) {
-  //       element.schemes.forEach((element, index2) => {
-  //         dataValue = [
-  //           index2 + 1,
-  //           element.schemeName,
-  //           element.totalAum,
-  //           element.weightInPercentage
-  //         ];
-  //         this.arrayOfExcelData[1].push(Object.assign(dataValue));
-
-  //         if (element.hasOwnProperty('clientList') && element.clientList) {
-  //           if (element.clientList.length !== 0) {
-  //             element.clientList.forEach((element, index3) => {
-  //               dataValue = [
-  //                 index3 + 1,
-  //                 element.clientName,
-  //                 element.balanceUnit,
-  //                 element.folio,
-  //                 element.totalAum,
-  //                 element.weightInPercentage
-  //               ];
-  //               this.arrayOfExcelData[2].push(Object.assign(dataValue));
-
-  //               // if (element.hasOwnProperty('clientList') && element.clientList.length !== 0) {
-  //               //   element.clientList.forEach((element, index4) => {
-  //               //     dataValue = [
-  //               //       index4 + 1,
-  //               //       element.clientName,
-  //               //       element.balanceUnit,
-  //               //       element.folio,
-  //               //       element.currentAmount,
-  //               //       element.weightInPercentage
-  //               //     ];
-  //               //     this.arrayOfExcelData[3].push(Object.assign(dataValue));
-  //               //   });
-  //               // }
-  //             });
-  //           }
-  //         }
-  //       });
-  //     }
-  //   });
-  // }
 
   removeValuesFromExcel(whichList, clientIndex) {
 

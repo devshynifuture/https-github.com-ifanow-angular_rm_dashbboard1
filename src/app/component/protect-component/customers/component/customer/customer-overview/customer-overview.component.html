@@ -1,16 +1,20 @@
 <div class="row" id="overview-secondhead">
     <div class="col-md-2 d-flex align-items-center">
-        <button (click)="goToAdvisorHome()" *ngIf="authService.isAdvisor()" class="btn-warning-outline advisorHomeBtn br-2" mat-stroked-button>
-      <i class="material-icons"> keyboard_backspace </i> ADVISOR HOME
-    </button>
+        <button (click)="goToAdvisorHome()" *ngIf="authService.isAdvisor()"
+            class="btn-warning-outline advisorHomeBtn br-2" mat-stroked-button>
+            <i class="material-icons"> keyboard_backspace </i> ADVISOR HOME
+        </button>
     </div>
 
     <div class="col-md-8 p-0 link-width">
         <nav mat-align-tabs="center" mat-tab-nav-bar>
             <a [routerLink]="['/customer/detail/overview/myfeed']" mat-tab-link routerLinkActive="active">MY FEED</a>
             <a [routerLink]="['/customer/detail/overview/profile']" mat-tab-link routerLinkActive="active">PROFILE</a>
-            <a [routerLink]="['/customer/detail/overview/documents']" mat-tab-link routerLinkActive="active">DOCUMENTS</a>
-            <a class="width-140" [routerLink]="['/customer/detail/overview/subscription/subscriptions']" mat-tab-link routerLinkActive="active">SUBSCRIPTION</a>
+            <a [routerLink]="['/customer/detail/overview/documents']" mat-tab-link
+                routerLinkActive="active">DOCUMENTS</a>
+            <a [routerLink]="['/customer/detail/overview/email']" mat-tab-link routerLinkActive="active">EMAIL</a>
+            <a class="width-140" [routerLink]="['/customer/detail/overview/subscription/subscriptions']" mat-tab-link
+                routerLinkActive="active">SUBSCRIPTION</a>
         </nav>
     </div>
 

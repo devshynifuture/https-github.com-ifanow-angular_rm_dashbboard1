@@ -1,12 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { ValidatorType } from 'src/app/services/util.service';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { DatePipe } from '@angular/common';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {ValidatorType} from 'src/app/services/util.service';
+import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {DatePipe} from '@angular/common';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-client-more-info',
@@ -41,8 +41,8 @@ export class ClientMoreInfoComponent implements OnInit {
   disableBtn = false;
 
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject,
-    private peopleService: PeopleService, private eventService: EventService,
-    private datePipe: DatePipe) {
+              private peopleService: PeopleService, private eventService: EventService,
+              private datePipe: DatePipe) {
   }
 
   @Input() fieldFlag;
@@ -58,14 +58,14 @@ export class ClientMoreInfoComponent implements OnInit {
     console.log('ClientMoreInfoComponent data : ', data);
     if (this.fieldFlag == 'familyMember') {
       this.occupationList = [
-        { name: 'Goverment', value: 1 },
-        { name: 'Service', value: 2 },
-        { name: 'Private', value: 3 },
-        { name: 'Business', value: 4 },
-        { name: 'Self-Occupied', value: 5 },
-        { name: 'Home maker', value: 6 },
-        { name: 'Student', value: 7 },
-        { name: 'Retired', value: 8 }
+        {name: 'Goverment', value: 1},
+        {name: 'Service', value: 2},
+        {name: 'Private', value: 3},
+        {name: 'Business', value: 4},
+        {name: 'Self Employed', value: 5},
+        {name: 'Home maker', value: 6},
+        {name: 'Student', value: 7},
+        {name: 'Retired', value: 8}
       ];
       if (this.moreInfoData.familyMemberType == 0 || this.moreInfoData.familyMemberType == 1) {
         this.moreInfoData.categoryTypeflag = 'Individual';
@@ -79,11 +79,11 @@ export class ClientMoreInfoComponent implements OnInit {
         return;
       } else {
         this.occupationList = [
-          { name: 'Goverment', value: 1 },
-          { name: 'Service', value: 2 },
-          { name: 'Private sector', value: 3 },
-          { name: 'Business', value: 4 },
-          { name: 'Self-Occupied', value: 5 },
+          {name: 'Government', value: 1},
+          {name: 'Service', value: 2},
+          {name: 'Private sector', value: 3},
+          {name: 'Business', value: 4},
+          {name: 'Self Employed', value: 5},
         ];
         if (this.moreInfoData.clientType == 1 || this.moreInfoData.clientType == 0) {
           this.moreInfoData.categoryTypeflag = 'Individual';
@@ -91,7 +91,6 @@ export class ClientMoreInfoComponent implements OnInit {
         } else if (this.moreInfoData.clientType == 2) {
           this.moreInfoData.categoryTypeflag = 'familyMinor';
           this.moreInfoData.invCategory = '2';
-
         } else {
           this.moreInfoData.categoryTypeflag = 'clientNonIndividual';
           this.moreInfoData.invCategory = '3';
@@ -292,7 +291,7 @@ export class ClientMoreInfoComponent implements OnInit {
 
   close(data) {
     (data == 'close') ? this.cancelTab.emit('close') :
-      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
+      this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: true});
   }
 
 }
