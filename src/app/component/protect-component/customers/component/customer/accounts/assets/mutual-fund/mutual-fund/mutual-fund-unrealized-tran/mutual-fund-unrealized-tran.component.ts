@@ -156,6 +156,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         this.advisorId = parseInt(param1.advisorId)
         this.toDate = (param1.toDate)
         this.isBulkEmailing = true;
+
         if (this.route.url.split('?')[0] == '/pdf/allTransactions') {
           this.viewMode = 'All Transactions'
           this.mode = 'All Transactions'
@@ -518,8 +519,10 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       this.mfService.changeShowMutualFundDropDown(false);
       this.mutualFundList = this.mutualFund.mutualFundList;
       // this.asyncFilter(this.mutualFundList);
-      this.asyncFilter(this.mfData.mutualFundList);
-
+      if(!this.isBulkEmailing){
+        this.asyncFilter(this.mfData.mutualFundList);
+      }
+   
       // this.initValueOnInit();
       // if (this.mfData) {
       //   this.mfData.advisorData = this.mfService.getPersonalDetails(this.advisorId);
