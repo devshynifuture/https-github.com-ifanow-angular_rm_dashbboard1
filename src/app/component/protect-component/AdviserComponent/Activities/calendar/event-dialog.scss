@@ -1,15 +1,40 @@
-  ::ng-deep .newTextarea .fr-box.fr-basic .fr-wrapper {
-     margin-bottom: 20px;
- }
- 
- .heightTextarea {
-     height: 100px;
- }
- 
- ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-datepicker-toggle-default-icon {
-     width: 1.5em !important;
- }
- 
- ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
-     padding: 0px;
- }
+            .eventBox {
+                .row{
+                    margin-left: -15px !important;
+                    margin-right: -15px !important;
+                }
+                .mt-16 {
+                    margin-top: 16px !important;
+                }
+            }
+            
+            ::ng-deep .newTextarea .fr-box.fr-basic .fr-wrapper {
+               margin-bottom: 20px;
+           }
+           
+           .heightTextarea {
+               height: 100px;
+           }
+           
+            ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-datepicker-toggle-default-icon {
+               width: 1.5em !important;
+           }
+           
+            ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
+               padding: 0px;
+           }
+           
+           .uiListChanges {
+               list-style-type: disc;
+               margin-top: 10px;
+               margin-bottom: 10px;
+               padding-left: 16px;
+               display: block;
+           }
+
+
+           ::ng-deep .newTextarea .fr-box.fr-basic .fr-wrapper {
+            min-height:  inherit;
+            height: 100px;
+            overflow: auto;
+           }

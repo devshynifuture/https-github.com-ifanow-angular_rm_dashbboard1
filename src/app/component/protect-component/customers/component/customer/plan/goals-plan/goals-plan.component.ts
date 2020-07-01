@@ -132,11 +132,8 @@ export class GoalsPlanComponent implements OnInit {
     this.allGoals = [];
     this.plansService.getAllGoals(this.advisor_client_id).subscribe((data:any[])=>{
       if (data) {
-        setTimeout(() => {
-          this.allGoals = data.reverse().map(goal => this.mapGoalDashboardData(goal));
-          // let dom render first
-          this.loadSelectedGoalData(this.allGoals[0]);
-        }, 100);
+        this.allGoals = data.reverse().map(goal => this.mapGoalDashboardData(goal));
+        this.loadSelectedGoalData(this.allGoals[0]);
       }
     }, err => this.eventService.openSnackBar(err, "Dismiss"))
   }
@@ -346,7 +343,7 @@ export class GoalsPlanComponent implements OnInit {
     this.selectedGoal = goalData;
     setTimeout(() => {
       this.createChart(this.selectedGoal);
-    });
+    }, 100);
   }
 
   deleteGoal() {
@@ -363,8 +360,8 @@ export class GoalsPlanComponent implements OnInit {
         }
         this.plansService.deleteGoal(deleteObj).subscribe((data)=>{
           this.eventService.openSnackBar("Goal has been deleted successfully", "Dismiss");
-          this.allGoals = [];
-          this.loadAllGoals();
+          this.allGoals = this.allGoals.filter(goal => goal.id != this.selectedGoal.id);
+          this.loadSelectedGoalData(this.allGoals[0]);
           dialogRef.close()
         }, (err) => { this.eventService.openSnackBar(err, "Dismiss") })
       },

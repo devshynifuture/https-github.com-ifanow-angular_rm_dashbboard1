@@ -68,6 +68,7 @@ export class EnumDataService {
     { assetShortName: 'Others', assetName: 'Others', assetType: 33 },
   ]
   accountTypes: any;
+  relationshipList: any;
 
   constructor(private enumService: EnumServiceService, private subService: SubscriptionService,
     private onlineTransactionService: OnlineTransactionService, private custumService: CustomerService,
@@ -151,8 +152,23 @@ export class EnumDataService {
     )
   }
 
+  setRelationShipStatus() {
+    const obj = {}
+    this.peopleService.getRelationShipStatusList(obj).subscribe(
+      data => {
+        if (data) {
+          this.relationshipList = data;
+        }
+      }
+    )
+  }
+
   getBankAccountTypes() {
     return this.accountTypes;
+  }
+
+  getRelationshipStatus() {
+    return this.relationshipList;
   }
   searchClientAndFamilyMember() {
     const obj = {

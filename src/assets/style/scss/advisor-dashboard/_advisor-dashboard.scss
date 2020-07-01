@@ -1,0 +1,201 @@
+#ui-dashboard-advisor {
+  #advisor-radio {
+    .mat-tab-label {
+      height: 40px !important;
+    }
+
+    .mat-tab-body-content {
+      overflow: hidden;
+    }
+
+
+
+    .mat-radio-label {
+      height: auto !important;
+    }
+
+    .mat-radio-label-content {
+
+      white-space: normal !important;
+      font-size: 14px;
+      padding-bottom: 15px;
+      padding-top: 15px;
+      padding-left: 10px;
+      line-height: 20px;
+
+    }
+
+    hr.ad {
+      height: 0.5px;
+      background-color: rgba(0, 0, 0, 0.12);
+      margin: 0px !important;
+      border: 0px !important;
+      width: 80%;
+      margin-left: 38px !important;
+
+    }
+
+
+  }
+
+  .advisor-status {
+    background: #FFFFFF;
+    box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.2), 0px 3px 14px rgba(0, 0, 0, 0.12), 0px 8px 10px rgba(0, 0, 0, 0.14);
+    border-radius: 0px;
+  }
+
+  .bg-advisors {
+    background: linear-gradient(180deg, rgba(253, 175, 64, 0.79) 12.92%, #FDAF40 99.1%, rgba(253, 175, 64, 0.890604) 99.11%);
+  }
+
+  .text-open-guide {
+    color: #FF9F00;
+  }
+
+  .ba-advisor {
+    border: 1px solid #FF9F00;
+  }
+
+  .bg-hred {
+    background: #FF7272;
+  }
+
+  .bussiness-snapshot {
+    #table-low {
+
+      tr.mat-header-row,
+      tr.mat-row {
+        height: 36px !important;
+      }
+
+      tr {
+        border: 0px !important;
+      }
+
+      th,
+      thead tr {
+        background-color: transparent !important;
+      }
+    }
+  }
+
+  .advisor-view-all {
+    border-radius: 2px !important;
+    border: 1px solid #83959D;
+    height: 20px;
+    font-size: 12px;
+    line-height: 16px;
+    padding: 0 3px;
+    min-width: 55px;
+    color: #83959D;
+    letter-spacing: 0.4px;
+  }
+
+  .today-task {
+
+    tr.mat-header-row {
+      height: 40px !important;
+    }
+
+    tr.mat-row {
+      height: 38px !important
+    }
+  }
+
+  .progress-advisors {
+    .mat-progress-bar {
+      height: 30px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+    }
+
+    .mat-progress-bar-background {
+      fill: #fff;
+    }
+
+    .mat-progress-bar-buffer {
+      background-color: #fff;
+    }
+
+    .mat-progress-bar-fill::after {
+      background-color: #D9DEE1;
+    }
+
+    p.top {
+      position: absolute;
+      margin-top: -34px !important;
+      left: 9px;
+    }
+  }
+
+  .progress-advisors-goal {
+    .mat-progress-bar {
+      height: 30px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+    }
+
+    .mat-progress-bar-background {
+      fill: #fff;
+    }
+
+    .mat-progress-bar-buffer {
+      background-color: #fff;
+    }
+
+
+    .light-red {
+      .mat-progress-bar-fill::after {
+        background-color: rgba(255, 114, 114, 0.4);
+        border-radius: 4px;
+
+      }
+    }
+
+    .light-green {
+      .mat-progress-bar-fill::after {
+        background-color: rgba(93, 198, 68, 0.4);
+        border-radius: 4px;
+      }
+    }
+
+    p.top {
+      position: absolute;
+      margin-top: -34px !important;
+      left: 9px;
+    }
+  }
+
+  .transctions-status-advisor,
+  .subscription-summary-advisor {
+    tr.mat-header-row {
+      height: 52px;
+    }
+
+    tr.mat-row {
+      height: 40px;
+    }
+  }
+
+  .rejections-advisor {
+    tr.mat-header-row {
+      height: 44px;
+    }
+
+    tr.mat-row {
+      height: 40px;
+    }
+  }
+
+  .reconciliation-report-advisor {
+    tr.mat-header-row {
+      height: 40px;
+    }
+
+    tr.mat-row {
+      height: 38px;
+    }
+  }
+
+  // .family-details-advisor {}
+}

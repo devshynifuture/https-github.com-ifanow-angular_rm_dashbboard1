@@ -78,7 +78,7 @@ export class PreferencesService {
       clientId: remainingData.clientId,
       advisorId: remainingData.advisorId,
       goalName: goalForm.name,
-      goalNote: goalForm.notes,
+      notes: goalForm.notes,
       archivedValue: (goalForm.archiveGoal ? 1 : 0),
       isFreezed: (goalForm.freezeCalculation ? 1 : 0),
       goalStartDate: gstartDate,
@@ -88,6 +88,10 @@ export class PreferencesService {
     }
     switch (oldGoalObj.goalType) {
       case AppConstants.CAR_GOAL:
+      case AppConstants.HOUSE_GOAL:
+      case AppConstants.OTHERS_GOAL:
+      case AppConstants.BIG_SPEND_GOAL:
+      case AppConstants.MARRIAGE_GOAL:
         obj['goalPresentValue'] = goalForm.goalValue;
         break;
       case AppConstants.WEALTH_CREATION_GOAL:
@@ -113,6 +117,10 @@ export class PreferencesService {
     } else {
       switch (data.goalType) {
         case AppConstants.CAR_GOAL:
+        case AppConstants.HOUSE_GOAL:
+        case AppConstants.OTHERS_GOAL:
+        case AppConstants.BIG_SPEND_GOAL:
+        case AppConstants.MARRIAGE_GOAL:
           return data.remainingData.goalPresentValue;
         case AppConstants.WEALTH_CREATION_GOAL:
         case AppConstants.EMERGENCY_GOAL:

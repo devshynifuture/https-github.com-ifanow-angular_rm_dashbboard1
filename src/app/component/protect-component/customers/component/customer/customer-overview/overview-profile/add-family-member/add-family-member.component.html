@@ -130,21 +130,43 @@
         <div class="dateFamilyMember">
 
             <div class="row ">
-                <div class="col-md-2"></div>
-                <div class="col-md-5">
+                <div class="col-md-3">
+                    <h6 class="f-14 mb-4">Relation/Type</h6>
+                </div>
+                <div class="col-md-4">
                     <h6 class="f-14 mb-4">Full name</h6>
                 </div>
                 <div class="col-md-3">
-                    <h6 class="f-14 mb-4">Date of birth</h6>
+                    <h6 class="f-14 mb-4">DOB/Incorporation</h6>
+                </div>
+                <div class="col-md-2">
+                    <h6 class="f-14 mb-4">Residental status</h6>
                 </div>
             </div>
             <div [formGroup]="createFamily">
                 <div *ngFor="let singleMember of getFamilyListList.controls;index as i" [formGroup]="singleMember"
                     class="row mbottom-30">
-                    <div class="col-md-2 pr-0">
-                        <h5 class="m-0 pt-12 text-right">{{familyMemberNameList[i]}}</h5>
+                    <div class="col-md-3 pr-0">
+                        <mat-form-field appearance="standard" floatLabel="never">
+                            <mat-select *ngIf="familyMemberNameList[i].value==10" class="form-control"
+                                formControlName="relationTypeId">
+                                <mat-option disabled value=''>Select option
+                                </mat-option>
+                                <mat-option [value]="relation.id" *ngFor="let relation of relationList">
+                                    {{relation.name}}</mat-option>
+                                <mat-option [value]="familyMemberNameList[i].value"
+                                    *ngIf="familyMemberNameList[i].name!='Others'">{{familyMemberNameList[i].name}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-select *ngIf="familyMemberNameList[i].value!=10" class="form-control"
+                                formControlName="relationTypeId">
+                                <mat-option [value]="familyMemberNameList[i].value">{{familyMemberNameList[i].name}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error>This field is required</mat-error>
+                        </mat-form-field>
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-4">
                         <div class="form-group remove-padding-matfield">
                             <mat-form-field appearance="standard" floatLabel="never">
                                 <input #name (input)="capitalise($event)" class="form-control" formControlName="name"
@@ -165,6 +187,15 @@
                                 <mat-error>This field is required</mat-error>
                             </mat-form-field>
                         </div>
+                    </div>
+                    <div class="col-md-2 pr-0">
+                        <mat-form-field appearance="standard" floatLabel="never">
+                            <mat-select formControlName="resident" class="form-control">
+                                <mat-option [value]=1>Residental</mat-option>
+                                <mat-option [value]=0>Non-Residental</mat-option>
+                            </mat-select>
+                            <mat-error>This field is required</mat-error>
+                        </mat-form-field>
                     </div>
                 </div>
             </div>

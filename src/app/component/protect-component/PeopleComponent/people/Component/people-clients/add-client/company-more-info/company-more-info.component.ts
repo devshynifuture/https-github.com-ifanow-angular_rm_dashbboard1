@@ -66,7 +66,7 @@ export class CompanyMoreInfoComponent implements OnInit {
       displayName: [(data.displayName) ? data.displayName : (this.companyIndividualData) ? this.companyIndividualData.name : ''],
       adhaarNo: [data.aadhaarNumber, [Validators.pattern(this.validatorType.ADHAAR)]],
       maritalStatus: [(data.martialStatusId) ? String(data.martialStatusId) : '1'],
-      dateOfBirth: [new Date(data.dateOfBirth)],
+      dateOfBirth: [data.dateOfBirth ? new Date(data.dateOfBirth) : ''],
       bio: [data.bio],
       myNotes: [data.remarks],
       name: [data.name],
@@ -74,7 +74,7 @@ export class CompanyMoreInfoComponent implements OnInit {
       pan: [data.pan, [Validators.pattern(this.validatorType.PAN)]],
       designation: [(data.occupationId) ? String(data.occupationId) : ''],
       gender: [(data.genderId) ? String(data.genderId) : '1'],
-      anniversaryDate: [new Date(data.anniversaryDate)]
+      anniversaryDate: [data.anniversaryDate ? new Date(data.anniversaryDate) : '']
     });
     console.log(this.moreInfoForm)
   }
