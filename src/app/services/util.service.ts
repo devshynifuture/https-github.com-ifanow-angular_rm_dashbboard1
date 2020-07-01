@@ -618,6 +618,7 @@ export function escapeRegExp(s: string): string {
  * You will need to add this to the component's providers to make this function private
  * 
  * Update: 1-July-2020:- You can now set your functions to be executed once the counter reaches 0
+ * @callback setFunctionToExeOnZero:- sets the callback you'd like to execute once counter reaches 0
  */
 export class LoaderFunction implements OnDestroy{
   apiDebounceSubject:Subject<any> = new Subject()
