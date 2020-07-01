@@ -146,6 +146,8 @@ export class CalendarMonthComponent implements OnInit {
 
 
   }
+
+
  sun:any = [];
  mon:any = [];
  tue:any = [];
@@ -189,6 +191,18 @@ export class CalendarMonthComponent implements OnInit {
     }
   }
  }
+
+ validateYearly(startDate,day, month){
+  let d = new Date(startDate).getDate();
+  let m = new Date(startDate).getMonth();
+  if(d == day && m == month){
+    return false;
+  }
+  else{
+    return true;
+  }
+ }
+
   validateMonthDays(eDays, cDate, startDate, interval) {
     if (eDays) {
       let d = new Date(cDate);
