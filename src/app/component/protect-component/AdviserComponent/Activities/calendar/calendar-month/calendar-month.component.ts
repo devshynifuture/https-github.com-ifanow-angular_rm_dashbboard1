@@ -463,34 +463,34 @@ export class CalendarMonthComponent implements OnInit {
   openDialog(eventData): void {
 
     const dialogRef = this.dialog.open(EventDialog, {
-      width: '600px',
-      height: '500px',
+      width: '576px',
+      height: '673px',
       data: eventData
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result != undefined && result != 'delete') {
         this.dialogData =
-          {
-            "calendarId": AuthService.getUserInfo().userName,
-            "userId": AuthService.getUserInfo().advisorId,
-            "eventId": result.eventId,
-            "summary": result.title,
-            "location": result.location,
-            "description": result.description,
-            "start": {
-              "dateTime": "",
-              "timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
-            },
-            "end": {
-              "dateTime": "",
-              "timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
-            },
-            "recurrence": [
-              "RRULE:FREQ=DAILY;COUNT=2"
-            ],
-            "attendees": result.attendeesList
-          }
+        {
+          "calendarId": AuthService.getUserInfo().userName,
+          "userId": AuthService.getUserInfo().advisorId,
+          "eventId": result.eventId,
+          "summary": result.title,
+          "location": result.location,
+          "description": result.description,
+          "start": {
+            "dateTime": "",
+            "timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
+          },
+          "end": {
+            "dateTime": "",
+            "timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
+          },
+          "recurrence": [
+            "RRULE:FREQ=DAILY;COUNT=2"
+          ],
+          "attendees": result.attendeesList
+        }
 
 
         this.startTime = result.startTime;

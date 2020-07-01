@@ -132,11 +132,8 @@ export class GoalsPlanComponent implements OnInit {
     this.allGoals = [];
     this.plansService.getAllGoals(this.advisor_client_id).subscribe((data:any[])=>{
       if (data) {
-        setTimeout(() => {
-          this.allGoals = data.reverse().map(goal => this.mapGoalDashboardData(goal));
-          // let dom render first
-          this.loadSelectedGoalData(this.allGoals[0]);
-        }, 100);
+        this.allGoals = data.reverse().map(goal => this.mapGoalDashboardData(goal));
+        this.loadSelectedGoalData(this.allGoals[0]);
       }
     }, err => this.eventService.openSnackBar(err, "Dismiss"))
   }
@@ -346,7 +343,7 @@ export class GoalsPlanComponent implements OnInit {
     this.selectedGoal = goalData;
     setTimeout(() => {
       this.createChart(this.selectedGoal);
-    });
+    }, 100);
   }
 
   deleteGoal() {
