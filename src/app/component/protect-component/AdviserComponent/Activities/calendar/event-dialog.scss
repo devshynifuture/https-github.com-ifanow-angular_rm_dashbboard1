@@ -1,3 +1,13 @@
+            .eventBox {
+                .row{
+                    margin-left: -15px !important;
+                    margin-right: -15px !important;
+                }
+                .mt-16 {
+                    margin-top: 16px !important;
+                }
+            }
+            
             ::ng-deep .newTextarea .fr-box.fr-basic .fr-wrapper {
                margin-bottom: 20px;
            }
@@ -20,4 +30,11 @@
                margin-bottom: 10px;
                padding-left: 16px;
                display: block;
+           }
+
+
+           ::ng-deep .newTextarea .fr-box.fr-basic .fr-wrapper {
+            min-height:  inherit;
+            height: 100px;
+            overflow: auto;
            }
