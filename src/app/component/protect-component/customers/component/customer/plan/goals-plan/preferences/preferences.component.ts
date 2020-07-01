@@ -57,11 +57,11 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     const remainingData = this.data.remainingData;
     this.goalDetailsFG = this.fb.group({
       goalValue: [Math.round(this.preferenceService.getGoalValueForForm(this.data)), [Validators.required]],
-      savingStartDateYear: [new Date(remainingData.savingStartDate).getFullYear(), [Validators.required]],
+      savingStartDateYear: [(new Date(remainingData.savingStartDate).getFullYear()), [Validators.required]],
       savingStartDateMonth: [('0' + (new Date(remainingData.savingStartDate).getMonth() + 1)).slice(-2), [Validators.required]],
-      savingEndDateYear: [new Date(remainingData.savingEndDate).getFullYear(), [Validators.required]],
+      savingEndDateYear: [(new Date(remainingData.savingEndDate).getFullYear()), [Validators.required]],
       savingEndDateMonth: [('0' + (new Date(remainingData.savingEndDate).getMonth() + 1)).slice(-2), [Validators.required]],
-      goalStartDateYear: [new Date(remainingData.goalStartDate).getFullYear(), [Validators.required]],
+      goalStartDateYear: [(new Date(remainingData.goalStartDate).getFullYear()), [Validators.required]],
       goalStartDateMonth: [('0' + (new Date(remainingData.goalStartDate).getMonth() + 1)).slice(-2), [Validators.required]],
       savingStatus: [remainingData.savingType, [Validators.required]],
       freezeCalculation: [remainingData.freezed],
@@ -102,12 +102,20 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       this.subscription.add(
         this.goalDetailsFG.controls.goalStartDateYear.valueChanges.subscribe(year => {
           this.years = Array(year + 1 - (new Date().getFullYear())).fill((new Date().getFullYear())).map((v, idx) => v + idx);
+          if(!this.years.includes(this.goalDetailsFG.controls.savingStartDateYear) || !this.years.includes(this.goalDetailsFG.controls.savingEndDateYear)) {
+            this.goalDetailsFG.controls.savingStartDateYear.setValue('');
+            this.goalDetailsFG.controls.savingEndDateYear.setValue('');
+          }
         })
       )
     } else {
       this.subscription.add(
         this.goalDetailsFG.controls.goalEndDate.valueChanges.subscribe(year => {
           this.years = Array(year + 1 - new Date().getFullYear()).fill((new Date().getFullYear())).map((v, idx) => v + idx);
+          if(!this.years.includes(this.goalDetailsFG.controls.savingStartDateYear) || !this.years.includes(this.goalDetailsFG.controls.savingEndDateYear)) {
+            this.goalDetailsFG.controls.savingStartDateYear.setValue('');
+            this.goalDetailsFG.controls.savingEndDateYear.setValue('');
+          }
         })
       )
     }
@@ -115,11 +123,11 @@ export class PreferencesComponent implements OnInit, OnDestroy {
 
   validateGoalDates() {
     const gstartDate = this.goalDetailsFG.controls.goalStartDateYear.value + '-' + this.goalDetailsFG.controls.goalStartDateMonth.value + '-01';
-    const gendtDate = this.goalDetailsFG.controls.goalEndDateYear.value + '-' + this.goalDetailsFG.controls.goalEndDateMonth.value + '-01';
     const sStartDate = this.goalDetailsFG.controls.savingStartDateYear.value + '-' + this.goalDetailsFG.controls.savingStartDateMonth.value + '-01';
     const sEndtDate = this.goalDetailsFG.controls.savingEndDateYear.value + '-' + this.goalDetailsFG.controls.savingEndDateMonth.value + '-01';
-
+    
     if(this.data.singleOrMulti == 2) {
+      const gendtDate = this.goalDetailsFG.controls.goalEndDateYear.value + '-' + this.goalDetailsFG.controls.goalEndDateMonth.value + '-01';
       // goal start date cannot be greater than end date
       if([-1].includes(UtilService.compareDates(gstartDate, gendtDate))) {
         this.goalSDError = true;

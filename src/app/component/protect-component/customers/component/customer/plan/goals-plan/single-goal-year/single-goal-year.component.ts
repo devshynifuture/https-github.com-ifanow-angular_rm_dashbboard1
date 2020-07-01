@@ -161,31 +161,31 @@ export class SingleGoalYearComponent implements OnInit {
         this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
         switch (this.goalTypeData.id) {
           case AppConstants.HOUSE_GOAL:
-            this.eventService.openSnackBar("House goal is added");
+            this.eventService.openSnackBar("House goal is added", "Dismiss");
             break;
 
           case AppConstants.CAR_GOAL:
-            this.eventService.openSnackBar("Car goal is added");
+            this.eventService.openSnackBar("Car goal is added", "Dismiss");
             break;
 
           case AppConstants.MARRIAGE_GOAL:
-            this.eventService.openSnackBar("Marriage goal is added");
+            this.eventService.openSnackBar("Marriage goal is added", "Dismiss");
             break;
 
           case AppConstants.EMERGENCY_GOAL:
-            this.eventService.openSnackBar("Emergency goal is added");
+            this.eventService.openSnackBar("Emergency goal is added", "Dismiss");
             break;
 
           case AppConstants.WEALTH_CREATION_GOAL:
-            this.eventService.openSnackBar("Wealth creation goal is added");
+            this.eventService.openSnackBar("Wealth creation goal is added", "Dismiss");
             break;
 
           case AppConstants.BIG_SPEND_GOAL:
-            this.eventService.openSnackBar("Big spends goal is added");
+            this.eventService.openSnackBar("Big spends goal is added", "Dismiss");
             break;
 
           case AppConstants.OTHERS_GOAL:
-            this.eventService.openSnackBar("Others goal is added");
+            this.eventService.openSnackBar("Others goal is added", "Dismiss");
             break;
 
           default:
