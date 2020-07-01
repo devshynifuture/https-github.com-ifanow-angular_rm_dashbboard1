@@ -344,7 +344,7 @@
                   {{singleClient.fullName}}
                 </mat-option>
               </mat-select>
-              <mat-error>This Field is required</mat-error>
+              <mat-error>This field is required</mat-error>
             </mat-form-field>
           </div>
         </div>
@@ -366,7 +366,7 @@
                 <mat-option (click)="addRole(role)" *ngFor="let role of clientRoles" [value]="role.id">
                   {{role.roleName}}</mat-option>
               </mat-select>
-              <mat-error>This Field is required</mat-error>
+              <mat-error>This field is required</mat-error>
             </mat-form-field>
           </div>
         </div>
@@ -833,7 +833,7 @@
               <input #cpan (input)="toUpperCase(nonIndividualForm.get('comPan'),$event)"
                 [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation class="form-control"
                 formControlName="comPan" matInput maxlength="10" placeholder="Enter pan">
-              <mat-error *ngIf="nonIndividualForm.get('comPan').errors?.required">This Field is required
+              <mat-error *ngIf="nonIndividualForm.get('comPan').errors?.required">This field is required
               </mat-error>
               <mat-error *ngIf="nonIndividualForm.get('comPan').errors?.pattern">Pan invalid
               </mat-error>
@@ -928,7 +928,7 @@
               <input #cpan (input)="toUpperCase(nonIndividualForm.get('comPan'),$event)"
                 [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation class="form-control"
                 formControlName="comPan" matInput maxlength="10" placeholder="Enter company pan">
-              <mat-error *ngIf="nonIndividualForm.get('comPan').errors?.required">This Field is required
+              <mat-error *ngIf="nonIndividualForm.get('comPan').errors?.required">This field is required
               </mat-error>
               <mat-error *ngIf="nonIndividualForm.get('comPan').errors?.pattern">Pan invalid
               </mat-error>

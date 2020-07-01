@@ -10,6 +10,7 @@ import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { EnumDataService } from 'src/app/services/enum-data.service';
 import { individualJson, minorJson, nonIndividualJson } from './client&leadJson';
+import { relationListFilterOnID } from './relationypeMethods';
 
 const moment = require('moment');
 
@@ -90,11 +91,13 @@ export class ClientBasicDetailsComponent implements OnInit {
       if (this.basicDetailsData.relationshipId == 2 || this.basicDetailsData.relationshipId == 3 || this.basicDetailsData.relationshipId == 6 || this.basicDetailsData.relationshipId == 7) {
         (data.relationshipId == 6 || data.relationshipId == 2) ? data.genderId = 1 : data.genderId = 2;
         this.familyMemberType = { name: 'Individual', value: '1' };
+        this.relationshipTypeMethod(this.basicDetailsData.genderId, this.basicDetailsData.age);
         this.invTypeCategory = '1';
         this.hideDematTab.emit(true);
         this.invTaxStatusList = this.enumService.getIndividualTaxList();
         this.createIndividualForm(this.basicDetailsData);
       } else if (this.basicDetailsData.relationshipId == 4 || this.basicDetailsData.relationshipId == 5) {
+        this.relationshipTypeMethod(this.basicDetailsData.genderId, this.basicDetailsData.age)
         if (this.basicDetailsData.age > 18) {
           (data.relationshipId != 10) ? (data.relationshipId == 4) ? data.genderId = 1 : data.genderId = 2 : '';
           this.familyMemberType = { name: 'Individual', value: '1' };
@@ -113,6 +116,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         }
       }
       else {
+        this.relationList = relationListFilterOnID(AuthService.getClientData().clientType);
         if (this.basicDetailsData.age > 18) {
           this.familyMemberType = { name: 'Individual', value: '1' };
           this.invTypeCategory = '1';
@@ -185,7 +189,6 @@ export class ClientBasicDetailsComponent implements OnInit {
     // else {
     //   this.taxStatusList = (this.basicDetailsData.residentFlag == 1) ? this.invTaxStatusList.filter(element => element.residentFlag == true) : this.invTaxStatusList.filter(element => element.residentFlag == false);
     // }
-    this.relationshipTypeMethod(this.basicDetailsData.genderId, this.basicDetailsData.age)
     console.log(data);
   }
 

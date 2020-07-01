@@ -81,6 +81,8 @@ export const appConfig = {
   HTML_TO_PDF: 'pdfAndEmail/bulk-mail/html-to-pdf',
   GET_CLIENT_IN_LOOP: 'mutual-fund/report/bulk-order/save',
   GET_ORDER_LIST: 'mutual-fund/report/bulk-order/list/get',
+  GET_MF_CLIENTS:'mutual-fund/report/client-setting/list/get',
+  SAVE_SETTING:'mutual-fund/report/client-setting/edit',
   /////////////////////////////Accounts///////////////////////////////////
   ADD_FIXEDDEPOSIT: 'account/asset/fixed-income/fixed-deposit/add',
   ADD_LIFE_INSURANCE: 'account/insurance/life-insurance/add',
@@ -726,6 +728,7 @@ export const appConfig = {
   DELETE_BANK: 'user/client/bank-details/delete',
   DELETE_DEMAT: 'user/client/demat/delete',
   GET_BANK_ACCOUNT_TYPE: 'user/bank/account-type/global/get',
+  GET_RELATIONSHIP_STATUS: 'user/relationship/global/get',
   //////////////////////////////Login///////////////////////////////////
   GENERATE_OTP: 'user/generate/otp',
   SAVE_AFTER_VERIFICATION: 'user/email/mobile/save',
