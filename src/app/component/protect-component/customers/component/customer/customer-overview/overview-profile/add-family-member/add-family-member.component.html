@@ -130,23 +130,23 @@
         <div class="dateFamilyMember">
 
             <div class="row ">
-                <div class="col-md-3">
+                <div class="w-22 pr-10 pl-10">
                     <h6 class="f-14 mb-4">Relation/Type</h6>
                 </div>
-                <div class="col-md-4">
+                <div class="w-28 pr-10 pl-10">
                     <h6 class="f-14 mb-4">Full name</h6>
                 </div>
-                <div class="col-md-3">
+                <div class="w-22 pr-10 pl-10">
                     <h6 class="f-14 mb-4">DOB/Incorporation</h6>
                 </div>
-                <div class="col-md-2">
+                <div class="w-28 pl-10">
                     <h6 class="f-14 mb-4">Residental status</h6>
                 </div>
             </div>
             <div [formGroup]="createFamily">
                 <div *ngFor="let singleMember of getFamilyListList.controls;index as i" [formGroup]="singleMember"
-                    class="row mbottom-30">
-                    <div class="col-md-3 pr-0">
+                    class="row mbottom-30 add-family-members-profile">
+                    <div class="w-22 pl-10 pr-10">
                         <mat-form-field appearance="standard" floatLabel="never">
                             <mat-select *ngIf="familyMemberNameList[i].value==10" class="form-control"
                                 formControlName="relationTypeId">
@@ -166,7 +166,7 @@
                             <mat-error>This field is required</mat-error>
                         </mat-form-field>
                     </div>
-                    <div class="col-md-4">
+                    <div class="w-28 pl-10 pr-10">
                         <div class="form-group remove-padding-matfield">
                             <mat-form-field appearance="standard" floatLabel="never">
                                 <input #name (input)="capitalise($event)" class="form-control" formControlName="name"
@@ -176,7 +176,7 @@
                             </mat-form-field>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="w-22 pl-10 pr-10">
                         <div class="form-group">
                             <mat-form-field class="ba-date">
                                 <input (click)="picker.open()" [matDatepicker]="picker"
@@ -188,7 +188,7 @@
                             </mat-form-field>
                         </div>
                     </div>
-                    <div class="col-md-2 pr-0">
+                    <div class="w-28 pl-10 pr-10">
                         <mat-form-field appearance="standard" floatLabel="never">
                             <mat-select formControlName="resident" class="form-control">
                                 <mat-option [value]=1>Residental</mat-option>
