@@ -9,7 +9,6 @@ import {SubscriptionService} from '../component/protect-component/AdviserCompone
 import {FormGroup} from '@angular/forms';
 import {BehaviorSubject} from 'rxjs';
 import {AuthService} from '../auth-service/authService';
-import {PlaceHolder} from '../interfaces/place-holder.interface';
 import {quotationTemplate} from './quotationTemplate';
 
 
@@ -165,6 +164,10 @@ export class UtilService {
 
   static roundOffToNearest1(data: number) {
     return Math.round(data);
+  }
+
+  static escapeRegExp(s) {
+    return s.replace(/([.*+?^=!:${}()|[\]\/\\])/g, '\\$1');
   }
 
   static mutualFundRoundAndFormat(data, noOfPlaces: number = 0) {
@@ -559,9 +562,9 @@ export class UtilService {
     const firstD = new Date(date1).getTime();
     const secondD = new Date(date2).getTime();
 
-    if(firstD === secondD) {
+    if (firstD === secondD) {
       return 0;
-    } else if(firstD > secondD) {
+    } else if (firstD > secondD) {
       return -1;
     } else {
       return 1;

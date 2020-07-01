@@ -1,8 +1,398 @@
-<div class="row pt-120">
+<!-- <div class="row pt-120">
   <div class="col-md-12">
     hello dashboard
   </div>
   <button (click)="openGuideDialog()">
     open the guide
   </button>
+</div> -->
+
+<div id="ui-advisor-dashboard-header" class="mt-64">
+  <div class="row">
+    <div class="col-md-2">
+      <h3 class="m-0 pt-16">Dashboard</h3>
+    </div>
+    <div class="col-md-10 p-0">
+      <div class="subnav-fixed">
+        <nav mat-tab-nav-bar>
+          <!--           
+                  <a (click)="value=1" [ngClass]="_value == 1 ? 'active': ''" [routerLink]="'./dashboard'"
+                      mat-tab-link routerLinkActive="active">DASHBOARD</a>
+                  <a (click)="value=2" [ngClass]="_value == 2 ? 'active': ''" [routerLink]="'./clients'" mat-tab-link
+                      routerLinkActive="active">CLIENTS</a>
+                  <a (click)="value=3" [ngClass]="_value == 3 ? 'active': ''" [routerLink]="'./subscriptions'"
+                      mat-tab-link routerLinkActive="active">SUBSCRIPTIONS</a>
+                  <a (click)="value=4" [ngClass]="_value == 4 ? 'active': ''" [routerLink]="'./quotations'"
+                      mat-tab-link routerLinkActive="active">QUOTATIONS</a>
+                  <a (click)="value=5" [ngClass]="_value == 5 ? 'active': ''" [routerLink]="'./invoices'" mat-tab-link
+                      routerLinkActive="active">INVOICES</a>
+                  <a (click)="value=6" [ngClass]="_value == 6 ? 'active': ''" [routerLink]="'./documents'"
+                      mat-tab-link routerLinkActive="active">DOCUMENTS</a>
+                  <a [ngClass]="isLinkActive() ? 'active': ''" [routerLink]="  ['./settings',label]"
+                      [state]="{ example: 0 }" mat-tab-link>SETTINGS</a> -->
+        </nav>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="row pt-135 pb-28" id="ui-dashboard-advisor">
+  <div class="col-md-3 pl-20 pr-20 pt-44">
+    <h5 class="m-0 roboto f-500 pb-16">Key metrics</h5>
+    <div class="row bg-grey lter text-center ba-primitive br-4 p-8">
+      <div class="col-md-6 pt-24 pb-24 bb-half pl-8">
+        <p class="m-0 text-primitive roboto f-400 lh-16">MF AUM</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">575.83 Cr</h3>
+      </div>
+      <div class="col-md-6 pt-24 pb-24 bl-half bb-half">
+        <p class="m-0 text-primitive roboto f-400 lh-16">SIP book</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">78.18 L</h3>
+      </div>
+      <div class="col-md-6 pt-24 pb-24 pl-8">
+        <p class="m-0 text-primitive roboto f-400 lh-16">SIP book</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">78.18 L</h3>
+      </div>
+      <div class="col-md-6 pt-24 pb-24 bl-half">
+        <p class="m-0 text-primitive roboto f-400 lh-16">SIP book</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">78.18 L</h3>
+      </div>
+    </div>
+    <h5 class="m-0 roboto f-500 pb-16 pt-28">Activity overview</h5>
+    <div class="row bg-grey lter text-center ba-primitive br-4 p-8">
+      <div class="col-md-6 pt-24 pb-24 bb-half pl-8">
+        <p class="m-0 text-primitive roboto f-400 lh-16">Awaiting
+          consent</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">78</h3>
+      </div>
+      <div class="col-md-6 pt-24 pb-24 bl-half bb-half">
+        <p class="m-0 text-primitive roboto f-400 lh-16">Advice to be
+          reviewed</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">41</h3>
+      </div>
+      <div class="col-md-6 pt-24 pb-24 pl-8">
+        <p class="m-0 text-primitive roboto f-400 lh-16">Money to
+          be deployed</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">712.35 L</h3>
+      </div>
+      <div class="col-md-6 pt-24 pb-24 bl-half">
+        <p class="m-0 text-primitive roboto f-400 lh-16">Action plans
+          in process</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">4</h3>
+      </div>
+    </div>
+    <h5 class="m-0 roboto f-500 pb-16 pt-28">Subscription overview</h5>
+    <div class="row bg-grey lter text-center ba-primitive br-4 p-8">
+      <div class="col-md-6 pt-24 pb-24 bb-half pl-8">
+        <p class="m-0 text-primitive roboto f-400 lh-16">Clients with
+          subscription</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">78</h3>
+      </div>
+      <div class="col-md-6 pt-24 pb-24 bl-half bb-half">
+        <p class="m-0 text-primitive roboto f-400 lh-16">Subscriptions
+          cancelled</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">41</h3>
+      </div>
+      <div class="col-md-6 pt-24 pb-24 pl-8">
+        <p class="m-0 text-primitive roboto f-400 lh-16">Total fees
+          charged</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">3.52 L</h3>
+      </div>
+      <div class="col-md-6 pt-24 pb-24 bl-half">
+        <p class="m-0 text-primitive roboto f-400 lh-16">Fees
+          received</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">2.90 L</h3>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 bl-1 br p-0">
+    <div class="pl-24 pr-24">
+      <div class="advisor-status pl-20 mb-24">
+        <h3 class="m-0 roboto f-500 roboto text-black pt-20">Good Evening Archit Gupta</h3>
+        <p class="m-0 roboto f-400 pt-4 lh-20 text-black pb-12">Your business dashboard is ready!</p>
+      </div>
+      <div class="row  ba-advisor">
+        <div class="col-md-8 bg-advisors p-0">
+          <div class="row">
+            <div class="col-md-10 p-0 pt-20 pl-20 pb-20">
+              <p class="lh-16 m-0 text-white roboto f-500">First things first, Archit Gupta! We’ve created an onboarding
+                guide for you. </p>
+
+              <p class="lh-16 m-0 text-white roboto f-400 pt-12"> This will help you get the best out of IFANOW and make
+                your onboarding process super smooth.</p>
+              <button mat-stroked-button class="text-open-guide mt-24 bg-white w-60 br-4">Open the guide</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 full-center">
+          <img src="/assets/images/sports.png">
+        </div>
+      </div>
+      <div class="row pt-40">
+        <div class="col-md-12 p-0">
+          <h5 class="m-0 roboto f-500 text-black pb-8">Asset classes</h5>
+          <div class="row b-a pt-20 pb-20 br-4">
+            <div class="col-md-7 pl-0 full-center">
+              <img src="/assets/images/circel-chart.png">
+            </div>
+            <div class="col-md-5 pl-0">
+              <div class="row ">
+                <div class="col-md-1 p-0 pt-4">
+                  <div class="hw-12 bg-primary br-50"></div>
+                </div>
+                <div class="col-md-11">
+                  <p class="m-0 text-black roboto f-400">₹38.43 Cr <span class="text-success">(63.45%)</span></p>
+                  <p class="m-0 text-primitive roboto f-400">Equity</p>
+                </div>
+              </div>
+              <div class="row pt-10">
+                <div class="col-md-1 p-0 pt-4">
+                  <div class="hw-12 bg-success br-50"></div>
+                </div>
+                <div class="col-md-11">
+                  <p class="m-0 text-black roboto f-400">₹18.43 Cr <span class="text-success">(30.45%)</span></p>
+                  <p class="m-0 text-primitive roboto f-400">Debt</p>
+                </div>
+              </div>
+              <div class="row pt-10">
+                <div class="col-md-1 p-0 pt-4">
+                  <div class="hw-12 bg-warning br-50"></div>
+                </div>
+                <div class="col-md-11">
+                  <p class="m-0 text-black roboto f-400">₹3.43 Cr <span class="text-success">(4.45%)</span></p>
+                  <p class="m-0 text-primitive roboto f-400">Hybrid</p>
+                </div>
+              </div>
+              <div class="row pt-10">
+                <div class="col-md-1 p-0 pt-4">
+                  <div class="hw-12 br-50 bg-hred"></div>
+                </div>
+                <div class="col-md-11">
+                  <p class="m-0 text-black roboto f-400">₹1.43 Cr <span class="text-success">(1.29%)</span></p>
+                  <p class="m-0 text-primitive roboto f-400">Commodities</p>
+                </div>
+              </div>
+              <div class="row pt-10">
+                <div class="col-md-1 p-0">
+                  <div class="hw-12 bg-grey br-50"></div>
+                </div>
+                <div class="col-md-11">
+                  <p class="m-0 text-black roboto f-400">₹38.43 Cr <span class="text-success">(63.45%)</span></p>
+                  <p class="m-0 text-primitive roboto f-400">Others</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row pt-40">
+        <div class="col-md-12 p-0">
+          <h5 class="m-0 f-500 roboto">Business snapshot</h5>
+          <img src="/assets/images/svg/snapshot.svg">
+          <div class="bussiness-snapshot">
+            <table mat-table [dataSource]="dataSource" id="table-low" class="mt-28">
+
+              <ng-container matColumnDef="position">
+                <th mat-header-cell *matHeaderCellDef> </th>
+                <td mat-cell *matCellDef="let element" class="br text-success f-500 bl-1"> {{element.position}} </td>
+              </ng-container>
+
+              <!-- Name Column -->
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef class="br bl bt-1 f-500 text-right"> Dec </th>
+                <td mat-cell *matCellDef="let element" class="br text-right"> {{element.name}} </td>
+              </ng-container>
+
+              <!-- Weight Column -->
+              <ng-container matColumnDef="weight">
+                <th mat-header-cell *matHeaderCellDef class="br bt-1 f-500 text-right"> Jan </th>
+                <td mat-cell *matCellDef="let element" class="br text-right"> {{element.weight}} </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="symbol">
+                <th mat-header-cell *matHeaderCellDef class="br bt-1 f-500 text-right"> Mar </th>
+                <td mat-cell *matCellDef="let element" class="br text-right"> {{element.symbol}} </td>
+              </ng-container>
+              <ng-container matColumnDef="apr">
+                <th mat-header-cell *matHeaderCellDef class="br bt-1 f-500 text-right"> Apr </th>
+                <td mat-cell *matCellDef="let element" class="br text-right"> {{element.apr}} </td>
+              </ng-container>
+              <ng-container matColumnDef="may">
+                <th mat-header-cell *matHeaderCellDef class="bt-1 br f-500 text-right"> May </th>
+                <td mat-cell *matCellDef="let element" class="br text-right"> {{element.may}} </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <p class="m-0 roboto f-400 pt-10 f-12 text-right"><i>Fig in ₹ Lacs</i></p>
+          </div>
+        </div>
+      </div>
+      <div class="row pt-40">
+        <div class="col-md-12 p-0">
+          <h5 class="f-500 roboto text-black m-0">Birthdays & Anniversaries</h5>
+        </div>
+      </div>
+      <div class="row pt-40 pb-8">
+        <div class="col-md-8 p-0">
+          <h5 class="f-500 roboto text-black m-0 pt-2">Task summary</h5>
+        </div>
+        <div class="col-md-4 text-right pr-0">
+          <button mat-stroked-button class="advisor-view-all">View All</button>
+        </div>
+      </div>
+      <div class="row b-a br-4 pt-10 pb-10 text-center">
+        <div class="col-md-4 br-half pt-8 pb-8">
+          <p class="m-0 text-custom f-400 roboto lh-16 ">This week’s<br> tasks</p>
+          <h3 class="m-0 roboto f-400 lh-23 pt-8">35</h3>
+        </div>
+        <div class="col-md-4 br-half pt-8 pb-8">
+          <p class="m-0 text-custom f-400 roboto lh-16 ">This week’s<br> tasks</p>
+          <h3 class="m-0 roboto f-400 lh-23 pt-8">35</h3>
+        </div>
+        <div class="col-md-4 pt-8 pb-8">
+          <p class="m-0 text-danger f-400 roboto lh-16">This week’s<br> tasks</p>
+          <h3 class="m-0 roboto f-400 text-danger lh-23 pt-8">35</h3>
+        </div>
+      </div>
+      <div class="row pt-40 today-task">
+        <div class="col-md-12 p-0">
+          <h5 class="f-500 roboto text-black m-0 pb-10">Today’s tasks</h5>
+          <table mat-table [dataSource]="dataSource2" id="table-low">
+
+            <ng-container matColumnDef="position">
+              <th mat-header-cell *matHeaderCellDef class="br"> Client </th>
+              <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef class="br"> Task </th>
+              <td mat-cell *matCellDef="let element" class="br">
+
+                <div class="row">
+                  <div class="col-md-9 p-0">
+                    {{element.name}}
+                  </div>
+                  <div class="col-md-3 p-0">
+                    <div class="text-right">
+                      <span class="text-custom">1/3</span>
+                      <span class="text-custom">2 <img src="/assets/images/svg/task-msg.svg" alt=""></span>
+                    </div>
+                  </div>
+                </div>
+
+
+              </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="weight">
+              <th mat-header-cell *matHeaderCellDef class="br"> Assigned to </th>
+              <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} </td>
+            </ng-container>
+
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+          </table>
+
+        </div>
+      </div>
+      <div class="row pt-40 pb-8">
+        <div class="col-md-8 p-0">
+          <h5 class="f-500 roboto text-black m-0 pt-2">Goal summary</h5>
+        </div>
+        <div class="col-md-4 text-right pr-0">
+          <button mat-stroked-button class="advisor-view-all">View All</button>
+        </div>
+      </div>
+      <div class="row b-a br-4 pt-10 pb-10 text-center">
+        <div class="col-md-4 br-half pt-8 pb-8">
+          <p class="m-0 text-custom f-400 roboto lh-16 ">Total goals<br>
+            all clients</p>
+          <h3 class="m-0 roboto f-400 lh-23 pt-8">481</h3>
+        </div>
+        <div class="col-md-4 br-half pt-8 pb-8">
+          <p class="m-0 text-custom f-400 roboto lh-16 ">Clients <br>
+            without goals</p>
+          <h3 class="m-0 roboto f-400 lh-23 pt-8">78%</h3>
+        </div>
+        <div class="col-md-4 pt-8 pb-8">
+          <p class="m-0 text-custom f-400 roboto lh-16">Clients without<br>
+            emergency funds</p>
+          <h3 class="m-0 roboto f-400 text-custom lh-23 pt-8">85%</h3>
+        </div>
+      </div>
+      <div class="row pt-40 pb-8">
+        <div class="col-md-8 p-0">
+          <h5 class="f-500 roboto text-black m-0 pt-2">Upcoming goals</h5>
+        </div>
+        <div class="col-md-4 text-right pr-0">
+          <button mat-stroked-button class="advisor-view-all">View All</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 pt-44">
+    <mat-tab-group animationDuration="0ms" id="advisor-radio">
+      <mat-tab label="To-do">
+        <div class="pt-12">
+          <div class="row">
+            <div class="col-md-6 p-0 d-flex pl-10">
+              <img src="/assets/images/svg/add-blue.svg" class="c-p">
+              <p class="m-0 text-black pl-12 pt-10">Add a to-do</p>
+            </div>
+
+            <div class="col-md-6 p-0 text-right">
+              <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item>
+                  <mat-icon>dialpad</mat-icon>
+                  <span>Redial</span>
+                </button>
+                <button mat-menu-item disabled>
+                  <mat-icon>voicemail</mat-icon>
+                  <span>Check voice mail</span>
+                </button>
+                <button mat-menu-item>
+                  <mat-icon>notifications_off</mat-icon>
+                  <span>Disable alerts</span>
+                </button>
+              </mat-menu>
+            </div>
+          </div>
+        </div>
+        <div class="radio-buttons-advisor">
+          <mat-radio-group aria-label="Select an option">
+            <mat-radio-button value="1">Send general insurance report</mat-radio-button>
+            <hr class="ad">
+            <mat-radio-button value="2">Call Nita tomorrow at 9PM</mat-radio-button>
+            <hr class="ad">
+            <mat-radio-button value="3">Create financial plan for Rahul Jain. Before that, check if the insurance
+              policies are added.</mat-radio-button>
+            <hr class="ad">
+            <mat-radio-button value="4">Con call with fund manager for market outlook</mat-radio-button>
+            <hr class="ad">
+            <mat-radio-button value="5">Talk to Ashish</mat-radio-button>
+            <hr class="ad">
+            <mat-radio-button value="6">Follow up with deepak roy</mat-radio-button>
+            <hr class="ad">
+            <mat-radio-button value="7">Training topics for each team</mat-radio-button>
+            <hr class="ad">
+            <mat-radio-button value="8">Aniket to send me email about asset allocation best practices, amit to send me
+
+              email about when she will finish her task of learning insurance planning</mat-radio-button>
+
+          </mat-radio-group>
+
+        </div>
+      </mat-tab>
+      <mat-tab label="Calendar">Content 2</mat-tab>
+    </mat-tab-group>
+  </div>
 </div>

@@ -43,27 +43,29 @@ export class LinkBankComponent implements OnInit {
   bankDetail: any;
   userData: any;
   holderList: any;
-  bankList: any=[];
-  userInfo:boolean = false;
+  bankList: any = [];
+  userInfo: boolean = false;
   bankForm;
   isIfsc;
   isPostal;
   validatorType = ValidatorType;
   @Output() valueChange = new EventEmitter();
   @Input() fieldFlag;
+  accountTypes: any;
   constructor(private cusService: CustomerService, private eventService: EventService,
     public dialogRef: MatDialogRef<LinkBankComponent>,
     private fb: FormBuilder, private subInjectService: SubscriptionInject, private enumDataService: EnumDataService,
     private subService: SubscriptionService, private postalService: PostalService,
     private peopleService: PeopleService, private utilService: UtilService, @Inject(MAT_DIALOG_DATA) public data: DialogData) {
-      this.bankList = data.bankList;
-      this.userInfo = data.userInfo;
-      console.log(this.bankList, this.userInfo,'this.bankList 123');
+    this.bankList = data.bankList;
+    this.userInfo = data.userInfo;
+    console.log(this.bankList, this.userInfo, 'this.bankList 123');
   }
 
   ngOnInit() {
     this.createBankForm(null);
     this.userData = AuthService.getClientData();
+    this.accountTypes = this.enumDataService.getBankAccountTypes();
   }
 
   toUpperCase(formControl, event) {
@@ -101,7 +103,7 @@ export class LinkBankComponent implements OnInit {
       bankName: [data.bankName, [Validators.required]],
       micrName: [data.micrNo],
       accNumber: [data.accountNumber, [Validators.required]],
-      accType: [(data.accountType) ? data.accountType : '1', [Validators.required]],
+      accType: [(data.accountType) ? data.accountType : '', [Validators.required]],
       branchName: [data.branchName, [Validators.required]],
       branchCountry: [(data.address) ? data.address.country : '', [Validators.required]],
       branchPinCode: [(data.address) ? data.address.pinCode : '', [Validators.required]],
@@ -184,7 +186,7 @@ export class LinkBankComponent implements OnInit {
       this.bankForm.get('branchAddressLine2').setValue(address2);
       this.bankForm.get('branchPinCode').setValue(pincode)
     }
-   
+
   }
 
   getPostalPin(value) {
@@ -255,11 +257,11 @@ export class LinkBankComponent implements OnInit {
         bankId: null,
         addressId: null
       };
-      if(this.userInfo){
+      if (this.userInfo) {
         obj.userId = this.enumDataService.userData[0].id;
         obj.userType = this.enumDataService.userData[0].userType;
       }
-      
+
       this.peopleService.addEditClientBankDetails(obj).subscribe(
         data => {
           this.barButtonOptions.active = false;
