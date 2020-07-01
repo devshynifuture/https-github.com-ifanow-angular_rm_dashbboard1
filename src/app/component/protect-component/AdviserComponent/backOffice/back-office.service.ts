@@ -316,4 +316,10 @@ export class BackOfficeService {
   getOrderList(data){
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ORDER_LIST, data);
   }
+  getMutualFundClientList(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_MF_CLIENTS, data);
+  }
+  saveSetting(data){
+    return this.http.put(apiConfig.MAIN_URL + appConfig.SAVE_SETTING, data);
+  }
 }
