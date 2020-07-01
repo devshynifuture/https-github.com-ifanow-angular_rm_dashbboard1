@@ -329,16 +329,20 @@ export class AddGoalsComponent implements OnInit {
   
   // TODO:- understand implementation of retirement goal
   setGoalTypeData(data) {
-    this.goalTypeData = data;
-    this.showGoalType = [AppConstants.VACATION_GOAL, AppConstants.EDUCATION_GOAL].includes(data.id) ? 'multiYear' : 'singleYear' 
+    if(this.validateIfUserAllowedToCreateGoal(data)){
+      this.goalTypeData = data;
+      this.showGoalType = [AppConstants.VACATION_GOAL, AppConstants.EDUCATION_GOAL].includes(data.id) ? 'multiYear' : 'singleYear' 
+    }
   }
 
-  validateIfUserAllowedToCreateGoal() {
+  validateIfUserAllowedToCreateGoal(goalTypeData) {
     // family validation
-    let owner = this.familyList.filter((member) => this.goalTypeData.defaults.planningForRelative.includes(member.relationshipId));
+    let owner = this.familyList.filter((member) => goalTypeData.defaults.planningForRelative.includes(member.relationshipId));
     if(owner.length == 0) {
-      this.eventService.openSnackBar("No family member found for such goal");
+      this.eventService.openSnackBar("No family member found for such goal", "Dismiss");
+      return false;
     }
+    return true;
 
     // age validation can also be added?
   }

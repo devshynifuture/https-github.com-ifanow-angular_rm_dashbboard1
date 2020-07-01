@@ -55,7 +55,7 @@ export class CalculatorsComponent implements OnInit {
 
   getdataForm() {
     let loan = this.data.remainingData.loan;
-    this.calculatedEMI = loan;
+    this.calculatedEMI = loan || {};
     this.incomeFG = this.fb.group({
       income: [loan ? loan.netSalary : '', [Validators.required, Validators.pattern('[0-9]*')]],
       growthRate: [loan ? loan.incomeGrowthRate : '', [Validators.required, Validators.pattern(/^\d+(\.\d{1,2})?$/)]],
@@ -126,6 +126,7 @@ export class CalculatorsComponent implements OnInit {
 
       this.planService.saveEMIToGoal(emiObj).subscribe((res) => {
         this.eventService.openSnackBar("EMI saved to goal", "Dismiss");
+        this.subInjectService.setSliderData(res);
         this.subInjectService.setRefreshRequired();
       }, err => {
         this.eventService.openSnackBar(err, "Dismiss");
@@ -139,7 +140,6 @@ export class CalculatorsComponent implements OnInit {
       let data = {
         ...this.data,
       }
-  
       this.subInjectService.closeNewRightSlider({ state: 'close', data: data, refreshRequired: true })
     }
   }
@@ -244,7 +244,6 @@ export class CalculatorsComponent implements OnInit {
     }
 
     this.planService.calculateCostToDelay(jsonObj).subscribe(res => {
-      console.log(res);
       this.showDelayChart = true;
       setTimeout(() => {
         this.createChart(res);
@@ -277,6 +276,7 @@ export class CalculatorsComponent implements OnInit {
 
     this.planService.saveCostToDelay(jsonObj).subscribe(res => {
       this.eventService.openSnackBar("Cost of delay added to goal", "Dismiss");
+      this.subInjectService.setSliderData(res);
       this.subInjectService.setRefreshRequired();
     }, err => {
       this.eventService.openSnackBar(err, "Dismiss");
