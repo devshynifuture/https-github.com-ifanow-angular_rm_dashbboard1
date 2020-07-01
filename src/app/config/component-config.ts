@@ -726,6 +726,7 @@ export const appConfig = {
   DELETE_BANK: 'user/client/bank-details/delete',
   DELETE_DEMAT: 'user/client/demat/delete',
   GET_BANK_ACCOUNT_TYPE: 'user/bank/account-type/global/get',
+  GET_RELATIONSHIP_STATUS: 'user/relationship/global/get',
   //////////////////////////////Login///////////////////////////////////
   GENERATE_OTP: 'user/generate/otp',
   SAVE_AFTER_VERIFICATION: 'user/email/mobile/save',
