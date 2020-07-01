@@ -146,49 +146,63 @@ export class CalendarMonthComponent implements OnInit {
 
 
   }
-  sun: any = [];
-  mon: any = [];
-  tue: any = [];
-  wed: any = [];
-  thu: any = [];
-  fri: any = [];
-  sat: any = [];
-  addDaysOfMomth() {
-    let d: any;
-    let m;
-    for (let i = 1; i < this.numbersOfDays; i++) {
-      // if(this.back){
-      //   m = this.month == 0?11:this.month-1;
-      // }
-      // else{
-      //   m = this.month == 0?1:this.month;
-      // }
-      d = new Date(this.year, this.month, i);
-      switch (d.getDay()) {
-        case 0:
-          this.sun.push(d);
-          break;
-        case 1:
-          this.mon.push(d);
-          break;
-        case 2:
-          this.tue.push(d);
-          break;
-        case 3:
-          this.wed.push(d);
-          break;
-        case 4:
-          this.thu.push(d);
-          break;
-        case 5:
-          this.fri.push(d);
-          break;
-        case 6:
-          this.sat.push(d);
-          break;
-      }
+
+
+ sun:any = [];
+ mon:any = [];
+ tue:any = [];
+ wed:any = [];
+ thu:any = [];
+ fri:any = [];
+ sat:any = [];
+ addDaysOfMomth(){
+   let d:any;
+   let m;
+  for(let i = 1; i < this.numbersOfDays; i++){
+    // if(this.back){
+    //   m = this.month == 0?11:this.month-1;
+    // }
+    // else{
+    //   m = this.month == 0?1:this.month;
+    // }
+    d = new Date(this.year,this.month,i);
+    switch (d.getDay()) {
+      case 0:
+        this.sun.push(d);
+        break;
+      case 1:
+        this.mon.push(d);
+        break;
+      case 2:
+        this.tue.push(d);
+        break;
+      case 3:
+        this.wed.push(d);
+        break;
+      case 4:
+        this.thu.push(d);
+        break;
+      case 5:
+        this.fri.push(d);
+        break;
+      case 6:
+        this.sat.push(d);
+        break;
     }
   }
+ }
+
+ validateYearly(startDate,day, month){
+  let d = new Date(startDate).getDate();
+  let m = new Date(startDate).getMonth();
+  if(d == day && m == month){
+    return false;
+  }
+  else{
+    return true;
+  }
+ }
+
   validateMonthDays(eDays, cDate, startDate, interval) {
     if (eDays) {
       let d = new Date(cDate);

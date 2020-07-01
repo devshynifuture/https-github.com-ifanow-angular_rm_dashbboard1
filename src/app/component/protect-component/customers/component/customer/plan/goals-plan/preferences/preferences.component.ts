@@ -115,11 +115,11 @@ export class PreferencesComponent implements OnInit, OnDestroy {
 
   validateGoalDates() {
     const gstartDate = this.goalDetailsFG.controls.goalStartDateYear.value + '-' + this.goalDetailsFG.controls.goalStartDateMonth.value + '-01';
-    const gendtDate = this.goalDetailsFG.controls.goalEndDateYear.value + '-' + this.goalDetailsFG.controls.goalEndDateMonth.value + '-01';
     const sStartDate = this.goalDetailsFG.controls.savingStartDateYear.value + '-' + this.goalDetailsFG.controls.savingStartDateMonth.value + '-01';
     const sEndtDate = this.goalDetailsFG.controls.savingEndDateYear.value + '-' + this.goalDetailsFG.controls.savingEndDateMonth.value + '-01';
-
+    
     if(this.data.singleOrMulti == 2) {
+      const gendtDate = this.goalDetailsFG.controls.goalEndDateYear.value + '-' + this.goalDetailsFG.controls.goalEndDateMonth.value + '-01';
       // goal start date cannot be greater than end date
       if([-1].includes(UtilService.compareDates(gstartDate, gendtDate))) {
         this.goalSDError = true;
