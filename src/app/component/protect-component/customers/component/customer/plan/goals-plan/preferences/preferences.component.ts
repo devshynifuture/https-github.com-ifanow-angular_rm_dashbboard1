@@ -1,13 +1,14 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { EventService } from 'src/app/Data-service/event.service';
 import { DatePipe } from '@angular/common';
 import { PlanService } from '../../plan.service';
-import { ValidatorType } from 'src/app/services/util.service';
+import { ValidatorType, UtilService } from 'src/app/services/util.service';
 import { AppConstants } from 'src/app/services/app-constants';
 import { PreferencesService } from './preferences.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { Utils } from 'angular-bootstrap-md/lib/free/utils';
 
 @Component({
   selector: 'app-preferences',
@@ -15,7 +16,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./preferences.component.scss'],
   providers: [PreferencesService]
 })
-export class PreferencesComponent implements OnInit {
+export class PreferencesComponent implements OnInit, OnDestroy {
   displayedColumns = ['position', 'name'];
   dataSource = ELEMENT_DATA;
   displayedColumns1 = ['position', 'name'];
@@ -25,7 +26,11 @@ export class PreferencesComponent implements OnInit {
   assetAllocationFG:FormGroup;
   validatorType = ValidatorType;
   months = AppConstants.getMonthsArr();
-  years = Array(50).fill((new Date().getFullYear())).map((v, idx) => v + idx);
+  
+  goalStartYears = Array(50).fill((new Date().getFullYear())).map((v, idx) => v + idx);
+  years = [];
+
+  subscription = new Subscription();
 
 
   constructor(
@@ -36,17 +41,22 @@ export class PreferencesComponent implements OnInit {
     private planService: PlanService,
     private preferenceService: PreferencesService
   ) { }
-  selected;
+  selected = 0;
 
   ngOnInit() {
-    this.selected = 0;
+    if(this.data.singleOrMulti == 1) {
+      this.years = Array((new Date(this.data.remainingData.goalStartDate).getFullYear()) - (new Date().getFullYear()) + 1).fill((new Date().getFullYear())).map((v, idx) => v + idx);
+    } else {
+      this.years = Array((new Date(this.data.remainingData.goalEndDate).getFullYear()) - (new Date().getFullYear()) + 1).fill((new Date().getFullYear())).map((v, idx) => v + idx);
+    }
     this.setForms();
+    this.setFormListeners();
   }
 
   setForms(){
     const remainingData = this.data.remainingData;
     this.goalDetailsFG = this.fb.group({
-      goalValue: [Math.round(remainingData.futureValue), [Validators.required]],
+      goalValue: [Math.round(this.preferenceService.getGoalValueForForm(this.data)), [Validators.required]],
       savingStartDateYear: [new Date(remainingData.savingStartDate).getFullYear(), [Validators.required]],
       savingStartDateMonth: [('0' + (new Date(remainingData.savingStartDate).getMonth() + 1)).slice(-2), [Validators.required]],
       savingEndDateYear: [new Date(remainingData.savingEndDate).getFullYear(), [Validators.required]],
@@ -54,11 +64,11 @@ export class PreferencesComponent implements OnInit {
       goalStartDateYear: [new Date(remainingData.goalStartDate).getFullYear(), [Validators.required]],
       goalStartDateMonth: [('0' + (new Date(remainingData.goalStartDate).getMonth() + 1)).slice(-2), [Validators.required]],
       savingStatus: [remainingData.savingType, [Validators.required]],
-      stepUp: [remainingData.stepUp, [Validators.required]],
       freezeCalculation: [remainingData.freezed],
-      notes: [remainingData.notes],
+      notes: [remainingData.notes || remainingData.goalNote],
       name: [this.data.goalName, [Validators.required]],
       archiveGoal: [],
+      stepUp: [remainingData.stepUp, [Validators.required]]
     })
 
     if(this.data.singleOrMulti == 2) {
@@ -77,10 +87,73 @@ export class PreferencesComponent implements OnInit {
     })
   }
 
+  setFormListeners(){
+    this.setKeyParamFormListeners();
+  }
+
 
   // ----------------- key params ----------------------------
+
+  savingsSDError:boolean = false;
+  savingsEDError:boolean = false;
+  goalSDError:boolean = false;
+  setKeyParamFormListeners(){
+    if(this.data.singleOrMulti == 1) {
+      this.subscription.add(
+        this.goalDetailsFG.controls.goalStartDateYear.valueChanges.subscribe(year => {
+          this.years = Array(year + 1 - (new Date().getFullYear())).fill((new Date().getFullYear())).map((v, idx) => v + idx);
+        })
+      )
+    } else {
+      this.subscription.add(
+        this.goalDetailsFG.controls.goalEndDate.valueChanges.subscribe(year => {
+          this.years = Array(year + 1 - new Date().getFullYear()).fill((new Date().getFullYear())).map((v, idx) => v + idx);
+        })
+      )
+    }
+  }
+
+  validateGoalDates() {
+    const gstartDate = this.goalDetailsFG.controls.goalStartDateYear.value + '-' + this.goalDetailsFG.controls.goalStartDateMonth.value + '-01';
+    const gendtDate = this.goalDetailsFG.controls.goalEndDateYear.value + '-' + this.goalDetailsFG.controls.goalEndDateMonth.value + '-01';
+    const sStartDate = this.goalDetailsFG.controls.savingStartDateYear.value + '-' + this.goalDetailsFG.controls.savingStartDateMonth.value + '-01';
+    const sEndtDate = this.goalDetailsFG.controls.savingEndDateYear.value + '-' + this.goalDetailsFG.controls.savingEndDateMonth.value + '-01';
+
+    if(this.data.singleOrMulti == 2) {
+      // goal start date cannot be greater than end date
+      if([-1].includes(UtilService.compareDates(gstartDate, gendtDate))) {
+        this.goalSDError = true;
+      } else {
+        this.goalSDError = false;
+      }
+  
+      // savings SD cannot be greater than goal end date
+      if([-1].includes(UtilService.compareDates(sEndtDate, gendtDate))) {
+        this.savingsEDError = true;
+      } else {
+        this.savingsEDError = false;
+      }
+    } else {
+      // savings SD cannot be greater than goal start date
+      if([-1].includes(UtilService.compareDates(sEndtDate, gstartDate))) {
+        this.savingsEDError = true;
+      } else {
+        this.savingsEDError = false;
+      }
+    }
+
+    // savings start date cannot be greater than end date
+    if([-1].includes(UtilService.compareDates(sStartDate, sEndtDate))) {
+      this.savingsSDError = true;
+    } else {
+      this.savingsSDError = false;
+    }
+    
+    return this.goalSDError || this.savingsEDError || this.savingsSDError;
+  }
+
   savePreference(){
-    if(this.goalDetailsFG.invalid) {
+    if(this.goalDetailsFG.invalid || this.validateGoalDates()) {
       this.goalDetailsFG.markAllAsTouched();
       return;
     }
@@ -96,6 +169,7 @@ export class PreferencesComponent implements OnInit {
 
     observer.subscribe(res => {
       this.eventService.openSnackBar("Preference saved", "Dismiss");
+      this.subInjectService.setRefreshRequired();
     }, err => {
       this.eventService.openSnackBar(err, "Dismiss");
     })
@@ -104,7 +178,7 @@ export class PreferencesComponent implements OnInit {
 
   // ----------------- asset allocation ----------------------
   saveAssetAllocation(){
-    if(this.assetAllocationFG.invalid) {
+    if(this.assetAllocationFG.invalid || this.validateGoalDates()) {
       this.assetAllocationFG.markAllAsTouched();
       return
     }
@@ -117,6 +191,7 @@ export class PreferencesComponent implements OnInit {
     console.log(obj)
     this.planService.saveAssetPreference(obj).subscribe(res => {
       this.eventService.openSnackBar("Asset allocation preference saved", "Dismiss");
+      this.subInjectService.setRefreshRequired();
     }, err => {
       this.eventService.openSnackBar(err, "Dismiss");
     })
@@ -138,7 +213,11 @@ export class PreferencesComponent implements OnInit {
 
   close() {
     // this.addMoreFlag = false;
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.closeNewRightSlider({ state: 'close' });
+  }
+
+  ngOnDestroy(){
+    this.subscription.unsubscribe();
   }
 }
 export interface PeriodicElement {
@@ -155,7 +234,6 @@ const ELEMENT_DATA: PeriodicElement[] = [
   {position: 'Equity funds', name: '10%'},
   {position: 'Balanced funds', name: '7%'},
   {position: 'Stocks', name: '7%'},
- 
 ];
 export interface PeriodicElement1 {
   name: string;

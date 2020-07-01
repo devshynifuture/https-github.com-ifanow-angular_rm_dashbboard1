@@ -1,0 +1,23 @@
+            ::ng-deep .newTextarea .fr-box.fr-basic .fr-wrapper {
+               margin-bottom: 20px;
+           }
+           
+           .heightTextarea {
+               height: 100px;
+           }
+           
+            ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-datepicker-toggle-default-icon {
+               width: 1.5em !important;
+           }
+           
+            ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
+               padding: 0px;
+           }
+           
+           .uiListChanges {
+               list-style-type: disc;
+               margin-top: 10px;
+               margin-bottom: 10px;
+               padding-left: 16px;
+               display: block;
+           }

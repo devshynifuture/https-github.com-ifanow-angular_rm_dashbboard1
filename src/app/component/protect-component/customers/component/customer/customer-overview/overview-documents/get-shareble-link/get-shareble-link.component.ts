@@ -5,6 +5,7 @@ import {FormBuilder, Validators} from '@angular/forms';
 import {EventService} from 'src/app/Data-service/event.service';
 import {ValidatorType} from 'src/app/services/util.service';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import { AuthService } from 'src/app/auth-service/authService';
 
 
 @Component({
@@ -30,10 +31,16 @@ export class GetSharebleLinkComponent implements OnInit {
 
   isLoading = false;
   dataS = [];
+  getClientData: any;
 
   constructor(public dialogRef: MatDialogRef<GetSharebleLinkComponent>, private fb: FormBuilder,
               @Inject(MAT_DIALOG_DATA) public data: DialogData, private eventService: EventService,) {
-  }
+  
+              this.getClientData = AuthService.getClientData()
+              console.log('clientData',this.getClientData)
+              let userInfo = AuthService.getUserInfo()
+              console.log('userInfo',userInfo)
+              }
 
   ngOnInit() {
     const ELEMENT_DATA = this.dataS;

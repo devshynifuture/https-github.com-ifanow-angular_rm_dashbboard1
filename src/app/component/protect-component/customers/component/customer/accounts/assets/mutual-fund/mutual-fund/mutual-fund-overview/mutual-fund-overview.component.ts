@@ -996,7 +996,7 @@ export class MutualFundOverviewComponent implements OnInit {
       clientId: this.clientId,
       advisorId: this.advisorId,
       fromEmail: 'devshyni@futurewise.co.in',
-      toEmail: 'devshyni@futurewise.co.in',
+      toEmail: 'futurewisejunkmail@gmail.com',
       svg: this.svg
     };
     this.UtilService.bulkHtmlToPdf(obj);

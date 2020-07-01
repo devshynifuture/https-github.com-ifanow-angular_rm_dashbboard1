@@ -280,7 +280,7 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
       premium: [(this.dataForEdit ? this.dataForEdit.premiumAmount : null), [Validators.required]],
       vehicleType: [(this.dataForEdit ? this.dataForEdit.vehicleTypeId + '' : null), [Validators.required]],
       registrationNumber: [(this.dataForEdit ? this.dataForEdit.vehicleRegNo : null)],
-      registrationDate: [(this.dataForEdit) ? ((this.dataForEdit.registrationDate) ? new Date(this.dataForEdit.registrationDate) : null) : null],
+      registrationDate: [(this.dataForEdit) ? ((this.dataForEdit.vehicleRegistrationDate) ? new Date(this.dataForEdit.vehicleRegistrationDate) : null) : null],
       modelName: [(this.dataForEdit ? this.dataForEdit.vehicleModel : null)],
       engineNumber: [(this.dataForEdit ? this.dataForEdit.engineNo : null)],
       chassisNumber: [(this.dataForEdit ? this.dataForEdit.chasisNo : null)],

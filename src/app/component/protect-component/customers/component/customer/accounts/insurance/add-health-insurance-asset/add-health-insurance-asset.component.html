@@ -108,7 +108,7 @@
                     <div class="col-md-7 pr-0">
                         <h5 class="mb-4 f-14">Name </h5>
                     </div>
-                    <div class="col-md-3 pr-0">
+                    <div class="col-md-3 pr-0" *ngIf="planDetails.value == ''  || planDetails.value !='1' && showinsuredMemberSum">
                         <h5 class="mb-4 f-14">Sum insured </h5>
                     </div>
                 </div>
@@ -193,8 +193,8 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input #policyNum [maxLength]="20" autocomplete="off" class="form-control br-0" formControlName="policyNum" matInput type="text">
-                        <mat-hint align="end" class="f-12">{{policyNum.value.length}}/20</mat-hint>
+                        <input #policyNum [maxLength]="30" autocomplete="off" class="form-control br-0" formControlName="policyNum" matInput type="text" placeholder="Enter Policy number">
+                        <mat-hint align="end" class="f-12">{{policyNum.value.length}}/30</mat-hint>
                         <mat-error>This field is required
                         </mat-error>
                     </mat-form-field>

@@ -130,10 +130,10 @@ export class MultiYearGoalComponent implements OnInit {
         this.eventService.closeUpperSlider({state: 'close'});
         switch (this.goalTypeData.id) {
           case 5:
-            this.eventService.openSnackBar("Vacation goal is added");
+            this.eventService.openSnackBar("Vacation goal is added", "Dismiss");
             break;
           case 6:
-            this.eventService.openSnackBar("Education goal is added");
+            this.eventService.openSnackBar("Education goal is added", "Dismiss");
             break;
           default:
             break;
