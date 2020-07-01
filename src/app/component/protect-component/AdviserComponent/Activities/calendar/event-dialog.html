@@ -1,6 +1,6 @@
 <div class="p-20 eventBox" *ngIf="isEditAdd">
-    <h1 class="mb-16 f-22" *ngIf="!isEditable">Add New Event</h1>
-    <h1 class="mb-16 f-22" *ngIf="isEditable">Edit Event</h1>
+    <h1 class="mb-16 f-22" *ngIf="!isEditable">Add new event</h1>
+    <h1 class="mb-16 f-22" *ngIf="isEditable">Edit event</h1>
 
     <form [formGroup]="eventForm">
 
@@ -8,8 +8,8 @@
             <div class="col-md-8 pr-0">
                 <h5 class="mb-4 f-14 text-black roboto">Title</h5>
                 <div class="form-group">
-                    <mat-form-field>
-                        <input matInput formControlName="title" class="form-control br-0">
+                    <mat-form-field floatLabel="never" appearance="standard">
+                        <input placeholder="Add title" matInput formControlName="title" class="form-control br-0">
                     </mat-form-field>
                 </div>
             </div>
@@ -83,8 +83,9 @@
                 <div class="row">
                     <div class="col-md-12  ">
                         <div class="form-group">
-                            <mat-form-field>
-                                <input matInput formControlName="attendee" class="form-control br-0 ">
+                            <mat-form-field floatLabel="never" appearance="standard">
+                                <input placeholder="Add attendee" matInput formControlName="attendee"
+                                    class="form-control br-0 ">
                                 <mat-error *ngIf="eventForm.controls['attendee'].hasError('pattern')">Email is valid
                                 </mat-error>
                             </mat-form-field>

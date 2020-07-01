@@ -31,10 +31,8 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div [ngClass]="{'table-scroll':isLoading==false }" (scroll)="onWindowScroll($event)"
-                class="ox-hide people-clients-scroll">
-                <table #tableEl mat-table [dataSource]="dataSource" class=" skeletonAnimation"
-                    [appSkeletonLoading]="isLoading" id="tbs" class="mt-8">
+            <div [ngClass]="{'table-scroll':isLoading==false }" (scroll)="onWindowScroll($event)" class="ox-hide people-clients-scroll">
+                <table #tableEl mat-table [dataSource]="dataSource" class=" skeletonAnimation" [appSkeletonLoading]="isLoading" id="tbs" class="mt-8">
                     <ng-container matColumnDef="name">
                         <th class="br" mat-header-cell *matHeaderCellDef sticky> Client name </th>
                         <td class="br" mat-cell *matCellDef="let element">
@@ -49,9 +47,7 @@
                         <th class="br" mat-header-cell *matHeaderCellDef sticky> MF Overview </th>
                         <td class="br text-center" mat-cell *matCellDef="let element">
                             <div class="bar c-p">
-                                <mat-checkbox [checked]="element.overview"
-                                    (change)="element.overview=$event.checked;selectReport($event,element)"
-                                    class="example-margin"></mat-checkbox>
+                                <mat-checkbox *ngIf="!isLoading" [checked]="element.overview" (change)="element.overview=$event.checked;selectReport($event,element)" class="example-margin"></mat-checkbox>
                             </div>
                         </td>
                     </ng-container>
@@ -61,8 +57,7 @@
                         <th class="br" mat-header-cell *matHeaderCellDef sticky> MF Summary </th>
                         <td class="br text-center" mat-cell *matCellDef="let element">
                             <div class="bar c-p">
-                                <mat-checkbox [checked]="element.summary" (change)="element.summary=$event.checked;selectReport($event,element)"
-                                    class="example-margin"></mat-checkbox>
+                                <mat-checkbox *ngIf="!isLoading" [checked]="element.summary" (change)="element.summary=$event.checked;selectReport($event,element)" class="example-margin"></mat-checkbox>
                             </div>
                         </td>
                     </ng-container>
@@ -72,8 +67,7 @@
                         <th class="br" mat-header-cell *matHeaderCellDef sticky> MF all transaction </th>
                         <td class="br text-center" mat-cell *matCellDef="let element">
                             <div class="bar c-p">
-                                <mat-checkbox [checked]="element.allTransaction" (change)="element.allTransaction=$event.checked;selectReport($event,element)"
-                                    class="example-margin"></mat-checkbox>
+                                <mat-checkbox *ngIf="!isLoading" [checked]="element.allTransaction" (change)="element.allTransaction=$event.checked;selectReport($event,element)" class="example-margin"></mat-checkbox>
                             </div>
                         </td>
                     </ng-container>
@@ -82,8 +76,7 @@
                         <th class="br" mat-header-cell *matHeaderCellDef sticky> MF unrealised transaction </th>
                         <td class="br text-center" mat-cell *matCellDef="let element">
                             <div class="bar c-p">
-                                <mat-checkbox [checked]="element.unrealizedTransaction"
-                                    (change)="element.unrealizedTransaction=$event.checked;selectReport($event,element)" class="example-margin"></mat-checkbox>
+                                <mat-checkbox *ngIf="!isLoading" [checked]="element.unrealizedTransaction" (change)="element.unrealizedTransaction=$event.checked;selectReport($event,element)" class="example-margin"></mat-checkbox>
                             </div>
                         </td>
                     </ng-container>
@@ -92,8 +85,7 @@
                         <th class="br" mat-header-cell *matHeaderCellDef sticky> MF capitalGain Summary </th>
                         <td class="br text-center" mat-cell *matCellDef="let element">
                             <div class="bar c-p">
-                                <mat-checkbox [checked]="element.capitalGainSummary"
-                                    (change)="element.capitalGainSummary=$event.checked;selectReport($event,element)" class="example-margin"></mat-checkbox>
+                                <mat-checkbox *ngIf="!isLoading" [checked]="element.capitalGainSummary" (change)="element.capitalGainSummary=$event.checked;selectReport($event,element)" class="example-margin"></mat-checkbox>
                             </div>
                         </td>
                     </ng-container>
@@ -102,8 +94,7 @@
                         <th class="br" mat-header-cell *matHeaderCellDef sticky> MF capital gain detailed </th>
                         <td class="br text-center" mat-cell *matCellDef="let element">
                             <div class="bar c-p">
-                                <mat-checkbox [checked]="element.capitalGainDetailed"
-                                    (change)="element.capitalGainDetailed=$event.checked;selectReport($event,element)" class="example-margin"></mat-checkbox>
+                                <mat-checkbox *ngIf="!isLoading" [checked]="element.capitalGainDetailed" (change)="element.capitalGainDetailed=$event.checked;selectReport($event,element)" class="example-margin"></mat-checkbox>
                             </div>
                         </td>
                     </ng-container>

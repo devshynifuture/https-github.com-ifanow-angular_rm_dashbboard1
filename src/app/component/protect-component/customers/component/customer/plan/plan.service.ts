@@ -164,4 +164,8 @@ export class PlanService {
   saveAssetPreference(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.SAVE_ASSET_ALLOCATION_PREFERENCE, data);
   }
+
+  getMFList(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_MF_DATA, data);
+  }
 }

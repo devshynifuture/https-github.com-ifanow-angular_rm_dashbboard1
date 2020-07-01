@@ -1,6 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { DashboardGuideDialogComponent } from './dashboard-guide-dialog/dashboard-guide-dialog.component';
+import { AuthService } from 'src/app/auth-service/authService';
+import { SubscriptionService } from '../Subscriptions/subscription.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { FixedFeeComponent } from '../Subscriptions/subscription/common-subscription-component/fixed-fee/fixed-fee.component';
+import { VariableFeeComponent } from '../Subscriptions/subscription/common-subscription-component/variable-fee/variable-fee.component';
+import { SubscriptionInject } from '../Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
+import { BillerSettingsComponent } from '../Subscriptions/subscription/common-subscription-component/biller-settings/biller-settings.component';
+import { InvoiceHistoryComponent } from '../Subscriptions/subscription/common-subscription-component/invoice-history/invoice-history.component';
+import { ChangePayeeComponent } from '../Subscriptions/subscription/common-subscription-component/change-payee/change-payee.component';
+import { DeleteSubscriptionComponent } from '../Subscriptions/subscription/common-subscription-component/delete-subscription/delete-subscription.component';
+import { ConfirmDialogComponent } from '../../common-component/confirm-dialog/confirm-dialog.component';
+import { BackOfficeService } from '../backOffice/back-office.service';
 export interface PeriodicElement {
   name: string;
   position: string;
@@ -117,14 +131,229 @@ const ELEMENT_DATA7: PeriodicElement7[] = [
 })
 
 export class DashboardComponent implements OnInit {
+  advisorId: any;
+  dashBoardSummary: {}[];
+  isLoadingSubSummary = false;
+  feeRecieved: any;
+  dataSourceClientWithSub: any;
+  greeting: string;
+  advisorName: any;
+  parentId: any;
+  sipCount: any;
+  MiscData1: any;
+  totalSales: any;
 
   constructor(
-    public dialog: MatDialog
-  ) { }
+    public dialog: MatDialog,private subService:SubscriptionService,private eventService:EventService,private router: Router,private activatedRoute: ActivatedRoute,private subInjectService:SubscriptionInject,private backoffice:BackOfficeService
+  ) {     
+    const date = new Date();
+    const hourOfDay = date.getHours();
+    if (hourOfDay < 12) {
+      this.greeting = 'Good morning';
+    } else if (hourOfDay < 16) {
+      this.greeting = 'Good afternoon';
+    } else {
+      this.greeting = 'Good evening';
+    }}
+  displayedDashboardSummary: string[] = ['name', 'service', 'amt', 'billing', 'icons'];
+  subscriptionSummaryStatusFilter = '1';
 
   ngOnInit() {
+    this.advisorId = AuthService.getAdvisorId();
+    this.parentId = AuthService.getParentId() ? AuthService.getParentId() : this.advisorId;
+    this.advisorName = AuthService.getUserInfo().name;
+    this.getTotalRecivedByDash();
+    this.clientWithSubscription();
+    this.getSummaryDataDashboard();//summry dashbord
+    this.sipCountGet();//for getting total sip book
+    this.getMisData(); // for getting total AUM
+
+
+  }
+  getSummaryDataDashboard() {
+    const obj = {
+      advisorId: this.advisorId,
+      limit: 9,
+      offset: 0,
+      dateType: 0,
+      statusIdList: [this.subscriptionSummaryStatusFilter],
+      fromDate: null,
+      toDate: null
+
+    };
+    this.dashBoardSummary = [{}, {}, {}];
+    this.isLoadingSubSummary = true;
+    this.subService.filterSubscription(obj).subscribe(
+      data => this.getSubSummaryRes(data), error => {
+        this.isLoadingSubSummary = false;
+        this.dataSource = [];
+
+      }
+    );
+  }
+  changeParentsTab(selectedTab) {
+    this.eventService.tabData(selectedTab);
+    if (selectedTab === 3) {
+      this.router.navigate(['/admin/subscription/subscriptions']);
+
+    } else if (selectedTab === 5) {
+      this.router.navigate(['/admin/subscription/invoices']);
+    }
+  }
+  getSubSummaryRes(data) {
+    this.isLoadingSubSummary = false;
+    // data.forEach(element => {
+    //   element.feeMode = (element.feeMode == 1) ? 'FIXED' : 'VARIABLE';
+    //   element.startsOn = (element.status == 1) ? 'START' : element.startsOn;
+    //   element.status = (element.status == 1) ? 'NOT STARTED' : (element.status == 2) ?
+    //   'LIVE' : (element.status == 3) ? 'FUTURE' : 'CANCELLED';
+    // });
+    if (data) {
+      this.dashBoardSummary = data;
+    } else {
+      this.dashBoardSummary = [];
+    }
+  }
+  Open(data) {
+    let feeMode;
+    data.isCreateSub = true;
+    (data.subscriptionPricing.feeTypeId == 1) ? feeMode = FixedFeeComponent : feeMode = VariableFeeComponent;
+    const fragmentData = {
+      // flag: feeMode,
+      data,
+      id: 1,
+      state: 'open',
+      componentName: feeMode
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        if (UtilService.isDialogClose(sideBarData)) {
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
+  }
+  openPlanSlider(value, state, data) {
+    let componentName;
+    // if (this.isLoading) {
+    //   return
+    // }
+    (value == 'billerSettings') ? componentName = BillerSettingsComponent : (value == 'changePayee') ? componentName = ChangePayeeComponent :
+      (value == "SUBSCRIPTIONS") ? componentName = InvoiceHistoryComponent : (data.subscriptionPricing.feeTypeId == 1) ?
+        value = 'createSubFixed' : value = 'createSubVariable';
+    data.isCreateSub = false;
+    const fragmentData = {
+      flag: value,
+      data,
+      id: 1,
+      state: 'open',
+      componentName: componentName
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        if (UtilService.isDialogClose(sideBarData)) {
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
+  }
+  delete(data) {
+    const Fragmentdata = {
+      flag: data,
+    };
+    if (data === 'cancelSubscription') {
+      const dialogRef = this.dialog.open(DeleteSubscriptionComponent, {
+        width: '400px',
+        // height:'40%',
+        data: Fragmentdata,
+        autoFocus: false,
+      });
+      /*dialogRef.afterClosed().subscribe(result => {
+      });*/
+    }
+  }
+  deleteModal(value) {
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete the document?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE'
+    };
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+
   }
 
+  getTotalRecivedByDash() {
+    // this.isLoading = true;
+    const beginDate = new Date();
+    beginDate.setMonth(beginDate.getMonth() - 1);
+    const obj = {
+      advisorId: this.advisorId,
+      fromDate: UtilService.getStartOfTheDay(beginDate).getTime(),
+      toDate: UtilService.getEndOfDay(new Date()).getTime()
+    };
+    this.subService.getTotalRecived(obj).subscribe(
+      data =>{
+        this.totalSales = data != undefined ? data.totalSales : '0';
+        this.feeRecieved = data != undefined ? data.feeRecieved : '0';
+      }
+    );
+  }
+  clientWithSubscription() {
+    const obj = {
+      advisorId: this.advisorId
+    };
+    this.subService.clientWithSubcribe(obj).subscribe(
+      data => {
+        if (data)
+        this.dataSourceClientWithSub = data;
+      else
+        this.dataSourceClientWithSub = {};
+      }
+    );
+  }
+  sipCountGet() {
+    const obj = {
+      advisorId: (this.parentId) ? 0 : [this.advisorId],
+      arnRiaDetailsId: -1,
+      parentId: this.parentId
+    }
+    this.backoffice.getSipcountGet(obj).subscribe(
+      data => {
+        this.sipCount = data.totalAmountInWords;
+      },
+      err=>{
+        this.sipCount = '';
+      }
+    )
+  }
+  getMisData() {
+    // const obj = {
+    //   advisorId:(this.parentId) ? 0 : (this.arnRiaValue!=-1) ? 0 :[this.adminAdvisorIds],
+    //   arnRiaDetailsId: this.arnRiaValue,
+    //   parentId: this.parentId
+    // }
+    this.backoffice.getMisData(this.advisorId).subscribe(
+      data => {
+        this.MiscData1 = data;
+      },
+      err => {
+        this.MiscData1 = '';
+      }
+    )
+  }
   openGuideDialog(): void {
     const dialogRef = this.dialog.open(DashboardGuideDialogComponent, {
       width: '250px',
