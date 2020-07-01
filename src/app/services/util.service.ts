@@ -624,6 +624,7 @@ export class LoaderFunction {
 
   private counter = 0;
   private isLoading = false;
+  private execOnZero:Function;
 
 
   public increaseCounter() {
@@ -635,7 +636,16 @@ export class LoaderFunction {
     this.counter--;
     if (this.counter == 0) {
       this.isLoading = false;
+      this.exeWhenCounterZero();
     }
+  }
+
+  public setFunctionToExeOnZero(fn:Function) {
+    this.execOnZero = fn;
+  }
+
+  public exeWhenCounterZero() {
+    this.execOnZero();
   }
 
 }
