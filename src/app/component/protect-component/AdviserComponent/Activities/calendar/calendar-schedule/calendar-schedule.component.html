@@ -1,13 +1,26 @@
-<div class="scheduleBox">
-  <div class="row b-b pb-10 pt-10">
+<div class="scheduleBox" *ngIf="currentMonthEvents.length > 0">
+  <div class="row b-b pb-10 pt-10" *ngFor="let dayEvents of currentMonthEvents">
     <div class="col-md-2">
       <div class="d-flex align-items-center">
-        <div class="numberDate activeNumber">1</div>
-        <div class="text-primary f-12 ml-8">JUL, WED</div>
+        <div class="numberDate" [class.activeNumber]="formateDate(dayEvents.date) == formateDate(current_day)">{{dayEvents.date | date :'dd'}}</div>
+        <div [ngClass]="formateDate(dayEvents.date) == formateDate(current_day)?'text-primary':'text-primitive'" class="f-12 ml-8">{{dayEvents.date | date :'MMM'}}, {{dayEvents.date | date :'EEE'}}</div>
       </div>
     </div>
     <div class="col-md-10">
-      <div class="eventList">
+      
+      <div class="eventList" *ngFor="let event of dayEvents.events" (click)="editEvent(event)">
+        <div class="eventListIcon">
+          <span> </span>
+        </div>
+        <div class="eventListTime">
+          {{event.startTime}} – {{event.endTime?event.endTime:event.startTime}}
+        </div>
+        <div class="eventListText">
+          {{event.summary}}
+        </div>
+      </div>
+
+      <!-- <div class="eventList">
         <div class="eventListIcon">
           <span> </span>
         </div>
@@ -29,31 +42,16 @@
         <div class="eventListText">
           Subscriptions evening stand up
         </div>
-      </div>
-
-      <div class="eventList">
-        <div class="eventListIcon">
-          <span> </span>
-        </div>
-        <div class="eventListTime">
-          6:30PM – 7.00PM
-        </div>
-        <div class="eventListText">
-          Subscriptions evening stand up
-        </div>
-      </div>
-
-
-
+      </div> -->
     </div>
 
   </div>
 
-  <div class="row b-b pb-10 pt-10">
+  <!-- <div class="row b-b pb-10 pt-10">
     <div class="col-md-2">
       <div class="d-flex align-items-center">
         <div class="numberDate">2</div>
-        <div class="text-primitive f-12 ml-8">JUL, WED</div>
+        <div class="f-12 ml-8">JUL, WED</div>
       </div>
     </div>
     <div class="col-md-10">
@@ -95,10 +93,8 @@
       </div>
     </div>
 
-  </div>
-
-
-
-
-
+  </div> -->
+</div>
+<div *ngIf="currentMonthEvents.length <= 0" class="mt-20 text-center">
+    <h2>Schedule not found</h2>
 </div>

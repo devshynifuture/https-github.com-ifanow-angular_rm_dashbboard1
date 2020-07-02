@@ -26,8 +26,8 @@
       <mat-chip style="margin-right: 3px;" [class.actived]="day == todayDate && i > addLastMonthDays - 1 && i < numbersOfDays - 1 && currentMonth == month" 
           [class.text-primitive]="i < addLastMonthDays || i > numbersOfDays + addLastMonthDays - 1" 
           >{{day}}</mat-chip>
-          <div   class="pt-20 pl-4 eInfo" style="width: 100%; border: none; ">
-              <ul   *ngFor="let event of formatedEvent;" class="date-info blue"
+          <div class="pt-20 pl-4 eInfo" style="width: 100%; border: none; ">
+              <ul *ngFor="let event of formatedEvent;" class="date-info blue"
                [hidden]="(
                  (!event.isRe?day != event.day || month + 1 != event.month || year != event.year :event.isRe == 'DAILY'?dateTimeEvent(year,month,day) < dateTimeEvent(null,null,event.reStart) || dateTimeEvent(year,month,day) > dateTimeEvent(null,null,event.reUntil):event.isRe == 'WEEKLY'?dateTimeEvent(year,month,day) < dateTimeEvent(null,null,event.reStart) || dateTimeEvent(year,month,day) > dateTimeEvent(null,null,event.reUntil) ||  validateWeekDays(event.rrule.BYDAY, getDay(year,month,day), event.rrule.INTERVAL) :event.isRe == 'MONTHLY' && i > addLastMonthDays - 1?dateTimeEvent(year,month,day) < dateTimeEvent(null,null,event.reStart) || dateTimeEvent(year,month,day) > dateTimeEvent(null,null,event.reUntil) || validateMonthDays(event.rrule.BYDAY, dateTimeEvent(year,month,day), event.start.date, event.rrule.INTERVAL): event.isRe == 'YEARLY'?(validateYearly(event.start.date,day,month) || dateTimeEvent(year,month,day) < dateTimeEvent(null,null,event.reStart) || dateTimeEvent(year,month,day) > dateTimeEvent(null,null,event.reUntil)): day != event.day || month + 1 != event.month || year != event.year) 
                  || i < addLastMonthDays || i > numbersOfDays + addLastMonthDays - 1 ) && (day != event.day || month + 1 != event.month || year != event.year || i < addLastMonthDays || i > numbersOfDays + addLastMonthDays - 1  )">
@@ -40,7 +40,7 @@
                     <!-- {{event.isRe? event.isRe != 'WEEKLY'?true:false:false || getDay(year,month,day) == 'Sun' || getDay(year,month,day) == 'Sat'}}                                  -->
                       <span *ngIf="event.startTime != null">{{event.startTime}}</span> <span class="f-700 m-0" [innerHTML]="event.summary" ></span></li>
               </ul>
-             
+             <div *ngIf = "i > addLastMonthDays-1 && i < numbersOfDays + addLastMonthDays && formatedEvent.length > 0"  (click)="viewMore(formatedEvent,dateTimeEvent(year,month,day))" class="more" >more</div>
              <!-- currunt month add event -->
              <!-- && i >= curruntDayIndex && currentMonth == month && currentYear >= year || && month>= currentMonth && year >= currentYear-->
               <div *ngIf = "i > addLastMonthDays-1 && i < numbersOfDays + addLastMonthDays " (click)="addEvent(day,month + 1,year)" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; border: none;"></div>
