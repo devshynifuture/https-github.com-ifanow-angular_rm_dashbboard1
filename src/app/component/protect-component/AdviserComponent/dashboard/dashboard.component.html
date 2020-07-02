@@ -43,7 +43,8 @@
     <div class="row bg-grey lter text-center ba-primitive br-4 p-8">
       <div class="col-md-6 pt-24 pb-24 bb-half pl-8">
         <p class="m-0 text-primitive roboto f-400 lh-16">MF AUM</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8">{{(MiscData1 &&  MiscData1.hasOwnProperty('totalAumRupees') ) ? MiscData1.totalAumRupees : '0'}}</h3>
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          {{(MiscData1 &&  MiscData1.hasOwnProperty('totalAumRupees') ) ? MiscData1.totalAumRupees : '0'}}</h3>
       </div>
       <div class="col-md-6 pt-24 pb-24 bl-half bb-half">
         <p class="m-0 text-primitive roboto f-400 lh-16">SIP book</p>
@@ -86,7 +87,9 @@
       <div class="col-md-6 pt-24 pb-24 bb-half pl-8">
         <p class="m-0 text-primitive roboto f-400 lh-16">Clients with
           subscription</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8">{{ (dataSourceClientWithSub && dataSourceClientWithSub.hasOwnProperty('activeClientPer')) ? dataSourceClientWithSub.activeClientPer : 0}}%</h3>
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          {{ (dataSourceClientWithSub && dataSourceClientWithSub.hasOwnProperty('activeClientPer')) ? dataSourceClientWithSub.activeClientPer : 0}}%
+        </h3>
       </div>
       <div class="col-md-6 pt-24 pb-24 bl-half bb-half">
         <p class="m-0 text-primitive roboto f-400 lh-16">Subscriptions
@@ -115,7 +118,8 @@
         <div class="col-md-8 bg-advisors p-0">
           <div class="row">
             <div class="col-md-10 p-0 pt-20 pl-20 pb-20">
-              <p class="lh-16 m-0 text-white roboto f-500">First things first, {{advisorName}}! We’ve created an onboarding
+              <p class="lh-16 m-0 text-white roboto f-500">First things first, {{advisorName}}! We’ve created an
+                onboarding
                 guide for you. </p>
 
               <p class="lh-16 m-0 text-white roboto f-400 pt-12"> This will help you get the best out of IFANOW and make
@@ -235,7 +239,7 @@
           <h5 class="f-500 roboto text-black m-0 pb-10">Birthdays & Anniversaries</h5>
           <div class="family-details-advisor">
             <div class="row no-wrap w-1800">
-              <div class=" pl-5 pr-5">
+              <div *ngFor="let singleMember of birthdayAnniList" class=" pl-5 pr-5">
                 <div class="w-180 b-a br-10">
                   <p class="m-0 pl-10 pt-10 roboto f-400">Rahul Jain</p>
                   <p class="m-0 pl-10 roboto f-400 f-12 text-custom">Group head</p>
@@ -245,12 +249,12 @@
                     </div>
                     <div class="col-md-7 pl-0 pt-8">
                       <p class="m-0 f-12 lh-16 roboto f-400 f-12">Today</p>
-                      <p class="m-0 f-12 lh-16 roboto text-custom f-400 f-12">44 years</p>
+                      <p class="m-0 f-12 lh-16 roboto text-custom f-400 f-12">{{singleMember.age}} years</p>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="pr-5 pl-5">
+              <!-- <div class="pr-5 pl-5">
                 <div class="w-180 b-a br-10">
                   <div class="row">
                     <div class="col-md-9 p-0">
@@ -303,7 +307,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> -->
 
             </div>
           </div>
@@ -687,43 +691,47 @@
           <button mat-stroked-button class="advisor-view-all">View All</button>
         </div>
         <div class="col-md-12 d-flex p-0 overflow-y pt-10">
-          <div class="pr-20">
+          <div *ngFor="let singleTransaction of transactionList" class="pr-20">
             <div class="b-a w-300 br-4">
               <div class="row pt-10">
                 <div class="col-md-10 p-0">
-                  <p class="m-0 f-400 roboto text-black pl-10 lh-16">PURCHASE</p>
+                  <p class="m-0 f-400 roboto text-black pl-10 lh-16">{{singleTransaction.transactionTypeString}}</p>
 
                 </div>
                 <div class="col-md-2 pr-10">
-                  <p class="m-0 f-400 roboto text-custom lh-16">BSE</p>
+                  <p class="m-0 f-400 roboto text-custom lh-16">{{singleTransaction.platformName}}</p>
                 </div>
               </div>
               <div class="row pt-10">
                 <div class="col-md-6 p-0">
-                  <p class="m-0 f-400 roboto text-black pl-10 f-20 lh-16">₹5,00,000</p>
+                  <p class="m-0 f-400 roboto text-black pl-10 f-20 lh-16">
+                    {{(singleTransaction.amtUnitType == 'Amount') ? '₹' : 'Units'}} {{singleTransaction.amount}}</p>
 
                 </div>
                 <div class="col-md-6 text-right pr-10">
-                  <p class="m-0 f-400 roboto text-custom lh-16">31/01 14:25</p>
+                  <p class="m-0 f-400 roboto text-custom lh-16">{{singleTransaction.orderDate | date:'dd/MM/yyyy'}}</p>
                 </div>
                 <div class="col-md-11 pl-10 pt-6">
-                  <p class="m-0 f-400 roboto text-custom lh-16 f-12">Aditya Birla Sun Life Equity Savings - Growth
-                    Option - Regular plan</p>
+                  <p class="m-0 f-400 roboto text-custom lh-16 f-12">{{singleTransaction.schemeName}}</p>
                 </div>
               </div>
               <div class="row pt-10">
                 <div class="col-md-10 pl-0">
-                  <p class="m-0 text-black f-400 roboto pl-10 lh-16">Rahul Harish Jain</p>
+                  <p class="m-0 text-black f-400 roboto pl-10 lh-16">{{singleTransaction.clientName}}</p>
                 </div>
 
                 <div class="col-md-12 p-0 pl-10 pt-20 pb-10">
-                  <button mat-stroked-button class="btn-primary-outline h-20 lh-20 br-2 pr-5 pl-5 f-12">UNITS ALLOTTED
+                  <button *ngIf="singleTransaction.statusDesc!='PENDING AUTHORIZATION'" mat-stroked-button
+                    class="btn-primary-outline h-20 lh-20 br-2 pr-5 pl-5 f-12">UNITS ALLOTTED
                     READY</button>
+                  <button *ngIf="singleTransaction.statusDesc=='PENDING AUTHORIZATION'" mat-stroked-button
+                    class="btn-danger-outline h-20 lh-20 br-2 pr-5 pl-5 f-12">PENDING
+                    AUTHORISATION</button>
                 </div>
               </div>
             </div>
           </div>
-          <div class="pr-20">
+          <!-- <div class="pr-20">
             <div class="b-a w-300 br-4">
               <div class="row pt-10">
                 <div class="col-md-10 p-0">
@@ -758,7 +766,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="row pt-40 rejections-advisor">
@@ -806,89 +814,84 @@
         <div class="col-md-6 p-0 text-right">
           <!-- <button mat-stroked-button class="text-primary">Not started</button>
           <button mat-button>Upcoming</button> -->
-          <mat-button-toggle-group (change)="getSummaryDataDashboard()"
-                                            [(ngModel)]="subscriptionSummaryStatusFilter" class="subscription-summary"
-                                            id="custom-toggle" multiple=false>
-                                            <mat-button-toggle class="f-14" value=1>NOT STARTED</mat-button-toggle>
-                                            <mat-button-toggle class="f-14" value=3>UPCOMING</mat-button-toggle>
-                                        </mat-button-toggle-group>
+          <mat-button-toggle-group (change)="getSummaryDataDashboard()" [(ngModel)]="subscriptionSummaryStatusFilter"
+            class="subscription-summary" id="custom-toggle" multiple=false>
+            <mat-button-toggle class="f-14" value=1>NOT STARTED</mat-button-toggle>
+            <mat-button-toggle class="f-14" value=3>UPCOMING</mat-button-toggle>
+          </mat-button-toggle-group>
         </div>
         <div class="col-md-12 p-0 pt-8">
-          <table mat-table [appSkeletonLoading]="isLoadingSubSummary" *ngIf="dashBoardSummary.length > 0" appSkeletonLoading class=" skeletonAnimation" [dataSource]="dashBoardSummary" id="table-low">
+          <table mat-table [appSkeletonLoading]="isLoadingSubSummary" *ngIf="dashBoardSummary.length > 0"
+            appSkeletonLoading class=" skeletonAnimation" [dataSource]="dashBoardSummary" id="table-low">
 
             <tbody>
               <ng-container matColumnDef="name">
-                  <th *matHeaderCellDef mat-header-cell> Client name</th>
-                  <td (click)="openPlanSlider('SUBSCRIPTIONS','open',element)"
-                      *matCellDef="let element" class="c-p" mat-cell>
-                      <div class="bar"> {{element.clientName}} </div>
-                  </td>
+                <th *matHeaderCellDef mat-header-cell> Client name</th>
+                <td (click)="openPlanSlider('SUBSCRIPTIONS','open',element)" *matCellDef="let element" class="c-p"
+                  mat-cell>
+                  <div class="bar"> {{element.clientName}} </div>
+                </td>
               </ng-container>
               <ng-container matColumnDef="service">
-                  <th *matHeaderCellDef mat-header-cell> Service name</th>
-                  <td *matCellDef="let element" class="c-p" mat-cell>
-                      <div class="bar"> {{element.serviceName}} </div>
-                  </td>
+                <th *matHeaderCellDef mat-header-cell> Service name</th>
+                <td *matCellDef="let element" class="c-p" mat-cell>
+                  <div class="bar"> {{element.serviceName}} </div>
+                </td>
               </ng-container>
               <ng-container matColumnDef="amt">
-                  <th *matHeaderCellDef class="w-22" mat-header-cell> Fee amount</th>
-                  <td (click)="Open(element)" *matCellDef="let element" class="c-p"
-                      mat-cell>
-                      <div class="bar text-primary text-underline">
-                          {{isLoadingSubSummary ? ' ' : 'View details'}}
-                      </div>
-                  </td>
+                <th *matHeaderCellDef class="w-22" mat-header-cell> Fee amount</th>
+                <td (click)="Open(element)" *matCellDef="let element" class="c-p" mat-cell>
+                  <div class="bar text-primary text-underline">
+                    {{isLoadingSubSummary ? ' ' : 'View details'}}
+                  </div>
+                </td>
               </ng-container>
               <ng-container matColumnDef="billing">
-                  <th *matHeaderCellDef mat-header-cell> Next billing date</th>
-                  <td *matCellDef="let element" mat-cell>
-                      <div *ngIf="element.nextBillingDate" class="bar">
-                          {{ element.nextBillingDate | date: 'dd/MM/yyyy' }}
-                      </div>
-                      <div *ngIf="!element.nextBillingDate" class="bar">
-                          {{ isLoadingSubSummary ? '' : 'Not Started' }}
-                      </div>
-                  </td>
+                <th *matHeaderCellDef mat-header-cell> Next billing date</th>
+                <td *matCellDef="let element" mat-cell>
+                  <div *ngIf="element.nextBillingDate" class="bar">
+                    {{ element.nextBillingDate | date: 'dd/MM/yyyy' }}
+                  </div>
+                  <div *ngIf="!element.nextBillingDate" class="bar">
+                    {{ isLoadingSubSummary ? '' : 'Not Started' }}
+                  </div>
+                </td>
               </ng-container>
               <ng-container matColumnDef="icons">
-                  <th *matHeaderCellDef class="f-18" mat-header-cell style="width: 2%;">
-                  </th>
-                  <td *matCellDef="let element" mat-cell style="width: 2%">
-                      <div class="bar">
-                          <i *ngIf="!isLoadingSubSummary" [matMenuTriggerFor]="menu"
-                              class="material-icons c-p iconscolors">
-                              more_vert
-                          </i>
-                      </div>
-                      <mat-menu #menu="matMenu">
-                          <a (click)="Open(element)" mat-menu-item>View fee
-                              structure</a>
-                          <a (click)="openPlanSlider('billerSettings','open',element)"
-                              class="bt-1" mat-menu-item>Change
-                              biller</a>
-                          <a (click)="openPlanSlider('changePayee','open',element)"
-                              mat-menu-item>Change
-                              payee</a>
-                          <a (click)="delete('cancelSubscription')" class="bt-1"
-                              mat-menu-item>Cancel
-                              subscription</a>
-                          <a (click)="deleteModal('SUBSCRIPTION')" mat-menu-item>Delete
-                              subscription</a>
-                      </mat-menu>
-                  </td>
+                <th *matHeaderCellDef class="f-18" mat-header-cell style="width: 2%;">
+                </th>
+                <td *matCellDef="let element" mat-cell style="width: 2%">
+                  <div class="bar">
+                    <i *ngIf="!isLoadingSubSummary" [matMenuTriggerFor]="menu" class="material-icons c-p iconscolors">
+                      more_vert
+                    </i>
+                  </div>
+                  <mat-menu #menu="matMenu">
+                    <a (click)="Open(element)" mat-menu-item>View fee
+                      structure</a>
+                    <a (click)="openPlanSlider('billerSettings','open',element)" class="bt-1" mat-menu-item>Change
+                      biller</a>
+                    <a (click)="openPlanSlider('changePayee','open',element)" mat-menu-item>Change
+                      payee</a>
+                    <a (click)="delete('cancelSubscription')" class="bt-1" mat-menu-item>Cancel
+                      subscription</a>
+                    <a (click)="deleteModal('SUBSCRIPTION')" mat-menu-item>Delete
+                      subscription</a>
+                  </mat-menu>
+                </td>
               </ng-container>
               <tr *matHeaderRowDef="displayedDashboardSummary" mat-header-row></tr>
               <tr *matRowDef="let row; columns: displayedDashboardSummary;" mat-row></tr>
-          </tbody>
+            </tbody>
           </table>
           <div *ngIf="dashBoardSummary.length ==0" class="noDataFound">
             <img src="assets/images/svg/run.svg">
-        </div>
-        <div *ngIf="dashBoardSummary" class="col-md-12 text-right pt-8">
-          <div (click)="changeParentsTab(3)" class="c-p">View all</div>
+          </div>
+          <div *ngIf="dashBoardSummary" class="col-md-12 text-right pt-8">
+            <div (click)="changeParentsTab(3)" class="c-p">View all</div>
 
-          <!--              <a href="#" class="text-black f-14">View all</a>-->
-      </div>
+            <!--              <a href="#" class="text-black f-14">View all</a>-->
+          </div>
         </div>
       </div>
       <div class="row pt-40 reconciliation-report-advisor">
@@ -947,11 +950,13 @@
         <div class="pt-12">
           <div class="row">
             <div class="col-md-6 p-0 d-flex pl-10">
-              <img src="/assets/images/svg/add-blue.svg" class="c-p">
-              <p class="m-0 text-black pl-12 pt-10">Add a to-do</p>
+              <img (click)="showInput=true" src="/assets/images/svg/add-blue.svg" class="c-p">
+              <p *ngIf="showInput==false" class="m-0 text-black pl-12 pt-10">Add a to-do</p>
+              <input *ngIf="showInput" autofocus #inputValue (keyup.enter)="addTodoList(inputValue.value)"
+                placeholder="Enter note">
             </div>
 
-            <div class="col-md-6 p-0 text-right">
+            <!-- <div class="col-md-6 p-0 text-right">
               <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
                 <mat-icon>more_vert</mat-icon>
               </button>
@@ -969,16 +974,33 @@
                   <span>Disable alerts</span>
                 </button>
               </mat-menu>
-            </div>
+            </div> -->
           </div>
         </div>
         <div class="radio-buttons-advisor">
-          <mat-radio-group aria-label="Select an option">
-            <mat-radio-button value="1">Send general insurance report</mat-radio-button>
-            <hr class="ad">
-            <mat-radio-button value="2">Call Nita tomorrow at 9PM</mat-radio-button>
-            <hr class="ad">
-            <mat-radio-button value="3">Create financial plan for Rahul Jain. Before that, check if the insurance
+          <mat-radio-group [formControl]="selectedItem" aria-label="Select an option">
+            <div class=row *ngFor="let singleNote of todoListData;index as i">
+              <!-- {{singleNote.createdOn | date:'dd/MM/yyyy'}} -->
+              <div class="col-md-2">
+                <mat-radio-button value={{singleNote.id}}>
+                </mat-radio-button>
+              </div>
+              <div class="col-md-4">
+                {{singleNote.activityName}}
+              </div>
+              <div class="col-md-4">
+                <span *ngIf="selectedItem.value==singleNote.id" class="material-icons c-p"
+                  (click)="deleteTodoList(singleNote,i)">
+                  delete
+                </span>
+              </div>
+              <hr class="ad">
+            </div>
+            <!-- </div>
+            </div> -->
+            <!-- <mat-radio-button value="2">Call Nita tomorrow at 9PM</mat-radio-button>
+            <hr class="ad"> -->
+            <!-- <mat-radio-button value="3">Create financial plan for Rahul Jain. Before that, check if the insurance
               policies are added.</mat-radio-button>
             <hr class="ad">
             <mat-radio-button value="4">Con call with fund manager for market outlook</mat-radio-button>
@@ -991,7 +1013,7 @@
             <hr class="ad">
             <mat-radio-button value="8">Aniket to send me email about asset allocation best practices, amit to send me
 
-              email about when she will finish her task of learning insurance planning</mat-radio-button>
+              email about when she will finish her task of learning insurance planning</mat-radio-button> -->
 
           </mat-radio-group>
 

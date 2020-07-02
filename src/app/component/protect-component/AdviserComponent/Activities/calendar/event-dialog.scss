@@ -6,6 +6,8 @@
                 .mt-16 {
                     margin-top: 16px !important;
                 }
+
+                
             }
             
             ::ng-deep .newTextarea .fr-box.fr-basic .fr-wrapper {
@@ -38,3 +40,8 @@
             height: 100px;
             overflow: auto;
            }
+
+
+           ::ng-deep .mat-form-field-appearance-standard .mat-form-field-flex {
+            padding-top: 0;
+        }

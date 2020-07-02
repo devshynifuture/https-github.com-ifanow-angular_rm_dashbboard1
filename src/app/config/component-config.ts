@@ -81,8 +81,8 @@ export const appConfig = {
   HTML_TO_PDF: 'pdfAndEmail/bulk-mail/html-to-pdf',
   GET_CLIENT_IN_LOOP: 'mutual-fund/report/bulk-order/save',
   GET_ORDER_LIST: 'mutual-fund/report/bulk-order/list/get',
-  GET_MF_CLIENTS:'mutual-fund/report/client-setting/list/get',
-  SAVE_SETTING:'mutual-fund/report/client-setting/edit',
+  GET_MF_CLIENTS: 'mutual-fund/report/client-setting/list/get',
+  SAVE_SETTING: 'mutual-fund/report/client-setting/edit',
   /////////////////////////////Accounts///////////////////////////////////
   ADD_FIXEDDEPOSIT: 'account/asset/fixed-income/fixed-deposit/add',
   ADD_LIFE_INSURANCE: 'account/insurance/life-insurance/add',
@@ -803,5 +803,14 @@ export const appConfig = {
   GET_GLOBAL_RISK_PROFILE: 'plan/risk/profile/global/get',
   GET_FEED_RECENT_TRANSACTIONS: 'report/transaction/list/get',
   GET_CASHFLOW_FEEDS: 'cashflow/monthly/list/family-member-wise/get',
-  GET_CUSTOMER_FEEDS_PROFILE: 'user/client/profile/completeness/get'
+  GET_CUSTOMER_FEEDS_PROFILE: 'user/client/profile/completeness/get',
+
+
+  ///////////////////////////// To-DO list -dashboard //////////////////////////
+
+  ADD_NOTES: 'admin/dashboard/memo/item/add',
+  UPDATE_NOTES: 'admin/dashboard/memo/item/update',
+  DELETE_NOTES: 'admin/dashboard/memo/item/delete',
+  GET_NOTES: 'admin/dashboard/memo/list/get',
+  GET_BIRTHDAY_OR_ANNIVERSARY: 'user/birthday/or/anniversary'
 };

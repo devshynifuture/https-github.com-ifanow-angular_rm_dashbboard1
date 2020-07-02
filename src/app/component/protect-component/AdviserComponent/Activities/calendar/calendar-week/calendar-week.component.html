@@ -1,15 +1,15 @@
 <div id="ui-backoffice-week">
   <div class="wrapper-12 pt-0">
-    
+
     <div class="row day-schedule">
       <div class="col-md-1 pl-0 br mt-82">
         <p class="f-12 roboto m-0 text-custom pt-2 pb-24">GMT+05:30</p>
-        <ul class="d-block"*ngFor='let time of timeArry; let i = index'>
-          <li >{{time}}</li>
+        <ul class="d-block" *ngFor='let time of timeArry; let i = index'>
+          <li>{{time}}</li>
         </ul>
       </div>
       <div class="col-md-11 p-0">
-        <div class="custom-grid pt-40 pb-0 pl-0 pr-0" >
+        <div class="custom-grid pt-40 pb-0 pl-0 pr-0">
           <div class="column" *ngFor="let day of week">
             <p class="m-0 roboto f-400 text-custom">{{day | date:'EEE'}}</p>
             <p class="m-0 roboto f-18 f-400 text-custom">{{day | date:'d'}}</p>
@@ -38,15 +38,19 @@
 
           </div>
         </div>
-        <div class="custom-grid  all-schedule"  *ngFor='let time of timeArry; let i = index'>
-          <div class="column"  *ngFor='let day of week; let di = index'  style="position: relative;">
-            <div *ngFor='let event of formatedEvent; let ei = index' (click)="editEvent(event)" style="position: relative; z-index: 1;" >
-              <div class="week-clicks pl-4"  *ngIf="event.day == formateDate(day) && event.month == formateMonth(day) && event.year == formateYear(day) && returnNumber(event.startTime)  == time ">
+        <div class="custom-grid  all-schedule" *ngFor='let time of timeArry; let i = index'>
+          <div class="column" *ngFor='let day of week; let di = index' style="position: relative;">
+            <div *ngFor='let event of formatedEvent; let ei = index' (click)="editEvent(event)"
+              style="position: relative; z-index: 1;">
+              <div class="week-clicks pl-4"
+                *ngIf="event.day == formateDate(day) && event.month == formateMonth(day) && event.year == formateYear(day) && returnNumber(event.startTime)  == time ">
                 <p class="m-0 f-12 roboto f-400 text-white">{{event.summary}}</p>
-                <p class="m-0 f-12 roboto f-400 text-white">{{event.startTime}} {{event.startTime != event.endTime?' - '+ event.endTime:''}}</p>
+                <p class="m-0 f-12 roboto f-400 text-white">{{event.startTime}}
+                  {{event.startTime != event.endTime?' - '+ event.endTime:''}}</p>
               </div>
             </div>
-            <div (click)="addEvent(formateDate(day),formateMonth(day),formateYear(day), time)" style="position: absolute; width: 100%; height: 100%;"></div>
+            <div (click)="addEvent(formateDate(day),formateMonth(day),formateYear(day), time)"
+              style="position: absolute; width: 100%; height: 100%;"></div>
           </div>
         </div>
       </div>
