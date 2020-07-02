@@ -49,7 +49,7 @@
                         <th class="br" mat-header-cell *matHeaderCellDef sticky> MF Overview </th>
                         <td class="br text-center" mat-cell *matCellDef="let element">
                             <div class="bar c-p">
-                                <mat-checkbox [checked]="element.overview"
+                                <mat-checkbox *ngIf="!isLoading" [checked]="element.overview"
                                     (change)="element.overview=$event.checked;selectReport($event,element)"
                                     class="example-margin"></mat-checkbox>
                             </div>
@@ -61,7 +61,7 @@
                         <th class="br" mat-header-cell *matHeaderCellDef sticky> MF Summary </th>
                         <td class="br text-center" mat-cell *matCellDef="let element">
                             <div class="bar c-p">
-                                <mat-checkbox [checked]="element.summary"
+                                <mat-checkbox *ngIf="!isLoading" [checked]="element.summary"
                                     (change)="element.summary=$event.checked;selectReport($event,element)"
                                     class="example-margin"></mat-checkbox>
                             </div>
@@ -73,7 +73,7 @@
                         <th class="br" mat-header-cell *matHeaderCellDef sticky> MF all transaction </th>
                         <td class="br text-center" mat-cell *matCellDef="let element">
                             <div class="bar c-p">
-                                <mat-checkbox [checked]="element.allTransaction"
+                                <mat-checkbox *ngIf="!isLoading" [checked]="element.allTransaction"
                                     (change)="element.allTransaction=$event.checked;selectReport($event,element)"
                                     class="example-margin"></mat-checkbox>
                             </div>
@@ -84,7 +84,7 @@
                         <th class="br" mat-header-cell *matHeaderCellDef sticky> MF unrealised transaction </th>
                         <td class="br text-center" mat-cell *matCellDef="let element">
                             <div class="bar c-p">
-                                <mat-checkbox [checked]="element.unrealizedTransaction"
+                                <mat-checkbox *ngIf="!isLoading" [checked]="element.unrealizedTransaction"
                                     (change)="element.unrealizedTransaction=$event.checked;selectReport($event,element)"
                                     class="example-margin"></mat-checkbox>
                             </div>
@@ -95,7 +95,7 @@
                         <th class="br" mat-header-cell *matHeaderCellDef sticky> MF capitalGain Summary </th>
                         <td class="br text-center" mat-cell *matCellDef="let element">
                             <div class="bar c-p">
-                                <mat-checkbox [checked]="element.capitalGainSummary"
+                                <mat-checkbox *ngIf="!isLoading" [checked]="element.capitalGainSummary"
                                     (change)="element.capitalGainSummary=$event.checked;selectReport($event,element)"
                                     class="example-margin"></mat-checkbox>
                             </div>
@@ -106,7 +106,7 @@
                         <th class="br" mat-header-cell *matHeaderCellDef sticky> MF capital gain detailed </th>
                         <td class="br text-center" mat-cell *matCellDef="let element">
                             <div class="bar c-p">
-                                <mat-checkbox [checked]="element.capitalGainDetailed"
+                                <mat-checkbox *ngIf="!isLoading" [checked]="element.capitalGainDetailed"
                                     (change)="element.capitalGainDetailed=$event.checked;selectReport($event,element)"
                                     class="example-margin"></mat-checkbox>
                             </div>
