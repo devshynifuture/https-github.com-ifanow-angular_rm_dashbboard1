@@ -6,6 +6,7 @@ import * as Highcharts from 'highcharts';
 import { MutualFundOverviewComponent } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mutual-fund/mutual-fund-overview/mutual-fund-overview.component';
 import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
 import { DatePipe } from '@angular/common';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-send-now-reports',
@@ -30,6 +31,7 @@ export class SendNowReportsComponent implements OnInit {
   financialYears: { from: number; to: number; selected: boolean; disabled: boolean; }[];
   date: any;
   default: any;
+  sendNow: any;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -37,6 +39,7 @@ export class SendNowReportsComponent implements OnInit {
     public overviewRepot: MutualFundOverviewComponent,
     public mfService: MfServiceService,
     private datePipe: DatePipe,
+    private fb: FormBuilder,
   ) { }
 
   ngOnInit() {
@@ -63,6 +66,7 @@ export class SendNowReportsComponent implements OnInit {
 
     });
     this.date = this.default
+    // this.getdataForm(null)
   }
   close() {
     this.subInjectService.changeNewRightSliderState({
@@ -194,4 +198,16 @@ export class SendNowReportsComponent implements OnInit {
     }
     console.log('from date', this.fromDate)
   }
+  // getdataForm(data) {
+  //   this.sendNow = this.fb.group({
+  //     capitalSummary: [(!data) ? '' : data.capitalSummary, [Validators.required]],
+  //     capitalDetailed: [(!data) ? '' : data.capitalDetailed, [Validators.required]],
+  //   });
+  //   this.sendNow.controls.capitalDetailed.setValue(this.default)
+  //   this.sendNow.controls.capitalSummary.setValue(this.default)
+  // }
+
+  // getFormControl(): any {
+  //   return this.sendNow.controls;
+  // }
 }
