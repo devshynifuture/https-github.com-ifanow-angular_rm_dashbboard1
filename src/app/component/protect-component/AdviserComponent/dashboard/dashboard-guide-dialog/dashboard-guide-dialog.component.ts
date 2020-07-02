@@ -19,6 +19,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class DashboardGuideDialogComponent implements OnInit {
 
+  page = 1;
+
   constructor(
     public dialogRef: MatDialogRef<DashboardGuideDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
@@ -33,4 +35,10 @@ export class DashboardGuideDialogComponent implements OnInit {
   }
   displayedColumns: string[] = ['position', 'name', 'weight'];
   dataSource = ELEMENT_DATA;
+
+  showPageByIndex(index) {
+    this.page = index;
+  }
+
 }
+

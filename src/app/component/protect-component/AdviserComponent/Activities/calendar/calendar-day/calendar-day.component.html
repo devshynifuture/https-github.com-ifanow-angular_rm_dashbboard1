@@ -48,21 +48,24 @@
           <li><span>12 PM</span></li> -->
         </ul>
       </div>
-      <div class="col-md-11 p-0 right-details">
+      <div class="col-md-11 pl-10 right-details">
         <div class="day-details" *ngFor='let time of timeArry' style="position: relative; ">
-          <div *ngFor='let event of formatedEvent; let ei = index'  >
-            <div class="day-clicks pl-4" (click)="editEvent(event)" style="background-color: browns;" *ngIf="event.day == formateDate(viewDate) && event.month == formateMonth(viewDate) && event.year == formateYear(viewDate) && returnNumber(event.startTime)  == time">
-              <p class="m-0 f-12 roboto f-400 text-white">{{event.summary}}</p>
-              <p class="m-0 f-12 roboto f-400 text-white">{{event.startTime}}- {{event.endTime}}</p>
+          <div *ngFor='let event of formatedEvent; let ei = index'>
+
+            <div class="day-clicks boxWidth pl-4" (click)="editEvent(event)"
+              *ngIf="event.day == formateDate(viewDate) && event.month == formateMonth(viewDate) && event.year == formateYear(viewDate) && returnNumber(event.startTime)  == time">
+              <p class="m-0 f-12 roboto f-400 text-primary">{{event.summary}}</p>
+              <p class="m-0 f-12 roboto f-400 text-primary">{{event.startTime}}- {{event.endTime}}</p>
             </div>
-            
+
 
             <div class="main-days" [hidden]="true">
               <div class="circle"></div>
               <hr class="red-lines">
             </div>
           </div>
-          <div (click)="addEvent(formateDate(viewDate),formateMonth(viewDate),formateYear(viewDate), time)" style="position: absolute; width: 100%; height: 100%;"></div>
+          <div (click)="addEvent(formateDate(viewDate),formateMonth(viewDate),formateYear(viewDate), time)"
+            style=" width: 100%; height: 100%;"></div>
         </div>
       </div>
     </div>

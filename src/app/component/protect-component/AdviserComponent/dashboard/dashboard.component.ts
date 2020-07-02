@@ -15,6 +15,14 @@ import { ChangePayeeComponent } from '../Subscriptions/subscription/common-subsc
 import { DeleteSubscriptionComponent } from '../Subscriptions/subscription/common-subscription-component/delete-subscription/delete-subscription.component';
 import { ConfirmDialogComponent } from '../../common-component/confirm-dialog/confirm-dialog.component';
 import { BackOfficeService } from '../backOffice/back-office.service';
+import { OnlineTransactionService } from '../transactions/online-transaction.service';
+import { TransactionEnumService } from '../transactions/transaction-enum.service';
+import { DashboardService } from './dashboard.service';
+import { FormControl } from '@angular/forms';
+import { calendarService } from '../Activities/calendar/calendar.service';
+import { EmailServiceService } from '../Email/email-service.service';
+import * as moment from 'moment';
+import { DatePipe } from '@angular/common';
 export interface PeriodicElement {
   name: string;
   position: string;
@@ -142,9 +150,30 @@ export class DashboardComponent implements OnInit {
   sipCount: any;
   MiscData1: any;
   totalSales: any;
+  finalStartDate: number;
+  finalEndDate: number;
+  transactionList: any;
+  isRecentTransactionFlag: boolean;
+  todoListData = [];
+  eventData: any;
+  formatedEvent: any[];
+  calenderLoader: boolean;
+  birthdayAnniList: any;
+  connectedToGmail: boolean;
 
   constructor(
-    public dialog: MatDialog, private subService: SubscriptionService, private eventService: EventService, private router: Router, private activatedRoute: ActivatedRoute, private subInjectService: SubscriptionInject, private backoffice: BackOfficeService
+    public dialog: MatDialog, private subService: SubscriptionService,
+    private eventService: EventService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private subInjectService: SubscriptionInject,
+    private backoffice: BackOfficeService,
+    private transactionService: OnlineTransactionService,
+    private dashboardService: DashboardService,
+    private calenderService: calendarService,
+    private emailService: EmailServiceService,
+    private utils: UtilService,
+    private datePipe: DatePipe
   ) {
     const date = new Date();
     const hourOfDay = date.getHours();
@@ -168,8 +197,12 @@ export class DashboardComponent implements OnInit {
     this.getSummaryDataDashboard();//summry dashbord
     this.sipCountGet();//for getting total sip book
     this.getMisData(); // for getting total AUM
-
-
+    this.finalStartDate = UtilService.getStartOfTheDay(new Date((new Date()).valueOf() - 1000 * 60 * 60 * 24 * 7)).getTime();
+    this.finalEndDate = UtilService.getEndOfDay(new Date()).getTime();
+    this.getTodoListData();
+    this.getRecentTransactionData();
+    this.connectAccountWithGoogle();
+    this.getBirthdayOrAnniversary();
   }
   getSummaryDataDashboard() {
     const obj = {
@@ -192,6 +225,204 @@ export class DashboardComponent implements OnInit {
       }
     );
   }
+
+  getTodoListData() {
+    const obj =
+    {
+      advisorId: this.advisorId
+    }
+    this.dashboardService.getNotes(obj).subscribe(
+      data => {
+        if (data && data.length > 0) {
+          data.forEach(element => {
+            element['selected'] == false;
+            if (this.calculateDifferenc(element.createdOn) <= 1) {
+              element['createdDate'] = this.calculateDifferenc(element.createdOn);
+            }
+            else {
+              element['createdDate'] = this.datePipe.transform(element.createdOn, 'MMMM d, y');
+            }
+          });
+          // data.forEach(element => {
+          // });
+          this.todoListData = data;
+          // this.todoListData=this.todoListData.sort((a,b)=>a.due - b.due);
+        }
+      }
+    )
+  }
+  showInput = false;
+  selectedItem = new FormControl();
+  addTodoList(value) {
+    const obj =
+    {
+      id: 0,
+      advisorId: this.advisorId,
+      activityName: value
+    }
+    this.dashboardService.addNotes(obj).subscribe(
+      data => {
+        if (data) {
+          this.showInput = false;
+          data.forEach(element => {
+            element['selected'] == false;
+          });
+          this.todoListData = data;
+          // this.todoListData.unshift(data);
+        }
+      }
+    )
+  }
+
+  updateTodoList() {
+    const obj =
+    {
+
+    }
+    this.dashboardService.updateNotes(obj).subscribe(
+      data => {
+
+      })
+  }
+
+  deleteTodoList(value, index) {
+    this.dashboardService.deleteNotes(value.id).subscribe(
+      data => {
+        // if (data) {
+        this.todoListData.splice(index, 1);
+        // }
+      }), err => {
+        this.eventService.openSnackBar(err, "Dismiss")
+      }
+  }
+
+  getBirthdayOrAnniversary() {
+    let fromDate = new Date();
+    fromDate.setFullYear(new Date().getFullYear() - 1)
+    const obj =
+    {
+      advisorId: this.advisorId,
+      fromDate: fromDate.getTime(),
+      toDate: new Date().getTime()
+    }
+    this.dashboardService.getBirthdayOrAnniversary(obj).subscribe(
+      data => {
+        if (data) {
+          this.birthdayAnniList = this.utils.calculateAgeFromCurrentDate(data);
+        }
+      }
+    )
+  }
+
+  calculateDifferenc(createdDate) {
+    const a = moment(createdDate)
+    const b = moment(new Date().getTime());
+    // console.log(a.diff(b, 'days'));
+    return a.diff(b, 'days');
+  }
+
+  connectAccountWithGoogle() {
+    this.calenderLoader = true;
+    this.emailService.getProfile().subscribe(res => {
+      if (res) {
+        this.connectedToGmail = true;
+        this.calenderLoader = false;
+        localStorage.setItem('googleOAuthToken', 'oauthtoken');
+        localStorage.setItem('successStoringToken', 'true');
+        localStorage.setItem('associatedGoogleEmailId', AuthService.getUserInfo().userName);
+        this.router.navigate(['/admin/emails/inbox'], { relativeTo: this.activatedRoute });
+        this.getEvent();
+      } else {
+        this.calenderLoader = false;
+        this.connectedToGmail = false;
+        // this.eventService.ope(res, 'DISMISS');
+      }
+    }, err => {
+      this.calenderLoader = false;
+      this.connectedToGmail = false;
+      // this.eventService.openSnackBarNoDuration(err, 'DISMISS');
+    });
+  }
+
+  getEvent() {
+    let eventData = {
+      "calendarId": AuthService.getUserInfo().userName,
+      "userId": AuthService.getUserInfo().advisorId
+    }
+    this.calenderService.getEvent(eventData).subscribe((data) => {
+
+      if (data != undefined) {
+
+        this.eventData = data;
+
+        console.log(data, "events calender", this.eventData);
+        this.formatedEvent = [];
+
+        for (let e of this.eventData) {
+          if (e.start) {
+            e["day"] = this.formateDate(!e.start.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
+            e["month"] = this.formateMonth(!e.start.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
+            e["year"] = this.formateYear(!e.start.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
+            e["startTime"] = this.formateTime(!e.start.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
+            e["endTime"] = this.formateTime(!e.end.dateTime ? new Date(e.created) : new Date(e.end.dateTime));
+            this.formatedEvent.push(e);
+            // console.log(this.formatedEvent,"formatedEvent calender1",);
+          }
+        }
+      }
+    });
+
+
+  }
+
+
+  formateDate(date) {
+    var dd = new Date(date).getDate();
+
+    return dd;
+  }
+
+  formateMonth(date) {
+    var mm = new Date(date).getMonth() + 1; //January is 0!
+    return mm;
+  }
+
+  formateYear(date) {
+    var yyyy = new Date(date).getFullYear();
+    return yyyy;
+  }
+
+  formateTime(date) {
+
+    var hh = date.getHours() > 12 ? date.getHours() - 12 : date.getHours();
+    var mm = date.getMinutes();
+    var amPm = date.getHours() > 12 ? "pm" : "am";
+    hh = hh < 10 ? '0' + hh : hh;
+    mm = mm < 10 ? '0' + mm : mm;
+    return hh + ":" + mm + amPm + " ";
+  }
+
+  getRecentTransactionData() {
+    this.isRecentTransactionFlag = true;
+    const obj = {
+      advisorId: this.advisorId,
+      tpUserCredentialId: null,
+      startDate: this.finalStartDate,
+      endDate: this.finalEndDate
+    };
+    this.transactionService.getSearchScheme(obj).subscribe(
+      data => {
+        this.isRecentTransactionFlag = false;
+        this.transactionList = data;
+        this.transactionList = TransactionEnumService.setPlatformEnum(data);
+        this.transactionList = TransactionEnumService.setTransactionStatus(data);
+      },
+      err => {
+        this.eventService.openSnackBar(err, 'Dismefault/stockfeediss');
+      }
+    );
+  }
+
   changeParentsTab(selectedTab) {
     this.eventService.tabData(selectedTab);
     if (selectedTab === 3) {

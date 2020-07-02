@@ -7,7 +7,6 @@
 
 .numberDate {
     border-radius: 50%;
-     
      width: 36px;
      height: 36px;
      
@@ -19,6 +18,14 @@
 .activeNumber{
     background: #008FFF;
     color: #ffffff;
+}
+
+.text-primitive,.text-primary{
+    text-transform: uppercase;
+}
+
+.text-primary{
+    color:#000;
 }
  
 .eventList {

@@ -110,7 +110,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       )
     } else {
       this.subscription.add(
-        this.goalDetailsFG.controls.goalEndDate.valueChanges.subscribe(year => {
+        this.goalDetailsFG.controls.goalEndDateYear.valueChanges.subscribe(year => {
           this.years = Array(year + 1 - new Date().getFullYear()).fill((new Date().getFullYear())).map((v, idx) => v + idx);
           if(!this.years.includes(this.goalDetailsFG.controls.savingStartDateYear) || !this.years.includes(this.goalDetailsFG.controls.savingEndDateYear)) {
             this.goalDetailsFG.controls.savingStartDateYear.setValue('');

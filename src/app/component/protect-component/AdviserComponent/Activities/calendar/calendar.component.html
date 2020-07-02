@@ -299,9 +299,9 @@
 
                 <div class="custom-grid pt-0">
                     <div class="column" *ngFor="let day of daysArr; let i = index" style="padding: 7px 0px;">
-                        <p [class.rounded-primary]="day == todaysDate && currentMonth == month"
+                        <p  [class.sub-rounded-primary]="day == selectedDate && i > addLastMonthDays - 1 && i < numbersOfDays + addLastMonthDays"
+                        [class.rounded-primary]="day == todaysDate && currentMonth == month && i > addLastMonthDays - 1 && i < numbersOfDays + addLastMonthDays"
 
-                            [class.sub-rounded-primary]="day == selectedDate && i > addLastMonthDays - 1 && i < numbersOfDays + addLastMonthDays"
                             
                             [class.text-primitive]="i < addLastMonthDays || i > numbersOfDays + addLastMonthDays - 1"
                             class="m-0 roboto f-11">{{day}}</p>
