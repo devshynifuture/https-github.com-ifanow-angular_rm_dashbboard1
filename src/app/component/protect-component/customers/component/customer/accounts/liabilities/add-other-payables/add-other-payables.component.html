@@ -77,7 +77,7 @@
         <div class="col-md-5 text-right">
             <h5 class="m-0 pt-8">Creditor name</h5>
         </div>
-        <div class="col-md-3 pl-0">
+        <div class="col-md-5 pl-0">
             <div class="form-group mb-0">
                 <mat-form-field>
                     <input matInput #creditorName class="form-control br-0" formControlName="creditorName" maxlength="{{getFormControl().creditorName.maxLength}}">
@@ -95,9 +95,9 @@
             <h5 class="m-0 pt-8">Amount borrowed</h5>
         </div>
         <div class="col-md-3 pl-0">
-            <div class="form-group mb-0">
+            <div class="form-group mb-0 iconRupess">
                 <mat-form-field>
-                    <input matInput #amtBorrowed class="form-control br-0" (keypress)="keyPress($event)" formControlName="amtBorrowed" maxlength="{{getFormControl().amtBorrowed.maxLength}}">
+                    <input matInput #amtBorrowed class="form-control rupess br-0" (keypress)="keyPress($event)" formControlName="amtBorrowed" maxlength="{{getFormControl().amtBorrowed.maxLength}}">
                     <mat-error class="f-12" [ngClass]="{'v-h':!(isAmtBorrowed && getFormControl().amtBorrowed.invalid || getFormControl().amtBorrowed.touched && getFormControl().amtBorrowed.invalid)}">
                         This field is required
 
@@ -180,11 +180,11 @@
             <div class="col-md-5 text-right">
                 <h5 class="m-0 pt-8">Collateral</h5>
             </div>
-            <div class="col-md-3 pl-0">
+            <div class="col-md-5 pl-0">
                 <div class="form-group mb-0">
                     <mat-form-field>
                         <input matInput #collateral class="form-control br-0" formControlName="collateral" maxlength="{{getFormControl().collateral.maxLength}}">
-                        <mat-hint align="start" class="f-12">Option</mat-hint>
+                        <mat-hint align="start" class="f-12">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{collateral.value.length}}/20</mat-hint>
                     </mat-form-field>
                 </div>
