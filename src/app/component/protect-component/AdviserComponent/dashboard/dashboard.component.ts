@@ -15,6 +15,10 @@ import { ChangePayeeComponent } from '../Subscriptions/subscription/common-subsc
 import { DeleteSubscriptionComponent } from '../Subscriptions/subscription/common-subscription-component/delete-subscription/delete-subscription.component';
 import { ConfirmDialogComponent } from '../../common-component/confirm-dialog/confirm-dialog.component';
 import { BackOfficeService } from '../backOffice/back-office.service';
+import { OnlineTransactionService } from '../transactions/online-transaction.service';
+import { TransactionEnumService } from '../transactions/transaction-enum.service';
+import { DashboardService } from './dashboard.service';
+import { FormControl } from '@angular/forms';
 export interface PeriodicElement {
   name: string;
   position: string;
@@ -142,10 +146,22 @@ export class DashboardComponent implements OnInit {
   sipCount: any;
   MiscData1: any;
   totalSales: any;
+  finalStartDate: number;
+  finalEndDate: number;
+  transactionList: any;
+  isRecentTransactionFlag: boolean;
+  todoListData = [];
 
   constructor(
-    public dialog: MatDialog,private subService:SubscriptionService,private eventService:EventService,private router: Router,private activatedRoute: ActivatedRoute,private subInjectService:SubscriptionInject,private backoffice:BackOfficeService
-  ) {     
+    public dialog: MatDialog, private subService: SubscriptionService,
+    private eventService: EventService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private subInjectService: SubscriptionInject,
+    private backoffice: BackOfficeService,
+    private transactionService: OnlineTransactionService,
+    private dashboardService: DashboardService
+  ) {
     const date = new Date();
     const hourOfDay = date.getHours();
     if (hourOfDay < 12) {
@@ -154,7 +170,8 @@ export class DashboardComponent implements OnInit {
       this.greeting = 'Good afternoon';
     } else {
       this.greeting = 'Good evening';
-    }}
+    }
+  }
   displayedDashboardSummary: string[] = ['name', 'service', 'amt', 'billing', 'icons'];
   subscriptionSummaryStatusFilter = '1';
 
@@ -167,8 +184,9 @@ export class DashboardComponent implements OnInit {
     this.getSummaryDataDashboard();//summry dashbord
     this.sipCountGet();//for getting total sip book
     this.getMisData(); // for getting total AUM
-
-
+    this.finalStartDate = UtilService.getStartOfTheDay(new Date((new Date()).valueOf() - 1000 * 60 * 60 * 24 * 7)).getTime();
+    this.finalEndDate = UtilService.getEndOfDay(new Date()).getTime();
+    this.getTodoListData();
   }
   getSummaryDataDashboard() {
     const obj = {
@@ -191,6 +209,90 @@ export class DashboardComponent implements OnInit {
       }
     );
   }
+
+  getTodoListData() {
+    const obj =
+    {
+      advisorId: this.advisorId
+    }
+    this.dashboardService.getNotes(obj).subscribe(
+      data => {
+        if (data && data.length > 0) {
+          data.forEach(element => {
+            element['selected'] == false;
+          });
+          this.todoListData = data;
+          // this.todoListData=this.todoListData.sort((a,b)=>a.due - b.due);
+        }
+      }
+    )
+  }
+  showInput = false;
+  selectedItem = new FormControl();
+  addTodoList(value) {
+    const obj =
+    {
+      id: 0,
+      advisorId: this.advisorId,
+      activityName: value
+    }
+    this.dashboardService.addNotes(obj).subscribe(
+      data => {
+        if (data) {
+          this.showInput = false;
+          data.forEach(element => {
+            element['selected'] == false;
+          });
+          this.todoListData = data;
+          // this.todoListData.unshift(data);
+        }
+      }
+    )
+  }
+
+  updateTodoList() {
+    const obj =
+    {
+
+    }
+    this.dashboardService.updateNotes(obj).subscribe(
+      data => {
+
+      })
+  }
+
+  deleteTodoList(value, index) {
+    this.dashboardService.deleteNotes(value.id).subscribe(
+      data => {
+        // if (data) {
+        this.todoListData.splice(index, 1);
+        // }
+      }), err => {
+        this.eventService.openSnackBar(err, "Dismiss")
+      }
+  }
+
+  getRecentTransactionData() {
+    this.isRecentTransactionFlag = true;
+    const obj = {
+      advisorId: this.advisorId,
+      tpUserCredentialId: null,
+      startDate: this.finalStartDate,
+      endDate: this.finalEndDate
+    };
+    this.transactionService.getSearchScheme(obj).subscribe(
+      data => {
+        this.isRecentTransactionFlag = false;
+        this.transactionList = data;
+        this.transactionList = TransactionEnumService.setPlatformEnum(data);
+        this.transactionList = TransactionEnumService.setTransactionStatus(data);
+      },
+      err => {
+        this.eventService.openSnackBar(err, 'Dismefault/stockfeediss');
+      }
+    );
+  }
+
   changeParentsTab(selectedTab) {
     this.eventService.tabData(selectedTab);
     if (selectedTab === 3) {
@@ -305,7 +407,7 @@ export class DashboardComponent implements OnInit {
       toDate: UtilService.getEndOfDay(new Date()).getTime()
     };
     this.subService.getTotalRecived(obj).subscribe(
-      data =>{
+      data => {
         this.totalSales = data != undefined ? data.totalSales : '0';
         this.feeRecieved = data != undefined ? data.feeRecieved : '0';
       }
@@ -318,9 +420,9 @@ export class DashboardComponent implements OnInit {
     this.subService.clientWithSubcribe(obj).subscribe(
       data => {
         if (data)
-        this.dataSourceClientWithSub = data;
-      else
-        this.dataSourceClientWithSub = {};
+          this.dataSourceClientWithSub = data;
+        else
+          this.dataSourceClientWithSub = {};
       }
     );
   }
@@ -334,7 +436,7 @@ export class DashboardComponent implements OnInit {
       data => {
         this.sipCount = data.totalAmountInWords;
       },
-      err=>{
+      err => {
         this.sipCount = '';
       }
     )
