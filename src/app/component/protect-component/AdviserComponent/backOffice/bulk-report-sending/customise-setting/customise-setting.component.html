@@ -9,7 +9,7 @@
         </p>
     </div>
     <div class="col-md-2 text-right">
-        <i class="material-icons pt-16 c-p pr-16">
+        <i class="material-icons pt-16 c-p pr-16" (click)="close()">
             clear
         </i>
     </div>
@@ -19,75 +19,90 @@
     <div class="row">
         <div class="col-md-4">
             <div class="form-group">
-                <input class="form-control" matInput>
+                <input class="form-control" matInput (input)="searchClient($event.target.value)">
             </div>
 
         </div>
+        <!-- <div class="col-md-8 text-right">
+            <button class="btn-primary f-14 ml-12" (click)="saveSetting()" mat-stroked-button cdkFocusInitial>Save
+                Setting</button>
+        </div> -->
     </div>
 
     <div class="row">
         <div class="col-md-12">
-            <table mat-table [dataSource]="dataSource" id="tbs" class="mt-8">
+            <div [ngClass]="{'table-scroll':isLoading==false }" (scroll)="onWindowScroll($event)" class="ox-hide people-clients-scroll">
+                <table #tableEl mat-table [dataSource]="dataSource" class=" skeletonAnimation" [appSkeletonLoading]="isLoading" id="tbs" class="mt-8">
+                    <ng-container matColumnDef="name">
+                        <th class="br" mat-header-cell *matHeaderCellDef sticky> Client name </th>
+                        <td class="br" mat-cell *matCellDef="let element">
+                            <div class="bar">
+                                {{element.name}}
+                            </div>
+                        </td>
+                    </ng-container>
 
-                <!--- Note that these columns can be defined in any order.
-                      The actual rendered columns are set as a property on the row definition" -->
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="mfoverview">
+                        <th class="br" mat-header-cell *matHeaderCellDef sticky> MF Overview </th>
+                        <td class="br text-center" mat-cell *matCellDef="let element">
+                            <div class="bar c-p">
+                                <mat-checkbox *ngIf="!isLoading" [checked]="element.overview" (change)="element.overview=$event.checked;selectReport($event,element)" class="example-margin"></mat-checkbox>
+                            </div>
+                        </td>
+                    </ng-container>
 
-                <!-- Position Column -->
-                <ng-container matColumnDef="name">
-                    <th class="br" mat-header-cell *matHeaderCellDef> Client name </th>
-                    <td class="br" mat-cell *matCellDef="let element">
-                        {{element.name}}
-                    </td>
-                </ng-container>
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="mfsummary">
+                        <th class="br" mat-header-cell *matHeaderCellDef sticky> MF Summary </th>
+                        <td class="br text-center" mat-cell *matCellDef="let element">
+                            <div class="bar c-p">
+                                <mat-checkbox *ngIf="!isLoading" [checked]="element.summary" (change)="element.summary=$event.checked;selectReport($event,element)" class="example-margin"></mat-checkbox>
+                            </div>
+                        </td>
+                    </ng-container>
 
-                <!-- Name Column -->
-                <ng-container matColumnDef="mfoverview">
-                    <th class="br" mat-header-cell *matHeaderCellDef> MF Overview </th>
-                    <td class="br text-center" mat-cell *matCellDef="let element">
-                        <mat-checkbox class="example-margin"></mat-checkbox>
-                    </td>
-                </ng-container>
+                    <!-- Symbol Column -->
+                    <ng-container matColumnDef="mftransaction">
+                        <th class="br" mat-header-cell *matHeaderCellDef sticky> MF all transaction </th>
+                        <td class="br text-center" mat-cell *matCellDef="let element">
+                            <div class="bar c-p">
+                                <mat-checkbox *ngIf="!isLoading" [checked]="element.allTransaction" (change)="element.allTransaction=$event.checked;selectReport($event,element)" class="example-margin"></mat-checkbox>
+                            </div>
+                        </td>
+                    </ng-container>
 
-                <!-- Weight Column -->
-                <ng-container matColumnDef="mfsummary">
-                    <th class="br" mat-header-cell *matHeaderCellDef> MF Summary </th>
-                    <td class="br text-center" mat-cell *matCellDef="let element">
-                        <mat-checkbox class="example-margin"></mat-checkbox>
-                    </td>
-                </ng-container>
+                    <ng-container matColumnDef="mfunrealised">
+                        <th class="br" mat-header-cell *matHeaderCellDef sticky> MF unrealised transaction </th>
+                        <td class="br text-center" mat-cell *matCellDef="let element">
+                            <div class="bar c-p">
+                                <mat-checkbox *ngIf="!isLoading" [checked]="element.unrealizedTransaction" (change)="element.unrealizedTransaction=$event.checked;selectReport($event,element)" class="example-margin"></mat-checkbox>
+                            </div>
+                        </td>
+                    </ng-container>
 
-                <!-- Symbol Column -->
-                <ng-container matColumnDef="mftransaction">
-                    <th class="br" mat-header-cell *matHeaderCellDef> MF all transaction </th>
-                    <td class="br text-center" mat-cell *matCellDef="let element">
-                        <mat-checkbox class="example-margin"></mat-checkbox>
-                    </td>
-                </ng-container>
+                    <ng-container matColumnDef="mfcapitalgain">
+                        <th class="br" mat-header-cell *matHeaderCellDef sticky> MF capitalGain Summary </th>
+                        <td class="br text-center" mat-cell *matCellDef="let element">
+                            <div class="bar c-p">
+                                <mat-checkbox *ngIf="!isLoading" [checked]="element.capitalGainSummary" (change)="element.capitalGainSummary=$event.checked;selectReport($event,element)" class="example-margin"></mat-checkbox>
+                            </div>
+                        </td>
+                    </ng-container>
 
-                <ng-container matColumnDef="mfunrealised">
-                    <th class="br" mat-header-cell *matHeaderCellDef> MF unrealised transaction </th>
-                    <td class="br text-center" mat-cell *matCellDef="let element">
-                        <mat-checkbox class="example-margin"></mat-checkbox>
-                    </td>
-                </ng-container>
+                    <ng-container matColumnDef="mfcapitalgaindetailed">
+                        <th class="br" mat-header-cell *matHeaderCellDef sticky> MF capital gain detailed </th>
+                        <td class="br text-center" mat-cell *matCellDef="let element">
+                            <div class="bar c-p">
+                                <mat-checkbox *ngIf="!isLoading" [checked]="element.capitalGainDetailed" (change)="element.capitalGainDetailed=$event.checked;selectReport($event,element)" class="example-margin"></mat-checkbox>
+                            </div>
+                        </td>
+                    </ng-container>
 
-                <ng-container matColumnDef="mfcapitalgain">
-                    <th class="br" mat-header-cell *matHeaderCellDef> MF capitalGain Summary </th>
-                    <td class="br text-center" mat-cell *matCellDef="let element">
-                        <mat-checkbox class="example-margin"></mat-checkbox>
-                    </td>
-                </ng-container>
-
-                <ng-container matColumnDef="mfcapitalgaindetailed">
-                    <th class="br" mat-header-cell *matHeaderCellDef> MF capital gain detailed </th>
-                    <td class="br text-center" mat-cell *matCellDef="let element">
-                        <mat-checkbox class="example-margin"></mat-checkbox>
-                    </td>
-                </ng-container>
-
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+            </div>
         </div>
     </div>
 </div>

@@ -51,6 +51,7 @@ export class OverviewProfileComponent implements OnInit {
   };
   duplicateFlag: any;
   clientList: any;
+  relationList: any;
 
   constructor(private peopleService: PeopleService, private authService: AuthService, public dialog: MatDialog, public subInjectService: SubscriptionInject,
     private cusService: CustomerService, private eventService: EventService, private utils: UtilService, private enumDataService: EnumDataService, private route: ActivatedRoute, private cancelFlagService: CancelFlagService
@@ -244,7 +245,7 @@ export class OverviewProfileComponent implements OnInit {
         if (data && data.length > 0) {
           this.bankList = data;
           this.bankList.forEach(singleBank => {
-            singleBank.accountTypeName = (singleBank.accountType == '1') ? 'Saving A/c' : (singleBank.accountType == '2') ? 'Current A/c' :(singleBank.accountType == '3')?'NRE' :(singleBank.accountType == '4')?'NRO':'Cash credit A/c';
+            singleBank.accountTypeName = (singleBank.accountType == '1') ? 'Saving A/c' : (singleBank.accountType == '2') ? 'Current A/c' : (singleBank.accountType == '3') ? 'NRE' : (singleBank.accountType == '4') ? 'NRO' : 'Cash credit A/c';
             singleBank.shortAddress = singleBank.address ? singleBank.address.city ? singleBank.address.city : '' : '';
           });
           this.selectedBankData = data[0];
@@ -279,6 +280,7 @@ export class OverviewProfileComponent implements OnInit {
 
 
   open(value, data) {
+    this.enumDataService.setRelationShipStatus();
     let component;
     if (value == 'add') {
       if (this.clientOverviewData.clientType == 1) {

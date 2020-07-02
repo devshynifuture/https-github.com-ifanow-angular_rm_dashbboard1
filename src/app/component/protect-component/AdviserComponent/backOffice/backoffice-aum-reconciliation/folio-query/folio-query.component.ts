@@ -8,6 +8,7 @@ import { FolioMasterDetailViewComponent } from '../folio-master-detail-view/foli
 import { AuthService } from '../../../../../../auth-service/authService';
 import { debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
 import { FormBuilder, FormControl } from '@angular/forms';
+import { BackOfficeService } from '../../back-office.service';
 
 @Component({
   selector: 'app-folio-query',
@@ -16,6 +17,7 @@ import { FormBuilder, FormControl } from '@angular/forms';
 })
 export class FolioQueryComponent implements OnInit {
   advisorId = AuthService.getAdvisorId();
+  parentId = AuthService.getParentId();
   errorMsg: string;
   isLoadingForDropDownGroupHead: boolean = false;
   isLoadingForDropDownInvestor: boolean = false;
@@ -32,10 +34,15 @@ export class FolioQueryComponent implements OnInit {
   arrayOfInvestorName: any[] = [];
   arrayInvestorNameError: boolean;
   arrayGroupHeadNameError: boolean;
+  adminAdvisorIds = [];
+  viewMode: string;
+  arnRiaList: any;
+  arnRiaValue = -1;
 
   constructor(
     private reconService: ReconciliationService,
     private subInjectService: SubscriptionInject,
+    private backoffice: BackOfficeService
   ) { }
   displayedColumns: string[] = ['folioNumber', 'schemeName', 'investorName', 'arnRiaCode', 'reconStatus', 'transactions', 'folioDetails'];
   isSearchDone: boolean = false;
@@ -44,9 +51,61 @@ export class FolioQueryComponent implements OnInit {
 
   ngOnInit() {
     this.dataSource.data = ELEMENT_DATA;
-    this.activateValueChanges()
+    this.viewMode = 'Select option';
+    this.getArnRiaList();
+    this.activateValueChanges();
+    this.teamMemberListGet();
   }
+  getArnRiaList() {
+    this.backoffice.getArnRiaList(this.advisorId).subscribe(
+      data => {
+        if (data) {
+          // this.advisorId = 0;
+          this.arnRiaList = data;
 
+          const obj = {
+            number: 'All',
+            id: -1
+          }
+          this.arnRiaList.unshift(obj);
+        } else {
+
+          // this.dataService.openSnackBar("No Arn Ria List Found", "Dismiss")
+        }
+      }
+    )
+  }
+  changeValueOfArnRia(item) {
+    this.viewMode = item.number;
+    if (item.number != 'All') {
+      this.arnRiaValue = item.id;
+    } else {
+      this.arnRiaValue = -1;
+    }
+  }
+  teamMemberListGet() {
+    this.reconService.getSubAdvisorListValues({ advisorId: this.advisorId })
+      .subscribe(data => {
+        if (data && data.length !== 0) {
+          console.log('team members: ', data);
+          data.forEach(element => {
+            this.adminAdvisorIds.push(element);
+          });
+          const isIncludeID = this.adminAdvisorIds.includes(this.advisorId);
+          if (!isIncludeID) {
+            this.adminAdvisorIds.unshift(this.advisorId);
+          }
+        } else {
+          this.adminAdvisorIds = [this.advisorId];
+
+          // this.handlingDataVariable();
+          // this.eventService.openSnackBar('No Team Member Found', 'Dismiss');
+        }
+      }, err => {
+        this.adminAdvisorIds = [this.advisorId];
+
+      });
+  }
   activateValueChanges() {
     this.folioQueryGroupHead.valueChanges
       .pipe(
@@ -107,20 +166,20 @@ export class FolioQueryComponent implements OnInit {
 
   getGroupHeadNameList(value) {
     const data = {
-      advisorId: this.advisorId,
+      advisorId:(this.parentId) ? -1 : (this.arnRiaValue!=-1) ? [this.adminAdvisorIds] :[this.adminAdvisorIds],
       clientName: value,
-      arnRiaDetailsId: -1,
-      parentId: -1
+      arnRiaDetailId: this.arnRiaValue,
+      parentId: (!this.parentId || this.parentId==0) ? -1 : this.parentId,
     }
     return this.reconService.getGroupHeadNameValues(data);
   }
 
   getInvestorNameList(value) {
     const data = {
-      advisorId: this.advisorId,
+      advisorId:(this.parentId) ? -1 : (this.arnRiaValue!=-1) ? [this.adminAdvisorIds] :[this.adminAdvisorIds],
       familyMemberName: value,
-      arnRiaDetailsId: -1,
-      parentId: -1
+      arnRiaDetailId: this.arnRiaValue,
+      parentId: (!this.parentId || this.parentId==0) ? -1 : this.parentId,
     }
     return this.reconService.getInvestorNameValues(data);
   }
@@ -131,8 +190,10 @@ export class FolioQueryComponent implements OnInit {
 
     const data = {
       flag_search: flag,
-      advisorId: this.advisorId,
-      key: value
+      advisorId:(this.parentId) ? -1 : (this.arnRiaValue!=-1) ? [this.adminAdvisorIds] :[this.adminAdvisorIds],
+      key: value,
+      arnRiaDetailId: this.arnRiaValue,
+      parentId: (!this.parentId || this.parentId==0) ? -1 : this.parentId,
     };
 
     this.reconService.getFolioQueryDataListValues(data)

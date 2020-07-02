@@ -48,6 +48,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class InvoiceHistoryComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
+  isLoading: boolean;
 
   constructor(public subInjectService: SubscriptionInject, private subService: SubscriptionService) {
 
@@ -84,7 +85,7 @@ export class InvoiceHistoryComponent implements OnInit {
   }
 
   invoiceDataGet(data) {
-
+    this.isLoading = true
     if (data === undefined) {
       return;
     } else {
@@ -100,6 +101,7 @@ export class InvoiceHistoryComponent implements OnInit {
   }
 
   getInvoiceResponseData(data) {
+    this.isLoading = false;
     if (data) {
       this.dataSource.data = data;
     } else {

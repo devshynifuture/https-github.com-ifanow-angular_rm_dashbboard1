@@ -155,4 +155,8 @@ export class PeopleService {
   getbankAccountTypes(data) {
     return this.http.get(apiConfig.USER + appConfig.GET_BANK_ACCOUNT_TYPE, data);
   }
+
+  getRelationShipStatusList(data) {
+    return this.http.get(apiConfig.USER + appConfig.GET_RELATIONSHIP_STATUS, data);
+  }
 }

@@ -80,7 +80,7 @@
   }
 
   .advisor-view-all {
-    border-radius: 2px;
+    border-radius: 2px !important;
     border: 1px solid #83959D;
     height: 20px;
     font-size: 12px;
@@ -99,6 +99,141 @@
 
     tr.mat-row {
       height: 38px !important
+    }
+  }
+
+  .progress-advisors {
+    .mat-progress-bar {
+      height: 30px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+    }
+
+    .mat-progress-bar-background {
+      fill: #fff;
+    }
+
+    .mat-progress-bar-buffer {
+      background-color: #fff;
+    }
+
+    .mat-progress-bar-fill::after {
+      background-color: #D9DEE1;
+    }
+
+    p.top {
+      position: absolute;
+      margin-top: -34px !important;
+      left: 9px;
+    }
+  }
+
+  .progress-advisors-goal {
+    .mat-progress-bar {
+      height: 30px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+    }
+
+    .mat-progress-bar-background {
+      fill: #fff;
+    }
+
+    .mat-progress-bar-buffer {
+      background-color: #fff;
+    }
+
+
+    .light-red {
+      .mat-progress-bar-fill::after {
+        background-color: rgba(255, 114, 114, 0.4);
+        border-radius: 4px;
+
+      }
+    }
+
+    .light-green {
+      .mat-progress-bar-fill::after {
+        background-color: rgba(93, 198, 68, 0.4);
+        border-radius: 4px;
+      }
+    }
+
+    p.top {
+      position: absolute;
+      margin-top: -34px !important;
+      left: 9px;
+    }
+  }
+
+  .transctions-status-advisor,
+  .subscription-summary-advisor {
+    tr.mat-header-row {
+      height: 52px;
+    }
+
+    tr.mat-row {
+      height: 40px;
+    }
+  }
+
+  .rejections-advisor {
+    tr.mat-header-row {
+      height: 44px;
+    }
+
+    tr.mat-row {
+      height: 40px;
+    }
+  }
+
+  .reconciliation-report-advisor {
+    tr.mat-header-row {
+      height: 40px;
+    }
+
+    tr.mat-row {
+      height: 38px;
+    }
+  }
+
+  .family-details-advisor {
+
+    overflow-y: auto;
+  }
+
+  .w-1800,
+  .upcoming-goals-advisor {
+    width: 2000px;
+  }
+
+  .join-img {
+    position: relative;
+    left: -15px;
+  }
+
+  .upcoming-goal {
+    .mat-progress-bar {
+      height: 16px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+    }
+
+    .mat-progress-bar-background {
+      fill: #D9DEE1;
+
+    }
+
+    .mat-progress-bar-buffer {
+      background-color: #D9DEE1;
+      ;
+    }
+
+    .mat-progress-bar-fill::after {
+      background-color: #008FFF;
+
+      border-radius: 2px;
+
     }
   }
 }

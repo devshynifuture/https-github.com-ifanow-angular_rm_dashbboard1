@@ -9,6 +9,8 @@ import { DatePipe } from '@angular/common';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import * as moment from 'moment';
 import { MergeClientFamilyMemberComponent } from '../merge-client-family-member/merge-client-family-member.component';
+import { EnumDataService } from 'src/app/services/enum-data.service';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-add-family-member',
@@ -40,10 +42,11 @@ export class AddFamilyMemberComponent implements OnInit {
   selectedCount = 0;
   step = 1;
   clientData: any;
+  relationList: any;
 
   constructor(private datePipe: DatePipe, private subInjectService: SubscriptionInject,
     private fb: FormBuilder, private eventService: EventService,
-    private peopleService: PeopleService) {
+    private peopleService: PeopleService, private enumDataService: EnumDataService) {
   }
 
   createFamily: any;
@@ -141,7 +144,7 @@ export class AddFamilyMemberComponent implements OnInit {
           advisorId: this.advisorId,
           isKycCompliant: 0,
           taxStatusId: 1,
-          residentFlag: 1,
+          residentFlag: element.get('resident').value,
           displayName: element.get('name').value,
           familyMemberType: (element.get('relationTypeId').value == 4 || element.get('relationTypeId').value == 5) ? 2 : 1,// Minor : Major
           clientId: AuthService.getClientData().clientId,
@@ -197,18 +200,43 @@ export class AddFamilyMemberComponent implements OnInit {
       this.eventService.openSnackBar('Please select member', 'Dismiss');
       return;
     }
+    if (this.data.client.clientType == 1) {
+      this.relationList = [
+        { name: 'Brother', id: 8 },
+        { name: 'Sister', id: 9 },
+        { name: 'Daughter_In_Law', id: 11 },
+        { name: 'Sister_In_Law', id: 12 }
+      ];
+    }
+    if (this.data.client.clientType == 2) {
+      this.relationList = [
+        { name: 'Niece', id: 15 },
+        { name: 'Nephew', id: 16 }
+      ]
+    }
+    if (this.data.client.clientType == 3) {
+      this.relationList = [
+        { name: 'HUF', id: 18 },
+        { name: 'Private Limited', id: 19 }
+      ]
+    }
+    if (this.data.client.clientType == 4) {
+      this.relationList = [
+        { name: 'Sole proprietorship', id: 17 },
+      ]
+    }
     this.familyMemberList.firstRow.forEach(element => {
       if (element.selected) {
         this.getFamilyListList.push(
           this.fb.group({
             name: [, [Validators.required]],
             date: [, [Validators.required]],
-            relationTypeId: [element.relationshipTypeId],
+            relationTypeId: [element.relationshipTypeId, [Validators.required]],
             genderId: [element.genderId],
-
+            resident: [1, [Validators.required]],
             maxDateValue: [this.maxDateForAdultDob]
           }));
-        this.familyMemberNameList.push(element.name);
+        this.familyMemberNameList.push({ name: element.name, value: element.relationshipTypeId });
       }
     });
     this.familyMemberList.secondRow.forEach(element => {
@@ -217,11 +245,11 @@ export class AddFamilyMemberComponent implements OnInit {
           name: [, [Validators.required]],
           date: [, [Validators.required]],
           genderId: [element.genderId],
-
-          relationTypeId: [element.relationshipTypeId],
+          resident: [1, [Validators.required]],
+          relationTypeId: [element.relationshipTypeId, [Validators.required]],
           maxDateValue: [this.maxDateForAdultDob]
         }));
-        this.familyMemberNameList.push(element.name);
+        this.familyMemberNameList.push({ name: element.name, value: element.relationshipTypeId });
       }
     });
     this.familyMemberList.thirdRow.forEach(element => {
@@ -230,11 +258,11 @@ export class AddFamilyMemberComponent implements OnInit {
           name: [, [Validators.required]],
           date: [, [Validators.required]],
           genderId: [element.genderId],
-
-          relationTypeId: [element.relationshipTypeId],
+          resident: [1, [Validators.required]],
+          relationTypeId: [(element.relationshipTypeId == 10) ? '' : element.relationshipTypeId, [Validators.required]],
           maxDateValue: [new Date()]
         }));
-        this.familyMemberNameList.push(element.name);
+        this.familyMemberNameList.push({ name: element.name, value: element.relationshipTypeId });
         element.count--;
       }
 
