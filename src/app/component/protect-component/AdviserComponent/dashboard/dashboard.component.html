@@ -43,7 +43,8 @@
     <div class="row bg-grey lter text-center ba-primitive br-4 p-8">
       <div class="col-md-6 pt-24 pb-24 bb-half pl-8">
         <p class="m-0 text-primitive roboto f-400 lh-16">MF AUM</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8">{{(MiscData1 &&  MiscData1.hasOwnProperty('totalAumRupees') ) ? MiscData1.totalAumRupees : '0'}}</h3>
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          {{(MiscData1 &&  MiscData1.hasOwnProperty('totalAumRupees') ) ? MiscData1.totalAumRupees : '0'}}</h3>
       </div>
       <div class="col-md-6 pt-24 pb-24 bl-half bb-half">
         <p class="m-0 text-primitive roboto f-400 lh-16">SIP book</p>
@@ -86,7 +87,9 @@
       <div class="col-md-6 pt-24 pb-24 bb-half pl-8">
         <p class="m-0 text-primitive roboto f-400 lh-16">Clients with
           subscription</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8">{{ (dataSourceClientWithSub && dataSourceClientWithSub.hasOwnProperty('activeClientPer')) ? dataSourceClientWithSub.activeClientPer : 0}}%</h3>
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          {{ (dataSourceClientWithSub && dataSourceClientWithSub.hasOwnProperty('activeClientPer')) ? dataSourceClientWithSub.activeClientPer : 0}}%
+        </h3>
       </div>
       <div class="col-md-6 pt-24 pb-24 bl-half bb-half">
         <p class="m-0 text-primitive roboto f-400 lh-16">Subscriptions
@@ -115,12 +118,14 @@
         <div class="col-md-8 bg-advisors p-0">
           <div class="row">
             <div class="col-md-10 p-0 pt-20 pl-20 pb-20">
-              <p class="lh-16 m-0 text-white roboto f-500">First things first, {{advisorName}}! We’ve created an onboarding
+              <p class="lh-16 m-0 text-white roboto f-500">First things first, {{advisorName}}! We’ve created an
+                onboarding
                 guide for you. </p>
 
               <p class="lh-16 m-0 text-white roboto f-400 pt-12"> This will help you get the best out of IFANOW and make
                 your onboarding process super smooth.</p>
-              <button mat-stroked-button class="text-open-guide mt-24 bg-white w-60 br-4">Open the guide</button>
+              <button mat-stroked-button (click)="openGuideDialog()"
+                class="text-open-guide mt-24 bg-white w-60 br-4">Open the guide</button>
             </div>
           </div>
         </div>
@@ -806,89 +811,84 @@
         <div class="col-md-6 p-0 text-right">
           <!-- <button mat-stroked-button class="text-primary">Not started</button>
           <button mat-button>Upcoming</button> -->
-          <mat-button-toggle-group (change)="getSummaryDataDashboard()"
-                                            [(ngModel)]="subscriptionSummaryStatusFilter" class="subscription-summary"
-                                            id="custom-toggle" multiple=false>
-                                            <mat-button-toggle class="f-14" value=1>NOT STARTED</mat-button-toggle>
-                                            <mat-button-toggle class="f-14" value=3>UPCOMING</mat-button-toggle>
-                                        </mat-button-toggle-group>
+          <mat-button-toggle-group (change)="getSummaryDataDashboard()" [(ngModel)]="subscriptionSummaryStatusFilter"
+            class="subscription-summary" id="custom-toggle" multiple=false>
+            <mat-button-toggle class="f-14" value=1>NOT STARTED</mat-button-toggle>
+            <mat-button-toggle class="f-14" value=3>UPCOMING</mat-button-toggle>
+          </mat-button-toggle-group>
         </div>
         <div class="col-md-12 p-0 pt-8">
-          <table mat-table [appSkeletonLoading]="isLoadingSubSummary" *ngIf="dashBoardSummary.length > 0" appSkeletonLoading class=" skeletonAnimation" [dataSource]="dashBoardSummary" id="table-low">
+          <table mat-table [appSkeletonLoading]="isLoadingSubSummary" *ngIf="dashBoardSummary.length > 0"
+            appSkeletonLoading class=" skeletonAnimation" [dataSource]="dashBoardSummary" id="table-low">
 
             <tbody>
               <ng-container matColumnDef="name">
-                  <th *matHeaderCellDef mat-header-cell> Client name</th>
-                  <td (click)="openPlanSlider('SUBSCRIPTIONS','open',element)"
-                      *matCellDef="let element" class="c-p" mat-cell>
-                      <div class="bar"> {{element.clientName}} </div>
-                  </td>
+                <th *matHeaderCellDef mat-header-cell> Client name</th>
+                <td (click)="openPlanSlider('SUBSCRIPTIONS','open',element)" *matCellDef="let element" class="c-p"
+                  mat-cell>
+                  <div class="bar"> {{element.clientName}} </div>
+                </td>
               </ng-container>
               <ng-container matColumnDef="service">
-                  <th *matHeaderCellDef mat-header-cell> Service name</th>
-                  <td *matCellDef="let element" class="c-p" mat-cell>
-                      <div class="bar"> {{element.serviceName}} </div>
-                  </td>
+                <th *matHeaderCellDef mat-header-cell> Service name</th>
+                <td *matCellDef="let element" class="c-p" mat-cell>
+                  <div class="bar"> {{element.serviceName}} </div>
+                </td>
               </ng-container>
               <ng-container matColumnDef="amt">
-                  <th *matHeaderCellDef class="w-22" mat-header-cell> Fee amount</th>
-                  <td (click)="Open(element)" *matCellDef="let element" class="c-p"
-                      mat-cell>
-                      <div class="bar text-primary text-underline">
-                          {{isLoadingSubSummary ? ' ' : 'View details'}}
-                      </div>
-                  </td>
+                <th *matHeaderCellDef class="w-22" mat-header-cell> Fee amount</th>
+                <td (click)="Open(element)" *matCellDef="let element" class="c-p" mat-cell>
+                  <div class="bar text-primary text-underline">
+                    {{isLoadingSubSummary ? ' ' : 'View details'}}
+                  </div>
+                </td>
               </ng-container>
               <ng-container matColumnDef="billing">
-                  <th *matHeaderCellDef mat-header-cell> Next billing date</th>
-                  <td *matCellDef="let element" mat-cell>
-                      <div *ngIf="element.nextBillingDate" class="bar">
-                          {{ element.nextBillingDate | date: 'dd/MM/yyyy' }}
-                      </div>
-                      <div *ngIf="!element.nextBillingDate" class="bar">
-                          {{ isLoadingSubSummary ? '' : 'Not Started' }}
-                      </div>
-                  </td>
+                <th *matHeaderCellDef mat-header-cell> Next billing date</th>
+                <td *matCellDef="let element" mat-cell>
+                  <div *ngIf="element.nextBillingDate" class="bar">
+                    {{ element.nextBillingDate | date: 'dd/MM/yyyy' }}
+                  </div>
+                  <div *ngIf="!element.nextBillingDate" class="bar">
+                    {{ isLoadingSubSummary ? '' : 'Not Started' }}
+                  </div>
+                </td>
               </ng-container>
               <ng-container matColumnDef="icons">
-                  <th *matHeaderCellDef class="f-18" mat-header-cell style="width: 2%;">
-                  </th>
-                  <td *matCellDef="let element" mat-cell style="width: 2%">
-                      <div class="bar">
-                          <i *ngIf="!isLoadingSubSummary" [matMenuTriggerFor]="menu"
-                              class="material-icons c-p iconscolors">
-                              more_vert
-                          </i>
-                      </div>
-                      <mat-menu #menu="matMenu">
-                          <a (click)="Open(element)" mat-menu-item>View fee
-                              structure</a>
-                          <a (click)="openPlanSlider('billerSettings','open',element)"
-                              class="bt-1" mat-menu-item>Change
-                              biller</a>
-                          <a (click)="openPlanSlider('changePayee','open',element)"
-                              mat-menu-item>Change
-                              payee</a>
-                          <a (click)="delete('cancelSubscription')" class="bt-1"
-                              mat-menu-item>Cancel
-                              subscription</a>
-                          <a (click)="deleteModal('SUBSCRIPTION')" mat-menu-item>Delete
-                              subscription</a>
-                      </mat-menu>
-                  </td>
+                <th *matHeaderCellDef class="f-18" mat-header-cell style="width: 2%;">
+                </th>
+                <td *matCellDef="let element" mat-cell style="width: 2%">
+                  <div class="bar">
+                    <i *ngIf="!isLoadingSubSummary" [matMenuTriggerFor]="menu" class="material-icons c-p iconscolors">
+                      more_vert
+                    </i>
+                  </div>
+                  <mat-menu #menu="matMenu">
+                    <a (click)="Open(element)" mat-menu-item>View fee
+                      structure</a>
+                    <a (click)="openPlanSlider('billerSettings','open',element)" class="bt-1" mat-menu-item>Change
+                      biller</a>
+                    <a (click)="openPlanSlider('changePayee','open',element)" mat-menu-item>Change
+                      payee</a>
+                    <a (click)="delete('cancelSubscription')" class="bt-1" mat-menu-item>Cancel
+                      subscription</a>
+                    <a (click)="deleteModal('SUBSCRIPTION')" mat-menu-item>Delete
+                      subscription</a>
+                  </mat-menu>
+                </td>
               </ng-container>
               <tr *matHeaderRowDef="displayedDashboardSummary" mat-header-row></tr>
               <tr *matRowDef="let row; columns: displayedDashboardSummary;" mat-row></tr>
-          </tbody>
+            </tbody>
           </table>
           <div *ngIf="dashBoardSummary.length ==0" class="noDataFound">
             <img src="assets/images/svg/run.svg">
-        </div>
-        <div *ngIf="dashBoardSummary" class="col-md-12 text-right pt-8">
-          <div (click)="changeParentsTab(3)" class="c-p">View all</div>
+          </div>
+          <div *ngIf="dashBoardSummary" class="col-md-12 text-right pt-8">
+            <div (click)="changeParentsTab(3)" class="c-p">View all</div>
 
-          <!--              <a href="#" class="text-black f-14">View all</a>-->
-      </div>
+            <!--              <a href="#" class="text-black f-14">View all</a>-->
+          </div>
         </div>
       </div>
       <div class="row pt-40 reconciliation-report-advisor">

@@ -144,8 +144,8 @@ export class DashboardComponent implements OnInit {
   totalSales: any;
 
   constructor(
-    public dialog: MatDialog,private subService:SubscriptionService,private eventService:EventService,private router: Router,private activatedRoute: ActivatedRoute,private subInjectService:SubscriptionInject,private backoffice:BackOfficeService
-  ) {     
+    public dialog: MatDialog, private subService: SubscriptionService, private eventService: EventService, private router: Router, private activatedRoute: ActivatedRoute, private subInjectService: SubscriptionInject, private backoffice: BackOfficeService
+  ) {
     const date = new Date();
     const hourOfDay = date.getHours();
     if (hourOfDay < 12) {
@@ -154,7 +154,8 @@ export class DashboardComponent implements OnInit {
       this.greeting = 'Good afternoon';
     } else {
       this.greeting = 'Good evening';
-    }}
+    }
+  }
   displayedDashboardSummary: string[] = ['name', 'service', 'amt', 'billing', 'icons'];
   subscriptionSummaryStatusFilter = '1';
 
@@ -305,7 +306,7 @@ export class DashboardComponent implements OnInit {
       toDate: UtilService.getEndOfDay(new Date()).getTime()
     };
     this.subService.getTotalRecived(obj).subscribe(
-      data =>{
+      data => {
         this.totalSales = data != undefined ? data.totalSales : '0';
         this.feeRecieved = data != undefined ? data.feeRecieved : '0';
       }
@@ -318,9 +319,9 @@ export class DashboardComponent implements OnInit {
     this.subService.clientWithSubcribe(obj).subscribe(
       data => {
         if (data)
-        this.dataSourceClientWithSub = data;
-      else
-        this.dataSourceClientWithSub = {};
+          this.dataSourceClientWithSub = data;
+        else
+          this.dataSourceClientWithSub = {};
       }
     );
   }
@@ -334,7 +335,7 @@ export class DashboardComponent implements OnInit {
       data => {
         this.sipCount = data.totalAmountInWords;
       },
-      err=>{
+      err => {
         this.sipCount = '';
       }
     )
@@ -356,7 +357,8 @@ export class DashboardComponent implements OnInit {
   }
   openGuideDialog(): void {
     const dialogRef = this.dialog.open(DashboardGuideDialogComponent, {
-      width: '250px',
+      width: '99%',
+      height: '595px',
       data: ''
     });
 
