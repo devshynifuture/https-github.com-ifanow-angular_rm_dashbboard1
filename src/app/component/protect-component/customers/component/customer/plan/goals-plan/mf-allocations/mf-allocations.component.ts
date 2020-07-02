@@ -18,11 +18,11 @@ import { MatTableDataSource } from '@angular/material';
 })
 export class MfAllocationsComponent implements OnInit {
   displayedColumns = ['position', 'name', 'weight'];
-  dataSource = ELEMENT_DATA;
-  displayedColumns1 = ['scheme', 'value', 'goal', 'allocation','icons'];
+  dataSource = [];
+  displayedColumns1 = ['scheme', 'value', 'goal','icons'];
   dataSource1 = new MatTableDataSource([]);
 
-  @Input() data = {};
+  @Input() data:any = {};
   advisorId;
   clientId;
   mfList:any[] = [];
@@ -32,6 +32,8 @@ export class MfAllocationsComponent implements OnInit {
   folioFilterValue = 'all';
   assetFilterValue = 'all';
   selectedFamFilter = 'all';
+
+  isFamilyObj = (index, item) => item.isFamily;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -47,9 +49,29 @@ export class MfAllocationsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loaderFn.setFunctionToExeOnZero(this.filterAssets);
+    this.loaderFn.setFunctionToExeOnZero(this, this.filterAssets);
+    this.initializeRequiredTable();
     this.getFamilyMembersList();
     this.loadMFData();
+  }
+
+  initializeRequiredTable(){
+    let required = this.data.dashboardData;
+    let tableSource = [];
+    // logic for saving status
+    tableSource.push({
+      name: 'LumpSum',
+      equity: required.lump_equity,
+      debt: required.lump_debt
+    })
+
+    tableSource.push({
+      name: 'Monthly',
+      equity: required.equity_monthly,
+      debt: required.debt_monthly
+    })
+
+    this.dataSource = tableSource;
   }
 
   getFamilyMembersList() {
@@ -87,92 +109,114 @@ export class MfAllocationsComponent implements OnInit {
 
   loadMFData(){
     this.loaderFn.increaseCounter();
-    this.planService.getMFList({advisorId: 5422, clientId: 101056}).subscribe(res => {
+    this.planService.getMFList({advisorId: this.advisorId, clientId: this.clientId}).subscribe(res => {
       this.mfList = res;
+      this.mfList = this.mfList.map(mf => {
+        let absAllocation = 0;
+        if(mf.goalAssetMapping.length > 0) {
+          mf.goalAssetMapping.forEach(element => {
+            absAllocation += element.percentAllocated;
+          });
+        }
+        return {absAllocation, ...mf};
+      })
       this.loaderFn.decreaseCounter();
     }, err => {
       this.eventService.openSnackBar(err, "Dismiss");
       this.loaderFn.decreaseCounter();
     })
   }
-
-  createMFTable(){
+  
+  filterAssets(){
     let tableSource = [];
-    if(this.familyList.length > 0 && this.mfList.length > 0) {
-      this.familyList = this.familyList.filter(fam => this.mfList.map(mf => mf.mfFamId).includes(fam.id));
-      this.familyList.forEach(fam => {
-        tableSource.push({isFamily: true, ...fam});
-        tableSource.push(this.mfList.filter(mf => mf.famId == fam.id).map(mf => {return {isFamily: false, ...mf}}));
-      })
+    let family = [];
 
-      tableSource.flat();
+    if(this.selectedFamFilter == 'all') {
+      family = this.familyList;
+    } else {
+      family = this.familyList.filter(fam => fam.id == this.selectedFamFilter);
     }
-    
+
+    let mfList = [];
+    mfList = this.filterByFolio(this.mfList);
+    mfList = this.filterByScheme(mfList);
+    mfList = this.filterByAssetType(mfList);
+
+    if(family.length > 0 && mfList.length > 0) {
+      family.forEach(fam => {
+        tableSource.push({isFamily: true, ...fam});
+        tableSource.push(mfList.filter(mf => mf.familyMemberId == fam.familyMemberId).map(mf => {return {isFamily: false, ...mf}}));
+      })
+      tableSource = tableSource.flat();
+    }
+
     this.dataSource1.data = tableSource;
   }
 
-  
-  filterAssets(){
-    console.log('I got executed');
-    if(this.schemeFilterValue == 'all') {
-      
-    } else {
-      
+  filterByFolio(mfList:Array<any>){
+    switch(this.folioFilterValue) {
+      case 'all':
+        return mfList;
+      case 'zero':
+        return mfList.filter(mf => mf.balanceUnit == 0);
+      case 'non-zero':
+        return mfList.filter(mf => mf.balanceUnit > 0);
     }
   }
 
-  filterByFamily(){
+  filterByScheme(mfList:Array<any>){
+    switch(this.schemeFilterValue) {
+      case 'all':
+        return mfList;
+      case 'unallocated':
+        return mfList.filter(mf => mf.absAllocation == 0);
+      case 'allocated':
+        return mfList.filter(mf => mf.absAllocation > 0);
+    }
+  }
 
+  filterByAssetType(mfList:Array<any>){
+    switch(this.assetFilterValue) {
+      case 'all':
+        return mfList;
+      case 'equity':
+        return mfList.filter(mf => mf.categoryName == 'EQUITY');
+      case 'debt':
+        // TODO:- check if this filter works properly
+        return mfList.filter(mf => mf.categoryName == 'DEBT');
+    }
+  }
+
+  allocateAssetToGoal(data){
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      goalId: this.data.remainingData.id,
+      mfId: data.id
+    }
+    // this.planService.allocateMFtoGoal(data).subscribe(res => {
+    //   this.eventService.openSnackBar("Asset allocated", "Dismiss");
+    // }, err => {
+    //   this.eventService.openSnackBar(err, "Dismiss");
+    // })
+  }
+
+
+  removeFromAllocation(data, goal){
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      goalId: goal.id,
+      mfId: data.id
+    }
+    // this.planService.allocateMFtoGoal(data).subscribe(res => {
+    //   this.eventService.openSnackBar("Asset allocated", "Dismiss");
+    // }, err => {
+    //   this.eventService.openSnackBar(err, "Dismiss");
+    // })
   }
 
   close() {
-    // this.addMoreFlag = false;
     this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
-  
-}
-
-export interface PeriodicElement {
-  name: string;
-  position: string;
-  weight: string;
-  
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 'Lumpsum', name: '4,55,814', weight: '1,20,529'},
-  {position: 'Monthly', name: '35,907', weight: '12,835'},
-  
-];
-
-export interface PeriodicElement1 {
-  scheme: string;
-  value: string;
-  goal: string;
-  allocation:string
-  
-}
-
-const ELEMENT_DATA1: PeriodicElement1[] = [
-  {scheme: 'DSP Tax Saver Fund - Regular Plan Growth | Large cap', value: '4,000', goal: 'Rahul’s retirement',allocation:'80%'},
-  {scheme: 'DSP Tax Saver Fund - Regular Plan Growth | Large cap | [SIP]', value: '4,000', goal: 'Aryan’s higher education',allocation:'80%'},
-  {scheme: 'Aditya birla sun life low duration fund | Low Duration', value: '4,000', goal: 'Aryan’s higher education',allocation:'80%'},
-  {scheme: 'Mirae Equity Fund - Regular Plan - Growth | Diversified', value: '4,000', goal: '-',allocation:'80%'},
-  {scheme: 'HDFC Balanced Advantage fund Aggressive - Growth	| Multi cap', value: '4,000', goal: 'Shreya’s marriage',allocation:'80%'},
-  {scheme: 'Mirae Equity Fund - Regular Plan - Growth | Diversified', value: '4,000', goal: '-',allocation:'80%'},
-  {scheme: 'HDFC Equity Fund - Regular Plan - Growth | ELSS | [SIP]', value: '4,000', goal: '-',allocation:'80%'},
-  
-];
-
-const e = {
-  totalAllocation: 80,
-  goalsAllocated: [{
-    goalName: 'abc',
-    allocation: 20,
-    allocationId: 123
-  }, {
-    goalName: 'def',
-    allocation: 60,
-    allocationId: 234
-  }]
 }

@@ -1,5 +1,5 @@
-import { Component,OnInit } from '@angular/core';
-import { MatDialog} from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { calendarService } from './../calendar.service';
 import { AuthService } from '../../../../../../auth-service/authService';
 import { EventDialog } from './../event-dialog';
@@ -22,7 +22,7 @@ export class CalendarDayComponent implements OnInit {
   dialogData: any
   currentMonth;
   addLastMonthDays;
-  daysArr:any = [];
+  daysArr: any = [];
   formatedEvent = []
   eventData: any = [];
   eventTitle;
@@ -36,19 +36,19 @@ export class CalendarDayComponent implements OnInit {
   private unSubcrip: Subscription;
   constructor(public dialog: MatDialog, private calenderService: calendarService) { }
 
-  timeArry:any = [];
+  timeArry: any = [];
   ngOnInit() {
-    let am:boolean = true;
-    for(let i = 1; i < 13; i++){
-      if(am){
-        this.timeArry.push(i+' AM');
+    let am: boolean = true;
+    for (let i = 1; i < 13; i++) {
+      if (am) {
+        this.timeArry.push(i + ' AM');
       }
-      else{
-        this.timeArry.push(i+' PM');
+      else {
+        this.timeArry.push(i + ' PM');
       }
-      if(i == 12 && am){
+      if (i == 12 && am) {
         i = 0
-        am =false;
+        am = false;
       }
     }
     this.currentMonth = new Date().getMonth();
@@ -62,17 +62,17 @@ export class CalendarDayComponent implements OnInit {
     // this.excessAllow = localStorage.getItem('successStoringToken')
     this.unSubcrip = this.calenderService.updateDayArr().subscribe((data: any) => {
       this.daysArr = data[0];
-      this.day=data[1].selectedDate;
-      this.month=data[1].month;
-      this.year=data[1].year;
-      this.numbersOfDays= data[1].numbersOfDays;
-      this.lastMonthDays= data[1].lastMonthDays;
-      this.nextMonthDays =data[1].nextMonthDays;
-      this.viewDate =data[1].viewDate;
-      this.addLastMonthDays =data[1].addLastMonthDays;
-      console.log(this.daysArr,"this.daysArr....");
+      this.day = data[1].selectedDate;
+      this.month = data[1].month;
+      this.year = data[1].year;
+      this.numbersOfDays = data[1].numbersOfDays;
+      this.lastMonthDays = data[1].lastMonthDays;
+      this.nextMonthDays = data[1].nextMonthDays;
+      this.viewDate = data[1].viewDate;
+      this.addLastMonthDays = data[1].addLastMonthDays;
+      console.log(this.daysArr, "this.daysArr....");
     });
-    
+
   }
 
   getEvent() {
@@ -81,20 +81,20 @@ export class CalendarDayComponent implements OnInit {
       "userId": AuthService.getUserInfo().advisorId
     }
     this.calenderService.getEvent(eventData).subscribe((data) => {
-      
+
       if (data != undefined) {
-        
+
         this.eventData = data;
-        
-        console.log(data,"events calender",this.eventData);
+
+        console.log(data, "events calender", this.eventData);
         this.formatedEvent = [];
-        
+
         for (let e of this.eventData) {
-          if(e.start){
-            e["day"] = this.formateDate(!e.start.dateTime? new Date(e.created): new Date(e.start.dateTime));
-            e["month"] = this.formateMonth(!e.start.dateTime ?new Date(e.created) : new Date(e.start.dateTime));
+          if (e.start) {
+            e["day"] = this.formateDate(!e.start.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
+            e["month"] = this.formateMonth(!e.start.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
             e["year"] = this.formateYear(!e.start.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
-            e["startTime"] = this.formateTime(!e.start.dateTime? new Date(e.created) : new Date(e.start.dateTime));
+            e["startTime"] = this.formateTime(!e.start.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
             e["endTime"] = this.formateTime(!e.end.dateTime ? new Date(e.created) : new Date(e.end.dateTime));
             this.formatedEvent.push(e);
             // console.log(this.formatedEvent,"formatedEvent calender1",);
@@ -117,7 +117,7 @@ export class CalendarDayComponent implements OnInit {
 
   }
 
-  
+
 
   curruntDayIndex: any;
 
@@ -156,10 +156,10 @@ export class CalendarDayComponent implements OnInit {
 
   // }
 
-  returnNumber(num){
+  returnNumber(num) {
     // num.toUpperCase()
-  //  console.log(parseInt(num) +' '+ num.charAt(num.length - 3).toUpperCase() + num.charAt(num.length - 2).toUpperCase(),"time event");
-    return parseInt(num)  +' '+ num.charAt(num.length - 3).toUpperCase() + num.charAt(num.length - 2).toUpperCase()
+    //  console.log(parseInt(num) +' '+ num.charAt(num.length - 3).toUpperCase() + num.charAt(num.length - 2).toUpperCase(),"time event");
+    return parseInt(num) + ' ' + num.charAt(num.length - 3).toUpperCase() + num.charAt(num.length - 2).toUpperCase()
   }
 
   formateDate(date) {
@@ -190,10 +190,10 @@ export class CalendarDayComponent implements OnInit {
 
   addEvent(day, month, year, time) {
     let hr;
-    if(time.charAt(time.length - 2)+time.charAt(time.length - 1) == 'PM'){
+    if (time.charAt(time.length - 2) + time.charAt(time.length - 1) == 'PM') {
       hr = 12 + parseInt(time);
     }
-    else{
+    else {
       hr = parseInt(time);
     }
     let event: any;
@@ -213,11 +213,11 @@ export class CalendarDayComponent implements OnInit {
       "title": "",
       "description": "",
       "start": {
-        "dateTime":eventDate,
+        "dateTime": eventDate,
         "timeZone": null
       },
       "end": {
-        "dateTime":eventDate,
+        "dateTime": eventDate,
         "timeZone": null
       },
       "recurrence": "",
@@ -265,7 +265,8 @@ export class CalendarDayComponent implements OnInit {
   openDialog(eventData): void {
 
     const dialogRef = this.dialog.open(EventDialog, {
-      width: '50%',
+      width: '576px',
+      height: '673px',
       data: eventData
     });
 
@@ -309,9 +310,9 @@ export class CalendarDayComponent implements OnInit {
             this.getEvent();
           })
         }
-        
+
       }
-      if(result == 'delete'){
+      if (result == 'delete') {
         this.getEvent();
       }
     });
@@ -357,8 +358,8 @@ export class CalendarDayComponent implements OnInit {
   ngOnDestroy() {
     this.unSubcrip.unsubscribe();
     console.log("unsubscribe");
-    
+
   }
- 
+
 
 }

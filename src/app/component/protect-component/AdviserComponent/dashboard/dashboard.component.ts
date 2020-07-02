@@ -588,7 +588,8 @@ export class DashboardComponent implements OnInit {
   }
   openGuideDialog(): void {
     const dialogRef = this.dialog.open(DashboardGuideDialogComponent, {
-      width: '250px',
+      width: '99%',
+      height: '595px',
       data: ''
     });
 

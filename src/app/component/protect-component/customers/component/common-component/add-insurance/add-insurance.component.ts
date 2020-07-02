@@ -455,7 +455,8 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       this.lifeInsuranceForm.controls.tenureDetailsPolicy.setValue(this.editInsuranceData.policyTenure);
       this.lifeInsuranceForm.controls.premiumPayingTerm.setValue(this.editInsuranceData.premiumPayingTerm);
       this.lifeInsuranceForm.controls.policyStatus.setValue(String(this.editInsuranceData.policyStatusId));
-      this.lifeInsuranceForm.controls.policyStatusLastUnpaid.setValue(this.editInsuranceData.lastUnpaidPremium);
+      // this.lifeInsuranceForm.controls.policyStatusLastUnpaid.setValue(this.editInsuranceData.lastUnpaidPremium);
+      this.lifeInsuranceForm.controls.policyStatusLastUnpaid.setValue(this.editInsuranceData.lastUnpaidPremium ? new Date(this.editInsuranceData.lastUnpaidPremium) : null);
       this.insuranceTypeId = this.editInsuranceData.insuranceTypeId;
       this.insuranceSubTypeId = this.editInsuranceData.insuranceSubTypeId;
       this.policyData = {};
@@ -658,7 +659,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
     this.lifeInsuranceForm.get('policyName').value;
     this.loanDetailsForm.controls.loanTakenOn.setErrors(null);
     if (this.lifeInsuranceForm.invalid) {
-      this.inputs.find(input => !input.ngControl.valid).focus();
+      // this.inputs.find(input => !input.ngControl.valid).focus();
       this.lifeInsuranceForm.markAllAsTouched();
       return;
   } else {
@@ -675,7 +676,8 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
         policyName: this.lifeInsuranceForm.get('policyName').value,
         sumAssured: this.lifeInsuranceForm.get('sumAssured').value,
         policyStatusId: this.lifeInsuranceForm.get('policyStatus').value,
-        lastUnpaidPremium: (this.lifeInsuranceForm.get('policyStatusLastUnpaid').value) ? this.lifeInsuranceForm.get('policyStatusLastUnpaid').value : null,
+        // lastUnpaidPremium: (this.lifeInsuranceForm.get('policyStatusLastUnpaid').value) ? this.lifeInsuranceForm.get('policyStatusLastUnpaid').value : null,
+        lastUnpaidPremium :this.datePipe.transform(this.lifeInsuranceForm.get('policyStatusLastUnpaid').value, 'yyyy-MM-dd'),
         premiumAmount: this.lifeInsuranceForm.get('premiumDetailsAmount').value,
         frequency: this.lifeInsuranceForm.get('premiumDetailsFrequency').value,
         policyTenure: this.lifeInsuranceForm.get('tenureDetailsPolicy').value,
