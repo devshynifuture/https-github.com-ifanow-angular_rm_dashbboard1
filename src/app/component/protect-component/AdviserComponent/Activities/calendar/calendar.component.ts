@@ -176,6 +176,9 @@ export class CalendarComponent implements OnInit {
       case '/admin/activies/month':
         this.viewDate = new Date(this.viewDate.setMonth(this.viewDate.getMonth() + 1))
         break;
+      case '/admin/activies/schedule':
+        this.viewDate = new Date(this.viewDate.setMonth(this.viewDate.getMonth() + 1))
+        break;
     }
     // this.viewDate = new Date(this.viewDate.setMonth(this.viewDate.getMonth() + 1))
     this.daysArr = [];
@@ -198,6 +201,9 @@ export class CalendarComponent implements OnInit {
         this.viewDate = new Date(this.viewDate.setDate(this.viewDate.getDate() - 7))
         break;
       case '/admin/activies/month':
+        this.viewDate = new Date(this.viewDate.setMonth(this.viewDate.getMonth() - 1))
+        break;
+      case '/admin/activies/schedule':
         this.viewDate = new Date(this.viewDate.setMonth(this.viewDate.getMonth() - 1))
         break;
     }

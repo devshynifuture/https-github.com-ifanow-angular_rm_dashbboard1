@@ -471,9 +471,11 @@ export class CalendarMonthComponent implements OnInit {
         events:eventData,
         calDate:date
       }
+      
+    }
+    if(eventData.id || date != null){
       h = "auto";
     }
-    
     const dialogRef = this.dialog.open(EventDialog, {
       width: '576px',
       height: h,
