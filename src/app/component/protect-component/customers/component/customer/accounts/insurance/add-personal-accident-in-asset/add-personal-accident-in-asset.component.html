@@ -25,7 +25,8 @@
             <div class="pr-0" [ngClass]="personalAccidentForm.value.getCoOwnerName.length > 1?'col-md-3' : 'col-md-5'">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData' (selectionChange)="disabledMember($event.value,'owner')" (valueChange3)='displayControler($event)' (emitBank)='getBank()' (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
+                        <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData' (selectionChange)="disabledMember($event.value,'owner')" (valueChange3)='displayControler($event)' (emitBank)='getBank()' (valueChange1)='lisNominee($event)' class="form-control br-0"
+                            [callMethod]='callMethod'>
                             <mat-option value='' disabled>Select family members</mat-option>
                             <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" [value]="f.userName">
                                 <span>{{f.userName}}</span>
@@ -63,20 +64,20 @@
         <div class="col-md-12 p-0" formArrayName="InsuredMemberForm">
 
             <div class="row">
-                <div class="col-md-5 pr-0">
+                <div class="col-md-5 d-flex align-items-center justify-content-between pr-0">
                     <h5 class="mb-0"> Name of insured members </h5>
                 </div>
-                <div class="col-md-3 pr-0">
+                <div class="col-md-3 d-flex align-items-center justify-content-between pr-0">
                     <h5 class="mb-0">AD sum insured</h5>
-                    <i class="material-icons"  matTooltip="Accidental Death">
+                    <i class="material-icons" matTooltip="Accidental Death">
                         info
-                        </i>
+                    </i>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3 d-flex align-items-center justify-content-between">
                     <h5 class="mb-0">TTD sum insured </h5>
-                    <i class="material-icons"  matTooltip="Temporary Total Disability">
+                    <i class="material-icons" matTooltip="Temporary Total Disability">
                         info
-                        </i>
+                    </i>
                 </div>
             </div>
 
