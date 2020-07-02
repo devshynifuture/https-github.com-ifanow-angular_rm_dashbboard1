@@ -92,6 +92,9 @@ export class GoalsPlanComponent implements OnInit {
     title: {
       text: ''
     },
+    tooltip: {
+      pointFormat: ' <b>{point.percentage:.1f}%</b>'
+    },
     credits: {
         enabled: false
     },
@@ -157,7 +160,7 @@ export class GoalsPlanComponent implements OnInit {
         lumpsumSeries.series[0].data.push({
           y: Math.round(costDelay[k].lumpsum_total),
           name: k + ' years',
-          color: colors[count]
+          color: colors[count],
         })
         sipSeries.series[0].data.push({
           y: Math.round(costDelay[k].sip_total),

@@ -81,8 +81,8 @@ export const appConfig = {
   HTML_TO_PDF: 'pdfAndEmail/bulk-mail/html-to-pdf',
   GET_CLIENT_IN_LOOP: 'mutual-fund/report/bulk-order/save',
   GET_ORDER_LIST: 'mutual-fund/report/bulk-order/list/get',
-  GET_MF_CLIENTS:'mutual-fund/report/client-setting/list/get',
-  SAVE_SETTING:'mutual-fund/report/client-setting/edit',
+  GET_MF_CLIENTS: 'mutual-fund/report/client-setting/list/get',
+  SAVE_SETTING: 'mutual-fund/report/client-setting/edit',
   /////////////////////////////Accounts///////////////////////////////////
   ADD_FIXEDDEPOSIT: 'account/asset/fixed-income/fixed-deposit/add',
   ADD_LIFE_INSURANCE: 'account/insurance/life-insurance/add',
@@ -293,6 +293,7 @@ export const appConfig = {
   EDIT_MULTI_YEAR_GOAL_PREFERENCE: 'goal-planning/multi-year/edit',
   EDIT_SINGLE_YEAR_GOAL_PREFERENCE: 'goal-planning/single-year/edit',
   SAVE_ASSET_ALLOCATION_PREFERENCE: 'goal-planning/asset-allocation/update',
+  GET_MF_DATA: 'goal-planning/goal/mf/list/get',
   CALCULATE_TOTAL_VALUES: 'account/asset/summary',
   GET_SUMMARY_LIST: 'account/asset/summary/list',
   GET_CASHFLOW_LIST: 'cashflow/monthly/list/get',
@@ -799,5 +800,14 @@ export const appConfig = {
   GET_GLOBAL_RISK_PROFILE: 'plan/risk/profile/global/get',
   GET_FEED_RECENT_TRANSACTIONS: 'report/transaction/list/get',
   GET_CASHFLOW_FEEDS: 'cashflow/monthly/list/family-member-wise/get',
-  GET_CUSTOMER_FEEDS_PROFILE: 'user/client/profile/completeness/get'
+  GET_CUSTOMER_FEEDS_PROFILE: 'user/client/profile/completeness/get',
+
+
+  ///////////////////////////// To-DO list -dashboard //////////////////////////
+
+  ADD_NOTES: 'admin/dashboard/memo/item/add',
+  UPDATE_NOTES: 'admin/dashboard/memo/item/update',
+  DELETE_NOTES: 'admin/dashboard/memo/item/delete',
+  GET_NOTES: 'admin/dashboard/memo/list/get',
+  GET_BIRTHDAY_OR_ANNIVERSARY: 'user/birthday/or/anniversary'
 };
