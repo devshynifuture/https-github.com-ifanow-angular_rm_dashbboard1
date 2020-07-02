@@ -61,7 +61,8 @@
                         <th class="br" mat-header-cell *matHeaderCellDef sticky> MF Summary </th>
                         <td class="br text-center" mat-cell *matCellDef="let element">
                             <div class="bar c-p">
-                                <mat-checkbox [checked]="element.summary" (change)="element.summary=$event.checked;selectReport($event,element)"
+                                <mat-checkbox [checked]="element.summary"
+                                    (change)="element.summary=$event.checked;selectReport($event,element)"
                                     class="example-margin"></mat-checkbox>
                             </div>
                         </td>
@@ -72,7 +73,8 @@
                         <th class="br" mat-header-cell *matHeaderCellDef sticky> MF all transaction </th>
                         <td class="br text-center" mat-cell *matCellDef="let element">
                             <div class="bar c-p">
-                                <mat-checkbox [checked]="element.allTransaction" (change)="element.allTransaction=$event.checked;selectReport($event,element)"
+                                <mat-checkbox [checked]="element.allTransaction"
+                                    (change)="element.allTransaction=$event.checked;selectReport($event,element)"
                                     class="example-margin"></mat-checkbox>
                             </div>
                         </td>
@@ -83,7 +85,8 @@
                         <td class="br text-center" mat-cell *matCellDef="let element">
                             <div class="bar c-p">
                                 <mat-checkbox [checked]="element.unrealizedTransaction"
-                                    (change)="element.unrealizedTransaction=$event.checked;selectReport($event,element)" class="example-margin"></mat-checkbox>
+                                    (change)="element.unrealizedTransaction=$event.checked;selectReport($event,element)"
+                                    class="example-margin"></mat-checkbox>
                             </div>
                         </td>
                     </ng-container>
@@ -93,7 +96,8 @@
                         <td class="br text-center" mat-cell *matCellDef="let element">
                             <div class="bar c-p">
                                 <mat-checkbox [checked]="element.capitalGainSummary"
-                                    (change)="element.capitalGainSummary=$event.checked;selectReport($event,element)" class="example-margin"></mat-checkbox>
+                                    (change)="element.capitalGainSummary=$event.checked;selectReport($event,element)"
+                                    class="example-margin"></mat-checkbox>
                             </div>
                         </td>
                     </ng-container>
@@ -103,7 +107,8 @@
                         <td class="br text-center" mat-cell *matCellDef="let element">
                             <div class="bar c-p">
                                 <mat-checkbox [checked]="element.capitalGainDetailed"
-                                    (change)="element.capitalGainDetailed=$event.checked;selectReport($event,element)" class="example-margin"></mat-checkbox>
+                                    (change)="element.capitalGainDetailed=$event.checked;selectReport($event,element)"
+                                    class="example-margin"></mat-checkbox>
                             </div>
                         </td>
                     </ng-container>
