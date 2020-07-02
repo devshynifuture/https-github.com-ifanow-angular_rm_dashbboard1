@@ -40,7 +40,7 @@
                     <!-- {{event.isRe? event.isRe != 'WEEKLY'?true:false:false || getDay(year,month,day) == 'Sun' || getDay(year,month,day) == 'Sat'}}                                  -->
                       <span *ngIf="event.startTime != null">{{event.startTime}}</span> <span class="f-700 m-0" [innerHTML]="event.summary" ></span></li>
               </ul>
-             <div *ngIf = "i > addLastMonthDays-1 && i < numbersOfDays + addLastMonthDays && formatedEvent.length > 0" class="more" >more</div>
+             <div *ngIf = "i > addLastMonthDays-1 && i < numbersOfDays + addLastMonthDays && formatedEvent.length > 0"  (click)="viewMore(formatedEvent,dateTimeEvent(year,month,day))" class="more" >more</div>
              <!-- currunt month add event -->
              <!-- && i >= curruntDayIndex && currentMonth == month && currentYear >= year || && month>= currentMonth && year >= currentYear-->
               <div *ngIf = "i > addLastMonthDays-1 && i < numbersOfDays + addLastMonthDays " (click)="addEvent(day,month + 1,year)" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; border: none;"></div>

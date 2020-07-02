@@ -393,6 +393,10 @@ export class CalendarMonthComponent implements OnInit {
     return hh + ":" + mm + amPm + " ";
   }
 
+  viewMore(events, date){
+    this.openDialog(events, date);
+  }
+
   addEvent(day, month, year) {
     let event: any;
     if (month == 0) {
@@ -423,7 +427,7 @@ export class CalendarMonthComponent implements OnInit {
       "attendeesList": ""
     }
 
-    this.openDialog(event);
+    this.openDialog(event, null);
 
     // const dialogRef = this.dialog.open(EventDialog, {
     //   width: '50%',
@@ -457,19 +461,27 @@ export class CalendarMonthComponent implements OnInit {
       }
     }
 
-    this.openDialog(event);
+    this.openDialog(event, null);
   }
 
-  openDialog(eventData): void {
-
+  openDialog(eventData, date): void {
+    let h = "673px"; 
+    if(date != null){
+      eventData ={
+        events:eventData,
+        calDate:date
+      }
+      h = "auto";
+    }
+    
     const dialogRef = this.dialog.open(EventDialog, {
       width: '576px',
-      height: '673px',
+      height: h,
       data: eventData
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result != undefined && result != 'delete') {
+      if (result != undefined && result != 'delete' && !result.openEvent) {
         this.dialogData =
         {
           "calendarId": AuthService.getUserInfo().userName,
@@ -507,6 +519,11 @@ export class CalendarMonthComponent implements OnInit {
           this.calenderService.addEvent(this.dialogData).subscribe((data) => {
             this.getEvent();
           })
+        }
+      }
+      else{
+        if(result){
+          this.openDialog(result.event, null);
         }
       }
       if (result == 'delete') {
