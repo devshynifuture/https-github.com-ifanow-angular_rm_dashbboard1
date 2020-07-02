@@ -9,6 +9,8 @@ import { DialogData } from '../../../customers/component/common-component/docume
 })
 export class DashboardGuideDialogComponent implements OnInit {
 
+  page = 1;
+
   constructor(
     public dialogRef: MatDialogRef<DashboardGuideDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
@@ -22,4 +24,9 @@ export class DashboardGuideDialogComponent implements OnInit {
   ngOnInit() {
   }
 
+  showPageByIndex(index) {
+    this.page = index;
+  }
+
 }
+

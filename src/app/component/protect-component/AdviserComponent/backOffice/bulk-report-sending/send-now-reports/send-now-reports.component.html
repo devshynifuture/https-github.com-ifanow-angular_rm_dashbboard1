@@ -189,7 +189,6 @@
                 <div class="col-md-6 d-flex align-items-center">
                     <mat-form-field>
                         <mat-select class="form-control">
-                            <mat-option disabled [value]=''> Select finacial year </mat-option>
                             <mat-option (click)="changeFinancialYear(item)" role="listitem" [value]="'FY '+item.from+' - '+item.to" *ngFor="let item of financialYears">
                                 {{'FY '+item.from+' - '+item.to}} </mat-option>
                         </mat-select>
@@ -202,8 +201,7 @@
                 </div>
                 <div class="col-md-6 d-flex align-items-center">
                     <mat-form-field>
-                        <mat-select class="form-control">
-                            <mat-option> Select finacial year </mat-option>
+                        <mat-select class="form-control" [(ngModel)]="default">
                             <mat-option (click)="changeFinancialYear(item)" role="listitem" [value]="'FY '+item.from+' - '+item.to" *ngFor="let item of financialYears">
                                 {{'FY '+item.from+' - '+item.to}} </mat-option>
                         </mat-select>

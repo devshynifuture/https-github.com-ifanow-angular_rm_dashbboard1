@@ -1,0 +1,31 @@
+.guideBackground {
+    background: url(/assets/images/svg/guide-bg.svg) no-repeat bottom !important;
+    height: 595px;
+}
+
+.headerGuideBox {
+    height: 199px;
+    position: relative;
+}
+
+.headerGuidename {
+    width: calc(100% - 150px);
+    margin: 0px auto 0px;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    bottom: 15px;
+}
+
+.lets-begin-guide {
+    width: 164px;
+    height: 48px;
+    font-size: 18px;
+    border-radius: 4px !important;
+}
+
+.content-guide {
+    width: calc(100% - 150px);
+    margin: 20px auto 0px;
+}
+
