@@ -645,13 +645,14 @@ export class LoaderFunction implements OnDestroy{
     }
   }
 
-  public setFunctionToExeOnZero(fn:Function) {
-    this.apiDebounceSubject.pipe(debounceTime(100)).subscribe(()=> this.exeWhenCounterZero());
-    this.execOnZero = fn;
-  }
-
-  private exeWhenCounterZero() {
-      this.execOnZero();
+  /**
+   * @description Executes the method once counter is 0
+   * @param obj the instance of the class/object
+   * @param func the function you'd like to execute
+   * @see https://stackoverflow.com/a/29827015
+   */
+  public setFunctionToExeOnZero(obj:Object,func: () => void) {
+    this.apiDebounceSubject.pipe(debounceTime(100)).subscribe(()=> func.call(obj));
   }
 
   ngOnDestroy(){
