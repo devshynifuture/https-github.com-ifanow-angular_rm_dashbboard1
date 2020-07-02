@@ -808,7 +808,6 @@ export const appConfig = {
   ADD_NOTES: 'admin/dashboard/memo/item/add',
   UPDATE_NOTES: 'admin/dashboard/memo/item/update',
   DELETE_NOTES: 'admin/dashboard/memo/item/delete',
-  GET_NOTES: 'admin/dashboard/memo/list/get'
-
-
+  GET_NOTES: 'admin/dashboard/memo/list/get',
+  GET_BIRTHDAY_OR_ANNIVERSARY: 'user/birthday/or/anniversary'
 };

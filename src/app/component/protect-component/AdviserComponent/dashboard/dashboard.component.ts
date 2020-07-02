@@ -19,6 +19,8 @@ import { OnlineTransactionService } from '../transactions/online-transaction.ser
 import { TransactionEnumService } from '../transactions/transaction-enum.service';
 import { DashboardService } from './dashboard.service';
 import { FormControl } from '@angular/forms';
+import { calendarService } from '../Activities/calendar/calendar.service';
+import { EmailServiceService } from '../Email/email-service.service';
 export interface PeriodicElement {
   name: string;
   position: string;
@@ -151,6 +153,10 @@ export class DashboardComponent implements OnInit {
   transactionList: any;
   isRecentTransactionFlag: boolean;
   todoListData = [];
+  eventData: any;
+  formatedEvent: any[];
+  calenderLoader: boolean;
+  birthdayAnniList: any;
 
   constructor(
     public dialog: MatDialog, private subService: SubscriptionService,
@@ -160,7 +166,10 @@ export class DashboardComponent implements OnInit {
     private subInjectService: SubscriptionInject,
     private backoffice: BackOfficeService,
     private transactionService: OnlineTransactionService,
-    private dashboardService: DashboardService
+    private dashboardService: DashboardService,
+    private calenderService: calendarService,
+    private emailService: EmailServiceService,
+    private utils: UtilService
   ) {
     const date = new Date();
     const hourOfDay = date.getHours();
@@ -187,6 +196,9 @@ export class DashboardComponent implements OnInit {
     this.finalStartDate = UtilService.getStartOfTheDay(new Date((new Date()).valueOf() - 1000 * 60 * 60 * 24 * 7)).getTime();
     this.finalEndDate = UtilService.getEndOfDay(new Date()).getTime();
     this.getTodoListData();
+    this.getRecentTransactionData();
+    this.connectAccountWithGoogle();
+    this.getBirthdayOrAnniversary();
   }
   getSummaryDataDashboard() {
     const obj = {
@@ -270,6 +282,109 @@ export class DashboardComponent implements OnInit {
       }), err => {
         this.eventService.openSnackBar(err, "Dismiss")
       }
+  }
+
+  getBirthdayOrAnniversary() {
+    let fromDate = new Date();
+    fromDate.setFullYear(new Date().getFullYear() - 1)
+    const obj =
+    {
+      advisorId: this.advisorId,
+      fromDate: fromDate.getTime(),
+      toDate: new Date().getTime()
+    }
+    this.dashboardService.getBirthdayOrAnniversary(obj).subscribe(
+      data => {
+        if (data) {
+          this.birthdayAnniList = this.utils.calculateAgeFromCurrentDate(data);
+        }
+      }
+    )
+  }
+
+  connectAccountWithGoogle() {
+    this.calenderLoader = true;
+    this.emailService.getProfile().subscribe(res => {
+      if (res) {
+        this.calenderLoader = false;
+        localStorage.setItem('googleOAuthToken', 'oauthtoken');
+        localStorage.setItem('successStoringToken', 'true');
+        localStorage.setItem('associatedGoogleEmailId', AuthService.getUserInfo().userName);
+        this.router.navigate(['/admin/emails/inbox'], { relativeTo: this.activatedRoute });
+      } else {
+        this.calenderLoader = false;
+        this.eventService.openSnackBarNoDuration(res, 'DISMISS');
+      }
+    }, err => {
+      this.calenderLoader = false;
+      this.eventService.openSnackBarNoDuration(err, 'DISMISS');
+    });
+  }
+
+  getAnniversayOrBirthday() {
+    const obj =
+    {
+
+    }
+
+  }
+
+  getEvent() {
+    let eventData = {
+      "calendarId": AuthService.getUserInfo().userName,
+      "userId": AuthService.getUserInfo().advisorId
+    }
+    this.calenderService.getEvent(eventData).subscribe((data) => {
+
+      if (data != undefined) {
+
+        this.eventData = data;
+
+        console.log(data, "events calender", this.eventData);
+        this.formatedEvent = [];
+
+        for (let e of this.eventData) {
+          if (e.start) {
+            e["day"] = this.formateDate(!e.start.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
+            e["month"] = this.formateMonth(!e.start.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
+            e["year"] = this.formateYear(!e.start.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
+            e["startTime"] = this.formateTime(!e.start.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
+            e["endTime"] = this.formateTime(!e.end.dateTime ? new Date(e.created) : new Date(e.end.dateTime));
+            this.formatedEvent.push(e);
+            // console.log(this.formatedEvent,"formatedEvent calender1",);
+          }
+        }
+      }
+    });
+
+
+  }
+
+
+  formateDate(date) {
+    var dd = new Date(date).getDate();
+
+    return dd;
+  }
+
+  formateMonth(date) {
+    var mm = new Date(date).getMonth() + 1; //January is 0!
+    return mm;
+  }
+
+  formateYear(date) {
+    var yyyy = new Date(date).getFullYear();
+    return yyyy;
+  }
+
+  formateTime(date) {
+
+    var hh = date.getHours() > 12 ? date.getHours() - 12 : date.getHours();
+    var mm = date.getMinutes();
+    var amPm = date.getHours() > 12 ? "pm" : "am";
+    hh = hh < 10 ? '0' + hh : hh;
+    mm = mm < 10 ? '0' + mm : mm;
+    return hh + ":" + mm + amPm + " ";
   }
 
   getRecentTransactionData() {
