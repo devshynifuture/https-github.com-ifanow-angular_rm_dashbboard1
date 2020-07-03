@@ -100,6 +100,8 @@ export class SipTransactionComponent implements OnInit {
 
   @Input()
   set data(data) {
+    this.folioList =[]
+    this.transactionSummary = {};
     this.inputData = data;
     this.transactionType = data.transactionType;
     this.selectedFamilyMember = data.selectedFamilyMember;
@@ -107,9 +109,16 @@ export class SipTransactionComponent implements OnInit {
       this.schemeName = data.mutualFundData.schemeName
       this.folioNumber = data.mutualFundData.folioNumber
       this.mutualFundData = data.mutualFundData
+      let foilo = {'folioNumber': this.folioNumber}
+      let schemeName = {'schemeName': this.schemeName}
+      this.folioList.push(foilo)
+      this.ExistingOrNew = 1
+      Object.assign(this.transactionSummary, {folioNumber: this.folioNumber});
+      Object.assign(this.transactionSummary, {schemeName: this.schemeName});
     }
     if (this.isViewInitCalled) {
       this.getDataForm('', false);
+      this.ngOnInit()
     }
   }
 
@@ -657,7 +666,7 @@ export class SipTransactionComponent implements OnInit {
       reinvest: [(data.dividendReinvestmentFlag) ? data.dividendReinvestmentFlag + '' : '', [Validators.required]],
       employeeContry: [(!data) ? '' : data.orderVal, [Validators.required]],
       frequency: [(data.frequencyType) ? data.frequencyType : '', [Validators.required]],
-      investmentAccountSelection: [(data.folioNo) ? this.mutualFundData.folioNumber : '', [Validators.required]],
+      investmentAccountSelection: [(data) ? this.mutualFundData.folioNumber : '', [Validators.required]],
       // modeOfPaymentSelection: ['1'],
       modeOfPaymentSelection: [(!data.modeOfPaymentSelection) ? '2' : data.modeOfPaymentSelection],
       folioSelection: [(!data.folioSelection) ? '2' : data.folioSelection],
@@ -684,6 +693,10 @@ export class SipTransactionComponent implements OnInit {
       // this.selectedScheme(data.scheme);
     }
     this.sipTransaction.controls.modeOfPaymentSelection.setValue('2');
+    if(this.mutualFundData){
+      this.sipTransaction.controls.schemeSelection.setValue('1')
+      this.sipTransaction.controls.folioSelection.setValue('1')
+    }
   }
 
   getFormControl(): any {
