@@ -6,7 +6,7 @@ import {ProcessTransactionService} from '../process-transaction.service';
 import {EventService} from 'src/app/Data-service/event.service';
 import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
 import {UtilService, ValidatorType} from '../../../../../../../services/util.service';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {MathUtilService} from '../../../../../../../services/math-util.service';
 import {ConfirmDialogComponent} from '../../../../../common-component/confirm-dialog/confirm-dialog.component';
@@ -111,6 +111,7 @@ export class SipTransactionComponent implements OnInit {
       this.mutualFundData = data.mutualFundData
       let foilo = {'folioNumber': this.folioNumber}
       let schemeName = {'schemeName': this.schemeName}
+      this.filterSchemeList = of([{'schemeName': this.schemeName}])
       this.folioList.push(foilo)
       this.ExistingOrNew = 1
       Object.assign(this.transactionSummary, {folioNumber: this.folioNumber});
@@ -696,6 +697,7 @@ export class SipTransactionComponent implements OnInit {
     if(this.mutualFundData){
       this.sipTransaction.controls.schemeSelection.setValue('1')
       this.sipTransaction.controls.folioSelection.setValue('1')
+      this.filterSchemeList = of([{'schemeName': this.schemeName}])
     }
   }
 

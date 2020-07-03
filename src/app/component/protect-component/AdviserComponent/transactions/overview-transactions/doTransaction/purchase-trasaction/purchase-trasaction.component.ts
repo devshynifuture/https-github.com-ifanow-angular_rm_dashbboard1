@@ -98,6 +98,7 @@ export class PurchaseTrasactionComponent implements OnInit {
   @Input()
   set data(data) {
     this.folioList =[]
+    this.schemeList =[]
     this.transactionSummary = {};
     this.inputData = data;
     this.transactionType = data.transactionType;
@@ -107,6 +108,8 @@ export class PurchaseTrasactionComponent implements OnInit {
       let foilo = {'folioNumber': this.folioNumber}
       let schemeName = {'schemeName': this.schemeName}
       this.folioList.push(foilo)
+      // this.schemeList.push({'schemeName': this.schemeName})
+      this.filterSchemeList = of([{'schemeName': this.schemeName}])
       this.ExistingOrNew = 1
       Object.assign(this.transactionSummary, {folioNumber: this.folioNumber});
       Object.assign(this.transactionSummary, {schemeName: this.schemeName});
@@ -621,6 +624,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     if(this.mutualFundData){
       this.purchaseTransaction.controls.schemeSelection.setValue('1')
       this.purchaseTransaction.controls.folioSelection.setValue('1')
+      this.filterSchemeList = of([{'schemeName': this.schemeName}])
     }
   }
 

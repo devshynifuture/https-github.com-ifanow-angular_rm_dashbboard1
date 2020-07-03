@@ -6,7 +6,7 @@ import {EventService} from 'src/app/Data-service/event.service';
 import {ProcessTransactionService} from '../process-transaction.service';
 import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
 import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {MatTableDataSource} from '@angular/material';
 
@@ -98,6 +98,7 @@ export class RedemptionTransactionComponent implements OnInit {
       let foilo = {'folioNumber': this.folioNumber}
       let schemeName = {'schemeName': this.schemeName}
       this.folioList.push(foilo)
+      this.filterSchemeList = of([{'schemeName': this.schemeName}])
     }
     if (this.isViewInitCalled) {
       // this.getdataForm('');
@@ -213,6 +214,9 @@ export class RedemptionTransactionComponent implements OnInit {
     if (data.folioNo) {
       this.selectedFolio(this.folioDetails);
       this.getSchemeWiseFolios();
+    }
+    if(this.mutualFundData){
+      this.filterSchemeList = of([{'schemeName': this.schemeName}])
     }
     
   }
