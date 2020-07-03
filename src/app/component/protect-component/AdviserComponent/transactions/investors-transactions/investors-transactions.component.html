@@ -124,7 +124,7 @@
             <div *ngIf="dataSource.filteredData.length==0 && isLoading==false" class="d-flex flex-column align-items-center pt-44">
                 <img class="width300" src="assets/images/svg/noDataFound.svg">
                 <h4 class="pt-12">{{noData}}</h4>
-                <button *ngIf="noData=='No investors found'&&isAdvisorSection" class="btn-primary addon v-middle  " mat-stroked-button>
+                <button *ngIf="noData=='No investors found'&&isAdvisorSection" class="btn-primary addon v-middle  " (click)="openNewCustomerIIN()" mat-stroked-button>
                     <!-- (click)="openTransaction()"for prod build -->
 
                     ADD NEW

@@ -50,7 +50,9 @@
             <!--  (click)="openSendNow()" prod fix -->
             <button class="sendEmailBtn bg-primary mt-40 text-white" mat-button (click)="openSendNow('')"> Send
                 Now</button>
-
+                <button (click)="openCustmiseSetting()" class="  ml-8  btn-primary" mat-stroked-button>Custmise
+                    setting
+                  </button>
         </div>
     </div>
 </div>
@@ -84,7 +86,7 @@
                 <ng-container matColumnDef="recipients">
                     <th mat-header-cell class="br " *matHeaderCellDef> Number of recipients </th>
                     <td mat-cell class="br c-p" *matCellDef="let element" (click)="openStatusReport(element)">
-                        <div class="bar"> {{isLoading ? '' : element.emailDeliveredCount}} </div>
+                        <div class="bar"> {{isLoading ? '' : element.emailSentCount}} </div>
                     </td>
                 </ng-container>
 
@@ -92,14 +94,14 @@
                 <ng-container matColumnDef="emails">
                     <th mat-header-cell class="br" *matHeaderCellDef> Bounced emails </th>
                     <td mat-cell class="br c-p" *matCellDef="let element">
-                        <div class="bar"> {{isLoading ? '' : element.emailSentCount-element.emailDeliveredCount}} </div>
+                        <div class="bar"> {{isLoading ? '' : element.bouncedEmailCount}} </div>
                     </td>
                 </ng-container>
 
                 <ng-container matColumnDef="status">
                     <th mat-header-cell class="br" *matHeaderCellDef> Status </th>
                     <td mat-cell class="br c-p" *matCellDef="let element">
-                        <div class="bar"> {{isLoading ? '' : (element.isActive == 0)?'Sending':'Sent'}} </div>
+                        <div class="bar"> {{isLoading ? '' : element.status}} </div>
                     </td>
                 </ng-container>
 

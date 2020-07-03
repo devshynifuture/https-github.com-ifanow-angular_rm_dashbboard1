@@ -68,16 +68,15 @@ export class EventDialog implements OnInit {
     this.userInfo = AuthService.getUserInfo();
 
 
-    if (this.eventData.calDate) {
-      this.day = this.formateDate(this.eventData.calDate);
-      this.month = this.formateMonth(this.eventData.calDate);
-      this.year = this.formateYear(this.eventData.calDate);
+    if (this.eventData.date) {
+      // this.day = this.formateDate(this.eventData.calDate);
+      // this.month = this.formateMonth(this.eventData.calDate);
+      // this.year = this.formateYear(this.eventData.calDate);
       this.isEditAdd = false;
-    this.numbersOfDays = this.getDaysCount(this.eventData.calDate, "currentMonthDays");
-
+      // this.numbersOfDays = this.getDaysCount(this.eventData.calDate, "currentMonthDays");
     }
     
-    if (this.eventData.id != undefined && !this.eventData.calDate) {
+    if (this.eventData.id != undefined && !this.eventData.date) {
       this.isEditAdd = false;
       this.showTime = true;
       if (new Date(this.eventData.start.dateTime).getDate() == new Date(this.eventData.end.dateTime).getDate() && new Date(this.eventData.start.dateTime).getMonth() == new Date(this.eventData.end.dateTime).getMonth()) {
@@ -87,7 +86,7 @@ export class EventDialog implements OnInit {
       this.eventForm.get("endTime").setValue(this.formateTime(new Date(this.eventData.end.dateTime)));
     }
 
-    if (!this.eventData.calDate) {
+    if (!this.eventData.date) {
       this.eventForm.get("description").setValue(this.eventData.description);
       this.eventForm.get("startDateTime").setValue(this.eventData.start.dateTime);
       this.setEndDate();
