@@ -11,6 +11,8 @@ import {EmailDomainAutoSuggestComponent} from './email-domain-auto-suggest/email
 import {GoogleConnectComponent} from '../component/protect-component/AdviserComponent/Email/email-component/email-list/email-listing/google-connect/google-connect.component';
 import {CalendarScheduleComponent} from '../component/protect-component/AdviserComponent/Activities/calendar/calendar-schedule/calendar-schedule.component';
 import {DashEvent} from '../component/protect-component/AdviserComponent/Activities/calendar/dash-event';
+import {RealEstatePropertyComponent } from './real-estate-property/real-estate-property.component';
+
 // import {CommonComponentModule} from '../component/protect-component/common-component/common-component.module'
 // import {FroalaComponent} from '../component/protect-component/common-component/froala/froala.component';
 
@@ -19,6 +21,7 @@ import {DashEvent} from '../component/protect-component/AdviserComponent/Activit
     DialogContainerComponent,
     ProgressButtonComponent,
     LinkBankComponent,
+    RealEstatePropertyComponent,
     EmailDomainAutoSuggestComponent,
     GoogleConnectComponent,
     CalendarScheduleComponent,
@@ -37,12 +40,13 @@ import {DashEvent} from '../component/protect-component/AdviserComponent/Activit
     DialogContainerComponent,
     ProgressButtonComponent,
     LinkBankComponent,
+    RealEstatePropertyComponent,
     EmailDomainAutoSuggestComponent,
     GoogleConnectComponent,
     CalendarScheduleComponent,
     DashEvent
   ],
-  entryComponents: [LinkBankComponent, DashEvent]
+  entryComponents: [LinkBankComponent,RealEstatePropertyComponent,DashEvent]
 })
 export class CustomCommonModule {
 }

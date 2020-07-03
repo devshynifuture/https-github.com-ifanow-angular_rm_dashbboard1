@@ -1,23 +1,26 @@
-import {Component, Input, OnInit, ViewChildren, QueryList} from '@angular/core';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {MAT_DATE_FORMATS} from '@angular/material/core';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
-import {CustomerService} from '../../customer/customer.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {EventService} from 'src/app/Data-service/event.service';
-import {DataComponent} from '../../../../../../interfaces/data.component';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {MatInput} from '@angular/material';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {DatePipe} from '@angular/common';
+import { Component, Input, OnInit, ViewChildren, QueryList } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MAT_DATE_FORMATS } from '@angular/material/core';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+import { CustomerService } from '../../customer/customer.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
+import { DataComponent } from '../../../../../../interfaces/data.component';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { MatInput, MatDialog } from '@angular/material';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { DatePipe } from '@angular/common';
+import { AddRealEstateComponent } from '../../customer/accounts/assets/realEstate/add-real-estate/add-real-estate.component';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { RealEstatePropertyComponent } from 'src/app/common/real-estate-property/real-estate-property.component';
 
 @Component({
   selector: 'app-add-liabilities',
   templateUrl: './add-liabilities.component.html',
   styleUrls: ['./add-liabilities.component.scss'],
   providers: [
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ],
 
 })
@@ -77,10 +80,13 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   callMethod: any;
   loanTypeDetails: any;
   showFilter: any;
+  propertyList = [];
+  propertyListDuplicate: any[];
+  isBorrowerAdded = false;
 
   // minDate = new Date()
   constructor(public utils: UtilService, private subInjectService: SubscriptionInject, private fb: FormBuilder,
-              public custumService: CustomerService, public eventService: EventService, private datePipe: DatePipe) {
+    public custumService: CustomerService, public eventService: EventService, private datePipe: DatePipe, private dialog: MatDialog,private custmService:CustomerService,private enumService:EnumServiceService) {
   }
 
   @Input()
@@ -103,9 +109,36 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     this.minDate.setFullYear(this.maxDate.getFullYear() - 100);
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.getRealEstate();
     this.getLiability(this.data);
   }
-
+  getRealEstate() {
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId
+    };
+    this.custmService.getRealEstate(obj).subscribe(
+      data => {
+        console.log(data);
+        if(data){
+          data.assetList.forEach((element,ind) => {
+            element.typeString = this.enumService.getRealEstateTypeStringFromValue(element.typeId);
+            const obj={
+              id:ind+1,
+              ownerName:element.ownerList[0].name,
+              propertyName:element.typeString
+            }
+            this.propertyList.push(obj);
+          });
+          this.propertyListDuplicate = this.propertyList; 
+          
+          this.filterPropertyOwnerWise(this.addLiabilityForm.value.getCoOwnerName[0].name);
+        }
+      }
+      , (error) => {
+        this.eventService.showErrorMessage(error);
+      });
+  }
   getFormDataNominee(data) {
     this.nomineesList = data.controls;
   }
@@ -121,7 +154,16 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     this.ownerData.Fmember = value;
     this.nomineesListFM = Object.assign([], value);
   }
-
+  filterPropertyOwnerWise(data){
+    let fiterdata = [];
+    let array = this.propertyListDuplicate;
+    array.forEach(element =>{
+      if(data==element.ownerName){
+        fiterdata.push(element)
+      }
+    })
+    this.propertyList=fiterdata;
+  }
   getFamilyMember(data, index) {
     this.familyMemberLifeData = data;
   }
@@ -137,6 +179,9 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
       ParamValue: value,
       disControl: type
     };
+    if(!this.isBorrowerAdded){
+      this.filterPropertyOwnerWise(value);
+    }
   }
 
   displayControler(con) {
@@ -161,6 +206,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   }
 
   addNewCoOwner(data) {
+    this.isBorrowerAdded = true;
     this.getCoOwner.push(this.fb.group({
       name: [data ? data.name : '', [Validators.required]],
       share: [data ? data.share : '', [Validators.required]],
@@ -217,7 +263,21 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   get getNominee() {
     return this.addLiabilityForm.get('getNomineeName') as FormArray;
   }
+  openDialog(eventData): void {
+    const dialogRef = this.dialog.open(RealEstatePropertyComponent, {
+      width: '50%',
+      data: { isRealEstate: true, realEstateDate: '' }
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      this.propertyList = [] ;
+      this.getRealEstate();
+      // setTimeout(() => {
+      //   this.getRealEstate();
+      // }, 5000);
+    })
+
+  }
   removeNewNominee(item) {
     this.disabledMember(null, null);
     this.getNominee.removeAt(item);
@@ -291,14 +351,14 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
       if (this._data.loanTypeId == undefined) {
         const data = this.showFilter;
         // const data = this.addLiabilityForm.get('loanType').value;
-        this.subInjectService.changeNewRightSliderState({state: 'close', data, refreshRequired: flag});
+        this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: flag });
       } else {
         const data = this.showFilter;
         // const data = this.addLiabilityForm.get('loanType').value;
-        this.subInjectService.changeNewRightSliderState({state: 'close', data, refreshRequired: flag});
+        this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: flag });
       }
     } else {
-      this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: flag});
+      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
     }
   }
 
@@ -348,7 +408,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
       if (parseInt(value) > 50) {
         this.addLiabilityForm.get('loanTenure').markAsTouched();
       }
-      if(value!=''){
+      if (value != '') {
         this.minDate = new Date();
         this.minDate.setFullYear(this.maxDate.getFullYear() - value);
       }
@@ -357,7 +417,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
       let formValue = parseInt(this.addLiabilityForm.controls.loanAmount.value);
       let emi = parseInt(this.addLiabilityForm.controls.emi.value);
       if (emi > formValue) {
-        this.addLiabilityForm.get('emi').setErrors({max: formValue});
+        this.addLiabilityForm.get('emi').setErrors({ max: formValue });
         this.addLiabilityForm.get('emi').markAsTouched();
       } else {
         this.addLiabilityForm.get('emi').setErrors(null);
@@ -399,7 +459,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
         // let commencementDate = new Date(this.addLiabilityForm.controls.CommencementDate.value);
         // let poDate = new Date(this.addLiabilityForm.controls.poDate.value);
         if (commencementDate > poDate) {
-          this.addLiabilityForm.get('poDate').setErrors({max: 'Date of repayment'});
+          this.addLiabilityForm.get('poDate').setErrors({ max: 'Date of repayment' });
           this.addLiabilityForm.get('poDate').markAsTouched();
         } else {
           this.addLiabilityForm.get('poDate').setErrors();
@@ -410,7 +470,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
         let commencementDate = this.datePipe.transform(new Date(this.addLiabilityForm.controls.CommencementDate.value), 'yyyy/MM/dd');
         let poDate = this.datePipe.transform(new Date(this.addLiabilityForm.controls.poDate.value), 'yyyy/MM/dd');
         if (commencementDate > poDate) {
-          this.addLiabilityForm.get('poDate').setErrors({max: 'Date of repayment'});
+          this.addLiabilityForm.get('poDate').setErrors({ max: 'Date of repayment' });
           this.addLiabilityForm.get('poDate').markAsTouched();
         } else {
           this.addLiabilityForm.get('poDate').setErrors();
@@ -433,6 +493,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
       loanAmount: [data.loanAmount, [Validators.required]],
       loanTenure: [data.loanTenure, [Validators.required, Validators.max(50)]],
       outstandingCheck: [data.principalOutstanding],
+      property: [data.property],
       poDate: [(data.principalOutstandingAsOn) ? new Date(data.principalOutstandingAsOn) : ''],
       outstandingAmt: [data.principalOutStandingAmount,],
       CommencementDate: [new Date(data.commencementDate), [Validators.required]],
@@ -488,10 +549,18 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
     this.getFormControl().interest.maxLength = 20;
     this.getFormControl().outstandingAmt.maxLength = 20;
     // this.ownerData = this.addLiabilityForm.controls;
-    this.ownerData = {Fmember: this.nomineesListFM, controleData: this.addLiabilityForm};
+    this.ownerData = { Fmember: this.nomineesListFM, controleData: this.addLiabilityForm };
 
   }
-
+  changeValidation(value){
+    if(value == 1){
+      this.addLiabilityForm.get('property').setValidators([Validators.required]);
+    }else{
+      this.addLiabilityForm.controls['property'].setValue(null);
+      this.addLiabilityForm.controls['property'].setErrors(null);
+      this.addLiabilityForm.get('property').setValidators(null);
+    }
+  }
   saveFormData() {
 
     let transactionFlag, finalTransctList = [];
@@ -534,6 +603,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
           frequencyOfPayments: this.addLiabilityForm.controls.emiFrequency.value,
           annualInterestRate: this.addLiabilityForm.controls.interest.value,
           financialInstitution: this.addLiabilityForm.controls.finInstitution.value,
+          propertyId: this.addLiabilityForm.get('property').value,
           emi: this.addLiabilityForm.controls.emi.value,
           loanPartPayments: finalTransctList
         };
@@ -558,7 +628,8 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
           principalOutstanding: (this.addLiabilityForm.controls.outstandingCheck.value) ? this.addLiabilityForm.controls.outstandingCheck.value : false,
           emi: this.addLiabilityForm.controls.emi.value,
           financialInstitution: this.addLiabilityForm.controls.finInstitution.value,
-          loanPartPayments: finalTransctList
+          loanPartPayments: finalTransctList,
+          propertyId: this.addLiabilityForm.get('property').value,
         };
         this.custumService.editLiability(editObj).subscribe(
           data => this.addEditLiabilityRes(data)

@@ -77,8 +77,10 @@
 
                                     <div class="row pt-16 b-b" *ngIf="invoice.auto == false">
                                         <div class="col-md-8 pl-8">
-                                            <p class="f-15 mb-28">{{invoice.clientName}}</p>
-                                            <p class="f-13 mb-12">{{invoice.invoiceNumber}}</p>
+                                            <p (click)="openInvoice(invoice,'invoiceUpperSlider','')"
+                                                class="f-15 mb-28 c-p">{{invoice.clientName}}</p>
+                                            <p (click)="openInvoice(invoice,'invoiceUpperSlider','')"
+                                                class="f-13 mb-12 c-p">{{invoice.invoiceNumber}}</p>
                                         </div>
                                         <div class="col-md-4 p-0">
                                             <p class="f-15 mb-28">₹<span [value]="invoice.finalAmount"
@@ -129,7 +131,7 @@
                                 <div [appSkeletonLoading]="isLoading" appSkeletonLoading
                                     class="col-md-6 p-0 skeletonAnimation">
 
-                                    <p class="f-300 f-18 pt-28 text-center mb-0"> received</p>
+                                    <p class="f-300 f-18 pt-28 text-center mb-0">Fee received</p>
                                     <h2 class="text-primary text-center mb-0 pb-28 pt-8 relClass">
                                         <div [ngClass]="{'height23': isLoading}" class="bar" [value]="feeRecieved"
                                             appFormatNumber>
@@ -239,13 +241,13 @@
                                                     <div class="bar" *ngIf="isLoadingSubSummary">
                                                     </div>
                                                     <div class="bar text-primary text-underline c-p"
-                                                        (click)="Open('open',element)"
+                                                        (click)="Open(element)"
                                                         *ngIf="element.startsOn==undefined && element.feeTypeId==1">
                                                         {{isLoadingSubSummary ? ' ' : 'View details'}} </div>
                                                     <div appFormatNumber
                                                         *ngIf="element.startsOn && element.feeTypeId==1">
                                                         ₹ {{element.pricing}}</div>
-                                                    <div appFormatNumber (click)="Open('open',element)"
+                                                    <div appFormatNumber (click)="Open(element)"
                                                         *ngIf="element.feeTypeId==2"
                                                         class="text-primary text-underline c-p">
                                                         View details</div>
