@@ -124,7 +124,8 @@
 
               <p class="lh-16 m-0 text-white roboto f-400 pt-12"> This will help you get the best out of IFANOW and make
                 your onboarding process super smooth.</p>
-              <button mat-stroked-button class="text-open-guide mt-24 bg-white w-60 br-4">Open the guide</button>
+              <button mat-stroked-button class="text-open-guide mt-24 bg-white w-60 br-4"
+                (click)="openGuideDialog()">Open the guide</button>
             </div>
           </div>
         </div>
@@ -241,15 +242,16 @@
             <div class="row no-wrap w-1800">
               <div *ngFor="let singleMember of birthdayAnniList" class=" pl-5 pr-5">
                 <div class="w-180 b-a br-10">
-                  <p class="m-0 pl-10 pt-10 roboto f-400">Rahul Jain</p>
-                  <p class="m-0 pl-10 roboto f-400 f-12 text-custom">Group head</p>
+                  <p class="m-0 pl-10 pt-10 roboto f-400">{{singleMember.displayName}}</p>
+                  <p class="m-0 pl-10 roboto f-400 f-12 text-custom" *ngIf="singleMember.clientId>0">Group head</p>
                   <div class="row pt-6 pb-10">
                     <div class="col-md-5 pl-10 pr-10">
                       <img src="/assets/images/people.png">
                     </div>
                     <div class="col-md-7 pl-0 pt-8">
                       <p class="m-0 f-12 lh-16 roboto f-400 f-12">Today</p>
-                      <p class="m-0 f-12 lh-16 roboto text-custom f-400 f-12">{{singleMember.age}} years</p>
+                      <p class="m-0 f-12 lh-16 roboto text-custom f-400 f-12" *ngIf="singleMember.age">
+                        {{singleMember.age}} years</p>
                     </div>
                   </div>
                 </div>
@@ -688,7 +690,8 @@
           <h5 class="m-0 f-500 roboto text-black">Recent online transactions (MF)</h5>
         </div>
         <div class="col-md-4 p-0 text-right">
-          <button mat-stroked-button class="advisor-view-all">View All</button>
+          <button mat-stroked-button [routerLink]="['/admin/transactions/overview']"
+            routerLinkActive="router-link-active" class="advisor-view-all">View All</button>
         </div>
         <div class="col-md-12 d-flex p-0 overflow-y pt-10">
           <div *ngFor="let singleTransaction of transactionList" class="pr-20">
@@ -979,20 +982,24 @@
         </div>
         <div class="radio-buttons-advisor">
           <mat-radio-group [formControl]="selectedItem" aria-label="Select an option">
-            <div class=row *ngFor="let singleNote of todoListData;index as i">
-              <!-- {{singleNote.createdOn | date:'dd/MM/yyyy'}} -->
-              <div class="col-md-2">
-                <mat-radio-button value={{singleNote.id}}>
-                </mat-radio-button>
-              </div>
-              <div class="col-md-4">
-                {{singleNote.activityName}}
-              </div>
-              <div class="col-md-4">
-                <span *ngIf="selectedItem.value==singleNote.id" class="material-icons c-p"
-                  (click)="deleteTodoList(singleNote,i)">
-                  delete
-                </span>
+            <div *ngFor="let singleNote of todoListData;index as i" class="pt-12">
+              <span *ngIf="singleNote.createdDate==0">Today</span>
+              <span *ngIf="singleNote.createdDate==1">Yesterday</span>
+              <span *ngIf="singleNote.createdDate!=1 && singleNote.createdDate!=0">{{singleNote.createdDate}}</span>
+              <div class="row">
+                <div class="col-md-2 pl-0">
+                  <mat-radio-button value={{singleNote.id}}>
+                  </mat-radio-button>
+                </div>
+                <div class="col-md-8 pl-0">
+                  {{singleNote.activityName}}
+                </div>
+                <div class="col-md-2 pl-0">
+                  <span *ngIf="selectedItem.value==singleNote.id" class="material-icons c-p"
+                    (click)="deleteTodoList(singleNote,i)">
+                    delete
+                  </span>
+                </div>
               </div>
               <hr class="ad">
             </div>

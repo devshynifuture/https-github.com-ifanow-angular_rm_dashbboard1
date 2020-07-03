@@ -278,7 +278,7 @@
                             </div>
                         </div>
 
-                        <div *ngIf="_data.ulipFundDetails.length > 0 || insuranceSubTypeId != 1">
+                        <div *ngIf="_data.ulipFundDetails.length > 0 && insuranceSubTypeId == 3">
                             <div *ngFor="let data of _data.ulipFundDetails; let i = index">
                                 <div class="row bb p-8 b-l br">
                                     <div class="col-md-8 text-left f-14 roboto p-0">

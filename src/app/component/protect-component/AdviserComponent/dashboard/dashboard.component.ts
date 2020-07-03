@@ -21,6 +21,8 @@ import { DashboardService } from './dashboard.service';
 import { FormControl } from '@angular/forms';
 import { calendarService } from '../Activities/calendar/calendar.service';
 import { EmailServiceService } from '../Email/email-service.service';
+import * as moment from 'moment';
+import { DatePipe } from '@angular/common';
 export interface PeriodicElement {
   name: string;
   position: string;
@@ -157,6 +159,7 @@ export class DashboardComponent implements OnInit {
   formatedEvent: any[];
   calenderLoader: boolean;
   birthdayAnniList: any;
+  connectedToGmail: boolean;
 
   constructor(
     public dialog: MatDialog, private subService: SubscriptionService,
@@ -169,7 +172,8 @@ export class DashboardComponent implements OnInit {
     private dashboardService: DashboardService,
     private calenderService: calendarService,
     private emailService: EmailServiceService,
-    private utils: UtilService
+    private utils: UtilService,
+    private datePipe: DatePipe
   ) {
     const date = new Date();
     const hourOfDay = date.getHours();
@@ -232,7 +236,15 @@ export class DashboardComponent implements OnInit {
         if (data && data.length > 0) {
           data.forEach(element => {
             element['selected'] == false;
+            if (this.calculateDifferenc(element.createdOn) <= 1) {
+              element['createdDate'] = this.calculateDifferenc(element.createdOn);
+            }
+            else {
+              element['createdDate'] = this.datePipe.transform(element.createdOn, 'MMMM d, y');
+            }
           });
+          // data.forEach(element => {
+          // });
           this.todoListData = data;
           // this.todoListData=this.todoListData.sort((a,b)=>a.due - b.due);
         }
@@ -302,31 +314,34 @@ export class DashboardComponent implements OnInit {
     )
   }
 
+  calculateDifferenc(createdDate) {
+    const a = moment(createdDate)
+    const b = moment(new Date().getTime());
+    // console.log(a.diff(b, 'days'));
+    return a.diff(b, 'days');
+  }
+
   connectAccountWithGoogle() {
     this.calenderLoader = true;
     this.emailService.getProfile().subscribe(res => {
       if (res) {
+        this.connectedToGmail = true;
         this.calenderLoader = false;
         localStorage.setItem('googleOAuthToken', 'oauthtoken');
         localStorage.setItem('successStoringToken', 'true');
         localStorage.setItem('associatedGoogleEmailId', AuthService.getUserInfo().userName);
         this.router.navigate(['/admin/emails/inbox'], { relativeTo: this.activatedRoute });
+        this.getEvent();
       } else {
         this.calenderLoader = false;
-        this.eventService.openSnackBarNoDuration(res, 'DISMISS');
+        this.connectedToGmail = false;
+        // this.eventService.ope(res, 'DISMISS');
       }
     }, err => {
       this.calenderLoader = false;
-      this.eventService.openSnackBarNoDuration(err, 'DISMISS');
+      this.connectedToGmail = false;
+      // this.eventService.openSnackBarNoDuration(err, 'DISMISS');
     });
-  }
-
-  getAnniversayOrBirthday() {
-    const obj =
-    {
-
-    }
-
   }
 
   getEvent() {
@@ -573,7 +588,9 @@ export class DashboardComponent implements OnInit {
   }
   openGuideDialog(): void {
     const dialogRef = this.dialog.open(DashboardGuideDialogComponent, {
-      width: '250px',
+      maxWidth: '100vw',
+      width: '90vw',
+      height: '90vh',
       data: ''
     });
 

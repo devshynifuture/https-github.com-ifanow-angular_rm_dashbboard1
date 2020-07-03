@@ -639,6 +639,10 @@ $lineheight:20px;
   padding-top: 250px !important;
 }
 
+.pt-300 {
+  padding-top: 300px !important;
+}
+
 .pr-0 {
   padding-right: $zeropx !important;
 }
@@ -727,12 +731,20 @@ $lineheight:20px;
   padding-right: 76px !important;
 }
 
+.pr-150 {
+  padding-right: 150px !important;
+}
+
 .pb-0 {
   padding-bottom: $zeropx !important;
 }
 
 .pb-4 {
   padding-bottom: $p4 !important;
+}
+
+.pb-5 {
+  padding-bottom: 5px !important;
 }
 
 .pb-6 {
@@ -903,6 +915,10 @@ $lineheight:20px;
   padding-left: 120px !important
 }
 
+.pl-150 {
+  padding-left: 150px !important
+}
+
 .wrapper-100 {
   padding: 100px;
 }
@@ -1019,6 +1035,10 @@ $lineheight:20px;
 
 .mt-16 {
   margin-top: $p4*4 !important;
+}
+
+.mt-18 {
+  margin-top: 18px !important;
 }
 
 .mt-20 {
