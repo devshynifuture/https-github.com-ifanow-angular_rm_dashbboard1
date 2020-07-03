@@ -62,6 +62,9 @@ export class CalendarComponent implements OnInit {
     this.excessAllow = localStorage.getItem('successStoringToken')
   }
 
+  mailConnect(done){
+    this.excessAllow = done;
+  }
   // getEvent() {
   //   let eventData = {
   //     "calendarId": AuthService.getUserInfo().userName,

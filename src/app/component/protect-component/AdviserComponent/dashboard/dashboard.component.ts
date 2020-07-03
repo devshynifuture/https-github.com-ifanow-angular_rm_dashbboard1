@@ -212,6 +212,10 @@ export class DashboardComponent implements OnInit {
     this.getBirthdayOrAnniversary();
     this.getLast7DaysTransactionStatus();
   }
+
+  mailConnect(done){
+    this.excessAllow = done;
+  }
   getSummaryDataDashboard() {
     const obj = {
       advisorId: this.advisorId,

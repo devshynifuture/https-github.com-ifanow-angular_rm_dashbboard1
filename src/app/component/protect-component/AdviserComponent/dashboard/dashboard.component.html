@@ -1057,7 +1057,7 @@
         </div>
       </mat-tab>
       <mat-tab label="Calendar">
-        <app-google-connect *ngIf="!excessAllow"></app-google-connect>
+        <app-google-connect (googleConnected)="mailConnect($event)" *ngIf="!excessAllow"></app-google-connect>
         <div *ngIf="excessAllow">
           <app-calendar-schedule [dashEvents]="dashEvent"></app-calendar-schedule>
         </div>

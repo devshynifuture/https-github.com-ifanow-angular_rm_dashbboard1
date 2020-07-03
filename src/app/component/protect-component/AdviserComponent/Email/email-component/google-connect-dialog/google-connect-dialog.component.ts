@@ -12,6 +12,7 @@ import { EventService } from '../../../../../../Data-service/event.service';
   styleUrls: ['./google-connect-dialog.component.scss']
 })
 export class GoogleConnectDialogComponent {
+  connect:any;
   constructor(
     public dialogRef: MatDialogRef<GoogleConnectDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -19,7 +20,9 @@ export class GoogleConnectDialogComponent {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private eventService: EventService
-  ) { }
+  ) { 
+    this.connect = data;
+  }
 
   redirectForm = this.fb.group({
     googleConnectEmail: ['', [Validators.required, Validators.email]]
@@ -51,11 +54,19 @@ export class GoogleConnectDialogComponent {
           clearInterval(lookForSuccessToken);
           redirectWindow.close();
           this.onNoClick();
-          this.router.navigate(['/admin/emails/inbox'], { relativeTo: this.activatedRoute });
+          if(this.connect == 'dash'){
+            this.router.navigate(['/admin/dashboard'], { relativeTo: this.activatedRoute });
+          }
+          else if(this.connect == 'calendar'){
+            this.router.navigate(['/admin/activies/month'], { relativeTo: this.activatedRoute });
+          }
+          else{
+            this.router.navigate(['/admin/emails/inbox'], { relativeTo: this.activatedRoute });
+          }
         }
       }, 1000);
     } else {
-      this.eventService.openSnackBar("Your email id is not same as your login credentials", "Dismiss")
+      this.eventService.openSnackBar("Your email id is not same as your login credentials", "Dismiss3")
     }
 
 
@@ -72,7 +83,7 @@ export class GoogleConnectDialogComponent {
 
 
   onNoClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(this.connect);
   }
 
   onSubmit() {
