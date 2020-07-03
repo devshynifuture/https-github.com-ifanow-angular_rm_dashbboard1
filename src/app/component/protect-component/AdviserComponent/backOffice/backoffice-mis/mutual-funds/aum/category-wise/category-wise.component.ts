@@ -325,7 +325,9 @@ export class CategoryWiseComponent implements OnInit {
     }
   }
 
-  showApplicantName(schemeData, index, catIndex) {
+  showApplicantName(schemeData, index, subCatIndex, catIndex) {
+    this.selectedSubCategory = subCatIndex;
+    this.selectedCategory = catIndex;
     this.selectedClientIndex = index;
     schemeData.showScheme = !schemeData.showScheme;
     if (!schemeData.showScheme) {
@@ -382,7 +384,7 @@ export class CategoryWiseComponent implements OnInit {
             name: element.name,
             totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
             weightInPerc: element.weightInPercentage,
-            schemeList: []
+            schemeList: [],
           });
           sumTotalAumTemp = sumTotalAumTemp + element.totalAum;
           sumTotalWeightInPercTemp = sumTotalWeightInPercTemp + element.weightInPercentage;
@@ -400,7 +402,7 @@ export class CategoryWiseComponent implements OnInit {
             name: element.schemeName,
             totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
             weightInPerc: element.weightInPercentage,
-            applicantList: []
+            applicantList: [],
           });
           sumTotalAumTemp = sumTotalAumTemp + element.totalAum;
           sumTotalWeightInPercTemp = sumTotalWeightInPercTemp + element.weightInPercentage
@@ -418,7 +420,7 @@ export class CategoryWiseComponent implements OnInit {
               balanceUnit: this.mfService.mutualFundRoundAndFormat(element.balanceUnit, 2),
               folioNumber: element.folioNumber,
               totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
-              weightInPerc: element.weightInPercentage
+              weightInPerc: element.weightInPercentage,
             });
           sumTotalAumTemp = sumTotalAumTemp + element.totalAum;
           sumTotalWeightInPercTemp = sumTotalWeightInPercTemp + element.weightInPercentage
@@ -449,8 +451,12 @@ export class CategoryWiseComponent implements OnInit {
         }
       }
     });
+    let arrayOfExcelHeaders = this.arrayOfHeaders.slice();
+    let arrayOfExcelStyles = this.arrayOfHeaderStyles.slice();
+    arrayOfExcelStyles.shift();
+    arrayOfExcelHeaders.shift();
 
-    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'MIS Report - Category wise AUM', 'category-wise-aum-mis', {
+    ExcelMisService.exportExcel3(arrayOfExcelHeaders, arrayOfExcelStyles, copyOfExcelData[index].subCatList, 'MIS Report - Category wise AUM', 'category-wise-aum-mis', {
       categoryList: true,
       subCatList: false,
       schemeList: false,
@@ -473,11 +479,11 @@ export class CategoryWiseComponent implements OnInit {
     ExcelMisService.exportExcel(this.arrayOfHeaderStyles[3], this.arrayOfHeaders[3], newarr, [], 'MIS Report - Category Wise AUM', this.applicantWiseTotalArr);
   }
 
-  schemeWiseExcelSheet(index) {
+  schemeWiseExcelSheet(catIndex, subCatIndex) {
     let copyOfExcelData = JSON.parse(JSON.stringify(this.arrayOfExcelData));
 
     copyOfExcelData.forEach((element, index1) => {
-      if (index1 === index) {
+      if (index1 === catIndex) {
         return;
       } else {
         if (element.subCatList.length !== 0) {
@@ -487,7 +493,15 @@ export class CategoryWiseComponent implements OnInit {
         }
       }
     });
-    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'MIS Report - Category wise AUM', 'category-wise-aum-mis', {
+
+    let arrayOfExcelHeaders = this.arrayOfHeaders.slice();
+    let arrayOfExcelStyles = this.arrayOfHeaderStyles.slice();
+    arrayOfExcelStyles.shift();
+    arrayOfExcelStyles.shift();
+    arrayOfExcelHeaders.shift();
+    arrayOfExcelHeaders.shift();
+
+    ExcelMisService.exportExcel4(arrayOfExcelHeaders, arrayOfExcelStyles, copyOfExcelData[catIndex].subCatList[subCatIndex].schemeList, 'MIS Report - Category wise AUM', 'category-wise-aum-mis', {
       categoryList: true,
       subCatList: true,
       schemeList: false,
@@ -495,19 +509,19 @@ export class CategoryWiseComponent implements OnInit {
     }, this.schemeWiseTotalArr);
   }
 
-  exportToExcelReport(choice, index) {
+  exportToExcelReport(choice, catIndex, subCatIndex, schemeIndex) {
     switch (choice) {
       case 'category':
         this.categoryWiseExcelSheet();
         break;
       case 'sub-category':
-        this.subCategoryWiseExcelSheet(index);
+        this.subCategoryWiseExcelSheet(catIndex);
         break;
       case 'schemes':
-        this.schemeWiseExcelSheet(index);
+        this.schemeWiseExcelSheet(catIndex, subCatIndex);
         break;
       case 'applicant':
-        this.applicantWiseExcelSheet(index);
+        this.applicantWiseExcelSheet(catIndex);
         break;
     }
   }

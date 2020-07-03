@@ -9,6 +9,7 @@ import { ValidatorType } from 'src/app/services/util.service';
 import * as Highcharts from 'highcharts';
 import { AuthService } from 'src/app/auth-service/authService';
 import { AppConstants } from 'src/app/services/app-constants';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-calculators',
@@ -34,6 +35,32 @@ export class CalculatorsComponent implements OnInit {
   calculatedEMI:any = {
   }
 
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'ADD TO GOALS',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+  };
+
+  barButtonOptions1: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+  };
+  
   constructor(
     private subInjectService: SubscriptionInject,
     private eventService: EventService, 
@@ -77,7 +104,7 @@ export class CalculatorsComponent implements OnInit {
 
   // ---------------------------------- calculator ---------------------------------------
   calculateEMI(){
-    if(this.incomeFG.invalid || this.loanFG.invalid) {
+    if(this.incomeFG.invalid || this.loanFG.invalid || this.barButtonOptions.active || this.barButtonOptions1.active) {
       this.incomeFG.markAllAsTouched();
       this.loanFG.markAllAsTouched();
     } else {
@@ -93,24 +120,32 @@ export class CalculatorsComponent implements OnInit {
         goalAmount: this.data.gv
       }
 
+      this.barButtonOptions.active = true;
+      this.barButtonOptions1.active = true;
       this.planService.calculateEMI({loanIpJson: JSON.stringify(emiObj)}).subscribe((res) => {
         this.calculatedEMI = {
           ...res,
           ...emiObj
         };
+        this.barButtonOptions.active = false;
+        this.barButtonOptions1.active = false;
         this.subInjectService.setRefreshRequired();
       }, err => {
         this.eventService.openSnackBar(err, "Dismiss");
+        this.barButtonOptions.active = false;
+        this.barButtonOptions1.active = false;
       })
     }
   }
 
   saveEMIToGoal(){
-    if(this.incomeFG.invalid || this.loanFG.invalid) {
+    if(this.incomeFG.invalid || this.loanFG.invalid || this.barButtonOptions.active || this.barButtonOptions1.active) {
       this.incomeFG.markAllAsTouched();
       this.loanFG.markAllAsTouched();
     } else {
 
+      this.barButtonOptions.active = true;
+      this.barButtonOptions1.active = true;
       const emiObj = {
         netSalary: this.incomeFG.controls.income.value,
         loanTenure: this.loanFG.controls.loanTenure.value,
@@ -130,6 +165,8 @@ export class CalculatorsComponent implements OnInit {
         this.subInjectService.setRefreshRequired();
       }, err => {
         this.eventService.openSnackBar(err, "Dismiss");
+        this.barButtonOptions.active = false;
+        this.barButtonOptions1.active = false;
       })
     }
   }
@@ -219,10 +256,13 @@ export class CalculatorsComponent implements OnInit {
   }
   
   calculateDelay(){
-    if(this.delayFG.invalid) {
+    if(this.delayFG.invalid || this.barButtonOptions.active || this.barButtonOptions1) {
       this.delayFG.markAllAsTouched();
       return;
     }
+
+    this.barButtonOptions.active = true;
+    this.barButtonOptions1.active = true;
 
     let subData = this.data.remainingData;
     let jsonObj = {
@@ -247,6 +287,8 @@ export class CalculatorsComponent implements OnInit {
       this.showDelayChart = true;
       setTimeout(() => {
         this.createChart(res);
+        this.barButtonOptions.active = false;
+        this.barButtonOptions1.active = false;
       }, 100);
     }, err => {
       this.eventService.openSnackBar(err, "Dismiss");
@@ -254,7 +296,7 @@ export class CalculatorsComponent implements OnInit {
   }
 
   saveDelayToGoal(){
-    if(this.delayFG.invalid) {
+    if(this.delayFG.invalid || this.barButtonOptions.active || this.barButtonOptions1) {
       this.delayFG.markAllAsTouched();
       return;
     }
@@ -268,6 +310,8 @@ export class CalculatorsComponent implements OnInit {
     }
 
     let formValue:Object = this.delayFG.value;
+    this.barButtonOptions.active = true;
+    this.barButtonOptions1.active = true;
 
     for(let k in formValue) {
       if(formValue.hasOwnProperty(k))
@@ -278,8 +322,12 @@ export class CalculatorsComponent implements OnInit {
       this.eventService.openSnackBar("Cost of delay added to goal", "Dismiss");
       this.subInjectService.setSliderData(res);
       this.subInjectService.setRefreshRequired();
+      this.barButtonOptions.active = false;
+      this.barButtonOptions1.active = false;
     }, err => {
       this.eventService.openSnackBar(err, "Dismiss");
+      this.barButtonOptions.active = false;
+      this.barButtonOptions1.active = false;
     })
   }
 

@@ -1,13 +1,13 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {AuthService} from 'src/app/auth-service/authService';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {SubscriptionService} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {UtilService} from 'src/app/services/util.service';
-import {CommonFroalaComponent} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/common-froala/common-froala.component';
-import {Router} from '@angular/router';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {SettingsService} from 'src/app/component/protect-component/AdviserComponent/setting/settings.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/auth-service/authService';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { SubscriptionService } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { UtilService } from 'src/app/services/util.service';
+import { CommonFroalaComponent } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/common-froala/common-froala.component';
+import { Router } from '@angular/router';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { SettingsService } from 'src/app/component/protect-component/AdviserComponent/setting/settings.service';
 
 @Component({
   selector: 'app-add-quotation-subscription',
@@ -171,7 +171,7 @@ export class AddQuotationSubscriptionComponent implements OnInit {
 
                    <td style="padding: 24px; border: none;">
                    ${(element.servicePricing.feeTypeId == 1) ? ` <p style="font-size: 12px; margin:0px;">FEES</p>
-                       <h4 style="margin: 0px; padding: 0px; font-size: 18px;">₹${element.averageFees}</h4>` : ''}
+                       <h4 style="margin: 0px; padding: 0px; font-size: 18px;">&#8377;${element.averageFees}</h4>` : ''}
                    </td>
                </tr>
            </table>

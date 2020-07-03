@@ -283,7 +283,7 @@ export const appConfig = {
   GET_DEPLOYMENT_DETAILS: 'activity/deployment/combined/deployment/detail/get',
   ADD_PURCHASE_SCHEME: 'activity/deployment/purchase/scheme/post',
   GET_MUTUAL_FUND_SCHEME: 'activity/deployment/scheme/get',
-  GET_ALL_ASSETS: 'goal-planning/static-allocation/get',
+  GET_ALL_ASSETS: 'goal-planning/other/asset/get',
   GET_ALL_GOALS: 'goal-planning/goal/list/get',
   DELETE_GOAL: 'goal-planning/goal/delete',
   CALCULATE_GOAL_EMI: 'goal-planning/loan/calculate',
@@ -812,5 +812,6 @@ export const appConfig = {
   UPDATE_NOTES: 'admin/dashboard/memo/item/update',
   DELETE_NOTES: 'admin/dashboard/memo/item/delete',
   GET_NOTES: 'admin/dashboard/memo/list/get',
-  GET_BIRTHDAY_OR_ANNIVERSARY: 'user/birthday/or/anniversary'
+  GET_BIRTHDAY_OR_ANNIVERSARY: 'user/birthday/or/anniversary',
+  LAST_7_DAYS_TRANSACTION_STATUS: 'report/transaction/status/summary'
 };

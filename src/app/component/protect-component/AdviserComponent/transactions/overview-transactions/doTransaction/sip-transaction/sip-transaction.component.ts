@@ -22,6 +22,9 @@ export class SipTransactionComponent implements OnInit {
 
   isSuccessfulTransaction = false;
   oldDefaultData;
+  schemeName: any;
+  folioNumber: any;
+  mutualFundData: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
               public processTransaction: ProcessTransactionService, private fb: FormBuilder,
@@ -97,12 +100,25 @@ export class SipTransactionComponent implements OnInit {
 
   @Input()
   set data(data) {
+    this.folioList =[]
+    this.transactionSummary = {};
     this.inputData = data;
     this.transactionType = data.transactionType;
     this.selectedFamilyMember = data.selectedFamilyMember;
-
+    if(data.mutualFundData){
+      this.schemeName = data.mutualFundData.schemeName
+      this.folioNumber = data.mutualFundData.folioNumber
+      this.mutualFundData = data.mutualFundData
+      let foilo = {'folioNumber': this.folioNumber}
+      let schemeName = {'schemeName': this.schemeName}
+      this.folioList.push(foilo)
+      this.ExistingOrNew = 1
+      Object.assign(this.transactionSummary, {folioNumber: this.folioNumber});
+      Object.assign(this.transactionSummary, {schemeName: this.schemeName});
+    }
     if (this.isViewInitCalled) {
       this.getDataForm('', false);
+      this.ngOnInit()
     }
   }
 
@@ -650,7 +666,7 @@ export class SipTransactionComponent implements OnInit {
       reinvest: [(data.dividendReinvestmentFlag) ? data.dividendReinvestmentFlag + '' : '', [Validators.required]],
       employeeContry: [(!data) ? '' : data.orderVal, [Validators.required]],
       frequency: [(data.frequencyType) ? data.frequencyType : '', [Validators.required]],
-      investmentAccountSelection: [(data.folioNo) ? data.folioNo : '', [Validators.required]],
+      investmentAccountSelection: [(data) ? this.mutualFundData.folioNumber : '', [Validators.required]],
       // modeOfPaymentSelection: ['1'],
       modeOfPaymentSelection: [(!data.modeOfPaymentSelection) ? '2' : data.modeOfPaymentSelection],
       folioSelection: [(!data.folioSelection) ? '2' : data.folioSelection],
@@ -658,7 +674,7 @@ export class SipTransactionComponent implements OnInit {
       date: [(data.date) ? data.date : '', [Validators.required]],
       tenure: [(data.tenure) ? data.tenure : '3', [Validators.required]],
       installment: [(!data) ? '' : data.noOfInstallments, [Validators.required]],
-      schemeSip: [(!data) ? '' : data.scheme, [Validators.required]],
+      schemeSip: [(!data) ? '' : this.mutualFundData.schemeName, [Validators.required]],
       isException: true,
     });
     this.sipTransaction.controls.schemeSip.valueChanges.subscribe((newValue) => {
@@ -677,6 +693,10 @@ export class SipTransactionComponent implements OnInit {
       // this.selectedScheme(data.scheme);
     }
     this.sipTransaction.controls.modeOfPaymentSelection.setValue('2');
+    if(this.mutualFundData){
+      this.sipTransaction.controls.schemeSelection.setValue('1')
+      this.sipTransaction.controls.folioSelection.setValue('1')
+    }
   }
 
   getFormControl(): any {

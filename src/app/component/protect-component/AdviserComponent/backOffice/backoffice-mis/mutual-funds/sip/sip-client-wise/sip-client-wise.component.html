@@ -52,7 +52,7 @@
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody *ngFor="let category of filteredArray; let i = index">
+                        <tbody *ngFor="let category of filteredArray; let catIndex = index">
                             <tr>
                                 <td>
                                     <div [ngClass]="{'bar': isLoading}">
@@ -68,7 +68,8 @@
                                         {{isLoading ? '' : category.weightInPercentage | number:'1.2-2'}}{{(isLoading?'':'%') }}
                                     </div>
                                 </td>
-                                <td class="text-center" (click)="showSubTableList(i,category.showCategory,category)">
+                                <td class="text-center"
+                                    (click)="showSubTableList(catIndex,category.showCategory,category)">
                                     <div class="bar text-center">
                                         <i class="material-icons b-a f-14 mt-4 c-p" *ngIf="category.showCategory==true">
                                             add
@@ -84,7 +85,7 @@
                                 <td colspan="4" class="innerTd one">
                                     <div class="d-block text-right"
                                         *ngIf="!category.showCategory && !isLoading && category.applicantList?.length > 0">
-                                        <button (click)="exportToExcelSheet('investor-wise', i)" mat-icon-button>
+                                        <button (click)="exportToExcelSheet('investor-wise', catIndex)" mat-icon-button>
                                             <mat-icon>
                                                 save_alt
                                             </mat-icon>

@@ -571,19 +571,19 @@ export class SipAmcWiseComponent implements OnInit {
       }
     )
   }
-  exportToExcelSheet(choice, index, amcIndex) {
+  exportToExcelSheet(choice, catIndex, subCatIndex, investorIndex) {
     switch (choice) {
       case 'amc-wise':
         this.amcWiseExcelReport();
         break;
       case 'scheme-wise':
-        this.schemeWiseExcelReport(index);
+        this.schemeWiseExcelReport(catIndex);
         break;
       case 'investor-wise':
-        this.investorWiseExcelSheet(index);
+        this.investorWiseExcelSheet(catIndex, subCatIndex);
         break;
       case 'applicant-wise':
-        this.applicantWiseExcelReport(index);
+        this.applicantWiseExcelReport(catIndex);
         break;
     }
 
@@ -596,29 +596,35 @@ export class SipAmcWiseComponent implements OnInit {
       applicantList: false
     }, this.amcWiseTotal);
   }
-  schemeWiseExcelReport(index) {
+  schemeWiseExcelReport(catIndex) {
     let copyOfExcelData = JSON.parse(JSON.stringify(this.arrayOfExcelData));
 
     copyOfExcelData.forEach((element, index1) => {
-      if (index1 === index) {
+      if (index1 === catIndex) {
         return;
       } else {
         element.schemeList = [];
       }
     });
-    ExcelMisSipService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'MIS report - AMC wise SIP', 'amc-wise-aum-mis', {
+
+    let arrayOfExcelHeaders = this.arrayOfHeaders.slice();
+    let arrayOfExcelStyles = this.arrayOfHeaderStyles.slice();
+    arrayOfExcelHeaders.shift();
+    arrayOfExcelStyles.shift();
+
+    ExcelMisSipService.exportExcel3(arrayOfExcelHeaders, arrayOfExcelStyles, copyOfExcelData[catIndex].schemeList, 'MIS report - AMC wise SIP', 'amc-wise-aum-mis', {
       amcList: true,
       schemeList: false,
       investorList: false,
       applicantList: false
     }, this.schemeWiseTotal);
   }
-  investorWiseExcelSheet(index) {
+  investorWiseExcelSheet(catIndex, subCatIndex) {
     let copyOfExcelData = JSON.parse(JSON.stringify(this.arrayOfExcelData));
     copyOfExcelData.forEach((element, index1) => {
       if (element.hasOwnProperty('schemeList') && element.schemeList.length !== 0) {
         element.schemeList.forEach((element, index2) => {
-          if (index === index2) {
+          if (catIndex === index2) {
             return;
           } else {
             element.investorList = [];
@@ -627,7 +633,15 @@ export class SipAmcWiseComponent implements OnInit {
       }
     });
 
-    ExcelMisSipService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'MIS report - AMC wise SIP', 'amc-wise-aum-mis', {
+    let arrayOfExcelHeaders = this.arrayOfHeaders.slice();
+    let arrayOfExcelStyles = this.arrayOfHeaderStyles.slice();
+
+    arrayOfExcelHeaders.shift();
+    arrayOfExcelHeaders.shift();
+    arrayOfExcelStyles.shift();
+    arrayOfExcelStyles.shift();
+
+    ExcelMisSipService.exportExcel4(arrayOfExcelHeaders, arrayOfExcelStyles, copyOfExcelData[catIndex].schemeList[subCatIndex].investorList, 'MIS report - AMC wise SIP', 'amc-wise-aum-mis', {
       amcList: true,
       schemeList: true,
       investorList: false,

@@ -35,7 +35,7 @@ export class GoogleConnectComponent implements OnInit {
   emailId;
   showEmailInput: boolean = false;
   redirectForm;
-  isEmail: boolean = true;
+  connect:any
 
   ngOnInit() {
     this.redirectForm = this.fb.group({
@@ -51,7 +51,16 @@ export class GoogleConnectComponent implements OnInit {
           localStorage.setItem('googleOAuthToken', 'oauthtoken');
           localStorage.setItem('successStoringToken', 'true');
           localStorage.setItem('associatedGoogleEmailId', AuthService.getUserInfo().userName);
-          this.router.navigate(['/admin/emails/inbox'], { relativeTo: this.activatedRoute });
+          if(this.connect == "dash"){
+            this.router.navigate(['/admin/dashboard'], { relativeTo: this.activatedRoute });
+          }
+          else if(this.connect = "calendar"){
+            this.router.navigate(['/admin/activies/month'], { relativeTo: this.activatedRoute });
+          }
+          else{
+            this.router.navigate(['/admin/emails/inbox'], { relativeTo: this.activatedRoute });
+          }
+
         } else {
           this.eventService.openSnackBarNoDuration(res, 'DISMISS');
         }
@@ -59,12 +68,16 @@ export class GoogleConnectComponent implements OnInit {
         this.eventService.openSnackBarNoDuration(err, 'DISMISS');
       });
     }
+    if (this.router.url == '/admin/emails/inbox/google-connect') {
+      this.connect = "email";
 
-    if (this.router.url == '/admin/activies/month') {
-      this.isEmail = false;
+    } 
+    else if(this.router.url == '/admin/dashboard'){
+      this.connect = "dash";
 
-    } else {
-      this.isEmail = true;
+    }
+    else {
+      this.connect = "calendar";
     }
 
   }

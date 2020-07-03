@@ -76,7 +76,7 @@ export class VariableFeeComponent implements OnInit {
 
   ngOnInit() {
     this.setValidation(false);
-    this.isSave = true;
+    // this.isSave = true;
   }
 
   getVariableFee() {

@@ -8,6 +8,7 @@ import { CustomCommonModule } from 'src/app/common/custom.common.module';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { Ng5SliderModule } from 'ng5-slider';
+import { CommonComponentModule } from 'src/app/component/protect-component/common-component/common-component.module';
 
 
 @NgModule({
@@ -18,7 +19,10 @@ import { Ng5SliderModule } from 'ng5-slider';
     MaterialModule,
     CustomDirectiveModule,
     DragDropModule,
-    Ng5SliderModule
+    Ng5SliderModule,
+    
+    CommonComponentModule,
+    CustomCommonModule,
   ]
 })
 export class PlanGoalsModule { }

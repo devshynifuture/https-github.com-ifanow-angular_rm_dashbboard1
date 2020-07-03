@@ -1,16 +1,16 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {startWith} from 'rxjs/internal/operators/startWith';
-import {map} from 'rxjs/operators';
-import {FormControl} from '@angular/forms';
-import {AuthService} from 'src/app/auth-service/authService';
-import {SubscriptionService} from '../../../subscription.service';
-import {CommonFroalaComponent} from '../../common-subscription-component/common-froala/common-froala.component';
-import {UtilService} from 'src/app/services/util.service';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {EventService} from 'src/app/Data-service/event.service';
-import {Router} from '@angular/router';
-import {SettingsService} from '../../../../setting/settings.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { startWith } from 'rxjs/internal/operators/startWith';
+import { map } from 'rxjs/operators';
+import { FormControl } from '@angular/forms';
+import { AuthService } from 'src/app/auth-service/authService';
+import { SubscriptionService } from '../../../subscription.service';
+import { CommonFroalaComponent } from '../../common-subscription-component/common-froala/common-froala.component';
+import { UtilService } from 'src/app/services/util.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { EventService } from 'src/app/Data-service/event.service';
+import { Router } from '@angular/router';
+import { SettingsService } from '../../../../setting/settings.service';
 
 @Component({
   selector: 'app-search-client-add-quotation',
@@ -192,7 +192,7 @@ export class SearchClientAddQuotationComponent implements OnInit {
 
                    <td style="padding: 24px; border: none;">
                    ${(element.servicePricing.feeTypeId == 1) ? ` <p style="font-size: 12px; margin:0px;">FEES</p>
-                       <h4 style="margin: 0px; padding: 0px; font-size: 18px;">₹${element.averageFees}</h4>` : ''}
+                       <h4 style="margin: 0px; padding: 0px; font-size: 18px;">&#8377;${element.averageFees}</h4>` : ''}
                    </td>
                </tr>
            </table>
