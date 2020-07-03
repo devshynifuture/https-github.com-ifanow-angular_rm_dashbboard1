@@ -201,7 +201,7 @@ export class DashboardComponent implements OnInit {
     this.finalEndDate = UtilService.getEndOfDay(new Date()).getTime();
     this.getTodoListData();
     this.getRecentTransactionData();
-    this.connectAccountWithGoogle();
+    // this.connectAccountWithGoogle();
     this.getBirthdayOrAnniversary();
   }
   getSummaryDataDashboard() {
