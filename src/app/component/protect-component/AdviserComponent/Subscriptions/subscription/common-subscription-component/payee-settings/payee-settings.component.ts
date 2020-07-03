@@ -361,6 +361,7 @@ export class PayeeSettingsComponent implements OnInit {
       //   }
       // }
       this.payeeSettingsForm.markAllAsTouched();
+      return;
     } else {
       this.barButtonOptions.active = true;
       if (this.payeeSettingsForm.controls.id.value != undefined) {
@@ -393,6 +394,7 @@ export class PayeeSettingsComponent implements OnInit {
             this.editSettingResData(data)
           },
           err => {
+            this.eventService.openSnackBar(err, "Dismiss");
           }
         );
 
@@ -423,6 +425,7 @@ export class PayeeSettingsComponent implements OnInit {
             this.addClientBillerProfileRes(data);
           },
           err => {
+            this.eventService.openSnackBar(err, "Dismiss");
           }
         );
 

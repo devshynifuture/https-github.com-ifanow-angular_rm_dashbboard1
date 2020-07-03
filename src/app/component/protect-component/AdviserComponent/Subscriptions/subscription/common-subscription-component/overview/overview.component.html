@@ -23,8 +23,8 @@
                   {{upperData.code}}</h5>
               </div>
               <div class="col-md-2">
-                <i [matMenuTriggerFor]="menu"
-                   [matMenuTriggerFor]="belowMenu" class="material-icons text-right right text-custom f-28 pt-12 c-p">
+                <i [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu"
+                  class="material-icons text-right right text-custom f-28 pt-12 c-p">
                   more_vert
                 </i>
                 <mat-menu #menu="matMenu">
@@ -37,7 +37,8 @@
               <div class="row">
                 <div class="col-md-12 p-0">
                   <p *ngIf="upperData" class="f-12 mb-0">DESCRIPTION</p>
-                  <h5 *ngIf="upperData" class="mb-0 roboto text-break">{{upperData.description}}</h5>
+                  <h5 *ngIf="upperData" class="mb-0 roboto text-break">
+                    {{upperData.description ? upperData.description:'N/A'}}</h5>
                 </div>
               </div>
             </div>
@@ -68,7 +69,7 @@
         (click)="changeDisplay()">VIEW
 </button> -->
           <button (click)="openForm('1','addEditDocument',letterOfEngagement)" class="btn-sm btn-success br-0 f-14"
-                  mat-stroked-button>USE
+            mat-stroked-button>USE
           </button>
           <!-- <button mat-stroked-button class="btn-sm btn-success br-0 f-14"
 (click)="openForm('','Terms of Agreement')">USE
@@ -84,7 +85,7 @@
       <div class="b-a hoverable">
         <div class="action-button">
           <button (click)="openForm('2','addEditDocument',detailsOfClientTemplate)" class="btn-sm btn-success br-0 f-14"
-                  mat-stroked-button>USE
+            mat-stroked-button>USE
           </button>
         </div>
         <img
@@ -104,7 +105,7 @@
       <div class="b-a hoverable">
         <div class="action-button">
           <button (click)="openForm('7','quotations',quotationTemplate)" class="btn-sm btn-success br-0 f-14"
-                  mat-stroked-button>USE
+            mat-stroked-button>USE
           </button>
         </div>
         <img
@@ -123,7 +124,7 @@
       <div class="b-a hoverable">
         <div class="action-button">
           <button (click)="openForm('4','quotations',redressalofGrievance)" class="btn-sm btn-success br-0 f-14"
-                  mat-stroked-button>USE
+            mat-stroked-button>USE
           </button>
         </div>
         <img
@@ -135,7 +136,7 @@
       <div class="b-a hoverable">
         <div class="action-button">
           <button (click)="openForm('5','quotations',scopeofService)" class="btn-sm btn-success br-0 f-14"
-                  mat-stroked-button>USE
+            mat-stroked-button>USE
           </button>
         </div>
         <img
@@ -189,5 +190,5 @@
 </div>
 <div>
   <app-terms-agreement *ngIf="overviewDesign=='false'" [componentFlag]="componentFlag=='planOverview'"
-                       [upperData]="upperData"></app-terms-agreement>
+    [upperData]="upperData"></app-terms-agreement>
 </div>
