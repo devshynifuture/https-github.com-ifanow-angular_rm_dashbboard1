@@ -149,23 +149,23 @@ export class AmcWiseComponent implements OnInit {
       err => this.getFilerrorResponse(err)
     )
   }
-  exportToExcelSheet(choice, index, amcIndex) {
+  exportToExcelSheet(choice, amcIndex, schemeIndex) {
     switch (choice) {
       case 'amc-wise':
         this.amcWiseExcelReport();
         break;
       case 'scheme-wise':
-        this.schemeWiseExcelReport(index);
+        this.schemeWiseExcelReport(amcIndex);
         break;
       case 'applicant-wise':
-        this.applicantWiseExcelReport(index, amcIndex);
+        this.applicantWiseExcelReport(schemeIndex, amcIndex);
         break;
     }
 
   }
 
-  applicantWiseExcelReport(index, amcIndex) {
-    let applicantList = this.arrayOfExcelData[amcIndex].schemeList[index].applicantList;
+  applicantWiseExcelReport(schemeIndex, amcIndex) {
+    let applicantList = this.arrayOfExcelData[amcIndex].schemeList[schemeIndex].applicantList;
     let newArray = [];
     applicantList.forEach(element => {
       newArray.push({
@@ -190,7 +190,13 @@ export class AmcWiseComponent implements OnInit {
         element.schemeList = [];
       }
     });
-    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'MIS Report - AMC wise AUM', 'amc-wise-aum-mis', {
+
+    let arrayOfExcelHeaders = this.arrayOfHeaders.slice();
+    let arrayOfExcelStyles = this.arrayOfHeaderStyles.slice();
+    arrayOfExcelHeaders.shift();
+    arrayOfExcelStyles.shift();
+
+    ExcelMisService.exportExcel3(arrayOfExcelHeaders, arrayOfExcelStyles, copyOfExcelData[index].schemeList, 'MIS Report - AMC wise AUM', 'amc-wise-aum-mis', {
       amcList: true,
       schemeList: false,
       applicantList: false
@@ -206,7 +212,6 @@ export class AmcWiseComponent implements OnInit {
   }
 
   removeValuesFromExcel(whichList, clientIndex) {
-
     switch (whichList) {
       case 'schemes':
         this.arrayOfExcelData[this.selectedAmc].schemeList = [];
@@ -352,10 +357,11 @@ export class AmcWiseComponent implements OnInit {
       arnRiaDetailsId: (this.data) ? this.data.arnRiaDetailId : -1,
       parentId: (this.data) ? this.data.parentId : -1,
     }
-    this.backoffice.amcWiseApplicantGet(obj).subscribe(
-      data => {
-      }
-    )
+    this.backoffice.amcWiseApplicantGet(obj)
+      .subscribe(
+        data => {
+        }
+      )
   }
   getFilerrorResponse(err) {
     this.isLoading = false;

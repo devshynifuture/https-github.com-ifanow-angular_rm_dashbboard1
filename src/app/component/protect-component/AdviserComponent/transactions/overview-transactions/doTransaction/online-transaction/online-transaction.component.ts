@@ -21,6 +21,7 @@ import {of} from 'rxjs';
 export class OnlineTransactionComponent implements OnInit {
 
   isAdvisorSection = true;
+  mutualFundData: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
               private eventService: EventService, private fb: FormBuilder,
@@ -36,6 +37,7 @@ export class OnlineTransactionComponent implements OnInit {
   @Input()
   set data(data) {
     this.inputData = data;
+    this.mutualFundData = data.data
     if (!this.inputData) {
       this.inputData = {};
     } else {
@@ -335,7 +337,8 @@ export class OnlineTransactionComponent implements OnInit {
           transactionType: this.transactionAddForm.controls.transactionType.value,
           clientId: this.familyMemberData.clientId,
           familyMemberId: this.familyMemberData.userType == 3 ? this.familyMemberData.familyMemberId : 0,
-          isAdvisorSection: this.isAdvisorSection
+          isAdvisorSection: this.isAdvisorSection,
+          mutualFundData : this.mutualFundData
         };
         this.openPurchaseTransaction(data.transactionType, data);
       } else {

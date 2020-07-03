@@ -7,6 +7,7 @@ import { CustomDirectiveModule } from '../../../../common/directives/common-dire
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardGuideDialogComponent } from './dashboard-guide-dialog/dashboard-guide-dialog.component';
 import { DashboardService } from './dashboard.service';
+import { CustomCommonModule } from 'src/app/common/custom.common.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { DashboardService } from './dashboard.service';
     FormsModule,
     ReactiveFormsModule,
     CustomDirectiveModule,
-    DashboardRoutingModule
+    DashboardRoutingModule,
+    CustomCommonModule
   ],
   exports: [],
   providers: [DashboardService]

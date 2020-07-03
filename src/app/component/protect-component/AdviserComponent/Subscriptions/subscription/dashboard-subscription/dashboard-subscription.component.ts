@@ -66,6 +66,7 @@ export class DashboardSubscriptionComponent implements OnInit {
   feeRecieved: any;
   totalSales: any;
   isAdvisor: any = true;
+  manualInvoice: any;
 
   constructor(private enumService: EnumServiceService,
     public subInjectService: SubscriptionInject,
@@ -89,6 +90,7 @@ export class DashboardSubscriptionComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.advisorName = AuthService.getUserInfo().name;
+    this.manualInvoice = []
     this.initChart();
     this.getDashboardResponse();
     this.docSentSignedCountData();
@@ -370,6 +372,8 @@ export class DashboardSubscriptionComponent implements OnInit {
 
   invoiceToBeReviewedRes(data) {
     this.dataSourceInvoice = data;
+    this.manualInvoice = this.dataSourceInvoice.filter(element => element.auto == false);
+    console.log('data', this.manualInvoice)
   }
 
   deleteModal(value) {

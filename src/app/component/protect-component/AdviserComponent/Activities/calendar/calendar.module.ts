@@ -13,16 +13,16 @@ import { CalendarDayComponent } from './calendar-day/calendar-day.component';
 import { CalendarMonthComponent } from './calendar-month/calendar-month.component';
 import { CalendarWeekComponent } from './calendar-week/calendar-week.component';
 import { EventDialog } from './event-dialog';
-import { CalendarScheduleComponent } from './calendar-schedule/calendar-schedule.component';
+
 
 @NgModule({
   declarations: [
     CalendarComponent,
-    EventDialog,
+    // EventDialog,
     CalendarDayComponent,
     CalendarMonthComponent,
     CalendarWeekComponent,
-    CalendarScheduleComponent,
+    EventDialog
   ],
   imports: [
     CommonModule,
