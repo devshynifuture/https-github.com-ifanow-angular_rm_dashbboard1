@@ -81,6 +81,8 @@ export const appConfig = {
   HTML_TO_PDF: 'pdfAndEmail/bulk-mail/html-to-pdf',
   GET_CLIENT_IN_LOOP: 'mutual-fund/report/bulk-order/save',
   GET_ORDER_LIST: 'mutual-fund/report/bulk-order/list/get',
+  GET_MF_CLIENTS: 'mutual-fund/report/client-setting/list/get',
+  SAVE_SETTING: 'mutual-fund/report/client-setting/edit',
   /////////////////////////////Accounts///////////////////////////////////
   ADD_FIXEDDEPOSIT: 'account/asset/fixed-income/fixed-deposit/add',
   ADD_LIFE_INSURANCE: 'account/insurance/life-insurance/add',
@@ -281,7 +283,7 @@ export const appConfig = {
   GET_DEPLOYMENT_DETAILS: 'activity/deployment/combined/deployment/detail/get',
   ADD_PURCHASE_SCHEME: 'activity/deployment/purchase/scheme/post',
   GET_MUTUAL_FUND_SCHEME: 'activity/deployment/scheme/get',
-  GET_ALL_ASSETS: 'goal-planning/static-allocation/get',
+  GET_ALL_ASSETS: 'goal-planning/other/asset/get',
   GET_ALL_GOALS: 'goal-planning/goal/list/get',
   DELETE_GOAL: 'goal-planning/goal/delete',
   CALCULATE_GOAL_EMI: 'goal-planning/loan/calculate',
@@ -291,6 +293,10 @@ export const appConfig = {
   EDIT_MULTI_YEAR_GOAL_PREFERENCE: 'goal-planning/multi-year/edit',
   EDIT_SINGLE_YEAR_GOAL_PREFERENCE: 'goal-planning/single-year/edit',
   SAVE_ASSET_ALLOCATION_PREFERENCE: 'goal-planning/asset-allocation/update',
+  GET_MF_DATA: 'goal-planning/goal/mf/list/get',
+  GET_OTHER_ASSET_ALLOCATION_DATA: 'goal-planning/goal/mf/list/get',
+  SAVE_MF_ASSET_TO_GOAL: 'goal-planning/goal/mf/allocate',
+  SAVE_ASSET_TO_GOAL: 'goal-planning/goal/mf/allocate',
   CALCULATE_TOTAL_VALUES: 'account/asset/summary',
   GET_SUMMARY_LIST: 'account/asset/summary/list',
   GET_CASHFLOW_LIST: 'cashflow/monthly/list/get',
@@ -725,6 +731,8 @@ export const appConfig = {
   DELETE_ADDDRESS: 'user/client/address/delete',
   DELETE_BANK: 'user/client/bank-details/delete',
   DELETE_DEMAT: 'user/client/demat/delete',
+  GET_BANK_ACCOUNT_TYPE: 'user/bank/account-type/global/get',
+  GET_RELATIONSHIP_STATUS: 'user/relationship/global/get',
   //////////////////////////////Login///////////////////////////////////
   GENERATE_OTP: 'user/generate/otp',
   SAVE_AFTER_VERIFICATION: 'user/email/mobile/save',
@@ -795,5 +803,15 @@ export const appConfig = {
   GET_GLOBAL_RISK_PROFILE: 'plan/risk/profile/global/get',
   GET_FEED_RECENT_TRANSACTIONS: 'report/transaction/list/get',
   GET_CASHFLOW_FEEDS: 'cashflow/monthly/list/family-member-wise/get',
-  GET_CUSTOMER_FEEDS_PROFILE: 'user/client/profile/completeness/get'
+  GET_CUSTOMER_FEEDS_PROFILE: 'user/client/profile/completeness/get',
+
+
+  ///////////////////////////// To-DO list -dashboard //////////////////////////
+
+  ADD_NOTES: 'admin/dashboard/memo/item/add',
+  UPDATE_NOTES: 'admin/dashboard/memo/item/update',
+  DELETE_NOTES: 'admin/dashboard/memo/item/delete',
+  GET_NOTES: 'admin/dashboard/memo/list/get',
+  GET_BIRTHDAY_OR_ANNIVERSARY: 'user/birthday/or/anniversary',
+  LAST_7_DAYS_TRANSACTION_STATUS: 'report/transaction/status/summary'
 };

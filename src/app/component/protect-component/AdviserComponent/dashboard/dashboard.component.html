@@ -1,8 +1,1062 @@
-<div class="row pt-120">
+<!-- <div class="row pt-120">
   <div class="col-md-12">
     hello dashboard
   </div>
   <button (click)="openGuideDialog()">
     open the guide
   </button>
+</div> -->
+
+<div id="ui-advisor-dashboard-header" class="mt-64">
+  <div class="row">
+    <div class="col-md-2">
+      <h3 class="m-0 pt-16">Dashboard</h3>
+    </div>
+    <div class="col-md-10 p-0">
+      <div class="subnav-fixed">
+        <nav mat-tab-nav-bar>
+          <!--           
+                  <a (click)="value=1" [ngClass]="_value == 1 ? 'active': ''" [routerLink]="'./dashboard'"
+                      mat-tab-link routerLinkActive="active">DASHBOARD</a>
+                  <a (click)="value=2" [ngClass]="_value == 2 ? 'active': ''" [routerLink]="'./clients'" mat-tab-link
+                      routerLinkActive="active">CLIENTS</a>
+                  <a (click)="value=3" [ngClass]="_value == 3 ? 'active': ''" [routerLink]="'./subscriptions'"
+                      mat-tab-link routerLinkActive="active">SUBSCRIPTIONS</a>
+                  <a (click)="value=4" [ngClass]="_value == 4 ? 'active': ''" [routerLink]="'./quotations'"
+                      mat-tab-link routerLinkActive="active">QUOTATIONS</a>
+                  <a (click)="value=5" [ngClass]="_value == 5 ? 'active': ''" [routerLink]="'./invoices'" mat-tab-link
+                      routerLinkActive="active">INVOICES</a>
+                  <a (click)="value=6" [ngClass]="_value == 6 ? 'active': ''" [routerLink]="'./documents'"
+                      mat-tab-link routerLinkActive="active">DOCUMENTS</a>
+                  <a [ngClass]="isLinkActive() ? 'active': ''" [routerLink]="  ['./settings',label]"
+                      [state]="{ example: 0 }" mat-tab-link>SETTINGS</a> -->
+        </nav>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="row pt-135 pb-28" id="ui-dashboard-advisor">
+  <div class="col-md-3 pl-20 pr-20 pt-44">
+    <h5 class="m-0 roboto f-500 pb-16">Key metrics</h5>
+    <div class="row bg-grey lter text-center ba-primitive br-4 p-8">
+      <div class="col-md-6 pt-24 pb-24 bb-half pl-8">
+        <p class="m-0 text-primitive roboto f-400 lh-16">MF AUM</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          {{(MiscData1 &&  MiscData1.hasOwnProperty('totalAumRupees') ) ? MiscData1.totalAumRupees : '0'}}</h3>
+      </div>
+      <div class="col-md-6 pt-24 pb-24 bl-half bb-half">
+        <p class="m-0 text-primitive roboto f-400 lh-16">SIP book</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">{{(sipCount) ? sipCount : '0'}}</h3>
+      </div>
+      <div class="col-md-6 pt-24 pb-24 pl-8">
+        <p class="m-0 text-primitive roboto f-400 lh-16">SIP book</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">{{(sipCount) ? sipCount : '0'}}</h3>
+      </div>
+      <div class="col-md-6 pt-24 pb-24 bl-half">
+        <p class="m-0 text-primitive roboto f-400 lh-16">SIP book</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">{{(sipCount) ? sipCount : '0'}}</h3>
+      </div>
+    </div>
+    <h5 class="m-0 roboto f-500 pb-16 pt-28">Activity overview</h5>
+    <div class="row bg-grey lter text-center ba-primitive br-4 p-8">
+      <div class="col-md-6 pt-24 pb-24 bb-half pl-8">
+        <p class="m-0 text-primitive roboto f-400 lh-16">Awaiting
+          consent</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">78</h3>
+      </div>
+      <div class="col-md-6 pt-24 pb-24 bl-half bb-half">
+        <p class="m-0 text-primitive roboto f-400 lh-16">Advice to be
+          reviewed</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">41</h3>
+      </div>
+      <div class="col-md-6 pt-24 pb-24 pl-8">
+        <p class="m-0 text-primitive roboto f-400 lh-16">Money to
+          be deployed</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">712.35 L</h3>
+      </div>
+      <div class="col-md-6 pt-24 pb-24 bl-half">
+        <p class="m-0 text-primitive roboto f-400 lh-16">Action plans
+          in process</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">4</h3>
+      </div>
+    </div>
+    <h5 class="m-0 roboto f-500 pb-16 pt-28">Subscription overview</h5>
+    <div class="row bg-grey lter text-center ba-primitive br-4 p-8">
+      <div class="col-md-6 pt-24 pb-24 bb-half pl-8">
+        <p class="m-0 text-primitive roboto f-400 lh-16">Clients with
+          subscription</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          {{ (dataSourceClientWithSub && dataSourceClientWithSub.hasOwnProperty('activeClientPer')) ? dataSourceClientWithSub.activeClientPer : 0}}%
+        </h3>
+      </div>
+      <div class="col-md-6 pt-24 pb-24 bl-half bb-half">
+        <p class="m-0 text-primitive roboto f-400 lh-16">Subscriptions
+          cancelled</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">41</h3>
+      </div>
+      <div class="col-md-6 pt-24 pb-24 pl-8">
+        <p class="m-0 text-primitive roboto f-400 lh-16">Total fees
+          charged</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">{{totalSales}}</h3>
+      </div>
+      <div class="col-md-6 pt-24 pb-24 bl-half">
+        <p class="m-0 text-primitive roboto f-400 lh-16">Fees
+          received</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">{{feeRecieved}}</h3>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 bl-1 br p-0">
+    <div class="pl-24 pr-24">
+      <div class="advisor-status pl-20 mb-24">
+        <h3 class="m-0 roboto f-500 roboto text-black pt-20">{{greeting}} {{advisorName}}</h3>
+        <p class="m-0 roboto f-400 pt-4 lh-20 text-black pb-12">Your business dashboard is ready!</p>
+      </div>
+      <div class="row  ba-advisor">
+        <div class="col-md-8 bg-advisors p-0">
+          <div class="row">
+            <div class="col-md-10 p-0 pt-20 pl-20 pb-20">
+              <p class="lh-16 m-0 text-white roboto f-500">First things first, {{advisorName}}! We’ve created an
+                onboarding
+                guide for you. </p>
+
+              <p class="lh-16 m-0 text-white roboto f-400 pt-12"> This will help you get the best out of IFANOW and make
+                your onboarding process super smooth.</p>
+              <button mat-stroked-button class="text-open-guide mt-24 bg-white w-60 br-4"
+                (click)="openGuideDialog()">Open the guide</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 full-center">
+          <img src="/assets/images/sports.png">
+        </div>
+      </div>
+      <div class="row pt-40">
+        <div class="col-md-12 p-0">
+          <h5 class="m-0 roboto f-500 text-black pb-8">Asset classes</h5>
+          <div class="row b-a pt-20 pb-20 br-4">
+            <div class="col-md-7 pl-0 full-center">
+              <img src="/assets/images/circel-chart.png">
+            </div>
+            <div class="col-md-5 pl-0">
+              <div class="row ">
+                <div class="col-md-1 p-0 pt-4">
+                  <div class="hw-12 bg-primary br-50"></div>
+                </div>
+                <div class="col-md-11">
+                  <p class="m-0 text-black roboto f-400">₹38.43 Cr <span class="text-success">(63.45%)</span></p>
+                  <p class="m-0 text-primitive roboto f-400">Equity</p>
+                </div>
+              </div>
+              <div class="row pt-10">
+                <div class="col-md-1 p-0 pt-4">
+                  <div class="hw-12 bg-success br-50"></div>
+                </div>
+                <div class="col-md-11">
+                  <p class="m-0 text-black roboto f-400">₹18.43 Cr <span class="text-success">(30.45%)</span></p>
+                  <p class="m-0 text-primitive roboto f-400">Debt</p>
+                </div>
+              </div>
+              <div class="row pt-10">
+                <div class="col-md-1 p-0 pt-4">
+                  <div class="hw-12 bg-warning br-50"></div>
+                </div>
+                <div class="col-md-11">
+                  <p class="m-0 text-black roboto f-400">₹3.43 Cr <span class="text-success">(4.45%)</span></p>
+                  <p class="m-0 text-primitive roboto f-400">Hybrid</p>
+                </div>
+              </div>
+              <div class="row pt-10">
+                <div class="col-md-1 p-0 pt-4">
+                  <div class="hw-12 br-50 bg-hred"></div>
+                </div>
+                <div class="col-md-11">
+                  <p class="m-0 text-black roboto f-400">₹1.43 Cr <span class="text-success">(1.29%)</span></p>
+                  <p class="m-0 text-primitive roboto f-400">Commodities</p>
+                </div>
+              </div>
+              <div class="row pt-10">
+                <div class="col-md-1 p-0">
+                  <div class="hw-12 bg-grey br-50"></div>
+                </div>
+                <div class="col-md-11">
+                  <p class="m-0 text-black roboto f-400">₹38.43 Cr <span class="text-success">(63.45%)</span></p>
+                  <p class="m-0 text-primitive roboto f-400">Others</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row pt-40">
+        <div class="col-md-12 p-0">
+          <h5 class="m-0 f-500 roboto">Business snapshot</h5>
+          <img src="/assets/images/svg/snapshot.svg">
+          <div class="bussiness-snapshot">
+            <table mat-table [dataSource]="dataSource" id="table-low" class="mt-28">
+
+              <ng-container matColumnDef="position">
+                <th mat-header-cell *matHeaderCellDef> </th>
+                <td mat-cell *matCellDef="let element" class="br text-success f-500 bl-1"> {{element.position}} </td>
+              </ng-container>
+
+              <!-- Name Column -->
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef class="br bl bt-1 f-500 text-right"> Dec </th>
+                <td mat-cell *matCellDef="let element" class="br text-right"> {{element.name}} </td>
+              </ng-container>
+
+              <!-- Weight Column -->
+              <ng-container matColumnDef="weight">
+                <th mat-header-cell *matHeaderCellDef class="br bt-1 f-500 text-right"> Jan </th>
+                <td mat-cell *matCellDef="let element" class="br text-right"> {{element.weight}} </td>
+              </ng-container>
+
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="symbol">
+                <th mat-header-cell *matHeaderCellDef class="br bt-1 f-500 text-right"> Mar </th>
+                <td mat-cell *matCellDef="let element" class="br text-right"> {{element.symbol}} </td>
+              </ng-container>
+              <ng-container matColumnDef="apr">
+                <th mat-header-cell *matHeaderCellDef class="br bt-1 f-500 text-right"> Apr </th>
+                <td mat-cell *matCellDef="let element" class="br text-right"> {{element.apr}} </td>
+              </ng-container>
+              <ng-container matColumnDef="may">
+                <th mat-header-cell *matHeaderCellDef class="bt-1 br f-500 text-right"> May </th>
+                <td mat-cell *matCellDef="let element" class="br text-right"> {{element.may}} </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <p class="m-0 roboto f-400 pt-10 f-12 text-right"><i>Fig in ₹ Lacs</i></p>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="birthdayAnniList" class="row pt-40">
+        <div class="col-md-12 p-0">
+          <h5 class="f-500 roboto text-black m-0 pb-10">Birthdays & Anniversaries</h5>
+          <div class="family-details-advisor">
+            <div class="row no-wrap w-1800">
+              <!-- <div *ngFor="let singleMember of birthdayAnniList" class=" pl-5 pr-5">
+                <div class="w-180 b-a br-10">
+                  <p class="m-0 pl-10 pt-10 roboto f-400">{{singleMember.displayName}}</p>
+                  <p class="m-0 pl-10 roboto f-400 f-12 text-custom" *ngIf="singleMember.clientId>0">Group head</p>
+                  <div class="row pt-6 pb-10">
+                    <div class="col-md-5 pl-10 pr-10">
+                      <img src="/assets/images/people.png">
+                    </div>
+                    <div class="col-md-7 pl-0 pt-8">
+                      <p class="m-0 f-12 lh-16 roboto f-400 f-12">
+                        <span *ngIf="singleMember.daysToGo==0">Today</span>
+                        <span *ngIf="singleMember.daysToGo==1">Tommorrow</span>
+                        <span *ngIf="singleMember.daysToGo!=0 && singleMember.daysToGo!=1">In {{singleMember.daysToGo}}
+                          days</span>
+                      </p>
+                      <p class="m-0 f-12 lh-16 roboto text-custom f-400 f-12" *ngIf="singleMember.age">
+                        {{singleMember.age}} years</p>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+              <div *ngFor="let singleMember of birthdayAnniList" class="pr-5 pl-5">
+                <div class="w-180 b-a br-10">
+                  <div class="row">
+                    <div class="col-md-9 p-0">
+                      <p class="m-0 pl-10 pt-10 roboto f-400">{{singleMember.displayName}}</p>
+                      <p *ngIf="singleMember.userType==2" class="m-0 pl-10 roboto f-400 f-12 text-custom">Group head</p>
+                      <p *ngIf="singleMember.userType==3" class="m-0 pl-10 roboto f-400 f-12 text-custom">
+                        {{singleMember.displayName}}</p>
+                    </div>
+                    <div class="col-md-3 p-0 pt-5 pr-5">
+                      <button *ngIf="singleMember.anniversaryDate" mat-stroked-button
+                        class="btn-primary-outline mw-40 p-0 h-20 lh-20 br-2 f-12 rigtht">Anniv</button>
+                    </div>
+                  </div>
+                  <div class="row pt-6 pb-10">
+                    <div class="col-md-5 pl-10 pr-10 d-flex">
+                      <img src="/assets/images/people.png">
+                      <!-- <img src="/assets/images/people.png" class="join-img"> -->
+                    </div>
+                    <div class="col-md-7 pl-0 pt-8">
+                      <p class="m-0 f-12 lh-16 roboto f-400 f-12">
+                        <span *ngIf="singleMember.daysToGo==0">Today</span>
+                        <span *ngIf="singleMember.daysToGo==1">Tommorrow</span>
+                        <span *ngIf="singleMember.daysToGo!=0 && singleMember.daysToGo!=1">In {{singleMember.daysToGo}}
+                          days</span>
+                      </p>
+                      <p class="m-0 f-12 lh-16 roboto text-custom f-400 f-12">{{singleMember.age}} years</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="pr-5  pl-5">
+                <div class="w-180 b-a br-10">
+                  <p class="m-0 pl-10 pt-10 roboto f-400">Ameen Sahani</p>
+                  <p class="m-0 pl-10 roboto f-400 f-12 text-custom">Mohit Sahani (Father)</p>
+                  <div class="row pt-6 pb-10">
+                    <div class="col-md-5 pl-10 pr-10">
+                      <img src="/assets/images/people.png">
+                    </div>
+                    <div class="col-md-7 pl-0 pt-8">
+                      <p class="m-0 f-12 lh-16 roboto f-400 f-12">In 4 days</p>
+                      <p class="m-0 f-12 lh-16 roboto text-custom f-400 f-12">46 years</p>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+              <!-- <div class="w-180 pr-5  pl-5">
+                <div class="b-a br-10">
+                  <p class="m-0 pl-10 pt-10 roboto f-400">Ameen Sahani</p>
+                  <p class="m-0 pl-10 roboto f-400 f-12 text-custom">Mohit Sahani (Father)</p>
+                  <div class="row pt-6 pb-10">
+                    <div class="col-md-5 pl-10 pr-10">
+                      <img src="/assets/images/people.png">
+                    </div>
+                    <div class="col-md-7 pl-0 pt-8">
+                      <p class="m-0 f-12 lh-16 roboto f-400 f-12">In 4 days</p>
+                      <p class="m-0 f-12 lh-16 roboto text-custom f-400 f-12">46 years</p>
+                    </div>
+                  </div>
+                </div>
+              </div>  -->
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row pt-40 pb-8">
+        <div class="col-md-8 p-0">
+          <h5 class="f-500 roboto text-black m-0 pt-2">Task summary</h5>
+        </div>
+        <div class="col-md-4 text-right pr-0">
+          <button mat-stroked-button class="advisor-view-all">View All</button>
+        </div>
+      </div>
+      <div class="row b-a br-4 pt-10 pb-10 text-center">
+        <div class="col-md-4 br-half pt-8 pb-8">
+          <p class="m-0 text-custom f-400 roboto lh-16 ">This week’s<br> tasks</p>
+          <h3 class="m-0 roboto f-400 lh-23 pt-8">35</h3>
+        </div>
+        <div class="col-md-4 br-half pt-8 pb-8">
+          <p class="m-0 text-custom f-400 roboto lh-16 ">This week’s<br> tasks</p>
+          <h3 class="m-0 roboto f-400 lh-23 pt-8">35</h3>
+        </div>
+        <div class="col-md-4 pt-8 pb-8">
+          <p class="m-0 text-danger f-400 roboto lh-16">This week’s<br> tasks</p>
+          <h3 class="m-0 roboto f-400 text-danger lh-23 pt-8">35</h3>
+        </div>
+      </div>
+      <div class="row pt-40 today-task">
+        <div class="col-md-12 p-0">
+          <h5 class="f-500 roboto text-black m-0 pb-10">Today’s tasks</h5>
+          <table mat-table [dataSource]="dataSource2" id="table-low">
+
+            <ng-container matColumnDef="position">
+              <th mat-header-cell *matHeaderCellDef class="br"> Client </th>
+              <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef class="br"> Task </th>
+              <td mat-cell *matCellDef="let element" class="br">
+
+                <div class="row">
+                  <div class="col-md-9 p-0">
+                    {{element.name}}
+                  </div>
+                  <div class="col-md-3 p-0">
+                    <div class="text-right">
+                      <span class="text-custom">1/3</span>
+                      <span class="text-custom">2 <img src="/assets/images/svg/task-msg.svg" alt=""></span>
+                    </div>
+                  </div>
+                </div>
+
+
+              </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="weight">
+              <th mat-header-cell *matHeaderCellDef class="br"> Assigned to </th>
+              <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} </td>
+            </ng-container>
+
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+          </table>
+
+        </div>
+      </div>
+      <div class="row pt-40 pb-8">
+        <div class="col-md-8 p-0">
+          <h5 class="f-500 roboto text-black m-0 pt-2">Goal summary</h5>
+        </div>
+        <div class="col-md-4 text-right pr-0">
+          <button mat-stroked-button class="advisor-view-all">View All</button>
+        </div>
+      </div>
+      <div class="row b-a br-4 pt-10 pb-10 text-center">
+        <div class="col-md-4 br-half pt-8 pb-8">
+          <p class="m-0 text-custom f-400 roboto lh-16 ">Total goals<br>
+            all clients</p>
+          <h3 class="m-0 roboto f-400 lh-23 pt-8">481</h3>
+        </div>
+        <div class="col-md-4 br-half pt-8 pb-8">
+          <p class="m-0 text-custom f-400 roboto lh-16 ">Clients <br>
+            without goals</p>
+          <h3 class="m-0 roboto f-400 lh-23 pt-8">78%</h3>
+        </div>
+        <div class="col-md-4 pt-8 pb-8">
+          <p class="m-0 text-custom f-400 roboto lh-16">Clients without<br>
+            emergency funds</p>
+          <h3 class="m-0 roboto f-400 text-custom lh-23 pt-8">85%</h3>
+        </div>
+      </div>
+      <div class="row pt-40 pb-8">
+        <div class="col-md-8 p-0">
+          <h5 class="f-500 roboto text-black m-0 pt-2">Upcoming goals</h5>
+        </div>
+
+        <div class="col-md-4 text-right pr-0">
+          <button mat-stroked-button class="advisor-view-all">View All</button>
+        </div>
+      </div>
+
+      <div class="row no-wrap">
+        <div class="col-md-12 p-0 d-flex overflow-y">
+
+          <div class=" pr-20">
+            <div class="w-404 b-a br-4">
+              <div class="row pt-10">
+                <div class="col-md-5 pl-10 pr-10">
+                  <img src="/assets/images/svg/daugther-edu.svg" class="w-100">
+                </div>
+                <div class="col-md-7 pl-10 pr-10">
+                  <h5 class="m-0 f-500 roboto lh-16">Shreya’s higher education</h5>
+                  <p class="m-0 roboto f-400 pt-5 text-custom lh-16">Rahul Jain</p>
+                  <p class="m-0 roboto f-400 pt-8 text-custom lh-16">Jun 2020</p>
+                  <div class="row pt-12">
+                    <div class="col-md-6 pl-0">
+                      <p class="m-0 roboto f-400 text-custom lh-16 f-12">GOAL VALUE</p>
+                      <p class="m-0 roboto f-400 lh-16">₹48,13,000</p>
+                    </div>
+                    <div class="col-md-6 pl-0">
+                      <p class="m-0 roboto f-400 text-custom f-12 lh-16">ACHIEVED</p>
+                      <p class="m-0 roboto f-400 lh-16">₹14,25,000</p>
+                    </div>
+                    <div class="col-md-12 upcoming-goal p-0 pt-16">
+                      <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class=" pr-20">
+            <div class="w-404 b-a br-4">
+              <div class="row pt-10">
+                <div class="col-md-5 pl-10 pr-10">
+                  <img src="/assets/images/svg/daugther-edu.svg" class="w-100">
+                </div>
+                <div class="col-md-7 pl-10 pr-10">
+                  <h5 class="m-0 f-500 roboto lh-16">Shreya’s higher education</h5>
+                  <p class="m-0 roboto f-400 pt-5 text-custom lh-16">Rahul Jain</p>
+                  <p class="m-0 roboto f-400 pt-8 text-custom lh-16">Jun 2020</p>
+                  <div class="row pt-12">
+                    <div class="col-md-6 pl-0">
+                      <p class="m-0 roboto f-400 text-custom lh-16 f-12">GOAL VALUE</p>
+                      <p class="m-0 roboto f-400 lh-16">₹48,13,000</p>
+                    </div>
+                    <div class="col-md-6 pl-0">
+                      <p class="m-0 roboto f-400 text-custom f-12 lh-16">ACHIEVED</p>
+                      <p class="m-0 roboto f-400 lh-16">₹14,25,000</p>
+                    </div>
+                    <div class="col-md-12 upcoming-goal p-0 pt-16">
+                      <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row pt-40 pb-40 bb-1">
+        <div class="col-md-12 p-0">
+          <h5 class="f-500 roboto text-black m-0 pt-2">Investment stickiness</h5>
+          <p class="m-0 roboto f-400 lh-16 text-primitive">Value of assets linked to goals</p>
+
+
+          <div class="row pt-10 progress-advisors">
+            <div class="col-md-6 pl-0">
+              <p class="m-0 lh-16 roboto pb-10 f-500 text-black">Mutual funds</p>
+              <mat-progress-bar mode="determinate" value="90"></mat-progress-bar>
+              <p class="m-0 roboto f-400 text-black top">> 10 years ₹5,23,25,000</p>
+              <mat-progress-bar mode="determinate" value="70"></mat-progress-bar>
+              <p class="m-0 roboto f-400 text-black top">3-5 years ₹4,36,58,000</p>
+              <mat-progress-bar mode="determinate" value="60"></mat-progress-bar>
+              <p class="m-0 roboto f-400 text-black top">1-3 years ₹3,89,91,000</p>
+              <mat-progress-bar mode="determinate" value="50"></mat-progress-bar>
+              <p class="m-0 roboto f-400 text-black top">1 year ₹3,36,58,000</p>
+              <mat-progress-bar mode="determinate" value="30"></mat-progress-bar>
+              <p class="m-0 roboto f-400 text-black top">5-10 years ₹3,06,21,000</p>
+            </div>
+            <div class="col-md-6 pl-0">
+              <p class="m-0 lh-16 roboto f-500 text-black pb-10">Non mutual fund assets</p>
+              <mat-progress-bar mode="determinate" value="90"></mat-progress-bar>
+              <p class="m-0 roboto f-400 text-black top">5-10 years ₹7,48,25,000</p>
+              <mat-progress-bar mode="determinate" value="70"></mat-progress-bar>
+              <p class="m-0 roboto f-400 text-black top">> 10 years ₹6,28,58,000</p>
+              <mat-progress-bar mode="determinate" value="60"></mat-progress-bar>
+              <p class="m-0 roboto f-400 text-black top">1-3 years ₹5,90,12,000</p>
+              <mat-progress-bar mode="determinate" value="50"></mat-progress-bar>
+              <p class="m-0 roboto f-400 text-black top">3 -5 years ₹5,36,58,000</p>
+              <mat-progress-bar mode="determinate" value="30"></mat-progress-bar>
+              <p class="m-0 roboto f-400 text-black top">
+                < 1 year ₹5,06,21,000</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-md-12 p-0">
+          <h5 class="m-0 f-400 text-black roboto pb-10 pt-40">Goal analytics (Avg goal values - PV)</h5>
+          <div class="row pt-10 progress-advisors-goal">
+            <div class="col-md-6 pl-0">
+              <p class="m-0 lh-16 roboto pb-10 f-500 text-black">Retirement</p>
+              <mat-progress-bar mode="determinate" value="90" class="light-red"></mat-progress-bar>
+              <p class="m-0 roboto f-400 text-black top">You ₹2,23,25,000</p>
+              <mat-progress-bar mode="determinate" value="70" class="light-green"></mat-progress-bar>
+
+              <p class="m-0 roboto f-400 text-black top">You ₹62,00,000</p>
+              <p class="m-0 lh-16 roboto pb-10 f-500 text-black">House</p>
+              <mat-progress-bar mode="determinate" value="70" class="light-green"></mat-progress-bar>
+              <p class="m-0 roboto f-400 text-black top">Industry ₹42,50,000</p>
+              <mat-progress-bar mode="determinate" value="60" class="light-red"></mat-progress-bar>
+              <p class="m-0 roboto f-400 text-black top">Industry ₹42,50,000</p>
+
+              <p class="m-0 lh-16 roboto pb-10 f-500 text-black">Marriage</p>
+              <mat-progress-bar mode="determinate" value="50" class="light-green"></mat-progress-bar>
+              <p class="m-0 roboto f-400 text-black top">You ₹23,13,000</p>
+              <mat-progress-bar mode="determinate" value="30" class="light-red"></mat-progress-bar>
+              <p class="m-0 roboto f-400 text-black top">Industry ₹20,90,000</p>
+            </div>
+            <div class="col-md-6 pl-0">
+              <p class="m-0 lh-16 roboto f-500 text-black pb-10">Higher education</p>
+              <mat-progress-bar mode="determinate" value="90" class="light-red"></mat-progress-bar>
+              <p class="m-0 roboto f-400 text-black top">You ₹48,13,000</p>
+              <mat-progress-bar mode="determinate" value="70" class="light-green"></mat-progress-bar>
+
+              <p class="m-0 roboto f-400 text-black top">Industry ₹63,13,000</p>
+              <p class="m-0 lh-16 roboto pb-10 f-500 text-black">Car</p>
+              <mat-progress-bar mode="determinate" value="70" class="light-green"></mat-progress-bar>
+              <p class="m-0 roboto f-400 text-black top">You ₹4,28,000</p>
+              <mat-progress-bar mode="determinate" value="60" class="light-red"></mat-progress-bar>
+              <p class="m-0 roboto f-400 text-black top">Industry ₹6,31,000</p>
+
+              <p class="m-0 lh-16 roboto pb-10 f-500 text-black">Vacation</p>
+              <mat-progress-bar mode="determinate" value="100" class="light-green"></mat-progress-bar>
+              <p class="m-0 roboto f-400 text-black top">You ₹2,18,000</p>
+              <mat-progress-bar mode="determinate" value="70" class="light-red"></mat-progress-bar>
+              <p class="m-0 roboto f-400 text-black top">Industry ₹1,42,000</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row pt-60 transctions-status-advisor">
+        <div class="col-md-8 p-0">
+          <h5 class="m-0 f-500 roboto text-black">Transaction - Pending & Rejections</h5>
+        </div>
+        <div class="col-md-4 p-0 text-right">
+          <p class="m-0 f-400 roboto text-black">Last 7 days</p>
+        </div>
+        <div class="col-md-12 p-0 pt-10">
+          <table mat-table appSkeletonLoading [appSkeletonLoading]="last7DaysFlag" class="skeletonAnimation"
+            [dataSource]="bseData" id="table-low">
+
+            <ng-container matColumnDef="position">
+              <th mat-header-cell *matHeaderCellDef class="br"> BSE Star MF </th>
+              <td mat-cell *matCellDef="let element;index as i" class="br">
+                <span *ngIf="i==0">Pending</span>
+                <span *ngIf="i==1">Rejection</span>
+              </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef class="br"> UCC </th>
+              <td mat-cell *matCellDef="let element" class="br"> {{element.InnOrUcc}} </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="weight">
+              <th mat-header-cell *matHeaderCellDef class="br"> Mandate </th>
+              <td mat-cell *matCellDef="let element" class="br"> {{element.mandate}} </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="symbol">
+              <th mat-header-cell *matHeaderCellDef class="br"> Transaction </th>
+              <td mat-cell *matCellDef="let element" class="br"> {{element.transact}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
+          </table>
+          <table appSkeletonLoading [appSkeletonLoading]="last7DaysFlag" class="skeletonAnimation" mat-table
+            [dataSource]="nscData" id="table-low" class="mt-20">
+
+            <ng-container matColumnDef="position">
+              <th mat-header-cell *matHeaderCellDef class="br"> NSE NMF II </th>
+              <td mat-cell *matCellDef="let element;index as i" class="br">
+                <span *ngIf="i==0">Pending</span>
+                <span *ngIf="i==1">Rejection</span>
+              </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef class="br"> IIN </th>
+              <td mat-cell *matCellDef="let element" class="br"> {{element.InnOrUcc}} </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="weight">
+              <th mat-header-cell *matHeaderCellDef class="br"> Mandate </th>
+              <td mat-cell *matCellDef="let element" class="br"> {{element.mandate}} </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="symbol">
+              <th mat-header-cell *matHeaderCellDef class="br"> Transaction </th>
+              <td mat-cell *matCellDef="let element" class="br"> {{element.transact}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns4"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns4;"></tr>
+          </table>
+        </div>
+      </div>
+      <div class="row pt-40">
+        <div class="col-md-8 p-0">
+          <h5 class="m-0 f-500 roboto text-black">Recent investment accounts</h5>
+        </div>
+        <div class="col-md-4 p-0 text-right">
+          <button mat-stroked-button class="advisor-view-all">View All</button>
+        </div>
+        <div class="col-md-12 d-flex p-0 overflow-y pt-10">
+          <div class="pr-20">
+            <div class="b-a w-270 br-4">
+              <div class="row pt-10">
+                <div class="col-md-10 p-0">
+                  <p class="m-0 f-400 roboto text-black pl-10 lh-16">UCC</p>
+                  <p class="m-0 f-400 roboto text-black pt-10 pl-10 lh-16">Rahul Harish Jain</p>
+                </div>
+                <div class="col-md-2 pr-10">
+                  <p class="m-0 f-400 roboto text-custom lh-16">BSE</p>
+                </div>
+              </div>
+              <div class="row pt-16 pb-20">
+                <div class="col-md-6 pl-0">
+                  <p class="m-0 text-custom f-400 roboto f-12 pl-10 lh-16">Individual</p>
+                </div>
+                <div class="col-md-6 pl-0">
+                  <p class="m-0 text-custom f-400 roboto f-12 lh-16">Anyone or survivor</p>
+                </div>
+                <div class="col-md-12 p-0 pl-10 pt-20">
+                  <button mat-stroked-button class="btn-success-outline h-20 lh-20 br-2 pr-5 pl-5 f-12">INVESTMENT
+                    READY</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="pr-20">
+            <div class="b-a w-270 br-4">
+              <div class="row pt-10">
+                <div class="col-md-10 p-0">
+                  <p class="m-0 f-400 roboto text-black pl-10 lh-16">IIN</p>
+                  <p class="m-0 f-400 roboto text-black pt-10 pl-10 lh-16">Shreay Rahul Jain</p>
+                </div>
+                <div class="col-md-2 pr-10">
+                  <p class="m-0 f-400 roboto text-custom lh-16">NSE</p>
+                </div>
+              </div>
+              <div class="row pt-16 pb-20">
+                <div class="col-md-6 pl-0">
+                  <p class="m-0 text-custom f-400 roboto f-12 pl-10 lh-16">On behalf of minor</p>
+                </div>
+                <!-- <div class="col-md-6 pl-0">
+                  <p class="m-0 text-custom f-400 roboto f-12 lh-16">Anyone or survivor</p>
+                </div> -->
+                <div class="col-md-12 p-0 pl-10 pt-20">
+                  <button mat-stroked-button class="btn-danger-outline h-20 lh-20 br-2 pr-5 pl-5 f-12">REJECTED
+                    READY</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row pt-40">
+        <div class="col-md-8 p-0">
+          <h5 class="m-0 f-500 roboto text-black">Recent online transactions (MF)</h5>
+        </div>
+        <div class="col-md-4 p-0 text-right">
+          <button mat-stroked-button [routerLink]="['/admin/transactions/overview']"
+            routerLinkActive="router-link-active" class="advisor-view-all">View All</button>
+        </div>
+        <div class="col-md-12 d-flex p-0 overflow-y pt-10">
+          <div *ngFor="let singleTransaction of transactionList" class="pr-20">
+            <div class="b-a w-300 br-4">
+              <div class="row pt-10">
+                <div class="col-md-10 p-0">
+                  <p class="m-0 f-400 roboto text-black pl-10 lh-16">{{singleTransaction.transactionTypeString}}</p>
+
+                </div>
+                <div class="col-md-2 pr-10">
+                  <p class="m-0 f-400 roboto text-custom lh-16">{{singleTransaction.platformName}}</p>
+                </div>
+              </div>
+              <div class="row pt-10">
+                <div class="col-md-6 p-0">
+                  <p class="m-0 f-400 roboto text-black pl-10 f-20 lh-16">
+                    {{(singleTransaction.amtUnitType == 'Amount') ? '₹' : 'Units'}} {{singleTransaction.amount}}</p>
+
+                </div>
+                <div class="col-md-6 text-right pr-10">
+                  <p class="m-0 f-400 roboto text-custom lh-16">{{singleTransaction.orderDate | date:'dd/MM/yyyy'}}</p>
+                </div>
+                <div class="col-md-11 pl-10 pt-6">
+                  <p class="m-0 f-400 roboto text-custom lh-16 f-12">{{singleTransaction.schemeName}}</p>
+                </div>
+              </div>
+              <div class="row pt-10">
+                <div class="col-md-10 pl-0">
+                  <p class="m-0 text-black f-400 roboto pl-10 lh-16">{{singleTransaction.clientName}}</p>
+                </div>
+
+                <div class="col-md-12 p-0 pl-10 pt-20 pb-10">
+                  <button *ngIf="singleTransaction.statusDesc!='PENDING AUTHORIZATION'" mat-stroked-button
+                    class="btn-primary-outline h-20 lh-20 br-2 pr-5 pl-5 f-12">UNITS ALLOTTED
+                    READY</button>
+                  <button *ngIf="singleTransaction.statusDesc=='PENDING AUTHORIZATION'" mat-stroked-button
+                    class="btn-danger-outline h-20 lh-20 br-2 pr-5 pl-5 f-12">PENDING
+                    AUTHORISATION</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="pr-20">
+            <div class="b-a w-300 br-4">
+              <div class="row pt-10">
+                <div class="col-md-10 p-0">
+                  <p class="m-0 f-400 roboto text-black pl-10 lh-16">SIP</p>
+
+                </div>
+                <div class="col-md-2 pr-10">
+                  <p class="m-0 f-400 roboto text-custom lh-16">BSE</p>
+                </div>
+              </div>
+              <div class="row pt-10">
+                <div class="col-md-6 p-0">
+                  <p class="m-0 f-400 roboto text-black pl-10 f-20 lh-16">₹12,000</p>
+
+                </div>
+                <div class="col-md-6 text-right pr-10">
+                  <p class="m-0 f-400 roboto text-custom lh-16">31/01 14:25</p>
+                </div>
+                <div class="col-md-11 pl-10 pt-6">
+                  <p class="m-0 f-400 roboto text-custom lh-16 f-12">Aditya Birla Sun Life Equity Savings - Growth
+                    Option - Regular plan</p>
+                </div>
+              </div>
+              <div class="row pt-10">
+                <div class="col-md-10 pl-0">
+                  <p class="m-0 text-black f-400 roboto pl-10 lh-16">Rahul Harish Jain</p>
+                </div>
+
+                <div class="col-md-12 p-0 pl-10 pt-20 pb-10">
+                  <button mat-stroked-button class="btn-danger-outline h-20 lh-20 br-2 pr-5 pl-5 f-12">PENDING
+                    AUTHORISATION</button>
+                </div>
+              </div>
+            </div>
+          </div> -->
+        </div>
+      </div>
+      <div class="row pt-40 rejections-advisor">
+        <div class="col-md-8 p-0">
+          <h5 class="m-0 f-500 roboto text-black pt-2">Rejections and Reversals</h5>
+        </div>
+        <div class="col-md-4 p-0 text-right">
+          <button mat-stroked-button class="advisor-view-all">View All</button>
+        </div>
+        <div class="col-md-12 p-0">
+          <table mat-table [dataSource]="dataSource5" id="table-low" class="mt-10">
+
+
+            <ng-container matColumnDef="position">
+              <th mat-header-cell *matHeaderCellDef class="br"> Client / Scheme </th>
+              <td mat-cell *matCellDef="let element" class="br"> {{element.position}}<br> <span class="text-custom">IDFC
+                  Sterling Value Fund -Regular Plan-Growth | 2005226/68</span> </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef class="br"> Type </th>
+              <td mat-cell *matCellDef="let element" class="br"> {{element.name}}<br> <span
+                  class="text-custom">mismatch</span></td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="weight">
+              <th mat-header-cell *matHeaderCellDef class="br"> Details </th>
+              <td mat-cell *matCellDef="let element" class="br"> {{element.weight}}<br> <span
+                  class="text-custom">30,000</span></td>
+            </ng-container>
+
+
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns5"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns5;"></tr>
+          </table>
+        </div>
+      </div>
+      <div class="row pt-40 subscription-summary-advisor">
+        <div class="col-md-6 p-0">
+          <h5 class="m-0 f-500 text-black roboto pt-8">Subscription summary</h5>
+        </div>
+        <div class="col-md-6 p-0 text-right">
+          <!-- <button mat-stroked-button class="text-primary">Not started</button>
+          <button mat-button>Upcoming</button> -->
+          <mat-button-toggle-group (change)="getSummaryDataDashboard()" [(ngModel)]="subscriptionSummaryStatusFilter"
+            class="subscription-summary" id="custom-toggle" multiple=false>
+            <mat-button-toggle class="f-14" value=1>NOT STARTED</mat-button-toggle>
+            <mat-button-toggle class="f-14" value=3>UPCOMING</mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+        <div class="col-md-12 p-0 pt-8">
+          <table mat-table [appSkeletonLoading]="isLoadingSubSummary" *ngIf="dashBoardSummary.length > 0"
+            appSkeletonLoading class=" skeletonAnimation" [dataSource]="dashBoardSummary" id="table-low">
+
+            <tbody>
+              <ng-container matColumnDef="name">
+                <th *matHeaderCellDef mat-header-cell> Client name</th>
+                <td (click)="openPlanSlider('SUBSCRIPTIONS','open',element)" *matCellDef="let element" class="c-p"
+                  mat-cell>
+                  <div class="bar"> {{element.clientName}} </div>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="service">
+                <th *matHeaderCellDef mat-header-cell> Service name</th>
+                <td *matCellDef="let element" class="c-p" mat-cell>
+                  <div class="bar"> {{element.serviceName}} </div>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="amt">
+                <th *matHeaderCellDef class="w-22" mat-header-cell> Fee amount</th>
+                <td (click)="Open(element)" *matCellDef="let element" class="c-p" mat-cell>
+                  <div class="bar text-primary text-underline">
+                    {{isLoadingSubSummary ? ' ' : 'View details'}}
+                  </div>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="billing">
+                <th *matHeaderCellDef mat-header-cell> Next billing date</th>
+                <td *matCellDef="let element" mat-cell>
+                  <div *ngIf="element.nextBillingDate" class="bar">
+                    {{ element.nextBillingDate | date: 'dd/MM/yyyy' }}
+                  </div>
+                  <div *ngIf="!element.nextBillingDate" class="bar">
+                    {{ isLoadingSubSummary ? '' : 'Not Started' }}
+                  </div>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="icons">
+                <th *matHeaderCellDef class="f-18" mat-header-cell style="width: 2%;">
+                </th>
+                <td *matCellDef="let element" mat-cell style="width: 2%">
+                  <div class="bar">
+                    <i *ngIf="!isLoadingSubSummary" [matMenuTriggerFor]="menu" class="material-icons c-p iconscolors">
+                      more_vert
+                    </i>
+                  </div>
+                  <mat-menu #menu="matMenu">
+                    <a (click)="Open(element)" mat-menu-item>View fee
+                      structure</a>
+                    <a (click)="openPlanSlider('billerSettings','open',element)" class="bt-1" mat-menu-item>Change
+                      biller</a>
+                    <a (click)="openPlanSlider('changePayee','open',element)" mat-menu-item>Change
+                      payee</a>
+                    <a (click)="delete('cancelSubscription')" class="bt-1" mat-menu-item>Cancel
+                      subscription</a>
+                    <a (click)="deleteModal('SUBSCRIPTION')" mat-menu-item>Delete
+                      subscription</a>
+                  </mat-menu>
+                </td>
+              </ng-container>
+              <tr *matHeaderRowDef="displayedDashboardSummary" mat-header-row></tr>
+              <tr *matRowDef="let row; columns: displayedDashboardSummary;" mat-row></tr>
+            </tbody>
+          </table>
+          <div *ngIf="dashBoardSummary.length ==0" class="noDataFound">
+            <img src="assets/images/svg/run.svg">
+          </div>
+          <div *ngIf="dashBoardSummary" class="col-md-12 text-right pt-8">
+            <div (click)="changeParentsTab(3)" class="c-p">View all</div>
+
+            <!--              <a href="#" class="text-black f-14">View all</a>-->
+          </div>
+        </div>
+      </div>
+      <div class="row pt-40 reconciliation-report-advisor">
+        <div class="col-md-6 p-0">
+          <h5 class="m-0 f-500 text-black roboto pt-8">Latest AUM Reconciliation report</h5>
+        </div>
+        <div class="col-md-6 p-0 text-right">
+          <button mat-stroked-button class="advisor-view-all">View All</button>
+        </div>
+        <div class="col-md-12 p-0 pt-10">
+          <table mat-table [dataSource]="dataSource7" id="table-low">
+
+            <ng-container matColumnDef="position">
+              <th mat-header-cell *matHeaderCellDef class="br"> RTA </th>
+              <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef class="br"> ARN/RIA </th>
+              <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="weight">
+              <th mat-header-cell *matHeaderCellDef> Done on </th>
+              <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="symbol">
+              <th mat-header-cell *matHeaderCellDef class="br"> Done by </th>
+              <td mat-cell *matCellDef="let element" class="br"> {{element.symbol}} </td>
+            </ng-container>
+            <ng-container matColumnDef="match">
+              <th mat-header-cell *matHeaderCellDef class="br"> Unmatch</th>
+              <td mat-cell *matCellDef="let element" class="br"> {{element.match}} </td>
+            </ng-container>
+            <ng-container matColumnDef="report">
+              <th mat-header-cell *matHeaderCellDef> Report </th>
+              <td mat-cell *matCellDef="let element" class="text-primary"> {{element.report}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns7"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns7;"></tr>
+          </table>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="col-md-3 pt-44">
+    <mat-tab-group animationDuration="0ms" id="advisor-radio">
+      <mat-tab label="To-do">
+        <div class="pt-12">
+          <div class="row">
+            <div class="col-md-9 p-0 d-flex pl-10">
+              <img (click)="showInput=true" src="/assets/images/svg/add-blue.svg" class="c-p pr-8">
+              <p *ngIf="showInput==false" class="m-0 text-black pl-12">Add a to-do</p>
+              <input *ngIf="showInput" class="form-control" matInput (focusout)="showInput=false" autofocus #inputValue
+                (keyup.enter)="addTodoList(inputValue.value)" placeholder="Enter note">
+            </div>
+
+            <!-- <div class="col-md-6 p-0 text-right">
+              <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item>
+                  <mat-icon>dialpad</mat-icon>
+                  <span>Redial</span>
+                </button>
+                <button mat-menu-item disabled>
+                  <mat-icon>voicemail</mat-icon>
+                  <span>Check voice mail</span>
+                </button>
+                <button mat-menu-item>
+                  <mat-icon>notifications_off</mat-icon>
+                  <span>Disable alerts</span>
+                </button>
+              </mat-menu>
+            </div> -->
+          </div>
+        </div>
+        <div class="radio-buttons-advisor">
+          <mat-radio-group [formControl]="selectedItem" aria-label="Select an option">
+            <div *ngFor="let singleNote of todoListData;index as i" class="pt-12">
+              <span *ngIf="singleNote.createdDate==0">Today</span>
+              <span *ngIf="singleNote.createdDate==1">Yesterday</span>
+              <span *ngIf="singleNote.createdDate!=1 && singleNote.createdDate!=0">{{singleNote.createdDate}}</span>
+              <div class="row">
+                <div *ngIf="singleNote.update==false" class="col-md-2 pl-0">
+                  <mat-radio-button value={{singleNote.id}}>
+                  </mat-radio-button>
+                </div>
+                <div class="col-md-7 pl-0">
+                  <span *ngIf="singleNote.update==false" (dblclick)="doubleClick(singleNote)"
+                    class="c-p">{{singleNote.activityName}}</span>
+                  <div class="pb-8 pt-8">
+                    <input *ngIf="singleNote.update" matInput class="form-control" [formControl]="updateNote"
+                      autofocus={{singleNote.update}} (focusout)="focusOutFunction(singleNote)"
+                      (keyup.enter)="updateTodoList(singleNote)" placeholder="Enter note">
+                  </div>
+                </div>
+                <div class="col-md-3 pl-0 d-flex">
+                  <span *ngIf="selectedItem.value==singleNote.id && singleNote.update==false"
+                    (click)="deleteTodoList(singleNote,i)" class="material-icons c-p">
+                    done
+                  </span>
+                  <span *ngIf="selectedItem.value==singleNote.id && singleNote.update==false"
+                    class="material-icons c-p pl-8" (click)="deleteTodoList(singleNote,i)">
+                    delete
+                  </span>
+                </div>
+              </div>
+              <hr class="ad">
+            </div>
+            <!-- </div>
+            </div> -->
+            <!-- <mat-radio-button value="2">Call Nita tomorrow at 9PM</mat-radio-button>
+            <hr class="ad"> -->
+            <!-- <mat-radio-button value="3">Create financial plan for Rahul Jain. Before that, check if the insurance
+              policies are added.</mat-radio-button>
+            <hr class="ad">
+            <mat-radio-button value="4">Con call with fund manager for market outlook</mat-radio-button>
+            <hr class="ad">
+            <mat-radio-button value="5">Talk to Ashish</mat-radio-button>
+            <hr class="ad">
+            <mat-radio-button value="6">Follow up with deepak roy</mat-radio-button>
+            <hr class="ad">
+            <mat-radio-button value="7">Training topics for each team</mat-radio-button>
+            <hr class="ad">
+            <mat-radio-button value="8">Aniket to send me email about asset allocation best practices, amit to send me
+
+              email about when she will finish her task of learning insurance planning</mat-radio-button> -->
+
+          </mat-radio-group>
+
+        </div>
+      </mat-tab>
+      <mat-tab label="Calendar">Content 2</mat-tab>
+    </mat-tab-group>
+  </div>
 </div>

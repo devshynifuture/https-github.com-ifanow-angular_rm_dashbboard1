@@ -153,10 +153,10 @@
         <div class="col-md-4 pr-0 text-right">
             <h5 class="m-0 pt-20 ">Policy number</h5>
         </div>
-        <div class="col-md-3 form-group">
+        <div class="col-md-5 form-group">
             <mat-form-field floatLabel="never" appearance="standard">
-                <input matInput type="text" formControlName="policyNum" #policyNum autocomplete="true" [maxLength]="20" class="form-control rupess br-0" placeholder="Enter Policy number">
-                <mat-hint align="end" class="f-12">{{policyNum.value.length}}/20</mat-hint>
+                <input matInput type="text" formControlName="policyNum" #policyNum autocomplete="true" [maxLength]="30" class="form-control rupess br-0"  placeholder="Enter Policy number">
+                <mat-hint align="end" class="f-12">{{policyNum.value.length}}/30</mat-hint>
                 <mat-error>This field is required
                 </mat-error>
             </mat-form-field>
@@ -320,7 +320,7 @@
             </div>
             <div class="col-md-5 form-group  ">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input matInput type="text" [maxLength]="40" formControlName="exclusion" #exclusion appInputValueValidation autocomplete="off" class="form-control br-0">
+                    <input matInput type="text" [maxLength]="40" formControlName="exclusion" #exclusion  autocomplete="off" class="form-control br-0">
                     <mat-hint align="end" class="f-12">{{exclusion.value.length}}/40</mat-hint>
                 </mat-form-field>
             </div>

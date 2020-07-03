@@ -25,7 +25,8 @@
             <div class="pr-0" [ngClass]="personalAccidentForm.value.getCoOwnerName.length > 1?'col-md-3' : 'col-md-5'">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData' (selectionChange)="disabledMember($event.value,'owner')" (valueChange3)='displayControler($event)' (emitBank)='getBank()' (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
+                        <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData' (selectionChange)="disabledMember($event.value,'owner')" (valueChange3)='displayControler($event)' (emitBank)='getBank()' (valueChange1)='lisNominee($event)' class="form-control br-0"
+                            [callMethod]='callMethod'>
                             <mat-option value='' disabled>Select family members</mat-option>
                             <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" [value]="f.userName">
                                 <span>{{f.userName}}</span>
@@ -63,14 +64,20 @@
         <div class="col-md-12 p-0" formArrayName="InsuredMemberForm">
 
             <div class="row">
-                <div class="col-md-5 pr-0">
+                <div class="col-md-5 d-flex align-items-center justify-content-between pr-0">
                     <h5 class="mb-0"> Name of insured members </h5>
                 </div>
-                <div class="col-md-3 pr-0">
+                <div class="col-md-3 d-flex align-items-center justify-content-between pr-0">
                     <h5 class="mb-0">AD sum insured</h5>
+                    <i class="material-icons" matTooltip="Accidental Death">
+                        info
+                    </i>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3 d-flex align-items-center justify-content-between">
                     <h5 class="mb-0">TTD sum insured </h5>
+                    <i class="material-icons" matTooltip="Temporary Total Disability">
+                        info
+                    </i>
                 </div>
             </div>
 
@@ -102,7 +109,7 @@
                 <div class="col-md-3">
                     <div class="form-group mb-0">
 
-                        <mat-form-field>
+                        <mat-form-field class="iconRupess">
                             <input matInput type="number" formControlName="ttdSumInsured" [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation #ttdSumInsured autocomplete="true" [maxLength]="10" class="form-control rupess br-0">
                             <mat-hint align="end" class="f-12">{{ttdSumInsured.value.length}}/10</mat-hint>
                             <mat-error>This field is required
@@ -129,10 +136,10 @@
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-20 ">Policy number</h5>
         </div>
-        <div class="col-md-3 form-group">
+        <div class="col-md-5 form-group">
             <mat-form-field floatLabel="never" appearance="standard">
-                <input class="form-control" matInput type="text" [maxLength]="20" formControlName="policyNum" #policyNum autocomplete="off" class="form-control br-0" placeholder="Enter Policy number">
-                <mat-hint align="end" class="f-12">{{policyNum.value.length}}/20</mat-hint>
+                <input class="form-control" matInput type="text" [maxLength]="30" formControlName="policyNum" #policyNum autocomplete="off" class="form-control br-0" placeholder="Enter Policy number">
+                <mat-hint align="end" class="f-12">{{policyNum.value.length}}/30</mat-hint>
                 <mat-error>This field is required
                 </mat-error>
             </mat-form-field>

@@ -108,7 +108,7 @@
                     <div class="col-md-7 pr-0">
                         <h5 class="mb-4 f-14">Name </h5>
                     </div>
-                    <div class="col-md-3 pr-0">
+                    <div class="col-md-3 pr-0" *ngIf="planDetails.value == ''  || planDetails.value !='1' && showinsuredMemberSum">
                         <h5 class="mb-4 f-14">Sum insured </h5>
                     </div>
                 </div>
@@ -186,19 +186,32 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-40">
+        <!-- <div class="row pt-32">
             <div class="col-md-4 pr-0 text-right">
-                <h5 class="m-0 pt-8">Policy number</h5>
+                <h5 class="m-0 pt-20">Policy number</h5>
             </div>
             <div class="col-md-5">
                 <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input #policyNum [maxLength]="20" autocomplete="off" class="form-control br-0" formControlName="policyNum" matInput type="text">
-                        <mat-hint align="end" class="f-12">{{policyNum.value.length}}/20</mat-hint>
+                    <mat-form-field floatLabel="never" appearance="standard">
+                        <input #policyNum [maxLength]="30" autocomplete="off" class="form-control br-0" formControlName="policyNum" matInput type="text" placeholder="Enter Policy number">
+                        <mat-hint align="end" class="f-12">{{policyNum.value.length}}/30</mat-hint>
                         <mat-error>This field is required
                         </mat-error>
                     </mat-form-field>
                 </div>
+            </div>
+        </div> -->
+        <div class="row pt-32">
+            <div class="col-md-4 pr-0 text-right">
+                <h5 class="m-0 pt-20 ">Policy number</h5>
+            </div>
+            <div class="col-md-5 form-group">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input class="form-control" matInput type="text" [maxLength]="30" formControlName="policyNum" #policyNum autocomplete="off" class="form-control br-0" placeholder="Enter Policy number">
+                    <mat-hint align="end" class="f-12">{{policyNum.value.length}}/30</mat-hint>
+                    <mat-error>This field is required
+                    </mat-error>
+                </mat-form-field>
             </div>
         </div>
         <div class="row pt-40">
@@ -413,7 +426,7 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input #exclusion [maxLength]="40" appInputValueValidation autocomplete="off" class="form-control br-0" formControlName="exclusion" matInput type="text">
+                            <input #exclusion [maxLength]="40"  autocomplete="off" class="form-control br-0" formControlName="exclusion" matInput type="text">
                             <mat-hint align="end" class="f-12">{{exclusion.value.length}}/40</mat-hint>
                         </mat-form-field>
                     </div>

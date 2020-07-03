@@ -68,14 +68,14 @@
                             <div class="col-md-12 p-0 b-b">
                                 <h4 class="f-300 roboto pl-16 pt-16 mb-16">Invoices to be reviewed</h4>
                             </div>
-                            <div *ngIf="!dataSourceInvoice" class="noDataFound">
+                            <div *ngIf="manualInvoice.length == 0  || !manualInvoice" class="noDataFound">
                                 <i class="material-icons font100">receipt</i>
                                 <p class="m-0"> No Data Found </p>
                             </div>
-                            <div class="row h-290" *ngIf="dataSourceInvoice">
-                                <div *ngFor="let invoice of dataSourceInvoice" class="col-md-12 ">
+                            <div class="row h-290" *ngIf="manualInvoice">
+                                <div *ngFor="let invoice of manualInvoice" class="col-md-12 ">
 
-                                    <div class="row pt-16 b-b">
+                                    <div class="row pt-16 b-b" *ngIf="invoice.auto == false">
                                         <div class="col-md-8 pl-8">
                                             <p class="f-15 mb-28">{{invoice.clientName}}</p>
                                             <p class="f-13 mb-12">{{invoice.invoiceNumber}}</p>
@@ -92,7 +92,7 @@
 
                         </div>
                     </div>
-                    <div *ngIf="dataSourceInvoice" class="bg-white col-md-12 text-right pt-8 pb-8">
+                    <div *ngIf="manualInvoice.length>0" class="bg-white col-md-12 text-right pt-8 pb-8">
                         <div (click)="changeParentsTab(5)" class="c-p">View all
                         </div>
 
@@ -129,7 +129,7 @@
                                 <div [appSkeletonLoading]="isLoading" appSkeletonLoading
                                     class="col-md-6 p-0 skeletonAnimation">
 
-                                    <p class="f-300 f-18 pt-28 text-center mb-0">Fee received</p>
+                                    <p class="f-300 f-18 pt-28 text-center mb-0">  received</p>
                                     <h2 class="text-primary text-center mb-0 pb-28 pt-8 relClass">
                                         <div [ngClass]="{'height23': isLoading}" class="bar" [value]="feeRecieved"
                                             appFormatNumber>

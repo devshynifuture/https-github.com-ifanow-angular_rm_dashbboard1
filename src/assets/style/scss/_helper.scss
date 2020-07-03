@@ -459,6 +459,10 @@ $lineheight:20px;
   padding-top: $p4 !important;
 }
 
+.pt-5 {
+  padding-top: 5px !important;
+}
+
 .pt-6 {
   padding-top: $p4 +2 !important;
 }
@@ -595,6 +599,10 @@ $lineheight:20px;
   padding-top: 130px !important;
 }
 
+.pt-135 {
+  padding-top: 135px !important;
+}
+
 .pt-150 {
   padding-top: 150px !important;
 }
@@ -629,6 +637,10 @@ $lineheight:20px;
 
 .pt-250 {
   padding-top: 250px !important;
+}
+
+.pt-300 {
+  padding-top: 300px !important;
 }
 
 .pr-0 {
@@ -719,12 +731,20 @@ $lineheight:20px;
   padding-right: 76px !important;
 }
 
+.pr-150 {
+  padding-right: 150px !important;
+}
+
 .pb-0 {
   padding-bottom: $zeropx !important;
 }
 
 .pb-4 {
   padding-bottom: $p4 !important;
+}
+
+.pb-5 {
+  padding-bottom: 5px !important;
 }
 
 .pb-6 {
@@ -895,6 +915,10 @@ $lineheight:20px;
   padding-left: 120px !important
 }
 
+.pl-150 {
+  padding-left: 150px !important
+}
+
 .wrapper-100 {
   padding: 100px;
 }
@@ -1011,6 +1035,10 @@ $lineheight:20px;
 
 .mt-16 {
   margin-top: $p4*4 !important;
+}
+
+.mt-18 {
+  margin-top: 18px !important;
 }
 
 .mt-20 {

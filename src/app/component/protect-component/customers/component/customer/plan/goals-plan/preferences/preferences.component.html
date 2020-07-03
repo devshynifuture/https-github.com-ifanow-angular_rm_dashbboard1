@@ -21,6 +21,7 @@
                                 <mat-form-field>
                                     <input matInput type="text" class="form-control br-0 rupess" formControlName="goalValue"
                                     appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY">
+                                    <mat-error>This field is required</mat-error>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -40,6 +41,7 @@
                                         <mat-option value="" disabled>Select option</mat-option>
                                         <mat-option [value]="month.number" *ngFor="let month of months">{{month.long}}</mat-option>
                                     </mat-select>
+                                    <mat-error>This field is required</mat-error>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -50,11 +52,15 @@
                                         <mat-option value="" disabled>Select option</mat-option>
                                         <mat-option [value]="year" *ngFor="let year of years">{{year}}</mat-option>
                                     </mat-select>
+                                    <mat-error>This field is required</mat-error>
                                 </mat-form-field>
                             </div>
                         </div>
+                        <div class="col-md-12" *ngIf="savingsSDError">
+                            <mat-error >Savings start date cannot be greater than savings end date</mat-error>
+                        </div>
                     </div>
-                    <div class="row pt-16 pb-16" *ngIf="data.singleOrMulti == 2">
+                    <div class="row pt-16 pb-16">
                         <div class="col-md-4 pl-0 pr-8 text-right">
                             <p class="roboto mb-0 pt-16">Savings end date
                                 <img src="/assets/images/svg/info.svg" matTooltip="Info about the action"
@@ -68,6 +74,7 @@
                                         <mat-option value="" disabled>Select option</mat-option>
                                         <mat-option [value]="month.number" *ngFor="let month of months">{{month.long}}</mat-option>
                                     </mat-select>
+                                    <mat-error>This field is required</mat-error>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -78,8 +85,12 @@
                                         <mat-option value="" disabled>Select option</mat-option>
                                         <mat-option [value]="year" *ngFor="let year of years">{{year}}</mat-option>
                                     </mat-select>
+                                    <mat-error>This field is required</mat-error>
                                 </mat-form-field>
                             </div>
+                        </div>
+                        <div class="col-md-12" *ngIf="savingsEDError">
+                            <mat-error >Savings end date cannot be greater than goal end date</mat-error>
                         </div>
                     </div>
                     <div class="row pt-16 pb-16 btl-1">
@@ -95,6 +106,7 @@
                                         <mat-option value="" disabled>Select option</mat-option>
                                         <mat-option [value]="month.number" *ngFor="let month of months">{{month.long}}</mat-option>
                                     </mat-select>
+                                    <mat-error>This field is required</mat-error>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -103,10 +115,14 @@
                                 <mat-form-field>
                                     <mat-select class="form-control br-0 br-none" formControlName="goalStartDateYear">
                                         <mat-option value="" disabled>Select option</mat-option>
-                                        <mat-option [value]="year" *ngFor="let year of years">{{year}}</mat-option>
+                                        <mat-option [value]="year" *ngFor="let year of goalStartYears">{{year}}</mat-option>
                                     </mat-select>
+                                    <mat-error>This field is required</mat-error>
                                 </mat-form-field>
                             </div>
+                        </div>
+                        <div class="col-md-12" *ngIf="goalSDError">
+                            <mat-error >Goal start date cannot be greater than goal end date</mat-error>
                         </div>
                     </div>
                     <div class="row pt-16 pb-16 btl-1" *ngIf="data.singleOrMulti == 2">
@@ -122,6 +138,7 @@
                                         <mat-option value="" disabled>Select option</mat-option>
                                         <mat-option [value]="month.number" *ngFor="let month of months">{{month.long}}</mat-option>
                                     </mat-select>
+                                    <mat-error>This field is required</mat-error>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -130,8 +147,9 @@
                                 <mat-form-field>
                                     <mat-select class="form-control br-0 br-none" formControlName="goalEndDateYear">
                                         <mat-option value="" disabled>Select option</mat-option>
-                                        <mat-option [value]="year" *ngFor="let year of years">{{year}}</mat-option>
+                                        <mat-option [value]="year" *ngFor="let year of goalStartYears">{{year}}</mat-option>
                                     </mat-select>
+                                    <mat-error>This field is required</mat-error>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -166,6 +184,7 @@
                                         <mat-option value="1">Breakup</mat-option>
                                         <mat-option value="2">No Breakup</mat-option>
                                     </mat-select>
+                                    <mat-error>This field is required</mat-error>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -173,9 +192,12 @@
                     </div>
                     <div class="row pt-32 pb-16">
                         <div class="col-md-4 pr-8 text-right">
-                            <p class="roboto mb-0 text-right pt-16">Step up <img src="/assets/images/svg/info.svg"
+                            <p class="roboto mb-0 text-right pt-16">
+                                Step up 
+                                <img src="/assets/images/svg/info.svg"
                                     matTooltip="Info about the action"
-                                    aria-label="Button that displays a tooltip when focused or hovered over"></p>
+                                    aria-label="Button that displays a tooltip when focused or hovered over">
+                            </p>
                         </div>
                         <div class="col-md-6 pl-0">
                             <div id="custom-slider">
@@ -188,6 +210,7 @@
                                     <input matInput type="text" class="form-control br-0" formControlName="stepUp"
                                     [value]="goalDetailsFG.get('stepUp').value"
                                     appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY">
+                                    <mat-error>This field is required</mat-error>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -218,6 +241,7 @@
                                 <mat-form-field>
                                     <input matInput type="text" class="form-control br-0"
                                         formControlName="name">
+                                        <mat-error>This field is required</mat-error>
                                 </mat-form-field>
                             </div>
                         </div>
@@ -254,82 +278,96 @@
                     <div class="row">
                         <div class="col-md-12">
                             <mat-radio-group aria-label="Select an option" formControlName="strategicOrTactical">
-                                <mat-radio-button value="1" class="b-a-custom text-primary">Strategic</mat-radio-button>
-                                <mat-radio-button value="2" class="b-a text-primitive">Tactical</mat-radio-button>
+                                <mat-radio-button [value]="1" class="b-a-custom text-primary">Strategic</mat-radio-button>
+                                <mat-radio-button [value]="2" class="b-a text-primitive">Tactical</mat-radio-button>
                             </mat-radio-group>
-                        </div>
-                    </div>
-                    
-                    <div class="row pt-32 pb-16">
-                        <div class="col-md-12 pl-8 pr-0">
-                            <mat-radio-group aria-label="Select an option" name="allocation_type" formControlName="staticOrProgressive">
-                                <mat-radio-button value="1" class="text-primary">Static asset allocation
-                                </mat-radio-button>
-                            </mat-radio-group>
-                        </div>
-                    </div>
-                    <div class="row pt-16 btl-1">
-                        <div class="col-md-6 pr-0">
-                            <p class="m-0 roboto text-black">Equity bifurcation</p>
-                            <div class="form-group mb-0">
-                                <mat-form-field class="w-100">
-                                    <input matInput formControlName="equityAllocation" type="text" class="form-control br-0">
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="col-md-6 pr-0">
-                            <p class="m-0 roboto text-black">Debt bifurcation</p>
-                            <div class="form-group mb-0">
-                                <mat-form-field class="w-100">
-                                    <input matInput formControlName="debtAllocation" type="text" class="form-control br-0">
-                                </mat-form-field>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row pt-32 pb-16">
-                        <div class="col-md-12 pl-8 pr-0">
-                            <mat-radio-group aria-label="Select an option" name="allocation_type" formControlName="staticOrProgressive">
-                                <mat-radio-button value="2" class="">Progressive asset allocation</mat-radio-button>
-                            </mat-radio-group>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p class="roboto m-0">Asset allocation stages</p>
-                            <div class="form-group mb-0">
-                                <mat-form-field>
-                                    <mat-select class="form-control br-0">
-                                        <mat-option value="">From today</mat-option>
-                                        <mat-option value="1">Bank FD</mat-option>
-                                        <mat-option value="2">Corporate FD</mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div>
-                            <div class="col-md-11 text-right">
-                                <p class="f-12 m-0 pt-4 roboto text-primitive">Today - Apr 2035</p>
-                            </div>
-                        </div>
-                        <div class="col-md-3 pr-0">
-                            <p class="m-0 roboto">Equity</p>
-                            <div class="form-group mb-0">
-                                <mat-form-field class="w-100">
-                                    <input matInput #amountInvest type="text" class="form-control br-0" value="100%">
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="col-md-3 pr-0">
-                            <p class="m-0 roboto">Debt</p>
-                            <div class="form-group mb-0">
-                                <mat-form-field class="w-100">
-                                    <input matInput #amountInvest type="text" class="form-control br-0" value="0%">
-                                </mat-form-field>
-                            </div>
                         </div>
                     </div>
 
-                    <div class="row pt-32">
-                        <div class="col-md-12">
-                            <h5 class="m-0 text-primitive c-p">+ Add stage</h5>
+                    <div class="col-md-12" *ngIf="assetAllocationFG.get('strategicOrTactical').value == 2">
+                        on tactical notes
+                    </div>
+                    
+                    <div class="col-md-12" *ngIf="assetAllocationFG.get('strategicOrTactical').value == 1">
+                        <div class="row pt-32 pb-16">
+                            <div class="col-md-12 pl-8 pr-0">
+                                <mat-radio-group aria-label="Select an option" name="allocation_type" formControlName="staticOrProgressive">
+                                    <mat-radio-button [value]="1" class="text-primary">Static asset allocation
+                                    </mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                        </div>
+                        <div class="row pt-16 btl-1">
+                            <div class="col-md-6 pr-0">
+                                <p class="m-0 roboto text-black">Equity bifurcation</p>
+                                <div class="form-group mb-0">
+                                    <mat-form-field class="w-100">
+                                        <input matInput formControlName="equityAllocation" type="text" class="form-control br-0">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-6 pr-0">
+                                <p class="m-0 roboto text-black">Debt bifurcation</p>
+                                <div class="form-group mb-0">
+                                    <mat-form-field class="w-100">
+                                        <input matInput formControlName="debtAllocation" type="text" class="form-control br-0">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row pt-32 pb-16">
+                            <div class="col-md-12 pl-8 pr-0">
+                                <mat-radio-group aria-label="Select an option" name="allocation_type" formControlName="staticOrProgressive">
+                                    <mat-radio-button value="2" class="">Progressive asset allocation</mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                        </div>
+                        <div class="row" formArrayName="rtaCamsFundNetSecurityQuestionsList">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p class="roboto m-0">Asset allocation stages</p>
+                                </div>
+                                <div class="col-md-3">
+                                    <p class="m-0 roboto">Equity</p>
+                                </div>
+                                <div class="col-md-3">
+                                    <p class="m-0 roboto">Debt</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group mb-0">
+                                        <mat-form-field>
+                                            <mat-select class="form-control br-0" [disabled]="assetAllocationFG.get('staticOrProgressive').value == 1">
+                                                <mat-option [value]=""
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-11 text-right">
+                                        <p class="f-12 m-0 pt-4 roboto text-primitive">Today - {{today | date:'MMM-yyyy'}}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 pr-0">
+                                    <div class="form-group mb-0">
+                                        <mat-form-field class="w-100">
+                                            <input matInput type="text" class="form-control br-0" [disabled]="assetAllocationFG.get('staticOrProgressive').value == 1">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 pr-0">
+                                    <div class="form-group mb-0">
+                                        <mat-form-field class="w-100">
+                                            <input matInput type="text" class="form-control br-0" [disabled]="assetAllocationFG.get('staticOrProgressive').value == 1">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="row pt-32">
+                            <div class="col-md-12">
+                                <h5 class="m-0 text-primitive c-p" (click)="addStages()">+ Add stage</h5>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -388,7 +426,9 @@
             <h4 class="mb-0 pt-8 text-white c-p f-16" (click)="close()">Cancel</h4>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit" (click)="save()">Save</button>
+            <app-progress-button (btnClick)="save()" class="br-0 text-inherit  "
+                [options]="barButtonOptions">
+            </app-progress-button>
         </div>
     </div>
 </div>

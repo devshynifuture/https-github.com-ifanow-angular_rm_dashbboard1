@@ -84,7 +84,7 @@ export class GoalsPlanComponent implements OnInit {
 
   // options set for donut chart
   // TODO:- remove 'series' legend from the tooltip
-  donutOptions:any = {
+  donutOptions = {
     chart: {
         type: 'pie',
         height: 170
@@ -92,12 +92,15 @@ export class GoalsPlanComponent implements OnInit {
     title: {
       text: ''
     },
+    tooltip: {
+      pointFormat: ' <b>{point.percentage:.1f}%</b>'
+    },
     credits: {
         enabled: false
     },
     yAxis: {
         title: {
-            text: 'Total percent market share'
+            text: ''
         }
     },
     plotOptions: {
@@ -106,17 +109,9 @@ export class GoalsPlanComponent implements OnInit {
         }
     },
     legend:{
-      floating: true,
+      floating: false,
     },
-    series: [{
-        data: [["Loan Amt",6],["Down Amt",4]],
-        size: '100%',
-        innerSize: '55%',
-        showInLegend:true,
-        dataLabels: {
-            enabled: false
-        }
-    }]
+    series: []
 }
 
   constructor(
@@ -137,13 +132,11 @@ export class GoalsPlanComponent implements OnInit {
 
   // load all goals created for the client and select the first goal
   loadAllGoals(){
-    this.plansService.getAllGoals(this.advisor_client_id).subscribe((data)=>{
+    this.allGoals = [];
+    this.plansService.getAllGoals(this.advisor_client_id).subscribe((data:any[])=>{
       if (data) {
-        setTimeout(() => {
-          this.allGoals = data.map(goal => this.mapGoalDashboardData(goal));
-          // let dom render first
-          this.loadSelectedGoalData(this.allGoals[0]);
-        }, 100);
+        this.allGoals = data.reverse().map(goal => this.mapGoalDashboardData(goal));
+        this.loadSelectedGoalData(this.allGoals[0]);
       }
     }, err => this.eventService.openSnackBar(err, "Dismiss"))
   }
@@ -167,7 +160,7 @@ export class GoalsPlanComponent implements OnInit {
         lumpsumSeries.series[0].data.push({
           y: Math.round(costDelay[k].lumpsum_total),
           name: k + ' years',
-          color: colors[count]
+          color: colors[count],
         })
         sipSeries.series[0].data.push({
           y: Math.round(costDelay[k].sip_total),
@@ -179,6 +172,21 @@ export class GoalsPlanComponent implements OnInit {
     }
     Highcharts.chart('monthly-chart-container-main', sipSeries);
     Highcharts.chart('lumpsum-chart-container-main', lumpsumSeries);
+
+    if(res.remainingData.loan) {
+      const loan = res.remainingData.loan;
+      const chart = {
+        data: [["Loan Amt", parseInt(loan.loanAmount)],["Down Amt",parseInt(loan.downPayment)]],
+        size: '100%',
+        innerSize: '55%',
+        showInLegend:true,
+        dataLabels: {
+            enabled: false
+        }
+    }
+    this.donutOptions.series = [chart];
+      Highcharts.chart('donut-chart-container', this.donutOptions);
+    }
   }
   
 
@@ -269,10 +277,11 @@ export class GoalsPlanComponent implements OnInit {
       state: 'open'
     };
 
-    this.eventService.changeUpperSliderState(fragmentData).subscribe(
+    const sub = this.eventService.changeUpperSliderState(fragmentData).subscribe(
       upperSliderData => {
         if (UtilService.isRefreshRequired(upperSliderData)) {
           this.loadAllGoals();
+          sub.unsubscribe();
         }
       }
     );
@@ -324,27 +333,20 @@ export class GoalsPlanComponent implements OnInit {
     }
 
     const subscription = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(sideBarData => {
-        if (UtilService.isDialogClose(sideBarData)) {
-          if(UtilService.isRefreshRequired(sideBarData)) {
-            switch (flag) {
-              case 'openCalculators':
-                // TODO:- add the save data method and then show snackbar
-                // sideBarData.data is the form value
-                this.eventService.openSnackBar('Goal calculation added successfully', 'OK');
-                break;
-            }
-          }
-          subscription.unsubscribe();
+      if (UtilService.isDialogClose(sideBarData)) {
+        if(UtilService.isRefreshRequired(sideBarData)) {
+          this.loadAllGoals();
         }
-      });
+        subscription.unsubscribe();
+      }
+    });
   }
 
   loadSelectedGoalData(goalData) {
     this.selectedGoal = goalData;
     setTimeout(() => {
       this.createChart(this.selectedGoal);
-    });
-    Highcharts.chart('donut-chart-container', this.donutOptions);
+    }, 100);
   }
 
   deleteGoal() {
@@ -361,8 +363,8 @@ export class GoalsPlanComponent implements OnInit {
         }
         this.plansService.deleteGoal(deleteObj).subscribe((data)=>{
           this.eventService.openSnackBar("Goal has been deleted successfully", "Dismiss");
-          this.allGoals = [];
-          this.loadAllGoals();
+          this.allGoals = this.allGoals.filter(goal => goal.id != this.selectedGoal.id);
+          this.loadSelectedGoalData(this.allGoals[0]);
           dialogRef.close()
         }, (err) => { this.eventService.openSnackBar(err, "Dismiss") })
       },
@@ -379,13 +381,23 @@ export class GoalsPlanComponent implements OnInit {
 
   // drag drop for assets brought from allocations tab
   drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    console.log(event.previousContainer.data[event.currentIndex]);
+    let asset = event.previousContainer.data[event.currentIndex];
+    // let obj = {
+    //   ...this.advisor_client_id,
+    //   assetId: asset.assetId,
+    //   assetType: asset.assetType
+    // }
+    // this.plansService.allocateOtherAssetToGoal(obj).subscribe(res => {
+    //   this.todo.push(res);
+    //   this.eventService.openSnackBar("Asset allocated to goal", "Dismiss");
+    // })
   }
 
   // dummy for allocation dragdrop list
   todo:any[] = [];
   logger(event) {
-    console.log('s')
+    // console.log(event)
   }
 }
 

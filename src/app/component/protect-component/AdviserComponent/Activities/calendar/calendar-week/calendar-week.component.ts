@@ -1,5 +1,5 @@
-import { Component,OnInit } from '@angular/core';
-import { MatDialog} from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { calendarService } from './../calendar.service';
 import { AuthService } from '../../../../../../auth-service/authService';
 import { EventDialog } from './../event-dialog';
@@ -19,12 +19,12 @@ export class CalendarWeekComponent implements OnInit {
   day;
   month;
   year;
-  week:any = [];
+  week: any = [];
   selectedDate;
   dialogData: any
   currentMonth;
   addLastMonthDays;
-  daysArr:any = [];
+  daysArr: any = [];
   formatedEvent = []
   eventData: any = [];
   eventTitle;
@@ -38,19 +38,19 @@ export class CalendarWeekComponent implements OnInit {
   private unSubcrip: Subscription;
   constructor(public dialog: MatDialog, private calenderService: calendarService) { }
 
-  timeArry:any = [];
+  timeArry: any = [];
   ngOnInit() {
-    let am:boolean = true;
-    for(let i = 1; i < 13; i++){
-      if(am){
-        this.timeArry.push(i+' AM');
+    let am: boolean = true;
+    for (let i = 1; i < 13; i++) {
+      if (am) {
+        this.timeArry.push(i + ' AM');
       }
-      else{
-        this.timeArry.push(i+' PM');
+      else {
+        this.timeArry.push(i + ' PM');
       }
-      if(i == 12 && am){
+      if (i == 12 && am) {
         i = 0
-        am =false;
+        am = false;
       }
     }
     this.currentMonth = new Date().getMonth();
@@ -66,41 +66,41 @@ export class CalendarWeekComponent implements OnInit {
     this.unSubcrip = this.calenderService.updateDayArr().subscribe((data: any) => {
       this.getWeek(data[1].viewDate);
       this.daysArr = data[0];
-      this.day=data[1].selectedDate;
-      this.month=data[1].month;
-      this.year=data[1].year;
-      this.numbersOfDays= data[1].numbersOfDays;
-      this.lastMonthDays= data[1].lastMonthDays;
-      this.nextMonthDays =data[1].nextMonthDays;
-      this.viewDate =data[1].viewDate;
-      this.addLastMonthDays =data[1].addLastMonthDays;
+      this.day = data[1].selectedDate;
+      this.month = data[1].month;
+      this.year = data[1].year;
+      this.numbersOfDays = data[1].numbersOfDays;
+      this.lastMonthDays = data[1].lastMonthDays;
+      this.nextMonthDays = data[1].nextMonthDays;
+      this.viewDate = data[1].viewDate;
+      this.addLastMonthDays = data[1].addLastMonthDays;
       // let selectedDate = this.year + "," + this.month+ "," +this.day
-      console.log(this.daysArr,this.day,"this.daysArr....",this.week);
+      console.log(this.daysArr, this.day, "this.daysArr....", this.week);
     });
-    
+
   }
 
-  getWeek(day){
+  getWeek(day) {
     var d = new Date(day);
     this.week = [];
-    
+
     var _days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     var _months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     for (let i = 1; i <= 7; i++) {
-        let first = d.getDate() - d.getDay() + i; 
-        let dt = new Date(d.setDate(first));
-        var _day = _days[dt.getDay()];
-        var _month = _months[dt.getMonth()];
-        var _date:any = dt.getDate();
-        if(_date < 10 ){
-            _date = '0' +_date;
-        }
-        var _year = dt.getFullYear();
-        var fulldate = _day+' '+_month+' '+_date+' '+_year+' ';
-        this.week.push(new Date(fulldate));
+      let first = d.getDate() - d.getDay() + i;
+      let dt = new Date(d.setDate(first));
+      var _day = _days[dt.getDay()];
+      var _month = _months[dt.getMonth()];
+      var _date: any = dt.getDate();
+      if (_date < 10) {
+        _date = '0' + _date;
       }
-      // console.log(newWeek,"newWeek",newDate);
-      
+      var _year = dt.getFullYear();
+      var fulldate = _day + ' ' + _month + ' ' + _date + ' ' + _year + ' ';
+      this.week.push(new Date(fulldate));
+    }
+    // console.log(newWeek,"newWeek",newDate);
+
   }
 
   getEvent() {
@@ -109,25 +109,25 @@ export class CalendarWeekComponent implements OnInit {
       "userId": AuthService.getUserInfo().advisorId
     }
     this.calenderService.getEvent(eventData).subscribe((data) => {
-      
+
       if (data != undefined) {
-        
+
         this.eventData = data;
-        
+
         this.formatedEvent = [];
-        
+
         for (let e of this.eventData) {
-          if(e.start){
-            e["day"] = this.formateDate(!e.start.dateTime? new Date(e.created): new Date(e.start.dateTime));
-            e["month"] = this.formateMonth(!e.start.dateTime ?new Date(e.created) : new Date(e.start.dateTime));
+          if (e.start) {
+            e["day"] = this.formateDate(!e.start.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
+            e["month"] = this.formateMonth(!e.start.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
             e["year"] = this.formateYear(!e.start.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
-            e["startTime"] = this.formateTime(!e.start.dateTime? new Date(e.created) : new Date(e.start.dateTime));
+            e["startTime"] = this.formateTime(!e.start.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
             e["endTime"] = this.formateTime(!e.end.dateTime ? new Date(e.created) : new Date(e.end.dateTime));
             this.formatedEvent.push(e);
             // console.log(this.formatedEvent,"formatedEvent calender1",);
           }
         }
-        console.log(data,"week events calender",this.formatedEvent);
+        console.log(data, "week events calender", this.formatedEvent);
 
       }
     });
@@ -199,10 +199,10 @@ export class CalendarWeekComponent implements OnInit {
     return yyyy;
   }
 
-  returnNumber(num){
+  returnNumber(num) {
     // num.toUpperCase()
-  //  console.log(parseInt(num) +1+' '+ num.charAt(num.length - 3).toUpperCase() + num.charAt(num.length - 2).toUpperCase(),"time event");
-    return parseInt(num) + 1 +' '+ num.charAt(num.length - 3).toUpperCase() + num.charAt(num.length - 2).toUpperCase()
+    //  console.log(parseInt(num) +1+' '+ num.charAt(num.length - 3).toUpperCase() + num.charAt(num.length - 2).toUpperCase(),"time event");
+    return parseInt(num) + 1 + ' ' + num.charAt(num.length - 3).toUpperCase() + num.charAt(num.length - 2).toUpperCase()
   }
 
   formateTime(date) {
@@ -217,10 +217,10 @@ export class CalendarWeekComponent implements OnInit {
 
   addEvent(day, month, year, time) {
     let hr;
-    if(time.charAt(time.length - 2)+time.charAt(time.length - 1) == 'PM'){
+    if (time.charAt(time.length - 2) + time.charAt(time.length - 1) == 'PM') {
       hr = 12 + parseInt(time);
     }
-    else{
+    else {
       hr = parseInt(time);
     }
     let event: any;
@@ -232,7 +232,7 @@ export class CalendarWeekComponent implements OnInit {
       year += 1;
     }
     let eventDate = new Date(month + "/" + day + "/" + year);
-    eventDate.setHours(hr-1)
+    eventDate.setHours(hr - 1)
     event = {
       "eventId": "",
       "summary": "",
@@ -240,11 +240,11 @@ export class CalendarWeekComponent implements OnInit {
       "title": "",
       "description": "",
       "start": {
-        "dateTime":eventDate,
+        "dateTime": eventDate,
         "timeZone": null
       },
       "end": {
-        "dateTime":eventDate,
+        "dateTime": eventDate,
         "timeZone": null
       },
       "recurrence": "",
@@ -292,7 +292,8 @@ export class CalendarWeekComponent implements OnInit {
   openDialog(eventData): void {
 
     const dialogRef = this.dialog.open(EventDialog, {
-      width: '50%',
+      width: '576px',
+      height: '673px',
       data: eventData
     });
 
@@ -337,7 +338,7 @@ export class CalendarWeekComponent implements OnInit {
           })
         }
       }
-      if(result == 'delete'){
+      if (result == 'delete') {
         this.getEvent();
       }
     });
@@ -383,6 +384,6 @@ export class CalendarWeekComponent implements OnInit {
   ngOnDestroy() {
     this.unSubcrip.unsubscribe();
     console.log("unsubscribe");
-    
+
   }
 }

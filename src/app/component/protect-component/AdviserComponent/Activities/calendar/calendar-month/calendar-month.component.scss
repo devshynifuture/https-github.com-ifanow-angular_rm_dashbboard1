@@ -16,13 +16,26 @@
              border-right: 0px !important;
          }
      }
-     .column:hover {
-         overflow: visible;
-     }
-     .eInfo:hover {
-         position: absolute;
-         overflow-y: visible;
-         background: #FFFFFF;
+    //  .column:hover {
+    //      overflow: visible;
+    //  }
+     .eInfo {
+         position: relative;
+         .more{
+            position: absolute;
+            bottom: 0px !important;
+            height: auto;
+            width: auto;
+            border: none;
+            background: #fff;
+            padding-left: 9px;
+            padding-bottom: 5px;
+            z-index: 1;
+            cursor: pointer;
+            font-size: 12px;
+            text-align: left;
+            font-weight: bold;
+         }
      }
      #ui-calendar {
          position: relative;
@@ -105,17 +118,10 @@
          overflow: hidden;
          text-align: left;
          position: relative;
+         line-height: 20px;
          z-index: 1;
      }
-     li:hover {
-         overflow: visible;
-         background-color: #fff;
-         position: absolute;
-         z-index: 11;
-         white-space: initial;
-         box-shadow: 1px 1px 1px #ccc;
-         width: 98%;
-     }
+     
      li:before {
          content: "\2022";
          color: #84BDF3;
@@ -186,10 +192,9 @@
      background: #3f51b5;
  }
  
- ::ng-deep .mat-select {
-     border: 0px !important;
- }
- 
+ //  ::ng-deep .mat-select {
+ //      border: 0px !important;
+ //  }
  .none {
      display: none;
  }

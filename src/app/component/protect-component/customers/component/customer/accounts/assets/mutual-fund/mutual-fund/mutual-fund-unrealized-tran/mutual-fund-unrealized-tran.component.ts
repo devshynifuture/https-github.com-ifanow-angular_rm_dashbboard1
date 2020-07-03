@@ -97,6 +97,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         let param1 = queryParamMap['params'];
         this.clientId = parseInt(param1.clientId)
         this.advisorId = parseInt(param1.advisorId)
+        this.toDate = param1.toDate;
         this.addedData = true;
         console.log('2423425', param1)
       }
@@ -154,6 +155,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         this.clientId = parseInt(param1.clientId)
         this.advisorId = parseInt(param1.advisorId)
         this.toDate = (param1.toDate)
+        this.isBulkEmailing = true;
+
         if (this.route.url.split('?')[0] == '/pdf/allTransactions') {
           this.viewMode = 'All Transactions'
           this.mode = 'All Transactions'
@@ -516,8 +519,10 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       this.mfService.changeShowMutualFundDropDown(false);
       this.mutualFundList = this.mutualFund.mutualFundList;
       // this.asyncFilter(this.mutualFundList);
-      this.asyncFilter(this.mfData.mutualFundList);
-
+      if(!this.isBulkEmailing){
+        this.asyncFilter(this.mfData.mutualFundList);
+      }
+   
       // this.initValueOnInit();
       // if (this.mfData) {
       //   this.mfData.advisorData = this.mfService.getPersonalDetails(this.advisorId);
@@ -1020,7 +1025,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         clientId: this.clientId,
         advisorId: this.advisorId,
         fromEmail: 'devshyni@futurewise.co.in',
-        toEmail: 'abhishek@futurewise.co.in'
+        toEmail: 'futurewisejunkmail@gmail.com'
       }
       this.utilService.bulkHtmlToPdf(obj)
         this.utilService.htmlToPdf(para, 'transaction', true, this.fragmentData, '', '')

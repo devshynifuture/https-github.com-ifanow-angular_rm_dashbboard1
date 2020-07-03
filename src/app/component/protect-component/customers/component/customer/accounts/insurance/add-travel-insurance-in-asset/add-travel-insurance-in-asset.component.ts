@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChildren, Input, QueryList } from '@angular/core';
 import { FormArray, Validators, FormBuilder } from '@angular/forms';
 import { ValidatorType } from 'src/app/services/util.service';
-import { MatInput, MAT_DATE_FORMATS } from '@angular/material';
+import { MatInput, MAT_DATE_FORMATS, MatDialog } from '@angular/material';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { CustomerService } from '../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -9,6 +9,8 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { DatePipe } from '@angular/common';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
 
 @Component({
   selector: 'app-add-travel-insurance-in-asset',
@@ -60,8 +62,9 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
   showSumAssured = false;
   insuredMemberList: any;
   options: any;
+  bankList: any;
 
-  constructor(private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService) { }
+  constructor(private dialog: MatDialog,private datePipe: DatePipe, private fb: FormBuilder, private subInjectService: SubscriptionInject, private customerService: CustomerService, private eventService: EventService,private enumService:EnumServiceService) { }
   validatorType = ValidatorType
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   @Input() set data(data) {
@@ -324,6 +327,7 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
       tpaName: [this.dataForEdit ? this.dataForEdit.tpaName : null],
       advisorName: [this.dataForEdit ? this.dataForEdit.advisorName : null],
       serviceBranch: [this.dataForEdit ? this.dataForEdit.serviceBranch : null],
+      bankAccount: [this.dataForEdit ? parseInt(this.dataForEdit.linkedBankAccount) : null],
       nominees: this.nominees,
       getNomineeName: this.fb.array([this.fb.group({
         name: [''],
@@ -408,7 +412,30 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
     // this.familyMemberId = data.familyMemberId;
   }
   ngOnInit() {
+    this.bankList = this.enumService.getBank();
     this.minDate.setFullYear(this.minDate.getFullYear() - 100);
+  }
+  openDialog(eventData): void {
+    const dialogRef = this.dialog.open(LinkBankComponent, {
+      width: '50%',
+      data:{bankList: this.bankList, userInfo: true} 
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      setTimeout(() => {
+        this.bankList = this.enumService.getBank();
+      }, 5000);
+    });
+
+  }
+  getBank(){
+    if(this.enumService.getBank().length > 0){
+      this.bankList = this.enumService.getBank();
+    }
+    else{
+      this.bankList = [];
+    }
+    console.log(this.bankList,"this.bankList2");
   }
   dateChange(value, form, formValue) {
     if (form == 'policyExpiryDate' && formValue) {
@@ -528,6 +555,7 @@ export class AddTravelInsuranceInAssetComponent implements OnInit {
         "serviceBranch": this.travelInsuranceForm.get('serviceBranch').value,
         "insuranceSubTypeId": this.inputData.insuranceSubTypeId,
         'sumInsuredIdv': this.travelInsuranceForm.get('sumAssuredIdv').value,
+        'linkedBankAccount': this.travelInsuranceForm.get('bankAccount').value,
         "policyFeatures": featureList,
         "id": (this.id) ? this.id : null,
         insuredMembers: memberList,
