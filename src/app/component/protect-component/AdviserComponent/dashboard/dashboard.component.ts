@@ -266,6 +266,13 @@ export class DashboardComponent implements OnInit {
           this.showInput = false;
           data.forEach(element => {
             element['selected'] == false;
+            this.selectedItem.reset();
+            if (this.calculateDifferenc(element.createdOn) <= 1) {
+              element['createdDate'] = this.calculateDifferenc(element.createdOn);
+            }
+            else {
+              element['createdDate'] = this.datePipe.transform(element.createdOn, 'MMMM d, y');
+            }
           });
           this.todoListData = data;
           // this.todoListData.unshift(data);
