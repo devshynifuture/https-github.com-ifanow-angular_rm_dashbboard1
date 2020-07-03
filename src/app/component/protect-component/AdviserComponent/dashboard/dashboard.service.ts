@@ -33,4 +33,7 @@ export class DashboardService {
     return this.http.get(apiConfig.USER + appConfig.GET_BIRTHDAY_OR_ANNIVERSARY, httpParams);
   }
 
+  last7DaysTransactionStatus(data) {
+    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.LAST_7_DAYS_TRANSACTION_STATUS, data, 1);
+  }
 }

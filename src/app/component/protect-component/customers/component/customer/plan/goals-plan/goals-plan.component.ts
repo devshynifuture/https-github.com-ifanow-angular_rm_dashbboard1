@@ -381,13 +381,23 @@ export class GoalsPlanComponent implements OnInit {
 
   // drag drop for assets brought from allocations tab
   drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    console.log(event.previousContainer.data[event.currentIndex]);
+    let asset = event.previousContainer.data[event.currentIndex];
+    // let obj = {
+    //   ...this.advisor_client_id,
+    //   assetId: asset.assetId,
+    //   assetType: asset.assetType
+    // }
+    // this.plansService.allocateOtherAssetToGoal(obj).subscribe(res => {
+    //   this.todo.push(res);
+    //   this.eventService.openSnackBar("Asset allocated to goal", "Dismiss");
+    // })
   }
 
   // dummy for allocation dragdrop list
   todo:any[] = [];
   logger(event) {
-    console.log('s')
+    // console.log(event)
   }
 }
 
