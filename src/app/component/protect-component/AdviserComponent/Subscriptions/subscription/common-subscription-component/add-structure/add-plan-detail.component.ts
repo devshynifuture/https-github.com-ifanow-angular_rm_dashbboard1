@@ -42,9 +42,9 @@ export class AddPlanDetailComponent implements OnInit {
   }
 
   @Input() set data(data) {
-    this.isCheckPlanData = data;
+    this.isCheckPlanData = data.value;
     this.clientRoles = this.enumService.getClientRole();
-    this.getSinglePlanData(data);
+    this.getSinglePlanData(data.value);
   }
 
   isPlanValid = false;
