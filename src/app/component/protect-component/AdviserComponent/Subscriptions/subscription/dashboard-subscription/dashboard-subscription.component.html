@@ -129,7 +129,7 @@
                                 <div [appSkeletonLoading]="isLoading" appSkeletonLoading
                                     class="col-md-6 p-0 skeletonAnimation">
 
-                                    <p class="f-300 f-18 pt-28 text-center mb-0">  received</p>
+                                    <p class="f-300 f-18 pt-28 text-center mb-0"> received</p>
                                     <h2 class="text-primary text-center mb-0 pb-28 pt-8 relClass">
                                         <div [ngClass]="{'height23': isLoading}" class="bar" [value]="feeRecieved"
                                             appFormatNumber>
@@ -233,9 +233,22 @@
                                                 <th *matHeaderCellDef class="w-22" mat-header-cell> Fee amount</th>
                                                 <td (click)="Open(element)" *matCellDef="let element" class="c-p"
                                                     mat-cell>
-                                                    <div class="bar text-primary text-underline">
+                                                    <!-- <div class="bar text-primary text-underline">
                                                         {{isLoadingSubSummary ? ' ' : 'View details'}}
+                                                    </div> -->
+                                                    <div class="bar" *ngIf="isLoadingSubSummary">
                                                     </div>
+                                                    <div class="bar text-primary text-underline c-p"
+                                                        (click)="Open('open',element)"
+                                                        *ngIf="element.startsOn==undefined && element.feeTypeId==1">
+                                                        {{isLoadingSubSummary ? ' ' : 'View details'}} </div>
+                                                    <div appFormatNumber
+                                                        *ngIf="element.startsOn && element.feeTypeId==1">
+                                                        ₹ {{element.pricing}}</div>
+                                                    <div appFormatNumber (click)="Open('open',element)"
+                                                        *ngIf="element.feeTypeId==2"
+                                                        class="text-primary text-underline c-p">
+                                                        View details</div>
                                                 </td>
                                             </ng-container>
                                             <ng-container matColumnDef="billing">
