@@ -180,8 +180,10 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     let observer:Observable<any>;
     const obj = this.preferenceService.createGoalObjForGoalTypes(this.data, this.goalDetailsFG.value);
     if(this.data.singleOrMulti == 1) {
+      this.barButtonOptions.active = false;
       observer = this.planService.saveSingleGoalPreference(obj);
     } else {
+      this.barButtonOptions.active = false;
       observer = this.planService.saveMultiGoalPreference(obj);
     }
 
@@ -274,6 +276,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       this.barButtonOptions.active = false;
       this.subInjectService.setRefreshRequired();
     }, err => {
+      this.barButtonOptions.active = false;
       this.eventService.openSnackBar(err, "Dismiss");
     })
   }
