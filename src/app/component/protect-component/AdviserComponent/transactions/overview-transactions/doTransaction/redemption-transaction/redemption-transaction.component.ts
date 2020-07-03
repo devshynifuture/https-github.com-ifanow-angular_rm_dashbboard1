@@ -86,6 +86,8 @@ export class RedemptionTransactionComponent implements OnInit {
 
   @Input()
   set data(data) {
+    this.folioList =[]
+    this.transactionSummary = {};
     this.inputData = data;
     this.transactionType = data.transactionType;
     this.selectedFamilyMember = data.selectedFamilyMember;
@@ -93,6 +95,9 @@ export class RedemptionTransactionComponent implements OnInit {
       this.schemeName = data.mutualFundData.schemeName
       this.folioNumber = data.mutualFundData.folioNumber
       this.mutualFundData = data.mutualFundData
+      let foilo = {'folioNumber': this.folioNumber}
+      let schemeName = {'schemeName': this.schemeName}
+      this.folioList.push(foilo)
     }
     if (this.isViewInitCalled) {
       // this.getdataForm('');
@@ -195,7 +200,7 @@ export class RedemptionTransactionComponent implements OnInit {
       employeeContry: [(!data) ? '' : data.orderVal, [Validators.required]],
       redeemType: [(data.redeemType) ? data.redeemType : '1', [Validators.required]],
       modeOfPaymentSelection: [(!data) ? '' : data.modeOfPaymentSelection, [Validators.required]],
-      investmentAccountSelection: [(data.folioNo) ? this.mutualFundData.folioNumber : '', [Validators.required]],
+      investmentAccountSelection: [(data) ? this.mutualFundData.folioNumber : '', [Validators.required]],
       redeem: [(!data) ? '' : data.switchType, [Validators.required]],
       schemeRedeem: [(!data) ? '' : this.mutualFundData.schemeName, [Validators.required]],
 
@@ -209,6 +214,7 @@ export class RedemptionTransactionComponent implements OnInit {
       this.selectedFolio(this.folioDetails);
       this.getSchemeWiseFolios();
     }
+    
   }
 
   deleteChildTran(element) {
