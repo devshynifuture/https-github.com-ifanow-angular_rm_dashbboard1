@@ -18,6 +18,9 @@ import {MatTableDataSource} from '@angular/material';
 export class RedemptionTransactionComponent implements OnInit {
 
   oldDefaultData;
+  schemeName: any;
+  folioNumber: any;
+  mutualFundData: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
               private fb: FormBuilder, private eventService: EventService,
@@ -86,7 +89,11 @@ export class RedemptionTransactionComponent implements OnInit {
     this.inputData = data;
     this.transactionType = data.transactionType;
     this.selectedFamilyMember = data.selectedFamilyMember;
-
+    if(data.mutualFundData){
+      this.schemeName = data.mutualFundData.schemeName
+      this.folioNumber = data.mutualFundData.folioNumber
+      this.mutualFundData = data.mutualFundData
+    }
     if (this.isViewInitCalled) {
       // this.getdataForm('');
     }
@@ -188,9 +195,9 @@ export class RedemptionTransactionComponent implements OnInit {
       employeeContry: [(!data) ? '' : data.orderVal, [Validators.required]],
       redeemType: [(data.redeemType) ? data.redeemType : '1', [Validators.required]],
       modeOfPaymentSelection: [(!data) ? '' : data.modeOfPaymentSelection, [Validators.required]],
-      investmentAccountSelection: [(data.folioNo) ? data.folioNo : '', [Validators.required]],
+      investmentAccountSelection: [(data.folioNo) ? this.mutualFundData.folioNumber : '', [Validators.required]],
       redeem: [(!data) ? '' : data.switchType, [Validators.required]],
-      schemeRedeem: [(!data) ? '' : data.scheme, [Validators.required]],
+      schemeRedeem: [(!data) ? '' : this.mutualFundData.schemeName, [Validators.required]],
 
     });
     this.filterSchemeList = this.redemptionTransaction.controls.schemeRedeem.valueChanges.pipe(

@@ -14,7 +14,7 @@
                 <div class="col-md-6 pr-0">
                     <div class="right text-right">
                         <button mat-stroked-button *ngIf="!isLoading && category.length != 0" class="btn-default addon"
-                            (click)="exportToExcelReport('category', null)"><i
+                            (click)="exportToExcelReport('category', null, null, null)"><i
                                 class="material-icons">add</i>XLS</button>
                         <button mat-stroked-button class="btn-success ml-8 addon" (click)="aumReport()">Back</button>
                     </div>
@@ -95,7 +95,7 @@
                                     <div class="d-block text-right"
                                         *ngIf="category.showCategory==false && category.subCategoryList!=0">
                                         <button mat-icon-button
-                                            (click)="exportToExcelReport('sub-category', categoryIndex)">
+                                            (click)="exportToExcelReport('sub-category', categoryIndex, null, null)">
                                             <mat-icon>
                                                 save_alt
                                             </mat-icon>
@@ -154,7 +154,7 @@
                                                     <div class="d-block text-right"
                                                         *ngIf="subcategory.showSubCategory==false && subcategory.schemes?.length > 0">
                                                         <button mat-icon-button
-                                                            (click)="exportToExcelReport('schemes', categoryIndex)">
+                                                            (click)="exportToExcelReport('schemes', categoryIndex, subCatIndex, null)">
                                                             <mat-icon>
                                                                 save_alt
                                                             </mat-icon>
@@ -202,7 +202,7 @@
                                                                 <td>{{scheme.weightInPercentage | number :'1.2-2'}}{{'%'}}
                                                                 </td>
                                                                 <td class="text-center"
-                                                                    (click)="showApplicantName(scheme, schemeIndex, categoryIndex)">
+                                                                    (click)="showApplicantName(scheme, schemeIndex, subCatIndex, categoryIndex)">
                                                                     <i class="material-icons  b-a f-14 mt-4 c-p"
                                                                         *ngIf="scheme.showScheme">add</i>
                                                                     <i class="material-icons b-a f-14 mt-4 c-p"
@@ -216,7 +216,7 @@
                                                                     <div class="d-block text-right"
                                                                         *ngIf="!scheme.showScheme && scheme.clientList?.length > 0">
                                                                         <button mat-icon-button
-                                                                            (click)="exportToExcelReport('applicant', categoryIndex)">
+                                                                            (click)="exportToExcelReport('applicant', categoryIndex, subCatIndex, schemeIndex)">
                                                                             <mat-icon>
                                                                                 save_alt
                                                                             </mat-icon>

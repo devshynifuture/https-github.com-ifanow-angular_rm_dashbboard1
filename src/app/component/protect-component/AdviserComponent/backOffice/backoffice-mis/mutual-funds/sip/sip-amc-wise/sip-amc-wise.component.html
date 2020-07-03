@@ -9,7 +9,7 @@
                     <div class="text-right">
                         <button mat-stroked-button class="btn-default addon"
                             *ngIf="!isLoading && filteredArray.length > 0"
-                            (click)="exportToExcelSheet('amc-wise', null,null)"><i
+                            (click)="exportToExcelSheet('amc-wise', null,null, null)"><i
                                 class="material-icons">add</i>XLS</button>
                         <button mat-stroked-button class="btn-success ml-8 addon" (click)="aumReport()">Back</button>
                     </div>
@@ -107,7 +107,7 @@
                                     <div class="d-block text-right"
                                         *ngIf="category.showCategory==false && category.schemeList?.length > 0">
                                         <button mat-icon-button
-                                            (click)="exportToExcelSheet('scheme-wise', catIndex, null)">
+                                            (click)="exportToExcelSheet('scheme-wise', catIndex, null, null)">
                                             <mat-icon>
                                                 save_alt
                                             </mat-icon>
@@ -198,7 +198,7 @@
                                                     <div class="d-block text-right"
                                                         *ngIf="!subcategory.showSubCategory && !isLoadingCategory && subcategory.investorList?.length > 0">
                                                         <button mat-icon-button
-                                                            (click)="exportToExcelSheet('investor-wise', subCatIndex, null)">
+                                                            (click)="exportToExcelSheet('investor-wise', catIndex, subCatIndex, null)">
                                                             <mat-icon>
                                                                 save_alt
                                                             </mat-icon>
@@ -291,7 +291,7 @@
                                                                     <div class="d-block text-right"
                                                                         *ngIf="subcategory.showSubCategory==false && !isLoadingSubCategory && inv.applicantList?.length > 0">
                                                                         <button mat-icon-button
-                                                                            (click)="exportToExcelSheet('applicant-wise', investorIndex, null)">
+                                                                            (click)="exportToExcelSheet('applicant-wise', catIndex, subCatIndex, investorIndex)">
                                                                             <mat-icon>
                                                                                 save_alt
                                                                             </mat-icon>

@@ -1001,7 +1001,7 @@ export class MutualFundSummaryComponent implements OnInit {
     }
     const fragmentData = {
       flag: 'addNewTransaction',
-      data: { isAdvisorSection: this.isAdvisorSection, flag: 'addNewTransaction' },
+      data: { isAdvisorSection: this.isAdvisorSection, flag: 'addNewTransaction',data:data },
       id: 1,
       state: 'open65',
       componentName: OnlineTransactionComponent,
