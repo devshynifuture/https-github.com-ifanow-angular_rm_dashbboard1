@@ -3,7 +3,7 @@
         <h4 class="wrapper-20 m-0">{{!isSave?'EDIT':''}} Fixed fee structure</h4>
     </div>
 
-    <div class="col-md-4 text-right" *ngIf="subData.status == 2 || subData.status == 3">
+    <div class="col-md-4 text-right" *ngIf="subData.status == 1">
         <div class="wrapper-12 pb-10" *ngIf="subData.isAdvisor">
             <button [ngClass]="{'v-h':!isSave}" mat-stroked-button class="br-0 btn-primary mr-20"
                 (click)="enableForm()">
