@@ -77,8 +77,10 @@
 
                                     <div class="row pt-16 b-b" *ngIf="invoice.auto == false">
                                         <div class="col-md-8 pl-8">
-                                            <p class="f-15 mb-28">{{invoice.clientName}}</p>
-                                            <p class="f-13 mb-12">{{invoice.invoiceNumber}}</p>
+                                            <p (click)="openInvoice(invoice,'invoiceUpperSlider','')"
+                                                class="f-15 mb-28 c-p">{{invoice.clientName}}</p>
+                                            <p (click)="openInvoice(invoice,'invoiceUpperSlider','')"
+                                                class="f-13 mb-12 c-p">{{invoice.invoiceNumber}}</p>
                                         </div>
                                         <div class="col-md-4 p-0">
                                             <p class="f-15 mb-28">₹<span [value]="invoice.finalAmount"
