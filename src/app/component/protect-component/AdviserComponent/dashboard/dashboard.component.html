@@ -952,11 +952,13 @@
       <mat-tab label="To-do">
         <div class="pt-12">
           <div class="row">
-            <div class="col-md-6 p-0 d-flex pl-10">
+            <div class="col-md-9 p-0 d-flex pl-10">
               <img (click)="showInput=true" src="/assets/images/svg/add-blue.svg" class="c-p">
-              <p *ngIf="showInput==false" class="m-0 text-black pl-12 pt-10">Add a to-do</p>
-              <input *ngIf="showInput" autofocus #inputValue (keyup.enter)="addTodoList(inputValue.value)"
-                placeholder="Enter note">
+              <p *ngIf="showInput==false" class="m-0 text-black pl-12 pt-2">Add a to-do</p>
+
+              <input *ngIf="showInput" matInput class="form-control" autofocus #inputValue
+                (keyup.enter)="addTodoList(inputValue.value)" placeholder="Enter note">
+
             </div>
 
             <!-- <div class="col-md-6 p-0 text-right">
@@ -991,11 +993,11 @@
                   <mat-radio-button value={{singleNote.id}}>
                   </mat-radio-button>
                 </div>
-                <div class="col-md-8 pl-0">
+                <div class="col-md-8 pl-0 pt-2">
                   {{singleNote.activityName}}
                 </div>
-                <div class="col-md-2 pl-0">
-                  <span *ngIf="selectedItem.value==singleNote.id" class="material-icons c-p"
+                <div class="col-md-2 pl-0 pt-4">
+                  <span *ngIf="selectedItem.value==singleNote.id" class="material-icons c-p f-20"
                     (click)="deleteTodoList(singleNote,i)">
                     delete
                   </span>
