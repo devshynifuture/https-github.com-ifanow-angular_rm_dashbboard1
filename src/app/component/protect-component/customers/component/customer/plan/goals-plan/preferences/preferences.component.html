@@ -426,7 +426,9 @@
             <h4 class="mb-0 pt-8 text-white c-p f-16" (click)="close()">Cancel</h4>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit" (click)="save()">Save</button>
+            <app-progress-button (btnClick)="save()" class="br-0 text-inherit  "
+                [options]="barButtonOptions">
+            </app-progress-button>
         </div>
     </div>
 </div>

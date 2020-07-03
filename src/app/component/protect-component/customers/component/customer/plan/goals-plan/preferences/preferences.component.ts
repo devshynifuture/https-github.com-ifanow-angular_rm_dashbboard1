@@ -9,6 +9,7 @@ import { AppConstants } from 'src/app/services/app-constants';
 import { PreferencesService } from './preferences.service';
 import { Observable, Subscription } from 'rxjs';
 import { Utils } from 'angular-bootstrap-md/lib/free/utils';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-preferences',
@@ -32,6 +33,19 @@ export class PreferencesComponent implements OnInit, OnDestroy {
 
   subscription = new Subscription();
 
+
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+  };
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -157,11 +171,12 @@ export class PreferencesComponent implements OnInit, OnDestroy {
   }
 
   savePreference(){
-    if(this.goalDetailsFG.invalid || this.validateGoalDates()) {
+    if(this.goalDetailsFG.invalid || this.validateGoalDates() || this.barButtonOptions.active) {
       this.goalDetailsFG.markAllAsTouched();
       return;
     }
 
+    this.barButtonOptions.active = true;
     let observer:Observable<any>;
     const obj = this.preferenceService.createGoalObjForGoalTypes(this.data, this.goalDetailsFG.value);
     if(this.data.singleOrMulti == 1) {
@@ -173,6 +188,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
 
     observer.subscribe(res => {
       this.eventService.openSnackBar("Preference saved", "Dismiss");
+      this.barButtonOptions.active = false;
       this.subInjectService.setRefreshRequired();
     }, err => {
       this.eventService.openSnackBar(err, "Dismiss");
@@ -241,10 +257,11 @@ export class PreferencesComponent implements OnInit, OnDestroy {
   }
 
   saveAssetAllocation(){
-    if(this.assetAllocationFG.invalid || this.validateGoalDates()) {
+    if(this.assetAllocationFG.invalid || this.validateGoalDates() || this.barButtonOptions.active) {
       this.assetAllocationFG.markAllAsTouched();
       return
     }
+    this.barButtonOptions.active = true;
     const remainingData = this.data.remainingData;
     let obj = this.assetAllocationFG.value;
     obj.equityAllocation = parseInt(obj.equityAllocation);
@@ -254,6 +271,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     console.log(obj)
     this.planService.saveAssetPreference(obj).subscribe(res => {
       this.eventService.openSnackBar("Asset allocation preference saved", "Dismiss");
+      this.barButtonOptions.active = false;
       this.subInjectService.setRefreshRequired();
     }, err => {
       this.eventService.openSnackBar(err, "Dismiss");

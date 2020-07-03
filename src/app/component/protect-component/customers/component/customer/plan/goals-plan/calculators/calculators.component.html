@@ -21,8 +21,9 @@
               <h5 class="m-0 pt-8 f-500 text-black">OUTPUT</h5>
             </div>
             <div class="col-md-3 pr-0">
-              <button mat-stroked-button class="br-0 btn-primary pl-8 pr-8 right" (click)="saveEMIToGoal()"><img
-                  src="/assets/images/svg/plus.svg" class="pr-8">ADD TO GOAL</button>
+              <app-progress-button (btnClick)="saveEMIToGoal()" class="br-0 text-inherit  "
+                  [options]="barButtonOptions">
+              </app-progress-button>
             </div>
           </div>
           <div class="row">
@@ -205,8 +206,9 @@
                 <h5 class="m-0 f-500 pt-8 text-black">INPUT</h5>
               </div>
               <div class="col-md-6">
-                <button mat-stroked-button class="br-0 btn-primary pl-8 pr-8 right" (click)="saveToGoal()">ADD TO
-                  GOAL</button>
+                <app-progress-button (btnClick)="saveToGoal()" class="br-0 text-inherit  "
+                    [options]="barButtonOptions">
+                </app-progress-button>
               </div>
             </div>
 
@@ -252,7 +254,9 @@
                 <h5 class="m-0 f-500 pt-8 text-black">INPUT</h5>
               </div>
               <div class="col-md-6">
-                <button mat-stroked-button class="br-0 btn-primary pl-8 pr-8 right" (click)="saveDelayToGoal()">ADD TO GOAL</button>
+                <app-progress-button (btnClick)="saveDelayToGoal()" class="br-0 text-inherit  "
+                    [options]="barButtonOptions">
+                </app-progress-button>
                 <button mat-stroked-button class="br-0 btn-primary pl-8 pr-8 right" (click)="calculateDelay()">Calculate</button>
               </div>
             </div>
@@ -334,7 +338,9 @@
       <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
     </div>
     <div class="col-md-8 right text-right">
-      <button mat-button class="btn-bottom br-0 text-inherit" (click)="save()">Save</button>
+      <app-progress-button (btnClick)="save()" class="br-0 text-inherit  "
+          [options]="barButtonOptions1">
+      </app-progress-button>
     </div>
   </div>
 </div>

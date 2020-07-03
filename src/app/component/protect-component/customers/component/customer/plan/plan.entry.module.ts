@@ -58,6 +58,8 @@ import { AddAmountComponent } from './deployments-plan/add-amount/add-amount.com
 import { Ng5SliderModule } from 'ng5-slider';
 import { SingleGoalYearComponent } from './goals-plan/single-goal-year/single-goal-year.component';
 import { MultiYearGoalComponent } from './goals-plan/multi-year-goal/multi-year-goal.component';
+import { CommonComponentModule } from 'src/app/component/protect-component/common-component/common-component.module';
+import { CustomCommonModule } from 'src/app/common/custom.common.module';
 
 export const componentList = [
   PreferencesComponent,
@@ -117,7 +119,10 @@ export const componentList = [
     CustomDirectiveModule,
     InsurancePlanModule,
     DragDropModule,
-    Ng5SliderModule
+    Ng5SliderModule,
+
+    CommonComponentModule,
+    CustomCommonModule,
   ],
   exports: [
     FormsModule,
