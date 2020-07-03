@@ -148,20 +148,20 @@
                         </div>
                     </div>
                     <div class="row ui-mff">
-                        <div class="col-md-4 p-0 bl-0 br-grey bb-grey">
+                        <div class="col-md-4 p-0 bl-0 br-grey bb-grey iconPetage">
                             <input (keyup)="validateFees()" [inputValidator]="validatorType.NUMBER_ONLY"
                                 (input)="restrictFrom100($event)" [maxLength]="4" appInputValueValidation
-                                class="form-control br-0 h-39" formControlName="equity" placeholder="%" type="text">
+                                class="form-control br-0 h-39 percentage" formControlName="equity" placeholder="%" type="text">
                         </div>
-                        <div class="col-md-4 p-0 br-grey bb-grey">
+                        <div class="col-md-4 p-0 br-grey bb-grey iconPetage">
                             <input (keyup)="validateFees()" [inputValidator]="validatorType.NUMBER_ONLY"
                                 (input)="restrictFrom100($event)" [maxLength]="4" appInputValueValidation
-                                class="form-control br-0 h-39" formControlName="debt" placeholder="%" type="text">
+                                class="form-control br-0 h-39 percentage" formControlName="debt" placeholder="%" type="text">
                         </div>
-                        <div class="col-md-4 p-0 bb-grey br-grey">
+                        <div class="col-md-4 p-0 bb-grey br-grey iconPetage">
                             <input (keyup)="validateFees()" [inputValidator]="validatorType.NUMBER_ONLY"
                                 (input)="restrictFrom100($event)" [maxLength]="4" appInputValueValidation
-                                class="form-control br-0 h-39" formControlName="liquid" placeholder="%" type="text">
+                                class="form-control br-0 h-39 percentage" formControlName="liquid" placeholder="%" type="text">
                         </div>
                     </div>
                     <!-- <mat-error class="f-12" *ngIf="
@@ -189,21 +189,21 @@
                         </div>
                     </div>
                     <div class="row ui-mff">
-                        <div class="col-md-4 p-0 bl-0 bb-grey br-grey">
+                        <div class="col-md-4 p-0 bl-0 bb-grey br-grey iconPetage">
                             <input (keyup)="validateFees()" [inputValidator]="validatorType.NUMBER_ONLY"
                                 (input)="restrictFrom100($event)" [maxLength]="4" appInputValueValidation
-                                class="form-control br-0 h-39 br-grey" formControlName="equity" placeholder="%"
+                                class="form-control br-0 h-39 br-grey percentage" formControlName="equity" 
                                 type="text">
                         </div>
-                        <div class="col-md-4 p-0 br-grey bb-grey">
+                        <div class="col-md-4 p-0 br-grey bb-grey iconPetage">
                             <input (keyup)="validateFees()" [inputValidator]="validatorType.NUMBER_ONLY"
                                 (input)="restrictFrom100($event)" [maxLength]="4" appInputValueValidation
-                                class="form-control br-0 h-39" formControlName="debt" placeholder="%" type="text">
+                                class="form-control br-0 h-39 percentage" formControlName="debt" type="text">
                         </div>
-                        <div class="col-md-4 p-0 br-grey bb-grey">
+                        <div class="col-md-4 p-0 br-grey bb-grey iconPetage">
                             <input (keyup)="validateFees()" [inputValidator]="validatorType.NUMBER_ONLY"
                                 (input)="restrictFrom100($event)" [maxLength]="4" appInputValueValidation
-                                class="form-control br-0 h-39" formControlName="liquid" placeholder="%" type="text">
+                                class="form-control br-0 h-39 percentage" formControlName="liquid" type="text">
                         </div>
                     </div>
 
