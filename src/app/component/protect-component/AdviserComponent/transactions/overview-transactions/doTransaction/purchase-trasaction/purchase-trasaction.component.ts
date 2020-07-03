@@ -97,11 +97,23 @@ export class PurchaseTrasactionComponent implements OnInit {
 
   @Input()
   set data(data) {
+    this.folioList =[]
+    this.schemeList =[]
+    this.transactionSummary = {};
     this.inputData = data;
     this.transactionType = data.transactionType;
     if(data.mutualFundData){
       this.schemeName = data.mutualFundData.schemeName
       this.folioNumber = data.mutualFundData.folioNumber
+      let foilo = {'folioNumber': this.folioNumber}
+      let schemeName = {'schemeName': this.schemeName}
+      this.folioList.push(foilo)
+      // this.schemeList.push({'schemeName': this.schemeName})
+      this.filterSchemeList = of([{'schemeName': this.schemeName}])
+      this.ExistingOrNew = 1
+      Object.assign(this.transactionSummary, {folioNumber: this.folioNumber});
+      Object.assign(this.transactionSummary, {schemeName: this.schemeName});
+      this.transactionSummary = {...this.transactionSummary};
       this.mutualFundData = data.mutualFundData
     }
    
@@ -587,7 +599,7 @@ export class PurchaseTrasactionComponent implements OnInit {
       bankAccountSelection: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
       schemeSelection: [(!data.schemeSelection) ? '2' : data.schemeSelection],
       employeeContry: [(!data) ? '' : data.orderVal, [Validators.required,]],
-      investmentAccountSelection: [(data.folioNo) ? this.mutualFundData.folioNumber : '', [Validators.required]],
+      investmentAccountSelection: [(data) ? this.mutualFundData.folioNumber : '', [Validators.required]],
       // modeOfPaymentSelection: ['1'],
       modeOfPaymentSelection: [(!data.modeOfPaymentSelection) ? '1' : data.modeOfPaymentSelection],
       folioSelection: [(!data.folioSelection) ? '2' : data.folioSelection],
@@ -608,6 +620,11 @@ export class PurchaseTrasactionComponent implements OnInit {
     if (data.folioNo) {
       // this.scheme.amcId = data.amcId;
       this.getFolioList();
+    }
+    if(this.mutualFundData){
+      this.purchaseTransaction.controls.schemeSelection.setValue('1')
+      this.purchaseTransaction.controls.folioSelection.setValue('1')
+      this.filterSchemeList = of([{'schemeName': this.schemeName}])
     }
   }
 

@@ -110,7 +110,7 @@
                                         </thead>
                                         <tbody *ngFor="let scheme of amc.schemes; let schemeIndex = index">
                                             <tr>
-                                                <td>{{ i+1}}</td>
+                                                <td>{{ schemeIndex+1}}</td>
                                                 <td>{{scheme.schemeName}}</td>
                                                 <td>{{'₹ '}}<span appFormatNumber [value]="scheme.totalAum"></span></td>
                                                 <td>{{scheme.weightInPercentage | number :'1.2-2'}}{{'%'}}</td>

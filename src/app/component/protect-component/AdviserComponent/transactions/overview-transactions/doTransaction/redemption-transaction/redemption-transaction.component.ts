@@ -6,7 +6,7 @@ import {EventService} from 'src/app/Data-service/event.service';
 import {ProcessTransactionService} from '../process-transaction.service';
 import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
 import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {MatTableDataSource} from '@angular/material';
 
@@ -86,6 +86,8 @@ export class RedemptionTransactionComponent implements OnInit {
 
   @Input()
   set data(data) {
+    this.folioList =[]
+    this.transactionSummary = {};
     this.inputData = data;
     this.transactionType = data.transactionType;
     this.selectedFamilyMember = data.selectedFamilyMember;
@@ -93,6 +95,10 @@ export class RedemptionTransactionComponent implements OnInit {
       this.schemeName = data.mutualFundData.schemeName
       this.folioNumber = data.mutualFundData.folioNumber
       this.mutualFundData = data.mutualFundData
+      let foilo = {'folioNumber': this.folioNumber}
+      let schemeName = {'schemeName': this.schemeName}
+      this.folioList.push(foilo)
+      this.filterSchemeList = of([{'schemeName': this.schemeName}])
     }
     if (this.isViewInitCalled) {
       // this.getdataForm('');
@@ -195,7 +201,7 @@ export class RedemptionTransactionComponent implements OnInit {
       employeeContry: [(!data) ? '' : data.orderVal, [Validators.required]],
       redeemType: [(data.redeemType) ? data.redeemType : '1', [Validators.required]],
       modeOfPaymentSelection: [(!data) ? '' : data.modeOfPaymentSelection, [Validators.required]],
-      investmentAccountSelection: [(data.folioNo) ? this.mutualFundData.folioNumber : '', [Validators.required]],
+      investmentAccountSelection: [(data) ? this.mutualFundData.folioNumber : '', [Validators.required]],
       redeem: [(!data) ? '' : data.switchType, [Validators.required]],
       schemeRedeem: [(!data) ? '' : this.mutualFundData.schemeName, [Validators.required]],
 
@@ -209,6 +215,10 @@ export class RedemptionTransactionComponent implements OnInit {
       this.selectedFolio(this.folioDetails);
       this.getSchemeWiseFolios();
     }
+    if(this.mutualFundData){
+      this.filterSchemeList = of([{'schemeName': this.schemeName}])
+    }
+    
   }
 
   deleteChildTran(element) {
