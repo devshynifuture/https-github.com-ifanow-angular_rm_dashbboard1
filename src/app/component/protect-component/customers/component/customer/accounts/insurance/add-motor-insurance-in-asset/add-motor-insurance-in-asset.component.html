@@ -85,7 +85,7 @@
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-20 ">Policy number</h5>
         </div>
-        <div class="col-md-3 form-group">
+        <div class="col-md-5 form-group">
             <mat-form-field floatLabel="never" appearance="standard">
                 <input matInput type="text"  [maxLength]="30" formControlName="policyNum" #policyNum  autocomplete="off" class="form-control br-0" placeholder="Enter Policy number" placeholder="Enter Policy number">
                 <mat-hint align="end" class="f-12">{{policyNum.value.length}}/30</mat-hint>
@@ -388,7 +388,7 @@
             </div>
             <div class="col-md-5 form-group ">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input matInput type="text" [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" [maxLength]="40" formControlName="exclusion" #exclusion appInputValueValidation autocomplete="off" class="form-control br-0">
+                    <input matInput type="text"  [maxLength]="40" formControlName="exclusion" #exclusion  autocomplete="off" class="form-control br-0">
                     <mat-hint align="end" class="f-12">{{exclusion.value.length}}/40</mat-hint>
                 </mat-form-field>
             </div>

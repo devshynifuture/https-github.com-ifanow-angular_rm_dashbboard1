@@ -1,6 +1,6 @@
 <div class="p-20 eventBox" *ngIf="isEditAdd">
-    <h1 class="mb-16 f-22" *ngIf="!isEditable">Add New Event</h1>
-    <h1 class="mb-16 f-22" *ngIf="isEditable">Edit Event</h1>
+    <h1 class="mb-16 f-22" *ngIf="!isEditable">Add new event</h1>
+    <h1 class="mb-16 f-22" *ngIf="isEditable">Edit event</h1>
 
     <form [formGroup]="eventForm">
 
@@ -8,8 +8,8 @@
             <div class="col-md-8 pr-0">
                 <h5 class="mb-4 f-14 text-black roboto">Title</h5>
                 <div class="form-group">
-                    <mat-form-field>
-                        <input matInput formControlName="title" class="form-control br-0">
+                    <mat-form-field floatLabel="never" appearance="standard">
+                        <input placeholder="Add title" matInput formControlName="title" class="form-control br-0">
                     </mat-form-field>
                 </div>
             </div>
@@ -83,8 +83,9 @@
                 <div class="row">
                     <div class="col-md-12  ">
                         <div class="form-group">
-                            <mat-form-field>
-                                <input matInput formControlName="attendee" class="form-control br-0 ">
+                            <mat-form-field floatLabel="never" appearance="standard">
+                                <input placeholder="Add attendee" matInput formControlName="attendee"
+                                    class="form-control br-0 ">
                                 <mat-error *ngIf="eventForm.controls['attendee'].hasError('pattern')">Email is valid
                                 </mat-error>
                             </mat-form-field>
@@ -237,9 +238,24 @@
 
 </div>
 
+
+<!---------------------------------- list Event start ----------------------------------------->
+
+<div class="p-20" *ngIf="!isEditAdd && eventData.calDate">
+
+    <h1 class="mb-0 f-22 text-center bb-1 pb-20">
+       <span class="actived"> {{eventData.calDate|date :'dd'}}</span> {{eventData.calDate|date :'MMM'}} {{eventData.calDate|date :'yyyy'}}
+    </h1>
+
+    <ul class="blue">
+        <li *ngFor="let event of eventData.events" (click)="viewEvent(event)" [hidden]="(
+            (!event.isRe?day != event.day || month != event.month || year != event.year :event.isRe == 'DAILY'?dateTimeEvent(year,month-1,day) < dateTimeEvent(null,null,event.reStart) || dateTimeEvent(year,month-1,day) > dateTimeEvent(null,null,event.reUntil):event.isRe == 'WEEKLY'?dateTimeEvent(year,month-1,day) < dateTimeEvent(null,null,event.reStart) || dateTimeEvent(year,month-1,day) > dateTimeEvent(null,null,event.reUntil) ||  validateWeekDays(event.rrule.BYDAY, getDay(year,month,day), event.rrule.INTERVAL) :event.isRe == 'MONTHLY' && i > addLastMonthDays - 1?dateTimeEvent(year,month-1,day) < dateTimeEvent(null,null,event.reStart) || dateTimeEvent(year,month-1,day) > dateTimeEvent(null,null,event.reUntil) || validateMonthDays(event.rrule.BYDAY, dateTimeEvent(year,month-1,day), event.start.date, event.rrule.INTERVAL): event.isRe == 'YEARLY'?(validateYearly(event.start.date,day,month) || dateTimeEvent(year,month-1,day) < dateTimeEvent(null,null,event.reStart) || dateTimeEvent(year,month-1,day) > dateTimeEvent(null,null,event.reUntil)): day != event.day || month != event.month || year != event.year) 
+             ) && (day != event.day || month != event.month || year != event.year)"><span *ngIf="event.startTime != null">{{event.startTime }}</span> {{event.summary}}</li>
+    </ul>
+</div>
 <!---------------------------------- view Event start ----------------------------------------->
 
-<div class="p-20" *ngIf="!isEditAdd">
+<div class="p-20" *ngIf="!isEditAdd && !eventData.calDate">
 
     <h1 class="mb-0 f-22">
         {{eventData.summary}}

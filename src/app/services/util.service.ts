@@ -1,15 +1,16 @@
 // tslint:disable:radix
 // tslint:disable:triple-equals
 
-import {ElementRef, Injectable, Input} from '@angular/core';
+import {ElementRef, Injectable, Input, OnDestroy} from '@angular/core';
 import {DatePipe, DecimalPipe} from '@angular/common';
 import {EventService} from '../Data-service/event.service';
 import {HttpClient} from '@angular/common/http';
 import {SubscriptionService} from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
 import {FormGroup} from '@angular/forms';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Subject} from 'rxjs';
 import {AuthService} from '../auth-service/authService';
 import {quotationTemplate} from './quotationTemplate';
+import { debounce, debounceTime } from 'rxjs/operators';
 
 
 @Injectable({
@@ -613,10 +614,14 @@ export function escapeRegExp(s: string): string {
 }
 
 /**
- * @description private loader function which tells when all api's have been resolved
+ * @description private loader function which tells when all api's have been resolved.
  * You will need to add this to the component's providers to make this function private
+ * 
+ * Update: 1-July-2020:- You can now set your functions to be executed once the counter reaches 0
+ * @callback setFunctionToExeOnZero:- sets the callback you'd like to execute once counter reaches 0
  */
-export class LoaderFunction {
+export class LoaderFunction implements OnDestroy{
+  apiDebounceSubject:Subject<any> = new Subject()
 
   public get loading() {
     return this.isLoading;
@@ -624,6 +629,7 @@ export class LoaderFunction {
 
   private counter = 0;
   private isLoading = false;
+  private execOnZero:Function;
 
 
   public increaseCounter() {
@@ -635,7 +641,22 @@ export class LoaderFunction {
     this.counter--;
     if (this.counter == 0) {
       this.isLoading = false;
+      this.apiDebounceSubject.next();
     }
+  }
+
+  /**
+   * @description Executes the method once counter is 0
+   * @param obj the instance of the class/object
+   * @param func the function you'd like to execute
+   * @see https://stackoverflow.com/a/29827015
+   */
+  public setFunctionToExeOnZero(obj:Object,func: () => void) {
+    this.apiDebounceSubject.pipe(debounceTime(100)).subscribe(()=> func.call(obj));
+  }
+
+  ngOnDestroy(){
+    this.apiDebounceSubject.unsubscribe();
   }
 
 }

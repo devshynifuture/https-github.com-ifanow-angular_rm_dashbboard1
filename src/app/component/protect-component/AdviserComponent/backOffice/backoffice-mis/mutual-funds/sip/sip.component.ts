@@ -29,7 +29,7 @@ export class SipComponent implements OnInit {
   clientWithoutSip = 0;
   newSipObj: any;
   ceaseSipObj: any;
-  arnRiaList: any;
+  arnRiaList = [];
   arnRiaId = -1;
   viewMode: string;
   isLoading = true;
@@ -123,7 +123,10 @@ export class SipComponent implements OnInit {
           this.arnRiaList.unshift(obj);
           this.initPoint();
         } else {
-          this.dataService.openSnackBar("No Arn Ria List Found", "Dismiss")
+          this.dataService.openSnackBar("No Arn Ria List Found", "Dismiss");
+          this.arnRiaList=[];
+          this.initPoint();
+
         }
       }
     )
@@ -144,7 +147,7 @@ export class SipComponent implements OnInit {
     )
   }
   getsipCountGet(data) {
-    // this.isLoading = false
+    this.isLoading = false
     this.sipCount = data;
   }
   getFilerrorResponse(err) {

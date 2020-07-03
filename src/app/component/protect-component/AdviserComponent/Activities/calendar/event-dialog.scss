@@ -6,6 +6,8 @@
                 .mt-16 {
                     margin-top: 16px !important;
                 }
+
+                
             }
             
             ::ng-deep .newTextarea .fr-box.fr-basic .fr-wrapper {
@@ -38,3 +40,45 @@
             height: 100px;
             overflow: auto;
            }
+
+
+           ::ng-deep .mat-form-field-appearance-standard .mat-form-field-flex {
+            padding-top: 0;
+
+
+        }
+
+        .actived {
+            padding:10px;
+            color: #fff !important;
+            background-color: #008FFF !important;
+            // float: right;÷
+            border-radius: 50px;
+        }
+
+        ul.blue {
+            height: auto;
+            display: block;
+            margin-top: 20px;
+            width: 100%;
+            li {
+                font-size: 16px !important;
+                cursor: pointer;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                text-align: left;
+                position: relative;
+                line-height: 33px;
+                z-index: 1;
+            }
+            
+            li:before {
+                content: "\2022";
+                color: #84BDF3;
+                font-weight: bold;
+                padding-top: 4px;
+                padding-right: 4px;
+                font-size: 34px;
+            }
+        }
