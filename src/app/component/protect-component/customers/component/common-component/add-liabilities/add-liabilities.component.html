@@ -49,7 +49,7 @@
                 </div>
             </div>
             <div class="col-md-2 p-0 d-flex align-items-center">
-                <i *ngIf="addLiabilityForm.value.getCoOwnerName.length < 3" class="material-icons text-primitive f-20 c-p float-left" (click)="addNewCoOwner(undefined)">add</i>
+                <i *ngIf="addLiabilityForm.value.getCoOwnerName.length < 3" class="material-icons text-primitive f-20 c-p float-left" (click)="     (undefined)">add</i>
                 <i *ngIf="addLiabilityForm.value.getCoOwnerName.length > 1" class="material-icons text-primitive f-20 c-p pl-10" (click)="removeCoOwner(pointIndex)">remove</i>
             </div>
 
@@ -62,7 +62,7 @@
         <div class="col-md-3 pr-0">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <mat-select matInput class="form-control br-0" formControlName="loanType" #loanType [disabled]="showFilter != 'tab1'">
+                    <mat-select matInput class="form-control br-0" formControlName="loanType" #loanType (selectionChange)="changeValidation($event.value)"  [disabled]="showFilter != 'tab1'">
                         <mat-option value="" disabled>Select option</mat-option>
                         <mat-option value="1">Home Loan</mat-option>
                         <mat-option value="2">Vehicle</mat-option>
@@ -78,7 +78,25 @@
             </div>
         </div>
     </div>
-
+    <div class="row pt-32" *ngIf="loanType.value == '1' || showFilter == '1'">
+        <div class="col-md-4 pr-0 text-right">
+            <h5 class="m-0 pt-8">Property</h5>
+        </div>
+        <div class="col-md-5 form-group">
+            <mat-form-field [matTooltip]="(propertyList.length == 0) ? 'Property name does not exist' : null  ">
+                <mat-select class="form-control" formControlName="property" matInput>
+                    <mat-option *ngFor="let option of propertyList ;index as i"   [value]="option.id">
+                        {{option.ownerName +' - '}}{{option.propertyName}}</mat-option>
+                </mat-select>
+                <mat-error>This field is required
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-md-1 p-0 pt-8 d-flex">
+            <!-- prod build -->
+            <i class="material-icons text-primitive c-p float-left" (click)="openDialog(null)"> add</i>
+        </div>
+    </div>
     <div class="row pt-40">
         <div class="col-md-5 pr-0 text-right">
             <h5 class="m-0 pt-8">Original loan amount</h5>
