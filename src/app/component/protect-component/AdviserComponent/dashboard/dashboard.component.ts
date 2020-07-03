@@ -235,7 +235,7 @@ export class DashboardComponent implements OnInit {
       data => {
         if (data && data.length > 0) {
           data.forEach(element => {
-            element['selected'] == false;
+            element['update'] = false;
             if (this.calculateDifferenc(element.createdOn) <= 1) {
               element['createdDate'] = this.calculateDifferenc(element.createdOn);
             }
@@ -253,6 +253,7 @@ export class DashboardComponent implements OnInit {
   }
   showInput = false;
   selectedItem = new FormControl();
+  updateNote = new FormControl();
   addTodoList(value) {
     const obj =
     {
@@ -263,9 +264,10 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.addNotes(obj).subscribe(
       data => {
         if (data) {
+          this.eventService.openSnackBar("To-Do note is added", "Dismiss");
           this.showInput = false;
           data.forEach(element => {
-            element['selected'] == false;
+            element['update'] = false;
             this.selectedItem.reset();
             if (this.calculateDifferenc(element.createdOn) <= 1) {
               element['createdDate'] = this.calculateDifferenc(element.createdOn);
@@ -280,16 +282,38 @@ export class DashboardComponent implements OnInit {
       }
     )
   }
-
-  updateTodoList() {
+  doubleClick(value) {
+    value.update = true;
+    this.updateNote.setValue(value.activityName);
+  }
+  focusOutFunction(value) {
+    value.update = false;
+  }
+  updateTodoList(todoData) {
     const obj =
     {
-
+      id: todoData.id,
+      advisorId: this.advisorId,
+      activityName: this.updateNote.value
     }
     this.dashboardService.updateNotes(obj).subscribe(
       data => {
-
-      })
+        if (data) {
+          this.eventService.openSnackBar("To-Do note is updated", "Dismiss");
+          this.showInput = false;
+          data.forEach(element => {
+            element['update'] = false;
+            this.selectedItem.reset();
+            if (this.calculateDifferenc(element.createdOn) <= 1) {
+              element['createdDate'] = this.calculateDifferenc(element.createdOn);
+            }
+            else {
+              element['createdDate'] = this.datePipe.transform(element.createdOn, 'MMMM d, y');
+            }
+          });
+          this.todoListData = data
+        }
+      }), err => this.eventService.openSnackBar(err, "Dismiss")
   }
 
   deleteTodoList(value, index) {
@@ -419,10 +443,12 @@ export class DashboardComponent implements OnInit {
     };
     this.transactionService.getSearchScheme(obj).subscribe(
       data => {
-        this.isRecentTransactionFlag = false;
-        this.transactionList = data;
-        this.transactionList = TransactionEnumService.setPlatformEnum(data);
-        this.transactionList = TransactionEnumService.setTransactionStatus(data);
+        if (data) {
+          this.isRecentTransactionFlag = false;
+          this.transactionList = data;
+          this.transactionList = TransactionEnumService.setPlatformEnum(data);
+          this.transactionList = TransactionEnumService.setTransactionStatus(data);
+        }
       },
       err => {
         this.eventService.openSnackBar(err, 'Dismefault/stockfeediss');

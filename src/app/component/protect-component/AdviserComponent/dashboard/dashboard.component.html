@@ -955,8 +955,8 @@
             <div class="col-md-6 p-0 d-flex pl-10">
               <img (click)="showInput=true" src="/assets/images/svg/add-blue.svg" class="c-p">
               <p *ngIf="showInput==false" class="m-0 text-black pl-12 pt-10">Add a to-do</p>
-              <input *ngIf="showInput" autofocus #inputValue (keyup.enter)="addTodoList(inputValue.value)"
-                placeholder="Enter note">
+              <input *ngIf="showInput" (focusout)="showInput=false" autofocus #inputValue
+                (keyup.enter)="addTodoList(inputValue.value)" placeholder="Enter note">
             </div>
 
             <!-- <div class="col-md-6 p-0 text-right">
@@ -987,15 +987,23 @@
               <span *ngIf="singleNote.createdDate==1">Yesterday</span>
               <span *ngIf="singleNote.createdDate!=1 && singleNote.createdDate!=0">{{singleNote.createdDate}}</span>
               <div class="row">
-                <div class="col-md-2 pl-0">
+                <div *ngIf="singleNote.update==false" class="col-md-2 pl-0">
                   <mat-radio-button value={{singleNote.id}}>
                   </mat-radio-button>
                 </div>
                 <div class="col-md-8 pl-0">
-                  {{singleNote.activityName}}
+                  <span *ngIf="singleNote.update==false" (dblclick)="doubleClick(singleNote)"
+                    class="c-p">{{singleNote.activityName}}</span>
+                  <input *ngIf="singleNote.update" [formControl]="updateNote" autofocus={{singleNote.update}}
+                    (focusout)="focusOutFunction(singleNote)" (keyup.enter)="updateTodoList(singleNote)"
+                    placeholder="Enter note">
                 </div>
                 <div class="col-md-2 pl-0">
-                  <span *ngIf="selectedItem.value==singleNote.id" class="material-icons c-p"
+                  <span *ngIf="selectedItem.value==singleNote.id && singleNote.update==false"
+                    (click)="deleteTodoList(singleNote,i)" class="material-icons c-p">
+                    done
+                  </span>
+                  <span *ngIf="selectedItem.value==singleNote.id && singleNote.update==false" class="material-icons c-p"
                     (click)="deleteTodoList(singleNote,i)">
                     delete
                   </span>

@@ -16,7 +16,7 @@ export class DashboardService {
   }
 
   updateNotes(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.UPDATE_NOTES, data);
+    return this.http.put(apiConfig.MAIN_URL + appConfig.UPDATE_NOTES, data);
   }
 
   deleteNotes(data) {
