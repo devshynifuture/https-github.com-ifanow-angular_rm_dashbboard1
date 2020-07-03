@@ -325,7 +325,9 @@ export class CategoryWiseComponent implements OnInit {
     }
   }
 
-  showApplicantName(schemeData, index, catIndex) {
+  showApplicantName(schemeData, index, subCatIndex, catIndex) {
+    this.selectedSubCategory = subCatIndex;
+    this.selectedCategory = catIndex;
     this.selectedClientIndex = index;
     schemeData.showScheme = !schemeData.showScheme;
     if (!schemeData.showScheme) {
