@@ -2,128 +2,27 @@ import { Component, OnInit, Input } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { PlanService } from '../../plan.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { LoaderFunction } from 'src/app/services/util.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 
 @Component({
   selector: 'app-add-goal',
   templateUrl: './add-goal.component.html',
-  styleUrls: ['./add-goal.component.scss']
+  styleUrls: ['./add-goal.component.scss'],
+  providers: [LoaderFunction]
 })
 export class AddGoalComponent implements OnInit {
 
   @Input() data: any = {};
   @Input() popupHeaderText: string = 'KEY INFO';
-
   allAssetsList:any[] = [];
+  clientId:any;
 
-  // TODO:- replace tempDisplayData with data
-  tempDisplayData = {
-    data: [
-      {
-        "id": "1",
-        "asset_owner": "Rahul Jain",
-        "name": "Fixed Deposit - ICICI Bank FD 802321938",
-        "allocated_percentage": 50,
-        "asset_owner_id": "1",
-        "current_value": 48941,
-        "maturity_value": 951456,
-        "maturity_year": 2029,
-        "allocation_status": "partially allocated"
-      },
-      {
-        "id": "2",
-        "asset_owner": "Rahul Jain",
-        "name": "Fixed Deposit - ICICI Bank FD 802321938",
-        "allocated_percentage": 0,
-        "asset_owner_id": "1",
-        "current_value": 9842,
-        "maturity_value": 198436,
-        "maturity_year": 2040,
-        "allocation_status": "unallocated"
-      },
-      {
-        "id": "3",
-        "asset_owner": "Rahul Jain",
-        "name": "Fixed Deposit - ICICI Bank FD 802321938",
-        "allocated_percentage": 0,
-        "asset_owner_id": "1",
-        "current_value": 3541,
-        "maturity_value": 768541,
-        "maturity_year": 2035,
-        "allocation_status": "unallocated"
-      },
-      {
-        "id": "4",
-        "asset_owner": "Shilpa Jain",
-        "name": "Fixed Deposit - ICICI Bank FD 802321938",
-        "allocated_percentage": 50,
-        "asset_owner_id": "2",
-        "current_value": 65378,
-        "maturity_value": 15498,
-        "maturity_year": 2030,
-        "allocation_status": "partially allocated"
-      },
-      {
-        "id": "5",
-        "asset_owner": "Shilpa Jain",
-        "name": "Fixed Deposit - ICICI Bank FD 802321938",
-        "allocated_percentage": 0,
-        "asset_owner_id": "2",
-        "current_value": 4443,
-        "maturity_value": 8815785,
-        "maturity_year": 2039,
-        "allocation_status": "unallocated"
-      },
-      {
-        "id": "6",
-        "asset_owner": "Shilpa Jain",
-        "name": "Fixed Deposit - ICICI Bank FD 802321938",
-        "allocated_percentage": 100,
-        "asset_owner_id": "2",
-        "current_value": 55343,
-        "maturity_value": 9785125,
-        "maturity_year": 2032,
-        "allocation_status": "allocated"
-      },
-      {
-        "id": "7",
-        "asset_owner": "Shilpa Jain",
-        "name": "Fixed Deposit - ICICI Bank FD 802321938",
-        "allocated_percentage": 0,
-        "asset_owner_id": "2",
-        "current_value": 12345,
-        "maturity_value": 6354545,
-        "maturity_year": 2038,
-        "allocation_status": "unallocated"
-      },
-      {
-        "id": "8",
-        "asset_owner": "Ganesh Jain",
-        "name": "Fixed Deposit - ICICI Bank FD 802321938",
-        "allocated_percentage": 50,
-        "asset_owner_id": "3",
-        "current_value": 89754,
-        "maturity_value": 789816,
-        "maturity_year": 2036,
-        "allocation_status": "partially allocated"
-      },
-      {
-        "id": "9",
-        "asset_owner": "Ganesh Jain",
-        "name": "Fixed Deposit - ICICI Bank FD 802321938",
-        "allocated_percentage": 0,
-        "asset_owner_id": "3",
-        "current_value": 63433,
-        "maturity_value": 1657841,
-        "maturity_year": 2031,
-        "allocation_status": "unallocated"
-      }
-    ]
-  }
-
-  familyList:any[] = [];
+  familyList:any[] = [{familyMemberId: 'all', displayName: 'All'}];
   displayedAssets:any[] = [];
   currentAllocationFilter:string = 'all';
-  currentFamilyFilter:any;
+  currentFamilyFilter:any = 'all';
   currentSort:string = 'v-H2L';
   allocationBtnList = [
     {
@@ -144,7 +43,7 @@ export class AddGoalComponent implements OnInit {
     },
     {
       name: 'Un-deployed',
-      filter: 'deployed',
+      filter: 'not-deployed',
     },
   ];
   sortBtnList:any[] = [
@@ -173,28 +72,69 @@ export class AddGoalComponent implements OnInit {
 
 
   
-  constructor(private subInjectService: SubscriptionInject, private goalService: PlanService) { }
+  constructor(
+    private subInjectService: SubscriptionInject, 
+    private goalService: PlanService,
+    private loaderFn: LoaderFunction,
+    private eventService: EventService,
+    private peopleService: PeopleService,
+  ) {
+    this.clientId = AuthService.getClientId();
+    this.advisorId = AuthService.getAdvisorId();
+  }
 
   ngOnInit() {
-    this.createFamilyList();
-    this.advisorId = AuthService.getAdvisorId();
+    this.loaderFn.setFunctionToExeOnZero(this, this.filterAndSortAssets)
+    this.getFamilyMembersList();
     this.loadAssets();
-    // this.displayData = this.data;
   }
 
   loadAssets(){
-    let data = {advisorId: this.advisorId}
+    let data = {advisorId: this.advisorId, clientId: this.clientId}
+    this.loaderFn.increaseCounter();
     this.goalService.getAssetsForAllocation(data).subscribe((data)=>{
       this.allAssetsList = data;
-      this.filterAndSortAssets(this.currentFamilyFilter, this.currentAllocationFilter);
+      this.allAssetsList = this.allAssetsList.map(asset => {
+        let absAllocation = 0;
+        if(asset.goalAssetMapping) {
+          asset.goalAssetMapping.forEach(element => {
+            absAllocation += element.percentAllocated;
+          });
+        }
+        return {absAllocation, ...asset};
+      })
+      this.loaderFn.decreaseCounter();
+    }, err => {
+      this.loaderFn.decreaseCounter();
+      this.eventService.openSnackBar(err, "Dismiss")
     })
   }
+  
 
-  // Creates list of family members from the given assets list for the family filter buttons.
-  createFamilyList(){
-    this.familyList = this.data;
-    this.familyList.unshift({userName: 'All family', id: -1});
-    this.currentFamilyFilter = this.familyList[0];
+  getFamilyMembersList() {
+    const obj = {
+      clientId: this.clientId,
+    };
+    this.loaderFn.increaseCounter();
+    this.peopleService.getClientFamilyMemberListAsset(obj).subscribe(
+      data => {
+        if (data && data.length > 0) {
+          this.familyList = data;
+        }
+        this.familyList.unshift({familyMemberId: 'all', displayName: 'All'})
+        this.loaderFn.decreaseCounter();
+      },
+      err => {
+        this.eventService.openSnackBar(err, "Dismiss");
+        this.loaderFn.decreaseCounter();
+      }
+    );
+  }
+
+  filterAndSortAssets(){
+    this.filterByFamily(this.currentFamilyFilter);
+    this.filterByAllocation(this.currentAllocationFilter);
+    this.sortList();
   }
 
   filterByFamily(member) {
@@ -202,59 +142,64 @@ export class AddGoalComponent implements OnInit {
       this.displayedAssets = this.allAssetsList;
     } else {
       this.displayedAssets = this.allAssetsList.filter((obj) => {
-        return obj.asset_owner_id === member.asset_owner_id
+        return obj.familyMemberId === member.familyMemberId
       });
     }
   }
 
   filterByAllocation(filterType) {
-    if(filterType == 'all') {
-      return; // Since filter by family is already taking fresh data
-    } else {
-      this.displayedAssets = this.displayedAssets.filter((obj)=> {
-        return obj.allocation_status === filterType
-      })
+    switch (filterType) {
+      case 'all':
+        this.displayedAssets = this.displayedAssets
+        break;
+      case 'unallocated':
+        this.displayedAssets = this.displayedAssets.filter(asset => asset.absAllocation == 0);
+        break;
+      case 'partially allocated':
+        this.displayedAssets = this.displayedAssets.filter(asset => asset.absAllocation > 0 && asset.absAllocation < 100)
+        break;
+      case 'allocated':
+        this.displayedAssets = this.displayedAssets.filter(asset => asset.absAllocation == 100);
+        break;
+      case 'not-deployed':
+        this.displayedAssets = this.displayedAssets.filter(asset => !asset.isDeployed);
+        break;
+    
+      default:
+        console.error("Invalid asset filter id found", filterType);
+        break;
     }
   }
 
-  filterAndSortAssets(member, filterType){
-    this.currentFamilyFilter = member;
-    this.currentAllocationFilter = filterType;
-    this.filterByFamily(this.currentFamilyFilter);
-    this.filterByAllocation(this.currentAllocationFilter);
-    this.sortList(this.currentSort);
-  }
-
-  sortList(sortType) {
-    this.currentSort = sortType;
-    switch (sortType) {
+  sortList() {
+    switch (this.currentSort) {
       case 'v-H2L': // value high to low
         this.displayedAssets = this.displayedAssets.sort((a,b)=>{
-          return b.current_value - a.current_value;
+          return b.currentValue - a.currentValue;
         });
         break;
 
       case 'v-L2H': // value low to high
         this.displayedAssets = this.displayedAssets.sort((a,b)=>{
-          return a.current_value - b.current_value;
+          return a.currentValue - b.currentValue;
         });
         break;
 
       case 'asset': // asset type
         this.displayedAssets = this.displayedAssets.sort((a,b) => {
-          return b.asset_id - a.asset_id;
+          return b.assetType - a.assetType;
         });
         break;
 
       case 'm-N2F': // maturity near to far
         this.displayedAssets = this.displayedAssets.sort((a,b)=> {
-          return a.maturity_year - b.maturity_year;
+          return a.maturityDate - b.maturityDate;
         });
         break;
 
       case 'm-F2N': // maturity far to near
         this.displayedAssets = this.displayedAssets.sort((a,b) => {
-          return b.maturity_year - a.maturity_year;
+          return b.maturityDate - a.maturityDate;
         });
         break;
     }

@@ -131,13 +131,13 @@ export class SipClientWiseComponent implements OnInit {
       element.showCategory = true
     });
   }
-  exportToExcelSheet(choice, index) {
+  exportToExcelSheet(choice, catIndex) {
     switch (choice) {
       case 'client-wise':
-        this.clientWiseExcelSheet(index);
+        this.clientWiseExcelSheet(catIndex);
         break;
       case 'investor-wise':
-        this.investorWiseExcelSheet(index);
+        this.investorWiseExcelSheet(catIndex);
         break;
     }
   }
@@ -187,17 +187,22 @@ export class SipClientWiseComponent implements OnInit {
     )
 
   }
-  investorWiseExcelSheet(index) {
+  investorWiseExcelSheet(catIndex) {
     let copyOfExcelData = JSON.parse(JSON.stringify(this.arrayOfExcelData));
     copyOfExcelData.forEach((element, index1) => {
-      if (index1 === index) {
+      if (index1 === catIndex) {
         return;
       } else {
         element.investorList = [];
       }
     });
+    let arrayOfExcelHeaders = this.arrayOfHeaders.slice();
+    let arrayOfExcelStyles = this.arrayOfHeaders.slice();
 
-    ExcelMisSipService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'MIS Report - Client wise SIP', 'client-wise-aum-mis', {
+    arrayOfExcelHeaders.shift();
+    arrayOfExcelStyles.shift();
+
+    ExcelMisSipService.exportExcel3(arrayOfExcelHeaders, arrayOfExcelStyles, copyOfExcelData[catIndex].investorList, 'MIS Report - Client wise SIP', 'client-wise-aum-mis', {
       clientList: true,
       investorList: false,
       schemeList: false,

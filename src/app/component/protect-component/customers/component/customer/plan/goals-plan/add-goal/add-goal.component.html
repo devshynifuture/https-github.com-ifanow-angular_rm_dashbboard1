@@ -7,42 +7,48 @@
             <div class="col-md-6">
                 <img src="/assets/images/svg/people.svg" class="pt-16 c-p" [matMenuTriggerFor]="peopleMenu">
                 <mat-menu #peopleMenu="matMenu">
-                    <button mat-menu-item *ngFor="let member of familyList" (click)="filterAndSortAssets(member, currentAllocationFilter)">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <img src="/assets/images/svg/right.svg" class="c-p" *ngIf="member.id == currentFamilyFilter.id">
+                    <mat-button-toggle-group vertical (change)="filterAndSortAssets()" [(ngModel)]="currentFamilyFilter">
+                        <mat-button-toggle *ngFor="let member of familyList" [value]="member.familyMemberId">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <img src="/assets/images/svg/right.svg" class="c-p" *ngIf="member.familyMemberId == currentFamilyFilter">
+                                </div>
+                                <div class="col-md-9">
+                                    {{member.displayName}}
+                                </div>
                             </div>
-                            <div class="col-md-9">
-                                {{member.userName}}
-                            </div>
-                        </div>
-                    </button>
+                        </mat-button-toggle>
+                    </mat-button-toggle-group>
                 </mat-menu>
             </div>
             <div class="col-md-6">
                 <img src="/assets/images/svg/lines-3.svg" class="pt-16 c-p" [matMenuTriggerFor]="menu">
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item *ngFor="let allocation_filter of allocationBtnList" (click)="filterAndSortAssets(currentFamilyFilter, allocation_filter.filter)">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <img src="/assets/images/svg/right.svg" class="c-p" *ngIf="allocation_filter.filter == currentAllocationFilter">
+                    <mat-button-toggle-group vertical (change)="filterAndSortAssets()" [(ngModel)]="currentAllocationFilter">
+                        <mat-button-toggle *ngFor="let allocation_filter of allocationBtnList" [value]="allocation_filter.filter">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <img src="/assets/images/svg/right.svg" class="c-p" *ngIf="allocation_filter.filter == currentAllocationFilter">
+                                </div>
+                                <div class="col-md-9">
+                                    {{allocation_filter.name}}
+                                </div>
                             </div>
-                            <div class="col-md-9">
-                                {{allocation_filter.name}}
-                            </div>
-                        </div>
-                    </button>
+                        </mat-button-toggle>
+                    </mat-button-toggle-group>
                     <p class="text-primitive roboto m-0">Sort</p>
-                    <button mat-menu-item *ngFor="let sortMenu of sortBtnList" (click)="sortList(sortMenu.sortKey)">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <img src="/assets/images/svg/right.svg" class="c-p" *ngIf="sortMenu.sortKey == currentSort">
+                    <mat-button-toggle-group vertical (change)="sortList()" [(ngModel)]="currentSort">
+                        <mat-button-toggle *ngFor="let sortMenu of sortBtnList" [value]="sortMenu.sortKey">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <img src="/assets/images/svg/right.svg" class="c-p" *ngIf="sortMenu.sortKey == currentSort">
+                                </div>
+                                <div class="col-md-9">
+                                    {{sortMenu.name}}
+                                </div>
                             </div>
-                            <div class="col-md-9">
-                                {{sortMenu.name}}
-                            </div>
-                        </div>
-                    </button>
+                        </mat-button-toggle>
+                    </mat-button-toggle-group>
                 </mat-menu>
             </div>
         </div>
@@ -68,27 +74,27 @@
         <div class="mb-12" *ngFor="let asset of displayedAssets" cdkDrag>
             <div class="row goal-border">
                 <div class="col-md-12 pl-8 pt-8">
-                    <p class="m-0 roboto text-black">{{asset.name}}</p>
+                    <p class="m-0 roboto text-black">{{asset.assetName}}</p>
                 </div>
                 <div class="row">
                     <div class="col-md-4">
                         <button mat-stroked-button class="br-0 mt-12" 
-                            [ngClass]="{'btn-danger': asset.allocated_percentage == 100, 
-                                        'btn-success': asset.allocated_percentage > 0, 
-                                        'btn-primary': asset.allocated_percentage == 0}">
-                            {{asset.allocated_percentage}}%
+                            [ngClass]="{'btn-danger': asset.absAllocation == 100, 
+                                        'btn-success': asset.absAllocation > 0 && asset.absAllocation < 100, 
+                                        'btn-primary': asset.absAllocation == 0}">
+                            {{asset.absAllocation}}%
                         </button>
-                        <button mat-stroked-button class="btn-default br-0 mt-12 mb-12">{{asset.maturity_year}}</button>
+                        <button mat-stroked-button class="btn-default br-0 mt-12 mb-12">{{asset.maturityDate | date: 'yyyy'}}</button>
                     </div>
                     <div class="col-md-4 pt-12 pr-0">
                         <p class="m-0 f-12 roboto text-primitive">Owner</p>
                         <p class="m-0 roboto text-lighter">{{asset.asset_owner}}</p>
                         <p class="m-0 f-12 roboto text-primitive pt-12">Current value</p>
-                        <p class="m-0 roboto text-lighter">₹<span appFormatNumber>{{asset.current_value}}</span></p>
+                        <p class="m-0 roboto text-lighter">₹<span appFormatNumber>{{asset.currentValue}}</span></p>
                     </div>
                     <div class="col-md-4 pt-58 pr-0">
                         <p class="m-0 f-12 roboto text-primitive">Maturity value</p>
-                        <p class="m-0 roboto text-lighter">₹<span appFormatNumber>{{asset.maturity_value}}</span></p>
+                        <p class="m-0 roboto text-lighter">₹<span appFormatNumber>{{asset.maturityValue}}</span></p>
                     </div>
                 </div>
             </div>

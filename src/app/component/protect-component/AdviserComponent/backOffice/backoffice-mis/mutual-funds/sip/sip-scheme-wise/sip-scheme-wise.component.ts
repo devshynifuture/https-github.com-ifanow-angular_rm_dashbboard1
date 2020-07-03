@@ -462,16 +462,16 @@ export class SipSchemeWiseComponent implements OnInit {
     });
     this.amcTotalList = ['Total', '', '', sumAmtTotal, sumWeightInPercTotal];
   }
-  exportToExcelSheet(choice, index, amcIndex) {
+  exportToExcelSheet(choice, catIndex, investorIndex) {
     switch (choice) {
       case 'scheme-wise':
-        this.schemeWiseExcelReport(index);
+        this.schemeWiseExcelReport(catIndex);
         break;
       case 'investor-wise':
-        this.investorWiseExcelSheet(index);
+        this.investorWiseExcelSheet(catIndex);
         break;
       case 'applicant-wise':
-        this.applicantWiseExcelReport(index, amcIndex);
+        this.applicantWiseExcelReport(catIndex, investorIndex);
         break;
     }
 
@@ -494,7 +494,13 @@ export class SipSchemeWiseComponent implements OnInit {
       }
     });
 
-    ExcelMisSipService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'MIS Report - Scheme wise SIP', 'category-wise-aum-mis', {
+    let arrayOfExcelHeaders = this.arrayOfHeaders.slice();
+    let arrayOfExcelStyles = this.arrayOfHeaderStyles.slice();
+
+    arrayOfExcelStyles.shift();
+    arrayOfExcelHeaders.shift();
+
+    ExcelMisSipService.exportExcel3(arrayOfExcelHeaders, arrayOfExcelStyles, copyOfExcelData[index].subCatList, 'MIS Report - Scheme wise SIP', 'category-wise-aum-mis', {
       clientList: true,
       subCatList: false,
       schemeList: false

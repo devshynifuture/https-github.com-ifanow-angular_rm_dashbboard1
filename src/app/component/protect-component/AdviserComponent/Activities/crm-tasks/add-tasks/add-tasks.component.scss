@@ -24,7 +24,7 @@
   padding: 10px;
   position: fixed;
   width: 50%;
-  bottom: 65px;
+  bottom: 55px;
   box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2), 0px 4px 5px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.14);
 }
 
@@ -53,4 +53,32 @@
 
 ::ng-deep .tasksList mat-list-item {
   height: 36px !important;
+}
+
+::ng-deep .matFormPadding .mat-form-field-appearance-standard .mat-form-field-flex {
+  padding-top: 0px;
+}
+
+.img-pos  {
+  position: absolute;
+  top: 13px;
+  right: 10px;
+}
+
+.img-pos-two {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+}
+
+::ng-deep .arrowRemoveBox .mat-select-arrow {
+  visibility: hidden;
+}
+
+.pb-160 {
+  padding-bottom: 160px;
+}
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-datepicker-toggle-default-icon {
+  width: 1.5em !important;
 }

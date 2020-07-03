@@ -16,7 +16,7 @@ export class DashboardService {
   }
 
   updateNotes(data) {
-    return this.http.post(apiConfig.MAIN_URL + appConfig.UPDATE_NOTES, data);
+    return this.http.put(apiConfig.MAIN_URL + appConfig.UPDATE_NOTES, data);
   }
 
   deleteNotes(data) {
@@ -33,4 +33,7 @@ export class DashboardService {
     return this.http.get(apiConfig.USER + appConfig.GET_BIRTHDAY_OR_ANNIVERSARY, httpParams);
   }
 
+  last7DaysTransactionStatus(data) {
+    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.LAST_7_DAYS_TRANSACTION_STATUS, data, 1);
+  }
 }

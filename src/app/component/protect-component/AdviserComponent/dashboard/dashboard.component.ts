@@ -162,6 +162,10 @@ export class DashboardComponent implements OnInit {
   connectedToGmail: boolean;
   excessAllow:any;
   dashEvent:boolean = true;
+  bseData: {}[];
+  nscData: {}[];
+  last7DaysFlag: boolean;
+
   constructor(
     public dialog: MatDialog, private subService: SubscriptionService,
     private eventService: EventService,
@@ -206,6 +210,7 @@ export class DashboardComponent implements OnInit {
     this.getRecentTransactionData();
     // this.connectAccountWithGoogle();
     this.getBirthdayOrAnniversary();
+    this.getLast7DaysTransactionStatus();
   }
   getSummaryDataDashboard() {
     const obj = {
@@ -238,7 +243,7 @@ export class DashboardComponent implements OnInit {
       data => {
         if (data && data.length > 0) {
           data.forEach(element => {
-            element['selected'] == false;
+            element['update'] = false;
             if (this.calculateDifferenc(element.createdOn) <= 1) {
               element['createdDate'] = this.calculateDifferenc(element.createdOn);
             }
@@ -256,6 +261,7 @@ export class DashboardComponent implements OnInit {
   }
   showInput = false;
   selectedItem = new FormControl();
+  updateNote = new FormControl();
   addTodoList(value) {
     const obj =
     {
@@ -266,9 +272,10 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.addNotes(obj).subscribe(
       data => {
         if (data) {
+          this.eventService.openSnackBar("To-Do note is added", "Dismiss");
           this.showInput = false;
           data.forEach(element => {
-            element['selected'] == false;
+            element['update'] = false;
             this.selectedItem.reset();
             if (this.calculateDifferenc(element.createdOn) <= 1) {
               element['createdDate'] = this.calculateDifferenc(element.createdOn);
@@ -283,16 +290,38 @@ export class DashboardComponent implements OnInit {
       }
     )
   }
-
-  updateTodoList() {
+  doubleClick(value) {
+    value.update = true;
+    this.updateNote.setValue(value.activityName);
+  }
+  focusOutFunction(value) {
+    value.update = false;
+  }
+  updateTodoList(todoData) {
     const obj =
     {
-
+      id: todoData.id,
+      advisorId: this.advisorId,
+      activityName: this.updateNote.value
     }
     this.dashboardService.updateNotes(obj).subscribe(
       data => {
-
-      })
+        if (data) {
+          this.eventService.openSnackBar("To-Do note is updated", "Dismiss");
+          this.showInput = false;
+          data.forEach(element => {
+            element['update'] = false;
+            this.selectedItem.reset();
+            if (this.calculateDifferenc(element.createdOn) <= 1) {
+              element['createdDate'] = this.calculateDifferenc(element.createdOn);
+            }
+            else {
+              element['createdDate'] = this.datePipe.transform(element.createdOn, 'MMMM d, y');
+            }
+          });
+          this.todoListData = data
+        }
+      }), err => this.eventService.openSnackBar(err, "Dismiss")
   }
 
   deleteTodoList(value, index) {
@@ -307,28 +336,65 @@ export class DashboardComponent implements OnInit {
   }
 
   getBirthdayOrAnniversary() {
-    let fromDate = new Date();
-    fromDate.setFullYear(new Date().getFullYear() - 1)
+    let toDate = new Date();
+    toDate.setDate(new Date().getDate() + 7)
     const obj =
     {
       advisorId: this.advisorId,
-      fromDate: fromDate.getTime(),
-      toDate: new Date().getTime()
+      fromDate: new Date().getTime(),
+      toDate: toDate.getTime()
     }
     this.dashboardService.getBirthdayOrAnniversary(obj).subscribe(
       data => {
         if (data) {
-          this.birthdayAnniList = this.utils.calculateAgeFromCurrentDate(data);
+          data.forEach(element => {
+            if (element.dateOfBirth != 0) {
+              element['daysToGo'] = this.calculateBirthdayOrAnniversary(element.dateOfBirth);
+            }
+            else {
+              element['daysToGo'] = 'N/A'
+            }
+          });
+          this.utils.calculateAgeFromCurrentDate(data);
+          this.birthdayAnniList = data;
+          console.log(this.birthdayAnniList);
         }
       }
     )
   }
 
+  calculateBirthdayOrAnniversary(date) {
+    let today, bday, diff, days;
+    today = new Date().getDate();
+    bday = new Date(date).getDate();
+    days = bday - today;
+    return days;
+  }
+
   calculateDifferenc(createdDate) {
-    const a = moment(createdDate)
-    const b = moment(new Date().getTime());
-    // console.log(a.diff(b, 'days'));
-    return a.diff(b, 'days');
+    let date1 = new Date(createdDate);
+    let date2 = new Date();
+    let diffDays = Math.abs((date2.getTime() - date1.getTime()) / (1000 * 60 * 60 * 24));
+    console.log(Math.round(diffDays));
+    return Math.round(diffDays);
+  }
+
+  getLast7DaysTransactionStatus() {
+    this.last7DaysFlag = true;
+    this.nscData = [{}, {}];
+    this.bseData = [{}, {}];
+    const obj = {
+      advisorId: this.advisorId
+    }
+    this.dashboardService.last7DaysTransactionStatus(obj).subscribe(
+      data => {
+        if (data) {
+          this.last7DaysFlag = false;
+          this.nscData = data.Nse;
+          this.bseData = data.Bse;
+        }
+      }
+    )
   }
 
   connectAccountWithGoogle() {
@@ -422,10 +488,12 @@ export class DashboardComponent implements OnInit {
     };
     this.transactionService.getSearchScheme(obj).subscribe(
       data => {
-        this.isRecentTransactionFlag = false;
-        this.transactionList = data;
-        this.transactionList = TransactionEnumService.setPlatformEnum(data);
-        this.transactionList = TransactionEnumService.setTransactionStatus(data);
+        if (data) {
+          this.isRecentTransactionFlag = false;
+          this.transactionList = data;
+          this.transactionList = TransactionEnumService.setPlatformEnum(data);
+          this.transactionList = TransactionEnumService.setTransactionStatus(data);
+        }
       },
       err => {
         this.eventService.openSnackBar(err, 'Dismefault/stockfeediss');

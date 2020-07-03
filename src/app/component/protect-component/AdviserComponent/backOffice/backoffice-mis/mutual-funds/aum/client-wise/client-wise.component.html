@@ -9,9 +9,10 @@
           <h3 class="pt-8 mb-0">Client Wise AUM</h3>
         </div>
         <div class="col-md-6 pr-0">
-          <div class="right text-right"> 
-            <button  *ngIf="!isLoading && clientList.length!=0" (click)="exportToExcelSheet('client-wise', null)" class="btn-default addon" mat-stroked-button><i
-                class="material-icons">add</i>XLS
+          <div class="right text-right">
+            <button *ngIf="!isLoading && clientList.length!=0"
+              (click)="exportToExcelSheet('client-wise', null, null ,null)" class="btn-default addon"
+              mat-stroked-button><i class="material-icons">add</i>XLS
             </button>
             <button (click)="aumReport()" class="btn-success ml-8 addon" mat-stroked-button>Back</button>
           </div>
@@ -57,10 +58,12 @@
                   <div [ngClass]="{'bar': isLoading}"> {{(isLoading) ? '' : name.name}} </div>
                 </td>
                 <td>
-                  <div [ngClass]="{'bar': isLoading}">{{isLoading ? ' ' : '₹ '}}<span appFormatNumber *ngIf="!isLoading" [value]="name.totalAum"></span></div>
+                  <div [ngClass]="{'bar': isLoading}">{{isLoading ? ' ' : '₹ '}}<span appFormatNumber *ngIf="!isLoading"
+                      [value]="name.totalAum"></span></div>
                 </td>
                 <td>
-                  <div [ngClass]="{'bar': isLoading}"> {{(isLoading) ? '' : (name.weightInPercentage | number:'1.2-2')}}{{(isLoading ? '' : '%')}}</div>
+                  <div [ngClass]="{'bar': isLoading}">
+                    {{(isLoading) ? '' : (name.weightInPercentage | number:'1.2-2')}}{{(isLoading ? '' : '%')}}</div>
                 </td>
                 <td (click)="getInvestorName(name, clientIndex)">
                   <div class="bar text-center">
@@ -75,14 +78,15 @@
               <tr style="border: transparent !important">
                 <td class="innerTd one" colspan="5">
                   <div *ngIf="name.show==false" class="d-block text-right">
-                    <button (click)="exportToExcelSheet('investor-wise', clientIndex)" mat-icon-button *ngIf="!isLoading  && name.investorList?.length > 0">
+                    <button (click)="exportToExcelSheet('investor-wise', clientIndex, null,null)" mat-icon-button
+                      *ngIf="!isLoading  && name.investorList?.length > 0">
                       <mat-icon>
                         save_alt
                       </mat-icon>
                     </button>
                   </div>
-                  <table *ngIf="name.show==false && name.investorList?.length > 0" class="skeletonAnimation mt-8 mb-8" appSkeletonLoading
-                    [appSkeletonLoading]="isLoadingInvestor" id="table-low">
+                  <table *ngIf="name.show==false && name.investorList?.length > 0" class="skeletonAnimation mt-8 mb-8"
+                    appSkeletonLoading [appSkeletonLoading]="isLoadingInvestor" id="table-low">
                     <thead class="bg-light text-dark">
                       <tr class="h-40">
                         <th class="w-10">Sr No.</th>
@@ -126,7 +130,8 @@
                         </td>
                         <td>
                           <div [ngClass]="{'bar': isLoadingInvestor}">
-                              {{isLoadingInvestor ? ' ' : '₹ '}}<span appFormatNumber *ngIf="!isLoadingInvestor">{{isLoadingInvestor ? '' : name.totalAum}}</span>
+                            {{isLoadingInvestor ? ' ' : '₹ '}}<span appFormatNumber
+                              *ngIf="!isLoadingInvestor">{{isLoadingInvestor ? '' : name.totalAum}}</span>
                           </div>
                         </td>
                         <td>
@@ -136,22 +141,26 @@
                         </td>
                         <td (click)="getSchemeName(investor, investorIndex, clientIndex)">
                           <div class="bar text-center">
-                          <i *ngIf="investor.showInvestor && !isLoadingInvestor" class="material-icons  b-a f-14 mt-4 c-p" >add</i>
-                          <i *ngIf="!investor.showInvestor && !isLoadingInvestor" class="material-icons  b-a f-14 mt-4 c-p" >remove </i>
+                            <i *ngIf="investor.showInvestor && !isLoadingInvestor"
+                              class="material-icons  b-a f-14 mt-4 c-p">add</i>
+                            <i *ngIf="!investor.showInvestor && !isLoadingInvestor"
+                              class="material-icons  b-a f-14 mt-4 c-p">remove </i>
                           </div>
                         </td>
                       </tr>
                       <tr style="border: transparent !important">
                         <td class="innerTd two" colspan="5">
                           <div *ngIf="!investor.showInvestor" class="d-block text-right">
-                            <button (click)="exportToExcelSheet('scheme1-wise', investorIndex)" mat-icon-button *ngIf="!isLoadingInvestor && investor.schemeList?.length > 0">
+                            <button (click)="exportToExcelSheet('scheme1-wise',clientIndex, investorIndex, null)"
+                              mat-icon-button *ngIf="!isLoadingInvestor && investor.schemeList?.length > 0">
                               <mat-icon>
                                 save_alt
                               </mat-icon>
                             </button>
                           </div>
-                          <table *ngIf="investor.showInvestor == false && investor.schemeList?.length > 0" class="skeletonAnimation mt-8 mb-8"
-                            appSkeletonLoading [appSkeletonLoading]="isLoadingScheme" id="table-low">
+                          <table *ngIf="investor.showInvestor == false && investor.schemeList?.length > 0"
+                            class="skeletonAnimation mt-8 mb-8" appSkeletonLoading
+                            [appSkeletonLoading]="isLoadingScheme" id="table-low">
                             <thead>
                               <tr class="h-40">
                                 <th class="w-10">Sr No.</th>
@@ -193,7 +202,8 @@
                                 </td>
                                 <td>
                                   <div [ngClass]="{'bar': isLoadingScheme}">
-                                      {{isLoadingScheme ? ' ' : '₹ '}}<span appFormatNumber *ngIf="!isLoadingScheme" [value]="scheme.totalAum"></span>
+                                    {{isLoadingScheme ? ' ' : '₹ '}}<span appFormatNumber *ngIf="!isLoadingScheme"
+                                      [value]="scheme.totalAum"></span>
                                   </div>
 
                                 </td>
@@ -204,24 +214,29 @@
                                 </td>
                                 <td (click)="getFolio(scheme, schemeIndex, investorIndex, clientIndex)"
                                   class="text-center">
-                                   <div class="bar text-center">
-                                  <i *ngIf="scheme.showScheme && !isLoadingScheme" class="material-icons  b-a f-14 mt-4 c-p">add</i>
-                                  <i *ngIf="scheme.showScheme==false && !isLoadingScheme" class="material-icons  b-a f-14 mt-4 c-p"> remove
-                                  </i>
-                                </div>
+                                  <div class="bar text-center">
+                                    <i *ngIf="scheme.showScheme && !isLoadingScheme"
+                                      class="material-icons  b-a f-14 mt-4 c-p">add</i>
+                                    <i *ngIf="scheme.showScheme==false && !isLoadingScheme"
+                                      class="material-icons  b-a f-14 mt-4 c-p"> remove
+                                    </i>
+                                  </div>
                                 </td>
                               </tr>
                               <tr style="border: transparent !important">
                                 <td class="innerTd four" colspan="5">
                                   <div class="d-block text-right" *ngIf="!scheme.showScheme">
-                                    <button (click)="exportToExcelSheet('scheme2-wise', schemeIndex)" mat-icon-button *ngIf="!isLoadingScheme && scheme.folioList?.length > 0">
+                                    <button
+                                      (click)="exportToExcelSheet('scheme2-wise',clientIndex, investorIndex, schemeIndex)"
+                                      mat-icon-button *ngIf="!isLoadingScheme && scheme.folioList?.length > 0">
                                       <mat-icon>
                                         save_alt
                                       </mat-icon>
                                     </button>
                                   </div>
-                                  <table *ngIf="scheme.showScheme==false && scheme.folioList?.length > 0" class="skeletonAnimation mt-8 mb-8"
-                                    appSkeletonLoading [appSkeletonLoading]="isLoadingFolio" id="table-low">
+                                  <table *ngIf="scheme.showScheme==false && scheme.folioList?.length > 0"
+                                    class="skeletonAnimation mt-8 mb-8" appSkeletonLoading
+                                    [appSkeletonLoading]="isLoadingFolio" id="table-low">
                                     <thead>
                                       <tr class="h-40">
                                         <th class="w-10">Sr No.</th>
@@ -279,17 +294,19 @@
                                         </td>
                                         <td>
                                           <div [ngClass]="{'bar': isLoadingFolio}">
-                                              {{isLoadingFolio ? ' ' : '₹ '}}<span appFormatNumber *ngIf="!isLoadingFolio" [value]="folio.totalAum"></span>
+                                            {{isLoadingFolio ? ' ' : '₹ '}}<span appFormatNumber *ngIf="!isLoadingFolio"
+                                              [value]="folio.totalAum"></span>
                                           </div>
                                         </td>
                                         <td>
                                           <div [ngClass]="{'bar': isLoadingFolio}">
-                                              {{isLoadingFolio ? ' ' : '₹ '}}<span appFormatNumber *ngIf="!isLoadingFolio">{{(isLoadingFolio) ? '' : (folio.balanceUnit | number:'1.2-2')}}</span>
+                                            {{isLoadingFolio ? ' ' : '₹ '}}<span appFormatNumber
+                                              *ngIf="!isLoadingFolio">{{(isLoadingFolio) ? '' : (folio.balanceUnit | number:'1.2-2')}}</span>
                                           </div>
                                         </td>
                                         <td>
 
-                                          <div  [ngClass]="{'bar': isLoadingFolio}">
+                                          <div [ngClass]="{'bar': isLoadingFolio}">
                                             {{(isLoadingFolio) ? '' : (folio.weightInPercentage | number:'1.2-2')}}
                                           </div>
 
@@ -298,8 +315,9 @@
                                     </tbody>
 
                                   </table>
-                                  <div *ngIf="!isLoadingFolio && scheme.showScheme == false && scheme.folioList?.length == 0">
-                                    <div  class="d-flex flex-column align-items-center">
+                                  <div
+                                    *ngIf="!isLoadingFolio && scheme.showScheme == false && scheme.folioList?.length == 0">
+                                    <div class="d-flex flex-column align-items-center">
                                       <h4 class="text-center pt-12">No data found
                                       </h4>
                                     </div>
@@ -310,7 +328,8 @@
                             </tbody>
 
                           </table>
-                          <div *ngIf="!isLoadingScheme && investor.showInvestor == false && investor.schemeList?.length == 0">
+                          <div
+                            *ngIf="!isLoadingScheme && investor.showInvestor == false && investor.schemeList?.length == 0">
                             <div *ngIf="scheme1ListArr.length == 0" class="d-flex flex-column align-items-center">
                               <h4 class="text-center pt-12">No data found
                               </h4>
@@ -321,7 +340,8 @@
                     </tbody>
                   </table>
                   <div *ngIf="!isLoadingInvestor && name.show == false ">
-                    <div *ngIf="investorList.length == 0  && name.investorList?.length == 0" class="d-flex flex-column align-items-center">
+                    <div *ngIf="investorList.length == 0  && name.investorList?.length == 0"
+                      class="d-flex flex-column align-items-center">
                       <h4 class="text-center pt-12">No data found
                       </h4>
                     </div>
@@ -333,7 +353,8 @@
               <tr *ngIf="!isLoading && clientList.length>0">
                 <td class="p-table  "><strong>Total</strong></td>
                 <td class="p-table  ">&nbsp;</td>
-                <td class="p-table  "><strong>{{'₹ '}}<span appFormatNumber [value]="totalCurrentValue"></span></strong></td>
+                <td class="p-table  "><strong>{{'₹ '}}<span appFormatNumber [value]="totalCurrentValue"></span></strong>
+                </td>
                 <td class="p-table "><strong><span>{{totalWeight | number:'1.2-2'}}%</span></strong></td>
                 <td></td>
               </tr>
