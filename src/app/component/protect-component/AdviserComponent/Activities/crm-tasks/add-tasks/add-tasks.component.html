@@ -13,7 +13,7 @@
     </div>
 </div>
 
-<div class="pt-72 pb-60">
+<div class="mt-80 pb-160 ">
     <div class="row">
         <div class="col-md-8">
             <h3 class="f-500 mb-20"> Do KYC and register mandate </h3>
@@ -40,23 +40,12 @@
     </div>
 
 
-    <div class="row pt-12">
-        <div class="col-md-3 pr-0 text-left">
-            <h5 class="m-0 pt-12">Task description</h5>
-        </div>
 
-        <div class="col-md-8 form-group pl-0">
-            <mat-form-field>
-                <input class="form-control br-0 text-left" matInput type="text">
-            </mat-form-field>
-        </div>
-
-    </div>
 
 
     <div class="row pt-16">
         <div class="col-md-3 pr-0 text-left">
-            <h5 class="m-0 pt-12">Client</h5>
+            <h5 class="m-0 f-14 pt-12">Client</h5>
         </div>
 
         <div class="col-md-4 form-group pl-0">
@@ -78,7 +67,7 @@
 
     <div class="row pt-16">
         <div class="col-md-3 pr-0 text-left">
-            <h5 class="m-0 pt-12">Assigned to</h5>
+            <h5 class="m-0 f-14 pt-12">Assigned to</h5>
         </div>
 
         <div class="col-md-4 form-group pl-0">
@@ -94,12 +83,12 @@
 
     <div class="row pt-16">
         <div class="col-md-3 pr-0 text-left">
-            <h5 class="m-0 pt-12">Due date</h5>
+            <h5 class="m-0 f-14 pt-12">Due date</h5>
         </div>
 
         <div class="col-md-4 form-group pl-0">
-            <mat-form-field>
-                <input class="form-control" matInput [matDatepicker]="picker">
+            <mat-form-field class="ba-date">
+                <input class="form-control br-0 b-0" matInput [matDatepicker]="picker">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
@@ -117,12 +106,45 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-12 tasksList">
 
 
-
+    <div class="row pb-16">
+        <div class="col-md-4">
+            <mat-form-field>
+                <input class="form-control br-0 text-left" matInput type="text">
+            </mat-form-field>
         </div>
+
+        <div class="col-md-3 pl-0">
+            <div class="form-group matFormPadding">
+                <mat-form-field appearance="standard" class="arrowRemoveBox" floatLabel="never">
+                    <img class="img-pos" src="/assets/images/svg/calander.svg">
+                    <mat-select class="form-control" formControlName=" ">
+                        <mat-option [value]=" ">
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="col-md-3 pl-0">
+            <div class="form-group matFormPadding">
+                <mat-form-field appearance="standard" class="arrowRemoveBox" floatLabel="never">
+                    <img class="img-pos-two" src="/assets/images/svg/people.svg">
+                    <mat-select class="form-control" formControlName=" ">
+                        <mat-option>
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="col-md-1 p-0 d-flex  justify-content-sm-between">
+            <i class="material-icons c-p mt-8">
+                remove
+            </i>
+        </div>
+
     </div>
 
 
@@ -137,7 +159,7 @@
     <div class="bg-white pb-20 pt-20">
         <div class="row">
             <div class="col-md-12">
-                <h5 class="f-500 roboto">Attachments</h5>
+                <h5 class="f-500 f-16 roboto">Attachments</h5>
             </div>
         </div>
         <div class="row">
@@ -250,10 +272,10 @@
 
 
 
-<!-- <div class="bottomCommentBox bg-grey lter">
+<div class="bottomCommentBox bg-grey lter">
     <div class="row">
         <div class="col-md-1 p-0">
-              <img src="assets/images/svg/avtar-2.svg" class="c-p ml-12">
+            <img src="assets/images/svg/avtar-1.svg" class="c-p ml-12">
         </div>
         <div class="col-md-11">
             <mat-form-field>
@@ -272,7 +294,7 @@
         </div>
     </div>
 
-</div> -->
+</div>
 
 <div class="bottom-fixed-50 wrapper-12 pt-16">
     <div class="row">

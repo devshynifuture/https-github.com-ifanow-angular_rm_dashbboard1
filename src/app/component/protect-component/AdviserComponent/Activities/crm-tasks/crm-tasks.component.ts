@@ -1,5 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {SubscriptionInject} from '../../Subscriptions/subscription-inject.service';
+import { Component, OnInit } from '@angular/core';
+import { SubscriptionInject } from '../../Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
+import { AddTasksComponent } from './add-tasks/add-tasks.component';
 
 @Component({
   selector: 'app-crm-tasks',
@@ -16,9 +18,32 @@ export class CrmTasksComponent implements OnInit {
   ngOnInit() {
   }
 
+  openAddTask(data) {
+    // let popupHeaderText = !!data ? 'Edit Recurring deposit' : 'Add Recurring deposit';
+    const fragmentData = {
+      // flag: 'addRecuringDeposit',
+      data,
+      id: 1,
+      state: 'open50',
+      componentName: AddTasksComponent,
+      // popupHeaderText: popupHeaderText,
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+
+          }
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
+  }
+
+
 
 }
-
 export interface PeriodicElement {
   client: string;
   member: string;
@@ -42,3 +67,4 @@ const ELEMENT_DATA: PeriodicElement[] = [
     menuList: ''
   },
 ];
+
