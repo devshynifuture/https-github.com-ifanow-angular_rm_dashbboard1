@@ -982,22 +982,24 @@
         </div>
         <div class="radio-buttons-advisor">
           <mat-radio-group [formControl]="selectedItem" aria-label="Select an option">
-            <div class=row *ngFor="let singleNote of todoListData;index as i">
+            <div *ngFor="let singleNote of todoListData;index as i" class="pt-12">
               <span *ngIf="singleNote.createdDate==0">Today</span>
               <span *ngIf="singleNote.createdDate==1">Yesterday</span>
               <span *ngIf="singleNote.createdDate!=1 && singleNote.createdDate!=0">{{singleNote.createdDate}}</span>
-              <div class="col-md-2">
-                <mat-radio-button value={{singleNote.id}}>
-                </mat-radio-button>
-              </div>
-              <div class="col-md-4">
-                {{singleNote.activityName}}
-              </div>
-              <div class="col-md-4">
-                <span *ngIf="selectedItem.value==singleNote.id" class="material-icons c-p"
-                  (click)="deleteTodoList(singleNote,i)">
-                  delete
-                </span>
+              <div class="row">
+                <div class="col-md-2 pl-0">
+                  <mat-radio-button value={{singleNote.id}}>
+                  </mat-radio-button>
+                </div>
+                <div class="col-md-8 pl-0">
+                  {{singleNote.activityName}}
+                </div>
+                <div class="col-md-2 pl-0">
+                  <span *ngIf="selectedItem.value==singleNote.id" class="material-icons c-p"
+                    (click)="deleteTodoList(singleNote,i)">
+                    delete
+                  </span>
+                </div>
               </div>
               <hr class="ad">
             </div>
