@@ -9,6 +9,10 @@ import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { LinkBankComponent } from './link-bank/link-bank.component';
 import { EmailDomainAutoSuggestComponent } from './email-domain-auto-suggest/email-domain-auto-suggest.component';
 import { GoogleConnectComponent } from '../component/protect-component/AdviserComponent/Email/email-component/email-list/email-listing/google-connect/google-connect.component';
+import { CalendarScheduleComponent } from '../component/protect-component/AdviserComponent/Activities/calendar/calendar-schedule/calendar-schedule.component';
+import { DashEvent } from '../component/protect-component/AdviserComponent/Activities/calendar/dash-event';
+// import {CommonComponentModule} from '../component/protect-component/common-component/common-component.module'
+// import {FroalaComponent} from '../component/protect-component/common-component/froala/froala.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +20,9 @@ import { GoogleConnectComponent } from '../component/protect-component/AdviserCo
     ProgressButtonComponent,
     LinkBankComponent,
     EmailDomainAutoSuggestComponent,
-    GoogleConnectComponent
+    GoogleConnectComponent,
+    CalendarScheduleComponent,
+    DashEvent 
   ],
   imports: [
     MaterialModule,
@@ -25,15 +31,18 @@ import { GoogleConnectComponent } from '../component/protect-component/AdviserCo
     NgxMatSelectSearchModule,
     ReactiveFormsModule,
     CustomDirectiveModule,
+    // CommonComponentModule
   ],
   exports: [
     DialogContainerComponent, 
     ProgressButtonComponent, 
     LinkBankComponent,
     EmailDomainAutoSuggestComponent,
-    GoogleConnectComponent
+    GoogleConnectComponent,
+    CalendarScheduleComponent,
+    DashEvent
   ],
-  entryComponents: [LinkBankComponent]
+  entryComponents: [LinkBankComponent, DashEvent]
 })
 export class CustomCommonModule {
 }

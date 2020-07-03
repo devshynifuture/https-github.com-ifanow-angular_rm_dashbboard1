@@ -1026,7 +1026,12 @@
 
         </div>
       </mat-tab>
-      <mat-tab label="Calendar">Content 2</mat-tab>
+      <mat-tab label="Calendar">
+        <app-google-connect *ngIf="!excessAllow"></app-google-connect>
+        <div *ngIf="excessAllow">
+          <app-calendar-schedule [dashEvents]="dashEvent"></app-calendar-schedule>
+        </div>
+      </mat-tab>
     </mat-tab-group>
   </div>
 </div>

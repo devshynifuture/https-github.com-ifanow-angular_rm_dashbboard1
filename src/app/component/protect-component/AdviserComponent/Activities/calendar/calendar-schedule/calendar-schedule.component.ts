@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { calendarService } from './../calendar.service';
 import { AuthService } from '../../../../../../auth-service/authService';
@@ -6,6 +6,7 @@ import { EventDialog } from './../event-dialog';
 import { Subscription } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { threadId } from 'worker_threads';
+import { DashEvent } from '../dash-event';
 
 @Component({
   selector: 'app-calendar-schedule',
@@ -38,17 +39,19 @@ export class CalendarScheduleComponent implements OnInit {
   excessAllow: any;
   private unSubcrip: Subscription;
   back: boolean = false;
-  sun:any = [];
- mon:any = [];
- tue:any = [];
- wed:any = [];
- thu:any = [];
- fri:any = [];
- sat:any = [];
- curruntDayIndex:any;
- currentMonthEvents:any = [];
+  sun: any = [];
+  mon: any = [];
+  tue: any = [];
+  wed: any = [];
+  thu: any = [];
+  fri: any = [];
+  sat: any = [];
+  //  dashEvents:boolean = false;
+  curruntDayIndex: any;
+  currentMonthEvents: any = [];
   constructor(public dialog: MatDialog, private calenderService: calendarService, private datePipe: DatePipe) { }
 
+  @Input() dashEvents: boolean;
   ngOnInit() {
     this.currentMonth = new Date().getMonth();
     this.currentYear = new Date().getFullYear();
@@ -157,32 +160,32 @@ export class CalendarScheduleComponent implements OnInit {
         this.createDayJson();
       }
     });
-                
+
   }
 
-createDayJson(){
-  for(let i=1; i < this.numbersOfDays; i++){
-    let dayArr = {
-      date:null,
-      events:[]
-    }
-    for(let e=0; e < this.formatedEvent.length; e++){
-      let calMonth = new Date(this.year,this.month,this.formateDate(this.current_day));
-      // console.log(this.formateMonth(calMonth),this.formatedEvent[e].month, this.formateYear(calMonth));
-      
-      if(this.formatedEvent[e].month == this.formateMonth(calMonth) && this.formatedEvent[e].year ==  this.formateYear(calMonth)){
-        if(this.formatedEvent[e].day== i && this.formatedEvent[e].month == this.formateMonth(calMonth) && this.formatedEvent[e].year ==  this.formateYear(calMonth)){
-            dayArr.date = new Date(this.formatedEvent[e].year, this.formatedEvent[e].month-1, i);
+  createDayJson() {
+    for (let i = 1; i < this.numbersOfDays; i++) {
+      let dayArr = {
+        date: null,
+        events: []
+      }
+      for (let e = 0; e < this.formatedEvent.length; e++) {
+        let calMonth = new Date(this.year, this.month, this.formateDate(this.current_day));
+        // console.log(this.formateMonth(calMonth),this.formatedEvent[e].month, this.formateYear(calMonth));
+
+        if (this.formatedEvent[e].month == this.formateMonth(calMonth) && this.formatedEvent[e].year == this.formateYear(calMonth)) {
+          if (this.formatedEvent[e].day == i && this.formatedEvent[e].month == this.formateMonth(calMonth) && this.formatedEvent[e].year == this.formateYear(calMonth)) {
+            dayArr.date = new Date(this.formatedEvent[e].year, this.formatedEvent[e].month - 1, i);
             dayArr.events.push(this.formatedEvent[e])
           }
+        }
+        // console.log(this.currentMonthEvents, "this.currentMonthEvents");
       }
-      // console.log(this.currentMonthEvents, "this.currentMonthEvents");
-    }
-    if(dayArr.date != null){
-      this.currentMonthEvents.push(dayArr);
+      if (dayArr.date != null) {
+        this.currentMonthEvents.push(dayArr);
+      }
     }
   }
-}
 
   formateDate(date) {
     var dd = new Date(date).getDate();
@@ -210,41 +213,41 @@ createDayJson(){
     return hh + ":" + mm + amPm + " ";
   }
 
-  addDaysOfMomth(){
-    let d:any;
+  addDaysOfMomth() {
+    let d: any;
     let m;
-   for(let i = 1; i < this.numbersOfDays; i++){
-     // if(this.back){
-     //   m = this.month == 0?11:this.month-1;
-     // }
-     // else{
-     //   m = this.month == 0?1:this.month;
-     // }
-     d = new Date(this.year,this.month,i);
-     switch (d.getDay()) {
-       case 0:
-         this.sun.push(d);
-         break;
-       case 1:
-         this.mon.push(d);
-         break;
-       case 2:
-         this.tue.push(d);
-         break;
-       case 3:
-         this.wed.push(d);
-         break;
-       case 4:
-         this.thu.push(d);
-         break;
-       case 5:
-         this.fri.push(d);
-         break;
-       case 6:
-         this.sat.push(d);
-         break;
-     }
-   }
+    for (let i = 1; i < this.numbersOfDays; i++) {
+      // if(this.back){
+      //   m = this.month == 0?11:this.month-1;
+      // }
+      // else{
+      //   m = this.month == 0?1:this.month;
+      // }
+      d = new Date(this.year, this.month, i);
+      switch (d.getDay()) {
+        case 0:
+          this.sun.push(d);
+          break;
+        case 1:
+          this.mon.push(d);
+          break;
+        case 2:
+          this.tue.push(d);
+          break;
+        case 3:
+          this.wed.push(d);
+          break;
+        case 4:
+          this.thu.push(d);
+          break;
+        case 5:
+          this.fri.push(d);
+          break;
+        case 6:
+          this.sat.push(d);
+          break;
+      }
+    }
   }
 
   updatecalendar() {
@@ -277,6 +280,8 @@ createDayJson(){
     for (let fd = 1; this.daysArr.length <= 41; fd++) {
       this.daysArr.push(fd);
     }
+    this.currentMonthEvents = [];
+      this.createDayJson();
   }
 
   getDaysCount(month: number, year: number, ch: string): any {
@@ -345,19 +350,26 @@ createDayJson(){
   }
 
   openDialog(eventData, date): void {
-    let h = "673px"; 
-    if(date != null){
-      eventData ={
-        events:eventData,
-        calDate:date
+    let h = "673px";
+    let component;
+    if (date != null) {
+      eventData = {
+        events: eventData,
+        calDate: date
       }
     }
 
-    if(eventData.id || date != null){
+    if (eventData.id || date != null) {
       h = "auto";
     }
-    
-    const dialogRef = this.dialog.open(EventDialog, {
+
+    if (this.dashEvents) {
+      component = DashEvent;
+    }
+    else {
+      component = EventDialog;
+    }
+    const dialogRef = this.dialog.open(component, {
       width: '576px',
       height: h,
       data: eventData
@@ -404,8 +416,8 @@ createDayJson(){
           })
         }
       }
-      else{
-        if(result){
+      else {
+        if (result) {
           this.openDialog(result.event, null);
         }
       }
@@ -450,5 +462,16 @@ createDayJson(){
     else {
       return current_year + '-' + current_month + '-' + current_date + 'T' + current_hrs + ':' + current_mins + ':' + current_secs;
     }
+  }
+
+
+  nextMonth() {
+    this.viewDate = new Date(this.viewDate.setMonth(this.viewDate.getMonth() + 1))
+    this.updatecalendar();
+  }
+
+  lastMonth() {
+    this.viewDate = new Date(this.viewDate.setMonth(this.viewDate.getMonth() - 1))
+    this.updatecalendar();
   }
 }

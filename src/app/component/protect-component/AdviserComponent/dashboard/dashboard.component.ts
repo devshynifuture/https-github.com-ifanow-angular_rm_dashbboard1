@@ -160,7 +160,8 @@ export class DashboardComponent implements OnInit {
   calenderLoader: boolean;
   birthdayAnniList: any;
   connectedToGmail: boolean;
-
+  excessAllow:any;
+  dashEvent:boolean = true;
   constructor(
     public dialog: MatDialog, private subService: SubscriptionService,
     private eventService: EventService,
@@ -192,6 +193,8 @@ export class DashboardComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.parentId = AuthService.getParentId() ? AuthService.getParentId() : this.advisorId;
     this.advisorName = AuthService.getUserInfo().name;
+    this.excessAllow = localStorage.getItem('successStoringToken')
+
     this.getTotalRecivedByDash();
     this.clientWithSubscription();
     this.getSummaryDataDashboard();//summry dashbord
