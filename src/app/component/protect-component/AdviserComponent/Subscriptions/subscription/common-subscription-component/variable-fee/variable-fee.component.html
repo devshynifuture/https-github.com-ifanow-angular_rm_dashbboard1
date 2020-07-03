@@ -73,21 +73,21 @@
                             </div>
                         </div>
                         <div class="row ui-mff">
-                            <div class="col-md-4 p-0 bl-0 border-right-1">
+                            <div class="col-md-4 p-0 bl-0 border-right-1 iconPetage">
                                 <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="4" [maxValue]="100"
-                                    appInputValueValidation class="form-control br-0 h-39" formControlName="equity"
-                                    placeholder="%" type="text">
+                                    appInputValueValidation class="form-control br-0 h-39 percentage" formControlName="equity"
+                                     type="text">
                                 <!-- <span  style= "position:absolute; top: 10px; right: 3px;">%</span> -->
                             </div>
-                            <div class="col-md-4 p-0 border-right-1">
+                            <div class="col-md-4 p-0 border-right-1 iconPetage">
                                 <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="4" [maxValue]="100"
-                                    appInputValueValidation class="form-control br-0 h-39" formControlName="debt"
-                                    placeholder="%" type="text">
+                                    appInputValueValidation class="form-control br-0 h-39 percentage" formControlName="debt"
+                                     type="text">
                             </div>
-                            <div class="col-md-4 p-0">
+                            <div class="col-md-4 p-0 iconPetage">
                                 <input [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="4" [maxValue]="100"
-                                    appInputValueValidation class="form-control br-0 h-39" formControlName="liquid"
-                                    placeholder="%" type="number">
+                                    appInputValueValidation class="form-control br-0 h-39 percentage" formControlName="liquid"
+                                     type="number">
                             </div>
                         </div>
                     </div>
@@ -106,17 +106,17 @@
                             </div>
                         </div>
                         <div class="row ui-mff">
-                            <div class="col-md-4 p-0 bl-0 border-right-1">
-                                <input type="text" appNumberOnly [maxLength]="4" placeholder="%"
-                                    class="form-control br-0 h-39" formControlName="equity">
+                            <div class="col-md-4 p-0 bl-0 border-right-1 iconPetage">
+                                <input type="text" appNumberOnly [maxLength]="4"
+                                    class="form-control br-0 h-39 percentage" formControlName="equity">
                             </div>
-                            <div class="col-md-4 p-0 border-right-1 ">
-                                <input type="number" appNumberOnly [maxLength]="4" placeholder="%"
-                                    class="form-control br-0 h-39" formControlName="debt">
+                            <div class="col-md-4 p-0 border-right-1 iconPetage">
+                                <input type="number" appNumberOnly [maxLength]="4"
+                                    class="form-control br-0 h-39 percentage" formControlName="debt">
                             </div>
-                            <div class="col-md-4 p-0">
-                                <input type="number" appNumberOnly [maxLength]="4" placeholder="%"
-                                    class="form-control br-0 h-39 " formControlName="liquid">
+                            <div class="col-md-4 p-0 iconPetage">
+                                <input type="number" appNumberOnly [maxLength]="4"
+                                    class="form-control br-0 h-39 percentage " formControlName="liquid">
                             </div>
                         </div>
                     </div>
