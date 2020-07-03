@@ -32,6 +32,7 @@ export class InsuranceComponent implements OnInit {
   isLoadingUpload: boolean;
   isExpandedLife: boolean;
   isExpandedGeneral: boolean;
+  bankList =[];
 
   [x: string]: any;
 
@@ -111,6 +112,7 @@ export class InsuranceComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.personalProfileData = AuthService.getProfileDetails();
+    this.getBankList(this.clientData);
     this.insuranceTypeId = 1;
     this.insuranceSubTypeId = 0;
     this.getCount();
@@ -150,7 +152,25 @@ export class InsuranceComponent implements OnInit {
       this.isLoadingUpload = false;
     }, 7000);
   }
-
+  getBankList(data) {
+    const obj = {
+      userId: data.clientId,
+      userType: data.userType
+    };
+    this.cusService.getBankList(obj).subscribe(
+      data => {
+        console.log(data);
+        if (data && data.length > 0) {
+          this.bankList = data;
+         
+        }
+      },
+      err => {
+       this.bankList = [];
+        console.error(err);
+      }
+    );
+  }
   getCount() {
     const obj = {
       advisorId: this.advisorId,

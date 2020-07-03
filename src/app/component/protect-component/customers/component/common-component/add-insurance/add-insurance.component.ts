@@ -57,6 +57,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
   showInsurance: any;
   flag = 'Add';
   bankList: any;
+  filterNomineesList: any[];
 
   /*_data;
   @Input()
@@ -211,9 +212,17 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
   display(value) {
     this.ownerName = value.userName;
     this.familyMemberId = value.id;
+    
   }
-  changeNomineeLis(value){
-    console.log(value)
+  changeNomineeList(){
+    this.filterNomineesList=[];
+    let filterArray=[];
+    this.nomineesListFM.forEach(element => {
+      if(element.familyMemberId != this.lifeInsuranceForm.value.getCoOwnerName[0].familyMemberId){
+        filterArray.push(element)
+      }
+    });
+    this.filterNomineesList = filterArray;
   }
   lisNominee(value) {
     this.ownerData.Fmember = value;
@@ -232,6 +241,8 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
     else{
       this.bankList = [];
     }
+    this.changeNomineeList();
+
     console.log(this.bankList,"this.bankList2");
   }
 
@@ -255,6 +266,8 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       ParamValue: value,
       disControl: type
     };
+    this.changeNomineeList();
+
   }
 
   displayControler(con) {
@@ -550,6 +563,23 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       }
 
     });
+
+
+  }
+  getOwnerData(value, data) {
+
+    data.forEach(element => {
+      for (const e in this.getCoOwner.controls) {
+        const name = this.getCoOwner.controls[e].get('name');
+        if (element.userName == name.value) {
+          this.getCoOwner.controls[e].get('name').setValue(element.userName);
+          this.getCoOwner.controls[e].get('familyMemberId').setValue(element.id);
+        }
+      }
+
+    });
+    this.changeNomineeList();
+
 
 
   }
