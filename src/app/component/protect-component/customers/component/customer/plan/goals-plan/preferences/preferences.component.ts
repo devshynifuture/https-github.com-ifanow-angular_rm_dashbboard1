@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
 import { EventService } from 'src/app/Data-service/event.service';
 import { DatePipe } from '@angular/common';
 import { PlanService } from '../../plan.service';
@@ -55,6 +55,23 @@ export class PreferencesComponent implements OnInit, OnDestroy {
 
   setForms(){
     const remainingData = this.data.remainingData;
+    this.createKeyParamsForm(remainingData);
+    this.createAssetForm(remainingData);
+  }
+
+  setFormListeners(){
+    this.setKeyParamFormListeners();
+    this.setAssetAllocationListeners();
+  }
+
+
+  // ----------------- key params ----------------------------
+
+  savingsSDError:boolean = false;
+  savingsEDError:boolean = false;
+  goalSDError:boolean = false;
+
+  createKeyParamsForm(remainingData){
     this.goalDetailsFG = this.fb.group({
       goalValue: [Math.round(this.preferenceService.getGoalValueForForm(this.data)), [Validators.required]],
       savingStartDateYear: [(new Date(remainingData.savingStartDate).getFullYear()), [Validators.required]],
@@ -75,28 +92,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       this.goalDetailsFG.addControl('goalEndDateYear',this.fb.control(new Date(remainingData.goalEndDate).getFullYear(), [Validators.required]));
       this.goalDetailsFG.addControl('goalEndDateMonth',this.fb.control(('0' + (new Date(remainingData.goalEndDate).getMonth() + 1)).slice(-2), [Validators.required]));
     }
-
-    this.assetAllocationFG = this.fb.group({
-      advisorId: [this.data.remainingData.advisorId],
-      equityAllocation: ['', [Validators.required]],
-      debtAllocation: ['', [Validators.required]],
-      strategicOrTactical: [this.data.remainingData.strategicOrTactical, [Validators.required]],
-      staticOrProgressive: [this.data.remainingData.staticOrProgressive, [Validators.required]],
-      goalId: [this.data.remainingData.id],
-      goalType: [this.data.goalType],
-    })
   }
-
-  setFormListeners(){
-    this.setKeyParamFormListeners();
-  }
-
-
-  // ----------------- key params ----------------------------
-
-  savingsSDError:boolean = false;
-  savingsEDError:boolean = false;
-  goalSDError:boolean = false;
   setKeyParamFormListeners(){
     if(this.data.singleOrMulti == 1) {
       this.subscription.add(
@@ -184,7 +180,66 @@ export class PreferencesComponent implements OnInit, OnDestroy {
   }
   // ----------------- key params ----------------------------
 
+
+
   // ----------------- asset allocation ----------------------
+  today = new Date();
+  stages = Array(50).fill(0).map((v, index) => {return {name: index + ' years from today', value: index}});
+  createAssetForm(remainingData){
+    this.assetAllocationFG = this.fb.group({
+      advisorId: [this.data.remainingData.advisorId],
+      equityAllocation: ['', [Validators.required]],
+      debtAllocation: ['', [Validators.required]],
+      progressiveStages: [this.fb.array([])],
+      strategicOrTactical: [this.data.remainingData.strategicOrTactical, [Validators.required]],
+      staticOrProgressive: [this.data.remainingData.staticOrProgressive, [Validators.required]],
+      goalId: [this.data.remainingData.id],
+      goalType: [this.data.goalType],
+    })
+  }
+
+  setAssetAllocationListeners(){
+    this.subscription.add(
+      this.assetAllocationFG.controls.staticOrProgressive.valueChanges.subscribe(value => {
+        if(value == 2) {
+          this.assetAllocationFG.controls.equityAllocation.disable();
+          this.assetAllocationFG.controls.debtAllocation.disable();
+        } else {
+          this.assetAllocationFG.controls.equityAllocation.enable();
+          this.assetAllocationFG.controls.debtAllocation.enable();
+        }
+      })
+    );
+
+    this.subscription.add(
+      this.assetAllocationFG.controls.strategicOrTactical.valueChanges.subscribe(value => {
+        if(value == 1) {
+          // some logic here
+        } else {
+          // some logic here
+        }
+      })
+    )
+  }
+
+  addStages(){
+    let progressiveStage = this.assetAllocationFG.controls.progressiveStages as FormArray;
+    progressiveStage.push(this.createStage());
+  }
+
+  removeStage(i) {
+    let progressiveStage = this.assetAllocationFG.controls.progressiveStages as FormArray;
+    progressiveStage.removeAt(i);
+  }
+
+  createStage(eq = '', db = '', timeline = ''){
+    return this.fb.group({
+      stageTime: [timeline, Validators.required],
+      equityAllocation: [eq, Validators.required],
+      debtAllocation: [db, Validators.required]
+    })
+  }
+
   saveAssetAllocation(){
     if(this.assetAllocationFG.invalid || this.validateGoalDates()) {
       this.assetAllocationFG.markAllAsTouched();

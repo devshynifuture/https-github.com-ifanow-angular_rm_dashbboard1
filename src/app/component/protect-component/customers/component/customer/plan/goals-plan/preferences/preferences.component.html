@@ -302,7 +302,7 @@
                                 <p class="m-0 roboto text-black">Equity bifurcation</p>
                                 <div class="form-group mb-0">
                                     <mat-form-field class="w-100">
-                                        <input matInput formControlName="equityAllocation" type="text" class="form-control br-0" [disabled]="assetAllocationFG.get('staticOrProgressive').value == 1">
+                                        <input matInput formControlName="equityAllocation" type="text" class="form-control br-0">
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -310,7 +310,7 @@
                                 <p class="m-0 roboto text-black">Debt bifurcation</p>
                                 <div class="form-group mb-0">
                                     <mat-form-field class="w-100">
-                                        <input matInput formControlName="debtAllocation" type="text" class="form-control br-0" [disabled]="assetAllocationFG.get('staticOrProgressive').value == 1">
+                                        <input matInput formControlName="debtAllocation" type="text" class="form-control br-0">
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -322,43 +322,51 @@
                                 </mat-radio-group>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <p class="roboto m-0">Asset allocation stages</p>
-                                <div class="form-group mb-0">
-                                    <mat-form-field>
-                                        <mat-select class="form-control br-0" [disabled]="assetAllocationFG.get('staticOrProgressive').value == 1">
-                                            <mat-option value="">From today</mat-option>
-                                            <mat-option value="1">Bank FD</mat-option>
-                                            <mat-option value="2">Corporate FD</mat-option>
-                                        </mat-select>
-                                    </mat-form-field>
+                        <div class="row" formArrayName="rtaCamsFundNetSecurityQuestionsList">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p class="roboto m-0">Asset allocation stages</p>
                                 </div>
-                                <div class="col-md-11 text-right">
-                                    <p class="f-12 m-0 pt-4 roboto text-primitive">Today - Apr 2035</p>
+                                <div class="col-md-3">
+                                    <p class="m-0 roboto">Equity</p>
+                                </div>
+                                <div class="col-md-3">
+                                    <p class="m-0 roboto">Debt</p>
                                 </div>
                             </div>
-                            <div class="col-md-3 pr-0">
-                                <p class="m-0 roboto">Equity</p>
-                                <div class="form-group mb-0">
-                                    <mat-form-field class="w-100">
-                                        <input matInput type="text" class="form-control br-0" [disabled]="assetAllocationFG.get('staticOrProgressive').value == 1">
-                                    </mat-form-field>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group mb-0">
+                                        <mat-form-field>
+                                            <mat-select class="form-control br-0" [disabled]="assetAllocationFG.get('staticOrProgressive').value == 1">
+                                                <mat-option [value]=""
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-11 text-right">
+                                        <p class="f-12 m-0 pt-4 roboto text-primitive">Today - {{today | date:'MMM-yyyy'}}</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-3 pr-0">
-                                <p class="m-0 roboto">Debt</p>
-                                <div class="form-group mb-0">
-                                    <mat-form-field class="w-100">
-                                        <input matInput type="text" class="form-control br-0" [disabled]="assetAllocationFG.get('staticOrProgressive').value == 1">
-                                    </mat-form-field>
+                                <div class="col-md-3 pr-0">
+                                    <div class="form-group mb-0">
+                                        <mat-form-field class="w-100">
+                                            <input matInput type="text" class="form-control br-0" [disabled]="assetAllocationFG.get('staticOrProgressive').value == 1">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 pr-0">
+                                    <div class="form-group mb-0">
+                                        <mat-form-field class="w-100">
+                                            <input matInput type="text" class="form-control br-0" [disabled]="assetAllocationFG.get('staticOrProgressive').value == 1">
+                                        </mat-form-field>
+                                    </div>
                                 </div>
                             </div>
                         </div>
     
                         <div class="row pt-32">
                             <div class="col-md-12">
-                                <h5 class="m-0 text-primitive c-p">+ Add stage</h5>
+                                <h5 class="m-0 text-primitive c-p" (click)="addStages()">+ Add stage</h5>
                             </div>
                         </div>
                     </div>
