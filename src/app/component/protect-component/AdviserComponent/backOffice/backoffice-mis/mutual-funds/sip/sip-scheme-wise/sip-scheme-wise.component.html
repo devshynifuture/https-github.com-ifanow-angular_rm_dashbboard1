@@ -59,11 +59,11 @@
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody *ngFor="let data of filteredArray; let i = index">
+                        <tbody *ngFor="let data of filteredArray; let catIndex = index">
                             <tr>
                                 <td>
                                     <div [ngClass]="{'bar': isLoading}">
-                                        {{(isLoading)?'':i+1}}
+                                        {{(isLoading)?'':catIndex+1}}
                                     </div>
                                 </td>
                                 <td>
@@ -84,7 +84,7 @@
                                     <div [ngClass]="{'bar': isLoading}">
                                         {{data.weightInPercentage | number:'1.2-2'}}{{(isLoading?'':'%') }}</div>
                                 </td>
-                                <td class="text-center" (click)="showSubTableList(i,data.showCategory,data)">
+                                <td class="text-center" (click)="showSubTableList(catIndex,data.showCategory,data)">
                                     <div class="bar text-center">
                                         <i class="material-icons b-a f-14 mt-4 c-p"
                                             *ngIf="data.showCategory && !isLoading">
@@ -100,7 +100,8 @@
                                 <td colspan="6" class="innerTd one">
                                     <div class="d-block text-right"
                                         *ngIf="!data.showCategory && !isLoading && data.subCatList?.length > 0">
-                                        <button (click)="exportToExcelSheet('investor-wise', i,i)" mat-icon-button>
+                                        <button (click)="exportToExcelSheet('investor-wise', catIndex, null)"
+                                            mat-icon-button>
                                             <mat-icon>
                                                 save_alt
                                             </mat-icon>
@@ -147,11 +148,11 @@
                                                 <th></th>
                                             </tr>
                                         </thead>
-                                        <tbody *ngFor="let subInvList of data.subCatList; let i = index">
+                                        <tbody *ngFor="let subInvList of data.subCatList; let investorIndex = index">
                                             <tr>
                                                 <td>
                                                     <div [ngClass]="{'bar': isLoadingCategory}">
-                                                        {{isLoadingCategory?'':i+1}}
+                                                        {{isLoadingCategory?'':investorIndex+1}}
 
                                                     </div>
                                                 </td>
@@ -181,7 +182,7 @@
 
                                                     </div>
                                                 </td>
-                                                <td (click)="showSchemeName(i,subInvList.showSubCategory,subInvList)">
+                                                <td (click)="showSchemeName(investorIndex,subInvList.showSubCategory,subInvList)">
                                                     <i *ngIf="subInvList.showSubCategory==true"
                                                         class="material-icons   b-a f-14 mt-4 c-p">add</i>
                                                     <i *ngIf="subInvList.showSubCategory==false"
@@ -192,7 +193,8 @@
                                                 <td colspan="6" class="innerTd two">
                                                     <div class="d-block text-right"
                                                         *ngIf="!subInvList.showSubCategory && !isLoadingCategory && subInvList.applicantList?.length > 0">
-                                                        <button (click)="exportToExcelSheet('applicant-wise', i,null)"
+                                                        <button
+                                                            (click)="exportToExcelSheet('applicant-wise', catIndex, investorIndex)"
                                                             mat-icon-button>
                                                             <mat-icon>
                                                                 save_alt

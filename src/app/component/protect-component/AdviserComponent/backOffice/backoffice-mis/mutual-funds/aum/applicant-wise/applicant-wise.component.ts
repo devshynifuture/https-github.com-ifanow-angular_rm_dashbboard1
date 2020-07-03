@@ -223,7 +223,7 @@ export class ApplicantWiseComponent implements OnInit {
     }, this.applicantWiseTotal)
   }
 
-  categoryWiseExcelSheet(applicantIndex) {
+  categoryWiseExcelSheet(applicantIndex, catIndex) {
     let copyOfExcelData = JSON.parse(JSON.stringify(this.arrayOfExcelData));
 
     copyOfExcelData.forEach((element, index1) => {
@@ -233,7 +233,13 @@ export class ApplicantWiseComponent implements OnInit {
         element.categoryList = [];
       }
     });
-    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'MIS Report - Applicant wise AUM', 'applicant-wise-aum-mis', {
+
+    let arrayOfExcelHeaders = this.arrayOfHeaders.slice();
+    let arrayOfExcelStyles = this.arrayOfHeaderStyles.slice();
+    arrayOfExcelHeaders.shift();
+    arrayOfExcelStyles.shift();
+
+    ExcelMisService.exportExcel3(arrayOfExcelHeaders, arrayOfExcelStyles, copyOfExcelData[applicantIndex].categoryList, 'MIS Report - Applicant wise AUM', 'applicant-wise-aum-mis', {
       applicantList: true,
       categoryList: false,
       subCategoryList: false,
@@ -242,11 +248,11 @@ export class ApplicantWiseComponent implements OnInit {
     }, this.catWiseTotal);
   }
 
-  subCategoryWiseExcelSheet(index) {
+  subCategoryWiseExcelSheet(applicantIndex, catIndex, subCatIndex) {
     let copyOfExcelData = JSON.parse(JSON.stringify(this.arrayOfExcelData));
 
     copyOfExcelData.forEach((element, index1) => {
-      if (index1 === index) {
+      if (index1 === applicantIndex) {
         return;
       } else {
         if (element.hasOwnProperty('categoryList') && element.categoryList.length !== 0) {
@@ -256,8 +262,14 @@ export class ApplicantWiseComponent implements OnInit {
         }
       }
     });
+    let arrayOfExcelHeaders = this.arrayOfHeaders.slice();
+    let arrayOfExcelStyles = this.arrayOfHeaderStyles.slice();
+    arrayOfExcelHeaders.shift();
+    arrayOfExcelHeaders.shift();
+    arrayOfExcelStyles.shift();
+    arrayOfExcelStyles.shift();
 
-    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'MIS Report - Applicant wise AUM', 'applicant-wise-aum-mis', {
+    ExcelMisService.exportExcel4(arrayOfExcelHeaders, arrayOfExcelStyles, copyOfExcelData[applicantIndex].categoryList[catIndex].subCategoryList, 'MIS Report - Applicant wise AUM', 'applicant-wise-aum-mis', {
       applicantList: true,
       categoryList: true,
       subCategoryList: false,
@@ -266,11 +278,11 @@ export class ApplicantWiseComponent implements OnInit {
     }, this.subCatWiseTotal);
   }
 
-  subCatSchemeWiseExcelSheet(index) {
+  subCatSchemeWiseExcelSheet(applicantIndex, catIndex, subCatIndex, schemeIndex) {
     let copyOfExcelData = JSON.parse(JSON.stringify(this.arrayOfExcelData));
 
     copyOfExcelData.forEach((element, index1) => {
-      if (index1 === index) {
+      if (index1 === applicantIndex) {
         return;
       } else {
         element.categoryList.forEach((element, index2) => {
@@ -282,7 +294,17 @@ export class ApplicantWiseComponent implements OnInit {
         });
       }
     });
-    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'MIS Report - Applicant wise AUM', 'applicant-wise-aum-mis', {
+
+    let arrayOfExcelHeaders = this.arrayOfHeaders.slice();
+    let arrayOfExcelStyles = this.arrayOfHeaderStyles.slice();
+    arrayOfExcelHeaders.shift();
+    arrayOfExcelHeaders.shift();
+    arrayOfExcelHeaders.shift();
+    arrayOfExcelStyles.shift();
+    arrayOfExcelStyles.shift();
+    arrayOfExcelStyles.shift();
+
+    ExcelMisService.exportExcel5(arrayOfExcelHeaders, arrayOfExcelStyles, copyOfExcelData[applicantIndex].categoryList[catIndex].subCategoryList[subCatIndex].schemeList, 'MIS Report - Applicant wise AUM', 'applicant-wise-aum-mis', {
       applicantList: true,
       categoryList: true,
       subCategoryList: true,
@@ -307,19 +329,19 @@ export class ApplicantWiseComponent implements OnInit {
     ExcelMisService.exportExcel(this.arrayOfHeaderStyles[4], this.arrayOfHeaders[4], newarr, [], 'MIS Report - Applicant wise AUM', this.schemeWiseTotal);
   }
 
-  exportToExcelSheet(choice, index) {
+  exportToExcelSheet(choice, applicantIndex, catIndex, subCatIndex, schemeIndex) {
     switch (choice) {
       case 'applicant-wise':
         this.applicantWiseExcelSheet();
         break;
       case 'category-wise':
-        this.categoryWiseExcelSheet(index);
+        this.categoryWiseExcelSheet(applicantIndex, catIndex);
         break;
       case 'sub-category-wise':
-        this.subCategoryWiseExcelSheet(index);
+        this.subCategoryWiseExcelSheet(applicantIndex, catIndex, subCatIndex);
         break;
       case 'sub-cat-scheme-wise':
-        this.subCatSchemeWiseExcelSheet(index);
+        this.subCatSchemeWiseExcelSheet(applicantIndex, catIndex, subCatIndex, schemeIndex);
         break;
       case 'scheme-wise':
         this.schemeWiseExcelSheet();

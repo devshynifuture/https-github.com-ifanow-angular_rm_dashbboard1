@@ -621,7 +621,7 @@ export function escapeRegExp(s: string): string {
  * @callback setFunctionToExeOnZero:- sets the callback you'd like to execute once counter reaches 0
  */
 export class LoaderFunction implements OnDestroy{
-  apiDebounceSubject:Subject<any> = new Subject()
+  private apiDebounceSubject:Subject<any> = new Subject()
 
   public get loading() {
     return this.isLoading;

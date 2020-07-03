@@ -38,7 +38,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
   cashFlowViewDataSource = [];
   welcomeMessage = '';
   isLoading = true;
-  imgGenderSrc:string;
+  imgGenderSrc: string;
 
   chartData: any[] = [
     {
@@ -148,7 +148,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     private eventService: EventService,
     private authService: AuthService,
     private plansService: PlanService,
-    private subInjectService :SubscriptionInject,
+    private subInjectService: SubscriptionInject,
     private router: Router,
     private orgSetting: OrgSettingServiceService,
     private enumSerice: EnumServiceService,
@@ -373,7 +373,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       }
     )
   }
-  generateUpload(data){
+  generateUpload(data) {
 
     const fragmentData = {
       flag: '',
@@ -483,7 +483,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
         this.tabsLoaded.portfolioData.hasData = true;
         let stock = res.find(d => d.assetType == 6);
         this.portFolioData = res;
-        if(stock) {
+        if (stock) {
           this.portFolioData = this.portFolioData.filter(d => d.assetType != 6);
           this.portFolioData.unshift(stock);
         }

@@ -39,7 +39,6 @@ import {UsersComponent} from './setting-user-roles/setting-users-roles/users/use
     SettingBackupModule,
     CustomDirectiveModule,
     CommonComponentModule,
-    CustomDirectiveModule,
     CustomCommonModule,
     // UserModule,
 

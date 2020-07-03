@@ -8,7 +8,8 @@
                 <div class="col-md-6 pr-0">
                     <div class="right text-right">
                         <button mat-stroked-button (click)="exportToExcelSheet('amc-wise', null, null)"
-                            class="btn-default addon" *ngIf="!isLoading && amcList.length != 0"><i class="material-icons">add</i>XLS</button>
+                            class="btn-default addon" *ngIf="!isLoading && amcList.length != 0"><i
+                                class="material-icons">add</i>XLS</button>
                         <button mat-stroked-button class="btn-success ml-8 addon" (click)="aumReport()">Back</button>
                     </div>
                 </div>
@@ -45,20 +46,23 @@
                         <tbody *ngFor="let amc of amcList; let amcIndex = index">
                             <tr>
                                 <td>
-                                    <div [ngClass]="{'bar': isLoading}" > {{(isLoading)?'':amcIndex+1}} </div>
+                                    <div [ngClass]="{'bar': isLoading}"> {{(isLoading)?'':amcIndex+1}} </div>
                                 </td>
                                 <td>
-                                    <div [ngClass]="{'bar': isLoading}" > {{isLoading ? '' : amc.name}} </div>
+                                    <div [ngClass]="{'bar': isLoading}"> {{isLoading ? '' : amc.name}} </div>
                                 </td>
                                 <td>
-                                    <div [ngClass]="{'bar': isLoading}" >{{isLoading ? ' ' : '₹ '}}<span appFormatNumber *ngIf="!isLoading" [value]="amc.totalAum"></span> </div>
+                                    <div [ngClass]="{'bar': isLoading}">{{isLoading ? ' ' : '₹ '}}<span appFormatNumber
+                                            *ngIf="!isLoading" [value]="amc.totalAum"></span> </div>
                                 </td>
                                 <td>
-                                    <div [ngClass]="{'bar': isLoading}" > {{isLoading ? '' : amc.weightInPercentage}} {{(isLoading?'':'%')}} </div>
+                                    <div [ngClass]="{'bar': isLoading}"> {{isLoading ? '' : amc.weightInPercentage}}
+                                        {{(isLoading?'':'%')}} </div>
                                 </td>
                                 <td (click)="showScheme(amc, amcIndex)">
                                     <div class="bar text-center">
-                                        <i class="material-icons b-a f-14 mt-4 c-p" *ngIf="amc.showAmc && !isLoading"> add </i>
+                                        <i class="material-icons b-a f-14 mt-4 c-p" *ngIf="amc.showAmc && !isLoading">
+                                            add </i>
                                         <i class="material-icons b-a f-14 mt-4 c-p" *ngIf="!amc.showAmc && !isLoading">
                                             {{(isLoading?'':'remove')}} </i>
                                     </div>
@@ -66,15 +70,18 @@
                             </tr>
                             <tr style="border: transparent !important">
                                 <td colspan="5" class="innerTd one">
-                                    <div class="d-block text-right" *ngIf="!amc.showAmc && !isLoading && amc.schemes?.length > 0">
+                                    <div class="d-block text-right"
+                                        *ngIf="!amc.showAmc && !isLoading && amc.schemes?.length > 0">
                                         <button mat-icon-button
-                                            (click)="exportToExcelSheet('scheme-wise', amcIndex, null)" *ngIf="!isLoading">
+                                            (click)="exportToExcelSheet('scheme-wise', amcIndex, null)"
+                                            *ngIf="!isLoading">
                                             <mat-icon>
                                                 save_alt
                                             </mat-icon>
                                         </button>
                                     </div>
-                                    <table *ngIf="amc.schemes?.length > 0 && amc.showAmc == false" class="skeletonAnimation mt-8 mb-8" appSkeletonLoading id="table-low">
+                                    <table *ngIf="amc.schemes?.length > 0 && amc.showAmc == false"
+                                        class="skeletonAnimation mt-8 mb-8" appSkeletonLoading id="table-low">
                                         <thead class="bg-light text-dark">
                                             <tr class="h-40">
                                                 <th class="w-10">Sr No.</th>
@@ -101,13 +108,14 @@
 
                                             </tr>
                                         </thead>
-                                        <tbody *ngFor="let scheme of amc.schemes; let i = index">
+                                        <tbody *ngFor="let scheme of amc.schemes; let schemeIndex = index">
                                             <tr>
-                                                <td>{{ i+1}}</td>
+                                                <td>{{ schemeIndex+1}}</td>
                                                 <td>{{scheme.schemeName}}</td>
                                                 <td>{{'₹ '}}<span appFormatNumber [value]="scheme.totalAum"></span></td>
                                                 <td>{{scheme.weightInPercentage | number :'1.2-2'}}{{'%'}}</td>
-                                                <td class="text-center" (click)="showApplicant(scheme, i, amcIndex)">
+                                                <td class="text-center"
+                                                    (click)="showApplicant(scheme, schemeIndex, amcIndex)">
                                                     <i *ngIf="scheme.showScheme==true"
                                                         class="material-icons b-a f-14 mt-4 c-p">add</i>
                                                     <i *ngIf="scheme.showScheme==false"
@@ -118,7 +126,7 @@
                                                 <td colspan="6" class="innerTd two">
                                                     <div class="d-block text-right" *ngIf="!scheme.showScheme">
                                                         <button mat-icon-button
-                                                            (click)="exportToExcelSheet('applicant-wise', i, amcIndex)">
+                                                            (click)="exportToExcelSheet('applicant-wise', amcIndex, schemeIndex)">
                                                             <mat-icon>
                                                                 save_alt
                                                             </mat-icon>
@@ -186,8 +194,9 @@
                                                                 </td>
                                                                 <td>
                                                                     <div class="bar">
-                                                                            {{isLoadingApplicant ? ' ' : '₹ '}}<span
-                                                                            appFormatNumber *ngIf="!isLoadingApplicant">{{isLoadingApplicant ? '' : applicant.balanceUnit | number :'1.2-2'}}</span>
+                                                                        {{isLoadingApplicant ? ' ' : '₹ '}}<span
+                                                                            appFormatNumber
+                                                                            *ngIf="!isLoadingApplicant">{{isLoadingApplicant ? '' : applicant.balanceUnit | number :'1.2-2'}}</span>
                                                                     </div>
                                                                 </td>
                                                                 <td>
@@ -197,8 +206,9 @@
                                                                 </td>
                                                                 <td>
                                                                     <div class="bar">
-                                                                            {{isLoadingApplicant ? ' ' : '₹ '}}<span
-                                                                            appFormatNumber *ngIf="!isLoadingApplicant" [value]=" applicant.totalAum"></span>
+                                                                        {{isLoadingApplicant ? ' ' : '₹ '}}<span
+                                                                            appFormatNumber *ngIf="!isLoadingApplicant"
+                                                                            [value]=" applicant.totalAum"></span>
                                                                     </div>
                                                                 </td>
                                                                 <td>
@@ -221,10 +231,11 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <div *ngIf="amc.schemes?.length == 0 && amc.showAmc == false" class="d-flex flex-column align-items-center">
-                                            <!-- <img class="width300" src="assets/images/svg/noDataFound.svg"> -->
-                                            <h4 class="text-center pt-12">No data found</h4>
-                                        </div>
+                                    <div *ngIf="amc.schemes?.length == 0 && amc.showAmc == false"
+                                        class="d-flex flex-column align-items-center">
+                                        <!-- <img class="width300" src="assets/images/svg/noDataFound.svg"> -->
+                                        <h4 class="text-center pt-12">No data found</h4>
+                                    </div>
                                 </td>
                             </tr>
                         </tbody>
@@ -232,7 +243,8 @@
                             <tr>
                                 <td class="p-table"><strong>Total</strong></td>
                                 <td class="p-table">&nbsp;</td>
-                                <td class="p-table"><strong>{{'₹ '}}<span appFormatNumber [value]="totalCurrentValue"></span></strong>
+                                <td class="p-table"><strong>{{'₹ '}}<span appFormatNumber
+                                            [value]="totalCurrentValue"></span></strong>
                                 </td>
                                 <td class="p-table"><strong>{{totalWeight | number:'1.2-2'}}%</strong></td>
                                 <td></td>

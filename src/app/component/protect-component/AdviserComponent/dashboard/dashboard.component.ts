@@ -160,6 +160,11 @@ export class DashboardComponent implements OnInit {
   calenderLoader: boolean;
   birthdayAnniList: any;
   connectedToGmail: boolean;
+  excessAllow:any;
+  dashEvent:boolean = true;
+  bseData: {}[];
+  nscData: {}[];
+  last7DaysFlag: boolean;
 
   constructor(
     public dialog: MatDialog, private subService: SubscriptionService,
@@ -192,6 +197,8 @@ export class DashboardComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.parentId = AuthService.getParentId() ? AuthService.getParentId() : this.advisorId;
     this.advisorName = AuthService.getUserInfo().name;
+    this.excessAllow = localStorage.getItem('successStoringToken')
+
     this.getTotalRecivedByDash();
     this.clientWithSubscription();
     this.getSummaryDataDashboard();//summry dashbord
@@ -201,8 +208,9 @@ export class DashboardComponent implements OnInit {
     this.finalEndDate = UtilService.getEndOfDay(new Date()).getTime();
     this.getTodoListData();
     this.getRecentTransactionData();
-    this.connectAccountWithGoogle();
+    // this.connectAccountWithGoogle();
     this.getBirthdayOrAnniversary();
+    this.getLast7DaysTransactionStatus();
   }
   getSummaryDataDashboard() {
     const obj = {
@@ -328,28 +336,65 @@ export class DashboardComponent implements OnInit {
   }
 
   getBirthdayOrAnniversary() {
-    let fromDate = new Date();
-    fromDate.setFullYear(new Date().getFullYear() - 1)
+    let toDate = new Date();
+    toDate.setDate(new Date().getDate() + 7)
     const obj =
     {
       advisorId: this.advisorId,
-      fromDate: fromDate.getTime(),
-      toDate: new Date().getTime()
+      fromDate: new Date().getTime(),
+      toDate: toDate.getTime()
     }
     this.dashboardService.getBirthdayOrAnniversary(obj).subscribe(
       data => {
         if (data) {
-          this.birthdayAnniList = this.utils.calculateAgeFromCurrentDate(data);
+          data.forEach(element => {
+            if (element.dateOfBirth != 0) {
+              element['daysToGo'] = this.calculateBirthdayOrAnniversary(element.dateOfBirth);
+            }
+            else {
+              element['daysToGo'] = 'N/A'
+            }
+          });
+          this.utils.calculateAgeFromCurrentDate(data);
+          this.birthdayAnniList = data;
+          console.log(this.birthdayAnniList);
         }
       }
     )
   }
 
+  calculateBirthdayOrAnniversary(date) {
+    let today, bday, diff, days;
+    today = new Date().getDate();
+    bday = new Date(date).getDate();
+    days = bday - today;
+    return days;
+  }
+
   calculateDifferenc(createdDate) {
-    const a = moment(createdDate)
-    const b = moment(new Date().getTime());
-    // console.log(a.diff(b, 'days'));
-    return a.diff(b, 'days');
+    let date1 = new Date(createdDate);
+    let date2 = new Date();
+    let diffDays = Math.abs((date2.getTime() - date1.getTime()) / (1000 * 60 * 60 * 24));
+    console.log(Math.round(diffDays));
+    return Math.round(diffDays);
+  }
+
+  getLast7DaysTransactionStatus() {
+    this.last7DaysFlag = true;
+    this.nscData = [{}, {}];
+    this.bseData = [{}, {}];
+    const obj = {
+      advisorId: this.advisorId
+    }
+    this.dashboardService.last7DaysTransactionStatus(obj).subscribe(
+      data => {
+        if (data) {
+          this.last7DaysFlag = false;
+          this.nscData = data.Nse;
+          this.bseData = data.Bse;
+        }
+      }
+    )
   }
 
   connectAccountWithGoogle() {

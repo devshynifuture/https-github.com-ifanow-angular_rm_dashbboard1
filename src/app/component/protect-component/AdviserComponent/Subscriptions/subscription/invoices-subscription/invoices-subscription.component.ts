@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { SubscriptionService } from '../../subscription.service';
 import { SubscriptionInject } from '../../subscription-inject.service';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { ErrPageOpenComponent } from 'src/app/component/protect-component/customers/component/common-component/err-page-open/err-page-open.component';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 
 export interface PeriodicElement {
   date: string;
@@ -32,7 +33,7 @@ export interface PeriodicElement {
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2 },
   ],
 })
-export class InvoicesSubscriptionComponent implements OnInit {
+export class InvoicesSubscriptionComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   isFilter: boolean = false;
@@ -83,8 +84,14 @@ export class InvoicesSubscriptionComponent implements OnInit {
     dateFilter: this.dateChips
   };
 
-  constructor(public dialog: MatDialog, public subInjectService: SubscriptionInject, private subService: SubscriptionService,
-    private eventService: EventService, public subscription: SubscriptionService, private datePipe: DatePipe, private router: Router, private utilservice: UtilService) {
+  constructor(
+    public dialog: MatDialog, 
+    public subInjectService: SubscriptionInject, 
+    private subService: SubscriptionService,
+    private eventService: EventService, 
+    public subscription: SubscriptionService, 
+    private enumDataService: EnumDataService,
+    private datePipe: DatePipe, private router: Router, private utilservice: UtilService) {
     // this.ngOnInit();
   }
 
@@ -566,5 +573,12 @@ export class InvoicesSubscriptionComponent implements OnInit {
 
 
     });
+  }
+
+  ngOnDestroy(){
+    // dirty fix for resetting search data
+    if (!this.enumDataService.searchData || this.enumDataService.searchData.length == 0) {
+      this.enumDataService.searchClientList();
+    }
   }
 }

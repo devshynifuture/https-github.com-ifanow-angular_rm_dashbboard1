@@ -277,7 +277,12 @@ export class ClientWiseComponent implements OnInit {
       }
     });
 
-    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'MIS Report - Client wise AUM', 'client-wise-aum-mis', {
+    let arrayOfExcelHeaders = this.arrayOfHeaders.slice();
+    let arrayOfExcelStyles = this.arrayOfHeaderStyles.slice();
+    arrayOfExcelHeaders.shift();
+    arrayOfExcelStyles.shift();
+
+    ExcelMisService.exportExcel3(arrayOfExcelHeaders, arrayOfExcelStyles, copyOfExcelData[index].investorList, 'MIS Report - Client wise AUM', 'client-wise-aum-mis', {
       clientList: true,
       investorList: false,
       schemeList: false,
@@ -285,10 +290,10 @@ export class ClientWiseComponent implements OnInit {
     }, this.investorWiseTotal);
   }
 
-  scheme1WiseExcelSheet(index) {
+  scheme1WiseExcelSheet(clientIndex, investorIndex, schemeIndex) {
     let copyOfExcelData = JSON.parse(JSON.stringify(this.arrayOfExcelData));
     copyOfExcelData.forEach((element, index1) => {
-      if (index1 === index) {
+      if (index1 === clientIndex) {
         return;
       } else {
         if (element.investorList.length !== 0) {
@@ -298,7 +303,15 @@ export class ClientWiseComponent implements OnInit {
         }
       }
     });
-    ExcelMisService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, copyOfExcelData, 'MIS Report - Client wise AUM', 'client-wise-aum-mis', {
+
+    let arrayOfExcelHeaders = this.arrayOfHeaders.slice();
+    let arrayOfExcelHeaderStyles = this.arrayOfHeaderStyles.slice();
+    arrayOfExcelHeaders.shift();
+    arrayOfExcelHeaders.shift();
+    arrayOfExcelHeaderStyles.shift();
+    arrayOfExcelHeaderStyles.shift();
+
+    ExcelMisService.exportExcel2(arrayOfExcelHeaders, arrayOfExcelHeaderStyles, copyOfExcelData[clientIndex].investorList[investorIndex].schemeList, 'MIS Report - Client wise AUM', 'client-wise-aum-mis', {
       clientList: true,
       investorList: true,
       schemeList: false,
@@ -306,8 +319,8 @@ export class ClientWiseComponent implements OnInit {
     }, this.schemeWiseTotal);
   }
 
-  scheme2WiseExcelSheet() {
-    let schemeFolioList = this.arrayOfExcelData[this.selectedClient].investorList[this.selectedInvestor].schemeList[this.selectedScheme].schemeFolioList;
+  scheme2WiseExcelSheet(clientIndex, investorIndex, schemeIndex) {
+    let schemeFolioList = this.arrayOfExcelData[clientIndex].investorList[investorIndex].schemeList[schemeIndex].schemeFolioList;
     let newarr = [];
     schemeFolioList.forEach(element => {
       newarr.push({
@@ -322,19 +335,19 @@ export class ClientWiseComponent implements OnInit {
     ExcelMisService.exportExcel(this.arrayOfHeaderStyles[3], this.arrayOfHeaders[3], newarr, [], 'MIS Report - Client Wise AUM', this.scheme2WiseTotal);
   }
 
-  exportToExcelSheet(choice, index) {
+  exportToExcelSheet(choice, clientIndex, investorIndex, schemeIndex) {
     switch (choice) {
       case 'client-wise':
-        this.clientWiseExcelSheet(index);
+        this.clientWiseExcelSheet(clientIndex);
         break;
       case 'investor-wise':
-        this.investorWiseExcelSheet(index);
+        this.investorWiseExcelSheet(clientIndex);
         break;
       case 'scheme1-wise':
-        this.scheme1WiseExcelSheet(index);
+        this.scheme1WiseExcelSheet(clientIndex, investorIndex, schemeIndex);
         break;
       case 'scheme2-wise':
-        this.scheme2WiseExcelSheet();
+        this.scheme2WiseExcelSheet(clientIndex, investorIndex, schemeIndex);
         break;
     }
   }

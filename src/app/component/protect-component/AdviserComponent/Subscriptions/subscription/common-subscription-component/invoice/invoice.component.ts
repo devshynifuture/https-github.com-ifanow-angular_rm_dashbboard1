@@ -90,7 +90,6 @@ export class InvoiceComponent implements OnInit {
 
   @Input() invoiceValue;
 
-  dataSub: any;
   storeData;
   showRecord: any;
   clientInvoice: any;
@@ -106,11 +105,11 @@ export class InvoiceComponent implements OnInit {
   constructor(public utils: UtilService, public enumService: EnumServiceService, public subInjectService: SubscriptionInject,
               private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService, public dialog: MatDialog,
               private eventService: EventService) {
-    this.dataSub = this.subInjectService.singleProfileData.subscribe(
-      data => this.getInvoiceData(data)
-    );
     this.subInjectService.singleProfileData.subscribe(
-      data => this.getRecordPayment(data)
+      data => {
+        this.getInvoiceData(data)
+        this.getRecordPayment(data)
+      }
     );
   }
 

@@ -22,6 +22,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { RightFilterDuplicateComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
 import { BackOfficeService } from 'src/app/component/protect-component/AdviserComponent/backOffice/back-office.service';
 import { DatePipe } from '@angular/common';
+import { OnlineTransactionComponent } from 'src/app/component/protect-component/AdviserComponent/transactions/overview-transactions/doTransaction/online-transaction/online-transaction.component';
+import { OnlineTransactionService } from 'src/app/component/protect-component/AdviserComponent/transactions/online-transaction.service';
 
 
 @Component({
@@ -78,6 +80,9 @@ export class MutualFundSummaryComponent implements OnInit {
   advisorId: number;
   clientId: any;
   clientDetails: any;
+  noSubBroker: boolean = false;
+  noMapping: boolean;
+  isAdvisorSection: boolean;
   @Input()
   set data(data) {
     this.inputData = data;
@@ -100,6 +105,7 @@ export class MutualFundSummaryComponent implements OnInit {
     private router: Router,
     private datePipe: DatePipe,
     public routerActive: ActivatedRoute,
+    private onlineTransact : OnlineTransactionService,
     private activatedRoute: ActivatedRoute) {
     this.routerActive.queryParamMap.subscribe((queryParamMap) => {
       if (queryParamMap.has('clientId')) {
@@ -151,6 +157,7 @@ export class MutualFundSummaryComponent implements OnInit {
         this.viewMode = res;
       })
     this.getFilterData(2);
+   // this.getDefaultDetails(null)
   }
   ngAfterViewInit() {
     //this.showDownload == true
@@ -953,5 +960,62 @@ export class MutualFundSummaryComponent implements OnInit {
     this.clientData = data.clientData
     this.getOrgData = data.advisorData
     this.userInfo = data.advisorData
+  }
+  getDefaultDetails(platform) {
+    const obj = {
+      advisorId: this.advisorId,
+      familyMemberId: 0,
+      clientId: this.clientId,
+      // aggregatorType: platform
+    };
+
+    this.onlineTransact.getDefaultDetails(obj).subscribe(
+      data => {
+        this.getDefaultDetailsRes(data);
+      }, error => {
+        this.eventService.openSnackBar(error, 'Dismiss');
+      }
+    );
+  }
+
+  getDefaultDetailsRes(data) {
+    if (data == undefined) {
+      return;
+    } else {
+      if (data.defaultCredential != undefined) {
+        this.noSubBroker = false;
+        if (data.defaultClient == undefined) {
+          this.noMapping = true;
+        } else {
+          this.noMapping = false;
+        }
+      } else {
+        this.noSubBroker = true;
+      }
+    }
+  }
+  openTransaction(data){
+    const routeName = this.router.url.split('/')[1];
+    if (routeName == 'customer') {
+      this.isAdvisorSection = false;
+    }
+    const fragmentData = {
+      flag: 'addNewTransaction',
+      data: { isAdvisorSection: this.isAdvisorSection, flag: 'addNewTransaction',data:data },
+      id: 1,
+      state: 'open65',
+      componentName: OnlineTransactionComponent,
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            //this.refresh(true);
+          }
+          rightSideDataSub.unsubscribe();
+
+        }
+      }
+    );
   }
 }
