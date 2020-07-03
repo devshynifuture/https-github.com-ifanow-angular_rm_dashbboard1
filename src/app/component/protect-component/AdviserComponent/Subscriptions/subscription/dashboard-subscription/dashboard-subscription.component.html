@@ -239,13 +239,13 @@
                                                     <div class="bar" *ngIf="isLoadingSubSummary">
                                                     </div>
                                                     <div class="bar text-primary text-underline c-p"
-                                                        (click)="Open('open',element)"
+                                                        (click)="Open(element)"
                                                         *ngIf="element.startsOn==undefined && element.feeTypeId==1">
                                                         {{isLoadingSubSummary ? ' ' : 'View details'}} </div>
                                                     <div appFormatNumber
                                                         *ngIf="element.startsOn && element.feeTypeId==1">
                                                         ₹ {{element.pricing}}</div>
-                                                    <div appFormatNumber (click)="Open('open',element)"
+                                                    <div appFormatNumber (click)="Open(element)"
                                                         *ngIf="element.feeTypeId==2"
                                                         class="text-primary text-underline c-p">
                                                         View details</div>
