@@ -599,7 +599,7 @@ export class RealEstatePropertyComponent implements OnInit {
       //   'isOwner': true
       // }
       // obj.realEstateOwners.push(obj1)
-      if (obj.id == undefined && this.flag != 'adviceRealEstate') {
+      // if (obj.id == undefined && this.flag != 'adviceRealEstate') {
         console.log(obj);
         this.custumService.addRealEstate(obj).subscribe(
           data => this.addRealEstateRes(data), (error) => {
@@ -607,28 +607,28 @@ export class RealEstatePropertyComponent implements OnInit {
             this.eventService.showErrorMessage(error);
           }
         );
-      } else if (this.flag == 'adviceRealEstate') {
-        const adviceObj = {
-          // advice_id: this.advisorId,
-          adviceStatusId: 5,
-          stringObject: obj,
-          adviceDescription: 'manualAssetDescription'
-        };
-        this.custumService.getAdviceRealEstate(adviceObj).subscribe(
-          data => this.getAdviceRealEstateRes(data), (error) => {
-            this.barButtonOptions.active = false;
-            this.eventService.showErrorMessage(error);
-          }
-        );
-      } else {
-        console.log(obj);
-        this.custumService.editRealEstate(obj).subscribe(
-          data => this.editRealEstateRes(data), (error) => {
-            this.barButtonOptions.active = false;
-            this.eventService.showErrorMessage(error);
-          }
-        );
-      }
+      // } else if (this.flag == 'adviceRealEstate') {
+      //   const adviceObj = {
+      //     // advice_id: this.advisorId,
+      //     adviceStatusId: 5,
+      //     stringObject: obj,
+      //     adviceDescription: 'manualAssetDescription'
+      //   };
+      //   this.custumService.getAdviceRealEstate(adviceObj).subscribe(
+      //     data => this.getAdviceRealEstateRes(data), (error) => {
+      //       this.barButtonOptions.active = false;
+      //       this.eventService.showErrorMessage(error);
+      //     }
+      //   );
+      // } else {
+      //   console.log(obj);
+      //   this.custumService.editRealEstate(obj).subscribe(
+      //     data => this.editRealEstateRes(data), (error) => {
+      //       this.barButtonOptions.active = false;
+      //       this.eventService.showErrorMessage(error);
+      //     }
+      //   );
+      // }
     }
   }
 

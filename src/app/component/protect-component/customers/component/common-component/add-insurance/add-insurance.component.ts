@@ -212,7 +212,9 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
     this.ownerName = value.userName;
     this.familyMemberId = value.id;
   }
-
+  changeNomineeLis(value){
+    console.log(value)
+  }
   lisNominee(value) {
     this.ownerData.Fmember = value;
     this.nomineesListFM = Object.assign([], value);
