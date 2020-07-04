@@ -34,6 +34,8 @@ export class EmailListingComponent implements OnInit {
   trashCount: any = 0;
   showOptions: boolean = false;
   starredCount: any;
+  advisorEmail;
+  isCustomerEmail: boolean;
 
 
   constructor(
@@ -70,18 +72,25 @@ export class EmailListingComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   ngOnInit() {
+    this.advisorEmail = AuthService.getUserInfo().userName;
     this.initPoint();
   }
 
   initPoint() {
     this.isLoading = true;
     let location;
+    location = this.router.url.split('/')[this.router.url.split('/').length - 1];
 
-    if (this.router.url === '/') {
-      location = 'inbox';
-    } else {
-      location = this.router.url.split('/')[3];
+    console.log("this is router url:", this.router.url);
+    if (this.router.url.split('/').includes('admin')) {
+      if (this.router.url === '/') {
+        location = 'inbox';
+      }
+      this.isCustomerEmail = false;
+    } else if (this.router.url.split('/').includes('customer')) {
+      this.isCustomerEmail = true;
     }
+
     (location === 'trash') ? this.trashAction = true : this.trashAction = false;
     (location === 'draft') ? this.showDraftView = true : this.showDraftView = false;
     this.location = location;
@@ -91,7 +100,6 @@ export class EmailListingComponent implements OnInit {
 
     this.totalListSize = this.totalListSize - 50;
     this.currentList = this.maxListRes + 1;
-    // this.maxListRes = this.maxListRes + 50;
 
     if (this.currentList <= 1) {
       this.showPrevPaginationBtn = false;
@@ -122,18 +130,6 @@ export class EmailListingComponent implements OnInit {
     }
   }
 
-  // initPaginatorLength() {
-  //   this.currentPage = 1;
-  //   this.totalNumberOfThreadsShown = 50;
-
-  // }
-
-
-  // updatePaginators() {
-  //   if (this.paginatorLength > this.)
-  //     this.currentPage
-  // }
-
   getPaginatorLengthRes(location) {
     if (localStorage.getItem('associatedGoogleEmailId')) {
       const userInfo = AuthService.getUserInfo();
@@ -155,7 +151,6 @@ export class EmailListingComponent implements OnInit {
           this.getRightSideNavListCount(location);
         }
       }, err => {
-        this.eventService.openSnackBarNoDuration(err);
         this.eventService.openSnackBar("You must connect your gmail account", "Dismiss");
         if (localStorage.getItem('successStoringToken')) {
           localStorage.removeItem('successStoringToken');
@@ -363,14 +358,36 @@ export class EmailListingComponent implements OnInit {
   getGmailList(data, page) {
     this.showNextPaginationBtn = false;
     this.showPrevPaginationBtn = false;
+
     if (data === 'INBOX') {
       data = 'IMPORTANT';
     }
-    data = {
-      labelIds: data,
-      pageToken: (page == 'next') ? (this.nextPageToken ? this.nextPageToken : '') : '',
-      maxResults: 50
+
+    let clientData;
+    let receiverEmail;
+    if (this.isCustomerEmail) {
+      clientData = JSON.parse(sessionStorage.getItem('clientData'));
+      // receiverEmail = clientData.emailList[0].email;
+      receiverEmail = 'abhishek@futurewise.co.in';
     }
+
+    let queryParams = `{ from: ${receiverEmail} from: ${this.advisorEmail} } { to: ${this.advisorEmail} to: ${receiverEmail}  }`
+    if (this.isCustomerEmail) {
+      data = {
+        labelIds: data,
+        pageToken: (page == 'next') ? (this.nextPageToken ? this.nextPageToken : '') : '',
+        maxResults: 50,
+        q: queryParams
+      }
+    } else {
+      data = {
+        labelIds: data,
+        pageToken: (page == 'next') ? (this.nextPageToken ? this.nextPageToken : '') : '',
+        maxResults: 50
+      }
+    }
+    // console.log("this is query parameters: ", encodeURIComponent(queryParams));
+
     this.listSubscription = this.emailService.getMailInboxList(data)
       .subscribe(responseData => {
         if (responseData.nextPageToken) {
