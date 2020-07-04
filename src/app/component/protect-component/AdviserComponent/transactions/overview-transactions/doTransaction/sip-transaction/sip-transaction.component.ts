@@ -671,7 +671,7 @@ export class SipTransactionComponent implements OnInit {
       reinvest: [(data.dividendReinvestmentFlag) ? data.dividendReinvestmentFlag + '' : '', [Validators.required]],
       employeeContry: [(!data) ? '' : data.orderVal, [Validators.required]],
       frequency: [(data.frequencyType) ? data.frequencyType : '', [Validators.required]],
-      investmentAccountSelection: [(data) ? this.mutualFundData.folioNumber : '', [Validators.required]],
+      investmentAccountSelection: [(data) ? '': (this.mutualFundData)?this.mutualFundData.folioNumber : '', [Validators.required]],
       // modeOfPaymentSelection: ['1'],
       modeOfPaymentSelection: [(!data.modeOfPaymentSelection) ? '2' : data.modeOfPaymentSelection],
       folioSelection: [(!data.folioSelection) ? '2' : data.folioSelection],
@@ -679,7 +679,7 @@ export class SipTransactionComponent implements OnInit {
       date: [(data.date) ? data.date : '', [Validators.required]],
       tenure: [(data.tenure) ? data.tenure : '3', [Validators.required]],
       installment: [(!data) ? '' : data.noOfInstallments, [Validators.required]],
-      schemeSip: [(!data) ? '' : this.mutualFundData.schemeName, [Validators.required]],
+      schemeSip: [(!data) ? '' : (this.mutualFundData)?this.mutualFundData.schemeName:'', [Validators.required]],
       isException: true,
     });
     this.sipTransaction.controls.schemeSip.valueChanges.subscribe((newValue) => {

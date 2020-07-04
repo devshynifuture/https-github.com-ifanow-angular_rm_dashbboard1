@@ -204,9 +204,9 @@ export class RedemptionTransactionComponent implements OnInit {
       employeeContry: [(!data) ? '' : data.orderVal, [Validators.required]],
       redeemType: [(data.redeemType) ? data.redeemType : '1', [Validators.required]],
       modeOfPaymentSelection: [(!data) ? '' : data.modeOfPaymentSelection, [Validators.required]],
-      investmentAccountSelection: [(data) ? this.mutualFundData.folioNumber : '', [Validators.required]],
+      investmentAccountSelection: [(data) ?data.folioNumber: (this.mutualFundData)?this.mutualFundData.folioNumber : '', [Validators.required]],
       redeem: [(!data) ? '' : data.switchType, [Validators.required]],
-      schemeRedeem: [(!data) ? '' : this.mutualFundData.schemeName, [Validators.required]],
+      schemeRedeem: [(!data) ? '' :(this.mutualFundData)? this.mutualFundData.schemeName:'', [Validators.required]],
 
     });
     this.filterSchemeList = this.redemptionTransaction.controls.schemeRedeem.valueChanges.pipe(
