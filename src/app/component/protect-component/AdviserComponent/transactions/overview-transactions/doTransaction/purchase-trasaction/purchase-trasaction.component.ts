@@ -603,7 +603,7 @@ export class PurchaseTrasactionComponent implements OnInit {
       bankAccountSelection: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
       schemeSelection: [(!data.schemeSelection) ? '2' : data.schemeSelection],
       employeeContry: [(!data) ? '' : data.orderVal, [Validators.required,]],
-      investmentAccountSelection: [(data) ? data.folioNumber : (this.mutualFundData)? this.mutualFundData.folioNumber : '', [Validators.required]],
+      investmentAccountSelection: [(data.folioNumber) ? data.folioNumber : (this.mutualFundData)? this.mutualFundData.folioNumber : '', [Validators.required]],
       // modeOfPaymentSelection: ['1'],
       modeOfPaymentSelection: [(!data.modeOfPaymentSelection) ? '1' : data.modeOfPaymentSelection],
       folioSelection: [(!data.folioSelection) ? '2' : data.folioSelection],

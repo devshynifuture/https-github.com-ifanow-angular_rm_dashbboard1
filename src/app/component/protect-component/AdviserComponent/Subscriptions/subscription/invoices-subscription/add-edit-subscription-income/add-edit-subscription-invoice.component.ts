@@ -62,7 +62,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   feeCalc: boolean;
 
   // flags if the template is being edited or not based on the data received
-  editFlag:boolean = false;
+  editFlag: boolean = false;
 
 
   service: { serviceName: any; averageFees: string; description: string; fromDate: string; toDate: string; }[];
@@ -422,6 +422,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   }
 
   getServicesListForInvoiceRes(data) {
+    data = data.filter(element => element.feeTypeId == 1);
     this.serviceList = data;
   }
 

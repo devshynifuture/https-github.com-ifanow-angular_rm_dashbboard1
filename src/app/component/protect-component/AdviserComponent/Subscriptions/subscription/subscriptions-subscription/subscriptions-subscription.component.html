@@ -160,7 +160,7 @@
                                 more_vert
                             </i>
                             <mat-menu #menu="matMenu">
-                                <a (click)="Open('open',element)" *ngIf="element.status !=1" mat-menu-item>
+                                <a (click)="Open('open',element)" *ngIf="element.status ==1" mat-menu-item>
                                     View fee structure</a>
                                 <a (click)="openPlanSlider('subscriptionDetails','open',element)"
                                     *ngIf="element.status!=4 && element.status !=1" mat-menu-item>View

@@ -158,14 +158,15 @@
                                             <p class="f-12 text-uppercase pb-16 ">YOUR LOGO</p>
                                             <div class="text-center containerOne">
                                                 <img [src]="singleBillerProfile.logoUrl" class="img-icons">
-                                                <div class="overlay" (click)="Open(singleBillerProfile,'editbillerProfile', 1)">
+                                                <div class="overlay"
+                                                    (click)="Open(singleBillerProfile,'editbillerProfile', 1)">
                                                     <div class="text">Edit Image</div>
                                                 </div>
                                             </div>
                                         </div>
                                         <hr>
                                         <div class="wrapper-16 relClass">
-                                            <p class="f-12 text-uppercase">Footnote</p>
+                                            <p class="f-12 text-uppercase">Footnote description</p>
                                             <div [ngClass]="singleBillerProfile.read? '': 'bar'"
                                                 style="overflow: hidden;"
                                                 [ngStyle]="{'height':singleBillerProfile.read?'':'55px'}">
@@ -367,11 +368,11 @@
                                                 <div class="col-md-11 p-0">
                                                     <h3 class="f-20 l-26">Invoice</h3>
                                                 </div>
-                                                <div class="col-md-1 p-0 text-right">
+                                                <!-- <div class="col-md-1 p-0 text-right">
                                                     <i class="material-icons  text-custom f-32">
                                                         more_vert
                                                     </i>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
                                         <!-- make class -->
@@ -394,11 +395,11 @@
                                                 <div class="col-md-11 p-0">
                                                     <h3 class="f-20 l-26"> Quotations</h3>
                                                 </div>
-                                                <div class="col-md-1 p-0 text-right">
+                                                <!-- <div class="col-md-1 p-0 text-right">
                                                     <i class="material-icons  text-custom f-32">
                                                         more_vert
                                                     </i>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
                                         <div class="wrapper-20 pl-24">
@@ -422,11 +423,11 @@
                                                 <div class="col-md-11 p-0">
                                                     <h3 class="f-20 l-26"> Documents with esign request</h3>
                                                 </div>
-                                                <div class="col-md-1 p-0 text-right">
+                                                <!-- <div class="col-md-1 p-0 text-right">
                                                     <i class="material-icons  text-custom f-32">
                                                         more_vert
                                                     </i>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
                                         <div class="wrapper-20 pl-24">
@@ -450,11 +451,11 @@
                                                 <div class="col-md-11 p-0">
                                                     <h3 class="f-20 l-26"> Documents without eSign request</h3>
                                                 </div>
-                                                <div class="col-md-1 p-0 text-right">
+                                                <!-- <div class="col-md-1 p-0 text-right">
                                                     <i class="material-icons  text-custom f-32">
                                                         more_vert
                                                     </i>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
                                         <div class="wrapper-20 pl-24">
