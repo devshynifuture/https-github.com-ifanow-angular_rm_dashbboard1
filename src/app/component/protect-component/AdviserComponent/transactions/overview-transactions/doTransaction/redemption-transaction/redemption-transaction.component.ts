@@ -21,6 +21,7 @@ export class RedemptionTransactionComponent implements OnInit {
   schemeName: any;
   folioNumber: any;
   mutualFundData: any;
+  mfDefault: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
               private fb: FormBuilder, private eventService: EventService,
@@ -94,11 +95,13 @@ export class RedemptionTransactionComponent implements OnInit {
     if(data.mutualFundData){
       this.schemeName = data.mutualFundData.schemeName
       this.folioNumber = data.mutualFundData.folioNumber
+      this.mfDefault = data.transactionData
       this.mutualFundData = data.mutualFundData
       let foilo = {'folioNumber': this.folioNumber}
       let schemeName = {'schemeName': this.schemeName}
       this.folioList.push(foilo)
       this.filterSchemeList = of([{'schemeName': this.schemeName}])
+      this.getdataForm('',false);
     }
     if (this.isViewInitCalled) {
       // this.getdataForm('');
@@ -201,9 +204,9 @@ export class RedemptionTransactionComponent implements OnInit {
       employeeContry: [(!data) ? '' : data.orderVal, [Validators.required]],
       redeemType: [(data.redeemType) ? data.redeemType : '1', [Validators.required]],
       modeOfPaymentSelection: [(!data) ? '' : data.modeOfPaymentSelection, [Validators.required]],
-      investmentAccountSelection: [(data) ? this.mutualFundData.folioNumber : '', [Validators.required]],
+      investmentAccountSelection: [(data.folioNumber) ?data.folioNumber: (this.mutualFundData)?this.mutualFundData.folioNumber : '', [Validators.required]],
       redeem: [(!data) ? '' : data.switchType, [Validators.required]],
-      schemeRedeem: [(!data) ? '' : this.mutualFundData.schemeName, [Validators.required]],
+      schemeRedeem: [(!data) ? '' :(this.mutualFundData)? this.mutualFundData.schemeName:'', [Validators.required]],
 
     });
     this.filterSchemeList = this.redemptionTransaction.controls.schemeRedeem.valueChanges.pipe(
@@ -216,7 +219,26 @@ export class RedemptionTransactionComponent implements OnInit {
       this.getSchemeWiseFolios();
     }
     if(this.mutualFundData){
+      this.folioDetails = {}
       this.filterSchemeList = of([{'schemeName': this.schemeName}])
+      this.redemptionTransaction.controls.schemeRedeem.setValue({'schemeName': this.schemeName})
+      this.redemptionTransaction.controls.investmentAccountSelection.setValue({'folioNumber': this.folioNumber})
+      const obj1 = {
+        mutualFundSchemeMasterId: this.mutualFundData.schemeId,
+        aggregatorType: this.mfDefault.defaultClient.aggregatorType,
+        orderType: 'ORDER',
+        userAccountType: this.mfDefault.defaultCredential.accountType,
+      };
+      this.onlineTransact.getSchemeDetails(obj1).subscribe(
+        data => this.getSchemeDetailsRes(data), (error) => {
+          this.eventService.openSnackBar(error, 'Dismiss');
+        }
+      );
+      Object.assign(this.folioDetails, {folioNumber: this.folioNumber});
+      this.scheme ={
+        'schemeName': this.schemeName,
+        'mutualFundSchemeMasterId':this.mutualFundData.schemeId
+      }
     }
     
   }
@@ -324,7 +346,11 @@ export class RedemptionTransactionComponent implements OnInit {
     if (data.length == 1) {
       this.reInvestmentOpt = [];
     }
-    this.getSchemeWiseFolios();
+    if(!this.mutualFundData){
+      this.getSchemeWiseFolios();
+    }
+    Object.assign(this.transactionSummary, {folioNumber: this.folioNumber});
+    Object.assign(this.transactionSummary, {schemeName: this.schemeName});
   }
 
   reinvest(scheme) {

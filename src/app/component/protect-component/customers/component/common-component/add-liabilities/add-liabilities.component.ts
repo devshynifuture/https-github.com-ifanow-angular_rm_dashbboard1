@@ -133,6 +133,10 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
           this.propertyListDuplicate = this.propertyList; 
           
           this.filterPropertyOwnerWise(this.addLiabilityForm.value.getCoOwnerName[0].name);
+          if(this.data.propertyId){
+            this.addLiabilityForm.controls.get('property').setValue(this.data.propertyId);
+
+          }
         }
       }
       , (error) => {
@@ -493,7 +497,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
       loanAmount: [data.loanAmount, [Validators.required]],
       loanTenure: [data.loanTenure, [Validators.required, Validators.max(50)]],
       outstandingCheck: [data.principalOutstanding],
-      property: [data.property],
+      property: [data.propertyId],
       poDate: [(data.principalOutstandingAsOn) ? new Date(data.principalOutstandingAsOn) : ''],
       outstandingAmt: [data.principalOutStandingAmount,],
       CommencementDate: [new Date(data.commencementDate), [Validators.required]],
