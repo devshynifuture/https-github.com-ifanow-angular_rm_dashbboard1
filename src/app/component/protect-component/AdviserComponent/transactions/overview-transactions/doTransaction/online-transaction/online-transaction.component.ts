@@ -1,17 +1,17 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {SubscriptionInject} from '../../../../Subscriptions/subscription-inject.service';
-import {UtilService} from 'src/app/services/util.service';
-import {OnlineTransactionService} from '../../../online-transaction.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ProcessTransactionService} from '../process-transaction.service';
-import {Router} from '@angular/router';
-import {IinUccCreationComponent} from '../../IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component';
-import {EnumDataService} from 'src/app/services/enum-data.service';
-import {map, startWith} from 'rxjs/operators';
-import {PeopleService} from '../../../../../PeopleComponent/people.service';
-import {of} from 'rxjs';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
+import { OnlineTransactionService } from '../../../online-transaction.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ProcessTransactionService } from '../process-transaction.service';
+import { Router } from '@angular/router';
+import { IinUccCreationComponent } from '../../IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component';
+import { EnumDataService } from 'src/app/services/enum-data.service';
+import { map, startWith } from 'rxjs/operators';
+import { PeopleService } from '../../../../../PeopleComponent/people.service';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-online-trasaction',
@@ -26,9 +26,9 @@ export class OnlineTransactionComponent implements OnInit {
   valid: boolean;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
-              private eventService: EventService, private fb: FormBuilder,
-              public processTransaction: ProcessTransactionService, private router: Router,
-              private enumDataService: EnumDataService, private peopleService: PeopleService) {
+    private eventService: EventService, private fb: FormBuilder,
+    public processTransaction: ProcessTransactionService, private router: Router,
+    private enumDataService: EnumDataService, private peopleService: PeopleService) {
     this.advisorId = AuthService.getAdvisorId();
   }
 
@@ -39,14 +39,15 @@ export class OnlineTransactionComponent implements OnInit {
   @Input()
   set data(data) {
     this.inputData = data;
-    if(data.data){
-      this.mutualFundData = data.data
-    }
+
     if (!this.inputData) {
       this.inputData = {};
     } else {
       if (this.inputData.isAdvisorSection == false) {
         this.isAdvisorSection = false;
+      }
+      if (this.inputData.data) {
+        this.mutualFundData = data.data
       }
     }
     this.familyMemberList = this.enumDataService.getClientAndFamilyData('');
@@ -144,13 +145,13 @@ export class OnlineTransactionComponent implements OnInit {
           this.familyMemberList = data;
           this.filteredStates = of(this.familyMemberList);
           this.familyMemberList.forEach(element => {
-            if(this.mutualFundData.familyMemberId == element.familyMemberId){
+            if (this.mutualFundData.familyMemberId == element.familyMemberId) {
               this.stateCtrl.setValue(element)
               this.valid = true
               this.ownerDetails(element)
             }
           });
-         
+
         }, error => {
           console.error('error data : ', error);
         }
@@ -211,7 +212,7 @@ export class OnlineTransactionComponent implements OnInit {
   }
 
   showData(value) {
-    if(this.valid == true){
+    if (this.valid == true) {
       if (this.formStep == 'step-1') {
         if (this.noMapping == false && this.noSubBroker == false) {
           this.formStep = 'step-2';
@@ -239,19 +240,19 @@ export class OnlineTransactionComponent implements OnInit {
   }
 
   noMapFunction() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
     this.router.navigate(['/admin/transactions/investors']);
   }
 
   noBroakerFun() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
     this.router.navigate(['/admin/transactions/settings/manage-credentials/arn-ria-creds']);
 
   }
 
 
   close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 
   ownerList(value) {
@@ -358,8 +359,8 @@ export class OnlineTransactionComponent implements OnInit {
           clientId: this.familyMemberData.clientId,
           familyMemberId: this.familyMemberData.userType == 3 ? this.familyMemberData.familyMemberId : 0,
           isAdvisorSection: this.isAdvisorSection,
-          mutualFundData : this.mutualFundData,
-          transactionData : this.defaultData
+          mutualFundData: this.mutualFundData,
+          transactionData: this.defaultData
         };
         this.openPurchaseTransaction(data.transactionType, data);
       } else {
