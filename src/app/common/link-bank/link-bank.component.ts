@@ -102,7 +102,7 @@ export class LinkBankComponent implements OnInit {
       ifscCode: [data.ifscCode, [Validators.required]],
       bankName: [data.bankName, [Validators.required]],
       micrName: [data.micrNo],
-      accNumber: [data.accountNumber, [Validators.required]],
+      accNumber: [data.accountNumber, [Validators.required,Validators.minLength(9), Validators.maxLength(18)]],
       accType: [(data.accountType) ? data.accountType : '', [Validators.required]],
       branchName: [data.branchName, [Validators.required]],
       branchCountry: [(data.address) ? data.address.country : '', [Validators.required]],

@@ -53,7 +53,7 @@ import { OpenPdfViewComponent } from './open-pdf-view/open-pdf-view.component';
     ScrollDispatchModule,
     ScrollingModule,
     SatDatepickerModule,
-    SatNativeDateModule
+    SatNativeDateModule,
   ], exports: [
     TransactionsComponent,
     TransactionsListComponent,
