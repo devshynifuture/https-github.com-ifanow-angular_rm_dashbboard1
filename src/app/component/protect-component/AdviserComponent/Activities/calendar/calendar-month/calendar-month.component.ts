@@ -83,7 +83,7 @@ export class CalendarMonthComponent implements OnInit {
 
   currentMonthEvents:any = [];
   createDayJson(){
-    
+    this.currentMonthEvents = [];
     for(let i=1; i < this.numbersOfDays + 1; i++){
       let dayArr = {
         date:null,
@@ -101,6 +101,7 @@ export class CalendarMonthComponent implements OnInit {
         // }
         // console.log(this.currentMonthEvents, "this.currentMonthEvents");
       }
+     
       if(dayArr.date != null){
         this.currentMonthEvents.push(dayArr);
       }
@@ -206,13 +207,13 @@ export class CalendarMonthComponent implements OnInit {
             }
           }
           if (e.start) {
-            e["day"] = this.formateDate(!e.start.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
-            e["month"] = this.formateMonth(!e.start.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
-            e["year"] = this.formateYear(!e.start.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
-            e["startTime"] = this.formateTime(!e.start.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
-            e["endTime"] = this.formateTime(!e.end.dateTime ? new Date(e.created) : new Date(e.end.dateTime));
+            e["day"] = this.formateDate(e.start.dateTime == null ? new Date(e.start.date) : new Date(e.start.dateTime));
+            e["month"] = this.formateMonth(e.start.dateTime == null ? new Date(e.start.date) : new Date(e.start.dateTime));
+            e["year"] = this.formateYear(e.start.dateTime == null ? new Date(e.start.date) : new Date(e.start.dateTime));
+            e["startTime"] = this.formateTime(e.start.dateTime == null ? new Date(e.start.date) : new Date(e.start.dateTime));
+            e["endTime"] = this.formateTime(e.start.dateTime == null ? new Date(e.start.date) : new Date(e.end.dateTime));
             this.formatedEvent.push(e);
-            // console.log(this.formatedEvent,"formatedEvent calender1",);
+            console.log(this.formatedEvent,"formatedEvent calender1",);
           }
         }
         this.createDayJson();
@@ -473,16 +474,16 @@ export class CalendarMonthComponent implements OnInit {
     this.openDialog(events);
   }
 
-  addEvent(day, month, year) {
+  addEvent(date) {
     let event: any;
-    if (month == 0) {
-      month = 12;
-    }
-    else if (month == 13) {
-      month = 1;
-      year += 1;
-    }
-    let eventDate = month + "/" + day + "/" + year;
+    // if (month == 0) {
+    //   month = 12;
+    // }
+    // else if (month == 13) {
+    //   month = 1;
+    //   year += 1;
+    // }
+    // let eventDate = month + "/" + day + "/" + year;
 
     event = {
       "eventId": "",
@@ -491,11 +492,11 @@ export class CalendarMonthComponent implements OnInit {
       "title": "",
       "description": "",
       "start": {
-        "dateTime": new Date(eventDate),
+        "dateTime": new Date(date),
         "timeZone": null
       },
       "end": {
-        "dateTime": new Date(eventDate),
+        "dateTime": new Date(date),
         "timeZone": null
       },
       "recurrence": "",
@@ -571,10 +572,10 @@ export class CalendarMonthComponent implements OnInit {
             "timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
           },
           "recurrence": [
-            "RRULE:FREQ=DAILY;COUNT=2"
           ],
           "attendees": result.attendeesList
         }
+        // "RRULE:FREQ=DAILY;COUNT=2"
 
 
         this.startTime = result.startTime;
@@ -594,7 +595,7 @@ export class CalendarMonthComponent implements OnInit {
         }
       }
       else{
-        if(result){
+        if(result && result != 'delete'){
           this.openDialog(result.event);
         }
       }

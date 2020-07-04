@@ -25,7 +25,7 @@
             <div [ngClass]="travelInsuranceForm.value.getCoOwnerName.length > 1?'col-md-3' : 'col-md-5'">
                 <div class="form-group  ">
                     <mat-form-field>
-                        <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData' (selectionChange)="disabledMember($event.value,'owner')" (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
+                        <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData' (selectionChange)="disabledMember($event.value,'owner')" (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)' (selectionChange)="getOwnerData($event.value,nomineesListFM)" class="form-control br-0" [callMethod]='callMethod'>
                             <mat-option value='' disabled>Select family members</mat-option>
                             <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" [value]="f.userName">
                                 <span>{{f.userName}}</span>
@@ -68,8 +68,11 @@
                     <!-- <mat-option *ngFor="let option of policyList ;index as i" [value]="option.id">
                         {{option.policy_type}}</mat-option> -->
                     <mat-option value='9'> Single Trip Travel Insurance Plan </mat-option>
-                    <mat-option value='10'>Multi Trip Travel Insurance Plan</mat-option>
-                    <mat-option value='11'>Family Floater Travel Insurance Plan</mat-option>
+                    <mat-option value='16'>Multi Trip Travel Insurance Plan - 30 days
+                    </mat-option>
+                    <mat-option value='17'>Multi Trip Travel Insurance Plan - 60 days
+                    </mat-option>
+                    <!-- <mat-option value='11'>Family Floater Travel Insurance PlanFamily Floater Travel Insurance Plan</mat-option> -->
                     <mat-option value='12'>Student Travel Insurance Plan</mat-option>
                 </mat-select>
                 <mat-error>This field is required

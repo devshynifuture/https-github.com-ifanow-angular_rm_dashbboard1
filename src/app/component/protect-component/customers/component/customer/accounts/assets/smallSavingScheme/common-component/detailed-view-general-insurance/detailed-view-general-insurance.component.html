@@ -51,7 +51,7 @@
                 {{(_data.insurerName) ? _data.insurerName : '-'}}
               </div>
             </div>
-            <div *ngIf="_data.policyName" class="row bb p-8 b-l br">
+            <div *ngIf="_data.policyName && showInsurance !='Motor'" class="row bb p-8 b-l br">
               <div class="col-md-8 text-left f-14 roboto p-0">
                 Policy name
               </div>
@@ -233,7 +233,7 @@
                 Chassis number
               </div>
               <div class="col-md-4 text-right f-14 roboto p-0">
-                {{(_data.chasisNo) ? _data.sumInsuredIdv : '-'}}
+                {{(_data.chasisNo) ? _data.chasisNo : '-'}}
               </div>
             </div>
             <div class="row bb p-8 b-l br">

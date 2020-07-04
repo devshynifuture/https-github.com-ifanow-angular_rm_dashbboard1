@@ -91,7 +91,7 @@ export class EnumDataService {
       // this.clientData = AuthService.getClientData();
 
       const obj = {
-        "userId": self.userData[0].id,
+        "userId": self.userData[0].id == 0?self.userData[0].clientId:self.userData[0].id,
         "userType": self.userData[0].userType
       };
       self.custumService.getBankList(obj).subscribe(

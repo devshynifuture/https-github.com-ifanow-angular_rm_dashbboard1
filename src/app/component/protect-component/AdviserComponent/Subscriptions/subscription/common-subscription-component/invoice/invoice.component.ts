@@ -11,6 +11,7 @@ import {UtilService} from 'src/app/services/util.service';
 import {EmailOnlyComponent} from '../email-only/email-only.component';
 import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
 import {EventService} from 'src/app/Data-service/event.service';
+import { AppConstants } from 'src/app/services/app-constants';
 
 
 export interface PeriodicElement {
@@ -71,7 +72,6 @@ export class InvoiceComponent implements OnInit {
     {name: 'Unregistered Business', value: 2}
   ];
 
-  @ViewChild('invoiceTemplate', {static: false}) invoiceTemplate: ElementRef;
   showErr = false;
 
   get data() {
@@ -90,7 +90,6 @@ export class InvoiceComponent implements OnInit {
 
   @Input() invoiceValue;
 
-  dataSub: any;
   storeData;
   showRecord: any;
   clientInvoice: any;
@@ -106,11 +105,11 @@ export class InvoiceComponent implements OnInit {
   constructor(public utils: UtilService, public enumService: EnumServiceService, public subInjectService: SubscriptionInject,
               private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService, public dialog: MatDialog,
               private eventService: EventService) {
-    this.dataSub = this.subInjectService.singleProfileData.subscribe(
-      data => this.getInvoiceData(data)
-    );
     this.subInjectService.singleProfileData.subscribe(
-      data => this.getRecordPayment(data)
+      data => {
+        this.getInvoiceData(data)
+        this.getRecordPayment(data)
+      }
     );
   }
 
@@ -833,7 +832,8 @@ export class InvoiceComponent implements OnInit {
 
   generatePdf() {
     const para = document.getElementById('template');
-    this.utils.htmlToPdf(para.innerHTML, 'Test', '');
+    const x = para.innerHTML.split(AppConstants.RUPEE_LETTER).join('&#8377;');
+    this.utils.htmlToPdf(x, 'Test', '');
   }
 
 

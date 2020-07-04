@@ -89,7 +89,7 @@
                                 Premium frequency
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                {{(_data.frequency == 12) ? 'Monthly' : (_data.frequency == 4) ? 'Quarterly' : (_data.frequency == 2) ? 'Half yearly' : (_data.frequency == 1) ? 'Yearly' : '-'}}
+                                {{(_data.frequency == 12) ? 'Monthly' : (_data.frequency == 4) ? 'Quarterly' : (_data.frequency == 2) ? 'Half yearly' : (_data.frequency == 1) ? 'Yearly' : (_data.frequency == 3) ? 'Single premium' : '-'}}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
@@ -113,7 +113,7 @@
                                 Policy status
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                {{(_data.policyStatusId == 1) ? 'In force' : (_data.policyStatusId == 2) ? 'Lapsed' : (_data.policyStatusId == 3) ? 'Paid up' : (_data.policyStatusId == 4) ? 'Fully paid up' : '-'}}
+                                {{(_data.policyStatusId == 1) ? 'In force' : (_data.policyStatusId == 2) ? 'Lapsed' : (_data.policyStatusId == 3) ? 'Fully paid up' : (_data.policyStatusId == 4) ? 'Partial paid up' : '-'}}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">
@@ -121,7 +121,7 @@
                                 Last unpaid premium
                             </div>
                             <div class="col-md-4 text-right f-14 roboto p-0">
-                                {{(_data.lastUnpaidPremium) ? '₹' : ''}}<span appFormatNumber>{{(_data.lastUnpaidPremium) ? _data.lastUnpaidPremium : '-'}}</span>
+                                {{(_data.lastUnpaidPremium) ? (_data.lastUnpaidPremium | date:'dd/MM/yyyy') : '-'}}
                             </div>
                         </div>
                         <div class="row bb p-8 b-l br">

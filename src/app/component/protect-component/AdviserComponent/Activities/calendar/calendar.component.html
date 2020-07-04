@@ -213,7 +213,7 @@
 
 <div id="ui-calendar">
     <!-- <div style="background:red; height: 64px"></div> -->
-    <app-google-connect *ngIf="!excessAllow"></app-google-connect>
+    <app-google-connect (googleConnected)="mailConnect($event)" *ngIf="!excessAllow"></app-google-connect>
     <div *ngIf="excessAllow">
         <div class="row main-header p-12">
             <div class="col-md-8 p-0">

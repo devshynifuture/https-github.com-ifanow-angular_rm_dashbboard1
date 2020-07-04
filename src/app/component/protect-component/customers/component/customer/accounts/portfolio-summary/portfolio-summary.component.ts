@@ -35,6 +35,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
   userData: any;
   filterCashFlow = { income: [], expense: [] };
   inflowFlag;
+
   outflowFlag;
   mutualFundValue: any = {
     currentValue: 0,
@@ -70,7 +71,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
       percentage: 0
     }
 
-  cashFlowFG:FormGroup;
+  cashFlowFG: FormGroup;
   subscription = new Subscription();
   noCashflowData: boolean = false;
 
@@ -78,16 +79,16 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
   cashflowFlag: boolean;
   letsideBarLoader: boolean;
   summaryFlag: boolean;
-  allBanks:any[] = [];
-  families:any[] = [];
-  cashFlowDescNaming:any[] = [];
+  allBanks: any[] = [];
+  families: any[] = [];
+  cashFlowDescNaming: any[] = [];
   constructor(
-    public eventService: EventService, 
+    public eventService: EventService,
     private cusService: CustomerService,
     private datePipe: DatePipe,
     private fb: FormBuilder,
     private enumService: EnumServiceService,
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.cashFlowFG = this.fb.group({
@@ -105,8 +106,8 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     this.cashFlowDescNaming = this.enumService.getAssetNamings();
   }
 
-  subscribeToCashflowChanges(){
-    this.cashFlowFG.valueChanges.subscribe(()=> {
+  subscribeToCashflowChanges() {
+    this.cashFlowFG.valueChanges.subscribe(() => {
       this.filterCashflowData()
     })
   }
@@ -215,9 +216,9 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
         this.cashflowFlag = false;
         this.filterCashFlow = Object.assign({}, data);
         this.cashFlowViewDataSource = [];
-        if(data.income.length === 0 && data.expense.length === 0) {
+        if (data.income.length === 0 && data.expense.length === 0) {
           this.noCashflowData = true;
-        } 
+        }
         this.incomeList = [];
         this.expenseList = [];
         this.createFilterList();
@@ -273,7 +274,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
   createFilterList() {
     this.allBanks = [];
     let cashflows = [...this.filterCashFlow.expense, ...this.filterCashFlow.income];
-    
+
     let banks = [...new Set(cashflows.map(flow => flow.userBankMappingId))]
     this.allBanks = banks.map(bank => {
       let tnx = cashflows.find(tnx => tnx.userBankMappingId === bank);
@@ -282,12 +283,12 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
         id: bank
       }
       // non linked bank id is 0
-      if(bank === 0) {
+      if (bank === 0) {
         bankObj.name = 'Non-linked banks'
       }
       return bankObj;
     });
-    
+
     let families = [...new Set(cashflows.map(flow => flow.familyMemberId))]
     this.families = families.map(family => {
       let tnx = cashflows.find(tnx => tnx.familyMemberId === family);
@@ -303,14 +304,14 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
   filterCashflowData() {
     this.incomeList = [];
     this.expenseList = [];
-    
+
     let cashflows = [...this.filterCashFlow.expense, ...this.filterCashFlow.income];
 
-    if(this.cashFlowFG.controls.bankfilter.value != 'all') {
+    if (this.cashFlowFG.controls.bankfilter.value != 'all') {
       cashflows = cashflows.filter(flow => flow.userBankMappingId === this.cashFlowFG.controls.bankfilter.value);
     }
 
-    if(this.cashFlowFG.controls.familyfilter.value != 'all') {
+    if (this.cashFlowFG.controls.familyfilter.value != 'all') {
       cashflows = cashflows.filter(flow => flow.familyMemberId === this.cashFlowFG.controls.familyfilter.value);
     }
 
@@ -318,14 +319,14 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
       income: [],
       expense: []
     }
-    if(this.cashFlowFG.controls.inflow.value) {
+    if (this.cashFlowFG.controls.inflow.value) {
       cashflowObj.income = cashflows.filter(flow => flow.inputOutputFlag === 1);
     }
 
-    if(this.cashFlowFG.controls.outflow.value) {
+    if (this.cashFlowFG.controls.outflow.value) {
       cashflowObj.expense = cashflows.filter(flow => flow.inputOutputFlag === -1);
     }
-    
+
     this.sortDataUsingFlowType(cashflowObj);
   }
 
@@ -559,13 +560,13 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
 
   getShortForm(elem) {
     let name = this.cashFlowDescNaming.find(asset => asset.assetType === elem.assetType);
-    if(name) {
+    if (name) {
       return name.assetShortName;
     }
     return '';
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 }

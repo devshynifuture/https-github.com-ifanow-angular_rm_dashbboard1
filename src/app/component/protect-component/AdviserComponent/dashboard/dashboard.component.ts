@@ -160,6 +160,8 @@ export class DashboardComponent implements OnInit {
   calenderLoader: boolean;
   birthdayAnniList: any;
   connectedToGmail: boolean;
+  excessAllow:any;
+  dashEvent:boolean = true;
   bseData: {}[];
   nscData: {}[];
   last7DaysFlag: boolean;
@@ -195,6 +197,8 @@ export class DashboardComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.parentId = AuthService.getParentId() ? AuthService.getParentId() : this.advisorId;
     this.advisorName = AuthService.getUserInfo().name;
+    this.excessAllow = localStorage.getItem('successStoringToken')
+
     this.getTotalRecivedByDash();
     this.clientWithSubscription();
     this.getSummaryDataDashboard();//summry dashbord
@@ -204,9 +208,13 @@ export class DashboardComponent implements OnInit {
     this.finalEndDate = UtilService.getEndOfDay(new Date()).getTime();
     this.getTodoListData();
     this.getRecentTransactionData();
-    this.connectAccountWithGoogle();
+    // this.connectAccountWithGoogle();
     this.getBirthdayOrAnniversary();
     this.getLast7DaysTransactionStatus();
+  }
+
+  mailConnect(done){
+    this.excessAllow = done;
   }
   getSummaryDataDashboard() {
     const obj = {

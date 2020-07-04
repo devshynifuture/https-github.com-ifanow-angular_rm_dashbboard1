@@ -2,7 +2,7 @@ import { EventService } from './../../../../../../../../Data-service/event.servi
 import { AuthService } from './../../../../../../../../auth-service/authService';
 import { EmailServiceService } from './../../../../email-service.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { GoogleConnectDialogComponent } from '../../../google-connect-dialog/google-connect-dialog.component';
@@ -16,6 +16,7 @@ import { EmailFaqAndSecurityComponent } from '../../../email-faq-and-security/em
   styleUrls: ['./google-connect.component.scss']
 })
 export class GoogleConnectComponent implements OnInit {
+  @Output() googleConnected = new EventEmitter();
 
   constructor(private route: ActivatedRoute,
     private fb: FormBuilder,
@@ -35,7 +36,7 @@ export class GoogleConnectComponent implements OnInit {
   emailId;
   showEmailInput: boolean = false;
   redirectForm;
-  isEmail: boolean = true;
+  connect:any
 
   ngOnInit() {
     this.redirectForm = this.fb.group({
@@ -51,20 +52,34 @@ export class GoogleConnectComponent implements OnInit {
           localStorage.setItem('googleOAuthToken', 'oauthtoken');
           localStorage.setItem('successStoringToken', 'true');
           localStorage.setItem('associatedGoogleEmailId', AuthService.getUserInfo().userName);
-          this.router.navigate(['/admin/emails/inbox'], { relativeTo: this.activatedRoute });
+          if(this.connect == "dash"){
+            this.router.navigate(['/admin/dashboard'], { relativeTo: this.activatedRoute });
+          }
+          else if(this.connect = "calendar"){
+            this.router.navigate(['/admin/activies/month'], { relativeTo: this.activatedRoute });
+          }
+          else{
+            this.router.navigate(['/admin/emails/inbox'], { relativeTo: this.activatedRoute });
+          }
+
         } else {
-          this.eventService.openSnackBarNoDuration(res, 'DISMISS');
+          
         }
       }, err => {
-        this.eventService.openSnackBarNoDuration(err, 'DISMISS');
+        
+        // this.eventService.openSnackBarNoDuration(err, 'DISMISS2');
       });
     }
+    if (this.router.url == '/admin/emails/inbox/google-connect') {
+      this.connect = "email";
 
-    if (this.router.url == '/admin/activies/month') {
-      this.isEmail = false;
+    } 
+    else if(this.router.url == '/admin/dashboard'){
+      this.connect = "dash";
 
-    } else {
-      this.isEmail = true;
+    }
+    else {
+      this.connect = "calendar";
     }
 
   }
@@ -137,11 +152,11 @@ export class GoogleConnectComponent implements OnInit {
 
     const dialogRef = this.dialog.open(GoogleConnectDialogComponent, {
       width: '390px',
-      data: ''
+      data: this.connect
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      this.googleConnected.emit(true);
     });
 
   }

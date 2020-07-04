@@ -57,6 +57,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
   showInsurance: any;
   flag = 'Add';
   bankList: any;
+  filterNomineesList: any[];
 
   /*_data;
   @Input()
@@ -148,7 +149,9 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       share: [0,],
       familyMemberId: 0,
       id: 0,
-      isClient: 0
+      isClient: 0,
+      userType:0,
+      clientId:0
     })]),
   });
   keyDetailsForm = this.fb.group({
@@ -211,8 +214,18 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
   display(value) {
     this.ownerName = value.userName;
     this.familyMemberId = value.id;
+    
   }
-
+  changeNomineeList(){
+    this.filterNomineesList=[];
+    let filterArray=[];
+    this.nomineesListFM.forEach(element => {
+      if(element.familyMemberId != this.lifeInsuranceForm.value.getCoOwnerName[0].familyMemberId){
+        filterArray.push(element)
+      }
+    });
+    this.filterNomineesList = filterArray;
+  }
   lisNominee(value) {
     this.ownerData.Fmember = value;
     this.nomineesListFM = Object.assign([], value);
@@ -230,6 +243,8 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
     else{
       this.bankList = [];
     }
+    this.changeNomineeList();
+
     console.log(this.bankList,"this.bankList2");
   }
 
@@ -253,6 +268,8 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       ParamValue: value,
       disControl: type
     };
+    this.changeNomineeList();
+
   }
 
   displayControler(con) {
@@ -286,7 +303,9 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
       share: [data ? data.share : ''],
       familyMemberId: [data ? data.familyMemberId : 0],
       id: [data ? data.id : 0],
-      isClient: [data ? data.isClient : 0]
+      isClient: [data ? data.isClient : 0],
+      clientId:[data ? data.clientId : 0],
+      userType:[data ? data.userType : 0]
     }));
     if (data) {
       setTimeout(() => {
@@ -551,6 +570,26 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
 
 
   }
+  getOwnerData(value, data) {
+
+    data.forEach(element => {
+      for (const e in this.getCoOwner.controls) {
+        const name = this.getCoOwner.controls[e].get('name');
+        if (element.userName == name.value) {
+          this.getCoOwner.controls[e].get('name').setValue(element.userName);
+          this.getCoOwner.controls[e].get('familyMemberId').setValue(element.id);
+          this.getCoOwner.controls[e].get('clientId').setValue(element.clientId);
+          this.getCoOwner.controls[e].get('userType').setValue(element.userType);
+
+        }
+      }
+
+    });
+    this.changeNomineeList();
+
+
+
+  }
 
   getFamilyMemberList() {
     const obj = {
@@ -620,8 +659,27 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
   getCashFlowData() {
 
   }
+  getClientId(){
 
+    this.nomineesListFM.forEach(element => {
+      for (const e in this.getCoOwner.controls) {
+        const id = this.getCoOwner.controls[e].get('familyMemberId');
+        if (element.familyMemberId == id.value) {
+          this.getCoOwner.controls[e].get('name').setValue(element.userName);
+          this.getCoOwner.controls[e].get('familyMemberId').setValue(element.id);
+          this.getCoOwner.controls[e].get('clientId').setValue(element.clientId);
+          this.getCoOwner.controls[e].get('userType').setValue(element.userType);
+
+        }
+      }
+
+    });
+
+
+
+}
   saveAddInsurance() {
+    this.getClientId();
     this.getFamilyMemberIdSelectedData(this.lifeInsuranceForm.get('proposer').value);
     let ulipFundDetails = [];
     const ulipFundVal = this.keyDetailsForm.get('fundValueForm') as FormArray;
@@ -665,7 +723,7 @@ export class AddInsuranceComponent implements OnInit, DataComponent {
   } else {
       this.barButtonOptions.active = true;
       this.insuranceFormFilledData = {
-        familyMemberIdLifeAssured: this.lifeInsuranceForm.value.getCoOwnerName[0].familyMemberId,
+        familyMemberIdLifeAssured: (this.lifeInsuranceForm.value.getCoOwnerName[0].userType == 2) ? this.lifeInsuranceForm.value.getCoOwnerName[0].clientId : this.lifeInsuranceForm.value.getCoOwnerName[0].familyMemberId,
         // "familyMemberIdLifeAssured": this.familyMemberLifeData.id,
         familyMemberIdProposer: (this.selectedProposerData) ? this.selectedProposerData.familyMemberId : null,
         clientId: this.clientId,

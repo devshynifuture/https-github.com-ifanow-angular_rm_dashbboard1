@@ -25,7 +25,7 @@
             <div class="pr-0" [ngClass]="motorInsuranceForm.value.getCoOwnerName.length > 1?'col-md-3' : 'col-md-5'">
                 <div class="form-group ">
                     <mat-form-field>
-                        <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData' (selectionChange)="disabledMember($event.value,'owner')" (valueChange3)='displayControler($event)' (emitBank)='getBank()' (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
+                        <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData' (selectionChange)="disabledMember($event.value,'owner')" (selectionChange)="getOwnerData($event.value,nomineesListFM)"  (valueChange3)='displayControler($event)' (emitBank)='getBank()' (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
                             <mat-option value='' disabled>Select family members</mat-option>
                             <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" [value]="f.userName">
                                 <span>{{f.userName}}</span>
@@ -323,7 +323,7 @@
         </div>
 
 
-        <div class="row pt-48">
+        <div class="row pt-48" *ngIf="motorInsuranceForm.get('PlanType').value != '4'">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8 "> No claim bonus</h5>
             </div>
@@ -336,7 +336,7 @@
         </div>
 
 
-        <div class="row pt-32">
+        <div class="row pt-32" *ngIf="motorInsuranceForm.get('PlanType').value != '4'">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8 "> Special discount</h5>
             </div>
@@ -348,7 +348,7 @@
         </div>
 
         <div formArrayName="addOnForm">
-            <div class="row pt-32" *ngFor="let obj of motorInsuranceForm.controls['addOnForm'].controls; let pointIndex=index" [formGroupName]="pointIndex">
+            <div class="row " [ngClass]="motorInsuranceForm.controls.PlanType.value == '4' ? 'pt-48': 'pt-32'" *ngFor="let obj of motorInsuranceForm.controls['addOnForm'].controls; let pointIndex=index" [formGroupName]="pointIndex">
                 <div class="col-md-5 pr-0 text-right">
                     <h5 class="m-0 pt-10 ">Add ons</h5>
                 </div>
