@@ -832,6 +832,7 @@ export class InvoiceComponent implements OnInit {
 
   generatePdf() {
     const para = document.getElementById('template');
+    
     this.utils.htmlToPdf(para.innerHTML, 'Test', '');
   }
 

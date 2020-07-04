@@ -813,5 +813,6 @@ export const appConfig = {
   DELETE_NOTES: 'admin/dashboard/memo/item/delete',
   GET_NOTES: 'admin/dashboard/memo/list/get',
   GET_BIRTHDAY_OR_ANNIVERSARY: 'user/birthday/or/anniversary',
+  KEY_METRICS_ADVISOR_DASHBOARD: 'admin/dashboard/key/metrics',
   LAST_7_DAYS_TRANSACTION_STATUS: 'report/transaction/status/summary'
 };
