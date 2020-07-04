@@ -198,14 +198,16 @@ export class PreferencesSettingsComponent implements OnInit {
     this.prefixData.controls.nextNo.updateValueAndValidity();
   }
 
-  Open(singleProfile, value) {
+  Open(singleProfile, value, tab = 0) {
     this.selected = 0;
+    // popupheadertext is a dirty fix to send the tab to open
     const fragmentData = {
       flag: value,
       data: singleProfile,
       id: 1,
       state: 'open',
-      componentName: BillerProfileAdvisorComponent
+      componentName: BillerProfileAdvisorComponent,
+      popupHeaderText: tab,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

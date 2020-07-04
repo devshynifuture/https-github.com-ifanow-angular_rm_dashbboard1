@@ -157,8 +157,8 @@
                                         <div class="wrapper-16  widthwebLogo">
                                             <p class="f-12 text-uppercase pb-16 ">YOUR LOGO</p>
                                             <div class="text-center containerOne">
-                                                <img src="{{singleBillerProfile.logoUrl}}" class="img-icons">
-                                                <div class="overlay">
+                                                <img [src]="singleBillerProfile.logoUrl" class="img-icons">
+                                                <div class="overlay" (click)="Open(singleBillerProfile,'editbillerProfile', 1)">
                                                     <div class="text">Edit Image</div>
                                                 </div>
                                             </div>
