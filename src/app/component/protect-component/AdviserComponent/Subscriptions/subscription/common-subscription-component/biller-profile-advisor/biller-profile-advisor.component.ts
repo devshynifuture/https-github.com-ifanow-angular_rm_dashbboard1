@@ -84,7 +84,8 @@ export class BillerProfileAdvisorComponent implements OnInit {
   ifscFlag: boolean;
   pincodeFlag: boolean;
 
-  @Input() Selected;
+  // dirty fix to set open tab
+  @Input() popupHeaderText = 0;
 
   logUrl = this.fb.group({
     url: [, [Validators.required]]
@@ -103,6 +104,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
+    this.selected = this.popupHeaderText;
   }
 
   getFormControl() {
