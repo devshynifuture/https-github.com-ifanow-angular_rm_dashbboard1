@@ -11,6 +11,7 @@ import {UtilService} from 'src/app/services/util.service';
 import {EmailOnlyComponent} from '../email-only/email-only.component';
 import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
 import {EventService} from 'src/app/Data-service/event.service';
+import { AppConstants } from 'src/app/services/app-constants';
 
 
 export interface PeriodicElement {
@@ -71,7 +72,6 @@ export class InvoiceComponent implements OnInit {
     {name: 'Unregistered Business', value: 2}
   ];
 
-  @ViewChild('invoiceTemplate', {static: false}) invoiceTemplate: ElementRef;
   showErr = false;
 
   get data() {
@@ -832,6 +832,7 @@ export class InvoiceComponent implements OnInit {
 
   generatePdf() {
     const para = document.getElementById('template');
+    
     this.utils.htmlToPdf(para.innerHTML, 'Test', '');
   }
 

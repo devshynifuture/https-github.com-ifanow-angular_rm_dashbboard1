@@ -169,7 +169,7 @@ export class SearchClientAddQuotationComponent implements OnInit {
            <table style="width: 100%; border-bottom: 1px solid rgba(0, 0, 0, 0.12); background: #F5F7F7; ">
                <tr>
                    <td style="padding: 28px 22px;  ">
-                       <h3 style="margin: 0px; font-size: 24px;">${element.serviceName}</h3>
+                       <h3 style="margin: 0px; font-size: 20px;">${element.serviceName}</h3>
                        <h5 style="margin: 0px; font-size: 16px;">${element.serviceCode}</h5>
                    </td>
                </tr>

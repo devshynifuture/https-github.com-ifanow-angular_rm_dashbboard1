@@ -142,8 +142,8 @@ export class EventDialog implements OnInit {
       }
     }
     else {
-      this.eventForm.get("startDateTime").setValue(this.eventData.created);
-      this.eventForm.get("endDateTime").setValue(this.eventData.created);
+      this.eventForm.get("startDateTime").setValue(this.eventData.start.date);
+      this.eventForm.get("endDateTime").setValue(this.eventData.start.date);
     }
   }
 

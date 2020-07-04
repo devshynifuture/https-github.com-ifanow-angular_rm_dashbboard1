@@ -71,11 +71,12 @@
         <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input autocomplete="off" placeholder="Enter Account number" #accNum [maxLength]="16"
+                    <input autocomplete="off" placeholder="Enter Account number" #accNum [maxLength]="18"
                         formControlName="accNumber" matInput appInputValueValidation
                         [inputValidator]="validatorType.NUMBER_ONLY" class="form-control">
-                    <mat-hint align="end">{{accNum.value.length}} / 16</mat-hint>
-                    <mat-error>This field is required</mat-error>
+                    <mat-hint align="end">{{accNum.value.length}} / 18</mat-hint>
+                    <mat-error *ngIf="bankForm.get('accNumber').errors?.minlength">Account number should contain atleast 9 numbers</mat-error>
+                    <mat-error *ngIf="!bankForm.get('accNumber').errors?.minlength">This field is required</mat-error>
                 </mat-form-field>
             </div>
         </div>
