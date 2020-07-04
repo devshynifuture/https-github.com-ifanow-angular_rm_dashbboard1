@@ -139,7 +139,7 @@ export class AddFireAndPerilsInsuranceInAssetComponent implements OnInit {
 
   addNewCoOwner(data) {
     this.getCoOwner.push(this.fb.group({
-      name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : ''], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
+      name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : ''], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0],clientId: [data ? data.clientId : 0],userType: [data ? data.userType : 0]
     }));
     if (data) {
       setTimeout(() => {
@@ -249,7 +249,10 @@ export class AddFireAndPerilsInsuranceInAssetComponent implements OnInit {
         share: [0,],
         familyMemberId: 0,
         id: 0,
-        isClient: 0
+        isClient: 0,
+        clientId: 0,
+        userType: 0
+
       })]),
       name: [(this.dataForEdit ? this.dataForEdit.name : null)],
       PlanType: [(this.dataForEdit ? this.dataForEdit.policyTypeId + '' : null), [Validators.required]],
@@ -440,7 +443,42 @@ export class AddFireAndPerilsInsuranceInAssetComponent implements OnInit {
       }
     );
   }
+  getOwnerData(value, data) {
+
+    data.forEach(element => {
+      for (const e in this.getCoOwner.controls) {
+        const name = this.getCoOwner.controls[e].get('name');
+        if (element.userName == name.value) {
+          this.getCoOwner.controls[e].get('name').setValue(element.userName);
+          this.getCoOwner.controls[e].get('familyMemberId').setValue(element.id);
+          this.getCoOwner.controls[e].get('clientId').setValue(element.clientId);
+          this.getCoOwner.controls[e].get('userType').setValue(element.userType);
+
+        }
+      }
+
+    });
+
+
+
+  }
+  getClientId(){
+    this.nomineesListFM.forEach(element => {
+      for (const e in this.getCoOwner.controls) {
+        const id = this.getCoOwner.controls[e].get('familyMemberId');
+        if (element.familyMemberId == id.value) {
+          this.getCoOwner.controls[e].get('name').setValue(element.userName);
+          this.getCoOwner.controls[e].get('familyMemberId').setValue(element.id);
+          this.getCoOwner.controls[e].get('clientId').setValue(element.clientId);
+          this.getCoOwner.controls[e].get('userType').setValue(element.userType);
+
+        }
+      }
+
+    });
+}
   saveFireInsurance() {
+    this.getClientId();
     let featureList = [];
     let finalplanFeatureList = this.fireInsuranceForm.get('planFeatureForm') as FormArray
     finalplanFeatureList.controls.forEach(element => {
@@ -472,7 +510,7 @@ export class AddFireAndPerilsInsuranceInAssetComponent implements OnInit {
       const obj = {
         "clientId": this.clientId,
         "advisorId": this.advisorId,
-        "policyHolderId": this.fireInsuranceForm.value.getCoOwnerName[0].familyMemberId,
+        "policyHolderId": (this.fireInsuranceForm.value.getCoOwnerName[0].userType == 2) ? this.fireInsuranceForm.value.getCoOwnerName[0].clientId : this.fireInsuranceForm.value.getCoOwnerName[0].familyMemberId,
         "insurerName": this.fireInsuranceForm.get('insurerName').value,
         "policyNumber": this.fireInsuranceForm.get('policyNum').value,
         "policyTypeId": this.fireInsuranceForm.get('PlanType').value,

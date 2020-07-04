@@ -142,7 +142,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
 
   addNewCoOwner(data) {
     this.getCoOwner.push(this.fb.group({
-      name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : ''], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
+      name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : ''], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0],clientId: [data ? data.clientId : 0],userType: [data ? data.userType : 0]
     }));
     if (data) {
       setTimeout(() => {
@@ -257,7 +257,9 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
         share: [0,],
         familyMemberId: 0,
         id: 0,
-        isClient: 0
+        isClient: 0,
+        clientId: 0,
+        userType: 0
       })]),
       name: [(this.dataForEdit ? this.dataForEdit.name : null)],
       PlanType: [(this.dataForEdit ? this.dataForEdit.policyTypeId + '' : ''), [Validators.required]],
@@ -292,7 +294,10 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
         sumAssured: [null, [Validators.required]],
         id: null,
         familyMemberId: [''],
-        relationshipId: ['']
+        relationshipId: [''],
+        clientId: [''],
+        userType: ['']
+
       })])
     })
     // ==============owner-nominee Data ========================\\
@@ -401,6 +406,8 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
             this.insuredMembersForm.controls[e].get('insuredMembers').setValue(element.userName);
             this.insuredMembersForm.controls[e].get('familyMemberId').setValue(element.familyMemberId);
             this.insuredMembersForm.controls[e].get('relationshipId').setValue(element.relationshipId);
+            this.insuredMembersForm.controls[e].get('clientId').setValue(element.clientId);
+            this.insuredMembersForm.controls[e].get('userType').setValue(element.userType);
             element.isDisabled = true;
           }
         }
@@ -415,7 +422,10 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
       sumAssured: [data ? data.sumInsured : '', [Validators.required]],
       id: [data ? data.id : ''],
       relationshipId: [data ? data.relationshipId : ''],
-      familyMemberId: [data ? data.familyMemberId : '']
+      familyMemberId: [data ? data.familyMemberId : ''],
+      clientId: [data ? data.clientId : ''],
+      userType: [data ? data.userType : '']
+
     }));
     this.resetValue(this.insuredMemberList);
     this.getFamilyData(this.insuredMemberList);
@@ -540,13 +550,48 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
     })
 
   }
+  getOwnerData(value, data) {
+
+    data.forEach(element => {
+      for (const e in this.getCoOwner.controls) {
+        const name = this.getCoOwner.controls[e].get('name');
+        if (element.userName == name.value) {
+          this.getCoOwner.controls[e].get('name').setValue(element.userName);
+          this.getCoOwner.controls[e].get('familyMemberId').setValue(element.id);
+          this.getCoOwner.controls[e].get('clientId').setValue(element.clientId);
+          this.getCoOwner.controls[e].get('userType').setValue(element.userType);
+
+        }
+      }
+
+    });
+
+
+
+  }
+  getClientId(){
+    this.nomineesListFM.forEach(element => {
+      for (const e in this.getCoOwner.controls) {
+        const id = this.getCoOwner.controls[e].get('familyMemberId');
+        if (element.familyMemberId == id.value) {
+          this.getCoOwner.controls[e].get('name').setValue(element.userName);
+          this.getCoOwner.controls[e].get('familyMemberId').setValue(element.id);
+          this.getCoOwner.controls[e].get('clientId').setValue(element.clientId);
+          this.getCoOwner.controls[e].get('userType').setValue(element.userType);
+
+        }
+      }
+
+    });
+}
   saveCriticalIllness() {
+    this.getClientId();
     let memberList = [];
     let finalMemberList = this.critialIllnessForm.get('InsuredMemberForm') as FormArray
     finalMemberList.controls.forEach(element => {
       let obj =
       {
-        familyMemberId: element.get('familyMemberId').value,
+        familyMemberId: element.get('userType').value == 2 ? element.get('clientId').value : element.get('familyMemberId').value,
         sumInsured: element.get('sumAssured').value,
         relationshipId: element.get('relationshipId').value,
         insuredOrNominee: 1,
@@ -562,7 +607,7 @@ export class AddCriticalIllnessInAssetComponent implements OnInit {
       const obj = {
         "clientId": this.clientId,
         "advisorId": this.advisorId,
-        "policyHolderId": this.critialIllnessForm.value.getCoOwnerName[0].familyMemberId,
+        'policyHolderId': (this.critialIllnessForm.value.getCoOwnerName[0].userType == 2) ? this.critialIllnessForm.value.getCoOwnerName[0].clientId : this.critialIllnessForm.value.getCoOwnerName[0].familyMemberId,
         "policyTypeId": this.critialIllnessForm.get('PlanType').value,
         "policyNumber": this.critialIllnessForm.get('policyNum').value,
         "insurerName": this.critialIllnessForm.get('insurerName').value,
