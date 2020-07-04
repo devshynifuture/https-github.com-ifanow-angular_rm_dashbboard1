@@ -39,7 +39,9 @@ export class OnlineTransactionComponent implements OnInit {
   @Input()
   set data(data) {
     this.inputData = data;
-    this.mutualFundData = data.data
+    if(data.data){
+      this.mutualFundData = data.data
+    }
     if (!this.inputData) {
       this.inputData = {};
     } else {
@@ -143,7 +145,7 @@ export class OnlineTransactionComponent implements OnInit {
           this.filteredStates = of(this.familyMemberList);
           this.familyMemberList.forEach(element => {
             if(this.mutualFundData.familyMemberId == element.familyMemberId){
-              this.transactionAddForm.controls.fmname.setValue(element)
+              this.stateCtrl.setValue(element)
               this.valid = true
               this.ownerDetails(element)
             }
@@ -278,7 +280,6 @@ export class OnlineTransactionComponent implements OnInit {
     }
     this.transactionAddForm = this.fb.group({
       ownerName: [(!data) ? '' : data.ownerName, [Validators.required]],
-      fmname: [(!data) ? '' : data.fmname, [Validators.required]],
       transactionType: [(!data) ? '' : data.transactionType, [Validators.required]],
       bankAccountSelection: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
       schemeSelection: [(!data) ? '' : data.schemeSelection, [Validators.required]],
