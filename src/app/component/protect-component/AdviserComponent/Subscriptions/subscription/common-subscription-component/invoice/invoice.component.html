@@ -92,214 +92,177 @@
             </mat-form-field>
           </div>
         </div>
-        <div #invoiceTemplate *ngIf="showRecord==false && feeCalc==false"
-          class="b-a m-16 mt-12 pb-28 scrollArrow max-height-100" id="template">
-          <div class="p-16">
-            <div class="row">
-              <div class="col-md-8">
-                <h1 class="f-42 text-custom pt-48 f-700">INVOICE</h1>
-              </div>
-              <div class="col-md-4 text-right">
-                <img class="pt-20 w-100" src="{{storeData.logoUrl}}">
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <h4 class="text-black pt-48">{{storeData.billerName}}</h4>
-                <p class="f-14 text-custom l-20 wb">{{storeData.billerAddress}}</p>
-              </div>
-              <div class="col-md-6">
-                <h4 class="text-black pt-48">{{storeData.clientName}}</h4>
-                <p class="f-14 text-custom l-20 wb">{{storeData.billingAddress}}</p>
-              </div>
-            </div>
-            <div class="row pt-44">
-              <div class="col-md-7">
-                <p class="text-black f-400"><span class="text-custom f-16">Invoice no</span>:
-                  {{storeData.invoiceNumber}}
-                </p>
-                <p class="text-black f-400"><span class="text-custom f-16">Invoice date</span>:
-                  {{storeData.invoiceDate| date:'dd/MM/yyyy'}}
-                </p>
-              </div>
-              <div class="col-md-5 text-right">
-                <h2>
-                  <span *ngIf="storeData.status==0" class="text-primary t-10 f-500 c-p">UNPAID</span>
-                  <span *ngIf="storeData.status==1" class="text-success t-10 f-500 c-p">PAID</span>
-                  <span *ngIf="storeData.status==2" class="text-danger t-10 f-500 c-p">OVERDUE</span>
-                  <span *ngIf="storeData.status==3" class="text-warning t-10 f-500 c-p">PARTIALLY
-                    PAID</span>
-                  <span *ngIf="storeData.status==4" class="text-primary t-10 f-500 c-p">SENT</span>
-                  <span *ngIf="storeData.status==5" class="text-lighter t-10 f-500 c-p">VOID</span>
-                  <span *ngIf="storeData.status==6" class="text-balck t-10 f-500 c-p">WRITE OFF</span>
-                </h2>
-              </div>
-            </div>
-            <div class="p-9">
-              <div class="b-a">
-                <div class="row bg-grey lter b-b p-16 pr-0 pl-0">
-                  <div class="col-md-9">
-                    <h4 class="m-0 f-14 f-500"> Service Details
+        <div class="row">
+          <div class="col-md-12">
+            <table style="width: 100%; margin: 0px auto; border: 1px solid #dee5e7; " align="center" #invoiceTemplate
+              *ngIf="showRecord==false && feeCalc==false" id="template">
+              <tr>
+                <td style="padding: 10px;" colspan="2">
+                  <table style="width: 100%">
+                    <tr>
+                      <td style="vertical-align: middle;">
+                        <h1 style="font-size: 40px; font-weight: 600; margin: 0px; color: #757575;">INVOICE </h1>
+                      </td>
+                      <td style="text-align: right; vertical-align: top;">
+                        <img style="width: 200px;" [src]="storeData.logoUrl"> </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2" style="padding: 10px;">
+                  <table style="width: 100%; margin-top: 30px;">
+                    <tr>
+                      <td style="vertical-align: top;">
+                        <h4 style="margin: 0px; font-size: 18px; color: #000000;">{{storeData.billerName}}</h4>
+                        <p style="color: #757575; font-size: 14px; margin-top: 10px;">{{storeData.billerAddress}}</p>
+                      </td>
 
-                    </h4>
-                  </div>
-                  <div class="col-md-3 ">
-                    <h4 class="m-0 f-14 f-500 text-right"> Amount </h4>
-                  </div>
-                </div>
-                <div class="row p-16 pr-0 pl-0">
-                  <div class="col-md-9">
-                    <h4 class="m-0 f-14">
-                      {{(storeData.services.length > 0) ? storeData.services[0].serviceName : ''}}</h4>
-                    <span class="m-0 f-14 text-custom">
-                      {{(storeData.services.length > 0) ? storeData.services[0].description : ''}}</span>
-                  </div>
-                  <div class="col-md-3 d-flex align-items-center justify-content-end">
-                    <h4 class="m-0 f-14  text-right">₹<span [value]="storeData.subTotal"
-                        appFormatNumber>{{formatter(storeData.subTotal)}}</span>
-                    </h4>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-7 mt-70">
-                <h4 class="m-0 f-14 f-500 text-left"> Footnote description </h4>
-                <p class="f-12 text-black f-400 roboto"> {{storeData.footnote}}</p>
-                <h4 class="m-0 f-14 f-500 text-left">Terms & conditions </h4>
-                <p class="f-12 text-black f-400 roboto"> {{storeData.terms}}</p>
-              </div>
-              <div class="col-md-5">
-                <div class="row pt-44">
-                  <div class="col-md-8">
-                    <p class="text-black f-400">Sub total</p>
-                  </div>
-                  <div class="col-md-4 pr-8 text-right">
-                    <p class="text-black f-400">₹<span [value]="storeData.subTotal"
-                        appFormatNumber>{{formatter(storeData.subTotal)}}</span>
-                    </p>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-8">
-                    <p class="text-black f-400">Discount</p>
-                  </div>
-                  <div class="col-md-4  text-right">
-                    <p class="text-black f-400">₹<span [value]="storeData.discount"
-                        appFormatNumber>{{formatter(storeData.discount)}}</span>
-                    </p>
-                  </div>
-                </div>
-                <div *ngIf="storeData.igst!=0" class="row">
-                  <div class="col-md-8">
-                    <p>IGST ({{storeData.igst}}%)</p>
-                  </div>
-                  <div class="col-md-4 pr-8">
-                    <p class="text-right">
-                      <span appFormatNumber
-                        [value]="(storeData.subTotal-storeData.discount)*18/100">₹{{formatter((storeData.subTotal - storeData.discount) * 18 / 100)}}</span>
-                    </p>
-                  </div>
-                </div>
-                <div *ngIf="storeData.cgst!=0" class="row">
-                  <div class="col-md-8">
-                    <p>CGST ({{storeData.cgst}}%)</p>
-                  </div>
-                  <div class="col-md-4 pr-8">
-                    <p class="text-right">
-                      ₹<span [value]="(storeData.subTotal-storeData.discount)*9/100"
-                        appFormatNumber>{{formatter((storeData.subTotal - storeData.discount) * 9 / 100)}}</span>
-                    </p>
-                  </div>
-                </div>
-                <div *ngIf="storeData.sgst!=0" class="row">
-                  <div class="col-md-8">
-                    <p>SGST ({{storeData.sgst}}%)</p>
-                  </div>
-                  <div class="col-md-4 pr-8">
-                    <p class="text-right">
-                      ₹<span [value]="(storeData.subTotal-storeData.discount)*9/100"
-                        appFormatNumber>{{formatter((storeData.subTotal - storeData.discount) * 9 / 100)}}</span>
-                    </p>
-                  </div>
-                </div>
-                <div class="row bt-1">
-                  <div class="col-md-8">
-                    <p class="f-500 roboto pt-8">Total</p>
-                  </div>
-                  <div *ngIf="storeData.cgst!=0 && storeData.sgst!=0" class="col-md-4 pr-8 text-right">
-                    <p class="f-500 roboto pt-8">₹<span [value]="storeData.finalAmount"
-                        appFormatNumber>{{formatter(storeData.finalAmount)}}</span>
-                    </p>
-                  </div>
-                  <div *ngIf="storeData.igst!=0" class="col-md-4 pr-8 text-right">
-                    <p class="f-500 roboto pt-8">
-                      ₹<span [value]="storeData.finalAmount" appFormatNumber>{{formatter(storeData.finalAmount)}}</span>
-                    </p>
-                  </div>
-                </div>
-                <div class="row bt-1 bb-1">
-                  <div class="col-md-8">
-                    <p class="f-500 roboto pt-8">Balance due</p>
-                  </div>
-                  <div class="col-md-4 pr-8">
-                    <p class="f-500 roboto pt-8 text-right">
-                      ₹<span [value]="storeData.balanceDue" appFormatNumber>{{formatter(storeData.balanceDue)}}
-                      </span></p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="wrapper-9">
-              <div *ngIf="storeData.auto == true" class="row b-a bg-grey lter ">
-                <!-- <div class="col-md-10 d-flex  align-items-center">
-                    <p class="m-0 text-black f-500  ">Fee calculation - Attachment</p>
-                </div>
-                <div class="col-md-2 wrapper-9 text-right">
-                    <button (click)="OpenFeeCalc()" class="btn-primary br-0" mat-stroked-button>View
-                    </button>
-                </div> -->
-              </div>
-              <div *ngIf="showPaymentRecive == true" class="row p-24 pl-0 pr-0 ">
-                <div class="col-md-12 p-0">
-                  <h5 class="m-0 text-black">Payments recieved</h5>
-                </div>
-              </div>
-              <table *ngIf="showPaymentRecive == true" [dataSource]="dataSource" class="" id="table-low" mat-table>
-                <ng-container matColumnDef="date">
-                  <th *matHeaderCellDef mat-header-cell>Date</th>
-                  <td *matCellDef="let element" mat-cell> {{element.paymentDate | date:'dd/MM/yyyy'}}
-                  </td>
-                </ng-container>
-                <ng-container matColumnDef="reference">
-                  <th *matHeaderCellDef mat-header-cell> Reference</th>
-                  <td *matCellDef="let element" mat-cell> {{storeData.invoiceNumber}} </td>
-                </ng-container>
-                <ng-container matColumnDef="paymentMode">
-                  <th *matHeaderCellDef mat-header-cell> Payment mode</th>
-                  <td *matCellDef="let element" mat-cell> {{element.paymentMode}} </td>
-                </ng-container>
-                <ng-container matColumnDef="amount">
-                  <th *matHeaderCellDef mat-header-cell> Amount(₹)</th>
-                  <td *matCellDef="let element" mat-cell><span appFormatNumber>{{element.amountReceived}}</span></td>
-                </ng-container>
-                <ng-container matColumnDef="icons">
-                  <th *matHeaderCellDef class="f-18 t-2" mat-header-cell></th>
-                  <td *matCellDef="let element" class="t-2" mat-cell>
-                    <i [matMenuTriggerFor]="menu" class="material-icons c-p iconscolors">
-                      more_vert
-                    </i>
-                    <mat-menu #menu="matMenu">
-                      <a (click)="editForm(element)" mat-menu-item>Edit</a>
-                    </mat-menu>
-                  </td>
-                </ng-container>
-                <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-                <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
-              </table>
-            </div>
+                      <td style="vertical-align: top;">
+                        <h4 style="margin: 0px; font-size: 18px; color: #000000;">{{storeData.clientName}}</h4>
+                        <p style="color: #757575; font-size: 14px; margin-top: 10px;">{{storeData.billingAddress}}</p>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <tr>
+                <td colspan="2" style="padding: 10px;">
+                  <table style="width: 100%; margin-top: 20px;">
+                    <tr>
+                      <td style="vertical-align: top;">
+                        <p style="font-size: 16px; color: #000000;">
+                          <span style="color: #757575;">Invoice no</span>: {{storeData.invoiceNumber}}
+                        </p>
+                        <p style="font-size: 14px; color: #000000;">
+                          <span style="color: #757575;">Invoice date</span>:
+                          {{storeData.invoiceDate| date:'dd/MM/yyyy'}}
+                        </p>
+                      </td>
+
+                      <td style="text-align: right;">
+                        <span style="color: #008FFF; font-size: 36px;">
+                          <span *ngIf="storeData.status==0">UNPAID</span>
+                          <span *ngIf="storeData.status==1">PAID</span>
+                          <span *ngIf="storeData.status==2">OVERDUE</span>
+                          <span *ngIf="storeData.status==3">PARTIALLY
+                            PAID</span>
+                          <span *ngIf="storeData.status==4">SENT</span>
+                          <span *ngIf="storeData.status==5">VOID</span>
+                          <span *ngIf="storeData.status==6">WRITE OFF</span>
+                        </span>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <tr>
+                <td colspan="2" style="padding: 10px;">
+                  <table style="width: 100%; border: 1px solid #dee5e7; margin-top: 20px;">
+                    <tr>
+                      <td style="padding: 16px; border-bottom: 1px solid #dee5e7; background: #F5F7F7;">
+                        Service Details </td>
+                      <td
+                        style="text-align: right; background: #F5F7F7; border-bottom: 1px solid #dee5e7; padding: 16px;">
+                        Amount</td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 16px;">
+                        <h4 class="m-0 f-14">
+                          {{(storeData.services.length > 0) ? storeData.services[0].serviceName : ''}}
+                        </h4>
+                        <span class="m-0 f-14 text-custom">
+                          {{(storeData.services.length > 0) ? storeData.services[0].description : ''}}
+                        </span>
+                      </td>
+                      <td style="text-align: right; padding: 16px;"><span>&#8377;</span>
+                        <span [value]="storeData.subTotal" appFormatNumber>{{formatter(storeData.subTotal)}}</span>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+              <tr>
+                <td style="width: 70%; padding-left: 10px;">
+                  <table style="width: 100%; margin-top: 20px;">
+                    <tr>
+                      <td>
+                        <h4 style="margin: 0px; font-size: 14px;"> Footnote description</h4>
+                        <p style="margin: 0px; font-size: 12px;"> {{storeData.footnote}}</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding-top: 15px;">
+                        <h4 style="margin: 0px; font-size: 14px;"> Terms & conditions</h4>
+                        <p style="margin: 0px; font-size: 12px;"> {{storeData.terms}}</p>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+                <td style="padding-right: 10px;">
+                  <table style="width: 100%; margin-top: 20px;">
+                    <tr>
+                      <td style="text-align: right; padding: 8px;font-size: 14px;">Sub total</td>
+                      <td style=" text-align: right; padding: 8px;font-size: 14px;"><span>&#8377;</span>
+                        <span [value]="storeData.subTotal" appFormatNumber>{{formatter(storeData.subTotal)}}</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style=" text-align: right;padding: 8px;font-size: 14px;">Discount</td>
+                      <td style="text-align: right; padding: 8px;font-size: 14px;"><span>&#8377;</span>
+                        <span [value]="storeData.discount" appFormatNumber>{{formatter(storeData.discount)}}</span>
+                      </td>
+                    </tr>
+                    <tr *ngIf="storeData.igst!=0">
+                      <td style=" text-align: right;padding: 8px;font-size: 14px;">IGST ({{storeData.igst}}%)</td>
+                      <td style=" text-align: right;padding: 8px;font-size: 14px;"> <span>&#8377;</span><span
+                          appFormatNumber
+                          [value]="(storeData.subTotal-storeData.discount)*18/100">₹{{formatter((storeData.subTotal - storeData.discount) * 18 / 100)}}</span>
+                      </td>
+                    </tr>
+                    <tr *ngIf="storeData.cgst!=0">
+                      <td style=" text-align: right;padding: 8px;font-size: 14px;"> CGST ({{storeData.cgst}}%)</td>
+                      <td style=" text-align: right;padding: 8px;font-size: 14px;"> <span>&#8377;</span><span
+                          [value]="(storeData.subTotal-storeData.discount)*9/100"
+                          appFormatNumber>{{formatter((storeData.subTotal - storeData.discount) * 9 / 100)}}</span></td>
+                    </tr>
+                    <tr *ngIf="storeData.sgst!=0">
+                      <td style=" text-align: right;padding: 8px;font-size: 14px;"> SGST ({{storeData.sgst}}%)</td>
+                      <td style=" text-align: right;padding: 8px;font-size: 14px;"> <span>&#8377;</span><span
+                          [value]="(storeData.subTotal-storeData.discount)*9/100"
+                          appFormatNumber>{{formatter((storeData.subTotal - storeData.discount) * 9 / 100)}}</span></td>
+                    </tr>
+                    <tr>
+                      <td
+                        style="border-top: 1px solid #dee5e7; text-align: right; font-weight: 500; padding: 8px;font-size: 14px;">
+                        Total </td>
+                      <td
+                        style="border-top: 1px solid #dee5e7;text-align: right; font-weight: 500; padding: 8px;font-size: 14px;">
+                        <span>&#8377;</span><span [value]="storeData.finalAmount"
+                          appFormatNumber>{{formatter(storeData.finalAmount)}}</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td
+                        style="border-top: 1px solid #dee5e7;text-align: right; font-weight: 500; padding: 8px; border-bottom: 1px solid #dee5e7; font-size: 14px;">
+                        Balance due
+                      </td>
+                      <td
+                        style="border-top: 1px solid #dee5e7; text-align: right; font-weight: 500; padding: 8px; border-bottom: 1px solid #dee5e7;font-size: 14px; ">
+                        <span>&#8377;</span><span [value]="storeData.finalAmount"
+                          appFormatNumber>{{formatter(storeData.finalAmount)}}</span> </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+            </table>
           </div>
         </div>
+
         <!--record payment div start-->
         <div *ngIf="showRecord==true">
           <app-record-payment (outputData)='display($event)' [InvRecordData]="sendRecordPaymentData" [padding]="false">
@@ -355,215 +318,175 @@
       </mat-form-field>
     </div>
   </div>
-  <div id="template" *ngIf="showRecord==false && feeCalc==false" class="b-a scrollArrow m-20 mb-100 pb-28">
-    <div class="row">
-      <div class="col-md-9">
-        <h1 class="f-42 text-custom pt-48 f-700">INVOICE</h1>
-      </div>
-      <div class="col-md-3 text-right">
-        <img class="pt-20 w-100" src={{inputData.logoUrl}}>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="row">
-          <div class="col-md-6">
-            <h4 class="text-black pt-48">{{storeData.billerName}}</h4>
-            <p class="f-14 text-custom l-20">{{storeData.billerAddress}}</p>
-          </div>
-          <div class="col-md-6">
-            <h4 class="text-black pt-48">{{storeData.clientName}}</h4>
-            <p class="f-14 text-custom l-20">{{storeData.billingAddress}}</p>
-          </div>
-        </div>
-        <div class="row pt-44">
-          <div class="col-md-8">
-            <p class="text-black f-400"><span class="text-custom f-16">Invoice no</span>:
-              {{storeData.invoiceNumber}}
-            </p>
-            <p class="text-black f-400"><span class="text-custom f-16">Invoice date</span>:
-              {{storeData.invoiceDate | date:'dd/MM/yyyy'}}
-            </p>
-          </div>
-          <div class="col-md-4 text-right">
-            <h2>
-              <span *ngIf="storeData.status==0" class="text-primary t-10 f-500 c-p">UNPAID</span>
-              <span *ngIf="storeData.status==1" class="text-success t-10 f-500 c-p">PAID</span>
-              <span *ngIf="storeData.status==2" class="text-danger t-10 f-500 c-p">OVERDUE</span>
-              <span *ngIf="storeData.status==3" class="text-warning t-10 f-500 c-p">PARTIALLY PAID</span>
-              <span *ngIf="storeData.status==4" class="text-primary t-10 f-500 c-p">SENT</span>
-              <span *ngIf="storeData.status==5" class="text-lighter t-10 f-500 c-p">VOID</span>
-              <span *ngIf="storeData.status==6" class="text-balck t-10 f-500 c-p">WRITE OFF</span>
-            </h2>
-          </div>
-        </div>
-        <div>
-          <div class="p-9">
-            <div class="b-a">
-              <div class="row bg-grey lter b-b b-t p-16 pr-0 pl-0">
-                <div class="col-md-9">
-                  <h4 class="m-0 f-14 f-500"> Service Details
-                  </h4>
-                </div>
-                <div class="col-md-3 ">
-                  <h4 class="m-0 f-14 f-500 text-right"> Amount </h4>
-                </div>
-              </div>
-              <div class="row p-16 pr-0 pl-0">
-                <div *ngIf="storeData.services.length > 0" class="col-md-9">
-                  <h4 class="m-0 f-14">{{storeData.services[0].serviceName}}</h4>
-                  <span class="m-0 f-14 text-custom"> {{storeData.services[0].description}}</span>
-                </div>
-                <div class="col-md-3 d-flex align-items-center justify-content-end">
-                  <h4 class="m-0 f-14  text-right"> ₹<span [value]="storeData.subTotal"
-                      appFormatNumber>{{formatter(storeData.subTotal)}}</span>
-                  </h4>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-7 mt-70">
-              <h4 class="m-0 f-14 f-500 text-left"> Footnote description </h4>
-              <p class="f-12 text-black f-400 roboto"> {{storeData.footnote}}</p>
-              <h4 class="m-0 f-14 f-500 text-left">Terms & conditions </h4>
-              <p class="f-12 text-black f-400 roboto"> {{storeData.terms}}</p>
-            </div>
-            <div class="col-md-5">
-              <div class="row pt-44">
-                <div class="col-md-8">
-                  <p class="text-black f-400">Sub total</p>
-                </div>
-                <div class="col-md-4 text-right">
-                  <p class="text-black f-400">₹<span [value]="storeData.subTotal"
-                      appFormatNumber>{{formatter(storeData.subTotal)}}</span>
-                  </p>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-8">
-                  <p class="text-black f-400">Discount</p>
-                </div>
-                <div class="col-md-4 text-right">
-                  <p class="text-black f-400">₹<span [value]="storeData.discount"
-                      appFormatNumber>{{formatter(storeData.discount)}}</span>
-                  </p>
-                </div>
-              </div>
-              <div *ngIf="storeData.igst!=0" class="row">
-                <div class="col-md-8">
-                  <p>IGST ({{storeData.igst}}%)</p>
-                </div>
-                <div class="col-md-4">
-                  <p class="text-right">₹<span [value]="(storeData.subTotal-storeData.discount)*18/100"
-                      appFormatNumber>{{formatter((storeData.subTotal - storeData.discount) * 18 / 100)}}</span>
-                  </p>
-                </div>
-              </div>
-              <div *ngIf="storeData.cgst!=0" class="row">
-                <div class="col-md-8">
-                  <p>CGST ({{storeData.cgst}}%)</p>
-                </div>
-                <div class="col-md-4">
-                  <p class="text-right">₹<span [value]="(storeData.subTotal-storeData.discount)*9/100"
-                      appFormatNumber>{{formatter((storeData.subTotal - storeData.discount) * 9 / 100)}}
-                    </span></p>
-                </div>
-              </div>
-              <div *ngIf="storeData.sgst!=0" class="row">
-                <div class="col-md-8">
-                  <p>SGST ({{storeData.sgst}}%)</p>
-                </div>
-                <div class="col-md-4">
-                  <p class="text-right">₹<span [value]="(storeData.subTotal-storeData.discount)*9/100"
-                      appFormatNumber>{{formatter((storeData.subTotal - storeData.discount) * 9 / 100)}}
-                    </span></p>
-                </div>
-              </div>
-              <div class="row bt-1">
-                <div class="col-md-8">
-                  <p class="f-500 roboto pt-8">Total</p>
-                </div>
-                <div *ngIf="storeData.cgst!=0 && storeData.sgst!=0" class="col-md-4 text-right">
-                  <p class="f-500 roboto pt-8">₹<span [value]="storeData.finalAmount"
-                      appFormatNumber>{{formatter(storeData.finalAmount)}}</span>
-                  </p>
-                </div>
-                <div *ngIf="storeData.igst!=0" class="col-md-4 text-right">
-                  <p class="f-500 roboto pt-8">₹<span [value]="storeData.finalAmount"
-                      appFormatNumber>{{formatter(storeData.finalAmount)}}</span>
-                  </p>
-                </div>
-              </div>
-              <div class="row bt-1 bb-1">
-                <div class="col-md-8">
-                  <p class="f-500 roboto pt-8">Balance due</p>
-                </div>
-                <div class="col-md-4 text-right">
-                  <!-- <p class="f-500 roboto pt-8 ">{{formatter(storeData.balanceDue)}}</p> -->
-                  <p class="f-500 roboto pt-8 ">₹<span [value]="storeData.balanceDue"
-                      appFormatNumber>{{formatter(storeData.balanceDue)}}</span>
-                  </p>
 
-                </div>
-              </div>
-            </div>
-            <!-- <div class="col-md-7 mt-70">
-      <p class="f-14 text-black f-500 roboto"> Terms & Conditions</p>
-   </div> -->
-          </div>
-          <div class="wrapper-9">
-            <div *ngIf="storeData.feeCalculation" class="row b-a bg-grey lter pt-16 pb-16">
-              <div class="col-md-10 d-flex  align-items-center">
-                <p class="m-0 text-black f-500  ">Fee calculation - Attachment</p>
-              </div>
-              <div class="col-md-2 text-right">
-                <!-- <button (click)="OpenFeeCalc()" class="btn-primary br-0" mat-stroked-button>View -->
-                <app-progress-button (btnClick)="OpenFeeCalc()" [options]="barButtonOptions" class="br-0 text-inherit">
-                </app-progress-button>
-                <!-- </button> -->
-              </div>
-            </div>
-            <div *ngIf="showPaymentRecive == true" class="row p-24 pl-0 pr-0 ">
-              <div class="col-md-12 p-0">
-                <h5 class="m-0 text-black">Payments recieved</h5>
-              </div>
-            </div>
-            <table *ngIf="showPaymentRecive == true" [dataSource]="dataSource" class="" id="table-low" mat-table>
-              <ng-container matColumnDef="date">
-                <th *matHeaderCellDef mat-header-cell>Date</th>
-                <td *matCellDef="let element" mat-cell> {{element.paymentDate | date:'dd/MM/yyyy'}}
+  <div class="row">
+    <div class="col-md-12">
+
+
+      <table style="width: 100%; margin: 0px auto; border: 1px solid #dee5e7; padding: 10px; " align="center"
+        #invoiceTemplate *ngIf="showRecord==false && feeCalc==false" id="template">
+        <tr>
+          <td colspan="2">
+            <table style="width: 100%">
+              <tr>
+                <td style="vertical-align: middle;">
+                  <h1 style="font-size: 40px; font-weight: 600; margin: 0px; color: #757575;">INVOICE</h1>
                 </td>
-              </ng-container>
-              <ng-container matColumnDef="reference">
-                <th *matHeaderCellDef mat-header-cell> Reference</th>
-                <td *matCellDef="let element" mat-cell> {{storeData.invoiceNumber}} </td>
-              </ng-container>
-              <ng-container matColumnDef="paymentMode">
-                <th *matHeaderCellDef mat-header-cell> Payment mode</th>
-                <td *matCellDef="let element" mat-cell> {{element.paymentMode}} </td>
-              </ng-container>
-              <ng-container matColumnDef="amount">
-                <th *matHeaderCellDef mat-header-cell> Amount(₹)</th>
-                <td *matCellDef="let element" mat-cell><span appFormatNumber>{{element.amountReceived}}</span></td>
-              </ng-container>
-              <ng-container matColumnDef="icons">
-                <th *matHeaderCellDef class="f-18 t-2" mat-header-cell></th>
-                <td *matCellDef="let element" class="t-2" mat-cell>
-                  <i [matMenuTriggerFor]="menu" class="material-icons c-p iconscolors">
-                    more_vert
-                  </i>
-                  <mat-menu #menu="matMenu">
-                    <a (click)="editForm(element)" mat-menu-item>Edit</a>
-                  </mat-menu>
-                </td>
-              </ng-container>
-              <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-              <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+                <td style="text-align: right; vertical-align: top;">
+                  <img style="width: 300px;" [src]="storeData.logoUrl"> </td>
+              </tr>
             </table>
-          </div>
-        </div>
-      </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <table style="width: 100%; margin-top: 30px;">
+              <tr>
+                <td style="vertical-align: top;">
+                  <h4 style="margin: 0px; font-size: 18px; color: #000000;">{{storeData.billerName}}</h4>
+                  <p style="color: #757575; font-size: 14px; margin-top: 10px;">{{storeData.billerAddress}}</p>
+                </td>
+
+                <td style="vertical-align: top;">
+                  <h4 style="margin: 0px; font-size: 18px; color: #000000;">{{storeData.clientName}}</h4>
+                  <p style="color: #757575; font-size: 14px; margin-top: 10px;">{{storeData.billingAddress}}</p>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="2">
+            <table style="width: 100%; margin-top: 20px;">
+              <tr>
+                <td style="vertical-align: top;">
+                  <p style="font-size: 16px; color: #000000;">
+                    <span style="color: #757575;">Invoice no</span>: {{storeData.invoiceNumber}}
+                  </p>
+                  <p style="font-size: 14px; color: #000000;">
+                    <span style="color: #757575;">Invoice date</span>: {{storeData.invoiceDate| date:'dd/MM/yyyy'}}
+                  </p>
+                </td>
+
+                <td style="text-align: right;">
+                  <span style="color: #008FFF; font-size: 36px;">
+                    <span *ngIf="storeData.status==0">UNPAID</span>
+                    <span *ngIf="storeData.status==1">PAID</span>
+                    <span *ngIf="storeData.status==2">OVERDUE</span>
+                    <span *ngIf="storeData.status==3">PARTIALLY
+                      PAID</span>
+                    <span *ngIf="storeData.status==4">SENT</span>
+                    <span *ngIf="storeData.status==5">VOID</span>
+                    <span *ngIf="storeData.status==6">WRITE OFF</span>
+                  </span>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan="2">
+            <table style="width: 100%; border: 1px solid #dee5e7; margin-top: 20px;">
+              <tr>
+                <td style="padding: 16px; border-bottom: 1px solid #dee5e7; background: #F5F7F7;">
+                  Service Details </td>
+                <td style="text-align: right; background: #F5F7F7; border-bottom: 1px solid #dee5e7; padding: 16px;">
+                  Amount</td>
+              </tr>
+              <tr>
+                <td style="padding: 16px;">
+                  <h4 class="m-0 f-14">
+                    {{(storeData.services.length > 0) ? storeData.services[0].serviceName : ''}}
+                  </h4>
+                  <span class="m-0 f-14 text-custom">
+                    {{(storeData.services.length > 0) ? storeData.services[0].description : ''}}
+                  </span>
+                </td>
+                <td style="text-align: right; padding: 16px;"><span>&#8377;</span>
+                  <span [value]="storeData.subTotal" appFormatNumber>{{formatter(storeData.subTotal)}}</span>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <tr>
+          <td style="width: 70%;">
+            <table style="width: 100%; margin-top: 20px;">
+              <tr>
+                <td>
+                  <h4 style="margin: 0px; font-size: 14px;"> Footnote description</h4>
+                  <p style="margin: 0px; font-size: 12px;"> {{storeData.footnote}}</p>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding-top: 15px;">
+                  <h4 style="margin: 0px; font-size: 14px;"> Terms & conditions</h4>
+                  <p style="margin: 0px; font-size: 12px;"> {{storeData.terms}}</p>
+                </td>
+              </tr>
+            </table>
+          </td>
+          <td>
+            <table style="width: 100%; margin-top: 20px;">
+              <tr>
+                <td style="text-align: right; padding: 8px;font-size: 14px;">Sub total</td>
+                <td style=" text-align: right; padding: 8px;font-size: 14px;"><span>&#8377;</span>
+                  <span [value]="storeData.subTotal" appFormatNumber>{{formatter(storeData.subTotal)}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td style=" text-align: right;padding: 8px;font-size: 14px;">Discount</td>
+                <td style="text-align: right; padding: 8px;font-size: 14px;"><span>&#8377;</span>
+                  <span [value]="storeData.discount" appFormatNumber>{{formatter(storeData.discount)}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td style=" text-align: right;padding: 8px;font-size: 14px;">IGST ({{storeData.igst}}%)</td>
+                <td style=" text-align: right;padding: 8px;font-size: 14px;"> <span>&#8377;</span><span appFormatNumber
+                    [value]="(storeData.subTotal-storeData.discount)*18/100">₹{{formatter((storeData.subTotal - storeData.discount) * 18 / 100)}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td style=" text-align: right;padding: 8px;font-size: 14px;"> CGST ({{storeData.cgst}}%)</td>
+                <td style=" text-align: right;padding: 8px;font-size: 14px;"> <span>&#8377;</span><span
+                    [value]="(storeData.subTotal-storeData.discount)*9/100"
+                    appFormatNumber>{{formatter((storeData.subTotal - storeData.discount) * 9 / 100)}}</span></td>
+              </tr>
+              <tr *ngIf="storeData.sgst!=0">
+                <td style=" text-align: right;padding: 8px;font-size: 14px;"> SGST ({{storeData.sgst}}%)</td>
+                <td style=" text-align: right;padding: 8px;font-size: 14px;"> <span>&#8377;</span><span
+                    [value]="(storeData.subTotal-storeData.discount)*9/100"
+                    appFormatNumber>{{formatter((storeData.subTotal - storeData.discount) * 9 / 100)}}</span></td>
+              </tr>
+              <tr>
+                <td
+                  style="border-top: 1px solid #dee5e7; text-align: right; font-weight: 500; padding: 8px;font-size: 14px;">
+                  Total </td>
+                <td
+                  style="border-top: 1px solid #dee5e7;text-align: right; font-weight: 500; padding: 8px;font-size: 14px;">
+                  <span>&#8377;</span><span [value]="storeData.finalAmount"
+                    appFormatNumber>{{formatter(storeData.finalAmount)}}</span>
+                </td>
+              </tr>
+              <tr>
+                <td
+                  style="border-top: 1px solid #dee5e7;text-align: right; font-weight: 500; padding: 8px; border-bottom: 1px solid #dee5e7; font-size: 14px;">
+                  Balance due
+                </td>
+                <td
+                  style="border-top: 1px solid #dee5e7; text-align: right; font-weight: 500; padding: 8px; border-bottom: 1px solid #dee5e7;font-size: 14px; ">
+                  <span>&#8377;</span><span [value]="storeData.finalAmount"
+                    appFormatNumber>{{formatter(storeData.finalAmount)}}</span> </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+      </table>
+
     </div>
   </div>
   <!--show record in client invoice-->

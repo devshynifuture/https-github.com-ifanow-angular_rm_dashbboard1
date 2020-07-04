@@ -11,6 +11,7 @@ import {BehaviorSubject, Subject} from 'rxjs';
 import {AuthService} from '../auth-service/authService';
 import {quotationTemplate} from './quotationTemplate';
 import { debounce, debounceTime } from 'rxjs/operators';
+import { AppConstants } from './app-constants';
 
 
 @Injectable({
@@ -377,6 +378,7 @@ export class UtilService {
 
   htmlToPdf(inputData, pdfName, landscape, fragData: any = {}, key = null, svg = null) {
     this.client = AuthService.getClientData();
+    inputData = inputData.split(AppConstants.RUPEE_LETTER).join('&#8377;');
     const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
     const obj = {
       htmlInput: inputData,
