@@ -155,7 +155,9 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
       share: [data ? data.share : ''],
       familyMemberId: [data ? data.familyMemberId : 0],
       id: [data ? data.id : 0],
-      isClient: [data ? data.isClient : 0]
+      isClient: [data ? data.isClient : 0],
+      clientId: [data ? data.clientId : 0],
+      userType: [data ? data.userType : 0]
     }));
     if (data) {
       setTimeout(() => {
@@ -247,7 +249,25 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
 
 
   }
+  getOwnerData(value, data) {
 
+    data.forEach(element => {
+      for (const e in this.getCoOwner.controls) {
+        const name = this.getCoOwner.controls[e].get('name');
+        if (element.userName == name.value) {
+          this.getCoOwner.controls[e].get('name').setValue(element.userName);
+          this.getCoOwner.controls[e].get('familyMemberId').setValue(element.id);
+          this.getCoOwner.controls[e].get('clientId').setValue(element.clientId);
+          this.getCoOwner.controls[e].get('userType').setValue(element.userType);
+
+        }
+      }
+
+    });
+
+
+
+  }
   getdataForm(data) {
     this.dataForEdit = data.data;
     if (data.data == null) {
@@ -266,7 +286,9 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
         share: [0,],
         familyMemberId: 0,
         id: 0,
-        isClient: 0
+        isClient: 0,
+        userType:0,
+        clientId:0
       })]),
       name: [(this.dataForEdit ? this.dataForEdit.name : null)],
       // additionalCovers: [this.dataForEdit ? this.dataForEdit.addOns[0].addOnId : null],
@@ -491,8 +513,23 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
     });
 
   }
+  getClientId(){
+    this.nomineesListFM.forEach(element => {
+      for (const e in this.getCoOwner.controls) {
+        const id = this.getCoOwner.controls[e].get('familyMemberId');
+        if (element.familyMemberId == id.value) {
+          this.getCoOwner.controls[e].get('name').setValue(element.userName);
+          this.getCoOwner.controls[e].get('familyMemberId').setValue(element.id);
+          this.getCoOwner.controls[e].get('clientId').setValue(element.clientId);
+          this.getCoOwner.controls[e].get('userType').setValue(element.userType);
 
+        }
+      }
+
+    });
+}
   saveMotorInsurance() {
+    this.getClientId();
     let addOns = [];
     const addOnList = this.motorInsuranceForm.get('addOnForm') as FormArray;
     addOnList.controls.forEach(element => {
@@ -515,7 +552,7 @@ export class AddMotorInsuranceInAssetComponent implements OnInit {
       const obj = {
         clientId: this.clientId,
         advisorId: this.advisorId,
-        policyHolderId: this.motorInsuranceForm.value.getCoOwnerName[0].familyMemberId,
+        policyHolderId: (this.motorInsuranceForm.value.getCoOwnerName[0].userType == 2) ? this.motorInsuranceForm.value.getCoOwnerName[0].clientId : this.motorInsuranceForm.value.getCoOwnerName[0].familyMemberId,
         policyTypeId: this.motorInsuranceForm.get('PlanType').value,
         policyNumber: this.motorInsuranceForm.get('policyNum').value,
         insurerName: this.motorInsuranceForm.get('insurerName').value,

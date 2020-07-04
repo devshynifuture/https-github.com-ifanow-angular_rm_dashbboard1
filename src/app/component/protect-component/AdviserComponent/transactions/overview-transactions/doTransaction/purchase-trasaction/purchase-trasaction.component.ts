@@ -603,14 +603,14 @@ export class PurchaseTrasactionComponent implements OnInit {
       bankAccountSelection: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
       schemeSelection: [(!data.schemeSelection) ? '2' : data.schemeSelection],
       employeeContry: [(!data) ? '' : data.orderVal, [Validators.required,]],
-      investmentAccountSelection: [(data) ? this.mutualFundData.folioNumber : '', [Validators.required]],
+      investmentAccountSelection: [(data) ? data.folioNumber : (this.mutualFundData)? this.mutualFundData.folioNumber : '', [Validators.required]],
       // modeOfPaymentSelection: ['1'],
       modeOfPaymentSelection: [(!data.modeOfPaymentSelection) ? '1' : data.modeOfPaymentSelection],
       folioSelection: [(!data.folioSelection) ? '2' : data.folioSelection],
       // folioSelection: ['2'],
       selectInvestor: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       reinvest: [(data.dividendReinvestmentFlag) ? data.dividendReinvestmentFlag : '', [Validators.required]],
-      schemePurchase: [(!data) ? '' : this.mutualFundData.schemeName, [Validators.required]],
+      schemePurchase: [(!data) ? '' : (this.mutualFundData)?this.mutualFundData.schemeName:'', [Validators.required]],
     });
     this.purchaseTransaction.controls.schemePurchase.valueChanges.subscribe((newValue) => {
       this.filterSchemeList = of(this.schemeList).pipe(startWith(''),
