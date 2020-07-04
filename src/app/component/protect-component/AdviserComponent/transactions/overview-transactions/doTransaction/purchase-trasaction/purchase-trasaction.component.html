@@ -260,7 +260,7 @@
         <!-- commented for prod build -->
 
 
-        <button (click)="AddMultiTransaction()" *ngIf="platformType && platformType == 1" class="br-0 text-primary f-14" mat-button mat-raised-button>
+        <button (click)="AddMultiTransaction()" *ngIf="platformType && platformType == 1 && !mutualFundData" class="br-0 text-primary f-14" mat-button mat-raised-button>
       SAVE & ADD ANOTHER
     </button>
 

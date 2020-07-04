@@ -22,6 +22,8 @@ export class OnlineTransactionComponent implements OnInit {
 
   isAdvisorSection = true;
   mutualFundData: any;
+  defaultData: any;
+  valid: boolean;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
               private eventService: EventService, private fb: FormBuilder,
@@ -139,6 +141,14 @@ export class OnlineTransactionComponent implements OnInit {
         data => {
           this.familyMemberList = data;
           this.filteredStates = of(this.familyMemberList);
+          this.familyMemberList.forEach(element => {
+            if(this.mutualFundData.familyMemberId == element.familyMemberId){
+              this.transactionAddForm.controls.fmname.setValue(element)
+              this.valid = true
+              this.ownerDetails(element)
+            }
+          });
+         
         }, error => {
           console.error('error data : ', error);
         }
@@ -195,9 +205,17 @@ export class OnlineTransactionComponent implements OnInit {
       }
     }
     this.showData(data);
+    this.defaultData = data
   }
 
   showData(value) {
+    if(this.valid == true){
+      if (this.formStep == 'step-1') {
+        if (this.noMapping == false && this.noSubBroker == false) {
+          this.formStep = 'step-2';
+        }
+      }
+    }
     if (this.stateCtrl.valid) {
       if (this.formStep == 'step-1') {
         if (this.noMapping == false && this.noSubBroker == false) {
@@ -260,6 +278,7 @@ export class OnlineTransactionComponent implements OnInit {
     }
     this.transactionAddForm = this.fb.group({
       ownerName: [(!data) ? '' : data.ownerName, [Validators.required]],
+      fmname: [(!data) ? '' : data.fmname, [Validators.required]],
       transactionType: [(!data) ? '' : data.transactionType, [Validators.required]],
       bankAccountSelection: [(!data) ? '' : data.bankAccountSelection, [Validators.required]],
       schemeSelection: [(!data) ? '' : data.schemeSelection, [Validators.required]],
@@ -338,7 +357,8 @@ export class OnlineTransactionComponent implements OnInit {
           clientId: this.familyMemberData.clientId,
           familyMemberId: this.familyMemberData.userType == 3 ? this.familyMemberData.familyMemberId : 0,
           isAdvisorSection: this.isAdvisorSection,
-          mutualFundData : this.mutualFundData
+          mutualFundData : this.mutualFundData,
+          transactionData : this.defaultData
         };
         this.openPurchaseTransaction(data.transactionType, data);
       } else {

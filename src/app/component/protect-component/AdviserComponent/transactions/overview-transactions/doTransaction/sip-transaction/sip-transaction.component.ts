@@ -25,6 +25,7 @@ export class SipTransactionComponent implements OnInit {
   schemeName: any;
   folioNumber: any;
   mutualFundData: any;
+  mfDefault: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
               public processTransaction: ProcessTransactionService, private fb: FormBuilder,
@@ -108,6 +109,7 @@ export class SipTransactionComponent implements OnInit {
     if(data.mutualFundData){
       this.schemeName = data.mutualFundData.schemeName
       this.folioNumber = data.mutualFundData.folioNumber
+      this.mfDefault = data.transactionData
       this.mutualFundData = data.mutualFundData
       let foilo = {'folioNumber': this.folioNumber}
       let schemeName = {'schemeName': this.schemeName}
@@ -375,10 +377,12 @@ export class SipTransactionComponent implements OnInit {
     if (data.length == 1) {
       this.reInvestmentOpt = [];
     }
-    if (this.sipTransaction.controls.folioSelection.value == '1') {
+    if (this.sipTransaction.controls.folioSelection.value == '1' && !this.mutualFundData) {
       this.getFolioList();
     }
     this.getFrequency();
+    Object.assign(this.transactionSummary, {folioNumber: this.folioNumber});
+    Object.assign(this.transactionSummary, {schemeName: this.schemeName});
   }
 
   setMinAmount() {
@@ -410,7 +414,7 @@ export class SipTransactionComponent implements OnInit {
   getFrequency() {
     const obj = {
       isin: this.schemeDetails.isin,
-      aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
+      aggregatorType: (this.getDataSummary)?this.getDataSummary.defaultClient.aggregatorType:this.mfDefault.defaultClient.aggregatorType,
       orderType: 'SIP'
     };
     this.onlineTransact.getSipFrequency(obj).subscribe(
@@ -695,9 +699,27 @@ export class SipTransactionComponent implements OnInit {
     }
     this.sipTransaction.controls.modeOfPaymentSelection.setValue('2');
     if(this.mutualFundData){
+      this.folioDetails = {}
       this.sipTransaction.controls.schemeSelection.setValue('1')
       this.sipTransaction.controls.folioSelection.setValue('1')
+      this.sipTransaction.controls.schemeSip.setValue({'schemeName': this.schemeName})
       this.filterSchemeList = of([{'schemeName': this.schemeName}])
+      Object.assign(this.folioDetails, {folioNumber: this.folioNumber});
+      this.scheme ={
+        'schemeName': this.schemeName,
+        'mutualFundSchemeMasterId':this.mutualFundData.schemeId
+      }
+      const obj1 = {
+        mutualFundSchemeMasterId: this.mutualFundData.schemeId,
+        aggregatorType: this.mfDefault.defaultClient.aggregatorType,
+        orderType: 'ORDER',
+        userAccountType: this.mfDefault.defaultCredential.accountType,
+      };
+      this.onlineTransact.getSchemeDetails(obj1).subscribe(
+        data => this.getSchemeDetailsRes(data), (error) => {
+          this.eventService.openSnackBar(error, 'Dismiss');
+        }
+      );
     }
   }
 
