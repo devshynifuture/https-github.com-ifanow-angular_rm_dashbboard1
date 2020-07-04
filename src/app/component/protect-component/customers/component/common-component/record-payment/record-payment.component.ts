@@ -76,7 +76,7 @@ export class RecordPaymentComponent implements OnInit {
     }
     console.log('payee data', data);
     this.rPayment = this.fb.group({
-      amountReceived: [data.amountReceived, [Validators.required, Validators.max(UtilService.roundOffToNearest1(this.balDue))]],
+      amountReceived: [(data == "") ? this.InvRecordData.balanceDue :data.amountReceived, [Validators.required, Validators.max(UtilService.roundOffToNearest1(this.balDue))]],
       chargesIfAny: [data.chargesIfAny],
       tds: [data.tds, [Validators.max(this.tdsAmt)]],
       paymentDate: [new Date(data.paymentDate), [Validators.required]],

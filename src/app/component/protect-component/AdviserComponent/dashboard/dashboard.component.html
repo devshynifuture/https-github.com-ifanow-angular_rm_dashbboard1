@@ -15,7 +15,7 @@
     <div class="col-md-10 p-0">
       <div class="subnav-fixed">
         <nav mat-tab-nav-bar>
-          <!--           
+          <!--
                   <a (click)="value=1" [ngClass]="_value == 1 ? 'active': ''" [routerLink]="'./dashboard'"
                       mat-tab-link routerLinkActive="active">DASHBOARD</a>
                   <a (click)="value=2" [ngClass]="_value == 2 ? 'active': ''" [routerLink]="'./clients'" mat-tab-link
@@ -44,19 +44,19 @@
       <div class="col-md-6 pt-24 pb-24 bb-half pl-8">
         <p class="m-0 text-primitive roboto f-400 lh-16">MF AUM</p>
         <h3 class="m-0 roboto f-400 text-black pt-8">
-          {{(MiscData1 &&  MiscData1.hasOwnProperty('totalAumRupees') ) ? MiscData1.totalAumRupees : '0'}}</h3>
+          {{(keyMetricJson.mfAum) ? keyMetricJson.mfAum : '0'}}</h3>
       </div>
       <div class="col-md-6 pt-24 pb-24 bl-half bb-half">
         <p class="m-0 text-primitive roboto f-400 lh-16">SIP book</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8">{{(sipCount) ? sipCount : '0'}}</h3>
+        <h3 class="m-0 roboto f-400 text-black pt-8">{{(keyMetricJson.sipBook) ? keyMetricJson.sipBook : '0'}}</h3>
       </div>
       <div class="col-md-6 pt-24 pb-24 pl-8">
-        <p class="m-0 text-primitive roboto f-400 lh-16">SIP book</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8">{{(sipCount) ? sipCount : '0'}}</h3>
+        <p class="m-0 text-primitive roboto f-400 lh-16">Clients</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">{{(keyMetricJson.clientCount) ? keyMetricJson.clientCount : '0'}}</h3>
       </div>
       <div class="col-md-6 pt-24 pb-24 bl-half">
-        <p class="m-0 text-primitive roboto f-400 lh-16">SIP book</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8">{{(sipCount) ? sipCount : '0'}}</h3>
+        <p class="m-0 text-primitive roboto f-400 lh-16">Investors</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">{{(keyMetricJson.InvestorCount) ? keyMetricJson.InvestorCount : '0'}}</h3>
       </div>
     </div>
     <h5 class="m-0 roboto f-500 pb-16 pt-28">Activity overview</h5>
@@ -88,7 +88,8 @@
         <p class="m-0 text-primitive roboto f-400 lh-16">Clients with
           subscription</p>
         <h3 class="m-0 roboto f-400 text-black pt-8">
-          {{ (dataSourceClientWithSub && dataSourceClientWithSub.hasOwnProperty('activeClientPer')) ? dataSourceClientWithSub.activeClientPer : 0}}%
+          {{ (dataSourceClientWithSub && dataSourceClientWithSub.hasOwnProperty('activeClientPer')) ? dataSourceClientWithSub.activeClientPer : 0}}
+          %
         </h3>
       </div>
       <div class="col-md-6 pt-24 pb-24 bl-half bb-half">
@@ -125,7 +126,8 @@
               <p class="lh-16 m-0 text-white roboto f-400 pt-12"> This will help you get the best out of IFANOW and make
                 your onboarding process super smooth.</p>
               <button mat-stroked-button class="text-open-guide mt-24 bg-white w-60 br-4"
-                (click)="openGuideDialog()">Open the guide</button>
+                      (click)="openGuideDialog()">Open the guide
+              </button>
             </div>
           </div>
         </div>
@@ -198,33 +200,33 @@
             <table mat-table [dataSource]="dataSource" id="table-low" class="mt-28">
 
               <ng-container matColumnDef="position">
-                <th mat-header-cell *matHeaderCellDef> </th>
+                <th mat-header-cell *matHeaderCellDef></th>
                 <td mat-cell *matCellDef="let element" class="br text-success f-500 bl-1"> {{element.position}} </td>
               </ng-container>
 
               <!-- Name Column -->
               <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef class="br bl bt-1 f-500 text-right"> Dec </th>
+                <th mat-header-cell *matHeaderCellDef class="br bl bt-1 f-500 text-right"> Dec</th>
                 <td mat-cell *matCellDef="let element" class="br text-right"> {{element.name}} </td>
               </ng-container>
 
               <!-- Weight Column -->
               <ng-container matColumnDef="weight">
-                <th mat-header-cell *matHeaderCellDef class="br bt-1 f-500 text-right"> Jan </th>
+                <th mat-header-cell *matHeaderCellDef class="br bt-1 f-500 text-right"> Jan</th>
                 <td mat-cell *matCellDef="let element" class="br text-right"> {{element.weight}} </td>
               </ng-container>
 
               <!-- Symbol Column -->
               <ng-container matColumnDef="symbol">
-                <th mat-header-cell *matHeaderCellDef class="br bt-1 f-500 text-right"> Mar </th>
+                <th mat-header-cell *matHeaderCellDef class="br bt-1 f-500 text-right"> Mar</th>
                 <td mat-cell *matCellDef="let element" class="br text-right"> {{element.symbol}} </td>
               </ng-container>
               <ng-container matColumnDef="apr">
-                <th mat-header-cell *matHeaderCellDef class="br bt-1 f-500 text-right"> Apr </th>
+                <th mat-header-cell *matHeaderCellDef class="br bt-1 f-500 text-right"> Apr</th>
                 <td mat-cell *matCellDef="let element" class="br text-right"> {{element.apr}} </td>
               </ng-container>
               <ng-container matColumnDef="may">
-                <th mat-header-cell *matHeaderCellDef class="bt-1 br f-500 text-right"> May </th>
+                <th mat-header-cell *matHeaderCellDef class="bt-1 br f-500 text-right"> May</th>
                 <td mat-cell *matCellDef="let element" class="br text-right"> {{element.may}} </td>
               </ng-container>
 
@@ -272,7 +274,8 @@
                     </div>
                     <div class="col-md-3 p-0 pt-5 pr-5">
                       <button *ngIf="singleMember.anniversaryDate" mat-stroked-button
-                        class="btn-primary-outline mw-40 p-0 h-20 lh-20 br-2 f-12 rigtht">Anniv</button>
+                              class="btn-primary-outline mw-40 p-0 h-20 lh-20 br-2 f-12 rigtht">Anniv
+                      </button>
                     </div>
                   </div>
                   <div class="row pt-6 pb-10">
@@ -355,13 +358,13 @@
           <table mat-table [dataSource]="dataSource2" id="table-low">
 
             <ng-container matColumnDef="position">
-              <th mat-header-cell *matHeaderCellDef class="br"> Client </th>
+              <th mat-header-cell *matHeaderCellDef class="br"> Client</th>
               <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
             </ng-container>
 
             <!-- Name Column -->
             <ng-container matColumnDef="name">
-              <th mat-header-cell *matHeaderCellDef class="br"> Task </th>
+              <th mat-header-cell *matHeaderCellDef class="br"> Task</th>
               <td mat-cell *matCellDef="let element" class="br">
 
                 <div class="row">
@@ -382,7 +385,7 @@
 
             <!-- Weight Column -->
             <ng-container matColumnDef="weight">
-              <th mat-header-cell *matHeaderCellDef class="br"> Assigned to </th>
+              <th mat-header-cell *matHeaderCellDef class="br"> Assigned to</th>
               <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} </td>
             </ng-container>
 
@@ -580,10 +583,10 @@
         </div>
         <div class="col-md-12 p-0 pt-10">
           <table mat-table appSkeletonLoading [appSkeletonLoading]="last7DaysFlag" class="skeletonAnimation"
-            [dataSource]="bseData" id="table-low">
+                 [dataSource]="bseData" id="table-low">
 
             <ng-container matColumnDef="position">
-              <th mat-header-cell *matHeaderCellDef class="br"> BSE Star MF </th>
+              <th mat-header-cell *matHeaderCellDef class="br"> BSE Star MF</th>
               <td mat-cell *matCellDef="let element;index as i" class="br">
                 <span *ngIf="i==0">Pending</span>
                 <span *ngIf="i==1">Rejection</span>
@@ -592,19 +595,19 @@
 
             <!-- Name Column -->
             <ng-container matColumnDef="name">
-              <th mat-header-cell *matHeaderCellDef class="br"> UCC </th>
+              <th mat-header-cell *matHeaderCellDef class="br"> UCC</th>
               <td mat-cell *matCellDef="let element" class="br"> {{element.InnOrUcc}} </td>
             </ng-container>
 
             <!-- Weight Column -->
             <ng-container matColumnDef="weight">
-              <th mat-header-cell *matHeaderCellDef class="br"> Mandate </th>
+              <th mat-header-cell *matHeaderCellDef class="br"> Mandate</th>
               <td mat-cell *matCellDef="let element" class="br"> {{element.mandate}} </td>
             </ng-container>
 
             <!-- Symbol Column -->
             <ng-container matColumnDef="symbol">
-              <th mat-header-cell *matHeaderCellDef class="br"> Transaction </th>
+              <th mat-header-cell *matHeaderCellDef class="br"> Transaction</th>
               <td mat-cell *matCellDef="let element" class="br"> {{element.transact}} </td>
             </ng-container>
 
@@ -612,10 +615,10 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
           </table>
           <table appSkeletonLoading [appSkeletonLoading]="last7DaysFlag" class="skeletonAnimation" mat-table
-            [dataSource]="nscData" id="table-low" class="mt-20">
+                 [dataSource]="nscData" id="table-low" class="mt-20">
 
             <ng-container matColumnDef="position">
-              <th mat-header-cell *matHeaderCellDef class="br"> NSE NMF II </th>
+              <th mat-header-cell *matHeaderCellDef class="br"> NSE NMF II</th>
               <td mat-cell *matCellDef="let element;index as i" class="br">
                 <span *ngIf="i==0">Pending</span>
                 <span *ngIf="i==1">Rejection</span>
@@ -624,19 +627,19 @@
 
             <!-- Name Column -->
             <ng-container matColumnDef="name">
-              <th mat-header-cell *matHeaderCellDef class="br"> IIN </th>
+              <th mat-header-cell *matHeaderCellDef class="br"> IIN</th>
               <td mat-cell *matCellDef="let element" class="br"> {{element.InnOrUcc}} </td>
             </ng-container>
 
             <!-- Weight Column -->
             <ng-container matColumnDef="weight">
-              <th mat-header-cell *matHeaderCellDef class="br"> Mandate </th>
+              <th mat-header-cell *matHeaderCellDef class="br"> Mandate</th>
               <td mat-cell *matCellDef="let element" class="br"> {{element.mandate}} </td>
             </ng-container>
 
             <!-- Symbol Column -->
             <ng-container matColumnDef="symbol">
-              <th mat-header-cell *matHeaderCellDef class="br"> Transaction </th>
+              <th mat-header-cell *matHeaderCellDef class="br"> Transaction</th>
               <td mat-cell *matCellDef="let element" class="br"> {{element.transact}} </td>
             </ng-container>
 
@@ -673,7 +676,8 @@
                 </div>
                 <div class="col-md-12 p-0 pl-10 pt-20">
                   <button mat-stroked-button class="btn-success-outline h-20 lh-20 br-2 pr-5 pl-5 f-12">INVESTMENT
-                    READY</button>
+                    READY
+                  </button>
                 </div>
               </div>
             </div>
@@ -698,7 +702,8 @@
                 </div> -->
                 <div class="col-md-12 p-0 pl-10 pt-20">
                   <button mat-stroked-button class="btn-danger-outline h-20 lh-20 br-2 pr-5 pl-5 f-12">REJECTED
-                    READY</button>
+                    READY
+                  </button>
                 </div>
               </div>
             </div>
@@ -711,7 +716,8 @@
         </div>
         <div class="col-md-4 p-0 text-right">
           <button mat-stroked-button [routerLink]="['/admin/transactions/overview']"
-            routerLinkActive="router-link-active" class="advisor-view-all">View All</button>
+                  routerLinkActive="router-link-active" class="advisor-view-all">View All
+          </button>
         </div>
         <div class="col-md-12 d-flex p-0 overflow-y pt-10">
           <div *ngFor="let singleTransaction of transactionList" class="pr-20">
@@ -745,11 +751,13 @@
 
                 <div class="col-md-12 p-0 pl-10 pt-20 pb-10">
                   <button *ngIf="singleTransaction.statusDesc!='PENDING AUTHORIZATION'" mat-stroked-button
-                    class="btn-primary-outline h-20 lh-20 br-2 pr-5 pl-5 f-12">UNITS ALLOTTED
-                    READY</button>
+                          class="btn-primary-outline h-20 lh-20 br-2 pr-5 pl-5 f-12">UNITS ALLOTTED
+                    READY
+                  </button>
                   <button *ngIf="singleTransaction.statusDesc=='PENDING AUTHORIZATION'" mat-stroked-button
-                    class="btn-danger-outline h-20 lh-20 br-2 pr-5 pl-5 f-12">PENDING
-                    AUTHORISATION</button>
+                          class="btn-danger-outline h-20 lh-20 br-2 pr-5 pl-5 f-12">PENDING
+                    AUTHORISATION
+                  </button>
                 </div>
               </div>
             </div>
@@ -804,25 +812,24 @@
 
 
             <ng-container matColumnDef="position">
-              <th mat-header-cell *matHeaderCellDef class="br"> Client / Scheme </th>
+              <th mat-header-cell *matHeaderCellDef class="br"> Client / Scheme</th>
               <td mat-cell *matCellDef="let element" class="br"> {{element.position}}<br> <span class="text-custom">IDFC
-                  Sterling Value Fund -Regular Plan-Growth | 2005226/68</span> </td>
+                  Sterling Value Fund -Regular Plan-Growth | 2005226/68</span></td>
             </ng-container>
 
             <!-- Name Column -->
             <ng-container matColumnDef="name">
-              <th mat-header-cell *matHeaderCellDef class="br"> Type </th>
+              <th mat-header-cell *matHeaderCellDef class="br"> Type</th>
               <td mat-cell *matCellDef="let element" class="br"> {{element.name}}<br> <span
-                  class="text-custom">mismatch</span></td>
+                class="text-custom">mismatch</span></td>
             </ng-container>
 
             <!-- Weight Column -->
             <ng-container matColumnDef="weight">
-              <th mat-header-cell *matHeaderCellDef class="br"> Details </th>
+              <th mat-header-cell *matHeaderCellDef class="br"> Details</th>
               <td mat-cell *matCellDef="let element" class="br"> {{element.weight}}<br> <span
-                  class="text-custom">30,000</span></td>
+                class="text-custom">30,000</span></td>
             </ng-container>
-
 
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns5"></tr>
@@ -838,73 +845,73 @@
           <!-- <button mat-stroked-button class="text-primary">Not started</button>
           <button mat-button>Upcoming</button> -->
           <mat-button-toggle-group (change)="getSummaryDataDashboard()" [(ngModel)]="subscriptionSummaryStatusFilter"
-            class="subscription-summary" id="custom-toggle" multiple=false>
+                                   class="subscription-summary" id="custom-toggle" multiple=false>
             <mat-button-toggle class="f-14" value=1>NOT STARTED</mat-button-toggle>
             <mat-button-toggle class="f-14" value=3>UPCOMING</mat-button-toggle>
           </mat-button-toggle-group>
         </div>
         <div class="col-md-12 p-0 pt-8">
           <table mat-table [appSkeletonLoading]="isLoadingSubSummary" *ngIf="dashBoardSummary.length > 0"
-            appSkeletonLoading class=" skeletonAnimation" [dataSource]="dashBoardSummary" id="table-low">
+                 appSkeletonLoading class=" skeletonAnimation" [dataSource]="dashBoardSummary" id="table-low">
 
             <tbody>
-              <ng-container matColumnDef="name">
-                <th *matHeaderCellDef mat-header-cell> Client name</th>
-                <td (click)="openPlanSlider('SUBSCRIPTIONS','open',element)" *matCellDef="let element" class="c-p"
+            <ng-container matColumnDef="name">
+              <th *matHeaderCellDef mat-header-cell> Client name</th>
+              <td (click)="openPlanSlider('SUBSCRIPTIONS','open',element)" *matCellDef="let element" class="c-p"
                   mat-cell>
-                  <div class="bar"> {{element.clientName}} </div>
-                </td>
-              </ng-container>
-              <ng-container matColumnDef="service">
-                <th *matHeaderCellDef mat-header-cell> Service name</th>
-                <td *matCellDef="let element" class="c-p" mat-cell>
-                  <div class="bar"> {{element.serviceName}} </div>
-                </td>
-              </ng-container>
-              <ng-container matColumnDef="amt">
-                <th *matHeaderCellDef class="w-22" mat-header-cell> Fee amount</th>
-                <td (click)="Open(element)" *matCellDef="let element" class="c-p" mat-cell>
-                  <div class="bar text-primary text-underline">
-                    {{isLoadingSubSummary ? ' ' : 'View details'}}
-                  </div>
-                </td>
-              </ng-container>
-              <ng-container matColumnDef="billing">
-                <th *matHeaderCellDef mat-header-cell> Next billing date</th>
-                <td *matCellDef="let element" mat-cell>
-                  <div *ngIf="element.nextBillingDate" class="bar">
-                    {{ element.nextBillingDate | date: 'dd/MM/yyyy' }}
-                  </div>
-                  <div *ngIf="!element.nextBillingDate" class="bar">
-                    {{ isLoadingSubSummary ? '' : 'Not Started' }}
-                  </div>
-                </td>
-              </ng-container>
-              <ng-container matColumnDef="icons">
-                <th *matHeaderCellDef class="f-18" mat-header-cell style="width: 2%;">
-                </th>
-                <td *matCellDef="let element" mat-cell style="width: 2%">
-                  <div class="bar">
-                    <i *ngIf="!isLoadingSubSummary" [matMenuTriggerFor]="menu" class="material-icons c-p iconscolors">
-                      more_vert
-                    </i>
-                  </div>
-                  <mat-menu #menu="matMenu">
-                    <a (click)="Open(element)" mat-menu-item>View fee
-                      structure</a>
-                    <a (click)="openPlanSlider('billerSettings','open',element)" class="bt-1" mat-menu-item>Change
-                      biller</a>
-                    <a (click)="openPlanSlider('changePayee','open',element)" mat-menu-item>Change
-                      payee</a>
-                    <a (click)="delete('cancelSubscription')" class="bt-1" mat-menu-item>Cancel
-                      subscription</a>
-                    <a (click)="deleteModal('SUBSCRIPTION')" mat-menu-item>Delete
-                      subscription</a>
-                  </mat-menu>
-                </td>
-              </ng-container>
-              <tr *matHeaderRowDef="displayedDashboardSummary" mat-header-row></tr>
-              <tr *matRowDef="let row; columns: displayedDashboardSummary;" mat-row></tr>
+                <div class="bar"> {{element.clientName}} </div>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="service">
+              <th *matHeaderCellDef mat-header-cell> Service name</th>
+              <td *matCellDef="let element" class="c-p" mat-cell>
+                <div class="bar"> {{element.serviceName}} </div>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="amt">
+              <th *matHeaderCellDef class="w-22" mat-header-cell> Fee amount</th>
+              <td (click)="Open(element)" *matCellDef="let element" class="c-p" mat-cell>
+                <div class="bar text-primary text-underline">
+                  {{isLoadingSubSummary ? ' ' : 'View details'}}
+                </div>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="billing">
+              <th *matHeaderCellDef mat-header-cell> Next billing date</th>
+              <td *matCellDef="let element" mat-cell>
+                <div *ngIf="element.nextBillingDate" class="bar">
+                  {{ element.nextBillingDate | date: 'dd/MM/yyyy' }}
+                </div>
+                <div *ngIf="!element.nextBillingDate" class="bar">
+                  {{ isLoadingSubSummary ? '' : 'Not Started' }}
+                </div>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="icons">
+              <th *matHeaderCellDef class="f-18" mat-header-cell style="width: 2%;">
+              </th>
+              <td *matCellDef="let element" mat-cell style="width: 2%">
+                <div class="bar">
+                  <i *ngIf="!isLoadingSubSummary" [matMenuTriggerFor]="menu" class="material-icons c-p iconscolors">
+                    more_vert
+                  </i>
+                </div>
+                <mat-menu #menu="matMenu">
+                  <a (click)="Open(element)" mat-menu-item>View fee
+                    structure</a>
+                  <a (click)="openPlanSlider('billerSettings','open',element)" class="bt-1" mat-menu-item>Change
+                    biller</a>
+                  <a (click)="openPlanSlider('changePayee','open',element)" mat-menu-item>Change
+                    payee</a>
+                  <a (click)="delete('cancelSubscription')" class="bt-1" mat-menu-item>Cancel
+                    subscription</a>
+                  <a (click)="deleteModal('SUBSCRIPTION')" mat-menu-item>Delete
+                    subscription</a>
+                </mat-menu>
+              </td>
+            </ng-container>
+            <tr *matHeaderRowDef="displayedDashboardSummary" mat-header-row></tr>
+            <tr *matRowDef="let row; columns: displayedDashboardSummary;" mat-row></tr>
             </tbody>
           </table>
           <div *ngIf="dashBoardSummary.length ==0" class="noDataFound">
@@ -928,25 +935,25 @@
           <table mat-table [dataSource]="dataSource7" id="table-low">
 
             <ng-container matColumnDef="position">
-              <th mat-header-cell *matHeaderCellDef class="br"> RTA </th>
+              <th mat-header-cell *matHeaderCellDef class="br"> RTA</th>
               <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
             </ng-container>
 
             <!-- Name Column -->
             <ng-container matColumnDef="name">
-              <th mat-header-cell *matHeaderCellDef class="br"> ARN/RIA </th>
+              <th mat-header-cell *matHeaderCellDef class="br"> ARN/RIA</th>
               <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
             </ng-container>
 
             <!-- Weight Column -->
             <ng-container matColumnDef="weight">
-              <th mat-header-cell *matHeaderCellDef> Done on </th>
+              <th mat-header-cell *matHeaderCellDef> Done on</th>
               <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
             </ng-container>
 
             <!-- Symbol Column -->
             <ng-container matColumnDef="symbol">
-              <th mat-header-cell *matHeaderCellDef class="br"> Done by </th>
+              <th mat-header-cell *matHeaderCellDef class="br"> Done by</th>
               <td mat-cell *matCellDef="let element" class="br"> {{element.symbol}} </td>
             </ng-container>
             <ng-container matColumnDef="match">
@@ -954,7 +961,7 @@
               <td mat-cell *matCellDef="let element" class="br"> {{element.match}} </td>
             </ng-container>
             <ng-container matColumnDef="report">
-              <th mat-header-cell *matHeaderCellDef> Report </th>
+              <th mat-header-cell *matHeaderCellDef> Report</th>
               <td mat-cell *matCellDef="let element" class="text-primary"> {{element.report}} </td>
             </ng-container>
 
@@ -976,7 +983,7 @@
               <img (click)="showInput=true" src="/assets/images/svg/add-blue.svg" class="c-p pr-8">
               <p *ngIf="showInput==false" class="m-0 text-black pl-12">Add a to-do</p>
               <input *ngIf="showInput" class="form-control" matInput (focusout)="showInput=false" autofocus #inputValue
-                (keyup.enter)="addTodoList(inputValue.value)" placeholder="Enter note">
+                     (keyup.enter)="addTodoList(inputValue.value)" placeholder="Enter note">
             </div>
 
             <!-- <div class="col-md-6 p-0 text-right">
@@ -1013,20 +1020,20 @@
                 </div>
                 <div class="col-md-7 pl-0">
                   <span *ngIf="singleNote.update==false" (dblclick)="doubleClick(singleNote)"
-                    class="c-p">{{singleNote.activityName}}</span>
+                        class="c-p">{{singleNote.activityName}}</span>
                   <div class="pb-8 pt-8">
                     <input *ngIf="singleNote.update" matInput class="form-control" [formControl]="updateNote"
-                      autofocus={{singleNote.update}} (focusout)="focusOutFunction(singleNote)"
-                      (keyup.enter)="updateTodoList(singleNote)" placeholder="Enter note">
+                           autofocus={{singleNote.update}} (focusout)="focusOutFunction(singleNote)"
+                           (keyup.enter)="updateTodoList(singleNote)" placeholder="Enter note">
                   </div>
                 </div>
                 <div class="col-md-3 pl-0 d-flex">
                   <span *ngIf="selectedItem.value==singleNote.id && singleNote.update==false"
-                    (click)="deleteTodoList(singleNote,i)" class="material-icons c-p">
+                        (click)="deleteTodoList(singleNote,i)" class="material-icons c-p">
                     done
                   </span>
                   <span *ngIf="selectedItem.value==singleNote.id && singleNote.update==false"
-                    class="material-icons c-p pl-8" (click)="deleteTodoList(singleNote,i)">
+                        class="material-icons c-p pl-8" (click)="deleteTodoList(singleNote,i)">
                     delete
                   </span>
                 </div>
