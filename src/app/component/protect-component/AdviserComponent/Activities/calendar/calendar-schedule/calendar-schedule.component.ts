@@ -156,6 +156,56 @@ export class CalendarScheduleComponent implements OnInit {
 
   }
 
+
+  getDay(year, month, day) {
+    let d = new Date(year, month, day);
+    return this.datePipe.transform(d, 'EEE')
+  }
+
+  validateMonthDays(eDays, cDate, startDate, interval) {
+    if (eDays) {
+      let d = new Date(cDate);
+      let dayNum = parseInt(eDays.charAt(0));
+      let monthDay = eDays.charAt(1) + eDays.charAt(2);
+
+      switch (monthDay) {
+        case "SU":
+          return new Date(this.sun[dayNum - 1]).getTime() == new Date(d).getTime() ? false : true;
+        case "MO":
+          return new Date(this.mon[dayNum - 1]).getTime() == new Date(d).getTime() ? false : true;
+        case "TU":
+          return new Date(this.tue[dayNum - 1]).getTime() == new Date(d).getTime() ? false : true;
+        case "WE":
+          return new Date(this.wed[dayNum - 1]).getTime() == new Date(d).getTime() ? false : true;
+        case "TH":
+          return new Date(this.thu[dayNum - 1]).getTime() == new Date(d).getTime() ? false : true;
+        case "FR":
+          return new Date(this.fri[dayNum - 1]).getTime() == new Date(d).getTime() ? false : true;
+        case "SA":
+          return new Date(this.sat[dayNum - 1]).getTime() == new Date(d).getTime() ? false : true;
+      }
+    }
+    else {
+      if (this.formateDate(cDate) == this.formateDate(startDate)) {
+        return false;
+      }
+      else {
+        return true;
+      }
+    }
+  }
+
+  validateYearly(startDate,day, month){
+    let d = new Date(startDate).getDate();
+    let m = new Date(startDate).getMonth();
+    if(d == day && m == month){
+      return false;
+    }
+    else{
+      return true;
+    }
+   }
+
   createDayJson() {
     for (let i = 1; i < this.numbersOfDays; i++) {
       const dayArr = {
@@ -166,12 +216,11 @@ export class CalendarScheduleComponent implements OnInit {
         const calMonth = new Date(this.year, this.month, this.formateDate(this.current_day));
         // console.log(this.formateMonth(calMonth),this.formatedEvent[e].month, this.formateYear(calMonth));
 
-        if (this.formatedEvent[e].month == this.formateMonth(calMonth) && this.formatedEvent[e].year == this.formateYear(calMonth)) {
-          if (this.formatedEvent[e].day == i && this.formatedEvent[e].month == this.formateMonth(calMonth) && this.formatedEvent[e].year == this.formateYear(calMonth)) {
-            dayArr.date = new Date(this.formatedEvent[e].year, this.formatedEvent[e].month - 1, i);
+        if(this.formatedEvent[e].day== i && this.formatedEvent[e].month == this.formateMonth(calMonth) && this.formatedEvent[e].year ==  this.formateYear(calMonth)||(this.formatedEvent[e].isRe && this.dateTimeEvent(this.year,this.month,i) > this.dateTimeEvent(null,null,this.formatedEvent[e].reStart) && this.dateTimeEvent(this.year,this.month,i) < this.dateTimeEvent(null,null,this.formatedEvent[e].reUntil)) && (this.formatedEvent[e].isRe == 'DAILY' || (this.formatedEvent[e].isRe == 'WEEKLY' && !this.validateWeekDays(this.formatedEvent[e].rrule.BYDAY, this.getDay(this.year,this.month,i),this.formatedEvent[e].rrule.INTERVAL)) || (this.formatedEvent[e].isRe == 'MONTHLY' && !this.validateMonthDays(this.formatedEvent[e].rrule.BYDAY, this.dateTimeEvent(this.year,this.month,i), this.formatedEvent[e].start.date,this.formatedEvent[e].rrule.INTERVAL)) || (this.formatedEvent[e].isRe == 'YEARLY' && !this.validateYearly(this.formatedEvent[e].start.date,i,this.month)))){
+            dayArr.date = new Date(this.formatedEvent[e].year, this.month, i);
             dayArr.events.push(this.formatedEvent[e]);
           }
-        }
+        
         // console.log(this.currentMonthEvents, "this.currentMonthEvents");
       }
       if (dayArr.date != null) {
@@ -463,5 +512,59 @@ export class CalendarScheduleComponent implements OnInit {
   lastMonth() {
     this.viewDate = new Date(this.viewDate.setMonth(this.viewDate.getMonth() - 1));
     this.updatecalendar();
+  }
+
+  validateWeekDays(eDays, day, interval) {
+    this.E = [];
+    let d;
+    eDays += ',';
+    if (this.E.length <= 0) {
+      for (let i = 0; i < eDays.length; i++) {
+        if (eDays.charAt(i) != ",") {
+          if (d) {
+            d += eDays.charAt(i);
+          } else {
+            d = eDays.charAt(i);
+          }
+        }
+        else {
+          switch (d) {
+            case "SU":
+              // return day == 'Sun'?false:true;
+              this.E.push('Sun');
+              break;
+            case "MO":
+              // return day == 'Mon'?false:true;
+              this.E.push('Mon');
+              break;
+            case "TU":
+              // return day == 'Tus'?false:true;
+              this.E.push('Tue');
+              break;
+            case "WE":
+              // return day == 'Wed'?false:true;
+              this.E.push('Wed');
+              break;
+            case "TH":
+              // return day == 'Thu'?false:true;
+              this.E.push('Thu');
+              break;
+            case "FR":
+              // return day == 'Fri'?false:true;
+              this.E.push('Fri');
+              break;
+            case "SA":
+              // return day == 'Sat'?false:true;
+              this.E.push('Sat');
+              break;
+          }
+
+          d = '';
+        }
+      }
+    }
+
+    return this.E.includes(day) ? false : true;
+
   }
 }
