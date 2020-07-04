@@ -118,11 +118,11 @@ export class CalendarWeekComponent implements OnInit {
 
         for (let e of this.eventData) {
           if (e.start) {
-            e["day"] = this.formateDate(!e.start.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
-            e["month"] = this.formateMonth(!e.start.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
-            e["year"] = this.formateYear(!e.start.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
-            e["startTime"] = this.formateTime(!e.start.dateTime ? new Date(e.created) : new Date(e.start.dateTime));
-            e["endTime"] = this.formateTime(!e.end.dateTime ? new Date(e.created) : new Date(e.end.dateTime));
+            e["day"] = this.formateDate(e.start.dateTime == null ? new Date(e.start.date) : new Date(e.start.dateTime));
+            e["month"] = this.formateMonth(e.start.dateTime == null ? new Date(e.start.date) : new Date(e.start.dateTime));
+            e["year"] = this.formateYear(e.start.dateTime == null ? new Date(e.start.date) : new Date(e.start.dateTime));
+            e["startTime"] = this.formateTime(e.start.dateTime == null ? new Date(e.start.date) : new Date(e.start.dateTime));
+            e["endTime"] = this.formateTime(e.start.dateTime == null ? new Date(e.start.date) : new Date(e.end.dateTime));
             this.formatedEvent.push(e);
             // console.log(this.formatedEvent,"formatedEvent calender1",);
           }
