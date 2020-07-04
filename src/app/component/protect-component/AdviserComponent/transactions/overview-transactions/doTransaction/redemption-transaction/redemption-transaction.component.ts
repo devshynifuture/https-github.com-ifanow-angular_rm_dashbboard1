@@ -204,7 +204,7 @@ export class RedemptionTransactionComponent implements OnInit {
       employeeContry: [(!data) ? '' : data.orderVal, [Validators.required]],
       redeemType: [(data.redeemType) ? data.redeemType : '1', [Validators.required]],
       modeOfPaymentSelection: [(!data) ? '' : data.modeOfPaymentSelection, [Validators.required]],
-      investmentAccountSelection: [(data) ?data.folioNumber: (this.mutualFundData)?this.mutualFundData.folioNumber : '', [Validators.required]],
+      investmentAccountSelection: [(data.folioNumber) ?data.folioNumber: (this.mutualFundData)?this.mutualFundData.folioNumber : '', [Validators.required]],
       redeem: [(!data) ? '' : data.switchType, [Validators.required]],
       schemeRedeem: [(!data) ? '' :(this.mutualFundData)? this.mutualFundData.schemeName:'', [Validators.required]],
 
@@ -222,6 +222,7 @@ export class RedemptionTransactionComponent implements OnInit {
       this.folioDetails = {}
       this.filterSchemeList = of([{'schemeName': this.schemeName}])
       this.redemptionTransaction.controls.schemeRedeem.setValue({'schemeName': this.schemeName})
+      this.redemptionTransaction.controls.investmentAccountSelection.setValue({'folioNumber': this.folioNumber})
       const obj1 = {
         mutualFundSchemeMasterId: this.mutualFundData.schemeId,
         aggregatorType: this.mfDefault.defaultClient.aggregatorType,
