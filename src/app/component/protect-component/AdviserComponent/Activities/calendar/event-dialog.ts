@@ -2,11 +2,14 @@ import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MAT_DATE_FORMATS, MatBottomSheet } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { calendarService } from './calendar.service';
 import { AuthService } from '../../../../../auth-service/authService';
 import { BottomSheetComponent } from '../../../customers/component/common-component/bottom-sheet/bottom-sheet.component';
 import { DatePipe } from '@angular/common';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
+
 // import { DialogData } from 'src/app/common/link-bank/link-bank.component';
 
 @Component({
@@ -34,6 +37,9 @@ export class EventDialog implements OnInit {
   isEditable: boolean = false;
   showBothDate: boolean = true;
   userInfo: any;
+  options: string[] = ['One', 'Two', 'Three'];
+  filteredOptions: Observable<string[]>;
+  myControl = new FormControl();
   timeArr = ["01:00", "01:30", "02:00", "02:30", "03:00", "03:30", "04:00", "04:30", "05:00", "05:30", "06:00", "06:30", "07:00", "07:30", "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:20", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00", "23:30", "24:00"]
   constructor(
     private fb: FormBuilder,
@@ -45,11 +51,12 @@ export class EventDialog implements OnInit {
     public dialogRef: MatDialogRef<EventDialog>, @Inject(MAT_DIALOG_DATA) public data: any) {
     this.eventData = data;
     console.log(this.eventData, "add this.eventData");
-
   }
-
-
+  
+  
   ngOnInit() {
+    this.getAttendyList();
+    // this.dialogRef.updatePosition({ top: '50px', left: '50px' });
     this.eventForm = this.fb.group({
       eventId: [this.eventData.id],
       summary: [this.eventData.summary, [Validators.required]],
@@ -64,7 +71,7 @@ export class EventDialog implements OnInit {
       startTime: [this.startTime],
       endTime: [this.endTime]
     });
-
+    
     this.userInfo = AuthService.getUserInfo();
 
 
@@ -97,8 +104,19 @@ export class EventDialog implements OnInit {
         this.attendeesArr.push({ "email": att.email });
       }
     }
+    // const eventUI =  document.getElementById('eventUI')
+    // setTimeout(() => {
+    //   // eventUI.scrollTop;
+    //   eventUI.scrollTop
+      
+    // }, 1000);
   }
 
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.attendy.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
+  }
   model: any;
   writeValue(content: any): void {
     this.model = content;
@@ -109,9 +127,24 @@ export class EventDialog implements OnInit {
     this.eventForm.get("description").setValue(data);
   }
 
-  addAttendee() {
+  addAttendee(event) {
+    console.log(event.keyCode, this.myControl, this.eventForm.controls['attendee'],"event.keyCode");
+    if (event.keyCode === 13 && this.eventForm.get("attendee").valid) {
     this.attendeesArr.push({ "email": this.eventForm.value.attendee });
-    this.eventForm.get("attendee").setValue("");
+    if(!this.attendy.includes(this.eventForm.get("attendee").value)){
+      let obj ={
+        "email": this.eventForm.get("attendee").value,
+        "userId": AuthService.getUserInfo().advisorId
+      }
+      this.calenderService.addToAttendyList(obj).subscribe((data) => {
+        
+      },
+      err =>{
+
+      });
+      }
+      this.eventForm.get("attendee").setValue("");
+    }
   }
 
   removeMember(member) {
@@ -191,6 +224,21 @@ export class EventDialog implements OnInit {
   editEvent() {
     this.isEditAdd = true;
     this.isEditable = true;
+  }
+
+  attendy:any=[];
+  getAttendyList(){
+    let obj = {
+      "userId": AuthService.getUserInfo().advisorId
+    }
+    this.calenderService.getAttendyList(obj).subscribe((data) => {
+      this.attendy = data;
+      this.filteredOptions = this.eventForm.controls['attendee'].valueChanges.pipe(
+        startWith(''),
+        map(value => this._filter(value))
+      );
+      console.log(this.attendy,data, "this.attendy");
+    });
   }
 
   deleteEvent(eventId) {
