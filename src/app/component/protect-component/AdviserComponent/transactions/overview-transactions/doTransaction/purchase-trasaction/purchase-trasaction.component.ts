@@ -24,6 +24,7 @@ export class PurchaseTrasactionComponent implements OnInit {
   folioNumber: any;
   mutualFundData: any;
   mfScheme: any;
+  mfDefault: any;
 
   constructor(public processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService,
               private subInjectService: SubscriptionInject, private fb: FormBuilder,
@@ -106,6 +107,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     if(data.mutualFundData){
       this.schemeName = data.mutualFundData.schemeName
       this.folioNumber = data.mutualFundData.folioNumber
+      this.mfDefault = data.transactionData
       let foilo = {'folioNumber': this.folioNumber}
       let schemeName = {'schemeName': this.schemeName}
       this.mfScheme = this.schemeName
@@ -113,9 +115,6 @@ export class PurchaseTrasactionComponent implements OnInit {
       // this.schemeList.push({'schemeName': this.schemeName})
       this.filterSchemeList = of([{'schemeName': this.schemeName}])
       this.ExistingOrNew = 1
-      Object.assign(this.transactionSummary, {folioNumber: this.folioNumber});
-      Object.assign(this.transactionSummary, {schemeName: this.schemeName});
-      this.transactionSummary = {...this.transactionSummary};
       this.mutualFundData = data.mutualFundData
     }
    
@@ -310,9 +309,11 @@ export class PurchaseTrasactionComponent implements OnInit {
     if (data.length == 1) {
       this.reInvestmentOpt = [];
     }
-    if (this.purchaseTransaction.controls.folioSelection.value == '1') {
+    if (this.purchaseTransaction.controls.folioSelection.value == '1' && !this.mutualFundData) {
       this.getFolioList();
     }
+    Object.assign(this.transactionSummary, {folioNumber: this.folioNumber});
+    Object.assign(this.transactionSummary, {schemeName: this.schemeName});
   }
 
   setMinAmount() {
@@ -434,6 +435,7 @@ export class PurchaseTrasactionComponent implements OnInit {
 
   enteredAmount(value) {
     Object.assign(this.transactionSummary, {enteredAmount: value});
+    
   }
 
   getDefaultDetails(data) {
@@ -624,10 +626,27 @@ export class PurchaseTrasactionComponent implements OnInit {
       this.getFolioList();
     }
     if(this.mutualFundData){
+      this.folioDetails = {}
       this.purchaseTransaction.controls.schemeSelection.setValue('1')
       this.purchaseTransaction.controls.folioSelection.setValue('1')
-      this.purchaseTransaction.controls.schemePurchase.setValue(this.schemeName)
+      this.purchaseTransaction.controls.schemePurchase.setValue({'schemeName': this.schemeName})
       this.filterSchemeList = of([{'schemeName': this.schemeName}])
+      Object.assign(this.folioDetails, {folioNumber: this.folioNumber});
+      this.scheme ={
+        'schemeName': this.schemeName,
+        'mutualFundSchemeMasterId':this.mutualFundData.schemeId
+      }
+      const obj1 = {
+        mutualFundSchemeMasterId: this.mutualFundData.schemeId,
+        aggregatorType: this.mfDefault.defaultClient.aggregatorType,
+        orderType: 'ORDER',
+        userAccountType: this.mfDefault.defaultCredential.accountType,
+      };
+      this.onlineTransact.getSchemeDetails(obj1).subscribe(
+        data => this.getSchemeDetailsRes(data), (error) => {
+          this.eventService.openSnackBar(error, 'Dismiss');
+        }
+      );
     }
   }
 
@@ -671,7 +690,7 @@ export class PurchaseTrasactionComponent implements OnInit {
       productDbId: this.schemeDetails.id,
       clientName: this.selectedFamilyMember,
       holdingType: this.getDataSummary.defaultClient.holdingType,
-      mutualFundSchemeMasterId: this.scheme.mutualFundSchemeMasterId,
+      mutualFundSchemeMasterId: (this.scheme)?this.scheme.mutualFundSchemeMasterId:this.mutualFundData.schemeId,
       productCode: this.schemeDetails.schemeCode,
       isin: this.schemeDetails.isin,
       folioNo: (this.folioDetails == undefined) ? null : this.folioDetails.folioNumber,

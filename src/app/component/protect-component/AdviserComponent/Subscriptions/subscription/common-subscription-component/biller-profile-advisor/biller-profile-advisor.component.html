@@ -227,7 +227,7 @@
               </div>
               <div class="col-md-7 pr-0">
                 <!-- <app-photo-upload></app-photo-upload>-->
-                <img *ngIf="logoImg" class="t-70 b-a" src="{{logoImg}}">
+                <img *ngIf="logoImg" class="t-70 b-a c-p" [src]="logoImg" (click)="file.click()">
                 <div (click)="file.click()" *ngIf="logoImg==undefined" class="imgBox">
                   <i class="material-icons c-p" style="font-size: 100px;">
                     insert_photo
@@ -235,7 +235,6 @@
                 </div>
                 <div class="row pt-16">
                   <div class="col-md-12 p-0 d-flex">
-                    <!-- (click)="file.click()"-->
                     <app-progress-button (btnClick)="uploadImage()" *ngIf="logoImg!=undefined"
                                          [options]="barButtonOptions">
                     </app-progress-button>
@@ -246,7 +245,7 @@
                             mat-stroked-button>CANCEL
                     </button>
                   </div>
-                  <input #file (change)="onChange($event)" [ngClass]="{'v-h': true}" accept='image/*'
+                  <input #file (change)="onChange($event)" hidden accept='image/*'
                          formControlName="url" type="file">
                 </div>
               </div>
