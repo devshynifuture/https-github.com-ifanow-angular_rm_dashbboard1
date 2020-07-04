@@ -134,7 +134,7 @@ export class RedemptionTransactionComponent implements OnInit {
     Object.assign(this.transactionSummary, {aggregatorType: this.getDataSummary.defaultClient.aggregatorType});
     if (this.oldDefaultData) {
       this.checkAndResetForm(this.oldDefaultData, this.getDataSummary);
-    } else {
+    } else if(!this.mutualFundData){
       this.getSchemeList();
     }
     this.oldDefaultData = data;
