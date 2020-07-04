@@ -69,6 +69,7 @@ export class AppConstants {
   public static DATE_FORMAT_DASHED = 'yyyy-MM-dd';
 
   public static RUPEE_LETTER = '₹';
+  public static RUPEE_UNICODE = '&#8377;';
 
 
   public static EMAIL_DOMAINS = ['gmail.com','hotmail.com','mail.com','outlook.com','yahoo.com','yahoo.co.in','rediffmail.com'];
