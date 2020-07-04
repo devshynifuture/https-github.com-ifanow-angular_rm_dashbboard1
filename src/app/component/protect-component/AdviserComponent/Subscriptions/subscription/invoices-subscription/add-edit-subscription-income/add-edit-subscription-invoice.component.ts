@@ -61,6 +61,9 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   @Output() cancelAddInvoice = new EventEmitter();
   feeCalc: boolean;
 
+  // flags if the template is being edited or not based on the data received
+  editFlag:boolean = false;
+
 
   service: { serviceName: any; averageFees: string; description: string; fromDate: string; toDate: string; }[];
   advisorBillerProfileId: any;
@@ -88,6 +91,9 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     if (data.id == undefined || data.flag) {
       this.getClients();
+      this.editFlag = false;
+    } else {
+      this.editFlag = true;
     }
     this.initFormsAndVariable(data);
   }
