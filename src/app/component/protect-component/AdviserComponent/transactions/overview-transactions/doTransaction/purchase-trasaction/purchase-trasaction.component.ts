@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
+import {FormBuilder, Validators,ReactiveFormsModule} from '@angular/forms';
 import {SubscriptionInject} from '../../../../Subscriptions/subscription-inject.service';
 import {OnlineTransactionService} from '../../../online-transaction.service';
 import {ProcessTransactionService} from '../process-transaction.service';
@@ -23,6 +23,7 @@ export class PurchaseTrasactionComponent implements OnInit {
   schemeName: any;
   folioNumber: any;
   mutualFundData: any;
+  mfScheme: any;
 
   constructor(public processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService,
               private subInjectService: SubscriptionInject, private fb: FormBuilder,
@@ -107,6 +108,7 @@ export class PurchaseTrasactionComponent implements OnInit {
       this.folioNumber = data.mutualFundData.folioNumber
       let foilo = {'folioNumber': this.folioNumber}
       let schemeName = {'schemeName': this.schemeName}
+      this.mfScheme = this.schemeName
       this.folioList.push(foilo)
       // this.schemeList.push({'schemeName': this.schemeName})
       this.filterSchemeList = of([{'schemeName': this.schemeName}])
@@ -624,6 +626,7 @@ export class PurchaseTrasactionComponent implements OnInit {
     if(this.mutualFundData){
       this.purchaseTransaction.controls.schemeSelection.setValue('1')
       this.purchaseTransaction.controls.folioSelection.setValue('1')
+      this.purchaseTransaction.controls.schemePurchase.setValue(this.schemeName)
       this.filterSchemeList = of([{'schemeName': this.schemeName}])
     }
   }
