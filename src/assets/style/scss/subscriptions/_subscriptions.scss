@@ -34,8 +34,9 @@
 }
 
 .placeholder-scroll {
-  height: calc(100vh - 320px);
+  //height: calc(100vh - 111px);
   overflow: auto;
+  max-height: 525px;
 }
 
 #ui-search-client-add-quotation {

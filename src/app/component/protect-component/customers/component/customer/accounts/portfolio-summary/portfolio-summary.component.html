@@ -271,108 +271,111 @@
 
         <div class="col-xl-8 col-lg-6 col-md-6 b-l p-0 bg-grey lter">
 
-            <div class="overflow-y">
-                <div class="w-1024">
-                    <div class="row bg-white height63 b-b">
-                        <div class="col-md-6 d-flex align-items-center">
-                            <h3 class="m-0 roboto   f-500 text-black">Portfolio summary</h3>
+
+
+            <div class="row bg-white height63 b-b">
+                <div class="col-md-6 d-flex align-items-center">
+                    <h3 class="m-0 roboto   f-500 text-black">Portfolio summary</h3>
+                </div>
+                <div class="col-md-6 d-flex align-items-center justify-content-end">
+                    <button (click)="dobAsPerRecord.open()" class="b-a br-0 width180 h-40" mat-button>As on
+                        {{asOnDate | date:'dd/MM/yyyy'}} <i class="material-icons text-custom">
+                            keyboard_arrow_down
+                        </i>
+                        <mat-form-field class="v-h">
+                            <input (dateChange)="dateChange($event)" [matDatepicker]="dobAsPerRecord"
+                                class="form-control br-0 b-0" matInput readonly>
+                            <mat-datepicker-toggle matSuffix [for]="dobAsPerRecord">
+                            </mat-datepicker-toggle>
+                            <mat-datepicker #dobAsPerRecord></mat-datepicker>
+                        </mat-form-field>
+
+                    </button>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-7">
+                    <div class="b-a mt-20 shadowBox bg-white">
+                        <div class="row">
+                            <div class="col-md-6 p-0">
+                                <h4 class="m-0 wrapper-20">Portfolio growth</h4>
+                            </div>
+                            <div class="col-md-6 pl-0">
+                                <h2 *ngIf="letsideBarLoader==false"
+                                    class="m-0 text-primary text-right f-300 wrapper-20">
+                                    ₹<span appFormatNumber
+                                        [value]="totalAssetsWithoutLiability-liabilityTotal">{{totalAssetsWithoutLiability-liabilityTotal}}</span>
+                                </h2>
+                            </div>
                         </div>
-                        <div class="col-md-6 d-flex align-items-center justify-content-end">
-                            <button (click)="dobAsPerRecord.open()" class="b-a br-0 width180 h-40" mat-button>As on
-                                {{asOnDate | date:'dd/MM/yyyy'}} <i class="material-icons text-custom">
-                                    keyboard_arrow_down
-                                </i>
-                                <mat-form-field class="v-h">
-                                    <input (dateChange)="dateChange($event)" [matDatepicker]="dobAsPerRecord"
-                                        class="form-control br-0 b-0" matInput readonly>
-                                    <mat-datepicker-toggle matSuffix [for]="dobAsPerRecord">
-                                    </mat-datepicker-toggle>
-                                    <mat-datepicker #dobAsPerRecord></mat-datepicker>
-                                </mat-form-field>
 
-                            </button>
+                        <div *ngIf="finalTotal==0" class="row">
+                            <div class="col-md-12 p-0">
+                                <div
+                                    class=" d-flex flex-column  align-items-center justify-content-center text-center h-300 bg-white">
+                                    <img src="assets/images/svg/portfolio-growth-icon.svg">
+                                    <h4 class="f-14 mb-0 mt-20">Not enough data to display</h4>
+                                    <p class="f-12 text-primitive"> Before we can create any charts, <br> we’ll
+                                        first need to get some data in here </p>
+                                    <a class="text-primary c-p dataBtnAdd">Add data</a>
 
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div *ngIf="finalTotal>0" class="row">
+                            <div class="col-md-12 p-0">
+                                <div class="highcharts-figure" id="container">
+                                </div>
+                                <!-- <img src="assets/images/svg/summary.svg" class="w-100"> -->
+                                <ul *ngIf="nightyDayData && oneDay" class="pl-20 pb-20">
+                                    <li class="pr-4 text-black">90-days</li>
+                                    <li *ngIf="letsideBarLoader==false"
+                                        [ngClass]="{'text-success': nightyDayData.flag,'text-danger':nightyDayData.flag==false}"
+                                        class="text-success pr-24">₹<span appFormatNumber
+                                            [value]="nightyDayData.value">{{nightyDayData.value}}</span></li>
+                                    <li class="pr-4 text-black">1-days</li>
+                                    <li *ngIf="letsideBarLoader==false"
+                                        [ngClass]="{'text-success': oneDay.flag,'text-danger':oneDay.flag==false}"
+                                        class="text-danger">₹<span appFormatNumber
+                                            [value]="oneDay.value">{{oneDay.value}}</span></li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-7">
-                            <div class="b-a mt-20 shadowBox bg-white">
-                                <div class="row">
-                                    <div class="col-md-6 p-0">
-                                        <h4 class="m-0 wrapper-20">Portfolio growth</h4>
-                                    </div>
-                                    <div class="col-md-6 pl-0">
-                                        <h2 *ngIf="letsideBarLoader==false"
-                                            class="m-0 text-primary text-right f-300 wrapper-20">
-                                            ₹<span appFormatNumber
-                                                [value]="totalAssetsWithoutLiability-liabilityTotal">{{totalAssetsWithoutLiability-liabilityTotal}}</span>
-                                        </h2>
-                                    </div>
-                                </div>
+                </div>
 
-                                <div *ngIf="finalTotal==0" class="row">
-                                    <div class="col-md-12 p-0">
-                                        <div
-                                            class=" d-flex flex-column  align-items-center justify-content-center text-center h-300 bg-white">
-                                            <img src="assets/images/svg/portfolio-growth-icon.svg">
-                                            <h4 class="f-14 mb-0 mt-20">Not enough data to display</h4>
-                                            <p class="f-12 text-primitive"> Before we can create any charts, <br> we’ll
-                                                first need to get some data in here </p>
-                                            <a class="text-primary c-p dataBtnAdd">Add data</a>
+                <div class="col-md-5 pl-0">
+                    <div class="b-a mt-20 shadowBox bg-white">
+                        <h4 class="m-0 wrapper-20 pb-0">Asset allocation</h4>
 
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div *ngIf="finalTotal>0" class="row">
-                                    <div class="col-md-12 p-0">
-                                        <div class="highcharts-figure" id="container">
-                                        </div>
-                                        <!-- <img src="assets/images/svg/summary.svg" class="w-100"> -->
-                                        <ul *ngIf="nightyDayData && oneDay" class="pl-20 pb-20">
-                                            <li class="pr-4 text-black">90-days</li>
-                                            <li *ngIf="letsideBarLoader==false"
-                                                [ngClass]="{'text-success': nightyDayData.flag,'text-danger':nightyDayData.flag==false}"
-                                                class="text-success pr-24">₹<span appFormatNumber
-                                                    [value]="nightyDayData.value">{{nightyDayData.value}}</span></li>
-                                            <li class="pr-4 text-black">1-days</li>
-                                            <li *ngIf="letsideBarLoader==false"
-                                                [ngClass]="{'text-success': oneDay.flag,'text-danger':oneDay.flag==false}"
-                                                class="text-danger">₹<span appFormatNumber
-                                                    [value]="oneDay.value">{{oneDay.value}}</span></li>
-                                        </ul>
-                                    </div>
+                        <div *ngIf="finalTotal==0" class="row">
+                            <div class="col-md-12 p-0">
+                                <div
+                                    class=" d-flex align-items-center justify-content-center flex-column text-center mt-30 h-300 ">
+                                    <img src="assets/images/svg/asset-allocation-empty-state.svg">
+                                    <h4 class="f-14 mb-0 mt-20">Not enough data to display</h4>
+                                    <p class="f-12 text-primitive"> Before we can create any charts, <br> we’ll
+                                        first need to get some data in here </p>
+                                    <a class="text-primary c-p dataBtnAdd">Add data</a>
                                 </div>
                             </div>
-
                         </div>
-
-                        <div class="col-md-5 pl-0">
-                            <div class="b-a mt-20 shadowBox bg-white">
-                                <h4 class="m-0 wrapper-20 pb-0">Asset allocation</h4>
-
-                                <div *ngIf="finalTotal==0" class="row">
-                                    <div class="col-md-12 p-0">
-                                        <div
-                                            class=" d-flex align-items-center justify-content-center flex-column text-center mt-30 h-300 ">
-                                            <img src="assets/images/svg/asset-allocation-empty-state.svg">
-                                            <h4 class="f-14 mb-0 mt-20">Not enough data to display</h4>
-                                            <p class="f-12 text-primitive"> Before we can create any charts, <br> we’ll
-                                                first need to get some data in here </p>
-                                            <a class="text-primary c-p dataBtnAdd">Add data</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div [hidden]="!finalTotal">
-                                    <div class="highcharts-figure" id="piechartMutualFund"></div>
-                                </div>
-                            </div>
+                        <div [hidden]="!finalTotal">
+                            <div class="highcharts-figure" id="piechartMutualFund"></div>
                         </div>
                     </div>
                 </div>
             </div>
+
+
+
+
+
 
             <div class="mtClass" [formGroup]="cashFlowFG">
                 <div class="w-1024 b-a shadowBox wrapper-12 overflow-y bg-white">
@@ -381,7 +384,8 @@
                         <div class="col-md-4 p-0">
                             <h4 class="m-0 pt-8 pl-8">Net cash flow</h4>
                         </div>
-                        <div *ngIf="!noCashflowData" class="col-md-4 b-a" [ngClass]="{'b-a': cashFlowViewDataSource.length>0 && !cashflowFlag}">
+                        <div *ngIf="!noCashflowData" class="col-md-4 b-a"
+                            [ngClass]="{'b-a': cashFlowViewDataSource.length>0 && !cashflowFlag}">
 
                             <div class="row">
                                 <div class="col-md-6 p-0 border-right-1 pt-8 pb-8 pr-4">
@@ -437,7 +441,8 @@
                                     <td mat-cell *matCellDef="let element">
                                         <div class="bar">
                                             <div>
-                                                <span>{{element.institutionName || element.bankName || element.description}} </span>
+                                                <span>{{element.institutionName || element.bankName || element.description}}
+                                                </span>
                                                 <span>{{element.serialNumber}}</span>
                                             </div>
                                             <div>
