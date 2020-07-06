@@ -333,7 +333,7 @@ export class SwpTransactionComponent implements OnInit {
   getFrequency() {
     const obj = {
       isin: this.schemeDetails.isin,
-      aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
+      aggregatorType: (this.getDataSummary)?this.getDataSummary.defaultClient.aggregatorType:this.mfDefault.defaultClient.aggregatorType,
       orderType: 'SWP'
     };
     this.onlineTransact.getSipFrequency(obj).subscribe(
