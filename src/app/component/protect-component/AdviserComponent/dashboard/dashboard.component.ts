@@ -146,6 +146,8 @@ const ELEMENT_DATA7: PeriodicElement7[] = [
 
 export class DashboardComponent implements OnInit {
   documentSizeData: any;
+  aumReconList: any;
+  aumFlag: boolean;
 
   constructor(
     public dialog: MatDialog, private subService: SubscriptionService,
@@ -238,6 +240,7 @@ export class DashboardComponent implements OnInit {
     this.getLast7DaysTransactionStatus();
     this.getDocumentTotalSize();
     this.getLastSevenDaysTransactions();
+    this.getLatesAumReconciliationData();
   }
 
   mailConnect(done) {
@@ -473,6 +476,22 @@ export class DashboardComponent implements OnInit {
     )
   }
 
+  getLatesAumReconciliationData() {
+    this.aumReconList = [{}, {}, {}];
+    this.aumFlag = true;
+    const obj =
+    {
+      id: this.advisorId
+    }
+    this.dashboardService.getLatestAumReconciliation(obj).subscribe(
+      data => {
+        if (data) {
+          this.aumFlag = false;
+          this.aumReconList = data;
+        }
+      }
+    )
+  }
 
   connectAccountWithGoogle() {
     this.calenderLoader = true;

@@ -56,4 +56,9 @@ export class DashboardService {
     let httpParams = new HttpParams().set('advisorId', data.advisorId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.DOCUMENT_TOTAL_COUNT_SIZE, httpParams);
   }
+
+  getLatestAumReconciliation(data) {
+    let httpParams = new HttpParams().set('id', data.id);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.LATEST_AUM_RECON, httpParams);
+  }
 }
