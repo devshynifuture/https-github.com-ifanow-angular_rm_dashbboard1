@@ -1,16 +1,16 @@
-import {ValidatorType} from './../../../../../../../services/util.service';
-import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionService} from '../../../subscription.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {EnumServiceService} from '../../../../../../../services/enum-service.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog} from '@angular/material';
-import {UtilService} from 'src/app/services/util.service';
-import {EmailOnlyComponent} from '../email-only/email-only.component';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {EventService} from 'src/app/Data-service/event.service';
+import { ValidatorType } from './../../../../../../../services/util.service';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionService } from '../../../subscription.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { EnumServiceService } from '../../../../../../../services/enum-service.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
+import { UtilService } from 'src/app/services/util.service';
+import { EmailOnlyComponent } from '../email-only/email-only.component';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { EventService } from 'src/app/Data-service/event.service';
 import { AppConstants } from 'src/app/services/app-constants';
 
 
@@ -63,13 +63,14 @@ export class InvoiceComponent implements OnInit {
     // buttonIcon: {
     //   fontIcon: 'favorite'
     // }
+
   };
 
   // invoiceTemplate
   gstTreatment = [
-    {name: 'Registered Business - Regular', value: 0},
-    {name: 'Registered Business - Composition', value: 1},
-    {name: 'Unregistered Business', value: 2}
+    { name: 'Registered Business - Regular', value: 0 },
+    { name: 'Registered Business - Composition', value: 1 },
+    { name: 'Unregistered Business', value: 2 }
   ];
 
   showErr = false;
@@ -103,8 +104,8 @@ export class InvoiceComponent implements OnInit {
   isClientName = false;
 
   constructor(public utils: UtilService, public enumService: EnumServiceService, public subInjectService: SubscriptionInject,
-              private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService, public dialog: MatDialog,
-              private eventService: EventService) {
+    private fb: FormBuilder, private subService: SubscriptionService, private auth: AuthService, public dialog: MatDialog,
+    private eventService: EventService) {
     this.subInjectService.singleProfileData.subscribe(
       data => {
         this.getInvoiceData(data)
@@ -270,8 +271,8 @@ export class InvoiceComponent implements OnInit {
       dueDate = new Date((this.editPayment.get('dueDate').value._d) ? this.editPayment.get('dueDate').value._d : this.editPayment.get('dueDate').value).getTime();
       (invoiceDate == undefined && dueDate == undefined) ? ''
         : (dueDate <= invoiceDate)
-        ? this.showDateError = 'invoice date should be greater than due' :
-        this.showDateError = undefined;
+          ? this.showDateError = 'invoice date should be greater than due' :
+          this.showDateError = undefined;
     }
   }
 
@@ -650,7 +651,7 @@ export class InvoiceComponent implements OnInit {
     }
   }
 
-  selectedInvRecord:any;
+  selectedInvRecord: any;
   passInvoice(data, index, event) {
     if (data.balanceDue == 0 || this.storeData.status == 1) {
       this.rpyment = false;
@@ -671,7 +672,7 @@ export class InvoiceComponent implements OnInit {
     this.subService.getPaymentReceive(obj).subscribe(
       data => this.getPaymentReceivedRes(data)
     );
-    this.selectedInvRecord= data
+    this.selectedInvRecord = data
   }
 
   editInvoice() {
@@ -708,8 +709,8 @@ export class InvoiceComponent implements OnInit {
       this.feeCalc = false;
     } else {
       (this.invoiceTab == 'invoiceUpperSlider') ? this.subInjectService.rightSliderData(state) : this.subInjectService.rightSideData(state);
-      this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: true});
-      this.subInjectService.changeUpperRightSliderState({state: 'close'});
+      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
+      this.subInjectService.changeUpperRightSliderState({ state: 'close' });
       this.valueChange.emit(closeObj);
     }
 
@@ -834,7 +835,7 @@ export class InvoiceComponent implements OnInit {
 
   generatePdf() {
     const para = document.getElementById('template');
-    
+
     this.utils.htmlToPdf(para.innerHTML, 'Test', '');
   }
 
