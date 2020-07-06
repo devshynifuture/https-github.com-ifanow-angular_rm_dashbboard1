@@ -542,14 +542,10 @@ export class CalendarMonthComponent implements OnInit {
   }
 
   openDialog(eventData): void {
-    let h = "673px"; 
-   
-    if(eventData.id || eventData.date){
-      h = "auto";
-    }
+    
     const dialogRef = this.dialog.open(EventDialog, {
       width: '576px',
-      height: h,
+      height: 'auto',
       data: eventData
     });
 
