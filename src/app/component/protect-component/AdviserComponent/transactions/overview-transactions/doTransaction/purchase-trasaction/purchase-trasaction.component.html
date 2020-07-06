@@ -66,7 +66,7 @@
                                 <mat-error *ngIf="purchaseTransaction.get('schemePurchase').errors?.setValue" class="f-12">
                                     Selected scheme does not exist
                                 </mat-error>
-                                <mat-hint *ngIf="scheme" align="start" class="f-12 text-custom">Last closing NAV: {{navOfSelectedScheme}} as on:{{mutualFundData.navDate | date:'dd/MM/yyyy'}}
+                                <mat-hint *ngIf="scheme" align="start" class="f-12 text-custom">Last closing NAV: {{navOfSelectedScheme}} as on:{{(mutualFundData)?mutualFundData.navDate:'-' | date:'dd/MM/yyyy'}}
                                 </mat-hint>
                             </mat-form-field>
                         </div>
