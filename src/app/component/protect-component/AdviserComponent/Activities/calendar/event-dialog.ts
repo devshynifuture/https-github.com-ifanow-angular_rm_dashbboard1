@@ -81,6 +81,11 @@ export class EventDialog implements OnInit {
       // this.year = this.formateYear(this.eventData.calDate);
       this.isEditAdd = false;
       // this.numbersOfDays = this.getDaysCount(this.eventData.calDate, "currentMonthDays");
+    }else{
+      this.isEditAdd = false;
+
+      this.isEditAdd = true;
+
     }
     
     if (this.eventData.id != undefined && !this.eventData.date) {
