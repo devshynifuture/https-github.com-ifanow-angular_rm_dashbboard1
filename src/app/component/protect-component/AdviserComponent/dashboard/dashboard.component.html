@@ -637,8 +637,8 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
           </table>
-          <table appSkeletonLoading [appSkeletonLoading]="last7DaysFlag" class="skeletonAnimation" mat-table
-            [dataSource]="nscData" id="table-low" class="mt-20">
+          <table appSkeletonLoading [appSkeletonLoading]="last7DaysFlag" class="skeletonAnimation mt-20" mat-table
+            [dataSource]="nscData" id="table-low">
 
             <ng-container matColumnDef="position">
               <th mat-header-cell *matHeaderCellDef class="br"> NSE NMF II</th>
@@ -955,37 +955,38 @@
           <button mat-stroked-button class="advisor-view-all">View All</button>
         </div>
         <div class="col-md-12 p-0 pt-10">
-          <table mat-table [dataSource]="dataSource7" id="table-low">
+          <table mat-table [appSkeletonLoading]="aumFlag" class="skeletonAnimation" [dataSource]="aumReconList"
+            id="table-low">
 
             <ng-container matColumnDef="position">
               <th mat-header-cell *matHeaderCellDef class="br"> RTA</th>
-              <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+              <td mat-cell *matCellDef="let element" class="br"> {{element.rtName}} </td>
             </ng-container>
 
             <!-- Name Column -->
             <ng-container matColumnDef="name">
               <th mat-header-cell *matHeaderCellDef class="br"> ARN/RIA</th>
-              <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
+              <td mat-cell *matCellDef="let element" class="br"> {{element.arnRiaNumber}} </td>
             </ng-container>
 
             <!-- Weight Column -->
             <ng-container matColumnDef="weight">
               <th mat-header-cell *matHeaderCellDef> Done on</th>
-              <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+              <td mat-cell *matCellDef="let element"> {{element.doneOn | date:'dd/MM/yyyy'}} </td>
             </ng-container>
 
             <!-- Symbol Column -->
             <ng-container matColumnDef="symbol">
               <th mat-header-cell *matHeaderCellDef class="br"> Done by</th>
-              <td mat-cell *matCellDef="let element" class="br"> {{element.symbol}} </td>
+              <td mat-cell *matCellDef="let element" class="br"> {{element.doneBy}} </td>
             </ng-container>
             <ng-container matColumnDef="match">
               <th mat-header-cell *matHeaderCellDef class="br"> Unmatch</th>
-              <td mat-cell *matCellDef="let element" class="br"> {{element.match}} </td>
+              <td mat-cell *matCellDef="let element" class="br"> {{element.unMatched}} </td>
             </ng-container>
             <ng-container matColumnDef="report">
               <th mat-header-cell *matHeaderCellDef> Report</th>
-              <td mat-cell *matCellDef="let element" class="text-primary"> {{element.report}} </td>
+              <td mat-cell *matCellDef="let element" class="text-primary">Report</td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns7"></tr>
