@@ -116,12 +116,14 @@
                       <!-- Payee address -->
                       <td style="vertical-align: top;">
                         <h4 style="margin: 0px; font-size: 18px; color: #000000;">{{storeData.billerName}}</h4>
-                        <p style="color: #757575; font-size: 14px; margin-top: 10px;">{{storeData.billerAddress}}</p>
+                        <p style="margin: 10px 0px 0px 0px; font-size: 14px; color: #757575;">Biller address</p>
+                        <p style="color: #000000; font-size: 14px;">{{storeData.billerAddress}}</p>
                       </td>
                       <!-- Biller address -->
                       <td style="vertical-align: top;">
                         <h4 style="margin: 0px; font-size: 18px; color: #000000;">{{storeData.clientName}}</h4>
-                        <p style="color: #757575; font-size: 14px; margin-top: 10px;">{{storeData.billingAddress}}</p>
+                        <p style="margin: 10px 0px 0px 0px; font-size: 14px; color: #757575;"> Payee address</p>
+                        <p style="color: #000000; font-size: 14px;">{{storeData.billingAddress}}</p>
                       </td>
                     </tr>
                   </table>
@@ -188,21 +190,6 @@
 
               <tr>
                 <td style=" padding: 10px;">
-                  <table style="width: 70%; float: left; margin-top: 20px;">
-                    <tr>
-                      <td>
-                        <h4 style="margin: 0px; font-weight: normal; font-size: 14px;"> Footnote description</h4>
-                        <p style="margin: 0px; font-size: 12px;"> {{storeData.footnote}}</p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td style="padding-top: 15px;">
-                        <h4 style="margin: 0px; font-weight: normal; font-size: 14px;"> Terms & conditions</h4>
-                        <p style="margin: 0px; font-size: 12px;"> {{storeData.terms}}</p>
-                      </td>
-                    </tr>
-                  </table>
-
                   <table style="width: 30%; float: right; margin-top: 20px;">
                     <tr>
                       <td style="text-align: right; padding: 8px;font-size: 14px;">Sub total</td>
@@ -258,6 +245,27 @@
                   </table>
                 </td>
               </tr>
+
+              <tr>
+                <td colspan="2" style="padding: 10px;">
+                  <table style="width: 100%; margin-top: 20px;">
+                    <tr>
+                      <td>
+                        <h4 style="margin: 0px; font-weight: normal; font-size: 14px;"> Footnote description</h4>
+                        <p style="margin: 0px; font-size: 12px;"> {{storeData.footnote}}</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding-top: 15px;">
+                        <h4 style="margin: 0px; font-weight: normal; font-size: 14px;"> Terms & conditions</h4>
+                        <p style="margin: 0px; font-size: 12px;"> {{storeData.terms}}</p>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+
+
 
 
 
@@ -343,7 +351,8 @@
 
         <!--record payment div start-->
         <div *ngIf="showRecord==true">
-          <app-record-payment (outputData)='display($event)' [InvRecordData]="sendRecordPaymentData" [selectedInvRecord]="selectedInvRecord" [padding]="false">
+          <app-record-payment (outputData)='display($event)' [InvRecordData]="sendRecordPaymentData"
+            [selectedInvRecord]="selectedInvRecord" [padding]="false">
           </app-record-payment>
         </div>
         <!--Fee calculation Div start-->
@@ -422,12 +431,14 @@
               <tr>
                 <td style="vertical-align: top;">
                   <h4 style="margin: 0px; font-size: 18px; color: #000000;">{{storeData.billerName}}</h4>
-                  <p style="color: #757575; font-size: 14px; margin-top: 10px;">{{storeData.billerAddress}}</p>
+                  <p style="margin: 10px 0px 0px 0px; font-size: 14px; color: #757575;">Biller address</p>
+                  <p style="color: #000000; font-size: 14px;">{{storeData.billerAddress}}</p>
                 </td>
 
                 <td style="vertical-align: top;">
                   <h4 style="margin: 0px; font-size: 18px; color: #000000;">{{storeData.clientName}}</h4>
-                  <p style="color: #757575; font-size: 14px; margin-top: 10px;">{{storeData.billingAddress}}</p>
+                  <p style="margin: 10px 0px 0px 0px; font-size: 14px; color: #757575;">Payee address.</p>
+                  <p style="color: #000000; font-size: 14px;">{{storeData.billingAddress}}</p>
                 </td>
               </tr>
             </table>
@@ -491,21 +502,8 @@
         </tr>
 
         <tr>
-          <td style="padding: 8px;">
-            <table style="width: 70%; float: left; margin-top: 20px;">
-              <tr>
-                <td>
-                  <h4 style="margin: 0px; font-weight:normal; font-size: 14px;"> Footnote description</h4>
-                  <p style="margin: 0px; font-size: 12px;"> {{storeData.footnote}}</p>
-                </td>
-              </tr>
-              <tr>
-                <td style="padding-top: 15px;">
-                  <h4 style="margin: 0px; font-weight:normal; font-size: 14px;"> Terms & conditions</h4>
-                  <p style="margin: 0px; font-size: 12px;"> {{storeData.terms}}</p>
-                </td>
-              </tr>
-            </table>
+          <td style="padding: 8px; ">
+
             <table style="width: 30%; float: right; margin-top: 20px;">
               <tr>
                 <td style="text-align: right; padding: 8px;font-size: 14px;">Sub total</td>
@@ -559,7 +557,31 @@
               </tr>
             </table>
           </td>
+
+        <tr>
+          <td>
+            <table style="width: 100%; margin-bottom: 15px; margin-top: 10px;">
+              <tr>
+                <td style="padding-left: 10px;">
+                  <h4 style="margin: 0px; font-weight:normal; font-size: 14px;"> Footnote description</h4>
+                  <p style="margin: 0px; font-size: 12px;"> {{storeData.footnote}}</p>
+                </td>
+              </tr>
+
+              <tr>
+                <td style="padding-left: 10px; padding-top: 10px;">
+                  <h4 style="margin: 0px; font-weight:normal; font-size: 14px;"> Terms & conditions</h4>
+                  <p style="margin: 0px; font-size: 12px;"> {{storeData.terms}}</p>
+                </td>
+              </tr>
+
+            </table>
+          </td>
         </tr>
+
+
+
+
 
       </table>
 

@@ -1,248 +1,270 @@
 <div class="popup-header-fix-60">
-    <div class="row bb-1">
-        <div class="col-md-8 p-0">
-            <h4 class="mb-0 wrapper-20">
-                {{ data && data.flag === 'addTransaction' ? 'Add': (data && data.flag === 'editTransaction') ? 'Edit': (data && data.flag === 'addMutualFund') ? 'Add Mutual Fund and ' : (data && data.flag === 'editMutualFund') ? 'Edit Mutual Fund and' : 'Add Mutual Fund
+  <div class="row bb-1">
+    <div class="col-md-8 p-0">
+      <h4 class="mb-0 wrapper-20">
+        {{ data && data.flag === 'addTransaction' ? 'Add': (data && data.flag === 'editTransaction') ? 'Edit': (data && data.flag === 'addMutualFund') ? 'Add Mutual Fund and ' : (data && data.flag === 'editMutualFund') ? 'Edit Mutual Fund and' : 'Add Mutual Fund
                 and'}} scheme level transactions
-            </h4>
-        </div>
-        <div class="col-md-4 text-right">
-            <div class="wrapper-12">
-                <i class="material-icons c-p pt-8 v-middle" (click)="Close(false)"> clear</i>
-            </div>
-        </div>
+      </h4>
     </div>
+    <div class="col-md-4 text-right">
+      <div class="wrapper-12">
+        <i class="material-icons c-p pt-8 v-middle" (click)="Close(false)"> clear</i>
+      </div>
+    </div>
+  </div>
 </div>
 <div class="mb-48">
-    <div class="pt-100 pl-24 pr-24 pb-24" [formGroup]="schemeLevelHoldingForm">
+  <div class="pt-100 pl-24 pr-24 pb-24" [formGroup]="schemeLevelHoldingForm">
 
-        <div class="row">
-            <div class="col-md-4 pl-0">
-                <label class=" f-14">Owner </label>
-                <div class="form-group">
-                    <mat-form-field class="w-100">
-                        <mat-select matInput appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)' [data]='ownerData' formControlName="ownerName" class="form-control br-0">
-                            <mat-option value=''>Select family members</mat-option>
-                            <mat-option *ngFor="let f of familyMemberList" [value]="f.name">
-                                <span>{{f.name}}</span>
-                            </mat-option>
-                        </mat-select>
-                        <mat-error class="f-12">
-                            This field is required
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-            </div>
+    <div class="row">
+      <div class="col-md-4 pl-0">
+        <label class=" f-14">Owner </label>
+        <div class="form-group">
+          <mat-form-field class="w-100">
+            <mat-select matInput appOwner (valueChange)='display($event)' (valueChange1)='lisNominee($event)'
+              [data]='ownerData' formControlName="ownerName" class="form-control br-0">
+              <mat-option value=''>Select family members</mat-option>
+              <mat-option *ngFor="let f of familyMemberList" [value]="f.name">
+                <span>{{f.name}}</span>
+              </mat-option>
+            </mat-select>
+            <mat-error class="f-12">
+              This field is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
 
-            <div class="col-md-7 p-0" *ngIf="data.flag == 'addMutualFund'">
-                <label class=" f-14">Scheme name <span class="text-custom f-12"> Last closing NAV: {{data.nav}} </span> </label>
-                <div class="form-group widthBig">
-                    <mat-form-field floatLabel="never" appearance="standard">
-                        <input class="form-control br-0" matInput placeholder="Start typing to see scheme names" (keyup)="checkValidation($event.value)" aria-label="schemeName" [matAutocomplete]="auto" [formControl]="schemeNameControl">
+      <div class="col-md-7 p-0" *ngIf="data.flag == 'addMutualFund'">
+        <label class=" f-14">Scheme name <span class="text-custom f-12"> Last closing NAV: {{data.nav}} </span> </label>
+        <div class="form-group widthBig">
+          <mat-form-field floatLabel="never" appearance="standard">
+            <input class="form-control br-0" matInput placeholder="Start typing to see scheme names"
+              (keyup)="checkValidation($event.value)" aria-label="schemeName" [matAutocomplete]="auto"
+              [formControl]="schemeNameControl">
 
-                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                            <mat-option *ngIf="isLoadingForDropDown" class="is-loading">Loading...</mat-option>
-                            <ng-container *ngIf="!isLoadingForDropDown">
-                                <mat-option *ngFor="let scheme of filteredSchemes" [value]="scheme" [matTooltip]="scheme.schemeName" matTooltipPosition="after">
-                                    <div (click)="mapSchemeWithForm(scheme)">
-                                        <strong>{{scheme.schemeName}}</strong>
-                                    </div>
-                                </mat-option>
-                            </ng-container>
-                            
-                        </mat-autocomplete>
-                    </mat-form-field>
-                    <br>
-                    <ng-container *ngIf="filteredSchemeError">
-                        <!-- <span class="f-12">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+              <mat-option *ngIf="isLoadingForDropDown" class="is-loading">Loading...</mat-option>
+              <ng-container *ngIf="!isLoadingForDropDown">
+                <mat-option *ngFor="let scheme of filteredSchemes" [value]="scheme" [matTooltip]="scheme.schemeName"
+                  matTooltipPosition="after">
+                  <div (click)="mapSchemeWithForm(scheme)">
+                    <strong>{{scheme.schemeName}}</strong>
+                  </div>
+                </mat-option>
+              </ng-container>
+
+            </mat-autocomplete>
+          </mat-form-field>
+          <br>
+          <ng-container *ngIf="filteredSchemeError">
+            <!-- <span class="f-12">
               {{errorMsg}}
             </span> -->
             <mat-error class="f-12">
               {{errorMsg}}
+            </mat-error>
+
+          </ng-container>
+          <mat-error class="f-12" *ngIf="errorMsgForScheme">
+            This field is required
           </mat-error>
-           
-                    </ng-container>
-                  <mat-error class="f-12" *ngIf="errorMsgForScheme">
-                    This field is required
-                </mat-error>
-                </div>
-            </div>
+        </div>
+      </div>
 
 
 
-            <div class="col-md-7 p-0" *ngIf="data.flag == 'editTransaction' ||  data.flag =='editMutualFund' || data.flag =='addTransaction' ">
-                <label class=" f-14"> Scheme name <span class="text-custom f-12"> Last closing NAV: {{data.nav}} </span>
+      <div class="col-md-7 p-0"
+        *ngIf="data.flag == 'editTransaction' ||  data.flag =='editMutualFund' || data.flag =='addTransaction' ">
+        <label class=" f-14"> Scheme name <span class="text-custom f-12"> Last closing NAV: {{data.nav}} </span>
         </label>
-                <div class="form-group widthBig">
-                    <!-- [matAutocomplete]="auto" -->
-                    <mat-form-field floatLabel="never" appearance="standard">
-                        <input class="form-control br-0" matInput placeholder="Start typing to see scheme names" aria-label="schemeName" [(ngModel)]="data.schemeName" [formControl]="schemeNameControl">
-                        <br>
-                        <ng-container *ngIf="filteredSchemeError">
-                            <span class="f-12">
+        <div class="form-group widthBig">
+          <!-- [matAutocomplete]="auto" -->
+          <mat-form-field floatLabel="never" appearance="standard">
+            <input class="form-control br-0" matInput placeholder="Start typing to see scheme names"
+              aria-label="schemeName" [(ngModel)]="data.schemeName" [formControl]="schemeNameControl">
+            <br>
+            <ng-container *ngIf="filteredSchemeError">
+              <span class="f-12">
                 {{errorMsg}}
               </span>
-                        </ng-container>
-                    </mat-form-field>
-                </div>
-            </div>
+            </ng-container>
+          </mat-form-field>
         </div>
+      </div>
+    </div>
 
-        <div class="row pt-24">
-            <div class="col-md-4 pl-0">
-                <label class=" f-14">Folio number </label>
-                <div class="form-group">
-                    <mat-form-field>
-                        <input matInput #folioNumber appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC" type="text" class="form-control br-0" formControlName="folioNumber">
-                        <mat-error class="f-12">
-                            This field is required
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-            </div>
+    <div class="row pt-24">
+      <div class="col-md-4 pl-0">
+        <label class=" f-14">Folio number </label>
+        <div class="form-group">
+          <mat-form-field>
+            <input matInput #folioNumber appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC"
+              type="text" class="form-control br-0" formControlName="folioNumber">
+            <mat-error class="f-12">
+              This field is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
 
-            <div class="col-md-7 p-0">
-                <div class="row">
-                    <div class="col-md-6 pl-0">
-                        <label class=" f-14"> SIP </label>
-                        <div class="form-group">
-                            <mat-form-field>
-                                <input matInput #sip type="text" appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SLASH" class="form-control br-0" formControlName="sip">
-                                <!-- <mat-error class="f-12">
+      <div class="col-md-7 p-0">
+        <div class="row">
+          <div class="col-md-6 pl-0">
+            <label class=" f-14"> SIP </label>
+            <div class="form-group">
+              <mat-form-field>
+                <input matInput #sip type="text" appInputValueValidation
+                  [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SLASH" class="form-control br-0"
+                  formControlName="sip">
+                <!-- <mat-error class="f-12">
                                     This field is required
                                 </mat-error> -->
-                            </mat-form-field>
-                        </div>
-                    </div>
+              </mat-form-field>
+            </div>
+          </div>
 
-                    <div class="col-md-6 p-0">
-                        <label class=" f-14 d-flex justify-content-between mb-2"> Tag <img class="c-p ml-4 right"
+          <div class="col-md-6 p-0">
+            <label class=" f-14 d-flex justify-content-between mb-2"> Tag <img class="c-p ml-4 right"
                 src="/assets/images/svg/toggle.svg"
                 matTooltip="You can add tag to a scheme to better classify it. Tags are open ended, so you can use whatever tags you want. FYI, tag wise reports can be generated as well.">
             </label>
-                        <div class="form-group widthBig">
-                            <mat-form-field floatLabel="never" appearance="standard">
-                                <input matInput #tag type="text" class="form-control br-0" placeholder="Managed" formControlName="tag">
-                                <mat-hint align="start" class="f-12">Optional</mat-hint>
-                                <!-- <mat-error class="f-12">
+            <div class="form-group widthBig">
+              <mat-form-field floatLabel="never" appearance="standard">
+                <input matInput #tag type="text" class="form-control br-0" placeholder="Managed" formControlName="tag">
+                <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
+                <!-- <mat-error class="f-12">
                       This field is required
                     </mat-error> -->
-                            </mat-form-field>
-                        </div>
-                    </div>
-                </div>
+              </mat-form-field>
             </div>
-
-
-
+          </div>
         </div>
-
-
-
+      </div>
 
 
 
     </div>
 
-    <hr>
-    <div class="row pl-28">
-        <div class="col-md-12 pl-0">
-            <h4 class="mb-20 text-black">Transactions</h4>
-        </div>
+
+
+
+
+
+  </div>
+
+  <hr>
+  <div class="row pl-28">
+    <div class="col-md-12 pl-0">
+      <h4 class="mb-20 text-black">Transactions</h4>
     </div>
-    <div class="row pl-28">
-        <div class="col-md-4 pl-0">
-            <label class="f-14"> Transaction type</label>
-        </div>
-
-        <div class="col-md-2 pl-0">
-            <label class=" f-14"> Date </label>
-        </div>
-
-        <div class="col-md-3">
-            <label class=" f-14">Transaction amount </label>
-        </div>
-        <div class="col-md-3 pl-0">
-            <label class=" f-14">Units</label>
-        </div>
+  </div>
+  <div class="row pl-28">
+    <div class="col-md-4 pl-0">
+      <label class="f-14"> Transaction type</label>
     </div>
 
-    <div [formGroup]="transactionListForm">
-        <div class="row pb-36 pl-24" *ngFor="let singleTransaction of transactionArray.controls; let i = index;" [formGroup]="singleTransaction">
-            <div class="col-md-4 pl-0">
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <mat-select matInput formControlName="transactionType" class="form-control br-0">
-                            <mat-option>None</mat-option>
-                            <mat-option [value]="item.id" #type *ngFor="let item of transactionTypeList" (click)="setTransactionType(item.id, singleTransaction,item);getIndexOfSelectedElement(type.value,singleTransaction)">
-                                {{ item.transactionType }}
-                            </mat-option>
-                        </mat-select>
-                        <mat-error>
-                            This field is required
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="col-md-2 p-0">
-                <div class="form-group mb-0">
-                    <mat-form-field class="ba-date">
-                        <input (click)="picker.open()" matInput (dateChange)="setDateChange($event);getIndexOfSelectedElement(date.value,singleTransaction)" autocomplete="off" formControlName="date" [max]="maximumDate" #date [matDatepicker]="picker" class="form-control br-0 b-0">
-                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
-                        <mat-error>
-                            This field is required
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input matInput autocomplete="off" type="number" formControlName="transactionAmount" maxlength="20" class="form-control br-0 rupess" #trnAmt (keyup)="getIndexOfSelectedElement(trnAmt.value,singleTransaction)">
-                        <mat-error>
-                            This field is required
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="col-md-2 pl-0">
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input matInput autocomplete="off" #totalNetContribution appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY_WITH_FOUR_DECIMAL" #totalUnits (keyup)="getIndexOfSelectedElement(totalUnits.value,singleTransaction)" formControlName="Units"
-                            type="number" maxlength="20" class="form-control br-0 rupess">
-                        <mat-error>
-                            This field is required
-                        </mat-error>
-                    </mat-form-field>
+    <div class="col-md-2 pl-0">
+      <label class=" f-14"> Date </label>
+    </div>
 
-                </div>
+    <div class="col-md-3">
+      <label class=" f-14">Transaction amount </label>
+    </div>
+    <div class="col-md-3 pl-0">
+      <label class=" f-14">Units</label>
+    </div>
+  </div>
 
-            </div>
+  <div [formGroup]="transactionListForm">
+    <div class="row pb-36 pl-24" *ngFor="let singleTransaction of transactionArray.controls; let i = index;"
+      [formGroup]="singleTransaction">
+      <div class="col-md-4 pl-0">
+        <div class="form-group mb-0">
+          <mat-form-field>
+            <mat-select matInput formControlName="transactionType" class="form-control br-0">
+              <mat-option>None</mat-option>
+              <mat-option [value]="item.id" #type *ngFor="let item of transactionTypeList"
+                (click)="setTransactionType(item.id, singleTransaction,item);getIndexOfSelectedElement(type.value,singleTransaction)">
+                {{ item.transactionType }}
+              </mat-option>
+            </mat-select>
+            <mat-error>
+              This field is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-2 p-0">
+        <div class="form-group mb-0">
+          <mat-form-field class="ba-date">
+            <input (click)="picker.open()" matInput
+              (dateChange)="setDateChange($event);getIndexOfSelectedElement(date.value,singleTransaction)"
+              autocomplete="off" formControlName="date" [max]="maximumDate" #date [matDatepicker]="picker"
+              class="form-control br-0 b-0">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error>
+              This field is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group mb-0">
+          <mat-form-field>
+            <input matInput autocomplete="off" type="number" formControlName="transactionAmount" maxlength="20"
+              class="form-control br-0 rupess" #trnAmt
+              (keyup)="getIndexOfSelectedElement(trnAmt.value,singleTransaction)">
+            <mat-error>
+              This field is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-2 pl-0">
+        <div class="form-group mb-0">
+          <mat-form-field>
+            <input matInput autocomplete="off" #totalNetContribution appInputValueValidation
+              [inputValidator]="validatorType.NUMBER_ONLY_WITH_FOUR_DECIMAL" #totalUnits
+              (keyup)="getIndexOfSelectedElement(totalUnits.value,singleTransaction)" formControlName="Units"
+              type="number" maxlength="20" class="form-control br-0 rupess">
+            <mat-error>
+              This field is required
+            </mat-error>
+          </mat-form-field>
 
-            <div class="col-md-1 d-flex pt-10 pl-0" *ngIf="data.flag =='addMutualFund' || data.flag =='editMutualFund' || data.flag =='addTransaction'">
-                <i class="material-icons text-primitive f-20 c-p float-left" *ngIf="i==transactionArray.length-1" (click)="addTransactions()">
+        </div>
+
+      </div>
+
+      <div class="col-md-1 d-flex pt-10 pl-0"
+        *ngIf="data.flag =='addMutualFund' || data.flag =='editMutualFund' || data.flag =='addTransaction'">
+        <i class="material-icons text-primitive f-20 c-p float-left" *ngIf="i==transactionArray.length-1"
+          (click)="addTransactions()">
           add
         </i>
-                <i class="material-icons text-primitive f-20 c-p pl-10" *ngIf="transactionArray.length != 1" (click)="removeTransactions(i)">
+        <i class="material-icons text-primitive f-20 c-p pl-10" *ngIf="transactionArray.length != 1"
+          (click)="removeTransactions(i)">
           remove
         </i>
-            </div>
+      </div>
 
-        </div>
     </div>
+  </div>
 </div>
 <div class="bottom-fixed wrapper-12 pt-16 w-60">
-    <div class="row">
-        <div class="col-md-4">
-            <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
-        </div>
-        <div class="col-md-8 right text-right">
-            <!-- <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveMfSchemeLevel()">Save</button> -->
-            <app-progress-button class="btn-bottom br-0 text-inherit c-p" (click)="saveMfSchemeLevel()" [options]="barButtonOptions">
-            </app-progress-button>
-        </div>
+  <div class="row">
+    <div class="col-md-4">
+      <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
     </div>
+    <div class="col-md-8 right text-right">
+      <!-- <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveMfSchemeLevel()">Save</button> -->
+      <app-progress-button class="btn-bottom br-0 text-inherit c-p" (click)="saveMfSchemeLevel()"
+        [options]="barButtonOptions">
+      </app-progress-button>
+    </div>
+  </div>
 </div>
 <!-- <div class="row">
       <div class="col-md-12 p-0">

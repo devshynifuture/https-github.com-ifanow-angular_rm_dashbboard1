@@ -29,9 +29,21 @@ img {
 }
 
 .boxes {
-  min-height: 255px;
+  height: 255px;
+  overflow: hidden;
   border: 1px solid #ddd;
+  position: relative;
+}
 
+.boxes {
+  .documrntBox{
+    p{
+      font-size: 12px !important;
+  margin-bottom: 0px !important;
+  text-align: left !important;
+    }
+  }
+  
 }
 
 h5 {
@@ -49,18 +61,24 @@ h5 {
   // -ms-transform: translate(-50%, -50%);
   // cursor: pointer;
   position: absolute;
-  top: 60%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
+  // top: 60%;
+  // left: 50%;
+  // transform: translate(-50%, -50%);
+  // -ms-transform: translate(-50%, -50%);
   // background-color: #555;
   // color: white;
   font-size: 16px;
-  padding: 12px 24px;
+  // padding: 12px 24px;
   border: none;
   cursor: pointer;
   border-radius: 5px;
   text-align: center;
+  width: 59px;
+  height: 26px;
+  left: 0px;
+  right: 0px;
+  margin: 0px auto;
+  bottom: 25px;
 
 }
 
