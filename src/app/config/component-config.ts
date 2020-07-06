@@ -493,7 +493,6 @@ export const appConfig = {
   AUTO_REMAP_CLIENT: 'user/clients/remap/auto',
 
 
-
   MAP_UNMAP_CLIENT: 'user/clients/map/manual',
   UNMAP_MAP_CLIENT: 'user/clients/unmap',
   BSE_UCC_FILE_UPLOAD: 'user/bse/client/file-upload',
