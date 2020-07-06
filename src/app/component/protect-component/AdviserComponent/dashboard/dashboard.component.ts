@@ -307,7 +307,8 @@ export class DashboardComponent implements OnInit {
       else{
         this.LastSevenDaysTransactions = [];
         this.dataSource5 = [];
-      })
+      }
+    });
   }
 
   getSummaryDataDashboard() {
