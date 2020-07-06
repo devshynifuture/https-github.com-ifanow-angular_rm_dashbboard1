@@ -222,7 +222,6 @@ export class RedemptionTransactionComponent implements OnInit {
       this.folioDetails = {}
       this.filterSchemeList = of([{'schemeName': this.schemeName}])
       this.redemptionTransaction.controls.schemeRedeem.setValue({'schemeName': this.schemeName})
-      this.redemptionTransaction.controls.investmentAccountSelection.setValue({'folioNumber': this.folioNumber})
       const obj1 = {
         mutualFundSchemeMasterId: this.mutualFundData.schemeId,
         aggregatorType: this.mfDefault.defaultClient.aggregatorType,
@@ -239,6 +238,12 @@ export class RedemptionTransactionComponent implements OnInit {
         'schemeName': this.schemeName,
         'mutualFundSchemeMasterId':this.mutualFundData.schemeId
       }
+      this.showUnits = true;
+    this.mutualFundData.balanceUnit = parseFloat(this.mutualFundData.balanceUnit).toFixed(2);
+    this.currentValue = this.processTransaction.calculateCurrentValue(this.mutualFundData.nav, this.mutualFundData.balanceUnit).toFixed(2);
+    Object.assign(this.folioDetails, {balanceUnit: this.mutualFundData.balanceUnit});
+    Object.assign(this.transactionSummary, {folioNumber: this.mutualFundData.folioNumber});
+    Object.assign(this.transactionSummary, {tpUserCredFamilyMappingId: this.mfDefault.defaultClient.tpUserCredFamilyMappingId});
     }
     
   }

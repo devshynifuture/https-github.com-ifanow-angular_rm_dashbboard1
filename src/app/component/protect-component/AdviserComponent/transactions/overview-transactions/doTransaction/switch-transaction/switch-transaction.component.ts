@@ -476,17 +476,17 @@ export class SwitchTransactionComponent implements OnInit {
         'schemeName': this.schemeName,
         'mutualFundSchemeMasterId':this.mutualFundData.schemeId
       }
-      // const obj1 = {
-      //   mutualFundSchemeMasterId: this.mutualFundData.schemeId,
-      //   aggregatorType: this.mfDefault.defaultClient.aggregatorType,
-      //   orderType: 'ORDER',
-      //   userAccountType: this.mfDefault.defaultCredential.accountType,
-      // };
-      // this.onlineTransact.getSchemeDetails(obj1).subscribe(
-      //   data => this.getSchemeDetailsRes(data), (error) => {
-      //     this.eventService.openSnackBar(error, 'Dismiss');
-      //   }
-      // );
+      const obj1 = {
+        mutualFundSchemeMasterId: this.mutualFundData.schemeId,
+        aggregatorType: this.mfDefault.defaultClient.aggregatorType,
+        orderType: 'ORDER',
+        userAccountType: this.mfDefault.defaultCredential.accountType,
+      };
+      this.onlineTransact.getSchemeDetails(obj1).subscribe(
+        data => this.getSchemeDetailsRes(data), (error) => {
+          this.eventService.openSnackBar(error, 'Dismiss');
+        }
+      );
     }
   }
 
@@ -495,13 +495,16 @@ export class SwitchTransactionComponent implements OnInit {
   }
 
   switch() {
+    if(this.mutualFundData){
+      this.switchTransaction.controls.investmentAccountSelection.setValue(this.folioNumber)
+    }
     if (this.reInvestmentOpt.length > 1 && this.switchTransaction.controls.reinvest.invalid) {
       this.switchTransaction.get('reinvest').markAsTouched();
-    } else if (this.switchTransaction.get('folioSelection').value == 1) {
-      if (this.switchTransaction.get('investmentAccountSelection').invalid) {
-        this.switchTransaction.get('investmentAccountSelection').markAsTouched();
-        return;
-      }
+    // } else if (this.switchTransaction.get('folioSelection').value == 1) {
+    //   if (this.switchTransaction.get('investmentAccountSelection').invalid) {
+    //     this.switchTransaction.get('investmentAccountSelection').markAsTouched();
+    //     return;
+    //   }
     } else if (this.switchTransaction.get('switchType').value != 3 && this.switchTransaction.get('employeeContry').invalid) {
       this.switchTransaction.get('employeeContry').markAsTouched();
       return;
