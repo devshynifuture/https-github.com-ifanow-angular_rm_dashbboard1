@@ -1,16 +1,15 @@
 <div class="bg-white pl-20 pr-20  pt-130 pb-28">
     <div [ngClass]="dataSource.data.length > 0 ? 'block' : 'none'">
         <div class="row pt-8">
-            <div class="col-md-4 p-0">
+            <div class="col-md-8 p-0">
+                <!-- <h4 class="pt-8 mb-0"></h4> -->
+            </div>
+            <div class="col-md-4 right text-right p-0">
                 <mat-form-field *ngIf="searchoptionFlag" appearance="standard" class="searchInputWidth"
                     floatLabel="never">
                     <input (keyup)="applyFilter($event)" autocomplete="off" class="form-control br-0 pt-8 mb-0" matInput
                         placeholder="Type to filter data">
                 </mat-form-field>
-                <!-- <h4 class="pt-8 mb-0"></h4> -->
-            </div>
-            <div class="col-md-8 right text-right p-0">
-
                 <!-- <button (click)="Open('clientHelp','open35',Questions)" class="btn-default br-0 help-btn"
                     mat-stroked-button>HELP
                 </button> -->

@@ -102,7 +102,8 @@
       <div class="col-md-6 pt-24 pb-24 pl-8">
         <p class="m-0 text-primitive roboto f-400 lh-16">Total fees
           charged</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8">{{totalSales}}</h3>
+        <h3 class="m-0 roboto f-400 text-black pt-8"><span appFormatNumber [value]="totalSales">{{totalSales}}</span>
+        </h3>
       </div>
       <div class="col-md-6 pt-24 pb-24 bl-half">
         <p class="m-0 text-primitive roboto f-400 lh-16">Fees
@@ -431,17 +432,17 @@
         <div class="col-md-4 br-half pt-8 pb-8">
           <p class="m-0 text-custom f-400 roboto lh-16 ">Total goals<br>
             all clients</p>
-          <h3 class="m-0 roboto f-400 lh-23 pt-8">481</h3>
+          <h3 class="m-0 roboto f-400 lh-23 pt-8">{{goalSummaryData.allGoals}}</h3>
         </div>
         <div class="col-md-4 br-half pt-8 pb-8">
           <p class="m-0 text-custom f-400 roboto lh-16 ">Clients <br>
             without goals</p>
-          <h3 class="m-0 roboto f-400 lh-23 pt-8">78%</h3>
+          <h3 class="m-0 roboto f-400 lh-23 pt-8">{{goalSummaryData.clientsWithoutGoals}}%</h3>
         </div>
         <div class="col-md-4 pt-8 pb-8">
           <p class="m-0 text-custom f-400 roboto lh-16">Clients without<br>
             emergency funds</p>
-          <h3 class="m-0 roboto f-400 text-custom lh-23 pt-8">85%</h3>
+          <h3 class="m-0 roboto f-400 text-custom lh-23 pt-8">{{goalSummaryData.clientsWithoutEmergencyGoals}}%</h3>
         </div>
       </div>
       <div class="row pt-40 pb-8">
@@ -637,8 +638,8 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
           </table>
-          <table appSkeletonLoading [appSkeletonLoading]="last7DaysFlag" class="skeletonAnimation" mat-table
-            [dataSource]="nscData" id="table-low" class="mt-20">
+          <table appSkeletonLoading [appSkeletonLoading]="last7DaysFlag" class="skeletonAnimation mt-20" mat-table
+            [dataSource]="nscData" id="table-low">
 
             <ng-container matColumnDef="position">
               <th mat-header-cell *matHeaderCellDef class="br"> NSE NMF II</th>
@@ -743,7 +744,55 @@
           </button>
         </div>
         <div class="col-md-12 d-flex p-0 overflow-y pt-10">
-          <div *ngFor="let singleTransaction of transactionList" class="pr-20">
+          <div class="pr-20" *ngIf="LastSevenDaysTransactions.length <= 0">
+            <div class="b-a w-300 br-4 noDataFound noTransactionFound">
+              No transaction done in last 7 days.
+              <div>
+                <img src="assets/images/svg/run.svg">
+              </div>
+              <!-- <div class="row pt-10">
+                <div class="col-md-10 p-0">
+                  <p class="m-0 f-400 roboto text-black pl-10 lh-16">{{singleTransaction.transactionTypeString}}</p>
+
+                </div>
+                <div class="col-md-2 pr-10">
+                  <p class="m-0 f-400 roboto text-custom lh-16">{{singleTransaction.platformName}}</p>
+                </div>
+              </div>
+              <div class="row pt-10">
+                <div class="col-md-6 p-0">
+                  <p class="m-0 f-400 roboto text-black pl-10 f-20 lh-16">
+                    {{(singleTransaction.amtUnitType == 'Amount') ? '₹' : 'Units'}} {{singleTransaction.amount}}</p>
+
+                </div>
+                <div class="col-md-6 text-right pr-10">
+                  <p class="m-0 f-400 roboto text-custom lh-16">{{singleTransaction.orderDate | date:'dd/MM/yyyy'}}</p>
+                </div>
+                <div class="col-md-11 pl-10 pt-6">
+                  <p class="m-0 f-400 roboto text-custom lh-16 f-12">{{singleTransaction.schemeName}}</p>
+                </div>
+              </div>
+              <div class="row pt-10">
+                <div class="col-md-10 pl-0">
+                  <p class="m-0 text-black f-400 roboto pl-10 lh-16">{{singleTransaction.clientName}}</p>
+                </div>
+
+                <div class="col-md-12 p-0 pl-10 pt-20 pb-10">
+                  <button *ngIf="singleTransaction.statusDesc!='PENDING AUTHORIZATION'" mat-stroked-button
+                    class="btn-primary-outline h-20 lh-20 br-2 pr-5 pl-5 f-12">UNITS ALLOTTED
+                    READY
+                  </button>
+                  <button *ngIf="singleTransaction.statusDesc=='PENDING AUTHORIZATION'" mat-stroked-button
+                    class="btn-danger-outline h-20 lh-20 br-2 pr-5 pl-5 f-12">PENDING
+                    AUTHORISATION
+                  </button>
+                </div>
+              </div> -->
+            </div>
+          </div>
+
+
+          <div *ngFor="let singleTransaction of LastSevenDaysTransactions" class="pr-20">
             <div class="b-a w-300 br-4">
               <div class="row pt-10">
                 <div class="col-md-10 p-0">
@@ -827,37 +876,47 @@
         <div class="col-md-8 p-0">
           <h5 class="m-0 f-500 roboto text-black pt-2">Rejections and Reversals</h5>
         </div>
-        <div class="col-md-4 p-0 text-right">
+        <div class="col-md-4 p-0 text-right" *ngIf="dataSource5.length > 0">
           <button mat-stroked-button class="advisor-view-all">View All</button>
         </div>
         <div class="col-md-12 p-0">
-          <table mat-table [dataSource]="dataSource5" id="table-low" class="mt-10">
-
-
+          <table mat-table [dataSource]="dataSource5" id="table-low" class="mt-10" *ngIf="dataSource5.length > 0">
             <ng-container matColumnDef="position">
               <th mat-header-cell *matHeaderCellDef class="br"> Client / Scheme</th>
-              <td mat-cell *matCellDef="let element" class="br"> {{element.position}}<br> <span class="text-custom">IDFC
-                  Sterling Value Fund -Regular Plan-Growth | 2005226/68</span></td>
+              <td mat-cell *matCellDef="let element" class="br"> {{element.clientName}}<br> <span
+                  class="text-custom">{{element.schemeName}}{{element.folio?" | "+element.folio:""}}</span></td>
             </ng-container>
 
             <!-- Name Column -->
             <ng-container matColumnDef="name">
               <th mat-header-cell *matHeaderCellDef class="br"> Type</th>
-              <td mat-cell *matCellDef="let element" class="br"> {{element.name}}<br> <span
-                  class="text-custom">mismatch</span></td>
+              <td mat-cell *matCellDef="let element" class="br">
+                <div [ngSwitch]="element.status">
+                  <div *ngSwitchCase="1">FAILURE</div>
+                  <div *ngSwitchCase="7">Transaction rejected</div>
+                </div>
+                <!-- <span class="text-custom">{{element.serviceMessage}}</span> for reason -->
+              </td>
             </ng-container>
 
             <!-- Weight Column -->
             <ng-container matColumnDef="weight">
               <th mat-header-cell *matHeaderCellDef class="br"> Details</th>
-              <td mat-cell *matCellDef="let element" class="br"> {{element.weight}}<br> <span
-                  class="text-custom">30,000</span></td>
+              <td mat-cell *matCellDef="let element" class="br"> {{element.orderDate | date:"dd/MM/yyyy"}}<br>
+                <span class="text-custom">{{element.amount? "₹" : ""}}</span><span class="text-custom"
+                  appFormatNumber>{{element.amount }}</span></td>
             </ng-container>
 
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns5"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns5;"></tr>
           </table>
+          <div *ngIf="dataSource5.length <= 0" class="noDataFound">
+            No Rejected transaction in last 7 days.
+            <div>
+              <img src="assets/images/svg/run.svg">
+            </div>
+          </div>
         </div>
       </div>
       <div class="row pt-40 subscription-summary-advisor">
@@ -955,37 +1014,38 @@
           <button mat-stroked-button class="advisor-view-all">View All</button>
         </div>
         <div class="col-md-12 p-0 pt-10">
-          <table mat-table [dataSource]="dataSource7" id="table-low">
+          <table mat-table [appSkeletonLoading]="aumFlag" class="skeletonAnimation" [dataSource]="aumReconList"
+            id="table-low">
 
             <ng-container matColumnDef="position">
               <th mat-header-cell *matHeaderCellDef class="br"> RTA</th>
-              <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+              <td mat-cell *matCellDef="let element" class="br"> {{element.rtName}} </td>
             </ng-container>
 
             <!-- Name Column -->
             <ng-container matColumnDef="name">
               <th mat-header-cell *matHeaderCellDef class="br"> ARN/RIA</th>
-              <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
+              <td mat-cell *matCellDef="let element" class="br"> {{element.arnRiaNumber}} </td>
             </ng-container>
 
             <!-- Weight Column -->
             <ng-container matColumnDef="weight">
               <th mat-header-cell *matHeaderCellDef> Done on</th>
-              <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+              <td mat-cell *matCellDef="let element"> {{element.doneOn | date:'dd/MM/yyyy'}} </td>
             </ng-container>
 
             <!-- Symbol Column -->
             <ng-container matColumnDef="symbol">
               <th mat-header-cell *matHeaderCellDef class="br"> Done by</th>
-              <td mat-cell *matCellDef="let element" class="br"> {{element.symbol}} </td>
+              <td mat-cell *matCellDef="let element" class="br"> {{element.doneBy}} </td>
             </ng-container>
             <ng-container matColumnDef="match">
               <th mat-header-cell *matHeaderCellDef class="br"> Unmatch</th>
-              <td mat-cell *matCellDef="let element" class="br"> {{element.match}} </td>
+              <td mat-cell *matCellDef="let element" class="br"> {{element.unMatched}} </td>
             </ng-container>
             <ng-container matColumnDef="report">
               <th mat-header-cell *matHeaderCellDef> Report</th>
-              <td mat-cell *matCellDef="let element" class="text-primary"> {{element.report}} </td>
+              <td mat-cell *matCellDef="let element" class="text-primary">Report</td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns7"></tr>
