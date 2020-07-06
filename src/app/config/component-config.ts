@@ -818,5 +818,6 @@ export const appConfig = {
   LAST_7_DAYS_TRANSACTION_STATUS: 'report/transaction/status/summary',
   LAST_7_DAYS_TRANSACTION: 'report/transaction/list/get',
   DOCUMENT_TOTAL_COUNT_SIZE: 'document/account/document/total-count-and-size/get',
-  LATEST_AUM_RECON: 'admin/dashboard/aum/reconciliation/summary'
+  LATEST_AUM_RECON: 'admin/dashboard/aum/reconciliation/summary',
+  GET_GOAL_SUMMARY: 'admin/dashboard/goal/summary'
 };

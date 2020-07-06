@@ -148,6 +148,7 @@ export class DashboardComponent implements OnInit {
   documentSizeData: any = {};
   aumReconList: any;
   aumFlag: boolean;
+  goalSummaryData: any = {};
 
   constructor(
     public dialog: MatDialog, private subService: SubscriptionService,
@@ -241,6 +242,7 @@ export class DashboardComponent implements OnInit {
     this.getDocumentTotalSize();
     this.getLastSevenDaysTransactions();
     this.getLatesAumReconciliationData();
+    this.getGoalSummaryData();
   }
 
   mailConnect(done) {
@@ -497,6 +499,23 @@ export class DashboardComponent implements OnInit {
       }, err => {
         this.aumFlag = false;
         this.aumReconList = []
+      }
+    )
+  }
+
+  getGoalSummaryData() {
+    const obj = {
+      advisorId: this.advisorId
+    }
+    this.dashboardService.getGoalSummarydata(obj).subscribe(
+      data => {
+        if (data) {
+          this.goalSummaryData = data;
+        } else {
+
+        }
+      }, err => {
+
       }
     )
   }

@@ -29,7 +29,7 @@ export class DashboardService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_NOTES, httpParams);
   }
 
-  getLastSevenDaysTransactions(data){
+  getLastSevenDaysTransactions(data) {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.LAST_7_DAYS_TRANSACTION, data, 1);
   }
 
@@ -60,5 +60,10 @@ export class DashboardService {
   getLatestAumReconciliation(data) {
     let httpParams = new HttpParams().set('id', data.id);
     return this.http.get(apiConfig.MAIN_URL + appConfig.LATEST_AUM_RECON, httpParams);
+  }
+
+  getGoalSummarydata(data) {
+    let httpParams = new HttpParams().set('advisorId', data.advisorId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_GOAL_SUMMARY, httpParams);
   }
 }
