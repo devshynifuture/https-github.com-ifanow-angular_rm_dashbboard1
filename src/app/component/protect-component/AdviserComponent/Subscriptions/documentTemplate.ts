@@ -59,6 +59,7 @@ export const redressalofGrievance = `
 
 
 export const letterOfEngagement = `
+
 <p>SCOPE OF SERVICES</p>
 <p>
 	<br>
@@ -113,7 +114,7 @@ export const letterOfEngagement = `
 <p>Email ID: $client_email</p>
 <p>Mobile No.: $client_mobile</p>
 <p>PAN: $client_PAN</p>
-<p data-f-id="pbf" style="text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;"></p>
+<p data-f-id="pbf" style="text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;"></p> 
 `
 export const scopeofService = `
 <p>SCOPE OF SERVICES</p>
