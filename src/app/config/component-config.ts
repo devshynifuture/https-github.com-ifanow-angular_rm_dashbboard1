@@ -817,5 +817,6 @@ export const appConfig = {
   GET_BIRTHDAY_OR_ANNIVERSARY: 'user/birthday/or/anniversary',
   KEY_METRICS_ADVISOR_DASHBOARD: 'admin/dashboard/key/metrics',
   LAST_7_DAYS_TRANSACTION_STATUS: 'report/transaction/status/summary',
+  LAST_7_DAYS_TRANSACTION: 'report/transaction/list/get',
   DOCUMENT_TOTAL_COUNT_SIZE: 'document/account/document/total-count-and-size/get'
 };

@@ -237,10 +237,48 @@ export class DashboardComponent implements OnInit {
     this.getBirthdayOrAnniversary();
     this.getLast7DaysTransactionStatus();
     this.getDocumentTotalSize();
+    this.getLastSevenDaysTransactions();
   }
 
   mailConnect(done) {
     this.excessAllow = done;
+  }
+
+  LastSevenDaysTransactions:any=[];
+  rejectedFAILURE:any = [];
+  getLastSevenDaysTransactions(){
+    let lastSevenDays = new Date().setDate(new Date().getDate() - 7);
+  //   const obj ={
+  //     "advisorId":this.advisorId,
+  //     "tpUserCredentialId":null,
+  //     "startDate":new Date().getTime(),
+  //     "endDate":new Date(lastSevenDays).getTime()
+  //  }
+
+   const obj = {
+    "advisorId":5430,
+    "tpUserCredentialId":null,
+    "startDate":1593369000000,
+    "endDate":1594060199999
+ }
+   console.log(new Date(obj.startDate), new Date(obj.endDate), "date 123");
+   this.dashboardService.getLastSevenDaysTransactions(obj).subscribe(
+    (data) => {
+      console.log(data,"LastSevenDaysTransactions 123");
+      if(data){
+        this.LastSevenDaysTransactions = data;
+        this.dataSource5 = this.LastSevenDaysTransactions.filter((x)=>{
+          x.status == 1 || x.status == 7;
+        })
+      }
+      else{
+        this.LastSevenDaysTransactions = [];
+        this.dataSource5 = [];
+      }
+    },
+    (err)=>{
+
+    })
   }
 
   getSummaryDataDashboard() {
