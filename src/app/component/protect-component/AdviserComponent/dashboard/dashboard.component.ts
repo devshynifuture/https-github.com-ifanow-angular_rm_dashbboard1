@@ -451,7 +451,14 @@ export class DashboardComponent implements OnInit {
           this.aumFlag = false;
           this.aumReconList = data;
         }
-      }
+        else {
+          this.aumFlag = false;
+          this.aumReconList = []
+        }
+      }, err => {
+      this.aumFlag = false;
+      this.aumReconList = []
+    }
     )
   }
 
