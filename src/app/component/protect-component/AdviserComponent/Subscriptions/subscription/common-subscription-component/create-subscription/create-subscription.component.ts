@@ -74,7 +74,7 @@ export class CreateSubscriptionComponent implements OnInit {
   set data(data) {
     this.payeeSettingData = data
     this.totalSelectedPayeeShare = 0;
-    this.subscriptionData = data;
+    this.subscriptionData = Object.assign({}, data);
     this.getSubStartDetails(data);
   }
 
@@ -130,7 +130,7 @@ export class CreateSubscriptionComponent implements OnInit {
     if (!data) {
       setTimeout(() => {
         this.stepper.selectedIndex = 3;
-        this.getSubStartDetails(this.payeeSettingData);
+        this.getSubStartDetails(this.subscriptionData);
       }, 1);
     }
   }
@@ -306,7 +306,7 @@ export class CreateSubscriptionComponent implements OnInit {
   startSubscription() {
     if (this.serviceData.feeTypeId == 1) {
       const obj = {
-        id: this.subscriptionData.id ? this.subscriptionData.id : this.subscriptionData.subscriptionPricing.id,
+        id: this.subscriptionData.id,
         advisorId: this.advisorId,
         billerProfileId: this.selectedBiller.id,
         services: [
@@ -341,7 +341,7 @@ export class CreateSubscriptionComponent implements OnInit {
       );
     } else {
       const obj = {
-        id: this.subscriptionData.id ? this.subscriptionData.id : this.subscriptionData.subscriptionPricing.id,
+        id: this.subscriptionData.id,
         advisorId: this.advisorId,
         billerProfileId: this.selectedBiller.id,
         services: [
