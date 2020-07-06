@@ -859,10 +859,9 @@ mat-tab-group[vertical] {
 #ui-perferences,
 #ui-setting-preference,
 #ui-assets,
-#ui-liabilities,
 #ui-income,
 #ui-expenses,
-#ui-insurance,
+
 #onboargings {
   .vertical-menu {
     height: 100vh;
@@ -902,8 +901,7 @@ mat-tab-group[vertical] {
   }
 }
 
-#ui-texes,
-#ui-liabilities {
+#ui-texes {
   .vertical-menu {
     // height: 100vh;
     // position: relative;
@@ -923,13 +921,7 @@ mat-tab-group[vertical] {
   }
 }
 
-#ui-liabilities {
-  .vertical-menu {
-    height: calc(100vh - 126px);
-    position: fixed;
-    width: 16.7%;
-  }
-}
+
 
 #ui-insurance {
   .vertical-menu {
@@ -944,11 +936,7 @@ mat-tab-group[vertical] {
     width: 16.7%;
   }
 
-  li {
-    padding: 10px 0px 10px;
-    padding-left: 24px;
-    height: 40px;
-  }
+
 }
 
 #ui-liabilities {
@@ -956,6 +944,8 @@ mat-tab-group[vertical] {
     padding: 0 0px 0 24px;
   }
 }
+
+
 
 #ui-biller-tabs,
 #ui-fp-planmodule {

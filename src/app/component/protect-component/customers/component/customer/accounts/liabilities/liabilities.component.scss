@@ -1,5 +1,5 @@
 ::ng-deep #table-low tbody td.br {
-    border-right: 1px solid #dee5e7 !important;
+  border-right: 1px solid #dee5e7 !important;
 }
 
 // ::ng-deep .liabilities {
@@ -10,68 +10,68 @@
 //   white-space: normal !important;
 // }
 ::ng-deep .rightText .mat-sort-header-container {
-    display: block !important;
+  display: block !important;
 }
 
- ::ng-deep .rightText .mat-sort-header-container .mat-sort-header-arrow {
-    float: right;
+::ng-deep .rightText .mat-sort-header-container .mat-sort-header-arrow {
+  float: right;
 }
 
- ::ng-deep .rightText .mat-sort-header-container .mat-sort-header-button {
-    float: right;
+::ng-deep .rightText .mat-sort-header-container .mat-sort-header-button {
+  float: right;
 }
 
 // ------------- new changes
 ::ng-deep .rightTextHide .mat-sort-header-container {
-    display: block !important;
-    position: relative;
+  display: block !important;
+  position: relative;
 }
 
- ::ng-deep .rightTextHide .mat-sort-header-container .mat-sort-header-arrow {
-    float: right;
-    opacity: 0 !important;
-    position: absolute;
-    right: 2px;
-    width: 100%;
-    height: auto;
-    min-width: 100%;
-    color: transparent;
+::ng-deep .rightTextHide .mat-sort-header-container .mat-sort-header-arrow {
+  float: right;
+  opacity: 0 !important;
+  position: absolute;
+  right: 2px;
+  width: 100%;
+  height: auto;
+  min-width: 100%;
+  color: transparent;
 }
 
- ::ng-deep .rightTextHide .mat-sort-header-container .mat-sort-header-button {
-    float: right;
-    text-align: right;
+::ng-deep .rightTextHide .mat-sort-header-container .mat-sort-header-button {
+  float: right;
+  text-align: right;
 }
 
 .spanclass {
-    width: 42px;
-    height: 36px;
+  width: 42px;
+  height: 36px;
 }
 
 .pdfClass {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: end;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: end;
 }
 
 .hide {
-    display: none;
+  display: none;
 }
 
 .uploadInput {
-    position: absolute;
-    font-size: 50px;
-    opacity: 0;
-    right: 0;
-    top: 0;
+  position: absolute;
+  font-size: 50px;
+  opacity: 0;
+  right: 0;
+  top: 0;
 }
 
 .sticky-top {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 140px;
-    z-index: 1020;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 140px;
+  z-index: 1020;
 }
 
 // ::ng-deep .rightText .mat-sort-header-container {
@@ -83,3 +83,11 @@
 //  ::ng-deep .rightText .mat-sort-header-container .mat-sort-header-button {
 //     float: right;
 // }
+
+@media (max-width: 1200px) {
+  #ui-insurance li {
+    font-size: 13px !important;
+    padding-top: 10px !important;
+
+  }
+}

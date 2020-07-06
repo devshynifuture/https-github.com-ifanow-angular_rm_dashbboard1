@@ -1,7 +1,7 @@
 <div id="ui-profile-plan">
     <div class="row" style="height: calc(100vh - 120px);">
-        <div class="col-md-2 p-0 pt-8 pb-20 bg-grey lter">
-            <ul class="vertical-menu">
+        <div class="col-md-2 p-0 pt-8 pb-20 bg-grey lter responsive-left-side-top responsive-flex-auto">
+            <ul class="vertical-menu responsive-left-side">
                 <li (click)="viewMode ='tab1'" [ngClass]="{'activeColor':viewMode =='tab1'}" class="activeColor c-p">
                     <div class="row">
                         <div class="col-md-2 p-0">
@@ -59,7 +59,7 @@
                 </li> -->
             </ul>
         </div>
-        <div class="col-md-10 b-a p-0" [ngSwitch]="viewMode">
+        <div class="col-md-10 b-a p-0 responsive-right-side-top" [ngSwitch]="viewMode">
             <div *ngSwitchCase="'tab1'">
                 <app-income></app-income>
             </div>
