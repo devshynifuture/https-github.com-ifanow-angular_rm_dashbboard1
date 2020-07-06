@@ -422,7 +422,6 @@ export class SwpTransactionComponent implements OnInit {
       this.swpTransaction.controls.schemeSwp.setValue({ 'schemeName': this.schemeName })
       this.filterSchemeList = of([{ 'schemeName': this.schemeName }])
       Object.assign(this.folioDetails, { folioNumber: this.folioNumber });
-      this.swpTransaction.controls.investmentAccountSelection.setValue({'folioNumber':this.folioNumber})
       this.scheme = {
         'schemeName': this.schemeName,
         'mutualFundSchemeMasterId': this.mutualFundData.schemeId
@@ -438,6 +437,12 @@ export class SwpTransactionComponent implements OnInit {
           this.eventService.openSnackBar(error, 'Dismiss');
         }
       );
+      this.swpTransaction.controls.balanceUnit.setValue((this.mutualFundData.balanceUnit));
+      this.swpTransaction.controls.currentValue.setValue((this.processTransaction.calculateCurrentValue(this.mutualFundData.nav, this.mutualFundData.balanceUnit)).toFixed(2));
+      this.currentValue = this.processTransaction.calculateCurrentValue(this.mutualFundData.nav, this.mutualFundData.balanceUnit);
+      this.showUnits = true;
+      Object.assign(this.transactionSummary, { folioNumber: this.folioNumber });
+      Object.assign(this.transactionSummary, { tpUserCredFamilyMappingId: this.getDataSummary.defaultClient.tpUserCredFamilyMappingId });
     }
   }
 
