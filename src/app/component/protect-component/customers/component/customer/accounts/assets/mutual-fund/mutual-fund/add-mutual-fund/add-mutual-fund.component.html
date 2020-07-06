@@ -88,7 +88,7 @@
                     <input matInput autocomplete="off" type="text" formControlName="description" #institution
                         maxlength="30" class="form-control ruppes br-0">
                     <mat-error>This field is required</mat-error>
-                    <mat-hint align="start" class="f-12">Optional</mat-hint>
+                    <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -110,7 +110,7 @@
                                 <span>{{item.userName}}</span>
                             </mat-option>
                         </mat-autocomplete>
-                        <mat-hint align="start" class="f-12">Optional</mat-hint>
+                        <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
                     </mat-form-field>
                 </div>
 
@@ -132,10 +132,10 @@
 
             </div>
             <mat-hint *ngIf="showError==true" align="end" class="f-12 text-danger">
-            Percent cannot be more than 100%
-        </mat-hint>
+                Percent cannot be more than 100%
+            </mat-hint>
         </div>
-        
+
     </div>
 </div>
 <div class="bottom-fixed wrapper-12">

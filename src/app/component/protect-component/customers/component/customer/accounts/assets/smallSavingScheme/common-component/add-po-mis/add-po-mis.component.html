@@ -22,8 +22,8 @@
                     <mat-form-field>
                         <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
                             (selectionChange)="disabledMember($event.value,'owner')"
-                            (valueChange3)='displayControler($event)' (emitBank)='getBank()' (valueChange1)='lisNominee($event)'
-                            class="form-control br-0" [callMethod]='callMethod'>
+                            (valueChange3)='displayControler($event)' (emitBank)='getBank()'
+                            (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
                             <mat-option value='' disabled>Select family members</mat-option>
                             <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" [value]="f.userName">
                                 <span>{{f.userName}}</span>
@@ -64,17 +64,19 @@
         <div class="col-md-3">
             <div class="form-group mb-0 iconRupess">
                 <mat-form-field>
-                    <input matInput type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" (keyup)="checkOwnerType()"
-                        autocomplete="off" #amtInvested maxlength="10" class="form-control br-0 rupess"
-                        formControlName="amtInvested">
+                    <input matInput type="text" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                        (keyup)="checkOwnerType()" autocomplete="off" #amtInvested maxlength="10"
+                        class="form-control br-0 rupess" formControlName="amtInvested">
                     <mat-error class="f-12" *ngIf="(pomisForm.get('amtInvested').errors?.required)"> This field is
                         required
                     </mat-error>
                     <mat-error *ngIf="(pomisForm.get('amtInvested').errors?.min)" class="f-12">
                         Should be greater than or equal to 1500
                     </mat-error>
-                    <mat-error *ngIf="(pomisForm.get('amtInvested').errors?.max && !pomisForm.get('amtInvested').errors?.min)" class="f-12">
-                        Should be less than  {{join?900000:450000}}
+                    <mat-error
+                        *ngIf="(pomisForm.get('amtInvested').errors?.max && !pomisForm.get('amtInvested').errors?.min)"
+                        class="f-12">
+                        Should be less than {{join?900000:450000}}
                     </mat-error>
                     <mat-hint align="end" class="f-12">{{amtInvested.value.length}}/10</mat-hint>
                 </mat-form-field>
@@ -101,7 +103,7 @@
                         class="form-control br-0 b-0" [min]="minDate" [max]="maxDate" [matDatepicker]="picker" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
-                    <mat-error class="f-12" >
+                    <mat-error class="f-12">
                         This field is required
                     </mat-error>
                 </mat-form-field>
@@ -157,9 +159,9 @@
             <div class="col-md-5">
                 <div class="form-group mb-0">
                     <mat-form-field>
-                        <input autocomplete="off" matInput type="text" maxlength="20"
-                            class="form-control br-0" formControlName="poMisNumber">
-                        <mat-hint align="start" class="f-12">Optional</mat-hint>
+                        <input autocomplete="off" matInput type="text" maxlength="20" class="form-control br-0"
+                            formControlName="poMisNumber">
+                        <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
                         <!-- <mat-hint align="end" class="f-12">{{poBranch.value.length}}/20</mat-hint> -->
                     </mat-form-field>
                 </div>
@@ -174,7 +176,7 @@
                     <mat-form-field>
                         <input autocomplete="off" matInput #poBranch type="text" maxlength="20"
                             class="form-control br-0" formControlName="poBranch">
-                        <mat-hint align="start" class="f-12">Optional</mat-hint>
+                        <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{poBranch.value.length}}/20</mat-hint>
                     </mat-form-field>
                 </div>
@@ -182,7 +184,7 @@
         </div>
         <!-- <app-add-nominee [ownerName]="ownerName" [data]="pomisData" (outputEvent)="getFormData($event)">
         </app-add-nominee> -->
-       
+
         <div class="row pt-40">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Linked bank account</h5>
@@ -193,12 +195,12 @@
                         <mat-option *ngFor="let option of bankList ;index as i" [value]="option.id">
                             {{option.bankNameAndLast4Digit}}</mat-option>
                     </mat-select>
-                    <mat-hint align="start" class="f-12">Optional</mat-hint>
+                    <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
                     <mat-error>This field is required
                     </mat-error>
                 </mat-form-field>
             </div>
-            <div  class="col-md-1 p-0 pt-8 d-flex">
+            <div class="col-md-1 p-0 pt-8 d-flex">
                 <!-- prod build -->
                 <i class="material-icons text-primitive c-p float-left" (click)="openDialog(null)">add</i>
             </div>
@@ -212,7 +214,7 @@
                     <mat-form-field>
                         <input autocomplete="off" matInput #description maxlength="60" class="form-control br-0"
                             formControlName="description">
-                        <mat-hint align="start" class="f-12">Optional</mat-hint>
+                        <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
                     </mat-form-field>
                 </div>
@@ -279,9 +281,9 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="close(false)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            
-                <app-progress-button (btnClick)="saveFormData(null)" [options]="barButtonOptions" >
-                </app-progress-button>
+
+            <app-progress-button (btnClick)="saveFormData(null)" [options]="barButtonOptions">
+            </app-progress-button>
         </div>
     </div>
 </div>

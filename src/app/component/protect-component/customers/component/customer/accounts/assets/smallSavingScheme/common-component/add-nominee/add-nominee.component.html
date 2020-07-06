@@ -8,7 +8,7 @@
                 <mat-form-field>
                     <input matInput aria-label="State" (click)="nomineesList()" [matAutocomplete]="auto" list="userName"
                         class="form-control br-0 pl-8" formControlName="name">
-                    <mat-hint align="start" class="f-12">Optional</mat-hint>
+                    <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
 
                     <mat-autocomplete #auto="matAutocomplete">
                         <mat-option *ngFor="let f of familyList" [value]="f.userName">
