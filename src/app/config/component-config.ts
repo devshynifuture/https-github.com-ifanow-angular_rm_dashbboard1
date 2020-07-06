@@ -744,6 +744,8 @@ export const appConfig = {
   RESET_PASSWORD: 'setting/reset/password',
   ////////////////////////////// calendar////////////////////////////////////////////
   GET_EVENT: 'calendar/event/list/get',
+  GET_ATTENDY: 'user/client/email/list/get',
+  ADD_ATTENDY: 'user/client/email/insert',
   GET_UPDATE: 'calendar/event/update',
   GET_ADD: 'calendar/event/add',
   GET_DELETE: 'calendar/event/delete',
@@ -814,5 +816,6 @@ export const appConfig = {
   GET_NOTES: 'admin/dashboard/memo/list/get',
   GET_BIRTHDAY_OR_ANNIVERSARY: 'user/birthday/or/anniversary',
   KEY_METRICS_ADVISOR_DASHBOARD: 'admin/dashboard/key/metrics',
-  LAST_7_DAYS_TRANSACTION_STATUS: 'report/transaction/status/summary'
+  LAST_7_DAYS_TRANSACTION_STATUS: 'report/transaction/status/summary',
+  DOCUMENT_TOTAL_COUNT_SIZE: 'document/account/document/total-count-and-size/get'
 };

@@ -266,7 +266,7 @@ export class CalendarDayComponent implements OnInit {
 
     const dialogRef = this.dialog.open(EventDialog, {
       width: '576px',
-      height: '673px',
+      height: 'auto',
       data: eventData
     });
 
