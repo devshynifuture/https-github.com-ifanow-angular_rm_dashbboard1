@@ -495,6 +495,7 @@ export class SwitchTransactionComponent implements OnInit {
   }
 
   switch() {
+    this.switchTransaction.controls.investmentAccountSelection.setValue(this.folioNumber)
     if (this.reInvestmentOpt.length > 1 && this.switchTransaction.controls.reinvest.invalid) {
       this.switchTransaction.get('reinvest').markAsTouched();
     } else if (this.switchTransaction.get('folioSelection').value == 1) {
