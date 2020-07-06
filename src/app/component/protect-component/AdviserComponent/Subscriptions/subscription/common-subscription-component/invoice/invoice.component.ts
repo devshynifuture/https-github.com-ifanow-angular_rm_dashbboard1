@@ -63,6 +63,7 @@ export class InvoiceComponent implements OnInit {
     // buttonIcon: {
     //   fontIcon: 'favorite'
     // }
+
   };
 
   // invoiceTemplate

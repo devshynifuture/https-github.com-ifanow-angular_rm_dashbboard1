@@ -518,6 +518,7 @@ export class StpTransactionComponent implements OnInit {
         }
       );
       this.showUnits = true;
+      this.navOfSelectedScheme = this.mutualFundData.nav
       this.stpTransaction.controls.balanceUnit.setValue(this.mutualFundData.balanceUnit);
     this.stpTransaction.controls.currentValue.setValue((this.processTransaction.calculateCurrentValue(this.mutualFundData.nav, this.mutualFundData.balanceUnit)).toFixed(2));
     this.currentValue = this.processTransaction.calculateCurrentValue(this.mutualFundData.nav, this.mutualFundData.balanceUnit);
