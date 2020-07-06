@@ -49,6 +49,7 @@ export class CreateSubscriptionComponent implements OnInit {
   subDateToShow: any;
   billEveryMsg: any;
   serviceData: any;
+  subscriptionData: any;
 
 
   constructor(private enumService: EnumServiceService, public subInjectService: SubscriptionInject,
@@ -73,6 +74,7 @@ export class CreateSubscriptionComponent implements OnInit {
   set data(data) {
     this.payeeSettingData = data
     this.totalSelectedPayeeShare = 0;
+    this.subscriptionData = Object.assign({}, data);
     this.getSubStartDetails(data);
   }
 
@@ -128,7 +130,7 @@ export class CreateSubscriptionComponent implements OnInit {
     if (!data) {
       setTimeout(() => {
         this.stepper.selectedIndex = 3;
-        this.getSubStartDetails(this.payeeSettingData);
+        this.getSubStartDetails(this.subscriptionData);
       }, 1);
     }
   }
@@ -201,7 +203,7 @@ export class CreateSubscriptionComponent implements OnInit {
   }
 
   nextStep(data) {
-    this.serviceData = data;
+    (data.subscriptionAssetPricingList) ? this.serviceData = data : '';
     this.goForward();
   }
   // getTotalPayeeData(data) {
@@ -304,7 +306,7 @@ export class CreateSubscriptionComponent implements OnInit {
   startSubscription() {
     if (this.serviceData.feeTypeId == 1) {
       const obj = {
-        id: this.clientData.id,
+        id: this.subscriptionData.id,
         advisorId: this.advisorId,
         billerProfileId: this.selectedBiller.id,
         services: [
@@ -313,7 +315,7 @@ export class CreateSubscriptionComponent implements OnInit {
             description: ''
           }],
         clientBillerProfiles: this.selectedPayee,
-        clientId: this.clientData.clientId,
+        clientId: this.subscriptionData.clientId,
         dueDateFrequency: this.subscriptionDetails.get('dueDateFrequency').value,
         startsOn: UtilService.convertDateObjectToDateString(this.datepipe, this.subscriptionDetails.get('activationDate').value),
         subscriptionNumber: this.feeStructureData.subscriptionNo,
@@ -339,7 +341,7 @@ export class CreateSubscriptionComponent implements OnInit {
       );
     } else {
       const obj = {
-        id: this.clientData.id,
+        id: this.subscriptionData.id,
         advisorId: this.advisorId,
         billerProfileId: this.selectedBiller.id,
         services: [
@@ -348,7 +350,7 @@ export class CreateSubscriptionComponent implements OnInit {
             description: ''
           }],
         clientBillerProfiles: this.selectedPayee,
-        clientId: this.clientData.clientId,
+        clientId: this.subscriptionData.clientId,
         dueDateFrequency: this.subscriptionDetails.get('dueDateFrequency').value,
         startsOn: UtilService.convertDateObjectToDateString(this.datepipe, this.subscriptionDetails.get('activationDate').value),
         subscriptionNumber: this.feeStructureData.subscriptionNo,
