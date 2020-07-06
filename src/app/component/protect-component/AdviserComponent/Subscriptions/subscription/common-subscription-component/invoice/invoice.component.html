@@ -78,7 +78,7 @@
           <div [ngClass]="storeData.status !=1? 'col-md-4' : 'col-md-2'" class="right text-right">
             <button (click)="recordPayment()" *ngIf="rpyment==true" class="btn-primary br-0 h-40"
               mat-stroked-button>RECORD
-              PAYMENT
+              PAYMENT1
             </button>
           </div>
           <div *ngIf="storeData.status!=1" class="col-md-2 right text-right pl-0">
@@ -343,7 +343,7 @@
 
         <!--record payment div start-->
         <div *ngIf="showRecord==true">
-          <app-record-payment (outputData)='display($event)' [InvRecordData]="sendRecordPaymentData" [padding]="false">
+          <app-record-payment (outputData)='display($event)' [InvRecordData]="sendRecordPaymentData" [selectedInvRecord]="selectedInvRecord" [padding]="false">
           </app-record-payment>
         </div>
         <!--Fee calculation Div start-->
@@ -404,20 +404,20 @@
       <table style="width: 100%; margin: 0px auto; border: 1px solid #dee5e7; padding: 10px; " align="center"
         #invoiceTemplate *ngIf="showRecord==false && feeCalc==false" id="template">
         <tr>
-          <td colspan="2">
+          <td colspan="2" style="padding: 8px;">
             <table style="width: 100%">
               <tr>
                 <td style="vertical-align: middle;">
                   <h1 style="font-size: 40px; font-weight: 600; margin: 0px; color: #757575;">INVOICE</h1>
                 </td>
                 <td style="text-align: right; vertical-align: top;">
-                  <img style="width: 300px;" [src]="storeData.logoUrl"> </td>
+                  <img style="width: 200px;" [src]="storeData.logoUrl"> </td>
               </tr>
             </table>
           </td>
         </tr>
         <tr>
-          <td colspan="2">
+          <td colspan="2" style="padding: 8px;">
             <table style="width: 100%; margin-top: 30px;">
               <tr>
                 <td style="vertical-align: top;">
@@ -435,7 +435,7 @@
         </tr>
 
         <tr>
-          <td colspan="2">
+          <td style="padding: 8px;" colspan="2">
             <table style="width: 100%; margin-top: 20px;">
               <tr>
                 <td style="vertical-align: top;">
@@ -465,7 +465,7 @@
         </tr>
 
         <tr>
-          <td colspan="2">
+          <td colspan="2" style="padding: 8px;">
             <table style="width: 100%; border: 1px solid #dee5e7; margin-top: 20px;">
               <tr>
                 <td style="padding: 16px; border-bottom: 1px solid #dee5e7; background: #F5F7F7;">
@@ -491,24 +491,22 @@
         </tr>
 
         <tr>
-          <td style="width: 70%;">
-            <table style="width: 100%; margin-top: 20px;">
+          <td style="padding: 8px;">
+            <table style="width: 70%; float: left; margin-top: 20px;">
               <tr>
                 <td>
-                  <h4 style="margin: 0px; font-size: 14px;"> Footnote description</h4>
+                  <h4 style="margin: 0px; font-weight:normal; font-size: 14px;"> Footnote description</h4>
                   <p style="margin: 0px; font-size: 12px;"> {{storeData.footnote}}</p>
                 </td>
               </tr>
               <tr>
                 <td style="padding-top: 15px;">
-                  <h4 style="margin: 0px; font-size: 14px;"> Terms & conditions</h4>
+                  <h4 style="margin: 0px; font-weight:normal; font-size: 14px;"> Terms & conditions</h4>
                   <p style="margin: 0px; font-size: 12px;"> {{storeData.terms}}</p>
                 </td>
               </tr>
             </table>
-          </td>
-          <td>
-            <table style="width: 100%; margin-top: 20px;">
+            <table style="width: 30%; float: right; margin-top: 20px;">
               <tr>
                 <td style="text-align: right; padding: 8px;font-size: 14px;">Sub total</td>
                 <td style=" text-align: right; padding: 8px;font-size: 14px;"><span>&#8377;</span>

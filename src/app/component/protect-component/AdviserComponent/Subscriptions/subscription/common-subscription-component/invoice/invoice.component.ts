@@ -650,6 +650,7 @@ export class InvoiceComponent implements OnInit {
     }
   }
 
+  selectedInvRecord:any;
   passInvoice(data, index, event) {
     if (data.balanceDue == 0 || this.storeData.status == 1) {
       this.rpyment = false;
@@ -670,6 +671,7 @@ export class InvoiceComponent implements OnInit {
     this.subService.getPaymentReceive(obj).subscribe(
       data => this.getPaymentReceivedRes(data)
     );
+    this.selectedInvRecord= data
   }
 
   editInvoice() {

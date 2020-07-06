@@ -53,7 +53,7 @@ export class AddFixedFeeComponent implements OnInit {
     Duration: [1],
     fees: [, [Validators.required]],
     billingNature: [1],
-    billEvery: ["1", [Validators.required]],
+    billEvery: [null, [Validators.required]],
     billingMode: [1]
   });
   @Input() set data(data) {
@@ -75,7 +75,7 @@ export class AddFixedFeeComponent implements OnInit {
       Duration: ['1'],
       fees: [data, [Validators.required]],
       billingNature: ['1'],
-      billEvery: ['1', [Validators.required]],
+      billEvery: ['', [Validators.required]],
       billingMode: ['1']
     });
     this.getFormControl().serviceName.maxLength = 40;

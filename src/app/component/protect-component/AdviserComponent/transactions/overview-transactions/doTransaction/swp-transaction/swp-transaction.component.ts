@@ -333,7 +333,7 @@ export class SwpTransactionComponent implements OnInit {
   getFrequency() {
     const obj = {
       isin: this.schemeDetails.isin,
-      aggregatorType: this.getDataSummary.defaultClient.aggregatorType,
+      aggregatorType: (this.getDataSummary)?this.getDataSummary.defaultClient.aggregatorType:this.mfDefault.defaultClient.aggregatorType,
       orderType: 'SWP'
     };
     this.onlineTransact.getSipFrequency(obj).subscribe(
@@ -360,7 +360,7 @@ export class SwpTransactionComponent implements OnInit {
     this.selectedFreqModel = getFrerq;
     this.frequency = getFrerq.frequency;
     this.swpTransaction.controls.employeeContry.setValidators([Validators.required, Validators.min(getFrerq.sipMinimumInstallmentAmount)]);
-    if (this.getDataSummary.defaultClient.aggregatorType == 1) {
+    if ((this.getDataSummary)?this.getDataSummary.defaultClient.aggregatorType == 1:this.mfDefault.defaultClient.aggregatorType == 1) {
       this.dateArray(getFrerq.swpDates);
     } else {
       this.dateArray(getFrerq.sipDates);
@@ -422,7 +422,6 @@ export class SwpTransactionComponent implements OnInit {
       this.swpTransaction.controls.schemeSwp.setValue({ 'schemeName': this.schemeName })
       this.filterSchemeList = of([{ 'schemeName': this.schemeName }])
       Object.assign(this.folioDetails, { folioNumber: this.folioNumber });
-      this.swpTransaction.controls.investmentAccountSelection.setValue({'folioNumber':this.folioNumber})
       this.scheme = {
         'schemeName': this.schemeName,
         'mutualFundSchemeMasterId': this.mutualFundData.schemeId
@@ -438,6 +437,12 @@ export class SwpTransactionComponent implements OnInit {
           this.eventService.openSnackBar(error, 'Dismiss');
         }
       );
+      this.swpTransaction.controls.balanceUnit.setValue((this.mutualFundData.balanceUnit));
+      this.swpTransaction.controls.currentValue.setValue((this.processTransaction.calculateCurrentValue(this.mutualFundData.nav, this.mutualFundData.balanceUnit)).toFixed(2));
+      this.currentValue = this.processTransaction.calculateCurrentValue(this.mutualFundData.nav, this.mutualFundData.balanceUnit);
+      this.showUnits = true;
+      Object.assign(this.transactionSummary, { folioNumber: this.folioNumber });
+      Object.assign(this.transactionSummary, { tpUserCredFamilyMappingId: this.mfDefault.defaultClient.tpUserCredFamilyMappingId });
     }
   }
 
