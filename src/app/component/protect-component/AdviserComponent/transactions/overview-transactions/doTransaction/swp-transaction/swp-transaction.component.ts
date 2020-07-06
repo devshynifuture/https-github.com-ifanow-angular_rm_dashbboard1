@@ -437,6 +437,7 @@ export class SwpTransactionComponent implements OnInit {
           this.eventService.openSnackBar(error, 'Dismiss');
         }
       );
+      this.navOfSelectedScheme = this.mutualFundData.nav
       this.swpTransaction.controls.balanceUnit.setValue((this.mutualFundData.balanceUnit));
       this.swpTransaction.controls.currentValue.setValue((this.processTransaction.calculateCurrentValue(this.mutualFundData.nav, this.mutualFundData.balanceUnit)).toFixed(2));
       this.currentValue = this.processTransaction.calculateCurrentValue(this.mutualFundData.nav, this.mutualFundData.balanceUnit);

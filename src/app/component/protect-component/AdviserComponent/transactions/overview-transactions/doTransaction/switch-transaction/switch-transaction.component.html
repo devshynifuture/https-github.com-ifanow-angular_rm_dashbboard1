@@ -91,7 +91,7 @@
                   </mat-option>
                 </mat-autocomplete>
                 <mat-hint *ngIf="scheme" align="start" class="f-12 text-custom">Last closing
-                  NAV: {{navOfSelectedScheme}}
+                  NAV: {{navOfSelectedScheme}} as on:{{mutualFundData.navDate | date:'dd/MM/yyyy'}}
                 </mat-hint>
                 <mat-error *ngIf="switchTransaction.get('schemeSwitch').errors?.required" class="f-12 pt-4">
                   This field is required
