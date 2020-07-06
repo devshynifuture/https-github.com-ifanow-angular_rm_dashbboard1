@@ -145,9 +145,10 @@ const ELEMENT_DATA7: PeriodicElement7[] = [
 })
 
 export class DashboardComponent implements OnInit {
-  documentSizeData: any;
+  documentSizeData: any = {};
   aumReconList: any;
   aumFlag: boolean;
+  goalSummaryData: any = {};
 
   constructor(
     public dialog: MatDialog, private subService: SubscriptionService,
@@ -242,6 +243,7 @@ export class DashboardComponent implements OnInit {
     this.getLastSevenDaysTransactions();
     this.getLatesAumReconciliationData();
     this.getLastSevenDaysInvestmentAccounts();
+    this.getGoalSummaryData();
   }
 
   mailConnect(done) {
@@ -305,11 +307,7 @@ export class DashboardComponent implements OnInit {
       else{
         this.LastSevenDaysTransactions = [];
         this.dataSource5 = [];
-      }
-    },
-    (err)=>{
-
-    })
+      })
   }
 
   getSummaryDataDashboard() {
@@ -517,6 +515,30 @@ export class DashboardComponent implements OnInit {
           this.aumFlag = false;
           this.aumReconList = data;
         }
+        else {
+          this.aumFlag = false;
+          this.aumReconList = []
+        }
+      }, err => {
+        this.aumFlag = false;
+        this.aumReconList = []
+      }
+    )
+  }
+
+  getGoalSummaryData() {
+    const obj = {
+      advisorId: this.advisorId
+    }
+    this.dashboardService.getGoalSummarydata(obj).subscribe(
+      data => {
+        if (data) {
+          this.goalSummaryData = data;
+        } else {
+
+        }
+      }, err => {
+
       }
     )
   }

@@ -77,7 +77,7 @@
                                 <mat-error *ngIf="swpTransaction.get('schemeSwp').errors?.setValue" class="f-12">
                                     No schemes Found
                                 </mat-error>
-                                <mat-hint *ngIf="scheme" align="start" class="f-12 text-custom">Last closing NAV: {{navOfSelectedScheme}}
+                                <mat-hint *ngIf="scheme" align="start" class="f-12 text-custom">Last closing NAV: {{navOfSelectedScheme}} as on:{{(mutualFundData)?mutualFundData.navDate:'-' | date:'dd/MM/yyyy'}}
                                 </mat-hint>
                             </mat-form-field>
                         </div>

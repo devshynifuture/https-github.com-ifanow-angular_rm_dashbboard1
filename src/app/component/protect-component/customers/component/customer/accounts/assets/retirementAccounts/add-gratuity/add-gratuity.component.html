@@ -23,8 +23,8 @@
                     <mat-form-field>
                         <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
                             (selectionChange)="disabledMember($event.value,'owner')"
-                            (valueChange3)='displayControler($event)' (emitBank)='getBank()' (valueChange1)='lisNominee($event)'
-                            class="form-control br-0" [callMethod]='callMethod'>
+                            (valueChange3)='displayControler($event)' (emitBank)='getBank()'
+                            (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
                             <mat-option value='' disabled>Select family members</mat-option>
                             <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" [value]="f.userName">
                                 <span>{{f.userName}}</span>
@@ -85,8 +85,8 @@
         <div class="col-md-3">
             <div class="form-group mb-0">
                 <mat-form-field class="ba-date">
-                    <input autocomplete="off" (click)="picker.open()" matInput formControlName="yearOfJoining" class="form-control br-0 b-0"
-                    [matDatepicker]="picker" [max]="maxDate" readonly>
+                    <input autocomplete="off" (click)="picker.open()" matInput formControlName="yearOfJoining"
+                        class="form-control br-0 b-0" [matDatepicker]="picker" [max]="maxDate" readonly>
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                     <mat-error class="f-12">
@@ -137,7 +137,7 @@
                     <mat-form-field>
                         <input autocomplete="off" matInput #nameOfOrg maxlength="40" class="form-control br-0"
                             formControlName="nameOfOrg">
-                        <mat-hint align="start" class="f-12">Optional</mat-hint>
+                        <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{nameOfOrg.value.length}}/40</mat-hint>
                     </mat-form-field>
                 </div>
@@ -175,7 +175,7 @@
                 </div>
             </div>
         </div> -->
-        
+
         <div class="row pt-32">
             <div class="col-md-5 pr-0 text-right">
                 <h5 class="m-0 pt-8">Linked bank account</h5>
@@ -190,7 +190,7 @@
                     </mat-error>
                 </mat-form-field>
             </div>
-            <div  class="col-md-1 p-0 pt-8 d-flex">
+            <div class="col-md-1 p-0 pt-8 d-flex">
                 <!-- prod build -->
                 <i class="material-icons text-primitive c-p float-left" (click)="openDialog(null)">add</i>
             </div>
@@ -204,7 +204,7 @@
                     <mat-form-field>
                         <input autocomplete="off" matInput #description maxlength="60" class="form-control br-0"
                             formControlName="description">
-                        <mat-hint align="start" class="f-12">Optional</mat-hint>
+                        <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
                     </mat-form-field>
                 </div>
@@ -251,10 +251,8 @@
                 </div>
                 <div class="col-md-2 p-0 d-flex align-items-center">
                     <i *ngIf="gratuity.value.getNomineeName.length < 3"
-                        class="material-icons text-primitive c-p float-left"
-                        (click)="addNewNominee(undefined)">add</i>
-                    <i *ngIf="gratuity.value.getNomineeName.length > 1"
-                        class="material-icons text-primitive c-p pl-10"
+                        class="material-icons text-primitive c-p float-left" (click)="addNewNominee(undefined)">add</i>
+                    <i *ngIf="gratuity.value.getNomineeName.length > 1" class="material-icons text-primitive c-p pl-10"
                         (click)="removeNewNominee(pointIndex)">remove</i>
                 </div>
 
@@ -268,7 +266,7 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <app-progress-button (btnClick)="saveEPF()" [options]="barButtonOptions" >
+            <app-progress-button (btnClick)="saveEPF()" [options]="barButtonOptions">
             </app-progress-button>
             <!-- <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveEPF()">Save</button> -->
         </div>

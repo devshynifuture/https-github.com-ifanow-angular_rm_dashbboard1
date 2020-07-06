@@ -647,6 +647,7 @@ export class PurchaseTrasactionComponent implements OnInit {
           this.eventService.openSnackBar(error, 'Dismiss');
         }
       );
+      this.navOfSelectedScheme = this.mutualFundData.nav
     }
   }
 

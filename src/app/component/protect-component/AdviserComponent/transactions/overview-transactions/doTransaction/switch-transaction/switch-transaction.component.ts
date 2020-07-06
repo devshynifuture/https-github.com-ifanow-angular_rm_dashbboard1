@@ -467,6 +467,7 @@ export class SwitchTransactionComponent implements OnInit {
     }
     if(this.mutualFundData){
       this.folioDetails = {}
+      this.navOfSelectedScheme = this.mutualFundData.nav
       this.switchTransaction.controls.schemeSelection.setValue('1')
       this.switchTransaction.controls.folioSelection.setValue('1')
       this.switchTransaction.controls.schemeSwitch.setValue({'schemeName': this.schemeName})
