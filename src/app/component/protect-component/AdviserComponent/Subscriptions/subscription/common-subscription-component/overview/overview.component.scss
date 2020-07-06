@@ -98,3 +98,21 @@ h5 {
 ::ng-deep .hoverable:hover {
   box-shadow: 0 0 11px rgba(33, 33, 33, 0.2);
 }
+
+
+::ng-deep .detailsFont{
+  padding: 8px;
+  p{
+    font-size: 8px;
+    margin: 0;
+    line-height: normal;
+    line-height: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+  }
+}
+
+ 
+  
