@@ -476,17 +476,17 @@ export class SwitchTransactionComponent implements OnInit {
         'schemeName': this.schemeName,
         'mutualFundSchemeMasterId':this.mutualFundData.schemeId
       }
-      // const obj1 = {
-      //   mutualFundSchemeMasterId: this.mutualFundData.schemeId,
-      //   aggregatorType: this.mfDefault.defaultClient.aggregatorType,
-      //   orderType: 'ORDER',
-      //   userAccountType: this.mfDefault.defaultCredential.accountType,
-      // };
-      // this.onlineTransact.getSchemeDetails(obj1).subscribe(
-      //   data => this.getSchemeDetailsRes(data), (error) => {
-      //     this.eventService.openSnackBar(error, 'Dismiss');
-      //   }
-      // );
+      const obj1 = {
+        mutualFundSchemeMasterId: this.mutualFundData.schemeId,
+        aggregatorType: this.mfDefault.defaultClient.aggregatorType,
+        orderType: 'ORDER',
+        userAccountType: this.mfDefault.defaultCredential.accountType,
+      };
+      this.onlineTransact.getSchemeDetails(obj1).subscribe(
+        data => this.getSchemeDetailsRes(data), (error) => {
+          this.eventService.openSnackBar(error, 'Dismiss');
+        }
+      );
     }
   }
 
