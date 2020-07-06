@@ -241,29 +241,57 @@ export class DashboardComponent implements OnInit {
     this.getDocumentTotalSize();
     this.getLastSevenDaysTransactions();
     this.getLatesAumReconciliationData();
+    this.getLastSevenDaysInvestmentAccounts();
   }
 
   mailConnect(done) {
     this.excessAllow = done;
   }
 
+  LastSevenDaysInvestmentAccounts:any=[];
+  getLastSevenDaysInvestmentAccounts(){
+    const obj ={
+      "advisorId":this.advisorId,
+      "startDate":new Date().getTime(),
+      "endDate":new Date(this.lastSevenDays).getTime()
+   }
+
+//       const obj = {
+//     "advisorId":5430,
+//     "startDate":1593369000000,
+//     "endDate":1594060199999
+//  }
+   this.dashboardService.getLastSevenDaysInvestmentAccounts(obj).subscribe(
+    (data) => {
+      if(data){
+        this.LastSevenDaysInvestmentAccounts = data;
+      }
+      else{
+        this.LastSevenDaysInvestmentAccounts = [];
+      }
+  },
+  (err)=>{
+
+  });
+  }
+
   LastSevenDaysTransactions:any=[];
   rejectedFAILURE:any = [];
+  lastSevenDays:any = new Date().setDate(new Date().getDate() - 7);
   getLastSevenDaysTransactions(){
-    let lastSevenDays = new Date().setDate(new Date().getDate() - 7);
-  //   const obj ={
-  //     "advisorId":this.advisorId,
-  //     "tpUserCredentialId":null,
-  //     "startDate":new Date().getTime(),
-  //     "endDate":new Date(lastSevenDays).getTime()
-  //  }
+    const obj ={
+      "advisorId":this.advisorId,
+      "tpUserCredentialId":null,
+      "startDate":new Date().getTime(),
+      "endDate":new Date(this.lastSevenDays).getTime()
+   }
 
-   const obj = {
-    "advisorId":5430,
-    "tpUserCredentialId":null,
-    "startDate":1593369000000,
-    "endDate":1594060199999
- }
+//    const obj = {
+//     "advisorId":5430,
+//     "tpUserCredentialId":null,
+//     "startDate":1593369000000,
+//     "endDate":1594060199999
+//  }
    console.log(new Date(obj.startDate), new Date(obj.endDate), "date 123");
    this.dashboardService.getLastSevenDaysTransactions(obj).subscribe(
     (data) => {

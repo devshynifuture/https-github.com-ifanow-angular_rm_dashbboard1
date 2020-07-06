@@ -679,12 +679,12 @@
           <button mat-stroked-button class="advisor-view-all">View All</button>
         </div>
         <div class="col-md-12 d-flex p-0 overflow-y pt-10">
-          <div class="pr-20">
+          <div class="pr-20" [hidden]="LastSevenDaysInvestmentAccounts.length <= 0" *ngFor="let singleAccount of LastSevenDaysInvestmentAccounts">
             <div class="b-a w-270 br-4">
               <div class="row pt-10">
                 <div class="col-md-10 p-0">
                   <p class="m-0 f-400 roboto text-black pl-10 lh-16">UCC</p>
-                  <p class="m-0 f-400 roboto text-black pt-10 pl-10 lh-16">Rahul Harish Jain</p>
+                  <p class="m-0 f-400 roboto text-black pt-10 pl-10 lh-16">{{singleAccount.clientName}}</p>
                 </div>
                 <div class="col-md-2 pr-10">
                   <p class="m-0 f-400 roboto text-custom lh-16">BSE</p>
@@ -705,9 +705,13 @@
               </div>
             </div>
           </div>
-          <div class="pr-20">
-            <div class="b-a w-270 br-4">
-              <div class="row pt-10">
+          <div class="pr-20" *ngIf="LastSevenDaysInvestmentAccounts.length <= 0">
+            <div class="b-a w-270 br-4 noDataFound noInvAccFound">
+              No investment accounts open in last 7 days.
+              <div>
+                <img src="assets/images/svg/run.svg">
+              </div>
+              <!-- <div class="row pt-10">
                 <div class="col-md-10 p-0">
                   <p class="m-0 f-400 roboto text-black pl-10 lh-16">IIN</p>
                   <p class="m-0 f-400 roboto text-black pt-10 pl-10 lh-16">Shreay Rahul Jain</p>
@@ -719,16 +723,16 @@
               <div class="row pt-16 pb-20">
                 <div class="col-md-6 pl-0">
                   <p class="m-0 text-custom f-400 roboto f-12 pl-10 lh-16">On behalf of minor</p>
-                </div>
+                </div> -->
                 <!-- <div class="col-md-6 pl-0">
                   <p class="m-0 text-custom f-400 roboto f-12 lh-16">Anyone or survivor</p>
                 </div> -->
-                <div class="col-md-12 p-0 pl-10 pt-20">
+                <!-- <div class="col-md-12 p-0 pl-10 pt-20">
                   <button mat-stroked-button class="btn-danger-outline h-20 lh-20 br-2 pr-5 pl-5 f-12">REJECTED
                     READY
                   </button>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
