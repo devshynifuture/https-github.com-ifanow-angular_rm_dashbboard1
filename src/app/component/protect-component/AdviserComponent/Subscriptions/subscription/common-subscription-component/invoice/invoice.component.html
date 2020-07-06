@@ -78,7 +78,7 @@
           <div [ngClass]="storeData.status !=1? 'col-md-4' : 'col-md-2'" class="right text-right">
             <button (click)="recordPayment()" *ngIf="rpyment==true" class="btn-primary br-0 h-40"
               mat-stroked-button>RECORD
-              PAYMENT
+              PAYMENT1
             </button>
           </div>
           <div *ngIf="storeData.status!=1" class="col-md-2 right text-right pl-0">
@@ -113,11 +113,12 @@
                 <td colspan="2" style="padding: 10px;">
                   <table style="width: 100%; margin-top: 30px;">
                     <tr>
+                      <!-- Payee address -->
                       <td style="vertical-align: top;">
                         <h4 style="margin: 0px; font-size: 18px; color: #000000;">{{storeData.billerName}}</h4>
                         <p style="color: #757575; font-size: 14px; margin-top: 10px;">{{storeData.billerAddress}}</p>
                       </td>
-
+                      <!-- Biller address -->
                       <td style="vertical-align: top;">
                         <h4 style="margin: 0px; font-size: 18px; color: #000000;">{{storeData.clientName}}</h4>
                         <p style="color: #757575; font-size: 14px; margin-top: 10px;">{{storeData.billingAddress}}</p>
@@ -342,7 +343,7 @@
 
         <!--record payment div start-->
         <div *ngIf="showRecord==true">
-          <app-record-payment (outputData)='display($event)' [InvRecordData]="sendRecordPaymentData" [padding]="false">
+          <app-record-payment (outputData)='display($event)' [InvRecordData]="sendRecordPaymentData" [selectedInvRecord]="selectedInvRecord" [padding]="false">
           </app-record-payment>
         </div>
         <!--Fee calculation Div start-->
