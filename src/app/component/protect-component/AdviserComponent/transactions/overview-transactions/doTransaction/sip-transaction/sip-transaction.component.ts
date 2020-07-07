@@ -700,6 +700,7 @@ export class SipTransactionComponent implements OnInit {
     this.sipTransaction.controls.modeOfPaymentSelection.setValue('2');
     if(this.mutualFundData){
       this.folioDetails = {}
+      this.navOfSelectedScheme = this.mutualFundData.nav
       this.sipTransaction.controls.schemeSelection.setValue('1')
       this.sipTransaction.controls.folioSelection.setValue('1')
       this.filterSchemeList = of([{'schemeName': this.schemeName}])

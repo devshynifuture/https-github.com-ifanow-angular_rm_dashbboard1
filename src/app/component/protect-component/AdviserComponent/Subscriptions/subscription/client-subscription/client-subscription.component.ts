@@ -1,16 +1,16 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
-import {EventService} from 'src/app/Data-service/event.service';
-import {SubscriptionInject} from '../../subscription-inject.service';
-import {SubscriptionService} from '../../subscription.service';
-import {UtilService} from '../../../../../../services/util.service';
-import {AuthService} from '../../../../../../auth-service/authService';
-import {HelpComponent} from '../common-subscription-component/help/help.component';
-import {SubscriptionUpperSliderComponent} from '../common-subscription-component/upper-slider/subscription-upper-slider.component';
-import {Router} from '@angular/router';
-import {ErrPageOpenComponent} from 'src/app/component/protect-component/customers/component/common-component/err-page-open/err-page-open.component';
-import {Location} from '@angular/common';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { EventService } from 'src/app/Data-service/event.service';
+import { SubscriptionInject } from '../../subscription-inject.service';
+import { SubscriptionService } from '../../subscription.service';
+import { UtilService } from '../../../../../../services/util.service';
+import { AuthService } from '../../../../../../auth-service/authService';
+import { HelpComponent } from '../common-subscription-component/help/help.component';
+import { SubscriptionUpperSliderComponent } from '../common-subscription-component/upper-slider/subscription-upper-slider.component';
+import { Router } from '@angular/router';
+import { ErrPageOpenComponent } from 'src/app/component/protect-component/customers/component/common-component/err-page-open/err-page-open.component';
+import { Location } from '@angular/common';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 
 export interface PeriodicElement {
@@ -28,16 +28,17 @@ export interface PeriodicElement {
   styleUrls: ['./client-subscription.component.scss']
 })
 export class ClientSubscriptionComponent implements OnInit {
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
-  Questions = [{question: 'How to apply subscription to client?'},
-    {question: 'Can we have more than one subscription applied to the client at the same time?'},
-    {question: 'What are the Future subscription?'}];
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  Questions = [{ question: 'How to apply subscription to client?' },
+  { question: 'Can we have more than one subscription applied to the client at the same time?' },
+  { question: 'What are the Future subscription?' }];
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
   noData: string;
+  searchoptionFlag: boolean;
 
   constructor(public dialog: MatDialog, public eventService: EventService, public subInjectService: SubscriptionInject,
-              private subService: SubscriptionService, private router: Router, private location: Location) {
+    private subService: SubscriptionService, private router: Router, private location: Location) {
   }
 
   @Input() upperData: any;
@@ -59,6 +60,7 @@ export class ClientSubscriptionComponent implements OnInit {
         this.getClientListResponse(data);
       }, (error) => {
         // this.errorMessage();
+        this.searchoptionFlag = false;
         this.dataSource.data = [];
         this.isLoading = false;
       }
@@ -93,7 +95,7 @@ export class ClientSubscriptionComponent implements OnInit {
             barButtonOption.active = false;
 
             this.getClientListResponse(data);
-            this.eventService.changeUpperSliderState({state: 'close'});
+            this.eventService.changeUpperSliderState({ state: 'close' });
             // this.errorMessage();
           }, (error) => {
             barButtonOption.active = false;
@@ -115,14 +117,14 @@ export class ClientSubscriptionComponent implements OnInit {
   getClientListResponse(data) {
 
     this.isLoading = false;
-
+    this.searchoptionFlag = true;
     if (data && data.length > 0) {
       this.data = data;
       this.dataSource.data = data;
       this.dataSource.sort = this.sort;
       // this.DataToSend = data;
     } else {
-
+      this.searchoptionFlag = false;
       this.data = [];
       this.dataSource.data = data;
       this.dataSource.data = [];
@@ -154,6 +156,14 @@ export class ClientSubscriptionComponent implements OnInit {
     // this.subInjectService.rightSideData(state);
   }
 
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSource.sort = this.sort;
+    if (this.dataSource.filteredData.length == 0) {
+      this.noData = 'No mandates found';
+    }
+  }
 
   openFragment(flag, data) {
     if (!this.isLoading) {

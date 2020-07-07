@@ -493,7 +493,6 @@ export const appConfig = {
   AUTO_REMAP_CLIENT: 'user/clients/remap/auto',
 
 
-
   MAP_UNMAP_CLIENT: 'user/clients/map/manual',
   UNMAP_MAP_CLIENT: 'user/clients/unmap',
   BSE_UCC_FILE_UPLOAD: 'user/bse/client/file-upload',
@@ -744,6 +743,8 @@ export const appConfig = {
   RESET_PASSWORD: 'setting/reset/password',
   ////////////////////////////// calendar////////////////////////////////////////////
   GET_EVENT: 'calendar/event/list/get',
+  GET_ATTENDY: 'user/client/email/list/get',
+  ADD_ATTENDY: 'user/client/email/insert',
   GET_UPDATE: 'calendar/event/update',
   GET_ADD: 'calendar/event/add',
   GET_DELETE: 'calendar/event/delete',
@@ -813,5 +814,11 @@ export const appConfig = {
   DELETE_NOTES: 'admin/dashboard/memo/item/delete',
   GET_NOTES: 'admin/dashboard/memo/list/get',
   GET_BIRTHDAY_OR_ANNIVERSARY: 'user/birthday/or/anniversary',
-  LAST_7_DAYS_TRANSACTION_STATUS: 'report/transaction/status/summary'
+  KEY_METRICS_ADVISOR_DASHBOARD: 'admin/dashboard/key/metrics',
+  LAST_7_DAYS_TRANSACTION_STATUS: 'report/transaction/status/summary',
+  LAST_7_DAYS_TRANSACTION: 'report/transaction/list/get',
+  LAST_7_DAYS_INVESTMENT_ACCOUNTS: 'user/register/filter/get',
+  DOCUMENT_TOTAL_COUNT_SIZE: 'document/account/document/total-count-and-size/get',
+  LATEST_AUM_RECON: 'admin/dashboard/aum/reconciliation/summary',
+  GET_GOAL_SUMMARY: 'admin/dashboard/goal/summary'
 };

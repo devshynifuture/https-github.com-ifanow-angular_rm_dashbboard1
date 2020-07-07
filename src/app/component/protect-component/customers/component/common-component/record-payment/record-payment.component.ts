@@ -46,8 +46,21 @@ export class RecordPaymentComponent implements OnInit {
 
   @Input() InvRecordData;
   @Input() padding;
+  // @Input() selectedInvRecord;
   @Output() outputData = new EventEmitter<Object>();
-
+  finalAmount:any;
+  @Input() set selectedInvRecord(selectedInvRecord: any) {
+    if(selectedInvRecord){
+      this.finalAmount = selectedInvRecord.finalAmount
+      console.log(selectedInvRecord, "selectedInvRecord");
+      this.getRecordPayment(selectedInvRecord);
+      this.rPayment.get('amountReceived').setValidators([Validators.max(selectedInvRecord.finalAmount)]);
+      this.rPayment.get('amountReceived').setValue(selectedInvRecord.finalAmount);
+      this.rPayment.get('tds').setValue("");
+      this.rPayment.get('chargesIfAny').setValue("");
+      this.rPayment.get('amountReceived').updateValueAndValidity();
+    }
+  }
   gstTreatment = [
     { name: 'Registered Business - Regular', value: 0 },
     { name: 'Registered Business - Composition', value: 1 },
@@ -76,7 +89,7 @@ export class RecordPaymentComponent implements OnInit {
     }
     console.log('payee data', data);
     this.rPayment = this.fb.group({
-      amountReceived: [data.amountReceived, [Validators.required, Validators.max(UtilService.roundOffToNearest1(this.balDue))]],
+      amountReceived: [(data == "") ? this.InvRecordData.balanceDue :data.amountReceived, [Validators.required, Validators.max(UtilService.roundOffToNearest1(this.balDue))]],
       chargesIfAny: [data.chargesIfAny],
       tds: [data.tds, [Validators.max(this.tdsAmt)]],
       paymentDate: [new Date(data.paymentDate), [Validators.required]],

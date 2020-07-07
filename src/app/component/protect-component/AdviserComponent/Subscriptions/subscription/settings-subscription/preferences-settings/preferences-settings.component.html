@@ -158,14 +158,15 @@
                                             <p class="f-12 text-uppercase pb-16 ">YOUR LOGO</p>
                                             <div class="text-center containerOne">
                                                 <img [src]="singleBillerProfile.logoUrl" class="img-icons">
-                                                <div class="overlay" (click)="Open(singleBillerProfile,'editbillerProfile', 1)">
+                                                <div class="overlay"
+                                                    (click)="Open(singleBillerProfile,'editbillerProfile', 1)">
                                                     <div class="text">Edit Image</div>
                                                 </div>
                                             </div>
                                         </div>
                                         <hr>
                                         <div class="wrapper-16 relClass">
-                                            <p class="f-12 text-uppercase">Footnote</p>
+                                            <p class="f-12 text-uppercase">Footnote description</p>
                                             <div [ngClass]="singleBillerProfile.read? '': 'bar'"
                                                 style="overflow: hidden;"
                                                 [ngStyle]="{'height':singleBillerProfile.read?'':'55px'}">

@@ -34,15 +34,20 @@
                         <img src="assets/images/svg/pensionIcon.svg"
                             *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeList==5">
                     </div>
-                    <p class="f-14 m-0 text-primitive text-center" *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeList==1">
+                    <p class="f-14 m-0 text-primitive text-center"
+                        *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeList==1">
                         Salaried</p>
-                    <p class="f-14 m-0 text-primitive text-center" *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeList==2">
+                    <p class="f-14 m-0 text-primitive text-center"
+                        *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeList==2">
                         Buisness</p>
-                    <p class="f-14 m-0 text-primitive text-center" *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeList==3">
+                    <p class="f-14 m-0 text-primitive text-center"
+                        *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeList==3">
                         Profession</p>
-                    <p class="f-14 m-0 text-primitive text-center" *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeList==4">
+                    <p class="f-14 m-0 text-primitive text-center"
+                        *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeList==4">
                         Rental</p>
-                    <p class="f-14 m-0 text-primitive text-center" *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeList==5">
+                    <p class="f-14 m-0 text-primitive text-center"
+                        *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeList==5">
                         Others</p>
                 </div>
             </div>
@@ -325,7 +330,7 @@
                                     <i class="material-icons c-p text-custom" *ngIf="i<getBonusList.controls.length-1"
                                         (click)="removeExpectedBonus(i)">remove</i>
                                 </div>
-                                <mat-hint align="start" class="f-12 pb-16">Optional</mat-hint>
+                                <mat-hint align="start" class="f-12 ml-8 pb-16">Optional</mat-hint>
                             </div>
 
                         </div>
@@ -340,7 +345,7 @@
                                 <mat-form-field>
                                     <input matInput formControlName="description" autocomplete="off"
                                         class="form-control br-0">
-                                    <mat-hint align="start" class="f-12">Optional</mat-hint>
+                                    <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
                                     <mat-error>This field is required</mat-error>
                                 </mat-form-field>
                             </div>

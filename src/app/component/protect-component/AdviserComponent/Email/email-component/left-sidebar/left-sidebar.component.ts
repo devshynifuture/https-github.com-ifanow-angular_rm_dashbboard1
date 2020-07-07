@@ -14,16 +14,25 @@ export class LeftSidebarComponent implements OnInit {
   paginatorSubscription: any;
   isAllowedToCompose: boolean;
   isLoading: boolean;
+  navList: any = [];
+  importantCount: any;
+  sentCount: any;
+  draftCount: any;
+  trashCount: any;
+  starredCount: any;
+  isCustomerEmail: boolean;
 
   constructor(
     private emailService: EmailServiceService,
     private eventService: EventService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) { }
 
 
   ngOnInit() {
     this.isUserAuthenticated();
+
   }
 
   isUserAuthenticated() {
@@ -32,7 +41,13 @@ export class LeftSidebarComponent implements OnInit {
       userInfo['email'] = localStorage.getItem('associatedGoogleEmailId');
       this.authService.setUserInfo(userInfo);
     }
-
+    let location;
+    location = this.router.url.split('/')[this.router.url.split('/').length - 1];
+    if (this.router.url.split('/').includes('customer')) {
+      this.isCustomerEmail = true;
+    } else {
+      this.isCustomerEmail = false;
+    }
     this.paginatorSubscription = this.emailService.getProfile()
       .subscribe(response => {
         if (!response) {
@@ -42,6 +57,7 @@ export class LeftSidebarComponent implements OnInit {
           }
           this.isAllowedToCompose = false;
         } else {
+          this.getRightSideNavListCount();
           this.isAllowedToCompose = true;
         }
       }, err => {
@@ -58,6 +74,28 @@ export class LeftSidebarComponent implements OnInit {
     } else {
       this.eventService.openSnackBar("You must connect your gmail account", "Dismiss");
     }
+  }
+
+  getRightSideNavListCount() {
+    this.isLoading = true;
+    this.emailService.getRightSideNavList().subscribe(responseData => {
+      this.navList = responseData;
+      console.log("check navlist :::", this.navList);
+      if (this.navList.length !== 0) {
+        this.navList.forEach(element => {
+          switch (element.labelId) {
+            case 'IMPORTANT': this.importantCount = element.threadsTotal;
+              break;
+            case 'SENT': this.sentCount = element.threadsTotal;
+              break;
+            case 'DRAFT': this.draftCount = element.threadsTotal;
+              break;
+            case 'TRASH': this.trashCount = element.threadsTotal;
+              break;
+          }
+        });
+      }
+    });
   }
 
 }

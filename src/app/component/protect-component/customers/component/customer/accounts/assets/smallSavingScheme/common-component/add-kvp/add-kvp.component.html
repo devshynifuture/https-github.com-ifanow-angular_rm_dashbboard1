@@ -23,8 +23,8 @@
                         <mat-form-field>
                             <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
                                 (selectionChange)="disabledMember($event.value,'owner')"
-                                (valueChange3)='displayControler($event)' (emitBank)='getBank()' (valueChange1)='lisNominee($event)'
-                                class="form-control br-0" [callMethod]='callMethod'>
+                                (valueChange3)='displayControler($event)' (emitBank)='getBank()'
+                                (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
                                 <mat-option value='' disabled>Select family members</mat-option>
                                 <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable"
                                     [value]="f.userName">
@@ -89,8 +89,8 @@
             <div class="col-md-3">
                 <div class="form-group mb-0">
                     <mat-form-field class="ba-date">
-                        <input matInput (click)="KVPpicker.open()" formControlName="commDate" [min]="minDate" [max]="maxDate"
-                            [matDatepicker]="KVPpicker" class="form-control br-0 b-0" readonly>
+                        <input matInput (click)="KVPpicker.open()" formControlName="commDate" [min]="minDate"
+                            [max]="maxDate" [matDatepicker]="KVPpicker" class="form-control br-0 b-0" readonly>
                         <mat-datepicker-toggle matSuffix [for]="KVPpicker"></mat-datepicker-toggle>
                         <mat-datepicker #KVPpicker></mat-datepicker>
                         <mat-error class="f-12">
@@ -133,10 +133,10 @@
                 </div>
                 <div class="col-md-5">
                     <div class="form-group mb-0">
-                        <mat-form-field> 
-                            <input autocomplete="off" matInput formControlName="certificateNo" 
-                                type="text" class="form-control br-0">
-                            <mat-hint align="start" class="f-12">Optional</mat-hint>
+                        <mat-form-field>
+                            <input autocomplete="off" matInput formControlName="certificateNo" type="text"
+                                class="form-control br-0">
+                            <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
                             <!-- <mat-hint align="end" class="f-12">{{poBranch.value.length}}/20</mat-hint> -->
                         </mat-form-field>
                     </div>
@@ -150,7 +150,7 @@
                     <div class="form-group mb-0">
                         <mat-form-field> <input autocomplete="off" matInput formControlName="poBranch" #poBranch
                                 type="text" maxlength="20" class="form-control br-0">
-                            <mat-hint align="start" class="f-12">Optional</mat-hint>
+                            <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
                             <mat-hint align="end" class="f-12">{{poBranch.value.length}}/20</mat-hint>
                         </mat-form-field>
                     </div>
@@ -158,7 +158,7 @@
             </div>
             <!-- <app-add-nominee [ownerName]="ownerName" [data]="kvpData" (outputEvent)="getFormDataNominee($event)">
             </app-add-nominee> -->
-            
+
             <div class="row pt-40">
                 <div class="col-md-5 pr-0 text-right">
                     <h5 class="m-0 pt-8">Linked bank account</h5>
@@ -169,12 +169,12 @@
                             <mat-option *ngFor="let option of bankList ;index as i" [value]="option.id">
                                 {{option.bankNameAndLast4Digit}}</mat-option>
                         </mat-select>
-                        <mat-hint align="start" class="f-12">Optional</mat-hint>
+                        <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
                         <mat-error>This field is required
                         </mat-error>
                     </mat-form-field>
                 </div>
-                <div  class="col-md-1 p-0 pt-8 d-flex">
+                <div class="col-md-1 p-0 pt-8 d-flex">
                     <!-- prod build -->
                     <i class="material-icons text-primitive c-p float-left" (click)="openDialog(null)">add</i>
                 </div>
@@ -187,7 +187,7 @@
                     <div class="form-group mb-0">
                         <mat-form-field> <input autocomplete="off" matInput formControlName="description" #description
                                 maxlength="60" class="form-control br-0">
-                            <mat-hint align="start" class="f-12">Optional</mat-hint>
+                            <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
                             <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
                         </mat-form-field>
                     </div>
@@ -254,8 +254,8 @@
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="close(false)">Cancel</h5>
         </div>
-        <div class="col-md-8 right text-right" > 
-            <app-progress-button (btnClick)="addKVP()" [options]="barButtonOptions" >
+        <div class="col-md-8 right text-right">
+            <app-progress-button (btnClick)="addKVP()" [options]="barButtonOptions">
             </app-progress-button>
         </div>
     </div>

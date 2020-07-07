@@ -17,6 +17,15 @@ dayArrey:any;
     return this.http.get(apiConfig.GMAIL_URL + appConfig.GET_EVENT, httpParams);
   }
 
+  getAttendyList(data) {
+    // const httpParams = new HttpParams().set('userId', data.userId);
+    return this.http.get(apiConfig.USER + appConfig.GET_ATTENDY, data);
+  }
+
+  addToAttendyList(data) {
+    // const httpParams = new HttpParams().set('userId', data.userId);
+    return this.http.postEncoded(apiConfig.USER + appConfig.ADD_ATTENDY, data);
+  }
   updateEvent(data) {
     // const httpParams = new HttpParams().set('calendarId', setData.calendarId).set('userId', setData.userId).set('eventId', setData.eventId);
     return this.http.put(apiConfig.GMAIL_URL + appConfig.GET_UPDATE, data);
@@ -57,6 +66,8 @@ dayArrey:any;
     const httpParams = new HttpParams().set('calendarId', data.calendarId).set('userId', data.userId).set('eventId', data.eventId);
     return this.http.delete(apiConfig.GMAIL_URL + appConfig.GET_DELETE, data, httpParams);
   }
+
+
 
   // =======================
   updateData = new Subject();

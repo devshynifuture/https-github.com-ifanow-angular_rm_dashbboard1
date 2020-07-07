@@ -3,7 +3,7 @@
 <!-- <button mat-button (click)="openComposeEmail(null)">Compose</button> -->
 <!-- <button mat-raised-button (click)="openBottomSheet()">Reply</button> -->
 
-<div class="row">
+<div class="row pt-10">
     <div class="col-md-4 d-flex align-items-center">
         <img class="c-p mr-28" (click)="goBack()" src="/assets/images/svg/left-arrows.svg">
         <img src="/assets/images/svg/refresh.svg" class="mr-20 c-p">
@@ -46,7 +46,8 @@
     </h4>
     <mat-action-list class="p-12 w-100">
 
-        <button mat-list-item class="c-p border-background" *ngFor="let attachment of attachmentArrayDetail" (click)="attachmentDownload(attachment)">
+        <button mat-list-item class="c-p border-background" *ngFor="let attachment of attachmentArrayDetail"
+            (click)="attachmentDownload(attachment)">
             <div class="col-md-11 text-primary">
                 {{ attachment.filename }}
             </div>

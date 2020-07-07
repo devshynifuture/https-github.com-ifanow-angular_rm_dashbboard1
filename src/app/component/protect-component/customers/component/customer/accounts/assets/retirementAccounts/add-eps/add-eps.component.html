@@ -22,7 +22,7 @@
                     <mat-form-field>
                         <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
                             (selectionChange)="disabledMember($event.value,'owner')"
-                            (valueChange3)='displayControler($event)'  (valueChange1)='lisNominee($event)'
+                            (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)'
                             class="form-control br-0" [callMethod]='callMethod'>
                             <mat-option value='' disabled>Select family members</mat-option>
                             <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" [value]="f.userName">
@@ -140,7 +140,7 @@
                         <input autocomplete="off" matInput #bankAcNo type="text" appInputValueValidation
                             [inputValidator]="validatorType.NUMBER_ONLY" maxlength="16" class="form-control br-0"
                             formControlName="bankAcNo">
-                        <mat-hint align="start" class="f-12">Optional</mat-hint>
+                        <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{bankAcNo.value.length}}/16</mat-hint>
                     </mat-form-field>
                 </div>
@@ -155,7 +155,7 @@
                     <mat-form-field>
                         <input autocomplete="off" matInput #description maxlength="60" type="text"
                             class="form-control br-0" formControlName="description">
-                        <mat-hint align="start" class="f-12">Optional</mat-hint>
+                        <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
                     </mat-form-field>
                 </div>
@@ -217,7 +217,7 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <app-progress-button (btnClick)="saveEPF()" [options]="barButtonOptions" >
+            <app-progress-button (btnClick)="saveEPF()" [options]="barButtonOptions">
             </app-progress-button>
             <!-- <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveEPF()">Save</button> -->
         </div>

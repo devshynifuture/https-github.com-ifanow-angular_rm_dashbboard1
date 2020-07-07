@@ -127,7 +127,7 @@
                     <mat-form-field>
                         <input autocomplete="off" matInput #description maxlength="60" class="form-control br-0"
                             formControlName="description">
-                        <mat-hint align="start" class="f-12">Optional</mat-hint>
+                        <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
                     </mat-form-field>
                 </div>
@@ -191,7 +191,7 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <app-progress-button (btnClick)="saveCashInHand()" [options]="barButtonOptions" >
+            <app-progress-button (btnClick)="saveCashInHand()" [options]="barButtonOptions">
             </app-progress-button>
             <!-- <button mat-button class="btn-bottom br-0 text-inherit" (click)="saveCashInHand()">Save</button> -->
         </div>

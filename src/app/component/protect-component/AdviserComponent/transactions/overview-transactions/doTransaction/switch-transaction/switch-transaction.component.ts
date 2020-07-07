@@ -59,6 +59,10 @@ export class SwitchTransactionComponent implements OnInit {
   folioList = [];
   showSpinner = false;
   scheme: any;
+  schemeName: any;
+  mutualFundData: any;
+  mfDefault: any;
+  folioNumber: any;
 
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
               private fb: FormBuilder, private eventService: EventService, public processTransaction: ProcessTransactionService) {
@@ -93,11 +97,22 @@ export class SwitchTransactionComponent implements OnInit {
 
   @Input()
   set data(data) {
+    this.folioList = []
     this.advisorId = AuthService.getAdvisorId();
     this.inputData = data;
     this.transactionType = data.transactionType;
     this.selectedFamilyMember = data.selectedFamilyMember;
-
+    if(data.mutualFundData){
+      this.schemeName = data.mutualFundData.schemeName
+      this.folioNumber = data.mutualFundData.folioNumber
+      this.mfDefault = data.transactionData
+      let foilo = {'folioNumber': this.folioNumber}
+      let schemeName = {'schemeName': this.schemeName}
+       this.folioList.push(foilo)
+      // this.schemeList.push({'schemeName': this.schemeName})
+      this.filterSchemeList = of([{'schemeName': this.schemeName}])
+      this.mutualFundData = data.mutualFundData
+    }
     if (this.isViewInitCalled) {
       this.getdataForm('', false);
     }
@@ -124,7 +139,7 @@ export class SwitchTransactionComponent implements OnInit {
     this.getDataSummary = data;
     if (this.oldDefaultData) {
       this.checkAndResetForm(this.oldDefaultData, this.getDataSummary);
-    } else {
+    } else if(!this.mutualFundData) {
       this.getSchemeList();
     }
     this.oldDefaultData = data;
@@ -170,7 +185,7 @@ export class SwitchTransactionComponent implements OnInit {
       Object.assign(this.transactionSummary, {folioNumber: ''});
       (this.schemeDetails) ? (this.schemeDetails.minimumPurchaseAmount = 0) : 0; // if scheme not present then min amt is 0
     }
-    if (this.selectScheme == 2) {
+    if (this.selectScheme == 2 && !this.mutualFundData) {
       this.showSpinnerEx = true;
       const obj = {
         // searchQuery: (data == '') ? '' : data.target.value,
@@ -256,9 +271,13 @@ export class SwitchTransactionComponent implements OnInit {
     this.maiSchemeList = data;
     this.schemeDetails = data[0];
     Object.assign(this.transactionSummary, {schemeName: this.schemeDetails.schemeName});
-
+    Object.assign(this.transactionSummary, {folioNumber: this.folioNumber});
+    Object.assign(this.transactionSummary, {schemeName: this.schemeName});
     this.schemeDetails.selectedFamilyMember = this.selectedFamilyMember;
-    this.getSchemeWiseFolios();
+    if(!this.mutualFundData){
+      this.getSchemeWiseFolios();
+    }
+    
   }
 
   reinvest(scheme) {
@@ -424,13 +443,13 @@ export class SwitchTransactionComponent implements OnInit {
       employeeContry: [(!data) ? '' : data.orderVal, [Validators.required]],
       currentValue: [(!data) ? '' : data.currentValue,],
       balanceUnit: [(!data) ? '' : data.balanceUnit,],
-      investmentAccountSelection: [(data.investmentAccountSelection) ? data.investmentAccountSelection : '', [Validators.required]],
+      investmentAccountSelection: [(data.folioNumber) ? data.folioNumber : (this.mutualFundData)? this.mutualFundData.folioNumber : '', [Validators.required]],
       modeOfPaymentSelection: [(!data) ? '' : data.modeOfPaymentSelection, [Validators.required]],
       folioSelection: [(data.folioSelection) ? data.folioSelection : '', [Validators.required]],
       selectInvestor: [(!data) ? '' : data.investmentAccountSelection, [Validators.required]],
       installment: [(!data) ? '' : data.employeeContry, [Validators.required]],
       tenure: [(data.tenure) ? data.tenure : '', [Validators.required]],
-      schemeSwitch: [(!data) ? '' : data.schemeName, [Validators.required]],
+      schemeSwitch: [(!data) ? '' : (this.mutualFundData)?this.mutualFundData.schemeName:'', [Validators.required]],
       transferIn: [(!data) ? '' : data.transferIn, [Validators.required]],
       switchType: [(data.switchType) ? data.switchType : '', [Validators.required]],
     });
@@ -446,6 +465,30 @@ export class SwitchTransactionComponent implements OnInit {
       this.scheme.mutualFundSchemeMasterId = data.mutualFundSchemeMasterId;
       this.getSchemeWiseFolios();
     }
+    if(this.mutualFundData){
+      this.folioDetails = {}
+      this.navOfSelectedScheme = this.mutualFundData.nav
+      this.switchTransaction.controls.schemeSelection.setValue('1')
+      this.switchTransaction.controls.folioSelection.setValue('1')
+      this.switchTransaction.controls.schemeSwitch.setValue({'schemeName': this.schemeName})
+      this.filterSchemeList = of([{'schemeName': this.schemeName}])
+      Object.assign(this.folioDetails, {folioNumber: this.folioNumber});
+      this.scheme ={
+        'schemeName': this.schemeName,
+        'mutualFundSchemeMasterId':this.mutualFundData.schemeId
+      }
+      const obj1 = {
+        mutualFundSchemeMasterId: this.mutualFundData.schemeId,
+        aggregatorType: this.mfDefault.defaultClient.aggregatorType,
+        orderType: 'ORDER',
+        userAccountType: this.mfDefault.defaultCredential.accountType,
+      };
+      this.onlineTransact.getSchemeDetails(obj1).subscribe(
+        data => this.getSchemeDetailsRes(data), (error) => {
+          this.eventService.openSnackBar(error, 'Dismiss');
+        }
+      );
+    }
   }
 
   getFormControl(): any {
@@ -453,13 +496,16 @@ export class SwitchTransactionComponent implements OnInit {
   }
 
   switch() {
+    if(this.mutualFundData){
+      this.switchTransaction.controls.investmentAccountSelection.setValue(this.folioNumber)
+    }
     if (this.reInvestmentOpt.length > 1 && this.switchTransaction.controls.reinvest.invalid) {
       this.switchTransaction.get('reinvest').markAsTouched();
-    } else if (this.switchTransaction.get('folioSelection').value == 1) {
-      if (this.switchTransaction.get('investmentAccountSelection').invalid) {
-        this.switchTransaction.get('investmentAccountSelection').markAsTouched();
-        return;
-      }
+    // } else if (this.switchTransaction.get('folioSelection').value == 1) {
+    //   if (this.switchTransaction.get('investmentAccountSelection').invalid) {
+    //     this.switchTransaction.get('investmentAccountSelection').markAsTouched();
+    //     return;
+    //   }
     } else if (this.switchTransaction.get('switchType').value != 3 && this.switchTransaction.get('employeeContry').invalid) {
       this.switchTransaction.get('employeeContry').markAsTouched();
       return;
