@@ -201,7 +201,7 @@
                         </div>
                         <div class="col-md-6 pl-0">
                             <div id="custom-slider">
-                                <mat-slider min="0" max="100" formControlName="stepUp" [value]="goalDetailsFG.get('stepUp').value"></mat-slider>
+                                <mat-slider min="0" max="100" formControlName="stepUp" [value]="goalDetailsFG.get('stepUp').value" (input)="stepupInputField.value = $event.value"></mat-slider>
                             </div>
                         </div>
                         <div class="col-md-2 pl-8 pr-0">
@@ -209,6 +209,7 @@
                                 <mat-form-field class="w-100">
                                     <input matInput type="text" class="form-control br-0" formControlName="stepUp"
                                     [value]="goalDetailsFG.get('stepUp').value"
+                                    #stepupInputField
                                     appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY">
                                     <mat-error>This field is required</mat-error>
                                 </mat-form-field>
@@ -322,7 +323,7 @@
                                 </mat-radio-group>
                             </div>
                         </div>
-                        <div class="row" formArrayName="rtaCamsFundNetSecurityQuestionsList">
+                        <div class="row" formArrayName="progressiveStages">
                             <div class="row">
                                 <div class="col-md-6">
                                     <p class="roboto m-0">Asset allocation stages</p>

@@ -1,9 +1,9 @@
 <div id="ui-goal">
-    <div class="row skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
-        <div class="col-width-22 relClass br-grey pb-44">
-            <div class=" row pt-12 pb-8 bb-grey">
+    <div class="row" *ngIf="allGoals.length > 0">
+        <div class="col-width-22 relClass br-grey  pb-44">
+            <div class=" row pt-20 pb-10 bb-grey">
                 <div class="col-md-4 p-0">
-                    <h3 class="mb-0 mt-8 text-black pt-4">Goals</h3>
+                    <h3 class="mb-0 d-flex align-items-end text-black pt-4">Goals</h3>
                 </div>
                 <div class="col-md-7 text-right pl-0">
                     <button mat-stroked-button class="btn-primary br-0 addon" (click)="openAddgoals()">ADD GOAL</button>
@@ -17,23 +17,35 @@
                 </div>
             </div>
 
-            <div class="mt-8" *ngFor="let goal of allGoals" (click)="loadSelectedGoalData(goal)">
-                <div class="row bg-grey lter p-8 c-p br-2" [ngClass]="{'bu-primitive': goal.id == selectedGoal.id}">
-                    <div class="col-md-3 p-0">
-                        <img class="maxWidth100" [src]="goal.img">
+            <div class="mt-8 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="loaderFn.loading"
+                *ngFor="let goal of allGoals" (click)="loadSelectedGoalData(goal)">
+                <div *ngIf="!loaderFn.loading">
+                    <div class="row bg-grey lter p-8 c-p br-2" [ngClass]="{'bu-primitive': goal.id == selectedGoal.id}">
+                        <div class="col-md-3 p-0">
+                            <img class="maxWidth100" [src]="goal.img">
+                        </div>
+                        <div class="col-md-9 pr-0 pl-10">
+                            <p class="m-0"><span class="bar">{{goal.goalName}}</span></p>
+                            <div class="row pt-8">
+                                <div class="col-md-6 pr-10 pl-0">
+                                    <h5 class="m-0 l-18 f-12 text-primitive"> Goal value</h5>
+                                    <h5 class="f-14 m-0"><span class="bar">₹<span
+                                                appFormatNumber>{{goal.gv}}</span></span>
+                                    </h5>
+                                </div>
+                                <div class="col-md-6 pr-0 pl-4">
+                                    <h5 class="m-0 l-18 f-12 text-primitive"> Year</h5>
+                                    <h5 class="f-14 m-0"><span class="bar">{{goal.year}}</span></h5>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-9 pr-0 pl-10">
-                        <p class="m-0"><span class="bar">{{goal.goalName}}</span></p>
-                        <div class="row pt-8">
-                            <div class="col-md-6 pr-10 pl-0">
-                                <h5 class="m-0 l-18 f-12 text-primitive"> Goal value</h5>
-                                <h5 class="f-14 m-0"><span class="bar">₹<span appFormatNumber>{{goal.gv}}</span></span>
-                                </h5>
-                            </div>
-                            <div class="col-md-6 pr-0 pl-4">
-                                <h5 class="m-0 l-18 f-12 text-primitive"> Year</h5>
-                                <h5 class="f-14 m-0"><span class="bar">{{goal.year}}</span></h5>
-                            </div>
+                </div>
+
+                <div *ngIf="loaderFn.loading">
+                    <div class="relClass">
+                        <div class="bar82" [ngClass]="{'height82': loaderFn.loading}">
+
                         </div>
                     </div>
                 </div>
@@ -41,39 +53,59 @@
         </div>
 
         <div class="col-width-78" *ngIf="allGoals.length > 0">
-            <div class="row bb-grey pt-28 pb-8">
-                <div class="col-md-12 p-0">
-                    <h3 class="m-0 text-black f-500">{{selectedGoal.goalName}}</h3>
+            <div class="row bb-grey pb-12 pt-28">
+                <div class="col-width-68">
+                    <div class="row">
+                        <div class="col-md-8 p-0">
+                            <h3 class="m-0 text-black f-500">{{selectedGoal.goalName}}</h3>
+                        </div>
+                        <div class="col-md-4 p-0 text-right">
+                            <h3 class="f-20 f-500 mb-0 roboto">2030 - 2033</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-width-31">
+                    <div class="row">
+                        <div class="col-md-12 text-right p-0" *ngIf="selectedGoal">
+                            <img (click)="deleteGoal()" src="/assets/images/svg/blue-delete.svg">
+                        </div>
+                    </div>
                 </div>
             </div>
+
             <div class="row">
                 <div class="col-width-68 p-0 pb-44 skeletonAnimation" appSkeletonLoading
-                    [appSkeletonLoading]="isLoading">
-                    <div class="row relClass">
+                    [appSkeletonLoading]="loaderFn.loading">
+                    <div class="row ">
                         <div class="col-md-6 pl-0 ">
                             <div class="row pt-28">
                                 <div class="col-md-6 p-0 ">
                                     <h5 class="f-12 m-0 text-primitive">GOAL FUTURE VALUE</h5>
-                                    <h3 class="m-0">
-                                        <div class="bar">₹<span
-                                                appFormatNumber [value]="selectedGoal.dashboardData.futureValue">{{selectedGoal.dashboardData.futureValue}}</span>
+                                    <div class="relClass">
+                                        <div class="bar" [ngClass]="{'height24': loaderFn.loading}">
+                                            <h3 class="m-0">
+                                                ₹<span appFormatNumber
+                                                    [value]="selectedGoal?.dashboardData?.futureValue"></span>
+                                            </h3>
                                         </div>
-                                    </h3>
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
                                     <h5 class="f-12 m-0 text-primitive">ACHIEVED</h5>
-                                    <h3 class="m-0">
-                                        <div class="bar">₹<span
-                                                appFormatNumber [value]="selectedGoal.achievedValue">{{selectedGoal.achievedValue}}</span>
+                                    <div class="relClass">
+                                        <div class="bar">
+                                            <h3 class="m-0">
+                                                ₹<span appFormatNumber [value]="selectedGoal.achievedValue"></span>
+                                            </h3>
                                         </div>
-                                    </h3>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row pt-24">
                                 <div class="col-md-12 p-0">
                                     <h5 class="m-0 text-primitive f-12">GOAL PROGRESS</h5>
                                     <mat-progress-bar id="bg-primary" mode="determinate"
-                                        [value]="selectedGoal.dashboardData.goalProgress" class="h-30">
+                                        [value]="selectedGoal?.dashboardData?.goalProgress" class="h-30">
                                     </mat-progress-bar>
                                 </div>
                             </div>
@@ -85,22 +117,28 @@
                                     <p class="m-0 text-black roboto p-12 br bb">Equity</p>
                                     <p class="m-0 text-black roboto p-12 br">Debt</p>
                                 </div>
-                                <div class="col-md-3 p-0">
-                                    <p class="m-0 text-black roboto p-12 f-500 br bb">Monthly</p>
-                                    <p class="m-0 text-black roboto p-12 bg-white br bb">
-                                        <span class="bar"
-                                            appFormatNumber [value]="selectedGoal.dashboardData.equity_monthly">{{selectedGoal.dashboardData.equity_monthly}}</span>
+                                <div class="col-md-3 relClass p-0">
+                                    <p class="m-0 text-black roboto p-12 f-500  bb">Monthly</p>
+                                    <p class="m-0 text-black roboto p-12 bg-white  bb">
+                                        <span class="bar" appFormatNumber
+                                            [value]="selectedGoal?.dashboardData?.equity_monthly"> </span>
                                     </p>
 
-                                    <p class="m-0 text-black roboto p-12 bg-white br"><span class="bar"
-                                            appFormatNumber [value]="selectedGoal.dashboardData.debt_monthly">{{selectedGoal.dashboardData.debt_monthly}}</span></p>
+                                    <p class="m-0 text-black roboto p-12 bg-white ">
+                                        <span class="bar" appFormatNumber
+                                            [value]="selectedGoal?.dashboardData?.debt_monthly"> </span>
+                                    </p>
                                 </div>
-                                <div class="col-md-3 p-0">
+                                <div class="col-md-3 relClass p-0">
                                     <p class="m-0 text-black roboto p-12 f-500 bb">Lumpsum</p>
-                                    <p class="m-0 text-black roboto p-12 bg-white bb"><span class="bar"
-                                            appFormatNumber [value]="selectedGoal.dashboardData.lump_equity">{{selectedGoal.dashboardData.lump_equity}}</span></p>
-                                    <p class="m-0 text-black roboto p-12 bg-white"><span class="bar"
-                                            appFormatNumber [value]="selectedGoal.dashboardData.lump_debt">{{selectedGoal.dashboardData.lump_debt}}</span></p>
+                                    <p class="m-0 text-black roboto p-12 bg-white bb">
+                                        <span class="bar height24" appFormatNumber
+                                            [value]="selectedGoal?.dashboardData?.lump_equity"> </span>
+                                    </p>
+                                    <p class="m-0 text-black roboto p-12 bg-white">
+                                        <span class="bar height24" appFormatNumber
+                                            [value]="selectedGoal?.dashboardData?.lump_debt"> </span>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -111,6 +149,8 @@
                             <h5 class="m-0 pb-12">Allocations to this goal</h5>
                         </div>
                     </div>
+
+
                     <div class="row b-a bg-grey lter">
                         <div class="col-md-3 p-0">
                             <p class="roboto m-0 p-8 text-black f-500">Description </p>
@@ -125,11 +165,8 @@
                             <p class="roboto m-0 p-8 text-black f-500">Maturity value </p>
                         </div>
                     </div>
-                    <div cdkDropList id="allottedList"
-                        [cdkDropListData]="todo"
-                        [cdkDropListSortingDisabled]="true"
-                        (cdkDropListDropped)="drop($event)" 
-                        (cdkDropListEntered)="logger($event)"
+                    <div cdkDropList id="allottedList" [cdkDropListData]="todo" [cdkDropListSortingDisabled]="true"
+                        (cdkDropListDropped)="drop($event)" (cdkDropListEntered)="logger($event)"
                         class="hide-placeholder">
                         <div class="row bl-1 bb-1 br bg-white">
                             <div class="col-md-3">
@@ -155,16 +192,16 @@
                         </div>
                     </div>
 
-                    <div class="row pt-28" [hidden]="!hasCostOfDelay">
+                    <div class="row pt-28" [hidden]="!hasCostOfDelay || !loaderFn.loading">
                         <div class="col-md-12 p-0">
                             <h5 class="m-0 f-500 text-black pb-8">Cost of delay</h5>
                         </div>
                     </div>
-                    <div class="row b-a" [hidden]="!hasCostOfDelay">
+                    <div class="row b-a" [hidden]="!hasCostOfDelay || !loaderFn.loading">
                         <div class="col-md-6" id="monthly-chart-container-main"></div>
                         <div class="col-md-6" id="lumpsum-chart-container-main"></div>
                     </div>
-                    <div class="row pt-24 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                    <div class="row pt-24 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="loaderFn.loading">
                         <div class="col-md-9 p-0">
                             <h5 class="m-0 f-500 pb-8">Planner notes</h5>
                         </div>
@@ -178,7 +215,7 @@
                         </div>
                         <div class="b-a relClass">
                             <div class="m-0 p-8 text-black f-14 roboto">
-                                <div class="bar">
+                                <div class="bar82">
                                     We have given higher allocations to your retirement goal compared to other goals. We
                                     suggest you to first allocate maximum corpus to this goal. We wile update your EPF
                                     contributions too once we have the details of the same.
@@ -202,25 +239,29 @@
                             </mat-menu>
                         </div>
                     </div>
-                    <div class="row b-a" *ngIf="selectedGoal.remainingData.loan">
-                        <div class="col-md-10 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                    <div class="row b-a" *ngIf="selectedGoal?.remainingData?.loan || loaderFn.loading">
+                        <div class="col-md-10 skeletonAnimation" appSkeletonLoading
+                            [appSkeletonLoading]="loaderFn.loading">
                             <div class="row pt-16 relClass">
                                 <div class="col-md-4 p-0">
                                     <p class="m-0 f-12 text-primitive">INCOME IN GOAL YEAR</p>
                                     <h5 class="m-0">
-                                        <span class="bar">₹<span appFormatNumber [value]="selectedGoal.remainingData.loan.netSalary">{{selectedGoal.remainingData.loan.netSalary}}</span></span>
+                                        <span class="bar">₹<span appFormatNumber
+                                                [value]="selectedGoal?.remainingData?.loan?.netSalary"></span></span>
                                     </h5>
                                 </div>
                                 <div class="col-md-4 p-0">
                                     <p class="m-0 f-12 text-primitive">HIGHEST EMI AVAILABLE</p>
                                     <h5 class="m-0">
-                                        <span class="bar">₹<span appFormatNumber [value]="selectedGoal.remainingData.loan.highestLoanAndEmiEligible.highest_emi_eligible">{{selectedGoal.remainingData.loan.highestLoanAndEmiEligible.highest_emi_eligible}}</span></span>
+                                        <span class="bar">₹<span appFormatNumber
+                                                [value]="selectedGoal?.remainingData?.loan?.highestLoanAndEmiEligible?.highest_emi_eligible"></span></span>
                                     </h5>
                                 </div>
                                 <div class="col-md-4 p-0">
                                     <p class="m-0 f-12 text-primitive">HIGHEST LOAN AVAILABLE</p>
                                     <h5 class="m-0">
-                                        <span class="bar">₹<span appFormatNumber [value]="selectedGoal.remainingData.loan.highestLoanAndEmiEligible.highest_loan_eligible">{{selectedGoal.remainingData.loan.highestLoanAndEmiEligible.highest_loan_eligible}}</span></span>
+                                        <span class="bar">₹<span appFormatNumber
+                                                [value]="selectedGoal?.remainingData?.loan?.highestLoanAndEmiEligible?.highest_loan_eligible"></span></span>
                                     </h5>
                                 </div>
                             </div>
@@ -228,19 +269,22 @@
                                 <div class="col-md-4 p-0">
                                     <p class="m-0 f-12 text-primitive">LOAN TENURE</p>
                                     <h5 class="m-0">
-                                        <span class="bar">₹<span appFormatNumber [value]="selectedGoal.remainingData.loan.loanTenure">{{selectedGoal.remainingData.loan.loanTenure}}</span></span>
+                                        <span class="bar">₹<span appFormatNumber
+                                                [value]="selectedGoal?.remainingData?.loan?.loanTenure"></span></span>
                                     </h5>
                                 </div>
                                 <div class="col-md-4 p-0">
                                     <p class="m-0 f-12 text-primitive">EMI PAYABLE</p>
                                     <h5 class="m-0">
-                                        <span class="bar">₹<span appFormatNumber [value]="selectedGoal.remainingData.loan.emi">{{selectedGoal.remainingData.loan.emi}}</span></span>
+                                        <span class="bar">₹<span appFormatNumber
+                                                [value]="selectedGoal?.remainingData?.loan?.emi"></span></span>
                                     </h5>
                                 </div>
                                 <div class="col-md-4 p-0">
                                     <p class="m-0 f-12 text-primitive">LOAN TO BE TAKEN</p>
                                     <h5 class="m-0">
-                                        <span class="bar">₹<span appFormatNumber [value]="selectedGoal.remainingData.loan.loanAmount">{{selectedGoal.remainingData.loan.loanAmount}}</span></span>
+                                        <span class="bar">₹<span appFormatNumber
+                                                [value]="selectedGoal?.remainingData?.loan?.loanAmount"></span></span>
                                     </h5>
                                 </div>
                             </div>
@@ -248,63 +292,63 @@
                         <div class="col-md-2 pl-0">
                             <div id="donut-chart-container"></div>
 
-                            <!-- <div class="row pt-16">
-                                <div class="col-md-2 pl-0">
-                                    <p class="hw-12 bg-primary mt-2 mb-0"></p>
-                                </div>
-                                <div class="col-md-10 pr-0 pl-0">
-                                    <p class="m-0 f-11">Loan amount</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-2 pl-0">
-                                    <p class="hw-12 bg-warning mt-2 mb-0"></p>
-                                </div>
-                                <div class="col-md-10 pr-0 pl-0">
-                                    <p class="m-0 f-11">Down amount</p>
-                                </div>
-                            </div> -->
+
                         </div>
                     </div>
                 </div>
                 <div class="col-width-31 pr-0 pt-20">
+
                     <img [src]="selectedGoal.img" class="imgWidth">
 
                     <div class="btnBox">
                         <button mat-stroked-button class="in-btn" (click)="openInSideBar(null, 'openallocations')">
-                            <img src="/assets/images/svg/btn-links.svg">Allocations</button>
+                            <img class="ml-8" src="/assets/images/svg/btn-links.svg">Allocations</button>
+
                         <button mat-stroked-button class="in-btn-two" (click)="openInSideBar(null, 'openMfAllocation')">
-                            <img src="/assets/images/svg/btn-links.svg">MF allocations</button>
+                            <img class="ml-8" src="/assets/images/svg/btn-links.svg">MF allocations</button>
                     </div>
 
 
                     <div class="btnBox">
                         <button mat-stroked-button class="in-btn" (click)="openInSideBar(null, 'openKeyinfo')">
-                            <img src="/assets/images/svg/filter-schemes.svg">Key info</button>
+                            <img class="ml-8" src="/assets/images/svg/filter-schemes.svg">Key info</button>
                         <button mat-stroked-button class="in-btn-two" (click)="openInSideBar(null, 'openCalculators')">
-                            <img src="/assets/images/svg/cal-sm.svg">Calculators</button>
+                            <img class="ml-8" src="/assets/images/svg/cal-sm.svg">Calculators</button>
                     </div>
 
 
                     <div class="btnBox">
                         <button mat-stroked-button class="in-btn">
-                            <img src="/assets/images/svg/btn-links.svg">Action plan</button>
+                            <img class="ml-8" src="/assets/images/svg/btn-links.svg">Action plan</button>
                         <button mat-stroked-button class="in-btn-two" (click)="openInSideBar(null, 'openPreferences')">
-                            <img src="/assets/images/svg/3lines.svg">Preferences</button>
+                            <img class="ml-8" src="/assets/images/svg/3lines.svg">Preferences</button>
                     </div>
 
 
-                    <div class="row pt-20" *ngIf="selectedGoal">
+                    <!-- <div class="row pt-20" *ngIf="selectedGoal">
                         <div class="col-md-12 right p-0 text-right" (click)="deleteGoal()">
                             <img src="/assets/images/svg/blue-delete.svg">
-                            <!-- (click)="deleteGoal(dashboardData)" -->
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
-        <div class="col-width-78" *ngIf="allGoals.length == 0">
-            No Data Present
+
+    </div>
+    <div class="row" *ngIf="allGoals.length == 0 && !loaderFn.loading">
+        <div class="col-md-12 emptyGoalmt d-flex align-items-center justify-content-center">
+
+            <div class="emptyImg">
+                <img src="/assets/images/svg/empty-goal-icon.svg">
+            </div>
+
+            <div class="textEmpty">
+                <h3>What’s a life without a goal.</h3>
+                <p>Let’s add your goals and achieve them. We’re in this together.</p>
+                <button (click)="openAddgoals()" mat-stroked-button class="btn-primary br-0 addon">LET’S GET
+                    STARTED</button>
+            </div>
+
         </div>
     </div>
 </div>

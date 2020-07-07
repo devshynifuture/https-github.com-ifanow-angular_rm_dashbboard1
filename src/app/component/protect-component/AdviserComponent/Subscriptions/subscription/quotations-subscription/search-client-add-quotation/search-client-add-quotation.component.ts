@@ -286,6 +286,7 @@ export class SearchClientAddQuotationComponent implements OnInit {
   }
 
   openFroala(data, value) {
+    data['isAdvisor'] = true;
     const fragmentData = {
       flag: value,
       data,
