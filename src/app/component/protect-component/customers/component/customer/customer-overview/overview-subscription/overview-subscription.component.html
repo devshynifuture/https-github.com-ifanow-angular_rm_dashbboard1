@@ -1,29 +1,60 @@
-<div class="profileOverview">
-    <div class="row">
-        <div class="col-md-2 pt-8 pb-20 pl-0 pr-0 overSub-height bg-grey lter">
-            <ul class="vertical-menu ">
+<div class="profileOverview" id="ui-overview-subscription">
+    <div class="row no-wrap">
+        <div
+            class="col-md-2 pt-8 pb-20 pl-0 pr-0 overSub-height bg-grey lter responsive-left-side-top responsive-flex-auto">
+            <ul class="vertical-menu responsive-left-side">
                 <li class="c-p" [routerLink]="['subscriptions']" routerLinkActive="activeColor">
-                    <img class="mr-8" src="/assets/images/svg/key-info-icon.svg"> Subscriptions
+                    <div class="row">
+                        <div class="col-md-2 p-0">
+                            <img class="mr-8" src="/assets/images/svg/key-info-icon.svg">
+                        </div>
+                        <div class="col-md-10 p-0 rs-pl-6">Subscriptions</div>
+                    </div>
+
                 </li>
                 <li class="c-p" [routerLink]="['quotations']" routerLinkActive="activeColor">
-                    <img class="mr-8" src="/assets/images/svg/people.svg"> Quotations
+                    <div class="row">
+                        <div class="col-md-2 p-0">
+                            <img class="mr-8" src="/assets/images/svg/people.svg">
+                        </div>
+                        <div class="col-md-10 p-0 rs-pl-6">Quotations</div>
+                    </div>
+
                 </li>
                 <li class="c-p" [routerLink]="['invoices']" routerLinkActive="activeColor">
-                    <img class="mr-8" src="/assets/images/svg/speed-meter-icon.svg"> Invoices
+                    <div class="row">
+                        <div class="col-md-2 p-0">
+                            <img class="mr-8" src="/assets/images/svg/speed-meter-icon.svg">
+                        </div>
+                        <div class="col-md-10 p-0 rs-pl-6">Invoices</div>
+                    </div>
+
                 </li>
 
                 <li class="c-p" [routerLink]="['documents']" routerLinkActive="activeColor">
-                    <img class="mr-8" src="/assets/images/svg/speed-meter-icon.svg"> Documents
+                    <div class="row">
+                        <div class="col-md-2 p-0">
+                            <img class="mr-8" src="/assets/images/svg/speed-meter-icon.svg">
+                        </div>
+                        <div class="col-md-10 p-0 rs-pl-6">Documents</div>
+                    </div>
+
                 </li>
 
                 <li class="c-p" [routerLink]="['settings']" routerLinkActive="activeColor">
-                    <img class="mr-8" src="/assets/images/svg/speed-meter-icon.svg"> Settings
+                    <div class="row">
+                        <div class="col-md-2 p-0">
+                            <img class="mr-8" src="/assets/images/svg/speed-meter-icon.svg">
+                        </div>
+                        <div class="col-md-10 p-0 rs-pl-6">Settings</div>
+                    </div>
+
                 </li>
 
             </ul>
         </div>
 
-        <div class="col-md-10 p-0" *ngIf="!isLoading">
+        <div class="col-md-10 p-0 responsive-right-side-top" *ngIf="!isLoading">
             <router-outlet></router-outlet>
         </div>
     </div>

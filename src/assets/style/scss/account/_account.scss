@@ -445,11 +445,19 @@
 
   #ui-assets-account,
   #ui-liabilities,
-  #ui-insurance #ui-profile-plan {
+  #ui-insurance #ui-profile-plan,
+  #ui-overview-subscription,
+  #ui-documents-overview,
+  #ui-overview-profile,
+  #ui-activity {
     li {
       padding: 0 0px 0px 8px !important;
       font-size: 13px;
     }
+  }
+
+  .rs-pl-15 {
+    padding-left: 15px !important;
   }
 
   .add-liabilities {
@@ -540,7 +548,12 @@
 
   #ui-assets-account,
   #ui-profile-plan,
-  #ui-liabilities {
+  #ui-liabilities,
+  #investmentPlan,
+  #ui-overview-subscription,
+  #ui-documents-overview,
+  #ui-overview-profile,
+  #ui-activity {
     li {
       font-size: 13px !important;
     }
@@ -560,7 +573,12 @@
   #ui-assets-account,
   #ui-liabilities,
   #ui-insurance,
-  #ui-profile-plan {
+  #ui-profile-plan,
+  #investmentPlan,
+  #ui-overview-subscription,
+  #ui-documents-overview,
+  #ui-overview-profile,
+  #ui-activity {
 
     .vertical-menu {
       width: 20vw !important;
@@ -594,7 +612,12 @@
   #ui-assets-account,
   #ui-liabilities,
   #ui-insurance,
-  #ui-profile-plan {
+  #ui-profile-plan,
+  #investmentPlan,
+  #ui-overview-subscription,
+  #ui-documents-overview,
+  #ui-overview-profile,
+  #ui-activity {
 
     .vertical-menu {
       width: 22vw !important;
@@ -628,7 +651,12 @@
   #ui-assets-account,
   #ui-liabilities,
   #ui-insurance,
-  #ui-profile-plan {
+  #ui-profile-plan,
+  #investmentPlan,
+  #ui-overview-subscription,
+  #ui-documents-overview,
+  #ui-overview-profile,
+  #ui-activity {
 
     .vertical-menu {
       width: 23vw !important;
