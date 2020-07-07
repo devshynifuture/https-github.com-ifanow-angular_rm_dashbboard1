@@ -1,16 +1,16 @@
-import {Component, Input, OnInit, QueryList, ViewChildren} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionService} from '../../../subscription.service';
-import {AuthService} from '../../../../../../../auth-service/authService';
-import {EventService} from 'src/app/Data-service/event.service';
-import {HttpClient} from '@angular/common/http';
-import {PhotoCloudinaryUploadService} from '../../../../../../../services/photo-cloudinary-upload.service';
-import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
-import {UtilService, ValidatorType} from '../../../../../../../services/util.service';
-import {PostalService} from 'src/app/services/postal.service';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {MatInput} from '@angular/material';
+import { Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionService } from '../../../subscription.service';
+import { AuthService } from '../../../../../../../auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
+import { HttpClient } from '@angular/common/http';
+import { PhotoCloudinaryUploadService } from '../../../../../../../services/photo-cloudinary-upload.service';
+import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
+import { UtilService, ValidatorType } from '../../../../../../../services/util.service';
+import { PostalService } from 'src/app/services/postal.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { MatInput } from '@angular/material';
 
 @Component({
   selector: 'app-biller-profile-advisor',
@@ -68,9 +68,9 @@ export class BillerProfileAdvisorComponent implements OnInit {
   MiscellaneousData: any;
 
   constructor(public utils: UtilService, public subInjectService: SubscriptionInject,
-              private fb: FormBuilder,
-              private subService: SubscriptionService, private postalService: PostalService,
-              private eventService: EventService, private http: HttpClient) {
+    private fb: FormBuilder,
+    private subService: SubscriptionService, private postalService: PostalService,
+    private eventService: EventService, private http: HttpClient) {
   }
 
   imageData: File;
@@ -125,6 +125,14 @@ export class BillerProfileAdvisorComponent implements OnInit {
 
   getFrormControlMisc() {
     return this.MiscellaneousData.controls;
+  }
+
+  footNoteData(data) {
+    this.getFrormControlMisc().footnote.setValue(data);
+  }
+
+  termsData(data) {
+    this.getFrormControlMisc().terms.setValue(data);
   }
 
   keyPress(event: any) {
@@ -267,7 +275,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
   }
 
   Close(data) {
-    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: data});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: data });
 
   }
 
@@ -300,10 +308,10 @@ export class BillerProfileAdvisorComponent implements OnInit {
     this.ifscFlag = true;
     if (ifsc != '') {
       this.subService.getBankAddress(obj).subscribe(data => {
-          this.bankData(data);
-          // this.PinData(data, 'bankDetailsForm')
+        this.bankData(data);
+        // this.PinData(data, 'bankDetailsForm')
 
-        },
+      },
         err => {
           this.ifscFlag = false;
           this.bankData(err);

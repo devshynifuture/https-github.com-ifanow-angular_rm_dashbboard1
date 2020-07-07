@@ -222,8 +222,11 @@ export class AddQuotationSubscriptionComponent implements OnInit {
 <br>
 </div>`;
       this.feeStructureHtmlData += feeStructureTable;
-      servicesName += element.serviceName + ', ';
+      servicesName += element.serviceName + ',';
     });
+    servicesName = servicesName.slice(0, -1);
+    // servicesName= servicesName.replace(/^,|,$|(,)+/g, '$1');
+
     quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$service_fee'), 'g'), this.feeStructureHtmlData);
     quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$service_name'), 'g'), servicesName);
     this.getOrgProfiles(quotationData);
