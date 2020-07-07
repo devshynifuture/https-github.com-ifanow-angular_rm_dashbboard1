@@ -7,6 +7,7 @@ import { MobileMyfeedComponent } from './component/customer/mobile/myfeed/mobile
 
 const routes: Routes = [
   {
+    
     path: 'detail',
     component: MobileMyfeedComponent,
     resolve: {advisorInfo: AdvisorAndOrganizationInfoService},

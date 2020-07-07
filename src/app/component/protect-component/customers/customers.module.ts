@@ -54,6 +54,7 @@ import { MobileLeftSidenavComponent } from './component/customer/mobile/left-sid
     PlanEntryModule,
     CustomersRoutingModule,
    // MobileRoutingModule,
+   
     AdviceEntryModule,
     CustomerOverviewEntryModule,
     CustomDirectiveModule,
