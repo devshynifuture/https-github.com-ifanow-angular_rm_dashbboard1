@@ -95,8 +95,7 @@
                                     <div class="relClass">
                                         <div class="bar">
                                             <h3 class="m-0">
-                                                ₹<span appFormatNumber
-                                                    [value]="selectedGoal.achievedValue"></span>
+                                                ₹<span appFormatNumber [value]="selectedGoal.achievedValue"></span>
                                             </h3>
                                         </div>
                                     </div>
@@ -122,22 +121,23 @@
                                     <p class="m-0 text-black roboto p-12 f-500  bb">Monthly</p>
                                     <p class="m-0 text-black roboto p-12 bg-white  bb">
                                         <span class="bar" appFormatNumber
-                                            [value]="selectedGoal.dashboardData.equity_monthly">{{selectedGoal.dashboardData.equity_monthly}}</span>
+                                            [value]="selectedGoal?.dashboardData?.equity_monthly"> </span>
                                     </p>
 
                                     <p class="m-0 text-black roboto p-12 bg-white ">
                                         <span class="bar" appFormatNumber
-                                            [value]="selectedGoal.dashboardData.debt_monthly">{{selectedGoal.dashboardData.debt_monthly}}</span>
+                                            [value]="selectedGoal?.dashboardData?.debt_monthly"> </span>
                                     </p>
                                 </div>
                                 <div class="col-md-3 relClass p-0">
                                     <p class="m-0 text-black roboto p-12 f-500 bb">Lumpsum</p>
                                     <p class="m-0 text-black roboto p-12 bg-white bb">
-                                        <span class="bar" appFormatNumber
-                                            [value]="selectedGoal.dashboardData.lump_equity">{{selectedGoal.dashboardData.lump_equity}}</span>
+                                        <span class="bar height24" appFormatNumber
+                                            [value]="selectedGoal?.dashboardData?.lump_equity"> </span>
                                     </p>
-                                    <p class="m-0 text-black roboto p-12 bg-white"><span class="bar" appFormatNumber
-                                            [value]="selectedGoal.dashboardData.lump_debt">{{selectedGoal.dashboardData.lump_debt}}</span>
+                                    <p class="m-0 text-black roboto p-12 bg-white">
+                                        <span class="bar height24" appFormatNumber
+                                            [value]="selectedGoal?.dashboardData?.lump_debt"> </span>
                                     </p>
                                 </div>
                             </div>
@@ -240,7 +240,8 @@
                         </div>
                     </div>
                     <div class="row b-a" *ngIf="selectedGoal.remainingData.loan || loaderFn.loading">
-                        <div class="col-md-10 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="loaderFn.loading">
+                        <div class="col-md-10 skeletonAnimation" appSkeletonLoading
+                            [appSkeletonLoading]="loaderFn.loading">
                             <div class="row pt-16 relClass">
                                 <div class="col-md-4 p-0">
                                     <p class="m-0 f-12 text-primitive">INCOME IN GOAL YEAR</p>
@@ -332,7 +333,10 @@
                 </div>
             </div>
         </div>
-        <div class="col-width-78" *ngIf="allGoals.length == 0 && !loaderFn.loading">
+
+    </div>
+    <div class="row">
+        <div class="col-md-12" *ngIf="allGoals.length == 0 && !loaderFn.loading">
             No Data Present
         </div>
     </div>
