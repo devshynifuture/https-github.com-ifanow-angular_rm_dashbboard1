@@ -16,7 +16,6 @@
 <div class="mt-80 pb-160 ">
     <div class="row">
         <div class="col-md-8">
-            <h3 class="f-500 mb-20"> Do KYC and register mandate </h3>
         </div>
         <div class="col-md-4 text-right">
             <img src="assets/images/svg/attchment-icon.svg" class="c-p ml-12">
@@ -39,12 +38,40 @@
         </div>
     </div>
 
+    <div class="row pt-16">
+        <div class="col-md-3 pr-0 pl-30 text-left">
+            <h5 class="m-0 f-14 pt-12">Task Description</h5>
+        </div>
+        <div class="col-md-8 pl-0">
+            <mat-form-field class="form-group" floadLabel="never" appearance="standard">
+                <input class="form-control" matInput placeholder="Search" aria-label="State" [matAutocomplete]="auto">
+                <!-- [formControl]="searchMoviesCtrl" -->
 
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                    <!-- <mat-option *ngIf="isLoading" class="is-loading">Loading...</mat-option> -->
+                    <!-- <ng-container *ngIf="!isLoading">
+                        <mat-option *ngFor="let movie of filteredMovies" [value]="movie.Title">
+                            <span><b>{{movie.Title}}</b> ({{movie.Year}})</span>
+                        </mat-option>
+                    </ng-container> -->
+                </mat-autocomplete>
+            </mat-form-field>
+
+            <!-- 
+            <ng-container *ngIf="errorMsg; else elseTemplate">
+                {{errorMsg}}
+            </ng-container>
+            <ng-template #elseTemplate>
+                <h5>Selected Value: {{searchMoviesCtrl.value}}</h5>
+            </ng-template> -->
+
+        </div>
+    </div>
 
 
 
     <div class="row pt-16">
-        <div class="col-md-3 pr-0 text-left">
+        <div class="col-md-3 pr-0 text-left pl-30">
             <h5 class="m-0 f-14 pt-12">Client</h5>
         </div>
 
@@ -66,7 +93,7 @@
     </div>
 
     <div class="row pt-16">
-        <div class="col-md-3 pr-0 text-left">
+        <div class="col-md-3 pr-0 text-left pl-30">
             <h5 class="m-0 f-14 pt-12">Assigned to</h5>
         </div>
 
@@ -82,7 +109,7 @@
     </div>
 
     <div class="row pt-16">
-        <div class="col-md-3 pr-0 text-left">
+        <div class="col-md-3 pr-0 text-left pl-30">
             <h5 class="m-0 f-14 pt-12">Due date</h5>
         </div>
 
@@ -101,7 +128,7 @@
 
 
     <div class="row pt-28">
-        <div class="col-md-12">
+        <div class="col-md-12 pl-30">
             <h5 class="f-500 m-0"> Sub-tasks </h5>
         </div>
     </div>
@@ -109,7 +136,7 @@
 
 
     <div class="row pb-16">
-        <div class="col-md-4">
+        <div class="col-md-4 pl-30">
             <mat-form-field>
                 <input class="form-control br-0 text-left" matInput type="text">
             </mat-form-field>
@@ -150,7 +177,7 @@
 
 
     <div class="row pt-14">
-        <div class="col-md-12 text-primitive f-14">
+        <div class="col-md-12 text-primitive f-14 pl-30">
             <img src="assets/images/svg/plus-icon-gray.svg" class="c-p"> Add sub-task
         </div>
     </div>
@@ -158,12 +185,12 @@
 
     <div class="bg-white pb-20 pt-20">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12 pl-30">
                 <h5 class="f-500 f-16 roboto">Attachments</h5>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-5">
+            <div class="col-md-5 pl-30">
                 <div class="row">
                     <div class="col-md-4 pl-0">
                         <div class="attachment-img">
@@ -184,7 +211,6 @@
                 <div class="row">
                     <div class="col-md-4 pl-0">
                         <div class="attachment-img">
-
                         </div>
                     </div>
                     <div class="col-md-8 p-0">
@@ -197,8 +223,10 @@
             </div>
 
             <div class="col-md-2">
-                <div class="uploadImgBox c-p d-flex align-items-center justify-content-center">
+                <div class="uploadImgBox c-p d-flex align-items-center justify-content-center"
+                    (click)="uploadFileRef.click()">
                     <img src="assets/images/svg/plus-icon-gray.svg" class="c-p">
+                    <input type="file" class="d-none" #uploadFileRef (change)="getFileData($event.target.files)">
                 </div>
             </div>
 
@@ -209,13 +237,13 @@
 
     <div class="bg-grey lter pt-20">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12 pl-30">
                 <h5 class="f-500 roboto">Comments</h5>
             </div>
         </div>
 
         <div class="row pb-10">
-            <div class="col-md-1 text-center p-0">
+            <div class="col-md-1 text-center p-0 pl-30">
                 <img src="assets/images/svg/avtarProfile.svg" class="c-p">
             </div>
             <div class="col-md-11 pl-0">
@@ -240,7 +268,7 @@
         </div>
 
         <div class="row pb-10">
-            <div class="col-md-1 text-center p-0">
+            <div class="col-md-1 text-center p-0 pl-30">
                 <img src="assets/images/svg/avtarProfile.svg" class="c-p">
             </div>
             <div class="col-md-11 pl-0">
@@ -273,8 +301,8 @@
 
 
 <div class="bottomCommentBox bg-grey lter">
-    <div class="row">
-        <div class="col-md-1 p-0">
+    <div class="row pt-16">
+        <div class="col-md-1 p-0 pl-30">
             <img src="assets/images/svg/avtar-1.svg" class="c-p ml-12">
         </div>
         <div class="col-md-11">

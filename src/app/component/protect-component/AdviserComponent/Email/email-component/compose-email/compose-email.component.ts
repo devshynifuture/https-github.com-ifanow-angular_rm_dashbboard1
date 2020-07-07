@@ -663,6 +663,7 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
 
 
     this.emailService.sendEmail(body).subscribe(res => {
+      this.refreshRequired = true;
       this.close();
     });
 
