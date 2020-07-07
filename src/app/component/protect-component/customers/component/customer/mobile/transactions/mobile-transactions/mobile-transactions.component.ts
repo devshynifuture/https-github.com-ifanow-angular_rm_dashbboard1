@@ -8,7 +8,8 @@ import { Component, OnInit } from '@angular/core';
 export class MobileTransactionsComponent implements OnInit {
 
   constructor() { }
-
+  myControl;
+  option;
   ngOnInit() {
   }
 
