@@ -4,7 +4,7 @@ import { MobileDocumentComponent } from './mobile-document.component';
 
 describe('MobileDocumentComponent', () => {
   let component: MobileDocumentComponent;
-  let fixture: ComponentFixture<MobileDocumentComponent>;
+  let fixture: ComponentFixture<MobileDocumentComponent>; 
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

@@ -8,7 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class MobileDocumentComponent implements OnInit {
   openMenue: boolean =false;
   inputData: any;
-
+ 
   constructor() { }
   @Input()
   set data(data) {

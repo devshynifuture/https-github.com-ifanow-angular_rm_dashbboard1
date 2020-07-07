@@ -4,7 +4,7 @@ import { Component, OnInit, Input } from '@angular/core';
   selector: 'app-mobile-profile',
   templateUrl: './mobile-profile.component.html',
   styleUrls: ['./mobile-profile.component.scss']
-})
+}) 
 export class MobileProfileComponent implements OnInit {
   openMenue: boolean=false;
   inputData: any;
