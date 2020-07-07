@@ -452,6 +452,7 @@ export class QuotationsSubscriptionComponent implements OnInit {
     if (this.isLoading) {
       return;
     }
+    data['isAdvisor'] = true;
     data['sendEsignFlag'] = false;
     const fragmentData = {
       flag: value,

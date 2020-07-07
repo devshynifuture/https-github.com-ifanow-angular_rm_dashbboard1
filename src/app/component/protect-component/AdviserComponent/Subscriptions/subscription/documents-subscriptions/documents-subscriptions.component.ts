@@ -214,6 +214,7 @@ export class DocumentsSubscriptionsComponent implements OnInit {
   openViewDocument(value, data) {
     data['sendEsignFlag'] = true;
     data['feeStructureFlag'] = data.documentText.includes('<service_fee>');
+    data['isAdvisor'] = true;
     const fragmentData = {
       flag: value,
       data,

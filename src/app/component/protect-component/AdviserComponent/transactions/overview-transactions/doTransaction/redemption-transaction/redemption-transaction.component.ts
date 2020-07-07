@@ -241,7 +241,8 @@ export class RedemptionTransactionComponent implements OnInit {
       this.showUnits = true;
       this.navOfSelectedScheme = this.mutualFundData.nav
     this.mutualFundData.balanceUnit = parseFloat(this.mutualFundData.balanceUnit).toFixed(2);
-    this.currentValue = this.processTransaction.calculateCurrentValue(this.mutualFundData.nav, this.mutualFundData.balanceUnit).toFixed(2);
+    this.currentValue = this.processTransaction.calculateCurrentValue(this.mutualFundData.nav, this.mutualFundData.balanceUnit);
+    this.currentValue =  Math.round(this.currentValue)
     Object.assign(this.folioDetails, {balanceUnit: this.mutualFundData.balanceUnit});
     Object.assign(this.transactionSummary, {folioNumber: this.mutualFundData.folioNumber});
     Object.assign(this.transactionSummary, {tpUserCredFamilyMappingId: this.mfDefault.defaultClient.tpUserCredFamilyMappingId});
