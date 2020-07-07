@@ -471,6 +471,7 @@ export class SwitchTransactionComponent implements OnInit {
       this.switchTransaction.controls.schemeSelection.setValue('1')
       this.switchTransaction.controls.folioSelection.setValue('1')
       this.switchTransaction.controls.schemeSwitch.setValue({'schemeName': this.schemeName})
+      this.currentValue = this.processTransaction.calculateCurrentValue(this.mutualFundData.nav, this.mutualFundData.balanceUnit);
       this.currentValue =  Math.round(this.currentValue)
       this.switchTransaction.controls.currentValue.setValue(this.currentValue);
       this.switchTransaction.controls.balanceUnit.setValue(this.mutualFundData.balanceUnit);
