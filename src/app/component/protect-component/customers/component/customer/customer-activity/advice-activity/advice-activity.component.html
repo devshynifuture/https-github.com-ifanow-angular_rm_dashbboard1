@@ -1,7 +1,7 @@
 <div id="ui-activity">
-    <div class="row" style="height: calc(100vh - 118px);">
-        <div class="col-md-2 bg-grey lter p-0 pt-8">
-            <ul class="vertical-menu">
+    <div class="row no-wrap" style="height: calc(100vh - 118px);">
+        <div class="col-md-2  p-0 pt-8 responsive-left-side-top responsive-flex-auto">
+            <ul class="vertical-menu bg-grey lter responsive-left-side">
                 <li [routerLink]="['/customer/detail/activity/advice/all-portfolio']" routerLinkActive="activeColor"
                     class="c-p pr-0">
                     <div class="row">
@@ -48,7 +48,12 @@
                 </li> -->
                 <li *ngFor="let singleAsset of leftSidebarList" routerLink={{singleAsset.urlPath}}
                     routerLinkActive="activeColor" class="c-p">
-                    {{singleAsset.name}}
+                    <div class="row">
+                        <div class="col-md-12 p-0">
+                            {{singleAsset.name}}
+                        </div>
+                    </div>
+
                 </li>
                 <!-- <li [routerLink]="['/customer/detail/activity/advice/fixedIncome']" routerLinkActive="activeColor"
                     class="c-p">
@@ -91,7 +96,7 @@
         </div>
 
 
-        <div class="col-md-10 b-a p-0">
+        <div class="col-md-10 p-0 responsive-right-side-top">
             <router-outlet></router-outlet>
             <!-- <div *ngSwitchCase="'tab1'">
                 <app-advice-all-portfolio></app-advice-all-portfolio>
