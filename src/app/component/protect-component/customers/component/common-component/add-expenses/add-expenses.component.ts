@@ -133,6 +133,7 @@ export class AddExpensesComponent implements OnInit {
       advisorId: this.advisorId,
       clientId: this.clientId
     };
+
     // this.planService.getListOfFamilyByClient(obj).subscribe(
       this.peopleService.getClientFamilyMemberListAsset(obj).subscribe(
       data => this.getListOfFamilyByClientRes(data)
@@ -140,7 +141,6 @@ export class AddExpensesComponent implements OnInit {
   }
 
   getListOfFamilyByClientRes(data) {
-    // this.familyMember = data.familyMembersList;
     this.familyMember = data;
   }
 

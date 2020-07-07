@@ -7,7 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class MobilePortfoiloComponent implements OnInit {
   openMenue: boolean = false;
-  inputData: any;
+  inputData: any; 
 
   constructor() { }
   @Input()

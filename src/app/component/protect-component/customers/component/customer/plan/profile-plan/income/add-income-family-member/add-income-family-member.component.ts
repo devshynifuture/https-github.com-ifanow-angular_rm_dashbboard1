@@ -1,4 +1,3 @@
-
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
@@ -22,7 +21,7 @@ export class AddIncomeFamilyMemberComponent implements OnInit {
   ownerCount = 0;
   checkFamList: boolean;
 
-  constructor(private peopleService : PeopleService,private subInjectService: SubscriptionInject, private custumService: CustomerService, private utils: UtilService, private eventService: EventService) {
+  constructor(private peopleService :PeopleService,private subInjectService: SubscriptionInject, private custumService: CustomerService, private utils: UtilService, private eventService: EventService) {
   }
 
   ngOnInit() {
@@ -53,7 +52,7 @@ export class AddIncomeFamilyMemberComponent implements OnInit {
       clientId: this.clientId,
     };
     // this.custumService.getListOfFamilyByClient(obj).subscribe(
-    this.peopleService.getClientFamilyMemberListAsset(obj).subscribe(
+      this.peopleService.getClientFamilyMemberListAsset(obj).subscribe(
       data => this.getListOfFamilyByClientRes(data)
     );
   }

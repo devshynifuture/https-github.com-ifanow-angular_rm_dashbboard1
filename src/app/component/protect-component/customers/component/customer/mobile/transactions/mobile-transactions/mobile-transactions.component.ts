@@ -7,7 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class MobileTransactionsComponent implements OnInit {
   openMenue: boolean=false;
-  inputData: any;
+  inputData: any; 
 
   constructor() { }
   @Input()

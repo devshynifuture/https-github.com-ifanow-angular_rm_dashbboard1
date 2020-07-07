@@ -5,32 +5,6 @@
   }
 }
 
-#ui-liabilities {
-  .vertical-menu {
-    height: calc(100vh - 126px);
-    position: fixed;
-    width: 16.7%;
-    display: block;
-  }
-
-  li {
-    height: 40px;
-    line-height: 40px;
-    padding: 0 0px 0 24px;
-    font-size: 14px;
-    text-align: left;
-    margin-bottom: 10px;
-  }
-}
-
-#ui-insurance li {
-  padding: 0px 0px 0 24px;
-  height: 40px;
-  text-align: left;
-  font-size: 14px;
-  line-height: 40px;
-}
-
 #ui-plan-summary .light-blue {
   .mat-progress-bar-buffer {
     background: #626262 !important;
@@ -234,7 +208,6 @@
 @media(max-width:1200px) {
 
   #ui-assets-account,
-  #ui-liabilities,
   #ui-profile-plan {
     li {
       padding: 0 0px 24px 13px !important;
@@ -251,12 +224,11 @@
 
   #ui-insurance {
     li {
-      font-size: 13px !important;
-      // padding-top: 10px !important;
-      padding-right: 0px !important;
-      padding-left: 8px !important;
+      padding: 13px !important;
 
-
+      .f-700 {
+        font-size: 12px;
+      }
 
       .row {
         flex-wrap: nowrap;
@@ -278,7 +250,7 @@
     }
   }
 
-  div.responsive-overflow-y {
+  div.overflow-y {
     overflow: auto;
     white-space: nowrap;
 
@@ -387,11 +359,11 @@
   //   min-width: 135px;
   //   width: 165px;
   // }
-  // #ui-insurance {
-  //   li {
-  //     padding: 10px !important;
-  //   }
-  // }
+  #ui-insurance {
+    li {
+      padding: 10px !important;
+    }
+  }
 
   .future-contribution {
     .f-14 {
@@ -445,7 +417,7 @@
 
   #ui-assets-account,
   #ui-liabilities,
-  #ui-insurance #ui-profile-plan {
+  #ui-profile-plan {
     li {
       padding: 0 0px 0px 8px !important;
       font-size: 13px;
@@ -489,43 +461,6 @@
   }
 }
 
-@media(max-width:1028px) {
-
-  #ui-assets-account,
-  #ui-insurance {
-
-    .vertical-menu {
-      width: 18vw !important;
-    }
-
-    .mat-drawer-side {
-      max-width: 18vw;
-    }
-  }
-
-  .responsive-flex-auto {
-    flex: auto
-  }
-
-  .responsive-left-side {
-    width: 18vw !important;
-  }
-
-
-  .responsive-left-side-top {
-    max-width: 18vw !important;
-  }
-
-  // .responsive-left-side {
-  //   width: 18vw !important;
-  // }
-
-  .responsive-right-side-top {
-    max-width: 82vw !important;
-  }
-
-}
-
 @media(max-width:1024px) {
   .radioBtn .mat-radio-label {
     min-width: 125px !important;
@@ -552,107 +487,5 @@
     h5 {
       font-size: 14px !important;
     }
-  }
-}
-
-@media(max-width:954px) {
-
-  #ui-assets-account,
-  #ui-liabilities,
-  #ui-insurance,
-  #ui-profile-plan {
-
-    .vertical-menu {
-      width: 20vw !important;
-    }
-
-    .mat-drawer-side {
-      max-width: 20vw;
-    }
-  }
-
-  .responsive-left-side {
-    width: 18vw !important;
-  }
-
-
-  .responsive-left-side-top {
-    max-width: 20vw !important;
-  }
-
-  // .responsive-left-side {
-  //   width: 18vw !important;
-  // }
-
-  .responsive-right-side-top {
-    max-width: 80vw !important;
-  }
-}
-
-@media(max-width:860px) {
-
-  #ui-assets-account,
-  #ui-liabilities,
-  #ui-insurance,
-  #ui-profile-plan {
-
-    .vertical-menu {
-      width: 22vw !important;
-    }
-
-    .mat-drawer-side {
-      max-width: 22vw;
-    }
-  }
-
-  .responsive-left-side {
-    width: 18vw !important;
-  }
-
-
-  .responsive-left-side-top {
-    max-width: 22vw !important;
-  }
-
-  // .responsive-left-side {
-  //   width: 18vw !important;
-  // }
-
-  .responsive-right-side-top {
-    max-width: 78vw !important;
-  }
-}
-
-@media(max-width:782px) {
-
-  #ui-assets-account,
-  #ui-liabilities,
-  #ui-insurance,
-  #ui-profile-plan {
-
-    .vertical-menu {
-      width: 23vw !important;
-    }
-
-    .mat-drawer-side {
-      max-width: 23vw;
-    }
-  }
-
-  .responsive-left-side {
-    width: 23vw !important;
-  }
-
-
-  .responsive-left-side-top {
-    max-width: 23vw !important;
-  }
-
-  // .responsive-left-side {
-  //   width: 18vw !important;
-  // }
-
-  .responsive-right-side-top {
-    max-width: 77vw !important;
   }
 }

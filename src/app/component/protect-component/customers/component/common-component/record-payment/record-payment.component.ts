@@ -48,10 +48,10 @@ export class RecordPaymentComponent implements OnInit {
   @Input() padding;
   // @Input() selectedInvRecord;
   @Output() outputData = new EventEmitter<Object>();
-  finalAmount:any;
+  finalAmount: any;
   @Input() set selectedInvRecord(selectedInvRecord: any) {
-    if(selectedInvRecord){
-      this.InvRecordData = selectedInvRecord
+    if (selectedInvRecord) {
+      this.finalAmount = selectedInvRecord.finalAmount
       console.log(selectedInvRecord, "selectedInvRecord");
       this.getRecordPayment(selectedInvRecord);
       this.rPayment.get('amountReceived').setValidators([Validators.max(selectedInvRecord.finalAmount)]);
@@ -83,12 +83,13 @@ export class RecordPaymentComponent implements OnInit {
 
   getRecordPayment(data) {
     this.balDue = data.balanceDue;
+
     if (data.add == true) {
       data = '';
     }
     console.log('payee data', data);
     this.rPayment = this.fb.group({
-      amountReceived: [(data == "") ? this.InvRecordData.balanceDue :data.amountReceived, [Validators.required]],
+      amountReceived: [(data == "") ? this.InvRecordData.balanceDue : data.amountReceived, [Validators.required, Validators.max(UtilService.roundOffToNearest1(this.balDue))]],
       chargesIfAny: [data.chargesIfAny],
       tds: [data.tds, [Validators.max(this.tdsAmt)]],
       paymentDate: [new Date(data.paymentDate), [Validators.required]],
@@ -98,11 +99,6 @@ export class RecordPaymentComponent implements OnInit {
       id: [data.id],
       editFormData: [true]
     });
-    
-
-    this.tdsAmt = this.rPayment.get('amountReceived').value*(10/100);
-    this.rPayment.get('tds').setValidators([Validators.max(this.tdsAmt)]);
-    
 
     this.getFormControl().amountReceived.maxLength = 10;
     this.getFormControl().chargesIfAny.maxLength = 10;
@@ -110,18 +106,6 @@ export class RecordPaymentComponent implements OnInit {
     this.getFormControl().notes.maxLength = 60;
     this.getPayReceive(this.InvRecordData.id);
 
-  }
-
-  setTDSLimit(){
-    this.tdsAmt =  parseInt(this.rPayment.get('amountReceived').value)*(10/100);
-    this.rPayment.get('tds').setValidators([Validators.max(this.tdsAmt)]);
-    this.rPayment.get('tds').updateValueAndValidity();
-
-    // if(this.balDue == this.rPayment.get('amountReceived').value){
-    //   return true
-    // }else{
-    //   return false
-    // }
   }
 
   getFormControl() {
@@ -182,13 +166,13 @@ export class RecordPaymentComponent implements OnInit {
 
   saveFormData() {
     if (this.rPayment.invalid) {
-      for (const element in this.rPayment.controls) {
-        console.log(element);
-        if (this.rPayment.get(element).invalid) {
-          this.inputs.find(input => !input.ngControl.valid).focus();
-          this.rPayment.controls[element].markAsTouched();
-        }
-      }
+      // for (const element in this.rPayment.controls) {
+      //   console.log(element);
+      //   if (this.rPayment.get(element).invalid) {
+      //     this.inputs.find(input => !input.ngControl.valid).focus();
+      this.rPayment.markAllAsTouched();
+      // }
+      // }
     } else {
       this.formObj = [{
         advisorId: this.advisorId,

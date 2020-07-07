@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./mobile-left-sidenav.component.scss']
 })
 export class MobileLeftSidenavComponent implements OnInit {
-  document: boolean = false;
+  document: boolean = false; 
   portfolio: boolean = false;
   transaction: boolean = false;
   profile: boolean = false;

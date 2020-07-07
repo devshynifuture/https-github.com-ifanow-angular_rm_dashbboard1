@@ -5,7 +5,7 @@ import { MobileLeftSidenavComponent } from './mobile-left-sidenav.component';
 describe('MobileLeftSidenavComponent', () => {
   let component: MobileLeftSidenavComponent;
   let fixture: ComponentFixture<MobileLeftSidenavComponent>;
-
+ 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ MobileLeftSidenavComponent ]

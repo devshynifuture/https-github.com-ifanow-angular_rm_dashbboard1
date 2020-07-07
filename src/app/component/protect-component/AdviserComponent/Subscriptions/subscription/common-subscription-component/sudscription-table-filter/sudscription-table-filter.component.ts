@@ -83,9 +83,7 @@ export class SudscriptionTableFilterComponent implements OnInit {
     // !_.includes(this.filterStatus, addFilters)
     if (this.filterStatus.find(element => element.name == addFilters.name) == undefined) {
       // this.lastFilterDataId = 0;
-      // this.filterStatus[0] = addFilters;
-      this.filterStatus.push(addFilters);
-
+      this.filterStatus[0] = addFilters;
       this.filterDataArr = [];
     } else {
 
@@ -112,9 +110,7 @@ export class SudscriptionTableFilterComponent implements OnInit {
       this.filterDate = [];
     }
     this.filterDataArr = [];
-    let filterValue = dateFilter.value;
-    this.filterDate.push(filterValue.value);
-    // this.filterDate.push((dateFilter == '1: Object') ? 1 : (dateFilter == '2: Object') ? 2 : 3);
+    this.filterDate.push((dateFilter == '1: Object') ? 1 : (dateFilter == '2: Object') ? 2 : 3);
     const beginDate = new Date();
     beginDate.setMonth(beginDate.getMonth() - 1);
     UtilService.getStartOfTheDay(beginDate);

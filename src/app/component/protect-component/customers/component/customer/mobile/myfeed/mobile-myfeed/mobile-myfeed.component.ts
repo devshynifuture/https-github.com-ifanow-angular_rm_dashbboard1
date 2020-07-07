@@ -6,7 +6,7 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./mobile-myfeed.component.scss']
 })
 export class MobileMyfeedComponent implements OnInit {
-  openMenue: boolean = false;
+  openMenue: boolean = false; 
   inputData: any;
 
   constructor() { }
