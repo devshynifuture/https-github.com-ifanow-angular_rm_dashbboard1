@@ -48,9 +48,9 @@ export class RecordPaymentComponent implements OnInit {
   @Input() padding;
   // @Input() selectedInvRecord;
   @Output() outputData = new EventEmitter<Object>();
-  finalAmount:any;
+  finalAmount: any;
   @Input() set selectedInvRecord(selectedInvRecord: any) {
-    if(selectedInvRecord){
+    if (selectedInvRecord) {
       this.finalAmount = selectedInvRecord.finalAmount
       console.log(selectedInvRecord, "selectedInvRecord");
       this.getRecordPayment(selectedInvRecord);
@@ -89,7 +89,7 @@ export class RecordPaymentComponent implements OnInit {
     }
     console.log('payee data', data);
     this.rPayment = this.fb.group({
-      amountReceived: [(data == "") ? this.InvRecordData.balanceDue :data.amountReceived, [Validators.required, Validators.max(UtilService.roundOffToNearest1(this.balDue))]],
+      amountReceived: [(data == "") ? this.InvRecordData.balanceDue : data.amountReceived, [Validators.required, Validators.max(UtilService.roundOffToNearest1(this.balDue))]],
       chargesIfAny: [data.chargesIfAny],
       tds: [data.tds, [Validators.max(this.tdsAmt)]],
       paymentDate: [new Date(data.paymentDate), [Validators.required]],
@@ -166,13 +166,13 @@ export class RecordPaymentComponent implements OnInit {
 
   saveFormData() {
     if (this.rPayment.invalid) {
-      for (const element in this.rPayment.controls) {
-        console.log(element);
-        if (this.rPayment.get(element).invalid) {
-          this.inputs.find(input => !input.ngControl.valid).focus();
-          this.rPayment.controls[element].markAsTouched();
-        }
-      }
+      // for (const element in this.rPayment.controls) {
+      //   console.log(element);
+      //   if (this.rPayment.get(element).invalid) {
+      //     this.inputs.find(input => !input.ngControl.valid).focus();
+      this.rPayment.markAllAsTouched();
+      // }
+      // }
     } else {
       this.formObj = [{
         advisorId: this.advisorId,
