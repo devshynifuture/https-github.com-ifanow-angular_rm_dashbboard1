@@ -22,13 +22,6 @@ import { AdvisorAndOrganizationInfoService } from './resolvers/advisor-and-organ
 import { TransactionEntryModule } from '../AdviserComponent/transactions/transaction.entry.module';
 import { SubscriptionEntry } from "../AdviserComponent/Subscriptions/subscription.entry.module";
 import { SubscriptionUpperEntry } from "../AdviserComponent/Subscriptions/subscription-upper-entry-module";
-import { MobileMyfeedComponent } from './component/customer/mobile/myfeed/mobile-myfeed/mobile-myfeed.component';
-import { MobileDocumentComponent } from './component/customer/mobile/document/mobile-document/mobile-document.component';
-import { MobilePortfoiloComponent } from './component/customer/mobile/portfolio/mobile-portfoilo/mobile-portfoilo.component';
-import { MobileProfileComponent } from './component/customer/mobile/profile/mobile-profile/mobile-profile.component';
-import { MobileTransactionsComponent } from './component/customer/mobile/transactions/mobile-transactions/mobile-transactions.component';
-import { MobileRoutingModule } from './mobile-routing.module';
-import { MobileLeftSidenavComponent } from './component/customer/mobile/left-side/mobile-left-sidenav/mobile-left-sidenav.component';
 
 
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
@@ -37,7 +30,7 @@ import { MobileLeftSidenavComponent } from './component/customer/mobile/left-sid
 
 
 @NgModule({
-  declarations: [CustomerComponent, TransactionSuccessfulComponent, MobileMyfeedComponent, MobileDocumentComponent, MobilePortfoiloComponent, MobileProfileComponent, MobileTransactionsComponent, MobileLeftSidenavComponent],
+  declarations: [CustomerComponent, TransactionSuccessfulComponent],
   imports: [
     // BrowserModule,
     CommonModule,
@@ -53,7 +46,6 @@ import { MobileLeftSidenavComponent } from './component/customer/mobile/left-sid
     AccountEntryModule,
     PlanEntryModule,
     CustomersRoutingModule,
-   // MobileRoutingModule,
     AdviceEntryModule,
     CustomerOverviewEntryModule,
     CustomDirectiveModule,
