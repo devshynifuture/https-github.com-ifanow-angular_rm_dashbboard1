@@ -1,6 +1,18 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ControlValueAccessor} from '@angular/forms';
-
+import 'froala-editor/js/froala_editor.min.js';
+import 'froala-editor/js/plugins/align.min.js';
+import 'froala-editor/js/plugins/code_beautifier.min.js';
+import 'froala-editor/js/plugins/colors.min.js';
+import 'froala-editor/js/plugins/emoticons.min.js';
+import 'froala-editor/js/plugins/font_size.min.js';
+import 'froala-editor/js/plugins/fullscreen.min';
+import 'froala-editor/js/plugins/image.min.js';
+import 'froala-editor/js/plugins/link.min.js';
+import 'froala-editor/js/plugins/lists.min.js';
+import 'froala-editor/js/plugins/paragraph_format.min.js';
+import 'froala-editor/js/plugins/quick_insert.min.js';
+import 'froala-editor/js/plugins/url.min.js';
 @Component({
   selector: 'app-froala',
   templateUrl: './froala.component.html',
@@ -18,10 +30,18 @@ export class FroalaComponent implements ControlValueAccessor, OnInit {
   _model;
 
   config: Object = {
-    attribution: false,
-    charCounterCount: false,
-    // toolbarButtons: ['getPDF']
-
+    key: 'XAG4eH3A3B10B8D6C5C-11VKOJ1FGULVKHXDXNDXc1d1Kg1SNdD5B4A4B3H3I3F3B7A4C3==',
+    // attribution: false,
+    // charCounterCount: false,
+    // toolbarButtons: ['bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', '|', 'paragraphStyle', 'paragraphFormat', 'align', 'undo', 'redo', 'html'],
+    // toolbarInline: true,
+    events: {
+      'froalaEditor.initialized': function (e, editor) {
+        if (this.readonly) {
+          editor.edit.off();
+        }
+      }
+    }
   };
 
   get model() {
@@ -42,15 +62,6 @@ export class FroalaComponent implements ControlValueAccessor, OnInit {
     // const froalaComponent = new FroalaEditor('div#froala-editor', {
     //   toolbarButtons: ['getPDF']
     // });
-    this.config = {
-      events : {
-        'froalaEditor.initialized' : function(e, editor) {
-          if(this.readonly) {
-            editor.edit.off();
-          }
-        }
-      }
-    }
   }
 
   // Begin ControlValueAccesor methods.

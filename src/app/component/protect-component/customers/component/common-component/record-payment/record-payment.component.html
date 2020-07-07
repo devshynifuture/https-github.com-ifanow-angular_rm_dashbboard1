@@ -8,7 +8,7 @@
       <div class="col-md-4">
         <div class="form-group mb-0">
           <mat-form-field>
-            <input #amountReceiveRef [maxLength]="10" appInputValueValidation
+            <input #amountReceiveRef [maxLength]="10" appInputValueValidation (keyup)="setTDSLimit()"
               [inputValidator]="validatorType.NUMBER_ONLY" class="form-control" formControlName="amountReceived"
               matInput type="text">
             <mat-hint align="end" class="f-12">
@@ -32,7 +32,7 @@
       <div class="col-md-4">
         <div class="form-group mb-0">
           <mat-form-field>
-            <input #chargesIfAnyRef [maxLength]="10" appInputValueValidation
+            <input #chargesIfAnyRef [maxLength]="10" appInputValueValidation 
               [inputValidator]="validatorType.NUMBER_ONLY" appInputValueValidation class="form-control"
               formControlName="chargesIfAny" type="text" matInput>
             <!-- <mat-hint align="start" class="f-12">Optional</mat-hint> -->
@@ -48,13 +48,13 @@
       <div class="col-md-4">
         <div class="form-group mb-0">
           <mat-form-field >
-            <input [disabled]="balDue == rPayment.get('amountReceived').value" #tdsRef [maxLength]="10" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
-              (keyup)="onChange()" appInputValueValidation class="form-control" formControlName="tds" type="text"
+            <input [readonly]="tdsAmt == 0" #tdsRef [maxLength]="10" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+               appInputValueValidation class="form-control" formControlName="tds" type="text"
               matInput >
             <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
             <mat-hint align="end" class="f-12">
               {{chargesIfAnyRef.value.length}}/{{getFormControl().tds.maxLength}}</mat-hint>
-            <mat-error *ngIf="rPayment.get('tds').errors?.incorrect" class="f-12">
+            <mat-error *ngIf="rPayment.get('tds').errors?.max" class="f-12">
               Should be less than or equal to {{this.tdsAmt}}
             </mat-error>
             <div></div>
