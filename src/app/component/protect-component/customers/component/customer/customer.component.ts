@@ -15,9 +15,10 @@ import { UtilService } from 'src/app/services/util.service';
 @Component({
   selector: 'app-customer',
   templateUrl: './customer.component.html',
-  //templateUrl: './customer.mobile.component.html',
-  //templateUrl: './transact-mob.html',
+  // templateUrl: './profile-mobile.html',
+  // templateUrl: './transact-mob.html',
   // templateUrl: './document-mob.html',
+  // templateUrl: './myfeed-mob.html',
   styleUrls: ['./customer.component.scss'],
   animations: [
     dialogContainerOpacity,
