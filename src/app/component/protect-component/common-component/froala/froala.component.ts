@@ -18,9 +18,11 @@ export class FroalaComponent implements ControlValueAccessor, OnInit {
   _model;
 
   config: Object = {
+    key: 'XAG4eH3A3B10B8D6C5C-11VKOJ1FGULVKHXDXNDXc1d1Kg1SNdD5B4A4B3H3I3F3B7A4C3==',
     attribution: false,
     charCounterCount: false,
-    // toolbarButtons: ['getPDF']
+    toolbarButtons: ['getPDF'],
+    toolbarInline: true,
 
   };
 
@@ -43,9 +45,9 @@ export class FroalaComponent implements ControlValueAccessor, OnInit {
     //   toolbarButtons: ['getPDF']
     // });
     this.config = {
-      events : {
-        'froalaEditor.initialized' : function(e, editor) {
-          if(this.readonly) {
+      events: {
+        'froalaEditor.initialized': function (e, editor) {
+          if (this.readonly) {
             editor.edit.off();
           }
         }
