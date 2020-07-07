@@ -1,25 +1,26 @@
 <!-- protfolio mobile screen start -->
+<div class="row mob-bg-common pb-12 mobtop-navfixed"*ngIf="openMenue != true">
+  <div class="col-2" (click)="openMenu(openMenue)">
+    <span class="material-icons text-white">
+      menu
+    </span>
+  </div>
+  <div class="col-7 pl-0" (click)="openMenu(openMenue)">
+    <h5 class="m-0 f-18 text-white pt-4">Portfolio</h5>
+  </div>
+  <div class="col-3 text-right">
+    <span class="material-icons text-white">
+      search
+    </span>
+  </div>
+</div>
+<div *ngIf="openMenue == true">
+  <app-mobile-left-sidenav></app-mobile-left-sidenav>
+</div>
+<div id="mob-portfolio"*ngIf="openMenue != true">
 
-<div id="mob-portfolio">
-  <div class="row mob-bg-common pb-12 mobtop-navfixed">
-    <div class="col-2" (click)="openMenu(openMenue)">
-      <span class="material-icons text-white">
-        menu
-      </span>
-    </div>
-    <div class="col-7 pl-0" (click)="openMenu(openMenue)">
-      <h5 class="m-0 f-18 text-white pt-4">Portfolio</h5>
-    </div>
-    <div class="col-3 text-right">
-      <span class="material-icons text-white">
-        search
-      </span>
-    </div>
-  </div>
-  <div *ngIf="openMenue == true">
-    <app-mobile-left-sidenav></app-mobile-left-sidenav>
-  </div>
-  <div class="p-8 pt-80 pb-28" *ngIf="openMenue == false">
+
+  <div class="p-8 pt-80 pb-28" >
     <div class="row chart-details">
       <div class="col-12 text-center p-0">
         <div class="row pl-20 pb-16 pt-24">
