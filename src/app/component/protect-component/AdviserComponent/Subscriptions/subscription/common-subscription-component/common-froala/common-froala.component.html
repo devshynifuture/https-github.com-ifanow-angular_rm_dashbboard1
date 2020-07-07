@@ -9,7 +9,7 @@
         <div class="col-md-2 text-right">
             <i class="material-icons pt-16 pr-8 c-p" (click)="Close('close',false)"> clear</i></div>
     </div>
-    <div class="row pt-72 bb-1">
+    <div *ngIf="storeData.isAdvisor" class="row pt-72 bb-1">
         <div class="col-md-8 pt-4 pb-12">
             <img src="assets/images/svg/mail-light.svg" class="b-a c-p" (click)="openSendEmail()">
             <img (click)="generatePdf()" class="b-a c-p" src="assets/images/svg/pdf-icons.svg">
@@ -83,7 +83,7 @@
         </div>
     </div>
 </div>
-<div class="bottom-fixed wrapper-12" *ngIf="changeFooter!='viewDoc'">
+<div class="bottom-fixed wrapper-12" *ngIf="changeFooter!='viewDoc' && storeData.isAdvisor">
     <div class="row">
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close('close',false)">Cancel</h5>
@@ -118,7 +118,7 @@
         </div>
     </div>
 </div>
-<div class="bottom-fixed wrapper-12">
+<div *ngIf="storeData.isAdvisor" class="bottom-fixed wrapper-12">
     <div class="row">
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close('close',false)">Cancel</h5>
