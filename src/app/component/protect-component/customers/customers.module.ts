@@ -30,8 +30,8 @@ import { SubscriptionUpperEntry } from "../AdviserComponent/Subscriptions/subscr
 
 
 @NgModule({
-  declarations: [CustomerComponent, TransactionSuccessfulComponent],
-  imports: [
+  declarations: [CustomerComponent, TransactionSuccessfulComponent, MobileMyfeedComponent, MobileDocumentComponent, MobilePortfoiloComponent, MobileProfileComponent, MobileTransactionsComponent, MobileLeftSidenavComponent],
+  imports: [ 
     // BrowserModule,
     CommonModule,
     MaterialModule,
