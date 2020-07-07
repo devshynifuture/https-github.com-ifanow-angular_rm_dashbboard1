@@ -110,6 +110,7 @@ export class QuotationsComponent implements OnInit {
   Open(value, state, data) {
     data['sendEsignFlag'] = false;
     data['feeStructureFlag'] = data.documentText.includes('$service_fee');
+    data['isAdvisor'] = (this.isAdvisor) ? true : false;
     if (this.isLoading) {
       return
     }

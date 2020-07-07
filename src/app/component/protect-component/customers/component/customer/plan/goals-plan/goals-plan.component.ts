@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { UtilService } from "../../../../../../../services/util.service";
+import { UtilService, LoaderFunction } from "../../../../../../../services/util.service";
 import { SubscriptionInject } from "../../../../../AdviserComponent/Subscriptions/subscription-inject.service";
 import { MfAllocationsComponent } from './mf-allocations/mf-allocations.component';
 import { PreferencesComponent } from './preferences/preferences.component';
@@ -29,7 +29,8 @@ export interface PeriodicElement {
 @Component({
   selector: 'app-goals-plan',
   templateUrl: './goals-plan.component.html',
-  styleUrls: ['./goals-plan.component.scss']
+  styleUrls: ['./goals-plan.component.scss'],
+  providers: [LoaderFunction]
 })
 export class GoalsPlanComponent implements OnInit {
   clientFamily:any[];
@@ -119,6 +120,7 @@ export class GoalsPlanComponent implements OnInit {
     private eventService: EventService, 
     private plansService: PlanService,
     private dialog: MatDialog,
+    public loaderFn: LoaderFunction
   ) {
     this.advisor_client_id.advisorId = AuthService.getAdvisorId();
     this.advisor_client_id.clientId = AuthService.getClientId();
@@ -133,12 +135,17 @@ export class GoalsPlanComponent implements OnInit {
   // load all goals created for the client and select the first goal
   loadAllGoals(){
     this.allGoals = [];
+    this.loaderFn.increaseCounter();
     this.plansService.getAllGoals(this.advisor_client_id).subscribe((data:any[])=>{
       if (data) {
         this.allGoals = data.reverse().map(goal => this.mapGoalDashboardData(goal));
         this.loadSelectedGoalData(this.allGoals[0]);
+        this.loaderFn.decreaseCounter();
       }
-    }, err => this.eventService.openSnackBar(err, "Dismiss"))
+    }, err => {
+      this.eventService.openSnackBar(err, "Dismiss");
+      this.loaderFn.decreaseCounter();
+    });
   }
 
 
