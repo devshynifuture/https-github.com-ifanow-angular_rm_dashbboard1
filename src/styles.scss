@@ -891,8 +891,7 @@ mat-tab-group[vertical] {
 
 #ui-assets,
 #ui-liabilities,
-#ui-income,
-#ui-activity {
+#ui-income {
   li {
     padding-top: 12px;
     padding-left: 24px;
@@ -1794,8 +1793,8 @@ textarea {
   .mat-tab-link {
     height: auto;
     color: #fff;
-  //  padding: 0;
-  //  min-width: 110px !important;
+    //  padding: 0;
+    //  min-width: 110px !important;
     opacity: 1;
     min-width: auto !important;
     padding: 0px 20px;
@@ -1917,7 +1916,3 @@ ngx-slick-carousel>.slick-disabled {
     }
   }
 }
-
-
-
-

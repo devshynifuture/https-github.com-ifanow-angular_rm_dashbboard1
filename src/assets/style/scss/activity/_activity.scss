@@ -49,13 +49,12 @@
   }
 
   li {
-    color: #212121;
+    height: 40px;
+    line-height: 40px;
+    padding: 9px 0px 0 24px;
     font-size: 14px;
-    font-style: normal;
-    font-weight: normal;
-    padding: 8px 12px 4px;
     text-align: left;
-    border-right: 0px !important;
+    margin-bottom: 10px;
   }
 
   li:after {
@@ -144,9 +143,6 @@ hr#suggest-advice-bottom {
     &:nth-child(1) {
       border-right: 0px;
     }
-
-
-
 
   }
 
