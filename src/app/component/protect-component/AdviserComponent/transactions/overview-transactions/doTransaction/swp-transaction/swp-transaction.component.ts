@@ -442,6 +442,7 @@ export class SwpTransactionComponent implements OnInit {
       this.currentValue =  Math.round(this.currentValue)
       this.swpTransaction.controls.currentValue.setValue(this.currentValue);
       this.swpTransaction.controls.balanceUnit.setValue(this.mutualFundData.balanceUnit);
+      Object.assign(this.folioDetails, {balanceUnit: this.mutualFundData.balanceUnit});
       this.mutualFundData.balanceUnit = parseFloat(this.mutualFundData.balanceUnit).toFixed(2);
       this.showUnits = true;
       Object.assign(this.transactionSummary, { folioNumber: this.folioNumber });
