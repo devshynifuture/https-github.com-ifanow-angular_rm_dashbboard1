@@ -178,6 +178,7 @@ export class DocumentComponent implements OnInit {
     this.subscription.getEsignedDocument(obj).subscribe(
       data => this.downloadEsignResponseData(data),
       error => {
+        this.eventService.openSnackBar(error, "Dismiss")
       }
     );
   }
@@ -320,6 +321,7 @@ export class DocumentComponent implements OnInit {
   }
 
   openEsignDocument(element) {
+    this._clientData['clientId'] = this._clientData.id;
     const data = {
       advisorId: this.advisorId,
       clientData: this._clientData,
@@ -344,8 +346,9 @@ export class DocumentComponent implements OnInit {
     this.openSendEmailComponent('eSignDocument', data);
   }
 
-  openSendEmail() {
-    const data = {
+  openSendEmail(sendEmailData) {
+    this._clientData['clientId'] = this._clientData.id;
+    let data = {
       advisorId: this.advisorId,
       clientData: this._clientData,
       templateType: 4, // 2 is for quotation
@@ -356,6 +359,9 @@ export class DocumentComponent implements OnInit {
         data.documentList.push(singleElement);
       }
     });
+    if (data.documentList.length == 0) {
+      data.documentList.push(sendEmailData);
+    }
     this.openSendEmailComponent('email', data);
   }
 
@@ -416,6 +422,7 @@ export class DocumentComponent implements OnInit {
   open(value, data) {
     data['sendEsignFlag'] = true;
     data['feeStructureFlag'] = data.documentText.includes('$service_fee');
+    data['isAdvisor'] = (this.isAdvisor) ? true : false;
     if (this.isLoading || !this.isAdvisor) {
       return;
     }
