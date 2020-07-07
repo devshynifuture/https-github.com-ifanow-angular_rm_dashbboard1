@@ -256,7 +256,7 @@ export class CalculatorsComponent implements OnInit {
   }
   
   calculateDelay(){
-    if(this.delayFG.invalid || this.barButtonOptions.active || this.barButtonOptions1) {
+    if(this.delayFG.invalid || this.barButtonOptions.active || this.barButtonOptions1.active) {
       this.delayFG.markAllAsTouched();
       return;
     }
@@ -296,7 +296,7 @@ export class CalculatorsComponent implements OnInit {
   }
 
   saveDelayToGoal(){
-    if(this.delayFG.invalid || this.barButtonOptions.active || this.barButtonOptions1) {
+    if(this.delayFG.invalid || this.barButtonOptions.active || this.barButtonOptions1.active) {
       this.delayFG.markAllAsTouched();
       return;
     }
