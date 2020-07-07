@@ -11,7 +11,10 @@
                     <img
                         [src]="rlaInbox.isActive ? '/assets/images/svg/crm-inbox.svg': '/assets/images/svg/crm-inbox.svg'">
 
-                    <h5 mat-line class="mb-0 ml-28 f-14">Inbox</h5>
+                    <h5 mat-line class="mb-0 ml-28 f-14">Inbox </h5>
+                    <span class="text-primitive ml-28" *ngIf="!isCustomerEmail">
+                        {{ importantCount }}
+                    </span>
                 </div>
             </mat-list-item>
 
@@ -21,6 +24,9 @@
                     <img
                         [src]="rlaInbox.isActive ? '/assets/images/svg/crm-sent.svg': '/assets/images/svg/crm-sent.svg'">
                     <h5 mat-line class="mb-0 ml-28 f-14 ">Sent</h5>
+                    <span class="text-primitive ml-28" *ngIf="!isCustomerEmail">
+                        {{ sentCount }}
+                    </span>
                 </div>
             </mat-list-item>
 
@@ -30,18 +36,21 @@
                     <img
                         [src]="rlaDraft.isActive ? '/assets/images/svg/crm-drafts-icon.svg': '/assets/images/svg/crm-drafts-icon.svg'">
                     <h5 mat-line class="mb-0 ml-28 f-14 ">Drafts</h5>
+                    <span class="text-primitive ml-28" *ngIf="!isCustomerEmail">
+                        {{ draftCount }}
+                    </span>
                 </div>
             </mat-list-item>
 
 
-            <mat-list-item routerLinkActive="text-primary" #rlaStarred="routerLinkActive" routerLink="starred"
+            <!-- <mat-list-item routerLinkActive="text-primary" #rlaStarred="routerLinkActive" routerLink="starred"
                 class="row c-p">
                 <div class="col-md-12 d-flex align-items-center">
                     <img
                         [src]="rlaStarred.isActive? '/assets/images/svg/crm-archive.svg': '/assets/images/svg/crm-archive.svg'">
                     <h5 mat-line class="mb-0 ml-28 f-14 ">Starred</h5>
                 </div>
-            </mat-list-item>
+            </mat-list-item> -->
 
             <mat-list-item routerLinkActive="text-primary" #rlaTrash="routerLinkActive" routerLink="trash"
                 class="row c-p">
@@ -49,6 +58,9 @@
                     <img
                         [src]="rlaTrash.isActive ? '/assets/images/svg/crm-trash.svg': '/assets/images/svg/crm-trash.svg'">
                     <h5 mat-line class="mb-0 ml-28 f-14 ">Trash</h5>
+                    <span class="text-primitive ml-28" *ngIf="!isCustomerEmail">
+                        {{ trashCount }}
+                    </span>
                 </div>
             </mat-list-item>
 

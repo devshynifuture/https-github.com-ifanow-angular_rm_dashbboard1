@@ -47,10 +47,10 @@
       </div>
       <div class="col-md-4">
         <div class="form-group mb-0">
-          <mat-form-field >
-            <input [disabled]="balDue == rPayment.get('amountReceived').value" #tdsRef [maxLength]="10" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+          <mat-form-field>
+            <input #tdsRef [maxLength]="10" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
               (keyup)="onChange()" appInputValueValidation class="form-control" formControlName="tds" type="text"
-              matInput >
+              matInput>
             <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
             <mat-hint align="end" class="f-12">
               {{chargesIfAnyRef.value.length}}/{{getFormControl().tds.maxLength}}</mat-hint>

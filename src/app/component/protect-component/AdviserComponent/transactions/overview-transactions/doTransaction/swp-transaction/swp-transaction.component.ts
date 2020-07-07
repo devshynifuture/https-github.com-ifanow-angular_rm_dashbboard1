@@ -438,9 +438,12 @@ export class SwpTransactionComponent implements OnInit {
         }
       );
       this.navOfSelectedScheme = this.mutualFundData.nav
-      this.swpTransaction.controls.balanceUnit.setValue((this.mutualFundData.balanceUnit));
-      this.swpTransaction.controls.currentValue.setValue((this.processTransaction.calculateCurrentValue(this.mutualFundData.nav, this.mutualFundData.balanceUnit)).toFixed(2));
       this.currentValue = this.processTransaction.calculateCurrentValue(this.mutualFundData.nav, this.mutualFundData.balanceUnit);
+      this.currentValue =  Math.round(this.currentValue)
+      this.swpTransaction.controls.currentValue.setValue(this.currentValue);
+      this.swpTransaction.controls.balanceUnit.setValue(this.mutualFundData.balanceUnit);
+      Object.assign(this.folioDetails, {balanceUnit: this.mutualFundData.balanceUnit});
+      this.mutualFundData.balanceUnit = parseFloat(this.mutualFundData.balanceUnit).toFixed(2);
       this.showUnits = true;
       Object.assign(this.transactionSummary, { folioNumber: this.folioNumber });
       Object.assign(this.transactionSummary, { tpUserCredFamilyMappingId: this.mfDefault.defaultClient.tpUserCredFamilyMappingId });

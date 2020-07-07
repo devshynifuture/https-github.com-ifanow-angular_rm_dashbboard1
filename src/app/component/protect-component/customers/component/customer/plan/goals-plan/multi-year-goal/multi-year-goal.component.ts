@@ -8,6 +8,7 @@ import { Options } from 'ng5-slider';
 import { DatePipe } from '@angular/common';
 import { UtilService } from 'src/app/services/util.service';
 import { AppConstants } from 'src/app/services/app-constants';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-multi-year-goal',
@@ -36,6 +37,18 @@ export class MultiYearGoalComponent implements OnInit {
     floor: 2,
     step: 1
   }
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+  };
   constructor(
     private eventService: EventService, 
     private fb: FormBuilder, 
@@ -124,10 +137,10 @@ export class MultiYearGoalComponent implements OnInit {
   }
 
   sendDataObj(obj){
+    this.barButtonOptions.active = true;
     this.planService.addMultiYearGoal(obj).subscribe(
       data => {
         this.eventService.setRefreshRequired();
-        this.eventService.closeUpperSlider({state: 'close'});
         switch (this.goalTypeData.id) {
           case 5:
             this.eventService.openSnackBar("Vacation goal is added", "Dismiss");
@@ -138,13 +151,18 @@ export class MultiYearGoalComponent implements OnInit {
           default:
             break;
         }
+        this.eventService.closeUpperSlider({state: 'close'});
+        this.barButtonOptions.active = false;
       },
-      error => this.eventService.showErrorMessage(error)
+      error => {
+        this.eventService.showErrorMessage(error)
+        this.barButtonOptions.active = false;
+      }
     )
   }
 
   saveGoal(){
-    if(this.multiYearGoalForm.invalid) {
+    if(this.multiYearGoalForm.invalid || this.barButtonOptions.active) {
       this.multiYearGoalForm.markAllAsTouched();
     } else {
       let goalObj = this.createGoalObj();

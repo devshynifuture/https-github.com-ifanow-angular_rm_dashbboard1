@@ -7,7 +7,7 @@ describe('MobileTransactionsComponent', () => {
   let fixture: ComponentFixture<MobileTransactionsComponent>;
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
+    TestBed.configureTestingModule({ 
       declarations: [ MobileTransactionsComponent ]
     })
     .compileComponents();
