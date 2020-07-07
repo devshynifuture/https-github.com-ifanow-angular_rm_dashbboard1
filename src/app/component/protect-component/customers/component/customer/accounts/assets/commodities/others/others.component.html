@@ -24,7 +24,7 @@
                     <mat-form-field>
                         <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
                             (selectionChange)="disabledMember($event.value,'owner')"
-                            (valueChange3)='displayControler($event)'  (valueChange1)='lisNominee($event)'
+                            (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)'
                             class="form-control br-0" [callMethod]='callMethod'>
                             <mat-option value='' disabled>Select family members</mat-option>
                             <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" [value]="f.userName">
@@ -116,7 +116,7 @@
                     [matDatepicker]="picker2" readonly [max]="todayDate" [min]="others.get('dateOfPurchase').value">
                 <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                 <mat-datepicker #picker2></mat-datepicker>
-                <mat-hint align="start" class="f-12">Optional</mat-hint>
+                <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
                 <mat-error class="f-12" *ngIf="getFormControl().marketValueAsOnDate.errors?.matDatepickerMin">
                     Market value as on date cannot be lower than date of purchase
                 </mat-error>
@@ -145,7 +145,7 @@
                         <input autocomplete="off" matInput #purchaseValue type="text" appInputValueValidation
                             [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control rupess br-0"
                             formControlName="purchaseValue">
-                        <mat-hint align="start" class="f-12">Optional</mat-hint>
+                        <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{purchaseValue.value.length}}/10</mat-hint>
                     </mat-form-field>
                 </div>
@@ -161,7 +161,7 @@
                         [matDatepicker]="picker" readonly [max]="todayDate">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
-                    <mat-hint align="start" class="f-12">Optional</mat-hint>
+                    <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
                 </mat-form-field>
 
             </div>
@@ -176,7 +176,7 @@
                         <input autocomplete="off" matInput #growthRate type="number" (keyup)="onChange($event)"
                             appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" maxlength="30"
                             class="form-control percentage br-0" formControlName="growthRate">
-                        <mat-hint align="start" class="f-12">Optional</mat-hint>
+                        <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
                     </mat-form-field>
                 </div>
             </div>
@@ -190,7 +190,7 @@
                     <mat-form-field>
                         <input autocomplete="off" matInput #description maxlength="60" class="form-control br-0"
                             formControlName="description">
-                        <mat-hint align="start" class="f-12">Optional</mat-hint>
+                        <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
                         <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
                     </mat-form-field>
                 </div>

@@ -1,4 +1,5 @@
             .eventBox {
+                
                 .row{
                     margin-left: -15px !important;
                     margin-right: -15px !important;
@@ -8,6 +9,10 @@
                 }
 
                 
+            }
+
+            #eventUI{
+                height:673px;
             }
             
             ::ng-deep .newTextarea .fr-box.fr-basic .fr-wrapper {

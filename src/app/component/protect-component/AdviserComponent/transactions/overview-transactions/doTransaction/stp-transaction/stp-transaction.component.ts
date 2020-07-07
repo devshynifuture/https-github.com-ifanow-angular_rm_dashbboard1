@@ -517,6 +517,15 @@ export class StpTransactionComponent implements OnInit {
           this.eventService.openSnackBar(error, 'Dismiss');
         }
       );
+      this.showUnits = true;
+      this.navOfSelectedScheme = this.mutualFundData.nav
+      this.stpTransaction.controls.balanceUnit.setValue(this.mutualFundData.balanceUnit);
+    this.stpTransaction.controls.currentValue.setValue((this.processTransaction.calculateCurrentValue(this.mutualFundData.nav, this.mutualFundData.balanceUnit)).toFixed(2));
+    this.currentValue = this.processTransaction.calculateCurrentValue(this.mutualFundData.nav, this.mutualFundData.balanceUnit);
+    this.mutualFundData.balanceUnit = parseFloat(this.mutualFundData.balanceUnit).toFixed(2);
+    Object.assign(this.folioDetails, {balanceUnit: this.mutualFundData.balanceUnit});
+    Object.assign(this.transactionSummary, {folioNumber: this.mutualFundData.folioNumber});
+    Object.assign(this.transactionSummary, {tpUserCredFamilyMappingId: this.mfDefault.defaultClient.tpUserCredFamilyMappingId});
     }
   }
 

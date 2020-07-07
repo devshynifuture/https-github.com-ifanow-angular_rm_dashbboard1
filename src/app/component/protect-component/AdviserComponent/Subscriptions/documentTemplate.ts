@@ -1,4 +1,4 @@
-export const quotationTemplate = `<p><span style="caret-color: rgb(29, 28, 29); color: rgb(29, 28, 29); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px; background-color: rgb(248, 248, 248);">Quotation for $plan_name</span></p>
+export const quotationTemplate = ` <div class="detailsFont"> <p><span style="caret-color: rgb(29, 28, 29); color: rgb(29, 28, 29); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px; background-color: rgb(248, 248, 248);">Quotation for $plan_name</span></p>
 <p><span style="caret-color: rgb(29, 28, 29); color: rgb(29, 28, 29); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px; background-color: rgb(248, 248, 248);">Date: ___________</span></p>
 <p><span style="caret-color: rgb(29, 28, 29); color: rgb(29, 28, 29); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px; background-color: rgb(248, 248, 248);">Dear $client_name,</span></p>
 <p><span style="caret-color: rgb(29, 28, 29); color: rgb(29, 28, 29); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px; background-color: rgb(248, 248, 248);">Greetings from $company_name!</span></p>
@@ -13,22 +13,24 @@ export const quotationTemplate = `<p><span style="caret-color: rgb(29, 28, 29); 
 	<br style="box-sizing: inherit; caret-color: rgb(29, 28, 29); color: rgb(29, 28, 29); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px;"><span style="caret-color: rgb(29, 28, 29); color: rgb(29, 28, 29); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px; background-color: rgb(248, 248, 248);">• &nbsp; &nbsp;The above fees are one-time annual charges valid for 12 months from the date of the plan.&nbsp;</span>
 	<br style="box-sizing: inherit; caret-color: rgb(29, 28, 29); color: rgb(29, 28, 29); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px;"><span style="caret-color: rgb(29, 28, 29); color: rgb(29, 28, 29); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px; background-color: rgb(248, 248, 248);">• &nbsp; &nbsp;Extra fees will be charged for other matters not included herein.&nbsp;</span>
 	<br style="box-sizing: inherit; caret-color: rgb(29, 28, 29); color: rgb(29, 28, 29); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px;"><span style="caret-color: rgb(29, 28, 29); color: rgb(29, 28, 29); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px; background-color: rgb(248, 248, 248);">• &nbsp; &nbsp;We will need your utmost cooperation in providing the required information to enable us to render you the services agreed upon.&nbsp;</span>
-	<br style="box-sizing: inherit; caret-color: rgb(29, 28, 29); color: rgb(29, 28, 29); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px;"><span style="caret-color: rgb(29, 28, 29); color: rgb(29, 28, 29); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px; background-color: rgb(248, 248, 248);">• &nbsp; &nbsp;Payment terms would be as per invoice.</span></p>`
+	<br style="box-sizing: inherit; caret-color: rgb(29, 28, 29); color: rgb(29, 28, 29); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px;"><span style="caret-color: rgb(29, 28, 29); color: rgb(29, 28, 29); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px; background-color: rgb(248, 248, 248);">• &nbsp; &nbsp;Payment terms would be as per invoice.</span></p></div>`
 
 
 
 export const detailsOfClientTemplate = `
-	<p>DETAILS OF CLIENT</p>
+<div class="detailsFont">	
+<p>DETAILS OF CLIENT</p>
 <p>Full Name : $client_name</p>
 <p>Residential address : $client_address</p>
 <p>Email ID: $client_email</p>
 <p>Mobile No.: $client_mobile</p>
 <p>PAN: $client_PAN</p>
-<p data-f-id="pbf" style="text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;"></p>
+<p data-f-id="pbf" style="text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;"></p> </div>
 	`
 
 
 export const redressalofGrievance = `
+<div class="detailsFont">
 <p>REDRESSAL OF GRIEVANCE</p>
 <p>We welcome your feedback, as it helps us improve our products and services for our clients.&nbsp;</p>
 <p>1. &nbsp; &nbsp;You can contact us in person, in writing, by email or by telephone at the following:&nbsp;</p>
@@ -59,6 +61,7 @@ export const redressalofGrievance = `
 
 
 export const letterOfEngagement = `
+<div class="detailsFont">
 <p>SCOPE OF SERVICES</p>
 <p>
 	<br>
@@ -113,9 +116,11 @@ export const letterOfEngagement = `
 <p>Email ID: $client_email</p>
 <p>Mobile No.: $client_mobile</p>
 <p>PAN: $client_PAN</p>
-<p data-f-id="pbf" style="text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;"></p>
+<p data-f-id="pbf" style="text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;"></p> 
+</div>
 `
 export const scopeofService = `
+<div class="detailsFont">
 <p>SCOPE OF SERVICES</p>
 <p>
 	<br>
@@ -163,4 +168,5 @@ export const scopeofService = `
 <p>Service fee:</p>
 <p>$service_fee</p>
 <p data-f-id="pbf" style="text-align: center; font-size: 14px; margin-top: 30px; opacity: 0.65; font-family: sans-serif;"></p>
+</div>
 `

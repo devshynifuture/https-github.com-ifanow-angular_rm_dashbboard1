@@ -392,7 +392,7 @@ export class CalendarScheduleComponent implements OnInit {
   }
 
   openDialog(eventData, date): void {
-    let h = '673px';
+
     let component;
     if (date != null) {
       eventData = {
@@ -401,10 +401,7 @@ export class CalendarScheduleComponent implements OnInit {
       };
     }
 
-    if (eventData.id || date != null) {
-      h = 'auto';
-    }
-
+    
     if (this.dashEvents) {
       component = DashEvent;
     } else {
@@ -412,7 +409,7 @@ export class CalendarScheduleComponent implements OnInit {
     }
     const dialogRef = this.dialog.open(component, {
       width: '576px',
-      height: h,
+      height: 'auto',
       data: eventData
     });
 

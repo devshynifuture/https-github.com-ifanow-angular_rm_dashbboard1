@@ -134,7 +134,7 @@
               formControlName="purchasePeriod" readonly>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
-            <mat-hint align="start" class="f-12">Optional</mat-hint>
+            <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
             <mat-error class="f-12">
               This field is required
             </mat-error>
@@ -156,7 +156,7 @@
                 <input autocomplete="off" matInput appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
                   #purchaseValue maxlength="10" type="text" class="form-control rupess br-0 "
                   formControlName="purchaseValue">
-                <mat-hint align="start" class="f-12">Optional</mat-hint>
+                <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
                 <mat-hint align="end" class="f-12">{{purchaseValue.value.length}}/10</mat-hint>
               </mat-form-field>
             </div>
@@ -209,7 +209,7 @@
                   <mat-option value="17">Kattha</mat-option>
                   <mat-option value="18">Lecha</mat-option>
                 </mat-select>
-                <mat-hint align="start" class="f-12">Optional</mat-hint>
+                <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
                 <mat-hint align="end" class="f-12">{{unit.value.length}}/10</mat-hint>
               </mat-form-field>
 
@@ -239,7 +239,7 @@
               <mat-form-field>
                 <input autocomplete="off" matInput appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
                   #stampDuty maxlength="10" type="text" class="form-control rupess br-0 " formControlName="stampDuty">
-                <mat-hint align="start" class="f-12">Optional</mat-hint>
+                <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
                 <mat-hint align="end" class="f-12">{{stampDuty.value.length}}/10</mat-hint>
               </mat-form-field>
             </div>
@@ -281,7 +281,7 @@
           <mat-form-field>
             <input autocomplete="off" matInput #location maxlength="20" type="text" class="form-control br-0 "
               formControlName="location">
-            <mat-hint align="start" class="f-12">Optional</mat-hint>
+            <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
             <mat-hint align="end" class="f-12">{{location.value.length}}/20</mat-hint>
           </mat-form-field>
 
@@ -297,7 +297,7 @@
           <mat-form-field>
             <input autocomplete="off" matInput #description maxlength="60" type="text" class="form-control br-0"
               formControlName="description">
-            <mat-hint align="start" class="f-12">Optional</mat-hint>
+            <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
             <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
           </mat-form-field>
         </div>

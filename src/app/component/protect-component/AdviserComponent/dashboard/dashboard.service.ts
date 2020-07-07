@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
-import {HttpService} from 'src/app/http-service/http-service';
-import {apiConfig} from 'src/app/config/main-config';
-import {appConfig} from 'src/app/config/component-config';
-import {HttpParams} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpService } from 'src/app/http-service/http-service';
+import { apiConfig } from 'src/app/config/main-config';
+import { appConfig } from 'src/app/config/component-config';
+import { HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +29,14 @@ export class DashboardService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_NOTES, httpParams);
   }
 
+  getLastSevenDaysTransactions(data) {
+    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.LAST_7_DAYS_TRANSACTION, data, 1);
+  }
+
+  getLastSevenDaysInvestmentAccounts(data){
+    return this.http.getEncoded(apiConfig.TRANSACT + appConfig.LAST_7_DAYS_INVESTMENT_ACCOUNTS, data, 1);
+  }
+
   getBirthdayOrAnniversary(data) {
     let httpParams = new HttpParams().set('advisorId', data.advisorId).set('fromDate', data.fromDate).set('toDate', data.toDate);
     return this.http.get(apiConfig.USER + appConfig.GET_BIRTHDAY_OR_ANNIVERSARY, httpParams);
@@ -46,5 +54,20 @@ export class DashboardService {
 
   last7DaysTransactionStatus(data) {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.LAST_7_DAYS_TRANSACTION_STATUS, data, 1);
+  }
+
+  getDocumentTotalSize(data) {
+    let httpParams = new HttpParams().set('advisorId', data.advisorId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.DOCUMENT_TOTAL_COUNT_SIZE, httpParams);
+  }
+
+  getLatestAumReconciliation(data) {
+    let httpParams = new HttpParams().set('id', data.id);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.LATEST_AUM_RECON, httpParams);
+  }
+
+  getGoalSummarydata(data) {
+    let httpParams = new HttpParams().set('advisorId', data.advisorId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_GOAL_SUMMARY, httpParams);
   }
 }

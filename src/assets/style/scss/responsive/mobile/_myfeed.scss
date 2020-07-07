@@ -33,4 +33,17 @@
     //   line-height: 12px;
     // }
   }
+
+  .mob-myfeed-ms {
+    width: 100%;
+
+
+    .mat-button-toggle-label-content {
+      line-height: 24px !important;
+    }
+
+    .mat-button-toggle {
+      width: 33.33%;
+    }
+  }
 }

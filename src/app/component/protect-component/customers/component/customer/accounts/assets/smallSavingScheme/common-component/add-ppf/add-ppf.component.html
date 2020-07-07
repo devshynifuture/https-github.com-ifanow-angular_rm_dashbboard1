@@ -45,8 +45,8 @@
                         <mat-form-field>
                             <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
                                 (selectionChange)="disabledMember($event.value,'owner')"
-                                (valueChange3)='displayControler($event)' (emitBank)='getBank()' (valueChange1)='lisNominee($event)'
-                                class="form-control br-0" [callMethod]='callMethod'>
+                                (valueChange3)='displayControler($event)' (emitBank)='getBank()'
+                                (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
                                 <mat-option value='' disabled>Select family members</mat-option>
                                 <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable"
                                     [value]="f.userName">
@@ -94,15 +94,16 @@
                             formControlName="commencementDate" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="CommencementPicker"></mat-datepicker-toggle>
                         <mat-datepicker #CommencementPicker></mat-datepicker>
-                        <mat-error class="f-12" >This field is required
+                        <mat-error class="f-12">This field is required
                         </mat-error>
                     </mat-form-field>
                 </div>
             </div>
         </div>
         <div formArrayName="extendedGroup" *ngIf="askExtended">
-            <div class="row pt-40"  *ngFor="let obj of ppfSchemeForm.controls['extendedGroup'].controls; let pointIndex=index"
-            [formGroupName]="pointIndex">
+            <div class="row pt-40"
+                *ngFor="let obj of ppfSchemeForm.controls['extendedGroup'].controls; let pointIndex=index"
+                [formGroupName]="pointIndex">
                 <div class="col-xl-5  col-lg-5 pr-0 text-right">
                     <h5 class="m-0 pt-12">Have you extended your maturity date (block {{pointIndex+1}})?</h5>
                 </div>
@@ -110,19 +111,20 @@
                     <mat-radio-group aria-label="Select an option" (change)="getMaturityDate($event)" id="custom-radio"
                         formControlName="extenMaturity">
                         <mat-radio-button value="1" class="b-ua radioBtn text-custom"
-                            [ngClass]="{'b-a-custom': ppfSchemeForm.get('extenMaturity').value==1,'text-primary':ppfSchemeForm.get('extenMaturity').value==1,'borderRadio':ppfSchemeForm.get('extenMaturity').value==2}"
-                            >Yes
+                            [ngClass]="{'b-a-custom': ppfSchemeForm.get('extenMaturity').value==1,'text-primary':ppfSchemeForm.get('extenMaturity').value==1,'borderRadio':ppfSchemeForm.get('extenMaturity').value==2}">
+                            Yes
                         </mat-radio-button>
-        
-                        <mat-radio-button class="b-ua radioBtn text-custom" value="2" 
-                            [ngClass]="{'b-a-custom': ppfSchemeForm.get('extenMaturity').value==2,'text-primary':ppfSchemeForm.get('extenMaturity').value==2,'borderRadio text-custom':ppfSchemeForm.get('extenMaturity').value==1}"
-                            >No
+
+                        <mat-radio-button class="b-ua radioBtn text-custom" value="2"
+                            [ngClass]="{'b-a-custom': ppfSchemeForm.get('extenMaturity').value==2,'text-primary':ppfSchemeForm.get('extenMaturity').value==2,'borderRadio text-custom':ppfSchemeForm.get('extenMaturity').value==1}">
+                            No
                         </mat-radio-button>
                     </mat-radio-group>
                 </div>
             </div>
             <mat-error class="f-12 pt-4" *ngIf="invalidExtended">
-                Cannot add ppf with the following details above. To add, please check the details and rectify wherever necessary
+                Cannot add ppf with the following details above. To add, please check the details and rectify wherever
+                necessary
             </mat-error>
         </div>
         <div class="row pt-40">
@@ -160,8 +162,9 @@
             <div class="col-md-3">
                 <div class="form-group form-group_one mb-0">
                     <mat-form-field class="ba-date">
-                        <input [matDatepicker]="balanceAsOn" (click)="balanceAsOn.open()" [max]="maxDate" [min]="ppfSchemeForm.value.commencementDate"
-                            class="form-control br-0 b-0" formControlName="balanceAsOn" matInput readonly>
+                        <input [matDatepicker]="balanceAsOn" (click)="balanceAsOn.open()" [max]="maxDate"
+                            [min]="ppfSchemeForm.value.commencementDate" class="form-control br-0 b-0"
+                            formControlName="balanceAsOn" matInput readonly>
                         <mat-datepicker-toggle matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
                         <mat-datepicker #balanceAsOn></mat-datepicker>
                         <mat-error class="f-12 pt-4 w-s">
@@ -233,7 +236,7 @@
                         <mat-form-field>
                             <input autocomplete="off" #fdNo class="form-control br-0" #description
                                 formControlName="description" matInput maxlength="60" type="text">
-                            <mat-hint align="start" class="f-12">Optional</mat-hint>
+                            <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
                             <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
                         </mat-form-field>
                     </div>
@@ -246,9 +249,9 @@
                 <div class="col-md-5">
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input autocomplete="off"  class="form-control br-0" 
-                                formControlName="ppfNo" #ppfNum matInput type="text" maxlength="20">
-                            <mat-hint align="start" class="f-12">Optional</mat-hint>
+                            <input autocomplete="off" class="form-control br-0" formControlName="ppfNo" #ppfNum matInput
+                                type="text" maxlength="20">
+                            <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
                             <mat-hint align="end" class="f-12">{{ppfNum.value.length}}/20</mat-hint>
                         </mat-form-field>
                     </div>
@@ -264,12 +267,12 @@
                             <mat-option *ngFor="let option of bankList ;index as i" [value]="option.id">
                                 {{option.bankNameAndLast4Digit}}</mat-option>
                         </mat-select>
-                        <mat-hint align="start" class="f-12">Optional</mat-hint>
+                        <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
                         <mat-error>This field is required
                         </mat-error>
                     </mat-form-field>
                 </div>
-                <div  class="col-md-1 p-0 pt-8 d-flex">
+                <div class="col-md-1 p-0 pt-8 d-flex">
                     <!-- prod build -->
                     <i class="material-icons text-primitive c-p float-left" (click)="openDialog(null)">add</i>
                 </div>
@@ -302,7 +305,8 @@
                             <mat-form-field>
                                 <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
                                     (selectionChange)="disabledMember($event.value,'nominee')"
-                                    (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
+                                    (valueChange1)='lisNominee($event)' class="form-control br-0"
+                                    [callMethod]='callMethod'>
                                     <mat-option value='' disabled>Select family members</mat-option>
                                     <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable"
                                         [value]="f.userName">
@@ -337,7 +341,7 @@
                             class="material-icons text-primitive f-20 c-p pl-10"
                             (click)="removeNewNominee(pointIndex)">remove</i>
                     </div>
-    
+
                 </div>
             </div>
         </div>
@@ -352,7 +356,7 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="close(false)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <app-progress-button (btnClick)="addPPF()" [disabled]="invalidExtended" [options]="barButtonOptions" >
+            <app-progress-button (btnClick)="addPPF()" [disabled]="invalidExtended" [options]="barButtonOptions">
             </app-progress-button>
         </div>
     </div>

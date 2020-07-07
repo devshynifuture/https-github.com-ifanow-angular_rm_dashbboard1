@@ -1,27 +1,27 @@
-import {Component, OnInit} from '@angular/core';
-import {MatDialog} from '@angular/material';
-import {DashboardGuideDialogComponent} from './dashboard-guide-dialog/dashboard-guide-dialog.component';
-import {AuthService} from 'src/app/auth-service/authService';
-import {SubscriptionService} from '../Subscriptions/subscription.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {FixedFeeComponent} from '../Subscriptions/subscription/common-subscription-component/fixed-fee/fixed-fee.component';
-import {VariableFeeComponent} from '../Subscriptions/subscription/common-subscription-component/variable-fee/variable-fee.component';
-import {SubscriptionInject} from '../Subscriptions/subscription-inject.service';
-import {UtilService} from 'src/app/services/util.service';
-import {BillerSettingsComponent} from '../Subscriptions/subscription/common-subscription-component/biller-settings/biller-settings.component';
-import {InvoiceHistoryComponent} from '../Subscriptions/subscription/common-subscription-component/invoice-history/invoice-history.component';
-import {ChangePayeeComponent} from '../Subscriptions/subscription/common-subscription-component/change-payee/change-payee.component';
-import {DeleteSubscriptionComponent} from '../Subscriptions/subscription/common-subscription-component/delete-subscription/delete-subscription.component';
-import {ConfirmDialogComponent} from '../../common-component/confirm-dialog/confirm-dialog.component';
-import {BackOfficeService} from '../backOffice/back-office.service';
-import {OnlineTransactionService} from '../transactions/online-transaction.service';
-import {TransactionEnumService} from '../transactions/transaction-enum.service';
-import {DashboardService} from './dashboard.service';
-import {FormControl} from '@angular/forms';
-import {calendarService} from '../Activities/calendar/calendar.service';
-import {EmailServiceService} from '../Email/email-service.service';
-import {DatePipe} from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { DashboardGuideDialogComponent } from './dashboard-guide-dialog/dashboard-guide-dialog.component';
+import { AuthService } from 'src/app/auth-service/authService';
+import { SubscriptionService } from '../Subscriptions/subscription.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FixedFeeComponent } from '../Subscriptions/subscription/common-subscription-component/fixed-fee/fixed-fee.component';
+import { VariableFeeComponent } from '../Subscriptions/subscription/common-subscription-component/variable-fee/variable-fee.component';
+import { SubscriptionInject } from '../Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
+import { BillerSettingsComponent } from '../Subscriptions/subscription/common-subscription-component/biller-settings/biller-settings.component';
+import { InvoiceHistoryComponent } from '../Subscriptions/subscription/common-subscription-component/invoice-history/invoice-history.component';
+import { ChangePayeeComponent } from '../Subscriptions/subscription/common-subscription-component/change-payee/change-payee.component';
+import { DeleteSubscriptionComponent } from '../Subscriptions/subscription/common-subscription-component/delete-subscription/delete-subscription.component';
+import { ConfirmDialogComponent } from '../../common-component/confirm-dialog/confirm-dialog.component';
+import { BackOfficeService } from '../backOffice/back-office.service';
+import { OnlineTransactionService } from '../transactions/online-transaction.service';
+import { TransactionEnumService } from '../transactions/transaction-enum.service';
+import { DashboardService } from './dashboard.service';
+import { FormControl } from '@angular/forms';
+import { calendarService } from '../Activities/calendar/calendar.service';
+import { EmailServiceService } from '../Email/email-service.service';
+import { DatePipe } from '@angular/common';
 
 export interface PeriodicElement {
   name: string;
@@ -33,9 +33,9 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 'Gross sales', name: '5.23', weight: '5.45', symbol: '5.83', apr: '4.80', may: '5.08'},
-  {position: 'Redemptions', name: '5.23', weight: '5.45', symbol: '5.83', apr: '4.80', may: '5.08'},
-  {position: 'Net sales', name: '5.23', weight: '5.45', symbol: '5.83', apr: '4.80', may: '5.08'},
+  { position: 'Gross sales', name: '5.23', weight: '5.45', symbol: '5.83', apr: '4.80', may: '5.08' },
+  { position: 'Redemptions', name: '5.23', weight: '5.45', symbol: '5.83', apr: '4.80', may: '5.08' },
+  { position: 'Net sales', name: '5.23', weight: '5.45', symbol: '5.83', apr: '4.80', may: '5.08' },
 
 ];
 
@@ -47,10 +47,10 @@ export interface PeriodicElement2 {
 }
 
 const ELEMENT_DATA2: PeriodicElement2[] = [
-  {position: 'Rahul Jain', name: 'Extend the account for an', weight: 'Nita Shinde'},
-  {position: 'Mohan Kumar', name: 'Re-invest FD to goal', weight: 'Sajith Thilakan'},
-  {position: 'Sagar Shah', name: 'Surrender insurance policy', weight: 'Khushboo Sidapara'},
-  {position: 'Rahul Jain', name: 'File IT returns through CA', weight: 'Satish Patel'},
+  { position: 'Rahul Jain', name: 'Extend the account for an', weight: 'Nita Shinde' },
+  { position: 'Mohan Kumar', name: 'Re-invest FD to goal', weight: 'Sajith Thilakan' },
+  { position: 'Sagar Shah', name: 'Surrender insurance policy', weight: 'Khushboo Sidapara' },
+  { position: 'Rahul Jain', name: 'File IT returns through CA', weight: 'Satish Patel' },
 
 ];
 
@@ -63,8 +63,8 @@ export interface PeriodicElement3 {
 }
 
 const ELEMENT_DATA3: PeriodicElement3[] = [
-  {position: 'Pending', name: '2', weight: '1', symbol: '4'},
-  {position: 'Rejections', name: '2', weight: '3', symbol: '2'},
+  { position: 'Pending', name: '2', weight: '1', symbol: '4' },
+  { position: 'Rejections', name: '2', weight: '3', symbol: '2' },
 
 
 ];
@@ -78,8 +78,8 @@ export interface PeriodicElement4 {
 }
 
 const ELEMENT_DATA4: PeriodicElement4[] = [
-  {position: 'Pending', name: '2', weight: '1', symbol: '4'},
-  {position: 'Rejections', name: '2', weight: '3', symbol: '2'},
+  { position: 'Pending', name: '2', weight: '1', symbol: '4' },
+  { position: 'Rejections', name: '2', weight: '3', symbol: '2' },
 
 
 ];
@@ -92,7 +92,7 @@ export interface PeriodicElement5 {
 }
 
 const ELEMENT_DATA5: PeriodicElement5[] = [
-  {position: 'Vishnu Khandelwal	', name: 'SIP Rejection', weight: '23/04/2019'},
+  { position: 'Vishnu Khandelwal	', name: 'SIP Rejection', weight: '23/04/2019' },
   {
     position: 'Saniya Kishore Parmar rep by Kishore Babulal Parmar	',
     name: 'Redemption Rejection',
@@ -111,9 +111,9 @@ export interface PeriodicElement6 {
 }
 
 const ELEMENT_DATA6: PeriodicElement6[] = [
-  {position: 'Mandira Gangakhedkar	', name: 'Investment Planning', weight: '1,00,000/Q', symbol: '15/09/2020'},
-  {position: 'Abhishek Mane	', name: 'Financial Planning', weight: '1,00,000/Q', symbol: '15/09/2020'},
-  {position: 'Sagar Shroff	', name: 'Tax Planning', weight: '1,00,000/Q', symbol: '15/09/2020'},
+  { position: 'Mandira Gangakhedkar	', name: 'Investment Planning', weight: '1,00,000/Q', symbol: '15/09/2020' },
+  { position: 'Abhishek Mane	', name: 'Financial Planning', weight: '1,00,000/Q', symbol: '15/09/2020' },
+  { position: 'Sagar Shroff	', name: 'Tax Planning', weight: '1,00,000/Q', symbol: '15/09/2020' },
 
 
 ];
@@ -130,10 +130,10 @@ export interface PeriodicElement7 {
 
 const ELEMENT_DATA7: PeriodicElement7[] = [
 
-  {position: 'CAMS	', name: 'INA000004409', weight: 'Today', symbol: 'Aniket Shah', match: '8', report: 'Report'},
-  {position: 'Karvy	', name: 'INA000004409', weight: '1 day ago', symbol: 'System', match: '23', report: 'Report'},
-  {position: 'FT	', name: 'INA000004409', weight: '10 days ago', symbol: 'Aniket Shah', match: '0', report: 'Report'},
-  {position: 'CAMS	', name: 'INA000004409', weight: '2 days ago', symbol: 'System', match: '18', report: 'Report'},
+  { position: 'CAMS	', name: 'INA000004409', weight: 'Today', symbol: 'Aniket Shah', match: '8', report: 'Report' },
+  { position: 'Karvy	', name: 'INA000004409', weight: '1 day ago', symbol: 'System', match: '23', report: 'Report' },
+  { position: 'FT	', name: 'INA000004409', weight: '10 days ago', symbol: 'Aniket Shah', match: '0', report: 'Report' },
+  { position: 'CAMS	', name: 'INA000004409', weight: '2 days ago', symbol: 'System', match: '18', report: 'Report' },
 
 
 ];
@@ -145,6 +145,10 @@ const ELEMENT_DATA7: PeriodicElement7[] = [
 })
 
 export class DashboardComponent implements OnInit {
+  documentSizeData: any = {};
+  aumReconList: any;
+  aumFlag: boolean;
+  goalSummaryData: any = {};
 
   constructor(
     public dialog: MatDialog, private subService: SubscriptionService,
@@ -235,10 +239,76 @@ export class DashboardComponent implements OnInit {
     // this.connectAccountWithGoogle();
     this.getBirthdayOrAnniversary();
     this.getLast7DaysTransactionStatus();
+    this.getDocumentTotalSize();
+    this.getLastSevenDaysTransactions();
+    this.getLatesAumReconciliationData();
+    this.getLastSevenDaysInvestmentAccounts();
+    this.getGoalSummaryData();
   }
 
   mailConnect(done) {
     this.excessAllow = done;
+  }
+
+  LastSevenDaysInvestmentAccounts:any=[];
+  getLastSevenDaysInvestmentAccounts(){
+    const obj ={
+      "advisorId":this.advisorId,
+      "startDate":new Date().getTime(),
+      "endDate":new Date(this.lastSevenDays).getTime()
+   }
+
+//       const obj = {
+//     "advisorId":5430,
+//     "startDate":1593369000000,
+//     "endDate":1594060199999
+//  }
+   this.dashboardService.getLastSevenDaysInvestmentAccounts(obj).subscribe(
+    (data) => {
+      if(data){
+        this.LastSevenDaysInvestmentAccounts = data;
+      }
+      else{
+        this.LastSevenDaysInvestmentAccounts = [];
+      }
+  },
+  (err)=>{
+
+  });
+  }
+
+  LastSevenDaysTransactions:any=[];
+  rejectedFAILURE:any = [];
+  lastSevenDays:any = new Date().setDate(new Date().getDate() - 7);
+  getLastSevenDaysTransactions(){
+    const obj ={
+      "advisorId":this.advisorId,
+      "tpUserCredentialId":null,
+      "startDate":new Date().getTime(),
+      "endDate":new Date(this.lastSevenDays).getTime()
+   }
+
+//    const obj = {
+//     "advisorId":5430,
+//     "tpUserCredentialId":null,
+//     "startDate":1593369000000,
+//     "endDate":1594060199999
+//  }
+   console.log(new Date(obj.startDate), new Date(obj.endDate), "date 123");
+   this.dashboardService.getLastSevenDaysTransactions(obj).subscribe(
+    (data) => {
+      console.log(data,"LastSevenDaysTransactions 123");
+      if(data){
+        this.LastSevenDaysTransactions = data;
+        this.dataSource5 = this.LastSevenDaysTransactions.filter((x)=>{
+          x.status == 1 || x.status == 7;
+        })
+      }
+      else{
+        this.LastSevenDaysTransactions = [];
+        this.dataSource5 = [];
+      }
+    });
   }
 
   getSummaryDataDashboard() {
@@ -355,8 +425,8 @@ export class DashboardComponent implements OnInit {
         this.todoListData.splice(index, 1);
         // }
       }), err => {
-      this.eventService.openSnackBar(err, 'Dismiss');
-    };
+        this.eventService.openSnackBar(err, 'Dismiss');
+      };
   }
 
   getBirthdayOrAnniversary() {
@@ -419,6 +489,61 @@ export class DashboardComponent implements OnInit {
     );
   }
 
+  getDocumentTotalSize() {
+    const obj = {
+      advisorId: this.advisorId,
+      // clientId
+    }
+    this.dashboardService.getDocumentTotalSize(obj).subscribe(
+      data => {
+        if (data) {
+          this.documentSizeData = data;
+        }
+      }
+    )
+  }
+
+  getLatesAumReconciliationData() {
+    this.aumReconList = [{}, {}, {}];
+    this.aumFlag = true;
+    const obj =
+    {
+      id: this.advisorId
+    }
+    this.dashboardService.getLatestAumReconciliation(obj).subscribe(
+      data => {
+        if (data) {
+          this.aumFlag = false;
+          this.aumReconList = data;
+        }
+        else {
+          this.aumFlag = false;
+          this.aumReconList = []
+        }
+      }, err => {
+        this.aumFlag = false;
+        this.aumReconList = []
+      }
+    )
+  }
+
+  getGoalSummaryData() {
+    const obj = {
+      advisorId: this.advisorId
+    }
+    this.dashboardService.getGoalSummarydata(obj).subscribe(
+      data => {
+        if (data) {
+          this.goalSummaryData = data;
+        } else {
+
+        }
+      }, err => {
+
+      }
+    )
+  }
+
   connectAccountWithGoogle() {
     this.calenderLoader = true;
     this.emailService.getProfile().subscribe(res => {
@@ -428,7 +553,7 @@ export class DashboardComponent implements OnInit {
         localStorage.setItem('googleOAuthToken', 'oauthtoken');
         localStorage.setItem('successStoringToken', 'true');
         localStorage.setItem('associatedGoogleEmailId', AuthService.getUserInfo().userName);
-        this.router.navigate(['/admin/emails/inbox'], {relativeTo: this.activatedRoute});
+        this.router.navigate(['/admin/emails/inbox'], { relativeTo: this.activatedRoute });
         this.getEvent();
       } else {
         this.calenderLoader = false;
