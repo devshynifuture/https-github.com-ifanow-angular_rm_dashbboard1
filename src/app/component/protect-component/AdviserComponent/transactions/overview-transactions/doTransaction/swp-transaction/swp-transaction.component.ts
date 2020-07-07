@@ -438,6 +438,7 @@ export class SwpTransactionComponent implements OnInit {
         }
       );
       this.navOfSelectedScheme = this.mutualFundData.nav
+      this.currentValue = this.processTransaction.calculateCurrentValue(this.mutualFundData.nav, this.mutualFundData.balanceUnit);
       this.currentValue =  Math.round(this.currentValue)
       this.swpTransaction.controls.currentValue.setValue(this.currentValue);
       this.swpTransaction.controls.balanceUnit.setValue(this.mutualFundData.balanceUnit);
