@@ -6,6 +6,7 @@ import {PlanService} from '../../plan.service';
 import { AppConstants } from 'src/app/services/app-constants';
 import { AppComponent } from 'src/app/app.component';
 import { DatePipe } from '@angular/common';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-single-goal-year',
@@ -29,6 +30,18 @@ export class SingleGoalYearComponent implements OnInit {
   maxAgeYear = 100;
   clientId: any;
   advisorId: any;
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'Save',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+  };
   
   constructor(
     private eventService: EventService, 
@@ -155,10 +168,9 @@ export class SingleGoalYearComponent implements OnInit {
   }
 
   sendDataObj(obj){
-    
+    this.barButtonOptions.active = true;
     this.planService.addSingleYearGoal(obj).subscribe(
       data => {
-        this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
         switch (this.goalTypeData.id) {
           case AppConstants.HOUSE_GOAL:
             this.eventService.openSnackBar("House goal is added", "Dismiss");
@@ -189,16 +201,20 @@ export class SingleGoalYearComponent implements OnInit {
             break;
 
           default:
-            console.error("Unidentified goal id found")
+            console.error("Unidentified goal id found", this.goalTypeData.id)
             break;
-        }
+          }
+          this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
       },
-      error => this.eventService.showErrorMessage(error)
+      error => {
+        this.eventService.showErrorMessage(error)
+        this.barButtonOptions.active = false;
+      }
     );
   }
 
   saveGoal(){
-    if(this.singleYearGoalForm.invalid) {
+    if(this.singleYearGoalForm.invalid || this.barButtonOptions.active) {
       this.singleYearGoalForm.markAllAsTouched();
     } else {
       let goalObj = this.createGoalObj();

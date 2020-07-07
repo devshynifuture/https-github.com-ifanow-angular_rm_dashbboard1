@@ -34,6 +34,9 @@ export class EmailListingComponent implements OnInit {
   trashCount: any = 0;
   showOptions: boolean = false;
   starredCount: any;
+  advisorEmail;
+  isCustomerEmail: boolean;
+  unreadCount: any;
 
 
   constructor(
@@ -70,18 +73,25 @@ export class EmailListingComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   ngOnInit() {
+    this.advisorEmail = AuthService.getUserInfo().userName;
     this.initPoint();
   }
 
   initPoint() {
     this.isLoading = true;
     let location;
+    location = this.router.url.split('/')[this.router.url.split('/').length - 1];
 
-    if (this.router.url === '/') {
-      location = 'inbox';
-    } else {
-      location = this.router.url.split('/')[3];
+    console.log("this is router url:", this.router.url);
+    if (this.router.url.split('/').includes('admin')) {
+      if (this.router.url === '/') {
+        location = 'inbox';
+      }
+      this.isCustomerEmail = false;
+    } else if (this.router.url.split('/').includes('customer')) {
+      this.isCustomerEmail = true;
     }
+
     (location === 'trash') ? this.trashAction = true : this.trashAction = false;
     (location === 'draft') ? this.showDraftView = true : this.showDraftView = false;
     this.location = location;
@@ -89,14 +99,15 @@ export class EmailListingComponent implements OnInit {
     this.currentList = 0;
     this.maxListRes = 0;
 
-    this.totalListSize = this.totalListSize - 50;
-    this.currentList = this.maxListRes + 1;
-    // this.maxListRes = this.maxListRes + 50;
+    if (!this.isCustomerEmail) {
+      this.totalListSize = this.totalListSize - 50;
+      this.currentList = this.maxListRes + 1;
 
-    if (this.currentList <= 1) {
-      this.showPrevPaginationBtn = false;
-    } else {
-      this.showPrevPaginationBtn == true;
+      if (this.currentList <= 1) {
+        this.showPrevPaginationBtn = false;
+      } else {
+        this.showPrevPaginationBtn == true;
+      }
     }
 
     this.getPaginatorLengthRes(location);
@@ -122,18 +133,6 @@ export class EmailListingComponent implements OnInit {
     }
   }
 
-  // initPaginatorLength() {
-  //   this.currentPage = 1;
-  //   this.totalNumberOfThreadsShown = 50;
-
-  // }
-
-
-  // updatePaginators() {
-  //   if (this.paginatorLength > this.)
-  //     this.currentPage
-  // }
-
   getPaginatorLengthRes(location) {
     if (localStorage.getItem('associatedGoogleEmailId')) {
       const userInfo = AuthService.getUserInfo();
@@ -155,7 +154,6 @@ export class EmailListingComponent implements OnInit {
           this.getRightSideNavListCount(location);
         }
       }, err => {
-        this.eventService.openSnackBarNoDuration(err);
         this.eventService.openSnackBar("You must connect your gmail account", "Dismiss");
         if (localStorage.getItem('successStoringToken')) {
           localStorage.removeItem('successStoringToken');
@@ -172,18 +170,24 @@ export class EmailListingComponent implements OnInit {
       if (this.navList.length !== 0) {
         this.navList.forEach(element => {
           switch (element.labelId) {
-            case 'IMPORTANT': this.importantCount = element.threadsTotal;
+            case 'IMPORTANT':
+              this.importantCount = element.threadsTotal;
               break;
-            case 'SENT': this.sentCount = element.threadsTotal;
+            case 'SENT':
+              this.sentCount = element.threadsTotal;
               break;
-            case 'DRAFT': this.draftCount = element.threadsTotal;
+            case 'DRAFT':
+              this.draftCount = element.threadsTotal;
               break;
-            case 'TRASH': this.trashCount = element.threadsTotal;
-              break;
-            case 'STARRED': this.starredCount = element.threadsTotal;
+            case 'TRASH':
+              this.trashCount = element.threadsTotal;
               break;
           }
+          if ((this.location.toUpperCase() === 'INBOX' ? 'IMPORTANT' : '') === element.labelId) {
+            this.unreadCount = parseInt(element.threadsUnread);
+          }
         });
+
         switch (location) {
           case 'inbox':
             this.paginatorLength = this.importantCount;
@@ -198,22 +202,24 @@ export class EmailListingComponent implements OnInit {
             break;
         }
 
-        this.totalListSize = this.paginatorLength;
-        if (this.paginatorLength <= 50) {
-          this.maxListRes = this.paginatorLength;
-          this.showNextPaginationBtn = false;
-          this.showPrevPaginationBtn = false;
-        } else if (this.paginatorLength > 50) {
-          this.maxListRes = this.maxListRes + 50;
-        }
+        if (!this.isCustomerEmail) {
+          this.totalListSize = this.paginatorLength;
+          if (this.paginatorLength <= 50) {
+            this.maxListRes = this.paginatorLength;
+            this.showNextPaginationBtn = false;
+            this.showPrevPaginationBtn = false;
+          } else if (this.paginatorLength > 50) {
+            this.maxListRes = this.maxListRes + 50;
+          }
 
-        let valueOfNextPagination = this.maxListRes + 50;
-        if (valueOfNextPagination >= this.paginatorLength) {
-          this.showNextPaginationBtn = false;
-        } else if (valueOfNextPagination > this.paginatorLength) {
-          this.showNextPaginationBtn = false;
-        } else if (this.maxListRes < this.paginatorLength) {
-          this.showNextPaginationBtn = true;
+          let valueOfNextPagination = this.maxListRes + 50;
+          if (valueOfNextPagination >= this.paginatorLength) {
+            this.showNextPaginationBtn = false;
+          } else if (valueOfNextPagination > this.paginatorLength) {
+            this.showNextPaginationBtn = false;
+          } else if (this.maxListRes < this.paginatorLength) {
+            this.showNextPaginationBtn = true;
+          }
         }
 
         this.getGmailList(location.toUpperCase(), '');
@@ -363,107 +369,159 @@ export class EmailListingComponent implements OnInit {
   getGmailList(data, page) {
     this.showNextPaginationBtn = false;
     this.showPrevPaginationBtn = false;
+
     if (data === 'INBOX') {
       data = 'IMPORTANT';
     }
-    data = {
-      labelIds: data,
-      pageToken: (page == 'next') ? (this.nextPageToken ? this.nextPageToken : '') : '',
-      maxResults: 50
+
+    let clientData;
+    let receiverEmail;
+    if (this.isCustomerEmail) {
+      clientData = JSON.parse(sessionStorage.getItem('clientData'));
+      receiverEmail = clientData.emailList[0].email;
+      // receiverEmail = 'abhishek@futurewise.co.in';
     }
+
+    if (this.isCustomerEmail) {
+      let queryParams = '';
+      if (this.location === 'inbox') {
+        queryParams = `{ from: ${receiverEmail} }`;
+      } else if (this.location === 'sent') {
+        queryParams = `{ to: ${receiverEmail} }`;
+      } else if (this.location === 'draft') {
+        queryParams = `{ in:draft } { (from to): ${receiverEmail} }`
+      } else if (this.location === 'trash') {
+        queryParams = `{ in:trash } { (from to): ${receiverEmail} }`
+      } else {
+        queryParams = `{ (from to): ${receiverEmail} }`;
+      }
+
+      data = {
+        labelIds: data,
+        pageToken: (page == 'next') ? (this.nextPageToken ? this.nextPageToken : '') : '',
+        maxResults: 50,
+        q: queryParams
+      }
+    } else {
+      data = {
+        labelIds: data,
+        pageToken: (page == 'next') ? (this.nextPageToken ? this.nextPageToken : '') : '',
+        maxResults: 50
+      }
+    }
+    // console.log("this is query parameters: ", encodeURIComponent(queryParams));
+
     this.listSubscription = this.emailService.getMailInboxList(data)
       .subscribe(responseData => {
-        if (responseData.nextPageToken) {
-          this.nextPageToken = responseData.nextPageToken;
-        }
-        this.resultSizeEstimate = responseData.resultSizeEstimate;
-        let tempArray1 = [];
+        if (responseData) {
+          if (responseData.nextPageToken) {
+            this.nextPageToken = responseData.nextPageToken;
+            if (this.isCustomerEmail) {
+              this.showNextPaginationBtn = true;
+            }
+          } else {
+            if (this.isCustomerEmail) {
+              this.showNextPaginationBtn = false;
+            }
+          }
 
-        // const parsedResponseData = JSON.parse(EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(responseData));
+          this.resultSizeEstimate = responseData.resultSizeEstimate;
+          let tempArray1 = [];
 
-        // const { gmailThreads, nextPageToken } = parsedResponseData;
-        const { gmailThreads, nextPageToken } = responseData;
+          // const parsedResponseData = JSON.parse(EmailUtilService.parseBase64AndDecodeGoogleUrlEncoding(responseData));
 
-        this.nextPageToken = nextPageToken;
-        this.gmailThreads = gmailThreads;
-        console.log("this is response data::::", responseData);
-        gmailThreads.forEach((thread: GmailInboxResponseI, index: number) => {
-          // thread.messages.map((message) => {
-          //   message.payload.body.data = btoa(message.payload.body.data);
-          // });
+          // const { gmailThreads, nextPageToken } = parsedResponseData;
+          const { gmailThreads, nextPageToken } = responseData;
 
-          let parsedData: any; // object containing array of decoded parts and headers
-          let idsOfThread: any; // Object of historyId and Id of thread
-          let idsOfMessages: string[]; // ids of messages
-          let dateIdsSnippetsOfMessages: any; // array of Objects having ids, date snippets of messages
-          let labelIdsfromMessages;
-          let extractSubjectFromHeaders;
-          let extractAttachmentFiles = null;
-          let attachmentFiles;
-          let attachmentArrayObjects = [];
-          let messageCountInAThread: number;
-          let messageDates: number[] = [];
+          this.nextPageToken = nextPageToken;
+          this.gmailThreads = gmailThreads;
+          console.log("this is response data::::", responseData);
+          gmailThreads.forEach((thread: GmailInboxResponseI, index: number) => {
+            // thread.messages.map((message) => {
+            //   message.payload.body.data = btoa(message.payload.body.data);
+            // });
 
-          parsedData = EmailUtilService.decodeGmailThreadExtractMessage(thread);
-          attachmentArrayObjects = EmailUtilService.getAttachmentObjectFromGmailThread(thread);
-          idsOfThread = EmailUtilService.getIdsOfGmailThreads(thread);
-          idsOfMessages = EmailUtilService.getIdsOfGmailMessages(thread);
-          dateIdsSnippetsOfMessages = EmailUtilService.getIdAndDateAndSnippetOfGmailThreadMessages(thread);
-          labelIdsfromMessages = EmailUtilService.getGmailLabelIdsFromMessages(thread);
-          extractSubjectFromHeaders = EmailUtilService.getSubjectAndFromOfGmailHeaders(thread);
-          messageCountInAThread = Math.ceil(parsedData.decodedPart.length / 2);
+            let parsedData: any; // object containing array of decoded parts and headers
+            let idsOfThread: any; // Object of historyId and Id of thread
+            let idsOfMessages: string[]; // ids of messages
+            let dateIdsSnippetsOfMessages: any; // array of Objects having ids, date snippets of messages
+            let labelIdsfromMessages;
+            let extractSubjectFromHeaders;
+            let extractAttachmentFiles = null;
+            let attachmentFiles;
+            let attachmentArrayObjects = [];
+            let messageCountInAThread: number;
+            let messageDates: number[] = [];
 
-          dateIdsSnippetsOfMessages.forEach(element => {
-            const { internalDate } = element;
-            messageDates.push(internalDate);
+            parsedData = EmailUtilService.decodeGmailThreadExtractMessage(thread);
+            attachmentArrayObjects = EmailUtilService.getAttachmentObjectFromGmailThread(thread);
+            idsOfThread = EmailUtilService.getIdsOfGmailThreads(thread);
+            idsOfMessages = EmailUtilService.getIdsOfGmailMessages(thread);
+            dateIdsSnippetsOfMessages = EmailUtilService.getIdAndDateAndSnippetOfGmailThreadMessages(thread);
+            labelIdsfromMessages = EmailUtilService.getGmailLabelIdsFromMessages(thread);
+            extractSubjectFromHeaders = EmailUtilService.getSubjectAndFromOfGmailHeaders(thread);
+            messageCountInAThread = Math.ceil(parsedData.decodedPart.length / 2);
+
+            dateIdsSnippetsOfMessages.forEach((element, index) => {
+              const { internalDate } = element;
+              messageDates.push(internalDate);
+            });
+
+            extractAttachmentFiles = EmailUtilService.getAttachmentFileData(thread);
+
+            if (extractAttachmentFiles !== null) {
+              attachmentFiles = extractAttachmentFiles;
+            } else {
+              attachmentFiles = '';
+            }
+            const Obj1 = {
+              position: index + 1,
+              idsOfThread,
+              idsOfMessages,
+              parsedData,
+              attachmentFiles,
+              messageHeaders: extractSubjectFromHeaders['headerFromArray'],
+              messageDates,
+              messageCount: messageCountInAThread,
+              labelIdsfromMessages,
+              emailers: `${typeof (extractSubjectFromHeaders['headerFromArray'][0]) === 'string' ? extractSubjectFromHeaders['headerFromArray'][0].split('<')[0].trim() : ''}`,
+              subjectMessage: {
+                subject: extractSubjectFromHeaders['headerSubjectArray'][0],
+                message: dateIdsSnippetsOfMessages[0]['snippet']
+              },
+              date: `${dateIdsSnippetsOfMessages[0]['internalDate']}`,
+              attachmentArrayObjects,
+              isRead: (index + 1) <= this.unreadCount ? true : false
+            }
+
+
+            // tempArray.push(Obj);
+            tempArray1.push(Obj1);
           });
 
-          extractAttachmentFiles = EmailUtilService.getAttachmentFileData(thread);
 
-          if (extractAttachmentFiles !== null) {
-            attachmentFiles = extractAttachmentFiles;
-          } else {
-            attachmentFiles = '';
+          this.messageListArray = tempArray1;
+          // this.messageDetailArray = tempArray;
+
+          this.isLoading = false;
+          if (!this.isCustomerEmail) {
+            if (this.maxListRes < this.paginatorLength) {
+              this.showNextPaginationBtn = true;
+            }
+            if (this.currentList > 50) {
+              this.showPrevPaginationBtn = true;
+            }
           }
-          const Obj1 = {
-            position: index + 1,
-            idsOfThread,
-            idsOfMessages,
-            parsedData,
-            attachmentFiles,
-            messageHeaders: extractSubjectFromHeaders['headerFromArray'],
-            messageDates,
-            messageCount: messageCountInAThread,
-            labelIdsfromMessages,
-            emailers: `${typeof (extractSubjectFromHeaders['headerFromArray'][0]) === 'string' ? extractSubjectFromHeaders['headerFromArray'][0].split('<')[0].trim() : ''}`,
-            subjectMessage: {
-              subject: extractSubjectFromHeaders['headerSubjectArray'][0],
-              message: dateIdsSnippetsOfMessages[0]['snippet']
-            },
-            date: `${dateIdsSnippetsOfMessages[0]['internalDate']}`,
-            attachmentArrayObjects
-          }
-
-
-          // tempArray.push(Obj);
-          tempArray1.push(Obj1);
-        });
-
-
-        this.messageListArray = tempArray1;
-        // this.messageDetailArray = tempArray;
-
-        this.isLoading = false;
-        if (this.maxListRes < this.paginatorLength) {
-          this.showNextPaginationBtn = true;
+          this.dataSource = new MatTableDataSource<MessageListArray>(this.messageListArray);
+          this.dataSource.paginator = this.paginator;
+        } else {
+          this.isLoading = false;
         }
-        if (this.currentList > 50) {
-          this.showPrevPaginationBtn = true;
-        }
-        this.dataSource = new MatTableDataSource<MessageListArray>(this.messageListArray);
-        this.dataSource.paginator = this.paginator;
-
       }, error => console.error(error));
+  }
+
+  getUnreadCountValue(index) {
+    return index + 1 <= parseInt(this.unreadCount) ? true : false;
   }
 
   nextPagesList() {
@@ -472,14 +530,16 @@ export class EmailListingComponent implements OnInit {
       this.totalListSize = this.totalListSize - 50;
       this.currentList = this.maxListRes + 1;
       this.maxListRes = this.maxListRes + 50;
-      if (this.currentList > 50) {
-        this.showPrevPaginationBtn = true;
-      }
-      if (this.maxListRes >= this.paginatorLength) {
-        this.maxListRes = this.paginatorLength;
+      if (!this.isCustomerEmail) {
+        if (this.currentList > 50) {
+          this.showPrevPaginationBtn = true;
+        }
+        if (this.maxListRes >= this.paginatorLength) {
+          this.maxListRes = this.paginatorLength;
+        }
       }
       this.isLoading = true;
-      this.getGmailList(this.router.url.split('/')[3].toUpperCase(), 'next');
+      this.getGmailList(this.location.toUpperCase(), 'next');
     } else {
       this.showNextPaginationBtn = false;
     }

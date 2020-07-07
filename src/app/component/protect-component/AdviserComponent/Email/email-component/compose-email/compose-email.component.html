@@ -51,13 +51,13 @@
                     <mat-form-field class="example-chip-list h-auto">
                         <mat-chip-list #chipList aria-label="Email Selection">
                             <mat-chip *ngFor="let receipient of receipients" [selectable]="selectable"
-                                [removable]="removable" (removed)="remove(receipient, receipients)">
+                                [removable]="removable" (removed)="remove(receipient, 'receipients')">
                                 {{receipient}}
                                 <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                             </mat-chip>
-                            <input placeholder="Receipient" [matChipInputFor]="chipList"
+                            <input *ngIf="editRecepient" placeholder="Receipient" [matChipInputFor]="chipList"
                                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
-                                (matChipInputTokenEnd)="add($event, receipients)">
+                                (matChipInputTokenEnd)="add($event, 'receipients')">
                         </mat-chip-list>
                     </mat-form-field>
                     <!-- <input type="text" [(ngModel)]="to" formControlName="receiver" /> -->
@@ -75,13 +75,13 @@
                     <mat-form-field class="example-chip-list h-auto">
                         <mat-chip-list #chipList1 aria-label="CC Email Selection">
                             <mat-chip *ngFor="let cc of ccArray" [selectable]="selectable" [removable]="removable"
-                                (removed)="remove(cc, ccArray)">
+                                (removed)="remove(cc, 'ccArray')">
                                 {{cc}}
                                 <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                             </mat-chip>
                             <input placeholder="CC" [matChipInputFor]="chipList1"
                                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
-                                (matChipInputTokenEnd)="add($event, ccArray)">
+                                (matChipInputTokenEnd)="add($event, 'ccArray')">
                         </mat-chip-list>
                     </mat-form-field>
                     <!-- <input type="text" formControlName="carbonCopy" *ngIf="isCcSelected">
@@ -100,13 +100,13 @@
                     <mat-form-field class="example-chip-list h-auto">
                         <mat-chip-list #chipList2 aria-label="BCC Email Selection">
                             <mat-chip *ngFor="let bcc of bccArray" [selectable]="selectable" [removable]="removable"
-                                (removed)="remove(bcc, bccArray)">
+                                (removed)="remove(bcc, 'bccArray')">
                                 {{bcc}}
                                 <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                             </mat-chip>
                             <input placeholder="BCC" [matChipInputFor]="chipList2"
                                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
-                                (matChipInputTokenEnd)="add($event, bccArray)">
+                                (matChipInputTokenEnd)="add($event, 'bccArray')">
                         </mat-chip-list>
                     </mat-form-field>
                     <!-- <input type="text" formControlName="blindCarbonCopy" *ngIf="isBccSelected">

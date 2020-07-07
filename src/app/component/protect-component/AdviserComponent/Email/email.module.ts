@@ -41,6 +41,9 @@ import { ManageHttpInterceptor } from '../../../../Interceptor/manage-http.inter
     EmailEntryModule,
   ],
   exports: [
+    EmailListModule,
+    EmailEntryModule,
+    LeftSidebarComponent
   ],
   providers: [
     HttpCancelService,
