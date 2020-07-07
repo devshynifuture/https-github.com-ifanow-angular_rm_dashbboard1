@@ -1,7 +1,7 @@
 <div id="ui-goal">
     <div class="row">
-        <div class="col-width-22 relClass br-grey mt-5 pb-44">
-            <div class=" row pt-12 pb-8 bb-grey">
+        <div class="col-width-22 relClass br-grey  pb-44">
+            <div class=" row pt-20 pb-10 bb-grey">
                 <div class="col-md-4 p-0">
                     <h3 class="mb-0 d-flex align-items-end text-black pt-4">Goals</h3>
                 </div>
@@ -44,7 +44,7 @@
 
                 <div *ngIf="loaderFn.loading">
                     <div class="relClass">
-                        <div class="bar82">
+                        <div class="bar82" [ngClass]="{'height82': loaderFn.loading}">
 
                         </div>
                     </div>
@@ -53,32 +53,53 @@
         </div>
 
         <div class="col-width-78" *ngIf="allGoals.length > 0 && !loaderFn.loading">
-            <div class="row bb-grey pt-28 pb-8">
-                <div class="col-md-12 p-0">
-                    <h3 class="m-0 text-black f-500">{{selectedGoal.goalName}}</h3>
+            <div class="row bb-grey pb-12 pt-28">
+                <div class="col-width-68">
+                    <div class="row">
+                        <div class="col-md-8 p-0">
+                            <h3 class="m-0 text-black f-500">{{selectedGoal.goalName}}</h3>
+                        </div>
+                        <div class="col-md-4 p-0 text-right">
+                            <h3 class="f-20 f-500 mb-0 roboto">2030 - 2033</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-width-31">
+                    <div class="row">
+                        <div class="col-md-12 text-right p-0" *ngIf="selectedGoal">
+                            <img (click)="deleteGoal()" src="/assets/images/svg/blue-delete.svg">
+                        </div>
+                    </div>
                 </div>
             </div>
+
             <div class="row">
                 <div class="col-width-68 p-0 pb-44 skeletonAnimation" appSkeletonLoading
                     [appSkeletonLoading]="isLoading">
-                    <div class="row relClass">
+                    <div class="row ">
                         <div class="col-md-6 pl-0 ">
                             <div class="row pt-28">
                                 <div class="col-md-6 p-0 ">
                                     <h5 class="f-12 m-0 text-primitive">GOAL FUTURE VALUE</h5>
-                                    <h3 class="m-0">
-                                        <div class="bar">₹<span appFormatNumber
-                                                [value]="selectedGoal.dashboardData.futureValue">{{selectedGoal.dashboardData.futureValue}}</span>
+                                    <div class="relClass">
+                                        <div class="bar" [ngClass]="{'height24': isLoading}">
+                                            <h3 class="m-0">
+                                                ₹<span appFormatNumber
+                                                    [value]="selectedGoal.dashboardData.futureValue">{{selectedGoal.dashboardData.futureValue}}</span>
+                                            </h3>
                                         </div>
-                                    </h3>
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
                                     <h5 class="f-12 m-0 text-primitive">ACHIEVED</h5>
-                                    <h3 class="m-0">
-                                        <div class="bar">₹<span appFormatNumber
-                                                [value]="selectedGoal.achievedValue">{{selectedGoal.achievedValue}}</span>
+                                    <div class="relClass">
+                                        <div class="bar">
+                                            <h3 class="m-0">
+                                                ₹<span appFormatNumber
+                                                    [value]="selectedGoal.achievedValue">{{selectedGoal.achievedValue}}</span>
+                                            </h3>
                                         </div>
-                                    </h3>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row pt-24">
@@ -97,20 +118,22 @@
                                     <p class="m-0 text-black roboto p-12 br bb">Equity</p>
                                     <p class="m-0 text-black roboto p-12 br">Debt</p>
                                 </div>
-                                <div class="col-md-3 p-0">
-                                    <p class="m-0 text-black roboto p-12 f-500 br bb">Monthly</p>
-                                    <p class="m-0 text-black roboto p-12 bg-white br bb">
+                                <div class="col-md-3 relClass p-0">
+                                    <p class="m-0 text-black roboto p-12 f-500  bb">Monthly</p>
+                                    <p class="m-0 text-black roboto p-12 bg-white  bb">
                                         <span class="bar" appFormatNumber
                                             [value]="selectedGoal.dashboardData.equity_monthly">{{selectedGoal.dashboardData.equity_monthly}}</span>
                                     </p>
 
-                                    <p class="m-0 text-black roboto p-12 bg-white br"><span class="bar" appFormatNumber
+                                    <p class="m-0 text-black roboto p-12 bg-white ">
+                                        <span class="bar" appFormatNumber
                                             [value]="selectedGoal.dashboardData.debt_monthly">{{selectedGoal.dashboardData.debt_monthly}}</span>
                                     </p>
                                 </div>
-                                <div class="col-md-3 p-0">
+                                <div class="col-md-3 relClass p-0">
                                     <p class="m-0 text-black roboto p-12 f-500 bb">Lumpsum</p>
-                                    <p class="m-0 text-black roboto p-12 bg-white bb"><span class="bar" appFormatNumber
+                                    <p class="m-0 text-black roboto p-12 bg-white bb">
+                                        <span class="bar" appFormatNumber
                                             [value]="selectedGoal.dashboardData.lump_equity">{{selectedGoal.dashboardData.lump_equity}}</span>
                                     </p>
                                     <p class="m-0 text-black roboto p-12 bg-white"><span class="bar" appFormatNumber
@@ -126,6 +149,49 @@
                             <h5 class="m-0 pb-12">Allocations to this goal</h5>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+                                <!--- Note that these columns can be defined in any order.
+                                      The actual rendered columns are set as a property on the row definition" -->
+
+                                <!-- Position Column -->
+                                <ng-container matColumnDef="position">
+                                    <th mat-header-cell *matHeaderCellDef> No. </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                                </ng-container>
+
+                                <!-- Name Column -->
+                                <ng-container matColumnDef="name">
+                                    <th mat-header-cell *matHeaderCellDef> Name </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                                </ng-container>
+
+                                <!-- Weight Column -->
+                                <ng-container matColumnDef="weight">
+                                    <th mat-header-cell *matHeaderCellDef> Weight </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                                </ng-container>
+
+                                <!-- Symbol Column -->
+                                <ng-container matColumnDef="symbol">
+                                    <th mat-header-cell *matHeaderCellDef> Symbol </th>
+                                    <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            </table>
+                        </div>
+                    </div>
+
+
+
+
+
+
                     <div class="row b-a bg-grey lter">
                         <div class="col-md-3 p-0">
                             <p class="roboto m-0 p-8 text-black f-500">Description </p>
@@ -312,12 +378,11 @@
                     </div>
 
 
-                    <div class="row pt-20" *ngIf="selectedGoal">
+                    <!-- <div class="row pt-20" *ngIf="selectedGoal">
                         <div class="col-md-12 right p-0 text-right" (click)="deleteGoal()">
                             <img src="/assets/images/svg/blue-delete.svg">
-                            <!-- (click)="deleteGoal(dashboardData)" -->
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

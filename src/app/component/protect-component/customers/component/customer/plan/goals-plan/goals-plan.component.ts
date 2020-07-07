@@ -19,12 +19,7 @@ import * as Highcharts from 'highcharts';
 import { MatDialog } from '@angular/material';
 import { P } from '@angular/cdk/keycodes';
 
-export interface PeriodicElement {
-  position: string;
-  name: string;
-  weight: string;
-  symbol: string;
-}
+
 
 @Component({
   selector: 'app-goals-plan',
@@ -35,7 +30,8 @@ export interface PeriodicElement {
 export class GoalsPlanComponent implements OnInit {
   clientFamily: any[];
 
-  isLoading = false;
+
+  isLoading = true;
   advisor_client_id: any = {
     advisorId: '',
     clientId: ''
