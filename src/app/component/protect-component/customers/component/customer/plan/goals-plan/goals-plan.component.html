@@ -1,5 +1,5 @@
 <div id="ui-goal">
-    <div class="row">
+    <div class="row" *ngIf="allGoals.length > 0">
         <div class="col-width-22 relClass br-grey  pb-44">
             <div class=" row pt-20 pb-10 bb-grey">
                 <div class="col-md-4 p-0">
@@ -105,7 +105,7 @@
                                 <div class="col-md-12 p-0">
                                     <h5 class="m-0 text-primitive f-12">GOAL PROGRESS</h5>
                                     <mat-progress-bar id="bg-primary" mode="determinate"
-                                        [value]="selectedGoal?.dashboardData.goalProgress" class="h-30">
+                                        [value]="selectedGoal?.dashboardData?.goalProgress" class="h-30">
                                     </mat-progress-bar>
                                 </div>
                             </div>
@@ -239,7 +239,7 @@
                             </mat-menu>
                         </div>
                     </div>
-                    <div class="row b-a" *ngIf="selectedGoal.remainingData.loan || loaderFn.loading">
+                    <div class="row b-a" *ngIf="selectedGoal?.remainingData?.loan || loaderFn.loading">
                         <div class="col-md-10 skeletonAnimation" appSkeletonLoading
                             [appSkeletonLoading]="loaderFn.loading">
                             <div class="row pt-16 relClass">
