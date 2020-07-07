@@ -15,6 +15,11 @@ export class AddTasksComponent implements OnInit {
   close(flag) {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
+
+  getFileData(fileList: FileList) {
+    let fileData = fileList.item(0);
+  }
+
 }
 
 

@@ -13,6 +13,7 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material';
 import { EmailAttachmentI } from '../email.interface';
 import { tap, debounceTime, switchMap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-compose-email',
@@ -29,12 +30,15 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
   refreshRequired: boolean = false;
   showSaving = false;
   saveDraftComplete: boolean;
+  isCustomerEmail: any;
+  editRecepient: boolean;
 
   constructor(private subInjectService: SubscriptionInject,
     public subscription: SubscriptionService,
     public eventService: EventService,
     private emailService: EmailServiceService,
-    private fb: FormBuilder) { }
+    private fb: FormBuilder,
+    private router: Router) { }
 
   receipentEmail: string;
   subject: string;
@@ -80,8 +84,13 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
   ngOnInit() {
     console.log("compose getting value data:::::", this.data);
     this.choice = this.data.choice;
-    this.createEmailForm();
 
+    if (this.router.url.split('/').includes('customer')) {
+      this.isCustomerEmail = true;
+    } else {
+      this.isCustomerEmail = false;
+    }
+    this.createEmailForm();
   }
 
   initPoint() {
@@ -131,7 +140,7 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
       createRequestJson = {
         toAddress: this.emailForm.get('receiver').value ? this.emailForm.get('receiver').value : [''],
         subject: this.emailForm.get('subject').value ? this.emailForm.get('subject').value : '',
-        message: this.emailForm.get('messageBody').value ? this.emailForm.get('messageBody').value : '',
+        message: this.emailForm.get('messageBody').value ? this.emailForm.get('messageBody').value.replace(/(<([^>]+)>)/ig, "") : '',
         fileData: (this.emailAttachments && this.emailAttachments.length !== 0) ? this.emailAttachments : [],
         attachmentIds,
         attachments: this.emailAttachments,
@@ -247,15 +256,35 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
   }
 
   createEmailForm() {
-    this.emailForm = this.fb.group({
-      sender: [, Validators.email],
-      receiver: [[], Validators.email],
-      carbonCopy: [[], Validators.email],
-      blindCarbonCopy: [[], Validators.email],
-      subject: [''],
-      messageBody: [''],
-      attachments: [''],
-    });
+    if (this.isCustomerEmail) {
+      let clientData = AuthService.getClientData();
+      let clientEmail = clientData.emailList[0].email;
+      console.log("this is some client email:::", clientEmail);
+      this.receipients = [clientEmail];
+      this.editRecepient = false;
+      this.removable = false;
+      this.emailForm = this.fb.group({
+        sender: [, Validators.email],
+        receiver: [[], Validators.email],
+        carbonCopy: [[], Validators.email],
+        blindCarbonCopy: [[], Validators.email],
+        subject: [''],
+        messageBody: [''],
+        attachments: [''],
+      });
+    } else {
+      this.editRecepient = true;
+      this.removable = true;
+      this.emailForm = this.fb.group({
+        sender: [, Validators.email],
+        receiver: [[], Validators.email],
+        carbonCopy: [[], Validators.email],
+        blindCarbonCopy: [[], Validators.email],
+        subject: [''],
+        messageBody: [''],
+        attachments: [''],
+      });
+    }
 
     if (this.data && this.data.dataToSend !== null) {
       let data = this.data.dataToSend;
@@ -314,15 +343,48 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
       });
 
       this.getAttachmentDetails(this.data.dataToSend);
-      this.emailForm.setValue({
-        sender: this.from ? this.from : '',
-        receiver: this.receipients ? this.receipients : [],
-        carbonCopy: this.ccArray ? this.ccArray : [],
-        blindCarbonCopy: this.bccArray ? this.bccArray : [],
-        subject: this.subject ? this.subject : '',
-        messageBody: this.emailBody ? this.emailBody : '',
-        attachments: []
-      }, { emitEvent: false });
+
+      if (this.isCustomerEmail) {
+        let clientData = AuthService.getClientData();
+        let clientEmail = clientData.emailList[0].email;
+        console.log("this is some client email:::", clientEmail);
+        this.receipients = [clientEmail];
+        this.editRecepient = false;
+        this.removable = false;
+
+        this.emailForm.setValue({
+          sender: this.from ? this.from : '',
+          receiver: this.receipients ? this.receipients : [],
+          carbonCopy: this.ccArray ? this.ccArray : [],
+          blindCarbonCopy: this.bccArray ? this.bccArray : [],
+          subject: this.subject ? this.subject : '',
+          messageBody: this.emailBody ? this.emailBody : '',
+          attachments: []
+        }, { emitEvent: false });
+      } else {
+        this.editRecepient = true;
+        this.removable = true;
+
+        this.emailForm.setValue({
+          sender: this.from ? this.from : '',
+          receiver: this.receipients ? this.receipients : [],
+          carbonCopy: this.ccArray ? this.ccArray : [],
+          blindCarbonCopy: this.bccArray ? this.bccArray : [],
+          subject: this.subject ? this.subject : '',
+          messageBody: this.emailBody ? this.emailBody : '',
+          attachments: []
+        }, { emitEvent: false });
+      }
+
+      // this.emailForm.setValue({
+      //   sender: this.from ? this.from : '',
+      //   receiver: this.receipients ? this.receipients : [],
+      //   carbonCopy: this.ccArray ? this.ccArray : [],
+      //   blindCarbonCopy: this.bccArray ? this.bccArray : [],
+      //   subject: this.subject ? this.subject : '',
+      //   messageBody: this.emailBody ? this.emailBody : '',
+      //   attachments: []
+      // }, { emitEvent: false });
     }
     this.initPoint();
   }
@@ -372,7 +434,7 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
 
     // Add our fruit
     if ((value || '').trim()) {
-      if (whichArray == this.receipients) {
+      if (whichArray == 'receipients') {
         let arr = this.emailForm.get('receiver').value;
         if (arr == '') {
           arr = [];
@@ -382,7 +444,7 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
           receiver: arr
         });
         // this.emailForm.get('receiver').value.push({ email: value.trim() });
-      } else if (whichArray == this.ccArray) {
+      } else if (whichArray == 'ccArray') {
         let arr = this.emailForm.get('carbonCopy').value;
         if (arr == '') {
           arr = [];
@@ -391,7 +453,7 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
         this.emailForm.patchValue({
           carbonCopy: arr
         })
-      } else if (whichArray == this.bccArray) {
+      } else if (whichArray == 'bccArray') {
 
         let arr = this.emailForm.get('blindCarbonCopy').value;
         if (arr == '') {
@@ -419,19 +481,19 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
 
     if (index >= 0) {
       whichArray.splice(index, 1);
-      if (whichArray == this.receipients) {
+      if (whichArray == 'receipients') {
         let arr = this.emailForm.get('receiver').value;
         // arr.splice(index, 1);
         this.emailForm.patchValue({
           receiver: arr
         });
-      } else if (whichArray == this.ccArray) {
+      } else if (whichArray == 'ccArray') {
         let arr = this.emailForm.get('carbonCopy').value;
         arr.splice(index, 1);
         this.emailForm.patchValue({
           carbonCopy: arr
         });
-      } else if (whichArray == this.bccArray) {
+      } else if (whichArray == 'bccArray') {
         let arr = this.emailForm.get('blindCarbonCopy').value;
         arr.splice(index, 1);
         this.emailForm.patchValue({
@@ -595,12 +657,13 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
       ccs: this.emailForm.get('carbonCopy').value,
       bccs: this.emailForm.get('blindCarbonCopy').value,
       subject: this.emailForm.get('subject').value,
-      message: this.emailForm.get('messageBody').value,
+      message: this.emailForm.get('messageBody').value.replace(/(<([^>]+)>)/ig, ""),
       attachments: this.emailAttachments
     }
 
 
     this.emailService.sendEmail(body).subscribe(res => {
+      this.refreshRequired = true;
       this.close();
     });
 
