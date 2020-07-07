@@ -46,6 +46,8 @@ import { SubscriptionUpperEntry } from "../AdviserComponent/Subscriptions/subscr
     AccountEntryModule,
     PlanEntryModule,
     CustomersRoutingModule,
+   // MobileRoutingModule,
+   
     AdviceEntryModule,
     CustomerOverviewEntryModule,
     CustomDirectiveModule,
