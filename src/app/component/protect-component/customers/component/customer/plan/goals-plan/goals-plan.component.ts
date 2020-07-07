@@ -141,6 +141,8 @@ export class GoalsPlanComponent implements OnInit {
         this.allGoals = data.reverse().map(goal => this.mapGoalDashboardData(goal));
         this.loadSelectedGoalData(this.allGoals[0]);
         this.loaderFn.decreaseCounter();
+      } else {
+        this.allGoals = [];
       }
     }, err => {
       this.eventService.openSnackBar(err, "Dismiss");
