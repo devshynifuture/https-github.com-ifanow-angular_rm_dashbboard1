@@ -1,14 +1,14 @@
 <div id="investmentPlan">
     <div class="row" style="  height: calc(100vh - 126px);">
-        <div class="col-md-2 bg-grey lter p-0 pt-8">
-            <ul class="vertical-menu">
+        <div class="col-md-2 bg-grey lter p-0 pt-8 responsive-left-side-top responsive-flex-auto">
+            <ul class="vertical-menu responsive-left-side">
                 <li class="c-p f-14 f-normal text-left " (click)="type=1;getDeploymentData()"
                     [ngClass]="{'activeColor': type==1}">
                     <div class="row">
                         <div class="col-md-2 p-0">
                             <img src="assets/images/svg/investment-man.svg" class="c-p pr-8">
                         </div>
-                        <div class="col-md-10 p-0 lh-42">
+                        <div class="col-md-10 p-0 rs-pl-6">
                             Goal based
                         </div>
                     </div>
@@ -21,7 +21,7 @@
                         <div class="col-md-2 p-0">
                             <img src="assets/images/svg/Insurance-plan.svg" class="c-p pr-8">
                         </div>
-                        <div class="col-md-10 p-0 lh-42">
+                        <div class="col-md-10 p-0 rs-pl-6">
                             Non goal based
                         </div>
                     </div>
@@ -29,7 +29,7 @@
             </ul>
         </div>
 
-        <div class="col-md-10">
+        <div class="col-md-10 responsive-right-side-top">
             <div class="row pt-28">
                 <div class="col-md-12">
                     <button mat-stroked-button class="br-0 text-primary">Rahul
