@@ -303,7 +303,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-width-78" *ngIf="allGoals.length == 0">
+        <div class="col-width-78" *ngIf="allGoals.length == 0 && !loaderFn.loading">
             No Data Present
         </div>
     </div>
