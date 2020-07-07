@@ -132,18 +132,18 @@ export class GoalsPlanComponent implements OnInit {
   loadAllGoals() {
     this.allGoals = [{}, {}, {}];
     this.loaderFn.increaseCounter();
-    // this.plansService.getAllGoals(this.advisor_client_id).subscribe((data: any[]) => {
-    //   if (data) {
-    //     this.allGoals = data.reverse().map(goal => this.mapGoalDashboardData(goal));
-    //     this.loadSelectedGoalData(this.allGoals[0]);
-    //     this.loaderFn.decreaseCounter();
-    //   } else {
-    //     this.allGoals = [];
-    //   }
-    // }, err => {
-    //   this.eventService.openSnackBar(err, "Dismiss");
-    //   this.loaderFn.decreaseCounter();
-    // });
+    this.plansService.getAllGoals(this.advisor_client_id).subscribe((data: any[]) => {
+      if (data) {
+        this.allGoals = data.reverse().map(goal => this.mapGoalDashboardData(goal));
+        this.loadSelectedGoalData(this.allGoals[0]);
+        this.loaderFn.decreaseCounter();
+      } else {
+        this.allGoals = [];
+      }
+    }, err => {
+      this.eventService.openSnackBar(err, "Dismiss");
+      this.loaderFn.decreaseCounter();
+    });
   }
 
 
