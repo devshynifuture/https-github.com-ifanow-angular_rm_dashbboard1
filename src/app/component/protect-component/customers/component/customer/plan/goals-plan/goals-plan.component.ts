@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { UtilService } from "../../../../../../../services/util.service";
+import { UtilService, LoaderFunction } from "../../../../../../../services/util.service";
 import { SubscriptionInject } from "../../../../../AdviserComponent/Subscriptions/subscription-inject.service";
 import { MfAllocationsComponent } from './mf-allocations/mf-allocations.component';
 import { PreferencesComponent } from './preferences/preferences.component';
@@ -29,19 +29,20 @@ export interface PeriodicElement {
 @Component({
   selector: 'app-goals-plan',
   templateUrl: './goals-plan.component.html',
-  styleUrls: ['./goals-plan.component.scss']
+  styleUrls: ['./goals-plan.component.scss'],
+  providers: [LoaderFunction]
 })
 export class GoalsPlanComponent implements OnInit {
-  clientFamily:any[];
+  clientFamily: any[];
 
   isLoading = false;
   advisor_client_id: any = {
-    advisorId:'',
-    clientId:''
+    advisorId: '',
+    clientId: ''
   }
-  selectedGoal:any = {};
+  selectedGoal: any = {};
   allGoals: any[] = [];
-  hasCostOfDelay:boolean = false;
+  hasCostOfDelay: boolean = false;
 
   // options set for bar charts
   // Reference - https://api.highcharts.com/highcharts/
@@ -52,25 +53,25 @@ export class GoalsPlanComponent implements OnInit {
     },
     plotOptions: {
       bar: {
-          dataLabels: {
-              enabled: true,
-              align: 'left',
-              inside: false
-          }
+        dataLabels: {
+          enabled: true,
+          align: 'left',
+          inside: false
+        }
       }
     },
     credits: {
-        enabled: false
+      enabled: false
     },
     title: {
       text: ''
     },
     xAxis: {
-        type: 'category',
-        lineWidth: 0,
-        tickWidth: 0
+      type: 'category',
+      lineWidth: 0,
+      tickWidth: 0
     },
-    yAxis:{
+    yAxis: {
       visible: false
     },
     tooltip: {
@@ -79,15 +80,15 @@ export class GoalsPlanComponent implements OnInit {
     legend: {
       enabled: false,
     },
-    series: [{data: []}]
+    series: [{ data: [] }]
   }
 
   // options set for donut chart
   // TODO:- remove 'series' legend from the tooltip
   donutOptions = {
     chart: {
-        type: 'pie',
-        height: 170
+      type: 'pie',
+      height: 170
     },
     title: {
       text: ''
@@ -96,29 +97,30 @@ export class GoalsPlanComponent implements OnInit {
       pointFormat: ' <b>{point.percentage:.1f}%</b>'
     },
     credits: {
-        enabled: false
+      enabled: false
     },
     yAxis: {
-        title: {
-            text: ''
-        }
+      title: {
+        text: ''
+      }
     },
     plotOptions: {
-        pie: {
-            shadow: false
-        }
+      pie: {
+        shadow: false
+      }
     },
-    legend:{
+    legend: {
       floating: false,
     },
     series: []
-}
+  }
 
   constructor(
-    private subInjectService: SubscriptionInject, 
-    private eventService: EventService, 
+    private subInjectService: SubscriptionInject,
+    private eventService: EventService,
     private plansService: PlanService,
     private dialog: MatDialog,
+    public loaderFn: LoaderFunction
   ) {
     this.advisor_client_id.advisorId = AuthService.getAdvisorId();
     this.advisor_client_id.clientId = AuthService.getClientId();
@@ -131,21 +133,26 @@ export class GoalsPlanComponent implements OnInit {
   }
 
   // load all goals created for the client and select the first goal
-  loadAllGoals(){
-    this.allGoals = [];
-    this.plansService.getAllGoals(this.advisor_client_id).subscribe((data:any[])=>{
+  loadAllGoals() {
+    this.loaderFn.increaseCounter();
+    this.allGoals = [{}, {}, {}];
+    this.plansService.getAllGoals(this.advisor_client_id).subscribe((data: any[]) => {
       if (data) {
         this.allGoals = data.reverse().map(goal => this.mapGoalDashboardData(goal));
         this.loadSelectedGoalData(this.allGoals[0]);
+        this.loaderFn.decreaseCounter();
       }
-    }, err => this.eventService.openSnackBar(err, "Dismiss"))
+    }, err => {
+      this.eventService.openSnackBar(err, "Dismiss");
+      this.loaderFn.decreaseCounter();
+    });
   }
 
 
-  createChart(res){
+  createChart(res) {
     const colors = ['green', 'blue', 'yellow', 'red'];
-    const costDelay:Object = res.remainingData.costDelay;
-    if(costDelay && costDelay.hasOwnProperty(0)) {
+    const costDelay: Object = res.remainingData.costDelay;
+    if (costDelay && costDelay.hasOwnProperty(0)) {
       this.hasCostOfDelay = true;
     } else {
       this.hasCostOfDelay = false;
@@ -155,8 +162,8 @@ export class GoalsPlanComponent implements OnInit {
     let lumpsumSeries = JSON.parse(JSON.stringify(this.options));
     let sipSeries = JSON.parse(JSON.stringify(this.options));
     let count = 0;
-    for(let k in costDelay) {
-      if(costDelay.hasOwnProperty(k)) {
+    for (let k in costDelay) {
+      if (costDelay.hasOwnProperty(k)) {
         lumpsumSeries.series[0].data.push({
           y: Math.round(costDelay[k].lumpsum_total),
           name: k + ' years',
@@ -173,25 +180,25 @@ export class GoalsPlanComponent implements OnInit {
     Highcharts.chart('monthly-chart-container-main', sipSeries);
     Highcharts.chart('lumpsum-chart-container-main', lumpsumSeries);
 
-    if(res.remainingData.loan) {
+    if (res.remainingData.loan) {
       const loan = res.remainingData.loan;
       const chart = {
-        data: [["Loan Amt", parseInt(loan.loanAmount)],["Down Amt",parseInt(loan.downPayment)]],
+        data: [["Loan Amt", parseInt(loan.loanAmount)], ["Down Amt", parseInt(loan.downPayment)]],
         size: '100%',
         innerSize: '55%',
-        showInLegend:true,
+        showInLegend: true,
         dataLabels: {
-            enabled: false
+          enabled: false
         }
-    }
-    this.donutOptions.series = [chart];
+      }
+      this.donutOptions.series = [chart];
       Highcharts.chart('donut-chart-container', this.donutOptions);
     }
   }
-  
 
-  mapGoalDashboardData(goal:any) {
-    let mapData:any = {};
+
+  mapGoalDashboardData(goal: any) {
+    let mapData: any = {};
 
     /**
      * TODO:- need to correct the logics for the following
@@ -203,7 +210,7 @@ export class GoalsPlanComponent implements OnInit {
     mapData.id = goal.id;
     mapData.goalType = goal.goalType;
     mapData.singleOrMulti = goal.singleOrMulti;
-    if(goal.singleOrMulti == 1) {
+    if (goal.singleOrMulti == 1) {
       const goalSubData = goal.singleGoalModel;
       mapData.img = goalSubData.imageUrl;
       mapData.year = (new Date(goalSubData.goalStartDate).getFullYear()) + ' - ' + (new Date(goalSubData.goalStartDate).getFullYear());
@@ -225,14 +232,14 @@ export class GoalsPlanComponent implements OnInit {
       mapData.remainingData = goalSubData;
       mapData.remainingData.differentGoalYears = [goalSubData.goalStartDate];
     } else {
-      const goalSubData:any = goal.multiYearGoalPlan;
+      const goalSubData: any = goal.multiYearGoalPlan;
       mapData.img = goalSubData.imageUrl;
-      mapData.year = (new Date(goalSubData.differentGoalYears[0]).getFullYear()) + ' - ' + (new Date(goalSubData.differentGoalYears[goalSubData.differentGoalYears.length -1]).getFullYear());
+      mapData.year = (new Date(goalSubData.differentGoalYears[0]).getFullYear()) + ' - ' + (new Date(goalSubData.differentGoalYears[goalSubData.differentGoalYears.length - 1]).getFullYear());
       mapData.goalName = goalSubData.name;
       mapData.gv = goalSubData.futureValue;
       mapData.achievedValue = goalSubData.achievedValue;
       mapData.goalStartDate = goalSubData.differentGoalYears[0];
-      mapData.goalEndDate = goalSubData.differentGoalYears[goalSubData.differentGoalYears.length -1];
+      mapData.goalEndDate = goalSubData.differentGoalYears[goalSubData.differentGoalYears.length - 1];
       mapData.dashboardData = {
         goalYear: new Date(goalSubData.goalEndDate || goalSubData.vacationEndYr).getFullYear(),
         presentValue: goalSubData.presentValue,
@@ -248,22 +255,22 @@ export class GoalsPlanComponent implements OnInit {
     return mapData;
   }
 
-  getSumOfJsonMap(json:Object = {}) {
+  getSumOfJsonMap(json: Object = {}) {
     let sum = 0;
-    for(let k in json) {
-      if(json.hasOwnProperty(k)) {
-        sum+=json[k];
+    for (let k in json) {
+      if (json.hasOwnProperty(k)) {
+        sum += json[k];
       }
     }
     return sum;
   }
 
-  loadGlobalAPIs(){
-    this.plansService.getListOfFamilyByClient(this.advisor_client_id).subscribe((data)=>{
+  loadGlobalAPIs() {
+    this.plansService.getListOfFamilyByClient(this.advisor_client_id).subscribe((data) => {
       this.clientFamily = data.familyMembersList.sort((a, b) => {
         return a.relationshipId - b.relationshipId;
       });
-    }, (err) => {this.eventService.openSnackBar(err, "Dismiss")});
+    }, (err) => { this.eventService.openSnackBar(err, "Dismiss") });
   }
 
   openAddgoals() {
@@ -334,7 +341,7 @@ export class GoalsPlanComponent implements OnInit {
 
     const subscription = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(sideBarData => {
       if (UtilService.isDialogClose(sideBarData)) {
-        if(UtilService.isRefreshRequired(sideBarData)) {
+        if (UtilService.isRefreshRequired(sideBarData)) {
           this.loadAllGoals();
         }
         subscription.unsubscribe();
@@ -361,7 +368,7 @@ export class GoalsPlanComponent implements OnInit {
           goalId: this.selectedGoal.id,
           goalType: this.selectedGoal.goalType
         }
-        this.plansService.deleteGoal(deleteObj).subscribe((data)=>{
+        this.plansService.deleteGoal(deleteObj).subscribe((data) => {
           this.eventService.openSnackBar("Goal has been deleted successfully", "Dismiss");
           this.allGoals = this.allGoals.filter(goal => goal.id != this.selectedGoal.id);
           this.loadSelectedGoalData(this.allGoals[0]);
@@ -395,7 +402,7 @@ export class GoalsPlanComponent implements OnInit {
   }
 
   // dummy for allocation dragdrop list
-  todo:any[] = [];
+  todo: any[] = [];
   logger(event) {
     // console.log(event)
   }
