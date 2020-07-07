@@ -83,8 +83,8 @@
                                     <h5 class="f-12 m-0 text-primitive">GOAL FUTURE VALUE</h5>
                                     <div class="relClass">
                                         <div class="bar" [ngClass]="{'height24': loaderFn.loading}">
-                                            <h3 class="m-0">
-                                                ₹<span appFormatNumber
+                                            <h3 class="m-0  ">
+                                                &#8377;<span appFormatNumber
                                                     [value]="selectedGoal?.dashboardData?.futureValue"></span>
                                             </h3>
                                         </div>
@@ -94,8 +94,9 @@
                                     <h5 class="f-12 m-0 text-primitive">ACHIEVED</h5>
                                     <div class="relClass">
                                         <div class="bar">
-                                            <h3 class="m-0">
-                                                ₹<span appFormatNumber [value]="selectedGoal.achievedValue"></span>
+                                            <h3 class="m-0  ">
+                                                &#8377;<span appFormatNumber
+                                                    [value]="selectedGoal.achievedValue"></span>
                                             </h3>
                                         </div>
                                     </div>
@@ -117,27 +118,42 @@
                                     <p class="m-0 text-black roboto p-12 br bb">Equity</p>
                                     <p class="m-0 text-black roboto p-12 br">Debt</p>
                                 </div>
-                                <div class="col-md-3 relClass p-0">
+                                <div class="col-md-3  p-0">
                                     <p class="m-0 text-black roboto p-12 f-500  bb">Monthly</p>
-                                    <p class="m-0 text-black roboto p-12 bg-white  bb">
-                                        <span class="bar" appFormatNumber
-                                            [value]="selectedGoal?.dashboardData?.equity_monthly"> </span>
+                                    <p class="m-0 relClass text-black roboto p-12 bg-white  bb">
+                                        <span appFormatNumber [value]="selectedGoal?.dashboardData?.equity_monthly">
+                                        </span>
+
+                                        <span class="bar height24" style="display: inline-block;"
+                                            *ngIf="loaderFn.loading">
+                                        </span>
                                     </p>
 
-                                    <p class="m-0 text-black roboto p-12 bg-white ">
+                                    <p class="m-0 text-black relClass roboto p-12 bg-white ">
                                         <span class="bar" appFormatNumber
                                             [value]="selectedGoal?.dashboardData?.debt_monthly"> </span>
+
+                                        <span class="bar height24" style="display: inline-block;"
+                                            *ngIf="loaderFn.loading">
+                                        </span>
                                     </p>
                                 </div>
-                                <div class="col-md-3 relClass p-0">
+                                <div class="col-md-3   p-0">
                                     <p class="m-0 text-black roboto p-12 f-500 bb">Lumpsum</p>
-                                    <p class="m-0 text-black roboto p-12 bg-white bb">
-                                        <span class="bar height24" appFormatNumber
+                                    <p class="m-0 text-black relClass roboto p-12 bg-white bb">
+                                        <span class="bar" appFormatNumber
                                             [value]="selectedGoal?.dashboardData?.lump_equity"> </span>
+
+                                        <span class="bar height24" style="display: inline-block;"
+                                            *ngIf="loaderFn.loading">
+                                        </span>
                                     </p>
-                                    <p class="m-0 text-black roboto p-12 bg-white">
-                                        <span class="bar height24" appFormatNumber
+                                    <p class="m-0 text-black relClass roboto p-12 bg-white">
+                                        <span class="bar" appFormatNumber
                                             [value]="selectedGoal?.dashboardData?.lump_debt"> </span>
+                                        <span class="bar height24" style="display: inline-block;"
+                                            *ngIf="loaderFn.loading">
+                                        </span>
                                     </p>
                                 </div>
                             </div>
@@ -169,21 +185,40 @@
                         (cdkDropListDropped)="drop($event)" (cdkDropListEntered)="logger($event)"
                         class="hide-placeholder">
                         <div class="row bl-1 bb-1 br bg-white">
-                            <div class="col-md-3">
-                                <p class="m-0 roboto pt-10">Fixed Deposit </p>
-                            </div>
-                            <div class="col-md-3">
-                                <p class="m-0 roboto pt-10">Continue till maturity</p>
-                            </div>
-                            <div class="col-md-3">
-                                <p class="m-0 roboto pt-10">13,000 </p>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="row pt-10">
-                                    <div class="col-md-11 p-0">
-                                        <p class="m-0 roboto ">5,28,000 </p>
+                            <div class="col-md-3 d-flex align-items-center">
+                                <div class="relClass">
+                                    <div class="bar">
+                                        <p class="mb-0 roboto">Fixed Deposit </p>
                                     </div>
-                                    <div class="col-md-1 p-0">
+                                </div>
+
+                            </div>
+                            <div class="col-md-3 d-flex align-items-center">
+                                <div class="relClass">
+                                    <div class="bar">
+                                        <p class="mb-0 roboto">Continue till maturity</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-3 d-flex align-items-center">
+                                <div class="relClass">
+                                    <div class="bar">
+                                        <p class="mb-0 roboto">13,000 </p>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-3  ">
+                                <div class="row">
+                                    <div class="col-md-11  d-flex align-items-center p-0">
+                                        <div class="relClass">
+                                            <div class="bar">
+                                                <p class="m-0 roboto ">5,28,000 </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1  d-flex align-items-end p-0">
                                         <mat-icon class="c-p">more_vert</mat-icon>
                                     </div>
                                 </div>
@@ -215,11 +250,9 @@
                         </div>
                         <div class="b-a relClass">
                             <div class="m-0 p-8 text-black f-14 roboto">
-                                <div class="bar82">
-                                    We have given higher allocations to your retirement goal compared to other goals. We
-                                    suggest you to first allocate maximum corpus to this goal. We wile update your EPF
-                                    contributions too once we have the details of the same.
-                                </div>
+                                We have given higher allocations to your retirement goal compared to other goals. We
+                                suggest you to first allocate maximum corpus to this goal. We wile update your EPF
+                                contributions too once we have the details of the same.
                             </div>
                         </div>
                     </div>
@@ -297,8 +330,10 @@
                     </div>
                 </div>
                 <div class="col-width-31 pr-0 pt-20">
+                    <div class="imgBoxGoals">
+                        <img [src]="selectedGoal.img">
+                    </div>
 
-                    <img [src]="selectedGoal.img" class="imgWidth">
 
                     <div class="btnBox">
                         <button mat-stroked-button class="in-btn" (click)="openInSideBar(null, 'openallocations')">

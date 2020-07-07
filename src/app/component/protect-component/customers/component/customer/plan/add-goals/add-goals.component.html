@@ -1,4 +1,4 @@
-<div *ngIf="!goalTypeData" class="bg-grey lter" id="ui-add-goals">
+<div *ngIf="!goalTypeData" class="bg-white " id="ui-add-goals">
     <div class="row bg-white bb-1 popup-header-fix w-100">
         <div class="col-md-2 p-0">
             <img class="imgLogo" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
@@ -8,19 +8,21 @@
         </div>
         <div class="col-md-2">
             <i class="material-icons pt-16 pb-12 c-p right pr-16" (click)="close()">
-        close
-      </i>
+                close
+            </i>
         </div>
     </div>
     <div class="d-flex align-items-center justify-content-between pt-100 pl-20 pr-20 pb-40">
-        <div (click)="setGoalTypeData(singleGoal1)" *ngFor="let singleGoal1 of goalTypeFirstRowListData;index as i" class="addGoalsWidth c-p">
+        <div (click)="setGoalTypeData(singleGoal1)" *ngFor="let singleGoal1 of goalTypeFirstRowListData;index as i"
+            class="addGoalsWidth c-p">
             <img [src]="singleGoal1.imageUrl">
             <h5 class="text-center m-0 pt-12 text-black">{{singleGoal1.name}}</h5>
         </div>
 
     </div>
     <div class="d-flex align-items-center justify-content-between pl-20 pr-20 pb-40">
-        <div (click)="setGoalTypeData(singleGoal2)" *ngFor="let singleGoal2 of goalTypeSecondRowListData;index as i" class="addGoalsWidth c-p">
+        <div (click)="setGoalTypeData(singleGoal2)" *ngFor="let singleGoal2 of goalTypeSecondRowListData;index as i"
+            class="addGoalsWidth c-p">
             <img [src]="singleGoal2.imageUrl">
             <h5 class="text-center m-0 pt-12 text-black">{{singleGoal2.name}}</h5>
         </div>
@@ -44,8 +46,8 @@
         <div class="col-md-4">
             <h4 class="mb-0 text-white c-p f-16 pt-8" (click)="close()">Cancel</h4>
         </div>
-         <div class="col-md-8 right text-right">
-      <button mat-button class="btn-bottom br-0 text-inherit">Save</button>
-    </div> 
+        <div class="col-md-8 right text-right">
+            <button mat-button class="btn-bottom br-0 text-inherit">Save</button>
+        </div>
     </div>
 </div>
