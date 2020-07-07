@@ -155,8 +155,8 @@
                     <mat-form-field class="w-100">
                         <mat-select formControlName="ownerName" class="form-control br-0">
                             <mat-option value=''>Search family members</mat-option>
-                            <mat-option *ngFor="let f of familyMember" [value]="f.userName" (click)="selectClient($event, f)">
-                                <span>{{f.userName}}</span>
+                            <mat-option *ngFor="let f of familyMember" [value]="f.name" (click)="selectClient($event, f)">
+                                <span>{{f.name}}</span>
                             </mat-option>
                         </mat-select>
                         <mat-error class="f-12 pt-4">
@@ -277,8 +277,8 @@
                     <mat-form-field class="w-100">
                         <mat-select formControlName="ownerName" class="form-control br-0">
                             <mat-option value=''>Search family members</mat-option>
-                            <mat-option *ngFor="let f of familyMember" [value]="f.userName" (click)="selectClient($event, f)">
-                                <span>{{f.userName}}</span>
+                            <mat-option *ngFor="let f of familyMember" [value]="f.name" (click)="selectClient($event, f)">
+                                <span>{{f.name}}</span>
                             </mat-option>
                         </mat-select>
                         <mat-error class="f-12 pt-4">

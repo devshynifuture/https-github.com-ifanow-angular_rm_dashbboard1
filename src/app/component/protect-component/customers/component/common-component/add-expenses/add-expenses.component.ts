@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { PlanService } from '../../customer/plan/plan.service';
 import { ConstantsService } from "../../../../../../constants/constants.service";
 import { EventService } from 'src/app/Data-service/event.service';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 
 @Component({
   selector: 'app-add-expenses',
@@ -29,7 +30,7 @@ export class AddExpensesComponent implements OnInit {
   isNoOfYrs: any;
   getFlag: any;
 
-  constructor(private event: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject,
+  constructor(private peopleService:PeopleService,private event: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject,
     private planService: PlanService, private constantService: ConstantsService) {
   }
   @Input()
@@ -132,13 +133,15 @@ export class AddExpensesComponent implements OnInit {
       advisorId: this.advisorId,
       clientId: this.clientId
     };
-    this.planService.getListOfFamilyByClient(obj).subscribe(
+
+    // this.planService.getListOfFamilyByClient(obj).subscribe(
+      this.peopleService.getClientFamilyMemberListAsset(obj).subscribe(
       data => this.getListOfFamilyByClientRes(data)
     );
   }
 
   getListOfFamilyByClientRes(data) {
-    this.familyMember = data.familyMembersList;
+    this.familyMember = data;
   }
 
   selectClient(event, selected) {
