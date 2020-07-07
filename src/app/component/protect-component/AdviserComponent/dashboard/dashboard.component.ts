@@ -145,7 +145,10 @@ const ELEMENT_DATA7: PeriodicElement7[] = [
 })
 
 export class DashboardComponent implements OnInit {
-  documentSizeData: any;
+  documentSizeData: any = {};
+  aumReconList: any;
+  aumFlag: boolean;
+  goalSummaryData: any = {};
 
   constructor(
     public dialog: MatDialog, private subService: SubscriptionService,
@@ -237,10 +240,75 @@ export class DashboardComponent implements OnInit {
     this.getBirthdayOrAnniversary();
     this.getLast7DaysTransactionStatus();
     this.getDocumentTotalSize();
+    this.getLastSevenDaysTransactions();
+    this.getLatesAumReconciliationData();
+    this.getLastSevenDaysInvestmentAccounts();
+    this.getGoalSummaryData();
   }
 
   mailConnect(done) {
     this.excessAllow = done;
+  }
+
+  LastSevenDaysInvestmentAccounts:any=[];
+  getLastSevenDaysInvestmentAccounts(){
+    const obj ={
+      "advisorId":this.advisorId,
+      "startDate":new Date().getTime(),
+      "endDate":new Date(this.lastSevenDays).getTime()
+   }
+
+//       const obj = {
+//     "advisorId":5430,
+//     "startDate":1593369000000,
+//     "endDate":1594060199999
+//  }
+   this.dashboardService.getLastSevenDaysInvestmentAccounts(obj).subscribe(
+    (data) => {
+      if(data){
+        this.LastSevenDaysInvestmentAccounts = data;
+      }
+      else{
+        this.LastSevenDaysInvestmentAccounts = [];
+      }
+  },
+  (err)=>{
+
+  });
+  }
+
+  LastSevenDaysTransactions:any=[];
+  rejectedFAILURE:any = [];
+  lastSevenDays:any = new Date().setDate(new Date().getDate() - 7);
+  getLastSevenDaysTransactions(){
+    const obj ={
+      "advisorId":this.advisorId,
+      "tpUserCredentialId":null,
+      "startDate":new Date().getTime(),
+      "endDate":new Date(this.lastSevenDays).getTime()
+   }
+
+//    const obj = {
+//     "advisorId":5430,
+//     "tpUserCredentialId":null,
+//     "startDate":1593369000000,
+//     "endDate":1594060199999
+//  }
+   console.log(new Date(obj.startDate), new Date(obj.endDate), "date 123");
+   this.dashboardService.getLastSevenDaysTransactions(obj).subscribe(
+    (data) => {
+      console.log(data,"LastSevenDaysTransactions 123");
+      if(data){
+        this.LastSevenDaysTransactions = data;
+        this.dataSource5 = this.LastSevenDaysTransactions.filter((x)=>{
+          x.status == 1 || x.status == 7;
+        })
+      }
+      else{
+        this.LastSevenDaysTransactions = [];
+        this.dataSource5 = [];
+      }
+    });
   }
 
   getSummaryDataDashboard() {
@@ -435,6 +503,46 @@ export class DashboardComponent implements OnInit {
     )
   }
 
+  getLatesAumReconciliationData() {
+    this.aumReconList = [{}, {}, {}];
+    this.aumFlag = true;
+    const obj =
+    {
+      id: this.advisorId
+    }
+    this.dashboardService.getLatestAumReconciliation(obj).subscribe(
+      data => {
+        if (data) {
+          this.aumFlag = false;
+          this.aumReconList = data;
+        }
+        else {
+          this.aumFlag = false;
+          this.aumReconList = []
+        }
+      }, err => {
+        this.aumFlag = false;
+        this.aumReconList = []
+      }
+    )
+  }
+
+  getGoalSummaryData() {
+    const obj = {
+      advisorId: this.advisorId
+    }
+    this.dashboardService.getGoalSummarydata(obj).subscribe(
+      data => {
+        if (data) {
+          this.goalSummaryData = data;
+        } else {
+
+        }
+      }, err => {
+
+      }
+    )
+  }
 
   connectAccountWithGoogle() {
     this.calenderLoader = true;

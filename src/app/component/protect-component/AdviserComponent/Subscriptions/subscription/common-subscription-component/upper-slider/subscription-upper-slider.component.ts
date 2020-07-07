@@ -8,6 +8,7 @@ import { DialogContainerComponent } from 'src/app/common/dialog-container/dialog
 import { dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation } from 'src/app/animation/animation';
 import { DynamicComponentService } from 'src/app/services/dynamic-component.service';
 import { Location } from '@angular/common';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 
 @Component({
   selector: 'app-subscription-upper-slider',
@@ -40,6 +41,7 @@ export class SubscriptionUpperSliderComponent extends DialogContainerComponent i
   constructor(private router: Router, public authService: AuthService,
     protected eventService: EventService, protected subinject: SubscriptionInject,
     protected dynamicComponentService: DynamicComponentService, private location: Location,
+    private enumDataService: EnumDataService
     // public dialogRef: MatDialogRef<UpperSliderComponent>,
     // @Inject(MAT_DIALOG_DATA) public fragmentDataSubsUpper: any
   ) {
@@ -100,7 +102,7 @@ export class SubscriptionUpperSliderComponent extends DialogContainerComponent i
     this.referenceData = AuthService.getSubscriptionUpperSliderData();
     this.fragmentDataSubsUpper = this.referenceData;
     this.upperDataSubsUpper = this.referenceData.data;
-
+    this.enumDataService.getDataForSubscriptionEnumService();
     // }
     // this.upperState = "open";
   }
