@@ -27,6 +27,7 @@ import { MobileDocumentComponent } from './component/customer/mobile/document/mo
 import { MobilePortfoiloComponent } from './component/customer/mobile/portfolio/mobile-portfoilo/mobile-portfoilo.component';
 import { MobileProfileComponent } from './component/customer/mobile/profile/mobile-profile/mobile-profile.component';
 import { MobileTransactionsComponent } from './component/customer/mobile/transactions/mobile-transactions/mobile-transactions.component';
+import { MobileRoutingModule } from './mobile-routing.module';
 import { MobileLeftSidenavComponent } from './component/customer/mobile/left-side/mobile-left-sidenav/mobile-left-sidenav.component';
 
 
@@ -52,6 +53,7 @@ import { MobileLeftSidenavComponent } from './component/customer/mobile/left-sid
     AccountEntryModule,
     PlanEntryModule,
     CustomersRoutingModule,
+   // MobileRoutingModule,
     AdviceEntryModule,
     CustomerOverviewEntryModule,
     CustomDirectiveModule,

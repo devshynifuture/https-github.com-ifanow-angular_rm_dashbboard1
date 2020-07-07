@@ -1,13 +1,16 @@
+<div *ngIf="openMenue == true">
+  <app-mobile-left-sidenav></app-mobile-left-sidenav>
+</div>
 <div id="mobile-profile">
     <div class="row mob-bg-common pb-12 mobtop-navfixed">
-        <div class="col-2">
+        <div class="col-2" (click)="openMenu(openMenue)">
             <img src="/assets/images/svg/mob-left-arrow.svg" class="c-p pt-4">
         </div>
         <div class="col-10 pl-0">
             <h5 class="m-0 f-18 text-white pt-4 roboto">Profile</h5>
         </div>
     </div>
-    <div class="bg-grey lter pt-80 pb-90">
+    <div class="bg-grey lter pt-80 pb-90" *ngIf="openMenue != true">
         <div class="row">
             <div class="col-12 pl-8 pb-10">
                 <h5 class="m-0 roboto f-400 text-dark f-16">Family members</h5>
