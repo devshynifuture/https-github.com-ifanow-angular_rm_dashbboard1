@@ -1,0 +1,490 @@
+<div id="mob-myfeed">
+    <div class="row mob-bg-common pb-12 mobtop-navfixed" *ngIf="openMenue != true">
+        <div class="col-2" (click)="openMenu(openMenue)">
+            <span class="material-icons text-white">
+                menu
+            </span>
+        </div>
+        <div class="col-7 pl-0" (click)="openMenu(openMenue)">
+            <h5 class="m-0 f-18 text-white">My feed</h5> 
+        </div>
+        <div class="col-3 text-right">
+            <span class="material-icons text-white">
+                search
+            </span>
+        </div>
+    </div>
+    <div *ngIf="openMenue == true">
+        <app-mobile-left-sidenav ></app-mobile-left-sidenav>
+    </div>
+    <div class="pt-90 pl-8 pr-8" *ngIf="openMenue != true">
+        <div class="row bg-white br-10">
+            <div class="col-12 pt-16 pb-16">
+                <h3 class="m-0 roboto f-500 text-mob-common">Good Evening Rahul Jain</h3>
+                <p class="pt-4 roboto f-400 text-custom m-0">Your personalized money feed is ready!</p>
+            </div>
+        </div>
+        <div class="row pt-40">
+            <div class="col-12 p-0">
+                <p class="m-0 text-black f-16 roboto pb-16"> Asset allocation</p>
+                <div class="bg-white br-10">
+                    <div class="row pt-20 pb-20">
+                        <div class="col-7">
+                            <img src="/assets/images/svg/chart-mob.svg" class="w-100">
+                            <p class="text-custom m-0 f-10 f-400 roboto pt-8 pl-16">*some message here</p>
+                        </div>
+                        <div class="col-5 pt-48">
+                            <div class="chart-data">
+                                <div class="d-flex">
+                                    <div class="hw-10 bg-1 br-2">
+
+                                    </div>
+                                    <p class="f-12 lh-12 roboto f-400 m-0 pl-10">38%</p>
+                                    <p class="f-12  lh-12 roboto text-custom m-0 f-400  pl-10">Equity</p>
+                                </div>
+
+                            </div>
+                            <div class="chart-data pt-16">
+                                <div class="d-flex">
+                                    <div class="hw-10 bg-2 br-2">
+
+                                    </div>
+                                    <p class="f-12 lh-12 roboto f-400 m-0 pl-10">23%</p>
+                                    <p class="f-12  lh-12 roboto text-custom m-0 f-400  pl-10">Fixed income</p>
+                                </div>
+
+                            </div>
+                            <div class="chart-data pt-16">
+                                <div class="d-flex">
+                                    <div class="hw-10 bg-3 br-2">
+
+                                    </div>
+                                    <p class="f-12 lh-12 roboto f-400 m-0 pl-10">12%</p>
+                                    <p class="f-12  lh-12 roboto text-custom m-0 f-400  pl-10">Commodities</p>
+                                </div>
+
+                            </div>
+                            <div class="chart-data pt-16">
+                                <div class="d-flex">
+                                    <div class="hw-10 bg-4 br-2">
+
+                                    </div>
+                                    <p class="f-12 lh-12 roboto f-400 m-0 pl-10">18%</p>
+                                    <p class="f-12  lh-12 roboto text-custom m-0 f-400  pl-10">Real estate</p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-40">
+            <div class="col-8 pl-8">
+                <p class="m-0 text-black f-16 roboto">Portfolio</p>
+            </div>
+            <div class="col-4 text-right">
+                <button mat-stroked-button class="view-all">View All</button>
+            </div>
+        </div>
+        <div class="col-md-12 d-flex p-0 overflow-y pt-10">
+            <div class="pr-20">
+                <div class="w-240 b-a">
+                    <div class="bg-white br-4">
+                        <div class="row pt-12 pb-12">
+                            <div class="col-9">
+                                <p class="m-0 roboto f-400 text-mob-common">Mutual funds</p>
+                            </div>
+                            <div class="col-3 pr-8">
+                                <div class="hw-30 bg-primary  br-4">
+                                    <p class="m-0 roboto f-400 pt-8 text-center text-white">MF</p>
+                                </div>
+                            </div>
+                            <div class="col-12 pt-10">
+                                <p class="f-10 text-custom m-0 roboto f-400">CURRENT VALUE</p>
+                                <p class="f-12 text-mob-common m-0 roboto f-400">₹14,84,563</p>
+                            </div>
+                            <div class="col-12 pt-10">
+                                <div class="row">
+                                    <div class="col-6 pl-0">
+                                        <p class="f-10 text-custom m-0 roboto f-400">AMT INVESTED</p>
+                                        <p class="f-12 text-mob-common m-0 roboto f-400">₹14,84,563</p>
+                                    </div>
+                                    <div class="col-6 pr-0">
+                                        <p class="f-10 text-custom m-0 roboto f-400">GAIN/(LOSS)</p>
+                                        <p class="f-12 text-success m-0 roboto f-400">₹10,63,257</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pr-20">
+                <div class="w-240 b-a">
+                    <div class="bg-white br-4">
+                        <div class="row pt-12 pb-12">
+                            <div class="col-9">
+                                <p class="m-0 roboto f-400 text-mob-common">Stocks</p>
+                            </div>
+                            <div class="col-3 pr-8">
+                                <div class="hw-30 bg-success  br-4">
+                                    <p class="m-0 roboto f-400 pt-8 text-center text-white">ST</p>
+                                </div>
+                            </div>
+                            <div class="col-12 pt-10">
+                                <p class="f-10 text-custom m-0 roboto f-400">CURRENT VALUE</p>
+                                <p class="f-12 text-mob-common m-0 roboto f-400">₹10,39,902</p>
+                            </div>
+                            <div class="col-12 pt-10">
+                                <div class="row">
+                                    <div class="col-6 pl-0">
+                                        <p class="f-10 text-custom m-0 roboto f-400">AMT INVESTED</p>
+                                        <p class="f-12 text-mob-common m-0 roboto f-400">₹10,39,902</p>
+                                    </div>
+                                    <div class="col-6 pr-0">
+                                        <p class="f-10 text-custom m-0 roboto f-400">GAIN/(LOSS)</p>
+                                        <p class="f-12 text-danger m-0 roboto f-400">₹10,63,257</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-40">
+            <div class="col-8 pl-8">
+                <p class="m-0 text-black f-16 roboto">Goals</p>
+            </div>
+            <div class="col-4 text-right">
+                <button mat-stroked-button class="view-all">View All</button>
+            </div>
+
+        </div>
+        <div class="col-md-12 d-flex p-0 overflow-y pt-10">
+            <div class="pr-20">
+                <div class="w-340">
+                    <div class="mob-new-house">
+                        <div class="row pt-16">
+                            <div class="col-2">
+                                <img src="/assets/images/Oval.png" class="br-50">
+                            </div>
+                            <div class="col-10">
+                                <p class="m-0 pt-4">2028</p>
+                                <h4 class="m-0 pt-8">New House</h4>
+                            </div>
+                        </div>
+                        <div class="row pt-20">
+                            <div class="col-8">
+                                <p class="m-0">Goal: Rs. 50,00,000</p>
+                                <p class="m-0 pt-6">CV: Rs. 10,23,000</p>
+                                <mat-progress-bar mode="determinate" value="40" class="mt-12"></mat-progress-bar>
+                                <p class="pt-10 m-0">10.23% Achieved</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="pr-20">
+                <div class="w-340">
+                    <div class="mob-education mt-0">
+                        <div class="row pt-16">
+                            <div class="col-2">
+                                <img src="/assets/images/Oval.png" class="br-50">
+                            </div>
+                            <div class="col-10">
+                                <p class="m-0 pt-4">2028 - 2036</p>
+                                <h4 class="m-0 pt-8">Sandeep’s Education</h4>
+                            </div>
+                        </div>
+                        <div class="row pt-20">
+                            <div class="col-8">
+                                <p class="m-0">Goal: Rs. 50,00,000</p>
+                                <p class="m-0 pt-6">CV: Rs. 10,23,000</p>
+                                <mat-progress-bar mode="determinate" value="30" class="mt-12"></mat-progress-bar>
+                                <p class="pt-10 m-0">10.23% Achieved</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="row pt-40 pb-16">
+            <div class="col-12 pl-8">
+                <p class="m-0 text-black f-16 roboto">Activity overview</p>
+            </div>
+
+        </div>
+        <div class="row bg-white br-10 pt-16 pb-16">
+            <div class="col-8">
+                <p class="m-0 roboto f-400 ">Advice awaiting
+                    your consent</p>
+                <p class="m-0 roboto f-400 f-12 text-custom">last 30 days</p>
+            </div>
+            <div class="col-4 text-center pt-8">
+                <p class="m-0 roboto f-400 text-danger f-18">6</p>
+            </div>
+        </div>
+        <div class="mt-12 mb-12">
+            <div class="row bg-white br-10 pt-16 pb-16">
+                <div class="col-8">
+                    <p class="m-0 roboto f-400">Action plans in process</p>
+                    <p class="m-0 roboto f-400 f-12 text-custom">currently</p>
+                </div>
+                <div class="col-4 text-center pt-8">
+                    <p class="m-0 roboto f-400 text-primary f-18">5</p>
+                </div>
+            </div>
+        </div>
+        <div class="row bg-white br-10 pt-16 pb-16">
+            <div class="col-8">
+                <p class="m-0 roboto f-400">Money to be
+                    deployed</p>
+                <p class="m-0 roboto f-400 f-12 text-custom">current + upcoming</p>
+            </div>
+            <div class="col-4 text-center pt-8">
+                <p class="m-0 roboto f-400 text-primary f-18">₹15,40,000</p>
+            </div>
+        </div>
+        <div class="row pt-40">
+            <div class="col-12 pl-8">
+                <h5 class="m-0 roboto f-400 text-dark pb-10">Document vault</h5>
+            </div>
+            <div class="col-12 p-0">
+                <div class="bg-white br-4 ba-half-grey">
+                    <div class="row pt-20 pb-20">
+                        <div class="col-8">
+                            <h5 class="m-0 roboto f-500 text-dark pb-8">You aren’t using the document vault!</h5>
+                            <ul>
+                                <li class="pr-8"><img src="/assets/images/people.png" class="w36"></li>
+                                <li class="pr-8"><img src="/assets/images/people.png" class="w36"></li>
+                                <li class="pr-8"><img src="/assets/images/people.png" class="w36"></li>
+                                <li><img src="/assets/images/people.png" class="w36"></li>
+                            </ul>
+                            <p class="pt-8 m-0 roboto f-400 text-dark pb-12 f-12">Document vault is a safe and secure
+                                way to
+                                manage your important documents. This will help you get better organized!
+                            </p>
+                            <button mat-stroked-button class="btn-primary w-100">Access your vault</button>
+                        </div>
+                        <div class="col-4 p-0 full-center">
+                            <img src="/assets/images/secure.png">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-40 pb-16">
+            <div class="col-8 pl-8">
+                <p class="m-0 text-black f-16 roboto">Insurance</p>
+            </div>
+            <div class="col-4 text-right">
+                <button mat-stroked-button class="view-all">View All</button>
+            </div>
+            <div class="col-12 d-flex p-0 overflow-y pt-10">
+                <div class="pr-20">
+                    <div class="w-240">
+                        <div class="row bg-white br-4">
+                            <div class="col-12 pt-10 pb-10">
+                                <p class="m-0 roboto f-400 text-mob-common">Health insurance</p>
+                                <p class="m-0 roboto f-400 text-custom f-12 pt-4">Family floater</p>
+                                <div class="row pt-8">
+                                    <div class="col-5 pl-0">
+                                        <img src="/assets/images/Group-1.png">
+                                    </div>
+                                    <div class="col-7 p-0 pt-16">
+                                        <p class="m-0 roboto f-500 text-mob-common">Actual: <span
+                                                class="f-400">24,50,000</span></p>
+                                        <p class="m-0 roboto f-500 text-mob-common pt-8">Advice: <span
+                                                class="f-400">194,50,000</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="pr-20">
+                    <div class="w-240">
+                        <div class="row bg-white br-4">
+                            <div class="col-12 pt-10 pb-10">
+                                <p class="m-0 roboto f-400 text-mob-common">Life insurance</p>
+                                <p class="m-0 roboto f-400 text-custom f-12 pt-4">Rahul Jain</p>
+                                <div class="row pt-8">
+                                    <div class="col-5 pl-0">
+                                        <img src="/assets/images/Group-1.png">
+                                    </div>
+                                    <div class="col-7 p-0 pt-16">
+                                        <p class="m-0 roboto f-500 text-mob-common">Actual: <span
+                                                class="f-400">54,50,000</span></p>
+                                        <p class="m-0 roboto f-500 text-mob-common pt-8">Advice: <span
+                                                class="f-400">154,50,000</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-40 pb-16">
+            <div class="col-8 pl-8">
+                <p class="m-0 text-black f-16 roboto">Recent transactions</p>
+            </div>
+            <div class="col-4 text-right">
+                <button mat-stroked-button class="view-all">View All</button>
+            </div>
+            <div class="col-12 d-flex p-0 overflow-y pt-10">
+                <div class="pr-20">
+                    <div class="w-300">
+                        <div class="row bg-white br-4">
+                            <div class="col-12 pt-16 pb-16">
+                                <div class="row">
+                                    <div class="col-9 pl-0">
+                                        <p class="m-0 roboto f-400 text-mob-common">PURCHASE</p>
+                                    </div>
+                                    <div class="col-3 pr-0">
+                                        <p class="m-0 roboto f-400 text-custom f-12 pt-4">BSE</p>
+                                    </div>
+                                </div>
+                                <div class="row pt-8">
+                                    <div class="col-9 pl-0">
+                                        <p class="m-0 roboto f-400 text-mob-common f-16">₹5,00,000</p>
+                                    </div>
+                                    <div class="col-3 pr-0">
+                                        <p class="m-0 roboto f-400 text-custom f-10">31/01 14:25</p>
+                                    </div>
+                                    <div class="col-12 pl-0 pt-8">
+                                        <p class="m-0 roboto f-400 text-custom f-10 ws-normal">Aditya Birla Sun Life
+                                            Equity
+                                            Savings - Growth Option - Regular plan</p>
+                                        <p class="m-0 roboto f-400 text-custom f-12 pt-10">Rahul Harish Jain</p>
+                                        <button mat-stroked-button
+                                            class="btn-primary-outline mt-8 h-20 lh-16 f-10 br-2 pl-4 pr-4">UNITS
+                                            ALLOTTED</button>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="pr-20">
+                    <div class="w-300">
+                        <div class="row bg-white br-4">
+                            <div class="col-12 pt-16 pb-16">
+                                <div class="row">
+                                    <div class="col-9 pl-0">
+                                        <p class="m-0 roboto f-400 text-mob-common">SIP</p>
+                                    </div>
+                                    <div class="col-3 pr-0">
+                                        <p class="m-0 roboto f-400 text-custom f-12 pt-4">NSE</p>
+                                    </div>
+                                </div>
+                                <div class="row pt-8">
+                                    <div class="col-9 pl-0">
+                                        <p class="m-0 roboto f-400 text-mob-common f-16">₹12,000</p>
+                                    </div>
+                                    <div class="col-3 pr-0">
+                                        <p class="m-0 roboto f-400 text-custom f-10">31/01 14:25</p>
+                                    </div>
+                                    <div class="col-12 pl-0 pt-8">
+                                        <p class="m-0 roboto f-400 text-custom f-10 ws-normal">Aditya Birla Sun Life
+                                            Equity
+                                            Savings - Growth Option - Regular plan</p>
+                                        <p class="m-0 roboto f-400 text-custom f-12 pt-10">Rahul Harish Jain</p>
+                                        <button mat-stroked-button
+                                            class="btn-danger-outline mt-8 h-20 lh-16 f-10 br-2 pl-4 pr-4">PENDING
+                                            AUTHORISATION</button>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-40 pb-16">
+            <div class="col-12 pl-8">
+                <p class="m-0 text-black f-16 roboto">Risk profile</p>
+            </div>
+
+        </div>
+        <div class="bg-white">
+            <div class="row">
+                <div class="col-12 pt-16 pb-16 text-center">
+                    <h5 class="m-0 f-16 roboto f-500 text-mob-common">Your risk profile: Moderately aggressive</h5>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-4 pr-0">
+                    <div class="ba-3x">
+                        <h1 class="m-0 text-dark roboto f-400 text-center pt-20 pb-20">32</h1>
+                    </div>
+                    <p class="f-12 m-0 text-custom roboto text-center lh-20">Max: 60</p>
+                </div>
+                <div class="col-7 pr-0">
+                    <p class="roboto m-0 lh-16 f-400 pt-16">You are an investor who is willing to take
+                        moderately
+                        high risk for moderately high returns.</p>
+                </div>
+            </div>
+
+            <div class="row pt-18 pb-16">
+                <div class="col-12 text-center">
+                    <img src="/assets/images/svg/mob-pofile-chart.svg">
+                    <p class="text-custom m-0 lh-16 f-400 roboto">You are an investor who is willing to take
+                        moderately high risk for moderately high returns</p>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-40 pb-16">
+            <div class="col-8 pl-8">
+                <p class="m-0 text-mob-common f-16 roboto pb-16">Market summary</p>
+            </div>
+            <div class="col-4 text-right">
+                <p class="m-0 text-custom f-12 roboto pb-16">13/02/2020</p>
+            </div>
+            <div class="col-12 p-0">
+                <mat-button-toggle-group class="mob-myfeed-ms">
+                    <mat-button-toggle value="Equities">Equities</mat-button-toggle>
+                    <mat-button-toggle value="Debt">Debt</mat-button-toggle>
+                    <mat-button-toggle value="C&M">C&M</mat-button-toggle>
+                </mat-button-toggle-group>
+            </div>
+            <div class="col-12 p-0 pt-12">
+                <div class="row">
+                    <div class="col-4 pl-24">
+                        <p class="m-0 text-mob-common f-12 roboto ">BSE Sensex</p>
+                        <p class="m-0 text-mob-common f-12 roboto  pt-8">Nifty 50</p>
+                        <p class="m-0 text-mob-common f-12 roboto pt-8">Nifty 500</p>
+                    </div>
+                    <div class="col-4 pl-0 text-right">
+                        <p class="m-0 text-success f-12 roboto">+0.23%</p>
+                        <p class="m-0 text-success f-12 roboto pt-8">+0.23%</p>
+                        <p class="m-0 text-success f-12 roboto pt-8">+0.23%</p>
+                    </div>
+                    <div class="col-4 pl-24">
+                        <p class="m-0 text-mob-common f-12 roboto">41,968</p>
+                        <p class="m-0 text-mob-common f-12 roboto pt-8">41,968</p>
+                        <p class="m-0 text-mob-common f-12 roboto pt-8">41,968</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
