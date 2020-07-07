@@ -37,7 +37,7 @@ import { MobileLeftSidenavComponent } from './component/customer/mobile/left-sid
 
 @NgModule({
   declarations: [CustomerComponent, TransactionSuccessfulComponent, MobileMyfeedComponent, MobileDocumentComponent, MobilePortfoiloComponent, MobileProfileComponent, MobileTransactionsComponent, MobileLeftSidenavComponent],
-  imports: [
+  imports: [ 
     // BrowserModule,
     CommonModule,
     MaterialModule,
@@ -52,6 +52,8 @@ import { MobileLeftSidenavComponent } from './component/customer/mobile/left-sid
     AccountEntryModule,
     PlanEntryModule,
     CustomersRoutingModule,
+   // MobileRoutingModule,
+   
     AdviceEntryModule,
     CustomerOverviewEntryModule,
     CustomDirectiveModule,

@@ -1,11 +1,11 @@
 <div>
     <div class="p-8">
         <div class="row pt-0">
-            <div class="col-md-6 pl-0 c-p">
+            <div class="col-md-4 pl-0 c-p">
                 <h4 class="m-0 text-black roboto pt-8">Mutual fund overview</h4>
                 <p class="m-0 text-custom f-13">A quick summary of all your mutual fund holdings</p>
             </div>
-            <div class="col-md-6 p-0 justify-content-end d-flex align-items-center " *ngIf="!isLoading">
+            <div class="col-md-8 p-0 justify-content-end d-flex align-items-center " *ngIf="!isLoading">
                 <div class="pdfClass">
                     <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon b-0">
                         <img src="assets/images/svg/mf-donwload.svg" *ngIf="!fragmentData.isSpinner"> </a>
@@ -76,8 +76,7 @@
                 <!-- </mat-menu> -->
             </div>
         </div>
-        <div class="responsive-overflow-y skeletonAnimation" *ngIf="showSummaryBar" appSkeletonLoading
-            [appSkeletonLoading]="isLoading">
+        <div class=" skeletonAnimation" *ngIf="showSummaryBar" appSkeletonLoading [appSkeletonLoading]="isLoading">
             <div class="row pt-4 w-1024">
                 <div class="col-md-5 pr-4 pl-0">
                     <div class="row b-a">

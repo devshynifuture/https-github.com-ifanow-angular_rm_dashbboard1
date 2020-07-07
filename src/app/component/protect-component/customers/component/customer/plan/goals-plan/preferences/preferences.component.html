@@ -278,8 +278,8 @@
                     <div class="row">
                         <div class="col-md-12">
                             <mat-radio-group aria-label="Select an option" formControlName="strategicOrTactical">
-                                <mat-radio-button [value]="1" class="b-a text-primitive" [ngClass]="{'b-a-custom text-primary': assetAllocationFG.get('strategicOrTactical').value == 1}">Strategic</mat-radio-button>
-                                <mat-radio-button [value]="2" class="b-a text-primitive" [ngClass]="{'b-a-custom text-primary': assetAllocationFG.get('strategicOrTactical').value == 2}">Tactical</mat-radio-button>
+                                <mat-radio-button [value]="1" class="b-a-custom text-primary">Strategic</mat-radio-button>
+                                <mat-radio-button [value]="2" class="b-a text-primitive">Tactical</mat-radio-button>
                             </mat-radio-group>
                         </div>
                     </div>
@@ -302,7 +302,7 @@
                                 <p class="m-0 roboto text-black">Equity bifurcation</p>
                                 <div class="form-group mb-0">
                                     <mat-form-field class="w-100">
-                                        <input matInput formControlName="equityAllocation" type="text" class="form-control br-0" (change)="setOtherBifurcation(assetAllocationFG.get('equityAllocation'), assetAllocationFG.get('debtAllocation'))">
+                                        <input matInput formControlName="equityAllocation" type="text" class="form-control br-0">
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -310,7 +310,7 @@
                                 <p class="m-0 roboto text-black">Debt bifurcation</p>
                                 <div class="form-group mb-0">
                                     <mat-form-field class="w-100">
-                                        <input matInput formControlName="debtAllocation" type="text" class="form-control br-0" (change)="setOtherBifurcation(assetAllocationFG.get('debtAllocation'), assetAllocationFG.get('equityAllocation'))">
+                                        <input matInput formControlName="debtAllocation" type="text" class="form-control br-0">
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -334,39 +334,33 @@
                                     <p class="m-0 roboto">Debt</p>
                                 </div>
                             </div>
-                            <div class="row" *ngFor="let bifurcation of progressiveStageArrayControl?.controls; let i = index">
-                                <ng-container [formGroupName]="i">
-                                    <div class="col-md-6">
-                                        <div class="form-group mb-0">
-                                            <mat-form-field>
-                                                <mat-select class="form-control br-0" formControlName="stageTime">
-                                                    <mat-option [value]=""></mat-option>
-                                                </mat-select>
-                                            </mat-form-field>
-                                        </div>
-                                        <div class="col-md-11 text-right">
-                                            <p class="f-12 m-0 pt-4 roboto text-primitive">Today - {{today | date:'MMM-yyyy'}}</p>
-                                        </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group mb-0">
+                                        <mat-form-field>
+                                            <mat-select class="form-control br-0" [disabled]="assetAllocationFG.get('staticOrProgressive').value == 1">
+                                                <mat-option [value]=""
+                                            </mat-select>
+                                        </mat-form-field>
                                     </div>
-                                    <div class="col-md-3 pr-0">
-                                        <div class="form-group mb-0">
-                                            <mat-form-field class="w-100">
-                                                <input matInput type="text" class="form-control br-0" 
-                                                (change)="setOtherBifurcation(bifurcation.get('equityAllocation'), bifurcation.get('debtAllocation'))"
-                                                formControlName="equityAllocation">
-                                            </mat-form-field>
-                                        </div>
+                                    <div class="col-md-11 text-right">
+                                        <p class="f-12 m-0 pt-4 roboto text-primitive">Today - {{today | date:'MMM-yyyy'}}</p>
                                     </div>
-                                    <div class="col-md-3 pr-0">
-                                        <div class="form-group mb-0">
-                                            <mat-form-field class="w-100">
-                                                <input matInput type="text" class="form-control br-0" 
-                                                (change)="setOtherBifurcation(bifurcation.get('equityAllocation'), bifurcation.get('debtAllocation'))"
-                                                formControlName="debtAllocation">
-                                            </mat-form-field>
-                                        </div>
+                                </div>
+                                <div class="col-md-3 pr-0">
+                                    <div class="form-group mb-0">
+                                        <mat-form-field class="w-100">
+                                            <input matInput type="text" class="form-control br-0" [disabled]="assetAllocationFG.get('staticOrProgressive').value == 1">
+                                        </mat-form-field>
                                     </div>
-                                </ng-container>
+                                </div>
+                                <div class="col-md-3 pr-0">
+                                    <div class="form-group mb-0">
+                                        <mat-form-field class="w-100">
+                                            <input matInput type="text" class="form-control br-0" [disabled]="assetAllocationFG.get('staticOrProgressive').value == 1">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
                             </div>
                         </div>
     

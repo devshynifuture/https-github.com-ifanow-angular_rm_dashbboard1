@@ -1,12 +1,16 @@
-<div class="row mob-bg-common pb-12  mobtop-navfixed pt-12">
-    <div class="col-2 full-center">
+
+<div *ngIf="openMenue == true">
+    <app-mobile-left-sidenav ></app-mobile-left-sidenav>
+</div>
+<div class="row mob-bg-common pb-12  mobtop-navfixed pt-12" *ngIf="openMenue != true">
+    <div class="col-2 full-center" (click)="openMenu(openMenue)"> 
         <img src="/assets/images/svg/mob-left-arrow.svg" class="c-p pt-2">
     </div>
     <div class="col-10 pl-0 d-flex align-items-center">
         <h5 class="m-0 f-18 text-white roboto">Documents</h5>
     </div>
 </div>
-<div class="pt-72">
+<div class="pt-72" *ngIf="openMenue != true">
     <div class="row pt-20">
         <div class="col-2 text-center">
             <img src="/assets/images/svg/mob-folder.svg" class="pt-2">
