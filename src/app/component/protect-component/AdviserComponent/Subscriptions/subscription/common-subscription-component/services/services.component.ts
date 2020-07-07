@@ -60,7 +60,7 @@ export class ServicesComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
 
     // this.getPlanServiceData();
-    if (this.componentFlag === 'services') {
+    if (this.componentFlag === '') {
       this.getServicesMapped()
     } else {
       this.getPlanServiceData();
@@ -154,6 +154,17 @@ export class ServicesComponent implements OnInit {
   selectService(data, index) {
     if (!this.isLoading) {
       (data.selected) ? this.unmapPlanToService(data) : this.mapPlanToService(data, index);
+      if (data.selected == true) {
+        data.seqNo = this.mappedData.length
+      }
+      if (data.selected == false) {
+        this.planServiceData.forEach(ele => {
+          if (ele.seqNo != data.seqNo && ele.seqNo > data.seqNo) {
+            ele.seqNo = ele.seqNo - 1;
+          }
+
+        })
+      }
     }
   }
 
@@ -247,7 +258,8 @@ export class ServicesComponent implements OnInit {
         advisorId: this.advisorId,
         global: 'false',
         id: 0,
-        planId: this.planData ? this.planData.id : null
+        planId: this.planData ? this.planData.id : null,
+
       };
       obj.push(data);
     } else {
@@ -257,7 +269,8 @@ export class ServicesComponent implements OnInit {
           advisorId: this.advisorId,
           global: element.global,
           id: element.id,
-          planId: this.planData ? this.planData.id : null
+          planId: this.planData ? this.planData.id : null,
+          seqNo: element.seqNo
         };
         obj.push(data);
       });
