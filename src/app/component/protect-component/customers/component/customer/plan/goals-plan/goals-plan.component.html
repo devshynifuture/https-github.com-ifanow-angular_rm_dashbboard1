@@ -335,9 +335,20 @@
         </div>
 
     </div>
-    <div class="row">
-        <div class="col-md-12" *ngIf="allGoals.length == 0 && !loaderFn.loading">
-            No Data Present
+    <div class="row" *ngIf="allGoals.length == 0 && !loaderFn.loading">
+        <div class="col-md-12 emptyGoalmt d-flex align-items-center justify-content-center">
+
+            <div class="emptyImg">
+                <img src="/assets/images/svg/empty-goal-icon.svg">
+            </div>
+
+            <div class="textEmpty">
+                <h3>What’s a life without a goal.</h3>
+                <p>Let’s add your goals and achieve them. We’re in this together.</p>
+                <button (click)="openAddgoals()" mat-stroked-button class="btn-primary br-0 addon">LET’S GET
+                    STARTED</button>
+            </div>
+
         </div>
     </div>
 </div>
