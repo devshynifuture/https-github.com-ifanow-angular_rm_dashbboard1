@@ -1,11 +1,9 @@
-
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 
 @Component({
   selector: 'app-add-income-family-member',
@@ -22,7 +20,7 @@ export class AddIncomeFamilyMemberComponent implements OnInit {
   ownerCount = 0;
   checkFamList: boolean;
 
-  constructor(private peopleService : PeopleService,private subInjectService: SubscriptionInject, private custumService: CustomerService, private utils: UtilService, private eventService: EventService) {
+  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private utils: UtilService, private eventService: EventService) {
   }
 
   ngOnInit() {
@@ -52,17 +50,14 @@ export class AddIncomeFamilyMemberComponent implements OnInit {
       advisorId: this.advisorId,
       clientId: this.clientId,
     };
-    // this.custumService.getListOfFamilyByClient(obj).subscribe(
-    this.peopleService.getClientFamilyMemberListAsset(obj).subscribe(
+    this.custumService.getListOfFamilyByClient(obj).subscribe(
       data => this.getListOfFamilyByClientRes(data)
     );
   }
 
   getListOfFamilyByClientRes(data) {
-    // (data.familyMembersList.length == 0) ? this.checkFamList = false : this.checkFamList = true;
-    // this.familyMemberList = this.utils.calculateAgeFromCurrentDate(data.familyMembersList);
-    (data.length == 0) ? this.checkFamList = false : this.checkFamList = true;
-    this.familyMemberList = this.utils.calculateAgeFromCurrentDate(data);
+    (data.familyMembersList.length == 0) ? this.checkFamList = false : this.checkFamList = true;
+    this.familyMemberList = this.utils.calculateAgeFromCurrentDate(data.familyMembersList);
     this.familyMemberList.forEach(element => {
       element.selected = false;
     });

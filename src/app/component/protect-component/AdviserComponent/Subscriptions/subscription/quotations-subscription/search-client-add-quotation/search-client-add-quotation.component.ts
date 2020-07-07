@@ -244,7 +244,6 @@ export class SearchClientAddQuotationComponent implements OnInit {
       this.feeStructureHtmlData += feeStructureTable;
       servicesName += element.serviceName + ','
     });
-    servicesName = servicesName.slice(0, -1);
     quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$service_fee'), 'g'), this.feeStructureHtmlData);
     quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$service_name'), 'g'), servicesName);
     this.getOrgProfiles(quotationData);

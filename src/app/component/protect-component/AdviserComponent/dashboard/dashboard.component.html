@@ -684,30 +684,23 @@
             <div class="b-a w-270 br-4">
               <div class="row pt-10">
                 <div class="col-md-10 p-0">
-                  <span [ngSwitch]="singleAccount.aggregatorType">
-                    <p *ngSwitchCase="1" class="m-0 f-400 roboto text-black pl-10 lh-16">IIN</p>
-                    <p *ngSwitchCase="2" class="m-0 f-400 roboto text-black pl-10 lh-16">UCC</p>
-                  </span>
+                  <p class="m-0 f-400 roboto text-black pl-10 lh-16">UCC</p>
                   <p class="m-0 f-400 roboto text-black pt-10 pl-10 lh-16">{{singleAccount.clientName}}</p>
                 </div>
-                
-                <div class="col-md-2 pr-10" [ngSwitch]="singleAccount.aggregatorType">
-                  <p class="m-0 f-400 roboto text-custom lh-16" *ngSwitchCase="1">NSE</p>
-                  <p class="m-0 f-400 roboto text-custom lh-16" *ngSwitchCase="2">BSE</p>
+                <div class="col-md-2 pr-10">
+                  <p class="m-0 f-400 roboto text-custom lh-16">BSE</p>
                 </div>
               </div>
               <div class="row pt-16 pb-20">
-                <div class="col-md-6 pl-0" [ngSwitch]="singleAccount.holdingType">
-                  <p class="m-0 text-custom f-400 roboto f-12 pl-10 lh-16" *ngSwitchCase="'SI'">Individual</p>
-                  <p class="m-0 text-custom f-400 roboto f-12 pl-10 lh-16" *ngSwitchCase="'AS'">ANYONE OR SURVIVOR</p>
-                  <p class="m-0 text-custom f-400 roboto f-12 pl-10 lh-16" *ngSwitchCase="'JO'">JOINT</p>
+                <div class="col-md-6 pl-0">
+                  <p class="m-0 text-custom f-400 roboto f-12 pl-10 lh-16">Individual</p>
+                </div>
+                <div class="col-md-6 pl-0">
+                  <p class="m-0 text-custom f-400 roboto f-12 lh-16">Anyone or survivor</p>
                 </div>
                 <div class="col-md-12 p-0 pl-10 pt-20">
-                  <button mat-stroked-button class="btn-success-outline h-20 lh-20 br-2 pr-5 pl-5 f-12" [ngSwitch]="singleAccount.status">
-                    <span *ngSwitchCase="0">PENDING</span>
-                    <span *ngSwitchCase="1">PENDING</span>
-                    <span *ngSwitchCase="2">INVESTMENT READY</span>
-                    <span *ngSwitchCase="3">REJECTED</span>
+                  <button mat-stroked-button class="btn-success-outline h-20 lh-20 br-2 pr-5 pl-5 f-12">INVESTMENT
+                    READY
                   </button>
                 </div>
               </div>

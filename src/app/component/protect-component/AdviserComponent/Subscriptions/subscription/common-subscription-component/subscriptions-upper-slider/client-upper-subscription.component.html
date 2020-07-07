@@ -30,7 +30,7 @@
         </div>
     </div>
 </div>
-<div class="bg-white " [ngClass]="{'mt-60': !isAdvisor,'pt-210':isAdvisor}">
+<div class="bg-white pt-210">
     <!-- <div class="bg-grey lter heading-fix p-20 b-a">
        <div class="row">
          <div class="col-md-12">
@@ -39,7 +39,8 @@
        </div>
      </div>-->
 
-    <div *ngFor="let sub of subscriptionData; let i = index" class="pl-20 pr-20 pb-40  col-md-12">
+    <div [ngClass]="{'mt-60': !isAdvisor}" *ngFor="let sub of subscriptionData; let i = index"
+        class="pl-20 pr-20 pb-40  col-md-12">
         <!--    *ngIf="clientData.length > 0"-->
         <div class="row">
             <div class="col-md-8 pl-0">
