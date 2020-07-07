@@ -60,7 +60,7 @@ export class ServicesComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
 
     // this.getPlanServiceData();
-    if (this.componentFlag === '') {
+    if (this.componentFlag === 'services') {
       this.getServicesMapped()
     } else {
       this.getPlanServiceData();
