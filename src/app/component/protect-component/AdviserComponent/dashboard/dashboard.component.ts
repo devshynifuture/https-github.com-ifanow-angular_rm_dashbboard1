@@ -450,7 +450,7 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getBirthdayOrAnniversary(obj).subscribe(
       data => {
         if (data) {
-          this.isBirhtdayLoader = false;
+          // this.isBirhtdayLoader = false;
           data.forEach(element => {
             if (element.displayName.length > 15) {
               element['shortName'] = element.displayName.substr(0, element.name.indexOf(' '));
@@ -783,7 +783,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getTotalRecivedByDash() {
-    this.isLoading = true;
+    // this.isLoading = true;
     const beginDate = new Date();
     beginDate.setMonth(beginDate.getMonth() - 1);
     const obj = {
