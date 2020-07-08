@@ -149,6 +149,9 @@ export class DashboardComponent implements OnInit {
   aumReconList: any;
   aumFlag: boolean;
   goalSummaryData: any = {};
+  isKeyMatrix: boolean;
+  subOverviewFlag: boolean;
+  docOverviewFlag: boolean;
 
   constructor(
     public dialog: MatDialog, private subService: SubscriptionService,
@@ -184,7 +187,12 @@ export class DashboardComponent implements OnInit {
   advisorName: any;
   parentId: any;
   sipCount: any;
-  keyMetricJson: any = {};
+  keyMetricJson: any = {
+    mfAum: '',
+    sipBook: '',
+    clientCount: '',
+    InvestorCount: ''
+  };
   totalSales: any;
   finalStartDate: number;
   finalEndDate: number;
@@ -493,6 +501,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getDocumentTotalSize() {
+    this.docOverviewFlag = true;
     const obj = {
       advisorId: this.advisorId,
       // clientId
@@ -500,6 +509,7 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getDocumentTotalSize(obj).subscribe(
       data => {
         if (data) {
+          this.docOverviewFlag = false;
           this.documentSizeData = data;
         }
       }
@@ -524,8 +534,8 @@ export class DashboardComponent implements OnInit {
           this.aumReconList = []
         }
       }, err => {
-        this.aumFlag = false;
-        this.aumReconList = []
+        // this.aumFlag = false;
+        // this.aumReconList = []
       }
     )
   }
@@ -778,12 +788,14 @@ export class DashboardComponent implements OnInit {
   }
 
   clientWithSubscription() {
+    this.subOverviewFlag = true;
     const obj = {
       advisorId: this.advisorId
     };
     this.subService.clientWithSubcribe(obj).subscribe(
       data => {
         if (data) {
+          this.subOverviewFlag = false;
           this.dataSourceClientWithSub = data;
         } else {
           this.dataSourceClientWithSub = {};
@@ -809,11 +821,13 @@ export class DashboardComponent implements OnInit {
   }
 
   getKeyMetrics() {
+    this.isKeyMatrix = true;
     const obj = {
       id: this.advisorId
     };
     this.dashboardService.getKeyMetrics(obj).subscribe(
       data => {
+        this.isKeyMatrix = false
         this.keyMetricJson = data;
       },
       err => {

@@ -37,18 +37,19 @@
   </div>
 </div>
 
-<div class="row pt-135 pb-28 skeletonAnimation" id="ui-dashboard-advisor" appSkeletonLoading
-  [appSkeletonLoading]="isLoading">
+<div class="row pt-135 pb-28" id="ui-dashboard-advisor">
   <div class="col-md-3 pl-20 pr-20 pt-44">
     <h5 class="m-0 roboto f-500 pb-16">Key metrics</h5>
-    <div class="row bg-grey lter text-center ba-primitive br-4 p-8">
+    <div appSkeletonLoading [appSkeletonLoading]="isKeyMatrix"
+      class="row bg-grey lter text-center ba-primitive br-4 p-8 skeletonAnimation">
       <div class="col-md-6 pt-24 pb-24 bb-half pl-8">
         <p class="m-0 text-primitive roboto f-400 lh-16">MF AUM</p>
         <h3 class="m-0 roboto f-400 text-black pt-8">
           <div class="relClass">
-            <div class="bar" [ngClass]="{'heightNew24': isLoading}">
-              <span appFormatNumber
-                [value]="keyMetricJson.mfAum">{{(keyMetricJson.mfAum) ? keyMetricJson.mfAum : '0'}}</span></div>
+            <div class="bar" [ngClass]="{'heightNew24': isKeyMatrix}">
+              <!-- <span appFormatNumber
+                [value]="keyMetricJson.mfAum">{{(keyMetricJson.mfAum) ? keyMetricJson.mfAum : '0'}}</span> -->
+            </div>
           </div>
         </h3>
       </div>
@@ -56,7 +57,7 @@
         <p class="m-0 text-primitive roboto f-400 lh-16">SIP book</p>
         <h3 class="m-0 roboto f-400 text-black pt-8">
           <div class="relClass">
-            <div class="bar" [ngClass]="{'heightNew24': isLoading}">
+            <div class="bar" [ngClass]="{'heightNew24': isKeyMatrix}">
               {{(keyMetricJson.sipBook) ? keyMetricJson.sipBook : '0'}}
             </div>
           </div>
@@ -66,7 +67,7 @@
         <p class="m-0 text-primitive roboto f-400 lh-16">Clients</p>
         <h3 class="m-0 roboto f-400 text-black pt-8">
           <div class="relClass">
-            <div class="bar" [ngClass]="{'heightNew24': isLoading}">
+            <div class="bar" [ngClass]="{'heightNew24': isKeyMatrix}">
               {{(keyMetricJson.clientCount) ? keyMetricJson.clientCount : '0'}}
             </div>
           </div>
@@ -76,7 +77,7 @@
         <p class="m-0 text-primitive roboto f-400 lh-16">Investors</p>
         <h3 class="m-0 roboto f-400 text-black pt-8">
           <div class="relClass">
-            <div class="bar" [ngClass]="{'heightNew24': isLoading}">
+            <div class="bar" [ngClass]="{'heightNew24': isKeyMatrix}">
               {{(keyMetricJson.InvestorCount) ? keyMetricJson.InvestorCount : '0'}}
             </div>
           </div>
@@ -133,14 +134,15 @@
       </div>
     </div>
     <h5 class="m-0 roboto f-500 pb-16 pt-28">Subscription overview</h5>
-    <div class="row bg-grey lter text-center ba-primitive br-4 p-8">
+    <div appSkeletonLoading [appSkeletonLoading]="subOverviewFlag"
+      class="row bg-grey lter text-center ba-primitive br-4 p-8 skeletonAnimation">
       <div class="col-md-6 pt-24 pb-24 bb-half pl-8">
         <p class="m-0 text-primitive roboto f-400 lh-16">Clients with
           subscription</p>
         <h3 class="m-0 roboto f-400 text-black pt-8">
 
           <div class="relClass">
-            <div class="bar" [ngClass]="{'heightNew24': isLoading}">
+            <div class="bar" [ngClass]="{'heightNew24': subOverviewFlag}">
               {{ (dataSourceClientWithSub && dataSourceClientWithSub.hasOwnProperty('activeClientPer')) ? dataSourceClientWithSub.activeClientPer : 0}}
               %
 
@@ -153,7 +155,7 @@
           cancelled</p>
         <h3 class="m-0 roboto f-400 text-black pt-8">
           <div class="relClass">
-            <div class="bar" [ngClass]="{'heightNew24': isLoading}">
+            <div class="bar" [ngClass]="{'heightNew24': subOverviewFlag}">
               41
             </div>
           </div>
@@ -164,7 +166,7 @@
           charged</p>
         <h3 class="m-0 roboto f-400 text-black pt-8">
           <div class="relClass">
-            <div class="bar" [ngClass]="{'heightNew24': isLoading}">
+            <div class="bar" [ngClass]="{'heightNew24': subOverviewFlag}">
 
               <span appFormatNumber [value]="totalSales">{{totalSales}}</span>
 
@@ -177,7 +179,7 @@
           received</p>
         <h3 class="m-0 roboto f-400 text-black pt-8">
           <div class="relClass">
-            <div class="bar" [ngClass]="{'heightNew24': isLoading}">
+            <div class="bar" [ngClass]="{'heightNew24': subOverviewFlag}">
               {{feeRecieved}}
             </div>
           </div>
@@ -185,12 +187,13 @@
       </div>
     </div>
     <h5 class="m-0 roboto f-500 pb-16 pt-28">Document overview</h5>
-    <div class="row bg-grey lter text-center ba-primitive br-4 p-8">
+    <div appSkeletonLoading [appSkeletonLoading]="docOverviewFlag"
+      class="row bg-grey lter text-center ba-primitive br-4 p-8 skeletonAnimation">
       <div class="col-md-6 pt-24 pb-24 bb-half pl-8">
         <p class="m-0 text-primitive roboto f-400 lh-16 ws-nowrap">Family member<br> count</p>
         <h3 class="m-0 roboto f-400 text-black pt-8">
           <div class="relClass">
-            <div class="bar" [ngClass]="{'heightNew24': isLoading}">
+            <div class="bar" [ngClass]="{'heightNew24': docOverviewFlag}">
               {{documentSizeData.familyMemberCount}}
 
             </div>
@@ -201,7 +204,7 @@
         <p class="m-0 text-primitive roboto f-400 lh-16">Total <br>clients</p>
         <h3 class="m-0 roboto f-400 text-black pt-8">
           <div class="relClass">
-            <div class="bar" [ngClass]="{'heightNew24': isLoading}">
+            <div class="bar" [ngClass]="{'heightNew24': docOverviewFlag}">
               {{documentSizeData.totalClients}}
 
             </div>
@@ -212,7 +215,7 @@
         <p class="m-0 text-primitive roboto f-400 lh-16">Total <br>size</p>
         <h3 class="m-0 roboto f-400 text-black pt-8">
           <div class="relClass">
-            <div class="bar" [ngClass]="{'heightNew24': isLoading}">
+            <div class="bar" [ngClass]="{'heightNew24': docOverviewFlag}">
               {{documentSizeData.totalMbs}} Mbs
             </div>
           </div>
@@ -222,7 +225,7 @@
         <p class="m-0 text-primitive roboto f-400 lh-16">Total documents</p>
         <h3 class="m-0 roboto f-400 text-black pt-8">
           <div class="relClass">
-            <div class="bar" [ngClass]="{'heightNew24': isLoading}">
+            <div class="bar" [ngClass]="{'heightNew24': docOverviewFlag}">
               {{documentSizeData.totalDocs}}
             </div>
           </div>
@@ -1130,8 +1133,8 @@
           <button mat-stroked-button class="advisor-view-all">View All</button>
         </div>
         <div class="col-md-12 p-0 pt-10">
-          <table mat-table [appSkeletonLoading]="aumFlag" appSkeletonLoading class="skeletonAnimation"
-            [dataSource]="aumReconList" id="table-low">
+          <table *ngIf="aumReconList.length>0" mat-table [appSkeletonLoading]="aumFlag" appSkeletonLoading
+            class="skeletonAnimation" [dataSource]="aumReconList" id="table-low">
 
             <ng-container matColumnDef="position">
               <th mat-header-cell *matHeaderCellDef class="br"> RTA</th>
@@ -1184,7 +1187,7 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns7"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns7;"></tr>
           </table>
-          <div *ngIf="aumReconList==undefined" class="noDataFound">
+          <div *ngIf="aumReconList.length==0" class="noDataFound">
             <img src="assets/images/svg/run.svg">
           </div>
         </div>
