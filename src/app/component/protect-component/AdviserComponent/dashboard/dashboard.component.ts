@@ -449,7 +449,7 @@ export class DashboardComponent implements OnInit {
       data => {
         if (data) {
           data.forEach(element => {
-            if (element.displayName.length > 19) {
+            if (element.displayName.length > 15) {
               element['shortName'] = element.displayName.substr(0, element.name.indexOf(' '));
             }
             if (element.dateOfBirth && element.dateOfBirth != 0) {
