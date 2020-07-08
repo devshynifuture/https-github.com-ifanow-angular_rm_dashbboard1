@@ -200,31 +200,32 @@ export class AddFamilyMemberComponent implements OnInit {
       this.eventService.openSnackBar('Please select member', 'Dismiss');
       return;
     }
-    if (this.data.client.clientType == 1) {
-      this.relationList = [
-        { name: 'Brother', id: 8 },
-        { name: 'Sister', id: 9 },
-        { name: 'Daughter_In_Law', id: 11 },
-        { name: 'Sister_In_Law', id: 12 }
-      ];
-    }
-    if (this.data.client.clientType == 2) {
-      this.relationList = [
-        { name: 'Niece', id: 15 },
-        { name: 'Nephew', id: 16 }
-      ]
-    }
-    if (this.data.client.clientType == 3) {
-      this.relationList = [
-        { name: 'HUF', id: 18 },
-        { name: 'Private Limited', id: 19 }
-      ]
-    }
-    if (this.data.client.clientType == 4) {
-      this.relationList = [
-        { name: 'Sole proprietorship', id: 17 },
-      ]
-    }
+    // if (this.data.client.clientType == 1) {
+    this.relationList = [
+      { name: 'Brother', id: 8 },
+      { name: 'Sister', id: 9 },
+      { name: 'Daughter_In_Law', id: 11 },
+      { name: 'Sister_In_Law', id: 12 },
+      // ];
+      // }
+      // if (this.data.client.clientType == 2) {
+      // this.relationList = [
+      { name: 'Niece', id: 15 },
+      { name: 'Nephew', id: 16 },
+      // ]
+      // }
+      // if (this.data.client.clientType == 3) {
+      // this.relationList = [
+      { name: 'HUF', id: 18 },
+      { name: 'Private Limited', id: 19 },
+      // ]
+      // }
+      // if (this.data.client.clientType == 4) {
+      // this.relationList = [
+      { name: 'Sole proprietorship', id: 17 },
+      // ]
+      // }
+    ]
     this.familyMemberList.firstRow.forEach(element => {
       if (element.selected) {
         this.getFamilyListList.push(

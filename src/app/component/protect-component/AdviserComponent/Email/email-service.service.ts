@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { UtilService } from './../../../../services/util.service';
 import { SubscriptionInject } from './../Subscriptions/subscription-inject.service';
@@ -99,13 +99,27 @@ export class EmailServiceService {
   getMailInboxList(data) {
     const { labelIds, maxResults, pageToken } = data;
     const userInfo = AuthService.getUserInfo();
-    return this.http.get(apiConfig.GMAIL_URL + appConfig.GET_GMAIL_INBOX_LIST, {
-      email: userInfo.userName,
-      userId: userInfo.advisorId,
-      labelIds,
-      maxResults,
-      pageToken
-    });
+    let sendReq;
+
+    if (data.hasOwnProperty('q')) {
+      sendReq = {
+        email: userInfo.userName,
+        userId: userInfo.advisorId,
+        labelIds,
+        maxResults,
+        pageToken,
+        q: data.q
+      }
+    } else {
+      sendReq = {
+        email: userInfo.userName,
+        userId: userInfo.advisorId,
+        labelIds,
+        maxResults,
+        pageToken,
+      }
+    }
+    return this.http.get(apiConfig.GMAIL_URL + appConfig.GET_GMAIL_INBOX_LIST, sendReq);
   }
 
   gmailMessageDetail(messageId: string) {

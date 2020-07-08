@@ -49,7 +49,9 @@
   }
 
   li {
-    color: #212121;
+    height: 40px;
+    line-height: 24px;
+    padding: 9px 0px 0 24px;
     font-size: 14px;
     font-style: normal;
     font-weight: normal;
@@ -234,6 +236,14 @@ hr#suggest-advice-bottom {
   .all-advice-stock {
     #table-low .mat-sort-header-button {
       white-space: initial !important;
+    }
+  }
+}
+
+@media(max-width:1200px) {
+  #ui-activity {
+    li {
+      padding: 9px 0px 24px 13px !important;
     }
   }
 }

@@ -61,7 +61,7 @@ export class OverviewTransactionsComponent implements OnInit {
     this.getMandate();
     this.getIInData();
     this.autoRemapClient();
-    this.updateAllNseClients();
+    // this.updateAllNseClients();
   }
 
   close() {
@@ -216,17 +216,6 @@ export class OverviewTransactionsComponent implements OnInit {
     );
   }
 
-  updateAllNseClients() {
-    const obj = {
-      advisorId: AuthService.getAdminId(),
-    };
-    this.tranService.updateAllNseClients(obj).subscribe(
-      data => {
-      },
-      err => {
-      }
-    );
-  }
 
   autoRemapClient() {
     const obj = {

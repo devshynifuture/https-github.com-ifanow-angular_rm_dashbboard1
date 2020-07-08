@@ -21,7 +21,7 @@
             class="col-md-6 skeletonAnimation hover c-p pb-20" *ngFor="let singlePlan of payeeDataRes;  let i = index">
             <mat-card class="p-0 b-ua relClass"
                 [ngClass]="{'ba-blue': singlePlan.selected == 1,'b-ua':singlePlan.selected == 0}"
-                (click)="selectedPayee(singlePlan.selected,singlePlan)">
+                (click)="totalValue!=100 ? selectedPayee(singlePlan.selected,singlePlan):''">
                 <div [ngStyle]="{'display':isLoading? '':'none'}" class="bar">
                 </div>
                 <div *ngIf="!isLoading">

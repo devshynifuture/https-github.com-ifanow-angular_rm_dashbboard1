@@ -4,7 +4,7 @@
             <div class="col-md-8 p-0">
                 <!-- <h4 class="pt-8 mb-0"></h4> -->
             </div>
-            <div class="col-md-4 right text-right p-0">
+            <div class="col-md-4 matClassView right text-right p-0">
                 <mat-form-field *ngIf="searchoptionFlag" appearance="standard" class="searchInputWidth"
                     floatLabel="never">
                     <input (keyup)="applyFilter($event)" autocomplete="off" class="form-control br-0 pt-8 mb-0" matInput
@@ -16,9 +16,9 @@
             </div>
         </div>
 
-        <div class="client-sub mt-8">
+        <div class="client-sub">
             <table *ngIf="dataSource.filteredData.length>0" [appSkeletonLoading]="isLoading" [dataSource]="dataSource"
-                appSkeletonLoading class="skeletonAnimation" id="table-low" mat-table matSort>
+                appSkeletonLoading class="skeletonAnimation  mt-8" id="table-low" mat-table matSort>
                 <ng-container matColumnDef="name">
                     <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="name"> Client name</th>
                     <td (click)="openFragment('clients',element)" *matCellDef="let element" class="c-p" mat-cell>
