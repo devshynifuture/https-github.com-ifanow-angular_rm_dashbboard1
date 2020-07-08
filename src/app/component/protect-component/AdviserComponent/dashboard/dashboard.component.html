@@ -292,7 +292,11 @@
                 <div class="w-180 b-a br-10">
                   <div class="row">
                     <div class="col-md-9 p-0">
-                      <p class="m-0 pl-10 pt-10 roboto f-400">{{singleMember.displayName}}</p>
+                      <p *ngIf="!singleMember.shortName" class="m-0 pl-10 pt-10 roboto f-400">
+                        {{singleMember.displayName}}</p>
+                      <p *ngIf="singleMember.shortName" matTooltip="{{singleMember.displayName}}"
+                        class="m-0 pl-10 pt-10 roboto f-400 c-p">{{singleMember.shortName}}...
+                      </p>
                       <p *ngIf="singleMember.userType==2" class="m-0 pl-10 roboto f-400 f-12 text-custom">Group head</p>
                       <p *ngIf="singleMember.userType==3" class="m-0 pl-10 roboto f-400 f-12 text-custom">
                         {{singleMember.displayName}}</p>
@@ -312,10 +316,15 @@
                       <p class="m-0 f-12 lh-16 roboto f-400 f-12">
                         <span *ngIf="singleMember.daysToGo==0">Today</span>
                         <span *ngIf="singleMember.daysToGo==1">Tommorrow</span>
-                        <span *ngIf="singleMember.daysToGo!=0 && singleMember.daysToGo!=1">In {{singleMember.daysToGo}}
+                        <span
+                          *ngIf="singleMember.daysToGo!=0 && singleMember.daysToGo!=1 && singleMember.daysToGo!='N/A'">In
+                          {{singleMember.daysToGo}}
                           days</span>
+                        <span *ngIf="singleMember.daysToGo=='N/A'">{{singleMember.daysToGo}}
+                        </span>
                       </p>
-                      <p class="m-0 f-12 lh-16 roboto text-custom f-400 f-12">{{singleMember.age}} years</p>
+                      <p *ngIf="singleMember.daysToGo!='N/A'" class="m-0 f-12 lh-16 roboto text-custom f-400 f-12">
+                        {{singleMember.age}} years</p>
                     </div>
                   </div>
                 </div>
@@ -1025,7 +1034,7 @@
           <button mat-stroked-button class="advisor-view-all">View All</button>
         </div>
         <div class="col-md-12 p-0 pt-10">
-          <table mat-table [appSkeletonLoading]="isLoading" appSkeletonLoading class="skeletonAnimation"
+          <table mat-table [appSkeletonLoading]="aumFlag" appSkeletonLoading class="skeletonAnimation"
             [dataSource]="aumReconList" id="table-low">
 
             <ng-container matColumnDef="position">
@@ -1079,7 +1088,9 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns7"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns7;"></tr>
           </table>
-
+          <div *ngIf="aumReconList==undefined" class="noDataFound">
+            <img src="assets/images/svg/run.svg">
+          </div>
         </div>
       </div>
 

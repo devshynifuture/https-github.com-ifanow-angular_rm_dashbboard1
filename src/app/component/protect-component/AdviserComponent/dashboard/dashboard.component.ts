@@ -441,7 +441,10 @@ export class DashboardComponent implements OnInit {
       data => {
         if (data) {
           data.forEach(element => {
-            if (element.dateOfBirth != 0) {
+            if (element.displayName.length > 19) {
+              element['shortName'] = element.displayName.substr(0, element.name.indexOf(' '));
+            }
+            if (element.dateOfBirth && element.dateOfBirth != 0) {
               element.daysToGo = this.calculateBirthdayOrAnniversary(element.dateOfBirth);
             } else {
               element.daysToGo = 'N/A';
