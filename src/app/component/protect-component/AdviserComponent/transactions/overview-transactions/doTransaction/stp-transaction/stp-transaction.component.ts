@@ -500,6 +500,7 @@ export class StpTransactionComponent implements OnInit {
       this.stpTransaction.controls.schemeSelection.setValue('1')
       //  this.stpTransaction.controls.folioSelection.setValue('1')
       this.stpTransaction.controls.schemeStp.setValue({ 'schemeName': this.schemeName })
+      this.stpTransaction.controls['schemeStp'].disable();
       this.filterSchemeList = of([{ 'schemeName': this.schemeName }])
       Object.assign(this.folioDetails, { folioNumber: this.folioNumber });
       this.scheme = {

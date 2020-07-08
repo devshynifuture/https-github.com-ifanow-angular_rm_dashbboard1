@@ -25,6 +25,7 @@ export class PurchaseTrasactionComponent implements OnInit {
   mutualFundData: any;
   mfScheme: any;
   mfDefault: any;
+  disabledScheme: boolean=true;
 
   constructor(public processTransaction: ProcessTransactionService, private onlineTransact: OnlineTransactionService,
               private subInjectService: SubscriptionInject, private fb: FormBuilder,
@@ -627,9 +628,12 @@ export class PurchaseTrasactionComponent implements OnInit {
     }
     if(this.mutualFundData){
       this.folioDetails = {}
+      Object.assign(this.mutualFundData, {disabledScheme: true});
+      this.disabledScheme =true
       this.purchaseTransaction.controls.schemeSelection.setValue('1')
       this.purchaseTransaction.controls.folioSelection.setValue('1')
       this.purchaseTransaction.controls.schemePurchase.setValue({'schemeName': this.schemeName})
+      this.purchaseTransaction.controls['schemePurchase'].disable();
       this.filterSchemeList = of([{'schemeName': this.schemeName}])
       Object.assign(this.folioDetails, {folioNumber: this.folioNumber});
       this.scheme ={
