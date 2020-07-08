@@ -37,29 +37,51 @@
   </div>
 </div>
 
-<div class="row pt-135 pb-28" id="ui-dashboard-advisor">
+<div class="row pt-135 pb-28 skeletonAnimation" id="ui-dashboard-advisor" appSkeletonLoading
+  [appSkeletonLoading]="isLoading">
   <div class="col-md-3 pl-20 pr-20 pt-44">
     <h5 class="m-0 roboto f-500 pb-16">Key metrics</h5>
     <div class="row bg-grey lter text-center ba-primitive br-4 p-8">
       <div class="col-md-6 pt-24 pb-24 bb-half pl-8">
         <p class="m-0 text-primitive roboto f-400 lh-16">MF AUM</p>
         <h3 class="m-0 roboto f-400 text-black pt-8">
-          <span appFormatNumber
-            [value]="keyMetricJson.mfAum">{{(keyMetricJson.mfAum) ? keyMetricJson.mfAum : '0'}}</span></h3>
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': isLoading}">
+              <span appFormatNumber
+                [value]="keyMetricJson.mfAum">{{(keyMetricJson.mfAum) ? keyMetricJson.mfAum : '0'}}</span></div>
+          </div>
+        </h3>
       </div>
       <div class="col-md-6 pt-24 pb-24 bl-half bb-half">
         <p class="m-0 text-primitive roboto f-400 lh-16">SIP book</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8">{{(keyMetricJson.sipBook) ? keyMetricJson.sipBook : '0'}}</h3>
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': isLoading}">
+              {{(keyMetricJson.sipBook) ? keyMetricJson.sipBook : '0'}}
+            </div>
+          </div>
+        </h3>
       </div>
       <div class="col-md-6 pt-24 pb-24 pl-8">
         <p class="m-0 text-primitive roboto f-400 lh-16">Clients</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8">{{(keyMetricJson.clientCount) ? keyMetricJson.clientCount : '0'}}
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': isLoading}">
+              {{(keyMetricJson.clientCount) ? keyMetricJson.clientCount : '0'}}
+            </div>
+          </div>
         </h3>
       </div>
       <div class="col-md-6 pt-24 pb-24 bl-half">
         <p class="m-0 text-primitive roboto f-400 lh-16">Investors</p>
         <h3 class="m-0 roboto f-400 text-black pt-8">
-          {{(keyMetricJson.InvestorCount) ? keyMetricJson.InvestorCount : '0'}}</h3>
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': isLoading}">
+              {{(keyMetricJson.InvestorCount) ? keyMetricJson.InvestorCount : '0'}}
+            </div>
+          </div>
+
+        </h3>
       </div>
     </div>
     <h5 class="m-0 roboto f-500 pb-16 pt-28">Activity overview</h5>
@@ -67,22 +89,47 @@
       <div class="col-md-6 pt-24 pb-24 bb-half pl-8">
         <p class="m-0 text-primitive roboto f-400 lh-16">Awaiting
           consent</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8">78</h3>
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': isLoading}">
+              78
+            </div>
+          </div>
+        </h3>
       </div>
       <div class="col-md-6 pt-24 pb-24 bl-half bb-half">
         <p class="m-0 text-primitive roboto f-400 lh-16">Advice to be
           reviewed</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8">41</h3>
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': isLoading}">
+              41
+            </div>
+          </div>
+        </h3>
       </div>
       <div class="col-md-6 pt-24 pb-24 pl-8">
         <p class="m-0 text-primitive roboto f-400 lh-16">Money to
           be deployed</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8">712.35 L</h3>
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': isLoading}">
+
+              712.35 L
+            </div>
+          </div>
+        </h3>
       </div>
       <div class="col-md-6 pt-24 pb-24 bl-half">
         <p class="m-0 text-primitive roboto f-400 lh-16">Action plans
           in process</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8">4</h3>
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': isLoading}">
+              4
+            </div>
+          </div>
+        </h3>
       </div>
     </div>
     <h5 class="m-0 roboto f-500 pb-16 pt-28">Subscription overview</h5>
@@ -91,46 +138,95 @@
         <p class="m-0 text-primitive roboto f-400 lh-16">Clients with
           subscription</p>
         <h3 class="m-0 roboto f-400 text-black pt-8">
-          {{ (dataSourceClientWithSub && dataSourceClientWithSub.hasOwnProperty('activeClientPer')) ? dataSourceClientWithSub.activeClientPer : 0}}
-          %
+
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': isLoading}">
+              {{ (dataSourceClientWithSub && dataSourceClientWithSub.hasOwnProperty('activeClientPer')) ? dataSourceClientWithSub.activeClientPer : 0}}
+              %
+
+            </div>
+          </div>
         </h3>
       </div>
       <div class="col-md-6 pt-24 pb-24 bl-half bb-half">
         <p class="m-0 text-primitive roboto f-400 lh-16">Subscriptions
           cancelled</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8">41</h3>
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': isLoading}">
+              41
+            </div>
+          </div>
+        </h3>
       </div>
       <div class="col-md-6 pt-24 pb-24 pl-8">
         <p class="m-0 text-primitive roboto f-400 lh-16">Total fees
           charged</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8"><span appFormatNumber [value]="totalSales">{{totalSales}}</span>
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': isLoading}">
+
+              <span appFormatNumber [value]="totalSales">{{totalSales}}</span>
+
+            </div>
+          </div>
         </h3>
       </div>
       <div class="col-md-6 pt-24 pb-24 bl-half">
         <p class="m-0 text-primitive roboto f-400 lh-16">Fees
           received</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8">{{feeRecieved}}</h3>
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': isLoading}">
+              {{feeRecieved}}
+            </div>
+          </div>
+        </h3>
       </div>
     </div>
     <h5 class="m-0 roboto f-500 pb-16 pt-28">Document overview</h5>
     <div class="row bg-grey lter text-center ba-primitive br-4 p-8">
       <div class="col-md-6 pt-24 pb-24 bb-half pl-8">
-        <p class="m-0 text-primitive roboto f-400 lh-16">Family member<br> count</p>
+        <p class="m-0 text-primitive roboto f-400 lh-16 ws-nowrap">Family member<br> count</p>
         <h3 class="m-0 roboto f-400 text-black pt-8">
-          {{documentSizeData.familyMemberCount}}
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': isLoading}">
+              {{documentSizeData.familyMemberCount}}
+
+            </div>
+          </div>
         </h3>
       </div>
       <div class="col-md-6 pt-24 pb-24 bl-half bb-half">
-        <p class="m-0 text-primitive roboto f-400 lh-16">Total clients</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8">{{documentSizeData.totalClients}}</h3>
+        <p class="m-0 text-primitive roboto f-400 lh-16">Total <br>clients</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': isLoading}">
+              {{documentSizeData.totalClients}}
+
+            </div>
+          </div>
+        </h3>
       </div>
       <div class="col-md-6 pt-24 pb-24 pl-8">
-        <p class="m-0 text-primitive roboto f-400 lh-16">Total size</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8">{{documentSizeData.totalMbs}} Mbs</h3>
+        <p class="m-0 text-primitive roboto f-400 lh-16">Total <br>size</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': isLoading}">
+              {{documentSizeData.totalMbs}} Mbs
+            </div>
+          </div>
+        </h3>
       </div>
       <div class="col-md-6 pt-24 pb-24 bl-half">
         <p class="m-0 text-primitive roboto f-400 lh-16">Total documents</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8">{{documentSizeData.totalDocs}}</h3>
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': isLoading}">
+              {{documentSizeData.totalDocs}}
+            </div>
+          </div>
+        </h3>
       </div>
     </div>
   </div>
