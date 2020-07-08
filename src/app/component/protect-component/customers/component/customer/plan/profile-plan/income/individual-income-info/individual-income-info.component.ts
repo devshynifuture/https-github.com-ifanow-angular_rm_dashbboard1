@@ -143,6 +143,10 @@ export class IndividualIncomeInfoComponent implements OnInit {
     this.incomeOption = data.value;
     this.addMoreFlag = false;
     this.incomeNetForm.controls.continousTill.setValue('1');
+    let value = parseInt(data.value)
+    this.singleIndividualIncome["finalIncomeList"] = { incomeTypeList: value }
+
+
     console.log(data.value)
   }
   checkDateDiff(event) {
@@ -235,17 +239,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
       "description": this.incomeNetForm.get('description').value,
       "monthlyContributions": {}
     }
-
-    console.log(obj)
-    if (this.editApiData) {
-      obj['id'] = this.editApiData.id;
-      this.planService.editIncomeData(obj).subscribe(
-        data => this.submitIncomeFormRes(data),
-        error => this.eventService.showErrorMessage(error)
-      )
-    }
-    else {
-      if (this.getBonusList) {
+       if (this.getBonusList) {
         this.finalBonusList = []
         this.getBonusList.controls.forEach(element => {
           let obj =
@@ -260,6 +254,17 @@ export class IndividualIncomeInfoComponent implements OnInit {
         })
       }
       obj['monthlyContributions'] = this.finalBonusList;
+
+    console.log(obj)
+    if (this.editApiData) {
+      obj['id'] = this.editApiData.id;
+      this.planService.editIncomeData(obj).subscribe(
+        data => this.submitIncomeFormRes(data),
+        error => this.eventService.showErrorMessage(error)
+      )
+    }
+    else {
+   
       this.planService.addIncomeData(obj).subscribe(
         data => this.submitIncomeFormRes(data),
         error => this.eventService.showErrorMessage(error)
