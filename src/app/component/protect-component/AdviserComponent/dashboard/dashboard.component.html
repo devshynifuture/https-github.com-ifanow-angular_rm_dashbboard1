@@ -491,7 +491,7 @@
             <ng-container matColumnDef="position">
               <th mat-header-cell *matHeaderCellDef class="br"> Client</th>
               <td mat-cell *matCellDef="let element" class="br">
-                <div class="bar"> {{element.position}} </div>
+                <div class="bar w-100"> {{element.position}} </div>
               </td>
             </ng-container>
 
@@ -520,7 +520,7 @@
             <ng-container matColumnDef="weight">
               <th mat-header-cell *matHeaderCellDef class="br"> Assigned to</th>
               <td mat-cell *matCellDef="let element" class="br">
-                <div class="bar"> {{element.weight}} </div>
+                <div class="bar w-100"> {{element.weight}} </div>
               </td>
             </ng-container>
 
@@ -717,33 +717,41 @@
           <p class="m-0 f-400 roboto text-black">Last 7 days</p>
         </div>
         <div class="col-md-12 p-0 pt-10">
-          <table mat-table appSkeletonLoading [appSkeletonLoading]="last7DaysFlag" class="skeletonAnimation"
+          <table mat-table [appSkeletonLoading]="isLoading" appSkeletonLoading class="skeletonAnimation"
             [dataSource]="bseData" id="table-low">
 
             <ng-container matColumnDef="position">
               <th mat-header-cell *matHeaderCellDef class="br"> BSE Star MF</th>
               <td mat-cell *matCellDef="let element;index as i" class="br">
-                <span *ngIf="i==0">Pending</span>
-                <span *ngIf="i==1">Rejection</span>
+                <div class="bar w-100">
+                  <span *ngIf="i==0">Pending</span>
+                  <span *ngIf="i==1">Rejection</span>
+                </div>
               </td>
             </ng-container>
 
             <!-- Name Column -->
             <ng-container matColumnDef="name">
               <th mat-header-cell *matHeaderCellDef class="br"> UCC</th>
-              <td mat-cell *matCellDef="let element" class="br"> {{element.InnOrUcc}} </td>
+              <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar w-100"> {{element.InnOrUcc}} </div>
+              </td>
             </ng-container>
 
             <!-- Weight Column -->
             <ng-container matColumnDef="weight">
               <th mat-header-cell *matHeaderCellDef class="br"> Mandate</th>
-              <td mat-cell *matCellDef="let element" class="br"> {{element.mandate}} </td>
+              <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar w-100">{{element.mandate}} </div>
+              </td>
             </ng-container>
 
             <!-- Symbol Column -->
             <ng-container matColumnDef="symbol">
               <th mat-header-cell *matHeaderCellDef class="br"> Transaction</th>
-              <td mat-cell *matCellDef="let element" class="br"> {{element.transact}} </td>
+              <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar w-100"> {{element.transact}} </div>
+              </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
@@ -755,27 +763,37 @@
             <ng-container matColumnDef="position">
               <th mat-header-cell *matHeaderCellDef class="br"> NSE NMF II</th>
               <td mat-cell *matCellDef="let element;index as i" class="br">
-                <span *ngIf="i==0">Pending</span>
-                <span *ngIf="i==1">Rejection</span>
+                <div class="bar w-100">
+                  <span *ngIf="i==0">Pending</span>
+                  <span *ngIf="i==1">Rejection</span>
+                </div>
               </td>
             </ng-container>
 
             <!-- Name Column -->
             <ng-container matColumnDef="name">
               <th mat-header-cell *matHeaderCellDef class="br"> IIN</th>
-              <td mat-cell *matCellDef="let element" class="br"> {{element.InnOrUcc}} </td>
+              <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar w-100">
+                  {{element.InnOrUcc}} </div>
+
+              </td>
             </ng-container>
 
             <!-- Weight Column -->
             <ng-container matColumnDef="weight">
               <th mat-header-cell *matHeaderCellDef class="br"> Mandate</th>
-              <td mat-cell *matCellDef="let element" class="br"> {{element.mandate}} </td>
+              <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar w-100"> {{element.mandate}} </div>
+              </td>
             </ng-container>
 
             <!-- Symbol Column -->
             <ng-container matColumnDef="symbol">
               <th mat-header-cell *matHeaderCellDef class="br"> Transaction</th>
-              <td mat-cell *matCellDef="let element" class="br"> {{element.transact}} </td>
+              <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar w-100"> {{element.transact}} </div>
+              </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns4"></tr>
