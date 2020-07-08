@@ -377,7 +377,8 @@
       </div>
       <div class="row pt-40">
         <div class="col-md-12 p-0">
-          <h5 class="f-500 roboto text-black m-0 pb-10">Birthdays & Anniversaries</h5>
+          <h5 *ngIf="birthdayAnniList && birthdayAnniList.length>0" class="f-500 roboto text-black m-0 pb-10">Birthdays
+            & Anniversaries</h5>
           <div class="family-details-advisor" [ngClass]="{'ox-hide': isBirhtdayLoader}">
             <div class="row no-wrap">
               <!-- <div *ngFor="let singleMember of birthdayAnniList" class=" pl-5 pr-5">
@@ -794,7 +795,7 @@
                   <div class="col-md-7 pl-10 pr-10">
                     <h5 class="m-0 f-500 roboto lh-16">
                       <div class="relClass ">
-                        <div class="bar">
+                        <div class="bar height24">
                           Shreya’s higher education
 
                         </div>
@@ -803,7 +804,7 @@
                     <h5 class="m-0 roboto f-400 pt-5 f-14 text-custom lh-16">
 
                       <div class="relClass ">
-                        <div class="bar w-60">
+                        <div class="bar height24 w-60">
                           Rahul Jain
 
                         </div>
@@ -811,7 +812,7 @@
                     </h5>
                     <h5 class="m-0 roboto f-400 pt-8 text-custom lh-16 f-14">
                       <div class="relClass ">
-                        <div class="bar w-60">
+                        <div class="bar height24 w-60">
                           Jun 2020
                         </div>
                       </div>
@@ -821,7 +822,7 @@
                         <p class="m-0 roboto f-400 text-custom lh-16 f-12">GOAL VALUE</p>
                         <h5 class="m-0 roboto f-400 lh-16 f-14">
                           <div class="relClass ">
-                            <div class="bar w-60">
+                            <div class="bar height24 w-60">
                               ₹48,13,000
                             </div>
                           </div>
@@ -832,7 +833,7 @@
                         <p class="m-0 roboto f-400 text-custom f-12 lh-16">ACHIEVED</p>
                         <h5 class="m-0 roboto f-400 lh-16 f-14">
                           <div class="relClass ">
-                            <div class="bar w-60">
+                            <div class="bar height24 w-60">
                               ₹14,25,000
                             </div>
                           </div>
@@ -840,7 +841,7 @@
                       </div>
                       <div class="col-md-12 upcoming-goal p-0 pt-16">
                         <div class="relClass ">
-                          <div class="bar w-100">
+                          <div class="bar height24 w-100">
                             <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
                           </div>
                         </div>
@@ -894,7 +895,7 @@
                 <p class="m-0 lh-16 roboto pb-10 f-500 text-black">Mutual funds</p>
 
                 <div class="relClass ">
-                  <div class="bar">
+                  <div class="bar height24">
                     <mat-progress-bar mode="determinate" value="90"></mat-progress-bar>
                     <p class="m-0 roboto f-400 text-black top">> 10 years ₹5,23,25,000</p>
                   </div>
@@ -911,7 +912,7 @@
               <div class="col-md-6 pl-0">
                 <p class="m-0 lh-16 roboto f-500 text-black pb-10">Non mutual fund assets</p>
                 <div class="relClass ">
-                  <div class="bar">
+                  <div class="bar height24">
                     <mat-progress-bar mode="determinate" value="90"></mat-progress-bar>
                     <p class="m-0 roboto f-400 text-black top">5-10 years ₹7,48,25,000</p>
                   </div>
@@ -939,13 +940,13 @@
               <div class="col-md-6 pl-0">
                 <p class="m-0 lh-16 roboto pb-10 f-500 text-black">Retirement</p>
                 <div class="relClass ">
-                  <div class="bar">
+                  <div class="bar height24">
                     <mat-progress-bar mode="determinate" value="90" class="light-red"></mat-progress-bar>
                     <p class="m-0 roboto f-400 text-black top">You ₹2,23,25,000</p>
                   </div>
                 </div>
                 <div class="relClass ">
-                  <div class="bar">
+                  <div class="bar height24">
                     <mat-progress-bar mode="determinate" value="70" class="light-green"></mat-progress-bar>
 
                     <p class="m-0 roboto f-400 text-black top">You ₹62,00,000</p>
