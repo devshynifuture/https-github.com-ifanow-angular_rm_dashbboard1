@@ -869,27 +869,6 @@
       </div>
 
       <div *ngIf="invTypeCategory=='4'" class="row pt-28">
-        <div class="col-md-4 text-right full-end">
-          <h5 class="m-0"> Email</h5>
-        </div>
-        <div class="col-md-5 p-0">
-          <div class="form-group">
-            <mat-form-field appearance="standard" floatLabel="never">
-              <!-- <input matInput placeholder="Enter company email" formControlName="comEmail"
-                  class="form-control"> -->
-              <app-email-domain-auto-suggest [disabled]="!!this.basicDetailsData.userId" formControlName="comEmail"
-                placeholder="Enter email">
-              </app-email-domain-auto-suggest>
-              <mat-error *ngIf="nonIndividualForm.get('comEmail').errors?.pattern">Email not valid
-              </mat-error>
-              <mat-error *ngIf="nonIndividualForm.get('comEmail').errors?.required">This field is required
-              </mat-error>
-            </mat-form-field>
-          </div>
-        </div>
-      </div>
-
-      <div *ngIf="invTypeCategory=='4'" class="row pt-28">
         <div class="col-md-4 text-right">
           <h5 class="m-0 pt-12">Occupation</h5>
         </div>
