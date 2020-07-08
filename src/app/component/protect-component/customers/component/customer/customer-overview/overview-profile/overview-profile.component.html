@@ -1,7 +1,7 @@
-<div class="profileOverview" *ngIf="!hasError">
-    <div class="row">
-        <div class="col-md-2  pt-8 pb-20 pl-0 pr-0 bg-grey lter">
-            <ul class="vertical-menu ">
+<div class="profileOverview" *ngIf="!hasError" id="ui-overview-profile">
+    <div class="row no-wrap">
+        <div class="col-md-2  pt-8 pb-20 pl-0 pr-0  responsive-left-side-top responsive-flex-auto">
+            <ul class="vertical-menu responsive-left-side bg-grey lter">
                 <li (click)="Tab='Tab1'" [ngClass]="{'activeColor lt':Tab=='Tab1'}" class="c-p">
                     <img class="mr-8" src="/assets/images/svg/key-info-icon.svg"> Key info
                 </li>
@@ -18,7 +18,7 @@
         </div>
 
 
-        <div *ngIf="Tab=='Tab1'" class="col-md-10 p-20 mt-5">
+        <div *ngIf="Tab=='Tab1'" class="col-md-10 p-20 mt-5 responsive-right-side-top">
             <div class="bg-grey lter p-9 borRd">
                 <div class="row">
                     <div class="col-md-10">
@@ -39,7 +39,7 @@
 
 
                             </div>
-                            <div class="col-md-10 pl-12">
+                            <div class="col-md-10 pl-12 rs-pl-50">
                                 <div [appSkeletonLoading]="letsideBarLoader" appSkeletonLoading
                                     class="profileDetails overflow-hidden skeletonAnimation">
                                     <div class="relClass">
@@ -88,7 +88,7 @@
                 <div *ngIf="clientData" class="row">
                     <div class="col-md-12 p-0">
                         <div class="primary-border familyMemberBox mt-12">
-                            <p class="memberName">Family members</p>
+                            <p class="memberName"> Members</p>
 
                             <!-- <div [hidden]="(!letsideBarLoader && familyMemberList) || familyMemberList==undefined"
                   class="skeletonAnimation" [appSkeletonLoading]="letsideBarLoader" appSkeletonLoading>

@@ -4,7 +4,7 @@ import { MobileMyfeedComponent } from './mobile-myfeed.component';
 
 describe('MobileMyfeedComponent', () => {
   let component: MobileMyfeedComponent;
-  let fixture: ComponentFixture<MobileMyfeedComponent>;
+  let fixture: ComponentFixture<MobileMyfeedComponent>; 
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

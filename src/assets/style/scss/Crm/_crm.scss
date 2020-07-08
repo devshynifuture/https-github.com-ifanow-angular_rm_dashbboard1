@@ -46,12 +46,21 @@
         tr {
             border-left: 0px !important;
         }
-        tbody td {
+        // tbody td {
+        //     font-weight: 500;
+        // }
+        
+        tr.unread{
+            background: #fff !important;
             font-weight: 500;
         }
-        tr:nth-child(2) {
+        
+        tr.read{
             background: #F5F7F7 !important;
         }
+        // tr:nth-child(2) {
+        //     background: #F5F7F7 !important;
+        // }
     }
 }
 

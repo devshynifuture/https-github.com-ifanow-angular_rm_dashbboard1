@@ -5,7 +5,7 @@ import { MobileProfileComponent } from './mobile-profile.component';
 describe('MobileProfileComponent', () => {
   let component: MobileProfileComponent;
   let fixture: ComponentFixture<MobileProfileComponent>;
-
+ 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ MobileProfileComponent ]

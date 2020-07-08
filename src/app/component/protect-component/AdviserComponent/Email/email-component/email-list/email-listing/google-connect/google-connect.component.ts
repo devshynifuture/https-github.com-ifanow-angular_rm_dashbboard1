@@ -36,7 +36,7 @@ export class GoogleConnectComponent implements OnInit {
   emailId;
   showEmailInput: boolean = false;
   redirectForm;
-  connect:any
+  connect: any
 
   ngOnInit() {
     this.redirectForm = this.fb.group({
@@ -52,31 +52,31 @@ export class GoogleConnectComponent implements OnInit {
           localStorage.setItem('googleOAuthToken', 'oauthtoken');
           localStorage.setItem('successStoringToken', 'true');
           localStorage.setItem('associatedGoogleEmailId', AuthService.getUserInfo().userName);
-          if(this.connect == "dash"){
+          if (this.connect == "dash") {
             this.router.navigate(['/admin/dashboard'], { relativeTo: this.activatedRoute });
           }
-          else if(this.connect = "calendar"){
+          else if (this.connect = "calendar") {
             this.router.navigate(['/admin/activies/month'], { relativeTo: this.activatedRoute });
           }
-          else{
+          else {
             this.router.navigate(['/admin/emails/inbox'], { relativeTo: this.activatedRoute });
           }
-
         } else {
-          
+
         }
       }, err => {
-        
+
         // this.eventService.openSnackBarNoDuration(err, 'DISMISS2');
       });
     }
     if (this.router.url == '/admin/emails/inbox/google-connect') {
       this.connect = "email";
-
-    } 
-    else if(this.router.url == '/admin/dashboard'){
+    }
+    else if (this.router.url == '/admin/dashboard') {
       this.connect = "dash";
 
+    } else if (this.router.url.split('/').includes('customer')) {
+      this.connect = 'email';
     }
     else {
       this.connect = "calendar";

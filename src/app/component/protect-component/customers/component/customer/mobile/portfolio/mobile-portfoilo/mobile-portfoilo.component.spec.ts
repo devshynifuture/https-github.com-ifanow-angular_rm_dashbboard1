@@ -5,7 +5,7 @@ import { MobilePortfoiloComponent } from './mobile-portfoilo.component';
 describe('MobilePortfoiloComponent', () => {
   let component: MobilePortfoiloComponent;
   let fixture: ComponentFixture<MobilePortfoiloComponent>;
-
+ 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ MobilePortfoiloComponent ]

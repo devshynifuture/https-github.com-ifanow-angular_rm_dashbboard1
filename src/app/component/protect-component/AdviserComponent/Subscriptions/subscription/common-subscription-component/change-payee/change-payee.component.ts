@@ -228,6 +228,9 @@ export class ChangePayeeComponent implements OnInit {
         const tempValue = this.totalValue + singlePayee.share;
         if (tempValue >= 100) {
           singlePayee.share = 100 - this.totalValue;
+          if(singlePayee.share == 0 ){
+            singlePayee.selected=false;
+          }
           this.totalValue = 100;
         } else {
           this.totalValue = tempValue;

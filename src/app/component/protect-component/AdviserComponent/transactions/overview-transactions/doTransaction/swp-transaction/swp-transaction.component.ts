@@ -91,6 +91,7 @@ export class SwpTransactionComponent implements OnInit {
   @Input()
   set data(data) {
     this.advisorId = AuthService.getAdvisorId();
+    this.reInvestmentOpt =[]
     this.inputData = data;
     this.transactionType = data.transactionType;
     this.selectedFamilyMember = data.selectedFamilyMember;
@@ -145,8 +146,13 @@ export class SwpTransactionComponent implements OnInit {
 
   checkAndResetForm(oldData, newData) {
     if (oldData.defaultCredential.accountType != newData.defaultCredential.accountType) {
-      this.resetForm();
-      this.getSchemeList();
+      if (!this.mutualFundData) {
+        this.resetForm();
+        this.getSchemeList();
+      } else {
+        this.mfDefault = newData
+        this.getdataForm(this.inputData)
+      }
     } else if (oldData.defaultClient.holdingType != newData.defaultClient.holdingType) {
       this.resetForm();
       this.getSchemeList();
@@ -420,6 +426,7 @@ export class SwpTransactionComponent implements OnInit {
       this.swpTransaction.controls.schemeSelection.setValue('1')
       this.swpTransaction.controls.folioSelection.setValue('1')
       this.swpTransaction.controls.schemeSwp.setValue({ 'schemeName': this.schemeName })
+      this.swpTransaction.controls['schemeSwp'].disable();
       this.filterSchemeList = of([{ 'schemeName': this.schemeName }])
       Object.assign(this.folioDetails, { folioNumber: this.folioNumber });
       this.scheme = {
@@ -438,9 +445,12 @@ export class SwpTransactionComponent implements OnInit {
         }
       );
       this.navOfSelectedScheme = this.mutualFundData.nav
-      this.swpTransaction.controls.balanceUnit.setValue((this.mutualFundData.balanceUnit));
-      this.swpTransaction.controls.currentValue.setValue((this.processTransaction.calculateCurrentValue(this.mutualFundData.nav, this.mutualFundData.balanceUnit)).toFixed(2));
       this.currentValue = this.processTransaction.calculateCurrentValue(this.mutualFundData.nav, this.mutualFundData.balanceUnit);
+      this.currentValue =  Math.round(this.currentValue)
+      this.swpTransaction.controls.currentValue.setValue(this.currentValue);
+      this.swpTransaction.controls.balanceUnit.setValue(this.mutualFundData.balanceUnit);
+      Object.assign(this.folioDetails, {balanceUnit: this.mutualFundData.balanceUnit});
+      this.mutualFundData.balanceUnit = parseFloat(this.mutualFundData.balanceUnit).toFixed(2);
       this.showUnits = true;
       Object.assign(this.transactionSummary, { folioNumber: this.folioNumber });
       Object.assign(this.transactionSummary, { tpUserCredFamilyMappingId: this.mfDefault.defaultClient.tpUserCredFamilyMappingId });
