@@ -101,7 +101,11 @@ export class IncomeComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          this.getIncomeList();
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            this.getIncomeList();
+            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+
+          }
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
         }
