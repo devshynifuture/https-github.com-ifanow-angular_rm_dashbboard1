@@ -273,7 +273,7 @@ export class AddFamilyMemberComponent implements OnInit {
 
   openMergeClient() {
     const data = {
-      flag: 'Add Family Member', clientData: this.data,
+      flag: 'Add member', clientData: this.data,
       advisorId: this.advisorId
     };
 
