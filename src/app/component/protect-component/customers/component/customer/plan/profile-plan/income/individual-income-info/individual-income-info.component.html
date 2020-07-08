@@ -54,16 +54,17 @@
         </div>
         <div class="col-md-9 pl-0">
             <div [formGroup]="incomeNetForm">
-                <div *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeList==1" class="row pt-40">
+                <!-- <div *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeList==1" class="row pt-40"> -->
+                        <div class="row pt-40">
                     <div class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8">Income option</h5>
                     </div>
                     <div class="col-md-7 pr-0">
                         <mat-radio-group (change)="chngIncomeOption($event)" formControlName="incomeOption"
                             class="d-flex " aria-label="Select an option">
-                            <mat-radio-button class="b-ua  f-14 text-custom" value="1">With breakup
+                            <mat-radio-button class="  f-14" value="1"  [ngClass]="{'b-a-custom': incomeNetForm.get('incomeOption').value=='1','text-primary':incomeNetForm.get('incomeOption').value=='1','b-a':incomeNetForm.get('incomeOption').value=='2'}">With breakup
                             </mat-radio-button>
-                            <mat-radio-button class="b-ua ml-8 b-a-custom f-14 text-custom" value="2">
+                            <mat-radio-button class=" ml-8  f-14 " value="2"  [ngClass]="{'b-a-custom': incomeNetForm.get('incomeOption').value=='2','text-primary':incomeNetForm.get('incomeOption').value=='2','b-a':incomeNetForm.get('incomeOption').value=='1'}">
                                 Net (In hand)
                             </mat-radio-button>
                         </mat-radio-group>
