@@ -38,7 +38,7 @@
                   <div class="col-md-6">
                     <div class="form-group mb-0 iconRupess">
                       <mat-form-field class="w-100" floatLabel="never" appearance="standard">
-                        <input matInput type="text" class="form-control br-0" placeholder="₹ 1,12,000"
+                        <input matInput type="text" class="form-control rupess br-0" placeholder=" "
                           appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" formControlName="income">
                         <mat-error>This field is required</mat-error>
                         <mat-hint (click)="resetIncome()" class="f-12 f-normal c-p text-primitive" align="end"> Reset
@@ -52,10 +52,10 @@
                   <div class="col-md-6 d-flex align-items-center justify-content-end p-0">
                     <p class="m-0 roboto ">Income growth rate</p>
                   </div>
-                  <div class="col-md-6 iconPetage">
-                    <div class="form-group mb-0">
+                  <div class="col-md-6">
+                    <div class="form-group mb-0 iconPetage">
                       <mat-form-field class="w-100" floatLabel="never" appearance="standard">
-                        <input matInput type="text" class="form-control br-0 percentage"
+                        <input matInput type="text" class="form-control br-0 percentage" placeholder=" "
                           appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
                           formControlName="growthRate">
                         <mat-error>This field is required</mat-error>
@@ -71,7 +71,7 @@
                   <div class="col-md-6">
                     <div class="form-group mb-0 iconRupess">
                       <mat-form-field class="w-100" floatLabel="never" appearance="standard">
-                        <input matInput type="text" class="form-control br-0" placeholder="₹ 1,12,000"
+                        <input matInput type="text" class="form-control rupess br-0" placeholder=" "
                           appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
                           formControlName="otherEMI">
                         <mat-error>This field is required</mat-error>
@@ -93,7 +93,7 @@
                   <div class="col-md-6">
                     <div class="form-group mb-0 iconRupess">
                       <mat-form-field class="w-100" floatLabel="never" appearance="standard">
-                        <input matInput type="text" class="form-control br-0 rupess"
+                        <input matInput type="text" class="form-control br-0 rupess" placeholder=" "
                           appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
                           formControlName="loanAmt">
                         <mat-error>This field is required</mat-error>
@@ -109,7 +109,7 @@
                   <div class="col-md-6">
                     <div class="form-group mb-0">
                       <mat-form-field class="w-100" floatLabel="never" appearance="standard">
-                        <input matInput type="text" class="form-control br-0" placeholder="14" appInputValueValidation
+                        <input matInput type="text" class="form-control br-0" placeholder=" " appInputValueValidation
                           [inputValidator]="validatorType.NUMBER_ONLY" formControlName="loanTenure">
                         <mat-error>This field is required</mat-error>
                       </mat-form-field>
@@ -120,10 +120,10 @@
                   <div class="col-md-6 p-0 d-flex align-items-center justify-content-end">
                     <p class="m-0 roboto ">Loan Interest rate</p>
                   </div>
-                  <div class="col-md-6 iconPetage">
-                    <div class="form-group mb-0">
+                  <div class="col-md-6">
+                    <div class="form-group mb-0 iconPetage">
                       <mat-form-field class="w-100" floatLabel="never" appearance="standard">
-                        <input matInput type="text" class="form-control br-0 percentage"
+                        <input matInput type="text" class="form-control br-0 percentage" placeholder=" "
                           appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
                           formControlName="interestRate">
                         <mat-error>This field is required</mat-error>
