@@ -321,37 +321,51 @@
           <h5 class="m-0 f-500 roboto">Business snapshot</h5>
           <img src="/assets/images/svg/snapshot.svg">
           <div class="bussiness-snapshot">
-            <table mat-table [dataSource]="dataSource" id="table-low" class="mt-28">
+            <table mat-table [dataSource]="dataSource" id="table-low" class="mt-28 skeletonAnimation"
+              [appSkeletonLoading]="isLoading" appSkeletonLoading>
 
               <ng-container matColumnDef="position">
                 <th mat-header-cell *matHeaderCellDef></th>
-                <td mat-cell *matCellDef="let element" class="br text-success f-500 bl-1"> {{element.position}} </td>
+                <td mat-cell *matCellDef="let element" class="br text-success f-500 bl-1">
+                  <div class="bar">
+                    {{element.position}} </div>
+                </td>
               </ng-container>
 
               <!-- Name Column -->
               <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef class="br bl bt-1 f-500 text-right"> Dec</th>
-                <td mat-cell *matCellDef="let element" class="br text-right"> {{element.name}} </td>
+                <td mat-cell *matCellDef="let element" class="br text-right">
+                  <div class="bar"> {{element.name}} </div>
+                </td>
               </ng-container>
 
               <!-- Weight Column -->
               <ng-container matColumnDef="weight">
                 <th mat-header-cell *matHeaderCellDef class="br bt-1 f-500 text-right"> Jan</th>
-                <td mat-cell *matCellDef="let element" class="br text-right"> {{element.weight}} </td>
+                <td mat-cell *matCellDef="let element" class="br text-right">
+                  <div class="bar"> {{element.weight}} </div>
+                </td>
               </ng-container>
 
               <!-- Symbol Column -->
               <ng-container matColumnDef="symbol">
                 <th mat-header-cell *matHeaderCellDef class="br bt-1 f-500 text-right"> Mar</th>
-                <td mat-cell *matCellDef="let element" class="br text-right"> {{element.symbol}} </td>
+                <td mat-cell *matCellDef="let element" class="br text-right">
+                  <div class="bar"> {{element.symbol}}</div>
+                </td>
               </ng-container>
               <ng-container matColumnDef="apr">
                 <th mat-header-cell *matHeaderCellDef class="br bt-1 f-500 text-right"> Apr</th>
-                <td mat-cell *matCellDef="let element" class="br text-right"> {{element.apr}} </td>
+                <td mat-cell *matCellDef="let element" class="br text-right">
+                  <div class="bar"> {{element.apr}} </div>
+                </td>
               </ng-container>
               <ng-container matColumnDef="may">
                 <th mat-header-cell *matHeaderCellDef class="bt-1 br f-500 text-right"> May</th>
-                <td mat-cell *matCellDef="let element" class="br text-right"> {{element.may}} </td>
+                <td mat-cell *matCellDef="let element" class="br text-right">
+                  <div class="bar">{{element.may}} </div>
+                </td>
               </ng-container>
 
               <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -387,18 +401,41 @@
                   </div>
                 </div>
               </div> -->
+
               <div *ngFor="let singleMember of birthdayAnniList" class="pr-5 pl-5">
                 <div class="w-180 b-a br-10">
-                  <div class="row">
+                  <div class="row" class=" skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                     <div class="col-md-9 p-0">
-                      <p *ngIf="!singleMember.shortName" class="m-0 pl-10 pt-10 roboto f-400">
-                        {{singleMember.displayName}}</p>
-                      <p *ngIf="singleMember.shortName" matTooltip="{{singleMember.displayName}}"
-                        class="m-0 pl-10 pt-10 roboto f-400 c-p">{{singleMember.shortName}}...
-                      </p>
-                      <p *ngIf="singleMember.userType==2" class="m-0 pl-10 roboto f-400 f-12 text-custom">Group head</p>
-                      <p *ngIf="singleMember.userType==3" class="m-0 pl-10 roboto f-400 f-12 text-custom">
-                        {{singleMember.displayName}}</p>
+                      <h5 *ngIf="!singleMember.shortName" class="m-0 pl-10 pt-10 roboto f-400">
+                        <div class="relClass ">
+                          <div class="bar height24">
+                            {{singleMember.displayName}}
+                          </div>
+                        </div>
+
+                      </h5>
+                      <h5 *ngIf="singleMember.shortName" matTooltip="{{singleMember.displayName}}"
+                        class="m-0 pl-10 pt-10 roboto f-400 c-p">
+                        <div class="relClass ">
+                          <div class="bar height24">
+                            {{singleMember.shortName}}...
+                          </div>
+                        </div>
+                      </h5>
+                      <h5 *ngIf="singleMember.userType==2" class="m-0 pl-10 roboto f-400 f-12 text-custom">
+                        <div class="relClass ">
+                          <div class="bar height24">
+                            Group head
+                          </div>
+                        </div>
+                      </h5>
+                      <h5 *ngIf="singleMember.userType==3" class="m-0 pl-10 roboto f-400 f-12 text-custom">
+                        <div class="relClass ">
+                          <div class="bar height24">
+                            {{singleMember.displayName}}
+                          </div>
+                        </div>
+                      </h5>
                     </div>
                     <div class="col-md-3 p-0 pt-5 pr-5">
                       <button *ngIf="singleMember.anniversaryDate" mat-stroked-button
@@ -406,28 +443,53 @@
                       </button>
                     </div>
                   </div>
-                  <div class="row pt-6 pb-10">
-                    <div class="col-md-5 pl-10 pr-10 d-flex">
-                      <img src="/assets/images/people.png">
-                      <!-- <img src="/assets/images/people.png" class="join-img"> -->
-                    </div>
-                    <div class="col-md-7 pl-0 pt-8">
-                      <p class="m-0 f-12 lh-16 roboto f-400 f-12">
-                        <span *ngIf="singleMember.daysToGo==0">Today</span>
-                        <span *ngIf="singleMember.daysToGo==1">Tommorrow</span>
-                        <span
-                          *ngIf="singleMember.daysToGo!=0 && singleMember.daysToGo!=1 && singleMember.daysToGo!='N/A'">In
-                          {{singleMember.daysToGo}}
-                          days</span>
-                        <span *ngIf="singleMember.daysToGo=='N/A'">{{singleMember.daysToGo}}
-                        </span>
-                      </p>
-                      <p *ngIf="singleMember.daysToGo!='N/A'" class="m-0 f-12 lh-16 roboto text-custom f-400 f-12">
-                        {{singleMember.age}} years</p>
+                  <div class=" skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                    <div class="row pt-6 pb-10">
+                      <div class="col-md-5 pl-10 pr-10 d-flex">
+                        <div class="relClass ">
+                          <div class="bar h-40">
+                            <img src="/assets/images/people.png">
+                          </div>
+                        </div>
+                        <!-- <img src="/assets/images/people.png" class="join-img"> -->
+                      </div>
+                      <div class="col-md-7 pl-0 pt-8">
+                        <h5 class="m-0 f-12 lh-16 roboto f-400 f-12">
+                          <span *ngIf="singleMember.daysToGo==0">Today</span>
+                          <span *ngIf="singleMember.daysToGo==1">Tommorrow</span>
+                          <span
+                            *ngIf="singleMember.daysToGo!=0 && singleMember.daysToGo!=1 && singleMember.daysToGo!='N/A'">
+                            <div class="relClass ">
+                              <div class="bar height24">
+                                In
+                                {{singleMember.daysToGo}}
+                                days
+                              </div>
+                            </div>
+
+                          </span>
+                          <span *ngIf="singleMember.daysToGo=='N/A'">
+
+                            <div class="relClass ">
+                              <div class="bar height24">
+                                {{singleMember.daysToGo}}
+                              </div>
+                            </div>
+                          </span>
+                        </h5>
+                        <h5 *ngIf="singleMember.daysToGo!='N/A'" class="m-0 f-12 lh-16 roboto text-custom f-400 f-12">
+                          <div class="relClass ">
+                            <div class="bar height24">
+                              {{singleMember.age}} years
+                            </div>
+                          </div>
+                        </h5>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
+
               <!-- <div class="pr-5  pl-5">
                 <div class="w-180 b-a br-10">
                   <p class="m-0 pl-10 pt-10 roboto f-400">Ameen Sahani</p>
@@ -463,27 +525,48 @@
           </div>
         </div>
       </div>
-      <div class="row pt-40 pb-8">
-        <div class="col-md-8 p-0">
-          <h5 class="f-500 roboto text-black m-0 pt-2">Task summary</h5>
+      <div class=" skeletonAnimation" *ngIf="showSummaryBar" appSkeletonLoading [appSkeletonLoading]="isLoading">
+        <div class="row pt-40 pb-8">
+          <div class="col-md-8 p-0">
+            <h5 class="f-500 roboto text-black m-0 pt-2">Task summary</h5>
+          </div>
+          <div class="col-md-4 text-right pr-0">
+            <button mat-stroked-button class="advisor-view-all">View All</button>
+          </div>
         </div>
-        <div class="col-md-4 text-right pr-0">
-          <button mat-stroked-button class="advisor-view-all">View All</button>
+        <div class="row b-a br-4 pt-10 pb-10 text-center">
+          <div class="col-md-4 br-half pt-8 pb-8">
+            <p class="m-0 text-custom f-400 roboto lh-16 ">This week’s<br> tasks</p>
+            <h3 class="m-0 roboto f-400 lh-23 pt-8">
+              <div class="relClass ">
+                <div class="bar height24">
+                  35
+                </div>
+              </div>
+            </h3>
+          </div>
+          <div class="col-md-4 br-half pt-8 pb-8">
+            <p class="m-0 text-custom f-400 roboto lh-16 ">This week’s<br> tasks</p>
+            <h3 class="m-0 roboto f-400 lh-23 pt-8">
+              <div class="relClass ">
+                <div class="bar height24">
+                  35
+                </div>
+              </div>
+            </h3>
+          </div>
+          <div class="col-md-4 pt-8 pb-8">
+            <p class="m-0 text-danger f-400 roboto lh-16">This week’s<br> tasks</p>
+            <h3 class="m-0 roboto f-400 text-danger lh-23 pt-8">
+              <div class="relClass ">
+                <div class="bar height24">
+                  35
+                </div>
+              </div>
+            </h3>
+          </div>
         </div>
-      </div>
-      <div class="row b-a br-4 pt-10 pb-10 text-center">
-        <div class="col-md-4 br-half pt-8 pb-8">
-          <p class="m-0 text-custom f-400 roboto lh-16 ">This week’s<br> tasks</p>
-          <h3 class="m-0 roboto f-400 lh-23 pt-8">35</h3>
-        </div>
-        <div class="col-md-4 br-half pt-8 pb-8">
-          <p class="m-0 text-custom f-400 roboto lh-16 ">This week’s<br> tasks</p>
-          <h3 class="m-0 roboto f-400 lh-23 pt-8">35</h3>
-        </div>
-        <div class="col-md-4 pt-8 pb-8">
-          <p class="m-0 text-danger f-400 roboto lh-16">This week’s<br> tasks</p>
-          <h3 class="m-0 roboto f-400 text-danger lh-23 pt-8">35</h3>
-        </div>
+
       </div>
       <div class="row pt-40 today-task">
         <div class="col-md-12 p-0">
@@ -542,21 +625,45 @@
           <button mat-stroked-button class="advisor-view-all">View All</button>
         </div>
       </div>
-      <div class="row b-a br-4 pt-10 pb-10 text-center">
-        <div class="col-md-4 br-half pt-8 pb-8">
-          <p class="m-0 text-custom f-400 roboto lh-16 ">Total goals<br>
-            all clients</p>
-          <h3 class="m-0 roboto f-400 lh-23 pt-8">{{goalSummaryData.allGoals}}</h3>
-        </div>
-        <div class="col-md-4 br-half pt-8 pb-8">
-          <p class="m-0 text-custom f-400 roboto lh-16 ">Clients <br>
-            without goals</p>
-          <h3 class="m-0 roboto f-400 lh-23 pt-8">{{goalSummaryData.clientsWithoutGoals}}%</h3>
-        </div>
-        <div class="col-md-4 pt-8 pb-8">
-          <p class="m-0 text-custom f-400 roboto lh-16">Clients without<br>
-            emergency funds</p>
-          <h3 class="m-0 roboto f-400 text-custom lh-23 pt-8">{{goalSummaryData.clientsWithoutEmergencyGoals}}%</h3>
+      <div class=" skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+        <div class="row b-a br-4 pt-10 pb-10 text-center">
+          <div class="col-md-4 br-half pt-8 pb-8">
+            <p class="m-0 text-custom f-400 roboto lh-16 ">Total goals<br>
+              all clients</p>
+            <h3 class="m-0 roboto f-400 lh-23 pt-8">
+              <div class="relClass ">
+                <div class="bar height24">
+                  {{goalSummaryData.allGoals}}
+
+                </div>
+              </div>
+            </h3>
+          </div>
+          <div class="col-md-4 br-half pt-8 pb-8">
+            <p class="m-0 text-custom f-400 roboto lh-16 ">Clients <br>
+              without goals</p>
+            <h3 class="m-0 roboto f-400 lh-23 pt-8">
+              <div class="relClass ">
+                <div class="bar height24">
+                  {{goalSummaryData.clientsWithoutGoals}}%
+                </div>
+              </div>
+
+            </h3>
+          </div>
+          <div class="col-md-4 pt-8 pb-8">
+            <p class="m-0 text-custom f-400 roboto lh-16">Clients without<br>
+              emergency funds</p>
+            <h3 class="m-0 roboto f-400 text-custom lh-23 pt-8">
+              <div class="relClass ">
+                <div class="bar height24">
+
+                  {{goalSummaryData.clientsWithoutEmergencyGoals}}%
+                </div>
+              </div>
+
+            </h3>
+          </div>
         </div>
       </div>
       <div class="row pt-40 pb-8">
@@ -1019,20 +1126,27 @@
           <button mat-stroked-button class="advisor-view-all">View All</button>
         </div>
         <div class="col-md-12 p-0">
-          <table mat-table [dataSource]="dataSource5" id="table-low" class="mt-10" *ngIf="dataSource5.length > 0">
+          <table mat-table [dataSource]="dataSource5" id="table-low" class="mt-10" *ngIf="dataSource5.length > 0"
+            [appSkeletonLoading]="aumFlag" appSkeletonLoading class="skeletonAnimation">
             <ng-container matColumnDef="position">
               <th mat-header-cell *matHeaderCellDef class="br"> Client / Scheme</th>
-              <td mat-cell *matCellDef="let element" class="br"> {{element.clientName}}<br> <span
-                  class="text-custom">{{element.schemeName}}{{element.folio?" | "+element.folio:""}}</span></td>
+              <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar">
+                  {{element.clientName}}<br> <span
+                    class="text-custom">{{element.schemeName}}{{element.folio?" | "+element.folio:""}}</span>
+                </div>
+              </td>
             </ng-container>
 
             <!-- Name Column -->
             <ng-container matColumnDef="name">
               <th mat-header-cell *matHeaderCellDef class="br"> Type</th>
               <td mat-cell *matCellDef="let element" class="br">
-                <div [ngSwitch]="element.status">
-                  <div *ngSwitchCase="1">FAILURE</div>
-                  <div *ngSwitchCase="7">Transaction rejected</div>
+                <div class="bar">
+                  <div [ngSwitch]="element.status">
+                    <div *ngSwitchCase="1">FAILURE</div>
+                    <div *ngSwitchCase="7">Transaction rejected</div>
+                  </div>
                 </div>
                 <!-- <span class="text-custom">{{element.serviceMessage}}</span> for reason -->
               </td>
@@ -1041,9 +1155,14 @@
             <!-- Weight Column -->
             <ng-container matColumnDef="weight">
               <th mat-header-cell *matHeaderCellDef class="br"> Details</th>
-              <td mat-cell *matCellDef="let element" class="br"> {{element.orderDate | date:"dd/MM/yyyy"}}<br>
-                <span class="text-custom">{{element.amount? "₹" : ""}}</span><span class="text-custom"
-                  appFormatNumber>{{element.amount }}</span></td>
+              <td mat-cell *matCellDef="let element" class="br">
+
+                <div class="bar">
+                  {{element.orderDate | date:"dd/MM/yyyy"}}<br>
+                  <span class="text-custom">{{element.amount? "₹" : ""}}</span><span class="text-custom"
+                    appFormatNumber>{{element.amount }}</span>
+                </div>
+              </td>
             </ng-container>
 
 
