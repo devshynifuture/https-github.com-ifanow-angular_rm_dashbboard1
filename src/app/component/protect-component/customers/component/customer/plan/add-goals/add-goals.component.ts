@@ -40,8 +40,8 @@ export class AddGoalsComponent implements OnInit {
   }
 
   ngOnInit() {
-    // TODO:- add loader
     this.loadGlobalGoalData();
+    this.getFamilyMembersList();
   }
 
   close() {
@@ -62,8 +62,6 @@ export class AddGoalsComponent implements OnInit {
         this.loaderFn.decreaseCounter();
       }
     )
-
-    this.getFamilyMembersList();
   }
 
 
@@ -72,6 +70,7 @@ export class AddGoalsComponent implements OnInit {
     const obj = {
       clientId: this.clientId,
     };
+    this.loaderFn.increaseCounter();
     this.peopleService.getClientFamilyMemberListAsset(obj).subscribe(
       data => {
         if (data && data.length > 0) {
@@ -89,10 +88,12 @@ export class AddGoalsComponent implements OnInit {
           return a.relationshipId - b.relationshipId;
         });
         this.familyList = this.utilService.calculateAgeFromCurrentDate(this.familyList);
+        this.loaderFn.decreaseCounter();
       },
       err => {
         this.familyList = [];
         this.eventService.openSnackBar(err, "Dismiss")
+        this.loaderFn.decreaseCounter();
         console.error(err);
       }
     );
