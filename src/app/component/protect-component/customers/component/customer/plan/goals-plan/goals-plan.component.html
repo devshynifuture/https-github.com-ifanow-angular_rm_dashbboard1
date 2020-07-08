@@ -18,9 +18,9 @@
             </div>
 
             <div class="mt-80">
-                <div class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="loaderFn.loading" *ngFor="let goal of allGoals" (click)="loadSelectedGoalData(goal)">
+                <div class="skeletonAnimation mt-8" appSkeletonLoading [appSkeletonLoading]="loaderFn.loading" *ngFor="let goal of allGoals" (click)="loadSelectedGoalData(goal)">
                     <div *ngIf="!loaderFn.loading">
-                        <div class="row bg-grey lter p-8 c-p br-2" [ngClass]="{'bu-primitive': goal.id == selectedGoal.id}">
+                        <div class="row bg-grey lter p-8 c-p br-2" [ngClass]="{'b-primitive': goal.id == selectedGoal.id}">
                             <div class="col-md-3 p-0">
                                 <img class="maxWidth100" [src]="goal.img">
                             </div>
