@@ -313,7 +313,7 @@
                             <div class="col-md-12 p-0">
                                 <mat-radio-group aria-label="Select an option" name="allocation_type"
                                     formControlName="staticOrProgressive">
-                                    <mat-radio-button [value]="1" class="text-primary pl-0">Static asset allocation
+                                    <mat-radio-button [value]="1" class=" pl-0" [ngClass]="{'text-primary': assetAllocationFG.get('staticOrProgressive').value == 1}">Static asset allocation
                                     </mat-radio-button>
                                 </mat-radio-group>
                             </div>
@@ -341,7 +341,7 @@
                             <div class="col-md-12 pl-0 pr-0">
                                 <mat-radio-group aria-label="Select an option" name="allocation_type"
                                     formControlName="staticOrProgressive">
-                                    <mat-radio-button value="2" class="pl-0">Progressive asset allocation
+                                    <mat-radio-button value="2" class="pl-0" class=" pl-0" [ngClass]="{'text-primary': assetAllocationFG.get('staticOrProgressive').value == 2}">Progressive asset allocation
                                     </mat-radio-button>
                                 </mat-radio-group>
                             </div>

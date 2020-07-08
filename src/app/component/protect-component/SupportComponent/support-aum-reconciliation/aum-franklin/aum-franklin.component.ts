@@ -122,7 +122,12 @@ export class AumFranklinComponent implements OnInit {
     const fragmentData = {
       flag,
       id: 1,
-      data,
+      data: {
+        ...data,
+        clientName: data.advisorName,
+        arnRiaCode: data.arnria,
+        // no arnRiaNumber getting from backend
+      },
       direction: 'top',
       componentName: UpperSliderBackofficeComponent,
       state: 'open'
