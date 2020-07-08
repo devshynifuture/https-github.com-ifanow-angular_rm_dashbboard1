@@ -149,6 +149,9 @@ export class DashboardComponent implements OnInit {
   aumReconList: any;
   aumFlag: boolean;
   goalSummaryData: any = {};
+  isKeyMatrix: boolean;
+  subOverviewFlag: boolean;
+  docOverviewFlag: boolean;
 
   constructor(
     public dialog: MatDialog, private subService: SubscriptionService,
@@ -184,7 +187,12 @@ export class DashboardComponent implements OnInit {
   advisorName: any;
   parentId: any;
   sipCount: any;
-  keyMetricJson: any = {};
+  keyMetricJson: any = {
+    mfAum: '',
+    sipBook: '',
+    clientCount: '',
+    InvestorCount: ''
+  };
   totalSales: any;
   finalStartDate: number;
   finalEndDate: number;
@@ -250,65 +258,65 @@ export class DashboardComponent implements OnInit {
     this.excessAllow = done;
   }
 
-  LastSevenDaysInvestmentAccounts:any=[];
-  getLastSevenDaysInvestmentAccounts(){
-    const obj ={
-      "advisorId":this.advisorId,
-      "startDate":new Date().getTime(),
-      "endDate":new Date(this.lastSevenDays).getTime()
-   }
+  LastSevenDaysInvestmentAccounts: any = [];
+  getLastSevenDaysInvestmentAccounts() {
+    const obj = {
+      "advisorId": this.advisorId,
+      "startDate": new Date().getTime(),
+      "endDate": new Date(this.lastSevenDays).getTime()
+    }
 
-//       const obj = {
-//     "advisorId":5430,
-//     "startDate":1593369000000,
-//     "endDate":1594060199999
-//  }
-   this.dashboardService.getLastSevenDaysInvestmentAccounts(obj).subscribe(
-    (data) => {
-      if(data){
-        this.LastSevenDaysInvestmentAccounts = data;
-      }
-      else{
-        this.LastSevenDaysInvestmentAccounts = [];
-      }
-  },
-  (err)=>{
+    //       const obj = {
+    //     "advisorId":5430,
+    //     "startDate":1593369000000,
+    //     "endDate":1594060199999
+    //  }
+    this.dashboardService.getLastSevenDaysInvestmentAccounts(obj).subscribe(
+      (data) => {
+        if (data) {
+          this.LastSevenDaysInvestmentAccounts = data;
+        }
+        else {
+          this.LastSevenDaysInvestmentAccounts = [];
+        }
+      },
+      (err) => {
 
-  });
+      });
   }
 
-  LastSevenDaysTransactions:any=[];
-  rejectedFAILURE:any = [];
-  lastSevenDays:any = new Date().setDate(new Date().getDate() - 7);
-  getLastSevenDaysTransactions(){
-    const obj ={
-      "advisorId":this.advisorId,
-      "tpUserCredentialId":null,
-      "startDate":new Date().getTime(),
-      "endDate":new Date(this.lastSevenDays).getTime()
-   }
+  LastSevenDaysTransactions: any = [];
+  rejectedFAILURE: any = [];
+  lastSevenDays: any = new Date().setDate(new Date().getDate() - 7);
+  getLastSevenDaysTransactions() {
+    const obj = {
+      "advisorId": this.advisorId,
+      "tpUserCredentialId": null,
+      "startDate": new Date().getTime(),
+      "endDate": new Date(this.lastSevenDays).getTime()
+    }
 
-//    const obj = {
-//     "advisorId":5430,
-//     "tpUserCredentialId":null,
-//     "startDate":1593369000000,
-//     "endDate":1594060199999
-//  }
-   console.log(new Date(obj.startDate), new Date(obj.endDate), "date 123");
-   this.dashboardService.getLastSevenDaysTransactions(obj).subscribe(
-    (data) => {
-      console.log(data,"LastSevenDaysTransactions 123");
-      if(data){
-        this.LastSevenDaysTransactions = data;
-        this.dataSource5 = this.LastSevenDaysTransactions.filter((x)=>{
-          x.status == 1 || x.status == 7;
-        })
-      }
-      else{
-        this.LastSevenDaysTransactions = [];
-        this.dataSource5 = [];
-      }
-    });
+    //    const obj = {
+    //     "advisorId":5430,
+    //     "tpUserCredentialId":null,
+    //     "startDate":1593369000000,
+    //     "endDate":1594060199999
+    //  }
+    console.log(new Date(obj.startDate), new Date(obj.endDate), "date 123");
+    this.dashboardService.getLastSevenDaysTransactions(obj).subscribe(
+      (data) => {
+        console.log(data, "LastSevenDaysTransactions 123");
+        if (data) {
+          this.LastSevenDaysTransactions = data;
+          this.dataSource5 = this.LastSevenDaysTransactions.filter((x) => {
+            x.status == 1 || x.status == 7;
+          })
+        }
+        else {
+          this.LastSevenDaysTransactions = [];
+          this.dataSource5 = [];
+        }
+      });
   }
 
   getSummaryDataDashboard() {
@@ -441,7 +449,10 @@ export class DashboardComponent implements OnInit {
       data => {
         if (data) {
           data.forEach(element => {
-            if (element.dateOfBirth != 0) {
+            if (element.displayName.length > 19) {
+              element['shortName'] = element.displayName.substr(0, element.name.indexOf(' '));
+            }
+            if (element.dateOfBirth && element.dateOfBirth != 0) {
               element.daysToGo = this.calculateBirthdayOrAnniversary(element.dateOfBirth);
             } else {
               element.daysToGo = 'N/A';
@@ -485,11 +496,21 @@ export class DashboardComponent implements OnInit {
           this.nscData = data.nse;
           this.bseData = data.bse;
         }
+        else {
+          this.last7DaysFlag = false;
+          this.nscData = [{}, {}];
+          this.bseData = [{}, {}];
+        }
+      }, err => {
+        this.last7DaysFlag = false;
+        this.nscData = [{}, {}];
+        this.bseData = [{}, {}];
       }
     );
   }
 
   getDocumentTotalSize() {
+    this.docOverviewFlag = true;
     const obj = {
       advisorId: this.advisorId,
       // clientId
@@ -497,6 +518,7 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getDocumentTotalSize(obj).subscribe(
       data => {
         if (data) {
+          this.docOverviewFlag = false;
           this.documentSizeData = data;
         }
       }
@@ -775,12 +797,14 @@ export class DashboardComponent implements OnInit {
   }
 
   clientWithSubscription() {
+    this.subOverviewFlag = true;
     const obj = {
       advisorId: this.advisorId
     };
     this.subService.clientWithSubcribe(obj).subscribe(
       data => {
         if (data) {
+          this.subOverviewFlag = false;
           this.dataSourceClientWithSub = data;
         } else {
           this.dataSourceClientWithSub = {};
@@ -806,11 +830,13 @@ export class DashboardComponent implements OnInit {
   }
 
   getKeyMetrics() {
+    this.isKeyMatrix = true;
     const obj = {
       id: this.advisorId
     };
     this.dashboardService.getKeyMetrics(obj).subscribe(
       data => {
+        this.isKeyMatrix = false
         this.keyMetricJson = data;
       },
       err => {
