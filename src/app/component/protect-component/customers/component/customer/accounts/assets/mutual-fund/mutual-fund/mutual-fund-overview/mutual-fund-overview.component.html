@@ -1,7 +1,7 @@
 <div>
     <div class="p-8">
         <div class="row pt-0">
-            <div class="col-md-6 pl-0 c-p">
+            <div class="col-md-6 pl-0 c-p" *ngIf="dataSource.data?.length > 0 && dataSource2.data?.length>0  && dataSource3.data?.length>0 && dataSource4.data?.length>0 ">
                 <h4 class="m-0 text-black roboto pt-8">Mutual fund overview</h4>
                 <p class="m-0 text-custom f-13">A quick summary of all your mutual fund holdings</p>
             </div>
