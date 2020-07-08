@@ -26,13 +26,12 @@
             <img [ngClass]="isLoading? 'd-none': ''" src="/assets/images/svg/refresh.svg" class="mr-20 c-p"
                 matTooltip="Refresh" (click)="initPoint()">
 
-            <img src="/assets/images/svg/double-drawer.svg" class="mr-20 c-p" matTooltip="Archive" *ngIf="showOptions">
+            <!-- <img src="/assets/images/svg/double-drawer.svg" class="mr-20 c-p" matTooltip="Archive" *ngIf="showOptions"> -->
             <img src="/assets/images/svg/delete.svg" (click)="multipleMoveToTrash()" *ngIf="showOptions"
                 class="mr-20 c-p" matTooltip="Move to Trash">
-            <mat-icon *ngIf="showOptions" [matMenuTriggerFor]="menu" class="c-p pab">more_vert</mat-icon>
+            <mat-icon *ngIf="showOptions && trashAction" [matMenuTriggerFor]="menu" class="c-p pab">more_vert
+            </mat-icon>
             <mat-menu #menu="matMenu">
-                <button mat-menu-item>Make as read</button>
-                <button mat-menu-item>Make as unread</button>
                 <button mat-menu-item *ngIf="trashAction" (click)="moveThreadsFromTrash()">
                     Remove from Trash
                 </button>
@@ -110,6 +109,9 @@
                         <p class="m-0 pl-12 text-primitive">
                             {{element.subjectMessage.message | truncate:30}}
                         </p>
+                        <span *ngIf="element.hasAttachment">
+                            <img class="text-right" src="/assets/images/svg/attech.svg" alt="attachment icon">
+                        </span>
                     </td>
                 </ng-container>
 
@@ -133,8 +135,8 @@
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index" appShowListActions
-                    [ngClass]="{ 'selected-tr': selectedThreadsArray.includes(row) }" class="c-p"
-                    [class.read]="!getUnreadCountValue(i)" [class.unread]="getUnreadCountValue(i)">
+                    [ngClass]="{ 'selected-tr': selectedThreadsArray.includes(row) }"
+                    [class.unread]="row.isRead === false" [class.read]="row.isRead === true" class="c-p">
                 </tr>
             </table>
             <div *ngIf="dataSource == null">

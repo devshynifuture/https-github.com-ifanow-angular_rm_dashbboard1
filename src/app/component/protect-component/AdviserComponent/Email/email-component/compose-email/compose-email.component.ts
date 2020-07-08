@@ -41,7 +41,7 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
     private router: Router) { }
 
   receipentEmail: string;
-  subject: string;
+  subject: string = '';
   emailBody: string = '';
   from: string = AuthService.getUserInfo().email;
   to: string = "";
@@ -108,6 +108,7 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
       switchMap(value => this.createDraft(value))
     ).subscribe(res => {
       if (res) {
+        this.refreshRequired = true;
         console.log(res);
         this.currentDraftIds.push(res.message.id);
         if (this.currentDraftIds.length == 2) {
@@ -147,6 +148,8 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
         bccs: this.bccArray,
         ccs: this.ccArray,
       }
+
+      console.log(createRequestJson);
       this.prevStateOfForm = value;
       return this.emailService.createDraft(createRequestJson)
     } else {
@@ -263,28 +266,20 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
       this.receipients = [clientEmail];
       this.editRecepient = false;
       this.removable = false;
-      this.emailForm = this.fb.group({
-        sender: [, Validators.email],
-        receiver: [[], Validators.email],
-        carbonCopy: [[], Validators.email],
-        blindCarbonCopy: [[], Validators.email],
-        subject: [''],
-        messageBody: [''],
-        attachments: [''],
-      });
     } else {
       this.editRecepient = true;
       this.removable = true;
-      this.emailForm = this.fb.group({
-        sender: [, Validators.email],
-        receiver: [[], Validators.email],
-        carbonCopy: [[], Validators.email],
-        blindCarbonCopy: [[], Validators.email],
-        subject: [''],
-        messageBody: [''],
-        attachments: [''],
-      });
     }
+
+    this.emailForm = this.fb.group({
+      sender: ['', Validators.email],
+      receiver: [[], Validators.email],
+      carbonCopy: [[], Validators.email],
+      blindCarbonCopy: [[], Validators.email],
+      subject: [''],
+      messageBody: [''],
+      attachments: [''],
+    });
 
     if (this.data && this.data.dataToSend !== null) {
       let data = this.data.dataToSend;
@@ -464,8 +459,17 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
           blindCarbonCopy: arr
         });
       }
-
-      whichArray.push(value.trim());
+      switch (whichArray) {
+        case 'receipients':
+          this.receipients.push(value.trim());
+          break;
+        case 'ccArray':
+          this.ccArray.push(value.trim());
+          break;
+        case 'bccArray':
+          this.bccArray.push(value.trim());
+          break;
+      }
     }
 
     // Reset the input value

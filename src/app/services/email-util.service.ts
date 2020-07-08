@@ -169,9 +169,7 @@ export class EmailUtilService {
     let labelIdsArray: Object[] = [];
     gmailThread.messages.forEach((message) => {
       const { labelIds } = message;
-      labelIdsArray.push({
-        labelIds
-      });
+      labelIdsArray.push(labelIds);
     });
     return labelIdsArray;
   }

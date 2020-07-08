@@ -93,7 +93,7 @@ export class AumAllRtaComponent implements OnInit {
               matchedCount: element.matchedCount,
               rtId: element.rtId,
               advisorName: element.advisorName,
-              arnria: '---',
+              arnria: element.arnOrRia === 0 ? 'ARN' : (element.arnOrRia === 1 ? 'RIA' : ''),
               doneOn: element.doneOn,
               doneBy: element.doneBy,
               totalFolioCount: element.totalFolioCount,
@@ -126,24 +126,31 @@ export class AumAllRtaComponent implements OnInit {
     console.log('hello mf button clicked');
 
     // const fragmentData = {
+    //    flag,
+    // id: 1,
+    // data: {
+    //   ...data,
+    //   startRecon:  false,
+    //   brokerId: this.selectBrokerForm.get('selectBrokerId').value,
+    //   rtId: this.rtId,
     //   flag,
-    //   id: 1,
-    //   data: {
-    //     ...data,
-    //     startRecon: flag === 'startReconciliation' ? true : (flag === 'report' ? false : null),
-    //     brokerId: this.selectBrokerForm.get('selectBrokerId').value,
-    //     rtId: this.rtId,
-    //     flag,
-    //   },
-    //   direction: 'top',
-    //   componentName: UpperSliderBackofficeComponent,
-    //   state: 'open'
+    //   clientName: this.clientName,
+    //   arnRiaCode: brokerCode,
+    // },
+    // direction: 'top',
+    // componentName: UpperSliderBackofficeComponent,
+    // state: 'open'
     // };
 
     const fragmentData = {
       flag,
       id: 1,
-      data,
+      data: {
+        ...data,
+        clientName: data.advisorName,
+        arnRiaCode: data.arnria,
+        // no arnRiaNumber getting from backend
+      },
       direction: 'top',
       componentName: UpperSliderBackofficeComponent,
       state: 'open'
