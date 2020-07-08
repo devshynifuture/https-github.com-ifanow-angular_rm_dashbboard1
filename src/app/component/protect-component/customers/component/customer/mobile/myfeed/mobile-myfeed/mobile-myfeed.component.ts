@@ -11,6 +11,7 @@ import { UtilService } from 'src/app/services/util.service';
   styleUrls: ['./mobile-myfeed.component.scss']
 })
 export class MobileMyfeedComponent implements OnInit {
+  bscData;
   openMenue: boolean = false;
   inputData: any;
   advisorId: any;
