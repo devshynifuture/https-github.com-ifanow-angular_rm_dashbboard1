@@ -496,7 +496,16 @@ export class DashboardComponent implements OnInit {
           this.nscData = data.nse;
           this.bseData = data.bse;
         }
-      }
+        else {
+          this.last7DaysFlag = false;
+          this.nscData = [{}, {}];
+          this.bseData = [{}, {}];
+        }
+      }, err => {
+      this.last7DaysFlag = false;
+      this.nscData = [{}, {}];
+      this.bseData = [{}, {}];
+    }
     );
   }
 
