@@ -40,26 +40,49 @@
 <div class="row pt-135 pb-28" id="ui-dashboard-advisor">
   <div class="col-md-3 pl-20 pr-20 pt-44">
     <h5 class="m-0 roboto f-500 pb-16">Key metrics</h5>
-    <div class="row bg-grey lter text-center ba-primitive br-4 p-8">
+    <div appSkeletonLoading [appSkeletonLoading]="isKeyMatrix"
+      class="row bg-grey lter text-center ba-primitive br-4 p-8 skeletonAnimation">
       <div class="col-md-6 pt-24 pb-24 bb-half pl-8">
         <p class="m-0 text-primitive roboto f-400 lh-16">MF AUM</p>
         <h3 class="m-0 roboto f-400 text-black pt-8">
-          <span appFormatNumber
-            [value]="keyMetricJson.mfAum">{{(keyMetricJson.mfAum) ? keyMetricJson.mfAum : '0'}}</span></h3>
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': isKeyMatrix}">
+              <!-- <span appFormatNumber
+                [value]="keyMetricJson.mfAum">{{(keyMetricJson.mfAum) ? keyMetricJson.mfAum : '0'}}</span> -->
+            </div>
+          </div>
+        </h3>
       </div>
       <div class="col-md-6 pt-24 pb-24 bl-half bb-half">
         <p class="m-0 text-primitive roboto f-400 lh-16">SIP book</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8">{{(keyMetricJson.sipBook) ? keyMetricJson.sipBook : '0'}}</h3>
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': isKeyMatrix}">
+              {{(keyMetricJson.sipBook) ? keyMetricJson.sipBook : '0'}}
+            </div>
+          </div>
+        </h3>
       </div>
       <div class="col-md-6 pt-24 pb-24 pl-8">
         <p class="m-0 text-primitive roboto f-400 lh-16">Clients</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8">{{(keyMetricJson.clientCount) ? keyMetricJson.clientCount : '0'}}
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': isKeyMatrix}">
+              {{(keyMetricJson.clientCount) ? keyMetricJson.clientCount : '0'}}
+            </div>
+          </div>
         </h3>
       </div>
       <div class="col-md-6 pt-24 pb-24 bl-half">
         <p class="m-0 text-primitive roboto f-400 lh-16">Investors</p>
         <h3 class="m-0 roboto f-400 text-black pt-8">
-          {{(keyMetricJson.InvestorCount) ? keyMetricJson.InvestorCount : '0'}}</h3>
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': isKeyMatrix}">
+              {{(keyMetricJson.InvestorCount) ? keyMetricJson.InvestorCount : '0'}}
+            </div>
+          </div>
+
+        </h3>
       </div>
     </div>
     <h5 class="m-0 roboto f-500 pb-16 pt-28">Activity overview</h5>
@@ -67,70 +90,146 @@
       <div class="col-md-6 pt-24 pb-24 bb-half pl-8">
         <p class="m-0 text-primitive roboto f-400 lh-16">Awaiting
           consent</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8">78</h3>
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': isLoading}">
+              78
+            </div>
+          </div>
+        </h3>
       </div>
       <div class="col-md-6 pt-24 pb-24 bl-half bb-half">
         <p class="m-0 text-primitive roboto f-400 lh-16">Advice to be
           reviewed</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8">41</h3>
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': isLoading}">
+              41
+            </div>
+          </div>
+        </h3>
       </div>
       <div class="col-md-6 pt-24 pb-24 pl-8">
         <p class="m-0 text-primitive roboto f-400 lh-16">Money to
           be deployed</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8">712.35 L</h3>
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': isLoading}">
+
+              712.35 L
+            </div>
+          </div>
+        </h3>
       </div>
       <div class="col-md-6 pt-24 pb-24 bl-half">
         <p class="m-0 text-primitive roboto f-400 lh-16">Action plans
           in process</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8">4</h3>
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': isLoading}">
+              4
+            </div>
+          </div>
+        </h3>
       </div>
     </div>
     <h5 class="m-0 roboto f-500 pb-16 pt-28">Subscription overview</h5>
-    <div class="row bg-grey lter text-center ba-primitive br-4 p-8">
+    <div appSkeletonLoading [appSkeletonLoading]="subOverviewFlag"
+      class="row bg-grey lter text-center ba-primitive br-4 p-8 skeletonAnimation">
       <div class="col-md-6 pt-24 pb-24 bb-half pl-8">
         <p class="m-0 text-primitive roboto f-400 lh-16">Clients with
           subscription</p>
         <h3 class="m-0 roboto f-400 text-black pt-8">
-          {{ (dataSourceClientWithSub && dataSourceClientWithSub.hasOwnProperty('activeClientPer')) ? dataSourceClientWithSub.activeClientPer : 0}}
-          %
+
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': subOverviewFlag}">
+              {{ (dataSourceClientWithSub && dataSourceClientWithSub.hasOwnProperty('activeClientPer')) ? dataSourceClientWithSub.activeClientPer : 0}}
+              %
+
+            </div>
+          </div>
         </h3>
       </div>
       <div class="col-md-6 pt-24 pb-24 bl-half bb-half">
         <p class="m-0 text-primitive roboto f-400 lh-16">Subscriptions
           cancelled</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8">41</h3>
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': subOverviewFlag}">
+              41
+            </div>
+          </div>
+        </h3>
       </div>
       <div class="col-md-6 pt-24 pb-24 pl-8">
         <p class="m-0 text-primitive roboto f-400 lh-16">Total fees
           charged</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8"><span appFormatNumber [value]="totalSales">{{totalSales}}</span>
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': subOverviewFlag}">
+
+              <span appFormatNumber [value]="totalSales">{{totalSales}}</span>
+
+            </div>
+          </div>
         </h3>
       </div>
       <div class="col-md-6 pt-24 pb-24 bl-half">
         <p class="m-0 text-primitive roboto f-400 lh-16">Fees
           received</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8">{{feeRecieved}}</h3>
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': subOverviewFlag}">
+              {{feeRecieved}}
+            </div>
+          </div>
+        </h3>
       </div>
     </div>
     <h5 class="m-0 roboto f-500 pb-16 pt-28">Document overview</h5>
-    <div class="row bg-grey lter text-center ba-primitive br-4 p-8">
+    <div appSkeletonLoading [appSkeletonLoading]="docOverviewFlag"
+      class="row bg-grey lter text-center ba-primitive br-4 p-8 skeletonAnimation">
       <div class="col-md-6 pt-24 pb-24 bb-half pl-8">
-        <p class="m-0 text-primitive roboto f-400 lh-16">Family member<br> count</p>
+        <p class="m-0 text-primitive roboto f-400 lh-16 ws-nowrap">Family member<br> count</p>
         <h3 class="m-0 roboto f-400 text-black pt-8">
-          {{documentSizeData.familyMemberCount}}
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': docOverviewFlag}">
+              {{documentSizeData.familyMemberCount}}
+
+            </div>
+          </div>
         </h3>
       </div>
       <div class="col-md-6 pt-24 pb-24 bl-half bb-half">
-        <p class="m-0 text-primitive roboto f-400 lh-16">Total clients</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8">{{documentSizeData.totalClients}}</h3>
+        <p class="m-0 text-primitive roboto f-400 lh-16">Total <br>clients</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': docOverviewFlag}">
+              {{documentSizeData.totalClients}}
+
+            </div>
+          </div>
+        </h3>
       </div>
       <div class="col-md-6 pt-24 pb-24 pl-8">
-        <p class="m-0 text-primitive roboto f-400 lh-16">Total size</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8">{{documentSizeData.totalMbs}} Mbs</h3>
+        <p class="m-0 text-primitive roboto f-400 lh-16">Total <br>size</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': docOverviewFlag}">
+              {{documentSizeData.totalMbs}} Mbs
+            </div>
+          </div>
+        </h3>
       </div>
       <div class="col-md-6 pt-24 pb-24 bl-half">
         <p class="m-0 text-primitive roboto f-400 lh-16">Total documents</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8">{{documentSizeData.totalDocs}}</h3>
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': docOverviewFlag}">
+              {{documentSizeData.totalDocs}}
+            </div>
+          </div>
+        </h3>
       </div>
     </div>
   </div>
@@ -292,7 +391,11 @@
                 <div class="w-180 b-a br-10">
                   <div class="row">
                     <div class="col-md-9 p-0">
-                      <p class="m-0 pl-10 pt-10 roboto f-400">{{singleMember.displayName}}</p>
+                      <p *ngIf="!singleMember.shortName" class="m-0 pl-10 pt-10 roboto f-400">
+                        {{singleMember.displayName}}</p>
+                      <p *ngIf="singleMember.shortName" matTooltip="{{singleMember.displayName}}"
+                        class="m-0 pl-10 pt-10 roboto f-400 c-p">{{singleMember.shortName}}...
+                      </p>
                       <p *ngIf="singleMember.userType==2" class="m-0 pl-10 roboto f-400 f-12 text-custom">Group head</p>
                       <p *ngIf="singleMember.userType==3" class="m-0 pl-10 roboto f-400 f-12 text-custom">
                         {{singleMember.displayName}}</p>
@@ -312,10 +415,15 @@
                       <p class="m-0 f-12 lh-16 roboto f-400 f-12">
                         <span *ngIf="singleMember.daysToGo==0">Today</span>
                         <span *ngIf="singleMember.daysToGo==1">Tommorrow</span>
-                        <span *ngIf="singleMember.daysToGo!=0 && singleMember.daysToGo!=1">In {{singleMember.daysToGo}}
+                        <span
+                          *ngIf="singleMember.daysToGo!=0 && singleMember.daysToGo!=1 && singleMember.daysToGo!='N/A'">In
+                          {{singleMember.daysToGo}}
                           days</span>
+                        <span *ngIf="singleMember.daysToGo=='N/A'">{{singleMember.daysToGo}}
+                        </span>
                       </p>
-                      <p class="m-0 f-12 lh-16 roboto text-custom f-400 f-12">{{singleMember.age}} years</p>
+                      <p *ngIf="singleMember.daysToGo!='N/A'" class="m-0 f-12 lh-16 roboto text-custom f-400 f-12">
+                        {{singleMember.age}} years</p>
                     </div>
                   </div>
                 </div>
@@ -386,7 +494,7 @@
             <ng-container matColumnDef="position">
               <th mat-header-cell *matHeaderCellDef class="br"> Client</th>
               <td mat-cell *matCellDef="let element" class="br">
-                <div class="bar"> {{element.position}} </div>
+                <div class="bar w-100"> {{element.position}} </div>
               </td>
             </ng-container>
 
@@ -415,7 +523,7 @@
             <ng-container matColumnDef="weight">
               <th mat-header-cell *matHeaderCellDef class="br"> Assigned to</th>
               <td mat-cell *matCellDef="let element" class="br">
-                <div class="bar"> {{element.weight}} </div>
+                <div class="bar w-100"> {{element.weight}} </div>
               </td>
             </ng-container>
 
@@ -612,33 +720,42 @@
           <p class="m-0 f-400 roboto text-black">Last 7 days</p>
         </div>
         <div class="col-md-12 p-0 pt-10">
-          <table mat-table appSkeletonLoading [appSkeletonLoading]="last7DaysFlag" class="skeletonAnimation"
+          <table mat-table [appSkeletonLoading]="last7DaysFlag" appSkeletonLoading class="skeletonAnimation"
             [dataSource]="bseData" id="table-low">
 
             <ng-container matColumnDef="position">
               <th mat-header-cell *matHeaderCellDef class="br"> BSE Star MF</th>
               <td mat-cell *matCellDef="let element;index as i" class="br">
-                <span *ngIf="i==0">Pending</span>
-                <span *ngIf="i==1">Rejection</span>
+                <div class="w-100">
+                  <span *ngIf="i==0">Pending</span>
+                  <span *ngIf="i==1">Rejection</span>
+                </div>
               </td>
             </ng-container>
 
             <!-- Name Column -->
             <ng-container matColumnDef="name">
               <th mat-header-cell *matHeaderCellDef class="br"> UCC</th>
-              <td mat-cell *matCellDef="let element" class="br"> {{element.InnOrUcc}} </td>
+              <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar w-100"><span *ngIf="!last7DaysFlag">{{element.InnOrUcc?element.InnOrUcc:0}}</span></div>
+              </td>
             </ng-container>
 
             <!-- Weight Column -->
             <ng-container matColumnDef="weight">
               <th mat-header-cell *matHeaderCellDef class="br"> Mandate</th>
-              <td mat-cell *matCellDef="let element" class="br"> {{element.mandate}} </td>
+              <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar w-100"><span *ngIf="!last7DaysFlag">{{element.mandate?element.mandate:0}}</span> </div>
+              </td>
             </ng-container>
 
             <!-- Symbol Column -->
             <ng-container matColumnDef="symbol">
               <th mat-header-cell *matHeaderCellDef class="br"> Transaction</th>
-              <td mat-cell *matCellDef="let element" class="br"> {{element.transact}} </td>
+              <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar w-100"><span *ngIf="!last7DaysFlag"> {{element.transact?element.transact:0}}</span>
+                </div>
+              </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns3"></tr>
@@ -650,27 +767,38 @@
             <ng-container matColumnDef="position">
               <th mat-header-cell *matHeaderCellDef class="br"> NSE NMF II</th>
               <td mat-cell *matCellDef="let element;index as i" class="br">
-                <span *ngIf="i==0">Pending</span>
-                <span *ngIf="i==1">Rejection</span>
+                <div class=" w-100">
+                  <span *ngIf="i==0">Pending</span>
+                  <span *ngIf="i==1">Rejection</span>
+                </div>
               </td>
             </ng-container>
 
             <!-- Name Column -->
             <ng-container matColumnDef="name">
               <th mat-header-cell *matHeaderCellDef class="br"> IIN</th>
-              <td mat-cell *matCellDef="let element" class="br"> {{element.InnOrUcc}} </td>
+              <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar w-100">
+                  <span *ngIf="!last7DaysFlag"> {{element.InnOrUcc?element.InnOrUcc:0}}</span> </div>
+
+              </td>
             </ng-container>
 
             <!-- Weight Column -->
             <ng-container matColumnDef="weight">
               <th mat-header-cell *matHeaderCellDef class="br"> Mandate</th>
-              <td mat-cell *matCellDef="let element" class="br"> {{element.mandate}} </td>
+              <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar w-100"><span *ngIf="!last7DaysFlag"> {{element.mandate?element.mandate:0}}</span> </div>
+              </td>
             </ng-container>
 
             <!-- Symbol Column -->
             <ng-container matColumnDef="symbol">
               <th mat-header-cell *matHeaderCellDef class="br"> Transaction</th>
-              <td mat-cell *matCellDef="let element" class="br"> {{element.transact}} </td>
+              <td mat-cell *matCellDef="let element" class="br">
+                <div class="bar w-100">
+                  <span *ngIf="!last7DaysFlag"> {{element.transact?element.transact:0}}</span> </div>
+              </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns4"></tr>
@@ -1025,8 +1153,8 @@
           <button mat-stroked-button class="advisor-view-all">View All</button>
         </div>
         <div class="col-md-12 p-0 pt-10">
-          <table mat-table [appSkeletonLoading]="isLoading" appSkeletonLoading class="skeletonAnimation"
-            [dataSource]="aumReconList" id="table-low">
+          <table *ngIf="aumReconList.length>0" mat-table [appSkeletonLoading]="aumFlag" appSkeletonLoading
+            class="skeletonAnimation" [dataSource]="aumReconList" id="table-low">
 
             <ng-container matColumnDef="position">
               <th mat-header-cell *matHeaderCellDef class="br"> RTA</th>
@@ -1072,14 +1200,17 @@
             <ng-container matColumnDef="report">
               <th mat-header-cell *matHeaderCellDef> Report</th>
               <td mat-cell *matCellDef="let element" class="text-primary">
-                <div class="bar">Report</div>
+                <div class="bar">
+                  <span *ngIf="!aumFlag">Report</span></div>
               </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns7"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns7;"></tr>
           </table>
-
+          <div *ngIf="aumReconList.length==0" class="noDataFound">
+            <img src="assets/images/svg/run.svg">
+          </div>
         </div>
       </div>
 

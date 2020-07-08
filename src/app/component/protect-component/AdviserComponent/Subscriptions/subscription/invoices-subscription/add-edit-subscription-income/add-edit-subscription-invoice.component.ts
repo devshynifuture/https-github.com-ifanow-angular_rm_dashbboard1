@@ -7,6 +7,7 @@ import { SubscriptionInject } from '../../../subscription-inject.service';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { MatInput } from '@angular/material';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-add-edit-subscription-invoice',
@@ -79,7 +80,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
   dueDate: any;
   selectedService: any;
 
-  constructor(public enumService: EnumServiceService, private fb: FormBuilder, private subService: SubscriptionService,
+  constructor(public enumService: EnumServiceService, private datePipe: DatePipe, private fb: FormBuilder, private subService: SubscriptionService,
     public subInjectService: SubscriptionInject) {
   }
 
@@ -327,7 +328,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
         discount: this.editPayment.value.discount == '' ? 0 : this.editPayment.value.discount,
         finalAmount: parseInt(this.finAmount),
         invoiceDate: this.editPayment.value.invoiceDate,
-        dueDate: this.editPayment.value.dueDate,
+        dueDate: new Date(this.editPayment.value.dueDate).setDate(new Date(this.editPayment.value.dueDate).getDate() + 1),
         igst: (this.editPayment.value.taxStatus == 'IGST(18%)') ? 18 : null,
         cgst: (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? 9 : null,
         sgst: (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? 9 : null,
@@ -337,6 +338,7 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
         footnote: this.editPayment.value.footnote,
         terms: this.editPayment.value.terms
       };
+
       let service;
       if (this.storeData.id == 0 || this.storeData.id == null) {
         obj['advisorBillerProfileId'] = (!this.storeData.advisorBillerProfileId) ? this.advisorBillerProfileId : this.storeData.advisorBillerProfileId,
