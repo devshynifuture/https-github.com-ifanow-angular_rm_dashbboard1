@@ -48,16 +48,27 @@ export class GmailDatePipe implements PipeTransform {
             for (const i in intervals) {
                 counter = Math.floor(seconds / intervals[i]);
 
-                if (counter > 0)
+                if (counter > 0) {
                     if (counter === 1) {
-                        return counter + ' ' + i + ' ago'; // singular (1 day ago)
+                        let val = this.returnDateFunc(i, value);
+                        return val ? val : counter + ' ' + i + ' ago'; // if false singular (1 day ago)
                     } else {
-                        return counter + ' ' + i + 's ago'; // plural (2 days ago)
+                        let val = this.returnDateFunc(i, value);
+                        return val ? val : counter + ' ' + i + 's ago'; // if false plural (2 days ago)
                     }
+                }
+
             }
+        }
+    }
+
+    returnDateFunc(i, value) {
+        if (i === 'week' || i === 'year' || i === 'month') {
             let date = new Date(parseInt(value));
             let returnVal = date.getDate() + " " + this.monthArray[date.getMonth() + 1] + " " + date.getFullYear();
             return returnVal;
+        } else {
+            return false;
         }
     }
 

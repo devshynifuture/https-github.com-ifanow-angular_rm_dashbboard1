@@ -348,7 +348,7 @@
 
             </table>
 
-            <div class="mt-10">
+            <div *ngIf="storeData.feeCalculation" class="mt-10">
               <div class="row b-a bg-grey lter ">
                 <div class="col-md-10 d-flex  align-items-center">
                   <p class="m-0 text-black f-600  ">Fee calculation - Attachment</p>
@@ -360,13 +360,13 @@
               </div>
             </div>
 
-            <div class="row">
+            <div *ngIf="showPaymentRecive == true" class="row">
               <div class="col-md-12 p-0">
                 <h3 class="mt-20 mb-20">Payments recieved</h3>
               </div>
             </div>
 
-            <table [dataSource]="dataSource" class="" id="table-low" mat-table>
+            <table *ngIf="showPaymentRecive == true" [dataSource]="dataSource" class="" id="table-low" mat-table>
               <ng-container matColumnDef="date">
                 <th *matHeaderCellDef mat-header-cell>Date</th>
                 <td *matCellDef="let element" mat-cell> {{element.paymentDate | date:'dd/MM/yyyy'}}
@@ -634,7 +634,7 @@
         </tr>
       </table>
 
-      <div class="mt-10 vaibahv">
+      <div *ngIf="storeData.feeCalculation" class="mt-10 vaibahv">
         <div class="row b-a bg-grey lter">
           <div class="col-md-10 d-flex  align-items-center">
             <p class="m-0 text-black f-600 ">Fee calculation - Attachment</p>
@@ -646,14 +646,14 @@
         </div>
       </div>
 
-      <div class="row">
+      <div *ngIf="showPaymentRecive == true" class="row">
         <div class="col-md-12 p-0">
           <h3 class="mt-20 mb-20">Payments recieved</h3>
         </div>
       </div>
 
 
-      <table [dataSource]="dataSource" class="" id="table-low" mat-table>
+      <table *ngIf="showPaymentRecive == true" [dataSource]="dataSource" class="" id="table-low" mat-table>
         <ng-container matColumnDef="date">
           <th *matHeaderCellDef mat-header-cell>Date</th>
           <td *matCellDef="let element" mat-cell> {{element.paymentDate | date:'dd/MM/yyyy'}}
