@@ -758,7 +758,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getTotalRecivedByDash() {
-    this.isLoading = true;
+    // this.isLoading = true;
     const beginDate = new Date();
     beginDate.setMonth(beginDate.getMonth() - 1);
     const obj = {
