@@ -25,7 +25,7 @@ export class PlanService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_GLOBAL_GROWTH_RATE, data)
   }
   deleteIncome(data) {
-    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_INCOME, data)
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_INCOME+ 'id=' + data,'')
   }
   getRiskProfile(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_RISK_PROFILE, data)

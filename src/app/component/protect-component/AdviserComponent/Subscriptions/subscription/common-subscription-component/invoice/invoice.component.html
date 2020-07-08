@@ -571,13 +571,13 @@
                   <span [value]="storeData.discount" appFormatNumber>{{formatter(storeData.discount)}}</span>
                 </td>
               </tr>
-              <tr>
+              <tr *ngIf="storeData.igst!=0">
                 <td style=" text-align: right;padding: 8px;font-size: 14px;">IGST ({{storeData.igst}}%)</td>
                 <td style=" text-align: right;padding: 8px;font-size: 14px;"> <span>&#8377;</span><span appFormatNumber
                     [value]="(storeData.subTotal-storeData.discount)*18/100">₹{{formatter((storeData.subTotal - storeData.discount) * 18 / 100)}}</span>
                 </td>
               </tr>
-              <tr>
+              <tr *ngIf="storeData.cgst!=0">
                 <td style=" text-align: right;padding: 8px;font-size: 14px;"> CGST ({{storeData.cgst}}%)</td>
                 <td style=" text-align: right;padding: 8px;font-size: 14px;"> <span>&#8377;</span><span
                     [value]="(storeData.subTotal-storeData.discount)*9/100"

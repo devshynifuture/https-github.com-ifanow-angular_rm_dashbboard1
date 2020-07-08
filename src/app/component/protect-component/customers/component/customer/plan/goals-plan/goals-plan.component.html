@@ -184,7 +184,34 @@
                     <div cdkDropList id="allottedList" [cdkDropListData]="todo" [cdkDropListSortingDisabled]="true"
                         (cdkDropListDropped)="drop($event)" (cdkDropListEntered)="logger($event)"
                         class="hide-placeholder">
-                        <div class="row height40 bl-1 bb-1 br bg-white">
+                        <div class="row height40 bl-1 bb-1 br bg-white" [hidden]="!loaderFn.loading">
+                            <div class="col-md-3 d-flex align-items-center">
+                                <div class="relClass">
+                                    <div class="bar height24"></div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-3 d-flex align-items-center">
+                                <div class="relClass">
+                                    <div class="bar height24"></div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-3 d-flex align-items-center">
+                                <div class="relClass">
+                                    <div class="bar height24"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3 d-flex align-items-center justify-content-between  ">
+                                <div class="relClass">
+                                    <div class="bar height24"></div>
+                                </div>
+                                <img src="/assets/images/svg/dot-menu.svg" class="c-p">
+                            </div>
+                        </div>
+
+                        <div class="row height40 bl-1 bb-1 br bg-white" [hidden]="loaderFn.loading">
                             <div class="col-md-3 d-flex align-items-center">
                                 <div class="relClass">
                                     <div class="bar">
@@ -220,24 +247,6 @@
                                 <img src="/assets/images/svg/dot-menu.svg" class="c-p">
 
                             </div>
-
-
-
-                            <!-- <div class="col-md-3">
-                                <div class="row">
-                                    <div class="col-md-11  d-flex align-items-center p-0">
-                                        <div class="relClass">
-                                            <div class="bar">
-                                                <p class="m-0 roboto ">5,28,000 </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-1  d-flex align-items-end p-0">
-                                        <mat-icon class="c-p">more_vert</mat-icon>
-                                    </div>
-                                </div>
-                            </div> -->
-
                         </div>
                     </div>
 
@@ -358,7 +367,7 @@
                         <div class="col-md-12 p-0  skeletonAnimation" appSkeletonLoading
                             [appSkeletonLoading]="loaderFn.loading">
 
-                            <div class="imgBoxGoals">
+                            <div class="imgBoxGoals" [hidden]="loaderFn.loading">
                                 <img [src]="selectedGoal.img">
                             </div>
 
@@ -385,8 +394,8 @@
                             </div>
 
 
-                            <div class="btnBox">
-                                <button mat-stroked-button class="in-btn "
+                            <div class="btnBox" [hidden]="loaderFn.loading">
+                                <button mat-stroked-button class="in-btn"
                                     (click)="openInSideBar(null, 'openallocations')">
                                     <img class="ml-8" src="/assets/images/svg/btn-links.svg">Allocations</button>
 
@@ -396,7 +405,7 @@
                             </div>
 
 
-                            <div class="btnBox">
+                            <div class="btnBox" [hidden]="loaderFn.loading">
                                 <button mat-stroked-button class="in-btn" (click)="openInSideBar(null, 'openKeyinfo')">
                                     <img class="ml-8" src="/assets/images/svg/filter-schemes.svg">Key info</button>
                                 <button mat-stroked-button class="in-btn-two"
@@ -405,7 +414,7 @@
                             </div>
 
 
-                            <div class="btnBox">
+                            <div class="btnBox" [hidden]="loaderFn.loading">
                                 <button mat-stroked-button class="in-btn">
                                     <img class="ml-8" src="/assets/images/svg/btn-links.svg">Action plan</button>
                                 <button mat-stroked-button class="in-btn-two"
