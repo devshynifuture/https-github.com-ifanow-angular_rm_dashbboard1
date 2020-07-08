@@ -152,6 +152,7 @@ export class DashboardComponent implements OnInit {
   isKeyMatrix: boolean;
   subOverviewFlag: boolean;
   docOverviewFlag: boolean;
+  isBirhtdayLoader: boolean;
 
   constructor(
     public dialog: MatDialog, private subService: SubscriptionService,
@@ -438,6 +439,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getBirthdayOrAnniversary() {
+    this.isBirhtdayLoader = true;
     const toDate = new Date();
     toDate.setDate(new Date().getDate() + 7);
     const obj = {
@@ -448,6 +450,7 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getBirthdayOrAnniversary(obj).subscribe(
       data => {
         if (data) {
+          this.isBirhtdayLoader = false;
           data.forEach(element => {
             if (element.displayName.length > 15) {
               element['shortName'] = element.displayName.substr(0, element.name.indexOf(' '));
