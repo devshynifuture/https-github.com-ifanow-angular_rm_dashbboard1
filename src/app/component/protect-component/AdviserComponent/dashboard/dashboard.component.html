@@ -380,7 +380,7 @@
           <h5 class="f-500 roboto text-black m-0 pb-10">Birthdays & Anniversaries</h5>
           <div class="family-details-advisor">
             <div class="row no-wrap">
-              <div *ngFor="let singleMember of birthdayAnniList" class=" pl-5 pr-5">
+              <!-- <div *ngFor="let singleMember of birthdayAnniList" class=" pl-5 pr-5">
                 <div class="w-180 b-a br-10">
                   <p class="m-0 pl-10 pt-10 roboto f-400">{{singleMember.displayName}}</p>
                   <p class="m-0 pl-10 roboto f-400 f-12 text-custom" *ngIf="singleMember.clientId>0">Group head</p>
@@ -400,7 +400,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> -->
 
               <div *ngFor="let singleMember of birthdayAnniList" class="pr-5 pl-5">
                 <div class="w-180 b-a br-10">
@@ -492,17 +492,14 @@
 
             </div>
 
-            <!-- staic loader -->
-            <!-- <div class="row no-wrap">
+            <div *ngIf="birthdayAnniList==undefined" class="row no-wrap">
               <div class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isBirhtdayLoader">
                 <div class="pr-5 d-flex pl-5">
                   <div class="w-180 b-a br-10">
                     <div class="relClass pl-10 pr-10 pt-10">
-                      <div class="bar h-24">
+                      <div class="bar h-24" [ngClass]="{'height24': isBirhtdayLoader}">
                         <p class="m-0 pl-10 pt-10 roboto f-400">
-
-                          Ameen Sahani</p>
-                        <p class="m-0 pl-10 roboto f-400 f-12 text-custom">Mohit Sahani (Father)</p>
+                        </p>
                       </div>
                     </div>
 
@@ -511,11 +508,12 @@
                         <div class="row pt-6 pb-10">
                           <div class="col-md-5 pl-10 pr-10">
 
-                            <img src="/assets/images/people.png">
+                            <img *ngIf="!isBirhtdayLoader" src="/assets/images/people.png">
                           </div>
                           <div class="col-md-7 pl-0 pt-8">
-                            <p class="m-0 f-12 lh-16 roboto f-400 f-12">In 4 days</p>
-                            <p class="m-0 f-12 lh-16 roboto text-custom f-400 f-12">46 years</p>
+                            <p *ngIf="!isBirhtdayLoader" class="m-0 f-12 lh-16 roboto f-400 f-12">In 4 days</p>
+                            <p *ngIf="!isBirhtdayLoader" class="m-0 f-12 lh-16 roboto text-custom f-400 f-12">46 years
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -525,10 +523,11 @@
                   <div class="w-180 b-a br-10">
                     <div class="relClass pl-10 pr-10 pt-10">
                       <div class="bar h-24">
-                        <p class="m-0 pl-10 pt-10 roboto f-400">
+                        <p *ngIf="!isBirhtdayLoader" class="m-0 pl-10 pt-10 roboto f-400">
 
                           Ameen Sahani</p>
-                        <p class="m-0 pl-10 roboto f-400 f-12 text-custom">Mohit Sahani (Father)</p>
+                        <p class="m-0 pl-10 roboto f-400 f-12 text-custom" *ngIf="!isBirhtdayLoader">Mohit Sahani
+                          (Father)</p>
                       </div>
                     </div>
 
@@ -537,11 +536,12 @@
                         <div class="row pt-6 pb-10">
                           <div class="col-md-5 pl-10 pr-10">
 
-                            <img src="/assets/images/people.png">
+                            <img *ngIf="!isBirhtdayLoader" src="/assets/images/people.png">
                           </div>
                           <div class="col-md-7 pl-0 pt-8">
-                            <p class="m-0 f-12 lh-16 roboto f-400 f-12">In 4 days</p>
-                            <p class="m-0 f-12 lh-16 roboto text-custom f-400 f-12">46 years</p>
+                            <p *ngIf="!isBirhtdayLoader" class="m-0 f-12 lh-16 roboto f-400 f-12">In 4 days</p>
+                            <p *ngIf="!isBirhtdayLoader" class="m-0 f-12 lh-16 roboto text-custom f-400 f-12">46 years
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -550,11 +550,12 @@
                   </div>
                   <div class="w-180 b-a br-10">
                     <div class="relClass pl-10 pr-10 pt-10">
-                      <div class="bar h-24">
-                        <p class="m-0 pl-10 pt-10 roboto f-400">
+                      <div class="bar h-24" [ngClass]="{'height24': isBirhtdayLoader}">
+                        <p *ngIf="!isBirhtdayLoader" class="m-0 pl-10 pt-10 roboto f-400">
 
                           Ameen Sahani</p>
-                        <p class="m-0 pl-10 roboto f-400 f-12 text-custom">Mohit Sahani (Father)</p>
+                        <p *ngIf="!isBirhtdayLoader" class="m-0 pl-10 roboto f-400 f-12 text-custom">Mohit Sahani
+                          (Father)</p>
                       </div>
                     </div>
 
@@ -563,11 +564,12 @@
                         <div class="row pt-6 pb-10">
                           <div class="col-md-5 pl-10 pr-10">
 
-                            <img src="/assets/images/people.png">
+                            <img *ngIf="!isBirhtdayLoader" src="/assets/images/people.png">
                           </div>
                           <div class="col-md-7 pl-0 pt-8">
-                            <p class="m-0 f-12 lh-16 roboto f-400 f-12">In 4 days</p>
-                            <p class="m-0 f-12 lh-16 roboto text-custom f-400 f-12">46 years</p>
+                            <p *ngIf="!isBirhtdayLoader" class="m-0 f-12 lh-16 roboto f-400 f-12">In 4 days</p>
+                            <p *ngIf="!isBirhtdayLoader" class="m-0 f-12 lh-16 roboto text-custom f-400 f-12">46 years
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -577,7 +579,7 @@
 
                 </div>
               </div>
-            </div> -->
+            </div>
           </div>
         </div>
       </div>

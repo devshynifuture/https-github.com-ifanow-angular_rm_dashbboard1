@@ -153,8 +153,9 @@ export class DashboardComponent implements OnInit {
   subOverviewFlag: boolean;
   docOverviewFlag: boolean;
   isBirhtdayLoader: boolean;
-isLoading;
-constructor(
+  isLoading;
+  isGoalSummaryLoaderFlag: boolean;
+  constructor(
     public dialog: MatDialog, private subService: SubscriptionService,
     private eventService: EventService,
     private router: Router,
@@ -450,7 +451,7 @@ constructor(
     this.dashboardService.getBirthdayOrAnniversary(obj).subscribe(
       data => {
         if (data) {
-          // this.isBirhtdayLoader = false;
+          this.isBirhtdayLoader = false;
           data.forEach(element => {
             if (element.displayName.length > 15) {
               element['shortName'] = element.displayName.substr(0, element.name.indexOf(' '));
@@ -553,12 +554,14 @@ constructor(
   }
 
   getGoalSummaryData() {
+    this.isGoalSummaryLoaderFlag = true;
     const obj = {
       advisorId: this.advisorId
     }
     this.dashboardService.getGoalSummarydata(obj).subscribe(
       data => {
         if (data) {
+          this.isGoalSummaryLoaderFlag = false;
           this.goalSummaryData = data;
         } else {
 
