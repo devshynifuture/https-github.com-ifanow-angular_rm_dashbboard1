@@ -52,8 +52,8 @@ import { MobileRoutingModule } from './mobile-routing.module';
     EntryComponentsModule,
     AccountEntryModule,
     PlanEntryModule,
-   // CustomersRoutingModule,
-    MobileRoutingModule,
+   CustomersRoutingModule,
+   // MobileRoutingModule,
    
     AdviceEntryModule,
     CustomerOverviewEntryModule,
