@@ -218,7 +218,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
       "familyMemberId": this.singleIndividualIncome.id,
       "clientId": this.clientId,
       "advisorId": this.advisorId,
-      "ownerName": this.singleIndividualIncome.userName,
+      "ownerName": this.singleIndividualIncome.name,
       "monthlyIncome": this.incomeNetForm.get('monthlyAmount').value,
       "incomeStartMonth": new Date(this.incomeNetForm.get('incomeStartDate').value).getMonth(),
       "incomeStartYear": new Date(this.incomeNetForm.get('incomeStartDate').value).getFullYear(),
