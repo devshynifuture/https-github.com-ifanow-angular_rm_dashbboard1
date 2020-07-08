@@ -153,7 +153,8 @@ export class DashboardComponent implements OnInit {
   subOverviewFlag: boolean;
   docOverviewFlag: boolean;
   isBirhtdayLoader: boolean;
-isLoading;
+  isLoading;
+  showSummaryBar;
 constructor(
     public dialog: MatDialog, private subService: SubscriptionService,
     private eventService: EventService,
