@@ -90,7 +90,8 @@
             <div class="pr-20">
                 <div class="w-240 b-a">
                     <div class="bg-white br-4">
-                        <div class="row pt-12 pb-12" *ngFor="let portData of portFolioData">
+                        <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="sliderConfig" #slickModal2="slick-carousel" (wheel)="carouselWheelEvent(slickModal2, $event)">
+                        <div class="row pt-12 pb-12" ngxSlickItem *ngFor="let portData of portFolioData">
                             <div class="col-9">
                                 <p class="m-0 roboto f-400 text-mob-common">{{portData.assetTypeString}}</p>
                             </div>
@@ -122,6 +123,7 @@
                                 </div>
                             </div>
                         </div>
+                    </ngx-slick-carousel>
                     </div>
                 </div>
             </div>
