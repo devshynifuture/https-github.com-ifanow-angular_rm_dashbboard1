@@ -1,20 +1,21 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { AuthService } from 'src/app/auth-service/authService';
-import { OnlineTransactionService } from '../online-transaction.service';
-import { TransactionEnumService } from '../transaction-enum.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { MatSort, MatTableDataSource, MatDialog } from '@angular/material';
-import { EnumServiceService } from '../../../../../services/enum-service.service';
-import { IinUccCreationComponent } from '../overview-transactions/IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component';
-import { UtilService } from 'src/app/services/util.service';
-import { SubscriptionInject } from '../../Subscriptions/subscription-inject.service';
-import { InvestorDetailComponent } from './investor-detail/investor-detail.component';
-import { FileUploadService } from '../../../../../services/file-upload.service';
-import { apiConfig } from '../../../../../config/main-config';
-import { appConfig } from '../../../../../config/component-config';
-import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
-import { Router } from '@angular/router';
-import { OpenPdfViewComponent } from '../open-pdf-view/open-pdf-view.component';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {AuthService} from 'src/app/auth-service/authService';
+import {OnlineTransactionService} from '../online-transaction.service';
+import {TransactionEnumService} from '../transaction-enum.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {MatSort, MatTableDataSource, MatDialog} from '@angular/material';
+import {EnumServiceService} from '../../../../../services/enum-service.service';
+import {IinUccCreationComponent} from '../overview-transactions/IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component';
+import {UtilService} from 'src/app/services/util.service';
+import {SubscriptionInject} from '../../Subscriptions/subscription-inject.service';
+import {InvestorDetailComponent} from './investor-detail/investor-detail.component';
+import {FileUploadService} from '../../../../../services/file-upload.service';
+import {apiConfig} from '../../../../../config/main-config';
+import {appConfig} from '../../../../../config/component-config';
+import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
+import {Router} from '@angular/router';
+import {OpenPdfViewComponent} from '../open-pdf-view/open-pdf-view.component';
+
 @Component({
   selector: 'app-investors-transactions',
   templateUrl: './investors-transactions.component.html',
@@ -29,7 +30,7 @@ export class InvestorsTransactionsComponent implements OnInit {
   advisorId: any;
   clientId;
   filterData: any;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
   noData: string;
   innUccPendindList: any;
   credentialData: any;
@@ -37,14 +38,16 @@ export class InvestorsTransactionsComponent implements OnInit {
   isPendingData = false;
   isLoading = false;
   isAdvisorSection = true;
+
   // dataSource = ELEMENT_DATA;
   constructor(private onlineTransact: OnlineTransactionService,
-    private eventService: EventService,
-    public dialog: MatDialog,
-    private enumServiceService: EnumServiceService,
-    private subInjectService: SubscriptionInject,
-    private router: Router) {
+              private eventService: EventService,
+              public dialog: MatDialog,
+              private enumServiceService: EnumServiceService,
+              private subInjectService: SubscriptionInject,
+              private router: Router) {
   }
+
   ngOnInit() {
     const routeName = this.router.url.split('/')[1];
     if (routeName == 'customer') {
@@ -56,6 +59,7 @@ export class InvestorsTransactionsComponent implements OnInit {
     // this.getMappedData();
     this.getFilterOptionData();
   }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -64,20 +68,26 @@ export class InvestorsTransactionsComponent implements OnInit {
       this.noData = 'No investors found';
     }
   }
+
   openPdfPopup() {
     const dialogRef = this.dialog.open(OpenPdfViewComponent, {
       width: '500px',
       height: '300px',
     });
   }
+
   refresh(flag) {
     this.dontHide = true;
     if (this.isPendingData) {
       this.getIINUCC();
     } else {
-      this.getMappedData();
+      this.isLoading = true;
+      this.dataSource.data = [{}, {}, {}];
+      this.isPendingData = false;
+      this.updateAllNseClients();
     }
   }
+
   getFilterOptionData() {
     this.isLoading = true;
     this.dataSource.data = [{}, {}, {}];
@@ -94,6 +104,7 @@ export class InvestorsTransactionsComponent implements OnInit {
       }
     );
   }
+
   getFilterOptionDataRes(data) {
     if (data) {
       this.credentialData = data;
@@ -105,6 +116,7 @@ export class InvestorsTransactionsComponent implements OnInit {
     }
     // this.filterData = TransactionEnumService.setPlatformEnum(data);
   }
+
   // sortDataFilterWise() {
   //   (this.type == '1') ? this.getMappedData() : this.getUnmappedData();
   // }
@@ -146,6 +158,35 @@ export class InvestorsTransactionsComponent implements OnInit {
       );
     }
   }
+
+  autoRemapClient() {
+    const obj = {
+      advisorId: AuthService.getAdminId(),
+    };
+    this.onlineTransact.autoRemapClientsToClientCode(obj).subscribe(
+      data => {
+        this.getMappedData();
+      },
+      err => {
+        this.getMappedData();
+      }
+    );
+  }
+
+  updateAllNseClients() {
+    const obj = {
+      advisorId: AuthService.getAdminId(),
+    };
+    this.onlineTransact.updateAllNseClients(obj).subscribe(
+      data => {
+        this.autoRemapClient();
+      },
+      err => {
+        this.autoRemapClient();
+      }
+    );
+  }
+
   handleMappedClientRes(data) {
     if (data) {
       data.forEach(singleData => {
@@ -164,6 +205,7 @@ export class InvestorsTransactionsComponent implements OnInit {
     }
     this.isLoading = false;
   }
+
   getIINUCC() {
     this.dontHide = true;
     this.isLoading = true;
@@ -195,6 +237,7 @@ export class InvestorsTransactionsComponent implements OnInit {
       }
     );
   }
+
   openNewCustomerIIN() {
     const fragmentData = {
       flag: 'addNewCustomer',
@@ -214,6 +257,7 @@ export class InvestorsTransactionsComponent implements OnInit {
       }
     );
   }
+
   getFileDetails(e) {
     console.log('file', e);
     const file = e.target.files[0];
@@ -238,6 +282,7 @@ export class InvestorsTransactionsComponent implements OnInit {
         }
       });
   }
+
   openInvestorDetail(data) {
     if (this.isLoading || !this.isPendingData || !this.isAdvisorSection) {
       return;

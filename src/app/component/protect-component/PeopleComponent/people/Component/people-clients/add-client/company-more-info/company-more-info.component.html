@@ -23,7 +23,8 @@
     </div>
     <div class="row pt-28">
         <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-20">Authorized person Name</h5>
+            <h5 class="m-0 pt-20" *ngIf="companyIndividualData.clientType==3">Authorized person name</h5>
+            <h5 class="m-0 pt-20" *ngIf="companyIndividualData.clientType==4">Proprietorship name</h5>
             <!-- <p class="m-0 f-12 text-custom">This will display everywhere</p> -->
         </div>
         <div class="col-md-6 p-0">

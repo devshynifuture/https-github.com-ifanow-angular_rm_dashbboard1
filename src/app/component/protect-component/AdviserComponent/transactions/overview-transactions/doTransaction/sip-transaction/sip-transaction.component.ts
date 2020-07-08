@@ -705,6 +705,7 @@ export class SipTransactionComponent implements OnInit {
       this.sipTransaction.controls.folioSelection.setValue('1')
       this.filterSchemeList = of([{'schemeName': this.schemeName}])
       this.sipTransaction.controls.schemeSip.setValue({'schemeName': this.schemeName})
+      this.sipTransaction.controls['schemeSip'].disable(); 
       Object.assign(this.folioDetails, {folioNumber: this.folioNumber});
       this.scheme ={
         'schemeName': this.schemeName,
