@@ -167,24 +167,24 @@
                     </div>
 
 
-                    <div class="row b-a bg-grey lter">
-                        <div class="col-md-3 p-0">
-                            <p class="roboto m-0 p-8 text-black f-500">Description </p>
+                    <div class="row b-a bg-grey height40 lter">
+                        <div class="col-md-3 d-flex align-items-center">
+                            <p class="roboto m-0 text-black f-500">Description </p>
                         </div>
-                        <div class="col-md-3 p-0">
-                            <p class="roboto m-0 p-8 text-black f-500">Advice </p>
+                        <div class="col-md-3 d-flex align-items-center">
+                            <p class="roboto m-0 text-black f-500">Advice </p>
                         </div>
-                        <div class="col-md-3 p-0">
-                            <p class="roboto m-0 p-8 text-black f-500">Current value </p>
+                        <div class="col-md-3 d-flex align-items-center">
+                            <p class="roboto m-0 text-black f-500">Current value </p>
                         </div>
-                        <div class="col-md-3 p-0">
-                            <p class="roboto m-0 p-8 text-black f-500">Maturity value </p>
+                        <div class="col-md-3 d-flex align-items-center">
+                            <p class="roboto m-0 text-black f-500">Maturity value </p>
                         </div>
                     </div>
                     <div cdkDropList id="allottedList" [cdkDropListData]="todo" [cdkDropListSortingDisabled]="true"
                         (cdkDropListDropped)="drop($event)" (cdkDropListEntered)="logger($event)"
                         class="hide-placeholder">
-                        <div class="row bl-1 bb-1 br bg-white">
+                        <div class="row height40 bl-1 bb-1 br bg-white">
                             <div class="col-md-3 d-flex align-items-center">
                                 <div class="relClass">
                                     <div class="bar">
@@ -207,9 +207,23 @@
                                         <p class="mb-0 roboto">13,000 </p>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div class="col-md-3 d-flex align-items-center justify-content-between  ">
+                                <div class="relClass">
+                                    <div class="bar">
+                                        <p class="m-0 roboto ">5,28,000 </p>
+                                    </div>
+                                </div>
+
+
+                                <img src="/assets/images/svg/dot-menu.svg" class="c-p">
 
                             </div>
-                            <div class="col-md-3">
+
+
+
+                            <!-- <div class="col-md-3">
                                 <div class="row">
                                     <div class="col-md-11  d-flex align-items-center p-0">
                                         <div class="relClass">
@@ -222,7 +236,7 @@
                                         <mat-icon class="c-p">more_vert</mat-icon>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
                         </div>
                     </div>
@@ -236,32 +250,41 @@
                         <div class="col-md-6" id="monthly-chart-container-main"></div>
                         <div class="col-md-6" id="lumpsum-chart-container-main"></div>
                     </div>
-                    <div class="row pt-24 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="loaderFn.loading">
-                        <div class="col-md-9 p-0">
-                            <h5 class="m-0 f-500 pb-8">Planner notes</h5>
+
+                    <div class=" mt-24 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="loaderFn.loading">
+                        <div class="row">
+                            <div class="col-md-9 p-0">
+                                <h5 class="m-0 f-500 pb-8">Planner notes</h5>
+                            </div>
+                            <div class="col-md-3 pL-0 d-flex align-items-center  justify-content-end ">
+                                <p class="m-0 text-primitive ">23/12/2019</p>
+                                <img src="/assets/images/svg/dot-menu.svg" class="c-p ml-16">
+                            </div>
+
                         </div>
-                        <div class="col-md-2 p-0 text-right">
-                            <p class="m-0 text-primitive ">23/12/2019</p>
-                        </div>
-                        <div class="col-md-1 pr-0">
-                            <i class="material-icons c-p right">
-                                more_vert
-                            </i>
-                        </div>
-                        <div class="b-a relClass">
-                            <div class="m-0 p-8 text-black f-14 roboto">
-                                We have given higher allocations to your retirement goal compared to other goals. We
-                                suggest you to first allocate maximum corpus to this goal. We wile update your EPF
-                                contributions too once we have the details of the same.
+                        <div class="row">
+                            <div class="col-md-12 p-0">
+                                <div class="b-a relClass">
+                                    <div class="m-0 p-8 text-black f-14 roboto">
+                                        We have given higher allocations to your retirement goal compared to other
+                                        goals. We
+                                        suggest you to first allocate maximum corpus to this goal. We wile update your
+                                        EPF
+                                        contributions too once we have the details of the same.
+                                    </div>
+                                    <div class="bar82 p-8" [ngClass]="{'height82': loaderFn.loading}">
+                                    </div>
+                                </div>
                             </div>
                         </div>
+
                     </div>
                     <div class="row pt-24">
                         <div class="col-md-11 p-0">
                             <h5 class="m-0 f-500 pb-8">Loan deatils</h5>
                         </div>
-                        <div class="col-md-1 pr-0">
-                            <mat-icon [matMenuTriggerFor]="menu" class="c-p right">more_vert</mat-icon>
+                        <div class="col-md-1 text-right">
+                            <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="c-p">
                             <mat-menu #menu="matMenu">
                                 <button mat-menu-item (click)="openInSideBar(null, 'openEdit')">Edit note</button>
                                 <button mat-menu-item>Hide from client</button>
@@ -329,42 +352,73 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col-width-31 pr-0 pt-20">
-                    <div class="imgBoxGoals">
-                        <img [src]="selectedGoal.img">
-                    </div>
+                    <div class="row">
+                        <div class="col-md-12 p-0  skeletonAnimation" appSkeletonLoading
+                            [appSkeletonLoading]="loaderFn.loading">
+
+                            <div class="imgBoxGoals">
+                                <img [src]="selectedGoal.img">
+                            </div>
+
+                            <div class="relClass">
+                                <div class="bar289" [ngClass]="{'height289': loaderFn.loading}">
+
+                                </div>
+                            </div>
+
+                            <div class=" btnBox relClass">
+                                <div class="bar36" [ngClass]="{'height36': loaderFn.loading}">
+                                </div>
+
+                                <div class="bar36" [ngClass]="{'height36': loaderFn.loading}">
+                                </div>
+                            </div>
+
+                            <div class=" btnBox relClass">
+                                <div class="bar36" [ngClass]="{'height36': loaderFn.loading}">
+                                </div>
+
+                                <div class="bar36" [ngClass]="{'height36': loaderFn.loading}">
+                                </div>
+                            </div>
 
 
-                    <div class="btnBox">
-                        <button mat-stroked-button class="in-btn" (click)="openInSideBar(null, 'openallocations')">
-                            <img class="ml-8" src="/assets/images/svg/btn-links.svg">Allocations</button>
+                            <div class="btnBox">
+                                <button mat-stroked-button class="in-btn"
+                                    (click)="openInSideBar(null, 'openallocations')">
+                                    <img class="ml-8" src="/assets/images/svg/btn-links.svg">Allocations</button>
 
-                        <button mat-stroked-button class="in-btn-two" (click)="openInSideBar(null, 'openMfAllocation')">
-                            <img class="ml-8" src="/assets/images/svg/btn-links.svg">MF allocations</button>
-                    </div>
-
-
-                    <div class="btnBox">
-                        <button mat-stroked-button class="in-btn" (click)="openInSideBar(null, 'openKeyinfo')">
-                            <img class="ml-8" src="/assets/images/svg/filter-schemes.svg">Key info</button>
-                        <button mat-stroked-button class="in-btn-two" (click)="openInSideBar(null, 'openCalculators')">
-                            <img class="ml-8" src="/assets/images/svg/cal-sm.svg">Calculators</button>
-                    </div>
+                                <button mat-stroked-button class="in-btn-two"
+                                    (click)="openInSideBar(null, 'openMfAllocation')">
+                                    <img class="ml-8" src="/assets/images/svg/btn-links.svg">MF allocations</button>
+                            </div>
 
 
-                    <div class="btnBox">
-                        <button mat-stroked-button class="in-btn">
-                            <img class="ml-8" src="/assets/images/svg/btn-links.svg">Action plan</button>
-                        <button mat-stroked-button class="in-btn-two" (click)="openInSideBar(null, 'openPreferences')">
-                            <img class="ml-8" src="/assets/images/svg/3lines.svg">Preferences</button>
-                    </div>
+                            <div class="btnBox">
+                                <button mat-stroked-button class="in-btn" (click)="openInSideBar(null, 'openKeyinfo')">
+                                    <img class="ml-8" src="/assets/images/svg/filter-schemes.svg">Key info</button>
+                                <button mat-stroked-button class="in-btn-two"
+                                    (click)="openInSideBar(null, 'openCalculators')">
+                                    <img class="ml-8" src="/assets/images/svg/cal-sm.svg">Calculators</button>
+                            </div>
 
 
-                    <!-- <div class="row pt-20" *ngIf="selectedGoal">
-                        <div class="col-md-12 right p-0 text-right" (click)="deleteGoal()">
-                            <img src="/assets/images/svg/blue-delete.svg">
+                            <div class="btnBox">
+                                <button mat-stroked-button class="in-btn">
+                                    <img class="ml-8" src="/assets/images/svg/btn-links.svg">Action plan</button>
+                                <button mat-stroked-button class="in-btn-two"
+                                    (click)="openInSideBar(null, 'openPreferences')">
+                                    <img class="ml-8" src="/assets/images/svg/3lines.svg">Preferences</button>
+                            </div>
+
+
+
+
                         </div>
-                    </div> -->
+                    </div>
+
                 </div>
             </div>
         </div>
