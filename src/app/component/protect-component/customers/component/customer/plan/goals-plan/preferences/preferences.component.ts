@@ -208,7 +208,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       advisorId: [this.data.remainingData.advisorId],
       equityAllocation: ['', [Validators.required]],
       debtAllocation: ['', [Validators.required]],
-      progressiveStages: [this.fb.array([])],
+      progressiveStages: this.fb.array([this.createStage()]),
       strategicOrTactical: [this.data.remainingData.strategicOrTactical, [Validators.required]],
       staticOrProgressive: [this.data.remainingData.staticOrProgressive, [Validators.required]],
       goalId: [this.data.remainingData.id],
@@ -220,11 +220,25 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.assetAllocationFG.controls.staticOrProgressive.valueChanges.subscribe(value => {
         if(value == 2) {
+          this.assetAllocationFG.controls.equityAllocation.setValue('');
+          this.assetAllocationFG.controls.debtAllocation.setValue('');
           this.assetAllocationFG.controls.equityAllocation.disable();
           this.assetAllocationFG.controls.debtAllocation.disable();
+          this.progressiveStageArrayControl.enable();
         } else {
           this.assetAllocationFG.controls.equityAllocation.enable();
           this.assetAllocationFG.controls.debtAllocation.enable();
+          this.progressiveStageArrayControl.disable();
+          for(let i = 1; i < this.progressiveStageArrayControl.controls.length; i++) {
+            this.removeStage(i);
+          }
+          this.progressiveStageArrayControl.controls.forEach(control => {
+            control.setValue({
+              stageTime: '',
+              equityAllocation: '',
+              debtAllocation: ''
+            });
+          })
         }
       })
     );
@@ -279,6 +293,20 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       this.barButtonOptions.active = false;
       this.eventService.openSnackBar(err, "Dismiss");
     })
+  }
+
+  get progressiveStageArrayControl(){
+    return this.assetAllocationFG.controls.progressiveStages as FormArray;
+  }
+
+  setOtherBifurcation(mainInput:FormControl, inputToChange:FormControl) {
+    if(mainInput.value <= 100) {
+      const value = 100 - parseInt(mainInput.value);
+      inputToChange.setValue(value);
+    } else {
+      mainInput.setValue(100);
+      inputToChange.setValue(0);
+    }
   }
   // ----------------- asset allocation ----------------------
 
