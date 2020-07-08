@@ -211,7 +211,7 @@ export class GoalsPlanComponent implements OnInit {
     if (goal.singleOrMulti == 1) {
       const goalSubData = goal.singleGoalModel;
       mapData.img = goalSubData.imageUrl;
-      mapData.year = (new Date(goalSubData.goalStartDate).getFullYear()) + ' - ' + (new Date(goalSubData.goalStartDate).getFullYear());
+      mapData.year = (new Date(goalSubData.goalStartDate).getFullYear()).toString();
       mapData.goalName = goalSubData.goalName;
       mapData.gv = goalSubData.goalFV;
       mapData.goalStartDate = goalSubData.goalStartDate;
