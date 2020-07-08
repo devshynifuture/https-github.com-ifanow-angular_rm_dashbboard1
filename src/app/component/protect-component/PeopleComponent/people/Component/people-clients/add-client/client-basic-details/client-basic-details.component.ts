@@ -330,6 +330,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         value: data.pan,
         disabled: this.basicDetailsData.userId ? true : false
       }, [Validators.required, Validators.pattern(this.validatorType.PAN)]],
+      gstinNum: [data.gstin, Validators.required, Validators.pattern('^([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-7]{1})([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$')],
       // taxStatus: [data.taxStatusId ? String(data.taxStatusId) : '', [Validators.required]],
       comOccupation: [(data.occupationId) ? String(data.occupationId) : ''],
       username: [{ value: data.userName, disabled: true }],
@@ -521,6 +522,7 @@ export class ClientBasicDetailsComponent implements OnInit {
 
       if (this.invTypeCategory == 3 || this.invTypeCategory == 4) {
         obj['dateOfBirth'] = this.datePipe.transform(this.nonIndividualForm.value.dateOfIncorporation, 'dd/MM/yyyy')
+        obj['gstin'] = this.nonIndividualForm.controls.gstinNum.value
         obj =
         {
           ...obj,
