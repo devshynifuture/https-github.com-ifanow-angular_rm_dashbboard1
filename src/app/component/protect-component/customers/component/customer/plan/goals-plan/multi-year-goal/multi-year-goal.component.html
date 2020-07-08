@@ -133,8 +133,8 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <img [src]="goalTypeData.imageUrl" *ngIf="!logoImg" (click)="file.click()">
-                    <img [src]="logoImg" alt="" *ngIf="logoImg" style="width: 100%;" (click)="file.click()">
+                    <img [src]="goalTypeData.imageUrl" *ngIf="!logoImg" (click)="file.click()" class="c-p">
+                    <img [src]="logoImg" alt="" *ngIf="logoImg" style="width: 100%;" (click)="file.click()" class="c-p">
                 </div>
                 <input #file (change)="previewGoalImage($event)" accept='image/*'
                     formControlName="logo" type="file" [hidden]="true">

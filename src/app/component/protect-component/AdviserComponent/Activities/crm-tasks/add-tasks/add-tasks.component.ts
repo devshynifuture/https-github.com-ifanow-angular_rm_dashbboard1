@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
+import {Component, OnInit} from '@angular/core';
+import {SubscriptionInject} from '../../../Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-add-tasks',
@@ -8,12 +8,17 @@ import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.s
 })
 export class AddTasksComponent implements OnInit {
 
-  constructor(private subInjectService: SubscriptionInject) { }
+  constructor(private subInjectService: SubscriptionInject) {
+  }
+
+  displayFn = (item) => {
+  };
 
   ngOnInit() {
   }
+
   close(flag) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
 
   getFileData(fileList: FileList) {

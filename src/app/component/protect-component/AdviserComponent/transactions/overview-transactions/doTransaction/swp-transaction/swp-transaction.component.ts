@@ -420,6 +420,7 @@ export class SwpTransactionComponent implements OnInit {
       this.swpTransaction.controls.schemeSelection.setValue('1')
       this.swpTransaction.controls.folioSelection.setValue('1')
       this.swpTransaction.controls.schemeSwp.setValue({ 'schemeName': this.schemeName })
+      this.swpTransaction.controls['schemeSwp'].disable();
       this.filterSchemeList = of([{ 'schemeName': this.schemeName }])
       Object.assign(this.folioDetails, { folioNumber: this.folioNumber });
       this.scheme = {

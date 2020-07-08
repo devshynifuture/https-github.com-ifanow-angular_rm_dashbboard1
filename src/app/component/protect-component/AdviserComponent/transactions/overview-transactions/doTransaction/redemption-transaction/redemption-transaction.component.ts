@@ -222,6 +222,7 @@ export class RedemptionTransactionComponent implements OnInit {
       this.folioDetails = {}
       this.filterSchemeList = of([{'schemeName': this.schemeName}])
       this.redemptionTransaction.controls.schemeRedeem.setValue({'schemeName': this.schemeName})
+      this.redemptionTransaction.controls['schemeRedeem'].disable();
       const obj1 = {
         mutualFundSchemeMasterId: this.mutualFundData.schemeId,
         aggregatorType: this.mfDefault.defaultClient.aggregatorType,
