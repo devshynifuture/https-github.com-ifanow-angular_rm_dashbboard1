@@ -502,10 +502,10 @@ export class DashboardComponent implements OnInit {
           this.bseData = [{}, {}];
         }
       }, err => {
-      this.last7DaysFlag = false;
-      this.nscData = [{}, {}];
-      this.bseData = [{}, {}];
-    }
+        this.last7DaysFlag = false;
+        this.nscData = [{}, {}];
+        this.bseData = [{}, {}];
+      }
     );
   }
 
@@ -543,8 +543,8 @@ export class DashboardComponent implements OnInit {
           this.aumReconList = []
         }
       }, err => {
-        // this.aumFlag = false;
-        // this.aumReconList = []
+        this.aumFlag = false;
+        this.aumReconList = []
       }
     )
   }
