@@ -29,7 +29,7 @@
                             <div class="row pt-8">
                                 <div class="col-md-6 pr-10 pl-0">
                                     <h5 class="m-0 l-18 f-12 text-primitive"> Goal value</h5>
-                                    <h5 class="f-14 m-0"><span class="bar">₹<span
+                                    <h5 class="f-14 m-0"><span class="bar"><span [hidden]="loaderFn.loading">₹</span><span
                                                 appFormatNumber>{{goal.gv}}</span></span>
                                     </h5>
                                 </div>
@@ -84,7 +84,7 @@
                                     <div class="relClass">
                                         <div class="bar" [ngClass]="{'height24': loaderFn.loading}">
                                             <h3 class="m-0  ">
-                                                &#8377;<span appFormatNumber
+                                                <span [hidden]="loaderFn.loading">&#8377;</span><span appFormatNumber
                                                     [value]="selectedGoal?.dashboardData?.futureValue"></span>
                                             </h3>
                                         </div>
@@ -93,9 +93,9 @@
                                 <div class="col-md-6">
                                     <h5 class="f-12 m-0 text-primitive">ACHIEVED</h5>
                                     <div class="relClass">
-                                        <div class="bar">
+                                        <div class="bar" [ngClass]="{'height24': loaderFn.loading}">
                                             <h3 class="m-0  ">
-                                                &#8377;<span appFormatNumber
+                                                <span [hidden]="loaderFn.loading">&#8377;</span><span appFormatNumber
                                                     [value]="selectedGoal.achievedValue"></span>
                                             </h3>
                                         </div>
@@ -184,29 +184,22 @@
                     <div cdkDropList id="allottedList" [cdkDropListData]="todo" [cdkDropListSortingDisabled]="true"
                         (cdkDropListDropped)="drop($event)" (cdkDropListEntered)="logger($event)"
                         class="hide-placeholder">
-                        <div class="row height40 bl-1 bb-1 br bg-white" [hidden]="!loaderFn.loading">
-                            <div class="col-md-3 d-flex align-items-center">
-                                <div class="relClass">
-                                    <div class="bar height24"></div>
-                                </div>
+                        <div class="row height40 bl-1 bb-1 br bg-white" [hidden]="!loaderFn.loading" appSkeletonLoading
+                        [appSkeletonLoading]="loaderFn.loading">
+                            <div class="col-md-3 d-flex align-items-center relClass">
+                                <div class="bar height24"></div>
 
                             </div>
-                            <div class="col-md-3 d-flex align-items-center">
-                                <div class="relClass">
-                                    <div class="bar height24"></div>
-                                </div>
+                            <div class="col-md-3 d-flex align-items-center relClass">
+                                <div class="bar height24"></div>
 
                             </div>
-                            <div class="col-md-3 d-flex align-items-center">
-                                <div class="relClass">
-                                    <div class="bar height24"></div>
-                                </div>
+                            <div class="col-md-3 d-flex align-items-center relClass">
+                                <div class="bar height24"></div>
                             </div>
 
-                            <div class="col-md-3 d-flex align-items-center justify-content-between  ">
-                                <div class="relClass">
-                                    <div class="bar height24"></div>
-                                </div>
+                            <div class="col-md-3 d-flex align-items-center justify-content-between relClass">
+                                <div class="bar height24"></div>
                                 <img src="/assets/images/svg/dot-menu.svg" class="c-p">
                             </div>
                         </div>
@@ -311,21 +304,21 @@
                                 <div class="col-md-4 p-0">
                                     <p class="m-0 f-12 text-primitive">INCOME IN GOAL YEAR</p>
                                     <h5 class="m-0">
-                                        <span class="bar">₹<span appFormatNumber
+                                        <span class="bar"><span [hidden]="loaderFn.loading">₹</span><span appFormatNumber
                                                 [value]="selectedGoal?.remainingData?.loan?.netSalary"></span></span>
                                     </h5>
                                 </div>
                                 <div class="col-md-4 p-0">
                                     <p class="m-0 f-12 text-primitive">HIGHEST EMI AVAILABLE</p>
                                     <h5 class="m-0">
-                                        <span class="bar">₹<span appFormatNumber
+                                        <span class="bar"><span [hidden]="loaderFn.loading">₹</span><span appFormatNumber
                                                 [value]="selectedGoal?.remainingData?.loan?.highestLoanAndEmiEligible?.highest_emi_eligible"></span></span>
                                     </h5>
                                 </div>
                                 <div class="col-md-4 p-0">
                                     <p class="m-0 f-12 text-primitive">HIGHEST LOAN AVAILABLE</p>
                                     <h5 class="m-0">
-                                        <span class="bar">₹<span appFormatNumber
+                                        <span class="bar"><span [hidden]="loaderFn.loading">₹</span><span appFormatNumber
                                                 [value]="selectedGoal?.remainingData?.loan?.highestLoanAndEmiEligible?.highest_loan_eligible"></span></span>
                                     </h5>
                                 </div>
@@ -334,21 +327,21 @@
                                 <div class="col-md-4 p-0">
                                     <p class="m-0 f-12 text-primitive">LOAN TENURE</p>
                                     <h5 class="m-0">
-                                        <span class="bar">₹<span appFormatNumber
+                                        <span class="bar"><span [hidden]="loaderFn.loading">₹</span><span appFormatNumber
                                                 [value]="selectedGoal?.remainingData?.loan?.loanTenure"></span></span>
                                     </h5>
                                 </div>
                                 <div class="col-md-4 p-0">
                                     <p class="m-0 f-12 text-primitive">EMI PAYABLE</p>
                                     <h5 class="m-0">
-                                        <span class="bar">₹<span appFormatNumber
+                                        <span class="bar"><span [hidden]="loaderFn.loading">₹</span><span appFormatNumber
                                                 [value]="selectedGoal?.remainingData?.loan?.emi"></span></span>
                                     </h5>
                                 </div>
                                 <div class="col-md-4 p-0">
                                     <p class="m-0 f-12 text-primitive">LOAN TO BE TAKEN</p>
                                     <h5 class="m-0">
-                                        <span class="bar">₹<span appFormatNumber
+                                        <span class="bar"><span [hidden]="loaderFn.loading">₹</span><span appFormatNumber
                                                 [value]="selectedGoal?.remainingData?.loan?.loanAmount"></span></span>
                                     </h5>
                                 </div>
@@ -371,13 +364,13 @@
                                 <img [src]="selectedGoal.img">
                             </div>
 
-                            <div class="relClass">
+                            <div class="relClass" [hidden]="!loaderFn.loading">
                                 <div class="bar289" [ngClass]="{'height289': loaderFn.loading}">
 
                                 </div>
                             </div>
 
-                            <div class=" btnBox relClass">
+                            <div class=" btnBox relClass" [hidden]="!loaderFn.loading">
                                 <div class="bar36" [ngClass]="{'height36': loaderFn.loading}">
                                 </div>
 
@@ -385,7 +378,7 @@
                                 </div>
                             </div>
 
-                            <div class=" btnBox relClass">
+                            <div class=" btnBox relClass" [hidden]="!loaderFn.loading">
                                 <div class="bar36" [ngClass]="{'height36': loaderFn.loading}">
                                 </div>
 

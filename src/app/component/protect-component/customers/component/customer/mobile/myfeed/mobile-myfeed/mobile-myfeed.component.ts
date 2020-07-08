@@ -11,6 +11,7 @@ import { UtilService } from 'src/app/services/util.service';
   styleUrls: ['./mobile-myfeed.component.scss']
 })
 export class MobileMyfeedComponent implements OnInit {
+  bscData;
   openMenue: boolean = false;
   inputData: any;
   advisorId: any;
@@ -176,6 +177,22 @@ export class MobileMyfeedComponent implements OnInit {
     } else {
       return '';
     }
+  }
+  carouselWheelEvent(carousel, event) {
+    event.preventDefault();
+    if (event.deltaY > 0) {
+      carousel.slickNext();
+    } else {
+      carousel.slickPrev();
+    }
+  }
+  sliderConfig = {
+    slidesToShow: 1,
+    infinite: true,
+    variableWidth: true,
+    outerEdgeLimit: true,
+    "nextArrow": "<div style='position: absolute; top: 35%; right: 0; cursor: pointer;' class='nav-btn classNextArrow next-slide'><img src='/assets/images/svg/next-arrow.svg'></div>",
+    "prevArrow": "<div style='position: absolute; top: 35%; left: -5px; z-index: 1; cursor: pointer;' class='nav-btn classNextArrow next-slide'><img src='/assets/images/svg/pre-arrow.svg'></div>",
   }
 
   loadRecentTransactions() {

@@ -20,7 +20,7 @@
     <div class="pt-90 pl-8 pr-8" *ngIf="openMenue != true">
         <div class="row bg-white br-10">
             <div class="col-12 pt-16 pb-16">
-                <h3 class="m-0 roboto f-500 text-mob-common">Good Evening Rahul Jain</h3>
+                <h3 class="m-0 roboto f-500 text-mob-common">Good Evening {{clientData.name}}</h3>
                 <p class="pt-4 roboto f-400 text-custom m-0">Your personalized money feed is ready!</p>
             </div>
         </div>
@@ -435,15 +435,15 @@
                         <p class="m-0 text-mob-common f-12 roboto  pt-8">Nifty 50</p>
                         <p class="m-0 text-mob-common f-12 roboto pt-8">Nifty 500</p>
                     </div>
-                    <div class="col-4 pl-0 text-right" *ngIf="bse && nifty50 && nifty500Data">
-                        <p class="m-0 text-success f-12 roboto">{{bse.change_in_percentage}}%</p>
-                        <p class="m-0 text-success f-12 roboto pt-8">{{nifty50.change_in_percentage}}%</p>
-                        <p class="m-0 text-success f-12 roboto pt-8">{{nifty500Data.change_in_percentage}}%</p>
+                    <div class="col-4 pl-0 text-right">
+                        <p class="m-0 text-success f-12 roboto">{{(bse)?bse.change_in_percentage:'-'}}%</p>
+                        <p class="m-0 text-success f-12 roboto pt-8">{{(nifty50)?nifty50.change_in_percentage:'-'}}%</p>
+                        <p class="m-0 text-success f-12 roboto pt-8">{{(nifty500Data)?nifty500Data.change_in_percentage:'-'}}%</p>
                     </div>
-                    <div class="col-4 pl-24" *ngIf="bse && nifty50 && nifty500Data">
-                        <p class="m-0 text-mob-common f-12 roboto"> {{bse.current_value}}</p>
-                        <p class="m-0 text-mob-common f-12 roboto pt-8">{{nifty50.current_value}}</p>
-                        <p class="m-0 text-mob-common f-12 roboto pt-8">{{nifty500Data.current_value}}</p>
+                    <div class="col-4 pl-24">
+                        <p class="m-0 text-mob-common f-12 roboto"> {{(bse)?bse.current_value:'-'}}</p>
+                        <p class="m-0 text-mob-common f-12 roboto pt-8">{{(nifty50)?nifty50.current_value:'-'}}</p>
+                        <p class="m-0 text-mob-common f-12 roboto pt-8">{{(nifty500Data)?nifty500Data.current_value:'-'}}</p>
                     </div>
                 </div>
             </div>
