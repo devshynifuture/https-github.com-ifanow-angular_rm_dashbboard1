@@ -132,7 +132,6 @@ export class GoalsPlanComponent implements OnInit {
   loadAllGoals() {
     this.allGoals = [{}, {}, {}];
     this.loaderFn.increaseCounter();
-    this.loaderFn.increaseCounter();
     this.plansService.getAllGoals(this.advisor_client_id).subscribe((data: any[]) => {
       if (data) {
         this.allGoals = data.reverse().map(goal => this.mapGoalDashboardData(goal));
