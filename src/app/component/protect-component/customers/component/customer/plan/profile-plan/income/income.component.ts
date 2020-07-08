@@ -18,7 +18,10 @@ import { ExcelGenService } from 'src/app/services/excel-gen.service';
 export class IncomeComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild('tableEl', { static: false }) tableEl;
-
+  isLoadingUpload;
+  fetchData;
+  getOrgData;
+  totalAmountOutstandingBalance;
   displayedColumns = ['no', 'owner', 'type', 'amt', 'income', 'till', 'rate', 'status', 'icons'];
   // dataSource = new MatTableDataSource(ELEMENT_DATA);
   advisorId: any;
