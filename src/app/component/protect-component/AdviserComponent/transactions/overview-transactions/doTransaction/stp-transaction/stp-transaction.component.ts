@@ -92,6 +92,7 @@ export class StpTransactionComponent implements OnInit {
   @Input()
   set data(data) {
     this.folioList = []
+    this.reInvestmentOpt =[]
     this.transactionSummary = {};
     this.inputData = data;
     this.transactionType = data.transactionType;
@@ -146,8 +147,14 @@ export class StpTransactionComponent implements OnInit {
 
   checkAndResetForm(oldData, newData) {
     if (oldData.defaultCredential.accountType != newData.defaultCredential.accountType) {
-      this.resetForm();
-      this.getSchemeList();
+      if (!this.mutualFundData) {
+        this.resetForm();
+        this.getSchemeList();
+        this.existingSchemeList = [];
+      } else {
+        this.mfDefault = newData
+        this.getDataForm(this.inputData)
+      }
     } else if (oldData.defaultClient.holdingType != newData.defaultClient.holdingType) {
       this.resetForm();
       this.getSchemeList();

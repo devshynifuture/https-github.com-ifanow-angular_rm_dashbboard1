@@ -102,6 +102,7 @@ export class SipTransactionComponent implements OnInit {
   @Input()
   set data(data) {
     this.folioList =[]
+    this.reInvestmentOpt =[]
     this.transactionSummary = {};
     this.inputData = data;
     this.transactionType = data.transactionType;
@@ -313,8 +314,13 @@ export class SipTransactionComponent implements OnInit {
 
   checkAndResetForm(oldData, newData) {
     if (oldData.defaultCredential.accountType != newData.defaultCredential.accountType) {
-      this.resetForm();
-      this.existingSchemeList = [];
+      if (!this.mutualFundData) {
+        this.resetForm();
+        this.existingSchemeList = [];
+      } else {
+        this.mfDefault = newData
+        this.getDataForm(this.inputData,true)
+      }
     } else if (oldData.defaultClient.holdingType != newData.defaultClient.holdingType) {
       if (this.selectScheme == 1) {
         this.resetForm();
@@ -644,16 +650,15 @@ export class SipTransactionComponent implements OnInit {
       this.editedId = data.id;
       this.scheme = data.scheme;
       this.schemeDetails = data.schemeDetails;
-      this.reInvestmentOpt = data.reInvestmentOpt;
+      if(data.reInvestmentOpt){
+        this.reInvestmentOpt = data.reInvestmentOpt;
+      }
       this.folioDetails = data.folioDetails;
       if (this.folioDetails) {
         this.selectedFolio(this.folioDetails);
       }
       this.selectedFreqModel = data.selectedFreqModel;
       this.sipFrequency = data.sipFrequency;
-      this.scheme = data.scheme;
-      this.schemeDetails = data.schemeDetails;
-      this.reInvestmentOpt = data.reInvestmentOpt;
       this.folioDetails = data.folioDetails;
       if (this.folioDetails) {
         this.folioList = [this.folioDetails];
