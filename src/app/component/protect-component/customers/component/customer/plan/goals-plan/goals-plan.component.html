@@ -274,21 +274,21 @@
                         <div class="row">
                             <div class="col-md-12 p-0">
                                 <div class="b-a relClass">
-                                    <div class="m-0 p-8 text-black f-14 roboto">
+                                    <div class="m-0 p-8 text-black f-14 roboto" [hidden]="loaderFn.loading">
                                         We have given higher allocations to your retirement goal compared to other
                                         goals. We
                                         suggest you to first allocate maximum corpus to this goal. We wile update your
                                         EPF
                                         contributions too once we have the details of the same.
                                     </div>
-                                    <div class="bar82 p-8" [ngClass]="{'height82': loaderFn.loading}">
+                                    <div class="bar82 p-8" [ngClass]="{'height82': loaderFn.loading}" [hidden]="!loaderFn.loading">
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                     </div>
-                    <div class="row pt-24">
+                    <div class="row pt-24" *ngIf="selectedGoal?.remainingData?.loan || loaderFn.loading">
                         <div class="col-md-11 p-0">
                             <h5 class="m-0 f-500 pb-8">Loan deatils</h5>
                         </div>
