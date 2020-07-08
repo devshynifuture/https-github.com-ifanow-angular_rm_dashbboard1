@@ -1,4 +1,4 @@
-<div *ngIf="!goalTypeData" class="bg-white " id="ui-add-goals">
+<div *ngIf="!goalTypeData" class="bg-white " id="ui-add-goals" [hidden]="loaderFn.loading">
     <div class="row bg-white bb-1 popup-header-fix w-100">
         <div class="col-md-2 p-0">
             <img class="imgLogo" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
@@ -29,14 +29,50 @@
     </div>
 </div>
 
-<div *ngIf="goalTypeData">
-    <div *ngIf="showGoalType == 'singleYear'">
-        <app-single-goal-year [goalTypeData]="goalTypeData" [familyList]="familyList" (output)="cancelGoal()">
-        </app-single-goal-year>
+<div appSkeletonLoading [appSkeletonLoading]="loaderFn.loading" [hidden]="!loaderFn.loading">
+    <div class="d-flex align-items-center justify-content-between pt-100 pl-20 pr-20 pb-40 relClass">
+        <div class="bar240" [ngClass]="{'height240': loaderFn.loading}">
+        </div>
+
+        <div class="bar240" [ngClass]="{'height240': loaderFn.loading}">
+        </div>
+
+        <div class="bar240" [ngClass]="{'height240': loaderFn.loading}">
+        </div>
+
+        <div class="bar240" [ngClass]="{'height240': loaderFn.loading}">
+        </div>
+
+        <div class="bar240" [ngClass]="{'height240': loaderFn.loading}">
+        </div>
+    </div>
+    <div class="d-flex align-items-center justify-content-between pt-100 pl-20 pr-20 pb-40 relClass">
+        <div class="bar240" [ngClass]="{'height240': loaderFn.loading}">
+        </div>
+
+        <div class="bar240" [ngClass]="{'height240': loaderFn.loading}">
+        </div>
+
+        <div class="bar240" [ngClass]="{'height240': loaderFn.loading}">
+        </div>
+
+        <div class="bar240" [ngClass]="{'height240': loaderFn.loading}">
+        </div>
+
+        <div class="bar240" [ngClass]="{'height240': loaderFn.loading}">
+        </div>
+    </div>
+</div>
+
+
+<div class="d-flex align-items-center justify-content-between pt-100 pl-20 pr-20 pb-40">
+    <div (click)="setGoalTypeData(singleGoal1)" *ngFor="let singleGoal1 of goalTypeFirstRowListData;index as i"
+        class="addGoalsWidth c-p">
+        <img [src]="singleGoal1.imageUrl">
+        <h5 class="text-center m-0 pt-12 text-black">{{singleGoal1.name}}</h5>
     </div>
     <div *ngIf="showGoalType == 'multiYear'">
         <app-multi-year-goal [goalTypeData]="goalTypeData" [familyList]="familyList" (output)="cancelGoal()">
         </app-multi-year-goal>
     </div>
 </div>
-<div></div>

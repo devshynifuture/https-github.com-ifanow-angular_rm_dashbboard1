@@ -88,6 +88,7 @@ export class RedemptionTransactionComponent implements OnInit {
   @Input()
   set data(data) {
     this.folioList =[]
+    this.reInvestmentOpt =[]
     this.transactionSummary = {};
     this.inputData = data;
     this.transactionType = data.transactionType;
@@ -144,11 +145,21 @@ export class RedemptionTransactionComponent implements OnInit {
 
   checkAndResetForm(oldData, newData) {
     if (oldData.defaultCredential.accountType != newData.defaultCredential.accountType) {
-      this.resetForm();
-      this.getSchemeList();
+      if (!this.mutualFundData) {
+        this.resetForm();
+        this.getSchemeList();
+      } else {
+        this.mfDefault = newData
+        this.getdataForm(this.inputData, true)
+      }
     } else if (oldData.defaultClient.holdingType != newData.defaultClient.holdingType) {
-      this.resetForm();
-      this.getSchemeList();
+      if (!this.mutualFundData) {
+        this.resetForm();
+        this.getSchemeList();
+      } else {
+        this.mfDefault = newData
+        this.getdataForm(oldData, true)
+      }
     } else if (oldData.defaultClient.aggregatorType != newData.defaultClient.aggregatorType) {
     }
   }
@@ -222,6 +233,7 @@ export class RedemptionTransactionComponent implements OnInit {
       this.folioDetails = {}
       this.filterSchemeList = of([{'schemeName': this.schemeName}])
       this.redemptionTransaction.controls.schemeRedeem.setValue({'schemeName': this.schemeName})
+      this.redemptionTransaction.controls['schemeRedeem'].disable();
       const obj1 = {
         mutualFundSchemeMasterId: this.mutualFundData.schemeId,
         aggregatorType: this.mfDefault.defaultClient.aggregatorType,

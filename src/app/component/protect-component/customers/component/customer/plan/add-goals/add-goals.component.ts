@@ -3,7 +3,7 @@ import {SubscriptionInject} from 'src/app/component/protect-component/AdviserCom
 import {EventService} from 'src/app/Data-service/event.service';
 import {PlanService} from '../plan.service';
 import {AuthService} from 'src/app/auth-service/authService';
-import { UtilService } from 'src/app/services/util.service';
+import { UtilService, LoaderFunction } from 'src/app/services/util.service';
 import { CustomerService } from '../../customer.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { AppConstants } from 'src/app/services/app-constants';
@@ -11,7 +11,8 @@ import { AppConstants } from 'src/app/services/app-constants';
 @Component({
   selector: 'app-add-goals',
   templateUrl: './add-goals.component.html',
-  styleUrls: ['./add-goals.component.scss']
+  styleUrls: ['./add-goals.component.scss'],
+  providers: [LoaderFunction]
 })
 export class AddGoalsComponent implements OnInit {
   goalTypeData: any;
@@ -30,6 +31,7 @@ export class AddGoalsComponent implements OnInit {
     private planService: PlanService,
     private utilService: UtilService,
     private peopleService: PeopleService,
+    public loaderFn: LoaderFunction
   ) {
     let clientData = AuthService.getClientData();
     this.clientName = clientData.name;
@@ -38,8 +40,8 @@ export class AddGoalsComponent implements OnInit {
   }
 
   ngOnInit() {
-    // TODO:- add loader
     this.loadGlobalGoalData();
+    this.getFamilyMembersList();
   }
 
   close() {
@@ -52,12 +54,14 @@ export class AddGoalsComponent implements OnInit {
     let advisorObj = {
       advisorId: this.advisorId
     }
+    this.loaderFn.increaseCounter();
     this.planService.getGoalGlobalData(advisorObj).subscribe(
       data => this.getGoalGlobalDataRes(data),
-      error => this.eventService.showErrorMessage(error)
+      error => {
+        this.eventService.showErrorMessage(error);
+        this.loaderFn.decreaseCounter();
+      }
     )
-
-    this.getFamilyMembersList();
   }
 
 
@@ -66,6 +70,7 @@ export class AddGoalsComponent implements OnInit {
     const obj = {
       clientId: this.clientId,
     };
+    this.loaderFn.increaseCounter();
     this.peopleService.getClientFamilyMemberListAsset(obj).subscribe(
       data => {
         if (data && data.length > 0) {
@@ -83,10 +88,12 @@ export class AddGoalsComponent implements OnInit {
           return a.relationshipId - b.relationshipId;
         });
         this.familyList = this.utilService.calculateAgeFromCurrentDate(this.familyList);
+        this.loaderFn.decreaseCounter();
       },
       err => {
         this.familyList = [];
         this.eventService.openSnackBar(err, "Dismiss")
+        this.loaderFn.decreaseCounter();
         console.error(err);
       }
     );
@@ -325,6 +332,7 @@ export class AddGoalsComponent implements OnInit {
     });
     this.goalTypeFirstRowListData = data.slice(0, 5);
     this.goalTypeSecondRowListData = data.slice(5, 10);
+    this.loaderFn.decreaseCounter();
   }
   
   // TODO:- understand implementation of retirement goal

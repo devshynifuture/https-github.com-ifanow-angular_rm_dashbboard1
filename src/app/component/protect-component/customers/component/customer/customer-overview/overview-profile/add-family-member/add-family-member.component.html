@@ -2,7 +2,7 @@
     <div class="row bb-1">
         <div class="col-md-8 p-0">
             <h4 class="mb-0 wrapper-20">
-                <!--<img class="c-p mr-8" src="/assets/images/svg/back-arrow.svg" >-->Add family member
+                <!--<img class="c-p mr-8" src="/assets/images/svg/back-arrow.svg" >-->Add member
             </h4>
         </div>
         <div class="col-md-4 text-right">
@@ -152,10 +152,37 @@
                                 formControlName="relationTypeId">
                                 <mat-option disabled value=''>Select option
                                 </mat-option>
-                                <mat-option [value]="relation.id" *ngFor="let relation of relationList">
+                                <!-- <mat-option [value]="relation.id" *ngFor="let relation of relationList">
                                     {{relation.name}}</mat-option>
                                 <mat-option [value]="familyMemberNameList[i].value"
                                     *ngIf="familyMemberNameList[i].name!='Others'">{{familyMemberNameList[i].name}}
+                                </mat-option> -->
+                                <mat-option value="value"
+                                    class="text-custom mt-12 f-14 event-none pl-24 individual-hover">
+                                    Individual
+                                </mat-option>
+                                <mat-option value="value" class="text-custom f-14 pl-64 text-black">Brother
+                                </mat-option>
+                                <mat-option value="value" class="text-custom f-14 pl-64 text-black">Sister</mat-option>
+                                <mat-option value="value" class="text-custom f-14 pl-64 text-black">Father in law
+                                </mat-option>
+                                <mat-option value="value" class="text-custom f-14 pl-64 text-black">Mother in law
+                                </mat-option>
+                                <mat-option value="value" class="text-custom f-14 event-none pl-24 btl-1 mb-8">Sole
+                                    proprietorship
+                                </mat-option>
+                                <mat-option value="value" class="text-custom f-14 pl-64 text-black">Sole proprietorship
+                                </mat-option>
+                                <mat-option value="value" class="text-custom f-14 event-none pl-24 btl-1 mb-8">Non
+                                    individual
+                                </mat-option>
+                                <mat-option value="value" class="text-custom f-14 pl-64 text-black">HUF</mat-option>
+                                <mat-option value="value" class="text-custom f-14 pl-64 text-black">Private Limited
+                                </mat-option>
+                                <mat-option value="value" class="text-custom f-14 event-none pl-24 mb-8">Minor
+                                </mat-option>
+                                <mat-option value="value" class="text-custom f-14 pl-64 text-black">Niece</mat-option>
+                                <mat-option value="value" class="text-custom f-14 pl-64 text-black mb-28">Nephew
                                 </mat-option>
                             </mat-select>
                             <mat-select *ngIf="familyMemberNameList[i].value!=10" class="form-control"
@@ -165,7 +192,41 @@
                             </mat-select>
                             <mat-error>This field is required</mat-error>
                         </mat-form-field>
+
                     </div>
+                    <!-- new options -->
+                    <!-- <div class="w-22">
+                            <mat-form-field>
+                                <mat-select class="form-control">
+                                    <mat-option value="value" class="text-custom mt-12 f-14 event-none pl-24 individual-hover">
+                                        Individual
+                                    </mat-option>
+                                    <mat-option value="value" class="text-custom f-14 pl-64 text-black">Brother</mat-option>
+                                    <mat-option value="value" class="text-custom f-14 pl-64 text-black">Sister</mat-option>
+                                    <mat-option value="value" class="text-custom f-14 pl-64 text-black">Father in law</mat-option>
+                                    <mat-option value="value" class="text-custom f-14 pl-64 text-black">Mother in law</mat-option>
+                                    <mat-option value="value" class="text-custom f-14 event-none pl-24 btl-1 mb-8">Sole
+                                        proprietorship
+                                    </mat-option>
+                                    <mat-option value="value" class="text-custom f-14 pl-64 text-black">Brother</mat-option>
+                                    <mat-option value="value" class="text-custom f-14 event-none pl-24 btl-1 mb-8">Non individual
+                                    </mat-option>
+                                    <mat-option value="value" class="text-custom f-14 pl-64 text-black">HUF</mat-option>
+                                    <mat-option value="value" class="text-custom f-14 pl-64 text-black">Private Limited
+                                    </mat-option>
+                                    <mat-option value="value" class="text-custom f-14 pl-64 text-black">Bank</mat-option>
+                                    <mat-option value="value" class="text-custom f-14 pl-64 text-black">Bank</mat-option>
+                                    <mat-option value="value" class="text-custom f-14 pl-64 text-black">Bank</mat-option>
+                                    <mat-option value="value" class="text-custom f-14 pl-64 text-black">Bank</mat-option>
+                                    <mat-option value="value" class="text-custom f-14 pl-64 text-black">Bank</mat-option>
+                                    <mat-option value="value" class="text-custom f-14 pl-64 text-black">Bank</mat-option>
+                                    <mat-option value="value" class="text-custom f-14 event-none pl-24 mb-8">Minor</mat-option>
+                                    <mat-option value="value" class="text-custom f-14 pl-64 text-black">Niece</mat-option>
+                                    <mat-option value="value" class="text-custom f-14 pl-64 text-black mb-28">Nephew</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div> -->
+
                     <div class="w-28 pl-10 pr-10">
                         <div class="form-group remove-padding-matfield">
                             <mat-form-field appearance="standard" floatLabel="never">

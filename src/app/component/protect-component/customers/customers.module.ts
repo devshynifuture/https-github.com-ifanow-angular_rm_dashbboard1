@@ -28,6 +28,8 @@ import { MobilePortfoiloComponent } from './component/customer/mobile/portfolio/
 import { MobileProfileComponent } from './component/customer/mobile/profile/mobile-profile/mobile-profile.component';
 import { MobileTransactionsComponent } from './component/customer/mobile/transactions/mobile-transactions/mobile-transactions.component';
 import { MobileLeftSidenavComponent } from './component/customer/mobile/left-side/mobile-left-sidenav/mobile-left-sidenav.component';
+import { MobileRoutingModule } from './mobile-routing.module';
+import { SlickCarouselModule } from 'ngx-slick-carousel';
 
 
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
@@ -51,9 +53,9 @@ import { MobileLeftSidenavComponent } from './component/customer/mobile/left-sid
     EntryComponentsModule,
     AccountEntryModule,
     PlanEntryModule,
-    CustomersRoutingModule,
-   // MobileRoutingModule,
-   
+   CustomersRoutingModule,
+    //MobileRoutingModule,
+    SlickCarouselModule,
     AdviceEntryModule,
     CustomerOverviewEntryModule,
     CustomDirectiveModule,

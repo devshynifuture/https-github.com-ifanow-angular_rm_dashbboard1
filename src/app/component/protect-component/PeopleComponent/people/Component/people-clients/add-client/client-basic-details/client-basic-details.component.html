@@ -847,6 +847,26 @@
         </div>
       </div>
 
+      <div *ngIf="invTypeCategory=='4'" class="row pt-28">
+        <div class="col-md-4 text-right full-end">
+          <h5 class="m-0">GSTIN number</h5>
+        </div>
+        <div class="col-md-5 p-0">
+          <div class="form-group">
+            <mat-form-field appearance="standard" floatLabel="never">
+              <input #gstinNum matInput placeholder="Enter gstin number" formControlName="gstinNum"
+                class="form-control">
+              <mat-error *ngIf="nonIndividualForm.get('gstinNum').errors?.required">This field is
+                required
+              </mat-error>
+              <mat-error *ngIf="(nonIndividualForm.get('gstinNum').errors?.pattern)" class="f-12">
+                GSTIN number invalid
+              </mat-error>
+              <mat-hint align="end" class="f-12">{{gstinNum.value.length}}/15</mat-hint>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
 
       <div *ngIf="invTypeCategory=='4'" class="row pt-28">
         <div class="col-md-4 text-right">
@@ -960,6 +980,27 @@
         <div class="col-md-4 d-flex align-items-center">
         </div>
       </div> -->
+
+      <div *ngIf="invTypeCategory=='3'" class="row pt-28">
+        <div class="col-md-4 text-right full-end">
+          <h5 class="m-0">GSTIN number</h5>
+        </div>
+        <div class="col-md-5 p-0">
+          <div class="form-group">
+            <mat-form-field appearance="standard" floatLabel="never">
+              <input #gstinNum matInput placeholder="Enter gstin number" formControlName="gstinNum"
+                class="form-control">
+              <mat-error *ngIf="nonIndividualForm.get('gstinNum').errors?.required">This field is
+                required
+              </mat-error>
+              <mat-error *ngIf="(nonIndividualForm.get('gstinNum').errors?.pattern)" class="f-12">
+                GSTIN number invalid
+              </mat-error>
+              <mat-hint align="end" class="f-12">{{gstinNum.value.length}}/15</mat-hint>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
 
       <div *ngIf="invTypeCategory=='3'" class="row pt-28">
         <div class="col-md-4 text-right">

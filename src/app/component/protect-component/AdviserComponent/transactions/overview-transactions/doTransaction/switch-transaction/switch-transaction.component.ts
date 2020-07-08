@@ -98,6 +98,7 @@ export class SwitchTransactionComponent implements OnInit {
   @Input()
   set data(data) {
     this.folioList = []
+    this.reInvestmentOpt =[]
     this.advisorId = AuthService.getAdvisorId();
     this.inputData = data;
     this.transactionType = data.transactionType;
@@ -149,8 +150,13 @@ export class SwitchTransactionComponent implements OnInit {
 
   checkAndResetForm(oldData, newData) {
     if (oldData.defaultCredential.accountType != newData.defaultCredential.accountType) {
-      this.resetForm();
-      this.getSchemeList();
+      if (!this.mutualFundData) {
+        this.resetForm();
+        this.getSchemeList();
+      } else {
+        this.mfDefault = newData
+        this.getdataForm(this.inputData,true)
+      }
     } else if (oldData.defaultClient.holdingType != newData.defaultClient.holdingType) {
       this.resetForm();
       this.getSchemeList();
@@ -471,6 +477,7 @@ export class SwitchTransactionComponent implements OnInit {
       this.switchTransaction.controls.schemeSelection.setValue('1')
       this.switchTransaction.controls.folioSelection.setValue('1')
       this.switchTransaction.controls.schemeSwitch.setValue({'schemeName': this.schemeName})
+      this.switchTransaction.controls['schemeSwitch'].disable();
       this.currentValue = this.processTransaction.calculateCurrentValue(this.mutualFundData.nav, this.mutualFundData.balanceUnit);
       this.currentValue =  Math.round(this.currentValue)
       this.switchTransaction.controls.currentValue.setValue(this.currentValue);

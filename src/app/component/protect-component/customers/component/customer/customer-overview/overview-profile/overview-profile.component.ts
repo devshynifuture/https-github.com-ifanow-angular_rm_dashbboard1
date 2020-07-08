@@ -303,9 +303,9 @@ export class OverviewProfileComponent implements OnInit {
 
       let ClientList = Object.assign([], this.enumDataService.getEmptySearchStateData());
       ClientList = ClientList.filter(element => element.userId != this.clientOverviewData.userId);
-      data = { flag: 'Add Family Member', fieldFlag: 'familyMember', client: this.clientOverviewData, ClientList };
+      data = { flag: 'Add member', fieldFlag: 'familyMember', client: this.clientOverviewData, ClientList };
     } else {
-      data.flag = 'Edit family member';
+      data.flag = 'Edit member';
       data.fieldFlag = 'familyMember';
       component = AddClientComponent;
     }

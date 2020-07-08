@@ -91,6 +91,7 @@ export class SwpTransactionComponent implements OnInit {
   @Input()
   set data(data) {
     this.advisorId = AuthService.getAdvisorId();
+    this.reInvestmentOpt =[]
     this.inputData = data;
     this.transactionType = data.transactionType;
     this.selectedFamilyMember = data.selectedFamilyMember;
@@ -145,8 +146,13 @@ export class SwpTransactionComponent implements OnInit {
 
   checkAndResetForm(oldData, newData) {
     if (oldData.defaultCredential.accountType != newData.defaultCredential.accountType) {
-      this.resetForm();
-      this.getSchemeList();
+      if (!this.mutualFundData) {
+        this.resetForm();
+        this.getSchemeList();
+      } else {
+        this.mfDefault = newData
+        this.getdataForm(this.inputData)
+      }
     } else if (oldData.defaultClient.holdingType != newData.defaultClient.holdingType) {
       this.resetForm();
       this.getSchemeList();
@@ -420,6 +426,7 @@ export class SwpTransactionComponent implements OnInit {
       this.swpTransaction.controls.schemeSelection.setValue('1')
       this.swpTransaction.controls.folioSelection.setValue('1')
       this.swpTransaction.controls.schemeSwp.setValue({ 'schemeName': this.schemeName })
+      this.swpTransaction.controls['schemeSwp'].disable();
       this.filterSchemeList = of([{ 'schemeName': this.schemeName }])
       Object.assign(this.folioDetails, { folioNumber: this.folioNumber });
       this.scheme = {
