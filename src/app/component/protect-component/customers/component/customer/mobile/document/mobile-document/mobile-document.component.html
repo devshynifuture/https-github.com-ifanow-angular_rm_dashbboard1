@@ -6,10 +6,9 @@
         <img src="/assets/images/svg/mob-left-arrow.svg" (click)="openMenu(openMenue)">
     </div>
     <div class="col-2 full-center" *ngIf="folderData.length>0">
-        <span *ngFor="let folder of openFolderName; let i = index">
-            <img src="/assets/images/svg/mob-left-arrow.svg"
-                *ngIf="folder[0] && folder[0].folderParentId==folderData[folderData.length-1].folderParentId"
-                (click)="getFolders(folder,i)" class="c-p pt-2"></span>
+        <span>
+            <img src="/assets/images/svg/mob-left-arrow.svg" (click)="getFolders(folderData[folderData.length-1])"
+                class="c-p pt-2"></span>
 
     </div>
     <div class="col-10 pl-0 d-flex align-items-center">
@@ -25,8 +24,10 @@
             <img *ngIf="singleMainFolder.fileName" src="/assets/images/svg/file-lines.svg" class="pt-2">
         </div>
         <div (click)="openFolder(singleMainFolder);getSharebleLink(singleMainFolder,'preview')" class="col-8 pl-0">
-            <p class="m-0 roboto f-400 lh-16">{{singleMainFolder.folderName}}<span *ngIf="singleMainFolder.isStarred==1"
-                    class="material-icons text-coff f-16 v-middle">
+            <p class="m-0 roboto f-400 lh-16">
+                <span *ngIf="singleMainFolder.folderName">{{singleMainFolder.folderName}}</span>
+                <span *ngIf="singleMainFolder.fileName">{{singleMainFolder.fileName}}</span>
+                <span *ngIf="singleMainFolder.isStarred==1" class="material-icons text-coff f-16 v-middle">
                     grade
                 </span>
             </p>
