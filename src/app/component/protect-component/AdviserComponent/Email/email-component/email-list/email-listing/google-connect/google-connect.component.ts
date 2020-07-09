@@ -156,7 +156,9 @@ export class GoogleConnectComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.googleConnected.emit(true);
+      if(result){
+        this.googleConnected.emit(localStorage.getItem('successStoringToken'));
+      }
     });
 
   }
