@@ -61,7 +61,7 @@ export class AddExpensesComponent implements OnInit {
 
   display(value) {
     this.ownerName = value.userName;
-    this.familyMemberId = value.id
+    this.familyMemberId = value.familyMemberId
   }
 
   lisNominee(value) {
