@@ -39,7 +39,7 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
 
 @NgModule({
   declarations: [CustomerComponent, TransactionSuccessfulComponent, MobileMyfeedComponent, MobileDocumentComponent, MobilePortfoiloComponent, MobileProfileComponent, MobileTransactionsComponent, MobileLeftSidenavComponent],
-  imports: [ 
+  imports: [
     // BrowserModule,
     CommonModule,
     MaterialModule,
@@ -53,8 +53,8 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
     EntryComponentsModule,
     AccountEntryModule,
     PlanEntryModule,
-   CustomersRoutingModule,
-   // MobileRoutingModule,
+    //  CustomersRoutingModule,
+    MobileRoutingModule,
     SlickCarouselModule,
     AdviceEntryModule,
     CustomerOverviewEntryModule,
