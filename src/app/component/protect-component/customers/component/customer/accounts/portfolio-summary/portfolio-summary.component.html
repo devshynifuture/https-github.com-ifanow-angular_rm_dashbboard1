@@ -295,7 +295,7 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div [hidden]="letsideBarLoader" class="row">
                 <div class="col-md-7">
                     <div class="b-a mt-20 shadowBox bg-white">
                         <div class="row">
@@ -346,13 +346,11 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
 
-                <div class="col-md-5 pl-0">
+                <div [hidden]="letsideBarLoader" class="col-md-5 pl-0">
                     <div class="b-a mt-20 shadowBox bg-white">
                         <h4 class="m-0 wrapper-20 pb-0">Asset allocation</h4>
-
                         <div *ngIf="finalTotal==0" class="row">
                             <div class="col-md-12 p-0">
                                 <div
@@ -368,6 +366,19 @@
                         <div [hidden]="!finalTotal">
                             <div class="highcharts-figure" id="piechartMutualFund"></div>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row skeletonAnimation" [appSkeletonLoading]="letsideBarLoader" appSkeletonLoading>
+                <div class="col-md-6 relClass">
+                    <div class="bar300" [ngClass]="{'height300': letsideBarLoader}">
+
+                    </div>
+                </div>
+                <div class="col-md-6 relClass">
+                    <div class="bar300" [ngClass]="{'height300': letsideBarLoader}">
+
                     </div>
                 </div>
             </div>

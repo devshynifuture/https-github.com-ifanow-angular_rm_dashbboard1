@@ -175,107 +175,128 @@
   }
 
   .mob-new-house {
-    background-image: url('/assets/images/svg/house-goals.svg');
+    background: url('/assets/images/svg/mobile/goal-house.svg') #D9DEE1;
     background-repeat: no-repeat;
     background-size: cover;
     height: 324px;
-    border-radius: 11.7px;
+    border-radius: 4px;
+    margin-top: 20px;
 
-    h4 {
-      font-weight: 700;
-    }
-
-    .mat-progress-bar {
-      height: 12px;
-      border-radius: 3px;
-    }
-
-    .mat-progress-bar-fill::after {
-      background: linear-gradient(90deg, #94E9B6 0%, #5BCF7F 100%);
-    }
-
-    .mat-progress-bar-background {
-      background-color: #ffffff;
-    }
   }
 
   .mob-education {
-    background-image: url('/assets/images/svg/son-edu.svg');
+    background: url('/assets/images/svg/mobile/goal-eduction.svg') #D9DEE1;
     background-repeat: no-repeat;
     background-size: cover;
     height: 324px;
-    border-radius: 11.7px;
-    margin-top: 30px;
+    border-radius: 4px;
+    margin-top: 20px;
   }
 
-  .mob-edu {
-    background-image: url('/assets/images/svg/mob-edu.svg');
+  .mob-retirement {
+    background: url('/assets/images/svg/mobile/goal-retirement.svg') #D9DEE1;
     background-repeat: no-repeat;
     background-size: cover;
     height: 324px;
-    border-radius: 11.7px;
-    margin-top: 30px;
+    border-radius: 4px;
+    margin-top: 20px;
   }
 
-  .mob-education,
-  .mob-edu {
-    h4 {
-      font-weight: 700;
-    }
-
-    h4,
-    p {
-      color: #2B0907;
-    }
-
-    .mat-progress-bar {
-      height: 12px;
-      border-radius: 3px;
-    }
-
-    .mat-progress-bar-fill::after {
-      background: linear-gradient(90deg, #9F726F 0%, #2B0907 100%);
-    }
-
-    .mat-progress-bar-background {
-      background-color: #ffffff;
-    }
+  .mob-car {
+    background: url('/assets/images/svg/mobile/goal-car.svg') #D9DEE1;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 324px;
+    border-radius: 4px;
+    margin-top: 20px;
   }
+
+  .mob-vaction {
+    background: url('/assets/images/svg/mobile/goal-vaction.svg') #D9DEE1;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 324px;
+    border-radius: 4px;
+    margin-top: 20px;
+  }
+
+  .mob-emergency {
+    background: url('/assets/images/svg/mobile/goal-emergency.svg') #D9DEE1;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 324px;
+    border-radius: 4px;
+    margin-top: 20px;
+  }
+
+
+  .mob-wealth-creation {
+    background: url('/assets/images/svg//mobile/goal-wealth-creation.svg') #D9DEE1;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 324px;
+    border-radius: 4px;
+    margin-top: 20px;
+  }
+
+  .mob-big-spend {
+    background: url('/assets/images/svg//mobile/goal-bigspend.svg') #D9DEE1;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 324px;
+    border-radius: 4px;
+    margin-top: 20px;
+  }
+
+  .mob-other {
+    background: url('/assets/images/svg//mobile/goal-other.svg') #D9DEE1;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 324px;
+    border-radius: 4px;
+    margin-top: 20px;
+  }
+
 
   .mob-marriage {
-    background-image: url('/assets/images/svg/mob-marrage.svg');
+    background: url('/assets/images/svg/mobile/goal-marriage.svg') #D9DEE1;
     background-repeat: no-repeat;
     background-size: cover;
     height: 324px;
-    border-radius: 11.7px;
-    margin-top: 30px;
+    border-radius: 4px;
+    margin-top: 20px;
 
-    h4 {
-      font-weight: 700;
-    }
 
-    h4,
-    p {
-      color: #1A303E;
-      font-family: Roboto;
-    }
 
-    .mat-progress-bar {
-      height: 12px;
-      border-radius: 3px;
-    }
-
-    .mat-progress-bar-fill::after {
-      background: linear-gradient(90deg, #94E9B6 0%, #5BCF7F 100%);
-    }
-
-    .mat-progress-bar-background {
-      background-color: #ffffff;
-    }
   }
 
   .create-new-mob {
     background: #FAFAFA;
     border-radius: 20px 20px 4px 4px;
+  }
+}
+
+.mob-main-goal-page {
+  h5 {
+    font-size: 16px !important;
+    color: #2B0907;
+    font-weight: 500;
+  }
+
+  p {
+    color: #2B0907;
+  }
+
+  .mat-progress-bar {
+    height: 12px;
+    border-radius: 3px;
+  }
+
+  .mat-progress-bar-fill::after {
+    background: #008FFF;
+  }
+
+  .mat-progress-bar-background {
+    background-color: #ffffff;
   }
 }

@@ -3,12 +3,18 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../customer.service';
 import { AppConstants } from 'src/app/services/app-constants';
 import { Chart } from 'angular-highcharts';
-import { UtilService } from 'src/app/services/util.service';
+import { UtilService, LoaderFunction } from 'src/app/services/util.service';
+import * as Highcharts from 'highcharts';
+import { slideInAnimation } from 'src/app/animation/router.animation';
 
 @Component({
   selector: 'app-mobile-myfeed',
   templateUrl: './mobile-myfeed.component.html',
-  styleUrls: ['./mobile-myfeed.component.scss']
+  styleUrls: ['./mobile-myfeed.component.scss'],
+  providers: [LoaderFunction],
+  animations: [
+    slideInAnimation,
+  ]
 })
 export class MobileMyfeedComponent implements OnInit {
   bscData;
@@ -18,7 +24,6 @@ export class MobileMyfeedComponent implements OnInit {
   clientId: any;
   clientData: any;
   chartTotal: number;
-  chartData: any[];
   assetAllocationPieConfig: Chart;
   portFolioData: any;
   recentTransactions: any[];
@@ -36,14 +41,59 @@ export class MobileMyfeedComponent implements OnInit {
   goldData: { carat_24: any; carat_22: any; };
   documentVault: any;
   globalRiskProfile: any[];
+  chart: Highcharts.Chart;
+  hasError: boolean;
+  chartData: any[] = [
+    {
+      name: 'Equity',
+      y: 20,
+      color: AppConstants.DONUT_CHART_COLORS[0],
+      dataLabels: {
+        enabled: false
+      }
+    }, {
+      name: 'Fixed income',
+      y: 20,
+      color: AppConstants.DONUT_CHART_COLORS[1],
+      dataLabels: {
+        enabled: false
+      }
+    }, {
+      name: 'Commodities',
+      y: 20,
+      color: AppConstants.DONUT_CHART_COLORS[2],
+      dataLabels: {
+        enabled: false
+      }
+    }, {
+      name: 'Real estate',
+      y: 20,
+      color: AppConstants.DONUT_CHART_COLORS[3],
+      dataLabels: {
+        enabled: false
+      }
+    }, {
+      name: 'Others',
+      y: 20,
+      color: AppConstants.DONUT_CHART_COLORS[4],
+      dataLabels: {
+        enabled: false
+      }
+    }
+  ]
+  portfolioData: boolean = false;
+  mfAllocationData: any;
+  totalValue: any;
 
   constructor(
     private customerService: CustomerService,
+    public loaderFn: LoaderFunction,
   ) {
     this.clientId = AuthService.getClientId()
     this.advisorId = AuthService.getAdvisorId()
     this.clientData = AuthService.getClientData()
   }
+  
   @Input()
   set data(data) {
     this.inputData = data;
@@ -64,6 +114,7 @@ export class MobileMyfeedComponent implements OnInit {
     this.getDeptData();
     this.getNifty500Data();
     this.loadRiskProfile()
+    this.initializePieChart()
     this.loadDocumentValutData();
   }
   openMenu(flag) {
@@ -74,6 +125,7 @@ export class MobileMyfeedComponent implements OnInit {
     }
   }
   getAssetAllocationData() {
+    this.portfolioData = true
     const obj = {
       clientId: this.clientData.clientId,
       advisorId: this.advisorId,
@@ -87,45 +139,50 @@ export class MobileMyfeedComponent implements OnInit {
       if (res == null) {
         this.portFolioData = [];
       } else {
+        this.portfolioData = true
         let stock = res.find(d => d.assetType == 6);
         this.portFolioData = res;
-        this.portFolioData.forEach(element => {
-          element.shortForm = (element.assetType == 2) ? 'LI' : (element.assetType == 6) ? 'ST' : (element.assetType == 12) ? 'COM' : (element.assetType == 31) ? 'C&B' : (element.assetType == 10) ? 'SSS' : (element.assetType == 9) ? 'RA' : (element.assetType == 8) ? 'RE' : (element.assetType == 7) ? 'FI' : ''
-        });
-      }
-      let chartData = [];
-      let counter = 0;
-      let othersData = {
-        y: 0,
-        name: 'Others',
-        color: AppConstants.DONUT_CHART_COLORS[4],
-        dataLabels: {
-          enabled: false
+        if (stock) {
+          this.portFolioData = this.portFolioData.filter(d => d.assetType != 6);
+          this.portFolioData.unshift(stock);
         }
-      }
-      let chartTotal = 1;
-      let hasNoDataCounter = res.length;
-      let pieChartData = res.filter(element => element.assetType != 2 && element.currentValue != 0);
-      pieChartData.forEach(element => {
-        if (element.investedAmount > 0) {
-          chartTotal += element.investedAmount;
-          if (counter < 4) {
-            chartData.push({
-              y: element.investedAmount,
-              name: element.assetTypeString,
-              color: AppConstants.DONUT_CHART_COLORS[counter],
-              dataLabels: {
-                enabled: false
-              }
-            })
-          } else {
-            othersData.y += element.investedAmount;
+
+        let chartData = [];
+        let counter = 0;
+        let othersData = {
+          y: 0,
+          name: 'Others',
+          color: AppConstants.DONUT_CHART_COLORS[4],
+          dataLabels: {
+            enabled: false
           }
-          counter++;
-        } else {
-          hasNoDataCounter--;
         }
+        let chartTotal = 1;
+        let hasNoDataCounter = res.length;
+        let pieChartData = res.filter(element => element.assetType != 2 && element.currentValue != 0);
+        pieChartData.forEach(element => {
+          if (element.investedAmount > 0) {
+            chartTotal += element.investedAmount;
+            if (counter < 4) {
+              chartData.push({
+                y: element.investedAmount,
+                name: element.assetTypeString,
+                color: AppConstants.DONUT_CHART_COLORS[counter],
+                dataLabels: {
+                  enabled: false
+                }
+              })
+            } else {
+              othersData.y += element.investedAmount;
+            }
+            counter++;
+          } else {
+            hasNoDataCounter--;
+          }
+        });
         chartTotal -= 1;
+        if (chartTotal === 0) {
+        }
         if (counter > 4) {
           chartData.push(othersData);
         }
@@ -134,8 +191,12 @@ export class MobileMyfeedComponent implements OnInit {
           this.chartData = chartData;
           this.assetAllocationPieChartDataMgnt(this.chartData);
         }
-      });
-    });
+      }
+      this.loaderFn.decreaseCounter();
+    }, err => {
+      this.hasError = true;
+      this.loaderFn.decreaseCounter();
+    })
   }
   loadDocumentValutData() {
     const obj = {
@@ -337,4 +398,59 @@ export class MobileMyfeedComponent implements OnInit {
   onValChange(value) {
     this.selectedVal = value;
   }
+  initializePieChart() {
+    let chartConfig: any = {
+      chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: 0,
+        plotShadow: false,
+        animation: false
+      },
+      title: {
+        text: '',
+        align: 'center',
+        verticalAlign: 'middle',
+        y: 60
+      },
+      tooltip: {
+        pointFormat: ' <b>{point.percentage:.1f}%</b>'
+      },
+      plotOptions: {
+        pie: {
+          dataLabels: {
+            enabled: true,
+            distance: -50,
+            style: {
+              fontWeight: 'bold',
+              color: 'white'
+            }
+          },
+          startAngle: 0,
+          endAngle: 360,
+          center: ['50%', '50%'],
+          size: '100%'
+        }
+      },
+      exporting: {
+        enabled: false
+      },
+      series: [{
+        type: 'pie',
+        name: 'Asset allocation',
+        animation: false,
+        innerSize: '60%',
+        data: this.chartData
+      }]
+    }
+    this.assetAllocationPieConfig = new Chart(chartConfig);
+
+    chartConfig.series = [{
+      type: 'pie',
+      animation: false,
+      name: 'MF Asset allocation',
+      innerSize: '60%',
+      data: this.mfAllocationData
+    }]
+  }
+
 }
