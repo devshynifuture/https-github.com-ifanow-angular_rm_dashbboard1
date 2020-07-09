@@ -126,7 +126,6 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-    // TODO:- implement loader fundtion
     this.loadAllGoals();
   }
 
@@ -148,7 +147,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     });
   }
 
-
+  // create loan and cost of delay charts
   createChart(res) {
     const colors = ['green', 'blue', 'yellow', 'red'];
     const costDelay: Object = res.remainingData.costDelay;
@@ -197,15 +196,9 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
   }
 
 
+  // create json which is used on dashboard and other areas
   mapGoalDashboardData(goal: any) {
     let mapData: any = {};
-
-    /**
-     * TODO:- need to correct the logics for the following
-     * 1. goal progress
-     * 2. achieved value -- fix on html as well
-     * 3. image for multi year goal
-     */
 
     mapData.id = goal.id;
     mapData.goalType = goal.goalType;
