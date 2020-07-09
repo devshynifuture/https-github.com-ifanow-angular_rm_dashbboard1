@@ -1,5 +1,5 @@
 <div id="mob-myfeed">
-    <div class="row mob-bg-common mobtop-navfixed" *ngIf="openMenue != true">
+    <div class="row mob-bg-common pb-12 mobtop-navfixed" *ngIf="openMenue != true">
         <div class="col-2" (click)="openMenu(openMenue)">
             <span class="material-icons text-white">
                 menu
@@ -30,48 +30,23 @@
                 <div class="bg-white br-10">
                     <div class="row pt-20 pb-20">
                         <div class="col-7">
-                            <img src="/assets/images/svg/chart-mob.svg" class="w-100">
+                            <!-- <div class="highcharts-figure" id="piechartMutualFund"></div> -->
+                            <div class="" *ngIf="portfolioData" [chart]="assetAllocationPieConfig">
+                            </div>
+
                             <p class="text-custom m-0 f-10 f-400 roboto pt-8 pl-16">*some message here</p>
                         </div>
-                        <div class="col-5 pt-48 pl-0">
-                            <div class="chart-data">
+                        <div class="col-5 pt-48">
+                            <div class="chart-data" *ngFor="let data of chartData">
                                 <div class="d-flex">
-                                    <div class="hw-10 bg-1 br-2">
-                                    </div>
-                                    <p class="f-12 lh-12 roboto f-400 m-0 pl-10">38%</p>
-                                    <p class="f-12  lh-12 roboto text-custom m-0 f-400  pl-10">Equity</p>
+                                    <!-- <div class="hw-10 bg-1 br-2">
+                                    </div> -->
+                                    <span class="pointNumber" [style.background-color]="data.color">
+                                    </span>
+                                    <span class="f-12 lh-12 roboto f-400 m-0 pl-10"
+                                        appFormatNumber>{{(data.y/chartTotal*100) | number : '0.2-2'}}%</span>
+                                    <p class="f-12  lh-12 roboto text-custom m-0 f-400  pl-10">{{data.name}}</p>
                                 </div>
-
-                            </div>
-                            <div class="chart-data pt-16">
-                                <div class="d-flex">
-                                    <div class="hw-10 bg-2 br-2">
-
-                                    </div>
-                                    <p class="f-12 lh-12 roboto f-400 m-0 pl-10">23%</p>
-                                    <p class="f-12  lh-12 roboto text-custom m-0 f-400  pl-10">Fixed income</p>
-                                </div>
-
-                            </div>
-                            <div class="chart-data pt-16">
-                                <div class="d-flex">
-                                    <div class="hw-10 bg-3 br-2">
-
-                                    </div>
-                                    <p class="f-12 lh-12 roboto f-400 m-0 pl-10">12%</p>
-                                    <p class="f-12  lh-12 roboto text-custom m-0 f-400  pl-10">Commodities</p>
-                                </div>
-
-                            </div>
-                            <div class="chart-data pt-16">
-                                <div class="d-flex">
-                                    <div class="hw-10 bg-4 br-2">
-
-                                    </div>
-                                    <p class="f-12 lh-12 roboto f-400 m-0 pl-10">18%</p>
-                                    <p class="f-12  lh-12 roboto text-custom m-0 f-400  pl-10">Real estate</p>
-                                </div>
-
                             </div>
                         </div>
                     </div>
