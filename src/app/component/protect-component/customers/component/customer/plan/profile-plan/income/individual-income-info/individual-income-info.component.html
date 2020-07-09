@@ -258,7 +258,8 @@
                                             [matDatepicker]="incomeStartdate">
                                         <mat-datepicker-toggle matSuffix [for]="incomeStartdate">
                                         </mat-datepicker-toggle>
-                                        <mat-datepicker #incomeStartdate></mat-datepicker>
+                                        <mat-datepicker #incomeStartdate startView="multi-year" (yearSelected)="chosenYearHandler($event,incomeNetForm,'incomeStartDate')"
+                                        (monthSelected)="chosenMonthHandler($event,incomeStartdate, incomeNetForm,'incomeStartDate')"></mat-datepicker>
                                         <mat-error class="f-12">This field is required
                                         </mat-error>
                                     </mat-form-field>
@@ -272,7 +273,8 @@
                                             [matDatepicker]="incomeEndDate">
                                         <mat-datepicker-toggle matSuffix [for]="incomeEndDate">
                                         </mat-datepicker-toggle>
-                                        <mat-datepicker #incomeEndDate></mat-datepicker>
+                                        <mat-datepicker #incomeEndDate startView="multi-year"  (yearSelected)="chosenYearHandler($event,incomeNetForm,'incomeEndDate')"
+                                        (monthSelected)="chosenMonthHandler($event,incomeEndDate,incomeNetForm,'incomeEndDate')" ></mat-datepicker>
                                         <mat-error class="f-12">This field is required
                                         </mat-error>
                                     </mat-form-field>
@@ -334,7 +336,8 @@
                                                 class="form-control br-0 b-0" [matDatepicker]="expectedBonus">
                                             <mat-datepicker-toggle matSuffix [for]="expectedBonus">
                                             </mat-datepicker-toggle>
-                                            <mat-datepicker #expectedBonus></mat-datepicker>
+                                            <mat-datepicker #expectedBonus startView="multi-year" (yearSelected)="chosenYearHandler($event,singleBonusForm,'receivingDate')"
+                                            (monthSelected)="chosenMonthHandler($event,expectedBonus, singleBonusForm,'receivingDate')"></mat-datepicker>
                                             <mat-error class="f-12">This field is required
                                             </mat-error>
                                         </mat-form-field>
