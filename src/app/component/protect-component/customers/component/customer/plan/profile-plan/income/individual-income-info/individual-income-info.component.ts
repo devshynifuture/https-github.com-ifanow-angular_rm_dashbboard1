@@ -6,6 +6,7 @@ import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { AuthService } from 'src/app/auth-service/authService';
 import { PlanService } from '../../../plan.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { ValidatorType } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-individual-income-info',
@@ -34,6 +35,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
   isStatic = true;
   isErractic = false;
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private planService: PlanService, private eventService: EventService) { }
+  validatorType = ValidatorType;
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
@@ -47,7 +49,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
     monthlyAmount: [, [Validators.required]],
     incomeStyle: [, [Validators.required]],
     continousTill: [String(1), [Validators.required]],
-    continousTillYear: [, [Validators.required]],
+    continousTillYear: [, []],
     incomeGrowthRate: [, [Validators.required]],
     basicIncome: [, [Validators.required]],
     standardDeduction: [, [Validators.required]],
@@ -56,7 +58,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
     totalRentPaid: [, [Validators.required]],
     incomeStartDate: [, [Validators.required]],
     incomeEndDate: [, [Validators.required]],
-    expectingBonusValue: [, [Validators.required]],
+    // expectingBonusValue: [, [Validators.required]],
     nextAppraisal: [],
     description: []
   })
@@ -84,6 +86,18 @@ export class IndividualIncomeInfoComponent implements OnInit {
     this.individualIncomeData = data
     this.singleIndividualIncome = this.finalIncomeAddList[this.incomePosition];
     console.log(this.singleIncomeType)
+  }
+  changeValidations(){
+    if(this.incomeNetForm.get('continousTill').value==3){
+      
+      this.incomeNetForm.get('continousTillYear').setValidators([Validators.required]);
+      this.incomeNetForm.get('continousTillYear').updateValueAndValidity();
+      this.incomeNetForm.controls['continousTillYear'].setErrors({ 'required': true });
+    }else{
+      this.incomeNetForm.get('continousTillYear').setValidators([Validators.required]);
+      this.incomeNetForm.get('continousTillYear').updateValueAndValidity();
+      this.incomeNetForm.controls['continousTillYear'].setErrors({ 'required': true });
+    }
   }
   @Input() set editIncomeData(data) {
     if (data == undefined) {
@@ -185,65 +199,87 @@ export class IndividualIncomeInfoComponent implements OnInit {
           this.showDateError = undefined;
     }
   }
+  onChange(form, value, event) {
+    if (parseInt(event.target.value) > 100) {
+      event.target.value = '100';
+      form.get(value).setValue(event.target.value);
+    }
+  }
   submitIncomeForm() {
     // let value = parseInt(this.incomeNetForm.get('incomeOption').value)
     // this.singleIndividualIncome["finalIncomeList"] = { incomeTypeList: value }
-    if (this.singleIndividualIncome.finalIncomeList.incomeTypeId == 1) {
-      this.inputs.find(input => !input.ngControl.valid).focus();
-      if (this.incomeOption == '1') {
-        if (this.incomeNetForm.get('basicIncome').invalid) {
-          this.incomeNetForm.get('basicIncome').markAsTouched();
-          return;
-        }
-        else if (this.incomeNetForm.get('standardDeduction').invalid) {
-          this.incomeNetForm.get('standardDeduction').markAsTouched();
+    // if (this.singleIndividualIncome.finalIncomeList.incomeTypeId == 1) {
+    //   this.inputs.find(input => !input.ngControl.valid).focus();
+    //   if (this.incomeOption == '1') {
+    //     if (this.incomeNetForm.get('basicIncome').invalid) {
+    //       this.incomeNetForm.get('basicIncome').markAsTouched();
+    //       return;
+    //     }
+    //     else if (this. .get('standardDeduction').invalid) {
+    //       this.incomeNetForm.get('standardDeduction').markAsTouched();
 
-          return;
-        }
-        else if (this.incomeNetForm.get('deamessAlowance').invalid) {
-          this.incomeNetForm.get('deamessAlowance').markAsTouched();
-          return;
-        }
-        else if (this.incomeNetForm.get('hraRecieved').invalid) {
-          this.incomeNetForm.get('hraRecieved').markAsTouched();
-          return;
-        }
-        else if (this.incomeNetForm.get('totalRentPaid').invalid) {
-          this.incomeNetForm.get('totalRentPaid').markAsTouched();
-          return;
-        }
-      }
-      else {
-        if (this.incomeNetForm.get('monthlyAmount').invalid) {
-          this.incomeNetForm.get('monthlyAmount').markAsTouched();
-          return;
-        }
-      }
-    }
-    if (this.singleIndividualIncome.finalIncomeList.incomeTypeId != 1) {
+    //       return;
+    //     }
+    //     else if (this.incomeNetForm.get('deamessAlowance').invalid) {
+    //       this.incomeNetForm.get('deamessAlowance').markAsTouched();
+    //       return;
+    //     }
+    //     else if (this.incomeNetForm.get('hraRecieved').invalid) {
+    //       this.incomeNetForm.get('hraRecieved').markAsTouched();
+    //       return;
+    //     }
+    //     else if (this.incomeNetForm.get('totalRentPaid').invalid) {
+    //       this.incomeNetForm.get('totalRentPaid').markAsTouched();
+    //       return;
+    //     }
+    //   }
+    //   else {
+    //     if (this.incomeNetForm.get('monthlyAmount').invalid) {
+    //       this.incomeNetForm.get('monthlyAmount').markAsTouched();
+    //       return;
+    //     }
+    //   }
+    // }
+    // if (this.singleIndividualIncome.finalIncomeList.incomeTypeId != 1) {
 
-    }
-    if (this.incomeNetForm.get('monthlyAmount').invalid) {
-      this.incomeNetForm.get('monthlyAmount').markAsTouched();
-      return;
-    }
-    if (this.incomeNetForm.get('incomeGrowthRate').invalid) {
-      this.incomeNetForm.get('incomeGrowthRate').markAsTouched();
-      return;
-    }
+    // }
+    // if (this.incomeNetForm.get('monthlyAmount').invalid) {
+    //   this.incomeNetForm.get('monthlyAmount').markAsTouched();
+    //   return;
+    // }
+    // if (this.incomeNetForm.get('incomeGrowthRate').invalid) {
+    //   this.incomeNetForm.get('incomeGrowthRate').markAsTouched();
+    //   return;
+    // }
     
-    if (this.incomeNetForm.get('incomeStartDate').invalid) {
-      this.incomeNetForm.get('incomeStartDate').markAsTouched();
-      return;
-    }
-    if (this.incomeNetForm.get('incomeEndDate').invalid) {
-      this.incomeNetForm.get('incomeEndDate').markAsTouched();
-      return;
-    }
+    // if (this.incomeNetForm.get('incomeStartDate').invalid) {
+    //   this.incomeNetForm.get('incomeStartDate').markAsTouched();
+    //   return;
+    // }
+    // if (this.incomeNetForm.get('incomeEndDate').invalid) {
+    //   this.incomeNetForm.get('incomeEndDate').markAsTouched();
+    //   return;
+    // }
 
     if (this.showDateError) {
       return
     }
+    if(this.incomeNetForm.get('incomeOption').value == '2'){
+      this.incomeNetForm.get('basicIncome').setErrors(null);
+      this.incomeNetForm.get('standardDeduction').setErrors(null);
+      this.incomeNetForm.get('deamessAlowance').setErrors(null);
+      this.incomeNetForm.get('hraRecieved').setErrors(null);
+      this.incomeNetForm.get('totalRentPaid').setErrors(null);
+
+}else{
+this.incomeNetForm.get('monthlyAmount').setErrors(null);
+  }
+    if (this.incomeNetForm.invalid) {
+      
+      this.incomeNetForm.markAllAsTouched();
+  } else{
+    
+  
     let obj =
     {
       "familyMemberId": this.singleIndividualIncome.id,
@@ -261,6 +297,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
        "incomeStyleId": this.incomeNetForm.get('incomeStyle').value,
       // "incomeStyleId":20,
       "continueTill": parseInt(this.incomeNetForm.get("continousTill").value),
+      "numberOfYear":parseInt(this.incomeNetForm.get("continousTillYear").value) ? parseInt(this.incomeNetForm.get("continousTillYear").value) :null,
       "nextAppraisalOrNextRenewal": this.incomeNetForm.get('nextAppraisal').value ? this.incomeNetForm.get('nextAppraisal').value : null,
       "incomeTypeId": this.singleIndividualIncome.finalIncomeList.incomeTypeList,
       "realEstateId": 20,
@@ -270,7 +307,8 @@ export class IndividualIncomeInfoComponent implements OnInit {
       "hraRecieved": (this.incomeNetForm.get('hraRecieved').value) ? this.incomeNetForm.get('hraRecieved').value : 0,
       "totalRentPaid": (this.incomeNetForm.get('totalRentPaid').value) ? this.incomeNetForm.get('totalRentPaid').value : 0,
       "description": this.incomeNetForm.get('description').value,
-      "monthlyContributions": []
+      "monthlyDistributionList": [],
+      "bonusOrInflowList":[]
     }
        if (this.getBonusList) {
         this.finalBonusList = []
@@ -286,10 +324,12 @@ export class IndividualIncomeInfoComponent implements OnInit {
           this.finalBonusList.push(obj)
         })
       }
-      obj['monthlyContributions'] = this.finalBonusList;
-      if(obj.monthlyContributions.length == 0){
-        obj.monthlyContributions = null;
+      obj['monthlyDistributionList'] = this.finalBonusList;
+      if(obj.monthlyDistributionList.length == 0){
+        obj.monthlyDistributionList = null;
       }
+      obj['bonusOrInflowList']=obj.monthlyDistributionList;
+
     console.log(obj)
     if (this.editApiData) {
       obj['id'] = this.editApiData.id;
@@ -305,6 +345,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
         error => this.eventService.showErrorMessage(error)
       )
     }
+  }
   }
   submitIncomeFormRes(data) {
     this.incomePosition++;
