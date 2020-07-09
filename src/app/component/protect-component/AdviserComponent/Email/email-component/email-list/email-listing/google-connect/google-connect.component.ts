@@ -43,32 +43,7 @@ export class GoogleConnectComponent implements OnInit {
       googleConnectEmail: ['', Validators.required]
     });
 
-    if (this.doesTokenStoredInLocalStorage()) {
-      this.router.navigate(['/admin/emails/inbox'], { relativeTo: this.activatedRoute });
-    } else {
-      // call for getProfile api for having connected mail
-      this.emailService.getProfile().subscribe(res => {
-        if (res) {
-          localStorage.setItem('googleOAuthToken', 'oauthtoken');
-          localStorage.setItem('successStoringToken', 'true');
-          localStorage.setItem('associatedGoogleEmailId', AuthService.getUserInfo().userName);
-          if (this.connect == "dash") {
-            this.router.navigate(['/admin/dashboard'], { relativeTo: this.activatedRoute });
-          }
-          else if (this.connect = "calendar") {
-            this.router.navigate(['/admin/activies/month'], { relativeTo: this.activatedRoute });
-          }
-          else {
-            this.router.navigate(['/admin/emails/inbox'], { relativeTo: this.activatedRoute });
-          }
-        } else {
-          this.eventService.openSnackBarNoDuration('Please Connect Your Gmail Account!!', "DISMISS");
-        }
-      }, err => {
-
-        console.log(err);
-      });
-    }
+   this.checkConnectGoogle();
     if (this.router.url.split('/').includes('google-connect')) {
       this.connect = "email";
     } else if (this.router.url == '/admin/dashboard') {
@@ -79,6 +54,40 @@ export class GoogleConnectComponent implements OnInit {
       this.connect = "calendar";
     }
 
+  }
+
+  checkConnectGoogle(){
+    // if (this.doesTokenStoredInLocalStorage()) {
+    //   this.router.navigate(['/admin/emails/inbox'], { relativeTo: this.activatedRoute });
+    // } else {
+      // call for getProfile api for having connected mail
+      this.emailService.getProfile().subscribe(res => {
+        if (res) {
+          localStorage.setItem('googleOAuthToken', 'oauthtoken');
+          localStorage.setItem('successStoringToken', 'true');
+          localStorage.setItem('associatedGoogleEmailId', AuthService.getUserInfo().userName);
+          if (this.connect == "dash") {
+            this.router.navigate(['/admin/dashboard'], { relativeTo: this.activatedRoute });
+            this.googleConnected.emit(localStorage.getItem('successStoringToken'));
+          }
+          else if (this.connect == "calendar") {
+            this.router.navigate(['/admin/activies/month'], { relativeTo: this.activatedRoute });
+            this.googleConnected.emit(localStorage.getItem('successStoringToken'));
+          }
+          else {
+            this.router.navigate(['/admin/emails/inbox'], { relativeTo: this.activatedRoute });
+          }
+        } else {
+          this.eventService.openSnackBarNoDuration('Please Connect Your Gmail Account!!', "DISMISS");
+          localStorage.removeItem('googleOAuthToken');
+          localStorage.removeItem('successStoringToken');
+          localStorage.removeItem('associatedGoogleEmailId');
+        }
+      }, err => {
+
+        console.log(err);
+      });
+    // }
   }
 
   toggleShowEmailInput() {
@@ -154,7 +163,8 @@ export class GoogleConnectComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if(result){
-        this.googleConnected.emit(localStorage.getItem('successStoringToken'));
+        // this.googleConnected.emit(localStorage.getItem('successStoringToken'));
+        this.checkConnectGoogle();
       }
     });
 
