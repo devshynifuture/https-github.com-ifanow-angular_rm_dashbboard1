@@ -79,6 +79,7 @@ export class MobileDocumentComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getAllFileList(tabValue, 'init');
+    this.folderData = []
   }
   openMenu(flag) {
     if (flag == false) {
@@ -343,7 +344,7 @@ export class MobileDocumentComponent implements OnInit {
     // this.commonFileFolders = new MatTableDataSource(this.data);
     this.parentId = (data == undefined) ? 0 : data.folderParentId;
     console.log('parentId', this.parentId);
-    this.folderData.splice(this.folderData.length - 1,1);
+    this.folderData.splice(this.folderData.length - 1, 1);
     this.openFolderName = this.openFolderName.filter((element, i) => i <= index);
     this.commonFileFolders = this.openFolderName[this.openFolderName.length - 1];
     // this.commonFileFolders = new MatTableDataSource(data);
