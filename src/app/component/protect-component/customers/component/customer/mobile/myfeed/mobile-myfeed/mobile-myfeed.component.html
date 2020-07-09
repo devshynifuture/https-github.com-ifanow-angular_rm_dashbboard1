@@ -381,8 +381,12 @@
 
                     <div class="row pt-18 pb-16">
                         <div class="col-12 text-center">
-                            <img src="/assets/images/svg/mob-pofile-chart.svg">
                             <p class="text-custom m-0 lh-16 f-400 roboto">{{riskProfileDesc(risk.riskProfileId)}}</p>
+                            <img src="/assets/images/svg/aggressive.svg" *ngIf="risk.riskProfileId == 1">
+                            <img src="/assets/images/svg/moderately-aggressive.svg" *ngIf="risk.riskProfileId == 2">
+                            <img src="/assets/images/svg/moderate.svg" *ngIf="risk.riskProfileId == 3">
+                            <img src="/assets/images/svg/moderately-conservative.svg" *ngIf="risk.riskProfileId == 4">
+                            <img src="/assets/images/svg/conservative.svg" *ngIf="risk.riskProfileId == 5">
                         </div>
                     </div>
                 </div>
