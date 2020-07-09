@@ -53,7 +53,7 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
     EntryComponentsModule,
     AccountEntryModule,
     PlanEntryModule,
-   CustomersRoutingModule,
+  CustomersRoutingModule,
    // MobileRoutingModule,
     SlickCarouselModule,
     AdviceEntryModule,

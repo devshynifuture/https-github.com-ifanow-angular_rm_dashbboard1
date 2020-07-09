@@ -34,7 +34,15 @@ export class GoogleConnectDialogComponent {
       localStorage.removeItem('successStoringToken');
       localStorage.removeItem('associatedGoogleEmailId');
     } else {
-      this.router.navigate(['/admin/emails/inbox'], { relativeTo: this.activatedRoute })
+      if(this.connect == 'dash'){
+        this.router.navigate(['/admin/dashboard'], { relativeTo: this.activatedRoute });
+      }
+      else if(this.connect == 'calendar'){
+        this.router.navigate(['/admin/activies/month'], { relativeTo: this.activatedRoute });
+      }
+      else{
+        this.router.navigate(['/admin/emails/inbox'], { relativeTo: this.activatedRoute });
+      }
     }
   }
 
