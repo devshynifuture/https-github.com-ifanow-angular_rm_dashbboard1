@@ -2,12 +2,10 @@
   "name": "my-planner2",
   "version": "0.0.0",
   "bundlewatch": {
-    "files": [
-      {
-        "path": "./src/*.js",
-        "maxSize": "100kB"
-      }
-    ]
+    "files": [{
+      "path": "./src/*.js",
+      "maxSize": "100kB"
+    }]
   },
   "scripts": {
     "ng": "ng",
