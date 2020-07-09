@@ -31,6 +31,8 @@ export class IndividualIncomeInfoComponent implements OnInit {
   showDateError: string;
   expectedBonusForm: any;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
+  isStatic = true;
+  isErractic = false;
   constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject, private planService: PlanService, private eventService: EventService) { }
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -85,7 +87,9 @@ export class IndividualIncomeInfoComponent implements OnInit {
   }
   @Input() set editIncomeData(data) {
     if (data == undefined) {
-      this.incomeNetForm.controls.incomeOption.setValue('2')
+      this.incomeNetForm.controls.incomeOption.setValue('2');
+      this.incomeNetForm.controls.incomeStyle.setValue('1')
+
       return;
     }
     else {
@@ -118,8 +122,20 @@ export class IndividualIncomeInfoComponent implements OnInit {
         }))
       });
         this.incomeNetForm.controls.incomeOption.setValue((data.basicIncome) ? '1' : '2');
-    }
+
+    }2
     this.bonusList = data.bonusOrInflows;
+  }
+  onClickValueChange(value){
+    if(value == '1'){
+      this.isStatic = true;
+      this.isErractic =false;
+    }else{
+      this.isStatic = false;
+      this.isErractic =true;
+    }
+    this.incomeNetForm.controls.incomeStyle.setValue(value)
+
   }
   cancel() {
     const obj =
