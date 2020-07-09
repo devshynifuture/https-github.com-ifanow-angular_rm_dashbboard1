@@ -350,9 +350,9 @@
                                     </div>
                                 </div>
                                 <div class="col-md-2 pt-8">
-                                    <i class="material-icons c-p text-custom" *ngIf="i==getBonusList.controls.length-1"
+                                    <i class="material-icons c-p text-custom"
                                         (click)="addExpectedBonus()">add</i>
-                                    <i class="material-icons c-p text-custom" *ngIf="i<getBonusList.controls.length-1"
+                                    <i class="material-icons c-p text-custom" *ngIf="getBonusList.controls.length > 1"
                                         (click)="removeExpectedBonus(i)">remove</i>
                                 </div>
                                 <mat-hint align="start" class="f-12 ml-8 pb-16">Optional</mat-hint>
