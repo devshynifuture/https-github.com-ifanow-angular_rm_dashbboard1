@@ -74,3 +74,28 @@
   width: 55px;
   float: left;
 }
+
+
+::ng-deep .checkOne .mat-radio-button {
+  border: 1px solid #b5b5b5;
+  min-width: 123px;
+  border-top: transparent;
+}
+
+::ng-deep .checkOne .mat-radio-button.radioBtnActive{
+  border: 2px solid #02B875;
+  border-top: transparent;
+}
+
+
+::ng-deep .checkOne .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+  border-color: #02B875 !important;
+}
+
+::ng-deep .checkOne .mat-radio-button.mat-accent .mat-radio-inner-circle {
+  background-color: #02B875 !important;
+}
+
+.checkOne {
+  width: 124px;
+}

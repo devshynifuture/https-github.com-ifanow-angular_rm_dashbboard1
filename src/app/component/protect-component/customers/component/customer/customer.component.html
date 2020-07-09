@@ -13,7 +13,10 @@
     </div>
     <div class="row" id="ui-customer">
         <div class="col-md-2 p-0 d-flex align-items-center c-p" (click)="goHome()">
-            <img class="imgClient" [src]="authService.orgData.logoUrl || organizationLogo">
+            <div class="imgClient">
+                <img [src]="authService.orgData.logoUrl || organizationLogo">
+            </div>
+
         </div>
         <div class="col-md-8">
             <nav mat-tab-nav-bar>
