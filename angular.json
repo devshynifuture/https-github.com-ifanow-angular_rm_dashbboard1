@@ -109,15 +109,15 @@
                   "with": "src/environments/environment.dev.ts"
                 }
               ],
-              "optimization": true,
-              "outputHashing": "all",
+              "optimization": false,
+              "outputHashing": "none",
               "sourceMap": false,
               "extractCss": true,
-              "namedChunks": true,
+              "namedChunks": false,
               "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
+              "extractLicenses": false,
+              "vendorChunk": true,
+              "buildOptimizer": false,
               "budgets": [
                 {
                   "type": "initial",

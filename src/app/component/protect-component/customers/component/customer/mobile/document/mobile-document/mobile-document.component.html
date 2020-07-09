@@ -1,39 +1,49 @@
-
 <div *ngIf="openMenue == true">
-    <app-mobile-left-sidenav ></app-mobile-left-sidenav>
+    <app-mobile-left-sidenav></app-mobile-left-sidenav>
 </div>
 <div class="row mob-bg-common pb-12  mobtop-navfixed pt-12" *ngIf="openMenue != true">
-    <div class="col-2 full-center" (click)="openMenu(openMenue)"> 
-        <img src="/assets/images/svg/mob-left-arrow.svg" class="c-p pt-2">
+    <div class="col-2 full-center" *ngIf="folderData.length==0">
+        <img src="/assets/images/svg/mob-left-arrow.svg" (click)="openMenu(openMenue)">
+    </div>
+    <div class="col-2 full-center" *ngIf="folderData.length>0">
+        <span *ngFor="let folder of openFolderName; let i = index">
+            <img src="/assets/images/svg/mob-left-arrow.svg"
+                *ngIf="folder[0] && folder[0].folderParentId==folderData[folderData.length-1].folderParentId"
+                (click)="getFolders(folder,i)" class="c-p pt-2"></span>
+
     </div>
     <div class="col-10 pl-0 d-flex align-items-center">
-        <h5 class="m-0 f-18 text-white roboto">Documents</h5>
+        <h5 class="m-0 f-18 text-white roboto">
+            {{(folderData.length>0)?folderData[folderData.length-1].openFolderNm : 'Documents'}}</h5>
     </div>
 </div>
 <div class="pt-72" *ngIf="openMenue != true">
-    <div class="row pt-20">
-        <div class="col-2 text-center">
-            <img src="/assets/images/svg/mob-folder.svg" class="pt-2">
+    <div *ngFor="let singleMainFolder of commonFileFolders" class="row pt-20">
+        <div (click)="openFolder(singleMainFolder);getSharebleLink(singleMainFolder,'preview')"
+            class="col-2 text-center">
+            <img *ngIf="singleMainFolder.folderName" src="/assets/images/svg/mob-folder.svg" class="pt-2">
+            <img *ngIf="singleMainFolder.fileName" src="/assets/images/svg/file-lines.svg" class="pt-2">
         </div>
-        <div class="col-8 pl-0">
-            <p class="m-0 roboto f-400 lh-16">Identity & address proofs<span
+        <div (click)="openFolder(singleMainFolder);getSharebleLink(singleMainFolder,'preview')" class="col-8 pl-0">
+            <p class="m-0 roboto f-400 lh-16">{{singleMainFolder.folderName}}<span *ngIf="singleMainFolder.isStarred==1"
                     class="material-icons text-coff f-16 v-middle">
                     grade
                 </span>
             </p>
-            <p class="text-custom f-12 f-400 roboto m-0 lh-14">23/09/2019 09:28 AM</p>
+            <p class="text-custom f-12 f-400 roboto m-0 lh-14">
+                {{singleMainFolder.createdDate |date:'dd/MM/yyyy h:mm a'}}</p>
         </div>
         <div class="col-2">
-            <span class="material-icons text-custom" [matMenuTriggerFor]="menu">
+            <span class="material-icons text-custom" (click)="openEditDocument()">
                 more_horiz
             </span>
-            <mat-menu #menu="matMenu">
+            <!-- <mat-menu #menu="matMenu">
                 <button mat-menu-item>Item 1</button>
                 <button mat-menu-item>Item 2</button>
-            </mat-menu>
+            </mat-menu> -->
         </div>
     </div>
-    <div class="row pt-20">
+    <!-- <div class="row pt-20">
         <div class="col-2 text-center">
             <img src="/assets/images/svg/mob-folder.svg" class="pt-2">
         </div>
@@ -104,7 +114,7 @@
             </span>
 
         </div>
-    </div>
+    </div> -->
 </div>
 
 <!-- Create new -->
@@ -133,11 +143,11 @@
     <!-- end -->
 
     <div class="document-bottom-action">
-        <button mat-stroked-button class="btn-primary" [matMenuTriggerFor]="menu1"><span class="material-icons">
+        <button (click)="openUploadOption()" mat-stroked-button class="btn-primary"><span class="material-icons">
                 add
             </span></button>
-
-        <mat-menu #menu1="matMenu">
+        <!-- [matMenuTriggerFor]="menu1" -->
+        <!-- <mat-menu #menu1="matMenu">
             <button mat-menu-item class="p-0">
                 <div class="row bb-1 pb-12">
                     <div class="col-2 text-center">
@@ -238,5 +248,5 @@
                     </div>
                 </div>
             </button>
-        </mat-menu>
+        </mat-menu> -->
     </div>
