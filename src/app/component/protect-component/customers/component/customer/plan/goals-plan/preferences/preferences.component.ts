@@ -27,7 +27,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
   assetAllocationFG:FormGroup;
   validatorType = ValidatorType;
   months = AppConstants.getMonthsArr();
-  
+
   goalStartYears = Array(50).fill((new Date().getFullYear())).map((v, idx) => v + idx);
   years = [];
 
@@ -49,7 +49,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
 
   constructor(
     private subInjectService: SubscriptionInject,
-    private eventService: EventService, 
+    private eventService: EventService,
     private fb: FormBuilder,
     private datePipe: DatePipe,
     private planService: PlanService,
@@ -135,7 +135,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     const gstartDate = this.goalDetailsFG.controls.goalStartDateYear.value + '-' + this.goalDetailsFG.controls.goalStartDateMonth.value + '-01';
     const sStartDate = this.goalDetailsFG.controls.savingStartDateYear.value + '-' + this.goalDetailsFG.controls.savingStartDateMonth.value + '-01';
     const sEndtDate = this.goalDetailsFG.controls.savingEndDateYear.value + '-' + this.goalDetailsFG.controls.savingEndDateMonth.value + '-01';
-    
+
     if(this.data.singleOrMulti == 2) {
       const gendtDate = this.goalDetailsFG.controls.goalEndDateYear.value + '-' + this.goalDetailsFG.controls.goalEndDateMonth.value + '-01';
       // goal start date cannot be greater than end date
@@ -144,7 +144,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       } else {
         this.goalSDError = false;
       }
-  
+
       // savings SD cannot be greater than goal end date
       if([-1].includes(UtilService.compareDates(sEndtDate, gendtDate))) {
         this.savingsEDError = true;
@@ -166,7 +166,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     } else {
       this.savingsSDError = false;
     }
-    
+
     return this.goalSDError || this.savingsEDError || this.savingsSDError;
   }
 
@@ -299,7 +299,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     return this.assetAllocationFG.controls.progressiveStages as FormArray;
   }
 
-  setOtherBifurcation(mainInput:FormControl, inputToChange:FormControl) {
+  setOtherBifurcation(mainInput, inputToChange) {
     if(mainInput.value <= 100) {
       const value = 100 - parseInt(mainInput.value);
       inputToChange.setValue(value);
@@ -336,7 +336,7 @@ export interface PeriodicElement {
   name: string;
   position: string;
 
- 
+
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
@@ -350,10 +350,10 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export interface PeriodicElement1 {
   name: string;
   position: string;
- 
+
 }
 
 const ELEMENT_DATA1: PeriodicElement1[] = [
   {position: 'Inflation rate', name: '6%'},
- 
+
 ];

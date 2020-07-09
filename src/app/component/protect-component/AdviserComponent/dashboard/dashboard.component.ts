@@ -157,6 +157,7 @@ export class DashboardComponent implements OnInit {
   isGoalSummaryLoaderFlag: boolean;
   investmentAccountFlag: boolean;
   transactionFlag: boolean;
+  showSummaryBar;
   constructor(
     public dialog: MatDialog, private subService: SubscriptionService,
     private eventService: EventService,

@@ -38,8 +38,8 @@
                         {{data.monthlyIncome? "₹" : ""}}{{income.monthlyIncome ? income.monthlyIncome : '-'}}
                     </div>
                 </div>
-                
-                <div class="row bb p-8 b-l br" *ngIf="income.incomeTypeId == 1"> 
+
+                <div class="row bb p-8 b-l br" *ngIf="income.incomeTypeId == 1">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Basic Income
                     </div>
@@ -54,7 +54,7 @@
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         {{data.standardDeduction? "₹" : ""}}{{income.standardDeduction ? income.standardDeduction : '-'}}
                     </div>
-                </div>  
+                </div>
                 <div class="row bb p-8 b-l br" *ngIf="income.incomeTypeId == 1">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Dearness allowance
@@ -62,7 +62,7 @@
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         {{data.deamessAlowance? "₹" : ""}}{{income.deamessAlowance ? income.deamessAlowance : '-'}}
                     </div>
-                </div>  
+                </div>
                 <div class="row bb p-8 b-l br" *ngIf="income.incomeTypeId == 1">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         HRA recieved
@@ -70,7 +70,7 @@
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         {{data.hraRecieved? "₹" : ""}}{{income.hraRecieved ? income.hraRecieved : '-'}}
                     </div>
-                </div>  
+                </div>
                 <div class="row bb p-8 b-l br" *ngIf="income.incomeTypeId == 1">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Total rent paid
@@ -78,7 +78,7 @@
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         {{data.totalRentPaid? "₹" : ""}}{{income.totalRentPaid ?income.totalRentPaid :'-'}}
                     </div>
-                </div>  
+                </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Income style
@@ -92,7 +92,7 @@
                         Continues till
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{(income.continueTill == 1) ? 'Retirement' : (income.continueTill == 2) ? 'Life time' : (income.continueTill == 3) ? (item.numberOfYear + 'years') : '-'}}
+                        {{(income.continueTill == 1) ? 'Retirement' : (income.continueTill == 2) ? 'Life time' : (income.continueTill == 3) ? (income.numberOfYear + 'years') : '-'}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">

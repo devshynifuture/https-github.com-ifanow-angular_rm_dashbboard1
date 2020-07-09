@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { UtilService, LoaderFunction } from "../../../../../../../services/util.service";
 import { SubscriptionInject } from "../../../../../AdviserComponent/Subscriptions/subscription-inject.service";
@@ -18,6 +18,7 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 import * as Highcharts from 'highcharts';
 import { MatDialog } from '@angular/material';
 import { P } from '@angular/cdk/keycodes';
+import { Subscriber, Subscription } from 'rxjs';
 
 
 
@@ -27,7 +28,7 @@ import { P } from '@angular/cdk/keycodes';
   styleUrls: ['./goals-plan.component.scss'],
   providers: [LoaderFunction]
 })
-export class GoalsPlanComponent implements OnInit {
+export class GoalsPlanComponent implements OnInit, OnDestroy {
   clientFamily: any[];
 
 
@@ -36,6 +37,7 @@ export class GoalsPlanComponent implements OnInit {
     advisorId: '',
     clientId: ''
   }
+  otherAssetAllocationSubscription:Subscription;
   selectedGoal: any = {};
   allGoals: any[] = [];
   hasCostOfDelay: boolean = false;
@@ -345,6 +347,9 @@ export class GoalsPlanComponent implements OnInit {
         subscription.unsubscribe();
       }
     });
+    if(flag == 'openallocations') {
+      this.otherAssetAllocationSubscription = subscription
+    }
   }
 
   loadSelectedGoalData(goalData) {
@@ -403,6 +408,11 @@ export class GoalsPlanComponent implements OnInit {
   todo: any[] = [];
   logger(event) {
     // console.log(event)
+  }
+
+  ngOnDestroy(){
+    this.subInjectService.closeNewRightSlider({state: 'close'});
+    this.otherAssetAllocationSubscription.unsubscribe();
   }
 }
 

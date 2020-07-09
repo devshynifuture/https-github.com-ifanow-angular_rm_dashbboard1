@@ -512,7 +512,8 @@ export class StpTransactionComponent implements OnInit {
       Object.assign(this.folioDetails, { folioNumber: this.folioNumber });
       this.scheme = {
         'schemeName': this.schemeName,
-        'mutualFundSchemeMasterId': this.mutualFundData.schemeId
+        'mutualFundSchemeMasterId': this.mutualFundData.schemeId,
+        'amcId':this.mutualFundData.amcId
       }
       const obj1 = {
         mutualFundSchemeMasterId: this.mutualFundData.schemeId,
