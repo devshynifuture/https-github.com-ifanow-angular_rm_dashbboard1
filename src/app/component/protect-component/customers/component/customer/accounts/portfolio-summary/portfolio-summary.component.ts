@@ -160,13 +160,13 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
             this.liabilityTotal = 0;
           });
           this.totalOfLiabilitiesAndTotalAssset(this.summaryTotalValue);
-          this.letsideBarLoader = true;
+          this.letsideBarLoader = false;
           this.summaryMap = tempSummaryTotalValue;
           this.pieChart('piechartMutualFund', this.summaryTotalValue);
         }
       },
       err => {
-        this.letsideBarLoader = true;
+        this.letsideBarLoader = false;
         this.finalTotal = 0;
         this.liabilityTotal = 0;
         this.totalAssetsWithoutLiability = 0;
