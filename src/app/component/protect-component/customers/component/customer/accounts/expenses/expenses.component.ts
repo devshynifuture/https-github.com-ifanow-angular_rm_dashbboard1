@@ -10,6 +10,7 @@ import * as Highcharts from 'highcharts';
 import { EventService } from 'src/app/Data-service/event.service';
 import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-expenses',
   templateUrl: './expenses.component.html',
@@ -31,8 +32,10 @@ export class ExpensesComponent implements OnInit {
   isLoading = false;
   dataSource1 = new MatTableDataSource([] as Array<any>);
   noData: string;
+  startDate: string;
+  endDate: string;
 
-  constructor(private subInjectService: SubscriptionInject, private planService: PlanService,
+  constructor(private datePipe: DatePipe,private subInjectService: SubscriptionInject, private planService: PlanService,
     private constantService: ConstantsService, private eventService: EventService, public dialog: MatDialog) {
   }
 
@@ -40,6 +43,7 @@ export class ExpensesComponent implements OnInit {
     this.viewMode = 'Transactions';
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.getStartAndEndDate();
     this.getTransaction();
     this.getRecuringTransactions();
     setTimeout(() => {
@@ -47,7 +51,13 @@ export class ExpensesComponent implements OnInit {
 
     }, 300);
   }
-
+  getStartAndEndDate(){
+    var date = new Date();
+    var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+    var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+    this.startDate = this.datePipe.transform(firstDay, 'yyyy/MM/dd');
+    this.endDate = this.datePipe.transform(lastDay, 'yyyy/MM/dd');
+  }
   budgetChart(id) {
     var chart = Highcharts.chart('bugetChart', {
 
@@ -210,8 +220,8 @@ export class ExpensesComponent implements OnInit {
       advisorId: this.advisorId,
       clientId: this.clientId,
       allOrSingle: 1,
-      endDate: '2020-01-30',
-      startDate: '2020-01-01',
+      endDate: this.endDate,
+      startDate: this.startDate,
       limit: 10,
       offset: 1,
       familyMemberId: 0,
@@ -249,8 +259,8 @@ export class ExpensesComponent implements OnInit {
       advisorId: this.advisorId,
       clientId: this.clientId,
       allOrSingle: 1,
-      endDate: '2020-01-30',
-      startDate: '2020-01-01',
+      endDate: this.endDate,
+      startDate:this.startDate,
       limit: 10,
       offset: 1,
       familyMemberId: 0,
@@ -291,8 +301,8 @@ export class ExpensesComponent implements OnInit {
       advisorId: this.advisorId,
       clientId: this.clientId,
       allOrSingle: 1,
-      endDate: '2020-01-30',
-      startDate: '2020-01-01',
+      endDate: this.endDate,
+      startDate: this.startDate,
       limit: 10,
       offset: 1,
       familyMemberId: 0,
@@ -332,8 +342,8 @@ export class ExpensesComponent implements OnInit {
       advisorId: this.advisorId,
       clientId: this.clientId,
       allOrSingle: 1,
-      endDate: '2020-01-30',
-      startDate: '2020-01-01',
+      endDate: this.endDate,
+      startDate: this.startDate,
       limit: 10,
       offset: 1,
       familyMemberId: 0,
