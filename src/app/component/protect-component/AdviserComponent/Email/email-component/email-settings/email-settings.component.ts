@@ -57,11 +57,10 @@ export class EmailSettingsComponent implements OnInit {
           this.router.navigate(['/admin/emails/inbox'], { relativeTo: this.activatedRoute });
           this.isLoggedIn = true;
         } else {
-          this.eventService.openSnackBarNoDuration(res, 'DISMISS');
+          this.eventService.openSnackBarNoDuration("Please Connect your Gmail Account!!", 'DISMISS');
           this.isLoggedIn = false;
         }
       }, err => {
-        this.eventService.openSnackBarNoDuration(err, "DISMISS");
         this.isLoggedIn = false;
       });
     }
