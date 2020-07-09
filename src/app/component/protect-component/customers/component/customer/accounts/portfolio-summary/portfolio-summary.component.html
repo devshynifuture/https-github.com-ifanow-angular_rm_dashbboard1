@@ -371,14 +371,16 @@
             </div>
 
             <div class="row skeletonAnimation" [appSkeletonLoading]="letsideBarLoader" appSkeletonLoading>
-                <div class="col-md-6 relClass">
-                    <div class="bar300" [ngClass]="{'height300': letsideBarLoader}">
-
+                <div class="col-md-6 mt-20 overflow-hidden ">
+                    <div class="relClass">
+                        <div class="bar300" [ngClass]="{'height300': letsideBarLoader}">
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-6 relClass">
-                    <div class="bar300" [ngClass]="{'height300': letsideBarLoader}">
-
+                <div class="col-md-6 mt-20 overflow-hidden">
+                    <div class="relClass">
+                        <div class="bar300" [ngClass]="{'height300': letsideBarLoader}">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -388,7 +390,7 @@
 
 
 
-            <div class="mtClass" [formGroup]="cashFlowFG">
+            <div [hidden]="letsideBarLoader" class="mtClass" [formGroup]="cashFlowFG">
                 <div class="w-1024 b-a shadowBox wrapper-12 overflow-y bg-white">
 
                     <div class="row">
@@ -499,6 +501,19 @@
 
                 </div>
             </div>
+
+            <div class="row skeletonAnimation" [appSkeletonLoading]="letsideBarLoader" appSkeletonLoading>
+                <div class="col-md-12 mt-20 overflow-hidden ">
+                    <div class="relClass">
+                        <div class="bar300" [ngClass]="{'height300': letsideBarLoader}">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
         </div>
         <div class="col-xl-2 col-lg-3 col-md-3 col-sm-12 p-0">
             <div class="b-a pl-8 pr-8">
