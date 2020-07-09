@@ -39,9 +39,12 @@ export class IndividualIncomeInfoComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.expectedBonusForm = this.fb.group({
-      bonusList: new FormArray([])
-    })
+    if(!this.editApiData){
+      this.expectedBonusForm = this.fb.group({
+        bonusList: new FormArray([])
+      })
+    }
+
 
   }
   incomeNetForm = this.fb.group({
@@ -127,15 +130,19 @@ export class IndividualIncomeInfoComponent implements OnInit {
       this.incomeNetForm.controls.incomeEndDate.setValue(new Date(data.incomeEndYear, data.incomeEndMonth));
       this.incomeNetForm.controls.nextAppraisal.setValue(new Date(data.nextAppraisalOrNextRenewal));
       this.incomeNetForm.controls.description.setValue(data.description);
-      data.monthlyDistributions.forEach(element => {
+     this.expectedBonusForm = this.fb.group({
+        bonusList: new FormArray([])
+      })
+      data.bonusOrInflowList.forEach(element => {
         this.getBonusList.push(this.fb.group({
-          id: [element.id, [Validators.required]],
-          bonusOrInflow: [element.bonusOrInflow, [Validators.required]],
-          receivingDate: [new Date(element.receivingDate), [Validators.required]],
+          id: [element.id],
+          bonusOrInflow: [element.bonusOrInflow],
+          receivingDate: [new Date(element.receivingYear, element.receivingMonth), [Validators.required]],
           amount: [element.amount, [Validators.required]],
         }))
       });
         this.incomeNetForm.controls.incomeOption.setValue((data.basicIncome) ? '1' : '2');
+        (data.basicIncome) ? this.incomeOption ='1' : this.incomeOption ='2'
       if(this.incomeNetForm.get('incomeStyle').value == 1){
         this.isStatic = true;
         this.isErractic = false;
