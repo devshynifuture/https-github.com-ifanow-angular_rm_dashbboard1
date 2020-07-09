@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
 import { PlanService } from '../../plan.service';
@@ -163,6 +163,8 @@ export class CalculatorsComponent implements OnInit {
         this.eventService.openSnackBar("EMI saved to goal", "Dismiss");
         this.subInjectService.setSliderData(res);
         this.subInjectService.setRefreshRequired();
+        this.barButtonOptions.active = false;
+        this.barButtonOptions1.active = false;
       }, err => {
         this.eventService.openSnackBar(err, "Dismiss");
         this.barButtonOptions.active = false;

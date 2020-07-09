@@ -148,11 +148,15 @@ export class DashboardComponent implements OnInit {
   documentSizeData: any = {};
   aumReconList: any;
   aumFlag: boolean;
-  goalSummaryData: any = {};
+  goalSummaryData: any;
   isKeyMatrix: boolean;
   subOverviewFlag: boolean;
   docOverviewFlag: boolean;
-
+  isBirhtdayLoader: boolean;
+  isLoading;
+  isGoalSummaryLoaderFlag: boolean;
+  investmentAccountFlag: boolean;
+  transactionFlag: boolean;
   constructor(
     public dialog: MatDialog, private subService: SubscriptionService,
     private eventService: EventService,
@@ -258,8 +262,9 @@ export class DashboardComponent implements OnInit {
     this.excessAllow = done;
   }
 
-  LastSevenDaysInvestmentAccounts: any = [];
+  LastSevenDaysInvestmentAccounts: any;
   getLastSevenDaysInvestmentAccounts() {
+    this.investmentAccountFlag = true;
     const obj = {
       "advisorId": this.advisorId,
       "startDate": new Date().getTime(),
@@ -274,9 +279,11 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getLastSevenDaysInvestmentAccounts(obj).subscribe(
       (data) => {
         if (data) {
+          this.investmentAccountFlag = false;
           this.LastSevenDaysInvestmentAccounts = data;
         }
         else {
+          this.investmentAccountFlag = false;
           this.LastSevenDaysInvestmentAccounts = [];
         }
       },
@@ -285,10 +292,11 @@ export class DashboardComponent implements OnInit {
       });
   }
 
-  LastSevenDaysTransactions: any = [];
+  LastSevenDaysTransactions: any;
   rejectedFAILURE: any = [];
   lastSevenDays: any = new Date().setDate(new Date().getDate() - 7);
   getLastSevenDaysTransactions() {
+    this.transactionFlag = true;
     const obj = {
       "advisorId": this.advisorId,
       "tpUserCredentialId": null,
@@ -307,12 +315,14 @@ export class DashboardComponent implements OnInit {
       (data) => {
         console.log(data, "LastSevenDaysTransactions 123");
         if (data) {
+          this.transactionFlag = false;
           this.LastSevenDaysTransactions = data;
           this.dataSource5 = this.LastSevenDaysTransactions.filter((x) => {
             x.status == 1 || x.status == 7;
           })
         }
         else {
+          this.transactionFlag = false;
           this.LastSevenDaysTransactions = [];
           this.dataSource5 = [];
         }
@@ -438,6 +448,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getBirthdayOrAnniversary() {
+    this.isBirhtdayLoader = true;
     const toDate = new Date();
     toDate.setDate(new Date().getDate() + 7);
     const obj = {
@@ -448,8 +459,9 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getBirthdayOrAnniversary(obj).subscribe(
       data => {
         if (data) {
+          this.isBirhtdayLoader = false;
           data.forEach(element => {
-            if (element.displayName.length > 19) {
+            if (element.displayName.length > 15) {
               element['shortName'] = element.displayName.substr(0, element.name.indexOf(' '));
             }
             if (element.dateOfBirth && element.dateOfBirth != 0) {
@@ -462,6 +474,14 @@ export class DashboardComponent implements OnInit {
           this.birthdayAnniList = data;
           console.log(this.birthdayAnniList);
         }
+        else {
+          this.birthdayAnniList = [];
+          this.isBirhtdayLoader = false;
+        }
+      },
+      err => {
+        this.birthdayAnniList = [];
+        this.isBirhtdayLoader = false;
       }
     );
   }
@@ -550,12 +570,14 @@ export class DashboardComponent implements OnInit {
   }
 
   getGoalSummaryData() {
+    this.isGoalSummaryLoaderFlag = true;
     const obj = {
       advisorId: this.advisorId
     }
     this.dashboardService.getGoalSummarydata(obj).subscribe(
       data => {
         if (data) {
+          this.isGoalSummaryLoaderFlag = false;
           this.goalSummaryData = data;
         } else {
 

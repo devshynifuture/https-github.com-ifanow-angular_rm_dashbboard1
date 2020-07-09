@@ -36,8 +36,8 @@ export class AddIncomeComponent implements OnInit {
   getGrowthRateDataResp(data) {
     console.log(data)
   }
-  close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  close(flag) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close' ,refreshRequired: flag});
   }
   getIncomeDetails(data) {
     this.addIncomeSteps = data.stpeNo;

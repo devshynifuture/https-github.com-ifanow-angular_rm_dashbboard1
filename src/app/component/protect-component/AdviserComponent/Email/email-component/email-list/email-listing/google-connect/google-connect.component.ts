@@ -62,23 +62,20 @@ export class GoogleConnectComponent implements OnInit {
             this.router.navigate(['/admin/emails/inbox'], { relativeTo: this.activatedRoute });
           }
         } else {
-
+          this.eventService.openSnackBarNoDuration('Please Connect Your Gmail Account!!', "DISMISS");
         }
       }, err => {
 
-        // this.eventService.openSnackBarNoDuration(err, 'DISMISS2');
+        console.log(err);
       });
     }
-    if (this.router.url == '/admin/emails/inbox/google-connect') {
+    if (this.router.url.split('/').includes('google-connect')) {
       this.connect = "email";
-    }
-    else if (this.router.url == '/admin/dashboard') {
+    } else if (this.router.url == '/admin/dashboard') {
       this.connect = "dash";
-
     } else if (this.router.url.split('/').includes('customer')) {
       this.connect = 'email';
-    }
-    else {
+    } else {
       this.connect = "calendar";
     }
 

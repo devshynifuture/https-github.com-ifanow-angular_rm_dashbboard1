@@ -91,7 +91,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
     else {
       this.editApiData = data;
       this.singleIndividualIncome = data;
-      this.singleIndividualIncome['userName'] = data.ownerName;
+      this.singleIndividualIncome['name'] = data.ownerName;
       this.singleIndividualIncome["finalIncomeList"] = { incomeTypeList: data.incomeTypeId }
       this.addMoreFlag = false;
       this.incomeOption = String(data.incomeTypeId);
@@ -143,6 +143,10 @@ export class IndividualIncomeInfoComponent implements OnInit {
     this.incomeOption = data.value;
     this.addMoreFlag = false;
     this.incomeNetForm.controls.continousTill.setValue('1');
+    let value = parseInt(data.value)
+    this.singleIndividualIncome["finalIncomeList"] = { incomeTypeList: value }
+
+
     console.log(data.value)
   }
   checkDateDiff(event) {
@@ -159,6 +163,8 @@ export class IndividualIncomeInfoComponent implements OnInit {
     }
   }
   submitIncomeForm() {
+    let value = parseInt(this.incomeNetForm.get('incomeOption').value)
+    this.singleIndividualIncome["finalIncomeList"] = { incomeTypeList: value }
     if (this.singleIndividualIncome.finalIncomeList.incomeTypeId == 1) {
       this.inputs.find(input => !input.ngControl.valid).focus();
       if (this.incomeOption == '1') {
@@ -214,7 +220,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
       "familyMemberId": this.singleIndividualIncome.id,
       "clientId": this.clientId,
       "advisorId": this.advisorId,
-      "ownerName": this.singleIndividualIncome.userName,
+      "ownerName": this.singleIndividualIncome.name,
       "monthlyIncome": this.incomeNetForm.get('monthlyAmount').value,
       "incomeStartMonth": new Date(this.incomeNetForm.get('incomeStartDate').value).getMonth(),
       "incomeStartYear": new Date(this.incomeNetForm.get('incomeStartDate').value).getFullYear(),
@@ -224,7 +230,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
       "growthRate": (this.incomeNetForm.get('incomeGrowthRate').value) ? this.incomeNetForm.get('incomeGrowthRate').value : 0,
       "incomeStyleId": 20,
       "continueTill": parseInt(this.incomeNetForm.get("continousTill").value),
-      "nextAppraisalOrNextRenewal": this.incomeNetForm.get('nextAppraisal').value,
+      "nextAppraisalOrNextRenewal": this.incomeNetForm.get('nextAppraisal').value ? this.incomeNetForm.get('nextAppraisal').value : null,
       "incomeTypeId": this.singleIndividualIncome.finalIncomeList.incomeTypeList,
       "realEstateId": 20,
       "basicIncome": (this.incomeNetForm.get('basicIncome').value) ? (this.incomeNetForm.get('basicIncome').value) : 0,
@@ -233,19 +239,9 @@ export class IndividualIncomeInfoComponent implements OnInit {
       "hraRecieved": (this.incomeNetForm.get('hraRecieved').value) ? this.incomeNetForm.get('hraRecieved').value : 0,
       "totalRentPaid": (this.incomeNetForm.get('totalRentPaid').value) ? this.incomeNetForm.get('totalRentPaid').value : 0,
       "description": this.incomeNetForm.get('description').value,
-      "monthlyContributions": {}
+      "monthlyContributions": []
     }
-
-    console.log(obj)
-    if (this.editApiData) {
-      obj['id'] = this.editApiData.id;
-      this.planService.editIncomeData(obj).subscribe(
-        data => this.submitIncomeFormRes(data),
-        error => this.eventService.showErrorMessage(error)
-      )
-    }
-    else {
-      if (this.getBonusList) {
+       if (this.getBonusList) {
         this.finalBonusList = []
         this.getBonusList.controls.forEach(element => {
           let obj =
@@ -260,6 +256,19 @@ export class IndividualIncomeInfoComponent implements OnInit {
         })
       }
       obj['monthlyContributions'] = this.finalBonusList;
+      if(obj.monthlyContributions.length == 0){
+        obj.monthlyContributions = null;
+      }
+    console.log(obj)
+    if (this.editApiData) {
+      obj['id'] = this.editApiData.id;
+      this.planService.editIncomeData(obj).subscribe(
+        data => this.submitIncomeFormRes(data),
+        error => this.eventService.showErrorMessage(error)
+      )
+    }
+    else {
+   
       this.planService.addIncomeData(obj).subscribe(
         data => this.submitIncomeFormRes(data),
         error => this.eventService.showErrorMessage(error)
@@ -275,7 +284,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
     }
     else {
       (this.editApiData) ? this.eventService.openSnackBar("Income is edited") : this.eventService.openSnackBar("Income is added")
-      this.subInjectService.changeNewRightSliderState({ state: 'close' });
+      this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired: true });
     }
   }
   //  expected bonus array logic
@@ -295,7 +304,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
   removeExpectedBonus(index) {
     this.expectedBonusForm.controls.bonusList.removeAt(index)
   }
-  close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+  close(flag) {
+    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired: flag });
   }
 }

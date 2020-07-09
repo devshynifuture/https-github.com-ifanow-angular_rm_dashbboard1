@@ -8,6 +8,7 @@ import { PlanService } from '../../plan.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { IncomeDetailedViewComponent } from './income-detailed-view/income-detailed-view.component';
+import { ExcelGenService } from 'src/app/services/excel-gen.service';
 
 @Component({
   selector: 'app-income',
@@ -15,8 +16,12 @@ import { IncomeDetailedViewComponent } from './income-detailed-view/income-detai
   styleUrls: ['./income.component.scss']
 })
 export class IncomeComponent implements OnInit {
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
-
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild('tableEl', { static: false }) tableEl;
+  isLoadingUpload;
+  fetchData;
+  getOrgData;
+  totalAmountOutstandingBalance;
   displayedColumns = ['no', 'owner', 'type', 'amt', 'income', 'till', 'rate', 'status', 'icons'];
   // dataSource = new MatTableDataSource(ELEMENT_DATA);
   advisorId: any;
@@ -25,16 +30,28 @@ export class IncomeComponent implements OnInit {
   data: Array<any> = [{}, {}, {}];
   dataSource = new MatTableDataSource(this.data);
   noData: string;
+  fragmentData = { isSpinner: false };
+  totalMonthlyIncome: number;
+  personalProfileData: any;
+  userInfo: any;
+  clientData: any;
+  details: any;
+  reportDate: Date;
 
-  constructor(public dialog: MatDialog, private eventService: EventService, private subInjectService: SubscriptionInject, private planService: PlanService) {
+  constructor(private util:UtilService,private excel: ExcelGenService,public dialog: MatDialog, private eventService: EventService, private subInjectService: SubscriptionInject, private planService: PlanService) {
   }
 
   viewMode;
 
   ngOnInit() {
+    this.reportDate = new Date();
     this.viewMode = "tab1"
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.personalProfileData = AuthService.getProfileDetails();
+    this.userInfo = AuthService.getUserInfo();
+    this.clientData = AuthService.getClientData();
+    this.details = AuthService.getProfileDetails();
     this.getIncomeList();
   }
 
@@ -52,7 +69,14 @@ export class IncomeComponent implements OnInit {
     )
 
   }
-
+  Excel(tableTitle) {
+    this.fragmentData.isSpinner = true;
+    let rows = this.tableEl._elementRef.nativeElement.rows;
+    const data = this.excel.generateExcel(rows, tableTitle);
+    if (data) {
+      this.fragmentData.isSpinner = false;
+    }
+  }
   getIncomeListRes(data) {
     this.isLoading = false;
     if (data == undefined) {
@@ -62,7 +86,10 @@ export class IncomeComponent implements OnInit {
     else if (data) {
       this.dataSource.data = data;
       this.dataSource.sort = this.sort;
-
+      this.totalMonthlyIncome = 0;
+      this.dataSource.data.forEach(element => {
+        this.totalMonthlyIncome += element.monthlyIncome;
+      });
     }
   }
 
@@ -77,14 +104,23 @@ export class IncomeComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          this.getIncomeList();
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            this.getIncomeList();
+            console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
+
+          }
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
         }
       }
     );
   }
-
+   generatePdf() {
+    this.fragmentData.isSpinner = true;
+    let para = document.getElementById('template');
+    // this.util.htmlToPdf(para.innerHTML, 'Test',this.fragmentData);
+    this.util.htmlToPdf(para.innerHTML, 'Other-payables', 'true', this.fragmentData, '', '');
+  }
   deleteModal(value, incomeData) {
     const dialogData = {
       data: value,
@@ -96,6 +132,7 @@ export class IncomeComponent implements OnInit {
       positiveMethod: () => {
         this.planService.deleteIncome(incomeData.id).subscribe(
           data => {
+            this.eventService.openSnackBar("Income deleted successfully", "Dismiss")
             this.getIncomeList();
             dialogRef.close();
           },
