@@ -6,8 +6,10 @@ import { UtilService } from 'src/app/services/util.service';
 import { PreviewComponent } from '../../../customer-overview/overview-documents/preview/preview.component';
 import { HttpHeaders } from '@angular/common/http';
 import { GetSharebleLinkComponent } from '../../../customer-overview/overview-documents/get-shareble-link/get-shareble-link.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatBottomSheet } from '@angular/material';
 import { HttpService } from 'src/app/http-service/http-service';
+import { UploadDocumentComponent } from './upload-document/upload-document.component';
+import { EditDocumentPopupComponent } from './edit-document-popup/edit-document-popup.component';
 
 @Component({
   selector: 'app-mobile-document',
@@ -64,7 +66,8 @@ export class MobileDocumentComponent implements OnInit {
     private eventService: EventService,
     private utils: UtilService,
     public dialog: MatDialog,
-    private http: HttpService
+    private http: HttpService,
+    private _bottomSheet: MatBottomSheet
   ) { }
   @Input()
   set data(data) {
@@ -352,5 +355,13 @@ export class MobileDocumentComponent implements OnInit {
     this.fileTypeGet();
     this.valueFirst = this.openFolderName[0];
   }
+
+  openUploadOption() {
+    this._bottomSheet.open(UploadDocumentComponent);
+  }
+  openEditDocument() {
+    this._bottomSheet.open(EditDocumentPopupComponent);
+  }
+
 }
 
