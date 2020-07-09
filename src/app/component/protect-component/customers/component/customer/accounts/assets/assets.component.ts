@@ -122,6 +122,7 @@ export class AssetsComponent implements OnInit {
   ngOnInit() {
     // this.viewMode = 'tab2';
     this.enumDataService.setBankAccountTypes();
+    this.enumDataService.getclientFamilybankList();
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
     this.getAssetCountGLobalData();

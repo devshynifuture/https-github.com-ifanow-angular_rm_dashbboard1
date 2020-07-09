@@ -61,6 +61,7 @@ export class CashAndBankComponent implements OnInit {
 
   @ViewChildren(FormatNumberDirective) formatNumber;
   bankList:any = [];
+  clientFamilybankList:any = [];
 
   ngOnInit() {
     this.showRequring = '1';
@@ -69,7 +70,8 @@ export class CashAndBankComponent implements OnInit {
     this.getBankAccountList();
     this.bankAccountList = new MatTableDataSource(this.data);
     this.bankList = this.enumService.getBank();
-    console.log(this.bankList,"this.bankList");
+    this.clientFamilybankList = this.enumService.getclientFamilybankList();
+    console.log(this.bankList,"this.bankList",this.clientFamilybankList);
     
   }
   Excel(tableTitle){

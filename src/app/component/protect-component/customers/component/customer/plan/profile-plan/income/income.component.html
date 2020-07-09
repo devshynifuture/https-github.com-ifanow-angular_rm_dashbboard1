@@ -135,8 +135,10 @@
                             style
                         </th>
                         <td *matCellDef="let element" class="br text-right" mat-cell>
-                            <div class="bar"> {{element.incomeStyleId}} </div>
+                            <div class="bar" *ngIf="!isLoading"> {{(element.incomeStyleId == 1) ? 'Stable' : 'Erratic'}} </div>
+                            <div class="bar" *ngIf="isLoading">{{''}}</div>
                         </td>
+                        
                         <td *matFooterCellDef class="br text-right " mat-footer-cell></td>
                     </ng-container>
                     <ng-container matColumnDef="till">
