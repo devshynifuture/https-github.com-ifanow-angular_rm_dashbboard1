@@ -1,7 +1,7 @@
 <div class="bg-white">
   <div class="row bb-1  popup-header-fix w-60">
     <div class="col-md-11 p-0">
-      <h4 class="f-16 mb-0 pb-20 wrapper-20">CALCULATORS - {{data.goalName}}</h4>
+      <h4 class="f-16 mb-0 pb-20 wrapper-20"> Calculators - {{data.goalName}}</h4>
     </div>
     <div class="col-md-1">
       <i class="material-icons pt-16 pb-12 c-p" (click)="close()">
@@ -10,19 +10,21 @@
     </div>
   </div>
   <div class="row pt-72 pb-44">
-    <div class="col-md-12">
-      <mat-tab-group mat-align-tabs="center" [(selectedIndex)]="currentTab" (selectedIndexChange)="initializePage($event)">
+    <div class="col-md-12 goal-calculators">
+      <mat-tab-group mat-align-tabs="center" [(selectedIndex)]="currentTab"
+        (selectedIndexChange)="initializePage($event)">
+
         <mat-tab label="Loan">
           <div class="row pt-28">
-            <div class="col-md-6">
-              <h5 class="m-0 f-500 pt-8 text-black">INPUT</h5>
+            <div class="col-md-6 d-flex align-items-end">
+              <h5 class="m-0 f-500 text-black">INPUT</h5>
             </div>
-            <div class="col-md-3 p-0">
-              <h5 class="m-0 pt-8 f-500 text-black">OUTPUT</h5>
+            <div class="col-md-3 d-flex align-items-end p-0">
+              <h5 class="m-0  f-500 text-black">OUTPUT</h5>
             </div>
-            <div class="col-md-3 pr-0">
+            <div class="col-md-3 text-right pr-0">
               <app-progress-button (btnClick)="saveEMIToGoal()" class="br-0 text-inherit  "
-                  [options]="barButtonOptions">
+                [options]="barButtonOptions">
               </app-progress-button>
             </div>
           </div>
@@ -30,49 +32,51 @@
             <div class="col-md-6 pb-44 mb-44">
               <div [formGroup]="incomeFG">
                 <div class="row pt-8">
-                  <div class="col-md-6 p-0">
-                    <p class="m-0 roboto pt-16 right">Monthly income</p>
+                  <div class="col-md-6 d-flex align-items-center justify-content-end p-0">
+                    <p class="m-0 roboto  right">Monthly income</p>
                   </div>
                   <div class="col-md-6">
-                    <div class="form-group mb-0">
+                    <div class="form-group mb-0 iconRupess">
                       <mat-form-field class="w-100" floatLabel="never" appearance="standard">
-                        <input matInput type="text" class="form-control br-0" placeholder="₹ 1,12,000"
-                          appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
-                          formControlName="income">
-                          <mat-error>This field is required</mat-error>
-                        <div (click)="resetIncome()">Reset</div>
+                        <input matInput type="text" class="form-control rupess br-0" placeholder=" "
+                          appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" formControlName="income">
+                        <mat-error>This field is required</mat-error>
+                        <mat-hint (click)="resetIncome()" class="f-12 f-normal c-p text-primitive" align="end"> Reset
+                        </mat-hint>
+
                       </mat-form-field>
                     </div>
                   </div>
                 </div>
                 <div class="row pt-40">
-                  <div class="col-md-6 p-0">
-                    <p class="m-0 roboto pt-16 right">Income growth rate</p>
+                  <div class="col-md-6 d-flex align-items-center justify-content-end p-0">
+                    <p class="m-0 roboto ">Income growth rate</p>
                   </div>
                   <div class="col-md-6">
-                    <div class="form-group mb-0">
+                    <div class="form-group mb-0 iconPetage">
                       <mat-form-field class="w-100" floatLabel="never" appearance="standard">
-                        <input matInput type="text" class="form-control br-0 percentage" placeholder="9.00"
+                        <input matInput type="text" class="form-control br-0 percentage" placeholder=" "
                           appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
                           formControlName="growthRate">
-                          <mat-error>This field is required</mat-error>
+                        <mat-error>This field is required</mat-error>
                       </mat-form-field>
                     </div>
 
                   </div>
                 </div>
                 <div class="row pt-36">
-                  <div class="col-md-6 p-0">
-                    <p class="m-0 roboto pt-16 right">Other EMIs in goal year</p>
+                  <div class="col-md-6 d-flex align-items-center justify-content-end p-0">
+                    <p class="m-0 roboto ">Other EMIs in goal year</p>
                   </div>
                   <div class="col-md-6">
-                    <div class="form-group mb-0">
+                    <div class="form-group mb-0 iconRupess">
                       <mat-form-field class="w-100" floatLabel="never" appearance="standard">
-                        <input matInput type="text" class="form-control br-0" placeholder="₹ 1,12,000" 
+                        <input matInput type="text" class="form-control rupess br-0" placeholder=" "
                           appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
                           formControlName="otherEMI">
-                          <mat-error>This field is required</mat-error>
-                        <div (click)="resetIncomeFG()">Reset</div>
+                        <mat-error>This field is required</mat-error>
+                        <mat-hint (click)="resetIncomeFG()" class="f-12 f-normal c-p text-primitive" align="end"> Reset
+                        </mat-hint>
                       </mat-form-field>
                     </div>
 
@@ -81,48 +85,48 @@
               </div>
               <div [formGroup]="loanFG">
                 <div class="row pt-36">
-                  <div class="col-md-6 p-0">
-                    <p class="m-0 roboto pt-16 right">Loan to be taken</p>
-                    <p class="m-0 f-12 right text-primitive">Max available: ₹<span appFormatNumber>{{calculatedEMI.maxAmtAvailable}}</span></p>
+                  <div class="col-md-6 d-flex  flex-column text-right justify-content-end p-0">
+                    <p class="m-0 roboto  ">Loan to be taken</p>
+                    <p class="m-0 f-12 right text-primitive">Max available: ₹<span
+                        appFormatNumber>{{calculatedEMI.maxAmtAvailable}}</span></p>
                   </div>
                   <div class="col-md-6">
-                    <div class="form-group mb-0">
+                    <div class="form-group mb-0 iconRupess">
                       <mat-form-field class="w-100" floatLabel="never" appearance="standard">
-                        <input matInput type="text" class="form-control br-0" placeholder="₹ 1,12,000"
+                        <input matInput type="text" class="form-control br-0 rupess" placeholder=" "
                           appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
                           formControlName="loanAmt">
-                          <mat-error>This field is required</mat-error>
+                        <mat-error>This field is required</mat-error>
                       </mat-form-field>
                     </div>
+                  </div>
+                </div>
 
-                  </div>
-                </div>
                 <div class="row pt-28">
-                  <div class="col-md-6 p-0">
-                    <p class="m-0 roboto pt-16 right">Loan tenure in years</p>
+                  <div class="col-md-6 d-flex align-items-center justify-content-end p-0">
+                    <p class="m-0 roboto ">Loan tenure in years</p>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group mb-0">
                       <mat-form-field class="w-100" floatLabel="never" appearance="standard">
-                        <input matInput type="text" class="form-control br-0" placeholder="14"
-                          appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
-                          formControlName="loanTenure">
-                          <mat-error>This field is required</mat-error>
+                        <input matInput type="text" class="form-control br-0" placeholder=" " appInputValueValidation
+                          [inputValidator]="validatorType.NUMBER_ONLY" formControlName="loanTenure">
+                        <mat-error>This field is required</mat-error>
                       </mat-form-field>
                     </div>
                   </div>
                 </div>
                 <div class="row pt-28">
-                  <div class="col-md-6 p-0">
-                    <p class="m-0 roboto pt-16 right">Loan Interest rate</p>
+                  <div class="col-md-6 p-0 d-flex align-items-center justify-content-end">
+                    <p class="m-0 roboto ">Loan Interest rate</p>
                   </div>
                   <div class="col-md-6">
-                    <div class="form-group mb-0">
+                    <div class="form-group mb-0 iconPetage">
                       <mat-form-field class="w-100" floatLabel="never" appearance="standard">
-                        <input matInput type="text" class="form-control br-0 percentage" placeholder="11.5"
+                        <input matInput type="text" class="form-control br-0 percentage" placeholder=" "
                           appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
                           formControlName="interestRate">
-                          <mat-error>This field is required</mat-error>
+                        <mat-error>This field is required</mat-error>
                       </mat-form-field>
                     </div>
                   </div>
@@ -134,53 +138,66 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-6 pt-16 p-0">
+            <div class="col-md-6 mt-8 p-0">
               <div class="wrapper-20 ba-light">
                 <div class="row ">
                   <div class="col-md-6 p-0">
                     <p class="m-0 text-primitive f-12">INCOME IN GOAL YEAR</p>
-                    <h5 class="m-0 text-black">₹<span appFormatNumber [value]="(calculatedEMI.netSalary || 0) * 12">{{(calculatedEMI.netSalary || 0) * 12}}</span></h5>
+                    <h5 class="m-0 text-black">&#8377;<span appFormatNumber
+                        [value]="(calculatedEMI.netSalary || 0) * 12">{{(calculatedEMI.netSalary || 0) * 12}}</span>
+                    </h5>
                   </div>
                   <div class="col-md-6 p-0"></div>
                 </div>
                 <div class="row pt-28">
                   <div class="col-md-6 p-0">
                     <p class="m-0 text-primitive f-12">HIGHEST LOAN AVAILABLE</p>
-                    <h5 class="m-0 text-black">₹<span appFormatNumber [value]="calculatedEMI.highestLoanAndEmiEligible?.highest_loan_eligible || 0">{{calculatedEMI.highestLoanAndEmiEligible?.highest_loan_eligible || 0}}</span></h5>
+                    <h5 class="m-0 text-black">&#8377;<span appFormatNumber
+                        [value]="calculatedEMI.highestLoanAndEmiEligible?.highest_loan_eligible || 0">{{calculatedEMI.highestLoanAndEmiEligible?.highest_loan_eligible || 0}}</span>
+                    </h5>
                   </div>
                   <div class="col-md-6 p-0">
                     <p class="m-0 text-primitive f-12">HIGHEST EMI AVAILABLE</p>
-                    <h5 class="m-0 text-black">₹<span appFormatNumber [value]="calculatedEMI.highestLoanAndEmiEligible?.highest_emi_eligible || 0">{{calculatedEMI.highestLoanAndEmiEligible?.highest_emi_eligible || 0}}</span></h5>
+                    <h5 class="m-0 text-black">&#8377;<span appFormatNumber
+                        [value]="calculatedEMI.highestLoanAndEmiEligible?.highest_emi_eligible || 0">{{calculatedEMI.highestLoanAndEmiEligible?.highest_emi_eligible || 0}}</span>
+                    </h5>
                   </div>
                 </div>
                 <div class="row pt-28">
                   <div class="col-md-6 p-0">
                     <p class="m-0 text-primitive f-12">LOAN TO BE TAKEN</p>
-                    <h5 class="m-0 text-black">₹<span appFormatNumber [value]="calculatedEMI.loanAmount || 0">{{calculatedEMI.loanAmount || 0}}</span></h5>
+                    <h5 class="m-0 text-black">&#8377;<span appFormatNumber
+                        [value]="calculatedEMI.loanAmount || 0">{{calculatedEMI.loanAmount || 0}}</span></h5>
                   </div>
                   <div class="col-md-6 p-0">
                     <p class="m-0 text-primitive f-12">EMI PAYABLE</p>
-                    <h5 class="m-0 text-black">₹<span appFormatNumber [value]="calculatedEMI.emi || 0">{{calculatedEMI.emi || 0}}</span></h5>
+                    <h5 class="m-0 text-black">&#8377;<span appFormatNumber
+                        [value]="calculatedEMI.emi || 0">{{calculatedEMI.emi || 0}}</span></h5>
                   </div>
                 </div>
                 <div class="row pt-28">
                   <div class="col-md-6 p-0">
                     <p class="m-0 text-primitive f-12">ORIGINAL GOAL AMOUNT</p>
-                    <h5 class="m-0 text-black">₹<span appFormatNumber [value]="data.gv || 0">{{data.gv || 0}}</span></h5>
+                    <h5 class="m-0 text-black">&#8377;<span appFormatNumber
+                        [value]="data.gv || 0">{{data.gv || 0}}</span>
+                    </h5>
                   </div>
                   <div class="col-md-6 p-0">
                     <p class="m-0 text-primitive f-12">DOWN PAYMENT AMOUNT</p>
-                    <h5 class="m-0 text-black">₹<span appFormatNumber [value]="calculatedEMI.downPayment || 0">{{calculatedEMI.downPayment || 0}}</span></h5>
+                    <h5 class="m-0 text-black">&#8377;<span appFormatNumber
+                        [value]="calculatedEMI.downPayment || 0">{{calculatedEMI.downPayment || 0}}</span></h5>
                   </div>
                 </div>
                 <div class="row pt-28">
                   <div class="col-md-6 p-0">
                     <p class="m-0 text-primitive f-12">MONTHLY REQUIRED</p>
-                    <h5 class="m-0 text-black">₹<span appFormatNumber [value]="calculatedEMI.monthlyRequired || 0">{{calculatedEMI.monthlyRequired || 0}}</span></h5>
+                    <h5 class="m-0 text-black">&#8377;<span appFormatNumber
+                        [value]="calculatedEMI.monthlyRequired || 0">{{calculatedEMI.monthlyRequired || 0}}</span></h5>
                   </div>
                   <div class="col-md-6 p-0 pb-20">
                     <p class="m-0 text-primitive f-12">LUMPSUM REQUIRED</p>
-                    <h5 class="m-0 text-black">₹<span appFormatNumber [value]="calculatedEMI.lumpsumRequired || 0">{{calculatedEMI.lumpsumRequired || 0}}</span></h5>
+                    <h5 class="m-0 text-black">&#8377;<span appFormatNumber
+                        [value]="calculatedEMI.lumpsumRequired || 0">{{calculatedEMI.lumpsumRequired || 0}}</span></h5>
                   </div>
                 </div>
                 <div class="row btl-1 pt-20 pb-20">
@@ -197,23 +214,24 @@
             </div>
           </div>
         </mat-tab>
+
         <mat-tab label="Rent vs buy">Content 2</mat-tab>
         <mat-tab label="Tax impact">Content 2</mat-tab>
+
         <mat-tab label="Step up">
           <div class="mt-32">
             <div class="row">
-              <div class="col-md-6">
-                <h5 class="m-0 f-500 pt-8 text-black">INPUT</h5>
+              <div class="col-md-6 d-flex align-items-end">
+                <h5 class="m-0 f-500  text-black">INPUT</h5>
               </div>
-              <div class="col-md-6">
-                <app-progress-button (btnClick)="saveToGoal()" class="br-0 text-inherit  "
-                    [options]="barButtonOptions">
+              <div class="col-md-6 text-right">
+                <app-progress-button (btnClick)="saveToGoal()" class="br-0 text-inherit  " [options]="barButtonOptions">
                 </app-progress-button>
               </div>
             </div>
 
             <div class="row pt-16">
-              <div class="col-md-3 pr-0">
+              <div class="col-md-4 pr-0">
                 <h5 class="f-14 mb-4">Step up investment growth rate</h5>
                 <div class="form-group">
                   <mat-form-field>
@@ -250,14 +268,17 @@
         <mat-tab label="Cost of delay">
           <div class="mt-32">
             <div class="row">
-              <div class="col-md-6">
-                <h5 class="m-0 f-500 pt-8 text-black">INPUT</h5>
+              <div class="col-md-6 d-flex align-items-end">
+                <h5 class="m-0 f-500  text-black">INPUT</h5>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-6 d-flex justify-content-end">
+
+                <button mat-stroked-button class="br-0 btn-primary mr-10 pl-8 pr-8 right"
+                  (click)="calculateDelay()">Calculate</button>
+
                 <app-progress-button (btnClick)="saveDelayToGoal()" class="br-0 text-inherit  "
-                    [options]="barButtonOptions">
+                  [options]="barButtonOptions">
                 </app-progress-button>
-                <button mat-stroked-button class="br-0 btn-primary pl-8 pr-8 right" (click)="calculateDelay()">Calculate</button>
               </div>
             </div>
 
@@ -328,6 +349,7 @@
             </div>
           </div>
         </mat-tab>
+
       </mat-tab-group>
     </div>
   </div>
@@ -338,8 +360,7 @@
       <h5 class="mb-0 pt-8 text-white c-p" (click)="close()">Cancel</h5>
     </div>
     <div class="col-md-8 right text-right">
-      <app-progress-button (btnClick)="save()" class="br-0 text-inherit  "
-          [options]="barButtonOptions1">
+      <app-progress-button (btnClick)="save()" class="br-0 text-inherit  " [options]="barButtonOptions1">
       </app-progress-button>
     </div>
   </div>

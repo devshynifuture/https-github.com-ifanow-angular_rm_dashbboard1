@@ -474,6 +474,12 @@ export class EmailListingComponent implements OnInit {
             } else {
               attachmentFiles = '';
             }
+            let isRead;
+            if (labelIdsfromMessages.some(labelItem => labelItem.some(item => item === 'UNREAD'))) {
+              isRead = false;
+            } else {
+              isRead = true;
+            }
             const Obj1 = {
               position: index + 1,
               idsOfThread,
@@ -491,7 +497,8 @@ export class EmailListingComponent implements OnInit {
               },
               date: `${dateIdsSnippetsOfMessages[0]['internalDate']}`,
               attachmentArrayObjects,
-              isRead: (index + 1) <= this.unreadCount ? true : false
+              isRead,
+              hasAttachment: attachmentArrayObjects.length !== 0 ? (attachmentArrayObjects[0].filename !== '' ? true : false) : false
             }
 
 

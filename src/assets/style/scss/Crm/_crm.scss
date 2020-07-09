@@ -58,6 +58,10 @@
         tr.read{
             background: #F5F7F7 !important;
         }
+
+        tr.selected-tr {
+            background: #d2ebff!important;
+        }
         // tr:nth-child(2) {
         //     background: #F5F7F7 !important;
         // }

@@ -1,0 +1,19 @@
+.allcoateBtn {
+    width: 82px;
+    height: 30px;
+    border: 1px solid #008FFF;
+    background: transparent;
+    padding: 0px;
+}
+
+.unallcoateBtn {
+    width: 82px;
+    height: 30px;
+    border: 1px solid #FF6823;
+    background: transparent;
+    padding: 0px;
+}
+
+::ng-deep .mat-button-toggle-button {
+    text-align: left;
+}

@@ -56,6 +56,7 @@ export class MobileMyfeedComponent implements OnInit {
     this.recentTransactions = [];
     this.globalRiskProfile = [];
     this.portFolioData = [];
+    this.documentVault = {}
     this.riskProfile = []
     this.getAssetAllocationData()
     this.loadRecentTransactions()
