@@ -886,6 +886,10 @@ export class CustomerService {
     return this.http.getEncoded(apiConfig.USER + appConfig.GET_BANK_LIST, data, 1)
   }
 
+  getclientFamilybankList(data) {
+    return this.http.getEncoded(apiConfig.USER + appConfig.GET_CLIENT_FEMILY_BANK_LIST, data, 1)
+  }
+
   calculateTotalValues(data) {
     let httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId).set('targetDate', data.targetDate);
     return this.http.get(apiConfig.MAIN_URL + appConfig.CALCULATE_TOTAL_VALUES, httpParams);

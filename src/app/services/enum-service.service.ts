@@ -7,6 +7,8 @@ import {element} from 'protractor';
 export class EnumServiceService {
   roleList: any = [];
   bankList: any = [];
+  clientFamilybankList:any=[];
+
   clientRoleList: any = [];
   proofTypeList: any = [];
   const;
@@ -86,6 +88,10 @@ export class EnumServiceService {
     this.bankList = data;
   }
 
+  public addclientFamilyBanks(data){
+    this.clientFamilybankList = data
+  }
+
   familyList:any;
   public getFamilyList(data) {
     this.familyList = data;
@@ -97,6 +103,10 @@ export class EnumServiceService {
 
   public getBank() {
     return this.bankList;
+  }
+
+  public getclientFamilybankList() {
+    return this.clientFamilybankList;
   }
 
   public addClientRole(data) {
