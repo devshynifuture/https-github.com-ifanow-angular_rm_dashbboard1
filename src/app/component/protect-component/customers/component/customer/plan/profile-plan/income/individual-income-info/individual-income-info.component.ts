@@ -129,7 +129,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
       this.incomeNetForm.controls.incomeStartDate.setValue(new Date(data.incomeStartYear, data.incomeStartMonth));
       this.incomeNetForm.controls.incomeEndDate.setValue(new Date(data.incomeEndYear, data.incomeEndMonth));
       this.incomeNetForm.controls.nextAppraisal.setValue(new Date(data.nextAppraisalOrNextRenewal));
-      this.incomeNetForm.controls.description.setValue(data.description);
+      this.incomeNetForm.controls.description.setValue((data.description) ? data.description : '');
      this.expectedBonusForm = this.fb.group({
         bonusList: new FormArray([])
       })
@@ -178,10 +178,13 @@ export class IndividualIncomeInfoComponent implements OnInit {
     if (this.bonusList) {
       return;
     }
-    this.getBonusList.push(this.fb.group({
-      receivingDate: [, [Validators.required]],
-      amount: [, [Validators.required]],
-    }))
+    if(!this.editApiData){
+      this.getBonusList.push(this.fb.group({
+        receivingDate: [, [Validators.required]],
+        amount: [, [Validators.required]],
+      }))
+    }
+
   }
   chngIncomeOption(data) {
     this.incomeOption = data.value;
@@ -382,7 +385,10 @@ this.incomeNetForm.get('monthlyAmount').setErrors(null);
     console.log(this.getBonusList)
   }
   removeExpectedBonus(index) {
-    this.expectedBonusForm.controls.bonusList.removeAt(index)
+    if (this.getBonusList.controls.length > 1) {
+      this.expectedBonusForm.controls.bonusList.removeAt(index)
+
+    }
   }
   close(flag) {
     this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired: flag });

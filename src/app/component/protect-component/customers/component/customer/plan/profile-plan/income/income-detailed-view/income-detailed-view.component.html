@@ -104,13 +104,13 @@
                     </div>
                 </div>
                 <div>
-                    <div *ngFor="let data of income.monthlyContributions; let i = index">
+                    <div *ngFor="let data of income.bonusOrInflowList; let i = index">
                         <div class="row bb p-8 b-l br">
                             <div class="col-md-8 text-left f-14 roboto p-0">
                                 Bonus/inflow date {{i + 1}}
                             </div>
                             <div appFormatNumber class="col-md-4 text-right f-14 roboto p-0">
-                                {{ (data.date) ? data.date : '-' }}
+                                {{ (data.date) ? (data.date  | date:'dd/MM/yyyy' ) : '-' }}
                             </div>
                         </div>
 
