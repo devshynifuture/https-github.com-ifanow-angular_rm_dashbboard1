@@ -11,6 +11,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 @Component({
   selector: 'app-bank-accounts',
   templateUrl: './bank-accounts.component.html',
@@ -61,9 +62,9 @@ export class BankAccountsComponent implements OnInit {
   editData: any;
   maxDate:Date = new Date();
   bankList:any = [];
-
+  accountTypes:any =[];
   callMethod: { methodName: string; ParamValue: any; };
-  constructor(private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService, public dialog: MatDialog, private enumService: EnumServiceService) { }
+  constructor(private fb: FormBuilder, private custumService: CustomerService, private enumDataService: EnumDataService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService, public dialog: MatDialog, private enumService: EnumServiceService) { }
 
   @Input()
   set data(data) {
@@ -86,6 +87,7 @@ export class BankAccountsComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.bankList = this.enumService.getBank();
     console.log(this.bankList,"this.bankList");
+    this.accountTypes = this.enumDataService.getBankAccountTypes();
     
 
   }
@@ -108,6 +110,8 @@ export class BankAccountsComponent implements OnInit {
       ParamValue : value,
     //  disControl : type
     }
+    this.bankAccounts.get("bankAcNo").setValue("");
+    this.bankAccounts.get("accountType").setValue("");
   }
 
   displayControler(con) {
