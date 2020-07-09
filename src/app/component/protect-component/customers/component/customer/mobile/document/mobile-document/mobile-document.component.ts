@@ -6,8 +6,11 @@ import { UtilService } from 'src/app/services/util.service';
 import { PreviewComponent } from '../../../customer-overview/overview-documents/preview/preview.component';
 import { HttpHeaders } from '@angular/common/http';
 import { GetSharebleLinkComponent } from '../../../customer-overview/overview-documents/get-shareble-link/get-shareble-link.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatBottomSheet } from '@angular/material';
 import { HttpService } from 'src/app/http-service/http-service';
+import { UploadDocumentComponent } from './upload-document/upload-document.component';
+import { EditDocumentPopupComponent } from './edit-document-popup/edit-document-popup.component';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-mobile-document',
@@ -64,8 +67,18 @@ export class MobileDocumentComponent implements OnInit {
     private eventService: EventService,
     private utils: UtilService,
     public dialog: MatDialog,
-    private http: HttpService
-  ) { }
+    private http: HttpService,
+    private _bottomSheet: MatBottomSheet,
+    public subInjectService: SubscriptionInject
+  ) {
+    this.subInjectService.singleProfileData.subscribe(
+      data => {
+        if (data) {
+          this.addRefreshDocuments(1, 'uplaodFile');
+        }
+      }
+    )
+  }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -88,6 +101,42 @@ export class MobileDocumentComponent implements OnInit {
       this.openMenue = false
     } else {
       this.openMenue = true
+    }
+  }
+
+  addRefreshDocuments(tabValue, flag) {
+    if (!this.advisorId) {
+      return;
+    }
+    if (this.parentId == 0) {
+      return;
+    }
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      docGetFlag: tabValue,
+      folderParentId: (this.parentId) ? this.parentId : 0,
+    };
+    this.custumService.getAllFiles(obj).subscribe(
+      data => this.addRefreshDocumentsRes(data), (error) => {
+        this.eventService.showErrorMessage(error);
+        this.commonFileFolders = [];
+        this.isLoading = false;
+        this.showMsg == true
+      }
+    );
+  }
+
+  addRefreshDocumentsRes(data) {
+    if (data) {
+      const allFiles = data.files;
+      const AllDocs = data.folders;
+      let temp = [];
+      (allFiles.length > 0) ? temp = temp.concat(allFiles) : '';
+      (AllDocs.length > 0) ? temp = temp.concat(AllDocs) : '';
+      this.openFolderName[this.folderData.length] = temp;
+      this.commonFileFolders = temp;
+
     }
   }
 
@@ -193,6 +242,9 @@ export class MobileDocumentComponent implements OnInit {
   }
 
   openFolder(value) {
+    if (!value.folderName) {
+      return
+    }
     this.folderData.push(
       {
         openFolderNm: value.folderName,
@@ -336,21 +388,26 @@ export class MobileDocumentComponent implements OnInit {
     this.eventService.openSnackBar('Link shared on email successfully', 'Dismiss');
   }
 
-  getFolders(data, index) {
+  getFolders(data) {
     this.urlData = ''
     this.isLoading = true;
     this.showMsg = false;
-    // this.commonFileFolders.data = [{}, {}, {}];
-    // this.commonFileFolders = new MatTableDataSource(this.data);
     this.parentId = (data == undefined) ? 0 : data.folderParentId;
     console.log('parentId', this.parentId);
     this.folderData.splice(this.folderData.length - 1, 1);
-    this.openFolderName = this.openFolderName.filter((element, i) => i <= index);
+    // this.openFolderName = this.openFolderName.filter((element, i) => i <= index);
+    this.openFolderName.pop();
     this.commonFileFolders = this.openFolderName[this.openFolderName.length - 1];
-    // this.commonFileFolders = new MatTableDataSource(data);
-    // this.commonFileFolders.sort = this.sort;
     this.fileTypeGet();
     this.valueFirst = this.openFolderName[0];
   }
+
+  openUploadOption() {
+    this._bottomSheet.open(UploadDocumentComponent, { data: this.parentId });
+  }
+  openEditDocument() {
+    this._bottomSheet.open(EditDocumentPopupComponent);
+  }
+
 }
 

@@ -717,6 +717,7 @@ export const appConfig = {
   GET_ADDRESS_LIST: 'user/address/list/get',
   GET_DEMAT_LIST: 'user/bank/demat/list/get',
   GET_BANK_LIST: 'user/bank/list/get',
+  GET_CLIENT_FEMILY_BANK_LIST: 'user/bank/list/all/get',
   SEND_WELCOME_EMAIL: 'user/advisor/welcome/email/send',
   CREATE_TEAM_MEMBER: 'user/advisor/team-member/sign-up',
   GET_ISD_CODES: 'user/isd-code/list/get',
