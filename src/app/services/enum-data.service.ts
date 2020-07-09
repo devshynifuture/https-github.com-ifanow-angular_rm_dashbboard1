@@ -107,6 +107,24 @@ export class EnumDataService {
     });
   }
 
+  clientFamilybankList:any=[];
+  getclientFamilybankList(){
+    let self = this;
+    this.clientData = AuthService.getClientData();
+    const obj = {
+      "clientId": this.clientData.clientId
+    }
+    self.custumService.getclientFamilybankList(obj).subscribe(
+      (data) => {
+        self.clientFamilybankList = data;
+        self.enumService.addclientFamilyBanks(self.clientFamilybankList);
+      },
+      (err) => {
+
+      });
+  }
+  
+
   public getProofType() {
     this.enumService.proofType(this.proofType);
   }

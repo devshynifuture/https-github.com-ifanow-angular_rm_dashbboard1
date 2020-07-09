@@ -2,16 +2,18 @@
     <div class="row">
         <div class="col-xl-2 skeletonAnimation col-lg-3 col-md-3 col-sm-6 p-0 bg-white pb-44"
             [appSkeletonLoading]="letsideBarLoader" appSkeletonLoading>
-            <div class="wrapper-16 bb-2 c-p relClass">
-                <div>
-                    <p class="m-0 text-black roboto">NET WORTH</p>
-                </div>
-                <div [ngClass]="{'height23': letsideBarLoader}" class="bar">
-                    <h1 *ngIf="!letsideBarLoader" class="f-35 m-0 roboto text-black pt-8 ">
-                        <span>₹</span>
-                        <span *ngIf="letsideBarLoader==false" appFormatNumber
-                            [value]="totalAssetsWithoutLiability-liabilityTotal">{{totalAssetsWithoutLiability-liabilityTotal}}</span>
-                    </h1>
+            <div class="wrapper-16 bb-2 c-p overflow-hidden ">
+
+                <p class="m-0 text-black roboto">NET WORTH</p>
+
+                <div class="relClass">
+                    <div [ngClass]="{'height23': letsideBarLoader}" class="bar">
+                        <h1 *ngIf="!letsideBarLoader" class="f-35 m-0 roboto text-black pt-8 ">
+                            <span>₹</span>
+                            <span *ngIf="letsideBarLoader==false" appFormatNumber
+                                [value]="totalAssetsWithoutLiability-liabilityTotal">{{totalAssetsWithoutLiability-liabilityTotal}}</span>
+                        </h1>
+                    </div>
                 </div>
 
                 <div class="row pt-20">
@@ -47,39 +49,12 @@
                                     class="bar">{{liabilityTotal}}</span></p>
                         </div>
                     </div>
-                    <!-- <div class="col-md-12 p-0 pt-4">
-                        <mat-progress-bar class="light-red" mode="determinate" value="50"></mat-progress-bar>
-                    </div> -->
+
                 </div>
             </div>
             <div [appSkeletonLoading]="letsideBarLoader" appSkeletonLoading>
                 <div class="height-700 ">
-                    <!-- <div class="row bb c-p">
-                        <div class="col-md-6 relClass pr-0">
-                            <div>
-                                <a [queryParams]="{ tab: 'tab1'}" class="text-black m-0 roboto" routerLink="/customer/detail/account/assets">
-                                    Mutual funds
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-md-6  relClass text-right">
-                            <div [ngClass]="{'height23': letsideBarLoader}" class="bar">
-                                <p *ngIf="letsideBarLoader==false" class="text-black m-0 roboto ">
-                                    <span *ngIf="mutualFundValue.currentValue!=0">₹</span>
-                                    <span appFormatNumber [value]="mutualFundValue.currentValue" *ngIf="mutualFundValue">
-
-                                        {{mutualFundValue.currentValue==0?'-':mutualFundValue.currentValue}}
-                                    </span>
-                                </p>
-                                <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(mutualFundValue.percentage),'text-danger': checkNumberPositiveAndNegative(mutualFundValue.percentage)==false,'': checkNumberPositiveAndNegative(mutualFundValue.percentage)==undefined}" class="m-0 roboto ">
-                                    <span *ngIf="letsideBarLoader==false">{{mutualFundValue.percentage==0?'-':mutualFundValue.percentage}}<span
-                                            *ngIf="mutualFundValue.percentage!=0">%</span></span>
-                                </p>
-                            </div>
-                        </div>
-                    </div> -->
-
-                    <div class="row bb c-p">
+                    <div class="row overflow-hidden bb c-p">
                         <div class="col-md-6 relClass pr-0">
                             <div>
                                 <a [queryParams]="{ tab: 'tab2'}" class="text-black m-0 roboto"
@@ -88,26 +63,27 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="col-md-6  relClass text-right">
-                            <div [ngClass]="{'height23': letsideBarLoader}" class="bar">
-                                <p *ngIf="letsideBarLoader==false" class=" m-0 roboto pr-8 roboto ">
-                                    <span *ngIf="stocks.currentValue!=0">₹</span>
-                                    <span [value]="stocks.currentValue"
-                                        appFormatNumber>{{stocks.currentValue==0?'-':stocks.currentValue}}
-                                    </span>
-                                </p>
-                                <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(stocks.percentage),'text-danger': checkNumberPositiveAndNegative(stocks.percentage)==false,'': checkNumberPositiveAndNegative(stocks.percentage)==undefined}"
-                                    class="m-0 roboto pr-8 ">
-                                    <span
-                                        *ngIf="letsideBarLoader==false">{{stocks.percentage==0?'-':stocks.percentage}}<span
-                                            *ngIf="stocks.percentage!=0">%</span></span>
-                                </p>
+                        <div class="col-md-6   text-right">
+                            <div class="relClass">
+                                <div [ngClass]="{'height23': letsideBarLoader}" class="bar">
+                                    <p *ngIf="letsideBarLoader==false" class=" m-0 roboto pr-8 roboto ">
+                                        <span *ngIf="stocks.currentValue!=0">₹</span>
+                                        <span [value]="stocks.currentValue"
+                                            appFormatNumber>{{stocks.currentValue==0?'-':stocks.currentValue}}
+                                        </span>
+                                    </p>
+                                    <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(stocks.percentage),'text-danger': checkNumberPositiveAndNegative(stocks.percentage)==false,'': checkNumberPositiveAndNegative(stocks.percentage)==undefined}"
+                                        class="m-0 roboto pr-8 ">
+                                        <span
+                                            *ngIf="letsideBarLoader==false">{{stocks.percentage==0?'-':stocks.percentage}}<span
+                                                *ngIf="stocks.percentage!=0">%</span></span>
+                                    </p>
+                                </div>
                             </div>
-
                         </div>
                     </div>
 
-                    <div class="row bb c-p">
+                    <div class="row overflow-hidden bb c-p">
                         <div class="col-md-6 relClass pr-0">
                             <div>
                                 <a [queryParams]="{ tab: 'tab3'}" class="text-black m-0 roboto"
@@ -116,24 +92,26 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="col-md-6   relClass text-right">
-                            <div [ngClass]="{'height23': letsideBarLoader}" class="bar">
-                                <p *ngIf="letsideBarLoader==false" class="m-0 roboto pr-8">
-                                    <span *ngIf="fixedIncome.currentValue!=0">₹</span>
-                                    <span *ngIf="fixedIncome" appFormatNumber
-                                        [value]="fixedIncome.currentValue">{{fixedIncome.currentValue==0?'-':fixedIncome.currentValue}}</span>
-                                </p>
-                                <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(fixedIncome.percentage),'text-danger': checkNumberPositiveAndNegative(fixedIncome.percentage)==false}"
-                                    class="m-0 roboto pr-8">
-                                    <span *ngIf="letsideBarLoader==false">
-                                        {{fixedIncome.percentage==0?'-':fixedIncome.percentage}}
-                                        <span *ngIf="fixedIncome.percentage!=0">%</span></span>
-                                </p>
+                        <div class="col-md-6    text-right">
+                            <div class="relClass">
+                                <div [ngClass]="{'height23': letsideBarLoader}" class="bar">
+                                    <p *ngIf="letsideBarLoader==false" class="m-0 roboto pr-8">
+                                        <span *ngIf="fixedIncome.currentValue!=0">₹</span>
+                                        <span *ngIf="fixedIncome" appFormatNumber
+                                            [value]="fixedIncome.currentValue">{{fixedIncome.currentValue==0?'-':fixedIncome.currentValue}}</span>
+                                    </p>
+                                    <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(fixedIncome.percentage),'text-danger': checkNumberPositiveAndNegative(fixedIncome.percentage)==false}"
+                                        class="m-0 roboto pr-8">
+                                        <span *ngIf="letsideBarLoader==false">
+                                            {{fixedIncome.percentage==0?'-':fixedIncome.percentage}}
+                                            <span *ngIf="fixedIncome.percentage!=0">%</span></span>
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="row bb c-p">
+                    <div class="row overflow-hidden bb c-p">
                         <div class="col-md-6 relClass pr-0">
                             <p class="text-black m-0 roboto"></p>
                             <div>
@@ -160,7 +138,7 @@
                         </div>
                     </div>
 
-                    <div class="row bb c-p">
+                    <div class="row overflow-hidden bb c-p">
                         <div class="col-md-6 relClass pr-0">
                             <div>
                                 <a [queryParams]="{ tab: 'tab5'}" class="text-black m-0 roboto"
@@ -187,7 +165,7 @@
                         </div>
                     </div>
 
-                    <div class="row bb c-p">
+                    <div class="row overflow-hidden bb c-p">
                         <div class="col-md-6 pr-0 ">
                             <div class="bar">
                                 <a [queryParams]="{ tab: 'tab6'}" class="text-black m-0 roboto"
@@ -213,7 +191,7 @@
                         </div>
                     </div>
 
-                    <div class="row bb c-p">
+                    <div class="row overflow-hidden bb c-p">
                         <div class="col-md-6 relClass pr-0">
                             <div>
                                 <a [queryParams]="{ tab: 'tab7'}" class="text-black m-0 roboto"
@@ -239,7 +217,7 @@
                         </div>
                     </div>
 
-                    <div class="row  bb c-p">
+                    <div class="row overflow-hidden bb c-p">
                         <div class="col-md-6 relClass pr-0">
                             <div>
                                 <a [queryParams]="{ tab: 'tab7'}" class="text-black m-0 roboto"
