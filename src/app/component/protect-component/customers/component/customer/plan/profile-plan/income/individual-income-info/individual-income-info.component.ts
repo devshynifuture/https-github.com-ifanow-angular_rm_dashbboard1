@@ -41,7 +41,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
 
   }
   incomeNetForm = this.fb.group({
-    incomeOption: [, [Validators.required]],
+    incomeOption: ['2', [Validators.required]],
     monthlyAmount: [, [Validators.required]],
     incomeStyle: [, [Validators.required]],
     continousTill: [String(1), [Validators.required]],
@@ -117,6 +117,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
           amount: [element.amount, [Validators.required]],
         }))
       });
+        this.incomeNetForm.controls.incomeOption.setValue((data.basicIncome) ? '1' : '2');
     }
     this.bonusList = data.bonusOrInflows;
   }
@@ -143,8 +144,8 @@ export class IndividualIncomeInfoComponent implements OnInit {
     this.incomeOption = data.value;
     this.addMoreFlag = false;
     this.incomeNetForm.controls.continousTill.setValue('1');
-    let value = parseInt(data.value)
-    this.singleIndividualIncome["finalIncomeList"] = { incomeTypeList: value }
+    // let value = parseInt(data.value)
+    // this.singleIndividualIncome["finalIncomeList"] = { incomeTypeList: value }
 
 
     console.log(data.value)
@@ -163,8 +164,8 @@ export class IndividualIncomeInfoComponent implements OnInit {
     }
   }
   submitIncomeForm() {
-    let value = parseInt(this.incomeNetForm.get('incomeOption').value)
-    this.singleIndividualIncome["finalIncomeList"] = { incomeTypeList: value }
+    // let value = parseInt(this.incomeNetForm.get('incomeOption').value)
+    // this.singleIndividualIncome["finalIncomeList"] = { incomeTypeList: value }
     if (this.singleIndividualIncome.finalIncomeList.incomeTypeId == 1) {
       this.inputs.find(input => !input.ngControl.valid).focus();
       if (this.incomeOption == '1') {
@@ -227,8 +228,10 @@ export class IndividualIncomeInfoComponent implements OnInit {
       "incomeEndMonth": new Date(this.incomeNetForm.get('incomeEndDate').value).getMonth(),
       "incomeEndYear": new Date(this.incomeNetForm.get('incomeEndDate').value).getFullYear(),
       "incomeGrowthRateId": 50,
+      // "incomeOption":this.incomeNetForm.get('incomeOption').value,
       "growthRate": (this.incomeNetForm.get('incomeGrowthRate').value) ? this.incomeNetForm.get('incomeGrowthRate').value : 0,
-      "incomeStyleId": 20,
+      // "incomeStyleId": this.incomeNetForm.get('incomeStyle').value,
+      "incomeStyleId":20,
       "continueTill": parseInt(this.incomeNetForm.get("continousTill").value),
       "nextAppraisalOrNextRenewal": this.incomeNetForm.get('nextAppraisal').value ? this.incomeNetForm.get('nextAppraisal').value : null,
       "incomeTypeId": this.singleIndividualIncome.finalIncomeList.incomeTypeList,
@@ -280,6 +283,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
     if (this.incomePosition < this.finalIncomeAddList.length) {
       this.singleIndividualIncome = this.finalIncomeAddList[this.incomePosition]
       this.incomeNetForm.reset();
+      this.incomeNetForm.controls.incomeOption.setValue('2')
       this.getExpectedBonusForm.reset();
     }
     else {
