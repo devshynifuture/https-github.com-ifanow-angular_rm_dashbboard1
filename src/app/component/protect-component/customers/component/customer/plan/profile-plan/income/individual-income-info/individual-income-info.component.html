@@ -170,17 +170,16 @@
                         <div class="form-group  ">
                             <mat-radio-group class="d-flex align-items-center"  #incomeStyle formControlName="incomeStyle">
                                 <div class="checkOne mr-10" (click)="onClickValueChange('1')">
-                                    <img src="assets/images/svg/stable-icn.svg" *ngIf=" incomeNetForm.get('incomeStyle').value == '1' && isStatic==true">
-                                    <img src="assets/images/svg/erratic-icon.svg" *ngIf=" incomeNetForm.get('incomeStyle').value == '2' && isErractic == true">
+                                    <img src="assets/images/svg/stable-icn.svg" *ngIf=" incomeNetForm.get('incomeStyle').value == '1' && isStatic == true">
+                                    <img src="assets/images/svg/erratic-icon.svg" *ngIf=" incomeNetForm.get('incomeStyle').value == '2' && isStatic == false">
 
                                     <mat-radio-button class="example-margin " value="1" [ngClass]="{'radioBtnActive': incomeNetForm.get('incomeStyle').value == '1'}">Stable
                                     </mat-radio-button>
 
                                 </div>
                                 <div class="checkOne" (click)="onClickValueChange('2')">
-                                    <img src="assets/images/svg/erratic-icon.svg" *ngIf=" incomeNetForm.get('incomeStyle').value == '2' && isErractic == true">
-                                    <img src="assets/images/svg/stable-icn.svg" *ngIf=" incomeNetForm.get('incomeStyle').value == '1' && isStatic==true">
-
+                                    <img src="assets/images/svg/erratic-icon.svg" *ngIf=" incomeNetForm.get('incomeStyle').value == '1' && isStatic == true" >
+                                    <img src="assets/images/svg/stable-icn.svg" *ngIf=" incomeNetForm.get('incomeStyle').value == '2' && isErractic == true">
                                     <mat-radio-button class="example-margin " value="2" [ngClass]="{'radioBtnActive': incomeNetForm.get('incomeStyle').value == '2'}">Erratic
                                     </mat-radio-button>
 

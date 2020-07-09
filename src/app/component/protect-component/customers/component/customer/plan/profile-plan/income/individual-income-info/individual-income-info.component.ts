@@ -101,7 +101,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
       this.incomeOption = String(data.incomeTypeId);
       this.incomeNetForm.controls.incomeOption.setValue((data.incomeTypeId) ? String(data.incomeTypeId) : '2');
       this.incomeNetForm.controls.monthlyAmount.setValue(data.monthlyIncome);
-      this.incomeNetForm.controls.incomeStyle.setValue(data.incomeStyleId);
+      this.incomeNetForm.controls.incomeStyle.setValue(data.incomeStyleId+'');
       this.incomeNetForm.controls.continousTill.setValue(String(data.continueTill));
       this.incomeNetForm.controls.incomeGrowthRate.setValue(data.growthRate);
       this.incomeNetForm.controls.basicIncome.setValue((data.basicIncome == 0) ? '' : data.basicIncome);
@@ -122,18 +122,24 @@ export class IndividualIncomeInfoComponent implements OnInit {
         }))
       });
         this.incomeNetForm.controls.incomeOption.setValue((data.basicIncome) ? '1' : '2');
-
-    }2
+      if(this.incomeNetForm.get('incomeStyle').value == 1){
+        this.isStatic = true;
+        this.isErractic = false;
+      }else{
+        this.isStatic = false;
+        this.isErractic = true;
+      }
+    }
     this.bonusList = data.bonusOrInflows;
   }
   onClickValueChange(value){
-    if(value == '1'){
-      this.isStatic = true;
-      this.isErractic =false;
-    }else{
-      this.isStatic = false;
-      this.isErractic =true;
-    }
+        if(value == '1'){
+          this.isStatic = true;
+          this.isErractic = false
+        }else{
+          this.isStatic = false;
+          this.isErractic = true
+        }
     this.incomeNetForm.controls.incomeStyle.setValue(value)
 
   }
@@ -217,10 +223,15 @@ export class IndividualIncomeInfoComponent implements OnInit {
     if (this.singleIndividualIncome.finalIncomeList.incomeTypeId != 1) {
 
     }
+    if (this.incomeNetForm.get('monthlyAmount').invalid) {
+      this.incomeNetForm.get('monthlyAmount').markAsTouched();
+      return;
+    }
     if (this.incomeNetForm.get('incomeGrowthRate').invalid) {
       this.incomeNetForm.get('incomeGrowthRate').markAsTouched();
       return;
     }
+    
     if (this.incomeNetForm.get('incomeStartDate').invalid) {
       this.incomeNetForm.get('incomeStartDate').markAsTouched();
       return;
@@ -229,6 +240,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
       this.incomeNetForm.get('incomeEndDate').markAsTouched();
       return;
     }
+
     if (this.showDateError) {
       return
     }
@@ -246,8 +258,8 @@ export class IndividualIncomeInfoComponent implements OnInit {
       "incomeGrowthRateId": 50,
       // "incomeOption":this.incomeNetForm.get('incomeOption').value,
       "growthRate": (this.incomeNetForm.get('incomeGrowthRate').value) ? this.incomeNetForm.get('incomeGrowthRate').value : 0,
-      // "incomeStyleId": this.incomeNetForm.get('incomeStyle').value,
-      "incomeStyleId":20,
+       "incomeStyleId": this.incomeNetForm.get('incomeStyle').value,
+      // "incomeStyleId":20,
       "continueTill": parseInt(this.incomeNetForm.get("continousTill").value),
       "nextAppraisalOrNextRenewal": this.incomeNetForm.get('nextAppraisal').value ? this.incomeNetForm.get('nextAppraisal').value : null,
       "incomeTypeId": this.singleIndividualIncome.finalIncomeList.incomeTypeList,
