@@ -833,8 +833,8 @@ mat-tab-group[vertical] {
   }
 
   .height-700 {
-    height: 700px;
-    overflow: auto;
+    max-height: 700px;
+    overflow-y: auto;
 
     .row {
       padding-top: 8px !important;
