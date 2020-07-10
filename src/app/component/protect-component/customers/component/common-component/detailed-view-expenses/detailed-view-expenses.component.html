@@ -1,4 +1,4 @@
-<div class="popup-header-fix-35">
+ <div class="popup-header-fix-35">
     <div class="row bb-1">
         <div class="col-md-10 p-0">
             <h4 class="mb-0 wrapper-20">EXPENSE ({{expense.value}})- DETAILED VIEW</h4>
@@ -22,7 +22,7 @@
                         {{expense.ownerName}}
                     </div>
                 </div>
-                <div class="row bb p-8 b-l br">
+                <div class="row bb p-8 b-l br" *ngIf="expense.value != 'Other commitments'">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Date
                     </div>
@@ -30,7 +30,7 @@
                        {{expense.expenseDoneOn | date:'dd/MM/yyyy' }}
                     </div>
                 </div>
-                <div class="row bb p-8 b-l br" >
+                <div class="row bb p-8 b-l br" *ngIf="expense.value != 'Other commitments'">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Time
                     </div>

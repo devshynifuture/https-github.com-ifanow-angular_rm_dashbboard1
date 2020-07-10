@@ -61,12 +61,17 @@ export class IncomeComponent implements OnInit {
     const obj =
     {
       advisorId: this.advisorId,
-      clientId: this.clientId
+      clientId: this.clientId,
+      addMonthlyDistribution:false
     }
     this.dataSource.data = [{}, {}, {}];
     this.planService.getIncomeData(obj).subscribe(
       data => this.getIncomeListRes(data),
-      error => this.eventService.showErrorMessage(error)
+      error => {
+        this.noData = 'No income found';
+        this.dataSource.data = []
+        this.eventService.showErrorMessage(error)
+      }
     )
 
   }

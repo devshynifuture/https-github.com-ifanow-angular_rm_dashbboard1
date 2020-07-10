@@ -497,11 +497,14 @@ export class ExpensesComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          this.getTransaction();
-          this.getRecuringTransactions();
-          this.getBudgetList();
-          this.getBugetRecurring();
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            this.getTransaction();
+            this.getRecuringTransactions();
+            this.getBudgetList();
+            this.getBugetRecurring();
+            console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          }
+ 
           rightSideDataSub.unsubscribe();
         }
       }
