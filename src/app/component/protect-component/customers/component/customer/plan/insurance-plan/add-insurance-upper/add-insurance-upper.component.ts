@@ -3,6 +3,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { CustomerService } from '../../../customer.service';
 import { UtilService } from 'src/app/services/util.service';
+import { AddLifeInsuranceComponent} from '../add-life-insurance/add-life-insurance.component';
 import { AddHealthInsuranceComponent } from '../add-health-insurance/add-health-insurance.component';
 
 @Component({
@@ -26,13 +27,21 @@ export class AddInsuranceUpperComponent implements OnInit {
     this.eventService.changeUpperSliderState(fragmentData);
   }
   openHelthInsurance(obj){
-    let data = {
-      value : obj,
+    let data ;
+    let component;
+    if(!obj){
+      component = AddLifeInsuranceComponent;
+    }
+    else{
+      component = AddHealthInsuranceComponent;
+      data = {
+        value : obj,
+      }
     }
     const fragmentData = {
       flag: 'opencurrentpolicies',
       data,
-      componentName: AddHealthInsuranceComponent,
+      componentName: component,
       id: 1,
       state: 'open',
     };
