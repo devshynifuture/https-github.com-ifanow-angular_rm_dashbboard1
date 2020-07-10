@@ -51,7 +51,10 @@
                 <h5 class="m-0 pt-8">Enter amount</h5>
                 <div class="form-group mb-0 pt-8">
                     <mat-form-field class="iconRupess">
-                        <input matInput class="form-control rupess br-0" formControlName="amount" type="number">
+                        <input matInput class="form-control rupess br-0" #amount [maxLength]="10" formControlName="amount" type="number">
+                        <mat-hint  align="end" class="f-12">
+                            {{amount.value.length}}/10
+                        </mat-hint>
                         <mat-error class="f-12 pt-4">
                             This field is required
                         </mat-error>
@@ -199,6 +202,9 @@
                         <input matInput class="form-control b-0 br-0" (focus)="picker.open()" (input)="preventDefault($event)" [matDatepicker]="picker" formControlName="expenseDoneOn">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
+                        <mat-error class="f-12 pt-4">
+                            This field is required
+                        </mat-error>
                     </mat-form-field>
                 </div>
             </div>
@@ -207,6 +213,9 @@
                 <div class="form-group mb-0 pt-4">
                     <mat-form-field>
                         <input matInput class="form-control br-0" maxlength="20" formControlName="timeInMilliSec">
+                        <mat-error class="f-12 pt-4">
+                            This field is required
+                        </mat-error>
                     </mat-form-field>
                 </div>
             </div>
@@ -263,9 +272,10 @@
                 <div class="form-group mb-0 pt-8">
                     <mat-form-field>
                         <input matInput class="form-control br-0" maxlength="20" formControlName="description">
-                        <mat-error class="f-12 pt-4">
+                        <mat-hint>Optional</mat-hint>
+                        <!-- <mat-error class="f-12 pt-4">
                             This field is required
-                        </mat-error>
+                        </mat-error> -->
                     </mat-form-field>
                 </div>
             </div>
