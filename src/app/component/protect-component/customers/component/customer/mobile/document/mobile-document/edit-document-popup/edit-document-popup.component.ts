@@ -169,5 +169,25 @@ export class EditDocumentPopupComponent implements OnInit {
     }
   }
 
+  starFiles(element) {
+    this._bottomSheetRef.dismiss();
+    const obj = {
+      clientId: this.clientId,
+      advisorId: this.advisorId,
+      id: element.id,
+      flag: (element.folderName == undefined) ? 2 : 1
+    };
+    this.custumService.starFile(obj).subscribe(
+      data => this.starFileRes(data)
+    );
+  }
+
+  starFileRes(data) {
+    console.log(data);
+    if (data) {
+      this.subInjectService.addSingleProfile(true);
+    }
+  }
+
 
 }

@@ -30,7 +30,7 @@
                 </div>
             </div>
         </button>
-        <button mat-menu-item class="p-0  w-100 h-48">
+        <button (click)="starFiles(data)" mat-menu-item class="p-0  w-100 h-48">
             <div class="row pb-10 pt-6">
                 <div class="col-2">
                     <img src="/assets/images/svg/star-border-icon.svg">
@@ -40,13 +40,13 @@
                 </div>
             </div>
         </button>
-        <button mat-menu-item class="p-0 w-100 h-48 bb-1">
+        <button (click)="openDialog('RENAME',data)" mat-menu-item class="p-0 w-100 h-48 bb-1">
             <div class="row pb-10 pt-6">
                 <div class="col-2">
                     <img src="/assets/images/svg/edit-name.svg">
                 </div>
                 <div class="col-10 d-flex align-items-center">
-                    <p (click)="openDialog('RENAME',data)" class="m-0 roboto text-dark f-400">Rename</p>
+                    <p class="m-0 roboto text-dark f-400">Rename</p>
                 </div>
             </div>
         </button>
@@ -60,13 +60,13 @@
                 </div>
             </div>
         </button>
-        <button mat-menu-item class="p-0 w-100 h-48">
+        <button (click)="openDialogCopy(data, 'Move')" mat-menu-item class="p-0 w-100 h-48">
             <div class="row pb-10 pt-6">
                 <div class="col-2">
                     <img src="/assets/images/svg/move-to-icon.svg">
                 </div>
                 <div class="col-10 d-flex align-items-center">
-                    <p (click)="openDialogCopy(data, 'Move')" class="m-0 roboto text-dark f-400">Move to</p>
+                    <p class="m-0 roboto text-dark f-400">Move to</p>
                 </div>
             </div>
         </button>
