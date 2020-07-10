@@ -8,6 +8,10 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { CopyDocumentsComponent } from '../../../../../common-component/copy-documents/copy-documents.component';
 import { BottomSheetComponent } from '../../../../../common-component/bottom-sheet/bottom-sheet.component';
 import { DocumentNewFolderComponent } from '../../../../../common-component/document-new-folder/document-new-folder.component';
+import { PreviewComponent } from '../../../../customer-overview/overview-documents/preview/preview.component';
+import { HttpHeaders } from '@angular/common/http';
+import { HttpService } from 'src/app/http-service/http-service';
+import { GetSharebleLinkComponent } from '../../../../customer-overview/overview-documents/get-shareble-link/get-shareble-link.component';
 
 @Component({
   selector: 'app-edit-document-popup',
@@ -19,6 +23,11 @@ export class EditDocumentPopupComponent implements OnInit {
   advisorId: any;
   selectedFolder: any;
   getInnerDoc: any;
+  urlData: any;
+  selectedElement: any;
+  element: any;
+  shortUrl: any;
+  getUserInfo: any;
 
   constructor(
     private _bottomSheet: MatBottomSheet,
@@ -26,6 +35,7 @@ export class EditDocumentPopupComponent implements OnInit {
     private eventService: EventService,
     public subInjectService: SubscriptionInject,
     public dialog: MatDialog,
+    private http: HttpService,
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
     // ) { }
     private _bottomSheetRef: MatBottomSheetRef<EditDocumentPopupComponent>) { }
@@ -169,25 +179,140 @@ export class EditDocumentPopupComponent implements OnInit {
     }
   }
 
-  starFiles(element) {
+  starFiles(element, flag) {
     this._bottomSheetRef.dismiss();
+    // this.isLoading = true
     const obj = {
       clientId: this.clientId,
       advisorId: this.advisorId,
       id: element.id,
-      flag: (element.folderName == undefined) ? 2 : 1
+      flag: (element.folderName == undefined) ? 2 : 1,
+      isStarred: flag
     };
     this.custumService.starFile(obj).subscribe(
-      data => this.starFileRes(data)
+      data => this.starFileRes(data, flag)
     );
   }
 
-  starFileRes(data) {
+  starFileRes(data, flag) {
     console.log(data);
     if (data) {
+      if (flag == 0) {
+        this.eventService.openSnackBar('Removed starred successfully', 'Dismiss');
+      } else {
+        this.eventService.openSnackBar('Starred successfully', 'Dismiss');
+      }
       this.subInjectService.addSingleProfile(true);
+    }
+    // this.isLoading = false
+  }
+  downlodFiles(element, value) {
+    // this.previewDoc = true
+    if (value == 'download') {
+      // this.isLoading = false
+    } else if (value != 'preview') {
+      // this.isLoading = true
+    }
+    const obj = {
+      clientId: this.clientId,
+      advisorId: this.advisorId,
+      folderId: element.parentFolderId,
+      fileName: element.fileName
+    };
+    this.custumService.downloadFile(obj).subscribe(
+      data => this.downloadFileRes(data, value)
+    );
+  }
+  downloadFileRes(data, value) {
+    console.log(data);
+    if (value == 'shareLink' || value == 'share') {
+      console.log('shareLink', data)
+      this.urlShorten(data, value)
+
+    } else if (value == 'preview') {
+      this.urlData = data
+    } else if (value == 'DocPreview') {
+      this.urlData = ''
+      const dialogRef = this.dialog.open(PreviewComponent, {
+        width: '500px',
+        height: '600px',
+        data: { bank: data, selectedElement: this.selectedElement }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result == undefined) {
+          return
+        }
+        console.log('The dialog was closed');
+        this.element = result;
+        console.log('result -==', this.element)
+      });
+    } else {
+      window.open(data);
+    }
+    setTimeout(() => {
+    }, 4000);
+  }
+
+  urlShorten(data, value) {
+    var link =
+    {
+      "destination": data,
+      "domain":
+      {
+        "fullName": "rebrand.ly"
+      }
+    }
+    const httpOptions = {
+      headers: new HttpHeaders()
+        .set('apiKey', 'b96683be9a4742979e78c6011a3ec2ca')
+    };
+    this.http.post('https://api.rebrandly.com/v1/links', link, httpOptions).subscribe((responseData) => {
+      console.log('DocumentsComponent uploadFileRes responseData : ', responseData);
+      if (responseData == null) {
+      }
+      console.log(responseData)
+      this.shortUrl = responseData.shortUrl
+      this.verifyEmail(this.shortUrl, value)
+    });
+  }
+
+  getSharebleLink(element, flag) {
+    this._bottomSheetRef.dismiss();
+    this.selectedElement = element
+    if (element.fileName) {
+      this.downlodFiles(element, flag);
     }
   }
 
+  verifyEmail(value, flag) {
+    this._bottomSheetRef.dismiss();
+    const dialogRef = this.dialog.open(GetSharebleLinkComponent, {
+      width: '400px',
+      data: { bank: value, flag: flag }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == undefined) {
+        return
+      }
+      this.element = result;
+      console.log('result -==', this.element)
+      let obj = {
+        fromEmail: "support@futurewise.co.in",
+        toEmail: this.element.email,
+        emailSubject: "Share link",
+        messageBody: 'You have received this email because' + this.getUserInfo.name + ' shared link with you.  ' + '' + this.element.link
+      }
+      if (this.element != "") {
+        this.custumService.sendSharebleLink(obj).subscribe(
+          data => this.sendSharebleLinkRes(data),
+          err => this.eventService.openSnackBar(err, "Dismiss")
+        );
+      }
+    });
+  }
+
+  sendSharebleLinkRes(data) {
+    this.eventService.openSnackBar('Link shared on email successfully', 'Dismiss');
+  }
 
 }
