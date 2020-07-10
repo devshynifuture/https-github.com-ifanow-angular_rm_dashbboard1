@@ -60,6 +60,7 @@ import { SingleGoalYearComponent } from './goals-plan/single-goal-year/single-go
 import { MultiYearGoalComponent } from './goals-plan/multi-year-goal/multi-year-goal.component';
 import { CommonComponentModule } from 'src/app/component/protect-component/common-component/common-component.module';
 import { CustomCommonModule } from 'src/app/common/custom.common.module';
+import { DetailedViewExpensesComponent } from '../../common-component/detailed-view-expenses/detailed-view-expenses.component';
 
 export const componentList = [
   PreferencesComponent,
@@ -91,6 +92,7 @@ export const componentList = [
   PlanGoalsComponent,
   HelthInsurancePolicyComponent,
   IncomeDetailedViewComponent,
+  DetailedViewExpensesComponent,
   AddInsuranceUpperComponent,
   SetupTaxPlanningComponent,
   AddHealthInsuranceComponent,

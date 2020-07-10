@@ -11,6 +11,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { DatePipe } from '@angular/common';
+import { DetailedViewExpensesComponent } from '../../../common-component/detailed-view-expenses/detailed-view-expenses.component';
 @Component({
   selector: 'app-expenses',
   templateUrl: './expenses.component.html',
@@ -502,6 +503,27 @@ export class ExpensesComponent implements OnInit {
           this.getBugetRecurring();
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
+        }
+      }
+    );
+  }
+  detailedViewExpense(data,value) {
+    const fragmentData = {
+      flag: 'detailedView',
+      data,
+      id: 1,
+      state: 'open35',
+      componentName: DetailedViewExpensesComponent
+    };
+    fragmentData.data.value = value;
+
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
+
         }
       }
     );
