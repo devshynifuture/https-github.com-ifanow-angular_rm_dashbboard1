@@ -1,32 +1,59 @@
 <mat-drawer-container class="mob-sidenav">
     <mat-drawer mode="over" #drawer opened="true">
-        <div class="persondeatils">
-            <img src="/assets/images/Oval.png">
-            <p class="m-0 pt-8 text-white">Jon Olsson Deler</p>
+        <div class="persondeatils pt-20 pl-16 pb-20">
+            <img src="/assets/images/people.png" class="text-left">
+            <p class="m-0 pt-12 pl-4 text-white">Rahul Santosh Jain</p>
         </div>
-        <div class="row pt-32 mobnav-link">
-            <div class="col-4">
-                <img src="/assets/images/svg/mob-nav-1.svg">
-                <img src="/assets/images/svg/mob-nav-2.svg">
-                <img src="/assets/images/svg/mob-nav-3.svg">
-                <img src="/assets/images/svg/mob-nav-4.svg">
-            </div>
-            <div class="col-8 pl-0">
-                <p class="m-0" (click)="openSection('Home');drawer.close()">Home</p>
-                <p class="m-0" (click)="openSection('Documents');drawer.close()">Documents</p>
-                <p class="m-0" (click)="openSection('Portfolio');drawer.close()">Portfolio</p>
-                <p class="m-0" (click)="openSection('Profile');drawer.close()">Profile</p>
-                <p class="m-0" (click)="openSection('Transaction');drawer.close()">Transaction</p>
+        <div class="row pt-32 mobnav-link bg-grey lter pb-32">
 
-                <!-- <p class="m-0">Advisor Profile</p>
-                <p class="m-0">Search Clients</p>
-                <p class="m-0">Share App</p>
-                <p class="m-0">Logout</p> -->
+
+            <div class="col-12 pl-32">
+                <div class="d-flex">
+                    <img src="/assets/images/svg/mobile/mob-home.svg">
+                    <p class="m-0 pl-24 pt-6 f-500 roboto" (click)="openSection('Home');drawer.close()">Home</p>
+                </div>
+                <div class="d-flex pt-24">
+                    <img src="/assets/images/svg/mobile/mob-prot.svg">
+                    <p class="m-0 pl-24 pt-6 f-500 roboto" (click)="openSection('Portfolio');drawer.close()">Portfolio
+                    </p>
+                </div>
+                <div class="d-flex pt-24">
+                    <img src="/assets/images/svg/mobile/mob-plan.svg">
+                    <p class="m-0 pl-24 pt-6 f-500 roboto" (click)="openSection('Home');drawer.close()">Plan</p>
+                </div>
+                <div class="d-flex pt-24">
+                    <img src="/assets/images/svg/mobile/mob-innvest.svg">
+                    <p class="m-0 pl-24 pt-6 f-500 roboto" (click)="openSection('Transaction');drawer.close()">Invest
+                    </p>
+                </div>
+                <div class="d-flex pt-24">
+                    <img src="/assets/images/svg/mob-nav-4.svg">
+                    <p class="m-0 pl-24 pt-6 f-500 roboto" (click)="openSection('Profile');drawer.close()">Profile</p>
+                </div>
+                <div class="d-flex pt-24">
+                    <img src="/assets/images/svg/mobile/mob-doc.svg">
+                    <p class="m-0 pl-24 pt-6 f-500 roboto" (click)="openSection('Documents');drawer.close()">Documents
+                    </p>
+                </div>
+                <div class="d-flex pt-24">
+                    <img src="/assets/images/svg/mobile/mob-query.svg">
+                    <p class="m-0 pl-24 pt-6 f-500 roboto" (click)="openSection('Home');drawer.close()">Raise a query
+                    </p>
+                </div>
+                <div class="d-flex pt-24">
+                    <img src="/assets/images/svg/mobile/mob-contact.svg">
+                    <p class="m-0 pl-24 pt-6 f-500 roboto" (click)="openSection('Home');drawer.close()">Contact us</p>
+                </div>
+                <div class="d-flex pt-24">
+                    <img src="/assets/images/svg/mobile/mob-share.svg">
+                    <p class="m-0 pl-24 pt-2 f-500 roboto" (click)="openSection('Home');drawer.close()">Share</p>
+                </div>
             </div>
+
         </div>
-        <div class="row pt-100">
-            <div class="col-md-12">
-                <img src="assets/images/fin.png" class="w-100">
+        <div class="row">
+            <div class="col-md-12 pt-8">
+                <img src="assets/images/Frame.png" class="w-100">
             </div>
         </div>
     </mat-drawer>
