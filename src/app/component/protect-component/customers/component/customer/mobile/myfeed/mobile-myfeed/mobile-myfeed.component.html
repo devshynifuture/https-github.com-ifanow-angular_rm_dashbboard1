@@ -20,7 +20,7 @@
     <div *ngIf="openMenue == true">
         <app-mobile-left-sidenav></app-mobile-left-sidenav>
     </div>
-    <div class="pt-90 pl-8 pr-8" *ngIf="openMenue != true">
+    <div class="pt-90 pl-8 pr-8 pb-48" *ngIf="openMenue != true">
         <div class="row bg-white br-10">
             <div class="col-12 pt-16 pb-16">
                 <p class="roboto f-400 text-custom m-0">Welcome again</p>
@@ -156,8 +156,8 @@
             </div>
         </div>
         <div>
-            <div class="col-12 p-0"
-            *ngIf="(tabsLoaded.portfolioData.dataLoaded && tabsLoaded.portfolioData.hasData) && !tabsLoaded.portfolioData.isLoading">
+            <div class="col-12 p-0 pt-40"
+                *ngIf="(tabsLoaded.portfolioData.dataLoaded && tabsLoaded.portfolioData.hasData) && !tabsLoaded.portfolioData.isLoading">
                 <h5 class="m-0 text-black f-16 roboto pb-16 f-500"> Asset allocation</h5>
                 <div class="bg-white br-10">
 
@@ -186,25 +186,28 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 p-0" *ngIf="(!tabsLoaded.portfolioData.dataLoaded || !tabsLoaded.portfolioData.hasData) && !tabsLoaded.portfolioData.isLoading">
+            <div class="col-12 p-0 pt-40"
+                *ngIf="(!tabsLoaded.portfolioData.dataLoaded || !tabsLoaded.portfolioData.hasData) && !tabsLoaded.portfolioData.isLoading">
                 <h5 class="m-0 text-black f-16 roboto pb-16 f-500"> Asset allocation</h5>
                 <div class="bg-white br-10">
 
                     <div class="row pt-20 pb-20">
                         <div class="col-6">
-                            <p>Once your data is uploaded, this chart will come to life</p>
-                            <p>Let’s get some data in here. There are lot’s of things you can add to
+                            <p class="m-0 roboto f-400">Once your data is uploaded, this chart will come to life</p>
+                            <p class="m-0 roboto f-400 pt-16 pb-16">Let’s get some data in here. There are lot’s of
+                                things you
+                                can add to
                                 your portfolio. Let’s get going.</p>
                             <button [routerLink]="['/customer/detail/account/summary']"
-                                class="vaultBtn mb-4 bg-primary f-16 text-white" mat-flat-button>
+                                class="vaultBtn mb-4 bg-primary f-16 text-white" mat-stroked-button>
                                 Add data
                             </button>
 
                         </div>
-                        <div class="col-6 pt-48 pl-0">
-                            <div class="col-md-6 text-center">
-                                <img class="w-180" src="assets/images/svg/asset-allocation-empty-state.svg">
-                            </div>
+                        <div class="col-6 full-center pl-0">
+
+                            <img class="w-100" src="assets/images/svg/asset-allocation-empty-state.svg">
+
                         </div>
                     </div>
                 </div>
@@ -305,18 +308,20 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-6 full-center">
+                    <div class="col-7 full-center">
                         <!-- <img src="/assets/images/Donut-chart.png" class="w-100"> -->
-                        <div class="h-200" [chart]="mfAllocationPieConfig"></div>
+                        <div class="h-147 w-100" [chart]="mfAllocationPieConfig"></div>
                     </div>
-                    <div class="col-6 pl-0 pt-20 pb-20 pr-8" *ngFor="let data of mfAllocationData">
-                        <div class="d-flex">
-                            <span class="pointNumber" [style.background-color]="data.color">
-                            </span>
-                            <span class="f-12 lh-12 roboto f-400 m-0"
-                                appFormatNumber>{{(data.y | number:'1.2-2')}}%</span>
+                    <div class="col-5 pl-0 pt-20 pb-8 pr-8">
+                        <div *ngFor="let data of mfAllocationData" class="pb-12">
+                            <div class="d-flex">
+                                <span class="pointNumber" [style.background-color]="data.color">
+                                </span>
+                                <span class="f-12 lh-12 roboto f-400 m-0"
+                                    appFormatNumber>{{(data.y | number:'1.2-2')}}%</span>
+                            </div>
+                            <p class="text-custom f-400 roboto pt-4 mb-0 pl-20">{{data.name}}</p>
                         </div>
-                        <p class="text-custom f-400 roboto pt-4 mb-0 pl-20">{{data.name}}</p>
                     </div>
                 </div>
             </div>
@@ -330,7 +335,7 @@
             </div>
 
         </div>
-        <div class="col-md-12 d-flex p-0 overflow-y pt-10">
+        <div class="col-md-12 d-flex p-0 myfeed-goals">
             <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="sliderConfig" #slickModal1="slick-carousel"
                 (wheel)="carouselWheelEvent(slickModal1, $event)">
                 <div class="pr-20" ngxSlickItem>
@@ -338,19 +343,42 @@
                         <div class="mob-new-house">
                             <div class="row pt-16">
                                 <div class="col-2">
-                                    <img src="/assets/images/Oval.png" class="br-50">
+                                    <img src="/assets/images/oval.png" class="br-50">
                                 </div>
-                                <div class="col-10">
-                                    <p class="m-0 pt-4">2028</p>
-                                    <h4 class="m-0 pt-8">New House</h4>
+                                <div class="col-10 pt-4">
+                                    <h5 class="m-0 pt-4">House</h5>
+                                    <p class="m-0 pt-4">2033 - 36</p>
                                 </div>
                             </div>
                             <div class="row pt-20">
                                 <div class="col-8">
                                     <p class="m-0">Goal: Rs. 50,00,000</p>
                                     <p class="m-0 pt-6">CV: Rs. 10,23,000</p>
-                                    <mat-progress-bar mode="determinate" value="40" class="mt-12">
-                                    </mat-progress-bar>
+                                    <mat-progress-bar mode="determinate" value="40" class="mt-10"></mat-progress-bar>
+                                    <p class="pt-10 m-0">10.23% Achieved</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="pr-20" ngxSlickItem>
+                    <div class="w-340">
+                        <div class="mob-education">
+                            <div class="row pt-16">
+                                <div class="col-2">
+                                    <img src="/assets/images/oval.png" class="br-50">
+                                </div>
+                                <div class="col-10 pt-4">
+                                    <h5 class="m-0 pt-4">Education</h5>
+                                    <p class="m-0 pt-4">2033 - 36</p>
+                                </div>
+                            </div>
+                            <div class="row pt-20">
+                                <div class="col-8">
+                                    <p class="m-0">Goal: Rs. 50,00,000</p>
+                                    <p class="m-0 pt-6">CV: Rs. 10,23,000</p>
+                                    <mat-progress-bar mode="determinate" value="40" class="mt-10"></mat-progress-bar>
                                     <p class="pt-10 m-0">10.23% Achieved</p>
                                 </div>
                             </div>
@@ -470,12 +498,12 @@
                 </div>
             </div>
 
-
+            <div *ngIf="riskProfile.length == 0">
+                <p class="m-0 f-14 roboto f-400 pt-20 pb-20 text-center">no data found</p>
+            </div>
         </div>
 
-        <div *ngIf="riskProfile.length == 0">
-            no data found
-        </div>
+
 
         <div class="row pt-40 pb-16">
             <div class="col-8 pl-0">
@@ -717,15 +745,18 @@
             <div class="col-12 p-0 bg-white br-4 pt-10">
                 <div class="row">
                     <div class="col-6 full-center">
-                        <div class="h-200" [chart]="mfSubCategoryPieConfig"></div>
+                        <div class="h-147 w-100" [chart]="mfSubCategoryPieConfig"></div>
                     </div>
-                    <div class="col-6 pl-0 pt-20 pb-20 pr-8" *ngFor="let data of mfSubCatAllocationData">
-                        <div class="d-flex">
-                            <span class="pointNumber" [style.background-color]="data.color">
-                            </span>
-                            ₹<span class="f-12 lh-12 roboto f-400 m-0 br" appFormatNumber>{{(data.y)}}</span>
-                            <span class="f-12 lh-12 roboto f-400 m-0">
-                                {{'('+(data.percentage | number:'1.2-2')+'%)'}}</span>
+                    <div class="col-6 pl-0 pt-20 pb-20 pr-8">
+                        <div class="pb-12" *ngFor="let data of mfSubCatAllocationData">
+                            <div class="d-flex">
+                                <span class="pointNumber" [style.background-color]="data.color">
+                                </span>
+                                <span class="f-12 lh-12 roboto f-400 m-0"> ₹</span>
+                                <span class="f-12 lh-12 roboto f-400 m-0 br" appFormatNumber>{{(data.y)}}</span>
+                                <span class="f-12 lh-12 roboto f-400 m-0 pl-4">
+                                    {{'('+(data.percentage | number:'1.2-2')+'%)'}}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -738,4 +769,14 @@
                 </div>
             </div>
         </div>
+
+    </div>
+    <div class="bottom-mob-footer">
+        <ul class="">
+            <li><img src="/assets/images/svg/mob-nav-1.svg"></li>
+            <li><img src="/assets/images/svg/mob-nav-2.svg"></li>
+            <li><img src="/assets/images/svg/goal-active.svg"></li>
+            <li> <img src="/assets/images/svg/mob-nav-3.svg"></li>
+            <li><img src="/assets/images/svg/people-black.svg"></li>
+        </ul>
     </div>
