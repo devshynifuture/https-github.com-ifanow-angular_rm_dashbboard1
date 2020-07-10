@@ -108,9 +108,6 @@ export class MobileDocumentComponent implements OnInit {
     if (!this.advisorId) {
       return;
     }
-    if (this.parentId == 0) {
-      return;
-    }
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
@@ -405,8 +402,8 @@ export class MobileDocumentComponent implements OnInit {
   openUploadOption() {
     this._bottomSheet.open(UploadDocumentComponent, { data: this.parentId });
   }
-  openEditDocument() {
-    this._bottomSheet.open(EditDocumentPopupComponent);
+  openEditDocument(value) {
+    this._bottomSheet.open(EditDocumentPopupComponent, { data: value });
   }
 
 }
