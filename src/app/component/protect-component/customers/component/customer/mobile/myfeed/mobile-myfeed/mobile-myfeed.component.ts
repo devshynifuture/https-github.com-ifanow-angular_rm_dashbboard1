@@ -106,6 +106,72 @@ export class MobileMyfeedComponent implements OnInit {
     this.clientData = AuthService.getClientData()
     this.imgGenderSrc = this.clientData.profilePicUrl;
   }
+
+  tabsLoaded = {
+    portfolioData: {
+      dataLoaded: false,
+      hasData: false,
+      isLoading: true,
+    },
+    rtaFeeds: {
+      dataLoaded: false,
+      hasData: false,
+      isLoading: true,
+    },
+    recentTransactions: {
+      dataLoaded: false,
+      hasData: false,
+      isLoading: true,
+    },
+    documentsVault: {
+      dataLoaded: false,
+      hasData: false,
+      isLoading: true,
+    },
+    riskProfile: {
+      dataLoaded: false,
+      hasData: false,
+      isLoading: true,
+    },
+    globalRiskProfile: {
+      dataLoaded: false,
+      hasData: false,
+      isLoading: true,
+    },
+    goalsData: {
+      dataLoaded: false,
+      hasData: false,
+      isLoading: true,
+      displaySection: false,
+    },
+    cashflowData: {
+      dataLoaded: false,
+      hasData: false,
+      isLoading: true,
+    },
+    customerProfile: {
+      dataLoaded: false,
+      hasData: false,
+      isLoading: true,
+    },
+    mfPortfolioSummaryData: {
+      dataLoaded: false,
+      hasData: false,
+      isLoading: true,
+      displaySection: false,
+    },
+    mfSubCategorySummaryData: {
+      dataLoaded: false,
+      hasData: false,
+      isLoading: true,
+      displaySection: false,
+    },
+    familyMembers: {
+      dataLoaded: false,
+      hasData: false,
+      isLoading: true,
+    }
+  };
   mfAllocationData: any[] = [
     {
       name: 'EQUITY',
@@ -244,6 +310,8 @@ export class MobileMyfeedComponent implements OnInit {
           this.assetAllocationPieChartDataMgnt(this.chartData);
         }
       }
+      this.tabsLoaded.portfolioData.isLoading = false;
+      this.tabsLoaded.portfolioData.dataLoaded = true;
       this.loaderFn.decreaseCounter();
     }, err => {
       this.hasError = true;
@@ -332,11 +400,21 @@ export class MobileMyfeedComponent implements OnInit {
     this.customerService.getRiskProfile(obj).subscribe(res => {
       if (res == null || res[0].id === 0) {
         this.riskProfile = [];
+        this.tabsLoaded.riskProfile.hasData = false;
       } else {
+        this.tabsLoaded.riskProfile.hasData = true;
         this.riskProfile = res;
-        console.log('risk',this.riskProfile)
       }
-    });
+      this.tabsLoaded.riskProfile.isLoading = false;
+      this.tabsLoaded.riskProfile.dataLoaded = true;
+      this.loaderFn.decreaseCounter();
+    }, err => {
+      this.tabsLoaded.riskProfile.isLoading = false;
+      this.tabsLoaded.riskProfile.dataLoaded = false;
+      this.hasError = true;
+      this.eventService.openSnackBar(err, "Dismiss")
+      this.loaderFn.decreaseCounter();
+    })
   }
   getTnxStatus(id) {
     return UtilService.getTransactionStatusFromStatusId(id);
@@ -510,15 +588,18 @@ export class MobileMyfeedComponent implements OnInit {
       clientId: this.clientData.clientId,
       advisorId: this.advisorId
     }
-
+    this.tabsLoaded.mfPortfolioSummaryData.isLoading = true
       this.loaderFn.increaseCounter();
       this.customerService.getMutualFund(obj).subscribe(
         data => this.getMutualFundResponse(data), (error) => {
           this.eventService.openSnackBar(error, "DISMISS");
+          this.tabsLoaded.mfPortfolioSummaryData.dataLoaded = false;
+          this.tabsLoaded.mfPortfolioSummaryData.isLoading = false;
         }
       );
   }
   getMutualFundResponse(data) {
+    this.tabsLoaded.mfPortfolioSummaryData.isLoading = false;
     if (data) {
       this.filterData = this.mfServiceService.doFiltering(data);
       this.mutualFund = this.filterData;
@@ -543,6 +624,9 @@ export class MobileMyfeedComponent implements OnInit {
         this.generateSubCategorywiseChartData(this.mutualFund.subCategoryData);
         this.generateSubCategorywiseAllocationData(this.mutualFund.subCategoryData); // For subCategoryWiseAllocation
         this.mfPieChartDataMgnt(); // pie chart data after calculating percentage
+        this.tabsLoaded.mfPortfolioSummaryData.hasData = true;
+        this.tabsLoaded.mfPortfolioSummaryData.dataLoaded = true;
+
       };
       this.worker.postMessage(input);
     } else {

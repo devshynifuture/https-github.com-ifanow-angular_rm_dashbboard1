@@ -243,30 +243,42 @@
             </ngx-slick-carousel>
         </div>
 
-        <div class="row pt-40 pb-16">
+        <div class="row pt-40 pb-16 skeletonAnimation" [appSkeletonLoading]="tabsLoaded.mfPortfolioSummaryData.isLoading" appSkeletonLoading>
             <div class="col-12 pl-0 pb-10">
                 <h5 class="m-0 text-black f-16 roboto">Portfolio Summary Mutual funds</h5>
             </div>
             <div class="col-12 p-0 bg-white br-4 pt-10">
-                <!-- <div class="row pt-16">
+                <div class="row pt-16">
                     <div class="col-4 pl-8 br">
-                        <p class="f-10 text-custom lh-12 roboto f-400 m-0">Current Value:</p>
-                        <p class="m-0 pt-4 roboto f-400">₹<span
-                                appFormatNumber>{{(mutualFund) ? (mutualFund.total_current_value) : 0}}</span></p>
+                        <div class="relClass">
+                            <div class="bar" [ngClass]="{'heightBar24':tabsLoaded.mfPortfolioSummaryData.isLoading}">
+                                <p class="f-10 text-custom lh-12 roboto f-400 m-0">Current Value:</p>
+                                <p class="m-0 pt-4 roboto f-400">₹<span
+                                        appFormatNumber>{{(mutualFund) ? (mutualFund.total_current_value) : 0}}</span>
+                                </p>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-4 pl-8 br">
-                        <p class="f-10 text-custom lh-12 roboto f-400 m-0">Amt. Invested:</p>
-                        <p class="m-0 pt-4 roboto f-400 text-custom">₹<span
-                                appFormatNumber>{{(mutualFund) ? (mutualFund.total_amount_invested) : 0}}</span></p>
+                        <div class="relClass">
+                            <div class="bar" [ngClass]="{'heightBar24':tabsLoaded.mfPortfolioSummaryData.isLoading}">
+                                <p class="f-10 text-custom lh-12 roboto f-400 m-0">Amt. Invested:</p>
+                                <p class="m-0 pt-4 roboto f-400 text-custom">₹<span
+                                        appFormatNumber>{{(mutualFund) ? (mutualFund.total_amount_invested) : 0}}</span>
+                                </p>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-4 pl-8">
-                        <p class="f-10 text-custom lh-12 roboto f-400 m-0">% Returns</p>
-                        <span *ngIf="(mutualFund) ? (mutualFund.total_xirr >= 0) : 0  "
-                            class="m-0 pt-4 roboto f-400 text-success">{{((mutualFund.total_xirr) ? (mutualFund.total_xirr | number:'1.2-2') : (mutualFund.total_xirr == 0 || mutualFund.total_xirr == 'Infinity') ? (mutualFund.total_absolute_return | number:'1.2-2') : 0)}}{{'%'}}</span>
-                        <span *ngIf="(mutualFund) ? (mutualFund.total_xirr < 0) : 0 "
-                            class="m-0 pt-4 roboto f-400 text-success">{{((mutualFund.total_xirr) ? (mutualFund.total_xirr | number:'1.2-2') : (mutualFund.total_xirr == 0 || mutualFund.total_xirr == 'Infinity') ? (mutualFund.total_absolute_return | number:'1.2-2') : 0)}}{{'%'}}</span>
+                        <div class="bar" [ngClass]="{'heightBar24':tabsLoaded.mfPortfolioSummaryData.isLoading}">
+                            <p class="f-10 text-custom lh-12 roboto f-400 m-0">% Returns</p>
+                            <span *ngIf="(mutualFund) ? (mutualFund.total_xirr >= 0) : 0  "
+                                class="m-0 pt-4 roboto f-400 text-success">{{((mutualFund.total_xirr) ? (mutualFund.total_xirr | number:'1.2-2') : (mutualFund.total_xirr == 0 || mutualFund.total_xirr == 'Infinity') ? (mutualFund.total_absolute_return | number:'1.2-2') : 0)}}{{'%'}}</span>
+                            <span *ngIf="(mutualFund) ? (mutualFund.total_xirr < 0) : 0 "
+                                class="m-0 pt-4 roboto f-400 text-success">{{((mutualFund.total_xirr) ? (mutualFund.total_xirr | number:'1.2-2') : (mutualFund.total_xirr == 0 || mutualFund.total_xirr == 'Infinity') ? (mutualFund.total_absolute_return | number:'1.2-2') : 0)}}{{'%'}}</span>
+                        </div>
                     </div>
-                </div> -->
+                </div>
                 <div class="row">
                     <div class="col-6 full-center">
                         <!-- <img src="/assets/images/Donut-chart.png" class="w-100"> -->
@@ -401,7 +413,7 @@
                     <h5 class="m-0 f-16 roboto f-500 text-mob-common">Your risk profile: Moderately aggressive</h5>
                 </div>
             </div>
-            <div>
+            <div *ngIf="tabsLoaded.riskProfile.dataLoaded && tabsLoaded.riskProfile.hasData">
                 <div *ngFor="let risk of riskProfile">
                     <div class="row">
                         <div class="col-4 pr-0">
@@ -615,7 +627,7 @@
                 </div>
             </div>
         </div> -->
-        <div class="row pt-40 pb-16">
+        <div class="row pt-40 pb-16" *ngIf="tabsLoaded.portfolioData.dataLoaded && familyWiseAllocation?.length > 0">
             <div class="col-12 pl-0">
                 <p class="m-0 text-black f-16 roboto">Family member wise summary</p>
             </div>
@@ -633,8 +645,7 @@
                                             <img class="w36"
                                                 *ngIf="item.relationshipId==0 || item.relationshipId == null"
                                                 [src]="imgGenderSrc">
-                                            <img class="w36"
-                                                *ngIf="item.relationshipId==2 || item.relationshipId == 1"
+                                            <img class="w36" *ngIf="item.relationshipId==2 || item.relationshipId == 1"
                                                 src="/assets/images/svg/man-profile.svg">
                                             <img class="w36" *ngIf="item.relationshipId==3"
                                                 src="/assets/images/svg/women-profile-icon.svg">
@@ -669,7 +680,7 @@
                 </ngx-slick-carousel>
             </div>
         </div>
-        <div class="row pt-40 pb-16">
+        <div class="row pt-40 pb-16" *ngIf="tabsLoaded.mfPortfolioSummaryData.hasData">
             <div class="col-12 pl-0 pb-10">
                 <h5 class="m-0 text-black f-16 roboto">Sub category wise</h5>
             </div>
