@@ -46,7 +46,7 @@
                     <img src="/assets/images/svg/edit-name.svg">
                 </div>
                 <div class="col-10 d-flex align-items-center">
-                    <p class="m-0 roboto text-dark f-400">Rename</p>
+                    <p (click)="openDialog('RENAME',data)" class="m-0 roboto text-dark f-400">Rename</p>
                 </div>
             </div>
         </button>
@@ -66,7 +66,7 @@
                     <img src="/assets/images/svg/move-to-icon.svg">
                 </div>
                 <div class="col-10 d-flex align-items-center">
-                    <p class="m-0 roboto text-dark f-400">Move to</p>
+                    <p (click)="openDialogCopy(data, 'Move')" class="m-0 roboto text-dark f-400">Move to</p>
                 </div>
             </div>
         </button>
@@ -86,7 +86,10 @@
                     <img src="/assets/images/svg/delete-icon.svg">
                 </div>
                 <div class="col-10 d-flex align-items-center">
-                    <p class="m-0 roboto text-dark f-400">Delete</p>
+                    <p (click)="deleteModal('FOLDER',data)" *ngIf="data.folderName" class="m-0 roboto text-dark f-400">
+                        Delete</p>
+                    <p (click)="deleteModal('FILE',data)" *ngIf="data.fileName" class="m-0 roboto text-dark f-400">
+                        Delete</p>
                 </div>
             </div>
         </button>
