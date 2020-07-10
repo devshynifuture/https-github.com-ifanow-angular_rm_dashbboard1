@@ -29,7 +29,7 @@ export const MY_FORMATS = {
     dateInput: 'MM/YYYY',
   },
   display: {
-    dateInput: 'MM/YYYY',
+    dateInput: 'MMM YYYY',
     monthYearLabel: 'MMM YYYY',
     dateA11yLabel: 'LL',
     monthYearA11yLabel: 'MMMM YYYY',
@@ -430,6 +430,13 @@ export class IndividualIncomeInfoComponent implements OnInit {
   }
   removeExpectedBonus(index) {
     if (this.getBonusList.controls.length > 1) {
+      if (this.getBonusList.controls[index].value.id) {
+        let id = this.getBonusList.controls[index].value.id;
+        this.planService.deleteBonusInflow(id).subscribe(
+          data => {
+          }
+        );
+      }
       this.expectedBonusForm.controls.bonusList.removeAt(index)
 
     }

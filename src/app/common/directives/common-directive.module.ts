@@ -15,6 +15,7 @@ import {BankAccountDirective} from './bank-account.directive';
 import {CustomAutocompleteDirective} from './custom-autocomplete.directive';
 import {DematOwnerNomineeDirective} from './demat-owner-nominee.directive';
 import {PrefixFocusDirective} from './prefix-focus.directive';
+import { ExternalDateFormatDirective } from './external-date-format.directive';
 
 // import {AppModule} from "../app.module";
 
@@ -36,7 +37,8 @@ export const directiveList = [
   BankAccountDirective,
   CustomAutocompleteDirective,
   DematOwnerNomineeDirective,
-  PrefixFocusDirective
+  PrefixFocusDirective,
+  ExternalDateFormatDirective
 ];
 
 @NgModule({

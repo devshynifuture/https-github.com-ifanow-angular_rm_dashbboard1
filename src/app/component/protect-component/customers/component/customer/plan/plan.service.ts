@@ -27,6 +27,9 @@ export class PlanService {
   deleteIncome(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_INCOME+ 'id=' + data,'')
   }
+  deleteBonusInflow(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_INFLOW_BONUS+ 'id=' + data,'')
+  }
   getRiskProfile(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_RISK_PROFILE, data)
   }
