@@ -97,7 +97,7 @@ export class EditDocumentPopupComponent implements OnInit {
     console.log(dialogData + 'dialogData');
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '400px',
+      width: '80%',
       data: dialogData,
       autoFocus: false,
 
@@ -118,7 +118,7 @@ export class EditDocumentPopupComponent implements OnInit {
     this._bottomSheetRef.dismiss();
     this.selectedFolder = element;
     const dialogRef = this.dialog.open(DocumentNewFolderComponent, {
-      width: '30%',
+      width: '80%',
       data: { name: value, animal: element }
     });
 
@@ -288,7 +288,7 @@ export class EditDocumentPopupComponent implements OnInit {
   verifyEmail(value, flag) {
     this._bottomSheetRef.dismiss();
     const dialogRef = this.dialog.open(GetSharebleLinkComponent, {
-      width: '400px',
+      width: '80%',
       data: { bank: value, flag: flag }
     });
     dialogRef.afterClosed().subscribe(result => {
