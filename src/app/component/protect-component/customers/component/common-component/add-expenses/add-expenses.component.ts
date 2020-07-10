@@ -29,6 +29,8 @@ export class AddExpensesComponent implements OnInit {
   recuring: any;
   isNoOfYrs: any;
   getFlag: any;
+  trnFlag: string;
+  budgetFlag: string;
 
   constructor(private peopleService:PeopleService,private event: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject,
     private planService: PlanService, private constantService: ConstantsService) {
@@ -57,6 +59,8 @@ export class AddExpensesComponent implements OnInit {
     this.getListFamilyMem();
     this.getdataForm(this.inputData);
     this.getdataFormRec(this.inputData)
+    this.trnFlag='Transaction';
+    this.budgetFlag='Budget';
   }
 
   display(value) {
@@ -149,6 +153,17 @@ export class AddExpensesComponent implements OnInit {
   }
   toggle(value) {
     this.isRecuring = value.checked;
+    if(value.checked == true && (this.getFlag == 'addExpenses' || this.getFlag == 'editExpenses')){
+      this.trnFlag = 'Recurring transaction';
+    }else if(value.checked == true && (this.getFlag == 'addBudget' || this.getFlag == 'editBudget')){
+      this.budgetFlag = 'Recurring Budget'
+    }else if(value.checked == false && (this.getFlag == 'addExpenses' || this.getFlag == 'editExpenses')){
+      this.trnFlag = 'Transaction';
+    }else{
+      this.budgetFlag = 'Budget'
+
+    }
+    
   }
   continuesTill(value) {
     this.isNoOfYrs = value;

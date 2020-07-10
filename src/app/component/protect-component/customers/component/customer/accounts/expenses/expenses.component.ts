@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { AddExpensesComponent } from '../../../common-component/add-expenses/add-expenses.component';
@@ -11,6 +11,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { DatePipe } from '@angular/common';
+import { DetailedViewExpensesComponent } from '../../../common-component/detailed-view-expenses/detailed-view-expenses.component';
 @Component({
   selector: 'app-expenses',
   templateUrl: './expenses.component.html',
@@ -34,15 +35,27 @@ export class ExpensesComponent implements OnInit {
   noData: string;
   startDate: string;
   endDate: string;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  personalProfileData: any;
+  userInfo: any;
+  clientData: any;
+  fragmentData = { isSpinner: false };
+  details: any;
+  getOrgData: any;
 
   constructor(private datePipe: DatePipe,private subInjectService: SubscriptionInject, private planService: PlanService,
-    private constantService: ConstantsService, private eventService: EventService, public dialog: MatDialog) {
+    private constantService: ConstantsService, private eventService: EventService, public dialog: MatDialog,private util:UtilService) {
   }
 
   ngOnInit() {
     this.viewMode = 'Transactions';
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.personalProfileData = AuthService.getProfileDetails();
+    this.userInfo = AuthService.getUserInfo();
+    this.clientData = AuthService.getClientData();
+    this.details = AuthService.getProfileDetails();
+    this.getOrgData = AuthService.getOrgDetails();
     this.getStartAndEndDate();
     this.getTransaction();
     this.getRecuringTransactions();
@@ -57,6 +70,24 @@ export class ExpensesComponent implements OnInit {
     var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
     this.startDate = this.datePipe.transform(firstDay, 'yyyy/MM/dd');
     this.endDate = this.datePipe.transform(lastDay, 'yyyy/MM/dd');
+  }
+  generatePdf(tmp) {
+    this.fragmentData.isSpinner = true;
+    let para = document.getElementById(tmp);
+    // this.util.htmlToPdf(para.innerHTML, 'Test',this.fragmentData);
+    this.util.htmlToPdf(para.innerHTML, 'Expenses', 'true', this.fragmentData, '', '');
+  }
+  
+  Excel(tableTitle,tmp) {
+    setTimeout(() => {
+      var blob = new Blob([document.getElementById(tmp).innerHTML], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
+      });
+      saveAs(blob, tableTitle + '.xls');
+    }, 200);
+    // if (data) {
+    //   this.fragmentData.isSpinner = false;
+    // }
   }
   budgetChart(id) {
     var chart = Highcharts.chart('bugetChart', {
@@ -249,6 +280,7 @@ export class ExpensesComponent implements OnInit {
         }
       });
       this.dataSource4.data = data;
+      this.dataSource4.sort = this.sort;
     }
     this.isLoading = false;
     console.log('getBudgetRes', data)
@@ -288,6 +320,7 @@ export class ExpensesComponent implements OnInit {
         }
       });
       this.dataSource5.data = data;
+      this.dataSource5.sort = this.sort;
     } else {
       this.noData = 'No data found';
       this.dataSource5.data = [];
@@ -332,6 +365,7 @@ export class ExpensesComponent implements OnInit {
         }
       });
       this.dataSource1.data = data;
+      this.dataSource1.sort = this.sort;
     } else {
       this.noData = 'No data found';
       this.dataSource1.data = [];
@@ -374,6 +408,8 @@ export class ExpensesComponent implements OnInit {
         }
       });
       this.dataSource.data = data;
+      this.dataSource.sort = this.sort;
+
     } else {
       this.noData = 'No data found';
       this.dataSource.data = [];
@@ -461,12 +497,36 @@ export class ExpensesComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          this.getTransaction();
-          this.getRecuringTransactions();
-          this.getBudgetList();
-          this.getBugetRecurring();
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            this.getTransaction();
+            this.getRecuringTransactions();
+            this.getBudgetList();
+            this.getBugetRecurring();
+            console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          }
+ 
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
+  }
+  detailedViewExpense(data,value) {
+    const fragmentData = {
+      flag: 'detailedView',
+      data,
+      id: 1,
+      state: 'open35',
+      componentName: DetailedViewExpensesComponent
+    };
+    fragmentData.data.value = value;
+
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
+
         }
       }
     );
