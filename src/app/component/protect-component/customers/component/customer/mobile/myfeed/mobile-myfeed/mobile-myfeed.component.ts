@@ -243,21 +243,20 @@ export class MobileMyfeedComponent implements OnInit {
     }
   }
   getAssetAllocationData() {
-    this.portfolioData = true
     const obj = {
       clientId: this.clientData.clientId,
       advisorId: this.advisorId,
       targetDate: new Date().getTime()
     }
-    // this.tabsLoaded.portfolioData.isLoading = true;
+    this.tabsLoaded.portfolioData.isLoading = true;
 
-    //this.loaderFn.increaseCounter();
+    this.loaderFn.increaseCounter();
     this.customerService.getAllFeedsPortFolio(obj).subscribe(res => {
-      console.log('asset allocation', res)
       if (res == null) {
         this.portFolioData = [];
+        this.tabsLoaded.portfolioData.hasData = false;
       } else {
-        this.portfolioData = true
+        this.tabsLoaded.portfolioData.hasData = true;
         let stock = res.find(d => d.assetType == 6);
         this.portFolioData = res;
         if (stock) {
@@ -300,6 +299,7 @@ export class MobileMyfeedComponent implements OnInit {
         });
         chartTotal -= 1;
         if (chartTotal === 0) {
+          this.tabsLoaded.portfolioData.hasData = false
         }
         if (counter > 4) {
           chartData.push(othersData);
@@ -315,6 +315,8 @@ export class MobileMyfeedComponent implements OnInit {
       this.loaderFn.decreaseCounter();
     }, err => {
       this.hasError = true;
+      this.tabsLoaded.portfolioData.isLoading = false;
+      this.eventService.openSnackBar(err, "Dismiss")
       this.loaderFn.decreaseCounter();
     })
   }
