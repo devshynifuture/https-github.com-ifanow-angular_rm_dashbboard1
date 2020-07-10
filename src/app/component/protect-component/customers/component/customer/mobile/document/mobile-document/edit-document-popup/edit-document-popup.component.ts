@@ -12,6 +12,7 @@ import { PreviewComponent } from '../../../../customer-overview/overview-documen
 import { HttpHeaders } from '@angular/common/http';
 import { HttpService } from 'src/app/http-service/http-service';
 import { GetSharebleLinkComponent } from '../../../../customer-overview/overview-documents/get-shareble-link/get-shareble-link.component';
+import { MoveCopyMobileViewComponent } from '../move-copy-mobile-view/move-copy-mobile-view.component';
 
 @Component({
   selector: 'app-edit-document-popup',
@@ -108,7 +109,7 @@ export class EditDocumentPopupComponent implements OnInit {
 
   openDialogCopy(element, value): void {
     // this._bottomSheetRef.dismiss();
-    this._bottomSheet.open(CopyDocumentsComponent, {
+    this._bottomSheet.open(MoveCopyMobileViewComponent, {
       data: { name: value, animal: element }
     });
   }

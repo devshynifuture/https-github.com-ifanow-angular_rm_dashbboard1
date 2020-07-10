@@ -32,6 +32,7 @@ import { MobileRoutingModule } from './mobile-routing.module';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { EditDocumentPopupComponent } from './component/customer/mobile/document/mobile-document/edit-document-popup/edit-document-popup.component';
 import { UploadDocumentComponent } from './component/customer/mobile/document/mobile-document/upload-document/upload-document.component';
+import { MoveCopyMobileViewComponent } from './component/customer/mobile/document/mobile-document/move-copy-mobile-view/move-copy-mobile-view.component';
 
 
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
@@ -40,7 +41,7 @@ import { UploadDocumentComponent } from './component/customer/mobile/document/mo
 
 
 @NgModule({
-  declarations: [CustomerComponent, TransactionSuccessfulComponent, MobileMyfeedComponent, MobileDocumentComponent, MobilePortfoiloComponent, MobileProfileComponent, MobileTransactionsComponent, MobileLeftSidenavComponent, UploadDocumentComponent, EditDocumentPopupComponent],
+  declarations: [CustomerComponent, TransactionSuccessfulComponent, MobileMyfeedComponent, MobileDocumentComponent, MobilePortfoiloComponent, MobileProfileComponent, MobileTransactionsComponent, MobileLeftSidenavComponent, UploadDocumentComponent, EditDocumentPopupComponent, MoveCopyMobileViewComponent],
   imports: [
     // BrowserModule,
     CommonModule,
@@ -71,7 +72,7 @@ import { UploadDocumentComponent } from './component/customer/mobile/document/mo
   exports: [],
   providers: [DynamicComponentService, AdvisorAndOrganizationInfoService],
   entryComponents: [EntryComponentsModule.getComponentList(), AccountEntryModule.getComponentList(), AdviceEntryModule.getComponentList()
-    , PlanEntryModule.getComponentList(), CustomerOverviewEntryModule.getComponentList(), UploadDocumentComponent, EditDocumentPopupComponent]
+    , PlanEntryModule.getComponentList(), CustomerOverviewEntryModule.getComponentList(), UploadDocumentComponent, EditDocumentPopupComponent, MoveCopyMobileViewComponent]
 })
 export class CustomersModule {
 }
