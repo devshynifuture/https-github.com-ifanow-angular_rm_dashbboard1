@@ -434,6 +434,7 @@ export const appConfig = {
   EDIT_INCOME_LIST: 'account/income/edit',
   GET_GLOBAL_GROWTH_RATE: 'account/income/growth/rate/global/get',
   DELETE_INCOME: 'account/income/delete?',
+  DELETE_INFLOW_BONUS: 'account/income/bonusOrInflow/delete?',
   /////////////////////////Activity///////////////////////////////////
   ADVICE_GET_ALL: 'advice/asset/get',
   ADVICE_ADD_FD: 'advice/asset/fixed-income/suggest-new-fd/add',

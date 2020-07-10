@@ -10,6 +10,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 export class IncomeDetailedViewComponent implements OnInit {
   inputData: any;
   income: any;
+  monthlyContribution: any[];
 
   constructor(public utils: UtilService,private subInjectService: SubscriptionInject) { }
 
@@ -19,6 +20,12 @@ export class IncomeDetailedViewComponent implements OnInit {
   @Input()
   set data(data) {
     this.inputData = data;
+    this.monthlyContribution = [];
+    let monthlyData = this.inputData.bonusOrInflowList
+    monthlyData.forEach(element => {
+      element.date=new Date(element.receivingYear, element.receivingMonth)
+    });
+    this.monthlyContribution  = monthlyData;
   }
 
   get data() {

@@ -122,15 +122,16 @@
 
   .view-all {
     font-size: 10px;
-    line-height: 12px !important;
-    color: #1A303E;
-    background: #FFFFFF;
-    border: 1px solid #1A303E !important;
-    border-radius: 7px !important;
+    line-height: 13px !important;
+    color: #83959D;
+    background: transparent;
+    border: 1px solid #83959D !important;
+    border-radius: 2px !important;
     height: 20px;
     min-width: 49px !important;
     padding: 0 3px !important;
-    font-family: Roboto;
+    font-family: "Roboto";
+    min-width: 55px !important;
   }
 
   .st {

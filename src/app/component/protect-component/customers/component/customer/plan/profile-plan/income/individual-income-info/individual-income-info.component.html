@@ -168,18 +168,19 @@
                     </div>
                     <div class="col-md-7">
                         <div class="form-group  ">
-                            <mat-radio-group class="d-flex align-items-center">
-                                <div class="checkOne mr-10">
-                                    <img src="assets/images/svg/stable-icn.svg">
+                            <mat-radio-group class="d-flex align-items-center"  #incomeStyle formControlName="incomeStyle">
+                                <div class="checkOne mr-10" (click)="onClickValueChange('1')">
+                                    <img src="assets/images/svg/stable-icn.svg" *ngIf=" incomeNetForm.get('incomeStyle').value == '1' && isStatic == true">
+                                    <img src="assets/images/svg/stable-gry-icon.svg" *ngIf=" incomeNetForm.get('incomeStyle').value == '2' && isStatic == false">
 
-                                    <mat-radio-button class="example-margin radioBtnActive" value="Stable">Stable
+                                    <mat-radio-button class="example-margin " value="1" [ngClass]="{'radioBtnActive': incomeNetForm.get('incomeStyle').value == '1'}">Stable
                                     </mat-radio-button>
 
                                 </div>
-                                <div class="checkOne">
-                                    <img src="assets/images/svg/erratic-icon.svg">
-
-                                    <mat-radio-button class="example-margin" value="Erratic">Erratic
+                                <div class="checkOne" (click)="onClickValueChange('2')">
+                                    <img src="assets/images/svg/erratic-icon.svg" *ngIf=" incomeNetForm.get('incomeStyle').value == '1' && isStatic == true" >
+                                    <img src="assets/images/svg/erratic-icon-active.svg" *ngIf=" incomeNetForm.get('incomeStyle').value == '2' && isErractic == true">
+                                    <mat-radio-button class="example-margin " value="2" [ngClass]="{'radioBtnActive': incomeNetForm.get('incomeStyle').value == '2'}">Erratic
                                     </mat-radio-button>
 
                                 </div>
@@ -202,7 +203,7 @@
                             <div class="col-md-7 pl-0 pr-4">
                                 <div class="form-group mb-0">
                                     <mat-form-field>
-                                        <mat-select matInput formControlName="continousTill" class="form-control  br-0">
+                                        <mat-select matInput formControlName="continousTill" (selectionChange)="changeValidations()" class="form-control  br-0">
                                             <mat-option value="1">Retirement</mat-option>
                                             <mat-option value="2">Life time</mat-option>
                                             <mat-option value="3">Number of years</mat-option>
@@ -214,7 +215,7 @@
                             <div *ngIf="incomeNetForm.get('continousTill').value==3" class="col-md-6 pl-4 pr-0">
                                 <div class="form-group mb-0">
                                     <mat-form-field>
-                                        <input matInput type="number" autocomplete="off"
+                                        <input matInput type="number" (keyup)="onChange(incomeNetForm,'continousTillYear',$event)" autocomplete="off"
                                             formControlName="continousTillYear" class="form-control br-0">
                                         <mat-error>This field is required</mat-error>
                                     </mat-form-field>
@@ -234,7 +235,7 @@
                     <div class="col-md-7 pr-0">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <input matInput type="number" autocomplete="off" formControlName="incomeGrowthRate"
+                                <input matInput type="number" autocomplete="off" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" (keyup)="onChange(incomeNetForm,'rate',$event)" formControlName="incomeGrowthRate"
                                     class="form-control br-0">
                                 <mat-error>This field is required</mat-error>
                             </mat-form-field>
@@ -257,7 +258,8 @@
                                             [matDatepicker]="incomeStartdate">
                                         <mat-datepicker-toggle matSuffix [for]="incomeStartdate">
                                         </mat-datepicker-toggle>
-                                        <mat-datepicker #incomeStartdate></mat-datepicker>
+                                        <mat-datepicker #incomeStartdate startView="multi-year" (yearSelected)="chosenYearHandler($event,incomeNetForm,'incomeStartDate')"
+                                        (monthSelected)="chosenMonthHandler($event,incomeStartdate, incomeNetForm,'incomeStartDate')"></mat-datepicker>
                                         <mat-error class="f-12">This field is required
                                         </mat-error>
                                     </mat-form-field>
@@ -271,7 +273,8 @@
                                             [matDatepicker]="incomeEndDate">
                                         <mat-datepicker-toggle matSuffix [for]="incomeEndDate">
                                         </mat-datepicker-toggle>
-                                        <mat-datepicker #incomeEndDate></mat-datepicker>
+                                        <mat-datepicker #incomeEndDate startView="multi-year"  (yearSelected)="chosenYearHandler($event,incomeNetForm,'incomeEndDate')"
+                                        (monthSelected)="chosenMonthHandler($event,incomeEndDate,incomeNetForm,'incomeEndDate')" ></mat-datepicker>
                                         <mat-error class="f-12">This field is required
                                         </mat-error>
                                     </mat-form-field>
@@ -307,7 +310,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group mb-0">
-                                <mat-form-field class="ba-date">
+                                <mat-form-field class="ba-date" appExternalDateFormat>
                                     <input matInput autocomplete="off" formControlName="nextAppraisal"
                                         class="form-control br-0 b-0" [matDatepicker]="nextAppraisalIN">
                                     <mat-datepicker-toggle matSuffix [for]="nextAppraisalIN">
@@ -333,7 +336,8 @@
                                                 class="form-control br-0 b-0" [matDatepicker]="expectedBonus">
                                             <mat-datepicker-toggle matSuffix [for]="expectedBonus">
                                             </mat-datepicker-toggle>
-                                            <mat-datepicker #expectedBonus></mat-datepicker>
+                                            <mat-datepicker #expectedBonus startView="multi-year" (yearSelected)="chosenYearHandler($event,singleBonusForm,'receivingDate')"
+                                            (monthSelected)="chosenMonthHandler($event,expectedBonus, singleBonusForm,'receivingDate')"></mat-datepicker>
                                             <mat-error class="f-12">This field is required
                                             </mat-error>
                                         </mat-form-field>
@@ -349,9 +353,9 @@
                                     </div>
                                 </div>
                                 <div class="col-md-2 pt-8">
-                                    <i class="material-icons c-p text-custom" *ngIf="i==getBonusList.controls.length-1"
+                                    <i class="material-icons c-p text-custom"
                                         (click)="addExpectedBonus()">add</i>
-                                    <i class="material-icons c-p text-custom" *ngIf="i<getBonusList.controls.length-1"
+                                    <i class="material-icons c-p text-custom" *ngIf="getBonusList.controls.length > 1"
                                         (click)="removeExpectedBonus(i)">remove</i>
                                 </div>
                                 <mat-hint align="start" class="f-12 ml-8 pb-16">Optional</mat-hint>

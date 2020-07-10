@@ -405,7 +405,9 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(){
     this.subInjectService.closeNewRightSlider({state: 'close'});
-    this.otherAssetAllocationSubscription.unsubscribe();
+    if(this.otherAssetAllocationSubscription) {
+      this.otherAssetAllocationSubscription.unsubscribe();
+    }
   }
 }
 

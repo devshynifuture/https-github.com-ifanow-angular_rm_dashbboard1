@@ -6,8 +6,9 @@
                 <img src="/assets/images/svg/c-1.svg">
                 <p class="m-0 roboto f-400 pt-4">Folder</p>
             </div>
-            <div class="col-4 pl-0">
+            <div (click)="uploadFileRef.click()" class="col-4 pl-0">
                 <img src="/assets/images/svg/c-2.svg">
+                <input #uploadFileRef [hidden]="true" multiple type="file" (change)="uploadFile($event)">
                 <p class="m-0 roboto f-400 pt-4">Upload file</p>
             </div>
             <div class="col-4 pl-0">

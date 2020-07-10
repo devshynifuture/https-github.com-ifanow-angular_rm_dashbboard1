@@ -135,8 +135,10 @@
                             style
                         </th>
                         <td *matCellDef="let element" class="br text-right" mat-cell>
-                            <div class="bar"> {{element.incomeStyleId}} </div>
+                            <div class="bar" *ngIf="!isLoading"> {{(element.incomeStyleId == 1) ? 'Stable' : 'Erratic'}} </div>
+                            <div class="bar" *ngIf="isLoading">{{''}}</div>
                         </td>
+                        
                         <td *matFooterCellDef class="br text-right " mat-footer-cell></td>
                     </ng-container>
                     <ng-container matColumnDef="till">
@@ -172,10 +174,12 @@
                     </ng-container>
                     <ng-container matColumnDef="icons">
                         <th *matHeaderCellDef class="t-2" mat-header-cell></th>
-                        <td *matCellDef="let element" class="t-2" mat-cell>
-                            <i [matMenuTriggerFor]="menu4" class="material-icons c-p text-black">
+                        <td *matCellDef="let element"  class="t-2 mat-menu-trigger text-center c-p" mat-cell [matMenuTriggerFor]="menu4">
+                            <!-- <i [matMenuTriggerFor]="menu4" class="material-icons c-p text-black">
                                 more_vert
-                            </i>
+                            </i> -->
+                            <img *ngIf="!isLoading" class="c-p" src="/assets/images/svg/dot-menu.svg">
+
                             <mat-menu #menu4="matMenu">
                                 <button (click)="addIncome('editIncome',element)" mat-menu-item>Edit</button>
                                 <button (click)="addIncomeDetail(element)" mat-menu-item>Detailed

@@ -1,4 +1,18 @@
 @media(max-width: 767px) {
+  .mob-circle {
+    height: 60px;
+    width: 60px;
+    background: #F5F7F7;
+    border: 1px solid #83959D;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #83959D;
+    font-size: 20px;
+    line-height: 23px;
+  }
+
   .pt-2 {
     padding-top: 2px;
   }
@@ -30,6 +44,8 @@
   .mob-text-success {
     color: #5BCF7F;
   }
+
+
 
   .mob-bg-success {
     background: rgba(91, 207, 127, 0.1);
@@ -299,4 +315,12 @@
   .mat-progress-bar-background {
     background-color: #ffffff;
   }
+
+  .mob-edit-document-popup {
+    button {
+      width: 100%;
+    }
+  }
+
+
 }
