@@ -61,6 +61,7 @@ import { MultiYearGoalComponent } from './goals-plan/multi-year-goal/multi-year-
 import { CommonComponentModule } from 'src/app/component/protect-component/common-component/common-component.module';
 import { CustomCommonModule } from 'src/app/common/custom.common.module';
 import { DetailedViewExpensesComponent } from '../../common-component/detailed-view-expenses/detailed-view-expenses.component';
+import { AddLifeInsuranceComponent } from './insurance-plan/add-life-insurance/add-life-insurance.component';
 
 export const componentList = [
   PreferencesComponent,
@@ -96,6 +97,7 @@ export const componentList = [
   AddInsuranceUpperComponent,
   SetupTaxPlanningComponent,
   AddHealthInsuranceComponent,
+  AddLifeInsuranceComponent,
   ShowHealthPlanningComponent,
   AddScenariosComponent,
   SuggestHealthInsuranceComponent,

@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatBottomSheet, MAT_BOTTOM_SHEET_DATA, MatBottomSheetRef } from '@angular/material';
+import { MatBottomSheet, MAT_BOTTOM_SHEET_DATA, MatDialog, MatBottomSheetRef } from '@angular/material';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { BottomSheetComponent } from '../../../../../common-component/bottom-sheet/bottom-sheet.component';
@@ -7,6 +7,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { EventService } from 'src/app/Data-service/event.service';
 import { HttpService } from 'src/app/http-service/http-service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { DocumentNewFolderComponent } from '../../../../../common-component/document-new-folder/document-new-folder.component';
 
 @Component({
   selector: 'app-upload-document',
@@ -26,7 +27,9 @@ export class UploadDocumentComponent implements OnInit {
     private eventService: EventService,
     private http: HttpService,
     public subInjectService: SubscriptionInject,
-    @Inject(MAT_BOTTOM_SHEET_DATA) public data: any) { }
+    public dialog: MatDialog,
+    @Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
+    private _bottomSheetRef: MatBottomSheetRef<UploadDocumentComponent>) { }
 
   ngOnInit() {
     this.clientId = AuthService.getClientId();
@@ -87,4 +90,21 @@ export class UploadDocumentComponent implements OnInit {
     });
 
   }
+
+  openDialog(element, value): void {
+    this._bottomSheetRef.dismiss();
+    const dialogRef = this.dialog.open(DocumentNewFolderComponent, {
+      width: '30%',
+      data: { parentId: value, animal: element }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed', result);
+      if (result) {
+        this.subInjectService.addSingleProfile(true);
+      }
+    });
+
+  }
+
 }
