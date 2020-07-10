@@ -245,56 +245,41 @@
 
         <div class="row pt-40 pb-16">
             <div class="col-12 pl-0 pb-10">
-                <h5 class="m-0 text-black f-16 roboto">Portfolio summary</h5>
+                <h5 class="m-0 text-black f-16 roboto">Portfolio Summary Mutual funds</h5>
             </div>
             <div class="col-12 p-0 bg-white br-4 pt-10">
-                <div class="row pt-16">
+                <!-- <div class="row pt-16">
                     <div class="col-4 pl-8 br">
                         <p class="f-10 text-custom lh-12 roboto f-400 m-0">Current Value:</p>
-                        <p class="m-0 pt-4 roboto f-400">₹63,24,908</p>
+                        <p class="m-0 pt-4 roboto f-400">₹<span
+                                appFormatNumber>{{(mutualFund) ? (mutualFund.total_current_value) : 0}}</span></p>
                     </div>
                     <div class="col-4 pl-8 br">
                         <p class="f-10 text-custom lh-12 roboto f-400 m-0">Amt. Invested:</p>
-                        <p class="m-0 pt-4 roboto f-400 text-custom">₹59,13,206</p>
+                        <p class="m-0 pt-4 roboto f-400 text-custom">₹<span
+                                appFormatNumber>{{(mutualFund) ? (mutualFund.total_amount_invested) : 0}}</span></p>
                     </div>
                     <div class="col-4 pl-8">
-                        <p class="f-10 text-custom lh-12 roboto f-400 m-0">% Growth (Yearly)</p>
-                        <p class="m-0 pt-4 roboto f-400 text-success">9.25%</p>
+                        <p class="f-10 text-custom lh-12 roboto f-400 m-0">% Returns</p>
+                        <span *ngIf="(mutualFund) ? (mutualFund.total_xirr >= 0) : 0  "
+                            class="m-0 pt-4 roboto f-400 text-success">{{((mutualFund.total_xirr) ? (mutualFund.total_xirr | number:'1.2-2') : (mutualFund.total_xirr == 0 || mutualFund.total_xirr == 'Infinity') ? (mutualFund.total_absolute_return | number:'1.2-2') : 0)}}{{'%'}}</span>
+                        <span *ngIf="(mutualFund) ? (mutualFund.total_xirr < 0) : 0 "
+                            class="m-0 pt-4 roboto f-400 text-success">{{((mutualFund.total_xirr) ? (mutualFund.total_xirr | number:'1.2-2') : (mutualFund.total_xirr == 0 || mutualFund.total_xirr == 'Infinity') ? (mutualFund.total_absolute_return | number:'1.2-2') : 0)}}{{'%'}}</span>
                     </div>
-                </div>
+                </div> -->
                 <div class="row">
                     <div class="col-6 full-center">
-                        <img src="/assets/images/Donut-chart.png" class="w-100">
+                        <!-- <img src="/assets/images/Donut-chart.png" class="w-100"> -->
+                        <div class="h-200" [chart]="mfAllocationPieConfig"></div>
                     </div>
-                    <div class="col-6 pl-0 pt-20 pb-20 pr-8">
+                    <div class="col-6 pl-0 pt-20 pb-20 pr-8" *ngFor="let data of mfAllocationData">
                         <div class="d-flex">
-                            <div class="hw-10 bg-1 br-2">
-                            </div>
-                            <p class="roboto f-400 m-0 pl-10">₹22,35,902 <span class="text-success pl-4">(10.90%)</span>
-                            </p>
+                            <span class="pointNumber" [style.background-color]="data.color">
+                            </span>
+                            <span class="f-12 lh-12 roboto f-400 m-0"
+                                appFormatNumber>{{(data.y | number:'1.2-2')}}%</span>
                         </div>
-                        <p class="text-custom f-400 roboto pt-4 mb-0 pl-20">Equity Large cap</p>
-                        <div class="d-flex pt-16">
-                            <div class="hw-10 bg-2 br-2">
-                            </div>
-                            <p class="roboto f-400 m-0 pl-10">₹16,35,902 <span class="text-danger pl-4">(-10.90%)</span>
-                            </p>
-                        </div>
-                        <p class="text-custom f-400 roboto pt-4 mb-0 pl-20">Equity Large cap</p>
-                        <div class="d-flex pt-16">
-                            <div class="hw-10 bg-3 br-2">
-                            </div>
-                            <p class="roboto f-400 m-0 pl-10">₹22,35,902 <span class="text-success pl-4">(10.90%)</span>
-                            </p>
-                        </div>
-                        <p class="text-custom f-400 roboto pt-4 mb-0 pl-20">Equity Large cap</p>
-                        <div class="d-flex pt-16">
-                            <div class="hw-10 bg-4 br-2">
-                            </div>
-                            <p class="roboto f-400 m-0 pl-10">₹22,35,902 <span class="text-success pl-4">(10.90%)</span>
-                            </p>
-                        </div>
-                        <p class="text-custom f-400 roboto pt-4 mb-0 pl-20">Equity Large cap</p>
+                        <p class="text-custom f-400 roboto pt-4 mb-0 pl-20">{{data.name}}</p>
                     </div>
                 </div>
             </div>
@@ -309,32 +294,34 @@
 
         </div>
         <div class="col-md-12 d-flex p-0 overflow-y pt-10">
+            <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="sliderConfig" #slickModal1="slick-carousel"
+                (wheel)="carouselWheelEvent(slickModal1, $event)">
+                <div class="pr-20" ngxSlickItem>
+                    <div class="w-340">
+                        <div class="mob-new-house">
+                            <div class="row pt-16">
+                                <div class="col-2">
+                                    <img src="/assets/images/Oval.png" class="br-50">
+                                </div>
+                                <div class="col-10">
+                                    <p class="m-0 pt-4">2028</p>
+                                    <h4 class="m-0 pt-8">New House</h4>
+                                </div>
+                            </div>
+                            <div class="row pt-20">
+                                <div class="col-8">
+                                    <p class="m-0">Goal: Rs. 50,00,000</p>
+                                    <p class="m-0 pt-6">CV: Rs. 10,23,000</p>
+                                    <mat-progress-bar mode="determinate" value="40" class="mt-12"></mat-progress-bar>
+                                    <p class="pt-10 m-0">10.23% Achieved</p>
+                                </div>
+                            </div>
+                        </div>
 
-            <div class="pr-20">
-                <div class="w-340">
-                    <div class="mob-new-house">
-                        <div class="row pt-16">
-                            <div class="col-2">
-                                <img src="/assets/images/Oval.png" class="br-50">
-                            </div>
-                            <div class="col-10">
-                                <p class="m-0 pt-4">2028</p>
-                                <h4 class="m-0 pt-8">New House</h4>
-                            </div>
-                        </div>
-                        <div class="row pt-20">
-                            <div class="col-8">
-                                <p class="m-0">Goal: Rs. 50,00,000</p>
-                                <p class="m-0 pt-6">CV: Rs. 10,23,000</p>
-                                <mat-progress-bar mode="determinate" value="40" class="mt-12"></mat-progress-bar>
-                                <p class="pt-10 m-0">10.23% Achieved</p>
-                            </div>
-                        </div>
                     </div>
-
                 </div>
-            </div>
-            <div class="pr-20">
+            </ngx-slick-carousel>
+            <!-- <div class="pr-20">
                 <div class="w-340">
                     <div class="mob-education mt-0">
                         <div class="row pt-16">
@@ -356,7 +343,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
         </div>
 
@@ -384,11 +371,12 @@
                                 <li class="pr-8"><img class="w36" *ngIf="fam.relationshipId==6"
                                         src="/assets/images/svg/father-profile.svg"></li>
                             </ul>
-                            <!-- <p class="mb-0">{{documentVault.fileStats[0].filesCount}} items in your vault
-                                {{documentVault.fileStats[0].totalKbs/1024 | number : '0.0-2'}} mb space used</p> -->
-                            <p class="pt-8 m-0 roboto f-400 text-dark pb-12 f-12">37 items in your vault. 23.7MB space
+                            <p *ngIf="documentVault.fileStats" class="pt-8 m-0 roboto f-400 text-dark pb-12 f-12">
+                                {{documentVault.fileStats[0].filesCount}} items in your vault
+                                {{documentVault.fileStats[0].totalKbs/1024 | number : '0.0-2'}} mb space used</p>
+                            <!-- <p class="pt-8 m-0 roboto f-400 text-dark pb-12 f-12">37 items in your vault. 23.7MB space
                                 used
-                            </p>
+                            </p> -->
                             <button mat-stroked-button class="btn-primary w-100 h-40 f-400 f-16">Access your
                                 vault</button>
                         </div>
@@ -633,93 +621,52 @@
             </div>
 
             <div class="col-12 d-flex p-0 overflow-y pt-10">
+                <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="sliderConfig" #slickModal4="slick-carousel"
+                    (wheel)="carouselWheelEvent(slickModal4, $event)">
+                    <div class="pr-20" ngxSlickItem *ngFor="let item of familyWiseAllocation">
+                        <div class="w-180">
 
-                <div class="pr-20">
-                    <div class="w-180">
-
-                        <div class="row fm-1 br-4">
-                            <div class="col-12 pt-16 pb-16">
-                                <div class="row">
-                                    <div class="col-3 pl-0">
-                                        <img src="/assets/images/people.png">
+                            <div class="row fm-1 br-4">
+                                <div class="col-12 pt-16 pb-16">
+                                    <div class="row">
+                                        <div class="col-3 pl-0">
+                                            <img class="w36"
+                                                *ngIf="item.relationshipId==0 || item.relationshipId == null"
+                                                [src]="imgGenderSrc">
+                                            <img class="w36"
+                                                *ngIf="item.relationshipId==2 || item.relationshipId == 1"
+                                                src="/assets/images/svg/man-profile.svg">
+                                            <img class="w36" *ngIf="item.relationshipId==3"
+                                                src="/assets/images/svg/women-profile-icon.svg">
+                                            <img class="w36" *ngIf="item.relationshipId==4"
+                                                src="/assets/images/svg/son-profile.svg">
+                                            <img class="w36" *ngIf="item.relationshipId==5"
+                                                src="/assets/images/svg/daughter-profile.svg">
+                                            <img class="w36" *ngIf="item.relationshipId==7"
+                                                src="/assets/images/svg/mother-profile.svg">
+                                            <img class="w36" *ngIf="item.relationshipId==6"
+                                                src="/assets/images/svg/father-profile.svg">
+                                        </div>
+                                        <div class="col-9 pr-0">
+                                            <p class="m-0 roboto f-400 f-12 pt-4">{{item.name}}</p>
+                                            <p class="m-0 roboto text-custom f-400 f-10 ">Self</p>
+                                        </div>
                                     </div>
-                                    <div class="col-9 pr-0">
-                                        <p class="m-0 roboto f-400 f-12 pt-4">Rahul Jain</p>
-                                        <p class="m-0 roboto text-custom f-400 f-10 ">Self</p>
-                                    </div>
-                                </div>
-                                <div class="row pt-16">
-                                    <div class="col-12 pl-0">
-                                        <p class="m-0 roboto f-400 text-custom f-12 ws-normal">Mutual Funds</p>
-                                        <p class="m-0 roboto f-400">₹ 10,29,091</p>
+                                    <div class="row pt-16">
+                                        <div class="col-12 pl-0">
+                                            <p class="m-0 roboto f-400 text-custom f-12 ws-normal">Mutual Funds</p>
+                                            <p class="m-0 roboto f-400">₹<span
+                                                    appFormatNumber>{{item.currentValue}}</span></p>
 
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-                </div>
-
-
-                <div class="pr-20">
-                    <div class="w-180">
-
-                        <div class="row fm-2 br-4">
-                            <div class="col-12 pt-16 pb-16">
-                                <div class="row">
-                                    <div class="col-3 pl-0">
-                                        <img src="/assets/images/people.png">
-                                    </div>
-                                    <div class="col-9 pr-0">
-                                        <p class="m-0 roboto f-400 f-12 pt-4">Rahul Jain</p>
-                                        <p class="m-0 roboto text-custom f-400 f-10">Self</p>
-                                    </div>
-                                </div>
-                                <div class="row pt-16">
-                                    <div class="col-12 pl-0">
-                                        <p class="m-0 roboto f-400 text-custom f-12 ws-normal">Mutual Funds</p>
-                                        <p class="m-0 roboto f-400">₹ 10,29,091</p>
-
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+
+
                         </div>
-
-
                     </div>
-                </div>
-
-                <div class="pr-20">
-                    <div class="w-180">
-
-                        <div class="row fm-2 br-4">
-                            <div class="col-12 pt-16 pb-16">
-                                <div class="row">
-                                    <div class="col-3 pl-0">
-                                        <img src="/assets/images/people.png">
-                                    </div>
-                                    <div class="col-9 pr-0">
-                                        <p class="m-0 roboto f-400 f-12 pt-4">Rahul Jain</p>
-                                        <p class="m-0 roboto text-custom f-400 f-10">Self</p>
-                                    </div>
-                                </div>
-                                <div class="row pt-16">
-                                    <div class="col-12 pl-0">
-                                        <p class="m-0 roboto f-400 text-custom f-12 ws-normal">Mutual Funds</p>
-                                        <p class="m-0 roboto f-400 f-14">₹ 10,29,091</p>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-                </div>
-
-
+                </ngx-slick-carousel>
             </div>
         </div>
         <div class="row pt-40 pb-16">
@@ -729,37 +676,16 @@
             <div class="col-12 p-0 bg-white br-4 pt-10">
                 <div class="row">
                     <div class="col-6 full-center">
-                        <img src="/assets/images/Donut-chart.png" class="w-100">
+                        <div class="h-200" [chart]="mfSubCategoryPieConfig"></div>
                     </div>
-                    <div class="col-6 pl-0 pt-20 pb-20 pr-8">
+                    <div class="col-6 pl-0 pt-20 pb-20 pr-8" *ngFor="let data of mfSubCatAllocationData">
                         <div class="d-flex">
-                            <div class="hw-10 bg-1 br-2">
-                            </div>
-                            <p class="roboto f-400 m-0 pl-10">₹22,35,902 <span class="text-success pl-4">(10.90%)</span>
-                            </p>
+                            <span class="pointNumber" [style.background-color]="data.color">
+                            </span>
+                            ₹<span class="f-12 lh-12 roboto f-400 m-0 br" appFormatNumber>{{(data.y)}}</span>
+                            <span class="f-12 lh-12 roboto f-400 m-0">
+                                {{'('+(data.percentage | number:'1.2-2')+'%)'}}</span>
                         </div>
-                        <p class="text-custom f-400 roboto pt-4 mb-0 pl-20">Equity Large cap</p>
-                        <div class="d-flex pt-16">
-                            <div class="hw-10 bg-2 br-2">
-                            </div>
-                            <p class="roboto f-400 m-0 pl-10">₹16,35,902 <span class="text-danger pl-4">(-10.90%)</span>
-                            </p>
-                        </div>
-                        <p class="text-custom f-400 roboto pt-4 mb-0 pl-20">Equity Large cap</p>
-                        <div class="d-flex pt-16">
-                            <div class="hw-10 bg-3 br-2">
-                            </div>
-                            <p class="roboto f-400 m-0 pl-10">₹22,35,902 <span class="text-success pl-4">(10.90%)</span>
-                            </p>
-                        </div>
-                        <p class="text-custom f-400 roboto pt-4 mb-0 pl-20">Equity Large cap</p>
-                        <div class="d-flex pt-16">
-                            <div class="hw-10 bg-4 br-2">
-                            </div>
-                            <p class="roboto f-400 m-0 pl-10">₹22,35,902 <span class="text-success pl-4">(10.90%)</span>
-                            </p>
-                        </div>
-                        <p class="text-custom f-400 roboto pt-4 mb-0 pl-20">Equity Large cap</p>
                     </div>
                 </div>
             </div>
