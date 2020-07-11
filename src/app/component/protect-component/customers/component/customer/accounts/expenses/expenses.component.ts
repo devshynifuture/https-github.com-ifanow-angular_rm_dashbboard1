@@ -12,6 +12,7 @@ import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { DatePipe } from '@angular/common';
 import { DetailedViewExpensesComponent } from '../../../common-component/detailed-view-expenses/detailed-view-expenses.component';
+import { FormControl, FormBuilder } from '@angular/forms';
 @Component({
   selector: 'app-expenses',
   templateUrl: './expenses.component.html',
@@ -42,13 +43,17 @@ export class ExpensesComponent implements OnInit {
   fragmentData = { isSpinner: false };
   details: any;
   getOrgData: any;
+  selectedPeriod: string;
+  // periodSelection: any;
 
-  constructor(private datePipe: DatePipe,private subInjectService: SubscriptionInject, private planService: PlanService,
+  constructor(private fb: FormBuilder,private datePipe: DatePipe,private subInjectService: SubscriptionInject, private planService: PlanService,
     private constantService: ConstantsService, private eventService: EventService, public dialog: MatDialog,private util:UtilService) {
   }
 
   ngOnInit() {
+    this.selectedPeriod = '1'
     this.viewMode = 'Transactions';
+
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.personalProfileData = AuthService.getProfileDetails();
@@ -56,6 +61,8 @@ export class ExpensesComponent implements OnInit {
     this.clientData = AuthService.getClientData();
     this.details = AuthService.getProfileDetails();
     this.getOrgData = AuthService.getOrgDetails();
+    // this.timePeriodSelection.setValue('1');
+    // this.getTimePeriod();
     this.getStartAndEndDate();
     this.getTransaction();
     this.getRecuringTransactions();
@@ -64,6 +71,12 @@ export class ExpensesComponent implements OnInit {
 
     }, 300);
   }
+  // getTimePeriod(){
+  //   this.periodSelection = this.fb.group({
+  //     timePeriodSelection: ['1'],
+      
+  //   }); 
+  // }
   getStartAndEndDate(){
     var date = new Date();
     var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);

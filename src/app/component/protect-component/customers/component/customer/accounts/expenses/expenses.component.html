@@ -1,5 +1,5 @@
 <div id="ui-expenses" class="account_side-menu">
-    <div class="row">
+    <div class="row" >
         <div class="col-md-12 p-0" [ngSwitch]="viewMode">
             <div [ngSwitch]="viewMode">
                 <div class="wrapper-8">
@@ -11,10 +11,10 @@
                             <button mat-button (click)="viewMode='Budget';getBugetTab(viewMode)"
                                 [ngClass]="{'mat-stroked-button': viewMode == 'Budget','text-primary':viewMode == 'Budget'}">Budget</button>
                         </div>
-                        <div class="col-md-8 right text-right pr-0">
+                        <div class="col-md-8 right text-right pr-0" >
                             <mat-form-field class="w-30">
-                                <mat-select class="form-control">
-                                    <mat-option value="option">This month</mat-option>
+                                <mat-select class="form-control" [(value)]="selectedPeriod">
+                                    <mat-option value="1">This month</mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </div>
