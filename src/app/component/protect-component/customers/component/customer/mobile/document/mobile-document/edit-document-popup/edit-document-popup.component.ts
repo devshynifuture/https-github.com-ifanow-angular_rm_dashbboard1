@@ -108,7 +108,7 @@ export class EditDocumentPopupComponent implements OnInit {
   }
 
   openDialogCopy(element, value): void {
-    // this._bottomSheetRef.dismiss();
+    this._bottomSheetRef.dismiss();
     this._bottomSheet.open(MoveCopyMobileViewComponent, {
       data: { name: value, animal: element }
     });

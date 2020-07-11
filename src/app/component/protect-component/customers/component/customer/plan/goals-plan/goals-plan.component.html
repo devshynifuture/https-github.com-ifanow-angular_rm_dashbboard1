@@ -1,6 +1,6 @@
 <div id="ui-goal">
     <div class="row" *ngIf="allGoals.length > 0">
-        <div class="col-width-22 sticky-top relClass br-grey  pb-44">
+        <div class="col-width-22 relClass br-grey  pb-44">
             <div class="row goalFixedHeader pt-20 pb-10 bb-grey">
                 <div class="col-md-4 p-0">
                     <h3 class="mb-0 d-flex align-items-end text-black pt-4">Goals</h3>
@@ -365,69 +365,71 @@
                 </div>
 
                 <div class="col-width-31  pr-0 pt-20">
+                    <div class="sticky-top">
+                        <div class="row">
+                            <div class="col-md-12 p-0  skeletonAnimation" appSkeletonLoading
+                                [appSkeletonLoading]="loaderFn.loading">
 
-                    <div class="row sticky-top">
-                        <div class="col-md-12 p-0  skeletonAnimation" appSkeletonLoading
-                            [appSkeletonLoading]="loaderFn.loading">
-
-                            <div class="imgBoxGoals" [hidden]="loaderFn.loading">
-                                <img [src]="selectedGoal.img">
-                            </div>
-
-                            <div class="relClass" [hidden]="!loaderFn.loading">
-                                <div class="bar289" [ngClass]="{'height289': loaderFn.loading}">
-
-                                </div>
-                            </div>
-
-                            <div class=" btnBox relClass" [hidden]="!loaderFn.loading">
-                                <div class="bar36" [ngClass]="{'height36': loaderFn.loading}">
+                                <div class="imgBoxGoals" [hidden]="loaderFn.loading">
+                                    <img [src]="selectedGoal.img">
                                 </div>
 
-                                <div class="bar36" [ngClass]="{'height36': loaderFn.loading}">
-                                </div>
-                            </div>
+                                <div class="relClass" [hidden]="!loaderFn.loading">
+                                    <div class="bar289" [ngClass]="{'height289': loaderFn.loading}">
 
-                            <div class=" btnBox relClass" [hidden]="!loaderFn.loading">
-                                <div class="bar36" [ngClass]="{'height36': loaderFn.loading}">
+                                    </div>
                                 </div>
 
-                                <div class="bar36" [ngClass]="{'height36': loaderFn.loading}">
+                                <div class=" btnBox relClass" [hidden]="!loaderFn.loading">
+                                    <div class="bar36" [ngClass]="{'height36': loaderFn.loading}">
+                                    </div>
+
+                                    <div class="bar36" [ngClass]="{'height36': loaderFn.loading}">
+                                    </div>
                                 </div>
+
+                                <div class=" btnBox relClass" [hidden]="!loaderFn.loading">
+                                    <div class="bar36" [ngClass]="{'height36': loaderFn.loading}">
+                                    </div>
+
+                                    <div class="bar36" [ngClass]="{'height36': loaderFn.loading}">
+                                    </div>
+                                </div>
+
+
+                                <div class="btnBox" [hidden]="loaderFn.loading">
+                                    <button mat-stroked-button class="in-btn"
+                                        (click)="openInSideBar(null, 'openallocations')">
+                                        <img class="ml-8" src="/assets/images/svg/btn-links.svg">Allocations</button>
+
+                                    <button mat-stroked-button class="in-btn-two"
+                                        (click)="openInSideBar(null, 'openMfAllocation')">
+                                        <img class="ml-8" src="/assets/images/svg/btn-links.svg">MF allocations</button>
+                                </div>
+
+
+                                <div class="btnBox" [hidden]="loaderFn.loading">
+                                    <button mat-stroked-button class="in-btn"
+                                        (click)="openInSideBar(null, 'openKeyinfo')">
+                                        <img class="ml-8" src="/assets/images/svg/filter-schemes.svg">Key info</button>
+                                    <button mat-stroked-button class="in-btn-two"
+                                        (click)="openInSideBar(null, 'openCalculators')">
+                                        <img class="ml-8" src="/assets/images/svg/cal-sm.svg">Calculators</button>
+                                </div>
+
+
+                                <div class="btnBox" [hidden]="loaderFn.loading">
+                                    <button mat-stroked-button class="in-btn">
+                                        <img class="ml-8" src="/assets/images/svg/btn-links.svg">Action plan</button>
+                                    <button mat-stroked-button class="in-btn-two"
+                                        (click)="openInSideBar(null, 'openPreferences')">
+                                        <img class="ml-8" src="/assets/images/svg/3lines.svg">Preferences</button>
+                                </div>
+
+
+
+
                             </div>
-
-
-                            <div class="btnBox" [hidden]="loaderFn.loading">
-                                <button mat-stroked-button class="in-btn"
-                                    (click)="openInSideBar(null, 'openallocations')">
-                                    <img class="ml-8" src="/assets/images/svg/btn-links.svg">Allocations</button>
-
-                                <button mat-stroked-button class="in-btn-two"
-                                    (click)="openInSideBar(null, 'openMfAllocation')">
-                                    <img class="ml-8" src="/assets/images/svg/btn-links.svg">MF allocations</button>
-                            </div>
-
-
-                            <div class="btnBox" [hidden]="loaderFn.loading">
-                                <button mat-stroked-button class="in-btn" (click)="openInSideBar(null, 'openKeyinfo')">
-                                    <img class="ml-8" src="/assets/images/svg/filter-schemes.svg">Key info</button>
-                                <button mat-stroked-button class="in-btn-two"
-                                    (click)="openInSideBar(null, 'openCalculators')">
-                                    <img class="ml-8" src="/assets/images/svg/cal-sm.svg">Calculators</button>
-                            </div>
-
-
-                            <div class="btnBox" [hidden]="loaderFn.loading">
-                                <button mat-stroked-button class="in-btn">
-                                    <img class="ml-8" src="/assets/images/svg/btn-links.svg">Action plan</button>
-                                <button mat-stroked-button class="in-btn-two"
-                                    (click)="openInSideBar(null, 'openPreferences')">
-                                    <img class="ml-8" src="/assets/images/svg/3lines.svg">Preferences</button>
-                            </div>
-
-
-
-
                         </div>
                     </div>
 
