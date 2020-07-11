@@ -1,7 +1,9 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectorRef } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material';
 import { CustomerService } from '../../../../customer.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-move-copy-mobile-view',
@@ -22,11 +24,24 @@ export class MoveCopyMobileViewComponent implements OnInit {
   dataToCommon: any;
   commonFileFolders: any = [];
   valueFirst: any;
+  folderData = [
+    {
+      openFolderNm: 'Document',
+      openFolderId: undefined,
+      folderParentId: 0,
+      index: 0,
+      arrowFlag: false
+    }
+  ];
+  showArrowFlag: boolean;
 
   constructor(
     private _bottomSheetRef: MatBottomSheetRef<MoveCopyMobileViewComponent>,
     private cusService: CustomerService,
-    @Inject(MAT_BOTTOM_SHEET_DATA) public data: any
+    @Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
+    private changeDetectorRef: ChangeDetectorRef,
+    public subInjectService: SubscriptionInject,
+    private eventService: EventService
   ) { }
 
   ngOnInit() {
@@ -35,6 +50,7 @@ export class MoveCopyMobileViewComponent implements OnInit {
     const tabValue = 'Documents';
     // this.viewMode = 'tab1';
     // this.backUpfiles = [];
+    this.sendToCopy = this.data.animal;
     this.openFolderName = [];
     this.getAllFileList(tabValue);
   }
@@ -74,6 +90,7 @@ export class MoveCopyMobileViewComponent implements OnInit {
         }
         console.log('this.backUpfiles', this.backUpfiles);
         this.commonFileFolders = this.dataToCommon;
+        this.changeDetectorRef.detectChanges();
       }
       // if (this.openFolderName.length > 2) {
       //   this.showDots = true;
@@ -82,13 +99,27 @@ export class MoveCopyMobileViewComponent implements OnInit {
   }
 
   getFolders(data, index) {
-    this.parentId = (data == undefined) ? 0 : data[0].folderParentId;
+    this.folderData[index].arrowFlag = false;
+    this.parentId = (data == undefined) ? 0 : data.folderParentId;
+    this.folderData = this.folderData.filter((element, i) => i <= index);
     this.openFolderName = this.openFolderName.filter((element, i) => i <= index);
     this.commonFileFolders = this.openFolderName[this.openFolderName.length - 1];
     this.valueFirst = this.openFolderName[0];
   }
 
   openFolder(value) {
+    if (!value.folderName) {
+      return
+    }
+    this.folderData[this.folderData.length - 1].arrowFlag = true;
+    this.folderData.push(
+      {
+        openFolderNm: value.folderName,
+        openFolderId: value.id,
+        folderParentId: value.folderParentId,
+        index: this.openFolderName.length,
+        arrowFlag: false
+      });
     // this.isLoading = true
     const obj = {
       advisorId: this.advisorId,
@@ -117,14 +148,14 @@ export class MoveCopyMobileViewComponent implements OnInit {
       if (value == 'Move') {
         this.cusService.moveFiles(obj).subscribe(
           data => {
-            this._bottomSheetRef.dismiss();
+            this.moveAndCopyRes();
           }
         );
       }
       else {
         this.cusService.copyFiles(obj).subscribe(
           data => {
-            this._bottomSheetRef.dismiss();
+            this.moveAndCopyRes();
           }
         );
       }
@@ -138,20 +169,25 @@ export class MoveCopyMobileViewComponent implements OnInit {
       if (value == 'Move') {
         this.cusService.moveFolder(obj).subscribe(
           data => {
-            this._bottomSheetRef.dismiss();
+            this.moveAndCopyRes();
           }
         );
       }
       else {
         this.cusService.copyFolders(obj).subscribe(
           data => {
-            this._bottomSheetRef.dismiss();
+            this.moveAndCopyRes();
           }
         );
       }
     }
   }
 
+  moveAndCopyRes() {
+    (this.data.name == 'Move') ? this.eventService.openSnackBar("Moved sucessfully", "Dismiss") : this.eventService.openSnackBar("Copied sucessfully", "Dismiss")
+    this.subInjectService.addSingleProfile(true);
+    this._bottomSheetRef.dismiss();
+  }
   close() {
     this.commonFileFolders = undefined;
     this.openFolderName = undefined;
