@@ -31,6 +31,7 @@ export class AddExpensesComponent implements OnInit {
   getFlag: any;
   trnFlag: string;
   budgetFlag: string;
+  mytime: Date = new Date();
 
   constructor(private peopleService:PeopleService,private event: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject,
     private planService: PlanService, private constantService: ConstantsService) {
@@ -121,7 +122,7 @@ export class AddExpensesComponent implements OnInit {
       paymentModeId: [(data.paymentModeId == undefined) ? '' : data.paymentModeId + '', [Validators.required]],
       familyMemberId : [(data == undefined) ? '' : data.familyMemberId + '', [Validators.required]],
       isRecuring: true,
-    });
+    }); 
     this.expenseList = this.constantService.expenseList
     this.familyMemberId = this.expenses.controls.familyMemberId.value
   }
@@ -286,7 +287,7 @@ export class AddExpensesComponent implements OnInit {
         familyMemberId: this.familyMemberId,
         expenseDoneOn: this.expenses.controls.expenseDoneOn.value,
         amount: this.expenses.controls.amount.value,
-        timeInMilliSec: this.expenses.controls.timeInMilliSec.value,
+        // timeInMilliSec: this.expenses.controls.timeInMilliSec.value,
         time:this.expenses.controls.timeInMilliSec.value,
         startsFrom:this.expenses.controls.expenseDoneOn.value,
         paymentModeId: this.expenses.controls.paymentModeId.value,
@@ -316,7 +317,7 @@ export class AddExpensesComponent implements OnInit {
         if (this.expenses.controls.id.value == undefined) {
           delete obj.expenseCategoryId;
           delete obj.expenseDoneOn
-          delete obj.timeInMilliSec
+          // delete obj.timeInMilliSec
           this.planService.addBudget(obj).subscribe(
             data => this.addBudgetRes(data)
           );
@@ -326,7 +327,7 @@ export class AddExpensesComponent implements OnInit {
         delete obj.expenseCategoryId;
         delete obj.expenseCategoryId;
         delete obj.expenseDoneOn
-        delete obj.timeInMilliSec
+        // delete obj.timeInMilliSec
         this.planService.editBudget(obj).subscribe(
           data => this.editBudgetRes(data)
         );
