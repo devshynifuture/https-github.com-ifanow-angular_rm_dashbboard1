@@ -29,6 +29,8 @@ export class AddExpensesComponent implements OnInit {
   recuring: any;
   isNoOfYrs: any;
   getFlag: any;
+  trnFlag: string;
+  budgetFlag: string;
 
   constructor(private peopleService:PeopleService,private event: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject,
     private planService: PlanService, private constantService: ConstantsService) {
@@ -57,6 +59,8 @@ export class AddExpensesComponent implements OnInit {
     this.getListFamilyMem();
     this.getdataForm(this.inputData);
     this.getdataFormRec(this.inputData)
+    this.trnFlag='Transaction';
+    this.budgetFlag='Budget';
   }
 
   display(value) {
@@ -84,11 +88,11 @@ export class AddExpensesComponent implements OnInit {
       timeInMilliSec: [(data == undefined) ? '' : (data.timeInMilliSec == undefined) ? data.time : data.timeInMilliSec, [Validators.required]],
       expenseDoneOn: [(data == undefined) ? '' : new Date((data.expenseDoneOn == undefined) ? data.startsFrom : data.expenseDoneOn), [Validators.required]],
       amount: [(data == undefined) ? '' : data.amount, [Validators.required]],
-      description: [(data == undefined) ? '' : data.description, [Validators.required]],
+      description: [(data == undefined) ? '' : data.description],
       id: [(data == undefined) ? '' : data.id, [Validators.required]],
-      category: [(data == undefined) ? '' : (data.expenseCategoryId == undefined) ? data.budgetCategoryId : data.expenseCategoryId, [Validators.required]],
+      category: [(data == undefined) ? null : (data.expenseCategoryId == undefined) ? data.budgetCategoryId : data.expenseCategoryId, [Validators.required]],
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
-      paymentModeId: [(data == undefined) ? '' : data.paymentModeId + '', [Validators.required]],
+      paymentModeId: [(data.paymentModeId == undefined) ? '' : data.paymentModeId + '', [Validators.required]],
       familyMemberId : [(data == undefined) ? '' : data.familyMemberId + '', [Validators.required]],
       isRecuring: false
     });
@@ -106,15 +110,15 @@ export class AddExpensesComponent implements OnInit {
     this.recuring = this.fb.group({
       timeInMilliSec: [(data == undefined) ? '' : (data.timeInMilliSec == undefined) ? data.time : data.timeInMilliSec, [Validators.required]],
       amount: [(data == undefined) ? '' : data.amount, [Validators.required]],
-      repeatFrequency: [(data == undefined) ? '' : data.repeatFrequency + '', [Validators.required]],
+      repeatFrequency: [(data == undefined) ? null : data.repeatFrequency , [Validators.required]],
       startsFrom: [(data == undefined) ? '' : new Date((data.expenseDoneOn == undefined) ? data.startsFrom : data.expenseDoneOn), [Validators.required]],
       numberOfYearOrNumberOfTime: [(data == undefined) ? '' : (data.numberOfYearOrNumberOfTime), [Validators.required]],
-      continueTill: [(data == undefined) ? '' : (data.continueTill) + '', [Validators.required]],
-      description: [(data == undefined) ? '' : data.description, [Validators.required]],
+      continueTill: [(data == undefined) ? '' : (data.continueTill), [Validators.required]],
+      description: [(data == undefined) ? '' : data.description],
       id: [(data == undefined) ? '' : data.id, [Validators.required]],
       category: [(data == undefined) ? '' : (data.expenseCategoryId == undefined) ? data.budgetCategoryId : data.expenseCategoryId, [Validators.required]],
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
-      paymentModeId: [(data == undefined) ? '' : data.paymentModeId + '', [Validators.required]],
+      paymentModeId: [(data.paymentModeId == undefined) ? '' : data.paymentModeId + '', [Validators.required]],
       familyMemberId : [(data == undefined) ? '' : data.familyMemberId + '', [Validators.required]],
       isRecuring: true,
     });
@@ -149,33 +153,48 @@ export class AddExpensesComponent implements OnInit {
   }
   toggle(value) {
     this.isRecuring = value.checked;
+    if(value.checked == true && (this.getFlag == 'addExpenses' || this.getFlag == 'editExpenses')){
+      this.trnFlag = 'Recurring transaction';
+    }else if(value.checked == true && (this.getFlag == 'addBudget' || this.getFlag == 'editBudget')){
+      this.budgetFlag = 'Recurring Budget'
+    }else if(value.checked == false && (this.getFlag == 'addExpenses' || this.getFlag == 'editExpenses')){
+      this.trnFlag = 'Transaction';
+    }else{
+      this.budgetFlag = 'Budget'
+
+    }
+    
   }
   continuesTill(value) {
     this.isNoOfYrs = value;
   }
   saveRecuringExpense() {
-    if (this.recuring.get('repeatFrequency').invalid) {
-      this.recuring.get('repeatFrequency').markAsTouched();
-      return
-    } else if (this.recuring.get('amount').invalid) {
-      this.recuring.get('amount').markAsTouched();
-      return
-    } else if (this.recuring.get('category').invalid) {
-      this.recuring.get('category').markAsTouched();
-      return
-    } else if (this.recuring.get('startsFrom').invalid) {
-      this.recuring.get('startsFrom').markAsTouched();
-      return
-    } else if (this.recuring.get('paymentModeId').invalid) {
-      this.recuring.get('paymentModeId').markAsTouched();
-      return
-    } else if (this.recuring.get('continueTill').invalid) {
-      this.recuring.get('continueTill').markAsTouched();
-      return
-    } else if (this.recuring.get('ownerName').invalid) {
-      this.recuring.get('ownerName').markAsTouched();
-      return
-    } else {
+    // if (this.recuring.get('repeatFrequency').invalid) {
+    //   this.recuring.get('repeatFrequency').markAsTouched();
+    //   return
+    // } else if (this.recuring.get('amount').invalid) {
+    //   this.recuring.get('amount').markAsTouched();
+    //   return
+    // } else if (this.recuring.get('category').invalid) {
+    //   this.recuring.get('category').markAsTouched();
+    //   return
+    // } else if (this.recuring.get('startsFrom').invalid) {
+    //   this.recuring.get('startsFrom').markAsTouched();
+    //   return
+    // } else if (this.recuring.get('paymentModeId').invalid) {
+    //   this.recuring.get('paymentModeId').markAsTouched();
+    //   return
+    // } else if (this.recuring.get('continueTill').invalid) {
+    //   this.recuring.get('continueTill').markAsTouched();
+    //   return
+    // } else if (this.recuring.get('ownerName').invalid) {
+    //   this.recuring.get('ownerName').markAsTouched();
+    //   return
+    // } else {
+      if (this.recuring.invalid) {
+
+        this.recuring.markAllAsTouched();
+      } else{
       let obj = {
         advisorId: this.advisorId,
         clientId: this.clientId,
@@ -238,25 +257,29 @@ export class AddExpensesComponent implements OnInit {
   }
 
   saveExpenses() {
-    if (this.expenses.get('expenseDoneOn').invalid) {
-      this.expenses.get('expenseDoneOn').markAsTouched();
-      return
-    } else if (this.expenses.get('timeInMilliSec').invalid) {
-      this.expenses.get('timeInMilliSec').markAsTouched();
-      return
-    } else if (this.expenses.get('amount').invalid) {
-      this.expenses.get('amount').markAsTouched();
-      return
-    } else if (this.expenses.get('category').invalid) {
-      this.expenses.get('category').markAsTouched();
-      return
-    } else if (this.expenses.get('paymentModeId').invalid) {
-      this.expenses.get('paymentModeId').markAsTouched();
-      return
-    } else if (this.expenses.get('ownerName').invalid) {
-      this.expenses.get('ownerName').markAsTouched();
-      return
-    } else {
+    // if (this.expenses.get('expenseDoneOn').invalid) {
+    //   this.expenses.get('expenseDoneOn').markAsTouched();
+    //   return
+    // } else if (this.expenses.get('timeInMilliSec').invalid) {
+    //   this.expenses.get('timeInMilliSec').markAsTouched();
+    //   return
+    // } else if (this.expenses.get('amount').invalid) {
+    //   this.expenses.get('amount').markAsTouched();
+    //   return
+    // } else if (this.expenses.get('category').invalid) {
+    //   this.expenses.get('category').markAsTouched();
+    //   return
+    // } else if (this.expenses.get('paymentModeId').invalid) {
+    //   this.expenses.get('paymentModeId').markAsTouched();
+    //   return
+    // } else if (this.expenses.get('ownerName').invalid) {
+    //   this.expenses.get('ownerName').markAsTouched();
+    //   return
+    // } else {
+          if (this.expenses.invalid) {
+
+        this.expenses.markAllAsTouched();
+      }else{
       let obj = {
         advisorId: this.advisorId,
         clientId: this.clientId,

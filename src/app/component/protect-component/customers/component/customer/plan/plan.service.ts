@@ -12,7 +12,7 @@ export class PlanService {
   constructor(private http: HttpService) { }
 
   getIncomeData(data) {
-    let httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
+    let httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId).set('addMonthlyDistribution',data.addMonthlyDistribution);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_INCOME_LIST, httpParams)
   }
   addIncomeData(data) {

@@ -141,9 +141,9 @@ export class IndividualIncomeInfoComponent implements OnInit {
       this.incomeNetForm.get('continousTillYear').updateValueAndValidity();
       this.incomeNetForm.controls['continousTillYear'].setErrors({ 'required': true });
     } else {
-      this.incomeNetForm.get('continousTillYear').setValidators([Validators.required]);
+      this.incomeNetForm.get('continousTillYear').setValidators(null);
       this.incomeNetForm.get('continousTillYear').updateValueAndValidity();
-      this.incomeNetForm.controls['continousTillYear'].setErrors({ 'required': true });
+      this.incomeNetForm.controls['continousTillYear'].setErrors(null);
     }
   }
   @Input() set editIncomeData(data) {
@@ -174,17 +174,28 @@ export class IndividualIncomeInfoComponent implements OnInit {
       this.incomeNetForm.controls.incomeEndDate.setValue(new Date(data.incomeEndYear, data.incomeEndMonth));
       this.incomeNetForm.controls.nextAppraisal.setValue(new Date(data.nextAppraisalOrNextRenewal));
       this.incomeNetForm.controls.description.setValue((data.description) ? data.description : '');
+      this.incomeNetForm.controls.continousTillYear.setValue((data.numberOfYear) ? data.numberOfYear : '');
       this.expectedBonusForm = this.fb.group({
         bonusList: new FormArray([])
       })
-      data.bonusOrInflowList.forEach(element => {
+      if(data.bonusOrInflowList.length > 0){
+        data.bonusOrInflowList.forEach(element => {
+          this.getBonusList.push(this.fb.group({
+            id: [element.id],
+            bonusOrInflow: [element.bonusOrInflow],
+            receivingDate: [new Date(element.receivingYear, element.receivingMonth), [Validators.required]],
+            amount: [element.amount, [Validators.required]],
+          }))
+        });
+      }else{
         this.getBonusList.push(this.fb.group({
-          id: [element.id],
-          bonusOrInflow: [element.bonusOrInflow],
-          receivingDate: [new Date(element.receivingYear, element.receivingMonth), [Validators.required]],
-          amount: [element.amount, [Validators.required]],
+          id: [, [Validators.required]],
+          bonusOrInflow: [, [Validators.required]],
+          receivingDate: [, [Validators.required]],
+          amount: [, [Validators.required]],
         }))
-      });
+      }
+     
       this.incomeNetForm.controls.incomeOption.setValue((data.basicIncome) ? '1' : '2');
       (data.basicIncome) ? this.incomeOption = '1' : this.incomeOption = '2'
       if (this.incomeNetForm.get('incomeStyle').value == 1) {
@@ -226,6 +237,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
       this.getBonusList.push(this.fb.group({
         receivingDate: [, [Validators.required]],
         amount: [, [Validators.required]],
+        id:[]
       }))
     }
 
@@ -374,6 +386,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
             "amount": element.get('amount').value,
             "receivingMonth": new Date(element.get('receivingDate').value).getMonth(),
             "receivingYear": new Date(element.get('receivingDate').value).getFullYear(),
+            "id": element.get('id').value ? element.get('id').value : null
           }
           this.finalBonusList.push(obj)
         })
@@ -387,6 +400,11 @@ export class IndividualIncomeInfoComponent implements OnInit {
       console.log(obj)
       if (this.editApiData) {
         obj['id'] = this.editApiData.id;
+        obj['changesIn']=1;
+        if(this.editApiData.bonusOrInflowList){
+          obj['bonusOrInflowList'] = obj.monthlyDistributionList;
+          delete obj.monthlyDistributionList
+        }
         this.planService.editIncomeData(obj).subscribe(
           data => this.submitIncomeFormRes(data),
           error => this.eventService.showErrorMessage(error)
