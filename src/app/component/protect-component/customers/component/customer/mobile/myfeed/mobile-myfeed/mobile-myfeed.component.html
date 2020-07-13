@@ -505,7 +505,7 @@
 
 
 
-        <div class="row pt-40 pb-16">
+        <div class="row pt-40 pb-16" *ngIf="tabsLoaded.recentTransactions.dataLoaded && tabsLoaded.recentTransactions.hasData">
             <div class="col-8 pl-0">
                 <h5 class="m-0 text-black f-16 roboto">Recent online transactions</h5>
             </div>
