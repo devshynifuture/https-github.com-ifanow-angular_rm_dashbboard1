@@ -70,8 +70,9 @@
         cdkDropList
         [cdkDropListData]="displayedAssets"
         cdkDropListConnectedTo="allottedList"
+        
         [cdkDropListSortingDisabled]="true">
-        <div class="mb-12" *ngFor="let asset of displayedAssets" cdkDrag>
+        <div class="mb-12" *ngFor="let asset of displayedAssets" cdkDrag [cdkDragData]="asset">
             <div class="row goal-border">
                 <div class="col-md-12 pl-8 pt-8">
                     <p class="m-0 roboto text-black">{{asset.assetName}}</p>

@@ -3,6 +3,7 @@ import { HttpService } from 'src/app/http-service/http-service';
 import { appConfig } from 'src/app/config/component-config';
 import { apiConfig } from 'src/app/config/main-config';
 import { HttpParams } from '@angular/common/http';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,7 @@ import { HttpParams } from '@angular/common/http';
 export class PlanService {
 
   constructor(private http: HttpService) { }
+  public assetSubject = new Subject();
 
   getIncomeData(data) {
     let httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId).set('addMonthlyDistribution',data.addMonthlyDistribution);
@@ -182,5 +184,9 @@ export class PlanService {
 
   allocateOtherAssetToGoal(data){
     return this.http.post(apiConfig.MAIN_URL + appConfig.SAVE_ASSET_TO_GOAL, data);
+  }
+
+  removeAllocation(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.REMOVE_ALLOCATION, data);
   }
 }
