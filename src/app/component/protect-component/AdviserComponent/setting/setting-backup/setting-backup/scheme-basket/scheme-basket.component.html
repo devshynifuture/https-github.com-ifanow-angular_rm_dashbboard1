@@ -3,18 +3,39 @@
         <h4 class="m-0 text-black pt-10">Scheme basket</h4>
     </div>
     <div class="col-md-4 text-right p-0">
-        <button class="btn-primary " mat-stroked-button>
+        <button class="btn-primary " (click)="openAddSchemeDetails(null, null)" mat-stroked-button>
             ADD NEW
         </button>
     </div>
 </div>
+
+<!-- empty screen -->
+<!-- <div class="row pt-48">
+    <div class="col-md-6 text-center">
+        <img src="/assets/images/Scheme-basket.png">
+    </div>
+    <div class="col-md-6 pt-60">
+        <p class="m-0 lh-16 f-400 roboto">Scheme baskets are the perfect way to keep a curated list of schemes which you
+            routinely advice to your clients.</p>
+
+        <p class="m-0 lh-16 f-400 roboto pt-16"> You can manage the rationale / factsheets etc here. From there on, the
+            schemes are picked up while creating model portfolios or giving advice or doing transactions and so on. </p>
+        <p class="m-0 lh-16 f-400 roboto pt-16">
+            There’s a lot of automation in store once you get going. So, let’s get going!</p>
+        <button class="btn-primary mt-20" mat-stroked-button>
+            Add schemes
+        </button>
+    </div>
+</div> -->
+<!-- end -->
 <div class="scheme-basket">
     <div class="col-md-12 p-0">
-        <table mat-table [dataSource]="dataSource" class="mt-8 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" id="table-low">
+        <table mat-table [dataSource]="dataSource" class="mt-8 skeletonAnimation" appSkeletonLoading
+            [appSkeletonLoading]="isLoading" id="table-low">
 
             <ng-container matColumnDef="position">
                 <th mat-header-cell *matHeaderCellDef> Scheme name </th>
-                <td (click)="openSchemeDetails(null, null)" mat-cell *matCellDef="let element">
+                <td (click)="openSchemeDetails(null, null)" mat-cell *matCellDef="let element" class="c-p">
                     <div class="bar">
                         {{element.position}} </div>
                 </td>
