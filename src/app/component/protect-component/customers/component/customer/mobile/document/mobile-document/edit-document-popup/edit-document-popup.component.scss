@@ -1,5 +1,6 @@
 @media(max-width:767px) {
   ::ng-deep .mat-bottom-sheet-container {
     padding: 0px !important;
+    border-radius: 16px 16px 4px 4px;
   }
 }
