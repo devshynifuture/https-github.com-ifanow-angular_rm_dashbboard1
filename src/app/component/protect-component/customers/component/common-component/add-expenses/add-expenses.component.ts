@@ -31,6 +31,7 @@ export class AddExpensesComponent implements OnInit {
   getFlag: any;
   trnFlag: string;
   budgetFlag: string;
+  mytime: Date = new Date();
 
   constructor(private peopleService:PeopleService,private event: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject,
     private planService: PlanService, private constantService: ConstantsService) {
@@ -85,11 +86,11 @@ export class AddExpensesComponent implements OnInit {
       this.isRecuring = data.isRecuring
     }
     this.expenses = this.fb.group({
-      timeInMilliSec: [(data == undefined) ? '' : (data.timeInMilliSec == undefined) ? data.time : data.timeInMilliSec, [Validators.required]],
+      timeInMilliSec: [(data == undefined) ? '' : data.timeInString],
       expenseDoneOn: [(data == undefined) ? '' : new Date((data.expenseDoneOn == undefined) ? data.startsFrom : data.expenseDoneOn), [Validators.required]],
       amount: [(data == undefined) ? '' : data.amount, [Validators.required]],
       description: [(data == undefined) ? '' : data.description],
-      id: [(data == undefined) ? '' : data.id, [Validators.required]],
+      id: [(data == undefined) ? '' : data.id],
       category: [(data == undefined) ? null : (data.expenseCategoryId == undefined) ? data.budgetCategoryId : data.expenseCategoryId, [Validators.required]],
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
       paymentModeId: [(data.paymentModeId == undefined) ? '' : data.paymentModeId + '', [Validators.required]],
@@ -104,24 +105,25 @@ export class AddExpensesComponent implements OnInit {
 
     if (data == undefined) {
       data = {};
-    } if (this.getFlag == 'editExpense' || this.getFlag == 'editBudget') {
+    } if (this.getFlag == 'editExpenses' || this.getFlag == 'editBudget') {
       this.isRecuring = data.isRecuring
     }
     this.recuring = this.fb.group({
-      timeInMilliSec: [(data == undefined) ? '' : (data.timeInMilliSec == undefined) ? data.time : data.timeInMilliSec, [Validators.required]],
+      timeInMilliSec: [(data == undefined) ? '' : data.timeInString],
       amount: [(data == undefined) ? '' : data.amount, [Validators.required]],
-      repeatFrequency: [(data == undefined) ? null : data.repeatFrequency , [Validators.required]],
+      repeatFrequency: [(data == undefined) ? null : data.repeatFrequency+'' , [Validators.required]],
       startsFrom: [(data == undefined) ? '' : new Date((data.expenseDoneOn == undefined) ? data.startsFrom : data.expenseDoneOn), [Validators.required]],
-      numberOfYearOrNumberOfTime: [(data == undefined) ? '' : (data.numberOfYearOrNumberOfTime), [Validators.required]],
-      continueTill: [(data == undefined) ? '' : (data.continueTill), [Validators.required]],
+      numberOfYearOrNumberOfTime: [(data == undefined) ? '' : (data.numberOfYearOrNumberOfTime)],
+      UntilDate: [(data == undefined) ? '' : new Date((data.UntilDate == undefined) ? data.startsFrom : data.UntilDate)],
+      continueTill: [(data == undefined) ? '' : (data.continueTill + ''), [Validators.required]],
       description: [(data == undefined) ? '' : data.description],
-      id: [(data == undefined) ? '' : data.id, [Validators.required]],
+      id: [(data == undefined) ? '' : data.id],
       category: [(data == undefined) ? '' : (data.expenseCategoryId == undefined) ? data.budgetCategoryId : data.expenseCategoryId, [Validators.required]],
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
       paymentModeId: [(data.paymentModeId == undefined) ? '' : data.paymentModeId + '', [Validators.required]],
       familyMemberId : [(data == undefined) ? '' : data.familyMemberId + '', [Validators.required]],
       isRecuring: true,
-    });
+    }); 
     this.expenseList = this.constantService.expenseList
     this.familyMemberId = this.expenses.controls.familyMemberId.value
   }
@@ -167,6 +169,24 @@ export class AddExpensesComponent implements OnInit {
   }
   continuesTill(value) {
     this.isNoOfYrs = value;
+    if (this.recuring.get('continueTill').value == '3' || this.recuring.get('continueTill').value == '4') {
+      this.recuring.get('numberOfYearOrNumberOfTime').setValidators([Validators.required]);
+      this.recuring.get('numberOfYearOrNumberOfTime').updateValueAndValidity();
+      this.recuring.controls['numberOfYearOrNumberOfTime'].setErrors({ 'required': true });
+    } 
+    // else if(this.recuring.get('continueTill').value == '5' ){
+    //   this.recuring.get('UntilDate').setValidators([Validators.required]);
+    //   this.recuring.get('UntilDate').updateValueAndValidity();
+    //   this.recuring.controls['UntilDate'].setErrors({ 'required': true });
+    // }
+    else{
+      this.recuring.get('numberOfYearOrNumberOfTime').setValidators(null);
+      this.recuring.get('numberOfYearOrNumberOfTime').updateValueAndValidity();
+      this.recuring.controls['numberOfYearOrNumberOfTime'].setErrors(null);
+      // this.recuring.get('UntilDate').setValidators(null);
+      // this.recuring.get('UntilDate').updateValueAndValidity();
+      // this.recuring.controls['UntilDate'].setErrors(null);
+    }
   }
   saveRecuringExpense() {
     // if (this.recuring.get('repeatFrequency').invalid) {
@@ -206,7 +226,10 @@ export class AddExpensesComponent implements OnInit {
         budgetCategoryId: this.recuring.controls.category.value,
         continueTill: parseInt(this.recuring.controls.continueTill.value),
         numberOfYearOrNumberOfTime: this.recuring.controls.numberOfYearOrNumberOfTime.value,
+        // UntilDate: this.recuring.controls.UntilDate.value,
         expenseCategoryId: this.recuring.controls.category.value,
+        description: this.recuring.controls.description.value,
+
       }
       if (this.getFlag == 'addExpenses') {
         if (this.recuring.controls.id.value == undefined) {
@@ -286,8 +309,9 @@ export class AddExpensesComponent implements OnInit {
         familyMemberId: this.familyMemberId,
         expenseDoneOn: this.expenses.controls.expenseDoneOn.value,
         amount: this.expenses.controls.amount.value,
-        timeInMilliSec: this.expenses.controls.timeInMilliSec.value,
-        time:this.expenses.controls.timeInMilliSec.value,
+        // timeInMilliSec: this.expenses.controls.timeInMilliSec.value,
+         time:this.expenses.controls.timeInMilliSec.value,
+        timeInString:this.expenses.controls.timeInMilliSec.value,
         startsFrom:this.expenses.controls.expenseDoneOn.value,
         paymentModeId: this.expenses.controls.paymentModeId.value,
         expenseCategoryId: this.expenses.controls.category.value,
@@ -316,7 +340,7 @@ export class AddExpensesComponent implements OnInit {
         if (this.expenses.controls.id.value == undefined) {
           delete obj.expenseCategoryId;
           delete obj.expenseDoneOn
-          delete obj.timeInMilliSec
+          // delete obj.timeInMilliSec
           this.planService.addBudget(obj).subscribe(
             data => this.addBudgetRes(data)
           );
@@ -326,7 +350,7 @@ export class AddExpensesComponent implements OnInit {
         delete obj.expenseCategoryId;
         delete obj.expenseCategoryId;
         delete obj.expenseDoneOn
-        delete obj.timeInMilliSec
+        // delete obj.timeInMilliSec
         this.planService.editBudget(obj).subscribe(
           data => this.editBudgetRes(data)
         );

@@ -10,6 +10,7 @@ import { SchemeLevelTransactionComponent } from '../../common-component/scheme-l
 import { AccountRoutingModule } from './account-routing.module';
 import { AccountsComponent } from './accounts.component';
 import { LibilitiesRightComponent } from './liabilities/libilities-right/libilities-right.component';
+import { SatNativeDateModule, SatDatepickerModule } from 'saturn-datepicker';
 @NgModule({
   declarations: [
     SchemeLevelTransactionComponent,
@@ -26,6 +27,8 @@ import { LibilitiesRightComponent } from './liabilities/libilities-right/libilit
     ChartModule,
     FormsModule,
     ReactiveFormsModule,
+    SatDatepickerModule,
+     SatNativeDateModule
     // CustomDirectiveModule
   ],
   exports: [],
