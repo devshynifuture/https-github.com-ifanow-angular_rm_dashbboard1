@@ -86,11 +86,11 @@ export class AddExpensesComponent implements OnInit {
       this.isRecuring = data.isRecuring
     }
     this.expenses = this.fb.group({
-      timeInMilliSec: [(data == undefined) ? '' : (data.timeInMilliSec == undefined) ? data.time : data.timeInMilliSec, [Validators.required]],
+      timeInMilliSec: [(data == undefined) ? '' : data.timeInString, [Validators.required]],
       expenseDoneOn: [(data == undefined) ? '' : new Date((data.expenseDoneOn == undefined) ? data.startsFrom : data.expenseDoneOn), [Validators.required]],
       amount: [(data == undefined) ? '' : data.amount, [Validators.required]],
       description: [(data == undefined) ? '' : data.description],
-      id: [(data == undefined) ? '' : data.id, [Validators.required]],
+      id: [(data == undefined) ? '' : data.id],
       category: [(data == undefined) ? null : (data.expenseCategoryId == undefined) ? data.budgetCategoryId : data.expenseCategoryId, [Validators.required]],
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
       paymentModeId: [(data.paymentModeId == undefined) ? '' : data.paymentModeId + '', [Validators.required]],
@@ -105,18 +105,18 @@ export class AddExpensesComponent implements OnInit {
 
     if (data == undefined) {
       data = {};
-    } if (this.getFlag == 'editExpense' || this.getFlag == 'editBudget') {
+    } if (this.getFlag == 'editExpenses' || this.getFlag == 'editBudget') {
       this.isRecuring = data.isRecuring
     }
     this.recuring = this.fb.group({
-      timeInMilliSec: [(data == undefined) ? '' : (data.timeInMilliSec == undefined) ? data.time : data.timeInMilliSec, [Validators.required]],
+      timeInMilliSec: [(data == undefined) ? '' : data.timeInString],
       amount: [(data == undefined) ? '' : data.amount, [Validators.required]],
-      repeatFrequency: [(data == undefined) ? null : data.repeatFrequency , [Validators.required]],
+      repeatFrequency: [(data == undefined) ? null : data.repeatFrequency+'' , [Validators.required]],
       startsFrom: [(data == undefined) ? '' : new Date((data.expenseDoneOn == undefined) ? data.startsFrom : data.expenseDoneOn), [Validators.required]],
-      numberOfYearOrNumberOfTime: [(data == undefined) ? '' : (data.numberOfYearOrNumberOfTime), [Validators.required]],
-      continueTill: [(data == undefined) ? '' : (data.continueTill), [Validators.required]],
+      numberOfYearOrNumberOfTime: [(data == undefined) ? '' : (data.numberOfYearOrNumberOfTime)],
+      continueTill: [(data == undefined) ? '' : (data.continueTill + ''), [Validators.required]],
       description: [(data == undefined) ? '' : data.description],
-      id: [(data == undefined) ? '' : data.id, [Validators.required]],
+      id: [(data == undefined) ? '' : data.id],
       category: [(data == undefined) ? '' : (data.expenseCategoryId == undefined) ? data.budgetCategoryId : data.expenseCategoryId, [Validators.required]],
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
       paymentModeId: [(data.paymentModeId == undefined) ? '' : data.paymentModeId + '', [Validators.required]],
@@ -208,6 +208,8 @@ export class AddExpensesComponent implements OnInit {
         continueTill: parseInt(this.recuring.controls.continueTill.value),
         numberOfYearOrNumberOfTime: this.recuring.controls.numberOfYearOrNumberOfTime.value,
         expenseCategoryId: this.recuring.controls.category.value,
+        description: this.recuring.controls.description.value,
+
       }
       if (this.getFlag == 'addExpenses') {
         if (this.recuring.controls.id.value == undefined) {
@@ -288,7 +290,8 @@ export class AddExpensesComponent implements OnInit {
         expenseDoneOn: this.expenses.controls.expenseDoneOn.value,
         amount: this.expenses.controls.amount.value,
         // timeInMilliSec: this.expenses.controls.timeInMilliSec.value,
-        time:this.expenses.controls.timeInMilliSec.value,
+         time:this.expenses.controls.timeInMilliSec.value,
+        timeInString:this.expenses.controls.timeInMilliSec.value,
         startsFrom:this.expenses.controls.expenseDoneOn.value,
         paymentModeId: this.expenses.controls.paymentModeId.value,
         expenseCategoryId: this.expenses.controls.category.value,

@@ -44,6 +44,7 @@ export class ExpensesComponent implements OnInit {
   details: any;
   getOrgData: any;
   selectedPeriod: string;
+  selectedDateRange: { begin: any; end: any; };
   // periodSelection: any;
 
   constructor(private fb: FormBuilder,private datePipe: DatePipe,private subInjectService: SubscriptionInject, private planService: PlanService,
@@ -63,7 +64,7 @@ export class ExpensesComponent implements OnInit {
     this.getOrgData = AuthService.getOrgDetails();
     // this.timePeriodSelection.setValue('1');
     // this.getTimePeriod();
-    this.getStartAndEndDate();
+    this.getStartAndEndDate('1');
     this.getTransaction();
     this.getRecuringTransactions();
     setTimeout(() => {
@@ -77,12 +78,40 @@ export class ExpensesComponent implements OnInit {
       
   //   }); 
   // }
-  getStartAndEndDate(){
+  getStartAndEndDate(val){
     var date = new Date();
-    var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
-    var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-    this.startDate = this.datePipe.transform(firstDay, 'yyyy/MM/dd');
-    this.endDate = this.datePipe.transform(lastDay, 'yyyy/MM/dd');
+    if(val == '1'){
+      var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+      var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+    }else if(val == '2'){
+      var firstDay = new Date(date.getFullYear(), date.getMonth()-1, 1);
+      var lastDay = new Date(date.getFullYear(), date.getMonth(), 0);
+    }else if(val == '3'){
+      var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+      var lastDay = new Date(date.getFullYear(), date.getMonth()+3, 1);
+
+    }else if(val == '4'){
+      var firstDay = new Date(date.getFullYear(), date.getMonth()-3, 1);
+      var lastDay = new Date(firstDay.getFullYear(), firstDay.getMonth()+3, 1);
+    }else if(val == '5'){
+      var firstDay = new Date(date.getFullYear(), 0, 1);
+      var lastDay = new Date(date.getFullYear(), 11, 31);
+    }else if(val == '6'){
+      var firstDay = new Date(date.getFullYear()-1, 0, 1);
+      var lastDay = new Date(date.getFullYear()-1, 11, 31);
+    }else if(val == '7'){
+      var firstDay = new Date(date.getFullYear(), 3, 1);
+      var lastDay = new Date(date.getFullYear(), 2, 31);
+    }else if(val == '8'){
+      var firstDay = new Date(date.getFullYear()-1, 3, 1);
+      var lastDay = new Date(date.getFullYear()-1, 2, 31);
+    }
+    
+    this.startDate = this.datePipe.transform(firstDay, 'yyyy-MM-dd');
+    this.endDate = this.datePipe.transform(lastDay, 'yyyy-MM-dd');
+    console.log('start Date,,,,,,,,,,,,,,,,',this.startDate);
+    console.log('endDate,,,,,,,,,,,,,,,,',this.endDate);
+
   }
   generatePdf(tmp) {
     this.fragmentData.isSpinner = true;
@@ -340,6 +369,15 @@ export class ExpensesComponent implements OnInit {
     }
     this.isLoading = false;
     console.log('otherCommitmentsGetRes', data)
+  }
+  addFilterPeriod(value){
+    let val=value.value
+    this.getStartAndEndDate(val);
+    this.getTransaction();
+    this.getRecuringTransactions();
+    this.getBudgetList();
+    this.getBugetRecurring();
+    this.selectedDateRange = { begin: this.startDate, end: this.endDate };
   }
   getRecuringTransactions() {
     this.isLoading = true;
