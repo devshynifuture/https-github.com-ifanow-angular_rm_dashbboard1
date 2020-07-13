@@ -13,7 +13,8 @@
                         </div>
                         <mat-chip-list class="newDateIcon" >
                             <mat-chip *ngFor="let dateFilter of filterDate; let i = index" class="bg-white b-a c-p f-400 p-12">
-                            <input  matInput autocomplete="off"
+                                {{startDateDisp}} - {{endDateDisp}}
+                            <!-- <input  matInput autocomplete="off"
                             [(value)]="startDate" class="form-control br-0 b-0"
                             [matDatepicker]="policyStartDatePicker">
                    
@@ -23,7 +24,7 @@
                         <input  matInput autocomplete="off"
                         [(value)]="endDate" class="form-control br-0 b-0"
                         [matDatepicker]="policyEndtDatePicker">
-                    <mat-datepicker #policyStartDatePicker ></mat-datepicker>
+                    <mat-datepicker #policyStartDatePicker ></mat-datepicker> -->
                    
                             </mat-chip>
                         </mat-chip-list>
@@ -369,7 +370,7 @@
                                             <th mat-sort-header="spent"  mat-header-cell *matHeaderCellDef class="br text-right"> Spent </th>
                                             <td mat-cell *matCellDef="let element" class="br text-right">
 
-                                                <div [ngClass]="{'bar': isLoading}">{{!isLoading && element.spent ? "₹" : ""}}<span appFormatNumber>{{element.spent ? element.spent  : '-'}}</span>
+                                                <div [ngClass]="{'bar': isLoading}">{{!isLoading && element.spent ? "₹" : ""}}<span appFormatNumber>{{isLoading ? '' : (element.spent ? element.spent  : '-')}}</span>
                                                 </div>
                                             </td>
                                         </ng-container>

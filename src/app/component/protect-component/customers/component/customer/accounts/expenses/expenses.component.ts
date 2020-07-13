@@ -69,6 +69,8 @@ export class ExpensesComponent implements OnInit {
   selectedPeriod: string;
   selectedDateRange: {};
   filterDate =[];
+  startDateDisp: string;
+  endDateDisp: string;
   // periodSelection: any;
 
   constructor(private fb: FormBuilder,private datePipe: DatePipe,private subInjectService: SubscriptionInject, private planService: PlanService,
@@ -136,6 +138,8 @@ export class ExpensesComponent implements OnInit {
     
     this.startDate = this.datePipe.transform(firstDay, 'yyyy-MM-dd');
     this.endDate = this.datePipe.transform(lastDay, 'yyyy-MM-dd');
+    this.startDateDisp = this.datePipe.transform(firstDay, 'dd-MM-yyyy');
+    this.endDateDisp = this.datePipe.transform(lastDay, 'dd-MM-yyyy');
     console.log('start Date,,,,,,,,,,,,,,,,',this.startDate);
     console.log('endDate,,,,,,,,,,,,,,,,',this.endDate);
 
