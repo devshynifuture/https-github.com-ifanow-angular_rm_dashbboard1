@@ -86,7 +86,7 @@ export class AddExpensesComponent implements OnInit {
       this.isRecuring = data.isRecuring
     }
     this.expenses = this.fb.group({
-      timeInMilliSec: [(data == undefined) ? '' : data.timeInString, [Validators.required]],
+      timeInMilliSec: [(data == undefined) ? '' : data.timeInString],
       expenseDoneOn: [(data == undefined) ? '' : new Date((data.expenseDoneOn == undefined) ? data.startsFrom : data.expenseDoneOn), [Validators.required]],
       amount: [(data == undefined) ? '' : data.amount, [Validators.required]],
       description: [(data == undefined) ? '' : data.description],
@@ -114,6 +114,7 @@ export class AddExpensesComponent implements OnInit {
       repeatFrequency: [(data == undefined) ? null : data.repeatFrequency+'' , [Validators.required]],
       startsFrom: [(data == undefined) ? '' : new Date((data.expenseDoneOn == undefined) ? data.startsFrom : data.expenseDoneOn), [Validators.required]],
       numberOfYearOrNumberOfTime: [(data == undefined) ? '' : (data.numberOfYearOrNumberOfTime)],
+      UntilDate: [(data == undefined) ? '' : new Date((data.UntilDate == undefined) ? data.startsFrom : data.UntilDate)],
       continueTill: [(data == undefined) ? '' : (data.continueTill + ''), [Validators.required]],
       description: [(data == undefined) ? '' : data.description],
       id: [(data == undefined) ? '' : data.id],
@@ -168,6 +169,24 @@ export class AddExpensesComponent implements OnInit {
   }
   continuesTill(value) {
     this.isNoOfYrs = value;
+    if (this.recuring.get('continueTill').value == '3' || this.recuring.get('continueTill').value == '4') {
+      this.recuring.get('numberOfYearOrNumberOfTime').setValidators([Validators.required]);
+      this.recuring.get('numberOfYearOrNumberOfTime').updateValueAndValidity();
+      this.recuring.controls['numberOfYearOrNumberOfTime'].setErrors({ 'required': true });
+    } 
+    // else if(this.recuring.get('continueTill').value == '5' ){
+    //   this.recuring.get('UntilDate').setValidators([Validators.required]);
+    //   this.recuring.get('UntilDate').updateValueAndValidity();
+    //   this.recuring.controls['UntilDate'].setErrors({ 'required': true });
+    // }
+    else{
+      this.recuring.get('numberOfYearOrNumberOfTime').setValidators(null);
+      this.recuring.get('numberOfYearOrNumberOfTime').updateValueAndValidity();
+      this.recuring.controls['numberOfYearOrNumberOfTime'].setErrors(null);
+      // this.recuring.get('UntilDate').setValidators(null);
+      // this.recuring.get('UntilDate').updateValueAndValidity();
+      // this.recuring.controls['UntilDate'].setErrors(null);
+    }
   }
   saveRecuringExpense() {
     // if (this.recuring.get('repeatFrequency').invalid) {
@@ -207,6 +226,7 @@ export class AddExpensesComponent implements OnInit {
         budgetCategoryId: this.recuring.controls.category.value,
         continueTill: parseInt(this.recuring.controls.continueTill.value),
         numberOfYearOrNumberOfTime: this.recuring.controls.numberOfYearOrNumberOfTime.value,
+        // UntilDate: this.recuring.controls.UntilDate.value,
         expenseCategoryId: this.recuring.controls.category.value,
         description: this.recuring.controls.description.value,
 

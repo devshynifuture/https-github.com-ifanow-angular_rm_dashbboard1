@@ -109,7 +109,7 @@
 
         <div class="row pt-24">
             <div class="col-md-6 pl-0">
-                <h5 class="m-0 pt-8"> Continues till </h5>
+                <h5 class="m-0 pt-8"> Continues till{{recuring.get('numberOfYearOrNumberOfTime').value}} </h5>
                 <div class="form-group mb-0 pt-8">
                     <mat-form-field>
                         <mat-select class="form-control br-0" (ngModelChange)="continuesTill($event)"
@@ -118,6 +118,8 @@
                             <mat-option value='2'> Life time </mat-option>
                             <mat-option value='3'> No.of yrs </mat-option>
                             <mat-option value='4'> No.of times </mat-option>
+                            <!-- <mat-option value='5'> Until </mat-option> -->
+
                         </mat-select>
                         <mat-error class="f-12 pt-4">
                             This field is required
@@ -125,7 +127,7 @@
                     </mat-form-field>
                 </div>
             </div>
-            <div class="col-md-6" *ngIf="isNoOfYrs == '4' || isNoOfYrs == '3'">
+            <div class="col-md-6" *ngIf="recuring.get('continueTill').value=='3' || recuring.get('continueTill').value=='4'">
                 <div class="form-group mt-35 mb-0">
                     <mat-form-field>
                         <input matInput class="form-control br-0" formControlName="numberOfYearOrNumberOfTime"
@@ -136,6 +138,18 @@
                     </mat-form-field>
                 </div>
             </div>
+            <!-- <div class="col-md-6 pl-0" *ngIf="recuring.get('continueTill').value=='5'">
+                <div class="form-group mt-35 mb-0">
+                    <mat-form-field>
+                        <input matInput class="form-control b-0 br-0" (focus)="UntilDate.open()" (input)="preventDefault($event)" [matDatepicker]="UntilDate" formControlName="UntilDate">
+                        <mat-datepicker-toggle matSuffix [for]="UntilDate"></mat-datepicker-toggle>
+                        <mat-datepicker #UntilDate></mat-datepicker>
+                        <mat-error class="f-12 pt-4">
+                            This field is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div> -->
         </div>
 
 
@@ -224,9 +238,11 @@
                         <!-- <input matInput class="form-control br-0" aria-label="12hr format" [ngxTimepicker]="toggleTimepicker" [disableClick]="true" readonly>
                         <ngx-material-timepicker-toggle [for]="toggleTimepicker"></ngx-material-timepicker-toggle>
                         <ngx-material-timepicker #toggleTimepicker></ngx-material-timepicker> -->
-                        <mat-error class="f-12 pt-4">
+                        <!-- <mat-error class="f-12 pt-4">
                             This field is required
-                        </mat-error>
+                        </mat-error> -->
+                        <mat-hint>Optional</mat-hint>
+
                     </mat-form-field>
                 </div>
             </div>

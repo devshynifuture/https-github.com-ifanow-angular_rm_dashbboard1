@@ -11,18 +11,22 @@
                             <button mat-button (click)="viewMode='Budget';getBugetTab(viewMode)"
                                 [ngClass]="{'mat-stroked-button': viewMode == 'Budget','text-primary':viewMode == 'Budget'}">Budget</button>
                         </div>
-                        <!-- <mat-chip-list class="newDateIcon">
+                        <mat-chip-list class="newDateIcon" >
                             <mat-chip *ngFor="let dateFilter of filterDate; let i = index" class="bg-white b-a c-p f-400 p-12">
-                                <p>{{dateFilter.name}}</p>
-                                <input (click)="picker2.open()" [(ngModel)]="selectedDateRange" [max]="maxDate" [satDatepicker]="picker2" class="pL-20" matInput placeholder="Choose a date" readonly>
-                                <sat-datepicker #picker2 (closed)="onClose()" [closeAfterSelection]="false" [calendarFooterComponent]="rangesFooter" [selectFirstDateOnClose]="true" [rangeMode]="true">
-                                </sat-datepicker>
-                                <sat-datepicker-toggle [for]="picker2" matSuffix></sat-datepicker-toggle>
-                                <i (click)="removeDate(i)" class="material-icons f-16 text-custom c-p">
-                                    cancel
-                                </i>
+                            <input  matInput autocomplete="off"
+                            [(value)]="startDate" class="form-control br-0 b-0"
+                            [matDatepicker]="policyStartDatePicker">
+                   
+                        <mat-datepicker #policyStartDatePicker ></mat-datepicker>
+                            -
+                            
+                        <input  matInput autocomplete="off"
+                        [(value)]="endDate" class="form-control br-0 b-0"
+                        [matDatepicker]="policyEndtDatePicker">
+                    <mat-datepicker #policyStartDatePicker ></mat-datepicker>
+                   
                             </mat-chip>
-                        </mat-chip-list> -->
+                        </mat-chip-list>
                         <div class="col-md-8 right text-right pr-0" >
                             <mat-form-field class="w-30">
                                 <mat-select class="form-control" (selectionChange)="addFilterPeriod($event)" [(value)]="selectedPeriod">
@@ -311,10 +315,10 @@
                                         <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
                                     </div>
                                 <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
-                                <button mat-stroked-button class="btn-default addon mr-12 v-middle">
+                                <!-- <button mat-stroked-button class="btn-default addon mr-12 v-middle">
                                     <i class="material-icons">filter_list</i>
                                     FILTERS
-                                </button>
+                                </button> -->
                                 <button mat-stroked-button class="btn-primary addon v-middle"
                                     (click)="openExpenses('addBudget', null)">
                                     <i class="material-icons">add</i>
