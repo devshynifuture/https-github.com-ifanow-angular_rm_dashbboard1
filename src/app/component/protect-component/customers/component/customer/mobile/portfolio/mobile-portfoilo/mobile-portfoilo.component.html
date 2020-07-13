@@ -24,7 +24,7 @@
     <h5 class="m-0 text-black f-16 roboto pb-16 f-500"> Asset allocation</h5>
     <div class="bg-white br-10">
 
-      <div class="row pt-20 pb-20">
+      <div class="row pt-20 pb-20" *ngIf="portFolioData.length > 0">
         <div class="col-7">
           <!-- <div class="highcharts-figure" id="piechartMutualFund"></div> -->
           <div class="h-200" [chart]="assetAllocationPieConfig">
@@ -47,6 +47,31 @@
           </div>
         </div>
       </div>
+      <div class="col-12 p-0 pt-40" *ngIf="portFolioData.length ==0">
+      <h5 class="m-0 text-black f-16 roboto pb-16 f-500"> Asset allocation</h5>
+      <div class="bg-white br-10">
+
+          <div class="row pt-20 pb-20">
+              <div class="col-6">
+                  <p class="m-0 roboto f-400">Once your data is uploaded, this chart will come to life</p>
+                  <p class="m-0 roboto f-400 pt-16 pb-16">Let’s get some data in here. There are lot’s of
+                      things you
+                      can add to
+                      your portfolio. Let’s get going.</p>
+                  <button [routerLink]="['/customer/detail/account/summary']"
+                      class="vaultBtn mb-4 bg-primary f-16 text-white" mat-stroked-button>
+                      Add data
+                  </button>
+
+              </div>
+              <div class="col-6 full-center pl-0">
+
+                  <img class="w-100" src="assets/images/svg/asset-allocation-empty-state.svg">
+
+              </div>
+          </div>
+      </div>
+  </div>
     </div>
     <div class="row pt-28 pb-20">
       <div class="col-md-12 pl-8">
