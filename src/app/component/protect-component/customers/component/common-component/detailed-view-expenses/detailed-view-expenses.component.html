@@ -80,9 +80,9 @@
                         {{(expense.continueTill == 1) ? 'Retirement' : (expense.continueTill == 2) ? 'Life time' : (expense.continueTill == 3) ? 'No.of yrs' : (expense.continueTill == 4) ? 'No.of times' : '-'}}
                     </div>
                 </div>
-                <div class="row bb p-8 b-l br" *ngIf="expense.numberOfYearOrNumberOfTime && (expense.value == 'Other commitments' || expense.value == 'Recurring commitments')">
+                <div class="row bb p-8 b-l br" *ngIf="(expense.value == 'Other commitments' || expense.value == 'Recurring commitments')">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        (expense.continueTill == 3) ? 'No.of years' : (expense.continueTill == 4) ? 'No.of times'  :''
+                       {{ (expense.continueTill == 3) ? 'No.of years' : (expense.continueTill == 4) ? 'No.of times'  :''}}
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         {{expense.numberOfYearOrNumberOfTime}}

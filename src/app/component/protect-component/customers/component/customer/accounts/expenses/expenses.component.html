@@ -88,7 +88,7 @@
                                                 <th  mat-sort-header="expenseType"  mat-header-cell *matHeaderCellDef class="br"> Category </th>
                                                 <td *matCellDef="let element" class="br" mat-cell>
                                                     <div [ngClass]="{'bar': isLoading}">
-                                                        {{element.expenseType}}
+                                                        {{isLoading ? '' : element.expenseType}}
                                                     </div>
                                                 </td>
                                             </ng-container>
@@ -96,7 +96,7 @@
                                                 <th  mat-sort-header="expenseDoneOn"  mat-header-cell *matHeaderCellDef class="br"> Date </th>
                                                 <td mat-cell *matCellDef="let element" class="br">
                                                     <div [ngClass]="{'bar': isLoading}">
-                                                        {{element.expenseDoneOn | date:'dd/MM/yyyy'}}
+                                                        {{isLoading ? '' : (element.expenseDoneOn | date:'dd/MM/yyyy')}}
                                                     </div>
                                                 </td>
                                             </ng-container>
@@ -120,7 +120,7 @@
                                             <ng-container matColumnDef="amt">
                                                 <th  mat-sort-header="amount"  mat-header-cell *matHeaderCellDef class="br"> Amount </th>
                                                 <td mat-cell *matCellDef="let element" class="br">
-                                                    <div [ngClass]="{'bar': isLoading}">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.amount }}</span>
+                                                    <div [ngClass]="{'bar': isLoading}">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{isLoading ? '' : element.amount }}</span>
                                                     </div>
                                                 </td>
                                             </ng-container>
@@ -128,7 +128,7 @@
                                                 <th  mat-sort-header="status"  mat-header-cell *matHeaderCellDef class="br"> Status </th>
                                                 <td mat-cell *matCellDef="let element" class="br">
                                                     <div [ngClass]="{'bar': isLoading}">
-                                                        {{element.status}}
+                                                        {{isLoading ? '' : element.status}}
                                                     </div>
                                                 </td>
                                             </ng-container>
@@ -181,7 +181,7 @@
                                                     </th>
                                                     <td mat-cell *matCellDef="let element" class="br">
                                                         <div [ngClass]="{'bar': isLoading}">
-                                                            {{element.expenseType}}
+                                                            {{isLoading ? '' : element.expenseType}}
                                                         </div>
                                                     </td>
                                                 </ng-container>
@@ -190,7 +190,7 @@
                                                         Date </th>
                                                     <td mat-cell *matCellDef="let element" class="br text-left">
                                                         <div [ngClass]="{'bar': isLoading}">
-                                                            {{element.startsFrom | date:'dd/MM/yyyy'}}
+                                                            {{isLoading ? '' : element.startsFrom | date:'dd/MM/yyyy'}}
                                                         </div>
                                                     </td>
                                                 </ng-container>
@@ -205,8 +205,11 @@
                                                 <ng-container matColumnDef="mode">
                                                     <th  mat-sort-header="paymentModeId"  mat-header-cell *matHeaderCellDef class="br"> Mode </th>
                                                     <td mat-cell *matCellDef="let element" class="br">
-                                                        <div [ngClass]="{'bar': isLoading}">
+                                                        <div [ngClass]="{'bar': isLoading}" *ngIf="!isLoading">
                                                             {{(element.paymentModeId == 2)? 'Debit card':(element.paymentModeId == 1)? 'Credit card':'-'}}
+                                                        </div>
+                                                        <div class="bar" *ngIf="isLaoding">
+                                                            {{''}}
                                                         </div>
                                                     </td>
                                                 </ng-container>
@@ -214,7 +217,7 @@
                                                     <th  mat-sort-header="amount"  mat-header-cell *matHeaderCellDef class="br text-right"> Amount
                                                     </th>
                                                     <td mat-cell *matCellDef="let element" class="br text-right">
-                                                        <div [ngClass]="{'bar': isLoading}">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.amount }}</span>
+                                                        <div [ngClass]="{'bar': isLoading}">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{isLoading ? '' : element.amount }}</span>
                                                         </div>
                                                     </td>
                                                 </ng-container>
@@ -222,7 +225,7 @@
                                                     <th  mat-sort-header="status"  mat-header-cell *matHeaderCellDef class="br"> Status </th>
                                                     <td mat-cell *matCellDef="let element" class="br">
                                                         <div [ngClass]="{'bar': isLoading}">
-                                                            {{element.status}}
+                                                            {{isLoading ? '' : element.status}}
                                                         </div>
                                                     </td>
                                                 </ng-container>
@@ -344,7 +347,7 @@
                                             <th mat-sort-header="expenseType"  mat-sort-header="expenseType"  mat-header-cell *matHeaderCellDef class="br t-26"> Category </th>
                                             <td mat-cell *matCellDef="let element" class="br t-26">
                                                 <div [ngClass]="{'bar': isLoading}">
-                                                    {{element.expenseType}}
+                                                    {{isLoading ? '' : element.expenseType}}
                                                 </div>
                                             </td>
                                         </ng-container>
@@ -363,6 +366,7 @@
                                                 <div [ngClass]="{'bar': isLoading}">
                                                     <mat-progress-bar *ngIf="isLoading==false" mode="determinate"
                                                         value="40" class="w-80"></mat-progress-bar>
+                                                        <span *ngIf="isLoading">{{''}}</span>
                                                 </div>
                                             </td>
                                         </ng-container>
@@ -425,7 +429,7 @@
                                             <th mat-sort-header="expenseType" mat-header-cell *matHeaderCellDef class="br t-26"> Category </th>
                                             <td mat-cell *matCellDef="let element" class="br t-26">
                                                 <div [ngClass]="{'bar': isLoading}">
-                                                    {{element.expenseType}}
+                                                    {{isLoading ? '' : element.expenseType}}
                                                 </div>
                                             </td>
                                         </ng-container>
@@ -433,7 +437,7 @@
                                             <th mat-sort-header="amount" mat-header-cell *matHeaderCellDef class="br t-10 text-right"> Budget
                                             </th>
                                             <td mat-cell *matCellDef="let element" class="br t-10 text-right">
-                                                <div [ngClass]="{'bar': isLoading}">{{!isLoading && element.amount? "₹" : ""}}<span appFormatNumber>{{element.amount ? element.amount : '-'}}</span>
+                                                <div [ngClass]="{'bar': isLoading}">{{!isLoading && element.amount? "₹" : ""}}<span appFormatNumber>{{(isLoading) ? '' :  (element.amount ? element.amount : '-')}}</span>
                                                 </div>
                                             </td>
                                         </ng-container>
@@ -443,6 +447,8 @@
                                                 <div [ngClass]="{'bar': isLoading}">
                                                     <mat-progress-bar *ngIf="isLoading==false" mode="determinate"
                                                         value="40"></mat-progress-bar>
+                                                        <span *ngIf="isLoading">{{''}}</span>
+
                                                 </div>
                                             </td>
                                         </ng-container>
@@ -450,7 +456,7 @@
                                             <th mat-sort-header="spent" mat-header-cell *matHeaderCellDef class="br text-right"> Spent </th>
                                             <td mat-cell *matCellDef="let element" class="br text-right">
                                                
-                                                <div [ngClass]="{'bar': isLoading}">{{!isLoading && element.spent ? "₹" : ""}}<span appFormatNumber>{{element.spent ? element.spent : '-'}}</span>
+                                                <div [ngClass]="{'bar': isLoading}">{{!isLoading && element.spent ? "₹" : ""}}<span appFormatNumber>{{isLoading ? '' : (element.spent ? element.spent : '-')}}</span>
                                                 </div>
                                             </td>
                                         </ng-container>
