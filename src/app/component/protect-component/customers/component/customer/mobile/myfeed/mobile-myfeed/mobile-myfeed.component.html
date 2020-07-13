@@ -423,20 +423,22 @@
                     <div class="row pt-20 pb-20">
                         <div class="col-8">
                             <h5 class="m-0 roboto f-500 text-dark pb-8">Your secure online vault</h5>
-                            <ul *ngFor="let fam of documentVault.familyStats | slice:0:5">
-                                <li class="pr-8"><img class="w36" *ngIf="fam.relationshipId==2"
-                                        src="/assets/images/svg/man-profile.svg"></li>
-                                <li class="pr-8"><img class="w36" *ngIf="fam.relationshipId==3"
-                                        src="/assets/images/svg/women-profile-icon.svg"></li>
-                                <li class="pr-8"><img class="w36" *ngIf="fam.relationshipId==4"
-                                        src="/assets/images/svg/son-profile.svg"></li>
-                                <li class="pr-8"><img class="w36" *ngIf="fam.relationshipId==5"
-                                        src="/assets/images/svg/daughter-profile.svg"></li>
-                                <li class="pr-8"><img class="w36" *ngIf="fam.relationshipId==7"
-                                        src="/assets/images/svg/mother-profile.svg"></li>
-                                <li class="pr-8"><img class="w36" *ngIf="fam.relationshipId==6"
-                                        src="/assets/images/svg/father-profile.svg"></li>
-                            </ul>
+                            <div class="d-flex">
+                                <ul class="" *ngFor="let fam of documentVault.familyStats | slice:0:5">
+                                    <li><img class="w36" *ngIf="fam.relationshipId==2"
+                                            src="/assets/images/svg/man-profile.svg"></li>
+                                    <li><img class="w36" *ngIf="fam.relationshipId==3"
+                                            src="/assets/images/svg/women-profile-icon.svg"></li>
+                                    <li><img class="w36" *ngIf="fam.relationshipId==4"
+                                            src="/assets/images/svg/son-profile.svg"></li>
+                                    <li><img class="w36" *ngIf="fam.relationshipId==5"
+                                            src="/assets/images/svg/daughter-profile.svg"></li>
+                                    <li><img class="w28" *ngIf="fam.relationshipId==7"
+                                            src="/assets/images/svg/mother-profile.svg"></li>
+                                    <li><img class="w36" *ngIf="fam.relationshipId==6"
+                                            src="/assets/images/svg/father-profile.svg"></li>
+                                </ul>
+                            </div>
                             <p *ngIf="documentVault.fileStats" class="pt-8 m-0 roboto f-400 text-dark pb-12 f-12">
                                 {{documentVault.fileStats[0].filesCount}} items in your vault
                                 {{documentVault.fileStats[0].totalKbs/1024 | number : '0.0-2'}} mb space used</p>
@@ -505,7 +507,8 @@
 
 
 
-        <div class="row pt-40 pb-16" *ngIf="tabsLoaded.recentTransactions.dataLoaded && tabsLoaded.recentTransactions.hasData">
+        <div class="row pt-40 pb-16"
+            *ngIf="tabsLoaded.recentTransactions.dataLoaded && tabsLoaded.recentTransactions.hasData">
             <div class="col-8 pl-0">
                 <h5 class="m-0 text-black f-16 roboto">Recent online transactions</h5>
             </div>
