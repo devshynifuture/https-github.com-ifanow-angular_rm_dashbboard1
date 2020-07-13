@@ -40,8 +40,8 @@ import { UploadDocumentComponent } from './component/customer/mobile/document/mo
 
 
 @NgModule({
-  declarations: [CustomerComponent, TransactionSuccessfulComponent, MobileMyfeedComponent, MobileDocumentComponent, MobilePortfoiloComponent, MobileProfileComponent, MobileTransactionsComponent, MobileLeftSidenavComponent, UploadDocumentComponent, EditDocumentPopupComponent],
-  imports: [
+  declarations: [CustomerComponent, TransactionSuccessfulComponent, MobileMyfeedComponent, MobileDocumentComponent, MobilePortfoiloComponent, MobileProfileComponent, MobileTransactionsComponent, MobileLeftSidenavComponent,UploadDocumentComponent,EditDocumentPopupComponent],
+  imports: [ 
     // BrowserModule,
     CommonModule,
     MaterialModule,
@@ -55,8 +55,8 @@ import { UploadDocumentComponent } from './component/customer/mobile/document/mo
     EntryComponentsModule,
     AccountEntryModule,
     PlanEntryModule,
-    CustomersRoutingModule,
-    // MobileRoutingModule,
+  CustomersRoutingModule,
+  // MobileRoutingModule,
     SlickCarouselModule,
     AdviceEntryModule,
     CustomerOverviewEntryModule,
@@ -71,7 +71,7 @@ import { UploadDocumentComponent } from './component/customer/mobile/document/mo
   exports: [],
   providers: [DynamicComponentService, AdvisorAndOrganizationInfoService],
   entryComponents: [EntryComponentsModule.getComponentList(), AccountEntryModule.getComponentList(), AdviceEntryModule.getComponentList()
-    , PlanEntryModule.getComponentList(), CustomerOverviewEntryModule.getComponentList(), UploadDocumentComponent, EditDocumentPopupComponent]
+    , PlanEntryModule.getComponentList(), CustomerOverviewEntryModule.getComponentList(),UploadDocumentComponent,EditDocumentPopupComponent]
 })
 export class CustomersModule {
 }
