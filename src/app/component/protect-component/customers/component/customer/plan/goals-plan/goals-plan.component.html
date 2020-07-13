@@ -186,10 +186,9 @@
                             <p class="roboto m-0 text-black f-500">Maturity value </p>
                         </div>
                     </div>
-                    <div cdkDropList id="allottedList" [cdkDropListData]="todo" [cdkDropListSortingDisabled]="true"
-                        (cdkDropListDropped)="drop($event)" (cdkDropListEntered)="logger($event)"
-                        class="hide-placeholder">
-                        <div class="row height40 bl-1 bb-1 br bg-white" [hidden]="!loaderFn.loading" appSkeletonLoading
+                    <div cdkDropList id="allottedList" [cdkDropListData]="allocatedList" [cdkDropListSortingDisabled]="true"
+                        (cdkDropListDropped)="drop($event)" class="hide-placeholder">
+                        <div class="row height40 bl-1 bb-1 br bg-white" *ngIf="loaderFn.loading" appSkeletonLoading
                             [appSkeletonLoading]="loaderFn.loading">
                             <div class="col-md-3 d-flex align-items-center relClass">
                                 <div class="bar height24"></div>
@@ -209,42 +208,48 @@
                             </div>
                         </div>
 
-                        <div class="row height40 bl-1 bb-1 br bg-white" [hidden]="loaderFn.loading">
-                            <div class="col-md-3 d-flex align-items-center">
-                                <div class="relClass">
-                                    <div class="bar">
-                                        <p class="mb-0 roboto">Fixed Deposit </p>
+                        <ng-container *ngFor="let allocation of allocatedList">
+                            <div class="row height40 bl-1 bb-1 br bg-white">
+                                <div class="col-md-3 d-flex align-items-center">
+                                    <div class="relClass">
+                                        <div class="bar">
+                                            <p class="mb-0 roboto">{{allocation.assetName}}</p>
+                                        </div>
+                                    </div>
+    
+                                </div>
+                                <div class="col-md-3 d-flex align-items-center">
+                                    <div class="relClass">
+                                        <div class="bar">
+                                            <p class="mb-0 roboto">{{allocation.advice || '-'}}</p>
+                                        </div>
+                                    </div>
+    
+                                </div>
+                                <div class="col-md-3 d-flex align-items-center">
+                                    <div class="relClass">
+                                        <div class="bar">
+                                            <p class="mb-0 roboto" appFormatNumber [value]='allocation.currentValue'></p>
+                                        </div>
                                     </div>
                                 </div>
-
-                            </div>
-                            <div class="col-md-3 d-flex align-items-center">
-                                <div class="relClass">
-                                    <div class="bar">
-                                        <p class="mb-0 roboto">Continue till maturity</p>
+                                
+                                <div class="col-md-3 d-flex align-items-center justify-content-between  ">
+                                    <div class="relClass">
+                                        <div class="bar">
+                                            <p class="m-0 roboto" appFormatNumber [value]='allocation.maturityValue'></p>
+                                        </div>
                                     </div>
-                                </div>
-
-                            </div>
-                            <div class="col-md-3 d-flex align-items-center">
-                                <div class="relClass">
-                                    <div class="bar">
-                                        <p class="mb-0 roboto">13,000 </p>
-                                    </div>
+                                    <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="c-p">
+                                    <mat-menu #menu="matMenu">
+                                        <button mat-menu-item (click)="removeAllocation(allocation)">Remove Allocation</button>
+                                    </mat-menu>
                                 </div>
                             </div>
+                        </ng-container>
 
-                            <div class="col-md-3 d-flex align-items-center justify-content-between  ">
-                                <div class="relClass">
-                                    <div class="bar">
-                                        <p class="m-0 roboto ">5,28,000 </p>
-                                    </div>
-                                </div>
-
-
-                                <img src="/assets/images/svg/dot-menu.svg" class="c-p">
-
-                            </div>
+                        <div class="row height40 bl-1 bb-1 br bg-white text-center" *ngIf="!loaderFn.loading && allocatedList.length == 0">
+                            allocate asset
                         </div>
                     </div>
 

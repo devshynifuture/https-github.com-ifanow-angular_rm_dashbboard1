@@ -390,9 +390,19 @@ export class MobileMyfeedComponent implements OnInit {
       if (res == null) {
         this.recentTransactions = [];
       } else {
+        this.tabsLoaded.recentTransactions.hasData = true;
         this.recentTransactions = res;
       }
-    });
+      this.tabsLoaded.recentTransactions.dataLoaded = true;
+      this.tabsLoaded.recentTransactions.isLoading = false;
+      this.loaderFn.decreaseCounter();
+    }, err => {
+      this.hasError = true;
+      this.tabsLoaded.recentTransactions.dataLoaded = false;
+      this.tabsLoaded.recentTransactions.isLoading = false;
+      this.eventService.openSnackBar(err, "Dismiss")
+      this.loaderFn.decreaseCounter();
+    })
   }
   loadRiskProfile() {
     const obj = {
