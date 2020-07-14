@@ -41,21 +41,31 @@ export class CalendarMonthComponent implements OnInit {
   constructor(public dialog: MatDialog, private calenderService: calendarService, private datePipe: DatePipe) { }
 
   ngOnInit() {
+    this.viewDate = new Date();
+    this.todayDate = this.viewDate.getDate();
+    this.curruntDayIndex = this.daysArr.indexOf(this.todayDate);
+    this.getEvent();
+    this.userInfo = AuthService.getUserInfo()
+
     this.currentMonth = new Date().getMonth();
     this.currentYear = new Date().getFullYear();
-    this.viewDate = new Date();
-    this.userInfo = AuthService.getUserInfo()
-    // this.updatecalendar();
-    this.month = this.viewDate.getMonth();
-    this.year = this.viewDate.getFullYear();
-    this.todayDate = this.viewDate.getDate();
-    this.numbersOfDays = this.getDaysCount(this.month, this.year, "currentMonthDays");
-    this.lastMonthDays = this.getDaysCount(this.month, this.year, "lastMonthDays");
-    this.nextMonthDays = this.getDaysCount(this.month, this.year, "nextMonthDays");
-    this.getEvent();
-
-    this.curruntDayIndex = this.daysArr.indexOf(this.todayDate);
-    // this.excessAllow = localStorage.getItem('successStoringToken')
+    if(!this.calenderService.dayArrey){
+      // this.updatecalendar();
+      this.month = this.viewDate.getMonth();
+      this.year = this.viewDate.getFullYear();
+      this.numbersOfDays = this.getDaysCount(this.month, this.year, "currentMonthDays");
+      this.lastMonthDays = this.getDaysCount(this.month, this.year, "lastMonthDays");
+      this.nextMonthDays = this.getDaysCount(this.month, this.year, "nextMonthDays");
+      // this.excessAllow = localStorage.getItem('successStoringToken')
+    }else
+    {
+      this.month = this.calenderService.dayArrey[1].month;
+      this.year = this.calenderService.dayArrey[1].year;
+      this.viewDate = new Date(this.year, this.month, this.todayDate);
+      this.numbersOfDays = this.calenderService.dayArrey[1].numbersOfDays;
+      this.lastMonthDays = this.getDaysCount(this.month, this.year, "lastMonthDays");
+      this.nextMonthDays = this.calenderService.dayArrey[1].nextMonthDays;
+    }
     this.unSubcrip = this.calenderService.updateDayArr().subscribe((data: any) => {
       this.daysArr = data[0];
       this.back = data[1].back;
@@ -464,7 +474,7 @@ export class CalendarMonthComponent implements OnInit {
 
     var hh = date.getHours() > 12 ? date.getHours() - 12 : date.getHours();
     var mm = date.getMinutes();
-    var amPm = date.getHours() > 12 ? "pm" : "am";
+    var amPm = date.getHours() > 12 ? "PM" : "AM";
     hh = hh < 10 ? '0' + hh : hh;
     mm = mm < 10 ? '0' + mm : mm;
     return hh + ":" + mm + amPm + " ";

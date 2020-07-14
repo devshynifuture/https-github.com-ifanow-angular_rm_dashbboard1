@@ -59,10 +59,22 @@ export class CalendarWeekComponent implements OnInit {
     this.day = this.formateDate(this.viewDate)
     this.userInfo = AuthService.getUserInfo()
     // this.updatecalendar();
-    this.getWeek(this.viewDate);
     this.getEvent();
     this.curruntDayIndex = this.daysArr.indexOf(this.selectedDate);
     // this.excessAllow = localStorage.getItem('successStoringToken')
+
+    if(!this.calenderService.dayArrey){
+      this.getWeek(this.viewDate);
+
+    }else
+    {
+      this.day = this.calenderService.dayArrey[1].selectedDate;
+      this.month = this.calenderService.dayArrey[1].month;
+      this.year = this.calenderService.dayArrey[1].year;
+      this.viewDate = new Date(this.year, this.month, this.day);
+      this.getWeek(this.viewDate);
+
+    }
     this.unSubcrip = this.calenderService.updateDayArr().subscribe((data: any) => {
       this.getWeek(data[1].viewDate);
       this.daysArr = data[0];
@@ -209,7 +221,7 @@ export class CalendarWeekComponent implements OnInit {
 
     var hh = date.getHours() > 12 ? date.getHours() - 12 : date.getHours();
     var mm = date.getMinutes();
-    var amPm = date.getHours() > 12 ? "pm" : "am";
+    var amPm = date.getHours() > 12 ? "PM" : "AM";
     hh = hh < 10 ? '0' + hh : hh;
     mm = mm < 10 ? '0' + mm : mm;
     return hh + ":" + mm + amPm + " ";

@@ -7,7 +7,7 @@ import {element} from 'protractor';
 export class EnumServiceService {
   roleList: any = [];
   bankList: any = [];
-  clientFamilybankList:any=[];
+  clientFamilybankList: any = [];
 
   clientRoleList: any = [];
   proofTypeList: any = [];
@@ -20,19 +20,20 @@ export class EnumServiceService {
   private globalEnumData = {
     otherAssetTypes: [],
     feeCollectionMode: [],
+    taxStatusList: [],
     taxStatusMap: {},
     corporateTaxList: [],
     individualTaxList: [],
     minorTaxList: [],
   };
 
-  private cashflowAssetNaming:any[] = []
+  private cashflowAssetNaming: any[] = []
 
-  setAssetShortForms(data){
+  setAssetShortForms(data) {
     this.cashflowAssetNaming = data;
   }
 
-  getAssetNamings(){
+  getAssetNamings() {
     return this.cashflowAssetNaming;
   }
 
@@ -60,6 +61,10 @@ export class EnumServiceService {
     return this.globalEnumData.corporateTaxList;
   }
 
+  //
+  getTaxStatusList() {
+    return this.globalEnumData.taxStatusList;
+  }
   getMinorTaxList() {
     return this.globalEnumData.minorTaxList;
   }
@@ -88,11 +93,12 @@ export class EnumServiceService {
     this.bankList = data;
   }
 
-  public addclientFamilyBanks(data){
+  public addclientFamilyBanks(data) {
     this.clientFamilybankList = data
   }
 
-  familyList:any;
+  familyList: any;
+
   public getFamilyList(data) {
     this.familyList = data;
   }

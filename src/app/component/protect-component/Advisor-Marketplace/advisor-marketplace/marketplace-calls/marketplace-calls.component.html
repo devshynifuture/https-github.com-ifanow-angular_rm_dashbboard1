@@ -63,58 +63,62 @@
 			<p class="pt-4 m-0 roboto text-custom">All settings related to Schedule a call feature on the marketplace can be managed from here.</p>
 		</div>
 	</div>
-	<div class="row pt-60">
-		<div class="col-md-3">
-			<h5 class="m-0 roboto text-right pt-10">Call duration</h5>
-		</div>
-		<div class="col-md-5 pl-0">
-			<mat-radio-group aria-label="Select an option">
-			  <mat-radio-button value="1" class="b-ua text-custom">30 mins</mat-radio-button>
-			  <mat-radio-button value="2" class="text-primary bu-primary text-primary">45 mins</mat-radio-button>
-			  <mat-radio-button value="2" class="b-ua text-custom">60 mins</mat-radio-button>
-			</mat-radio-group>
-		</div>
-			
-		</div>
-		<div class="row pt-44">
-		<div class="col-md-3">
-			<h5 class="m-0 roboto text-right pt-10">Date range</h5>
-		</div>
-		<div class="col-md-2 pl-0">
-			<div class="form-group mb-0">
-				<mat-form-field>
-				    <input matInput class="form-control">
-				  </mat-form-field>
+	<div [formGroup]="callDetails" >
+		<div class="row pt-60">
+			<div class="col-md-3">
+				<h5 class="m-0 roboto text-right pt-10">Call duration</h5>
+			</div>
+			<div class="col-md-5 pl-0">
+				<mat-radio-group aria-label="Select an option" formControlName="callDurationId">
+					<!-- [ngClass]="callDetails.get('callDurationId').value == 1? bu-primary : b-ua"  -->
+				  <mat-radio-button [value]="1" class="b-ua text-custom" >30 mins</mat-radio-button>
+				  <mat-radio-button [value]="2" class="text-primary bu-primary text-primary">45 mins</mat-radio-button>
+				  <mat-radio-button [value]="3" class="b-ua text-custom">60 mins</mat-radio-button>
+				</mat-radio-group>
+			</div> 
+				
+			</div>
+			<div class="row pt-44">
+			<div class="col-md-3">
+				<h5 class="m-0 roboto text-right pt-10">Date range</h5>
+			</div>
+			<div class="col-md-2 pl-0">
+				<div class="form-group mb-0">
+					<mat-form-field>
+						<input matInput class="form-control" formControlName="rollingDays">
+					  </mat-form-field>
+				</div>
+	
+			</div>
+				<div class="col-md-1 pl-0">
+					<p class="m-0 roboto text-primary pt-8 c-p">Edit</p>
+				</div>
+				
+			</div>
+			<div class="row pt-10">
+				<div class="col-md-3"></div>
+				<div class="col-md-8 pl-0">
+					<p class="text-dark roboto m-0 f-400">Your availability to the users is currently set to 60 rolling days</p>
+				</div>
+			</div>
+				<div class="row pt-44">
+			<div class="col-md-3">
+				<h5 class="m-0 roboto text-right pt-10">Description</h5>
+			</div>
+			<div class="col-md-5 pl-0">
+				<div class="form-group mb-0">
+					<mat-form-field>
+						<textarea formControlName="description" matInput class="form-control h-200"></textarea>
+						 <mat-hint align="end">0/200</mat-hint>
+					  </mat-form-field>
+				</div>
+			</div>
+				<div class="col-md-1 pl-0">
+					<p class="m-0 roboto text-primary pt-8 c-p">Edit</p>
+				</div>
 			</div>
 
-		</div>
-			<div class="col-md-1 pl-0">
-				<p class="m-0 roboto text-primary pt-8 c-p">Edit</p>
-			</div>
-			
-		</div>
-		<div class="row pt-10">
-			<div class="col-md-3"></div>
-			<div class="col-md-8 pl-0">
-				<p class="text-dark roboto m-0 f-400">Your availability to the users is currently set to 60 rolling days</p>
-			</div>
-		</div>
-			<div class="row pt-44">
-		<div class="col-md-3">
-			<h5 class="m-0 roboto text-right pt-10">Description</h5>
-		</div>
-		<div class="col-md-5 pl-0">
-			<div class="form-group mb-0">
-				<mat-form-field>
-				    <textarea matInput class="form-control h-200"></textarea>
-				     <mat-hint align="end">0/200</mat-hint>
-				  </mat-form-field>
-			</div>
-		</div>
-			<div class="col-md-1 pl-0">
-				<p class="m-0 roboto text-primary pt-8 c-p">Edit</p>
-			</div>
-		</div>
+	</div>
 		<div class="row pt-220">
 			<div class="col-md-12 pl-48">
 				<h5 class="m-0 roboto text-dark f-400">Availability</h5>
