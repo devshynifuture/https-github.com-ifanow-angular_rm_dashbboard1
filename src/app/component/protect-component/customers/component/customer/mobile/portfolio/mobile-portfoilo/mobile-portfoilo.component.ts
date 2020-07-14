@@ -22,6 +22,7 @@ export class MobilePortfoiloComponent implements OnInit {
   hasError: boolean;
   chartTotal: number;
   mfAllocationData: any;
+  showMf 
 
   chartData: any[] = [
     {
@@ -61,6 +62,10 @@ export class MobilePortfoiloComponent implements OnInit {
       }
     }
   ]
+  mfData: any;
+  fixedIncome: any;
+  showFixedIncome: boolean;
+  showRetirementAccount: boolean;
   constructor(
     public customerService : CustomerService,
     public loaderFn: LoaderFunction,
@@ -79,8 +84,19 @@ export class MobilePortfoiloComponent implements OnInit {
     return this.inputData;
   }
   ngOnInit() {
+    this.portFolioData = [];
     this.getAssetAllocationData()
     this.initializePieChart()
+  }
+  openAsset(asset){
+    console.log('assets',asset)
+    if(asset.assetType == 7){
+      this.fixedIncome = asset
+      this.showFixedIncome = true
+    }else if(asset.assetType == 8){
+    }else if(asset.assetType == 9){
+      this.showRetirementAccount = true;
+    }
   }
   openMenu(flag) {
     if (flag == false) {
@@ -90,12 +106,13 @@ export class MobilePortfoiloComponent implements OnInit {
     }
   }
   getAssetAllocationData() {
+    this.mfData = []
     const obj = {
       clientId: this.clientData.clientId,
       advisorId: this.advisorId,
       targetDate: new Date().getTime()
     }
-
+    
 
     this.loaderFn.increaseCounter();
     this.customerService.getAllFeedsPortFolio(obj).subscribe(res => {
@@ -104,6 +121,11 @@ export class MobilePortfoiloComponent implements OnInit {
       } else {
         let stock = res.find(d => d.assetType == 6);
         this.portFolioData = res;
+      this.portFolioData.forEach(element => {
+        if(element.assetType == 5){
+          this.mfData.push(element)
+        }
+      });
         console.log('assets',this.portFolioData)
         if (stock) {
           this.portFolioData = this.portFolioData.filter(d => d.assetType != 6);
@@ -224,5 +246,8 @@ export class MobilePortfoiloComponent implements OnInit {
       innerSize: '60%',
       data: this.mfAllocationData
     }]
+  }
+  getValue(value){
+    this.showRetirementAccount = value;
   }
 }

@@ -91,9 +91,17 @@ export class AddGoalComponent implements OnInit {
     this.loadAssets();
     this.subscription.add(
       this.planService.assetSubject.subscribe((data:any) => {
-        // const assetIndex = this.allAssetsList.findIndex(asset => asset.assetId == data.assetId);
-        // this.allAssetsList[assetIndex] = data;
-        this.loadAssets();
+        
+        this.allAssetsList = data.map(asset => {
+          let absAllocation = 0;
+          if(asset.goalAssetMapping) {
+            asset.goalAssetMapping.forEach(element => {
+              absAllocation += element.percentAllocated;
+            });
+          }
+          return {absAllocation, ...asset};
+        })
+        this.filterAndSortAssets();
       })
     )
   }

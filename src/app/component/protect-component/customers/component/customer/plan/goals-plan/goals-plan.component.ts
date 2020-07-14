@@ -18,7 +18,7 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 import * as Highcharts from 'highcharts';
 import { MatDialog } from '@angular/material';
 import { P } from '@angular/cdk/keycodes';
-import { Subscriber, Subscription, Subject } from 'rxjs';
+import { Subscriber, Subscription, Subject, forkJoin } from 'rxjs';
 
 
 
@@ -40,6 +40,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
   otherAssetAllocationSubscription:Subscription;
   selectedGoal: any = {};
   allGoals: any[] = [];
+  allAssets:any[] = [];
   hasCostOfDelay: boolean = false;
 
   // options set for bar charts
@@ -113,6 +114,8 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     series: []
   }
   allocatedList:Array<any> = [];
+  assetError = false;
+  selectedGoalId:any = null;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -127,17 +130,19 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
+    this.loadAllAssets();
     this.loadAllGoals();
+    this.loaderFn.setFunctionToExeOnZero(this, this.afterDataLoadMethod);
   }
 
   // load all goals created for the client and select the first goal
-  loadAllGoals() {
+  loadAllGoals() {``
     this.allGoals = [{}, {}, {}];
     this.loaderFn.increaseCounter();
+    this.selectedGoal = {};
     this.plansService.getAllGoals(this.advisor_client_id).subscribe((data: any[]) => {
       if (data) {
-        this.allGoals = data.reverse().map(goal => this.mapGoalDashboardData(goal));
-        this.loadSelectedGoalData(this.allGoals[0]);
+        this.allGoals = data
       } else {
         this.allGoals = [];
       }
@@ -147,6 +152,44 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       this.loaderFn.decreaseCounter();
     });
   }
+
+  loadAllAssets(){
+    const otherAssets = this.plansService.getAssetsForAllocation(this.advisor_client_id);
+    const mfAssets = this.plansService.getMFList(this.advisor_client_id);
+
+    this.loaderFn.increaseCounter();
+    forkJoin(otherAssets, mfAssets).subscribe(result => {
+      console.log(result[0], 'im other');
+      let otherAssetRes = result[0].map(asset => {
+        let absAllocation = 0;
+        if(asset.goalAssetMapping) {
+          asset.goalAssetMapping.forEach(element => {
+            absAllocation += element.percentAllocated;
+          });
+        }
+        return {absAllocation, ...asset};
+      });
+
+      let mfAssetRes = result[1].map(mf => {
+        let absAllocation = 0;
+        if(mf.goalAssetMapping.length > 0) {
+          mf.goalAssetMapping.forEach(element => {
+            absAllocation += element.percentAllocated;
+          });
+        }
+        return {absAllocation, ...mf};
+      })
+
+      this.allAssets = [...otherAssetRes, ...mfAssetRes];
+      console.log(this.allAssets);
+      this.loaderFn.decreaseCounter();
+    }, err => {
+      console.error(err)
+      this.assetError = true;
+      this.loaderFn.decreaseCounter();
+    })
+  }
+
 
   // create loan and cost of delay charts
   createChart(res) {
@@ -196,6 +239,14 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     }
   }
 
+  afterDataLoadMethod(){
+    this.allGoals = this.allGoals.reverse().map(goal => this.mapGoalDashboardData(goal));
+    if(this.selectedGoalId) {
+      this.loadSelectedGoalData(this.allGoals.find(goal => goal.remainingData.id == this.selectedGoalId));
+    } else {
+      this.loadSelectedGoalData(this.allGoals[0]);
+    }
+  }
 
   // create json which is used on dashboard and other areas
   mapGoalDashboardData(goal: any) {
@@ -204,6 +255,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     mapData.id = goal.id;
     mapData.goalType = goal.goalType;
     mapData.singleOrMulti = goal.singleOrMulti;
+    mapData.goalAssetAllocation = goal.goalAssetAllocation;
     if (goal.singleOrMulti == 1) {
       const goalSubData = goal.singleGoalModel;
       mapData.img = goalSubData.imageUrl;
@@ -238,8 +290,8 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         goalYear: new Date(goalSubData.goalEndDate || goalSubData.vacationEndYr).getFullYear(),
         presentValue: goalSubData.presentValue,
         futureValue: goalSubData.futureValue,
-        equity_monthly: this.getSumOfJsonMap(goalSubData.sipAmoutEquity),
-        debt_monthly: this.getSumOfJsonMap(goalSubData.sipAmoutDebt),
+        equity_monthly: this.getSumOfJsonMap(goalSubData.sipAmountEquity),
+        debt_monthly: this.getSumOfJsonMap(goalSubData.sipAmountDebt),
         lump_equity: this.getSumOfJsonMap(goalSubData.lumpSumAmountEquity),
         lump_debt: this.getSumOfJsonMap(goalSubData.lumpSumAmountDebt),
         goalProgress: (goalSubData.achievedValue / goalSubData.futureValue * 100),
@@ -347,7 +399,11 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
   }
 
   loadSelectedGoalData(goalData) {
+    this.allocatedList = goalData.goalAssetAllocation.map(asset => {
+      return this.allAssets.find(allasset => allasset.assetId == asset.assetId && allasset.assetType == asset.assetType) || {};
+    });
     this.selectedGoal = goalData;
+    this.selectedGoalId = goalData.remainingData.id;
     setTimeout(() => {
       this.createChart(this.selectedGoal);
     }, 100);
@@ -384,8 +440,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
   }
 
   // drag drop for assets brought from allocations tab
-  drop(event: CdkDragDrop<string[]>) {
-    console.log(event.item.data);
+  drop(event: CdkDragDrop<string[]>) {  
     let asset:any = event.item.data;
     let obj = {
       ...this.advisor_client_id,
@@ -395,11 +450,11 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       goalType: this.selectedGoal.goalType,
       percentAllocated: 100
     }
-    console.log(obj);
     this.plansService.allocateOtherAssetToGoal(obj).subscribe(res => {
+      this.loadAllGoals();
       this.plansService.assetSubject.next(res);
-      this.eventService.openSnackBar("Asset allocated to goal", "Dismiss");
       this.allocatedList.push(asset);
+      this.eventService.openSnackBar("Asset allocated to goal", "Dismiss");
     }, err => {
       this.eventService.openSnackBar(err);
     })

@@ -18,7 +18,7 @@
         </div>
       </div>
       <div class="row mob-scroll">
-        <div *ngFor="let member of familyMembers" class="col-9 pl-0">
+        <div (click)="selectFamilyMember(member)" *ngFor="let member of familyMembers" class="col-9 pl-0">
           <div class="bg-white br-4 ba-half-grey">
             <div class="row pt-16 pb-36">
               <div class="col-3">
@@ -180,75 +180,92 @@
     </div>
   </div>
   <!-- Profile family memeber  -->
-  <!-- <div class="row pt-90 bg-grey lter">
-        <div class="col-3">
-          <img src="/assets/images/mob-women.png">
-        </div>
-        <div class="col-9 pl-0">
-          <h5 class="m-0 roboto f-400 pt-12 f-16">Shilpa Rahul Jain</h5>
-          <p class="m-0 roboto f-400 text-custom pt-4">AHJKM0267L</p>
-        </div>
-        </div>
-        <div class="row pt-28 mob-profile pb-16 bg-grey lter">
-        <div class="col-12">
-          <button mat-stroked-button class="text-success ba-success mr-12"><span class="material-icons active-kyc">
-          done
+  <div *ngIf="hideShowFlag=='FamilyMember'">
+    <div class="row mob-bg-common pb-12 mobtop-navfixed">
+      <div class="col-2">
+        <img (click)="hideShowFlag='profile'" src="/assets/images/svg/mob-left-arrow.svg" class="c-p pt-4">
+      </div>
+      <div class="col-10 pl-0">
+        <h5 class="m-0 f-18 text-white pt-4 roboto">{{selectedFamilyMember.name}}</h5>
+      </div>
+    </div>
+    <div class="row pt-90 bg-grey lter">
+      <div class="col-3">
+        <img src="/assets/images/mob-women.png">
+      </div>
+      <div class="col-9 pl-0">
+        <h5 class="m-0 roboto f-400 pt-12 f-16">{{selectedFamilyMember.name}}</h5>
+        <p class="m-0 roboto f-400 text-custom pt-4">{{selectedFamilyMember.pan?selectedFamilyMember.pan:'N/A'}}</p>
+      </div>
+    </div>
+    <div class="row pt-28 mob-profile pb-16 bg-grey lter">
+      <div class="col-12">
+        <button mat-stroked-button class="text-success ba-success mr-12"><span class="material-icons active-kyc">
+            done
           </span>KYC</button>
-          <button mat-stroked-button class="text-danger ba-danger"><span class="material-icons active-invest">
-          done
+        <button mat-stroked-button class="text-danger ba-danger"><span class="material-icons active-invest">
+            done
           </span>Investment A/c</button>
+      </div>
+    </div>
+    <div (click)="hideShowFlag='basicDetails'" class="pl-20">
+      <div class="row pt-24 pb-12">
+        <div class="col-1 pl-0">
+          <img src="/assets/images/svg/basic-details.svg" class="m-0">
         </div>
+        <div class="col-9">
+          <p class="m-0 roboto text-dark pt-10">Basic details</p>
         </div>
-        <div class="pl-20">
-        <div class="row pt-24 pb-12">
-          <div class="col-1 pl-0">
-            <img src="/assets/images/svg/basic-details.svg" class="m-0">
-          </div>
-          <div class="col-9">
-            <p class="m-0 roboto text-dark pt-10">Basic details</p>
-          </div>
+      </div>
+      <div class="row bt-primitive pt-12 pb-12">
+        <div class="col-1 pl-0">
+          <img src="/assets/images/svg/more-info.svg" class="m-0">
         </div>
-        <div class="row bt-primitive pt-12 pb-12">
-          <div class="col-1 pl-0">
-            <img src="/assets/images/svg/more-info.svg" class="m-0">
-          </div>
-          <div class="col-9">
-            <p class="m-0 roboto text-dark pt-10">More info</p>
-          </div>
+        <div class="col-9">
+          <p class="m-0 roboto text-dark pt-10">More info</p>
         </div>
-        <div class="row bt-primitive pt-12 pb-12">
-          <div class="col-1 pl-0">
-            <img src="/assets/images/svg/address-mob.svg" class="m-0">
-          </div>
-          <div class="col-9">
-            <p class="m-0 roboto text-dark pt-10">Address</p>
-          </div>
+      </div>
+      <div (click)="hideShowFlag='address'" class="row bt-primitive pt-12 pb-12">
+        <div class="col-1 pl-0">
+          <img src="/assets/images/svg/address-mob.svg" class="m-0">
         </div>
-        <div class="row bt-primitive pt-12 pb-12">
-          <div class="col-1 pl-0">
-            <img src="/assets/images/svg/bank-mob.svg" class="m-0">
-          </div>
-          <div class="col-9">
-            <p class="m-0 roboto text-dark pt-10">Bank</p>
-          </div>
+        <div class="col-9">
+          <p class="m-0 roboto text-dark pt-10">Address</p>
         </div>
-        <div class="row bt-primitive pt-12 pb-12">
-          <div class="col-1 pl-0">
-            <img src="/assets/images/svg/demat.svg" class="m-0">
-          </div>
-          <div class="col-9">
-            <p class="m-0 roboto text-dark pt-10">Demat</p>
-          </div>
+      </div>
+      <div (click)="hideShowFlag='bank'" class="row bt-primitive pt-12 pb-12">
+        <div class="col-1 pl-0">
+          <img src="/assets/images/svg/bank-mob.svg" class="m-0">
         </div>
-        <div class="row bt-primitive bb-primitive pt-12 pb-12">
-          <div class="col-1 pl-0">
-            <img src="/assets/images/svg/uploads-mob.svg" class="m-0">
-          </div>
-          <div class="col-9">
-            <p class="m-0 roboto text-dark pt-10">Uploads</p>
-          </div>
+        <div class="col-9">
+          <p class="m-0 roboto text-dark pt-10">Bank</p>
         </div>
-`        </div> -->
+      </div>
+      <div (click)="hideShowFlag='demat'" class="row bt-primitive pt-12 pb-12">
+        <div class="col-1 pl-0">
+          <img src="/assets/images/svg/demat.svg" class="m-0">
+        </div>
+        <div class="col-9">
+          <p class="m-0 roboto text-dark pt-10">Demat</p>
+        </div>
+      </div>
+      <div class="row bt-primitive bb-primitive pt-12 pb-12">
+        <div class="col-1 pl-0">
+          <img src="/assets/images/svg/uploads-mob.svg" class="m-0">
+        </div>
+        <div class="col-9">
+          <p class="m-0 roboto text-dark pt-10">Uploads</p>
+        </div>
+      </div>
+      `
+    </div>
+  </div>
+  <app-mobile-view-address (backfunc)="backfunc($event)" [data]="selectedFamilyMember" *ngIf="hideShowFlag=='address'">
+  </app-mobile-view-address>
+  <app-mobile-view-bank (backfunc)="backfunc($event)" [data]="selectedFamilyMember" *ngIf="hideShowFlag=='bank'">
+  </app-mobile-view-bank>
+  <app-mobile-view-demat (backfunc)="backfunc($event)" [data]="selectedFamilyMember" *ngIf="hideShowFlag=='demat'">
+  </app-mobile-view-demat>
   <!-- end Profile family memeber  -->
   <!-- Profile family memeber basic info -->
   <div *ngIf="hideShowFlag=='changePassword'">
@@ -486,117 +503,43 @@
         </div> -->
   <!-- end add new bank -->
   <!-- (family memeber)basic details -->
-  <!-- <div class="bg-grey lter pb-28 pt-90">
-        <div class="row">
-          <div class="col-6 mob-pl-10 pr-5">
-            <p class="m-0 pb-4 roboto f-400">Investor category</p>
-            <div class="form-group mb-0">
-              <mat-select class="form-control">
-                  <mat-option>
-                    Individual
-                  </mat-option>
-                </mat-select>
-            </div>
-          </div>
-          <div class="col-6 mob-pr-10 pl-5">
-            <p class="m-0 pb-4 roboto f-400">Tax status</p>
-            <div class="form-group mb-0">
-              <mat-select class="form-control">
-                  <mat-option>
-                    Individual
-                  </mat-option>
-                </mat-select>
-            </div>
+  <div *ngIf="hideShowFlag=='basicDetails'">
+    <div class="row mob-bg-common pb-12 mobtop-navfixed">
+      <div class="col-2">
+        <img (click)="hideShowFlag='FamilyMember'" src="/assets/images/svg/mob-left-arrow.svg" class="c-p pt-4">
+      </div>
+      <div class="col-10 pl-0">
+        <h5 class="m-0 f-18 text-white pt-4 roboto">Basic details</h5>
+      </div>
+    </div>
+    <div class="bg-grey lter pb-28 pt-90">
+      <div class="row">
+        <div class="col-6 mob-pl-10 pr-5">
+          <p class="m-0 pb-4 roboto f-400">Investor category</p>
+          <div class="form-group mb-0">
+            <mat-select [formControl]="catergoryType" class="form-control">
+              <mat-option [value]=1>Individual</mat-option>
+              <mat-option [value]=2>Minor</mat-option>
+            </mat-select>
           </div>
         </div>
-         <div class="row pt-32">
-           <div class="col-12 mob-pl-10 mob-pr-10">
-             <h5 class="m-0 roboto text-dark pb-10 f-16">Full name</h5>
-             <div class="form-group mb-0">
-                    <mat-form-field >
-                     <input matInput class="form-control text-primitive" value="Enter Name">
-                   </mat-form-field>
-             </div>
-           </div>
+        <div class="col-6 mob-pr-10 pl-5">
+          <p class="m-0 pb-4 roboto f-400">Tax status</p>
+          <div class="form-group mb-0">
+            <mat-select [formControl]="taxStatus" class="form-control">
+              <mat-option [value]=1>Resident</mat-option>
+              <mat-option [value]=0>Non-resident</mat-option>
+            </mat-select>
+          </div>
         </div>
-        <div class="row pt-32">
-           <div class="col-12 mob-pl-10 mob-pr-10">
-             <h5 class="m-0 roboto text-dark pb-10 f-16">Email</h5>
-             <div class="form-group mb-0">
-                    <mat-form-field >
-                     <input matInput class="form-control text-primitive" value="Enter email">
-                   </mat-form-field>
-             </div>
-           </div>
-        </div>
-        <div class="row pt-32">
-           <div class="col-12 mob-pl-10 mob-pr-10">
-             <h5 class="m-0 roboto text-dark pb-10 f-16">Mobile</h5>
-            <div class="row">
-              <div class="col-4 pl-0 mob-pr-10">
-                <mat-form-field>
-                   <mat-select class="form-control">
-                     <mat-option>
-                       +91 (IND)
-                     </mat-option>
-                   </mat-select>
-                 </mat-form-field>
-              </div>
-              <div class="col-8 pr-0 mob-pl-10">
-                 <mat-form-field >
-                     <input matInput class="form-control text-primitive" value="Enter mobile">
-                   </mat-form-field>
-              </div>
-            </div>
-           </div>
-        </div>
-        <div class="row pt-32">
-           <div class="col-12 mob-pl-10 mob-pr-10">
-             <h5 class="m-0 roboto text-dark pb-10 f-16">Enter your PAN</h5>
-             <div class="form-group mb-0">
-                    <mat-form-field >
-                     <input matInput class="form-control text-primitive" value="Enter PAN">
-                   </mat-form-field>
-             </div>
-           </div>
-        </div>
-        <div class="row pt-32">
-           <div class="col-12 mob-pl-10 mob-pr-10">
-             <h5 class="m-0 roboto text-dark pb-10 f-16">Date of birth</h5>
-             <div class="form-group mb-0">
-                    <mat-form-field >
-                     <input matInput class="form-control text-primitive" value="DD/MM/YYYY">
-                   </mat-form-field>
-             </div>
-           </div>
-        </div>
-        <div class="row pt-32">
-           <div class="col-12 mob-pl-10 mob-pr-10">
-             <h5 class="m-0 roboto text-dark pb-10 f-16">Gender</h5>
-           <mat-radio-group aria-label="Select an option">
-         <mat-radio-button value="1" class="text-primary bu-primary wh-99 bg-white">Male</mat-radio-button>
-         <mat-radio-button value="2" class="text-primitive b-ua wh-116 bg-white">Female</mat-radio-button>
-         <mat-radio-button value="3" class="text-primitive b-ua wh-102 bg-white">Other</mat-radio-button>
-        </mat-radio-group>
-           </div>
-        </div>
-        <div class="row pt-32">
-           <div class="col-12 mob-pl-10 mob-pr-10">
-             <h5 class="m-0 roboto text-dark pb-10 f-16">Relation</h5>
-             <div class="form-group mb-0">
-                   <mat-form-field>
-                   <mat-select class="form-control">
-                     <mat-option>
-                      Select relation
-                     </mat-option>
-                   </mat-select>
-                   <mat-hint class="text-custom">Relation with group head</mat-hint>
-                 </mat-form-field>
-             </div>
-           </div>
-        </div>
-        </div>
-        -->
+        <app-individual-member-form [categoryType]="catergoryType.value" [taxStatusType]="taxStatus.value"
+          [formData]="selectedFamilyMember" *ngIf="catergoryType.value==1">
+        </app-individual-member-form>
+        <app-minor-member-form [categoryType]="catergoryType.value" [taxStatusType]="taxStatus.value"
+          [formData]="selectedFamilyMember" *ngIf="catergoryType.value==2"></app-minor-member-form>
+      </div>
+    </div>
+  </div>
   <!-- end -->
   <!-- More info form -->
   <!-- <div class="bg-grey lter pb-90 pt-90">

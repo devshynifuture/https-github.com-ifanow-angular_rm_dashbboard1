@@ -17,15 +17,15 @@
                             <!-- <input  matInput autocomplete="off"
                             [(value)]="startDate" class="form-control br-0 b-0"
                             [matDatepicker]="policyStartDatePicker">
-                   
+
                         <mat-datepicker #policyStartDatePicker ></mat-datepicker>
                             -
-                            
+
                         <input  matInput autocomplete="off"
                         [(value)]="endDate" class="form-control br-0 b-0"
                         [matDatepicker]="policyEndtDatePicker">
                     <mat-datepicker #policyStartDatePicker ></mat-datepicker> -->
-                   
+
                             </mat-chip>
                         </mat-chip-list>
                         <div class="col-md-8 right text-right pr-0" >
@@ -57,7 +57,7 @@
                                         <a class="c-p downloadPdfIcon" [matMenuTriggerFor]="menu1" *ngIf="!fragmentData.isSpinner">
                                             <img src="assets/images/svg/download-bordered.svg">
                                         </a>
-                        
+
                                         <mat-menu #menu1="matMenu">
                                             <button mat-menu-item (click)="generatePdf('template')">PDF</button>
                                             <button (click)="Excel('Expenses','template')" mat-menu-item>XLS</button>
@@ -208,7 +208,7 @@
                                                         <div [ngClass]="{'bar': isLoading}" *ngIf="!isLoading">
                                                             {{(element.paymentModeId == 2)? 'Debit card':(element.paymentModeId == 1)? 'Credit card':'-'}}
                                                         </div>
-                                                        <div class="bar" *ngIf="isLaoding">
+                                                        <div class="bar" *ngIf="isLoading">
                                                             {{''}}
                                                         </div>
                                                     </td>
@@ -311,7 +311,7 @@
                                         <a class="c-p downloadPdfIcon" [matMenuTriggerFor]="menu2" *ngIf="!fragmentData.isSpinner">
                                             <img src="assets/images/svg/download-bordered.svg">
                                         </a>
-                        
+
                                         <mat-menu #menu2="matMenu">
                                             <button mat-menu-item (click)="generatePdf('template2')">PDF</button>
                                             <button (click)="Excel('Expenses','template2')" mat-menu-item>XLS</button>
@@ -455,7 +455,7 @@
                                         <ng-container matColumnDef="spent">
                                             <th mat-sort-header="spent" mat-header-cell *matHeaderCellDef class="br text-right"> Spent </th>
                                             <td mat-cell *matCellDef="let element" class="br text-right">
-                                               
+
                                                 <div [ngClass]="{'bar': isLoading}">{{!isLoading && element.spent ? "₹" : ""}}<span appFormatNumber>{{isLoading ? '' : (element.spent ? element.spent : '-')}}</span>
                                                 </div>
                                             </td>
@@ -577,7 +577,7 @@
                 Mode </td>
             <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Amount </td>
-         
+
 
         </tr>
         <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;" *ngFor="let item of dataSource.data ;index as i">
@@ -592,7 +592,7 @@
                 {{(item.description)?item.description:'-'}}</td>
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>  {{(item.paymentModeId == 2)? 'Debit card':(item.paymentModeId == 1)? 'Credit card':'-'}}</td>
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>{{item.amount}}</td>
-           
+
 
         </tr>
         <tr *ngIf="dataSource.data.length == 0">
@@ -622,7 +622,7 @@
                 Mode </td>
             <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Amount </td>
-         
+
 
         </tr>
         <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;" *ngFor="let item of dataSource1.data ;index as i">
@@ -637,7 +637,7 @@
                 {{(item.description)?item.description:'-'}}</td>
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>  {{(item.paymentModeId == 2)? 'Debit card':(item.paymentModeId == 1)? 'Credit card':'-'}}</td>
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>{{item.amount}}</td>
-           
+
 
         </tr>
         <tr *ngIf="dataSource1.data.length == 0">
@@ -722,7 +722,7 @@
                 Progress </td>
             <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Spent </td>
-         
+
 
         </tr>
         <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;" *ngFor="let item of dataSource4.data ;index as i">
@@ -733,12 +733,12 @@
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 {{item.amount}}
             </td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>  
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>
                 <mat-progress-bar  mode="determinate"
                 value="40" class="w-80"></mat-progress-bar>
             </td>
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>{{item.spent}}</td>
-           
+
 
         </tr>
         <tr *ngIf="dataSource4.data.length == 0">
@@ -766,7 +766,7 @@
                 Progress </td>
             <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Spent </td>
-         
+
 
         </tr>
         <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;" *ngFor="let item of dataSource4.data ;index as i">
@@ -777,12 +777,12 @@
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 {{item.amount}}
             </td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>  
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>
                 <mat-progress-bar  mode="determinate"
                 value="40" class="w-80"></mat-progress-bar>
             </td>
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>{{item.spent}}</td>
-           
+
 
         </tr>
         <tr *ngIf="dataSource5.data.length == 0">
