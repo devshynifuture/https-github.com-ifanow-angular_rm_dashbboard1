@@ -68,8 +68,8 @@ import { MinorMemberFormComponent } from './component/customer/mobile/profile/mo
     EntryComponentsModule,
     AccountEntryModule,
     PlanEntryModule,
-    CustomersRoutingModule,
-    // MobileRoutingModule,
+    // CustomersRoutingModule,
+    MobileRoutingModule,
     SlickCarouselModule,
     AdviceEntryModule,
     CustomerOverviewEntryModule,
@@ -83,8 +83,8 @@ import { MinorMemberFormComponent } from './component/customer/mobile/profile/mo
   ],
   exports: [],
   providers: [DynamicComponentService, AdvisorAndOrganizationInfoService],
-  entryComponents: [EntryComponentsModule.getComponentList(), AccountEntryModule.getComponentList(), AdviceEntryModule.getComponentList()
-    , PlanEntryModule.getComponentList(), CustomerOverviewEntryModule.getComponentList(), UploadDocumentComponent, EditDocumentPopupComponent]
+  entryComponents: [EntryComponentsModule.getComponentList(), AccountEntryModule.getComponentList(), AdviceEntryModule.getComponentList(),
+  PlanEntryModule.getComponentList(), CustomerOverviewEntryModule.getComponentList(), UploadDocumentComponent, EditDocumentPopupComponent]
 })
 export class CustomersModule {
 }
