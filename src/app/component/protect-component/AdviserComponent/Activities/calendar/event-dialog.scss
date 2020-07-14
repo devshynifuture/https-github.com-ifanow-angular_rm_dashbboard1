@@ -40,6 +40,18 @@
                 }
             }
             
+            .uiListChanges_two {
+                margin-bottom: 10px;
+                display: block;
+                li {
+                    display: flex;
+                    align-items: center;
+                    padding-left: 15px;
+                    background: url('/assets/images/svg/calender-dot.svg') no-repeat;
+                    background-position: 4px 10px;
+                }
+            }
+            
              ::ng-deep .newTextarea .fr-box.fr-basic .fr-wrapper {
                 min-height: inherit;
                 height: 100px;
