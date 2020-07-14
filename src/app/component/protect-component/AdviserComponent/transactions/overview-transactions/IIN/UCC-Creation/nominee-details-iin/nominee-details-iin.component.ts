@@ -356,7 +356,8 @@ export class NomineeDetailsIinComponent implements OnInit {
       const obj = {
         ownerName: this.inputData.ownerName,
         holdingType: this.inputData.holdingType,
-        taxStatus: this.inputData.taxStatus,
+        taxMaster: this.inputData.taxMaster,
+        taxMasterId: this.inputData.taxMasterId,
         holderList: this.inputData.holderList,
         bankDetailList: this.inputData.bankDetailList,
         nomineeList: this.nominee,

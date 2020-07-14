@@ -91,10 +91,10 @@
       </div>
       <div class="col-md-7 form-group">
         <mat-form-field appearance="standard" floatLabel="never">
-          <mat-select class="form-control" formControlName="taxStatus">
+          <mat-select class="form-control" formControlName="taxMaster">
             <mat-option disabled value=''>Select tax status</mat-option>
-            <mat-option *ngFor="let singleTaxStatus of taxStatusList" [value]="singleTaxStatus.taxStatusCode">
-              {{singleTaxStatus.taxStatusDesc}}
+            <mat-option *ngFor="let singleTaxStatus of taxStatusList" [value]="singleTaxStatus">
+              {{singleTaxStatus.description}}
             </mat-option>
           </mat-select>
           <mat-error class="f-12">This field is required</mat-error>
