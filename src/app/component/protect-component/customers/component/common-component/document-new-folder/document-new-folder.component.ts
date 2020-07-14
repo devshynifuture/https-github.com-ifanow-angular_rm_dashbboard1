@@ -22,28 +22,28 @@ export class DocumentNewFolderComponent implements OnInit {
 
   constructor(private custumService: CustomerService,
     public dialogRef: MatDialogRef<DocumentNewFolderComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData,private eventService:EventService) {}
+    @Inject(MAT_DIALOG_DATA) public data: DialogData, private eventService: EventService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.folderUpload = this.data.animal;
     this.folderName = this.data.name;
-    this.parentId=this.data.parentId;
-     this.rename(this.folderName);
+    this.parentId = this.data.parentId;
+    this.rename(this.folderName);
   }
 
-  createNewFolder(value){
-   console.log(this.nameFolder)
-   this.showSpinner = true
+  createNewFolder(value) {
+    console.log(this.nameFolder)
+    this.showSpinner = true
 
 
-    if(this.folderUpload!='CREATE'){
-   let obj ={
-     newFolder : value, rename: this.SendObj
-   }
-   this.close(true,obj)
-    }else{
+    if (this.folderUpload != 'Create') {
+      let obj = {
+        newFolder: value, rename: this.SendObj
+      }
+      this.close(true, obj)
+    } else {
       const obj = {
         clientId: this.clientId,
         advisorId: this.advisorId,
@@ -56,26 +56,26 @@ export class DocumentNewFolderComponent implements OnInit {
     }
 
   }
-  newFolderRes(data){
+  newFolderRes(data) {
     this.showSpinner = false
     console.log(data)
-    if(data == 'Folder name exist in given directory'){
+    if (data == 'Folder name exist in given directory') {
       this.eventService.openSnackBar('Folder name already exist', 'Ok');
-    }else{
-      let obj ={
-        newFolder : this.nameFolder, rename: this.SendObj
+    } else {
+      let obj = {
+        newFolder: this.nameFolder, rename: this.SendObj
       }
-       this.close(true,obj)
+      this.close(true, obj)
     }
-    
+
   }
-  rename(value){
-    this.nameFolder = (value.fileName == undefined)? value.folderName : value.fileName
-    this.reameValue = (value.fileName == undefined)? 'folderName' : 'fileName'
-    this.SendObj = { name : this.nameFolder, flag : this.reameValue, value: value}
+  rename(value) {
+    this.nameFolder = (value.fileName == undefined) ? value.folderName : value.fileName
+    this.reameValue = (value.fileName == undefined) ? 'folderName' : 'fileName'
+    this.SendObj = { name: this.nameFolder, flag: this.reameValue, value: value }
   }
-  close(flag,obj) {
-    this.dialogRef.close({ isRefreshRequired: flag,data:obj })
+  close(flag, obj) {
+    this.dialogRef.close({ isRefreshRequired: flag, data: obj })
   }
 }
 

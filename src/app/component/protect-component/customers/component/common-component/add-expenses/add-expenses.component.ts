@@ -29,6 +29,9 @@ export class AddExpensesComponent implements OnInit {
   recuring: any;
   isNoOfYrs: any;
   getFlag: any;
+  trnFlag: string;
+  budgetFlag: string;
+  mytime: Date = new Date();
 
   constructor(private peopleService:PeopleService,private event: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject,
     private planService: PlanService, private constantService: ConstantsService) {
@@ -57,11 +60,13 @@ export class AddExpensesComponent implements OnInit {
     this.getListFamilyMem();
     this.getdataForm(this.inputData);
     this.getdataFormRec(this.inputData)
+    this.trnFlag='Transaction';
+    this.budgetFlag='Budget';
   }
 
   display(value) {
     this.ownerName = value.userName;
-    this.familyMemberId = value.id
+    this.familyMemberId = value.familyMemberId
   }
 
   lisNominee(value) {
@@ -81,14 +86,14 @@ export class AddExpensesComponent implements OnInit {
       this.isRecuring = data.isRecuring
     }
     this.expenses = this.fb.group({
-      timeInMilliSec: [(data == undefined) ? '' : (data.timeInMilliSec == undefined) ? data.time : data.timeInMilliSec, [Validators.required]],
+      timeInMilliSec: [(data == undefined) ? '' : data.timeInString],
       expenseDoneOn: [(data == undefined) ? '' : new Date((data.expenseDoneOn == undefined) ? data.startsFrom : data.expenseDoneOn), [Validators.required]],
       amount: [(data == undefined) ? '' : data.amount, [Validators.required]],
-      description: [(data == undefined) ? '' : data.description, [Validators.required]],
-      id: [(data == undefined) ? '' : data.id, [Validators.required]],
-      category: [(data == undefined) ? '' : (data.expenseCategoryId == undefined) ? data.budgetCategoryId : data.expenseCategoryId, [Validators.required]],
+      description: [(data == undefined) ? '' : data.description],
+      id: [(data == undefined) ? '' : data.id],
+      category: [(data == undefined) ? null : (data.expenseCategoryId == undefined) ? data.budgetCategoryId : data.expenseCategoryId, [Validators.required]],
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
-      paymentModeId: [(data == undefined) ? '' : data.paymentModeId + '', [Validators.required]],
+      paymentModeId: [(data.paymentModeId == undefined) ? '' : data.paymentModeId + '', [Validators.required]],
       familyMemberId : [(data == undefined) ? '' : data.familyMemberId + '', [Validators.required]],
       isRecuring: false
     });
@@ -100,24 +105,25 @@ export class AddExpensesComponent implements OnInit {
 
     if (data == undefined) {
       data = {};
-    } if (this.getFlag == 'editExpense' || this.getFlag == 'editBudget') {
+    } if (this.getFlag == 'editExpenses' || this.getFlag == 'editBudget') {
       this.isRecuring = data.isRecuring
     }
     this.recuring = this.fb.group({
-      timeInMilliSec: [(data == undefined) ? '' : (data.timeInMilliSec == undefined) ? data.time : data.timeInMilliSec, [Validators.required]],
+      timeInMilliSec: [(data == undefined) ? '' : data.timeInString],
       amount: [(data == undefined) ? '' : data.amount, [Validators.required]],
-      repeatFrequency: [(data == undefined) ? '' : data.repeatFrequency + '', [Validators.required]],
+      repeatFrequency: [(data == undefined) ? null : data.repeatFrequency+'' , [Validators.required]],
       startsFrom: [(data == undefined) ? '' : new Date((data.expenseDoneOn == undefined) ? data.startsFrom : data.expenseDoneOn), [Validators.required]],
-      numberOfYearOrNumberOfTime: [(data == undefined) ? '' : (data.numberOfYearOrNumberOfTime), [Validators.required]],
-      continueTill: [(data == undefined) ? '' : (data.continueTill) + '', [Validators.required]],
-      description: [(data == undefined) ? '' : data.description, [Validators.required]],
-      id: [(data == undefined) ? '' : data.id, [Validators.required]],
+      numberOfYearOrNumberOfTime: [(data == undefined) ? '' : (data.numberOfYearOrNumberOfTime)],
+      UntilDate: [(data == undefined) ? '' : new Date((data.UntilDate == undefined) ? data.startsFrom : data.UntilDate)],
+      continueTill: [(data == undefined) ? '' : (data.continueTill + ''), [Validators.required]],
+      description: [(data == undefined) ? '' : data.description],
+      id: [(data == undefined) ? '' : data.id],
       category: [(data == undefined) ? '' : (data.expenseCategoryId == undefined) ? data.budgetCategoryId : data.expenseCategoryId, [Validators.required]],
       ownerName: [(data == undefined) ? '' : data.ownerName, [Validators.required]],
-      paymentModeId: [(data == undefined) ? '' : data.paymentModeId + '', [Validators.required]],
+      paymentModeId: [(data.paymentModeId == undefined) ? '' : data.paymentModeId + '', [Validators.required]],
       familyMemberId : [(data == undefined) ? '' : data.familyMemberId + '', [Validators.required]],
       isRecuring: true,
-    });
+    }); 
     this.expenseList = this.constantService.expenseList
     this.familyMemberId = this.expenses.controls.familyMemberId.value
   }
@@ -149,33 +155,66 @@ export class AddExpensesComponent implements OnInit {
   }
   toggle(value) {
     this.isRecuring = value.checked;
+    if(value.checked == true && (this.getFlag == 'addExpenses' || this.getFlag == 'editExpenses')){
+      this.trnFlag = 'Recurring transaction';
+    }else if(value.checked == true && (this.getFlag == 'addBudget' || this.getFlag == 'editBudget')){
+      this.budgetFlag = 'Recurring Budget'
+    }else if(value.checked == false && (this.getFlag == 'addExpenses' || this.getFlag == 'editExpenses')){
+      this.trnFlag = 'Transaction';
+    }else{
+      this.budgetFlag = 'Budget'
+
+    }
+    
   }
   continuesTill(value) {
     this.isNoOfYrs = value;
+    if (this.recuring.get('continueTill').value == '3' || this.recuring.get('continueTill').value == '4') {
+      this.recuring.get('numberOfYearOrNumberOfTime').setValidators([Validators.required]);
+      this.recuring.get('numberOfYearOrNumberOfTime').updateValueAndValidity();
+      this.recuring.controls['numberOfYearOrNumberOfTime'].setErrors({ 'required': true });
+    } 
+    // else if(this.recuring.get('continueTill').value == '5' ){
+    //   this.recuring.get('UntilDate').setValidators([Validators.required]);
+    //   this.recuring.get('UntilDate').updateValueAndValidity();
+    //   this.recuring.controls['UntilDate'].setErrors({ 'required': true });
+    // }
+    else{
+      this.recuring.get('numberOfYearOrNumberOfTime').setValidators(null);
+      this.recuring.get('numberOfYearOrNumberOfTime').updateValueAndValidity();
+      this.recuring.controls['numberOfYearOrNumberOfTime'].setErrors(null);
+      // this.recuring.get('UntilDate').setValidators(null);
+      // this.recuring.get('UntilDate').updateValueAndValidity();
+      // this.recuring.controls['UntilDate'].setErrors(null);
+    }
   }
   saveRecuringExpense() {
-    if (this.recuring.get('repeatFrequency').invalid) {
-      this.recuring.get('repeatFrequency').markAsTouched();
-      return
-    } else if (this.recuring.get('amount').invalid) {
-      this.recuring.get('amount').markAsTouched();
-      return
-    } else if (this.recuring.get('category').invalid) {
-      this.recuring.get('category').markAsTouched();
-      return
-    } else if (this.recuring.get('startsFrom').invalid) {
-      this.recuring.get('startsFrom').markAsTouched();
-      return
-    } else if (this.recuring.get('paymentModeId').invalid) {
-      this.recuring.get('paymentModeId').markAsTouched();
-      return
-    } else if (this.recuring.get('continueTill').invalid) {
-      this.recuring.get('continueTill').markAsTouched();
-      return
-    } else if (this.recuring.get('ownerName').invalid) {
-      this.recuring.get('ownerName').markAsTouched();
-      return
-    } else {
+    // if (this.recuring.get('repeatFrequency').invalid) {
+    //   this.recuring.get('repeatFrequency').markAsTouched();
+    //   return
+    // } else if (this.recuring.get('amount').invalid) {
+    //   this.recuring.get('amount').markAsTouched();
+    //   return
+    // } else if (this.recuring.get('category').invalid) {
+    //   this.recuring.get('category').markAsTouched();
+    //   return
+    // } else if (this.recuring.get('startsFrom').invalid) {
+    //   this.recuring.get('startsFrom').markAsTouched();
+    //   return
+    // } else if (this.recuring.get('paymentModeId').invalid) {
+    //   this.recuring.get('paymentModeId').markAsTouched();
+    //   return
+    // } else if (this.recuring.get('continueTill').invalid) {
+    //   this.recuring.get('continueTill').markAsTouched();
+    //   return
+    // } else if (this.recuring.get('ownerName').invalid) {
+    //   this.recuring.get('ownerName').markAsTouched();
+    //   return
+    // } else {
+      if (this.recuring.invalid) {
+
+        this.recuring.markAllAsTouched();
+      } else{
       let obj = {
         advisorId: this.advisorId,
         clientId: this.clientId,
@@ -187,7 +226,10 @@ export class AddExpensesComponent implements OnInit {
         budgetCategoryId: this.recuring.controls.category.value,
         continueTill: parseInt(this.recuring.controls.continueTill.value),
         numberOfYearOrNumberOfTime: this.recuring.controls.numberOfYearOrNumberOfTime.value,
+        // UntilDate: this.recuring.controls.UntilDate.value,
         expenseCategoryId: this.recuring.controls.category.value,
+        description: this.recuring.controls.description.value,
+
       }
       if (this.getFlag == 'addExpenses') {
         if (this.recuring.controls.id.value == undefined) {
@@ -238,33 +280,38 @@ export class AddExpensesComponent implements OnInit {
   }
 
   saveExpenses() {
-    if (this.expenses.get('expenseDoneOn').invalid) {
-      this.expenses.get('expenseDoneOn').markAsTouched();
-      return
-    } else if (this.expenses.get('timeInMilliSec').invalid) {
-      this.expenses.get('timeInMilliSec').markAsTouched();
-      return
-    } else if (this.expenses.get('amount').invalid) {
-      this.expenses.get('amount').markAsTouched();
-      return
-    } else if (this.expenses.get('category').invalid) {
-      this.expenses.get('category').markAsTouched();
-      return
-    } else if (this.expenses.get('paymentModeId').invalid) {
-      this.expenses.get('paymentModeId').markAsTouched();
-      return
-    } else if (this.expenses.get('ownerName').invalid) {
-      this.expenses.get('ownerName').markAsTouched();
-      return
-    } else {
+    // if (this.expenses.get('expenseDoneOn').invalid) {
+    //   this.expenses.get('expenseDoneOn').markAsTouched();
+    //   return
+    // } else if (this.expenses.get('timeInMilliSec').invalid) {
+    //   this.expenses.get('timeInMilliSec').markAsTouched();
+    //   return
+    // } else if (this.expenses.get('amount').invalid) {
+    //   this.expenses.get('amount').markAsTouched();
+    //   return
+    // } else if (this.expenses.get('category').invalid) {
+    //   this.expenses.get('category').markAsTouched();
+    //   return
+    // } else if (this.expenses.get('paymentModeId').invalid) {
+    //   this.expenses.get('paymentModeId').markAsTouched();
+    //   return
+    // } else if (this.expenses.get('ownerName').invalid) {
+    //   this.expenses.get('ownerName').markAsTouched();
+    //   return
+    // } else {
+          if (this.expenses.invalid) {
+
+        this.expenses.markAllAsTouched();
+      }else{
       let obj = {
         advisorId: this.advisorId,
         clientId: this.clientId,
         familyMemberId: this.familyMemberId,
         expenseDoneOn: this.expenses.controls.expenseDoneOn.value,
         amount: this.expenses.controls.amount.value,
-        timeInMilliSec: this.expenses.controls.timeInMilliSec.value,
-        time:this.expenses.controls.timeInMilliSec.value,
+        // timeInMilliSec: this.expenses.controls.timeInMilliSec.value,
+         time:this.expenses.controls.timeInMilliSec.value,
+        timeInString:this.expenses.controls.timeInMilliSec.value,
         startsFrom:this.expenses.controls.expenseDoneOn.value,
         paymentModeId: this.expenses.controls.paymentModeId.value,
         expenseCategoryId: this.expenses.controls.category.value,
@@ -293,7 +340,7 @@ export class AddExpensesComponent implements OnInit {
         if (this.expenses.controls.id.value == undefined) {
           delete obj.expenseCategoryId;
           delete obj.expenseDoneOn
-          delete obj.timeInMilliSec
+          // delete obj.timeInMilliSec
           this.planService.addBudget(obj).subscribe(
             data => this.addBudgetRes(data)
           );
@@ -303,7 +350,7 @@ export class AddExpensesComponent implements OnInit {
         delete obj.expenseCategoryId;
         delete obj.expenseCategoryId;
         delete obj.expenseDoneOn
-        delete obj.timeInMilliSec
+        // delete obj.timeInMilliSec
         this.planService.editBudget(obj).subscribe(
           data => this.editBudgetRes(data)
         );

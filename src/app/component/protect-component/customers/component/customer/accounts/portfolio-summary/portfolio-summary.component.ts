@@ -8,6 +8,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { EnumDataService } from 'src/app/services/enum-data.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-portfolio-summary',
@@ -35,6 +36,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
   userData: any;
   filterCashFlow = { income: [], expense: [] };
   inflowFlag;
+  yearArr = Array(12).fill('').map((v, i) => this.datePipe.transform(new Date().setMonth(new Date().getMonth() + i), 'MMM'));
 
   outflowFlag;
   mutualFundValue: any = {
@@ -129,8 +131,8 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
           this.summaryTotalValue = Object.assign([], data);
           console.log(this.summaryTotalValue);
           // this.mutualFundValue = data[3];
-          // this.mutualFundValue = data.filter(element => element.assetType == 5);
-          // this.mutualFundValue = this.mutualFundValue[0];
+          this.mutualFundValue = data.filter(element => element.assetType == 5);
+          this.mutualFundValue = this.mutualFundValue[0];
           this.fixedIncome = data.filter(element => element.assetType == 7);
           this.fixedIncome = this.fixedIncome[0];
           this.realEstate = data.filter(element => element.assetType == 8);
@@ -254,7 +256,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
       this.cashFlowViewDataSource = ObjectArray['expense'];
       ObjectArray['expense'].forEach(element => {
         element['colourFlag'] = false;
-        this.expenseList.push(-Math.abs(Math.round(element.currentValue)));
+        this.expenseList.push(Math.abs(Math.round(element.currentValue)));
       });
       this.outflowFlag = true;
     } else if (ObjectArray['income'].length > 0) {
@@ -397,21 +399,29 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
 
   cashFlow(id, data) {
     console.log(data);
-    const { expense, income } = data;
-    const timeArray = [];
+    const thisMonthStart = UtilService.getStartOfTheDay(new Date(new Date().setDate(1)));
+    const thisMonthEnd = UtilService.getEndOfDay(new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0));
+    const { income, expense } = data;
+    income.forEach(element => {
+      element['month'] = this.datePipe.transform(new Date(element.targetDate), 'MMM')
+    });
+    expense.forEach(element => {
+      element['month'] = this.datePipe.transform(new Date(element.targetDate), 'MMM')
+    });
 
-    if (income.length > 0) {
-      income.forEach(element => {
-        timeArray.push(this.datePipe.transform(new Date(element.targetDate), 'd MMM'));
-      });
-    }
-    if (expense.length > 0) {
-      expense.forEach(element => {
-        timeArray.push(this.datePipe.transform(new Date(element.targetDate), 'd MMM'));
-      });
-    }
-    console.log('timearray : ', timeArray);
-    const chart1 = new Highcharts.Chart('cashFlow', {
+    const incomeGraph = this.yearArr.map((month, i) => {
+      return income.filter(e => e.month == month)
+        .map(e => e.currentValue)
+        .reduce((acc, curr) => acc + curr, 0);
+    })
+
+    const expenseGraph = this.yearArr.map((month, i) => {
+      return expense.filter(e => e.month == month)
+        .map(e => e.currentValue)
+        .reduce((acc, curr) => acc + curr, 0);
+    })
+
+    new Highcharts.Chart('cashFlow', {
       chart: {
         type: 'column'
       },
@@ -419,8 +429,8 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
         text: ''
       },
       xAxis: {
-        categories: timeArray,
-        visible: false
+        categories: this.yearArr,
+        visible: true
       },
       yAxis: {
         visible: false
@@ -431,15 +441,15 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
       series: [{
         name: 'Income',
         color: '#5cc644',
-        data: this.incomeList,
+        data: incomeGraph,
         showInLegend: false,
-        type: undefined,
+        type: 'column',
       }, {
         name: 'Expense',
         color: '#ef6725',
-        data: this.expenseList,
+        data: expenseGraph,
         showInLegend: false,
-        type: undefined,
+        type: 'column',
       }]
     });
   }
@@ -450,7 +460,8 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
         zoomType: 'x'
       },
       xAxis: {
-        type: 'datetime'
+        type: 'datetime',
+        showEmpty: true
       },
       yAxis: {
         title: {

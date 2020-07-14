@@ -1,0 +1,46 @@
+<div class="row mob-bg-black pt-8 pb-16 align-items-center">
+    <div class="col-10">
+        <h3 class="m-0 roboto f-500 text-white">Move 1 item to</h3>
+    </div>
+    <div class="col-2 full-center">
+        <span (click)="close()" class="material-icons c-p text-white">
+            clear
+        </span>
+    </div>
+</div>
+<div *ngIf="folderData && folderData.length>0" class="row bg-grey lter pt-10 pb-10">
+    <div class="col-12 pl-10 d-flex align-items-center">
+        <p *ngFor="let folder of folderData;index as i" (click)="getFolders(folder,folder.index)"
+            class="m-0 text-black roboto f-400">{{folder.openFolderNm}}
+            <span *ngIf="folder.arrowFlag" class="material-icons">
+                keyboard_arrow_right
+            </span>
+        </p>
+        <!-- <p class="m-0 text-black roboto f-400">Accounts</p> -->
+    </div>
+</div>
+<div *ngIf="commonFileFolders && commonFileFolders.length>0" class="pl-6 pr-6 pb-48">
+    <div (click)="openFolder(singleMainFolder)" *ngFor="let singleMainFolder of commonFileFolders"
+        class="row pt-16 bbl-1 ">
+        <div class=" col-2">
+            <img *ngIf="singleMainFolder.folderName" src="/assets/images/svg/folder-icon.svg">
+            <img *ngIf="singleMainFolder.fileName" src="/assets/images/svg/file-lines.svg">
+        </div>
+        <div class=" col-8">
+            <p class="m-0 text-black roboto f-400">{{singleMainFolder.folderName}}</p>
+        </div>
+        <div class=" col-2">
+            <span *ngIf="singleMainFolder.folderName" class="material-icons">
+                keyboard_arrow_right
+            </span>
+        </div>
+    </div>
+</div>
+
+<div class="row btl-1 pt-16 pb-16">
+    <div class="col-12 text-right">
+
+        <button mat-button class="text-primitive f-500" (click)="close()">CANCEL</button>
+        <button (click)="copyFile(data.name)" mat-button class="text-purple f-500">{{data.name}}</button>
+    </div>
+</div>

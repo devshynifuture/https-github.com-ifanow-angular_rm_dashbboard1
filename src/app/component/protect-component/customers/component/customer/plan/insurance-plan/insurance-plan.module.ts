@@ -9,6 +9,7 @@ import { LifeInsuranceComponent } from './mainInsuranceScreen/life-insurance/lif
 
 
 
+
 @NgModule({
   declarations: [AllInsurancelistComponent, LifeInsuranceComponent],
   imports: [

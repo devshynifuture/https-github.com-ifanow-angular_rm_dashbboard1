@@ -12,6 +12,7 @@ import {GoogleConnectComponent} from '../component/protect-component/AdviserComp
 import {CalendarScheduleComponent} from '../component/protect-component/AdviserComponent/Activities/calendar/calendar-schedule/calendar-schedule.component';
 import {DashEvent} from '../component/protect-component/AdviserComponent/Activities/calendar/dash-event';
 import {RealEstatePropertyComponent } from './real-estate-property/real-estate-property.component';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 // import {CommonComponentModule} from '../component/protect-component/common-component/common-component.module'
 // import {FroalaComponent} from '../component/protect-component/common-component/froala/froala.component';
@@ -34,6 +35,7 @@ import {RealEstatePropertyComponent } from './real-estate-property/real-estate-p
     NgxMatSelectSearchModule,
     ReactiveFormsModule,
     CustomDirectiveModule,
+    NgxMaterialTimepickerModule
     // CommonComponentModule
   ],
   exports: [

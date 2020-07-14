@@ -30,6 +30,9 @@ import { MobileTransactionsComponent } from './component/customer/mobile/transac
 import { MobileLeftSidenavComponent } from './component/customer/mobile/left-side/mobile-left-sidenav/mobile-left-sidenav.component';
 import { MobileRoutingModule } from './mobile-routing.module';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
+import { EditDocumentPopupComponent } from './component/customer/mobile/document/mobile-document/edit-document-popup/edit-document-popup.component';
+import { UploadDocumentComponent } from './component/customer/mobile/document/mobile-document/upload-document/upload-document.component';
+import { MutualFundsComponent } from './component/customer/mobile/mutual-funds/mutual-funds/mutual-funds.component';
 
 
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
@@ -38,7 +41,7 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
 
 
 @NgModule({
-  declarations: [CustomerComponent, TransactionSuccessfulComponent, MobileMyfeedComponent, MobileDocumentComponent, MobilePortfoiloComponent, MobileProfileComponent, MobileTransactionsComponent, MobileLeftSidenavComponent],
+  declarations: [CustomerComponent, TransactionSuccessfulComponent, MobileMyfeedComponent, MobileDocumentComponent, MobilePortfoiloComponent, MobileProfileComponent, MobileTransactionsComponent, MobileLeftSidenavComponent,UploadDocumentComponent,EditDocumentPopupComponent, MutualFundsComponent],
   imports: [ 
     // BrowserModule,
     CommonModule,
@@ -53,8 +56,8 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
     EntryComponentsModule,
     AccountEntryModule,
     PlanEntryModule,
-   CustomersRoutingModule,
-    //MobileRoutingModule,
+  CustomersRoutingModule,
+  // MobileRoutingModule,
     SlickCarouselModule,
     AdviceEntryModule,
     CustomerOverviewEntryModule,
@@ -69,7 +72,7 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
   exports: [],
   providers: [DynamicComponentService, AdvisorAndOrganizationInfoService],
   entryComponents: [EntryComponentsModule.getComponentList(), AccountEntryModule.getComponentList(), AdviceEntryModule.getComponentList()
-    , PlanEntryModule.getComponentList(), CustomerOverviewEntryModule.getComponentList()]
+    , PlanEntryModule.getComponentList(), CustomerOverviewEntryModule.getComponentList(),UploadDocumentComponent,EditDocumentPopupComponent]
 })
 export class CustomersModule {
 }

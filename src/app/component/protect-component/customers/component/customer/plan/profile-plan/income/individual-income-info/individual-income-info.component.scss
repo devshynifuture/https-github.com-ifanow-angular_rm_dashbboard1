@@ -10,7 +10,13 @@
   flex-direction: column;
   position: relative;
 }
+.example-month-picker .mat-calendar-period-button {
+  pointer-events: none;
+}
 
+.example-month-picker .mat-calendar-arrow {
+  display: none;
+}
 .borderActive {
   border: 3px solid #008FFF;
   background: #DFF1FF;
@@ -73,4 +79,21 @@
 .width60 {
   width: 55px;
   float: left;
+}
+
+
+::ng-deep .checkOne .mat-radio-button {
+  border: 2px solid #b5b5b5;
+  min-width: 123px;
+  font-size: 14px;
+  border-top: transparent;
+}
+
+::ng-deep .checkOne .mat-radio-button.radioBtnActive{
+  border: 2px solid #008FFF;
+  border-top: transparent;
+}
+
+.checkOne {
+  width: 124px;
 }

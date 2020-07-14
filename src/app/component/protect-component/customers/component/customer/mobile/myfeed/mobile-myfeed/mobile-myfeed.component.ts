@@ -3,12 +3,20 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../customer.service';
 import { AppConstants } from 'src/app/services/app-constants';
 import { Chart } from 'angular-highcharts';
-import { UtilService } from 'src/app/services/util.service';
+import { UtilService, LoaderFunction } from 'src/app/services/util.service';
+import * as Highcharts from 'highcharts';
+import { slideInAnimation } from 'src/app/animation/router.animation';
+import { EventService } from 'src/app/Data-service/event.service';
+import { MfServiceService } from '../../../accounts/assets/mutual-fund/mf-service.service';
 
 @Component({
   selector: 'app-mobile-myfeed',
   templateUrl: './mobile-myfeed.component.html',
-  styleUrls: ['./mobile-myfeed.component.scss']
+  styleUrls: ['./mobile-myfeed.component.scss'],
+  providers: [LoaderFunction],
+  animations: [
+    slideInAnimation,
+  ]
 })
 export class MobileMyfeedComponent implements OnInit {
   bscData;
@@ -18,8 +26,9 @@ export class MobileMyfeedComponent implements OnInit {
   clientId: any;
   clientData: any;
   chartTotal: number;
-  chartData: any[];
   assetAllocationPieConfig: Chart;
+  mfSubCategoryPieConfig: Chart;
+  mfAllocationPieConfig : Chart;
   portFolioData: any;
   recentTransactions: any[];
   riskProfile: any[];
@@ -36,14 +45,171 @@ export class MobileMyfeedComponent implements OnInit {
   goldData: { carat_24: any; carat_22: any; };
   documentVault: any;
   globalRiskProfile: any[];
+  chart: Highcharts.Chart;
+  hasError: boolean;
+  chartData: any[] = [
+    {
+      name: 'Equity',
+      y: 20,
+      color: AppConstants.DONUT_CHART_COLORS[0],
+      dataLabels: {
+        enabled: false
+      }
+    }, {
+      name: 'Fixed income',
+      y: 20,
+      color: AppConstants.DONUT_CHART_COLORS[1],
+      dataLabels: {
+        enabled: false
+      }
+    }, {
+      name: 'Commodities',
+      y: 20,
+      color: AppConstants.DONUT_CHART_COLORS[2],
+      dataLabels: {
+        enabled: false
+      }
+    }, {
+      name: 'Real estate',
+      y: 20,
+      color: AppConstants.DONUT_CHART_COLORS[3],
+      dataLabels: {
+        enabled: false
+      }
+    }, {
+      name: 'Others',
+      y: 20,
+      color: AppConstants.DONUT_CHART_COLORS[4],
+      dataLabels: {
+        enabled: false
+      }
+    }
+  ]
+  portfolioData: boolean = false;
+  totalValue: any;
+  familyMembers: any;
+  mutualFund: any;
+  familyWiseAllocation: any;
+  filterData: any;
+  worker: Worker;
+  mfSubCatAllocationData: any;
+  imgGenderSrc: any;
 
   constructor(
     private customerService: CustomerService,
+    public eventService : EventService,
+    public loaderFn: LoaderFunction,
+    public mfServiceService : MfServiceService,
   ) {
     this.clientId = AuthService.getClientId()
     this.advisorId = AuthService.getAdvisorId()
     this.clientData = AuthService.getClientData()
+    this.imgGenderSrc = this.clientData.profilePicUrl;
   }
+
+  tabsLoaded = {
+    portfolioData: {
+      dataLoaded: false,
+      hasData: false,
+      isLoading: true,
+    },
+    rtaFeeds: {
+      dataLoaded: false,
+      hasData: false,
+      isLoading: true,
+    },
+    recentTransactions: {
+      dataLoaded: false,
+      hasData: false,
+      isLoading: true,
+    },
+    documentsVault: {
+      dataLoaded: false,
+      hasData: false,
+      isLoading: true,
+    },
+    riskProfile: {
+      dataLoaded: false,
+      hasData: false,
+      isLoading: true,
+    },
+    globalRiskProfile: {
+      dataLoaded: false,
+      hasData: false,
+      isLoading: true,
+    },
+    goalsData: {
+      dataLoaded: false,
+      hasData: false,
+      isLoading: true,
+      displaySection: false,
+    },
+    cashflowData: {
+      dataLoaded: false,
+      hasData: false,
+      isLoading: true,
+    },
+    customerProfile: {
+      dataLoaded: false,
+      hasData: false,
+      isLoading: true,
+    },
+    mfPortfolioSummaryData: {
+      dataLoaded: false,
+      hasData: false,
+      isLoading: true,
+      displaySection: false,
+    },
+    mfSubCategorySummaryData: {
+      dataLoaded: false,
+      hasData: false,
+      isLoading: true,
+      displaySection: false,
+    },
+    familyMembers: {
+      dataLoaded: false,
+      hasData: false,
+      isLoading: true,
+    }
+  };
+  mfAllocationData: any[] = [
+    {
+      name: 'EQUITY',
+      y: 0,
+      color: AppConstants.DONUT_CHART_COLORS[0],
+      dataLabels: {
+        enabled: false
+      }
+    }, {
+      name: 'DEBT',
+      y: 0,
+      color: AppConstants.DONUT_CHART_COLORS[1],
+      dataLabels: {
+        enabled: false
+      }
+    }, {
+      name: 'HYBRID',
+      y: 0,
+      color: AppConstants.DONUT_CHART_COLORS[2],
+      dataLabels: {
+        enabled: false
+      }
+    }, {
+      name: 'SOLUTION ORIENTED',
+      y: 0,
+      color: AppConstants.DONUT_CHART_COLORS[4],
+      dataLabels: {
+        enabled: false
+      }
+    }, {
+      name: 'OTHERS',
+      y: 0,
+      color: AppConstants.DONUT_CHART_COLORS[3],
+      dataLabels: {
+        enabled: false
+      }
+    }
+  ]
   @Input()
   set data(data) {
     this.inputData = data;
@@ -64,7 +230,10 @@ export class MobileMyfeedComponent implements OnInit {
     this.getDeptData();
     this.getNifty500Data();
     this.loadRiskProfile()
+    this.initializePieChart()
     this.loadDocumentValutData();
+    this.getMFPortfolioData();
+
   }
   openMenu(flag) {
     if (flag == false) {
@@ -79,53 +248,59 @@ export class MobileMyfeedComponent implements OnInit {
       advisorId: this.advisorId,
       targetDate: new Date().getTime()
     }
-    // this.tabsLoaded.portfolioData.isLoading = true;
+    this.tabsLoaded.portfolioData.isLoading = true;
 
-    //this.loaderFn.increaseCounter();
+    this.loaderFn.increaseCounter();
     this.customerService.getAllFeedsPortFolio(obj).subscribe(res => {
-      console.log('asset allocation', res)
       if (res == null) {
         this.portFolioData = [];
+        this.tabsLoaded.portfolioData.hasData = false;
       } else {
+        this.tabsLoaded.portfolioData.hasData = true;
         let stock = res.find(d => d.assetType == 6);
         this.portFolioData = res;
-        this.portFolioData.forEach(element => {
-          element.shortForm = (element.assetType == 2) ? 'LI' : (element.assetType == 6) ? 'ST' : (element.assetType == 12) ? 'COM' : (element.assetType == 31) ? 'C&B' : (element.assetType == 10) ? 'SSS' : (element.assetType == 9) ? 'RA' : (element.assetType == 8) ? 'RE' : (element.assetType == 7) ? 'FI' : ''
-        });
-      }
-      let chartData = [];
-      let counter = 0;
-      let othersData = {
-        y: 0,
-        name: 'Others',
-        color: AppConstants.DONUT_CHART_COLORS[4],
-        dataLabels: {
-          enabled: false
+        if (stock) {
+          this.portFolioData = this.portFolioData.filter(d => d.assetType != 6);
+          this.portFolioData.unshift(stock);
         }
-      }
-      let chartTotal = 1;
-      let hasNoDataCounter = res.length;
-      let pieChartData = res.filter(element => element.assetType != 2 && element.currentValue != 0);
-      pieChartData.forEach(element => {
-        if (element.investedAmount > 0) {
-          chartTotal += element.investedAmount;
-          if (counter < 4) {
-            chartData.push({
-              y: element.investedAmount,
-              name: element.assetTypeString,
-              color: AppConstants.DONUT_CHART_COLORS[counter],
-              dataLabels: {
-                enabled: false
-              }
-            })
-          } else {
-            othersData.y += element.investedAmount;
+
+        let chartData = [];
+        let counter = 0;
+        let othersData = {
+          y: 0,
+          name: 'Others',
+          color: AppConstants.DONUT_CHART_COLORS[4],
+          dataLabels: {
+            enabled: false
           }
-          counter++;
-        } else {
-          hasNoDataCounter--;
         }
+        let chartTotal = 1;
+        let hasNoDataCounter = res.length;
+        let pieChartData = res.filter(element => element.assetType != 2 && element.currentValue != 0);
+        pieChartData.forEach(element => {
+          if (element.investedAmount > 0) {
+            chartTotal += element.investedAmount;
+            if (counter < 4) {
+              chartData.push({
+                y: element.investedAmount,
+                name: element.assetTypeString,
+                color: AppConstants.DONUT_CHART_COLORS[counter],
+                dataLabels: {
+                  enabled: false
+                }
+              })
+            } else {
+              othersData.y += element.investedAmount;
+            }
+            counter++;
+          } else {
+            hasNoDataCounter--;
+          }
+        });
         chartTotal -= 1;
+        if (chartTotal === 0) {
+          this.tabsLoaded.portfolioData.hasData = false
+        }
         if (counter > 4) {
           chartData.push(othersData);
         }
@@ -134,8 +309,16 @@ export class MobileMyfeedComponent implements OnInit {
           this.chartData = chartData;
           this.assetAllocationPieChartDataMgnt(this.chartData);
         }
-      });
-    });
+      }
+      this.tabsLoaded.portfolioData.isLoading = false;
+      this.tabsLoaded.portfolioData.dataLoaded = true;
+      this.loaderFn.decreaseCounter();
+    }, err => {
+      this.hasError = true;
+      this.tabsLoaded.portfolioData.isLoading = false;
+      this.eventService.openSnackBar(err, "Dismiss")
+      this.loaderFn.decreaseCounter();
+    })
   }
   loadDocumentValutData() {
     const obj = {
@@ -207,9 +390,19 @@ export class MobileMyfeedComponent implements OnInit {
       if (res == null) {
         this.recentTransactions = [];
       } else {
+        this.tabsLoaded.recentTransactions.hasData = true;
         this.recentTransactions = res;
       }
-    });
+      this.tabsLoaded.recentTransactions.dataLoaded = true;
+      this.tabsLoaded.recentTransactions.isLoading = false;
+      this.loaderFn.decreaseCounter();
+    }, err => {
+      this.hasError = true;
+      this.tabsLoaded.recentTransactions.dataLoaded = false;
+      this.tabsLoaded.recentTransactions.isLoading = false;
+      this.eventService.openSnackBar(err, "Dismiss")
+      this.loaderFn.decreaseCounter();
+    })
   }
   loadRiskProfile() {
     const obj = {
@@ -219,11 +412,21 @@ export class MobileMyfeedComponent implements OnInit {
     this.customerService.getRiskProfile(obj).subscribe(res => {
       if (res == null || res[0].id === 0) {
         this.riskProfile = [];
+        this.tabsLoaded.riskProfile.hasData = false;
       } else {
+        this.tabsLoaded.riskProfile.hasData = true;
         this.riskProfile = res;
-        console.log('risk',this.riskProfile)
       }
-    });
+      this.tabsLoaded.riskProfile.isLoading = false;
+      this.tabsLoaded.riskProfile.dataLoaded = true;
+      this.loaderFn.decreaseCounter();
+    }, err => {
+      this.tabsLoaded.riskProfile.isLoading = false;
+      this.tabsLoaded.riskProfile.dataLoaded = false;
+      this.hasError = true;
+      this.eventService.openSnackBar(err, "Dismiss")
+      this.loaderFn.decreaseCounter();
+    })
   }
   getTnxStatus(id) {
     return UtilService.getTransactionStatusFromStatusId(id);
@@ -336,5 +539,257 @@ export class MobileMyfeedComponent implements OnInit {
 
   onValChange(value) {
     this.selectedVal = value;
+  }
+  initializePieChart() {
+    let chartConfig: any = {
+      chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: 0,
+        plotShadow: false,
+        animation: false
+      },
+      title: {
+        text: '',
+        align: 'center',
+        verticalAlign: 'middle',
+        y: 60
+      },
+      tooltip: {
+        pointFormat: ' <b>{point.percentage:.1f}%</b>'
+      },
+      plotOptions: {
+        pie: {
+          dataLabels: {
+            enabled: true,
+            distance: -50,
+            style: {
+              fontWeight: 'bold',
+              color: 'white'
+            }
+          },
+          startAngle: 0,
+          endAngle: 360,
+          center: ['50%', '50%'],
+          size: '100%'
+        }
+      },
+      exporting: {
+        enabled: false
+      },
+      series: [{
+        type: 'pie',
+        name: 'Asset allocation',
+        animation: false,
+        innerSize: '60%',
+        data: this.chartData
+      }]
+    }
+    this.assetAllocationPieConfig = new Chart(chartConfig);
+    this.mfAllocationPieConfig = new Chart(chartConfig);
+    this.mfSubCategoryPieConfig = new Chart(chartConfig);
+    chartConfig.series = [{
+      type: 'pie',
+      animation: false,
+      name: 'MF Asset allocation',
+      innerSize: '60%',
+      data: this.mfAllocationData
+    }]
+  }
+  getMFPortfolioData() {
+    const obj = {
+      clientId: this.clientData.clientId,
+      advisorId: this.advisorId
+    }
+    this.tabsLoaded.mfPortfolioSummaryData.isLoading = true
+      this.loaderFn.increaseCounter();
+      this.customerService.getMutualFund(obj).subscribe(
+        data => this.getMutualFundResponse(data), (error) => {
+          this.eventService.openSnackBar(error, "DISMISS");
+          this.tabsLoaded.mfPortfolioSummaryData.dataLoaded = false;
+          this.tabsLoaded.mfPortfolioSummaryData.isLoading = false;
+        }
+      );
+  }
+  getMutualFundResponse(data) {
+    this.tabsLoaded.mfPortfolioSummaryData.isLoading = false;
+    if (data) {
+      this.filterData = this.mfServiceService.doFiltering(data);
+      this.mutualFund = this.filterData;
+      this.asyncFilter(this.filterData.mutualFundList, this.filterData.mutualFundCategoryMastersList)
+
+      this.getFamilyMemberWiseAllocation(data); // for FamilyMemberWiseAllocation
+    }
+  }
+  asyncFilter(mutualFund, categoryList) {
+    if (typeof Worker !== 'undefined') {
+      const input = {
+        mutualFundList: mutualFund,
+        mutualFund: this.mutualFund,
+        type: '',
+        // mfService: this.mfService
+      };
+      // Create a new
+      this.worker = new Worker('src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mutual-fund.worker.ts', { type: 'module' });
+      this.worker.onmessage = ({ data }) => {
+        this.totalValue = data.totalValue;
+        this.generateMFallocationChartData(categoryList); // for Calculating MF categories percentage
+        this.generateSubCategorywiseChartData(this.mutualFund.subCategoryData);
+        this.generateSubCategorywiseAllocationData(this.mutualFund.subCategoryData); // For subCategoryWiseAllocation
+        this.mfPieChartDataMgnt(); // pie chart data after calculating percentage
+        this.tabsLoaded.mfPortfolioSummaryData.hasData = true;
+        this.tabsLoaded.mfPortfolioSummaryData.dataLoaded = true;
+
+      };
+      this.worker.postMessage(input);
+    } else {
+      // Web workers are not supported in this environment.
+      // You should add a fallback so that your program still executes correctly.
+    }
+  }
+  getFamilyMemberWiseAllocation(data) {
+    this.familyWiseAllocation = data.family_member_list;
+  }
+  generateMFallocationChartData(data) {// function for calculating percentage
+    // this.mfAllocationData = [];
+    let counter = 0;
+    data.forEach(element => {
+      switch (element.category) {
+        case 'DEBT':
+          this.mfAllocationData.push({
+            name: element.category,
+            y: parseFloat(((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2)),
+            color: AppConstants.DONUT_CHART_COLORS[1],
+            dataLabels: {
+              enabled: false
+            }
+          })
+          counter++;
+          break;
+
+        case 'EQUITY':
+          this.mfAllocationData.push({
+            name: element.category,
+            y: parseFloat(((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2)),
+            color: AppConstants.DONUT_CHART_COLORS[0],
+            dataLabels: {
+              enabled: false
+            }
+          })
+          counter++;
+          break;
+        case 'HYBRID':
+          this.mfAllocationData.push({
+            name: element.category,
+            y: parseFloat(((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2)),
+            color: AppConstants.DONUT_CHART_COLORS[2],
+            dataLabels: {
+              enabled: false
+            }
+          })
+          counter++;
+          break;
+        case 'SOLUTION ORIENTED':
+          this.mfAllocationData.push({
+            name: element.category,
+            y: parseFloat(((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2)),
+            color: AppConstants.DONUT_CHART_COLORS[4],
+            dataLabels: {
+              enabled: false
+            }
+          })
+          counter++;
+          break;
+        default:
+          this.mfAllocationData.push({
+            name: 'OTHERS',
+            y: parseFloat(((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2)),
+            color: AppConstants.DONUT_CHART_COLORS[3],
+            dataLabels: {
+              enabled: false
+            }
+          })
+          counter++;
+          break;
+      }
+    });
+    this.mfAllocationData = [...new Map(this.mfAllocationData.map(item => [item.name, item])).values()];
+    this.mfAllocationData.forEach(e => {
+      e.name = e.name[0].toUpperCase() + e.name.slice(1).toLowerCase();
+    })
+  }
+  generateSubCategorywiseAllocationData(data) {
+    data = data.sort((a, b) =>
+      a.currentValue > b.currentValue ? -1 : (a.currentValue === b.currentValue ? 0 : 1)
+    );
+
+    console.log(data);
+    let counter = 0;
+    this.mfSubCatAllocationData = [];
+    let othersData = {
+      name: 'Others',
+      y: 0,
+      percentage: 0,
+      color: AppConstants.DONUT_CHART_COLORS[4],
+      dataLabels: { enabled: false }
+    }
+    data.forEach((data, ind) => {
+      if (ind < 4) {
+        this.mfSubCatAllocationData.push({
+          name: data.subCategory,
+          y: data.currentValue,
+          percentage: data.allocatedPercentage,
+          color: AppConstants.DONUT_CHART_COLORS[counter],
+          dataLabels: {
+            enabled: false
+          }
+        })
+        counter++;
+      } else {
+        othersData.y += data.currentValue
+        othersData.percentage += data.allocatedPercentage
+
+      }
+    })
+    this.mfSubCatAllocationData.push(othersData);
+
+    this.mfSubCategoryPieConfig.removeSeries[0];
+    this.mfSubCategoryPieConfig.addSeries({
+      type: 'pie',
+      name: 'Browser share',
+      innerSize: '60%',
+      animation: false,
+      data: this.mfSubCatAllocationData,
+    }, true, false)
+
+  }
+  mfPieChartDataMgnt() {
+    this.mfAllocationPieConfig.removeSeries(0);
+    this.mfAllocationPieConfig.addSeries({
+      type: 'pie',
+      name: 'Browser share',
+      innerSize: '60%',
+      data: this.mfAllocationData,
+    }, true, false)
+  }
+  generateSubCategorywiseChartData(data) {
+    data = this.mfServiceService.sorting(data, 'currentValue');
+    console.log(data);
+
+  }
+  getFamilyMembersList() {
+    this.loaderFn.increaseCounter();
+    const obj = {
+      clientId: this.clientId,
+      id: 0 // why is this required?
+    };
+    this.customerService.getFamilyMembers(obj).subscribe(
+      data => {
+        this.familyMembers = data;
+      },
+      err => {
+        this.eventService.openSnackBar(err, "Dismiss");
+        console.error(err);
+      }
+    );
   }
 }

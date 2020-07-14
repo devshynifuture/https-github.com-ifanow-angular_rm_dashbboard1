@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { UtilService, LoaderFunction } from "../../../../../../../services/util.service";
 import { SubscriptionInject } from "../../../../../AdviserComponent/Subscriptions/subscription-inject.service";
@@ -18,6 +18,7 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 import * as Highcharts from 'highcharts';
 import { MatDialog } from '@angular/material';
 import { P } from '@angular/cdk/keycodes';
+import { Subscriber, Subscription, Subject } from 'rxjs';
 
 
 
@@ -27,7 +28,7 @@ import { P } from '@angular/cdk/keycodes';
   styleUrls: ['./goals-plan.component.scss'],
   providers: [LoaderFunction]
 })
-export class GoalsPlanComponent implements OnInit {
+export class GoalsPlanComponent implements OnInit, OnDestroy {
   clientFamily: any[];
 
 
@@ -36,6 +37,7 @@ export class GoalsPlanComponent implements OnInit {
     advisorId: '',
     clientId: ''
   }
+  otherAssetAllocationSubscription:Subscription;
   selectedGoal: any = {};
   allGoals: any[] = [];
   hasCostOfDelay: boolean = false;
@@ -110,6 +112,7 @@ export class GoalsPlanComponent implements OnInit {
     },
     series: []
   }
+  allocatedList:Array<any> = [];
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -124,7 +127,6 @@ export class GoalsPlanComponent implements OnInit {
 
 
   ngOnInit() {
-    // TODO:- implement loader fundtion
     this.loadAllGoals();
   }
 
@@ -146,7 +148,7 @@ export class GoalsPlanComponent implements OnInit {
     });
   }
 
-
+  // create loan and cost of delay charts
   createChart(res) {
     const colors = ['green', 'blue', 'yellow', 'red'];
     const costDelay: Object = res.remainingData.costDelay;
@@ -195,15 +197,9 @@ export class GoalsPlanComponent implements OnInit {
   }
 
 
+  // create json which is used on dashboard and other areas
   mapGoalDashboardData(goal: any) {
     let mapData: any = {};
-
-    /**
-     * TODO:- need to correct the logics for the following
-     * 1. goal progress
-     * 2. achieved value -- fix on html as well
-     * 3. image for multi year goal
-     */
 
     mapData.id = goal.id;
     mapData.goalType = goal.goalType;
@@ -345,6 +341,9 @@ export class GoalsPlanComponent implements OnInit {
         subscription.unsubscribe();
       }
     });
+    if(flag == 'openallocations') {
+      this.otherAssetAllocationSubscription = subscription
+    }
   }
 
   loadSelectedGoalData(goalData) {
@@ -386,23 +385,47 @@ export class GoalsPlanComponent implements OnInit {
 
   // drag drop for assets brought from allocations tab
   drop(event: CdkDragDrop<string[]>) {
-    console.log(event.previousContainer.data[event.currentIndex]);
-    let asset = event.previousContainer.data[event.currentIndex];
-    // let obj = {
-    //   ...this.advisor_client_id,
-    //   assetId: asset.assetId,
-    //   assetType: asset.assetType
-    // }
-    // this.plansService.allocateOtherAssetToGoal(obj).subscribe(res => {
-    //   this.todo.push(res);
-    //   this.eventService.openSnackBar("Asset allocated to goal", "Dismiss");
-    // })
+    console.log(event.item.data);
+    let asset:any = event.item.data;
+    let obj = {
+      ...this.advisor_client_id,
+      assetId: asset.assetId,
+      assetType: asset.assetType,
+      goalId: this.selectedGoal.remainingData.id,
+      goalType: this.selectedGoal.goalType,
+      percentAllocated: 100
+    }
+    console.log(obj);
+    this.plansService.allocateOtherAssetToGoal(obj).subscribe(res => {
+      this.plansService.assetSubject.next(res);
+      this.eventService.openSnackBar("Asset allocated to goal", "Dismiss");
+      this.allocatedList.push(asset);
+    }, err => {
+      this.eventService.openSnackBar(err);
+    })
   }
 
-  // dummy for allocation dragdrop list
-  todo: any[] = [];
-  logger(event) {
-    // console.log(event)
+  removeAllocation(allocation) {
+    const obj = {
+      ...this.advisor_client_id,
+      assetId: allocation.assetId,
+      assetType: allocation.assetType,
+      goalId: this.selectedGoal.remainingData.id
+    }
+    this.plansService.removeAllocation(obj).subscribe(res => {
+      const assetIndex =  this.allocatedList.findIndex((asset) => asset.assetId == allocation.assetId);
+      this.allocatedList.splice(assetIndex, 1);
+      this.eventService.openSnackBar("Asset unallocated");
+    }, err => {
+      this.eventService.openSnackBar(err);
+    })
+  }
+
+  ngOnDestroy(){
+    this.subInjectService.closeNewRightSlider({state: 'close'});
+    if(this.otherAssetAllocationSubscription) {
+      this.otherAssetAllocationSubscription.unsubscribe();
+    }
   }
 }
 
