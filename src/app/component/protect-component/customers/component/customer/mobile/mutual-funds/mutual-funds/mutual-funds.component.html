@@ -1,9 +1,9 @@
 <!-- Mutul funds -->
-<div id="mob-mutualfunds">
+<div id="mob-mutualfunds" *ngIf="backtoMf != true && showmfDetails != true">
     <div class="row mob-bg-common pb-12 mobtop-navfixed">
         <div class="col-2">
-            <span class="material-icons text-white">
-                menu
+            <span class="material-icons text-white" (click)="backtoMf = true">
+              <img src="/assets/images/svg/mob-left-arrow.svg">
             </span>
         </div>
         <div class="col-7 pl-0">
@@ -20,72 +20,47 @@
             <div class="col-12 text-center p-0">
                 <div class="row pl-20 pb-16 pt-24">
                     <div class="col-6 p-0">
-                        <img src="/assets/images/Donut-chart.png">
+                      <div class="h-147 w-100" [chart]="mfSubCategoryPieConfig"></div>
                     </div>
                     <div class="col-6">
-                        <div class="row">
-                            <div class="col-1 p-0 pt-2">
-                                <div class="i-1"></div>
-                            </div>
-                            <div class="col-11 pr-0 pl-8 text-left">
-                                <p class="f-12 mb-0">₹ 22,35,902 <span class="mob-text-success">(35%)</span></p>
-                                <p class="mob-text-xs pt-4">Equity</p>
-                            </div>
+                      <div class="pb-12" *ngFor="let data of mfSubCatAllocationData">
+                        <div class="d-flex">
+                            <span class="pointNumber" [style.background-color]="data.color">
+                            </span>
+                            <span class="f-12 lh-12 roboto f-400 m-0"> ₹</span>
+                            <span class="f-12 lh-12 roboto f-400 m-0 br" appFormatNumber>{{(data.y)}}</span>
+                            <span class="f-12 lh-12 roboto f-400 m-0 pl-4">
+                                {{'('+(data.percentage | number:'1.2-2')+'%)'}}</span>
                         </div>
-                        <div class="row pt-16">
-                            <div class="col-1 p-0 pt-2">
-                                <div class="i-2"></div>
-                            </div>
-                            <div class="col-11 pr-0 pl-8 text-left">
-                                <p class="f-12 mb-0">₹ 22,35,902 <span class="mob-text-success">(35%)</span></p>
-                                <p class="mob-text-xs pt-4">Others</p>
-                            </div>
-                        </div>
-                        <div class="row pt-16">
-                            <div class="col-1 p-0 pt-2">
-                                <div class="i-3"></div>
-                            </div>
-                            <div class="col-11 pr-0 pl-8 text-left">
-                                <p class="f-12 mb-0">₹ 22,35,902 <span class="mob-text-success">(35%)</span></p>
-                                <p class="mob-text-xs pt-4">Debt</p>
-                            </div>
-                        </div>
-                        <div class="row pt-16">
-                            <div class="col-1 p-0 pt-2">
-                                <div class="i-4"></div>
-                            </div>
-                            <div class="col-11 pr-0 pl-8 text-left">
-                                <p class="f-12 mb-0">₹ 22,35,902 <span class="mob-text-success">(35%)</span></p>
-                                <p class="mob-text-xs pt-4">Solution Oriented</p>
-                            </div>
-                        </div>
+                    </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="bg-white mt-20">
-            <div class="row pt-16 pb-16">
-                <div class="col-11">
-                    <p class="f-13 mb-0">Canara Robecco Emerging Equity Fund Growth</p>
+            <div class="row pt-16 pb-16" *ngFor="let item of subCategoryData">
+                <div class="col-11" >
+                    <p class="f-13 mb-0">{{item.subCategory}}</p>
                     <div class="row pt-12">
                         <div class="col-6 mob-br-1 p-0">
                             <p class="mob-text-xs">Amt. Invested</p>
-                            <p class="m-0 f-13 pt-4">Rs. 81,21,50,000</p>
+                            <p class="m-0 f-13 pt-4">
+                              <span  appFormatNumber>₹ {{item.amountInvested}}</span></p>
                         </div>
                         <div class="col-6 pr-0">
                             <p class="mob-text-xs">XIRR</p>
-                            <p class="m-0 f-13 pt-4 mob-text-success">9.67%</p>
+                            <p class="m-0 f-13 pt-4 mob-text-success">{{item.xirr}}%</p>
                         </div>
                     </div>
                 </div>
-                <div class="col-1 pl-0 pt-28">
+                <div class="col-1 pl-0 pt-28" (click)="showmfDetails = true; mfDetailsData = item;">
                     <img src="/assets/images/svg/mob-down-arrow.svg">
                 </div>
             </div>
         </div>
         <div class="mt-16">
             <div class="bg-white">
-                <div class="row pt-16 pb-16">
+                <!-- <div class="row pt-16 pb-16">
                     <div class="col-11">
                         <p class="f-13 mb-0">Reliance Agro Fund</p>
                         <div class="row pt-12">
@@ -102,8 +77,8 @@
                     <div class="col-1 pl-0 pt-28">
                         <img src="/assets/images/svg/mob-up-arrow.svg">
                     </div>
-                </div>
-                <div class="mob-bg-success">
+                </div> -->
+                <!-- <div class="mob-bg-success">
                     <div class="row pt-16">
                         <div class="col-4 pr-0">
                             <p class="m-0 mob-wbb">Sunanda Singh</p>
@@ -129,8 +104,8 @@
                             <img src="/assets/images/svg/mob-right-arrow-selected.svg">
                         </div>
                     </div>
-                </div>
-                <div class="mt-4 mob-bg-success">
+                </div> -->
+                <!-- <div class="mt-4 mob-bg-success">
                     <div class="row pt-16">
                         <div class="col-4 pr-0">
                             <p class="m-0 mob-wbb">Sunanda Singh</p>
@@ -156,7 +131,7 @@
                             <img src="/assets/images/svg/mob-right-arrow-selected.svg">
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -612,7 +587,7 @@
 
 
 <!-- Add fixed deposit -->
-<div id="mob-fixed-income">
+<!-- <div id="mob-fixed-income">
     <div class="row mob-bg-common pb-12 mobtop-navfixed">
         <div class="col-2">
             <span class="material-icons text-white">
@@ -673,4 +648,10 @@
             <button mat-stroked-button class="mob-btn-primary w-60">Submit</button>
         </div>
     </div>
+</div> -->
+<div *ngIf="backtoMf == true">
+  <app-mobile-portfoilo></app-mobile-portfoilo>
+</div>
+<div *ngIf="showmfDetails == true">
+<app-mutual-fund-details [data]="mfDetailsData"></app-mutual-fund-details>
 </div>

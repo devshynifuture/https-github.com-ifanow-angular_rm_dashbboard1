@@ -1,18 +1,18 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MAT_BOTTOM_SHEET_DATA, MatDialog, MatBottomSheetRef, MatBottomSheet } from '@angular/material';
-import { CustomerService } from '../../../../customer.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { EventService } from 'src/app/Data-service/event.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { CopyDocumentsComponent } from '../../../../../common-component/copy-documents/copy-documents.component';
-import { BottomSheetComponent } from '../../../../../common-component/bottom-sheet/bottom-sheet.component';
-import { DocumentNewFolderComponent } from '../../../../../common-component/document-new-folder/document-new-folder.component';
-import { PreviewComponent } from '../../../../customer-overview/overview-documents/preview/preview.component';
-import { HttpHeaders } from '@angular/common/http';
-import { HttpService } from 'src/app/http-service/http-service';
-import { GetSharebleLinkComponent } from '../../../../customer-overview/overview-documents/get-shareble-link/get-shareble-link.component';
-import { MoveCopyMobileViewComponent } from '../move-copy-mobile-view/move-copy-mobile-view.component';
+import {Component, OnInit, Inject} from '@angular/core';
+import {MAT_BOTTOM_SHEET_DATA, MatDialog, MatBottomSheetRef, MatBottomSheet} from '@angular/material';
+import {CustomerService} from '../../../../customer.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {EventService} from 'src/app/Data-service/event.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {CopyDocumentsComponent} from '../../../../../common-component/copy-documents/copy-documents.component';
+import {BottomSheetComponent} from '../../../../../common-component/bottom-sheet/bottom-sheet.component';
+import {DocumentNewFolderComponent} from '../../../../../common-component/document-new-folder/document-new-folder.component';
+import {PreviewComponent} from '../../../../customer-overview/overview-documents/preview/preview.component';
+import {HttpHeaders} from '@angular/common/http';
+import {HttpService} from 'src/app/http-service/http-service';
+import {GetSharebleLinkComponent} from '../../../../customer-overview/overview-documents/get-shareble-link/get-shareble-link.component';
+import {MoveCopyMobileViewComponent} from '../move-copy-mobile-view/move-copy-mobile-view.component';
 
 @Component({
   selector: 'app-edit-document-popup',
@@ -39,12 +39,13 @@ export class EditDocumentPopupComponent implements OnInit {
     private http: HttpService,
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: any,
     // ) { }
-    private _bottomSheetRef: MatBottomSheetRef<EditDocumentPopupComponent>) { }
+    private _bottomSheetRef: MatBottomSheetRef<EditDocumentPopupComponent>) {
+  }
 
   ngOnInit() {
     this.clientId = AuthService.getClientId();
     this.advisorId = AuthService.getAdvisorId();
-    console.log(this.data, this._bottomSheetRef)
+    console.log(this.data, this._bottomSheetRef);
   }
 
   deleteModal(flag, data) {
@@ -110,7 +111,7 @@ export class EditDocumentPopupComponent implements OnInit {
   openDialogCopy(element, value): void {
     this._bottomSheetRef.dismiss();
     this._bottomSheet.open(MoveCopyMobileViewComponent, {
-      data: { name: value, animal: element }
+      data: {name: value, animal: element}
     });
   }
 
@@ -119,7 +120,7 @@ export class EditDocumentPopupComponent implements OnInit {
     this.selectedFolder = element;
     const dialogRef = this.dialog.open(DocumentNewFolderComponent, {
       width: '80%',
-      data: { name: value, animal: element }
+      data: {name: value, animal: element}
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -155,7 +156,7 @@ export class EditDocumentPopupComponent implements OnInit {
     console.log(data);
     console.log(data);
     if (data) {
-      this.eventService.openSnackBar("File rename sucessfully", "Dismiss");
+      this.eventService.openSnackBar('File rename sucessfully', 'Dismiss');
       this.subInjectService.addSingleProfile(true);
     }
   }
@@ -175,7 +176,7 @@ export class EditDocumentPopupComponent implements OnInit {
   renameFolderRes(data) {
     console.log(data);
     if (data) {
-      this.eventService.openSnackBar("Folder rename sucessfully", "Dismiss");
+      this.eventService.openSnackBar('Folder rename sucessfully', 'Dismiss');
       this.subInjectService.addSingleProfile(true);
     }
   }
@@ -207,7 +208,8 @@ export class EditDocumentPopupComponent implements OnInit {
     }
     // this.isLoading = false
   }
-  downlodFiles(element, value) {
+
+  downloadFiles(element, value) {
     // this.previewDoc = true
     if (value == 'download') {
       // this.isLoading = false
@@ -224,28 +226,29 @@ export class EditDocumentPopupComponent implements OnInit {
       data => this.downloadFileRes(data, value)
     );
   }
+
   downloadFileRes(data, value) {
     console.log(data);
     if (value == 'shareLink' || value == 'share') {
-      console.log('shareLink', data)
-      this.urlShorten(data, value)
+      console.log('shareLink', data);
+      this.urlShorten(data, value);
 
     } else if (value == 'preview') {
-      this.urlData = data
+      this.urlData = data;
     } else if (value == 'DocPreview') {
-      this.urlData = ''
+      this.urlData = '';
       const dialogRef = this.dialog.open(PreviewComponent, {
         width: '500px',
         height: '600px',
-        data: { bank: data, selectedElement: this.selectedElement }
+        data: {bank: data, selectedElement: this.selectedElement}
       });
       dialogRef.afterClosed().subscribe(result => {
         if (result == undefined) {
-          return
+          return;
         }
         console.log('The dialog was closed');
         this.element = result;
-        console.log('result -==', this.element)
+        console.log('result -==', this.element);
       });
     } else {
       window.open(data);
@@ -255,14 +258,13 @@ export class EditDocumentPopupComponent implements OnInit {
   }
 
   urlShorten(data, value) {
-    var link =
-    {
-      "destination": data,
-      "domain":
-      {
-        "fullName": "rebrand.ly"
-      }
-    }
+    const link = {
+        destination: data,
+        domain:
+          {
+            fullName: 'rebrand.ly'
+          }
+      };
     const httpOptions = {
       headers: new HttpHeaders()
         .set('apiKey', 'b96683be9a4742979e78c6011a3ec2ca')
@@ -271,17 +273,17 @@ export class EditDocumentPopupComponent implements OnInit {
       console.log('DocumentsComponent uploadFileRes responseData : ', responseData);
       if (responseData == null) {
       }
-      console.log(responseData)
-      this.shortUrl = responseData.shortUrl
-      this.verifyEmail(this.shortUrl, value)
+      console.log(responseData);
+      this.shortUrl = responseData.shortUrl;
+      this.verifyEmail(this.shortUrl, value);
     });
   }
 
   getSharebleLink(element, flag) {
     this._bottomSheetRef.dismiss();
-    this.selectedElement = element
+    this.selectedElement = element;
     if (element.fileName) {
-      this.downlodFiles(element, flag);
+      this.downloadFiles(element, flag);
     }
   }
 
@@ -289,24 +291,24 @@ export class EditDocumentPopupComponent implements OnInit {
     this._bottomSheetRef.dismiss();
     const dialogRef = this.dialog.open(GetSharebleLinkComponent, {
       width: '80%',
-      data: { bank: value, flag: flag }
+      data: {bank: value, flag}
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result == undefined) {
-        return
+        return;
       }
       this.element = result;
-      console.log('result -==', this.element)
-      let obj = {
-        fromEmail: "support@futurewise.co.in",
+      console.log('result -==', this.element);
+      const obj = {
+        fromEmail: 'support@futurewise.co.in',
         toEmail: this.element.email,
-        emailSubject: "Share link",
+        emailSubject: 'Share link',
         messageBody: 'You have received this email because' + this.getUserInfo.name + ' shared link with you.  ' + '' + this.element.link
-      }
-      if (this.element != "") {
+      };
+      if (this.element != '') {
         this.custumService.sendSharebleLink(obj).subscribe(
           data => this.sendSharebleLinkRes(data),
-          err => this.eventService.openSnackBar(err, "Dismiss")
+          err => this.eventService.openSnackBar(err, 'Dismiss')
         );
       }
     });
