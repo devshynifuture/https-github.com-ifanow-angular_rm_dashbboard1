@@ -72,14 +72,22 @@
                     text-align: left;
                     position: relative;
                     line-height: 33px;
+                    display: flex;
+                    align-items: center;
                     z-index: 1;
                 }
                 li:before {
                     content: "\2022";
                     color: #84BDF3;
                     font-weight: bold;
-                    padding-top: 4px;
+                    display: flex;
+                    align-items: center;
                     padding-right: 4px;
                     font-size: 34px;
                 }
+            }
+            
+            .lineBottom {
+                border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+                margin-bottom: 16px;
             }
