@@ -165,10 +165,10 @@ export class ContactDetailsInnComponent implements OnInit {
     }
     this.contactDetails = this.fb.group({
       email: [(!data) ? '' : data.email, [Validators.required, Validators.pattern(ValidatorType.EMAIL)]],
-      aadharNumber: [(!data) ? '' : data.aadharNumber, [Validators.required, Validators.pattern(ValidatorType.ADHAAR)]],
+      // aadharNumber: [(!data) ? '' : data.aadharNumber, [Validators.required, Validators.pattern(ValidatorType.ADHAAR)]],
       mobileNo: [!data ? '' : data.mobileNo, [Validators.required, Validators.pattern(this.validatorType.TEN_DIGITS)]],
       foreignMobileNo: [!data ? '' : data.foreignMobileNo,
-        this.inputData.taxMaster.residentFlag ? [Validators.required] : []],
+        !this.inputData.taxMaster.residentFlag ? [Validators.required] : []],
       address1: [(address.address1), [Validators.required]],
       address2: [(address.address2), [Validators.required]],
       pinCode: [address.pinCode, [Validators.required]],
@@ -196,7 +196,7 @@ export class ContactDetailsInnComponent implements OnInit {
     }
     this.contactDetails = this.fb.group({
       email: [(!data) ? '' : data.email, [Validators.required]],
-      aadharNumber: [(!data) ? '' : data.aadharNumber, [Validators.required]],
+      // aadharNumber: [(!data) ? '' : data.aadharNumber, [Validators.required]],
       mobileNo: [!data ? '' : data.mobileNo, [Validators.required]]
     });
   }
@@ -294,7 +294,7 @@ export class ContactDetailsInnComponent implements OnInit {
         this.eventService.openSnackBar('Please fill third holder details');
         return;
       }
-      if (this.inputData.taxMaster.residentFlag) {
+      if (!this.inputData.taxMaster.residentFlag) {
         if (!this.firstHolderContact || !this.firstHolderContact.address ||
           !this.firstHolderContact.address.address1 || !this.firstHolderContact.foreignAddress ||
           !this.firstHolderContact.foreignAddress.address1) {
@@ -309,7 +309,7 @@ export class ContactDetailsInnComponent implements OnInit {
   }
 
   validateSecondaryObject(obj) {
-    if (obj && obj.email && obj.mobileNo && obj.aadharNumber) {
+    if (obj && obj.email && obj.mobileNo ) {
       return true;
     } else {
       return false;
@@ -321,7 +321,7 @@ export class ContactDetailsInnComponent implements OnInit {
     holder = {
       ...holder,
       email: formValue.email,
-      aadharNumber: formValue.aadharNumber,
+      // aadharNumber: formValue.aadharNumber,
       mobileNo: formValue.mobileNo,
       foreignMobileNo: formValue.foreignMobileNo,
       phoneNo: formValue.phoneNo,

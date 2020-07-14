@@ -38,22 +38,22 @@
             </mat-form-field>
           </div>
         </div>
-        <div class="row pt-20">
-          <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
-            <h3 class="f-16  m-0"> Aadhar number </h3>
-          </div>
-          <div class="col-md-5 form-group">
-            <mat-form-field appearance="standard" floatLabel="never">
-              <input #aadharNumber [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="12" appInputValueValidation
-                     class="form-control" formControlName="aadharNumber" matInput placeholder="Enter Aadhar number"
-                     type="number">
-              <mat-error class="f-12">This field is required</mat-error>
-              <mat-hint align="end" class="f-12 text-custom">
-                {{aadharNumber.value.length}} / 12
-              </mat-hint>
-            </mat-form-field>
-          </div>
-        </div>
+        <!--        <div class="row pt-20">-->
+        <!--          <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">-->
+        <!--            <h3 class="f-16  m-0"> Aadhar number </h3>-->
+        <!--          </div>-->
+        <!--          <div class="col-md-5 form-group">-->
+        <!--            <mat-form-field appearance="standard" floatLabel="never">-->
+        <!--              <input #aadharNumber [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="12" appInputValueValidation-->
+        <!--                     class="form-control" formControlName="aadharNumber" matInput placeholder="Enter Aadhar number"-->
+        <!--                     type="number">-->
+        <!--              <mat-error class="f-12">This field is required</mat-error>-->
+        <!--              <mat-hint align="end" class="f-12 text-custom">-->
+        <!--                {{aadharNumber.value.length}} / 12-->
+        <!--              </mat-hint>-->
+        <!--            </mat-form-field>-->
+        <!--          </div>-->
+        <!--        </div>-->
         <div class="row pt-20">
           <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
             <h3 class="f-16   m-0"> Mobile number </h3>
@@ -70,7 +70,7 @@
             </div>
           </div>
         </div>
-        <div *ngIf="inputData&&inputData.taxMaster.residentFlag" class="row pt-20">
+        <div *ngIf="inputData&&!inputData.taxMaster.residentFlag" class="row pt-20">
           <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
             <h3 class="f-16   m-0">Foreign Mobile number </h3>
           </div>
@@ -205,7 +205,7 @@
   </div>
 
   <div class="col-md-5 center_menu">
-    <div *ngIf="inputData.taxMaster.residentFlag">
+    <div *ngIf="!inputData.taxMaster.residentFlag">
       <a (click)="SendToForm('first',false);" class="activeLink"> Indian Address </a>
       <a (click)="SendToForm('overseas',false);" class="activeLink"> Overseas Address </a>
       <a (click)="SendToForm('second',false);" *ngIf="secondHolderContact" class="activeLink"> Second Holder </a>
@@ -216,7 +216,7 @@
       <!--    <a (click)="SendToForm('third',false);" *ngIf="inputData.holdingType != 'SI'" class="activeLink"> Third-->
       <!--      holder </a>-->
     </div>
-    <div *ngIf="!inputData.taxMaster.residentFlag">
+    <div *ngIf="inputData.taxMaster.residentFlag">
       <a (click)="SendToForm('first',false);" *ngIf="secondHolderContact" class="activeLink c-p"> First Holder </a>
       <a (click)="SendToForm('second',false);" *ngIf="secondHolderContact" class="activeLink c-p"> Second Holder </a>
       <a (click)="SendToForm('third',false);" *ngIf="thirdHolderContact" class="activeLink c-p"> Third Holder </a>
