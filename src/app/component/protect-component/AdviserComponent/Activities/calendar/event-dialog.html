@@ -102,7 +102,7 @@
                 <ul class="uiListChanges">
                     <li class="text-left mb-4" *ngFor="let member of attendeesArr">
                         {{member.email}}
-                        <i (click)="removeMember(member)" class="material-icons f-20 c-p">
+                        <i (click)="removeMember(member)" class="material-icons ml-8 f-18 c-p">
                             close
                         </i>
                     </li>
@@ -134,8 +134,7 @@
 
     <div class="row pt-16 pb-32">
         <div class="col-md-12  text-right">
-
-            <button mat-button (click)="onNoClick()">CANCEl</button>
+            <button mat-button (click)="onNoClick()">CANCEL </button>
             <button mat-button [mat-dialog-close]="eventForm.value" class="text-primary">ADD</button>
             <!-- cdkFocusInitial -->
 
@@ -163,40 +162,48 @@
 
 <div class="p-20" *ngIf="!isEditAdd && !eventData.date">
 
-    <h1 class="mb-0 f-22">
-        {{eventData.summary}}
-    </h1>
+    <div class="lineBottom">
+        <h1 class="mb-0 l-22 f-22">
+            {{eventData.summary}}
+        </h1>
 
-    <p *ngIf="eventData.start.dateTime != null && eventData.start.dateTime != null">
-        <span>{{eventData.start.dateTime | date : 'MMMM d, y'}}</span><span *ngIf="eventData.start.dateTime != null">,
-            {{eventData.startTime}}</span> - <span *ngIf="showBothDate">{{eventData.end.dateTime | date : 'MMMM d, y'}},
-        </span><span *ngIf="eventData.end.dateTime != null">{{eventData.endTime}}</span></p>
+        <p class="mb-10" *ngIf="eventData.start.dateTime != null && eventData.start.dateTime != null">
+            <span>{{eventData.start.dateTime | date : 'MMMM d, y'}}</span>
+            <span *ngIf="eventData.start.dateTime != null">,
+                {{eventData.startTime}}</span> - <span *ngIf="showBothDate">{{eventData.end.dateTime | date : 'MMMM d, y'}},
+            </span><span *ngIf="eventData.end.dateTime != null">{{eventData.endTime}}</span></p>
 
-    <p *ngIf="eventData.start.dateTime == null && eventData.start.dateTime == null">
-        <span>{{eventData.start.date | date : 'MMMM d, y'}}</span></p>
+        <p class="mb-10" *ngIf="eventData.start.dateTime == null && eventData.start.dateTime == null">
+            <span>{{eventData.start.date | date : 'MMMM d, y'}}</span></p>
+    </div>
 
 
-    <div *ngIf="eventData.description != null" style="display: flex;">
-        <div> <img src="assets/images/svg/bell.svg" width="25px" class="mr-16"> </div>
+
+
+
+
+    <div class="d-flex mb-12" *ngIf="eventData.description != null">
+        <div class="mr-16"> <img src="assets/images/svg/bell.svg" width="25px"> </div>
         <div>
             <div [innerHTML]="eventData.description"> </div>
         </div>
     </div>
-    <div *ngIf="eventData.location != null" style="display: flex;" class="mt-16">
-        <div> <img src="assets/images/svg/addon-three.svg" width="25px" class="mr-16"> </div>
+
+    <div *ngIf="eventData.location != null" class="d-flex">
+        <div class="mr-16"> <img src="assets/images/svg/addon-three.svg" width="25px"> </div>
         <div>
-            <strong class="mb-2 text-black">Event address:</strong>
+            <strong class="mb-2 text-black">Event address</strong>
             <div [innerHTML]="eventData.location"> </div>
         </div>
     </div>
 
     <div class="row">
-        <div class="col-md-8 pl-0">
+        <div class="col-md-12 pl-0">
             <div *ngIf="attendeesArr.length > 0" class="mt-16 d-flex">
                 <div> <img src="assets/images/svg/people.svg" width="25px" class="mr-16"> </div>
                 <div class="col-md-10 pl-0">
-                    <h4 class="mb-0 mt-4 f-600 text-black">Attendee list: </h4>
-                    <ul class="uiListChanges">
+                    <h4 class="mb-0 mt-4 f-600 text-black">Attendee list </h4>
+                    <ul class="uiListChanges_two">
                         <li class="text-left mb-4" *ngFor="let member of attendeesArr">{{member.email}}</li>
                     </ul>
 
@@ -208,15 +215,14 @@
                 </div>
             </div>
         </div>
-
-        <div class="col-md-4 pr-0 text-right">
-            <img (click)="editEvent()" class="c-p" src="assets/images/svg/pencil.svg">
-            <img (click)="deleteEvent(eventData.id)" class="b-a c-p wrapper-9 ml-8" src="assets/images/svg/delete.svg">
-
-        </div>
     </div>
 
-
+    <div class="row pt-10">
+        <div class="col-md-12 pr-0 text-right">
+            <img title="Edit" (click)="editEvent()" class="c-p" src="assets/images/svg/pencil.svg">
+            <img title="Delete" (click)="deleteEvent(eventData.id)" class="b-a c-p wrapper-9 ml-8" src="assets/images/svg/delete.svg">
+        </div>
+    </div>
 
 
 </div>

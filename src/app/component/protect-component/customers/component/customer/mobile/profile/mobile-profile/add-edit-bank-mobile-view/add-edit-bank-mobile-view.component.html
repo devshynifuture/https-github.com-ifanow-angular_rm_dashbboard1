@@ -1,0 +1,220 @@
+<div class="row mob-bg-common pb-12 mobtop-navfixed">
+    <div (click)="back()" class="col-2">
+        <img src="/assets/images/svg/mob-left-arrow.svg" class="c-p pt-4">
+    </div>
+    <div class="col-10 pl-0">
+        <h5 class="m-0 f-18 text-white pt-4 roboto">{{userData.bankData?'Edit':'Add'}} bank</h5>
+    </div>
+</div>
+<div [formGroup]="bankForm" class="bg-grey lter">
+    <div class="row pt-90">
+        <div class="col-12 pl-8">
+            <h3 class="m-0 roboto f-400 text-dark">Add new bank</h3>
+        </div>
+    </div>
+    <div class="row pt-28">
+        <div class="col-12 mob-pl-10 mob-pr-10">
+            <h5 class="m-0 roboto text-dark pb-10 f-16">Add IFSC</h5>
+            <div class="form-group mb-0">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input placeholder="Enter ifsc code" autocomplete="off"
+                        (input)="toUpperCase(bankForm.get('ifscCode'),$event)" appInputValueValidation
+                        [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="ifscCode" #ifcCode
+                        [maxLength]="11" matInput class="form-control text-primitive">
+                    <mat-hint align="end" class="f-12">{{ifcCode.value.length}}/11</mat-hint>
+                    <mat-error *ngIf="bankForm.get('ifscCode').errors?.required">This field is required</mat-error>
+                    <mat-error *ngIf="bankForm.get('ifscCode').errors?.invalidIfsc">Ifsc code invalid</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="bankForm.get('ifscCode').valid && showBankFields">
+        <div class="mob-pr-10 mob-pl-10 mt-20 mb-28">
+            <div class="row mob-card">
+                <div class="col-2">
+                    <img src="/assets/images/icici.png">
+                </div>
+                <div class="col-10">
+                    <p class="m-0 roboto f-400 lh-22">{{bankForm.get('bankName').value}}</p>
+                    <p class="m-0 f-10 roboto f-400 text-custom lh-18">A/c: {{bankForm.get('accNumber').value}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 mob-pl-10 mob-pr-10">
+                <h5 class="m-0 roboto text-dark pb-10 f-16">Account number</h5>
+                <div class="form-group mb-0">
+                    <mat-form-field floatLabel="never" appearance="standard">
+                        <input autocomplete="off" placeholder="Enter account number" #accNum [maxLength]="18"
+                            formControlName="accNumber" matInput appInputValueValidation
+                            [inputValidator]="validatorType.NUMBER_ONLY" matInput class="form-control text-primitive">
+                        <mat-hint class="text-custom">Bank grade security | 256 bit encryption</mat-hint>
+                        <mat-hint align="end">{{accNum.value.length}} / 18</mat-hint>
+                        <mat-error>This field is required</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-44">
+            <div class="col-12 mob-pl-10 mob-pr-10">
+                <h5 class="m-0 roboto text-dark pb-10 f-16">Confirm account number</h5>
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <input matInput class="form-control text-primitive" value="Enter bank account number">
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-28">
+            <div class="col-12 mob-pl-10 mob-pr-10">
+                <h5 class="m-0 roboto text-dark pb-10 f-16">Name as per bank</h5>
+                <div class="form-group mb-0">
+                    <mat-form-field floatLabel="never" appearance="standard">
+                        <input placeholder="Enter your bank name" autocomplete="off" [maxLength]="50" #bankName
+                            appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY"
+                            formControlName="bankName" matInput class="form-control text-primitive">
+                        <mat-error>This field is required</mat-error>
+                        <mat-hint align="end">{{bankName.value.length}}/50</mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-28 pb-28">
+            <div class="col-12 mob-pl-10 mob-pr-10">
+                <h5 class="m-0 roboto text-dark pb-10 f-16">Account type</h5>
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <mat-select formControlName="accType" class="form-control" floatLabel="never"
+                            appearance="standard">
+                            <mat-option value='' disabled>Select account type</mat-option>
+                            <mat-option *ngFor="let account of accountTypes" [value]=account.id>{{account.name}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>This field is required</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-28">
+            <div class="col-12 mob-pl-10 mob-pr-10">
+                <h5 class="m-0 roboto text-dark pb-10 f-16">MICR code</h5>
+                <div class="form-group mb-0">
+                    <mat-form-field floatLabel="never" appearance="standard">
+                        <input appInputValueValidation #micr [inputValidator]="validatorType.NUMBER_ONLY"
+                            [maxLength]="9" placeholder="Enter micr code" formControlName="micrName" matInput
+                            class="form-control text-primitive">
+                        <mat-hint>Optional</mat-hint>
+                        <mat-hint align="end">{{micr.value.length}} / 9</mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-28">
+            <div class="col-12 mob-pl-10 mob-pr-10">
+                <h5 class="m-0 roboto text-dark pb-10 f-16">Branch name</h5>
+                <div class="form-group mb-0">
+                    <mat-form-field floatLabel="never" appearance="standard">
+                        <input placeholder="Enter branch name" #branchName autocomplete="off"
+                            formControlName="branchName" appInputValueValidation
+                            [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="50" matInput
+                            class="form-control text-primitive">
+                        <mat-error>This field is required</mat-error>
+                        <mat-hint align="end">{{branchName.value.length}}/50</mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-28">
+            <div class="col-12 mob-pl-10 mob-pr-10">
+                <h5 class="m-0 roboto text-dark pb-10 f-16">Branch country</h5>
+                <div class="form-group mb-0">
+                    <mat-form-field floatLabel="never" appearance="standard">
+                        <input placeholder="Enter your branch country" autocomplete="off" matInput
+                            formControlName="branchCountry" class="form-control text-primitive">
+                        <mat-error>This field is required</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-28">
+            <div class="col-12 mob-pl-10 mob-pr-10">
+                <h5 class="m-0 roboto text-dark pb-10 f-16">Branch pin code</h5>
+                <div class="form-group mb-0">
+                    <mat-form-field floatLabel="never" appearance="standard">
+                        <input placeholder="Enter pin code" autocomplete="off" [maxLength]="6"
+                            (focusout)="getPostalPin($event.target.value)" formControlName="branchPinCode" #branchCode
+                            matInput appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                            class="form-control text-primitive">
+                        <mat-error>This field is required</mat-error>
+                        <mat-hint align="end" class="f-12">{{branchCode.value.length}}/6</mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-28">
+            <div class="col-12 mob-pl-10 mob-pr-10">
+                <h5 class="m-0 roboto text-dark pb-10 f-16">Branch address line 1</h5>
+                <div class="form-group mb-0">
+                    <mat-form-field floatLabel="never" appearance="standard">
+                        <input placeholder="Enter branch address 1" autocomplete="off" maxlength="100" #bAdd1
+                            formControlName="branchAddressLine1" matInput class="form-control text-primitive">
+                        <mat-hint align="end">{{bAdd1.value.length}}/100</mat-hint>
+                        <mat-error>This field is required</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-28">
+            <div class="col-12 mob-pl-10 mob-pr-10">
+                <h5 class="m-0 roboto text-dark pb-10 f-16">Branch address line 2</h5>
+                <div class="form-group mb-0">
+                    <mat-form-field floatLabel="never" appearance="standard">
+                        <input placeholder="Enter branch address 2" autocomplete="off" #bAdd2 maxlength="100"
+                            formControlName="branchAddressLine2" matInput class="form-control text-primitive">
+                        <mat-error>This field is required</mat-error>
+                        <mat-hint align="end">{{bAdd2.value.length}}/100</mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-28">
+            <div class="col-12 mob-pl-10 mob-pr-10">
+                <h5 class="m-0 roboto text-dark pb-10 f-16">Branch city</h5>
+                <div class="form-group mb-0">
+                    <mat-form-field floatLabel="never" appearance="standard">
+                        <input placeholder="Enter branch city" maxlength="30" appInputValueValidation
+                            [inputValidator]="validatorType.TEXT_ONLY" autocomplete="off" #branchCity
+                            formControlName="branchCity" matInput class="form-control text-primitive">
+                        <mat-hint align="end">{{branchCity.value.length}}/30</mat-hint>
+                        <mat-error>This field is required</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-28">
+            <div class="col-12 mob-pl-10 mob-pr-10">
+                <h5 class="m-0 roboto text-dark pb-10 f-16">Branch state</h5>
+                <div class="form-group mb-0">
+                    <mat-form-field floatLabel="never" appearance="standard">
+                        <input placeholder="Enter branch state" maxlength="30" autocomplete="off"
+                            appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" #branchState
+                            formControlName="branchState" matInput class="form-control text-primitive">
+                        <mat-hint align="end">{{branchState.value.length}}/30</mat-hint>
+                        <mat-error>This field is required</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row profile-save-bottom">
+    <div class="col-2"></div>
+    <div class="col-8 pt-8 pb-8">
+        <button *ngIf="bankForm.get('ifscCode').valid && showBankFields" (click)="saveNext()" mat-stroked-button
+            class="btn-primary w-100 f-16 h-40 br-40">Add
+            address</button>
+        <button *ngIf="!showBankFields" (click)="showAllBankFields()" mat-stroked-button
+            class="btn-primary w-100 f-16 h-40 br-40">Submit</button>
+    </div>
+    <div class="col-2"></div>
+</div>

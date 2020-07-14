@@ -1,17 +1,17 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { OnlineTransactionService } from '../../../../online-transaction.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { FormBuilder, Validators } from '@angular/forms';
-import { EventService } from 'src/app/Data-service/event.service';
-import { FatcaDetailsInnComponent } from '../fatca-details-inn/fatca-details-inn.component';
-import { UtilService, ValidatorType } from 'src/app/services/util.service';
-import { FileUploadService } from '../../../../../../../../services/file-upload.service';
-import { apiConfig } from '../../../../../../../../config/main-config';
-import { appConfig } from '../../../../../../../../config/component-config';
-import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
-import { MatDialog } from '@angular/material';
-import { IinCreationLoaderComponent } from './iin-creation-loader/iin-creation-loader.component';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {OnlineTransactionService} from '../../../../online-transaction.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {FormBuilder, Validators} from '@angular/forms';
+import {EventService} from 'src/app/Data-service/event.service';
+import {FatcaDetailsInnComponent} from '../fatca-details-inn/fatca-details-inn.component';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import {FileUploadService} from '../../../../../../../../services/file-upload.service';
+import {apiConfig} from '../../../../../../../../config/main-config';
+import {appConfig} from '../../../../../../../../config/component-config';
+import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
+import {MatDialog} from '@angular/material';
+import {IinCreationLoaderComponent} from './iin-creation-loader/iin-creation-loader.component';
+import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
 
 @Component({
   selector: 'app-submit-review-inn',
@@ -24,7 +24,7 @@ export class SubmitReviewInnComponent implements OnInit {
   isSuccessful = false;
 
   constructor(private onlineTransact: OnlineTransactionService, private fb: FormBuilder,
-    private eventService: EventService, public dialog: MatDialog, private peopleService: PeopleService) {
+              private eventService: EventService, public dialog: MatDialog, private peopleService: PeopleService) {
   }
 
   get data() {
@@ -192,6 +192,7 @@ export class SubmitReviewInnComponent implements OnInit {
   }
 
   tempObj;
+
   submit(singleBrokerCred) {
     // this.doneData = true;
     this.toSendObjHolderList = [];
@@ -220,7 +221,8 @@ export class SubmitReviewInnComponent implements OnInit {
     this.inputData.clientData = this.clientData;
 
     const firstHolder = this.allData.holderList[0];
-    if (this.allData.taxStatus == '02') {
+    // this.inputData.taxMaster
+    if (this.allData.taxMaster.minorFlag) {
       firstHolder.guardianName = firstHolder.fatherName;
       firstHolder.guardianPan = firstHolder.panNumber;
       firstHolder.panNumber = '';
@@ -229,7 +231,7 @@ export class SubmitReviewInnComponent implements OnInit {
     const obj1 = {
       ownerName: this.allData.ownerName,
       holdingType: this.allData.holdingType,
-      taxStatus: (this.allData.taxStatus) ? this.allData.taxStatus : '01',
+      taxMasterId: this.allData.taxMasterId,
       holderList: this.toSendObjHolderList,
       bankDetailList: this.toSendObjBankList,
       nomineeList: this.toSendObjNomineeList,
@@ -338,7 +340,7 @@ export class SubmitReviewInnComponent implements OnInit {
   }
 
   openIinUccClient(singleBrokerCred, requestJson) {
-    const data = { singleBrokerCred, requestJson };
+    const data = {singleBrokerCred, requestJson};
     const Fragmentdata = {
       flag: 'IIn',
       ...data

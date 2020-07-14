@@ -18,7 +18,7 @@
         </div>
       </div>
       <div class="row mob-scroll">
-        <div *ngFor="let member of familyMembers" class="col-9 pl-0">
+        <div (click)="selectFamilyMember(member)" *ngFor="let member of familyMembers" class="col-9 pl-0">
           <div class="bg-white br-4 ba-half-grey">
             <div class="row pt-16 pb-36">
               <div class="col-3">
@@ -180,75 +180,92 @@
     </div>
   </div>
   <!-- Profile family memeber  -->
-  <!-- <div class="row pt-90 bg-grey lter">
-        <div class="col-3">
-          <img src="/assets/images/mob-women.png">
-        </div>
-        <div class="col-9 pl-0">
-          <h5 class="m-0 roboto f-400 pt-12 f-16">Shilpa Rahul Jain</h5>
-          <p class="m-0 roboto f-400 text-custom pt-4">AHJKM0267L</p>
-        </div>
-        </div>
-        <div class="row pt-28 mob-profile pb-16 bg-grey lter">
-        <div class="col-12">
-          <button mat-stroked-button class="text-success ba-success mr-12"><span class="material-icons active-kyc">
-          done
+  <div *ngIf="hideShowFlag=='FamilyMember'">
+    <div class="row mob-bg-common pb-12 mobtop-navfixed">
+      <div class="col-2">
+        <img (click)="hideShowFlag='profile'" src="/assets/images/svg/mob-left-arrow.svg" class="c-p pt-4">
+      </div>
+      <div class="col-10 pl-0">
+        <h5 class="m-0 f-18 text-white pt-4 roboto">{{selectedFamilyMember.name}}</h5>
+      </div>
+    </div>
+    <div class="row pt-90 bg-grey lter">
+      <div class="col-3">
+        <img src="/assets/images/mob-women.png">
+      </div>
+      <div class="col-9 pl-0">
+        <h5 class="m-0 roboto f-400 pt-12 f-16">{{selectedFamilyMember.name}}</h5>
+        <p class="m-0 roboto f-400 text-custom pt-4">{{selectedFamilyMember.pan?selectedFamilyMember.pan:'N/A'}}</p>
+      </div>
+    </div>
+    <div class="row pt-28 mob-profile pb-16 bg-grey lter">
+      <div class="col-12">
+        <button mat-stroked-button class="text-success ba-success mr-12"><span class="material-icons active-kyc">
+            done
           </span>KYC</button>
-          <button mat-stroked-button class="text-danger ba-danger"><span class="material-icons active-invest">
-          done
+        <button mat-stroked-button class="text-danger ba-danger"><span class="material-icons active-invest">
+            done
           </span>Investment A/c</button>
+      </div>
+    </div>
+    <div class="pl-20">
+      <div class="row pt-24 pb-12">
+        <div class="col-1 pl-0">
+          <img src="/assets/images/svg/basic-details.svg" class="m-0">
         </div>
+        <div class="col-9">
+          <p class="m-0 roboto text-dark pt-10">Basic details</p>
         </div>
-        <div class="pl-20">
-        <div class="row pt-24 pb-12">
-          <div class="col-1 pl-0">
-            <img src="/assets/images/svg/basic-details.svg" class="m-0">
-          </div>
-          <div class="col-9">
-            <p class="m-0 roboto text-dark pt-10">Basic details</p>
-          </div>
+      </div>
+      <div class="row bt-primitive pt-12 pb-12">
+        <div class="col-1 pl-0">
+          <img src="/assets/images/svg/more-info.svg" class="m-0">
         </div>
-        <div class="row bt-primitive pt-12 pb-12">
-          <div class="col-1 pl-0">
-            <img src="/assets/images/svg/more-info.svg" class="m-0">
-          </div>
-          <div class="col-9">
-            <p class="m-0 roboto text-dark pt-10">More info</p>
-          </div>
+        <div class="col-9">
+          <p class="m-0 roboto text-dark pt-10">More info</p>
         </div>
-        <div class="row bt-primitive pt-12 pb-12">
-          <div class="col-1 pl-0">
-            <img src="/assets/images/svg/address-mob.svg" class="m-0">
-          </div>
-          <div class="col-9">
-            <p class="m-0 roboto text-dark pt-10">Address</p>
-          </div>
+      </div>
+      <div (click)="hideShowFlag='address'" class="row bt-primitive pt-12 pb-12">
+        <div class="col-1 pl-0">
+          <img src="/assets/images/svg/address-mob.svg" class="m-0">
         </div>
-        <div class="row bt-primitive pt-12 pb-12">
-          <div class="col-1 pl-0">
-            <img src="/assets/images/svg/bank-mob.svg" class="m-0">
-          </div>
-          <div class="col-9">
-            <p class="m-0 roboto text-dark pt-10">Bank</p>
-          </div>
+        <div class="col-9">
+          <p class="m-0 roboto text-dark pt-10">Address</p>
         </div>
-        <div class="row bt-primitive pt-12 pb-12">
-          <div class="col-1 pl-0">
-            <img src="/assets/images/svg/demat.svg" class="m-0">
-          </div>
-          <div class="col-9">
-            <p class="m-0 roboto text-dark pt-10">Demat</p>
-          </div>
+      </div>
+      <div (click)="hideShowFlag='bank'" class="row bt-primitive pt-12 pb-12">
+        <div class="col-1 pl-0">
+          <img src="/assets/images/svg/bank-mob.svg" class="m-0">
         </div>
-        <div class="row bt-primitive bb-primitive pt-12 pb-12">
-          <div class="col-1 pl-0">
-            <img src="/assets/images/svg/uploads-mob.svg" class="m-0">
-          </div>
-          <div class="col-9">
-            <p class="m-0 roboto text-dark pt-10">Uploads</p>
-          </div>
+        <div class="col-9">
+          <p class="m-0 roboto text-dark pt-10">Bank</p>
         </div>
-`        </div> -->
+      </div>
+      <div (click)="hideShowFlag='demat'" class="row bt-primitive pt-12 pb-12">
+        <div class="col-1 pl-0">
+          <img src="/assets/images/svg/demat.svg" class="m-0">
+        </div>
+        <div class="col-9">
+          <p class="m-0 roboto text-dark pt-10">Demat</p>
+        </div>
+      </div>
+      <div class="row bt-primitive bb-primitive pt-12 pb-12">
+        <div class="col-1 pl-0">
+          <img src="/assets/images/svg/uploads-mob.svg" class="m-0">
+        </div>
+        <div class="col-9">
+          <p class="m-0 roboto text-dark pt-10">Uploads</p>
+        </div>
+      </div>
+      `
+    </div>
+  </div>
+  <!-- <app-mobile-view-address (backfunc)="backfunc($event)" [data]="selectedFamilyMember" *ngIf="hideShowFlag=='address'">
+  </app-mobile-view-address> -->
+  <!-- <app-mobile-view-bank (backfunc)="backfunc($event)" [data]="selectedFamilyMember" *ngIf="hideShowFlag=='bank'">
+  </app-mobile-view-bank> -->
+  <!-- <app-mobile-view-demat (backfunc)="backfunc($event)" [data]="selectedFamilyMember" *ngIf="hideShowFlag=='demat'">
+  </app-mobile-view-demat> -->
   <!-- end Profile family memeber  -->
   <!-- Profile family memeber basic info -->
   <div *ngIf="hideShowFlag=='changePassword'">

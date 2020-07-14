@@ -824,6 +824,8 @@ export const appConfig = {
   LATEST_AUM_RECON: 'admin/dashboard/aum/reconciliation/summary',
   GET_GOAL_SUMMARY: 'admin/dashboard/goal/summary',
 
+  ///////////////////////////// market place //////////////////////////
+  GET_CALL_DETAILS: 'marketplace/call/settings/get'
 
 };
 
