@@ -155,6 +155,7 @@ export class EventDialog implements OnInit {
   removeMember(member) {
     // this.attendeesArr.splice(this.attendeesArr.indexOf(member.email), 1)
     this.attendeesArr = this.attendeesArr.filter((x) => x.email != member.email);
+    this.eventForm.get("attendeesList").setValue(this.attendeesArr);
   }
 
   addTime() {

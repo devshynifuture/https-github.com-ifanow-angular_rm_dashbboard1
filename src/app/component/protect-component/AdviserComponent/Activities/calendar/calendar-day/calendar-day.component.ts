@@ -51,10 +51,19 @@ export class CalendarDayComponent implements OnInit {
         am = false;
       }
     }
-    this.currentMonth = new Date().getMonth();
-    this.currentYear = new Date().getFullYear();
     this.viewDate = new Date();
-    this.day = this.formateDate(this.viewDate)
+    this.day = this.formateDate(this.viewDate);
+    if(!this.calenderService.dayArrey){
+      this.currentMonth = new Date().getMonth();
+      this.currentYear = new Date().getFullYear();
+    }else{
+      this.day = this.calenderService.dayArrey[1].selectedDate;
+      this.month = this.calenderService.dayArrey[1].month;
+      this.year = this.calenderService.dayArrey[1].year;
+      this.currentMonth = this.calenderService.dayArrey[1].month;
+      this.currentYear = this.calenderService.dayArrey[1].year;
+      this.viewDate = new Date(this.year,this.month, this.day);
+    }
     this.userInfo = AuthService.getUserInfo()
     // this.updatecalendar();
     this.getEvent();

@@ -26,8 +26,8 @@
 </div>
 <div class="custom-grid p-0 b-a bb-0  calendar-column">
   <div class="column " *ngFor="let day of currentMonthEvents; let i = index">
-      <mat-chip style="margin-right: 3px;" [class.actived]="formateDate(day.date) == todayDate && i > addLastMonthDays - 1 && i < numbersOfDays - 1 && currentMonth == month" 
-          [class.text-primitive]="i < addLastMonthDays || i > numbersOfDays + addLastMonthDays - 1" 
+      <mat-chip style="margin-right: 3px;" [class.text-primitive]="i < addLastMonthDays || i > numbersOfDays + addLastMonthDays - 1" [class.actived]="formateDate(day.date) == todayDate && i > addLastMonthDays - 1 && i < numbersOfDays - 1 && currentMonth == month" 
+           
           >{{day.date|date:'d'}}</mat-chip>
           <div class="pt-20 pl-4 eInfo" style="width: 100%; border: none; ">
               <ul *ngFor="let event of day.events; let e = index" class="date-info blue">
