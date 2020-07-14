@@ -261,7 +261,7 @@ export class CalendarScheduleComponent implements OnInit {
 
     let hh = date.getHours() > 12 ? date.getHours() - 12 : date.getHours();
     let mm = date.getMinutes();
-    const amPm = date.getHours() > 12 ? 'pm' : 'am';
+    const amPm = date.getHours() > 12 ? 'PM' : 'AM';
     hh = hh < 10 ? '0' + hh : hh;
     mm = mm < 10 ? '0' + mm : mm;
     return hh + ':' + mm + amPm + ' ';

@@ -474,7 +474,7 @@ export class CalendarMonthComponent implements OnInit {
 
     var hh = date.getHours() > 12 ? date.getHours() - 12 : date.getHours();
     var mm = date.getMinutes();
-    var amPm = date.getHours() > 12 ? "pm" : "am";
+    var amPm = date.getHours() > 12 ? "PM" : "AM";
     hh = hh < 10 ? '0' + hh : hh;
     mm = mm < 10 ? '0' + mm : mm;
     return hh + ":" + mm + amPm + " ";
