@@ -91,28 +91,28 @@ export class CalendarMonthComponent implements OnInit {
 
   }
 
-  currentMonthEvents:any = [];
-  createDayJson(){
+  currentMonthEvents: any = [];
+  createDayJson() {
     this.currentMonthEvents = [];
-    for(let i=1; i < this.numbersOfDays + 1; i++){
+    for (let i = 1; i < this.numbersOfDays + 1; i++) {
       let dayArr = {
-        date:null,
-        events:[]
+        date: null,
+        events: []
       }
-      for(let e=0; e < this.formatedEvent.length; e++){
-        let calMonth = new Date(this.year,this.month,this.formateDate(this.current_day));
+      for (let e = 0; e < this.formatedEvent.length; e++) {
+        let calMonth = new Date(this.year, this.month, this.formateDate(this.current_day));
         // console.log(this.formateMonth(calMonth),this.formatedEvent[e].month, this.formateYear(calMonth));
-        
+
         // if(this.formatedEvent[e].month == this.formateMonth(calMonth) && this.formatedEvent[e].year ==  this.formateYear(calMonth)){
-          dayArr.date = new Date(this.year, this.month, i);
-          if(this.formatedEvent[e].day== i && this.formatedEvent[e].month == this.formateMonth(calMonth) && this.formatedEvent[e].year ==  this.formateYear(calMonth)||(this.formatedEvent[e].isRe && this.dateTimeEvent(this.year,this.month,i) > this.dateTimeEvent(null,null,this.formatedEvent[e].reStart) && this.dateTimeEvent(this.year,this.month,i) < this.dateTimeEvent(null,null,this.formatedEvent[e].reUntil)) && (this.formatedEvent[e].isRe == 'DAILY' || (this.formatedEvent[e].isRe == 'WEEKLY' && !this.validateWeekDays(this.formatedEvent[e].rrule.BYDAY, this.getDay(this.year,this.month,i),this.formatedEvent[e].rrule.INTERVAL)) || (this.formatedEvent[e].isRe == 'MONTHLY' && !this.validateMonthDays(this.formatedEvent[e].rrule.BYDAY, this.dateTimeEvent(this.year,this.month,i), this.formatedEvent[e].start.date,this.formatedEvent[e].rrule.INTERVAL)) || (this.formatedEvent[e].isRe == 'YEARLY' && !this.validateYearly(this.formatedEvent[e].start.date,i,this.month)))){
-              dayArr.events.push(this.formatedEvent[e])
-            }
+        dayArr.date = new Date(this.year, this.month, i);
+        if (this.formatedEvent[e].day == i && this.formatedEvent[e].month == this.formateMonth(calMonth) && this.formatedEvent[e].year == this.formateYear(calMonth) || (this.formatedEvent[e].isRe && this.dateTimeEvent(this.year, this.month, i) > this.dateTimeEvent(null, null, this.formatedEvent[e].reStart) && this.dateTimeEvent(this.year, this.month, i) < this.dateTimeEvent(null, null, this.formatedEvent[e].reUntil)) && (this.formatedEvent[e].isRe == 'DAILY' || (this.formatedEvent[e].isRe == 'WEEKLY' && !this.validateWeekDays(this.formatedEvent[e].rrule.BYDAY, this.getDay(this.year, this.month, i), this.formatedEvent[e].rrule.INTERVAL)) || (this.formatedEvent[e].isRe == 'MONTHLY' && !this.validateMonthDays(this.formatedEvent[e].rrule.BYDAY, this.dateTimeEvent(this.year, this.month, i), this.formatedEvent[e].start.date, this.formatedEvent[e].rrule.INTERVAL)) || (this.formatedEvent[e].isRe == 'YEARLY' && !this.validateYearly(this.formatedEvent[e].start.date, i, this.month)))) {
+          dayArr.events.push(this.formatedEvent[e])
+        }
         // }
         // console.log(this.currentMonthEvents, "this.currentMonthEvents");
       }
-     
-      if(dayArr.date != null){
+
+      if (dayArr.date != null) {
         this.currentMonthEvents.push(dayArr);
       }
     }
@@ -122,11 +122,11 @@ export class CalendarMonthComponent implements OnInit {
     // this.year = this.viewDate.getFullYear();
     // this.todayDate = this.viewDate.getDate();
     // this.numbersOfDays = this.daysInMonth(this.month, this.year)
-   
 
-// last month days
+
+    // last month days
     let firstDay = (new Date(this.year, this.month)).getDay();
-   
+
     if (firstDay == 0) {
       this.addLastMonthDays = 6;
     }
@@ -137,26 +137,26 @@ export class CalendarMonthComponent implements OnInit {
     for (let d = 1; d <= this.addLastMonthDays; d++) {
       this.currentMonthEvents.unshift(
         {
-          date:new Date(this.year,this.month-1,this.lastMonthDays),
-          events:[]
+          date: new Date(this.year, this.month - 1, this.lastMonthDays),
+          events: []
         }
       )
       this.lastMonthDays -= 1;
     }
 
-// next month days
+    // next month days
     for (let fd = 1; this.currentMonthEvents.length <= 41; fd++) {
       this.currentMonthEvents.push(
         {
-          date:new Date(this.year,this.month+1,fd),
-          events:[]
+          date: new Date(this.year, this.month + 1, fd),
+          events: []
         }
       );
     }
-    
-    
+
+
   }
-  
+
 
   E = [];
   getEvent() {
@@ -223,7 +223,7 @@ export class CalendarMonthComponent implements OnInit {
             e["startTime"] = this.formateTime(e.start.dateTime == null ? new Date(e.start.date) : new Date(e.start.dateTime));
             e["endTime"] = this.formateTime(e.start.dateTime == null ? new Date(e.start.date) : new Date(e.end.dateTime));
             this.formatedEvent.push(e);
-            console.log(this.formatedEvent,"formatedEvent calender1",);
+            console.log(this.formatedEvent, "formatedEvent calender1");
           }
         }
         this.createDayJson();
@@ -235,60 +235,60 @@ export class CalendarMonthComponent implements OnInit {
   }
 
 
- sun:any = [];
- mon:any = [];
- tue:any = [];
- wed:any = [];
- thu:any = [];
- fri:any = [];
- sat:any = [];
- addDaysOfMomth(){
-   let d:any;
-   let m;
-  for(let i = 1; i < this.numbersOfDays; i++){
-    // if(this.back){
-    //   m = this.month == 0?11:this.month-1;
-    // }
-    // else{
-    //   m = this.month == 0?1:this.month;
-    // }
-    d = new Date(this.year,this.month,i);
-    switch (d.getDay()) {
-      case 0:
-        this.sun.push(d);
-        break;
-      case 1:
-        this.mon.push(d);
-        break;
-      case 2:
-        this.tue.push(d);
-        break;
-      case 3:
-        this.wed.push(d);
-        break;
-      case 4:
-        this.thu.push(d);
-        break;
-      case 5:
-        this.fri.push(d);
-        break;
-      case 6:
-        this.sat.push(d);
-        break;
+  sun: any = [];
+  mon: any = [];
+  tue: any = [];
+  wed: any = [];
+  thu: any = [];
+  fri: any = [];
+  sat: any = [];
+  addDaysOfMomth() {
+    let d: any;
+    let m;
+    for (let i = 1; i < this.numbersOfDays; i++) {
+      // if(this.back){
+      //   m = this.month == 0?11:this.month-1;
+      // }
+      // else{
+      //   m = this.month == 0?1:this.month;
+      // }
+      d = new Date(this.year, this.month, i);
+      switch (d.getDay()) {
+        case 0:
+          this.sun.push(d);
+          break;
+        case 1:
+          this.mon.push(d);
+          break;
+        case 2:
+          this.tue.push(d);
+          break;
+        case 3:
+          this.wed.push(d);
+          break;
+        case 4:
+          this.thu.push(d);
+          break;
+        case 5:
+          this.fri.push(d);
+          break;
+        case 6:
+          this.sat.push(d);
+          break;
+      }
     }
   }
- }
 
- validateYearly(startDate,day, month){
-  let d = new Date(startDate).getDate();
-  let m = new Date(startDate).getMonth();
-  if(d == day && m == month){
-    return false;
+  validateYearly(startDate, day, month) {
+    let d = new Date(startDate).getDate();
+    let m = new Date(startDate).getMonth();
+    if (d == day && m == month) {
+      return false;
+    }
+    else {
+      return true;
+    }
   }
-  else{
-    return true;
-  }
- }
 
   validateMonthDays(eDays, cDate, startDate, interval) {
     if (eDays) {
@@ -450,7 +450,7 @@ export class CalendarMonthComponent implements OnInit {
       this.daysArr.push(fd);
     }
 
-    
+
 
   }
 
@@ -480,7 +480,7 @@ export class CalendarMonthComponent implements OnInit {
     return hh + ":" + mm + amPm + " ";
   }
 
-  viewMore(events){
+  viewMore(events) {
     this.openDialog(events);
   }
 
@@ -552,7 +552,7 @@ export class CalendarMonthComponent implements OnInit {
   }
 
   openDialog(eventData): void {
-    
+
     const dialogRef = this.dialog.open(EventDialog, {
       width: '576px',
       height: 'auto',
@@ -562,25 +562,25 @@ export class CalendarMonthComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result != undefined && result != 'delete' && !result.openEvent) {
         this.dialogData =
-        {
-          "calendarId": AuthService.getUserInfo().userName,
-          "userId": AuthService.getUserInfo().advisorId,
-          "eventId": result.eventId,
-          "summary": result.title,
-          "location": result.location,
-          "description": result.description,
-          "start": {
-            "dateTime": "",
-            "timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
-          },
-          "end": {
-            "dateTime": "",
-            "timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
-          },
-          "recurrence": [
-          ],
-          "attendees": result.attendeesList
-        }
+          {
+            "calendarId": AuthService.getUserInfo().userName,
+            "userId": AuthService.getUserInfo().advisorId,
+            "eventId": result.eventId,
+            "summary": result.title,
+            "location": result.location,
+            "description": result.description,
+            "start": {
+              "dateTime": "",
+              "timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
+            },
+            "end": {
+              "dateTime": "",
+              "timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
+            },
+            "recurrence": [
+            ],
+            "attendees": result.attendeesList
+          }
         // "RRULE:FREQ=DAILY;COUNT=2"
 
 
@@ -600,8 +600,8 @@ export class CalendarMonthComponent implements OnInit {
           })
         }
       }
-      else{
-        if(result && result != 'delete'){
+      else {
+        if (result && result != 'delete') {
           this.openDialog(result.event);
         }
       }
