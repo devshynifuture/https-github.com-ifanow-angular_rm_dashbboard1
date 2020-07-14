@@ -122,6 +122,7 @@ import { BulkCapitalGainSummaryComponent } from './component/protect-component/A
 import { BulkCapitalGainDetailedComponent } from './component/protect-component/AdviserComponent/backOffice/bulk-report-sending/bulk-capital-gain-detailed/bulk-capital-gain-detailed.component';
 import { RightFilterDuplicateComponent } from './component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
 import { CustomiseSettingComponent } from './component/protect-component/AdviserComponent/backOffice/bulk-report-sending/customise-setting/customise-setting.component';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 // tslint:disable-next-line:max-line-length
 // import { TransactionAddComponent } from './component/protect-component/AdviserComponent/transactions/transaction-add/transaction-add.component';
 
@@ -242,7 +243,6 @@ export const componentList = [
   MfAllocationsComponent,
   DetailedPoRdComponent,
   DetailedViewSchemeHoldingComponent,
-  AddExpensesComponent,
   KeyInfoComponent,
   AddMutualFundComponent,
   MFSchemeLevelHoldingsComponent,
@@ -277,7 +277,9 @@ export const componentList = [
   AddFireAndPerilsInsuranceInAssetComponent,
   DetailedViewGeneralInsuranceComponent,
   DetailedViewLifeInsuranceComponent,
-  RightFilterDuplicateComponent
+  RightFilterDuplicateComponent,
+  AddExpensesComponent,
+
   // ComposeEmailComponent
 ];
 
@@ -297,6 +299,7 @@ export const componentList = [
     CustomDirectiveModule,
     Ng5SliderModule, // used in MultiYearGoalComponent
     NgxDocViewerModule,
+    NgxMaterialTimepickerModule
   ],
   exports: [
     FormsModule,

@@ -32,6 +32,7 @@ import { MobileRoutingModule } from './mobile-routing.module';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { EditDocumentPopupComponent } from './component/customer/mobile/document/mobile-document/edit-document-popup/edit-document-popup.component';
 import { UploadDocumentComponent } from './component/customer/mobile/document/mobile-document/upload-document/upload-document.component';
+import { MutualFundsComponent } from './component/customer/mobile/mutual-funds/mutual-funds/mutual-funds.component';
 
 
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
@@ -40,8 +41,8 @@ import { UploadDocumentComponent } from './component/customer/mobile/document/mo
 
 
 @NgModule({
-  declarations: [CustomerComponent, TransactionSuccessfulComponent, MobileMyfeedComponent, MobileDocumentComponent, MobilePortfoiloComponent, MobileProfileComponent, MobileTransactionsComponent, MobileLeftSidenavComponent, UploadDocumentComponent, EditDocumentPopupComponent],
-  imports: [
+  declarations: [CustomerComponent, TransactionSuccessfulComponent, MobileMyfeedComponent, MobileDocumentComponent, MobilePortfoiloComponent, MobileProfileComponent, MobileTransactionsComponent, MobileLeftSidenavComponent,UploadDocumentComponent,EditDocumentPopupComponent, MutualFundsComponent],
+  imports: [ 
     // BrowserModule,
     CommonModule,
     MaterialModule,
@@ -55,8 +56,8 @@ import { UploadDocumentComponent } from './component/customer/mobile/document/mo
     EntryComponentsModule,
     AccountEntryModule,
     PlanEntryModule,
-    CustomersRoutingModule,
-    // MobileRoutingModule,
+  CustomersRoutingModule,
+  // MobileRoutingModule,
     SlickCarouselModule,
     AdviceEntryModule,
     CustomerOverviewEntryModule,
@@ -71,7 +72,7 @@ import { UploadDocumentComponent } from './component/customer/mobile/document/mo
   exports: [],
   providers: [DynamicComponentService, AdvisorAndOrganizationInfoService],
   entryComponents: [EntryComponentsModule.getComponentList(), AccountEntryModule.getComponentList(), AdviceEntryModule.getComponentList()
-    , PlanEntryModule.getComponentList(), CustomerOverviewEntryModule.getComponentList(), UploadDocumentComponent, EditDocumentPopupComponent]
+    , PlanEntryModule.getComponentList(), CustomerOverviewEntryModule.getComponentList(),UploadDocumentComponent,EditDocumentPopupComponent]
 })
 export class CustomersModule {
 }

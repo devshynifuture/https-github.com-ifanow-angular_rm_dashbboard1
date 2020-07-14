@@ -822,5 +822,9 @@ export const appConfig = {
   LAST_7_DAYS_INVESTMENT_ACCOUNTS: 'user/register/filter/get',
   DOCUMENT_TOTAL_COUNT_SIZE: 'document/account/document/total-count-and-size/get',
   LATEST_AUM_RECON: 'admin/dashboard/aum/reconciliation/summary',
-  GET_GOAL_SUMMARY: 'admin/dashboard/goal/summary'
+  GET_GOAL_SUMMARY: 'admin/dashboard/goal/summary',
+
+
 };
+
+

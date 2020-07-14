@@ -131,8 +131,8 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
           this.summaryTotalValue = Object.assign([], data);
           console.log(this.summaryTotalValue);
           // this.mutualFundValue = data[3];
-          // this.mutualFundValue = data.filter(element => element.assetType == 5);
-          // this.mutualFundValue = this.mutualFundValue[0];
+          this.mutualFundValue = data.filter(element => element.assetType == 5);
+          this.mutualFundValue = this.mutualFundValue[0];
           this.fixedIncome = data.filter(element => element.assetType == 7);
           this.fixedIncome = this.fixedIncome[0];
           this.realEstate = data.filter(element => element.assetType == 8);
@@ -401,7 +401,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     console.log(data);
     const thisMonthStart = UtilService.getStartOfTheDay(new Date(new Date().setDate(1)));
     const thisMonthEnd = UtilService.getEndOfDay(new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0));
-    const {income, expense} = data;
+    const { income, expense } = data;
     income.forEach(element => {
       element['month'] = this.datePipe.transform(new Date(element.targetDate), 'MMM')
     });
@@ -411,14 +411,14 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
 
     const incomeGraph = this.yearArr.map((month, i) => {
       return income.filter(e => e.month == month)
-      .map(e => e.currentValue)
-      .reduce((acc, curr) => acc + curr, 0);
+        .map(e => e.currentValue)
+        .reduce((acc, curr) => acc + curr, 0);
     })
 
     const expenseGraph = this.yearArr.map((month, i) => {
       return expense.filter(e => e.month == month)
-      .map(e => e.currentValue)
-      .reduce((acc, curr) => acc + curr, 0);
+        .map(e => e.currentValue)
+        .reduce((acc, curr) => acc + curr, 0);
     })
 
     new Highcharts.Chart('cashFlow', {
