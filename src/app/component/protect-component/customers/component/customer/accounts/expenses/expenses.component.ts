@@ -42,7 +42,7 @@ export const PICK_FORMATS = {
   styleUrls: ['./expenses.component.scss'],
 })
 export class ExpensesComponent implements OnInit {
-
+  reportDate;
 
   displayedColumns = ['no', 'expense', 'date', 'desc', 'mode', 'amt', 'icons'];
 
@@ -104,8 +104,8 @@ export class ExpensesComponent implements OnInit {
   // getTimePeriod(){
   //   this.periodSelection = this.fb.group({
   //     timePeriodSelection: ['1'],
-      
-  //   }); 
+
+  //   });
   // }
   getStartAndEndDate(val){
     var date = new Date();
@@ -135,7 +135,7 @@ export class ExpensesComponent implements OnInit {
       var firstDay = new Date(date.getFullYear()-1, 3, 1);
       var lastDay = new Date(date.getFullYear(), 2, 31);
     }
-    
+
     this.startDate = this.datePipe.transform(firstDay, 'yyyy-MM-dd');
     this.endDate = this.datePipe.transform(lastDay, 'yyyy-MM-dd');
     this.startDateDisp = this.datePipe.transform(firstDay, 'dd-MM-yyyy');
@@ -150,7 +150,7 @@ export class ExpensesComponent implements OnInit {
     // this.util.htmlToPdf(para.innerHTML, 'Test',this.fragmentData);
     this.util.htmlToPdf(para.innerHTML, 'Expenses', 'true', this.fragmentData, '', '');
   }
-  
+
   Excel(tableTitle,tmp) {
     setTimeout(() => {
       var blob = new Blob([document.getElementById(tmp).innerHTML], {
@@ -297,7 +297,7 @@ export class ExpensesComponent implements OnInit {
             dataLabels: {
               enabled: false
             }
-          },   
+          },
         ]
       }]
     });
@@ -570,7 +570,7 @@ export class ExpensesComponent implements OnInit {
             this.getBugetRecurring();
             console.log('this is sidebardata in subs subs 2: ', sideBarData);
           }
- 
+
           rightSideDataSub.unsubscribe();
         }
       }

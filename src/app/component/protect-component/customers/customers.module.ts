@@ -1,13 +1,12 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { CustomersRoutingModule } from './customers-routing.module';
-import { MaterialModule } from '../../../material/material';
-import { ChartModule } from 'angular-highcharts';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {CustomersRoutingModule} from './customers-routing.module';
+import {MaterialModule} from '../../../material/material';
+import {ChartModule} from 'angular-highcharts';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 // import {BrowserModule} from '@angular/platform-browser';
-import { CustomerComponent } from './component/customer/customer.component';
-
+import {CustomerComponent} from './component/customer/customer.component';
 import { CustomCommonModule } from '../../../common/custom.common.module';
 import { EntryComponentsModule } from '../../../entry.components.module';
 import { AccountEntryModule } from './component/customer/accounts/account.entry.module';
@@ -32,6 +31,12 @@ import { MobileRoutingModule } from './mobile-routing.module';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { EditDocumentPopupComponent } from './component/customer/mobile/document/mobile-document/edit-document-popup/edit-document-popup.component';
 import { UploadDocumentComponent } from './component/customer/mobile/document/mobile-document/upload-document/upload-document.component';
+import { MutualFundsComponent } from './component/customer/mobile/mutual-funds/mutual-funds/mutual-funds.component';
+import { MutualFundDetailsComponent } from './component/customer/mobile/mutual-funds/mutual-fund-details/mutual-fund-details.component';
+import { MoveCopyMobileViewComponent } from './component/customer/mobile/document/mobile-document/move-copy-mobile-view/move-copy-mobile-view.component';
+import { FixedIncomeMobComponent } from './component/customer/mobile/fixed-income-mob/fixed-income-mob.component';
+
+
 
 
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
@@ -40,7 +45,7 @@ import { UploadDocumentComponent } from './component/customer/mobile/document/mo
 
 
 @NgModule({
-  declarations: [CustomerComponent, TransactionSuccessfulComponent, MobileMyfeedComponent, MobileDocumentComponent, MobilePortfoiloComponent, MobileProfileComponent, MobileTransactionsComponent, MobileLeftSidenavComponent,UploadDocumentComponent,EditDocumentPopupComponent],
+  declarations: [CustomerComponent, TransactionSuccessfulComponent, MobileMyfeedComponent, MobileDocumentComponent, MobilePortfoiloComponent, MobileProfileComponent, MobileTransactionsComponent, MobileLeftSidenavComponent,UploadDocumentComponent,EditDocumentPopupComponent, MutualFundsComponent,MutualFundDetailsComponent,MoveCopyMobileViewComponent, FixedIncomeMobComponent],
   imports: [ 
     // BrowserModule,
     CommonModule,
@@ -55,8 +60,8 @@ import { UploadDocumentComponent } from './component/customer/mobile/document/mo
     EntryComponentsModule,
     AccountEntryModule,
     PlanEntryModule,
-  CustomersRoutingModule,
-  // MobileRoutingModule,
+    CustomersRoutingModule,
+    // MobileRoutingModule,
     SlickCarouselModule,
     AdviceEntryModule,
     CustomerOverviewEntryModule,
@@ -71,7 +76,7 @@ import { UploadDocumentComponent } from './component/customer/mobile/document/mo
   exports: [],
   providers: [DynamicComponentService, AdvisorAndOrganizationInfoService],
   entryComponents: [EntryComponentsModule.getComponentList(), AccountEntryModule.getComponentList(), AdviceEntryModule.getComponentList()
-    , PlanEntryModule.getComponentList(), CustomerOverviewEntryModule.getComponentList(),UploadDocumentComponent,EditDocumentPopupComponent]
+    , PlanEntryModule.getComponentList(), CustomerOverviewEntryModule.getComponentList(), UploadDocumentComponent, EditDocumentPopupComponent]
 })
 export class CustomersModule {
 }

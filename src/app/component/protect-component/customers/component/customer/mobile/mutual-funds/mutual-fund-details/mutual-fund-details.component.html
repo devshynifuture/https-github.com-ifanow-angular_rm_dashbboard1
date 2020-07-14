@@ -1,0 +1,72 @@
+
+<div class="mt-2 " *ngIf="backToMf != true">
+    <div class="col-12 pt-12 pb-12 bg-white" (click)="backToMf = true">
+        <span>
+            <img src="/assets/images/svg/black-left-arrow.svg" class="c-p pt-2">
+        </span>
+    </div>
+    <div class="row pt-16 pb-12">
+        <div class="col-2 pr-0">
+            <img class="w36" src="/assets/images/svg/women-profile-icon.svg">
+        </div>
+        <div class="col-10 pr-0">
+            <p class="m-0 mob-wbb">{{mutualFundSchemeMaster.schemeName}}</p>
+        </div>
+    </div>
+    <div class="bg-white" *ngFor="let item of mutualFund">
+        <div class="mob-bg-success" >
+            <div class="row pt-16">
+                <div class="col-7 pr-0">
+                    <p class="m-0 mob-wbb">{{item.ownerName}}</p>
+                </div>
+                <div class="col-5 pl-0">
+                    <p class="m-0 mob-wbb">Folio - {{item.folioNumber}}</p>
+                </div>
+            </div>
+            <div class="row pt-12 pb-16">
+                <div class="col-4 mob-br-success-1 pr-8">
+                    <p class="mob-text-xs">Amt. Invested</p>
+                    <p class="pt-4 m-0">
+                        <span appFormatNumber>₹ {{item.amountInvested}}</span></p>
+                </div>
+                <div class="col-4 mob-br-success-1 pr-8">
+                    <p class="mob-text-xs">Gain/Loss</p>
+                    <p class="pt-4 m-0 mob-text-success">Rs. 10,29,091</p>
+                </div>
+                <div class="col-3">
+                    <p class="mob-text-xs">Returns</p>
+                      <span class="pt-4 m-0 mob-text-success"appFormatNumber>{{item.xirr | number : '1.2'}}%</span>
+                </div>
+                <div class="col-1 pl-0" (click)="showDetailsFun(showDetails)">
+                    <img src="/assets/images/svg/mob-right-arrow-selected.svg">
+                </div>
+            </div>
+        </div>
+        <div class="mt-4 mb-20" *ngIf="showDetails == true">
+            <div class="row mob-bg-success pt-16 pb-16">
+              <div class="col-7">
+                <p class="mob-text-xs f-14">Dividend Earned</p>
+              </div>
+              <div class="col-5 pl-0">
+                <p class="m-0">Rs. {{item.dividendPayout}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="row bg-white pt-12" *ngIf="showDetails == true">
+            <div class="col-6 pl-8">
+              <p class="mob-text-xs">NAV {{item.navDate | date:'dd/MM/yyyy'}}</p>
+              <h5 class="m-0 f-16 mob-text-success">Rs.{{item.nav}}</h5>
+            </div>
+            <div class="col-6">
+               <p class="mob-text-xs">Units</p>
+              <h5 class="m-0 f-16">{{item.balanceUnit}}</h5>
+            </div>
+            <div class="col-12">
+              <img src="/assets/images/svg/mob-line-chart.svg" class="pt-40 pb-20 w-100">
+            </div>
+          </div>
+    </div>
+</div>
+<div *ngIf="backToMf == true">
+    <app-mutual-funds></app-mutual-funds>
+</div>
