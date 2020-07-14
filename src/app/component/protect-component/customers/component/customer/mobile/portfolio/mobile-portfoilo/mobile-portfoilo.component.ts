@@ -65,6 +65,7 @@ export class MobilePortfoiloComponent implements OnInit {
   mfData: any;
   fixedIncome: any;
   showFixedIncome: boolean;
+  showRetirementAccount: boolean;
   constructor(
     public customerService : CustomerService,
     public loaderFn: LoaderFunction,
@@ -93,9 +94,8 @@ export class MobilePortfoiloComponent implements OnInit {
       this.fixedIncome = asset
       this.showFixedIncome = true
     }else if(asset.assetType == 8){
-
     }else if(asset.assetType == 9){
-
+      this.showRetirementAccount = true;
     }
   }
   openMenu(flag) {
@@ -112,7 +112,7 @@ export class MobilePortfoiloComponent implements OnInit {
       advisorId: this.advisorId,
       targetDate: new Date().getTime()
     }
-
+    
 
     this.loaderFn.increaseCounter();
     this.customerService.getAllFeedsPortFolio(obj).subscribe(res => {
@@ -246,5 +246,8 @@ export class MobilePortfoiloComponent implements OnInit {
       innerSize: '60%',
       data: this.mfAllocationData
     }]
+  }
+  getValue(value){
+    this.showRetirementAccount = value;
   }
 }

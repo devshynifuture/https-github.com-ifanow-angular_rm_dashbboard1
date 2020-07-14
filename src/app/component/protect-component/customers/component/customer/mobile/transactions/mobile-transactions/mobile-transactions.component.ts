@@ -167,8 +167,8 @@ export class MobileTransactionsComponent implements OnInit {
   }
   openMenu(flag) {
     if(this.showSearchResult == true && this.detailedScheme == true){
-      this.showSearchResult = true;
-      this.detailedScheme = false;
+      //  this.showSearchResult = true;
+       this.detailedScheme = false;
       this.openMenue = false
     }else if(this.showSearchResult == true && this.detailedScheme == false){
        this.showSearchResult = false;

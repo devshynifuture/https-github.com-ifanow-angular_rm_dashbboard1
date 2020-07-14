@@ -35,6 +35,7 @@ import { MutualFundsComponent } from './component/customer/mobile/mutual-funds/m
 import { MutualFundDetailsComponent } from './component/customer/mobile/mutual-funds/mutual-fund-details/mutual-fund-details.component';
 import { MoveCopyMobileViewComponent } from './component/customer/mobile/document/mobile-document/move-copy-mobile-view/move-copy-mobile-view.component';
 import { FixedIncomeMobComponent } from './component/customer/mobile/fixed-income-mob/fixed-income-mob.component';
+import { RetirementAccMobComponent } from './component/customer/mobile/retirement-acc-mob/retirement-acc-mob.component';
 
 
 
@@ -45,7 +46,7 @@ import { FixedIncomeMobComponent } from './component/customer/mobile/fixed-incom
 
 
 @NgModule({
-  declarations: [CustomerComponent, TransactionSuccessfulComponent, MobileMyfeedComponent, MobileDocumentComponent, MobilePortfoiloComponent, MobileProfileComponent, MobileTransactionsComponent, MobileLeftSidenavComponent,UploadDocumentComponent,EditDocumentPopupComponent, MutualFundsComponent,MutualFundDetailsComponent,MoveCopyMobileViewComponent, FixedIncomeMobComponent],
+  declarations: [CustomerComponent, TransactionSuccessfulComponent, MobileMyfeedComponent, MobileDocumentComponent, MobilePortfoiloComponent, MobileProfileComponent, MobileTransactionsComponent, MobileLeftSidenavComponent,UploadDocumentComponent,EditDocumentPopupComponent, MutualFundsComponent,MutualFundDetailsComponent,MoveCopyMobileViewComponent, FixedIncomeMobComponent, RetirementAccMobComponent],
   imports: [ 
     // BrowserModule,
     CommonModule,
@@ -60,8 +61,8 @@ import { FixedIncomeMobComponent } from './component/customer/mobile/fixed-incom
     EntryComponentsModule,
     AccountEntryModule,
     PlanEntryModule,
-    // CustomersRoutingModule,
-     MobileRoutingModule,
+     CustomersRoutingModule,
+    //  MobileRoutingModule,
     SlickCarouselModule,
     AdviceEntryModule,
     CustomerOverviewEntryModule,
