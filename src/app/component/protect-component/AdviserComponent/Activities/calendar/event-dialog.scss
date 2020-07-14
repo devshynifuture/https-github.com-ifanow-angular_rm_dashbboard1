@@ -29,10 +29,15 @@
             }
             
             .uiListChanges {
-                list-style-type: disc;
                 margin-bottom: 10px;
-                padding-left: 35px;
                 display: block;
+                li {
+                    display: flex;
+                    align-items: center;
+                    padding-left: 35px;
+                    background: url('/assets/images/svg/calender-dot.svg') no-repeat;
+                    background-position: 20px 10px;
+                }
             }
             
              ::ng-deep .newTextarea .fr-box.fr-basic .fr-wrapper {
