@@ -1,21 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
-import { ProcessTransactionService } from '../../doTransaction/process-transaction.service';
-import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import { DatePipe } from '@angular/common';
-import { UtilService } from 'src/app/services/util.service';
-import { OnlineTransactionService } from '../../../online-transaction.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { FileUploadService } from 'src/app/services/file-upload.service';
-import { apiConfig } from 'src/app/config/main-config';
-import { appConfig } from 'src/app/config/component-config';
-import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
-import { IinUccCreationComponent } from '../../IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component';
-import { map, startWith } from 'rxjs/operators';
-import { EnumDataService } from 'src/app/services/enum-data.service';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionInject} from '../../../../Subscriptions/subscription-inject.service';
+import {ProcessTransactionService} from '../../doTransaction/process-transaction.service';
+import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import {DatePipe} from '@angular/common';
+import {UtilService} from 'src/app/services/util.service';
+import {OnlineTransactionService} from '../../../online-transaction.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {FileUploadService} from 'src/app/services/file-upload.service';
+import {apiConfig} from 'src/app/config/main-config';
+import {appConfig} from 'src/app/config/component-config';
+import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
+import {IinUccCreationComponent} from '../../IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component';
+import {map, startWith} from 'rxjs/operators';
+import {EnumDataService} from 'src/app/services/enum-data.service';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
 
 const moment = require('moment');
 
@@ -56,11 +56,11 @@ export class AddMandateComponent implements OnInit {
   imageLoader: boolean = false;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
-    private processTrasaction: ProcessTransactionService,
-    private custumService: CustomerService, private datePipe: DatePipe,
-    public utils: UtilService,
-    private onlineTransact: OnlineTransactionService, public eventService: EventService,
-    private enumDataService: EnumDataService) {
+              private processTrasaction: ProcessTransactionService,
+              private custumService: CustomerService, private datePipe: DatePipe,
+              public utils: UtilService,
+              private onlineTransact: OnlineTransactionService, public eventService: EventService,
+              private enumDataService: EnumDataService) {
     this.advisorId = AuthService.getAdvisorId();
   }
 
@@ -75,7 +75,7 @@ export class AddMandateComponent implements OnInit {
           if (state) {
             let list = this.enumDataService.getClientAndFamilyData(state);
             if (list.length == 0) {
-              this.generalDetails.controls.ownerName.setErrors({ invalid: true });
+              this.generalDetails.controls.ownerName.setErrors({invalid: true});
             }
             return this.enumDataService.getClientAndFamilyData(state);
           } else {
@@ -86,7 +86,7 @@ export class AddMandateComponent implements OnInit {
   }
 
   closeRightSlider(flag) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
+    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: flag});
   }
 
   close() {
@@ -226,6 +226,7 @@ export class AddMandateComponent implements OnInit {
           this.clientCodeData = data;
           if (this.clientCodeData.length == 1) {
             this.generalDetails.controls.holdingType.setValue(this.clientCodeData[0].clientCode);
+            this.selectIINUCC(this.clientCodeData[0]);
           }
         } else {
           this.isLoadingUcc = false;
@@ -312,13 +313,13 @@ export class AddMandateComponent implements OnInit {
     this.barButtonOptions.active = true;
     this.formDate = new Date(this.generalDetails.controls.fromDate.value);
     this.toDate = new Date(this.generalDetails.controls.toDate.value);
-    Object.assign(this.selectedMandate, { advisorId: this.detailsIIN.advisorId });
-    Object.assign(this.selectedMandate, { clientCode: this.detailsIIN.clientCode });
-    Object.assign(this.selectedMandate, { amount: this.generalDetails.controls.mandateAmount.value });
-    Object.assign(this.selectedMandate, { toDate: (this.toDate).getTime() });
-    Object.assign(this.selectedMandate, { fromDate: (this.formDate).getTime() });
-    Object.assign(this.selectedMandate, { tpUserCredFamilyMappingId: this.detailsIIN.tpUserCredFamilyMappingId });
-    Object.assign(this.selectedMandate, { tpUserCredentialId: this.detailsIIN.tpUserCredentialId });
+    Object.assign(this.selectedMandate, {advisorId: this.detailsIIN.advisorId});
+    Object.assign(this.selectedMandate, {clientCode: this.detailsIIN.clientCode});
+    Object.assign(this.selectedMandate, {amount: this.generalDetails.controls.mandateAmount.value});
+    Object.assign(this.selectedMandate, {toDate: (this.toDate).getTime()});
+    Object.assign(this.selectedMandate, {fromDate: (this.formDate).getTime()});
+    Object.assign(this.selectedMandate, {tpUserCredFamilyMappingId: this.detailsIIN.tpUserCredFamilyMappingId});
+    Object.assign(this.selectedMandate, {tpUserCredentialId: this.detailsIIN.tpUserCredentialId});
     this.onlineTransact.addMandate(this.selectedMandate).subscribe(
       data => this.addMandateRes(data), (error) => {
         this.barButtonOptions.active = false;
