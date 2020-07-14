@@ -54,6 +54,36 @@
             </div>
             <div [appSkeletonLoading]="letsideBarLoader" appSkeletonLoading>
                 <div class="height-700 ">
+
+                    <div class="row overflow-hidden bb c-p">
+                        <div class="col-md-6 relClass pr-0">
+                            <div>
+                                <a [queryParams]="{ tab: 'tab2'}" class="text-black m-0 roboto"
+                                    routerLink="/customer/detail/account/assets">
+                                    Mutual funds
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-6   text-right">
+                            <div class="relClass">
+                                <div [ngClass]="{'height23': letsideBarLoader}" class="bar">
+                                    <p *ngIf="letsideBarLoader==false" class=" m-0 roboto pr-8 roboto ">
+                                        <span *ngIf="mutualFundValue.currentValue!=0">₹</span>
+                                        <span [value]="mutualFundValue.currentValue"
+                                            appFormatNumber>{{mutualFundValue.currentValue==0?'-':mutualFundValue.currentValue}}
+                                        </span>
+                                    </p>
+                                    <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(mutualFundValue.percentage),'text-danger': checkNumberPositiveAndNegative(mutualFundValue.percentage)==false,'': checkNumberPositiveAndNegative(mutualFundValue.percentage)==undefined}"
+                                        class="m-0 roboto pr-8 ">
+                                        <span
+                                            *ngIf="letsideBarLoader==false">{{mutualFundValue.percentage==0?'-':mutualFundValue.percentage}}<span
+                                                *ngIf="mutualFundValue.percentage!=0">%</span></span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row overflow-hidden bb c-p">
                         <div class="col-md-6 relClass pr-0">
                             <div>

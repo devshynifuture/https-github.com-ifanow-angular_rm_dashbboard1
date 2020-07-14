@@ -15,7 +15,7 @@ import { UtilService } from 'src/app/services/util.service';
 @Component({
   selector: 'app-customer',
   templateUrl: './customer.component.html',
-  //templateUrl: './customer.mobile.component.html',
+  // templateUrl: './customer.mobile.component.html',
   //templateUrl: './transact-mob.html',
   // templateUrl: './goal.mobile.component.html',
   styleUrls: ['./customer.component.scss'],
