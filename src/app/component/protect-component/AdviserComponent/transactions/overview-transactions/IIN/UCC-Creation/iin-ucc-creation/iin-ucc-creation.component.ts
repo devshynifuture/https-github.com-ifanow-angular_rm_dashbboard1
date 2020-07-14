@@ -52,6 +52,8 @@ export class IinUccCreationComponent implements OnInit, AfterViewInit {
     } else {
       this.greeting = 'Good evening';
     }
+    this.taxStatusList = this.enumService.getTaxStatusList();
+
   }
 
   ngOnInit() {
@@ -114,14 +116,13 @@ export class IinUccCreationComponent implements OnInit, AfterViewInit {
     this.generalDetails.controls.ownerName.setValue('');
     this.generalDetails.controls.holdingType.valueChanges.subscribe((newValue) => {
       if (newValue != 'SI') {
-        this.taxStatusList = [{taxStatusDesc: 'Individual', taxStatusCode: '01'}];
         this.generalDetails.controls.taxStatus.setValue('01');
       } else {
-        this.taxStatusList = [{taxStatusDesc: 'Individual', taxStatusCode: '01'},
-          {taxStatusDesc: 'On behalf of minor', taxStatusCode: '02'}, {
-            taxStatusDesc: 'NRI - Repatriable (NRE)',
-            taxStatusCode: '21'
-          }];
+        // this.taxStatusList = [{taxStatusDesc: 'Individual', taxStatusCode: '01'},
+        //   {taxStatusDesc: 'On behalf of minor', taxStatusCode: '02'}, {
+        //     taxStatusDesc: 'NRI - Repatriable (NRE)',
+        //     taxStatusCode: '21'
+        //   }];
       }
     });
   }
