@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../customer.service';
 import { runInThisContext } from 'vm';
-import { Validators, FormBuilder } from '@angular/forms';
+import { Validators, FormBuilder, FormControl } from '@angular/forms';
 import { ValidatorType } from 'src/app/services/util.service';
 import { LoginService } from 'src/app/component/no-protected/login/login.service';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -37,6 +37,8 @@ export class MobileProfileComponent implements OnInit {
   advisorPersonalData: any;
   orgnisationData: any;
   selectedFamilyMember: any;
+  catergoryType = new FormControl(1);
+  taxStatus = new FormControl(1);
   constructor(private cusService: CustomerService,
     private fb: FormBuilder,
     private loginService: LoginService,
@@ -433,6 +435,8 @@ export class MobileProfileComponent implements OnInit {
   selectFamilyMember(member) {
     this.hideShowFlag = "FamilyMember";
     this.selectedFamilyMember = member;
+    this.catergoryType.setValue(member.familyMemberType);
+    this.taxStatus.setValue(member.residentFlag);
   }
 
   backfunc(data) {
