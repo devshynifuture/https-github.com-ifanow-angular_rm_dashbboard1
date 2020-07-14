@@ -9,6 +9,7 @@ export class MutualFundDetailsComponent implements OnInit {
   inputData: any;
   mutualFundSchemeMaster: any;
   mutualFund: any;
+  showDetails: boolean;
 
   constructor() { }
   @Input()
@@ -23,5 +24,11 @@ export class MutualFundDetailsComponent implements OnInit {
   }
   ngOnInit() {
   }
-
+  showDetailsFun(flag){
+    if(flag == true){
+      this.showDetails = false
+    }else{
+      this.showDetails = true
+    }
+  }
 }
