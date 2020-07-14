@@ -1,5 +1,5 @@
 <!-- protfolio mobile screen start -->
-<div *ngIf="showMf != true">
+<div *ngIf="showMf != true && showFixedIncome != true">
 <div class="row mob-bg-common pb-12 mobtop-navfixed" *ngIf="openMenue != true">
   <div class="col-2" (click)="openMenu(openMenue)">
     <span class="material-icons text-white">
@@ -96,7 +96,7 @@
       </div>
     </div>
     <div class="row breakdown pt-16 pb-16" *ngFor="let portData of portFolioData">
-      <div class="col-10" *ngIf="portData.assetType != 5">
+      <div class="col-10" *ngIf="portData.assetType != 5" (click)="openAsset(portData)">
         <h4 class="m-0">₹<span appFormatNumber>{{portData.currentValue}}</span></h4>
         <div class="row pt-8">
           <div class="col-1 pl-0">
@@ -809,4 +809,7 @@
   </div> -->
   <div *ngIf="showMf == true">
     <app-mutual-funds></app-mutual-funds>
+   </div>
+   <div *ngIf="showFixedIncome == true">
+     <app-fixed-income-mob></app-fixed-income-mob>
    </div>

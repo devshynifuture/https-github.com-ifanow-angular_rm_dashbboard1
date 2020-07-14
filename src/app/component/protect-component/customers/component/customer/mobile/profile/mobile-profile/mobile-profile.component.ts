@@ -9,6 +9,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { PlanService } from '../../../plan/plan.service';
 import Highcharts from 'highcharts';
 import { SettingsService } from 'src/app/component/protect-component/AdviserComponent/setting/settings.service';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 
 @Component({
   selector: 'app-mobile-profile',
@@ -35,12 +36,14 @@ export class MobileProfileComponent implements OnInit {
   feedsRiskProfile: any = {};
   advisorPersonalData: any;
   orgnisationData: any;
+  selectedFamilyMember: any;
   constructor(private cusService: CustomerService,
     private fb: FormBuilder,
     private loginService: LoginService,
     private event: EventService,
     private planService: PlanService,
-    private settingService: SettingsService) { }
+    private settingService: SettingsService,
+    private enumDataService: EnumDataService) { }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -50,6 +53,7 @@ export class MobileProfileComponent implements OnInit {
     return this.inputData;
   }
   ngOnInit() {
+    this.enumDataService.setBankAccountTypes();
     this.hideShowFlag = "profile";
     this.setNewPasswordForm = this.fb.group({
       oldPassword: ['', [Validators.required]],
@@ -424,6 +428,15 @@ export class MobileProfileComponent implements OnInit {
           this.advisorPersonalData = data;
         }
       })
+  }
+
+  selectFamilyMember(member) {
+    this.hideShowFlag = "FamilyMember";
+    this.selectedFamilyMember = member;
+  }
+
+  backfunc(data) {
+    this.hideShowFlag = "FamilyMember";
   }
 
 }
