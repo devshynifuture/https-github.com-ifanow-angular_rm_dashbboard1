@@ -166,13 +166,24 @@ export class MobileTransactionsComponent implements OnInit {
     this.scheme = item;
   }
   openMenu(flag) {
-    if (flag == false) {
-      this.openMenue = true
-    } else {
+    if(this.showSearchResult == true && this.detailedScheme == true){
+      this.showSearchResult = true;
+      this.detailedScheme = false;
       this.openMenue = false
+    }else if(this.showSearchResult == true && this.detailedScheme == false){
+       this.showSearchResult = false;
+       this.detailedScheme == false
+      this.openMenue = false
+    }else if(flag == false){
+      this.openMenue = true
     }
-    this.showSearchResult = false;
-    this.detailedScheme = true;
+    // if (flag == false) {
+    //   this.openMenue = true
+    // } else {
+    //   this.openMenue = false
+    // }
+    // this.showSearchResult = false;
+    // this.detailedScheme = false;
 
   }
 
