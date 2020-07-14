@@ -1,0 +1,43 @@
+
+<div class="mt-2 ">
+    <div class="col-12 pt-12 pb-12 bg-white">
+        <span>
+            <img src="/assets/images/svg/black-left-arrow.svg" class="c-p pt-2">
+        </span>
+    </div>
+    <div class="row pt-16 pb-12">
+        <div class="col-2 pr-0">
+            <img class="w36" src="/assets/images/svg/women-profile-icon.svg">
+        </div>
+        <div class="col-10 pr-0">
+            <p class="m-0 mob-wbb">{{mutualFundSchemeMaster.schemeName}}</p>
+        </div>
+    </div>
+    <div class="bg-white">
+        <div class="mob-bg-success" *ngFor="let item of mutualFund">
+            <div class="row pt-16">
+                <div class="col-7 pr-0">
+                    <p class="m-0 mob-wbb">{{item.ownerName}}</p>
+                </div>
+                <div class="col-5 pl-0">
+                    <p class="m-0 mob-wbb">Folio - {{item.folioNumber}}</p>
+                </div>
+            </div>
+            <div class="row pt-12 pb-16">
+                <div class="col-4 mob-br-success-1 pr-8">
+                    <p class="mob-text-xs">Amt. Invested</p>
+                    <p class="pt-4 m-0">
+                        <span appFormatNumber>₹ {{item.amountInvested}}</span></p>
+                </div>
+                <div class="col-4 mob-br-success-1 pr-8">
+                    <p class="mob-text-xs">Gain/Loss</p>
+                    <p class="pt-4 m-0 mob-text-success">Rs. 10,29,091</p>
+                </div>
+                <div class="col-3">
+                    <p class="mob-text-xs">Returns</p>
+                      <span class="pt-4 m-0 mob-text-success"appFormatNumber>{{item.xirr | number : '1.2'}}%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

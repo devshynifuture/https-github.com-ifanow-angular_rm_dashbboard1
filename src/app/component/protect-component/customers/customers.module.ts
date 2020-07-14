@@ -33,6 +33,7 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { EditDocumentPopupComponent } from './component/customer/mobile/document/mobile-document/edit-document-popup/edit-document-popup.component';
 import { UploadDocumentComponent } from './component/customer/mobile/document/mobile-document/upload-document/upload-document.component';
 import { MutualFundsComponent } from './component/customer/mobile/mutual-funds/mutual-funds/mutual-funds.component';
+import { MutualFundDetailsComponent } from './component/customer/mobile/mutual-funds/mutual-fund-details/mutual-fund-details.component';
 
 
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
@@ -41,7 +42,7 @@ import { MutualFundsComponent } from './component/customer/mobile/mutual-funds/m
 
 
 @NgModule({
-  declarations: [CustomerComponent, TransactionSuccessfulComponent, MobileMyfeedComponent, MobileDocumentComponent, MobilePortfoiloComponent, MobileProfileComponent, MobileTransactionsComponent, MobileLeftSidenavComponent,UploadDocumentComponent,EditDocumentPopupComponent, MutualFundsComponent],
+  declarations: [CustomerComponent, TransactionSuccessfulComponent, MobileMyfeedComponent, MobileDocumentComponent, MobilePortfoiloComponent, MobileProfileComponent, MobileTransactionsComponent, MobileLeftSidenavComponent,UploadDocumentComponent,EditDocumentPopupComponent, MutualFundsComponent,MutualFundDetailsComponent],
   imports: [ 
     // BrowserModule,
     CommonModule,
@@ -57,7 +58,7 @@ import { MutualFundsComponent } from './component/customer/mobile/mutual-funds/m
     AccountEntryModule,
     PlanEntryModule,
   CustomersRoutingModule,
-  // MobileRoutingModule,
+   //MobileRoutingModule,
     SlickCarouselModule,
     AdviceEntryModule,
     CustomerOverviewEntryModule,
