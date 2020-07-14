@@ -63,6 +63,8 @@ export class MobilePortfoiloComponent implements OnInit {
     }
   ]
   mfData: any;
+  fixedIncome: any;
+  showFixedIncome: boolean;
   constructor(
     public customerService : CustomerService,
     public loaderFn: LoaderFunction,
@@ -84,6 +86,17 @@ export class MobilePortfoiloComponent implements OnInit {
     this.portFolioData = [];
     this.getAssetAllocationData()
     this.initializePieChart()
+  }
+  openAsset(asset){
+    console.log('assets',asset)
+    if(asset.assetType == 7){
+      this.fixedIncome = asset
+      this.showFixedIncome = true
+    }else if(asset.assetType == 8){
+
+    }else if(asset.assetType == 9){
+
+    }
   }
   openMenu(flag) {
     if (flag == false) {
