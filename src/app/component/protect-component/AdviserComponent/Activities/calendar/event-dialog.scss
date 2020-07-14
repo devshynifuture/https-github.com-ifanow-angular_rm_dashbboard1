@@ -1,89 +1,80 @@
             .eventBox {
-                
-                .row{
+                .row {
                     margin-left: -15px !important;
                     margin-right: -15px !important;
                 }
                 .mt-16 {
                     margin-top: 16px !important;
                 }
-
-                
-            }
-
-            #eventUI{
-                height:673px;
             }
             
-            ::ng-deep .newTextarea .fr-box.fr-basic .fr-wrapper {
-               margin-bottom: 20px;
-           }
-           
-           .heightTextarea {
-               height: 100px;
-           }
-           
-            ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-datepicker-toggle-default-icon {
-               width: 1.5em !important;
-           }
-           
-            ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
-               padding: 0px;
-           }
-           
-           .uiListChanges {
-               list-style-type: disc;
-               margin-top: 10px;
-               margin-bottom: 10px;
-               padding-left: 16px;
-               display: block;
-           }
-
-
-           ::ng-deep .newTextarea .fr-box.fr-basic .fr-wrapper {
-            min-height:  inherit;
-            height: 100px;
-            overflow: auto;
-           }
-
-
-           ::ng-deep .mat-form-field-appearance-standard .mat-form-field-flex {
-            padding-top: 0;
-
-
-        }
-
-        .actived {
-            padding:10px;
-            color: #fff !important;
-            background-color: #008FFF !important;
-            // float: right;÷
-            border-radius: 50px;
-        }
-
-        ul.blue {
-            height: auto;
-            display: block;
-            margin-top: 20px;
-            width: 100%;
-            li {
-                font-size: 16px !important;
-                cursor: pointer;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-                overflow: hidden;
-                text-align: left;
-                position: relative;
-                line-height: 33px;
-                z-index: 1;
+            #eventUI {
+                height: 673px;
             }
             
-            li:before {
-                content: "\2022";
-                color: #84BDF3;
-                font-weight: bold;
-                padding-top: 4px;
-                padding-right: 4px;
-                font-size: 34px;
+             ::ng-deep .newTextarea .fr-box.fr-basic .fr-wrapper {
+                margin-bottom: 20px;
             }
-        }
+            
+            .heightTextarea {
+                height: 100px;
+            }
+            
+             ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-datepicker-toggle-default-icon {
+                width: 1.5em !important;
+            }
+            
+             ::ng-deep .mat-form-field-appearance-legacy .mat-form-field-infix {
+                padding: 0px;
+            }
+            
+            .uiListChanges {
+                list-style-type: disc;
+                margin-bottom: 10px;
+                padding-left: 40px;
+                display: block;
+            }
+            
+             ::ng-deep .newTextarea .fr-box.fr-basic .fr-wrapper {
+                min-height: inherit;
+                height: 100px;
+                overflow: auto;
+            }
+            
+             ::ng-deep .mat-form-field-appearance-standard .mat-form-field-flex {
+                padding-top: 0;
+            }
+            
+            .actived {
+                padding: 10px;
+                color: #fff !important;
+                background-color: #008FFF !important;
+                // float: right;÷
+                border-radius: 50px;
+            }
+            
+            ul.blue {
+                height: auto;
+                display: block;
+                margin-top: 20px;
+                width: 100%;
+                li {
+                    font-size: 16px !important;
+                    cursor: pointer;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    text-align: left;
+                    position: relative;
+                    line-height: 33px;
+                    z-index: 1;
+                }
+                li:before {
+                    content: "\2022";
+                    color: #84BDF3;
+                    font-weight: bold;
+                    padding-top: 4px;
+                    padding-right: 4px;
+                    font-size: 34px;
+                }
+            }
