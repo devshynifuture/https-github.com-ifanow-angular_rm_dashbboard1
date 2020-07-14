@@ -31,9 +31,7 @@ export class IinUccCreationComponent implements OnInit, AfterViewInit {
   advisorId: any;
   clientData: any;
   isLoading = false;
-  taxStatusList = [{taxStatusDesc: 'Individual', taxStatusCode: '01'},
-    {taxStatusDesc: 'On behalf of minor', taxStatusCode: '02'},
-    {taxStatusDesc: 'NRI - Repatriable (NRE)', taxStatusCode: '21'}];
+  taxStatusList = [];
   greeting;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
@@ -52,8 +50,9 @@ export class IinUccCreationComponent implements OnInit, AfterViewInit {
     } else {
       this.greeting = 'Good evening';
     }
-    this.taxStatusList = this.enumService.getTaxStatusList();
-
+    this.taxStatusList = this.enumService.getIndividualTaxList();
+    this.taxStatusList.push(...this.enumService.getMinorTaxList());
+    console.log('this.taxStatusList :', this.taxStatusList);
   }
 
   ngOnInit() {
@@ -64,9 +63,6 @@ export class IinUccCreationComponent implements OnInit, AfterViewInit {
     } else {
       this.getClients();
     }
-    //
-
-
     this.processTransaction.getCountryCodeList().subscribe((responseData) => {
     }, error => {
       console.error('country code error : ', error);
@@ -78,7 +74,7 @@ export class IinUccCreationComponent implements OnInit, AfterViewInit {
     // TODO for testing only
     // this.generalDetails.controls.ownerName.setValue('Gaurav');
     // this.generalDetails.controlss.holdingType.setValue('SI');
-    // this.generalDetails.controlss.taxStatus.setValue('01');
+    // this.generalDetails.controlss.taxMaster.setValue('01');
   }
 
   closeRightSlider(flag) {
@@ -100,8 +96,9 @@ export class IinUccCreationComponent implements OnInit, AfterViewInit {
     this.generalDetails = this.fb.group({
       ownerName: [(!data) ? '' : data.ownerName, [Validators.required]],
       holdingType: [(!data) ? '' : data.holdingType, [Validators.required]],
-      taxStatus: [(!data) ? '' : data.taxStatus, [Validators.required]],
+      taxMaster: [(!data) ? {taxMasterId: 1, description: 'Individual'} : data.taxMaster, [Validators.required]],
     });
+    this.setDefaultTaxStatus();
     this.generalDetails.controls.ownerName.valueChanges
       .subscribe(newValue => {
         this.filteredStates = new Observable(this.clientData).pipe(startWith(''),
@@ -115,15 +112,10 @@ export class IinUccCreationComponent implements OnInit, AfterViewInit {
       });
     this.generalDetails.controls.ownerName.setValue('');
     this.generalDetails.controls.holdingType.valueChanges.subscribe((newValue) => {
-      if (newValue != 'SI') {
-        this.generalDetails.controls.taxStatus.setValue('01');
-      } else {
-        // this.taxStatusList = [{taxStatusDesc: 'Individual', taxStatusCode: '01'},
-        //   {taxStatusDesc: 'On behalf of minor', taxStatusCode: '02'}, {
-        //     taxStatusDesc: 'NRI - Repatriable (NRE)',
-        //     taxStatusCode: '21'
-        //   }];
-      }
+      // if (newValue != 'SI') {
+      //   this.generalDetails.controls.taxMaster.setValue({taxMasterId: 1, description: 'Individual'});
+      // } else {
+      // }
     });
   }
 
@@ -173,44 +165,6 @@ export class IinUccCreationComponent implements OnInit, AfterViewInit {
   getIINUCCRegistrationRes(data) {
   }
 
-  // getClientAndFamilyMember(data) {
-  //   this.isLoading = true
-  //   if (data == '') {
-  //     this.generalDetails.controls.ownerName.setErrors({ invalid: false });
-  //     this.generalDetails.controls.ownerName.setValidators([Validators.required]);
-  //     this.generalDetails.controls.ownerName.updateValueAndValidity();
-  //     this.nomineesListFM = undefined;
-  //     return;
-  //   }
-  //   const obj = {
-  //     advisorId: this.advisorId,
-  //     displayName: data
-  //   };
-
-  //   this.onlineTransact.getClientAndFmList(obj).subscribe(
-  //     data => this.getClientAndFmListRes(data), (error) => {
-
-  //     }
-  //   );
-  // }
-  // getClientAndFmListRes(data) {
-  //   if (data == 0) {
-  //     this.isLoading = false
-  //     this.generalDetails.controls.ownerName.setErrors({ invalid: true });
-  //     this.generalDetails.controls.ownerName.markAsTouched();
-  //     data = undefined;
-  //   }
-  //   this.isLoading = false
-
-  //   this.nomineesListFM = data
-  // }
-  lisNominee(value) {
-    // this.showSpinnerOwner = false
-    if (value == null) {
-      // this.transactionAddForm.get('ownerName').setErrors({ 'setValue': 'family member does not exist' });
-      // this.transactionAddForm.get('ownerName').markAsTouched();
-    }
-  }
 
   ownerList(value) {
     if (value == '') {
@@ -224,20 +178,15 @@ export class IinUccCreationComponent implements OnInit, AfterViewInit {
     this.familyMemberData = value;
     this.familyMemberId = value.familyMemberId;
     this.clientData = value;
-    /* if (value.guardianId && value.guardianId > 0) {
-       this.taxStatusList = this.enumService.getMinorTaxList();
-     } else if (value.userType == 2 && value.clientType == 3) {
-       // TODO we are not doing corporate registration for now
-       // this.taxStatusList = this.enumService.getCorporateTaxList();
-       this.taxStatusList = this.enumService.getIndividualTaxList();
-     } else {
-       this.taxStatusList = this.enumService.getIndividualTaxList();
-     }*/
   }
 
   displayFn(user) {
 
     return user && user.name ? user.name : '';
+  }
+
+  setDefaultTaxStatus() {
+    this.generalDetails.controls.taxMaster.setValue(this.taxStatusList[0]);
   }
 
   saveGeneralDetails(data) {
@@ -251,7 +200,8 @@ export class IinUccCreationComponent implements OnInit, AfterViewInit {
       familyMemberId: this.familyMemberId,
       clientId: this.familyMemberData.clientId,
       advisorId: this.advisorId,
-      taxStatus: this.generalDetails.controls.taxStatus.value,
+      taxMaster: this.generalDetails.controls.taxMaster.value,
+      taxMasterId: this.generalDetails.controls.taxMaster.value.taxMasterId,
       clientData: this.clientData
     };
     this.openPersonalDetails(obj);
