@@ -12,13 +12,15 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { EditNoteGoalComponent } from './edit-note-goal/edit-note-goal.component';
 import { ViewPastnotGoalComponent } from './view-pastnot-goal/view-pastnot-goal.component';
 import { PlanService } from '../plan.service';
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray, transferArrayItem, copyArrayItem } from '@angular/cdk/drag-drop';
 import { AuthService } from 'src/app/auth-service/authService';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import * as Highcharts from 'highcharts';
 import { MatDialog } from '@angular/material';
 import { P } from '@angular/cdk/keycodes';
 import { Subscriber, Subscription, Subject, forkJoin } from 'rxjs';
+import { AddGoalService } from './add-goal/add-goal.service';
+import { ReallocateAssetComponent } from './reallocate-asset/reallocate-asset.component';
 
 
 
@@ -42,6 +44,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
   allGoals: any[] = [];
   allAssets:any[] = [];
   hasCostOfDelay: boolean = false;
+  inDropZone:boolean = false;
 
   // options set for bar charts
   // Reference - https://api.highcharts.com/highcharts/
@@ -116,12 +119,14 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
   allocatedList:Array<any> = [];
   assetError = false;
   selectedGoalId:any = null;
+  subscriber = new Subscriber();
 
   constructor(
     private subInjectService: SubscriptionInject,
     private eventService: EventService,
     private plansService: PlanService,
     private dialog: MatDialog,
+    private allocateOtherAssetService: AddGoalService,
     public loaderFn: LoaderFunction
   ) {
     this.advisor_client_id.advisorId = AuthService.getAdvisorId();
@@ -130,6 +135,11 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
+    this.subscriber.add(
+      this.allocateOtherAssetService.refreshObservable.subscribe(() => {
+        this.loadAllGoals();
+      })
+    );
     this.loadAllAssets();
     this.loadAllGoals();
     this.loaderFn.setFunctionToExeOnZero(this, this.afterDataLoadMethod);
@@ -159,7 +169,6 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
 
     this.loaderFn.increaseCounter();
     forkJoin(otherAssets, mfAssets).subscribe(result => {
-      console.log(result[0], 'im other');
       let otherAssetRes = result[0].map(asset => {
         let absAllocation = 0;
         if(asset.goalAssetMapping) {
@@ -181,7 +190,6 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       })
 
       this.allAssets = [...otherAssetRes, ...mfAssetRes];
-      console.log(this.allAssets);
       this.loaderFn.decreaseCounter();
     }, err => {
       console.error(err)
@@ -269,10 +277,10 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         goalYear: new Date(goalSubData.goalStartDate).getFullYear(),
         presentValue: goalSubData.goalPresentValue,
         futureValue: goalSubData.goalFV,
-        equity_monthly: goalSubData.equitySipAmount || 0,
-        debt_monthly: goalSubData.debtSipAmount || 0,
-        lump_equity: goalSubData.lumpsumEquityReqOnSSD || 0,
-        lump_debt: goalSubData.lumpsumDebtReqOnSSD || 0,
+        equity_monthly: this.getSumOfJsonMap(goalSubData.sipAmountEquity) || 0,
+        debt_monthly: this.getSumOfJsonMap(goalSubData.sipAmountDebt) || 0,
+        lump_equity: this.getSumOfJsonMap(goalSubData.lumpSumAmountEquity) || 0,
+        lump_debt: this.getSumOfJsonMap(goalSubData.lumpSumAmountDebt) || 0,
         goalProgress: (goalSubData.achievedValue / goalSubData.goalFV * 100),
       }
       mapData.remainingData = goalSubData;
@@ -333,6 +341,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     const sub = this.eventService.changeUpperSliderState(fragmentData).subscribe(
       upperSliderData => {
         if (UtilService.isRefreshRequired(upperSliderData)) {
+          this.selectedGoalId = null;
           this.loadAllGoals();
           sub.unsubscribe();
         }
@@ -400,7 +409,11 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
 
   loadSelectedGoalData(goalData) {
     this.allocatedList = goalData.goalAssetAllocation.map(asset => {
-      return this.allAssets.find(allasset => allasset.assetId == asset.assetId && allasset.assetType == asset.assetType) || {};
+      let assetObj = this.allAssets.find(allasset => allasset.assetId == asset.assetId && allasset.assetType == asset.assetType) || {};
+      return {
+        ...assetObj,
+        ...asset
+      }
     });
     this.selectedGoal = goalData;
     this.selectedGoalId = goalData.remainingData.id;
@@ -441,39 +454,61 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
 
   // drag drop for assets brought from allocations tab
   drop(event: CdkDragDrop<string[]>) {  
-    let asset:any = event.item.data;
-    let obj = {
-      ...this.advisor_client_id,
-      assetId: asset.assetId,
-      assetType: asset.assetType,
-      goalId: this.selectedGoal.remainingData.id,
-      goalType: this.selectedGoal.goalType,
-      percentAllocated: 100
+    if(event.previousContainer === event.container || !event.isPointerOverContainer) {
+      return;
     }
-    this.plansService.allocateOtherAssetToGoal(obj).subscribe(res => {
-      this.loadAllGoals();
-      this.plansService.assetSubject.next(res);
-      this.allocatedList.push(asset);
-      this.eventService.openSnackBar("Asset allocated to goal", "Dismiss");
-    }, err => {
-      this.eventService.openSnackBar(err);
-    })
+    this.allocateOtherAssetService.allocateAssetToGoal(event, this.advisor_client_id, this.selectedGoal);
   }
 
   removeAllocation(allocation) {
-    const obj = {
-      ...this.advisor_client_id,
-      assetId: allocation.assetId,
-      assetType: allocation.assetType,
-      goalId: this.selectedGoal.remainingData.id
+    const dialogData = {
+      header: 'DELETE RTA',
+      body: 'Are you sure you want to remove allocation?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        let obj = {
+          ...this.advisor_client_id,
+          id: allocation.id,
+          assetId: allocation.assetId,
+          assetType: allocation.assetType,
+          goalId: this.selectedGoal.remainingData.id,
+          goalType: this.selectedGoal.goalType,
+          percentAllocated: 0
+        }
+        this.plansService.allocateOtherAssetToGoal(obj).subscribe(res => {
+          const assetIndex =  this.allocatedList.findIndex((asset) => asset.assetId == allocation.assetId);
+          this.allocatedList.splice(assetIndex, 1);
+          this.eventService.openSnackBar("Asset unallocated");
+          dialogRef.close();
+        }, err => {
+          this.eventService.openSnackBar(err);
+        })
+      }
+    };
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+    });
+  }
+
+  reallocateAsset(allocation){
+    const dialogData = {
+      goalData: this.selectedGoal,
+      allocationData: allocation
     }
-    this.plansService.removeAllocation(obj).subscribe(res => {
-      const assetIndex =  this.allocatedList.findIndex((asset) => asset.assetId == allocation.assetId);
-      this.allocatedList.splice(assetIndex, 1);
-      this.eventService.openSnackBar("Asset unallocated");
-    }, err => {
-      this.eventService.openSnackBar(err);
-    })
+    this.dialog.open(ReallocateAssetComponent, {
+      width: '600px',
+      height: '400px',
+      data: dialogData,
+      autoFocus: false,
+    });
+  }
+
+  inDropZoneMethod(e) {
+    console.log(e, 'dz method')
   }
 
   ngOnDestroy(){
@@ -481,6 +516,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     if(this.otherAssetAllocationSubscription) {
       this.otherAssetAllocationSubscription.unsubscribe();
     }
+    this.subscriber.unsubscribe();
   }
 }
 

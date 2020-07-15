@@ -1,0 +1,58 @@
+<div id="mob-fixed-income" *ngIf="fixdeposit != true && backToMf != true">
+    <div class="row mob-bg-common pb-12 mobtop-navfixed">
+        <div class="col-2" (click)="backToMf = true">
+            <span class="material-icons text-white">
+                keyboard_backspace
+            </span>
+        </div>
+        <div class="col-7 p-0">
+            <h5 class="m-0 f-18 text-white pt-4">Fixed deposits</h5>
+        </div>
+        <div class="col-3 text-right">
+            <span class="material-icons text-white">
+                filter_list
+            </span>
+        </div>
+    </div>
+    <div class="pt-80 p-8 h-100vh">
+        <div class="pt-16">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20 mob-bb-1">
+                    <div class="col-8">
+                        <p class="mb-0">ICICI bank | 908908484</p>
+                    </div>
+                    <div class="col-4 text-right">
+                        <p class="m-0">₹5,00,000</p>
+                    </div>
+                </div>
+                <div class="row pt-20 pb-20 mob-bb-1">
+                    <div class="col-8">
+                        <p class="mb-0">HDFC bank</p>
+                    </div>
+                    <div class="col-4 text-right">
+                        <p class="m-0">₹3,00,000</p>
+                    </div>
+                </div>
+                <div class="row pt-20 pb-20 mob-bb-1">
+                    <div class="col-8">
+                        <p class="mb-0">Kotak mahindra</p>
+                    </div>
+                    <div class="col-4 text-right">
+                        <p class="m-0">₹1,50,000</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="document-bottom-action">
+        <button (click)="fixdeposit = true" mat-stroked-button class="btn-primary"><span class="material-icons">
+                add
+            </span></button>
+    </div>
+</div>
+<div *ngIf="fixdeposit==true">
+    <app-fixed-deposit-mob></app-fixed-deposit-mob>
+</div>
+<div *ngIf="backToMf == true">
+    <app-fixed-income-mob></app-fixed-income-mob>
+</div>

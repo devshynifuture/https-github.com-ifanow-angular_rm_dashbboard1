@@ -16,6 +16,9 @@ export class RetirementAccMobComponent implements OnInit {
   gratuity: any;
   totalCurrentValue = 0;
   @Output() outputValue = new EventEmitter<any>();
+  epfCv: any;
+  npsCv: any;
+  gratuityCv: any;
 
   constructor(private custumService:CustomerService,private eventService:EventService) { }
 
@@ -35,6 +38,7 @@ export class RetirementAccMobComponent implements OnInit {
       data => {
         if(data){
           this.epfData = data;
+          this.epfCv = data.sumOfEpfBalanceTillToday;
           this.calculateSum();
         }
       }, (error) => {
@@ -52,6 +56,7 @@ export class RetirementAccMobComponent implements OnInit {
       data => {
         if(data){
           this.npsData = data;
+          this.npsCv = data.sumOfCurrentValue;
           this.calculateSum();
         }
       }, (error) => {
@@ -69,6 +74,7 @@ export class RetirementAccMobComponent implements OnInit {
       data => {
         if(data){
           this.gratuity = data;
+          this.gratuityCv =data.sumOfAmountReceived;
           this.calculateSum();
         }
       }, (error) => {
@@ -80,6 +86,6 @@ export class RetirementAccMobComponent implements OnInit {
     this.outputValue.emit(flag);
   }
   calculateSum(){
-    this.totalCurrentValue = this.epfData.sumOfEpfBalanceTillToday+this.npsData.sumOfCurrentValue+this.gratuity.sumOfAmountReceived
+    this.totalCurrentValue = this.epfCv+this.npsCv+this.gratuityCv
   }
 }

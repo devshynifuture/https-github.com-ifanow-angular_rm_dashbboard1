@@ -182,17 +182,17 @@ export class SearchClientAddQuotationComponent implements OnInit {
                <tr>
                    <td style="padding: 24px; border: none;">
                        <p style="font-size: 12px; margin:0px;">BILLING NATURE</p>
-                       <h4 style="margin: 0px; padding: 0px; font-size: 18px;">${(element.servicePricing.billingNature == 1) ? 'Recurring' : 'Once'}</h4>
+                       <h4 style="margin: 0px; padding: 0px; font-size: 16px;">${(element.servicePricing.billingNature == 1) ? 'Recurring' : 'Once'}</h4>
                    </td>
 
                    <td style="padding: 24px; border: none;">
                        <p style="font-size: 12px; margin:0px;">BILLING MODE</p>
-                       <h4 style="margin: 0px; padding: 0px; font-size: 18px;">${(element.servicePricing.billingMode == 1) ? 'Start Of Period' : 'End Of Period'}</h4>
+                       <h4 style="margin: 0px; padding: 0px; font-size: 16px;">${(element.servicePricing.billingMode == 1) ? 'Start Of Period' : 'End Of Period'}</h4>
                    </td>
 
                    <td style="padding: 24px; border: none;">
                    ${(element.servicePricing.feeTypeId == 1) ? ` <p style="font-size: 12px; margin:0px;">FEES</p>
-                       <h4 style="margin: 0px; padding: 0px; font-size: 18px;">&#8377;${element.averageFees}</h4>` : ''}
+                       <h4 style="margin: 0px; padding: 0px; font-size: 16px;">&#8377;${element.averageFees}</h4>` : ''}
                    </td>
                </tr>
            </table>
@@ -204,11 +204,11 @@ export class SearchClientAddQuotationComponent implements OnInit {
                <tr>
                    <td style="padding: 24px; border: none; width: 50%; vertical-align: top; border: none;">
                        <p style="font-size: 12px; margin:0px;">DESCRIPTION</p>
-                       <h4 style="margin: 0px; padding: 0px; font-size: 18px;">${(element.description) ? element.description : 'N/A'}</h4>
+                       <h4 style="margin: 0px; padding: 0px; font-size: 16px;">${(element.description) ? element.description : 'N/A'}</h4>
                    </td>
                ${(element.servicePricing.feeTypeId == 2) ? `<td style="padding: 24px; border: none;pointer-event:none;">
                        <p style="font-size: 12px; margin:0px;">VARIABLE FEE DETAILS </p>
-                       <h4 style="margin: 0px; padding: 0px; font-size: 18px;">Mutual Funds </h4>
+                       <h4 style="margin: 0px; padding: 0px; font-size: 16px;">Mutual Funds </h4>
                        <table style="width: 100%; border: 1px solid rgba(0, 0, 0, 0.12);  background: #F5F7F7;">
                            <tr>
                                <td colspan="3" style=" border-bottom: 1px solid rgba(0, 0, 0, 0.12); border-right: 1px solid rgba(0, 0, 0, 0.12);  text-align: center; padding: 10px;">

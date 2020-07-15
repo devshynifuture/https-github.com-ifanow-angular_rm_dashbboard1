@@ -10,8 +10,8 @@ import {FormGroup} from '@angular/forms';
 import {BehaviorSubject, Subject} from 'rxjs';
 import {AuthService} from '../auth-service/authService';
 import {quotationTemplate} from './quotationTemplate';
-import { debounce, debounceTime } from 'rxjs/operators';
-import { AppConstants } from './app-constants';
+import {debounce, debounceTime} from 'rxjs/operators';
+import {AppConstants} from './app-constants';
 
 
 @Injectable({
@@ -355,11 +355,13 @@ export class UtilService {
     }
     formGroup.patchValue(event.target.value.toUpperCase());
   }
+
   capitalise(event) {
     if (event.target.value != '') {
       event.target.value = event.target.value.replace(/\b\w/g, l => l.toUpperCase());
     }
   }
+
   getBrowserName() {
     const agent = window.navigator.userAgent.toLowerCase();
     switch (true) {
@@ -587,6 +589,7 @@ export class ValidatorType {
   static NUMBER_ONLY = new RegExp(/^\d+(\.\d{0,4})?$/);
   static NUMBER_SEPCIALCHAR = new RegExp(/^[0-9*#_@$/+-]+$/);
   static NUMBER_ONLY_WITH_FOUR_DECIMAL = new RegExp(/^[0-9]+(\.{1}[0-9]{1,4})?$/);
+  static NUMBER_ONLY_WITH_TWO_DECIMAL = new RegExp(/^\d+\.?\d{0,2}$/);
   static NUMBER_ONLY_WITH_FORWARD_SLASH = new RegExp(/^[0-9\.\-\/]+$/);
   static NUMBER_ONLY_WITHOUT_DOT = new RegExp(/^\d+(\\d{0,4})?$/);
   static PERSON_NAME = new RegExp(/^[a-zA-Z]*[a-zA-Z]+[a-zA-Z ]*$/);
@@ -626,8 +629,8 @@ export function escapeRegExp(s: string): string {
  * Update: 1-July-2020:- You can now set your functions to be executed once the counter reaches 0
  * @callback setFunctionToExeOnZero:- sets the callback you'd like to execute once counter reaches 0
  */
-export class LoaderFunction implements OnDestroy{
-  private apiDebounceSubject:Subject<any> = new Subject()
+export class LoaderFunction implements OnDestroy {
+  private apiDebounceSubject: Subject<any> = new Subject()
 
   public get loading() {
     return this.isLoading;
@@ -635,7 +638,7 @@ export class LoaderFunction implements OnDestroy{
 
   private counter = 0;
   private isLoading = false;
-  private execOnZero:Function;
+  private execOnZero: Function;
 
 
   public increaseCounter() {
@@ -657,11 +660,11 @@ export class LoaderFunction implements OnDestroy{
    * @param func the function you'd like to execute
    * @see https://stackoverflow.com/a/29827015
    */
-  public setFunctionToExeOnZero(obj:Object,func: () => void) {
-    this.apiDebounceSubject.pipe(debounceTime(100)).subscribe(()=> func.call(obj));
+  public setFunctionToExeOnZero(obj: Object, func: () => void) {
+    this.apiDebounceSubject.pipe(debounceTime(100)).subscribe(() => func.call(obj));
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.apiDebounceSubject.unsubscribe();
   }
 
