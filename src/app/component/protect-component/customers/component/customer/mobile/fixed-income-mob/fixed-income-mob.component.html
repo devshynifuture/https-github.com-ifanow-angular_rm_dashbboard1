@@ -1,4 +1,4 @@
-<div id="mob-fixed-income" *ngIf="backToMf != true">
+<div id="mob-fixed-income" *ngIf="backToMf != true && showBank != true">
     <div class="row mob-bg-common pb-12 mobtop-navfixed">
       <div class="col-2" (click)="backToMf = true">
         <span class="material-icons text-white">
@@ -28,7 +28,7 @@
       </div>
     <div class="pt-16">
         <div class="bg-white">
-          <div class="row pt-20 pb-20 mob-bb-1">
+          <div class="row pt-20 pb-20 mob-bb-1" (click)="showBank = true">
             <div class="col-8">
               <p class="mb-0">Fixed deposit</p>
             </div>
@@ -36,7 +36,7 @@
               <p class="m-0">₹5,00,000</p>
             </div>
           </div>
-          <div class="row pt-20 pb-20 mob-bb-1">
+          <div class="row pt-20 pb-20 mob-bb-1" (click)="showBank = true">
             <div class="col-8">
               <p class="mb-0">Recurring deposit</p>
             </div>
@@ -44,7 +44,7 @@
               <p class="m-0">₹3,00,000</p>
             </div>
           </div>
-          <div class="row pt-20 pb-20 mob-bb-1">
+          <div class="row pt-20 pb-20 mob-bb-1" (click)="showBank = true">
             <div class="col-8">
               <p class="mb-0">Bonds</p>
             </div>
@@ -59,3 +59,6 @@
     <div *ngIf="backToMf == true">
         <app-mobile-portfoilo></app-mobile-portfoilo>
     </div>
+    <div *ngIf="showBank == true">
+      <app-bank-detailed-assets></app-bank-detailed-assets>
+  </div>
