@@ -1,5 +1,5 @@
 <!-- protfolio mobile screen start -->
-<div *ngIf="showMf != true && showFixedIncome != true && showRetirementAccount != true">
+<div *ngIf="showMf != true && showFixedIncome != true && showRetirementAccount != true && !showStocks && !showRealEstate && !showCashAndBank && !showCommodities">
 <div class="row mob-bg-common pb-12 mobtop-navfixed" *ngIf="openMenue != true">
   <div class="col-2" (click)="openMenu(openMenue)">
     <span class="material-icons text-white">
@@ -817,15 +817,15 @@
     <app-retirement-acc-mob (outputValue)="getValue($event)"></app-retirement-acc-mob>
   </div>
   <div *ngIf="showStocks == true">
-    <app-stocks-mob></app-stocks-mob>
+    <app-stocks-mob (outputValue)="getValue($event)"></app-stocks-mob>
   </div><div *ngIf="showRealEstate == true">
-    <app-real-estate-mob></app-real-estate-mob>
+    <app-real-estate-mob (outputValue)="getValue($event)"></app-real-estate-mob>
   </div><div *ngIf="showSmallSavings == true">
-    <app-small-saving-mob></app-small-saving-mob>
+    <app-small-saving-mob (outputValue)="getValue($event)"></app-small-saving-mob>
   </div><div *ngIf="showCashAndBank == true">
-    <app-cash-and-bank-mob></app-cash-and-bank-mob>
+    <app-cash-and-bank-mob (outputValue)="getValue($event)"></app-cash-and-bank-mob>
   </div><div *ngIf="showCommodities == true">
-    <app-commodities-mob></app-commodities-mob>
+    <app-commodities-mob (outputValue)="getValue($event)"></app-commodities-mob>
   </div><div *ngIf="showLiablities == true">
-    <app-liabilities-mob></app-liabilities-mob>
+    <app-liabilities-mob (outputValue)="getValue($event)"></app-liabilities-mob>
   </div>

@@ -85,7 +85,7 @@ import { GeneralInsuranceMobComponent } from './component/customer/mobile/genera
     EntryComponentsModule,
     AccountEntryModule,
     PlanEntryModule,
-    // CustomersRoutingModule,
+      CustomersRoutingModule,
     MobileRoutingModule,
     SlickCarouselModule,
     AdviceEntryModule,
