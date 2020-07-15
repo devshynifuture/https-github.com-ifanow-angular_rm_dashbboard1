@@ -457,7 +457,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     if(event.previousContainer === event.container || !event.isPointerOverContainer) {
       return;
     }
-    this.allocateOtherAssetService.allocateAssetToGoal(event, this.advisor_client_id, this.selectedGoal);
+    this.allocateOtherAssetService.allocateOtherAssetToGoal(event, this.advisor_client_id, this.selectedGoal);
   }
 
   removeAllocation(allocation) {

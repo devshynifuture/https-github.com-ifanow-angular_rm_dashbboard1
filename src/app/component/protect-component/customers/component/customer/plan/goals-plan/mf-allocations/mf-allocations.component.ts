@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { FormBuilder } from '@angular/forms';
@@ -9,6 +9,8 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { UtilService, LoaderFunction } from 'src/app/services/util.service';
 import { MatTableDataSource } from '@angular/material';
+import { AddGoalService } from '../add-goal/add-goal.service';
+import { Subscriber } from 'rxjs';
 
 @Component({
   selector: 'app-mf-allocations',
@@ -16,7 +18,7 @@ import { MatTableDataSource } from '@angular/material';
   styleUrls: ['./mf-allocations.component.scss'],
   providers: [LoaderFunction]
 })
-export class MfAllocationsComponent implements OnInit {
+export class MfAllocationsComponent implements OnInit, OnDestroy {
   displayedColumns = ['position', 'name', 'weight'];
   dataSource = [];
   displayedColumns1 = ['scheme', 'value', 'goal','icons'];
@@ -32,6 +34,7 @@ export class MfAllocationsComponent implements OnInit {
   folioFilterValue = 'all';
   assetFilterValue = 'all';
   selectedFamFilter = 'all';
+  subscriber = new Subscriber();
 
   isFamilyObj = (index, item) => item.isFamily;
 
@@ -43,6 +46,7 @@ export class MfAllocationsComponent implements OnInit {
     private peopleService: PeopleService,
     private utilService: UtilService,
     public loaderFn: LoaderFunction,
+    private allocationService: AddGoalService,
   ) {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
@@ -53,6 +57,11 @@ export class MfAllocationsComponent implements OnInit {
     this.initializeRequiredTable();
     this.getFamilyMembersList();
     this.loadMFData();
+    this.subscriber.add(
+      this.allocationService.refreshObservable.subscribe(()=>{
+        this.loadMFData();
+      })
+    );
   }
 
   initializeRequiredTable(){
@@ -194,11 +203,8 @@ export class MfAllocationsComponent implements OnInit {
       goalId: this.data.remainingData.id,
       mfId: data.id
     }
-    // this.planService.allocateMFtoGoal(data).subscribe(res => {
-    //   this.eventService.openSnackBar("Asset allocated", "Dismiss");
-    // }, err => {
-    //   this.eventService.openSnackBar(err, "Dismiss");
-    // })
+    this.allocationService.allocateMFToGoal(data, {advisorId: this.advisorId, clientId: this.clientId}, this.data);
+    
   }
 
 
@@ -209,14 +215,14 @@ export class MfAllocationsComponent implements OnInit {
       goalId: goal.id,
       mfId: data.id
     }
-    // this.planService.allocateMFtoGoal(data).subscribe(res => {
-    //   this.eventService.openSnackBar("Asset allocated", "Dismiss");
-    // }, err => {
-    //   this.eventService.openSnackBar(err, "Dismiss");
-    // })
+    
   }
 
   close() {
     this.subInjectService.changeNewRightSliderState({state: 'close'});
+  }
+
+  ngOnDestroy(){
+    this.subscriber.unsubscribe();
   }
 }

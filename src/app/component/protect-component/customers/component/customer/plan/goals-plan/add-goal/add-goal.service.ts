@@ -16,10 +16,20 @@ export class AddGoalService {
 
   refreshObservable = new Subject();
 
-  allocateAssetToGoal(event, advisor_client_id, selectedGoal){
+  allocateOtherAssetToGoal(event, advisor_client_id, selectedGoal){
 
     let asset:any = event.item.data;
-    let obj = {
+    let obj = this.createAllocationObject(asset, advisor_client_id, selectedGoal)
+    this.allocateAsset(obj);
+  }
+  
+  allocateMFToGoal(mfAsset, advisor_client_id, selectedGoal) {
+    let obj = this.createAllocationObject(mfAsset, advisor_client_id, selectedGoal);
+    this.allocateAsset(obj);
+  }
+
+  createAllocationObject(asset, advisor_client_id, selectedGoal){
+    return {
       ...advisor_client_id,
       assetId: asset.assetId,
       assetType: asset.assetType,
@@ -27,6 +37,9 @@ export class AddGoalService {
       goalType: selectedGoal.goalType,
       percentAllocated: 100
     }
+  }
+
+  allocateAsset(obj){
     this.plansService.allocateOtherAssetToGoal(obj).subscribe(res => {
       this.refreshObservable.next();
       this.plansService.assetSubject.next(res);
