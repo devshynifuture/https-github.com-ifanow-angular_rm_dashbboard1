@@ -93,6 +93,6 @@ export class LifeInsuranceMobComponent implements OnInit {
     this.outputValue.emit(flag);
   }
   calculateSum(){
-    this.totalCurrentValue = this.termCv+this.traditionalCv+this.ulipCv
+    this.totalCurrentValue = (this.termCv ? this.termCv : 0)+(this.traditionalCv ? this.traditionalCv : 0)+(this.ulipCv ? this.ulipCv : 0)
   }
 }

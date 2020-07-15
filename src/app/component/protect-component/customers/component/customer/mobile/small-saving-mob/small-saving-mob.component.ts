@@ -186,6 +186,9 @@ export class SmallSavingMobComponent implements OnInit {
     this.outputValue.emit(flag);
   }
   calculateSum(){
-    this.totalCurrentValue = this.ppfCv+this.nscCv+this.ssyCv+this.kvpCv+this.scssCv+this.poSavingCv+this.pordCv+this.potdCv+this.PomisCv
+    this.totalCurrentValue = (this.ppfCv ?this.ppfCv : 0)+(this.nscCv ? this.nscCv : 0)+
+    (this.ssyCv ? this.ssyCv : 0)+(this.kvpCv ? this.kvpCv : 0)+
+    (this.scssCv ? this.scssCv : 0)+(this.poSavingCv ? this.poSavingCv : 0)+
+    (this.pordCv ? this.pordCv : 0)+(this.potdCv ? this.potdCv :0)+(this.PomisCv ? this.PomisCv :0)
   }
 }

@@ -19,7 +19,7 @@ export class GeneralInsuranceMobComponent implements OnInit {
   criticalIllnessCv: any;
   personalAccidentCv: any;
   HealthCv: any;
-  totalCurrentValue: any;
+  totalCurrentValue = 0;
 
   constructor(private custumService:CustomerService,private eventService:EventService) { }
 
@@ -158,6 +158,12 @@ export class GeneralInsuranceMobComponent implements OnInit {
     this.outputValue.emit(flag);
   }
   calculateSum(){
-          this.totalCurrentValue = this.HealthCv+this.personalAccidentCv+this.criticalIllnessCv+this.motorCv+this.travelCv+this.HomewCv+this.fireCv
+    console.log('persolena',this.personalAccidentCv)
+   this.totalCurrentValue = (this.HealthCv ? this.HealthCv : 0) +
+   (this.personalAccidentCv ? this.personalAccidentCv : 0 )+ (this.criticalIllnessCv ? this.criticalIllnessCv : 0)
+   +(this.motorCv ? this.motorCv : 0)+(this.travelCv ? this.travelCv : 0)+
+   (this.HomewCv ? this.HomewCv : 0)+(this.fireCv ? this.fireCv : 0)
+
+   console.log('totalCV',this.totalCurrentValue)
   }
 }

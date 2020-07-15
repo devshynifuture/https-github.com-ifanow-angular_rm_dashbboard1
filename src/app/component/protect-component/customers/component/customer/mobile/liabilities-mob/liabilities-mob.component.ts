@@ -65,6 +65,6 @@ export class LiabilitiesMobComponent implements OnInit {
     this.outputValue.emit(flag);
   }
   calculateSum(){
-    this.totalCurrentValue = this.liabilityCv+this.otherPayableCv
+    this.totalCurrentValue = (this.liabilityCv ? this.liabilityCv : 0)+(this.otherPayableCv ? this.otherPayableCv : 0)
   }
 }
