@@ -50,9 +50,13 @@
             </span></button>
     </div>
 </div>
-<div *ngIf="fixdeposit==true">
+<div *ngIf="fixdeposit==true && inputData == 'fd'">
     <app-fixed-deposit-mob></app-fixed-deposit-mob>
 </div>
 <div *ngIf="backToMf == true">
     <app-fixed-income-mob></app-fixed-income-mob>
 </div>
+<div *ngIf="fixdeposit == true && inputData == 'bond'">
+    <app-bond-mob></app-bond-mob>
+</div>
+
