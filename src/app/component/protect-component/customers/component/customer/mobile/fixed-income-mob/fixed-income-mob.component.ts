@@ -8,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 export class FixedIncomeMobComponent implements OnInit {
   backToMf;
   showBank;
+  assetSubType;
   constructor() { }
 
   ngOnInit() {
   }
-
+  openSubAsset(subAsset){
+ this.assetSubType = subAsset
+  }
 }

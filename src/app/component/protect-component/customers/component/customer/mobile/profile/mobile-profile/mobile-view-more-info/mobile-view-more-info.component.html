@@ -1,0 +1,117 @@
+<div class="row mob-bg-common pb-12 mobtop-navfixed">
+    <div class="col-2">
+        <img (click)="back()" src="/assets/images/svg/mob-left-arrow.svg" class="c-p pt-4">
+    </div>
+    <div class="col-10 pl-0">
+        <h5 class="m-0 f-18 text-white pt-4 roboto">More info</h5>
+    </div>
+</div>
+<div [formGroup]="moreInfoForm" class="bg-grey lter pb-90 pt-90">
+    <div class="row">
+        <div class="col-12 mob-pl-10 mob-pr-10">
+            <p class="m-0 pb-4 roboto f-400">Display name</p>
+            <div class="form-group mb-0">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input autocomplete="off" placeholder="Enter name" #displayName appInputValueValidation
+                        [inputValidator]="validatorType.TEXT_ONLY" formControlName="displayName" matInput
+                        [maxLength]="50" class="form-control text-primitive">
+                    <mat-hint class="text-custom">This will display everwhere</mat-hint>
+                    <mat-hint align="end">{{displayName.value.length}}/50</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-12 mob-pl-10 mob-pr-10 pt-28">
+            <p *ngIf="userData.familyMemberType==1" class="m-0 pb-4 roboto f-400">Aadhaar</p>
+            <p *ngIf="userData.familyMemberType==2" class="m-0 pb-4 roboto f-400">Minor's aadhaar</p>
+            <div class="form-group mb-0">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input autocomplete="off" placeholder="Enter aadhaar number" maxlength="12" appInputValueValidation
+                        [inputValidator]="validatorType.NUMBER_ONLY" #adharNum formControlName="adhaarNo" matInput
+                        class="form-control text-primitive" placeholder="Enter aadhaar">
+                    <mat-hint>Optional</mat-hint>
+                    <mat-error *ngIf="moreInfoForm.get('adhaarNo').errors?.pattern">Adhaar must be 12 digits</mat-error>
+                    <mat-hint align="end">{{adharNum.value.length}} / 12</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+        <div *ngIf="userData.familyMemberType==2" class="col-12 mob-pl-10 mob-pr-10 pt-28">
+            <p class="m-0 pb-4 roboto f-400">Guardian's Aadhaar</p>
+            <div class="form-group mb-0">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input autocomplete="off" placeholder="Enter aadhaar number" maxlength="12" appInputValueValidation
+                        [inputValidator]="validatorType.NUMBER_ONLY" #adharNum formControlName="adhaarNo" matInput
+                        class="form-control text-primitive" placeholder="Enter aadhaar">
+                    <mat-hint>Optional</mat-hint>
+                    <mat-error *ngIf="moreInfoForm.get('adhaarNo').errors?.pattern">Adhaar must be 12 digits</mat-error>
+                    <mat-hint align="end">{{adharNum.value.length}} / 12</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-12 mob-pl-10 mob-pr-10 pt-28">
+            <p class="m-0 pb-4 roboto f-400">Occupation type</p>
+            <div class="form-group mb-0">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <mat-select formControlName="occupation" class="form-control">
+                        <mat-option value='' disabled>Select Option</mat-option>
+                        <mat-option *ngFor="let singleOccupation of occupationList" [value]="singleOccupation.value">
+                            {{singleOccupation.name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+        <div *ngIf="userData.familyMemberType==1" class="col-12 mob-pl-10 mob-pr-10 pt-32">
+            <p class="m-0 pb-4 roboto f-400">Marital status</p>
+            <mat-radio-group formControlName="maritalStatus" aria-label="Select an option">
+                <mat-radio-button value="1"
+                    [ngClass]="{'bu-primary': moreInfoForm.get('maritalStatus').value=='1','borderRadio':moreInfoForm.get('maritalStatus').value!='1','text-primary': moreInfoForm.get('maritalStatus').value=='1','text-custom':moreInfoForm.get('maritalStatus').value!='1'}"
+                    class=" mw-102">Married</mat-radio-button>
+                <mat-radio-button
+                    [ngClass]="{'bu-primary': moreInfoForm.get('maritalStatus').value=='2','borderRadio':moreInfoForm.get('maritalStatus').value!='2','text-primary': moreInfoForm.get('maritalStatus').value=='2','text-custom':moreInfoForm.get('maritalStatus').value!='2'}"
+                    value="2" class="mw-128">Unmarried</mat-radio-button>
+                <mat-radio-button
+                    [ngClass]="{'bu-primary': moreInfoForm.get('maritalStatus').value=='3','borderRadio':moreInfoForm.get('maritalStatus').value!='3','text-primary': moreInfoForm.get('maritalStatus').value=='3','text-custom':moreInfoForm.get('maritalStatus').value!='3'}"
+                    value="3" class="mw-102">Other</mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <div *ngIf="userData.familyMemberType==1 && moreInfoForm.get('maritalStatus').value=='1'"
+            class="col-12 mob-pl-10 mob-pr-10 pt-32">
+            <p class="m-0 pb-4 roboto f-400">Anniversary date</p>
+            <div class="form-group mb-0">
+                <mat-form-field class="ba-date">
+                    <input [matDatepicker]="anniversaryDate" formControlName="anniversaryDate"
+                        (click)="anniversaryDate.open()" [max]="date" class="form-control br-0 b-0" matInput readonly>
+                    <mat-datepicker-toggle matSuffix [for]="anniversaryDate"></mat-datepicker-toggle>
+                    <mat-datepicker #anniversaryDate></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-12 mob-pl-10 mob-pr-10 pt-32">
+            <p class="m-0 pb-4 roboto f-400">Bio</p>
+            <div class="form-group mb-0">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <textarea autocomplete="off" formControlName="bio" maxlength="200" #bio matInput
+                        class="form-control text-primitive h-100 bg-white" placeholder="Add some details..."></textarea>
+                    <mat-hint>This will be visible on the Key details page</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-12 mob-pl-10 mob-pr-10 pt-90 pb-24">
+            <p class="m-0 pb-4 roboto f-400">My notes</p>
+            <div class="form-group mb-0">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <textarea #myNotes formControlName="myNotes" maxlength="100" autocomplete="off" matInput class="
+                        form-control text-primitive h-100 bg-white" placeholder="Add your notes..."></textarea>
+                    <mat-hint>This will not be visible to the client</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row profile-save-bottom">
+        <div class="col-2"></div>
+        <div class="col-8 pt-8 pb-8">
+            <button (click)="editFamilyMember()" mat-stroked-button
+                class="btn-primary w-100 f-16 h-40 br-40">Submit</button>
+        </div>
+        <div class="col-2"></div>
+    </div>
+</div>

@@ -1,28 +1,23 @@
-import {Component, Input, OnInit, ViewChildren, QueryList} from '@angular/core';
-import {FormBuilder, Validators, FormArray} from '@angular/forms';
-import {CustomerService} from '../../../../customer.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {DatePipe} from '@angular/common';
-import {MAT_DATE_FORMATS, MatInput, MatDialog} from '@angular/material';
-import {MY_FORMATS2} from 'src/app/constants/date-format.constant';
-import * as moment from 'moment';
-import {AuthService} from 'src/app/auth-service/authService';
-import {EventService} from 'src/app/Data-service/event.service';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {EnumServiceService} from 'src/app/services/enum-service.service';
-import {LinkBankComponent} from 'src/app/common/link-bank/link-bank.component';
+import { Component, OnInit, Input, ViewChildren, QueryList } from '@angular/core';
+import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
+import { Validators, FormArray, FormBuilder } from '@angular/forms';
+import moment from 'moment';
+import { AuthService } from 'src/app/auth-service/authService';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { ValidatorType, UtilService } from 'src/app/services/util.service';
+import { MatInput, MatDialog } from '@angular/material';
+import { EventService } from 'src/app/Data-service/event.service';
+import { CustomerService } from '../../../customer.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { DatePipe } from '@angular/common';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
 
 @Component({
-  selector: 'app-bonds',
-  templateUrl: './bonds.component.html',
-  styleUrls: ['./bonds.component.scss'],
-  providers: [
-    [DatePipe],
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS2},
-  ],
+  selector: 'app-bond-mob',
+  templateUrl: './bond-mob.component.html',
+  styleUrls: ['./bond-mob.component.scss']
 })
-export class BondsComponent implements OnInit {
+export class BondMobComponent implements OnInit {
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
     text: 'Save',
@@ -90,7 +85,7 @@ export class BondsComponent implements OnInit {
     } else {
       this.adviceShowHeaderAndFooter = true;
     }
-     this.getdataForm(this.inputData)
+    // this.getdataForm()
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.bankList = this.enumService.getBank();
@@ -296,7 +291,6 @@ export class BondsComponent implements OnInit {
       linkBankAc: [(data == undefined) ? '' : data.userBankMappingId,],
       tenure: [(data == undefined) ? '' : data.tenure, [Validators.required, Validators.min(1), Validators.max(120)]],
       description: [(data == undefined) ? '' : data.description,],
-      // bankName: [(data == undefined) ? '' : data.bankName, [Validators.required]],
       id: [(data == undefined) ? '' : data.id,],
       bondNo: [(data == undefined) ? '' : data.bondNo,],
       familyMemberId: [[(data == undefined) ? '' : data.familyMemberId],],
@@ -488,6 +482,4 @@ export class BondsComponent implements OnInit {
     });
 
   }
-
-//link bank
 }
