@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ValidatorType } from 'src/app/services/util.service';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { DatePipe } from '@angular/common';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
@@ -12,23 +12,24 @@ import { EventService } from 'src/app/Data-service/event.service';
   styleUrls: ['./individual-member-form.component.scss']
 })
 export class IndividualMemberFormComponent implements OnInit {
-  individualForm: FormGroup;
-  validatorType = ValidatorType
-  userData: any;
   constructor(
     private fb: FormBuilder,
     private datePipe: DatePipe,
     private peopleService: PeopleService,
-    private eventService: EventService
+    private eventService: EventService,
+    private utilService: UtilService
   ) { }
-
-  ngOnInit() {
-  }
-  @Input() categoryType;
-  @Input() taxStatusType;
   @Input() set formData(data) {
     this.userData = data;
     this.createIndividualForm(data);
+  }
+  individualForm: FormGroup;
+  validatorType = ValidatorType;
+  userData: any;
+  @Input() categoryType;
+  @Input() taxStatusType;
+
+  ngOnInit() {
   }
   createIndividualForm(data) {
     (data == undefined) ? data = {} : '';
@@ -47,7 +48,9 @@ export class IndividualMemberFormComponent implements OnInit {
       event.target.value = event.target.value.replace(/\b\w/g, l => l.toUpperCase());
     }
   }
-
+  toUpperCase(formControl, event) {
+    this.utilService.toUpperCase(formControl, event);
+  }
   editFamilyMember() {
     const obj = {
       adminAdvisorId: AuthService.getAdminId(),
@@ -91,6 +94,6 @@ export class IndividualMemberFormComponent implements OnInit {
       data => {
         console.log(data);
       },
-      err => { this.eventService.openSnackBar(err, "Dismiss") })
+      err => { this.eventService.openSnackBar(err, 'Dismiss'); });
   }
 }
