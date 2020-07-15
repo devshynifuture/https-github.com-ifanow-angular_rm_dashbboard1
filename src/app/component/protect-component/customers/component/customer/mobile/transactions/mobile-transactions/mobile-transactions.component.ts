@@ -15,6 +15,7 @@ export class MobileTransactionsComponent implements OnInit {
   openMenue: boolean=false;
   inputData: any;
   option;
+  myControl;
   clientId = AuthService.getClientId()
   advisorId = AuthService.getAdvisorId()
   categoryWiseArray: any;

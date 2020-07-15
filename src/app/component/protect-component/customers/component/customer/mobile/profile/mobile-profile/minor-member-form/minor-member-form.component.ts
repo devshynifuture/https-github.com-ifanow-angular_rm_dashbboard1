@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ValidatorType } from 'src/app/services/util.service';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-minor-member-form',
@@ -8,21 +8,22 @@ import { ValidatorType } from 'src/app/services/util.service';
   styleUrls: ['./minor-member-form.component.scss']
 })
 export class MinorMemberFormComponent implements OnInit {
+  constructor(
+    private fb: FormBuilder,
+    public utilService: UtilService,
+  ) { }
+  @Input() set formData(data) {
+    this.userData = data;
+    this.createMinorForm(data);
+  }
   userData: any;
   minorForm: FormGroup;
   validatorType = ValidatorType;
-
-  constructor(
-    private fb: FormBuilder
-  ) { }
-
-  ngOnInit() {
-  }
+  gDobAsPerRecord;
   @Input() categoryType;
   @Input() taxStatusType;
-  @Input() set formData(data) {
-    this.userData = data;
-    this.createMinorForm(data)
+
+  ngOnInit() {
   }
 
   createMinorForm(data) {

@@ -4,7 +4,7 @@
             <h5 class="m-0 roboto text-dark pb-10 f-16">Minor’s full name</h5>
             <div class="form-group mb-0">
                 <mat-form-field appearance="standard" floatLabel="never">
-                    <input #minorFullName (input)="capitalise($event)" [inputValidator]="validatorType.TEXT_ONLY"
+                    <input #minorFullName (input)="utilService.capitalise($event)" [inputValidator]="validatorType.TEXT_ONLY"
                         [maxLength]="50" appInputValueValidation autocomplete="off" class="form-control"
                         formControlName="minorFullName" matInput placeholder="Enter name">
                     <mat-error>This field is required</mat-error>
@@ -65,7 +65,7 @@
             <h5 class="m-0 roboto text-dark pb-10 f-16">Guardian’s full name</h5>
             <div class="form-group mb-0">
                 <mat-form-field appearance="standard" floatLabel="never">
-                    <input #fullName (input)="capitalise($event)" [inputValidator]="validatorType.TEXT_ONLY"
+                    <input #fullName (input)="utilService.capitalise($event)" [inputValidator]="validatorType.TEXT_ONLY"
                         [maxLength]="50" appInputValueValidation autocomplete="off" class="form-control"
                         formControlName="gFullName" matInput placeholder="Enter name">
                     <mat-error>This field is required</mat-error>
