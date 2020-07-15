@@ -1,0 +1,174 @@
+<div [formGroup]="minorForm">
+    <div class="row pt-32">
+        <div class="col-12 mob-pl-10 mob-pr-10">
+            <h5 class="m-0 roboto text-dark pb-10 f-16">Minor’s full name</h5>
+            <div class="form-group mb-0">
+                <mat-form-field appearance="standard" floatLabel="never">
+                    <input #minorFullName (input)="utilService.capitalise($event)" [inputValidator]="validatorType.TEXT_ONLY"
+                        [maxLength]="50" appInputValueValidation autocomplete="off" class="form-control"
+                        formControlName="minorFullName" matInput placeholder="Enter name">
+                    <mat-error>This field is required</mat-error>
+                    <mat-hint align="end">{{minorFullName.value.length}}/50</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-32">
+        <div class="col-12 mob-pl-10 mob-pr-10">
+            <h5 class="m-0 roboto text-dark pb-10 f-16">Minor’s date of birth</h5>
+            <div class="form-group mb-0">
+                <mat-form-field class="ba-date">
+                    <input (click)="dobAsPerRecord.open()" [matDatepicker]="dobAsPerRecord"
+                        class="form-control text-primitive" formControlName="dobAsPerRecord" matInput readonly>
+                    <mat-datepicker-toggle [for]="dobAsPerRecord" matSuffix>
+                    </mat-datepicker-toggle>
+                    <mat-datepicker #dobAsPerRecord></mat-datepicker>
+                    <mat-hint>Optional</mat-hint>
+                    <!-- <input matInput  value="DD/MM/YYYY"> -->
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-32">
+        <div class="col-12 mob-pl-10 mob-pr-10">
+            <h5 class="m-0 roboto text-dark pb-10 f-16">Gender</h5>
+            <mat-radio-group formControlName="gender" aria-label="Select an option">
+                <mat-radio-button
+                    [ngClass]="{'bu-primary': minorForm.get('gender').value=='1','borderRadio':minorForm.get('gender').value!='1','text-primary':minorForm.get('gender').value=='1','text-custom':minorForm.get('gender').value!='1'}"
+                    value="1" class="wh-99 bg-white">Male</mat-radio-button>
+                <mat-radio-button
+                    [ngClass]="{'bu-primary': minorForm.get('gender').value=='2','borderRadio':minorForm.get('gender').value!='2','text-primary':minorForm.get('gender').value=='2','text-custom':minorForm.get('gender').value!='2'}"
+                    value="2" class=" wh-116 bg-white">Female</mat-radio-button>
+                <mat-radio-button
+                    [ngClass]="{'bu-primary': minorForm.get('gender').value=='3','borderRadio':minorForm.get('gender').value!='3','text-primary':minorForm.get('gender').value=='3','text-custom':minorForm.get('gender').value!='3'}"
+                    value="3" class=" wh-102 bg-white">Other</mat-radio-button>
+            </mat-radio-group>
+        </div>
+    </div>
+    <div class="row pt-32">
+        <div class="col-12 mob-pl-10 mob-pr-10">
+            <h5 class="m-0 roboto text-dark pb-10 f-16">Relation</h5>
+            <div class="form-group mb-0">
+                <mat-form-field appearance="standard" floatLabel="never">
+                    <mat-select formControlName="relationType" class="form-control">
+                        <mat-option>
+                            Select relation
+                        </mat-option>
+                    </mat-select>
+                    <mat-hint class="text-custom">Relation with group head</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-32">
+        <div class="col-12 mob-pl-10 mob-pr-10">
+            <h5 class="m-0 roboto text-dark pb-10 f-16">Guardian’s full name</h5>
+            <div class="form-group mb-0">
+                <mat-form-field appearance="standard" floatLabel="never">
+                    <input #fullName (input)="utilService.capitalise($event)" [inputValidator]="validatorType.TEXT_ONLY"
+                        [maxLength]="50" appInputValueValidation autocomplete="off" class="form-control"
+                        formControlName="gFullName" matInput placeholder="Enter name">
+                    <mat-error>This field is required</mat-error>
+                    <mat-hint align="end">{{fullName.value.length}}/50</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-32">
+        <div class="col-12 mob-pl-10 mob-pr-10">
+            <h5 class="m-0 roboto text-dark pb-10 f-16">Guardian’s date of birth</h5>
+            <div class="form-group mb-0">
+                <mat-form-field class="ba-date">
+                    <input (click)="gDobAsPerRecord.open()" [matDatepicker]="gDobAsPerRecord"
+                        class="form-control text-primitive" formControlName="gDobAsPerRecord" matInput readonly>
+                    <mat-datepicker-toggle [for]="gDobAsPerRecord" matSuffix>
+                    </mat-datepicker-toggle>
+                    <mat-datepicker #dobAsPerRecord></mat-datepicker>
+                    <mat-hint>Optional</mat-hint>
+                    <!-- <input matInput  value="DD/MM/YYYY"> -->
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-32">
+        <div class="col-12 mob-pl-10 mob-pr-10">
+            <h5 class="m-0 roboto text-dark pb-10 f-16">Guardian’s</h5>
+            <mat-radio-group formControlName="gGender" aria-label="Select an option">
+                <mat-radio-button
+                    [ngClass]="{'bu-primary': minorForm.get('gGender').value=='1','borderRadio':minorForm.get('gGender').value!='1','text-primary':minorForm.get('gGender').value=='1','text-custom':minorForm.get('gGender').value!='1'}"
+                    value="1" class="wh-99 bg-white">Male</mat-radio-button>
+                <mat-radio-button
+                    [ngClass]="{'bu-primary': minorForm.get('gGender').value=='2','borderRadio':minorForm.get('gGender').value!='2','text-primary':minorForm.get('gGender').value=='2','text-custom':minorForm.get('gGender').value!='2'}"
+                    value="2" class=" wh-116 bg-white">Female</mat-radio-button>
+                <mat-radio-button
+                    [ngClass]="{'bu-primary': minorForm.get('gGender').value=='3','borderRadio':minorForm.get('gGender').value!='3','text-primary':minorForm.get('gGender').value=='3','text-custom':minorForm.get('gGender').value!='3'}"
+                    value="3" class=" wh-102 bg-white">Other</mat-radio-button>
+            </mat-radio-group>
+        </div>
+    </div>
+    <div class="row pt-32">
+        <div class="col-12 mob-pl-10 mob-pr-10">
+            <h5 class="m-0 roboto text-dark pb-10 f-16">Relation with minor</h5>
+            <div class="form-group mb-0">
+                <mat-form-field appearance="standard" floatLabel="never">
+                    <mat-select formControlName="relationWithMinor" class="form-control">
+                        <mat-option>
+                            Select relation
+                        </mat-option>
+                    </mat-select>
+                    <mat-hint class="text-custom">Relation with group head</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-32">
+        <div class="col-12 mob-pl-10 mob-pr-10">
+            <h5 class="m-0 roboto text-dark pb-10 f-16">Email</h5>
+            <div class="form-group mb-0">
+                <mat-form-field appearance="standard" floatLabel="never">
+                    <app-email-domain-auto-suggest formControlName="gEmail" placeholder="Enter email">
+                    </app-email-domain-auto-suggest>
+                    <mat-error *ngIf="minorForm.get('gEmail').errors?.pattern">Email is not valid</mat-error>
+                    <mat-hint>Optional</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-32">
+        <div class="col-12 mob-pl-10 mob-pr-10">
+            <h5 class="m-0 roboto text-dark pb-10 f-16">Mobile</h5>
+            <div class="row">
+                <div class="col-4 pl-0 mob-pr-10">
+                    <mat-form-field appearance="standard" floatLabel="never">
+                        <mat-select class="form-control">
+                            <mat-option>
+                                +91 (IND)
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-8 pr-0 mob-pl-10">
+                    <mat-form-field appearance="standard" floatLabel="never">
+                        <input matInput class="form-control text-primitive" value="Enter mobile">
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-32">
+        <div class="col-12 mob-pl-10 mob-pr-10">
+            <h5 class="m-0 roboto text-dark pb-10 f-16">Enter your PAN</h5>
+            <div class="form-group mb-0">
+                <mat-form-field appearance="standard" floatLabel="never">
+                    <input #pan (input)="utilService.toUpperCase(minorForm.get('pan'),$event)"
+                        [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation autocomplete="off"
+                        class="form-control" formControlName="pan" matInput maxlength="10" placeholder="Enter pan">
+                    <mat-hint align="end">{{pan.value.length}}/ 10</mat-hint>
+                    <mat-error *ngIf="minorForm.get('pan').errors?.pattern">Pan invalid
+                    </mat-error>
+                    <mat-hint>Optional</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+</div>

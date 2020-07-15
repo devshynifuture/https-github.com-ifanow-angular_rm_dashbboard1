@@ -51,10 +51,19 @@ export class CalendarDayComponent implements OnInit {
         am = false;
       }
     }
-    this.currentMonth = new Date().getMonth();
-    this.currentYear = new Date().getFullYear();
     this.viewDate = new Date();
-    this.day = this.formateDate(this.viewDate)
+    this.day = this.formateDate(this.viewDate);
+    if(!this.calenderService.dayArrey){
+      this.currentMonth = new Date().getMonth();
+      this.currentYear = new Date().getFullYear();
+    }else{
+      this.day = this.calenderService.dayArrey[1].selectedDate;
+      this.month = this.calenderService.dayArrey[1].month;
+      this.year = this.calenderService.dayArrey[1].year;
+      this.currentMonth = this.calenderService.dayArrey[1].month;
+      this.currentYear = this.calenderService.dayArrey[1].year;
+      this.viewDate = new Date(this.year,this.month, this.day);
+    }
     this.userInfo = AuthService.getUserInfo()
     // this.updatecalendar();
     this.getEvent();
@@ -182,7 +191,7 @@ export class CalendarDayComponent implements OnInit {
 
     var hh = date.getHours() > 12 ? date.getHours() - 12 : date.getHours();
     var mm = date.getMinutes();
-    var amPm = date.getHours() > 12 ? "pm" : "am";
+    var amPm = date.getHours() > 12 ? "PM" : "AM";
     hh = hh < 10 ? '0' + hh : hh;
     mm = mm < 10 ? '0' + mm : mm;
     return hh + ":" + mm + amPm + " ";

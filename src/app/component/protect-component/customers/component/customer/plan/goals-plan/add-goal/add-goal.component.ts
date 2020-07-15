@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { LoaderFunction } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { Subscriber, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-add-goal',
@@ -69,7 +70,7 @@ export class AddGoalComponent implements OnInit {
     },
   ];
   advisorId: any;
-
+  subscription = new Subscription();
 
   
   constructor(
@@ -78,6 +79,7 @@ export class AddGoalComponent implements OnInit {
     private loaderFn: LoaderFunction,
     private eventService: EventService,
     private peopleService: PeopleService,
+    private planService: PlanService
   ) {
     this.clientId = AuthService.getClientId();
     this.advisorId = AuthService.getAdvisorId();
@@ -87,12 +89,27 @@ export class AddGoalComponent implements OnInit {
     this.loaderFn.setFunctionToExeOnZero(this, this.filterAndSortAssets)
     this.getFamilyMembersList();
     this.loadAssets();
+    this.subscription.add(
+      this.planService.assetSubject.subscribe((data:any) => {
+        
+        this.allAssetsList = data.map(asset => {
+          let absAllocation = 0;
+          if(asset.goalAssetMapping) {
+            asset.goalAssetMapping.forEach(element => {
+              absAllocation += element.percentAllocated;
+            });
+          }
+          return {absAllocation, ...asset};
+        })
+        this.filterAndSortAssets();
+      })
+    )
   }
 
   loadAssets(){
-    let data = {advisorId: this.advisorId, clientId: this.clientId}
+    let obj = {advisorId: this.advisorId, clientId: this.clientId}
     this.loaderFn.increaseCounter();
-    this.goalService.getAssetsForAllocation(data).subscribe((data)=>{
+    this.goalService.getAssetsForAllocation(obj).subscribe((data)=>{
       this.allAssetsList = data;
       this.allAssetsList = this.allAssetsList.map(asset => {
         let absAllocation = 0;

@@ -1,0 +1,100 @@
+<div class="row popup-header-fix w-45 bb-1 p-20 pl-0 pr-0">
+    <div class="col-md-10">
+        <h3 class="m-0 roboto f-400">Add a scheme to the scheme basket</h3>
+    </div>
+    <div class="col-md-2 full-center pr-0">
+        <span class="material-icons c-p">
+            clear
+        </span>
+    </div>
+</div>
+<div class="pt-90 pl-28 pr-28 pb-90">
+    <div class="row ">
+        <div class="col-md-12 p-0">
+            <p class="m-0 f-400 roboto">Scheme name</p>
+            <mat-form-field floatLabel="never" appearance="standard">
+                <input matInput class="form-control" placeholder="Start typing to see scheme names">
+                <p class="m-0 f-400 text-custom f-12 pt-4">Sub category: Equity Large Cap</p>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row pt-60">
+        <div class="col-md-12 p-0">
+            <p class="m-0 f-400 roboto">Rationale</p>
+            <mat-form-field floatLabel="never" appearance="standard">
+                <textarea matInput class="form-control h-170"
+                    placeholder="The rationale added here will automatically show up when you select this scheme in the advice section. You can add rationale for schemes which are either in the recommended category or withdraw / redeem / switch out category."></textarea>
+                <mat-hint align="end">0 / 500</mat-hint>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row pt-180">
+        <div class="col-md-12 p-0">
+            <p class="m-0 f-400 roboto">Recommendation type</p>
+        </div>
+    </div>
+    <div class="row pt-10">
+        <div class="col-md-6 pl-0">
+            <div class="row bu-primary">
+                <div class="col-md-3 full-center ">
+                    <img src="/assets/images/svg/setting-investments.svg">
+                </div>
+                <div class="col-md-9 pl-0">
+                    <p class="m-0 text-diff pt-12 pb-12">Select this option if you wish to add this scheme in the scheme
+                        basket for
+                        lumpsum, SIP, Switch in transactions.</p>
+                </div>
+                <div class="col-md-12 p-0">
+                    <mat-radio-group aria-label="Select an option" class="bu-primary w-100">
+                        <mat-radio-button value="1" class="text-primary w-100">Recommend for investments
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 pl-0">
+            <div class="row b-ua">
+                <div class="col-md-3 p-0 full-center">
+                    <img src="/assets/images/svg/setting-withdrawals.svg">
+                </div>
+                <div class="col-md-9 pl-0">
+                    <p class="m-0 text-diff pt-12 pb-12">Select this option if you wish to remove this scheme from
+                        scheme basket for
+                        Redemptions, Switch out transactions.</p>
+                </div>
+                <div class="col-md-12 p-0">
+                    <mat-radio-group aria-label="Select an option">
+                        <mat-radio-button value="2" class="text-custom b-ua w-100">Propose withdrawals
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row pt-60">
+        <div class="col-md-12 p-0">
+            <p class="m-0 f-400 roboto">Attachments</p>
+            <p class="f-12 pt-4 text-custom m-0">Add factsheets, offer documents, scheme performance workings etc.</p>
+            <button mat-stroked-button class="text-primitive bg-grey lter"><img
+                    src="/assets/images/svg/attech-light.svg" class="pr-16">HDFC Equity
+                Fund - Fact sheet.pdf<img src="/assets/images/svg/s-cross.svg" class="pl-16"></button><br>
+            <button mat-stroked-button class="btn-primary br-2 mt-12">Add attachment</button>
+        </div>
+    </div>
+</div>
+
+<div class="bottom-fixed wrapper-12 pt-16 w-45 ">
+    <div class="row">
+        <div class="col-md-4">
+            <h5 class="mb-0 pt-8 text-white c-p">Close</h5>
+        </div>
+        <div class="col-md-8 d-flex align-items-end justify-content-end">
+            <button mat-stroked-button class="btn-primary">
+                SAVE
+            </button>
+
+        </div>
+
+    </div>
+</div>

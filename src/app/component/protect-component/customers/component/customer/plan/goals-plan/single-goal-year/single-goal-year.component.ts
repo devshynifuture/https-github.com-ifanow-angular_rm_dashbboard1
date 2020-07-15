@@ -204,7 +204,7 @@ export class SingleGoalYearComponent implements OnInit {
             console.error("Unidentified goal id found", this.goalTypeData.id)
             break;
           }
-          this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
+          this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true, data: {resetSelectedCursor: true}});
       },
       error => {
         this.eventService.showErrorMessage(error)

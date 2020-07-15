@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { AddExpensesComponent } from '../../../common-component/add-expenses/add-expenses.component';
@@ -10,13 +10,39 @@ import * as Highcharts from 'highcharts';
 import { EventService } from 'src/app/Data-service/event.service';
 import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { DatePipe, formatDate } from '@angular/common';
+import {DateAdapter, MAT_DATE_FORMATS, NativeDateAdapter} from 'saturn-datepicker'
+import { DetailedViewExpensesComponent } from '../../../common-component/detailed-view-expenses/detailed-view-expenses.component';
+import { FormControl, FormBuilder } from '@angular/forms';
+import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'MM/YYYY',
+  },
+  display: {
+    dateInput: 'MMM YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
+export const PICK_FORMATS = {
+  parse: {dateInput: {month: 'short', year: 'numeric', day: 'numeric'}},
+  display: {
+    dateInput: 'input',
+    monthYearLabel: {year: 'numeric', month: 'short'},
+    dateA11yLabel: {year: 'numeric', month: 'long', day: 'numeric'},
+    monthYearA11yLabel: {year: 'numeric', month: 'long'}
+  }
+};
 @Component({
   selector: 'app-expenses',
   templateUrl: './expenses.component.html',
-  styleUrls: ['./expenses.component.scss']
+  styleUrls: ['./expenses.component.scss'],
 })
 export class ExpensesComponent implements OnInit {
-
+  reportDate;
 
   displayedColumns = ['no', 'expense', 'date', 'desc', 'mode', 'amt', 'icons'];
 
@@ -31,23 +57,111 @@ export class ExpensesComponent implements OnInit {
   isLoading = false;
   dataSource1 = new MatTableDataSource([] as Array<any>);
   noData: string;
+  startDate: string;
+  endDate: string;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  personalProfileData: any;
+  userInfo: any;
+  clientData: any;
+  fragmentData = { isSpinner: false };
+  details: any;
+  getOrgData: any;
+  selectedPeriod: string;
+  selectedDateRange: {};
+  filterDate =[];
+  startDateDisp: string;
+  endDateDisp: string;
+  // periodSelection: any;
 
-  constructor(private subInjectService: SubscriptionInject, private planService: PlanService,
-    private constantService: ConstantsService, private eventService: EventService, public dialog: MatDialog) {
+  constructor(private fb: FormBuilder,private datePipe: DatePipe,private subInjectService: SubscriptionInject, private planService: PlanService,
+    private constantService: ConstantsService, private eventService: EventService, public dialog: MatDialog,private util:UtilService) {
   }
 
   ngOnInit() {
+    this.selectedPeriod = '1'
     this.viewMode = 'Transactions';
+
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.personalProfileData = AuthService.getProfileDetails();
+    this.userInfo = AuthService.getUserInfo();
+    this.clientData = AuthService.getClientData();
+    this.details = AuthService.getProfileDetails();
+    this.getOrgData = AuthService.getOrgDetails();
+    // this.timePeriodSelection.setValue('1');
+    // this.getTimePeriod();
+    this.getStartAndEndDate('1');
     this.getTransaction();
     this.getRecuringTransactions();
+    this.filterDate = [{name:'period'}]
+    this.selectedDateRange = { begin: this.startDate, end: this.endDate };
+
     setTimeout(() => {
       this.cashFlow('piechartExpense')
 
     }, 300);
   }
+  // getTimePeriod(){
+  //   this.periodSelection = this.fb.group({
+  //     timePeriodSelection: ['1'],
 
+  //   });
+  // }
+  getStartAndEndDate(val){
+    var date = new Date();
+    if(val == '1'){
+      var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+      var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+    }else if(val == '2'){
+      var firstDay = new Date(date.getFullYear(), date.getMonth()-1, 1);
+      var lastDay = new Date(date.getFullYear(), date.getMonth(), 0);
+    }else if(val == '3'){
+      var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+      var lastDay = new Date(date.getFullYear(), date.getMonth()+3, 1);
+
+    }else if(val == '4'){
+      var firstDay = new Date(date.getFullYear(), date.getMonth()-3, 1);
+      var lastDay = new Date(firstDay.getFullYear(), firstDay.getMonth()+3, 1);
+    }else if(val == '5'){
+      var firstDay = new Date(date.getFullYear(), 0, 1);
+      var lastDay = new Date(date.getFullYear(), 11, 31);
+    }else if(val == '6'){
+      var firstDay = new Date(date.getFullYear()-1, 0, 1);
+      var lastDay = new Date(date.getFullYear()-1, 11, 31);
+    }else if(val == '7'){
+      var firstDay = new Date(date.getFullYear(), 3, 1);
+      var lastDay = new Date(date.getFullYear()+1, 2, 31);
+    }else if(val == '8'){
+      var firstDay = new Date(date.getFullYear()-1, 3, 1);
+      var lastDay = new Date(date.getFullYear(), 2, 31);
+    }
+
+    this.startDate = this.datePipe.transform(firstDay, 'yyyy-MM-dd');
+    this.endDate = this.datePipe.transform(lastDay, 'yyyy-MM-dd');
+    this.startDateDisp = this.datePipe.transform(firstDay, 'dd-MM-yyyy');
+    this.endDateDisp = this.datePipe.transform(lastDay, 'dd-MM-yyyy');
+    console.log('start Date,,,,,,,,,,,,,,,,',this.startDate);
+    console.log('endDate,,,,,,,,,,,,,,,,',this.endDate);
+
+  }
+  generatePdf(tmp) {
+    this.fragmentData.isSpinner = true;
+    let para = document.getElementById(tmp);
+    // this.util.htmlToPdf(para.innerHTML, 'Test',this.fragmentData);
+    this.util.htmlToPdf(para.innerHTML, 'Expenses', 'true', this.fragmentData, '', '');
+  }
+
+  Excel(tableTitle,tmp) {
+    setTimeout(() => {
+      var blob = new Blob([document.getElementById(tmp).innerHTML], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
+      });
+      saveAs(blob, tableTitle + '.xls');
+    }, 200);
+    // if (data) {
+    //   this.fragmentData.isSpinner = false;
+    // }
+  }
   budgetChart(id) {
     var chart = Highcharts.chart('bugetChart', {
 
@@ -91,6 +205,11 @@ export class ExpensesComponent implements OnInit {
       }, 300);
     }
   }
+  removeDate(item) {
+    this.filterDate.splice(item, 1);
+
+
+  }
   cashFlow(id) {
     Highcharts.chart('piechartExpense', {
       chart: {
@@ -130,76 +249,55 @@ export class ExpensesComponent implements OnInit {
         innerSize: '60%',
         data: [
           {
-            name: 'Food & Groceries',
+            name: 'Basic',
             y: 23,
             color: "#A6CEE3",
             dataLabels: {
               enabled: false
             }
           }, {
-            name: 'Clothing',
+            name: 'Bills & Utilities',
             y: 13,
             color: "#1F78B4",
             dataLabels: {
               enabled: false
             }
           }, {
-            name: 'Medical expenses',
+            name: 'Transport',
             y: 25.42,
             color: "#B2DF8A",
             dataLabels: {
               enabled: false
             }
           }, {
-            name: 'Shopping',
+            name: 'Education',
             y: 12.61,
             color: "#33A02C",
             dataLabels: {
               enabled: false
             }
           }, {
-            name: 'Basic misc.',
+            name: 'Housing',
             y: 23.42,
             color: "#FB9A99",
             dataLabels: {
               enabled: false
             }
           }, {
-            name: 'Mobile',
+            name: 'Entertainment',
             y: 23.42,
             color: "#E31A1C",
             dataLabels: {
               enabled: false
             }
           }, {
-            name: 'Internet',
+            name: 'Miscellaneous',
             y: 23.42,
             color: "#FDBF6F",
             dataLabels: {
               enabled: false
             }
-          }, {
-            name: 'Electricity',
-            y: 23.42,
-            color: "#FF7F00",
-            dataLabels: {
-              enabled: false
-            }
-          }, {
-            name: 'DTH',
-            y: 23.42,
-            color: "#CAB2D6",
-            dataLabels: {
-              enabled: false
-            }
-          }, {
-            name: 'Telephone',
-            y: 23.42,
-            color: "#6A3D9A",
-            dataLabels: {
-              enabled: false
-            }
-          }
+          },
         ]
       }]
     });
@@ -210,8 +308,8 @@ export class ExpensesComponent implements OnInit {
       advisorId: this.advisorId,
       clientId: this.clientId,
       allOrSingle: 1,
-      endDate: '2020-01-30',
-      startDate: '2020-01-01',
+      endDate: this.endDate,
+      startDate: this.startDate,
       limit: 10,
       offset: 1,
       familyMemberId: 0,
@@ -239,6 +337,7 @@ export class ExpensesComponent implements OnInit {
         }
       });
       this.dataSource4.data = data;
+      this.dataSource4.sort = this.sort;
     }
     this.isLoading = false;
     console.log('getBudgetRes', data)
@@ -249,8 +348,8 @@ export class ExpensesComponent implements OnInit {
       advisorId: this.advisorId,
       clientId: this.clientId,
       allOrSingle: 1,
-      endDate: '2020-01-30',
-      startDate: '2020-01-01',
+      endDate: this.endDate,
+      startDate:this.startDate,
       limit: 10,
       offset: 1,
       familyMemberId: 0,
@@ -278,6 +377,7 @@ export class ExpensesComponent implements OnInit {
         }
       });
       this.dataSource5.data = data;
+      this.dataSource5.sort = this.sort;
     } else {
       this.noData = 'No data found';
       this.dataSource5.data = [];
@@ -285,14 +385,23 @@ export class ExpensesComponent implements OnInit {
     this.isLoading = false;
     console.log('otherCommitmentsGetRes', data)
   }
+  addFilterPeriod(value){
+    let val=value.value
+    this.getStartAndEndDate(val);
+    this.getTransaction();
+    this.getRecuringTransactions();
+    this.getBudgetList();
+    this.getBugetRecurring();
+    this.selectedDateRange = { begin: this.startDate, end: this.endDate };
+  }
   getRecuringTransactions() {
     this.isLoading = true;
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
       allOrSingle: 1,
-      endDate: '2020-01-30',
-      startDate: '2020-01-01',
+      endDate: this.endDate,
+      startDate: this.startDate,
       limit: 10,
       offset: 1,
       familyMemberId: 0,
@@ -322,6 +431,7 @@ export class ExpensesComponent implements OnInit {
         }
       });
       this.dataSource1.data = data;
+      this.dataSource1.sort = this.sort;
     } else {
       this.noData = 'No data found';
       this.dataSource1.data = [];
@@ -332,8 +442,8 @@ export class ExpensesComponent implements OnInit {
       advisorId: this.advisorId,
       clientId: this.clientId,
       allOrSingle: 1,
-      endDate: '2020-01-30',
-      startDate: '2020-01-01',
+      endDate: this.endDate,
+      startDate: this.startDate,
       limit: 10,
       offset: 1,
       familyMemberId: 0,
@@ -364,6 +474,8 @@ export class ExpensesComponent implements OnInit {
         }
       });
       this.dataSource.data = data;
+      this.dataSource.sort = this.sort;
+
     } else {
       this.noData = 'No data found';
       this.dataSource.data = [];
@@ -451,12 +563,36 @@ export class ExpensesComponent implements OnInit {
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
-          this.getTransaction();
-          this.getRecuringTransactions();
-          this.getBudgetList();
-          this.getBugetRecurring();
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            this.getTransaction();
+            this.getRecuringTransactions();
+            this.getBudgetList();
+            this.getBugetRecurring();
+            console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          }
+
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
+  }
+  detailedViewExpense(data,value) {
+    const fragmentData = {
+      flag: 'detailedView',
+      data,
+      id: 1,
+      state: 'open35',
+      componentName: DetailedViewExpensesComponent
+    };
+    fragmentData.data.value = value;
+
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
           rightSideDataSub.unsubscribe();
+
         }
       }
     );

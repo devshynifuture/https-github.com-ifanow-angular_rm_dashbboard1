@@ -355,7 +355,11 @@ export class UtilService {
     }
     formGroup.patchValue(event.target.value.toUpperCase());
   }
-
+  capitalise(event) {
+    if (event.target.value != '') {
+      event.target.value = event.target.value.replace(/\b\w/g, l => l.toUpperCase());
+    }
+  }
   getBrowserName() {
     const agent = window.navigator.userAgent.toLowerCase();
     switch (true) {
@@ -583,6 +587,7 @@ export class ValidatorType {
   static NUMBER_ONLY = new RegExp(/^\d+(\.\d{0,4})?$/);
   static NUMBER_SEPCIALCHAR = new RegExp(/^[0-9*#_@$/+-]+$/);
   static NUMBER_ONLY_WITH_FOUR_DECIMAL = new RegExp(/^[0-9]+(\.{1}[0-9]{1,4})?$/);
+  static NUMBER_ONLY_WITH_TWO_DECIMAL = new RegExp(/^\d+\.?\d{0,2}$/);
   static NUMBER_ONLY_WITH_FORWARD_SLASH = new RegExp(/^[0-9\.\-\/]+$/);
   static NUMBER_ONLY_WITHOUT_DOT = new RegExp(/^\d+(\\d{0,4})?$/);
   static PERSON_NAME = new RegExp(/^[a-zA-Z]*[a-zA-Z]+[a-zA-Z ]*$/);
@@ -618,7 +623,7 @@ export function escapeRegExp(s: string): string {
 /**
  * @description private loader function which tells when all api's have been resolved.
  * You will need to add this to the component's providers to make this function private
- * 
+ *
  * Update: 1-July-2020:- You can now set your functions to be executed once the counter reaches 0
  * @callback setFunctionToExeOnZero:- sets the callback you'd like to execute once counter reaches 0
  */

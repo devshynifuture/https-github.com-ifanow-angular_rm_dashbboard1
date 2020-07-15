@@ -1,3 +1,18 @@
-.is-invalid{
-    color: red;
+.is-invalid {
+  color: red;
+}
+
+::ng-deep #new-mail-chips-1 {
+  .mat-chip-list-wrapper {
+    margin: -13px;
+
+  }
+
+  input.mat-chip-input {
+    height: auto;
+  }
+
+  .mat-form-field-wrapper {
+    padding-bottom: 0px !important;
+  }
 }

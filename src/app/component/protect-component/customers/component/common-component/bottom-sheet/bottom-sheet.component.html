@@ -1,44 +1,46 @@
 <mat-nav-list>
     <div class="row bg-dark p-12">
-        <div class="col-md-9" *ngIf="data.flag!='uploadFolder'">
+        <div class="col-9" *ngIf="data.flag!='uploadFolder'">
             <h4 class="l-26 f-500 mb-0 t-white f-20">Uploading {{noOfFiles}} items</h4>
         </div>
-        <div class="col-md-9"  *ngIf="data.flag=='uploadFolder'">
+        <div class="col-md-9" *ngIf="data.flag=='uploadFolder'">
             <h4 class="l-26 f-500 mb-0 t-white f-20">Uploading {{display.length}} items</h4>
         </div>
-        <div class="col-md-3 p-0 text-right">
+        <div class="col-3 p-0 text-right">
             <i class="t-white material-icons mr-16"> expand_more </i>
             <i class="material-icons t-white c-p" (click)="close()"> close </i>
         </div>
     </div>
 
-    <div class="row p-8 mb-8">
-        <div class="col-md-9 f-14">
+    <div class="row pt-10 pb-10 bg-grey lter">
+        <div class="col-9">
             <!-- 0 seconds left... -->
+            <p class="m-0 lh-16 roboto f-400">Starting uploads now</p>
         </div>
-        <div class="col-md-3 f-14 text-right text-primary c-p" (click)="close()">
+        <div class="col-3 f-14 text-right text-primary c-p" (click)="close()">
             CANCEL
         </div>
     </div>
 
-    <div class="row p-8 mb-8"  *ngIf="data.flag!='uploadFolder'">
-        <div class="col-md-10" *ngFor="let item of fileData">
+    <div class="row pt-16 pb-24 mb-24" *ngIf="data.flag!='uploadFolder'">
+        <div class="col-10 pb-24" *ngFor="let item of fileData">
             <img class="mr-8" src="assets/images/svg/file-lines.svg">{{item.name}}
         </div>
-        <div class="col-md-2 text-right">
+        <div class="col-2 text-right">
             <mat-progress-spinner class="example-margin " [color]="color" [mode]="mode" [value]="value">
             </mat-progress-spinner>
         </div>
-        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        <!-- <mat-progress-bar mode="indeterminate"></mat-progress-bar> -->
     </div>
-    <div class="row p-8 mb-8"  *ngIf="data.flag=='uploadFolder'">
-        <div class="col-md-10" *ngFor="let item of display">
-            <img class="mr-8"src="/assets/images/svg/folder-icon.svg">{{item.folderNameToDisplay}}{{this.data.countFiles}}of{{item.length}}
+    <div class="row pt-16 pb-24 mb-24" *ngIf="data.flag=='uploadFolder'">
+        <div class="col-10" *ngFor="let item of display">
+            <img class="mr-8"
+                src="/assets/images/svg/folder-icon.svg">{{item.folderNameToDisplay}}{{this.data.countFiles}}of{{item.length}}
         </div>
-        <div class="col-md-2 text-right">
+        <div class="col-2 text-right">
             <mat-progress-spinner class="example-margin " [color]="color" [mode]="mode" [value]="value">
             </mat-progress-spinner>
         </div>
-    </div>  
+    </div>
 
 </mat-nav-list>

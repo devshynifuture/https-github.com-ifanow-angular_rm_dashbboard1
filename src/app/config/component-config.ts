@@ -294,9 +294,9 @@ export const appConfig = {
   EDIT_SINGLE_YEAR_GOAL_PREFERENCE: 'goal-planning/single-year/edit',
   SAVE_ASSET_ALLOCATION_PREFERENCE: 'goal-planning/asset-allocation/update',
   GET_MF_DATA: 'goal-planning/goal/mf/list/get',
-  GET_OTHER_ASSET_ALLOCATION_DATA: 'goal-planning/goal/mf/list/get',
   SAVE_MF_ASSET_TO_GOAL: 'goal-planning/goal/mf/allocate',
-  SAVE_ASSET_TO_GOAL: 'goal-planning/goal/mf/allocate',
+  SAVE_ASSET_TO_GOAL: 'goal-planning/asset/allocate',
+  REMOVE_ALLOCATION: 'goal-planning/asset/allocate',
   CALCULATE_TOTAL_VALUES: 'account/asset/summary',
   GET_SUMMARY_LIST: 'account/asset/summary/list',
   GET_CASHFLOW_LIST: 'cashflow/monthly/list/get',
@@ -434,6 +434,7 @@ export const appConfig = {
   EDIT_INCOME_LIST: 'account/income/edit',
   GET_GLOBAL_GROWTH_RATE: 'account/income/growth/rate/global/get',
   DELETE_INCOME: 'account/income/delete?',
+  DELETE_INFLOW_BONUS: 'account/income/bonusOrInflow/delete?',
   /////////////////////////Activity///////////////////////////////////
   ADVICE_GET_ALL: 'advice/asset/get',
   ADVICE_ADD_FD: 'advice/asset/fixed-income/suggest-new-fd/add',
@@ -742,6 +743,7 @@ export const appConfig = {
   GET_ADDRESS_LIST: 'user/address/list/get',
   GET_DEMAT_LIST: 'user/bank/demat/list/get',
   GET_BANK_LIST: 'user/bank/list/get',
+  GET_CLIENT_FEMILY_BANK_LIST: 'user/bank/list/all/get',
   SEND_WELCOME_EMAIL: 'user/advisor/welcome/email/send',
   CREATE_TEAM_MEMBER: 'user/advisor/team-member/sign-up',
   GET_ISD_CODES: 'user/isd-code/list/get',
@@ -845,5 +847,11 @@ export const appConfig = {
   LAST_7_DAYS_INVESTMENT_ACCOUNTS: 'user/register/filter/get',
   DOCUMENT_TOTAL_COUNT_SIZE: 'document/account/document/total-count-and-size/get',
   LATEST_AUM_RECON: 'admin/dashboard/aum/reconciliation/summary',
-  GET_GOAL_SUMMARY: 'admin/dashboard/goal/summary'
+  GET_GOAL_SUMMARY: 'admin/dashboard/goal/summary',
+
+  ///////////////////////////// market place //////////////////////////
+  GET_CALL_DETAILS: 'marketplace/call/settings/get'
+
 };
+
+

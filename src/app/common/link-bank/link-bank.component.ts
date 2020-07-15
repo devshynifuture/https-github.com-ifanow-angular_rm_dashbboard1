@@ -258,7 +258,7 @@ export class LinkBankComponent implements OnInit {
         addressId: null
       };
       if (this.userInfo) {
-        obj.userId = this.enumDataService.userData[0].id;
+        obj.userId = this.enumDataService.userData[0].id==0?this.enumDataService.userData[0].clientId:this.enumDataService.userData[0].id;
         obj.userType = this.enumDataService.userData[0].userType;
       }
 

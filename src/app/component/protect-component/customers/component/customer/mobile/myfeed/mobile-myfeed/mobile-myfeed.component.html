@@ -14,110 +14,248 @@
             </span>
         </div>
     </div>
+    <div class="mob-myfeed-bottom">
+        <button mat-stroked-button class="btn-primary"><img src="/assets/images/svg/mobile/home-icon-mob.svg"></button>
+    </div>
     <div *ngIf="openMenue == true">
         <app-mobile-left-sidenav></app-mobile-left-sidenav>
     </div>
-    <div class="pt-90 pl-8 pr-8" *ngIf="openMenue != true">
+    <div class="pt-90 pl-8 pr-8 pb-48" *ngIf="openMenue != true">
         <div class="row bg-white br-10">
             <div class="col-12 pt-16 pb-16">
-                <h3 class="m-0 roboto f-500 text-mob-common">Good Evening {{clientData.name}}</h3>
-                <p class="pt-4 roboto f-400 text-custom m-0">Your personalized money feed is ready!</p>
+                <p class="roboto f-400 text-custom m-0">Welcome again</p>
+                <h3 class="m-0 roboto f-500 pt-4 text-mob-common">{{clientData.name}}</h3>
+
             </div>
         </div>
-        <div class="row pt-40">
-            <div class="col-12 p-0">
-                <p class="m-0 text-black f-16 roboto pb-16"> Asset allocation</p>
-                <div class="bg-white br-10">
-                    <div class="row pt-20 pb-20">
-                        <div class="col-7">
-                            <img src="/assets/images/svg/chart-mob.svg" class="w-100">
-                            <p class="text-custom m-0 f-10 f-400 roboto pt-8 pl-16">*some message here</p>
+        <div class="mt-40">
+            <div class="row bg-white br-4">
+                <div class="col-md-12 pl-8 pr-8">
+                    <h5 class="f-16 roboto f-500 pt-20 m-0">An important note</h5>
+                    <img src="/assets/images/svg/mobile/mob-main.svg" class="center-item">
+                    <p class="pt-8 roboto f-400 mb-0 lh-18">IFANOW is primarily an advisor driven money management
+                        platform. Which
+                        means you have to be associated with an expert who is currently on the IFANOW’s marketplace. To
+                        continue using the account, please ensure you zero in on a financial expert.
+
+                    </p>
+                    <p class="text-primary pt-8 mb-0 f-16 f-500 pb-20"> Read more</p>
+
+                </div>
+            </div>
+        </div>
+        <div class="mt-40">
+            <div class="row">
+                <div class="col-md-12 p-0">
+                    <h5 class="f-16 roboto f-500">Your financial expert</h5>
+                </div>
+            </div>
+        </div>
+        <div class="row bg-white pb-16">
+            <div class="col-md-12 pl-8 pr-8">
+                <p class="m-0 roboto f-400  lh-18 pt-8">To continue using your IFANOW account, please choose a
+                    financial
+                    expert. Since this is an important decision to be made, you can choose to do so once the call is
+                    scheduled with the expert & you are sure of working with the expert.</p>
+
+                <p class="m-0 roboto f-400 pt-16 lh-18"> Since this is a 2 way relationship, just like you
+                    choose
+                    your expert, even the expert will decide
+                    whether to work with you or not. Read more</p>
+                <div class="b-primitive mt-16 pl-10 br-4">
+                    <div class="row">
+                        <div class="col-12 p-0  pl-16">
+                            <h5 class="f-16 m-0 pt-20 roboto f-500">Financial expert</h5>
+                            <div class="row pt-4">
+                                <div class="col-3 pl-0">
+                                    <img src="/assets/images/men.png" class="w-100">
+                                </div>
+                                <div class="col-9 pl-0 pt-6">
+                                    <p class="f-16 m-0 pb-4 f-400 text-black">Deepesh Raghaw</p>
+                                    <div class="d-flex">
+                                        <button mat-stroked-button
+                                            class="btn-warning-outline h-30 lh-24 pl-4 pr-4 br-4">Not
+                                            decided</button>
+                                        <img src="/assets/images/svg/info.svg" class="ml-8">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-5 pt-48">
-                            <div class="chart-data">
-                                <div class="d-flex">
-                                    <div class="hw-10 bg-1 br-2">
-                                    </div>
-                                    <p class="f-12 lh-12 roboto f-400 m-0 pl-10">38%</p>
-                                    <p class="f-12  lh-12 roboto text-custom m-0 f-400  pl-10">Equity</p>
+                    </div>
+                    <hr class="bg-grey lt">
+                    <div class="sort-mob">
+                        <img src="/assets/images/svg/sort1.svg">
+                    </div>
+                    <div class="row pt-16 pb-20">
+                        <div class="col-12 p-0  pl-16">
+                            <h5 class="f-16 m-0 roboto f-500">You</h5>
+                            <div class="row pt-4">
+                                <div class="col-3 pl-0">
+                                    <div class="mob-circle">RJ</div>
                                 </div>
-
+                                <div class="col-9 pl-0 pt-6">
+                                    <p class="f-16 m-0 pb-4 f-400 text-black">Rahul Jain</p>
+                                    <div class="d-flex">
+                                        <button mat-stroked-button
+                                            class="btn-success-outline h-30 lh-24 pl-4 pr-4 br-4">
+                                            Accept</button>
+                                        <button mat-stroked-button
+                                            class="btn-primitive-outline  h-30 lh-24 pl-4 pr-4 br-4 ml-10">
+                                            Decline</button>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="chart-data pt-16">
-                                <div class="d-flex">
-                                    <div class="hw-10 bg-2 br-2">
+                        </div>
+                    </div>
+                </div>
+                <div class="b-a-custom mt-16 pl-10 br-4">
+                    <div class="row">
+                        <div class="col-12 p-0  pl-16">
+                            <h5 class="f-16 m-0 pt-20 roboto f-500">Financial expert</h5>
+                            <div class="row pt-4">
+                                <div class="col-3 pl-0">
+                                    <img src="/assets/images/sonesh-rouneded.png" class="w-100">
+                                </div>
+                                <div class="col-9 pl-0 pt-6">
+                                    <p class="f-16 m-0 pb-4 f-400 text-black">Sonesh Dedhia</p>
+                                    <div class="d-flex">
+                                        <button mat-stroked-button
+                                            class="btn-success-outline h-30 lh-24 pl-4 pr-4 br-4">Accepted</button>
 
                                     </div>
-                                    <p class="f-12 lh-12 roboto f-400 m-0 pl-10">23%</p>
-                                    <p class="f-12  lh-12 roboto text-custom m-0 f-400  pl-10">Fixed income</p>
                                 </div>
-
                             </div>
-                            <div class="chart-data pt-16">
-                                <div class="d-flex">
-                                    <div class="hw-10 bg-3 br-2">
-
-                                    </div>
-                                    <p class="f-12 lh-12 roboto f-400 m-0 pl-10">12%</p>
-                                    <p class="f-12  lh-12 roboto text-custom m-0 f-400  pl-10">Commodities</p>
+                        </div>
+                    </div>
+                    <hr class="bg-grey lt">
+                    <div class="sort-mob">
+                        <img src="/assets/images/svg/sort1.svg">
+                    </div>
+                    <div class="row pt-16 pb-20">
+                        <div class="col-12 p-0  pl-16">
+                            <h5 class="f-16 m-0 roboto f-500">You</h5>
+                            <div class="row pt-4">
+                                <div class="col-3 pl-0">
+                                    <div class="mob-circle">RJ</div>
                                 </div>
-
-                            </div>
-                            <div class="chart-data pt-16">
-                                <div class="d-flex">
-                                    <div class="hw-10 bg-4 br-2">
-
+                                <div class="col-9 pl-0 pt-6">
+                                    <p class="f-16 m-0 pb-4 f-400 text-black">Rahul Jain</p>
+                                    <div class="d-flex">
+                                        <button mat-stroked-button
+                                            class="btn-success-outline h-30 lh-24 pl-4 pr-4 br-4">
+                                            Accepted</button>
+                                        <button mat-stroked-button
+                                            class="btn-primitive-outline  h-30 lh-24 pl-4 pr-4 br-4 ml-10">
+                                            Decline</button>
                                     </div>
-                                    <p class="f-12 lh-12 roboto f-400 m-0 pl-10">18%</p>
-                                    <p class="f-12  lh-12 roboto text-custom m-0 f-400  pl-10">Real estate</p>
                                 </div>
-
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row pt-40">
-            <div class="col-8 pl-8">
-                <p class="m-0 text-black f-16 roboto">Portfolio</p>
+        <div>
+            <div class="col-12 p-0 pt-40"
+                *ngIf="(tabsLoaded.portfolioData.dataLoaded && tabsLoaded.portfolioData.hasData) && !tabsLoaded.portfolioData.isLoading">
+                <h5 class="m-0 text-black f-16 roboto pb-16 f-500"> Asset allocation</h5>
+                <div class="bg-white br-10">
+
+                    <div class="row pt-20 pb-20">
+                        <div class="col-7">
+                            <!-- <div class="highcharts-figure" id="piechartMutualFund"></div> -->
+                            <div class="h-200" [chart]="assetAllocationPieConfig">
+                            </div>
+
+
+                        </div>
+                        <div class="col-5 pt-48 pl-0">
+                            <div class="chart-data" *ngFor="let data of chartData">
+                                <div class="d-flex pt-12">
+                                    <!-- <div class="hw-10 bg-1 br-2">
+                                    </div> -->
+                                    <span class="pointNumber" [style.background-color]="data.color">
+                                    </span>
+                                    <span class="f-12 lh-12 roboto f-400 m-0"
+                                        appFormatNumber>{{(data.y/chartTotal*100) | number : '0.2-2'}}%</span>
+                                </div>
+                                <p class="f-12  lh-12 roboto text-custom m-0 f-400 pt-6 pl-10">{{data.name}}</p>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col-4 text-right">
+            <div class="col-12 p-0 pt-40"
+                *ngIf="(!tabsLoaded.portfolioData.dataLoaded || !tabsLoaded.portfolioData.hasData) && !tabsLoaded.portfolioData.isLoading">
+                <h5 class="m-0 text-black f-16 roboto pb-16 f-500"> Asset allocation</h5>
+                <div class="bg-white br-10">
+
+                    <div class="row pt-20 pb-20">
+                        <div class="col-6">
+                            <p class="m-0 roboto f-400">Once your data is uploaded, this chart will come to life</p>
+                            <p class="m-0 roboto f-400 pt-16 pb-16">Let’s get some data in here. There are lot’s of
+                                things you
+                                can add to
+                                your portfolio. Let’s get going.</p>
+                            <button [routerLink]="['/customer/detail/account/summary']"
+                                class="vaultBtn mb-4 bg-primary f-16 text-white" mat-stroked-button>
+                                Add data
+                            </button>
+
+                        </div>
+                        <div class="col-6 full-center pl-0">
+
+                            <img class="w-100" src="assets/images/svg/asset-allocation-empty-state.svg">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-40">
+            <div class="col-8 pl-0">
+                <p class="m-0 text-black f-16 roboto pt-2">Portfolio</p>
+            </div>
+            <div class="col-4 text-right pr-0">
                 <button mat-stroked-button class="view-all">View All</button>
             </div>
         </div>
         <div class="col-md-12 d-flex p-0 overflow-y pt-10">
-            <div class="pr-20">
-                <div class="w-240 b-a">
-                    <div class="bg-white br-4">
-                        <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="sliderConfig"
-                            #slickModal3="slick-carousel" (wheel)="carouselWheelEvent(slickModal3, $event)">
-                            <div class="row pt-12 pb-12" ngxSlickItem *ngFor="let portData of portFolioData">
+            <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="sliderConfig" #slickModal3="slick-carousel"
+                (wheel)="carouselWheelEvent(slickModal3, $event)">
+                <div class="pr-20" ngxSlickItem *ngFor="let portData of portFolioData">
+                    <div class="w-240 b-a">
+                        <div class="port-1 br-4">
+
+                            <div class="row pt-12 pb-12">
                                 <div class="col-9">
-                                    <p class="m-0 roboto f-400 text-mob-common">{{portData.assetTypeString}}</p>
+                                    <p class="m-0 roboto f-400 f-16">{{portData.assetTypeString}}</p>
                                 </div>
-                                <div class="col-3 pr-8">
-                                    <div class="hw-30 bg-primary  br-4">
+                                <div class="col-3 pr-8 pl-0">
+                                    <!-- <div class="hw-30 bg-primary  br-4">
                                         <p class="m-0 roboto f-400 pt-8 text-center text-white">{{portData.shortForm}}
                                         </p>
-                                    </div>
+                                    </div> -->
+                                    <button mat-stroked-button
+                                        class="btn-primary h-30 lh-24 pl-12 pr-12 br-4">Add</button>
                                 </div>
-                                <div class="col-12 pt-10">
-                                    <p class="f-10 text-custom m-0 roboto f-400">CURRENT VALUE</p>
-                                    <p class="f-12 text-mob-common m-0 roboto f-400"><span
+                                <div class="col-12 pt-20">
+                                    <p class="f-12 text-custom m-0 roboto f-400">CURRENT VALUE</p>
+                                    <p class="text-mob-common m-0 roboto f-400">₹<span
                                             appFormatNumber>{{portData.currentValue}}</span></p>
                                 </div>
-                                <div class="col-12 pt-10">
+                                <div class="col-12 pt-20">
                                     <div class="row">
                                         <div class="col-6 pl-0">
-                                            <p class="f-10 text-custom m-0 roboto f-400">AMT INVESTED</p>
-                                            <p class="f-12 text-mob-common m-0 roboto f-400">
+                                            <p class="f-12 text-custom m-0 roboto f-400">AMT INVESTED</p>
+                                            <p class="text-mob-common m-0 roboto f-400">
                                                 ₹<span appFormatNumber>{{portData.investedAmount}}</span>
                                             </p>
                                         </div>
                                         <div class="col-6 pr-0">
-                                            <p class="f-10 text-custom m-0 roboto f-400">GAIN/(LOSS)</p>
-                                            <p class="f-12 text-success m-0 roboto f-400">
+                                            <p class="f-12 text-custom m-0 roboto f-400">GAIN/(LOSS)</p>
+                                            <p class=" text-success m-0 roboto f-400">
                                                 ₹<span
                                                     appFormatNumber>{{portData.gainAmount ? (portData.gainAmount) : 0}}</span>
                                             </p>
@@ -125,49 +263,131 @@
                                     </div>
                                 </div>
                             </div>
-                        </ngx-slick-carousel>
+
+                        </div>
+                    </div>
+                </div>
+            </ngx-slick-carousel>
+        </div>
+
+        <div class="row pt-40 pb-16 skeletonAnimation"
+            [appSkeletonLoading]="tabsLoaded.mfPortfolioSummaryData.isLoading" appSkeletonLoading>
+            <div class="col-12 pl-0 pb-10">
+                <h5 class="m-0 text-black f-16 roboto">Portfolio Summary Mutual funds</h5>
+            </div>
+            <div class="col-12 p-0 bg-white br-4 pt-10">
+                <div class="row pt-16">
+                    <div class="col-4 pl-8 br">
+                        <div class="relClass">
+                            <div class="bar" [ngClass]="{'heightBar24':tabsLoaded.mfPortfolioSummaryData.isLoading}">
+                                <p class="f-10 text-custom lh-12 roboto f-400 m-0">Current Value:</p>
+                                <p class="m-0 pt-4 roboto f-400">₹<span
+                                        appFormatNumber>{{(mutualFund) ? (mutualFund.total_current_value) : 0}}</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 pl-8 br">
+                        <div class="relClass">
+                            <div class="bar" [ngClass]="{'heightBar24':tabsLoaded.mfPortfolioSummaryData.isLoading}">
+                                <p class="f-10 text-custom lh-12 roboto f-400 m-0">Amt. Invested:</p>
+                                <p class="m-0 pt-4 roboto f-400 text-custom">₹<span
+                                        appFormatNumber>{{(mutualFund) ? (mutualFund.total_amount_invested) : 0}}</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 pl-8">
+                        <div class="bar" [ngClass]="{'heightBar24':tabsLoaded.mfPortfolioSummaryData.isLoading}">
+                            <p class="f-10 text-custom lh-12 roboto f-400 m-0">% Returns</p>
+                            <span *ngIf="(mutualFund) ? (mutualFund.total_xirr >= 0) : 0  "
+                                class="m-0 pt-4 roboto f-400 text-success">{{((mutualFund.total_xirr) ? (mutualFund.total_xirr | number:'1.2-2') : (mutualFund.total_xirr == 0 || mutualFund.total_xirr == 'Infinity') ? (mutualFund.total_absolute_return | number:'1.2-2') : 0)}}{{'%'}}</span>
+                            <span *ngIf="(mutualFund) ? (mutualFund.total_xirr < 0) : 0 "
+                                class="m-0 pt-4 roboto f-400 text-success">{{((mutualFund.total_xirr) ? (mutualFund.total_xirr | number:'1.2-2') : (mutualFund.total_xirr == 0 || mutualFund.total_xirr == 'Infinity') ? (mutualFund.total_absolute_return | number:'1.2-2') : 0)}}{{'%'}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-7 full-center">
+                        <!-- <img src="/assets/images/Donut-chart.png" class="w-100"> -->
+                        <div class="h-147 w-100" [chart]="mfAllocationPieConfig"></div>
+                    </div>
+                    <div class="col-5 pl-0 pt-20 pb-8 pr-8">
+                        <div *ngFor="let data of mfAllocationData" class="pb-12">
+                            <div class="d-flex">
+                                <span class="pointNumber" [style.background-color]="data.color">
+                                </span>
+                                <span class="f-12 lh-12 roboto f-400 m-0"
+                                    appFormatNumber>{{(data.y | number:'1.2-2')}}%</span>
+                            </div>
+                            <p class="text-custom f-400 roboto pt-4 mb-0 pl-20">{{data.name}}</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div *ngIf="portFolioData.length > 0">
-            No data Found
-        </div>
         <div class="row pt-40">
-            <div class="col-8 pl-8">
+            <div class="col-8 pl-0">
                 <p class="m-0 text-black f-16 roboto">Goals</p>
             </div>
-            <div class="col-4 text-right">
+            <div class="col-4 text-right pr-0">
                 <button mat-stroked-button class="view-all">View All</button>
             </div>
 
         </div>
-        <div class="col-md-12 d-flex p-0 overflow-y pt-10">
-            <div class="pr-20">
-                <div class="w-340">
-                    <div class="mob-new-house">
-                        <div class="row pt-16">
-                            <div class="col-2">
-                                <img src="/assets/images/Oval.png" class="br-50">
+        <div class="col-md-12 d-flex p-0 myfeed-goals">
+            <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="sliderConfig" #slickModal1="slick-carousel"
+                (wheel)="carouselWheelEvent(slickModal1, $event)">
+                <div class="pr-20" ngxSlickItem>
+                    <div class="w-340">
+                        <div class="mob-new-house">
+                            <div class="row pt-16">
+                                <div class="col-2">
+                                    <img src="/assets/images/oval.png" class="br-50">
+                                </div>
+                                <div class="col-10 pt-4">
+                                    <h5 class="m-0 pt-4">House</h5>
+                                    <p class="m-0 pt-4">2033 - 36</p>
+                                </div>
                             </div>
-                            <div class="col-10">
-                                <p class="m-0 pt-4">2028</p>
-                                <h4 class="m-0 pt-8">New House</h4>
+                            <div class="row pt-20">
+                                <div class="col-8">
+                                    <p class="m-0">Goal: Rs. 50,00,000</p>
+                                    <p class="m-0 pt-6">CV: Rs. 10,23,000</p>
+                                    <mat-progress-bar mode="determinate" value="40" class="mt-10"></mat-progress-bar>
+                                    <p class="pt-10 m-0">10.23% Achieved</p>
+                                </div>
                             </div>
                         </div>
-                        <div class="row pt-20">
-                            <div class="col-8">
-                                <p class="m-0">Goal: Rs. 50,00,000</p>
-                                <p class="m-0 pt-6">CV: Rs. 10,23,000</p>
-                                <mat-progress-bar mode="determinate" value="40" class="mt-12"></mat-progress-bar>
-                                <p class="pt-10 m-0">10.23% Achieved</p>
-                            </div>
-                        </div>
-                    </div>
 
+                    </div>
                 </div>
-            </div>
-            <div class="pr-20">
+                <div class="pr-20" ngxSlickItem>
+                    <div class="w-340">
+                        <div class="mob-education">
+                            <div class="row pt-16">
+                                <div class="col-2">
+                                    <img src="/assets/images/oval.png" class="br-50">
+                                </div>
+                                <div class="col-10 pt-4">
+                                    <h5 class="m-0 pt-4">Education</h5>
+                                    <p class="m-0 pt-4">2033 - 36</p>
+                                </div>
+                            </div>
+                            <div class="row pt-20">
+                                <div class="col-8">
+                                    <p class="m-0">Goal: Rs. 50,00,000</p>
+                                    <p class="m-0 pt-6">CV: Rs. 10,23,000</p>
+                                    <mat-progress-bar mode="determinate" value="40" class="mt-10"></mat-progress-bar>
+                                    <p class="pt-10 m-0">10.23% Achieved</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </ngx-slick-carousel>
+            <!-- <div class="pr-20">
                 <div class="w-340">
                     <div class="mob-education mt-0">
                         <div class="row pt-16">
@@ -189,78 +409,44 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
         </div>
 
 
-        <div class="row pt-40 pb-16">
-            <div class="col-12 pl-8">
-                <p class="m-0 text-black f-16 roboto">Activity overview</p>
-            </div>
-
-        </div>
-        <div class="row bg-white br-10 pt-16 pb-16">
-            <div class="col-8">
-                <p class="m-0 roboto f-400 ">Advice awaiting
-                    your consent</p>
-                <p class="m-0 roboto f-400 f-12 text-custom">last 30 days</p>
-            </div>
-            <div class="col-4 text-center pt-8">
-                <p class="m-0 roboto f-400 text-danger f-18">6</p>
-            </div>
-        </div>
-        <div class="mt-12 mb-12">
-            <div class="row bg-white br-10 pt-16 pb-16">
-                <div class="col-8">
-                    <p class="m-0 roboto f-400">Action plans in process</p>
-                    <p class="m-0 roboto f-400 f-12 text-custom">currently</p>
-                </div>
-                <div class="col-4 text-center pt-8">
-                    <p class="m-0 roboto f-400 text-primary f-18">5</p>
-                </div>
-            </div>
-        </div>
-        <div class="row bg-white br-10 pt-16 pb-16">
-            <div class="col-8">
-                <p class="m-0 roboto f-400">Money to be
-                    deployed</p>
-                <p class="m-0 roboto f-400 f-12 text-custom">current + upcoming</p>
-            </div>
-            <div class="col-4 text-center pt-8">
-                <p class="m-0 roboto f-400 text-primary f-18">₹15,40,000</p>
-            </div>
-        </div>
         <div class="row pt-40">
-            <div class="col-12 pl-8">
-                <h5 class="m-0 roboto f-400 text-dark pb-10">Document vault</h5>
+            <div class="col-12 pl-0">
+                <h5 class="m-0 roboto f-500 text-dark pb-10">Document vault</h5>
             </div>
             <div class="col-12 p-0">
                 <div class="bg-white br-4 ba-half-grey">
                     <div class="row pt-20 pb-20">
                         <div class="col-8">
-                            <h5 class="m-0 roboto f-500 text-dark pb-8">You aren’t using the document vault!</h5>
-                            <ul *ngFor="let fam of documentVault.familyStats | slice:0:5">
-                                <li class="pr-8"><img class="w36" *ngIf="fam.relationshipId==2"
-                                        src="/assets/images/svg/man-profile.svg"></li>
-                                <li class="pr-8"><img class="w36" *ngIf="fam.relationshipId==3"
-                                        src="/assets/images/svg/women-profile-icon.svg"></li>
-                                <li class="pr-8"><img class="w36" *ngIf="fam.relationshipId==4"
-                                        src="/assets/images/svg/son-profile.svg"></li>
-                                <li class="pr-8"><img class="w36" *ngIf="fam.relationshipId==5"
-                                        src="/assets/images/svg/daughter-profile.svg"></li>
-                                <li class="pr-8"><img class="w36" *ngIf="fam.relationshipId==7"
-                                        src="/assets/images/svg/mother-profile.svg"></li>
-                                <li class="pr-8"><img class="w36" *ngIf="fam.relationshipId==6"
-                                        src="/assets/images/svg/father-profile.svg"></li>
-                            </ul>
-                            <!-- <p class="mb-0">{{documentVault.fileStats[0].filesCount}} items in your vault
-                                {{documentVault.fileStats[0].totalKbs/1024 | number : '0.0-2'}} mb space used</p> -->
-                            <p class="pt-8 m-0 roboto f-400 text-dark pb-12 f-12">Document vault is a safe and secure
-                                way to
-                                manage your important documents. This will help you get better organized!
-                            </p>
-                            <button mat-stroked-button class="btn-primary w-100">Access your vault</button>
+                            <h5 class="m-0 roboto f-500 text-dark pb-8">Your secure online vault</h5>
+                            <div class="d-flex">
+                                <ul class="" *ngFor="let fam of documentVault.familyStats | slice:0:5">
+                                    <li><img class="w36" *ngIf="fam.relationshipId==2"
+                                            src="/assets/images/svg/man-profile.svg"></li>
+                                    <li><img class="w36" *ngIf="fam.relationshipId==3"
+                                            src="/assets/images/svg/women-profile-icon.svg"></li>
+                                    <li><img class="w36" *ngIf="fam.relationshipId==4"
+                                            src="/assets/images/svg/son-profile.svg"></li>
+                                    <li><img class="w36" *ngIf="fam.relationshipId==5"
+                                            src="/assets/images/svg/daughter-profile.svg"></li>
+                                    <li><img class="w28" *ngIf="fam.relationshipId==7"
+                                            src="/assets/images/svg/mother-profile.svg"></li>
+                                    <li><img class="w36" *ngIf="fam.relationshipId==6"
+                                            src="/assets/images/svg/father-profile.svg"></li>
+                                </ul>
+                            </div>
+                            <p *ngIf="documentVault.fileStats" class="pt-8 m-0 roboto f-400 text-dark pb-12 f-12">
+                                {{documentVault.fileStats[0].filesCount}} items in your vault
+                                {{documentVault.fileStats[0].totalKbs/1024 | number : '0.0-2'}} mb space used</p>
+                            <!-- <p class="pt-8 m-0 roboto f-400 text-dark pb-12 f-12">37 items in your vault. 23.7MB space
+                                used
+                            </p> -->
+                            <button mat-stroked-button class="btn-primary w-100 h-40 f-400 f-16">Access your
+                                vault</button>
                         </div>
                         <div class="col-4 p-0 full-center">
                             <img src="/assets/images/secure.png">
@@ -269,73 +455,73 @@
                 </div>
             </div>
         </div>
+
+
         <div class="row pt-40 pb-16">
-            <div class="col-8 pl-8">
-                <p class="m-0 text-black f-16 roboto">Insurance</p>
+            <div class="col-12 pl-0">
+                <p class="m-0 text-black f-16 roboto">Risk profile</p>
             </div>
-            <div class="col-4 text-right">
-                <button mat-stroked-button class="view-all">View All</button>
-            </div>
-            <div class="col-12 d-flex p-0 overflow-y pt-10">
-                <div class="pr-20">
-                    <div class="w-240">
-                        <div class="row bg-white br-4">
-                            <div class="col-12 pt-10 pb-10">
-                                <p class="m-0 roboto f-400 text-mob-common">Health insurance</p>
-                                <p class="m-0 roboto f-400 text-custom f-12 pt-4">Family floater</p>
-                                <div class="row pt-8">
-                                    <div class="col-5 pl-0">
-                                        <img src="/assets/images/Group-1.png">
-                                    </div>
-                                    <div class="col-7 p-0 pt-16">
-                                        <p class="m-0 roboto f-500 text-mob-common">Actual: <span
-                                                class="f-400">24,50,000</span></p>
-                                        <p class="m-0 roboto f-500 text-mob-common pt-8">Advice: <span
-                                                class="f-400">194,50,000</span></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
+        </div>
+        <div class="bg-white">
+            <div class="row">
+                <div class="col-12 pt-16 pb-16 text-center">
+                    <!-- <h5 class="m-0 f-16 roboto f-500 text-mob-common">Your risk profile: Moderately aggressive</h5> -->
+                </div>
+            </div>
+            <div *ngIf="tabsLoaded.riskProfile.dataLoaded && tabsLoaded.riskProfile.hasData">
+                <div *ngFor="let risk of riskProfile">
+                    <div class="row">
+                        <div class="col-4 pr-0">
+                            <div class="ba-3x">
+                                <h1 class="m-0 text-dark roboto f-400 text-center pt-20 pb-20">
+                                    {{risk.riskAssessmentScore}}</h1>
+                            </div>
+                            <p class="f-12 m-0 text-custom roboto text-center lh-20">Max:
+                                {{riskProfileMaxScore(risk.riskProfileId)}}</p>
+                        </div>
+                        <div class="col-7 pr-0">
+                            <p class="roboto m-0 lh-16 f-400 pt-16">Your risk profile: {{risk.riskProfileStatus}}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="row pt-18 pb-16">
+                        <div class="col-12 text-center">
+                            <p class="text-custom m-0 lh-16 f-400 roboto">{{riskProfileDesc(risk.riskProfileId)}}
+                            </p>
+                            <img src="/assets/images/svg/aggressive.svg" *ngIf="risk.riskProfileId == 1">
+                            <img src="/assets/images/svg/moderately-aggressive.svg" *ngIf="risk.riskProfileId == 2">
+                            <img src="/assets/images/svg/moderate.svg" *ngIf="risk.riskProfileId == 3">
+                            <img src="/assets/images/svg/moderately-conservative.svg" *ngIf="risk.riskProfileId == 4">
+                            <img src="/assets/images/svg/conservative.svg" *ngIf="risk.riskProfileId == 5">
+                        </div>
                     </div>
                 </div>
-                <div class="pr-20">
-                    <div class="w-240">
-                        <div class="row bg-white br-4">
-                            <div class="col-12 pt-10 pb-10">
-                                <p class="m-0 roboto f-400 text-mob-common">Life insurance</p>
-                                <p class="m-0 roboto f-400 text-custom f-12 pt-4">Rahul Jain</p>
-                                <div class="row pt-8">
-                                    <div class="col-5 pl-0">
-                                        <img src="/assets/images/Group-1.png">
-                                    </div>
-                                    <div class="col-7 p-0 pt-16">
-                                        <p class="m-0 roboto f-500 text-mob-common">Actual: <span
-                                                class="f-400">54,50,000</span></p>
-                                        <p class="m-0 roboto f-500 text-mob-common pt-8">Advice: <span
-                                                class="f-400">154,50,000</span></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+            </div>
 
-                    </div>
-                </div>
+            <div *ngIf="riskProfile.length == 0">
+                <p class="m-0 f-14 roboto f-400 pt-20 pb-20 text-center">no data found</p>
             </div>
         </div>
-        <div class="row pt-40 pb-16">
-            <div class="col-8 pl-8">
-                <p class="m-0 text-black f-16 roboto">Recent transactions</p>
+
+
+
+        <div class="row pt-40 pb-16"
+            *ngIf="tabsLoaded.recentTransactions.dataLoaded && tabsLoaded.recentTransactions.hasData">
+            <div class="col-8 pl-0">
+                <h5 class="m-0 text-black f-16 roboto">Recent online transactions</h5>
             </div>
-            <div class="col-4 text-right">
+            <div class="col-4 text-right pr-0">
                 <button mat-stroked-button class="view-all">View All</button>
             </div>
             <div class="col-12 d-flex p-0 overflow-y pt-10">
-                <div class="pr-20">
-                    <div class="w-300">
-                        <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="sliderConfig"
-                            #slickModal2="slick-carousel" (wheel)="carouselWheelEvent(slickModal2, $event)">
-                            <div class="row bg-white br-4" ngxSlickItem *ngFor="let tnx of recentTransactions">
+                <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="sliderConfig" #slickModal2="slick-carousel"
+                    (wheel)="carouselWheelEvent(slickModal2, $event)">
+                    <div class="pr-20" ngxSlickItem *ngFor="let tnx of recentTransactions">
+                        <div class="w-300">
+
+                            <div class="row bg-white br-4">
                                 <div class="col-12 pt-16 pb-16">
                                     <div class="row">
                                         <div class="col-9 pl-0">
@@ -350,14 +536,16 @@
                                             <p class="m-0 roboto f-400 text-mob-common f-16">₹<span
                                                     appFormatNumber>{{tnx.amount | number : '0.0-2'}}</span></p>
                                         </div>
-                                        <div class="col-3 pr-0">
+                                        <div class="col-3 pr-0 pl-0">
                                             <p class="m-0 roboto f-400 text-custom f-10">
                                                 {{tnx.orderDate | date:'dd/MM h:mm a'}}</p>
                                         </div>
                                         <div class="col-12 pl-0 pt-8">
-                                            <p class="m-0 roboto f-400 text-custom f-10 ws-normal">Aditya Birla Sun Life
+                                            <p class="m-0 roboto f-400 text-custom f-10 ws-normal">Aditya Birla Sun
+                                                Life
                                                 {{tnx.schemeName}}</p>
-                                            <p class="m-0 roboto f-400 text-custom f-12 pt-10">{{clientData.name}}</p>
+                                            <p class="m-0 roboto f-400 text-custom f-12 pt-10">{{clientData.name}}
+                                            </p>
                                             <button mat-stroked-button
                                                 class="btn-primary-outline mt-8 h-20 lh-16 f-10 br-2 pl-4 pr-4">UNITS
                                                 {{getTnxStatus(tnx.status)}}</button>
@@ -368,57 +556,16 @@
 
                                 </div>
                             </div>
-                        </ngx-slick-carousel>
-                        <div *ngIf="recentTransactions.length == 0">
-                            No data Found
+
+                            <!-- <div *ngIf="recentTransactions.length == 0">
+                                No data Found
+                            </div> -->
                         </div>
                     </div>
-                </div>
+                </ngx-slick-carousel>
             </div>
         </div>
-        <div class="row pt-40 pb-16">
-            <div class="col-12 pl-8">
-                <p class="m-0 text-black f-16 roboto">Risk profile</p>
-            </div>
-
-        </div>
-        <div class="bg-white">
-            <div class="row">
-                <div class="col-12 pt-16 pb-16 text-center">
-                    <h5 class="m-0 f-16 roboto f-500 text-mob-common">Your risk profile: Moderately aggressive</h5>
-                </div>
-            </div>
-            <div>
-                <div *ngFor="let risk of riskProfile">
-                    <div class="row">
-                        <div class="col-4 pr-0">
-                            <div class="ba-3x">
-                                <h1 class="m-0 text-dark roboto f-400 text-center pt-20 pb-20">
-                                    {{risk.riskAssessmentScore}}</h1>
-                            </div>
-                            <p class="f-12 m-0 text-custom roboto text-center lh-20">Max:
-                                {{riskProfileMaxScore(risk.riskProfileId)}}</p>
-                        </div>
-                        <div class="col-7 pr-0">
-                            <p class="roboto m-0 lh-16 f-400 pt-16">Your risk profile: {{risk.riskProfileStatus}}</p>
-                        </div>
-                    </div>
-
-                    <div class="row pt-18 pb-16">
-                        <div class="col-12 text-center">
-                            <img src="/assets/images/svg/mob-pofile-chart.svg">
-                            <p class="text-custom m-0 lh-16 f-400 roboto">{{riskProfileDesc(risk.riskProfileId)}}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-        </div>
-        <div *ngIf="riskProfile.length == 0">
-            no data found
-        </div>
-        <div class="row pt-40 pb-16">
+        <!-- <div class="row pt-40 pb-16">
             <div class="col-8 pl-8">
                 <p class="m-0 text-mob-common f-16 roboto pb-16">Market summary</p>
             </div>
@@ -453,5 +600,186 @@
                     </div>
                 </div>
             </div>
+        </div> -->
+        <!-- <div class="row pt-40 pb-16">
+            <div class="col-8 pl-0">
+                <h5 class="m-0 text-black f-16 roboto pt-2">Recent transactions (RTA)</h5>
+            </div>
+            <div class="col-4 text-right pr-0">
+                <button mat-stroked-button class="view-all">View All</button>
+            </div>
+            <div class="col-12 d-flex p-0 overflow-y pt-10">
+                <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="sliderConfig" #slickModal2="slick-carousel"
+                    (wheel)="carouselWheelEvent(slickModal2, $event)">
+                    <div class="pr-20">
+                        <div class="w-300">
+
+                            <div class="row rta-1 br-4">
+                                <div class="col-12 pt-16 pb-16">
+                                    <div class="row">
+                                        <div class="col-9 pl-0">
+                                            <p class="m-0 roboto f-400 text-mob-common">PURCHASE</p>
+                                        </div>
+                                        <div class="col-3 pr-0">
+                                            <p class="m-0 roboto f-400 text-custom f-12 pt-4">31/01/2020</p>
+                                        </div>
+                                    </div>
+                                    <div class="row pt-8">
+                                        <div class="col-9 pl-0">
+                                            <p class="m-0 roboto f-400 text-mob-common f-16">₹<span>5,00,000</span></p>
+                                        </div>
+
+                                        <div class="col-12 pl-0 pt-10">
+                                            <p class="m-0 roboto f-400 text-custom f-12 ws-normal">Aditya Birla Sun Life
+                                                Equity Savings - Growth Option - Regular plan | 87626263</p>
+                                            <p class="m-0 roboto f-400 pt-10">Rahul Harish Jain</p>
+
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </ngx-slick-carousel>
+                <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="sliderConfig" #slickModal2="slick-carousel"
+                    (wheel)="carouselWheelEvent(slickModal2, $event)">
+                    <div class="pr-20">
+                        <div class="w-300">
+
+                            <div class="row rta-2 br-4">
+                                <div class="col-12 pt-16 pb-16">
+                                    <div class="row">
+                                        <div class="col-9 pl-0">
+                                            <p class="m-0 roboto f-400 text-mob-common">PURCHASE</p>
+                                        </div>
+                                        <div class="col-3 pr-0">
+                                            <p class="m-0 roboto f-400 text-custom f-12 pt-4">31/01/2020</p>
+                                        </div>
+                                    </div>
+                                    <div class="row pt-8">
+                                        <div class="col-9 pl-0">
+                                            <p class="m-0 roboto f-400 text-mob-common f-16">₹<span>5,00,000</span></p>
+                                        </div>
+
+                                        <div class="col-12 pl-0 pt-10">
+                                            <p class="m-0 roboto f-400 text-custom f-12 ws-normal">Aditya Birla Sun Life
+                                                Equity Savings - Growth Option - Regular plan | 87626263</p>
+                                            <p class="m-0 roboto f-400 pt-10">Rahul Harish Jain</p>
+
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </ngx-slick-carousel>
+                <div *ngIf="recentTransactions.length == 0">
+                    No data Found
+                </div>
+            </div>
+        </div> -->
+        <div class="row pt-40 pb-16" *ngIf="tabsLoaded.portfolioData.dataLoaded && familyWiseAllocation?.length > 0">
+            <div class="col-12 pl-0">
+                <p class="m-0 text-black f-16 roboto">Family member wise summary</p>
+            </div>
+
+            <div class="col-12 d-flex p-0 overflow-y pt-10">
+                <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="sliderConfig" #slickModal4="slick-carousel"
+                    (wheel)="carouselWheelEvent(slickModal4, $event)">
+                    <div class="pr-20" ngxSlickItem *ngFor="let item of familyWiseAllocation">
+                        <div class="w-180">
+
+                            <div class="row fm-1 br-4">
+                                <div class="col-12 pt-16 pb-16">
+                                    <div class="row">
+                                        <div class="col-3 pl-0">
+                                            <img class="w36"
+                                                *ngIf="item.relationshipId==0 || item.relationshipId == null"
+                                                [src]="imgGenderSrc">
+                                            <img class="w36" *ngIf="item.relationshipId==2 || item.relationshipId == 1"
+                                                src="/assets/images/svg/man-profile.svg">
+                                            <img class="w36" *ngIf="item.relationshipId==3"
+                                                src="/assets/images/svg/women-profile-icon.svg">
+                                            <img class="w36" *ngIf="item.relationshipId==4"
+                                                src="/assets/images/svg/son-profile.svg">
+                                            <img class="w36" *ngIf="item.relationshipId==5"
+                                                src="/assets/images/svg/daughter-profile.svg">
+                                            <img class="w36" *ngIf="item.relationshipId==7"
+                                                src="/assets/images/svg/mother-profile.svg">
+                                            <img class="w36" *ngIf="item.relationshipId==6"
+                                                src="/assets/images/svg/father-profile.svg">
+                                        </div>
+                                        <div class="col-9 pr-0">
+                                            <p class="m-0 roboto f-400 f-12 pt-4">{{item.name}}</p>
+                                            <p class="m-0 roboto text-custom f-400 f-10 ">Self</p>
+                                        </div>
+                                    </div>
+                                    <div class="row pt-16">
+                                        <div class="col-12 pl-0">
+                                            <p class="m-0 roboto f-400 text-custom f-12 ws-normal">Mutual Funds</p>
+                                            <p class="m-0 roboto f-400">₹<span
+                                                    appFormatNumber>{{item.currentValue}}</span></p>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </ngx-slick-carousel>
+            </div>
         </div>
+        <div class="row pt-40 pb-16" *ngIf="tabsLoaded.mfPortfolioSummaryData.hasData">
+            <div class="col-12 pl-0 pb-10">
+                <h5 class="m-0 text-black f-16 roboto">Sub category wise</h5>
+            </div>
+            <div class="col-12 p-0 bg-white br-4 pt-10">
+                <div class="row">
+                    <div class="col-6 full-center">
+                        <div class="h-147 w-100" [chart]="mfSubCategoryPieConfig"></div>
+                    </div>
+                    <div class="col-6 pl-0 pt-20 pb-20 pr-8">
+                        <div class="pb-12" *ngFor="let data of mfSubCatAllocationData">
+                            <div class="d-flex">
+                                <span class="pointNumber" [style.background-color]="data.color">
+                                </span>
+                                <span class="f-12 lh-12 roboto f-400 m-0"> ₹</span>
+                                <span class="f-12 lh-12 roboto f-400 m-0 br" appFormatNumber>{{(data.y)}}</span>
+                                <span class="f-12 lh-12 roboto f-400 m-0 pl-4">
+                                    {{'('+(data.percentage | number:'1.2-2')+'%)'}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-10 pb-20">
+            <div class="row">
+                <div class="col-12 bg-white mob-box-shadow-1">
+                    <h5 class="text-center text-black lh-14 f-500 pt-20 pb-20 m-0">You’re up to date</h5>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="bottom-mob-footer">
+        <ul class="">
+            <li><img src="/assets/images/svg/mob-nav-1.svg"></li>
+            <li><img src="/assets/images/svg/mob-nav-2.svg"></li>
+            <li><img src="/assets/images/svg/goal-active.svg"></li>
+            <li> <img src="/assets/images/svg/mob-nav-3.svg"></li>
+            <li><img src="/assets/images/svg/people-black.svg"></li>
+        </ul>
     </div>
