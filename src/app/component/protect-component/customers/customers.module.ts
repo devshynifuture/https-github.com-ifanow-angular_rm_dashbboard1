@@ -1,10 +1,10 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { CustomersRoutingModule } from './customers-routing.module';
-import { MaterialModule } from '../../../material/material';
-import { ChartModule } from 'angular-highcharts';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {CustomersRoutingModule} from './customers-routing.module';
+import {MaterialModule} from '../../../material/material';
+import {ChartModule} from 'angular-highcharts';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 // import {BrowserModule} from '@angular/platform-browser';
 import { CustomerComponent } from './component/customer/customer.component';
 import { CustomCommonModule } from '../../../common/custom.common.module';
@@ -62,7 +62,17 @@ import { GeneralInsuranceMobComponent } from './component/customer/mobile/genera
 
 
 @NgModule({
-  declarations: [CustomerComponent, TransactionSuccessfulComponent, MobileMyfeedComponent, MobileDocumentComponent, MobilePortfoiloComponent, MobileProfileComponent, MobileTransactionsComponent, MobileLeftSidenavComponent, UploadDocumentComponent, EditDocumentPopupComponent, MutualFundsComponent, MutualFundDetailsComponent, MoveCopyMobileViewComponent, FixedIncomeMobComponent, MobileViewAddressComponent, MobileViewBankComponent, MobileViewDematComponent, AddEditBankMobileViewComponent, AddEditDematMobileViewComponent, AddEditDocumentMobileViewComponent, IndividualMemberFormComponent, MinorMemberFormComponent,RetirementAccMobComponent, CashAndBankMobComponent, StocksMobComponent, RealEstateMobComponent, SmallSavingMobComponent, CommoditiesMobComponent, LiabilitiesMobComponent, LifeInsuranceMobComponent, GeneralInsuranceMobComponent],
+  declarations: [CustomerComponent, TransactionSuccessfulComponent,
+    MobileMyfeedComponent, MobileDocumentComponent, MobilePortfoiloComponent,
+    MobileProfileComponent, MobileTransactionsComponent, MobileLeftSidenavComponent,
+    UploadDocumentComponent, EditDocumentPopupComponent, MutualFundsComponent,
+    MutualFundDetailsComponent, MoveCopyMobileViewComponent, FixedIncomeMobComponent,
+    MobileViewAddressComponent, MobileViewBankComponent, MobileViewDematComponent,
+    AddEditBankMobileViewComponent, AddEditDematMobileViewComponent,
+    AddEditDocumentMobileViewComponent, IndividualMemberFormComponent,
+    MinorMemberFormComponent, RetirementAccMobComponent,, CashAndBankMobComponent, 
+    StocksMobComponent, RealEstateMobComponent, SmallSavingMobComponent, CommoditiesMobComponent, LiabilitiesMobComponent, LifeInsuranceMobComponent, 
+    GeneralInsuranceMobComponent],
   imports: [
     // BrowserModule,
     CommonModule,
@@ -77,13 +87,8 @@ import { GeneralInsuranceMobComponent } from './component/customer/mobile/genera
     EntryComponentsModule,
     AccountEntryModule,
     PlanEntryModule,
-    //  CustomersRoutingModule,
-      MobileRoutingModule,
-    SlickCarouselModule,
-    AdviceEntryModule,
     CustomerOverviewEntryModule,
     CustomDirectiveModule,
-    MatStepperModule,
     TransactionEntryModule,
     SubscriptionEntry,
     SubscriptionUpperEntry,
@@ -92,8 +97,10 @@ import { GeneralInsuranceMobComponent } from './component/customer/mobile/genera
   ],
   exports: [],
   providers: [DynamicComponentService, AdvisorAndOrganizationInfoService],
-  entryComponents: [EntryComponentsModule.getComponentList(), AccountEntryModule.getComponentList(), AdviceEntryModule.getComponentList(),
-  PlanEntryModule.getComponentList(), CustomerOverviewEntryModule.getComponentList(), UploadDocumentComponent, EditDocumentPopupComponent]
+  entryComponents: [EntryComponentsModule.getComponentList(),
+    AccountEntryModule.getComponentList(), AdviceEntryModule.getComponentList(),
+    PlanEntryModule.getComponentList(), CustomerOverviewEntryModule.getComponentList(),
+    UploadDocumentComponent, EditDocumentPopupComponent]
 })
 export class CustomersModule {
 }
