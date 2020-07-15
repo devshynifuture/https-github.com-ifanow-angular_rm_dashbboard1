@@ -1,44 +1,83 @@
-Edit allocation
+<div class="p-20">
 
-Current value of asset/insurance
-<span [value]="allocationData.currentValue" appFormatNumber></span>
-<hr>
+    <div class="headerEditClass">
+        <h2 class="f-20 mb-12">
+            Edit allocation
+        </h2>
 
-Allocation Details
+        <p class="text-primitive mb-5">
+            Current value of asset/insurance
+        </p>
 
-<div>
-    <div class="col-md-12">
-        <div class="col-md-6">a) Allocation to other goals</div>
-        <div class="col-md-6"><span [value]="allocationData.otherAllocated" appFormatNumber></span></div>
+        <p class="mb-0">
+            &#8377; <span [value]="allocationData.currentValue" appFormatNumber></span>
+        </p>
     </div>
-    <div class="col-md-12">
-        <div class="col-md-6">b) Allocation to this goal (editable)</div>
-        <div class="col-md-6" [formGroup]="reallocationFG">
-            <mat-form-field appearance="standard" floatLabel="never">
-                <input type="text" formControlName="allocatedPercentage"
-                    appInputValueValidation [inputValidator]="decimalValidator"
-                    min="1" [max]="availableAllocation"
-                    matInput class="form-control">
-                <mat-error *ngIf="reallocationFG.get('allocatedPercentage').errors?.required">This field is required</mat-error>
-                <mat-error *ngIf="reallocationFG.get('allocatedPercentage').errors?.min || reallocationFG.get('allocatedPercentage').errors?.max">Please enter valid number</mat-error>
-            </mat-form-field>
+
+
+    <div class="edit-body">
+        <p class="text-primitive">Allocation Details</p>
+
+        <div class="row">
+            <div class="col-md-6 p-0">
+                <p class="text-black mb-8">
+                    a) Allocation to other goals
+                </p>
+            </div>
+            <div class="col-md-6">
+                <p class="mb-8 "> 36%
+                    <span [value]="allocationData.otherAllocated" appFormatNumber></span>
+                </p>
+
+            </div>
+        </div>
+
+        <div class="row pb-10 align-items-center">
+
+            <div class="col-md-6 p-0">
+                <p class="text-black mb-8"> b) Allocation to this goal (editable) </p>
+            </div>
+            <div class="col-md-6">
+                <div class="editable_textBox" [formGroup]="reallocationFG">
+                    <mat-form-field appearance="standard" floatLabel="never">
+                        <input type="text" formControlName="allocatedPercentage" appInputValueValidation [inputValidator]="decimalValidator" min="1" [max]="availableAllocation" matInput class="form-control">
+                        <mat-error *ngIf="reallocationFG.get('allocatedPercentage').errors?.required">This field is required
+                        </mat-error>
+                        <mat-error *ngIf="reallocationFG.get('allocatedPercentage').errors?.min || reallocationFG.get('allocatedPercentage').errors?.max">
+                            Please enter valid number</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-6 p-0">
+                <p class="mb-0 text-black">c) Net allocation available</p>
+                <p class="mb-0 text-primitive ml-16">(100% - a - b)</p>
+            </div>
+            <div class="col-md-6">
+                <p class="f-500"> <span [value]="remainingAllocation" appFormatNumber [shouldRoundOff]="false"></span>
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="edit-footer mt-52">
+        <div class="row">
+            <div class="col-md-7 pl-0 text-left">
+                <button class="text-danger p-0" mat-button>UNALLOCATE</button>
+            </div>
+
+            <div class="col-md-5 pr-0 d-flex align-items-center justify-content-end">
+                <button class="text-primitive mr-12" mat-button mat-dialog-close>Cancel</button>
+                <app-progress-button (btnClick)="reallocate()" class="btn-bottom   br-0 text-inherit" [options]="barButtonOptions">
+                </app-progress-button>
+            </div>
         </div>
     </div>
-    <div class="col-md-12">
-        <div class="col-md-6">
-            <p>Net allocation available</p>
-            <p>(100% - a - b)</p>
-        </div>
-        <div class="col-md-6">
-            <span [value]="remainingAllocation" appFormatNumber [shouldRoundOff]="false"></span>
-        </div>
-    </div>
-</div>
 
-<div>
-    <button mat-button mat-dialog-close>Cancel</button>
-
-    <app-progress-button (btnClick)="reallocate()" class="btn-bottom br-0 text-inherit"
-        [options]="barButtonOptions">
-</app-progress-button>
 </div>

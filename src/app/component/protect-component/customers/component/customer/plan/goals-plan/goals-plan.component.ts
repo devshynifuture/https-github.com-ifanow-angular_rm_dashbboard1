@@ -500,7 +500,8 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       allocationData: allocation
     }
     this.dialog.open(ReallocateAssetComponent, {
-      width: '400px',
+      width: '600px',
+      height: '400px',
       data: dialogData,
       autoFocus: false,
     });
