@@ -118,7 +118,7 @@ export class EmailListingComponent implements OnInit {
     let gmailThread;
     gmailThread = this.gmailThreads[index];
     console.log("this is some listing ::element;::::", element);
-    if (element.labelIdsfromMessages[0].labelIds.includes('DRAFT') && this.location === 'draft') {
+    if (element.labelIdsfromMessages[0].includes('DRAFT') && this.location === 'draft') {
       this.showDraftView = true;
     } else {
       this.showDraftView = false;
