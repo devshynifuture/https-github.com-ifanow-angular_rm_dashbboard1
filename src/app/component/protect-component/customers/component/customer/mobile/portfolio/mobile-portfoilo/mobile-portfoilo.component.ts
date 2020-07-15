@@ -307,5 +307,7 @@ export class MobilePortfoiloComponent implements OnInit {
     this.showRealEstate = value;
     this.showCashAndBank = value;
     this.showCommodities = value;
+    this.showSmallSavings = value;
+    this.showLiablities = value;
   }
 }

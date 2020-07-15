@@ -22,7 +22,7 @@
           </div>
           <div class="col-10 pl-8 pt-4">
             <p class="m-0 f-12 lh-12">Current Value:</p>
-            <h3 class="mob-text-success mb-0 pt-4">{{realEstateData ? 'Rs.' : ''}}  <span appFormatNumber>{{realEstateData ? realEstateData.sumOfMarketValue : '-'}}</span></h3>
+            <h3 class="mob-text-success mb-0 pt-4">{{realEstateCv ? 'Rs.' : ''}}  <span appFormatNumber [value]="realEstateCv ? realEstateCv : '-'"></span></h3>
           </div>
         </div>
       </div>
@@ -33,7 +33,7 @@
               <p class="mb-0">Real estate</p>
             </div>
             <div class="col-4 text-right">
-              <p class="m-0">{{realEstateData ? '₹' : ''}}<span appFormatNumber>{{realEstateData.sumOfMarketValue ? realEstateData.sumOfMarketValue : ''}}</span></p>
+              <p class="m-0">{{realEstateCv ? '₹' : ''}}<span appFormatNumber [value]="realEstateCv ? realEstateCv : ''" ></span></p>
             </div>
           </div>
         </div>

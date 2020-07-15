@@ -20,11 +20,17 @@
           <div class="col-2">
              <div class="mf hw-40 f-14 pt-16">C</div>
           </div>
+          
           <div class="col-10 pl-8 pt-4">
             <p class="m-0 f-12 lh-12">Current Value:</p>
-            <h3 class="mob-text-success mb-0 pt-4">{{totalCurrentValue ? 'Rs.' : ''}}  <span appFormatNumber>{{totalCurrentValue ? totalCurrentValue : '-'}}</span></h3>
+            <h3 class="mob-text-success mb-0 pt-4">{{totalCurrentValue ? 'Rs.' : ''}}  <span appFormatNumber [value]="totalCurrentValue"></span></h3>
           </div>
         </div>
+      </div>
+      <div class="mob-add" (click)="addGold('addGold','open',null)">
+        <span class="material-icons text-white">
+      add
+      </span>
       </div>
     <div class="pt-16">
         <div class="bg-white">
@@ -33,7 +39,7 @@
               <p class="mb-0">Gold</p>
             </div>
             <div class="col-4 text-right">
-              <p class="m-0">{{goldData.sumOfMarketValue ? '₹' : ''}}<span appFormatNumber>{{goldData.sumOfMarketValue}}</span></p>
+              <p class="m-0">{{goldCV ? '₹' : ''}}<span appFormatNumber [value]="goldCV"></span></p>
             </div>
           </div>
           <div class="row pt-20 pb-20 mob-bb-1">
@@ -41,10 +47,14 @@
               <p class="mb-0">Others</p>
             </div>
             <div class="col-4 text-right">
-              <p class="m-0">{{othersData.sumOfMarketValue ? '₹' : ''}}<span appFormatNumber>{{othersData.sumOfMarketValue}}</span></p>
+              <p class="m-0">{{otherCv ? '₹' : ''}}<span appFormatNumber [value]="otherCv"></span></p>
             </div>
           </div>
         </div>
       </div>
+    </div>
+
+    <div>
+     
     </div>
     </div>

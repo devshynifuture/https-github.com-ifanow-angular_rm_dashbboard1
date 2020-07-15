@@ -14,6 +14,7 @@ export class StocksMobComponent implements OnInit {
   stocksData: any;
   backToMf;
   @Output() outputValue = new EventEmitter<any>();
+  stockCv: any;
 
   constructor(private eventService:EventService,private custumService:CustomerService) { }
 
@@ -34,6 +35,7 @@ export class StocksMobComponent implements OnInit {
       data => {
         if(data){
         this.stocksData = data;
+        this.stockCv=data.grandTotalCurrentValue;
         }
       }, (error) => {
         this.eventService.showErrorMessage(error);

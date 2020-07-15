@@ -13,6 +13,7 @@ export class RealEstateMobComponent implements OnInit {
   clientId: any;
   realEstateData: any;
   @Output() outputValue = new EventEmitter<any>();
+  realEstateCv: any;
 
   constructor(private custumService:CustomerService,private eventService:EventService) { }
 
@@ -30,6 +31,7 @@ export class RealEstateMobComponent implements OnInit {
       data => {
         if(data){
           this.realEstateData = data;
+          this.realEstateCv =data.sumOfMarketValue;
         }
       }, (error) => {
         this.eventService.showErrorMessage(error);

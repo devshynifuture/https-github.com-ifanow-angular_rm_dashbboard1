@@ -15,6 +15,8 @@ export class CashAndBankMobComponent implements OnInit {
   bankAccData: any;
   cashInHandData: any;
   @Output() outputValue = new EventEmitter<any>();
+  accCv: any;
+  cashInHandCv: any;
   constructor(private custumService:CustomerService,private eventService:EventService) { }
 
   ngOnInit() {
@@ -32,6 +34,7 @@ export class CashAndBankMobComponent implements OnInit {
       data => {
         if(data){
           this.bankAccData = data;
+          this.accCv = data.sumOfAccountBalance;
           this.calculateSum();
         }
       }, (error) => {
@@ -49,6 +52,7 @@ export class CashAndBankMobComponent implements OnInit {
       data => {
         if(data){
           this.cashInHandData = data;
+          this.cashInHandCv= data.sumOfCashValue;
           this.calculateSum();
         }
       }, (error) => {
@@ -58,7 +62,7 @@ export class CashAndBankMobComponent implements OnInit {
     );
   }
   calculateSum(){
-    this.totalCurrentValue = this.bankAccData.sumOfAccountBalance+this.cashInHandData.sumOfCashValue
+    this.totalCurrentValue = this.accCv+this.cashInHandCv
   }
   changeValue(flag){
     this.outputValue.emit(flag);

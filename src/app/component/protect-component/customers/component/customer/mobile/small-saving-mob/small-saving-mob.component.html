@@ -1,1 +1,106 @@
-<p>small-saving-mob works!</p>
+<div id="mob-fixed-income">
+    <div class="row mob-bg-common pb-12 mobtop-navfixed">
+      <div class="col-2" (click)="changeValue(false)">
+        <span class="material-icons text-white">
+        keyboard_backspace
+        </span>
+      </div>
+      <div class="col-7 p-0">
+        <h5 class="m-0 f-18 text-white pt-4">Small saving scheme</h5>
+      </div>
+      <div class="col-3 text-right">
+        <span class="material-icons text-white">
+        filter_list
+        </span>
+      </div>
+    </div>
+      <div class="pt-80 p-8 h-100vh">
+      <div class="bg-white">
+        <div class="row pt-20 pb-20">
+          <div class="col-2">
+             <div class="mf hw-40 f-14 pt-16">SS</div>
+          </div>
+          <div class="col-10 pl-8 pt-4">
+            <p class="m-0 f-12 lh-12">Current Value:</p>
+            <h3 class="mob-text-success mb-0 pt-4">{{totalCurrentValue ? 'Rs.' : ''}}  <span appFormatNumber [value]="totalCurrentValue ? totalCurrentValue : '-'"></span></h3>
+          </div>
+        </div>
+      </div>
+    <div class="pt-16">
+        <div class="bg-white">
+          <div class="row pt-20 pb-20 mob-bb-1">
+            <div class="col-8">
+              <p class="mb-0">PPF</p>
+            </div>
+            <div class="col-4 text-right">
+              <p class="m-0">{{ppfCv ? '₹' : ''}}<span appFormatNumber [value]="ppfCv ? ppfCv : ''"></span></p>
+            </div>
+          </div>
+          <div class="row pt-20 pb-20 mob-bb-1">
+            <div class="col-8">
+              <p class="mb-0">NSC</p>
+            </div>
+            <div class="col-4 text-right">
+              <p class="m-0">{{nscCv ? '₹' : ''}}<span appFormatNumber [value]="nscCv ? nscCv : ''"></span></p>
+            </div>
+          </div>
+          <div class="row pt-20 pb-20 mob-bb-1">
+            <div class="col-8">
+              <p class="mb-0">SSY</p>
+            </div>
+            <div class="col-4 text-right">
+              <p class="m-0">{{ssyCv ? '₹' : ''}}<span appFormatNumber [value]="ssyCv ? ssyCv : ''" ></span></p>
+            </div>
+          </div>
+          <div class="row pt-20 pb-20 mob-bb-1">
+            <div class="col-8">
+              <p class="mb-0">KVP</p>
+            </div>
+            <div class="col-4 text-right">
+              <p class="m-0">{{kvpCv ? '₹' : ''}}<span appFormatNumber [value]="kvpCv ? kvpCv : ''" ></span></p>
+            </div>
+          </div>
+          <div class="row pt-20 pb-20 mob-bb-1">
+            <div class="col-8">
+              <p class="mb-0">SCSS</p>
+            </div>
+            <div class="col-4 text-right">
+              <p class="m-0">{{scssCv ? '₹' : ''}}<span appFormatNumber [value]="scssCv ? scssCv : ''" ></span></p>
+            </div>
+          </div>
+          <div class="row pt-20 pb-20 mob-bb-1">
+            <div class="col-8">
+              <p class="mb-0">PO Savings</p>
+            </div>
+            <div class="col-4 text-right">
+              <p class="m-0">{{poSavingCv ? '₹' : ''}}<span appFormatNumber [value]="poSavingCv ? poSavingCv : ''" ></span></p>
+            </div>
+          </div>
+          <div class="row pt-20 pb-20 mob-bb-1">
+            <div class="col-8">
+              <p class="mb-0">PO RD</p>
+            </div>
+            <div class="col-4 text-right">
+              <p class="m-0">{{pordCv ? '₹' : ''}}<span appFormatNumber [value]="pordCv ? pordCv : ''" ></span></p>
+            </div>
+          </div>
+          <div class="row pt-20 pb-20 mob-bb-1">
+            <div class="col-8">
+              <p class="mb-0">PO TD</p>
+            </div>
+            <div class="col-4 text-right">
+              <p class="m-0">{{potdCv ? '₹' : ''}}<span appFormatNumber [value]="potdCv ? potdCv : ''" ></span></p>
+            </div>
+          </div>
+          <div class="row pt-20 pb-20 mob-bb-1">
+            <div class="col-8">
+              <p class="mb-0">PO MIS</p>
+            </div>
+            <div class="col-4 text-right">
+              <p class="m-0">{{PomisCv ? '₹' : ''}}<span appFormatNumber [value]="PomisCv ? PomisCv : ''" ></span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>

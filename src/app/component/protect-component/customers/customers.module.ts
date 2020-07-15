@@ -52,6 +52,7 @@ import { CommoditiesMobComponent } from './component/customer/mobile/commodities
 import { LiabilitiesMobComponent } from './component/customer/mobile/liabilities-mob/liabilities-mob.component';
 import { LifeInsuranceMobComponent } from './component/customer/mobile/life-insurance-mob/life-insurance-mob.component';
 import { GeneralInsuranceMobComponent } from './component/customer/mobile/general-insurance-mob/general-insurance-mob.component';
+import { AddGoldMobComponent } from './component/customer/mobile/commodities-mob/add-gold-mob/add-gold-mob.component';
 
 
 
@@ -70,7 +71,7 @@ import { GeneralInsuranceMobComponent } from './component/customer/mobile/genera
     MobileViewAddressComponent, MobileViewBankComponent, MobileViewDematComponent,
     AddEditBankMobileViewComponent, AddEditDematMobileViewComponent,
     AddEditDocumentMobileViewComponent, IndividualMemberFormComponent,
-    MinorMemberFormComponent, RetirementAccMobComponent,CashAndBankMobComponent, StocksMobComponent, RealEstateMobComponent, SmallSavingMobComponent, CommoditiesMobComponent, LiabilitiesMobComponent, LifeInsuranceMobComponent, GeneralInsuranceMobComponent],
+    MinorMemberFormComponent, RetirementAccMobComponent,CashAndBankMobComponent, StocksMobComponent, RealEstateMobComponent, SmallSavingMobComponent, CommoditiesMobComponent, LiabilitiesMobComponent, LifeInsuranceMobComponent, GeneralInsuranceMobComponent, AddGoldMobComponent],
   imports: [
     // BrowserModule,
     CommonModule,
