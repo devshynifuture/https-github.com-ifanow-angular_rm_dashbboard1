@@ -90,7 +90,7 @@ export class BondsComponent implements OnInit {
     } else {
       this.adviceShowHeaderAndFooter = true;
     }
-     this.getdataForm(this.inputData)
+    // this.getdataForm()
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.bankList = this.enumService.getBank();
