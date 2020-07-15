@@ -68,7 +68,7 @@
     "ngx-image-cropper": "^3.1.5",
     "ngx-mat-select-search": "^2.2.0",
     "ngx-material-timepicker": "^5.5.3",
-    "ngx-slick-carousel": "^0.5.0",
+    "ngx-slick-carousel": "^0.5.1",
     "pdfmake": "^0.1.65",
     "rxjs": "~6.4.0",
     "rxjs-compat": "^6.5.4",
