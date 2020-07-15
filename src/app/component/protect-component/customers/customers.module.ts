@@ -44,6 +44,8 @@ import {AddEditDematMobileViewComponent} from './component/customer/mobile/profi
 import {IndividualMemberFormComponent} from './component/customer/mobile/profile/mobile-profile/individual-member-form/individual-member-form.component';
 import {MinorMemberFormComponent} from './component/customer/mobile/profile/mobile-profile/minor-member-form/minor-member-form.component';
 import {RetirementAccMobComponent} from './component/customer/mobile/retirement-acc-mob/retirement-acc-mob.component';
+import { BankDetailedAssetsComponent } from './component/customer/mobile/bank-detailed-assets/bank-detailed-assets.component';
+import { FixedDepositMobComponent } from './component/customer/mobile/fixed-income-mob/fixed-deposit-mob/fixed-deposit-mob.component';
 
 
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
@@ -60,7 +62,7 @@ import {RetirementAccMobComponent} from './component/customer/mobile/retirement-
     MobileViewAddressComponent, MobileViewBankComponent, MobileViewDematComponent,
     AddEditBankMobileViewComponent, AddEditDematMobileViewComponent,
     AddEditDocumentMobileViewComponent, IndividualMemberFormComponent,
-    MinorMemberFormComponent, RetirementAccMobComponent],
+    MinorMemberFormComponent, RetirementAccMobComponent, BankDetailedAssetsComponent, FixedDepositMobComponent],
   imports: [
     // BrowserModule,
     CommonModule,
@@ -93,7 +95,7 @@ import {RetirementAccMobComponent} from './component/customer/mobile/retirement-
   entryComponents: [EntryComponentsModule.getComponentList(),
     AccountEntryModule.getComponentList(), AdviceEntryModule.getComponentList(),
     PlanEntryModule.getComponentList(), CustomerOverviewEntryModule.getComponentList(),
-    UploadDocumentComponent, EditDocumentPopupComponent]
+    UploadDocumentComponent, EditDocumentPopupComponent,FixedDepositMobComponent]
 })
 export class CustomersModule {
 }

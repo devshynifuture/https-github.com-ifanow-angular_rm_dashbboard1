@@ -8,6 +8,7 @@ import * as Highcharts from 'highcharts';
 import { slideInAnimation } from 'src/app/animation/router.animation';
 import { EventService } from 'src/app/Data-service/event.service';
 import { MfServiceService } from '../../../accounts/assets/mutual-fund/mf-service.service';
+import { rightSliderAnimation, upperSliderAnimation } from 'src/app/animation/animation';
 
 @Component({
   selector: 'app-mobile-myfeed',
@@ -16,7 +17,9 @@ import { MfServiceService } from '../../../accounts/assets/mutual-fund/mf-servic
   providers: [LoaderFunction],
   animations: [
     slideInAnimation,
-  ]
+    rightSliderAnimation,
+    upperSliderAnimation
+  ],
 })
 export class MobileMyfeedComponent implements OnInit {
   bscData;
