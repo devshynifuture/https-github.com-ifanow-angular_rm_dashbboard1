@@ -21,9 +21,46 @@ export class MobilePortfoiloComponent implements OnInit {
   portFolioData: any[];
   hasError: boolean;
   chartTotal: number;
-  mfAllocationData: any;
-  showMf 
 
+  showMf 
+  mfAllocationData: any[] = [
+    {
+      name: 'EQUITY',
+      y: 0,
+      color: AppConstants.DONUT_CHART_COLORS[0],
+      dataLabels: {
+        enabled: false
+      }
+    }, {
+      name: 'DEBT',
+      y: 0,
+      color: AppConstants.DONUT_CHART_COLORS[1],
+      dataLabels: {
+        enabled: false
+      }
+    }, {
+      name: 'HYBRID',
+      y: 0,
+      color: AppConstants.DONUT_CHART_COLORS[2],
+      dataLabels: {
+        enabled: false
+      }
+    }, {
+      name: 'SOLUTION ORIENTED',
+      y: 0,
+      color: AppConstants.DONUT_CHART_COLORS[4],
+      dataLabels: {
+        enabled: false
+      }
+    }, {
+      name: 'OTHERS',
+      y: 0,
+      color: AppConstants.DONUT_CHART_COLORS[3],
+      dataLabels: {
+        enabled: false
+      }
+    }
+  ]
   chartData: any[] = [
     {
       name: 'Equity',
@@ -65,6 +102,13 @@ export class MobilePortfoiloComponent implements OnInit {
   mfData: any;
   fixedIncome: any;
   showFixedIncome: boolean;
+  showRetirementAccount: boolean;
+  showRealEstate: boolean;
+  showStocks: boolean;
+  showCashAndBank: boolean;
+  showLiablities: boolean;
+  showSmallSavings: boolean;
+  showCommodities: boolean;
   constructor(
     public customerService : CustomerService,
     public loaderFn: LoaderFunction,
@@ -93,9 +137,19 @@ export class MobilePortfoiloComponent implements OnInit {
       this.fixedIncome = asset
       this.showFixedIncome = true
     }else if(asset.assetType == 8){
-
+      this.showRealEstate = true;
     }else if(asset.assetType == 9){
-
+      this.showRetirementAccount = true;
+    }else if(asset.assetType == 6){
+      this.showStocks = true;
+    }else if(asset.assetType == 12){
+      this.showCommodities = true;
+    }else if(asset.assetType == 31){
+      this.showCashAndBank = true;
+    }else if(asset.assetType == 2){
+      this.showLiablities = true;
+    }else if(asset.assetType == 10){
+     this.showSmallSavings = true;
     }
   }
   openMenu(flag) {
@@ -112,7 +166,7 @@ export class MobilePortfoiloComponent implements OnInit {
       advisorId: this.advisorId,
       targetDate: new Date().getTime()
     }
-
+    
 
     this.loaderFn.increaseCounter();
     this.customerService.getAllFeedsPortFolio(obj).subscribe(res => {
@@ -246,5 +300,14 @@ export class MobilePortfoiloComponent implements OnInit {
       innerSize: '60%',
       data: this.mfAllocationData
     }]
+  }
+  getValue(value){
+    this.showRetirementAccount = value;
+    this.showStocks = value;
+    this.showRealEstate = value;
+    this.showCashAndBank = value;
+    this.showCommodities = value;
+    this.showSmallSavings = value;
+    this.showLiablities = value;
   }
 }

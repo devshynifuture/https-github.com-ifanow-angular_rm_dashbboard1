@@ -8,7 +8,7 @@ import { MobileMyfeedComponent } from './component/customer/mobile/myfeed/mobile
 const routes: Routes = [
   {
 
-    path: 'detail',
+    path: 'mobile',
     component: MobileMyfeedComponent,
     resolve: {advisorInfo: AdvisorAndOrganizationInfoService},
     children: [

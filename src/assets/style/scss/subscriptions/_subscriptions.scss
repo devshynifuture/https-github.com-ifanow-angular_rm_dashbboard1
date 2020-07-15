@@ -7,6 +7,11 @@
   }
 }
 
+#ui-appcustomhtml p {
+  width: 100%;
+  padding-top: 15px;
+}
+
 .service-deatils {
   .mat-form-field-appearance-standard .mat-form-field-flex {
     padding-top: 0px !important;
@@ -36,7 +41,7 @@
 .placeholder-scroll {
   //height: calc(100vh - 111px);
   overflow: auto;
-  max-height: 525px;
+  max-height: 507px;
 }
 
 #ui-search-client-add-quotation {

@@ -2,8 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../customer.service';
 import { runInThisContext } from 'vm';
-import { Validators, FormBuilder } from '@angular/forms';
-import { ValidatorType } from 'src/app/services/util.service';
+import { Validators, FormBuilder, FormControl } from '@angular/forms';
+import { ValidatorType, UtilService } from 'src/app/services/util.service';
 import { LoginService } from 'src/app/component/no-protected/login/login.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { PlanService } from '../../../plan/plan.service';
@@ -37,13 +37,16 @@ export class MobileProfileComponent implements OnInit {
   advisorPersonalData: any;
   orgnisationData: any;
   selectedFamilyMember: any;
+  catergoryType = new FormControl(1);
+  taxStatus = new FormControl(1);
   constructor(private cusService: CustomerService,
     private fb: FormBuilder,
     private loginService: LoginService,
     private event: EventService,
     private planService: PlanService,
     private settingService: SettingsService,
-    private enumDataService: EnumDataService) { }
+    private enumDataService: EnumDataService,
+    private utils: UtilService) { }
   @Input()
   set data(data) {
     this.inputData = data;
@@ -150,6 +153,7 @@ export class MobileProfileComponent implements OnInit {
 
   getFamilyMemberListRes(data) {
     if (data && data.length > 0) {
+      data = this.utils.calculateAgeFromCurrentDate(data);
       this.familyMembers = data;
     }
   }
@@ -432,10 +436,30 @@ export class MobileProfileComponent implements OnInit {
 
   selectFamilyMember(member) {
     this.hideShowFlag = "FamilyMember";
+    if (member.relationshipId == 2 || member.relationshipId == 3 || member.relationshipId == 6 || member.relationshipId == 7) {
+      (member.relationshipId == 6 || member.relationshipId == 2) ? member.genderId = 1 : member.genderId = 2;
+      member.familyMemberType = 1;
+    } else if (member.relationshipId == 4 || member.relationshipId == 5) {
+      if (member.age > 18) {
+        (member.relationshipId != 10) ? (member.relationshipId == 4) ? member.genderId = 1 : member.genderId = 2 : '';
+        member.familyMemberType = 1;
+      }
+      else {
+        (member.relationshipId == 4) ? member.genderId = 1 : member.genderId = 2;
+        member.familyMemberType = 2;
+      }
+    }
     this.selectedFamilyMember = member;
+    this.catergoryType.setValue(member.familyMemberType);
+    this.taxStatus.setValue(member.residentFlag);
   }
 
   backfunc(data) {
+    this.hideShowFlag = "FamilyMember";
+  }
+
+  getSavedData(data) {
+    this.selectedFamilyMember = data;
     this.hideShowFlag = "FamilyMember";
   }
 

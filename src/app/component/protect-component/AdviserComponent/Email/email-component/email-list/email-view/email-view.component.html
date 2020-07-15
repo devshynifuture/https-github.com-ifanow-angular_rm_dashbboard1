@@ -13,18 +13,15 @@
 </div>
 
 <div class="chatBox">
-
-
-    <h4 class="f-22">{{ subject }}</h4>
-
-    <div *ngIf="isAttachmentBasedEmail">
+    <h4 class="f-22 pt-12 pb-12 bb">{{ subject }}</h4>
+    <div *ngIf="isAttachmentBasedEmail" class="pl-10">
         <div class="messengerDiv" *ngFor="let part of decodedPartsDetail; let i=index">
             <div class="d-flex" [ngClass]="i % 2 == 0 ? 'userOne': 'userTwo'" *ngIf="part.item">
                 <div class="avatar">
                     <img class="header-img" src="/assets/images/svg/user-icon.svg">
                 </div>
                 <div class="chatMsgBox">
-                    <h2>
+                    <h2 class="pb-20">
                         {{messagesHeaders[i]}}
                     </h2>
                     <div [innerHtml]="part.item | sanitizeDomBy: 'html'">
@@ -34,18 +31,14 @@
                     </p>
                 </div>
             </div>
-
         </div>
     </div>
-
-
 </div>
 <div class="row" *ngIf="attachmentArrayDetail.length!==0">
     <h4 class="p-12">
         Attachments:
     </h4>
     <mat-action-list class="p-12 w-100">
-
         <button mat-list-item class="c-p border-background" *ngFor="let attachment of attachmentArrayDetail"
             (click)="attachmentDownload(attachment)">
             <div class="col-md-11 text-primary">

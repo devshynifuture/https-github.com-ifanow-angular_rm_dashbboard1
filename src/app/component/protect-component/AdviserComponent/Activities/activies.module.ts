@@ -10,17 +10,22 @@ import { CrmNotesComponent } from './crm-notes/crm-notes.component';
 import { CrmActionPlansComponent } from './crm-action-plans/crm-action-plans.component';
 import { CrmTasksComponent } from './crm-tasks/crm-tasks.component';
 import { CrmOpportunitiesComponent } from './crm-opportunities/crm-opportunities.component';
-
-
-
+import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 
 @NgModule({
-  declarations: [ActiviesComponent, AdviceComponent, CrmNotesComponent,
-    CrmActionPlansComponent, CrmTasksComponent, CrmOpportunitiesComponent],
+  declarations: [
+    ActiviesComponent,
+    AdviceComponent,
+    CrmNotesComponent,
+    CrmActionPlansComponent,
+    CrmTasksComponent,
+    CrmOpportunitiesComponent
+  ],
   imports: [
     CommonModule,
     MaterialModule,
     CalendarModule,
+    CustomDirectiveModule,
     ActiviesRoutingModule
   ],
   entryComponents: []

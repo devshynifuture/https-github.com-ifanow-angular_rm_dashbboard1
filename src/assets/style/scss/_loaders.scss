@@ -150,6 +150,50 @@
   }
 }
 
+.loader-only {
+  z-index: 999;
+  position: absolute;
+  top: 45%;
+  text-align: center;
+  left: 45%;
+
+  &:after {
+
+    animation: dots 1s steps(5, end) infinite;
+  }
+
+  @keyframes dots {
+
+    0%,
+    20% {
+      color: rgba(0, 0, 0, 0);
+      text-shadow:
+        .25em 0 0 rgba(0, 0, 0, 0),
+        .5em 0 0 rgba(0, 0, 0, 0);
+    }
+
+    40% {
+      color: white;
+      text-shadow:
+        .25em 0 0 rgba(0, 0, 0, 0),
+        .5em 0 0 rgba(0, 0, 0, 0);
+    }
+
+    60% {
+      text-shadow:
+        .25em 0 0 white,
+        .5em 0 0 rgba(0, 0, 0, 0);
+    }
+
+    80%,
+    100% {
+      text-shadow:
+        .25em 0 0 white,
+        .5em 0 0 white;
+    }
+  }
+}
+
 // progress bar button css
 .progress-bar-common .mat-progress-bar.mat-accent .mat-progress-bar-fill::after {
   background-color: #277ec1 !important;

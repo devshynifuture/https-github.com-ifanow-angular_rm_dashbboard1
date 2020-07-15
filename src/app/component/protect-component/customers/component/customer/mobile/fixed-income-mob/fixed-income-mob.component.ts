@@ -6,10 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./fixed-income-mob.component.scss']
 })
 export class FixedIncomeMobComponent implements OnInit {
-
+  backToMf;
+  showBank;
+  assetSubType;
   constructor() { }
 
   ngOnInit() {
   }
-
+  openSubAsset(subAsset){
+ this.assetSubType = subAsset
+  }
 }

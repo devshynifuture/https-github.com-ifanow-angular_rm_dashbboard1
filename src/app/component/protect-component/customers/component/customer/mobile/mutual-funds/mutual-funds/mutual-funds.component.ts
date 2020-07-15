@@ -15,6 +15,8 @@ import { EventService } from 'src/app/Data-service/event.service';
 export class MutualFundsComponent implements OnInit {
   mutualFund: any;
   totalValue: any;
+  backtoMf;
+  showmfDetails;
   familyWiseAllocation: any;
   mfSubCategoryPieConfig: Chart;
   mfAllocationPieConfig : Chart;
@@ -71,7 +73,7 @@ export class MutualFundsComponent implements OnInit {
     public customerService : CustomerService,
     public eventService :EventService,
 
-  ) { 
+  ) {
     this.clientId = AuthService.getClientId()
     this.advisorId = AuthService.getAdvisorId()
     this.clientData = AuthService.getClientData()
@@ -182,7 +184,7 @@ export class MutualFundsComponent implements OnInit {
   ngOnInit() {
     this.initializePieChart()
     this.getMFPortfolioData();
-    
+
   }
   getMFPortfolioData() {
     const obj = {

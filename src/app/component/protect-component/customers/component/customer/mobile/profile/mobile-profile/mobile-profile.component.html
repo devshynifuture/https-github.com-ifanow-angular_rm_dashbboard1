@@ -183,7 +183,8 @@
   <div *ngIf="hideShowFlag=='FamilyMember'">
     <div class="row mob-bg-common pb-12 mobtop-navfixed">
       <div class="col-2">
-        <img (click)="hideShowFlag='profile'" src="/assets/images/svg/mob-left-arrow.svg" class="c-p pt-4">
+        <img (click)="hideShowFlag='profile';getFamilyMemberList()" src="/assets/images/svg/mob-left-arrow.svg"
+          class="c-p pt-4">
       </div>
       <div class="col-10 pl-0">
         <h5 class="m-0 f-18 text-white pt-4 roboto">{{selectedFamilyMember.name}}</h5>
@@ -208,7 +209,7 @@
           </span>Investment A/c</button>
       </div>
     </div>
-    <div class="pl-20">
+    <div (click)="hideShowFlag='basicDetails'" class="pl-20">
       <div class="row pt-24 pb-12">
         <div class="col-1 pl-0">
           <img src="/assets/images/svg/basic-details.svg" class="m-0">
@@ -217,7 +218,7 @@
           <p class="m-0 roboto text-dark pt-10">Basic details</p>
         </div>
       </div>
-      <div class="row bt-primitive pt-12 pb-12">
+      <div (click)="hideShowFlag='moreInfo'" class="row bt-primitive pt-12 pb-12">
         <div class="col-1 pl-0">
           <img src="/assets/images/svg/more-info.svg" class="m-0">
         </div>
@@ -241,7 +242,8 @@
           <p class="m-0 roboto text-dark pt-10">Bank</p>
         </div>
       </div>
-      <div (click)="hideShowFlag='demat'" class="row bt-primitive pt-12 pb-12">
+      <div *ngIf="selectedFamilyMember.familyMemberType==1" (click)="hideShowFlag='demat'"
+        class="row bt-primitive pt-12 pb-12">
         <div class="col-1 pl-0">
           <img src="/assets/images/svg/demat.svg" class="m-0">
         </div>
@@ -260,12 +262,12 @@
       `
     </div>
   </div>
-  <!-- <app-mobile-view-address (backfunc)="backfunc($event)" [data]="selectedFamilyMember" *ngIf="hideShowFlag=='address'">
-  </app-mobile-view-address> -->
-  <!-- <app-mobile-view-bank (backfunc)="backfunc($event)" [data]="selectedFamilyMember" *ngIf="hideShowFlag=='bank'">
-  </app-mobile-view-bank> -->
-  <!-- <app-mobile-view-demat (backfunc)="backfunc($event)" [data]="selectedFamilyMember" *ngIf="hideShowFlag=='demat'">
-  </app-mobile-view-demat> -->
+  <app-mobile-view-address (backfunc)="backfunc($event)" [data]="selectedFamilyMember" *ngIf="hideShowFlag=='address'">
+  </app-mobile-view-address>
+  <app-mobile-view-bank (backfunc)="backfunc($event)" [data]="selectedFamilyMember" *ngIf="hideShowFlag=='bank'">
+  </app-mobile-view-bank>
+  <app-mobile-view-demat (backfunc)="backfunc($event)" [data]="selectedFamilyMember" *ngIf="hideShowFlag=='demat'">
+  </app-mobile-view-demat>
   <!-- end Profile family memeber  -->
   <!-- Profile family memeber basic info -->
   <div *ngIf="hideShowFlag=='changePassword'">
@@ -343,7 +345,7 @@
         <img (click)="hideShowFlag='profile'" src="/assets/images/svg/mob-left-arrow.svg" class="c-p pt-4">
       </div>
       <div class="col-10 pl-0">
-        <h5 class="m-0 f-18 text-white pt-4 roboto">Change password</h5>
+        <h5 class="m-0 f-18 text-white pt-4 roboto">Raise query</h5>
       </div>
     </div>
     <div class="bg-grey lter h-100vh">
@@ -503,117 +505,47 @@
         </div> -->
   <!-- end add new bank -->
   <!-- (family memeber)basic details -->
-  <!-- <div class="bg-grey lter pb-28 pt-90">
-        <div class="row">
-          <div class="col-6 mob-pl-10 pr-5">
-            <p class="m-0 pb-4 roboto f-400">Investor category</p>
-            <div class="form-group mb-0">
-              <mat-select class="form-control">
-                  <mat-option>
-                    Individual
-                  </mat-option>
-                </mat-select>
-            </div>
-          </div>
-          <div class="col-6 mob-pr-10 pl-5">
-            <p class="m-0 pb-4 roboto f-400">Tax status</p>
-            <div class="form-group mb-0">
-              <mat-select class="form-control">
-                  <mat-option>
-                    Individual
-                  </mat-option>
-                </mat-select>
-            </div>
+  <div *ngIf="hideShowFlag=='basicDetails'">
+    <div class="row mob-bg-common pb-12 mobtop-navfixed">
+      <div class="col-2">
+        <img (click)="hideShowFlag='FamilyMember'" src="/assets/images/svg/mob-left-arrow.svg" class="c-p pt-4">
+      </div>
+      <div class="col-10 pl-0">
+        <h5 class="m-0 f-18 text-white pt-4 roboto">Basic details</h5>
+      </div>
+    </div>
+    <div class="bg-grey lter pb-28 pt-90">
+      <div class="row">
+        <div class="col-6 mob-pl-10 pr-5">
+          <p class="m-0 pb-4 roboto f-400">Investor category</p>
+          <div class="form-group mb-0">
+            <mat-select [formControl]="catergoryType" class="form-control">
+              <mat-option *ngIf="selectedFamilyMember.familyMemberType==1" [value]=1>Individual</mat-option>
+              <mat-option *ngIf="selectedFamilyMember.familyMemberType==2" [value]=2>Minor</mat-option>
+            </mat-select>
           </div>
         </div>
-         <div class="row pt-32">
-           <div class="col-12 mob-pl-10 mob-pr-10">
-             <h5 class="m-0 roboto text-dark pb-10 f-16">Full name</h5>
-             <div class="form-group mb-0">
-                    <mat-form-field >
-                     <input matInput class="form-control text-primitive" value="Enter Name">
-                   </mat-form-field>
-             </div>
-           </div>
+        <div class="col-6 mob-pr-10 pl-5">
+          <p class="m-0 pb-4 roboto f-400">Tax status</p>
+          <div class="form-group mb-0">
+            <mat-select [formControl]="taxStatus" class="form-control">
+              <mat-option [value]=1>Resident</mat-option>
+              <mat-option [value]=0>Non-resident</mat-option>
+            </mat-select>
+          </div>
         </div>
-        <div class="row pt-32">
-           <div class="col-12 mob-pl-10 mob-pr-10">
-             <h5 class="m-0 roboto text-dark pb-10 f-16">Email</h5>
-             <div class="form-group mb-0">
-                    <mat-form-field >
-                     <input matInput class="form-control text-primitive" value="Enter email">
-                   </mat-form-field>
-             </div>
-           </div>
-        </div>
-        <div class="row pt-32">
-           <div class="col-12 mob-pl-10 mob-pr-10">
-             <h5 class="m-0 roboto text-dark pb-10 f-16">Mobile</h5>
-            <div class="row">
-              <div class="col-4 pl-0 mob-pr-10">
-                <mat-form-field>
-                   <mat-select class="form-control">
-                     <mat-option>
-                       +91 (IND)
-                     </mat-option>
-                   </mat-select>
-                 </mat-form-field>
-              </div>
-              <div class="col-8 pr-0 mob-pl-10">
-                 <mat-form-field >
-                     <input matInput class="form-control text-primitive" value="Enter mobile">
-                   </mat-form-field>
-              </div>
-            </div>
-           </div>
-        </div>
-        <div class="row pt-32">
-           <div class="col-12 mob-pl-10 mob-pr-10">
-             <h5 class="m-0 roboto text-dark pb-10 f-16">Enter your PAN</h5>
-             <div class="form-group mb-0">
-                    <mat-form-field >
-                     <input matInput class="form-control text-primitive" value="Enter PAN">
-                   </mat-form-field>
-             </div>
-           </div>
-        </div>
-        <div class="row pt-32">
-           <div class="col-12 mob-pl-10 mob-pr-10">
-             <h5 class="m-0 roboto text-dark pb-10 f-16">Date of birth</h5>
-             <div class="form-group mb-0">
-                    <mat-form-field >
-                     <input matInput class="form-control text-primitive" value="DD/MM/YYYY">
-                   </mat-form-field>
-             </div>
-           </div>
-        </div>
-        <div class="row pt-32">
-           <div class="col-12 mob-pl-10 mob-pr-10">
-             <h5 class="m-0 roboto text-dark pb-10 f-16">Gender</h5>
-           <mat-radio-group aria-label="Select an option">
-         <mat-radio-button value="1" class="text-primary bu-primary wh-99 bg-white">Male</mat-radio-button>
-         <mat-radio-button value="2" class="text-primitive b-ua wh-116 bg-white">Female</mat-radio-button>
-         <mat-radio-button value="3" class="text-primitive b-ua wh-102 bg-white">Other</mat-radio-button>
-        </mat-radio-group>
-           </div>
-        </div>
-        <div class="row pt-32">
-           <div class="col-12 mob-pl-10 mob-pr-10">
-             <h5 class="m-0 roboto text-dark pb-10 f-16">Relation</h5>
-             <div class="form-group mb-0">
-                   <mat-form-field>
-                   <mat-select class="form-control">
-                     <mat-option>
-                      Select relation
-                     </mat-option>
-                   </mat-select>
-                   <mat-hint class="text-custom">Relation with group head</mat-hint>
-                 </mat-form-field>
-             </div>
-           </div>
-        </div>
-        </div>
-        -->
+        <app-individual-member-form (savedData)="getSavedData($event)" [categoryType]="catergoryType.value"
+          [taxStatusType]="taxStatus.value" [formData]="selectedFamilyMember" *ngIf="catergoryType.value==1">
+        </app-individual-member-form>
+        <app-minor-member-form (savedData)="getSavedData($event)" [categoryType]="catergoryType.value"
+          [taxStatusType]="taxStatus.value" [formData]="selectedFamilyMember" *ngIf="catergoryType.value==2">
+        </app-minor-member-form>
+      </div>
+    </div>
+  </div>
+  <app-mobile-view-more-info (savedData)="getSavedData($event)" (backfunc)="backfunc($event)"
+    [fmData]="selectedFamilyMember" *ngIf="hideShowFlag=='moreInfo'">
+  </app-mobile-view-more-info>
   <!-- end -->
   <!-- More info form -->
   <!-- <div class="bg-grey lter pb-90 pt-90">

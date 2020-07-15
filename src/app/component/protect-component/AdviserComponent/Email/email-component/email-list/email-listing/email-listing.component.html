@@ -96,22 +96,42 @@
                 <ng-container matColumnDef="emailers">
                     <th mat-header-cell *matHeaderCellDef> </th>
                     <td mat-cell *matCellDef="let element; index as i" (click)="redirectMessages(element, i)">
-                        {{element.emailers | truncate:25}} {{ element.messageCount
-                        <=1 ? '': element.messageCount }} </td>
+                        <span *ngIf="isCustomerEmail">
+                            {{element.emailers | truncate:30}}
+                            {{ element.messageCount <=1 ? '': element.messageCount }}
+                        </span>
+                        <span *ngIf="!isCustomerEmail">
+                            {{element.emailers | truncate:25}}
+                            {{ element.messageCount<=1 ? '': element.messageCount }}
+                        </span>
+                    </td>
                 </ng-container>
 
                 <!-- subject and message Column -->
                 <ng-container matColumnDef="subjectMessage">
                     <th mat-header-cell *matHeaderCellDef> </th>
-                    <td mat-cell *matCellDef="let element; index as i" class="d-flex "
-                        (click)="redirectMessages(element, i)">
-                        {{element.subjectMessage.subject | truncate:30}}
-                        <p class="m-0 pl-12 text-primitive">
-                            {{element.subjectMessage.message | truncate:30}}
-                        </p>
-                        <span *ngIf="element.hasAttachment">
-                            <img class="text-right" src="/assets/images/svg/attech.svg" alt="attachment icon">
-                        </span>
+                    <td mat-cell *matCellDef="let element; index as i" class="" (click)="redirectMessages(element, i)">
+                        <div class="row w-100 align-items-center">
+                            <div class="col-md-6 p-0" *ngIf="isCustomerEmail">
+                                {{element.subjectMessage.subject | truncate:25}}
+                            </div>
+                            <div class="col-md-6 p-0" *ngIf="!isCustomerEmail">
+                                {{element.subjectMessage.subject | truncate:35}}
+                            </div>
+                            <div class="col-md-5 p-0">
+                                <p class="m-0 text-primitive" *ngIf="isCustomerEmail">
+                                    {{element.subjectMessage.message | truncate:25}}
+                                </p>
+                                <p class="m-0 text-primitive" *ngIf="!isCustomerEmail">
+                                    {{element.subjectMessage.message | truncate:35}}
+                                </p>
+                            </div>
+                            <div class="col-md-1 p-0">
+                                <span *ngIf="element.hasAttachment">
+                                    <img class="right" src="/assets/images/svg/attech.svg" alt="attachment icon">
+                                </span>
+                            </div>
+                        </div>
                     </td>
                 </ng-container>
 
@@ -146,8 +166,11 @@
             </div>
         </div>
 
-        <div class="loaderClass" *ngIf="isLoading == true">
-            <mat-spinner class="loader" [diameter]="30"></mat-spinner>
+        <div class="text-center loader-only" *ngIf="isLoading == true">
+
+            <mat-spinner [diameter]="30"></mat-spinner>
+
+
         </div>
 
 

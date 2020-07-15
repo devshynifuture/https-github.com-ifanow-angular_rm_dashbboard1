@@ -209,7 +209,7 @@ export class EmailServiceService {
       flag: 'composeEmail',
       data: { dataToSend: data, choice },
       id: 1,
-      state: 'open35',
+      state: 'open50',
       componentName
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(

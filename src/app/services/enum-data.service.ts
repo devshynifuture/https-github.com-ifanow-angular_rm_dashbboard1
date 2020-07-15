@@ -21,6 +21,7 @@ export class EnumDataService {
               private subInject: SubscriptionInject) {
     this.enumService.setAssetShortForms(this.cashflowAssetNaming);
   }
+
   searchData: any;
   clientAndFamilyData: any = [];
   proofType = [
@@ -75,6 +76,8 @@ export class EnumDataService {
     {assetShortName: 'Others', assetName: 'Others', assetType: 33},
   ];
   accountTypes: any;
+  accountTypeMap: any = {};
+
   relationshipList: any;
 
   bankList: any = [];
@@ -89,7 +92,7 @@ export class EnumDataService {
     if (userData != null) {
       self.userData = userData;
     }
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
       // this.advisorId = AuthService.getAdvisorId();
       // this.clientData = AuthService.getClientData();
 
@@ -162,6 +165,12 @@ export class EnumDataService {
   }
 
   setBankAccountTypes() {
+    if (this.accountTypeMap.lastSyncTime) {
+      const difference = new Date().getTime() - this.accountTypeMap.lastSyncTime;
+      if (difference < 86400000) {
+        return;
+      }
+    }
     const obj = {};
     this.peopleService.getbankAccountTypes(obj).subscribe(
       data => {

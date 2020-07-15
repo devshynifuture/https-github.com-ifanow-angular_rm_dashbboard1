@@ -118,7 +118,7 @@
         </div>
     </div>
 </div>
-<div *ngIf="storeData.isAdvisor" class="bottom-fixed wrapper-12">
+<div *ngIf="storeData.isAdvisor" class="bottom-fixed wrapper-12 pt-16">
     <div class="row">
         <div class="col-md-4">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close('close',false)">Cancel</h5>
@@ -137,8 +137,8 @@
             </mat-menu>
             <!-- <button *ngIf="saveQuotationFlag" mat-button class="btn-bottom br-0 text-inherit pr-4 pl-4"
                 (click)="createQuotation()">SAVE</button> -->
-            <app-progress-button *ngIf="saveQuotationFlag" (btnClick)="createQuotation()"
-                class="br-0 text-inherit ml-12" [options]="barButtonOptions">
+            <app-progress-button *ngIf="saveQuotationFlag" (btnClick)="createQuotation()" class="br-0 text-inherit"
+                [options]="barButtonOptions">
             </app-progress-button>
         </div>
     </div>

@@ -7,6 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class MutualFundDetailsComponent implements OnInit {
   inputData: any;
+  backToMf;
   mutualFundSchemeMaster: any;
   mutualFund: any;
   showDetails: boolean;

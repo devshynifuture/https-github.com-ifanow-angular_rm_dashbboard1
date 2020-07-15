@@ -33,7 +33,7 @@ export class AddHealthInsuranceComponent implements OnInit {
 
   insuranceData = [{
     value: '1',
-    header: 'ADD HEALTH INSURANCE',
+    header: 'Add Health Insurance',
     smallHeading: 'health insurance',
     logo: '/assets/images/svg/helth-insurance.svg',
     heading: 'Health insurance',
@@ -41,35 +41,35 @@ export class AddHealthInsuranceComponent implements OnInit {
   }, {
     value: '2',
     logo: '/assets/images/svg/Criticalillness.svg',
-    header: 'ADD CRITICAL ILLNESS',
+    header: 'Add Critical Illness',
     smallHeading: 'critical illness',
     heading: 'Critical illness',
     subHeading: 'Select how you’d like to proceed with planning for critical insurance policies.'
   }, {
     value: '3',
     logo: '/assets/images/svg/Cancercare.svg',
-    header: 'ADD CANCER CARE',
+    header: 'Add Cancer Care',
     smallHeading: 'cancer care',
     heading: 'Cancer care',
     subHeading: 'Select how you’d like to proceed with planning for cancer insurance policies.'
   }, {
     value: '4',
     logo: '/assets/images/svg/Personalaccident.svg',
-    header: 'ADD PERSONAL ACCIDENT',
+    header: 'Add Personal Accident',
     heading: 'Personal accident',
     smallHeading: 'personal accident',
     subHeading: 'Select how you’d like to proceed with planning for personal insurance policies.'
   }, {
     value: '5',
     logo: '/assets/images/svg/Householders.svg',
-    header: 'ADD HOUSEHOLDERS',
+    header: 'Add Householders',
     smallHeading: 'householders',
     heading: 'Householders',
     subHeading: 'Select how you’d like to proceed with planning for householders insurance policies.'
   }, {
     value: '6',
     logo: '/assets/images/svg/Fireinsurance.svg',
-    header: 'ADD FIRE INSURANCE',
+    header: 'Add Fire Insurance',
     smallHeading: 'fire insurance',
     heading: 'Fire insurance',
     subHeading: 'Select how you’d like to proceed with planning for fire insurance policies.'
