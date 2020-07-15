@@ -250,6 +250,127 @@
                 </mat-form-field>
             </div>
         </div>
+        <div class="row">
+            <div *ngIf="showHide == true" class="col-5 text-right">
+                <h5 (click)="showLess(showHide)" class="m-0 pt-8 text-custom c-p">Show less</h5>
+            </div>
+            <div *ngIf="showHide == false" class="col-5 text-right">
+                <h5 (click)="showLess(showHide)" class="m-0 pt-8 text-custom c-p">+ Add more [optional data] </h5>
+            </div>
+            <div class="col-md-5">
+    
+            </div>
+        </div>
+        <div *ngIf="showHide == true">
+            <div *ngIf="showHide == true">
+                <div class="col-12 pt-28 pb-20 mob-pr-10 mob-pl-10">
+                    <p class="m-0 roboto f-400 text-dark f-16 pb-10">FD number</p>
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <input matInput autocomplete="off" #fdNo type="text" maxlength="18"
+                                class="form-control br-0" formControlName="fdNo">
+                            <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
+                            <mat-hint align="end" class="f-12">{{fdNo.value.length}}/18</mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-10 pt-28 pb-20 mob-pr-10 mob-pl-10">
+                        <p class="m-0 roboto f-400 text-dark f-16 pb-10">Linked bank account</p>
+                        <div class="form-group mb-0">
+                            <mat-form-field>
+                                <mat-select class="form-control" formControlName="bankACNo" matInput>
+                                    <mat-option *ngFor="let option of bankList ;index as i" [value]="option.id">
+                                        {{option.bankNameAndLast4Digit}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error>This field is required
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-2 p-0 pt-8 d-flex">
+                        <i class="material-icons text-primitive c-p float-left" (click)="openDialog(null)">add</i>
+                    </div>
+                </div>
+
+                <div class="col-12 pt-28 pb-20 mob-pr-10 mob-pl-10">
+                    <p class="m-0 roboto f-400 text-dark f-16 pb-10">Institution name</p>
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <input matInput autocomplete="off" type="text" #institution maxlength="50"
+                                class="form-control br-0" formControlName="institution">
+                            <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
+                            <mat-hint align="end" class="f-12">{{institution.value.length}}/50</mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-12 pt-28 pb-20 mob-pr-10 mob-pl-10">
+                    <p class="m-0 roboto f-400 text-dark f-16 pb-10">Institution name</p>
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <input matInput autocomplete="off" #description maxlength="60" class="form-control br-0"
+                                formControlName="description" type="text">
+                            <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
+                            <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
+                        </mat-form-field>
+                    </div>
+                    </div>
+                </div>
+                <div formArrayName="getNomineeName">
+                    <div *ngFor="let obj of fixedDeposit.controls['getNomineeName'].controls; let pointIndex=index"
+                    [formGroupName]="pointIndex">
+                        <div class="col-12">
+                            <p class="m-0 roboto f-400 text-dark f-16 pb-10">
+                                Nominee {{pointIndex + 1}}</p>
+                        </div>
+                        <div class="row">
+                            <div class="pb-20 mob-pr-10 mob-pl-10"
+                            [ngClass]="getNominee.length > 1?'col-md-7' : 'col-md-9'">
+                                <div class="form-group mb-0">
+                                    <mat-form-field>
+                                        <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
+                                            (selectionChange)="disabledMember($event.value,'nominee')"
+                                            (valueChange1)='lisNominee($event)' class="form-control br-0"
+                                            [callMethod]='callMethod'>
+                                            <mat-option value='' disabled>Select family members</mat-option>
+                                            <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable"
+                                                [value]="f.userName">
+                                                <span>{{f.userName}}</span>
+                                            </mat-option>
+                                        </mat-select>
+                                        <mat-error class="f-12">
+                                            This field is required
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-2" *ngIf="fixedDeposit.value.getCoOwnerName.length > 1">
+                                <div class="form-group mb-0">
+                                    <mat-form-field>
+                                        <input matInput class="form-control br-0 percentage" type="number"
+                                            formControlName="sharePercentage" (focusout)="onChangeJointOwnership('nominee')">
+                                        <mat-error class="f-12" *ngIf="obj.controls['sharePercentage'].hasError('required')">
+                                            This field is required
+                                        </mat-error>
+                                        <mat-error class="f-12" *ngIf="obj.controls['sharePercentage'].hasError('incorrect') ">
+                                            Total percent should be 100%
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <i *ngIf="fixedDeposit.value.getNomineeName.length < 3"
+                                class="material-icons text-primitive f-20 c-p float-left"
+                                (click)="addNewNominee(undefined)">add</i>
+                            <i *ngIf="fixedDeposit.value.getNomineeName.length > 1"
+                                class="material-icons text-primitive f-20 c-p pl-10"
+                                (click)="removeNewNominee(pointIndex)">remove</i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
         <div class="row mob-proccess-fixed br-0 pb-16">
             <div class="col-12 text-right pt-8 pb-8">
                 <app-progress-button (btnClick)="saveFixedDeposit()" [options]="barButtonOptions">
