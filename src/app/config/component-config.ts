@@ -850,8 +850,9 @@ export const appConfig = {
   GET_GOAL_SUMMARY: 'admin/dashboard/goal/summary',
 
   ///////////////////////////// market place //////////////////////////
-  GET_CALL_DETAILS: 'marketplace/call/settings/get'
-
+  GET_CALL_DETAILS: 'marketplace/call/settings/get',
+  ADD_CALL_DETAILS: 'marketplace/call/settings/edit',
+  ADD_CALL_AVAILABLE: 'marketplace/call/settings/non-working/days/edit'
 };
 
 

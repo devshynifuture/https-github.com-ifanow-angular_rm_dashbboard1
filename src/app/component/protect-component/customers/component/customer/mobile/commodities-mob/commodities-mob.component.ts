@@ -66,7 +66,7 @@ export class CommoditiesMobComponent implements OnInit {
     );
   }
   calculateSum(){
-    this.totalCurrentValue = this.goldCV+this.otherCv
+    this.totalCurrentValue = (this.goldCV ? this.goldCV : 0)+(this.otherCv ? this.otherCv:0)
   }
   changeValue(flag){
     this.outputValue.emit(flag);
