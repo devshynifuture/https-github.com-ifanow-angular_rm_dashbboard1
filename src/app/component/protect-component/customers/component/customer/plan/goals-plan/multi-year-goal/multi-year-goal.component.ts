@@ -151,7 +151,7 @@ export class MultiYearGoalComponent implements OnInit {
           default:
             break;
         }
-        this.eventService.closeUpperSlider({state: 'close'});
+        this.eventService.closeUpperSlider({state: 'close', data: {resetSelectedCursor: true}});
         this.barButtonOptions.active = false;
       },
       error => {
