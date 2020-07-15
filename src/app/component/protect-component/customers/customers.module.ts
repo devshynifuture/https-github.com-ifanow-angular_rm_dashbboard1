@@ -44,6 +44,7 @@ import {AddEditDematMobileViewComponent} from './component/customer/mobile/profi
 import {IndividualMemberFormComponent} from './component/customer/mobile/profile/mobile-profile/individual-member-form/individual-member-form.component';
 import {MinorMemberFormComponent} from './component/customer/mobile/profile/mobile-profile/minor-member-form/minor-member-form.component';
 import {RetirementAccMobComponent} from './component/customer/mobile/retirement-acc-mob/retirement-acc-mob.component';
+import { MobileViewMoreInfoComponent } from './component/customer/mobile/profile/mobile-profile/mobile-view-more-info/mobile-view-more-info.component';
 
 
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
@@ -60,7 +61,7 @@ import {RetirementAccMobComponent} from './component/customer/mobile/retirement-
     MobileViewAddressComponent, MobileViewBankComponent, MobileViewDematComponent,
     AddEditBankMobileViewComponent, AddEditDematMobileViewComponent,
     AddEditDocumentMobileViewComponent, IndividualMemberFormComponent,
-    MinorMemberFormComponent, RetirementAccMobComponent],
+    MinorMemberFormComponent, RetirementAccMobComponent, MobileViewMoreInfoComponent],
   imports: [
     // BrowserModule,
     CommonModule,

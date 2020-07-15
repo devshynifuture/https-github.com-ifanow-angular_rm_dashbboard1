@@ -4,9 +4,10 @@
             <h5 class="m-0 roboto text-dark pb-10 f-16">Minor’s full name</h5>
             <div class="form-group mb-0">
                 <mat-form-field appearance="standard" floatLabel="never">
-                    <input #minorFullName (input)="utilService.capitalise($event)" [inputValidator]="validatorType.TEXT_ONLY"
-                        [maxLength]="50" appInputValueValidation autocomplete="off" class="form-control"
-                        formControlName="minorFullName" matInput placeholder="Enter name">
+                    <input #minorFullName (input)="utilService.capitalise($event)"
+                        [inputValidator]="validatorType.TEXT_ONLY" [maxLength]="50" appInputValueValidation
+                        autocomplete="off" class="form-control" formControlName="minorFullName" matInput
+                        placeholder="Enter name">
                     <mat-error>This field is required</mat-error>
                     <mat-hint align="end">{{minorFullName.value.length}}/50</mat-hint>
                 </mat-form-field>
@@ -51,9 +52,9 @@
             <div class="form-group mb-0">
                 <mat-form-field appearance="standard" floatLabel="never">
                     <mat-select formControlName="relationType" class="form-control">
-                        <mat-option>
-                            Select relation
-                        </mat-option>
+                        <mat-option disabled value=''>Select option</mat-option>
+                        <mat-option *ngFor="let relation of relationList" [value]="relation.value">
+                            {{relation.name}}</mat-option>
                     </mat-select>
                     <mat-hint class="text-custom">Relation with group head</mat-hint>
                 </mat-form-field>
@@ -112,9 +113,10 @@
             <div class="form-group mb-0">
                 <mat-form-field appearance="standard" floatLabel="never">
                     <mat-select formControlName="relationWithMinor" class="form-control">
-                        <mat-option>
-                            Select relation
-                        </mat-option>
+                        <mat-option disabled value=''>Select option</mat-option>
+                        <mat-option value="6">Father</mat-option>
+                        <mat-option value="2">Mother</mat-option>
+                        <mat-option value="7">Court appointed</mat-option>
                     </mat-select>
                     <mat-hint class="text-custom">Relation with group head</mat-hint>
                 </mat-form-field>
@@ -170,5 +172,13 @@
                 </mat-form-field>
             </div>
         </div>
+    </div>
+    <div class="row profile-save-bottom">
+        <div class="col-2"></div>
+        <div class="col-8 pt-8 pb-8">
+            <button (click)="editFamilyMember()" mat-stroked-button
+                class="btn-primary w-100 f-16 h-40 br-40">Submit</button>
+        </div>
+        <div class="col-2"></div>
     </div>
 </div>
