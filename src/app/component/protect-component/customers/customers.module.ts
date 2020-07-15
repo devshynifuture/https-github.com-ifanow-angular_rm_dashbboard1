@@ -76,7 +76,7 @@ import {RetirementAccMobComponent} from './component/customer/mobile/retirement-
     AccountEntryModule,
     PlanEntryModule,
     CustomersRoutingModule,
-    //  MobileRoutingModule,
+    MobileRoutingModule,
     SlickCarouselModule,
     AdviceEntryModule,
     CustomerOverviewEntryModule,

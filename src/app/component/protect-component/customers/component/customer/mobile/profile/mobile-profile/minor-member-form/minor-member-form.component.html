@@ -160,7 +160,7 @@
             <h5 class="m-0 roboto text-dark pb-10 f-16">Enter your PAN</h5>
             <div class="form-group mb-0">
                 <mat-form-field appearance="standard" floatLabel="never">
-                    <input #pan (input)="toUpperCase(minorForm.get('pan'),$event)"
+                    <input #pan (input)="utilService.toUpperCase(minorForm.get('pan'),$event)"
                         [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation autocomplete="off"
                         class="form-control" formControlName="pan" matInput maxlength="10" placeholder="Enter pan">
                     <mat-hint align="end">{{pan.value.length}}/ 10</mat-hint>

@@ -1,0 +1,35 @@
+Edit allocation
+
+Current value of asset/insurance
+<span [value]="allocationData.currentValue" appFormatNumber></span>
+<hr>
+
+Allocation Details
+
+<div>
+    <div class="col-md-12">
+        <div class="col-md-6">a) Allocation to other goals</div>
+        <div class="col-md-6"><span [value]="allocationData.otherAllocated" appFormatNumber></span></div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-6">b) Allocation to this goal (editable)</div>
+        <div class="col-md-6" [formGroup]="reallocationFG">
+            <mat-form-field appearance="standard" floatLabel="never">
+                <input type="text" formControlName="allocatedPercentage"
+                    appInputValueValidation [inputValidator]="decimalValidator.NUMBER_ONLY_WITH_TWO_DECIMAL"
+                    min="1" max="{{availableAllocation}}"
+                    matInput class="form-control">
+                <mat-error>This field is required</mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-6">
+            <p>Net allocation available</p>
+            <p>(100% - a - b)</p>
+        </div>
+        <div class="col-md-6">
+            <span [value]="remainingAllocation" appFormatNumber></span>
+        </div>
+    </div>
+</div>

@@ -21,9 +21,46 @@ export class MobilePortfoiloComponent implements OnInit {
   portFolioData: any[];
   hasError: boolean;
   chartTotal: number;
-  mfAllocationData: any;
-  showMf 
 
+  showMf 
+  mfAllocationData: any[] = [
+    {
+      name: 'EQUITY',
+      y: 0,
+      color: AppConstants.DONUT_CHART_COLORS[0],
+      dataLabels: {
+        enabled: false
+      }
+    }, {
+      name: 'DEBT',
+      y: 0,
+      color: AppConstants.DONUT_CHART_COLORS[1],
+      dataLabels: {
+        enabled: false
+      }
+    }, {
+      name: 'HYBRID',
+      y: 0,
+      color: AppConstants.DONUT_CHART_COLORS[2],
+      dataLabels: {
+        enabled: false
+      }
+    }, {
+      name: 'SOLUTION ORIENTED',
+      y: 0,
+      color: AppConstants.DONUT_CHART_COLORS[4],
+      dataLabels: {
+        enabled: false
+      }
+    }, {
+      name: 'OTHERS',
+      y: 0,
+      color: AppConstants.DONUT_CHART_COLORS[3],
+      dataLabels: {
+        enabled: false
+      }
+    }
+  ]
   chartData: any[] = [
     {
       name: 'Equity',

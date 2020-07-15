@@ -62,6 +62,7 @@ import { CommonComponentModule } from 'src/app/component/protect-component/commo
 import { CustomCommonModule } from 'src/app/common/custom.common.module';
 import { DetailedViewExpensesComponent } from '../../common-component/detailed-view-expenses/detailed-view-expenses.component';
 import { AddLifeInsuranceComponent } from './insurance-plan/add-life-insurance/add-life-insurance.component';
+import { ReallocateAssetComponent } from './goals-plan/reallocate-asset/reallocate-asset.component';
 
 export const componentList = [
   PreferencesComponent,
@@ -103,7 +104,8 @@ export const componentList = [
   SuggestHealthInsuranceComponent,
   HealthInsuranceComponent,
   SearchSchemeComponent,
-  AddAmountComponent
+  AddAmountComponent,
+  ReallocateAssetComponent
 ];
 // import { AddPlaninsuranceComponent } from './insurance-plan/add-planinsurance/add-planinsurance.component';
 
