@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { DatePipe } from '@angular/common';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { relationListFilterOnID } from 'src/app/component/protect-component/PeopleComponent/people/Component/people-clients/add-client/client-basic-details/relationypeMethods';
 
 @Component({
   selector: 'app-individual-member-form',
@@ -23,7 +24,21 @@ export class IndividualMemberFormComponent implements OnInit {
   @Output() savedData = new EventEmitter();
   @Input() set formData(data) {
     this.userData = data;
-    this.relationshipTypeMethod(data.gender, data.age)
+    if (data.relationshipId == 10 ||
+      data.relationshipId == 8 ||
+      data.relationshipId == 9 ||
+      data.relationshipId == 11 ||
+      data.relationshipId == 12 ||
+      data.relationshipId == 15 ||
+      data.relationshipId == 16 ||
+      data.relationshipId == 18 ||
+      data.relationshipId == 19 ||
+      data.relationshipId == 17) {
+      relationListFilterOnID(data)
+    }
+    else {
+      this.relationshipTypeMethod(data.genderId, data.age)
+    }
     this.createIndividualForm(data);
   }
   individualForm: FormGroup;
