@@ -44,6 +44,14 @@ import { AddEditDematMobileViewComponent } from './component/customer/mobile/pro
 import { IndividualMemberFormComponent } from './component/customer/mobile/profile/mobile-profile/individual-member-form/individual-member-form.component';
 import { MinorMemberFormComponent } from './component/customer/mobile/profile/mobile-profile/minor-member-form/minor-member-form.component';
 import { RetirementAccMobComponent } from './component/customer/mobile/retirement-acc-mob/retirement-acc-mob.component';
+import { CashAndBankMobComponent } from './component/customer/mobile/cash-and-bank-mob/cash-and-bank-mob.component';
+import { StocksMobComponent } from './component/customer/mobile/stocks-mob/stocks-mob.component';
+import { RealEstateMobComponent } from './component/customer/mobile/real-estate-mob/real-estate-mob.component';
+import { SmallSavingMobComponent } from './component/customer/mobile/small-saving-mob/small-saving-mob.component';
+import { CommoditiesMobComponent } from './component/customer/mobile/commodities-mob/commodities-mob.component';
+import { LiabilitiesMobComponent } from './component/customer/mobile/liabilities-mob/liabilities-mob.component';
+import { LifeInsuranceMobComponent } from './component/customer/mobile/life-insurance-mob/life-insurance-mob.component';
+import { GeneralInsuranceMobComponent } from './component/customer/mobile/general-insurance-mob/general-insurance-mob.component';
 
 
 
@@ -54,7 +62,7 @@ import { RetirementAccMobComponent } from './component/customer/mobile/retiremen
 
 
 @NgModule({
-  declarations: [CustomerComponent, TransactionSuccessfulComponent, MobileMyfeedComponent, MobileDocumentComponent, MobilePortfoiloComponent, MobileProfileComponent, MobileTransactionsComponent, MobileLeftSidenavComponent, UploadDocumentComponent, EditDocumentPopupComponent, MutualFundsComponent, MutualFundDetailsComponent, MoveCopyMobileViewComponent, FixedIncomeMobComponent, MobileViewAddressComponent, MobileViewBankComponent, MobileViewDematComponent, AddEditBankMobileViewComponent, AddEditDematMobileViewComponent, AddEditDocumentMobileViewComponent, IndividualMemberFormComponent, MinorMemberFormComponent,RetirementAccMobComponent],
+  declarations: [CustomerComponent, TransactionSuccessfulComponent, MobileMyfeedComponent, MobileDocumentComponent, MobilePortfoiloComponent, MobileProfileComponent, MobileTransactionsComponent, MobileLeftSidenavComponent, UploadDocumentComponent, EditDocumentPopupComponent, MutualFundsComponent, MutualFundDetailsComponent, MoveCopyMobileViewComponent, FixedIncomeMobComponent, MobileViewAddressComponent, MobileViewBankComponent, MobileViewDematComponent, AddEditBankMobileViewComponent, AddEditDematMobileViewComponent, AddEditDocumentMobileViewComponent, IndividualMemberFormComponent, MinorMemberFormComponent,RetirementAccMobComponent, CashAndBankMobComponent, StocksMobComponent, RealEstateMobComponent, SmallSavingMobComponent, CommoditiesMobComponent, LiabilitiesMobComponent, LifeInsuranceMobComponent, GeneralInsuranceMobComponent],
   imports: [
     // BrowserModule,
     CommonModule,
@@ -69,8 +77,8 @@ import { RetirementAccMobComponent } from './component/customer/mobile/retiremen
     EntryComponentsModule,
     AccountEntryModule,
     PlanEntryModule,
-     CustomersRoutingModule,
-    //  MobileRoutingModule,
+    //  CustomersRoutingModule,
+      MobileRoutingModule,
     SlickCarouselModule,
     AdviceEntryModule,
     CustomerOverviewEntryModule,

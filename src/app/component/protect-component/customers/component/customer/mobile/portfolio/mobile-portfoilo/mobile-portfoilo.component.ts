@@ -66,6 +66,12 @@ export class MobilePortfoiloComponent implements OnInit {
   fixedIncome: any;
   showFixedIncome: boolean;
   showRetirementAccount: boolean;
+  showRealEstate: boolean;
+  showStocks: boolean;
+  showCashAndBank: boolean;
+  showLiablities: boolean;
+  showSmallSavings: boolean;
+  showCommodities: boolean;
   constructor(
     public customerService : CustomerService,
     public loaderFn: LoaderFunction,
@@ -94,8 +100,19 @@ export class MobilePortfoiloComponent implements OnInit {
       this.fixedIncome = asset
       this.showFixedIncome = true
     }else if(asset.assetType == 8){
+      this.showRealEstate = true;
     }else if(asset.assetType == 9){
       this.showRetirementAccount = true;
+    }else if(asset.assetType == 6){
+      this.showStocks = true;
+    }else if(asset.assetType == 12){
+      this.showCommodities = true;
+    }else if(asset.assetType == 31){
+      this.showCashAndBank = true;
+    }else if(asset.assetType == 2){
+      this.showLiablities = true;
+    }else if(asset.assetType == 10){
+     this.showSmallSavings = true;
     }
   }
   openMenu(flag) {
