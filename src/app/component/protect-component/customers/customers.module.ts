@@ -74,7 +74,7 @@ import { FixedDepositMobComponent } from './component/customer/mobile/fixed-inco
     AddEditBankMobileViewComponent, AddEditDematMobileViewComponent,
     AddEditDocumentMobileViewComponent, IndividualMemberFormComponent,
     MinorMemberFormComponent, RetirementAccMobComponent,CashAndBankMobComponent, StocksMobComponent, RealEstateMobComponent, SmallSavingMobComponent, CommoditiesMobComponent, LiabilitiesMobComponent, LifeInsuranceMobComponent, GeneralInsuranceMobComponent, 
-    AddGoldMobComponent, BankDetailedAssetsComponent, FixedDepositMobComponent],
+    AddGoldMobComponent, BankDetailedAssetsComponent,FixedDepositMobComponent ],
   imports: [
     // BrowserModule,
     CommonModule,
@@ -107,7 +107,7 @@ import { FixedDepositMobComponent } from './component/customer/mobile/fixed-inco
   entryComponents: [EntryComponentsModule.getComponentList(),
     AccountEntryModule.getComponentList(), AdviceEntryModule.getComponentList(),
     PlanEntryModule.getComponentList(), CustomerOverviewEntryModule.getComponentList(),
-    UploadDocumentComponent, EditDocumentPopupComponent,FixedDepositMobComponent]
+    UploadDocumentComponent, EditDocumentPopupComponent]
 })
 export class CustomersModule {
 }
