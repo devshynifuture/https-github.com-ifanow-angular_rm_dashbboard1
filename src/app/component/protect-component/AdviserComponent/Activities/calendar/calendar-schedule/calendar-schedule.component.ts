@@ -52,14 +52,26 @@ export class CalendarScheduleComponent implements OnInit {
   }
 
   ngOnInit() {
+    if(!this.calenderService.dayArrey){
     this.currentMonth = new Date().getMonth();
     this.currentYear = new Date().getFullYear();
     this.viewDate = new Date();
-    this.userInfo = AuthService.getUserInfo();
     this.updatecalendar();
     this.getEvent();
-    this.curruntDayIndex = this.daysArr.indexOf(this.todayDate);
     // this.excessAllow = localStorage.getItem('successStoringToken')
+    }else{
+     
+      this.currentMonth = this.calenderService.dayArrey[1].month;
+      this.currentYear = this.calenderService.dayArrey[1].year;
+      this.month = this.calenderService.dayArrey[1].month;
+      this.year = this.calenderService.dayArrey[1].year;
+      this.viewDate = new Date(this.year, this.month);
+      this.updatecalendar();
+      this.getEvent();
+    }
+    this.curruntDayIndex = this.daysArr.indexOf(this.todayDate);
+    this.userInfo = AuthService.getUserInfo();
+
     this.unSubcrip = this.calenderService.updateDayArr().subscribe((data: any) => {
       this.daysArr = data[0];
       this.back = data[1].back;
@@ -249,7 +261,7 @@ export class CalendarScheduleComponent implements OnInit {
 
     let hh = date.getHours() > 12 ? date.getHours() - 12 : date.getHours();
     let mm = date.getMinutes();
-    const amPm = date.getHours() > 12 ? 'pm' : 'am';
+    const amPm = date.getHours() > 12 ? 'PM' : 'AM';
     hh = hh < 10 ? '0' + hh : hh;
     mm = mm < 10 ? '0' + mm : mm;
     return hh + ':' + mm + amPm + ' ';

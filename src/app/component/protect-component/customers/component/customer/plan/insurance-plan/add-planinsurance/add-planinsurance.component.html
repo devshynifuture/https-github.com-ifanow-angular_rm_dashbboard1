@@ -14,7 +14,7 @@
 <div class="pt-80 pl-24 pr-24 pb-48 mb-48">
 
     <button mat-stroked-button class="btn-primary br-0 right">ADD TO PLAN</button>
-
+    <!-- <button mat-stroked-button class="btn-danger text-white right">REMOVE FROM PLAN</button> -->
     <mat-tab-group class="tabView">
 
         <mat-tab class="f-14 f-500 roboto" label="Needs based">
@@ -386,11 +386,15 @@
                     Planner notes
                 </div>
                 <div class="col-md-1 text-right">
-                    <mat-icon _ngcontent-jrn-c337="" aria-hidden="true" role="img" class="mat-icon notranslate material-icons mat-icon-no-color">more_vert</mat-icon>
+                    <mat-icon _ngcontent-jrn-c337="" aria-hidden="true" role="img"
+                        class="mat-icon notranslate material-icons mat-icon-no-color">more_vert</mat-icon>
                 </div>
                 <div class="col-md-12 p-0">
-                    <p class="f-14 p-12 ba-light"> With increasing medical costs you are strongly advised to increase your sum assured. We suggest an additional sum assured of Rs.7,00,000. We have compared and suggested two of the best policies currently available in the market. We
-                        have done a comprehensive feature anlaysis of the same and presented a detailed feature analysis for your review.</p>
+                    <p class="f-14 p-12 ba-light"> With increasing medical costs you are strongly advised to increase
+                        your sum assured. We suggest an additional sum assured of Rs.7,00,000. We have compared and
+                        suggested two of the best policies currently available in the market. We
+                        have done a comprehensive feature anlaysis of the same and presented a detailed feature analysis
+                        for your review.</p>
                 </div>
             </div>
 
@@ -398,7 +402,19 @@
 
         </mat-tab>
 
-        <mat-tab class="f-14 f-500 roboto" label="Manual"> Content 2 </mat-tab>
+        <mat-tab class="f-14 f-500 roboto" label="Manual">
+            <div class="row">
+                <div class="col-md-4">
+
+                    <h5 class="m-0">Suggest insurance amount</h5>
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <input matInput class="form-control br-0 rupess">
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+        </mat-tab>
 
     </mat-tab-group>
 </div>

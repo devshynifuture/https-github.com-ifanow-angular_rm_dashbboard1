@@ -1,16 +1,16 @@
-import { Component, Input, OnInit, QueryList, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import { DatePipe } from '@angular/common';
-import { UtilService, ValidatorType } from 'src/app/services/util.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
-import { PostalService } from 'src/app/services/postal.service';
-import { MatInput } from '@angular/material';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
-import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import {Component, Input, OnInit, QueryList, ViewChild, ViewChildren, ViewContainerRef} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import {DatePipe} from '@angular/common';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {ProcessTransactionService} from '../../../doTransaction/process-transaction.service';
+import {PostalService} from 'src/app/services/postal.service';
+import {MatInput} from '@angular/material';
+import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 
 @Component({
   selector: 'app-contact-details-inn',
@@ -26,9 +26,9 @@ export class ContactDetailsInnComponent implements OnInit {
   filterCountryName: Observable<any[]>;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder, private postalService: PostalService,
-    private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
-    public eventService: EventService, public processTransaction: ProcessTransactionService,
-    private peopleService: PeopleService) {
+              private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
+              public eventService: EventService, public processTransaction: ProcessTransactionService,
+              private peopleService: PeopleService) {
   }
 
   addressTypeLabel = 'Permanent Address Details';
@@ -100,7 +100,7 @@ export class ContactDetailsInnComponent implements OnInit {
         this.getAddressList(this.clientData);
       }*/
     }
-    this.sendObj = { ...this.inputData };
+    this.sendObj = {...this.inputData};
   }
 
   close() {
@@ -165,10 +165,10 @@ export class ContactDetailsInnComponent implements OnInit {
     }
     this.contactDetails = this.fb.group({
       email: [(!data) ? '' : data.email, [Validators.required, Validators.pattern(ValidatorType.EMAIL)]],
-      aadharNumber: [(!data) ? '' : data.aadharNumber, [Validators.required, Validators.pattern(ValidatorType.ADHAAR)]],
+      // aadharNumber: [(!data) ? '' : data.aadharNumber, [Validators.required, Validators.pattern(ValidatorType.ADHAAR)]],
       mobileNo: [!data ? '' : data.mobileNo, [Validators.required, Validators.pattern(this.validatorType.TEN_DIGITS)]],
       foreignMobileNo: [!data ? '' : data.foreignMobileNo,
-      this.inputData.taxStatus == '21' ? [Validators.required] : []],
+        !this.inputData.taxMaster.residentFlag ? [Validators.required] : []],
       address1: [(address.address1), [Validators.required]],
       address2: [(address.address2), [Validators.required]],
       pinCode: [address.pinCode, [Validators.required]],
@@ -196,7 +196,7 @@ export class ContactDetailsInnComponent implements OnInit {
     }
     this.contactDetails = this.fb.group({
       email: [(!data) ? '' : data.email, [Validators.required]],
-      aadharNumber: [(!data) ? '' : data.aadharNumber, [Validators.required]],
+      // aadharNumber: [(!data) ? '' : data.aadharNumber, [Validators.required]],
       mobileNo: [!data ? '' : data.mobileNo, [Validators.required]]
     });
   }
@@ -294,7 +294,7 @@ export class ContactDetailsInnComponent implements OnInit {
         this.eventService.openSnackBar('Please fill third holder details');
         return;
       }
-      if (this.inputData.taxStatus == '21') {
+      if (!this.inputData.taxMaster.residentFlag) {
         if (!this.firstHolderContact || !this.firstHolderContact.address ||
           !this.firstHolderContact.address.address1 || !this.firstHolderContact.foreignAddress ||
           !this.firstHolderContact.foreignAddress.address1) {
@@ -309,7 +309,7 @@ export class ContactDetailsInnComponent implements OnInit {
   }
 
   validateSecondaryObject(obj) {
-    if (obj && obj.email && obj.mobileNo && obj.aadharNumber) {
+    if (obj && obj.email && obj.mobileNo ) {
       return true;
     } else {
       return false;
@@ -321,7 +321,7 @@ export class ContactDetailsInnComponent implements OnInit {
     holder = {
       ...holder,
       email: formValue.email,
-      aadharNumber: formValue.aadharNumber,
+      // aadharNumber: formValue.aadharNumber,
       mobileNo: formValue.mobileNo,
       foreignMobileNo: formValue.foreignMobileNo,
       phoneNo: formValue.phoneNo,

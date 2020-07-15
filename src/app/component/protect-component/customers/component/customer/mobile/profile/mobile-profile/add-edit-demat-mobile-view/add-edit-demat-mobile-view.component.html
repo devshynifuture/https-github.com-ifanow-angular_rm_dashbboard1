@@ -1,0 +1,170 @@
+<div class="row mob-bg-common pb-12 mobtop-navfixed">
+    <div (click)="back()" class="col-2">
+        <img src="/assets/images/svg/mob-left-arrow.svg" class="c-p pt-4">
+    </div>
+    <div class="col-10 pl-0">
+        <h5 class="m-0 f-18 text-white pt-4 roboto">
+            {{userData.dematData?'Edit':'Add'}} Demat</h5>
+    </div>
+</div>
+<div [formGroup]="dematForm" class="bg-grey lter">
+    <div class="row pt-90">
+        <div class="col-12 pl-8">
+            <h3 class="m-0 roboto f-400 text-dark">Add new demat</h3>
+        </div>
+    </div>
+    <!-- <div class="row pt-28">
+        <div class="col-12 mob-pl-10 mob-pr-10">
+            <h5 class="m-0 roboto text-dark pb-10 f-16">Add IFSC</h5>
+            <div class="form-group mb-0">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input placeholder="Enter ifsc code" autocomplete="off"
+                        (input)="toUpperCase(bankForm.get('ifscCode'),$event)" appInputValueValidation
+                        [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="ifscCode" #ifcCode
+                        [maxLength]="11" matInput class="form-control text-primitive">
+                    <mat-hint align="end" class="f-12">{{ifcCode.value.length}}/11</mat-hint>
+                    <mat-error *ngIf="bankForm.get('ifscCode').errors?.required">This field is required</mat-error>
+                    <mat-error *ngIf="bankForm.get('ifscCode').errors?.invalidIfsc">Ifsc code invalid</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </div> -->
+    <!-- <div class="mob-pr-10 mob-pl-10 mt-20 mb-28">
+            <div class="row mob-card">
+                <div class="col-2">
+                    <img src="/assets/images/icici.png">
+                </div>
+                <div class="col-10">
+                    <p class="m-0 roboto f-400 lh-22">{{bankForm.get('bankName').value}}</p>
+                    <p class="m-0 f-10 roboto f-400 text-custom lh-18">A/c: {{bankForm.get('accNumber').value}}</p>
+                </div>
+            </div>
+        </div> -->
+    <div class="row">
+        <div class="col-12 mob-pl-10 mob-pr-10">
+            <h5 class="m-0 roboto text-dark pb-10 f-16">Depository participant name</h5>
+            <div class="form-group mb-0">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input placeholder="Enter depository participant name" autocomplete="off"
+                        formControlName="depositoryPartName" #nadNameme appInputValueValidation
+                        [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPEC_CHAR" [maxLength]="50" matInput
+                        class="form-control text-primitive">
+                    <mat-hint align="end" class="f-12">{{nadNameme.value.length}}/50</mat-hint>
+                    <mat-hint>Optional</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="row pt-44">
+            <div class="col-12 mob-pl-10 mob-pr-10">
+                <h5 class="m-0 roboto text-dark pb-10 f-16">Confirm account number</h5>
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <input matInput class="form-control text-primitive" value="Enter bank account number">
+                    </mat-form-field>
+                </div>
+            </div>
+        </div> -->
+    <div class="row pt-28">
+        <div class="col-12 mob-pl-10 mob-pr-10">
+            <h5 class="m-0 roboto text-dark pb-10 f-16">Depository participant ID</h5>
+            <div class="form-group mb-0">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input placeholder="Enter depository id" autocomplete="off" appInputValueValidation
+                        [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="depositoryPartId" matInput
+                        class="form-control text-primitive">
+                    <mat-hint>Optional</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-28">
+        <div class="col-12 mob-pl-10 mob-pr-10">
+            <h5 class="m-0 roboto text-dark pb-10 f-16">Demat client ID</h5>
+            <div class="form-group mb-0">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input placeholder="Enter demat client id" autocomplete="off" appInputValueValidation
+                        [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="dematClientId" matInput
+                        class="form-control text-primitive">
+                    <mat-hint>Optional</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-28">
+        <div class="col-12 mob-pl-10 mob-pr-10">
+            <h5 class="m-0 roboto text-dark pb-10 f-16">Broker name</h5>
+            <div class="form-group mb-0">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input autocomplete="off" placeholder="Enter broker name " #brokerName appInputValueValidation
+                        [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPEC_CHAR" formControlName="brekerName"
+                        matInput class="form-control text-primitive">
+                    <mat-hint>Optional</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-28">
+        <div class="col-12 mob-pl-10 mob-pr-10">
+            <h5 class="m-0 roboto text-dark pb-10 f-16">Broker address</h5>
+            <div class="form-group mb-0">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input placeholder="Enter broker address" autocomplete="off" #bAddres
+                        formControlName="brokerAddress" matInput maxlength="200" class="form-control text-primitive">
+                    <mat-hint align="end" class="f-12">{{bAddres.value.length}}/20</mat-hint>
+                    <mat-hint>Optional</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-28">
+        <div class="col-12 mob-pl-10 mob-pr-10">
+            <h5 class="m-0 roboto text-dark pb-10 f-16">Linked bank account</h5>
+            <div class="form-group mb-0">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input placeholder="Enter linked bank account" autocomplete="off" #linkedAccNum [maxLength]="16"
+                        appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                        formControlName="linkedBankAccount" matInput class="form-control text-primitive">
+                    <mat-hint align="end" class="f-12">{{linkedAccNum.value.length}}/16</mat-hint>
+                    <mat-hint>Optional</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-28">
+        <div class="col-12 mob-pl-10 mob-pr-10">
+            <h5 class="m-0 roboto text-dark pb-10 f-16">Power of attorney name</h5>
+            <div class="form-group mb-0">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input placeholder="Enter power of attorney name" autocomplete="off" #paName appInputValueValidation
+                        [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPEC_CHAR" [maxLength]="50"
+                        formControlName="powerOfAttName" matInput class="form-control text-primitive">
+                    <mat-hint>Optional</mat-hint>
+                    <mat-hint align="end" class="f-12">{{paName.value.length}}/50</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-28">
+        <div class="col-12 mob-pl-10 mob-pr-10">
+            <h5 class="m-0 roboto text-dark pb-10 f-16">Power of attorney master ID</h5>
+            <div class="form-group mb-0">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input autocomplete="off" placeholder="Enter power of attorney master ID" #powerOfAttMasId
+                        formControlName="powerOfAttMasId" appInputValueValidation
+                        [inputValidator]="validatorType.NUMBER_ONLY" matInput class="form-control text-primitive">
+                    <mat-hint>Optional</mat-hint>
+                    <mat-hint align="end" class="f-12">{{powerOfAttMasId.value.length}}/10</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row profile-save-bottom">
+    <div class="col-2"></div>
+    <div class="col-8 pt-8 pb-8">
+        <button (click)="saveNext('')" mat-stroked-button class="btn-primary w-100 f-16 h-40 br-40">Add
+            address</button>
+    </div>
+    <div class="col-2"></div>
+</div>
