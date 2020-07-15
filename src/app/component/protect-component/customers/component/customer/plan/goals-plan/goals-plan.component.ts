@@ -470,6 +470,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       positiveMethod: () => {
         let obj = {
           ...this.advisor_client_id,
+          id: allocation.id,
           assetId: allocation.assetId,
           assetType: allocation.assetType,
           goalId: this.selectedGoal.remainingData.id,

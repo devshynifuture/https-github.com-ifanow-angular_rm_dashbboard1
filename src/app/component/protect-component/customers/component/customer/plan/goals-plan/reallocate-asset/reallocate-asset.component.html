@@ -16,10 +16,11 @@ Allocation Details
         <div class="col-md-6" [formGroup]="reallocationFG">
             <mat-form-field appearance="standard" floatLabel="never">
                 <input type="text" formControlName="allocatedPercentage"
-                    appInputValueValidation [inputValidator]="decimalValidator.NUMBER_ONLY_WITH_TWO_DECIMAL"
-                    min="1" max="{{availableAllocation}}"
+                    appInputValueValidation [inputValidator]="decimalValidator"
+                    min="1" [max]="availableAllocation"
                     matInput class="form-control">
-                <mat-error>This field is required</mat-error>
+                <mat-error *ngIf="reallocationFG.get('allocatedPercentage').errors?.required">This field is required</mat-error>
+                <mat-error *ngIf="reallocationFG.get('allocatedPercentage').errors?.min || reallocationFG.get('allocatedPercentage').errors?.max">Please enter valid number</mat-error>
             </mat-form-field>
         </div>
     </div>
@@ -29,7 +30,15 @@ Allocation Details
             <p>(100% - a - b)</p>
         </div>
         <div class="col-md-6">
-            <span [value]="remainingAllocation" appFormatNumber></span>
+            <span [value]="remainingAllocation" appFormatNumber [shouldRoundOff]="false"></span>
         </div>
     </div>
+</div>
+
+<div>
+    <button mat-button mat-dialog-close>Cancel</button>
+
+    <app-progress-button (btnClick)="reallocate()" class="btn-bottom br-0 text-inherit"
+        [options]="barButtonOptions">
+</app-progress-button>
 </div>

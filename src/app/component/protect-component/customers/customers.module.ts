@@ -55,6 +55,8 @@ import { GeneralInsuranceMobComponent } from './component/customer/mobile/genera
 import { AddGoldMobComponent } from './component/customer/mobile/commodities-mob/add-gold-mob/add-gold-mob.component';
 
 
+import { BankDetailedAssetsComponent } from './component/customer/mobile/bank-detailed-assets/bank-detailed-assets.component';
+import { FixedDepositMobComponent } from './component/customer/mobile/fixed-income-mob/fixed-deposit-mob/fixed-deposit-mob.component';
 
 
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
@@ -71,7 +73,8 @@ import { AddGoldMobComponent } from './component/customer/mobile/commodities-mob
     MobileViewAddressComponent, MobileViewBankComponent, MobileViewDematComponent,
     AddEditBankMobileViewComponent, AddEditDematMobileViewComponent,
     AddEditDocumentMobileViewComponent, IndividualMemberFormComponent,
-    MinorMemberFormComponent, RetirementAccMobComponent,CashAndBankMobComponent, StocksMobComponent, RealEstateMobComponent, SmallSavingMobComponent, CommoditiesMobComponent, LiabilitiesMobComponent, LifeInsuranceMobComponent, GeneralInsuranceMobComponent, AddGoldMobComponent],
+    MinorMemberFormComponent, RetirementAccMobComponent,CashAndBankMobComponent, StocksMobComponent, RealEstateMobComponent, SmallSavingMobComponent, CommoditiesMobComponent, LiabilitiesMobComponent, LifeInsuranceMobComponent, GeneralInsuranceMobComponent, 
+    AddGoldMobComponent, BankDetailedAssetsComponent, FixedDepositMobComponent],
   imports: [
     // BrowserModule,
     CommonModule,
@@ -104,7 +107,7 @@ import { AddGoldMobComponent } from './component/customer/mobile/commodities-mob
   entryComponents: [EntryComponentsModule.getComponentList(),
     AccountEntryModule.getComponentList(), AdviceEntryModule.getComponentList(),
     PlanEntryModule.getComponentList(), CustomerOverviewEntryModule.getComponentList(),
-    UploadDocumentComponent, EditDocumentPopupComponent]
+    UploadDocumentComponent, EditDocumentPopupComponent,FixedDepositMobComponent]
 })
 export class CustomersModule {
 }
