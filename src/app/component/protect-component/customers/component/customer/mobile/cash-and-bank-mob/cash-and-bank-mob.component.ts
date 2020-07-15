@@ -62,7 +62,7 @@ export class CashAndBankMobComponent implements OnInit {
     );
   }
   calculateSum(){
-    this.totalCurrentValue = this.accCv+this.cashInHandCv
+    this.totalCurrentValue = (this.accCv ? this.accCv : 0)+(this.cashInHandCv ? this.cashInHandCv :0)
   }
   changeValue(flag){
     this.outputValue.emit(flag);

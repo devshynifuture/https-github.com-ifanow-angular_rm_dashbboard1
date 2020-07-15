@@ -12,6 +12,8 @@ import { MarketplaceCallsComponent } from './advisor-marketplace/marketplace-cal
 import { MarketplaceReviewRatingComponent } from './advisor-marketplace/marketplace-review-rating/marketplace-review-rating.component';
 import { MarketPlaceEntryModule } from './advisor-marketplace.entry.module';
 import { MaterialModule } from 'src/app/material/material';
+import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
+import { CustomCommonModule } from 'src/app/common/custom.common.module';
 
 @NgModule({
   declarations: [
@@ -30,6 +32,8 @@ import { MaterialModule } from 'src/app/material/material';
     FormsModule,
     MaterialModule,
     MarketPlaceEntryModule,
+    CustomDirectiveModule,
+    CustomCommonModule
   ]
 })
 export class AdvisorMarketplceModule { }

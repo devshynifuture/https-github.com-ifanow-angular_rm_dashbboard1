@@ -86,6 +86,7 @@ export class RetirementAccMobComponent implements OnInit {
     this.outputValue.emit(flag);
   }
   calculateSum(){
-    this.totalCurrentValue = this.epfCv+this.npsCv+this.gratuityCv
+    this.totalCurrentValue = (this.epfCv ? this.epfCv : 0)+(this.npsCv ? this.npsCv : 0)
+    +(this.gratuityCv ? this.gratuityCv :0)
   }
 }
