@@ -58,6 +58,7 @@ import { AddGoldMobComponent } from './component/customer/mobile/commodities-mob
 
 import { BankDetailedAssetsComponent } from './component/customer/mobile/bank-detailed-assets/bank-detailed-assets.component';
 import { FixedDepositMobComponent } from './component/customer/mobile/fixed-income-mob/fixed-deposit-mob/fixed-deposit-mob.component';
+import { BondMobComponent } from './component/customer/mobile/fixed-income-mob/bond-mob/bond-mob.component';
 
 
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
@@ -76,7 +77,7 @@ import { FixedDepositMobComponent } from './component/customer/mobile/fixed-inco
     AddEditDocumentMobileViewComponent, IndividualMemberFormComponent,
     MobileViewMoreInfoComponent,
     MinorMemberFormComponent, RetirementAccMobComponent, CashAndBankMobComponent, StocksMobComponent, RealEstateMobComponent, SmallSavingMobComponent, CommoditiesMobComponent, LiabilitiesMobComponent, LifeInsuranceMobComponent, GeneralInsuranceMobComponent,
-    AddGoldMobComponent, BankDetailedAssetsComponent, FixedDepositMobComponent],
+    AddGoldMobComponent, BankDetailedAssetsComponent, FixedDepositMobComponent, BondMobComponent],
   imports: [
     // BrowserModule,
     CommonModule,
