@@ -6,7 +6,7 @@
         </span>
       </div>
       <div class="col-7 p-0">
-        <h5 class="m-0 f-18 text-white pt-4">Retirement accounts</h5>
+        <h5 class="m-0 f-18 text-white pt-4">Liabilities</h5>
       </div>
       <div class="col-3 text-right">
         <span class="material-icons text-white">
@@ -18,7 +18,7 @@
       <div class="bg-white">
         <div class="row pt-20 pb-20">
           <div class="col-2">
-             <div class="mf hw-40 f-14 pt-16">RA</div>
+             <div class="mf hw-40 f-14 pt-16">L</div>
           </div>
           <div class="col-10 pl-8 pt-4">
             <p class="m-0 f-12 lh-12">Current Value:</p>
@@ -30,26 +30,18 @@
         <div class="bg-white">
           <div class="row pt-20 pb-20 mob-bb-1">
             <div class="col-8">
-              <p class="mb-0">EPF</p>
+              <p class="mb-0">Liabilities</p>
             </div>
             <div class="col-4 text-right">
-              <p class="m-0">{{epfCv ? '₹' : ''}}<span appFormatNumber [value]="epfCv ? epfCv : ''"></span></p>
+              <p class="m-0">{{liabilityCv ? '₹' : ''}}<span appFormatNumber [value]="liabilityCv ? liabilityCv : ''"></span></p>
             </div>
           </div>
           <div class="row pt-20 pb-20 mob-bb-1">
             <div class="col-8">
-              <p class="mb-0">NPS</p>
+              <p class="mb-0">Other payables</p>
             </div>
             <div class="col-4 text-right">
-              <p class="m-0">{{npsCv ? '₹' : ''}}<span appFormatNumber [value]="npsCv ? npsCv : ''"></span></p>
-            </div>
-          </div>
-          <div class="row pt-20 pb-20 mob-bb-1">
-            <div class="col-8">
-              <p class="mb-0">Gratuity</p>
-            </div>
-            <div class="col-4 text-right">
-              <p class="m-0">{{gratuityCv ? '₹' : ''}}<span appFormatNumber [value]="gratuityCv ? gratuityCv : ''" ></span></p>
+              <p class="m-0">{{otherPayableCv ? '₹' : ''}}<span appFormatNumber [value]="otherPayableCv ? otherPayableCv : ''"></span></p>
             </div>
           </div>
         </div>

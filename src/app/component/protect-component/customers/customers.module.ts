@@ -44,6 +44,17 @@ import {AddEditDematMobileViewComponent} from './component/customer/mobile/profi
 import {IndividualMemberFormComponent} from './component/customer/mobile/profile/mobile-profile/individual-member-form/individual-member-form.component';
 import {MinorMemberFormComponent} from './component/customer/mobile/profile/mobile-profile/minor-member-form/minor-member-form.component';
 import {RetirementAccMobComponent} from './component/customer/mobile/retirement-acc-mob/retirement-acc-mob.component';
+import { CashAndBankMobComponent } from './component/customer/mobile/cash-and-bank-mob/cash-and-bank-mob.component';
+import { StocksMobComponent } from './component/customer/mobile/stocks-mob/stocks-mob.component';
+import { RealEstateMobComponent } from './component/customer/mobile/real-estate-mob/real-estate-mob.component';
+import { SmallSavingMobComponent } from './component/customer/mobile/small-saving-mob/small-saving-mob.component';
+import { CommoditiesMobComponent } from './component/customer/mobile/commodities-mob/commodities-mob.component';
+import { LiabilitiesMobComponent } from './component/customer/mobile/liabilities-mob/liabilities-mob.component';
+import { LifeInsuranceMobComponent } from './component/customer/mobile/life-insurance-mob/life-insurance-mob.component';
+import { GeneralInsuranceMobComponent } from './component/customer/mobile/general-insurance-mob/general-insurance-mob.component';
+import { AddGoldMobComponent } from './component/customer/mobile/commodities-mob/add-gold-mob/add-gold-mob.component';
+
+
 import { BankDetailedAssetsComponent } from './component/customer/mobile/bank-detailed-assets/bank-detailed-assets.component';
 import { FixedDepositMobComponent } from './component/customer/mobile/fixed-income-mob/fixed-deposit-mob/fixed-deposit-mob.component';
 
@@ -62,7 +73,8 @@ import { FixedDepositMobComponent } from './component/customer/mobile/fixed-inco
     MobileViewAddressComponent, MobileViewBankComponent, MobileViewDematComponent,
     AddEditBankMobileViewComponent, AddEditDematMobileViewComponent,
     AddEditDocumentMobileViewComponent, IndividualMemberFormComponent,
-    MinorMemberFormComponent, RetirementAccMobComponent, BankDetailedAssetsComponent,FixedDepositMobComponent ],
+    MinorMemberFormComponent, RetirementAccMobComponent,CashAndBankMobComponent, StocksMobComponent, RealEstateMobComponent, SmallSavingMobComponent, CommoditiesMobComponent, LiabilitiesMobComponent, LifeInsuranceMobComponent, GeneralInsuranceMobComponent, 
+    AddGoldMobComponent, BankDetailedAssetsComponent,FixedDepositMobComponent ],
   imports: [
     // BrowserModule,
     CommonModule,
@@ -77,7 +89,7 @@ import { FixedDepositMobComponent } from './component/customer/mobile/fixed-inco
     EntryComponentsModule,
     AccountEntryModule,
     PlanEntryModule,
-    CustomersRoutingModule,
+      CustomersRoutingModule,
     MobileRoutingModule,
     SlickCarouselModule,
     AdviceEntryModule,
