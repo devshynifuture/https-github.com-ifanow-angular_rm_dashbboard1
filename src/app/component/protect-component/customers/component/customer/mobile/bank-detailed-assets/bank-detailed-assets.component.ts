@@ -15,30 +15,14 @@ import { upperSliderAnimation, rightSliderAnimation } from 'src/app/animation/an
   ],
 })
 export class BankDetailedAssetsComponent implements OnInit {
-
+  fixdeposit
+  backToMf
   constructor(
     public eventService : EventService,
   ) { }
 
   ngOnInit() {
   }
-  addFixedDeposit(){
-      const fragmentData = {
-        flag: 'addNewCustomer',
-        id: 1,
-        direction: '',
-        componentName: FixedDepositMobComponent,
-        state: 'open'
-      };
-      // this.router.navigate(['/subscription-upper'])
-      AuthService.setSubscriptionUpperSliderData(fragmentData);
-      const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
-        upperSliderData => {
-          if (UtilService.isDialogClose(upperSliderData)) {
-            // this.getClientSubscriptionList();
-            subscription.unsubscribe();
-          }
-        }
-      );
+  addFixedDeposit(){     
       }
 }
