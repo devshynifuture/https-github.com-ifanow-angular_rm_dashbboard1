@@ -107,6 +107,8 @@ import { BondMobComponent } from './component/customer/mobile/fixed-income-mob/b
 import { RecurringDepositeMobComponent } from './component/customer/mobile/fixed-income-mob/recurring-deposite-mob/recurring-deposite-mob.component';
 import { MobileViewMoreInfoComponent } from './component/customer/mobile/profile/mobile-profile/mobile-view-more-info/mobile-view-more-info.component';
 import { AddOthersMobComponent } from './component/customer/mobile/commodities-mob/add-others-mob/add-others-mob.component';
+import { CommonComponentModule } from '../common-component/common-component.module';
+import { HolderNameMobileViewComponent } from './component/customer/mobile/profile/mobile-profile/holder-name-mobile-view/holder-name-mobile-view.component';
 
 
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
@@ -126,7 +128,7 @@ import { AddOthersMobComponent } from './component/customer/mobile/commodities-m
     MinorMemberFormComponent, RetirementAccMobComponent, RealEstateComponent, SmallSavingComponent, CashAndBankComponent, CommoditiesComponent, LiabilitiesComponent, LifeInsuranceComponent, GeneralInsuranceComponent,
     MobileViewMoreInfoComponent,
     CashAndBankMobComponent, StocksMobComponent, RealEstateMobComponent, SmallSavingMobComponent, CommoditiesMobComponent, LiabilitiesMobComponent, LifeInsuranceMobComponent, GeneralInsuranceMobComponent,
-    AddGoldMobComponent, BankDetailedAssetsComponent, FixedDepositMobComponent, BondMobComponent, RecurringDepositeMobComponent, AddOthersMobComponent],
+    AddGoldMobComponent, BankDetailedAssetsComponent, FixedDepositMobComponent, BondMobComponent, RecurringDepositeMobComponent, AddOthersMobComponent, HolderNameMobileViewComponent],
   imports: [
     // BrowserModule,
     CommonModule,
@@ -151,6 +153,7 @@ import { AddOthersMobComponent } from './component/customer/mobile/commodities-m
     TransactionEntryModule,
     SubscriptionEntry,
     SubscriptionUpperEntry,
+    CommonComponentModule
 
     // PlanModule
   ],
