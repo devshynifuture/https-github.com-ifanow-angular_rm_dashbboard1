@@ -115,6 +115,7 @@ export class MobilePortfoiloComponent implements OnInit {
   giObj: {};
   showLifeInsurance: boolean;
   showGenralInsurance: boolean;
+  allDataPort: any;
   constructor(
     public customerService : CustomerService,
     public loaderFn: LoaderFunction,
@@ -236,6 +237,8 @@ export class MobilePortfoiloComponent implements OnInit {
       } else {
         let stock = res.find(d => d.assetType == 6);
         this.portFolioData = res;
+        this.allDataPort = res
+        this.portFolioData = this.portFolioData.filter(element => element.assetType != 5);
       this.portFolioData.forEach(element => {
         if(element.assetType == 5){
           this.mfData.push(element)
