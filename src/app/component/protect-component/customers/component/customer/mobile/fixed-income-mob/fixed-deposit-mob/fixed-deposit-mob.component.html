@@ -9,7 +9,7 @@
             <h5 class="m-0 f-18 text-white pt-4">Add fixed deposit</h5>
         </div>
     </div>
-    <div [formGroup]="fixedDeposit" class="bg-grey lter h-100vh pt-80 mb-48 add-fixed-desposit">
+    <div [formGroup]="fixedDeposit" class="bg-grey lter pt-80 mb-48 add-fixed-desposit">
         <div formArrayName="getCoOwnerName">
             <div *ngFor="let obj of fixedDeposit.controls['getCoOwnerName'].controls; let pointIndex=index"
                 [formGroupName]="pointIndex">
@@ -258,7 +258,7 @@
                 <h5 (click)="showLess(showHide)" class="m-0 pt-8 text-custom c-p">+ Add more [optional data] </h5>
             </div>
             <div class="col-md-5">
-    
+
             </div>
         </div>
         <div *ngIf="showHide == true">
@@ -315,61 +315,64 @@
                             <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
                         </mat-form-field>
                     </div>
-                    </div>
                 </div>
-                <div formArrayName="getNomineeName">
-                    <div *ngFor="let obj of fixedDeposit.controls['getNomineeName'].controls; let pointIndex=index"
+            </div>
+            <div formArrayName="getNomineeName">
+                <div *ngFor="let obj of fixedDeposit.controls['getNomineeName'].controls; let pointIndex=index"
                     [formGroupName]="pointIndex">
-                        <div class="col-12">
-                            <p class="m-0 roboto f-400 text-dark f-16 pb-10">
-                                Nominee {{pointIndex + 1}}</p>
-                        </div>
-                        <div class="row">
-                            <div class="pb-20 mob-pr-10 mob-pl-10"
+                    <div class="col-12">
+                        <p class="m-0 roboto f-400 text-dark f-16 pb-10">
+                            Nominee {{pointIndex + 1}}</p>
+                    </div>
+                    <div class="row">
+                        <div class="pb-20 mob-pr-10 mob-pl-10"
                             [ngClass]="getNominee.length > 1?'col-md-7' : 'col-md-9'">
-                                <div class="form-group mb-0">
-                                    <mat-form-field>
-                                        <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
-                                            (selectionChange)="disabledMember($event.value,'nominee')"
-                                            (valueChange1)='lisNominee($event)' class="form-control br-0"
-                                            [callMethod]='callMethod'>
-                                            <mat-option value='' disabled>Select family members</mat-option>
-                                            <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable"
-                                                [value]="f.userName">
-                                                <span>{{f.userName}}</span>
-                                            </mat-option>
-                                        </mat-select>
-                                        <mat-error class="f-12">
-                                            This field is required
-                                        </mat-error>
-                                    </mat-form-field>
-                                </div>
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
+                                        (selectionChange)="disabledMember($event.value,'nominee')"
+                                        (valueChange1)='lisNominee($event)' class="form-control br-0"
+                                        [callMethod]='callMethod'>
+                                        <mat-option value='' disabled>Select family members</mat-option>
+                                        <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable"
+                                            [value]="f.userName">
+                                            <span>{{f.userName}}</span>
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error class="f-12">
+                                        This field is required
+                                    </mat-error>
+                                </mat-form-field>
                             </div>
-                            <div class="col-2" *ngIf="fixedDeposit.value.getCoOwnerName.length > 1">
-                                <div class="form-group mb-0">
-                                    <mat-form-field>
-                                        <input matInput class="form-control br-0 percentage" type="number"
-                                            formControlName="sharePercentage" (focusout)="onChangeJointOwnership('nominee')">
-                                        <mat-error class="f-12" *ngIf="obj.controls['sharePercentage'].hasError('required')">
-                                            This field is required
-                                        </mat-error>
-                                        <mat-error class="f-12" *ngIf="obj.controls['sharePercentage'].hasError('incorrect') ">
-                                            Total percent should be 100%
-                                        </mat-error>
-                                    </mat-form-field>
-                                </div>
+                        </div>
+                        <div class="col-2" *ngIf="fixedDeposit.value.getCoOwnerName.length > 1">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput class="form-control br-0 percentage" type="number"
+                                        formControlName="sharePercentage"
+                                        (focusout)="onChangeJointOwnership('nominee')">
+                                    <mat-error class="f-12"
+                                        *ngIf="obj.controls['sharePercentage'].hasError('required')">
+                                        This field is required
+                                    </mat-error>
+                                    <mat-error class="f-12"
+                                        *ngIf="obj.controls['sharePercentage'].hasError('incorrect') ">
+                                        Total percent should be 100%
+                                    </mat-error>
+                                </mat-form-field>
                             </div>
-                            <div class="col-2">
-                                <i *ngIf="fixedDeposit.value.getNomineeName.length < 3"
+                        </div>
+                        <div class="col-2">
+                            <i *ngIf="fixedDeposit.value.getNomineeName.length < 3"
                                 class="material-icons text-primitive f-20 c-p float-left"
                                 (click)="addNewNominee(undefined)">add</i>
                             <i *ngIf="fixedDeposit.value.getNomineeName.length > 1"
                                 class="material-icons text-primitive f-20 c-p pl-10"
                                 (click)="removeNewNominee(pointIndex)">remove</i>
-                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
         </div>
     </div>
     <div *ngIf="adviceShowHeaderAndFooter">
