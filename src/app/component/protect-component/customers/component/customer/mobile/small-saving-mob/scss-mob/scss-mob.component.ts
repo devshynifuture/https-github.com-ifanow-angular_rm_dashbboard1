@@ -52,7 +52,7 @@ export class ScssMobComponent implements OnInit {
   nominees: any[];
   flag: any;
   bankList:any = [];
-
+  backToSS;
   @Input() popupHeaderText: string = 'Add Senior citizen savings scheme (SCSS)';
   adviceShowHeaderAndFooter: boolean = true;
 

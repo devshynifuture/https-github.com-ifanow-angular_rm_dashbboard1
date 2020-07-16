@@ -53,6 +53,7 @@ export class PpfMobComponent implements OnInit {
   showError = false;
   nomineesListFM: any =[];
   dataFM: any;
+  backToSS;
   familyList: any;
   errorFieldName: string;
   nomineesList: any[] = [];

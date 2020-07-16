@@ -92,6 +92,8 @@ export class SsyMobComponent implements OnInit {
   flag: any;
   callMethod: any;
   bankList: any = [];
+  backToSS;
+
 
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   transactionViewData =
