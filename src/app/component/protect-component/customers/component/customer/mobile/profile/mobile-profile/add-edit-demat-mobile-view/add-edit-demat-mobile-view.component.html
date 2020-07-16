@@ -120,8 +120,9 @@
             </div>
         </div>
     </div>
-    <app-mobile-view-add-number (numberArray)="getNumberDetails($event)" [flag]="mobileNumberFlag"
-        [isResidential]="taxStatusType" [numberList]="userData.mobileList"></app-mobile-view-add-number>
+    <app-mobile-view-add-number [isResidential]="userData" (numberArray)="getNumberDetails($event)"
+        [flag]="mobileNumberFlag" [isResidential]="taxStatusType" [numberList]="userData.mobileList">
+    </app-mobile-view-add-number>
     <div class="row pt-28">
         <div class="col-12 mob-pl-10 mob-pr-10">
             <h5 class="m-0 roboto text-dark pb-10 f-16">Linked bank account</h5>
