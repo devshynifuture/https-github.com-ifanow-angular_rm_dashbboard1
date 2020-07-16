@@ -11,9 +11,11 @@
                 <input #uploadFileRef [hidden]="true" multiple type="file" (change)="uploadFile($event)">
                 <p class="m-0 roboto f-400 pt-4">Upload file</p>
             </div>
-            <div class="col-4 pl-0">
+            <div (click)="cameraRef.click()" class="col-4 pl-0">
                 <img src="/assets/images/svg/c-3.svg">
                 <p class="m-0 roboto f-400 pt-4">Use camera</p>
+                <input #cameraRef [hidden]="true" type="file" accept="image/*" (change)="uploadFile($event)"
+                    capture="environment">
             </div>
         </div>
     </div>

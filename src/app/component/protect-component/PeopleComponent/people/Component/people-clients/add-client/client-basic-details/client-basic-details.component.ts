@@ -496,7 +496,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         gardianObj = {
           name: this.minorForm.value.gFullName,
           birthDate: this.datePipe.transform(this.minorForm.value.gDobAsPerRecord, 'dd/MM/yyyy'),
-          pan: 'pan',
+          pan: this.minorForm.controls.pan.value,
           genderId: this.minorForm.value.gGender,
           relationshipId: (this.minorForm.value.relationWithMinor != '') ? this.minorForm.value.relationWithMinor : null,
           aadhaarNumber: (this.basicDetailsData.guardianData) ? this.basicDetailsData.guardianData.aadhaarNumber : null,
