@@ -20,7 +20,7 @@ export class CommoditiesMobComponent implements OnInit {
   othersData: any;
   goldCV: any;
   otherCv: any;
-  assetSubType: any;
+  assetSubType = {assetType:'',data:''};
   showBank: any;
   constructor(private custumService: CustomerService, private eventService: EventService, private subInjectService: SubscriptionInject) { }
 
@@ -102,7 +102,8 @@ export class CommoditiesMobComponent implements OnInit {
       }
     );
   }
-  openSubAsset(subAsset) {
-    this.assetSubType = subAsset
+  openSubAsset(subAsset,value) {
+    this.assetSubType.assetType = subAsset;
+    this.assetSubType.data = value;
   }
 }

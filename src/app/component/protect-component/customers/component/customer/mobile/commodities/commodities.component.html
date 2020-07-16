@@ -1,4 +1,64 @@
-<div id="mob-fixed-income">
+<div id="mob-fixed-income" *ngIf="fixdeposit != true && backToMf != true">
+    <div class="row mob-bg-common pb-12 mobtop-navfixed">
+        <div class="col-2" (click)="backToMf = true">
+            <span class="material-icons text-white">
+                keyboard_backspace
+            </span>
+        </div>
+        <div class="col-7 p-0">
+            <h5 class="m-0 f-18 text-white pt-4">{{inputData}}</h5>
+        </div>
+        <div class="col-3 text-right">
+            <span class="material-icons text-white">
+                filter_list
+            </span>
+        </div>
+    </div>
+    <div class="pt-80 p-8 h-100vh">
+        <div class="pt-16">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20 mob-bb-1">
+                    <div class="col-8">
+                        <p class="mb-0">ICICI bank | 908908484</p>
+                    </div>
+                    <div class="col-4 text-right">
+                        <p class="m-0">₹5,00,000 </p>
+                    </div>
+                </div>
+                <div class="row pt-20 pb-20 mob-bb-1">
+                    <div class="col-8">
+                        <p class="mb-0">HDFC bank</p>
+                    </div>
+                    <div class="col-4 text-right">
+                        <p class="m-0">₹3,00,000</p>
+                    </div>
+                </div>
+                <div class="row pt-20 pb-20 mob-bb-1">
+                    <div class="col-8">
+                        <p class="mb-0">Kotak mahindra</p>
+                    </div>
+                    <div class="col-4 text-right">
+                        <p class="m-0">₹1,50,000</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="document-bottom-action">
+        <button (click)="fixdeposit = true" mat-stroked-button class="btn-primary"><span class="material-icons">
+                add
+            </span></button>
+    </div>
+</div>
+<div *ngIf="fixdeposit == true && inputData == 'Gold'">
+    <app-add-gold-mob></app-add-gold-mob>
+</div>
+<div *ngIf="fixdeposit == true && inputData == 'Others'">
+    <app-add-others-mob></app-add-others-mob>
+</div>
+
+
+<!-- <div id="mob-fixed-income">
     <div class="row mob-bg-common pb-12 mobtop-navfixed">
         <div class="col-2">
             <span class="material-icons text-white">
@@ -14,8 +74,8 @@
             </span>
         </div>
     </div>
-    <div class="pt-80 p-8 h-100vh">
-        <div class="bg-white">
+    <div class="pt-80 p-8 h-100vh"> -->
+        <!-- <div class="bg-white">
             <div class="row pt-20 pb-20">
                 <div class="col-2">
                     <div class="mf hw-40 f-14 pt-16">FI</div>
@@ -25,8 +85,8 @@
                     <h3 class="mob-text-success mb-0 pt-4"> Rs. 10,29,091</h3>
                 </div>
             </div>
-        </div>
-        <div class="pt-16">
+        </div> -->
+        <!-- <div class="pt-16">
             <div class="bg-white">
                 <div class="row pt-20 pb-20 mob-bb-1">
                     <div class="col-8">
@@ -46,7 +106,7 @@
                 </div>
 
             </div>
-        </div>
+        </div> -->
 
         <!-- deatils view Gold -->
         <!-- <div class="pt-80 p-8 pb-48">
@@ -149,5 +209,5 @@
                 </div>
             </div>
         </div> -->
-    </div>
-</div>
+    <!-- </div>
+</div> -->
