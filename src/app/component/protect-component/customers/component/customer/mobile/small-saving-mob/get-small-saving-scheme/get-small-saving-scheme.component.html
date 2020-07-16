@@ -204,30 +204,30 @@
 <div *ngIf="backToSS == true">
 <app-small-saving-mob></app-small-saving-mob>
 </div>
-<div *ngIf="inputData.assetType == 'PPF'">
+<div *ngIf="fixdeposit == true && inputData.assetType == 'PPF'">
     <app-ppf-mob></app-ppf-mob>
 </div>
-<div *ngIf="inputData.assetType == 'KVP'">
+<div *ngIf="fixdeposit == true && inputData.assetType == 'KVP'">
     <app-kvp-mob></app-kvp-mob>
 </div>
-<div *ngIf="inputData.assetType == 'NSC'">
+<div *ngIf="fixdeposit == true && inputData.assetType == 'NSC'">
     <app-nsc-mob></app-nsc-mob>
 </div>
-<div *ngIf="inputData.assetType == 'SCSS'">
+<div *ngIf="fixdeposit == true && inputData.assetType == 'SCSS'">
     <app-scss-mob></app-scss-mob>
 </div>
-<div *ngIf="inputData.assetType == 'PO Savings'">
+<div *ngIf="fixdeposit == true && inputData.assetType == 'PO Savings'">
     <app-po-savings-mob></app-po-savings-mob>
 </div>
-<div *ngIf="inputData.assetType == 'PO RD'">
+<div *ngIf="fixdeposit == true && inputData.assetType == 'PO RD'">
     <app-po-rd-mob></app-po-rd-mob>
 </div>
-<div *ngIf="inputData.assetType == 'PO TD'">
+<div *ngIf="fixdeposit == true && inputData.assetType == 'PO TD'">
     <app-po-td-mob></app-po-td-mob>
 </div>
-<div *ngIf="inputData.assetType == 'PO MIS'">
+<div *ngIf="fixdeposit == true && inputData.assetType == 'PO MIS'">
     <app-po-mis-mob></app-po-mis-mob>
 </div>
-<div *ngIf="inputData.assetType == 'SSY'">
+<div *ngIf="fixdeposit == true && inputData.assetType == 'SSY'">
     <app-ssy-mob></app-ssy-mob>
 </div>
