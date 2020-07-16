@@ -22,10 +22,22 @@ export class SmallSavingMobComponent implements OnInit {
   ssyCv: any;
   nscCv: any;
   ppfCv: any;
+  assetSubType: any;
+  showBank: boolean;
+  ppf: any;
+  nsc: any;
+  ssy: any;
+  kvp: any;
+  scss: any;
+  poSavings: any;
+  poRd: any;
+  poTd: any;
+  poMis: any;
 
   constructor(private custumService:CustomerService,private eventService:EventService) { }
 
   ngOnInit() {
+    this.assetSubType = {}
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getPpf();
@@ -38,6 +50,37 @@ export class SmallSavingMobComponent implements OnInit {
     this.getPotd();
     this.getPomis();
   }
+  openSubAsset(subAsset) {
+    if (subAsset == 'PPF') {
+      this.assetSubType = Object.assign(this.assetSubType, { assetType: subAsset });
+      this.assetSubType = Object.assign(this.assetSubType, { asset: this.ppf });
+    } else if (subAsset == 'NSC') {
+      this.assetSubType = Object.assign(this.assetSubType, { assetType: subAsset });
+      this.assetSubType = Object.assign(this.assetSubType, { asset: this.nsc });
+    } else if(subAsset == 'KVP') {
+      this.assetSubType = Object.assign(this.assetSubType, { assetType: subAsset });
+      this.assetSubType = Object.assign(this.assetSubType, { asset: this.ssy });
+    }else if(subAsset == 'SSY') {
+      this.assetSubType = Object.assign(this.assetSubType, { assetType: subAsset });
+      this.assetSubType = Object.assign(this.assetSubType, { asset: this.kvp });
+    }else if(subAsset == 'SCSS') {
+      this.assetSubType = Object.assign(this.assetSubType, { assetType: subAsset });
+      this.assetSubType = Object.assign(this.assetSubType, { asset: this.scss });
+    }else if(subAsset == 'PO Savings') {
+      this.assetSubType = Object.assign(this.assetSubType, { assetType: subAsset });
+      this.assetSubType = Object.assign(this.assetSubType, { asset: this.poSavings });
+    }else if(subAsset == 'PO RD') {
+      this.assetSubType = Object.assign(this.assetSubType, { assetType: subAsset });
+      this.assetSubType = Object.assign(this.assetSubType, { asset: this.poRd });
+    }else if(subAsset == 'PO TD') {
+      this.assetSubType = Object.assign(this.assetSubType, { assetType: subAsset });
+      this.assetSubType = Object.assign(this.assetSubType, { asset: this.poTd });
+    }else{
+      this.assetSubType = Object.assign(this.assetSubType, { assetType: subAsset });
+      this.assetSubType = Object.assign(this.assetSubType, { asset: this.poMis });
+    }
+    this.showBank = true;
+  }
   getPpf(){
     const obj = {
       clientId: this.clientId,
@@ -46,6 +89,7 @@ export class SmallSavingMobComponent implements OnInit {
     this.custumService.getSmallSavingSchemePPFData(obj).subscribe(
       data => {
         if(data){
+          this.ppf = data
           this.ppfCv = data.sumOfCurrentValue;
           this.calculateSum();
         }
@@ -62,6 +106,7 @@ export class SmallSavingMobComponent implements OnInit {
     this.custumService.getSmallSavingSchemeNSCData(obj).subscribe(
       data => {
         if(data){
+          this.nsc = data
           this.nscCv = data.sumOfCurrentValue;
           this.calculateSum();
         }
@@ -78,6 +123,7 @@ export class SmallSavingMobComponent implements OnInit {
     this.custumService.getSmallSavingSchemeSSYData(obj).subscribe(
       data => {
         if(data){
+          this.ssy = data
           this.ssyCv = data.sumOfCurrentValue;
           this.calculateSum();
         }
@@ -94,6 +140,7 @@ export class SmallSavingMobComponent implements OnInit {
     this.custumService.getSmallSavingSchemeKVPData(obj).subscribe(
       data => {
         if(data){
+          this.kvp =data
           this.kvpCv = data.sumOfCurrentValue;
           this.calculateSum();
         }
@@ -110,6 +157,7 @@ export class SmallSavingMobComponent implements OnInit {
     this.custumService.getSmallSavingSchemeSCSSData(obj).subscribe(
       data => {
         if(data){
+          this.scss = data
           this.scssCv = data.sumOfAmountInvested;
           this.calculateSum();
         }
@@ -126,6 +174,7 @@ export class SmallSavingMobComponent implements OnInit {
     this.custumService.getSmallSavingSchemePOSAVINGData(obj).subscribe(
       data => {
         if(data){
+          this.poSavings = data
           this.poSavingCv = data.sumOfCurrentValue;
           this.calculateSum();
         }
@@ -142,6 +191,7 @@ export class SmallSavingMobComponent implements OnInit {
     this.custumService.getSmallSavingSchemePORDData(obj).subscribe(
       data => {
         if(data){
+          this.poRd = data
           this.pordCv = data.sumOfCurrentValue;
           this.calculateSum();
         }
@@ -158,6 +208,7 @@ export class SmallSavingMobComponent implements OnInit {
     this.custumService.getSmallSavingSchemePOTDData(obj).subscribe(
       data => {
         if(data){
+          this.poTd = data
           this.potdCv = data.sumOfCurrentValue;
           this.calculateSum();
         }
@@ -174,6 +225,7 @@ export class SmallSavingMobComponent implements OnInit {
     this.custumService.getSmallSavingSchemePOSAVINGData(obj).subscribe(
       data => {
         if(data){
+          this.poMis = data
           this.PomisCv = data.sumOfCurrentValue;
           this.calculateSum();
         }

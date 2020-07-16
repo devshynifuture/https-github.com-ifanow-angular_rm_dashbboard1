@@ -1,0 +1,233 @@
+<div id="mob-fixed-income" *ngIf="fixdeposit != true && backToMf != true">
+    <div class="row mob-bg-common pb-12 mobtop-navfixed">
+        <div class="col-2" (click)="backToSS = true">
+            <span class="material-icons text-white">
+                keyboard_backspace
+            </span>
+        </div>
+        <div class="col-7 p-0">
+            <h5 class="m-0 f-18 text-white pt-4">{{inputData.assetType}}</h5>
+        </div>
+        <div class="col-3 text-right">
+            <span class="material-icons text-white">
+                filter_list
+            </span>
+        </div>
+    </div>
+    <div class="pt-80 p-8 h-100vh" *ngIf="inputData.assetType == 'PPF'">
+        <div class="pt-16" *ngFor="let item of asset">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20 mob-bb-1">
+                    <div class="col-8">
+                        <p class="mb-0">
+                            <span appFormatNumber>
+                                {{item.description}} {{item.fdNumber}} {{'EPF'}}
+                            </span></p>
+                    </div>
+                    <div class="col-4 text-right">
+                        <p class="m-0">₹
+                            <span appFormatNumber></span>{{item.currentValue}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="inputData.assetType == 'PPF' && asset.length == 0">
+        <p class="m-0 f-14 roboto f-400 pt-20 pb-20 text-center">no data found</p>
+    </div>
+    <div class="pt-80 p-8 h-100vh" *ngIf="inputData.assetType == 'NSC'">
+        <div class="pt-16" *ngFor="let item of asset">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20 mob-bb-1">
+                    <div class="col-8">
+                        <p class="mb-0">
+                            <span appFormatNumber>
+                                {{item.description}} {{item.rdNumber}} {{'RD'}}
+                            </span></p>
+                    </div>
+                    <div class="col-4 text-right">
+                        <p class="m-0">₹{{item.currentValue}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="inputData.assetType == 'NSC' && asset.length == 0">
+        <p class="m-0 f-14 roboto f-400 pt-20 pb-20 text-center">no data found</p>
+    </div>
+    <div class="pt-80 p-8 h-100vh" *ngIf="inputData.assetType == 'KVP'">
+        <div class="pt-16" *ngFor="let item of asset">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20 mob-bb-1">
+                    <div class="col-8">
+                        <p class="mb-0">
+                            <span appFormatNumber>
+                                {{item.description}} {{item.rdNumber}} {{'RD'}}
+                            </span></p>
+                    </div>
+                    <div class="col-4 text-right">
+                        <p class="m-0">₹{{item.currentValue}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="inputData.assetType == 'KVP' && asset.length == 0">
+        <p class="m-0 f-14 roboto f-400 pt-20 pb-20 text-center">no data found</p>
+    </div>
+    <div class="pt-80 p-8 h-100vh" *ngIf="inputData.assetType == 'SSY'">
+        <div class="pt-16" *ngFor="let item of asset">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20 mob-bb-1">
+                    <div class="col-8">
+                        <p class="mb-0">
+                            <span appFormatNumber>
+                                {{item.description}} {{item.rdNumber}} {{'RD'}}
+                            </span></p>
+                    </div>
+                    <div class="col-4 text-right">
+                        <p class="m-0">₹{{item.currentValue}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="inputData.assetType == 'SSY' && asset.length == 0">
+        <p class="m-0 f-14 roboto f-400 pt-20 pb-20 text-center">no data found</p>
+    </div>
+    <div class="pt-80 p-8 h-100vh" *ngIf="inputData.assetType == 'SCSS'">
+        <div class="pt-16" *ngFor="let item of asset">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20 mob-bb-1">
+                    <div class="col-8">
+                        <p class="mb-0">
+                            <span appFormatNumber>
+                                {{item.description}} {{item.rdNumber}} {{'RD'}}
+                            </span></p>
+                    </div>
+                    <div class="col-4 text-right">
+                        <p class="m-0">₹{{item.currentValue}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="inputData.assetType == 'SCSS' && asset.length == 0">
+        <p class="m-0 f-14 roboto f-400 pt-20 pb-20 text-center">no data found</p>
+    </div>
+    <div class="pt-80 p-8 h-100vh" *ngIf="inputData.assetType == 'PO Savings'">
+        <div class="pt-16" *ngFor="let item of asset">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20 mob-bb-1">
+                    <div class="col-8">
+                        <p class="mb-0">
+                            <span appFormatNumber>
+                                {{item.description}} {{item.rdNumber}} {{'RD'}}
+                            </span></p>
+                    </div>
+                    <div class="col-4 text-right">
+                        <p class="m-0">₹{{item.currentValue}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="inputData.assetType == 'PO Savings' && asset.length == 0">
+        <p class="m-0 f-14 roboto f-400 pt-20 pb-20 text-center">no data found</p>
+    </div>
+    <div class="pt-80 p-8 h-100vh" *ngIf="inputData.assetType == 'PO RD'">
+        <div class="pt-16" *ngFor="let item of asset">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20 mob-bb-1">
+                    <div class="col-8">
+                        <p class="mb-0">
+                            <span appFormatNumber>
+                                {{item.description}} {{item.rdNumber}} {{'RD'}}
+                            </span></p>
+                    </div>
+                    <div class="col-4 text-right">
+                        <p class="m-0">₹{{item.currentValue}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="inputData.assetType == 'PO RD' && asset.length == 0">
+        <p class="m-0 f-14 roboto f-400 pt-20 pb-20 text-center">no data found</p>
+    </div>
+    <div class="pt-80 p-8 h-100vh" *ngIf="inputData.assetType == 'PO TD'">
+        <div class="pt-16" *ngFor="let item of asset">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20 mob-bb-1">
+                    <div class="col-8">
+                        <p class="mb-0">
+                            <span appFormatNumber>
+                                {{item.description}} {{item.rdNumber}} {{'RD'}}
+                            </span></p>
+                    </div>
+                    <div class="col-4 text-right">
+                        <p class="m-0">₹{{item.currentValue}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="inputData.assetType == 'PO TD' && asset.length == 0">
+        <p class="m-0 f-14 roboto f-400 pt-20 pb-20 text-center">no data found</p>
+    </div>
+    <div class="pt-80 p-8 h-100vh" *ngIf="inputData.assetType == 'PO Mis'">
+        <div class="pt-16" *ngFor="let item of asset">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20 mob-bb-1">
+                    <div class="col-8">
+                        <p class="mb-0">
+                            <span appFormatNumber>
+                                {{item.description}} {{item.rdNumber}} {{'RD'}}
+                            </span></p>
+                    </div>
+                    <div class="col-4 text-right">
+                        <p class="m-0">₹{{item.currentValue}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="inputData.assetType == 'PO Mis' && asset.length == 0">
+        <p class="m-0 f-14 roboto f-400 pt-20 pb-20 text-center">no data found</p>
+    </div>
+    <div class="document-bottom-action">
+        <button (click)="fixdeposit = true" mat-stroked-button class="btn-primary"><span class="material-icons">
+                add
+            </span></button>
+    </div>
+</div>
+<div *ngIf="backToSS == true">
+<app-small-saving-mob></app-small-saving-mob>
+</div>
+<div *ngIf="inputData.assetType == 'PPF'">
+    <app-ppf-mob></app-ppf-mob>
+</div>
+<div *ngIf="inputData.assetType == 'KVP'">
+    <app-kvp-mob></app-kvp-mob>
+</div>
+<div *ngIf="inputData.assetType == 'NSC'">
+    <app-nsc-mob></app-nsc-mob>
+</div>
+<div *ngIf="inputData.assetType == 'SCSS'">
+    <app-scss-mob></app-scss-mob>
+</div>
+<div *ngIf="inputData.assetType == 'PO Savings'">
+    <app-po-savings-mob></app-po-savings-mob>
+</div>
+<div *ngIf="inputData.assetType == 'PO RD'">
+    <app-po-rd-mob></app-po-rd-mob>
+</div>
+<div *ngIf="inputData.assetType == 'PO TD'">
+    <app-po-td-mob></app-po-td-mob>
+</div>
+<div *ngIf="inputData.assetType == 'PO MIS'">
+    <app-po-mis-mob></app-po-mis-mob>
+</div>
+<div *ngIf="inputData.assetType == 'SSY'">
+    <app-ssy-mob></app-ssy-mob>
+</div>
