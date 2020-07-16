@@ -6,7 +6,7 @@
             </span>
         </div>
         <div class="col-7 p-0">
-            <h5 class="m-0 f-18 text-white pt-4">Fixed deposits</h5>
+            <h5 class="m-0 f-18 text-white pt-4">{{inputData}}</h5>
         </div>
         <div class="col-3 text-right">
             <span class="material-icons text-white">
@@ -50,19 +50,19 @@
             </span></button>
     </div>
 </div>
-<div *ngIf="fixdeposit==true && inputData == 'fd'">
+<div *ngIf="fixdeposit==true && inputData == 'Fixed deposite'">
     <app-fixed-deposit-mob></app-fixed-deposit-mob>
 </div>
-<div *ngIf="fixdeposit==true && inputData == 'rd'">
+<div *ngIf="fixdeposit==true && inputData == 'Recurring deposite'">
     <app-recurring-deposite-mob></app-recurring-deposite-mob>
 </div>
-<div *ngIf="fixdeposit == true && inputData == 'bond'">
+<div *ngIf="fixdeposit == true && inputData == 'Bond'">
     <app-bond-mob></app-bond-mob>
 </div>
-<div *ngIf="fixdeposit == true && inputData == 'gold'">
+<div *ngIf="fixdeposit == true && inputData == 'Gold'">
     <app-add-gold-mob></app-add-gold-mob>
 </div>
-<div *ngIf="fixdeposit == true && inputData == 'others'">
+<div *ngIf="fixdeposit == true && inputData == 'Others'">
     <app-add-others-mob></app-add-others-mob>
 </div>
 
