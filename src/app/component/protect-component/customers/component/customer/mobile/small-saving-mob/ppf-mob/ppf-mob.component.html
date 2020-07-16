@@ -1,12 +1,12 @@
-<div id="mob-fixed-income">
+<div id="mob-fixed-income" *ngIf="backToSS != true">
     <div class="row mob-bg-common pb-12 mobtop-navfixed">
-        <div class="col-2">
-            <span class="material-icons text-white">
+        <div class="col-2" (click)="backToSS = true">
+            <span class="material-icons text-white" >
                 keyboard_backspace
             </span>
         </div>
         <div class="col-7 p-0">
-            <h5 class="m-0 f-18 text-white pt-4">Add fixed deposit</h5>
+            <h5 class="m-0 f-18 text-white pt-4">Add PPF</h5>
         </div>
     </div>
     <div [formGroup]="ppfSchemeForm" class="bg-grey lter pt-80 mb-48 add-fixed-desposit">
@@ -297,4 +297,7 @@
         </div>
     </div>
 
+</div>
+<div *ngIf="backToSS == true">
+  <app-small-saving-mob></app-small-saving-mob>
 </div>

@@ -1,6 +1,6 @@
-<div id="mob-fixed-income">
+<div id="mob-fixed-income" *ngIf="backToSS != true">
     <div class="row mob-bg-common pb-12 mobtop-navfixed">
-        <div class="col-2">
+        <div class="col-2" (click)="backToSS = true">
             <span class="material-icons text-white">
                 keyboard_backspace
             </span>
@@ -284,4 +284,7 @@
         </div>
     </div>
 
+</div>
+<div *ngIf="backToSS == true">
+    <app-small-saving-mob></app-small-saving-mob>
 </div>

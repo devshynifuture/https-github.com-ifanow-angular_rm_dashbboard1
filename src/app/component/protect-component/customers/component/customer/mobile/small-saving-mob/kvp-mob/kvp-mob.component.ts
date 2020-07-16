@@ -51,7 +51,7 @@ export class KvpMobComponent implements OnInit {
   flag: any;
   callMethod:any;
   bankList:any = [];
-
+  backToSS;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   adviceShowHeaderAndFooter: boolean = true;
     constructor(public utils: UtilService, private datePipe: DatePipe,  private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService,public dialog: MatDialog, private enumService: EnumServiceService) { }
