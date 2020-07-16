@@ -14,14 +14,14 @@
             </span>
         </div>
     </div>
-    <div class="pt-80 p-8 h-100vh" *ngIf="inputData.assetType == 'Fixed deposite'">
+    <div class="pt-80 p-8 h-100vh" *ngIf="inputData.assetType == 'EPF'">
         <div class="pt-16" *ngFor="let item of asset">
             <div class="bg-white">
                 <div class="row pt-20 pb-20 mob-bb-1">
                     <div class="col-8">
                         <p class="mb-0">
                             <span appFormatNumber>
-                                {{item.description}} {{item.fdNumber}} {{'FD'}}
+                                {{item.description}} {{item.fdNumber}} {{'EPF'}}
                             </span></p>
                     </div>
                     <div class="col-4 text-right">
@@ -32,7 +32,7 @@
             </div>
         </div>
     </div>
-    <div class="pt-80 p-8 h-100vh" *ngIf="inputData.assetType == 'Recurring deposite'">
+    <div class="pt-80 p-8 h-100vh" *ngIf="inputData.assetType == 'NPS'">
         <div class="pt-16" *ngFor="let item of asset">
             <div class="bg-white">
                 <div class="row pt-20 pb-20 mob-bb-1">
@@ -49,7 +49,7 @@
             </div>
         </div>
     </div>
-    <div class="pt-80 p-8 h-100vh" *ngIf="inputData.assetType == 'Bond'">
+    <div class="pt-80 p-8 h-100vh" *ngIf="inputData.assetType == 'Gratuity'">
         <div class="pt-16" *ngFor="let item of asset">
             <div class="bg-white">
                 <div class="row pt-20 pb-20 mob-bb-1">
@@ -72,22 +72,16 @@
             </span></button>
     </div>
 </div>
-<div *ngIf="fixdeposit==true && inputData.assetType == 'Fixed deposite'">
-    <app-fixed-deposit-mob></app-fixed-deposit-mob>
+<div *ngIf="fixdeposit==true && inputData.assetType == 'EPF'">
+    <app-epf-mob></app-epf-mob>
 </div>
-<div *ngIf="fixdeposit==true && inputData.assetType == 'Recurring deposite'">
-    <app-recurring-deposite-mob></app-recurring-deposite-mob>
+<div *ngIf="fixdeposit==true && inputData.assetType == 'NPS'">
+    <app-nps-mob></app-nps-mob>
 </div>
-<div *ngIf="fixdeposit == true && inputData.assetType == 'Bond'">
-    <app-bond-mob></app-bond-mob>
-</div>
-<div *ngIf="fixdeposit == true && inputData.assetType == 'Gold'">
-    <app-add-gold-mob></app-add-gold-mob>
-</div>
-<div *ngIf="fixdeposit == true && inputData.assetType == 'Others'">
-    <app-add-others-mob></app-add-others-mob>
+<div *ngIf="fixdeposit == true && inputData.assetType == 'Gratuity'">
+    <app-gratuity-mob></app-gratuity-mob>
 </div>
 <div *ngIf="backToMf == true">
-<app-fixed-income-mob></app-fixed-income-mob>
+<app-retirement-acc-mob></app-retirement-acc-mob>
 </div>
 
