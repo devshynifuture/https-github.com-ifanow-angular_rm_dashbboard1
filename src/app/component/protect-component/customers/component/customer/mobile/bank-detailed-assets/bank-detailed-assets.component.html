@@ -1,6 +1,6 @@
-<div id="mob-fixed-income">
+<div id="mob-fixed-income" *ngIf="fixdeposit != true && backToMf != true">
     <div class="row mob-bg-common pb-12 mobtop-navfixed">
-        <div class="col-2">
+        <div class="col-2" (click)="backToMf = true">
             <span class="material-icons text-white">
                 keyboard_backspace
             </span>
@@ -45,8 +45,18 @@
         </div>
     </div>
     <div class="document-bottom-action">
-        <button (click)="addFixedDeposit(null)" mat-stroked-button class="btn-primary"><span class="material-icons">
+        <button (click)="fixdeposit = true" mat-stroked-button class="btn-primary"><span class="material-icons">
                 add
             </span></button>
     </div>
 </div>
+<div *ngIf="fixdeposit==true && inputData == 'fd'">
+    <app-fixed-deposit-mob></app-fixed-deposit-mob>
+</div>
+<div *ngIf="fixdeposit==true && inputData == 'rd'">
+    <app-recurring-deposite-mob></app-recurring-deposite-mob>
+</div>
+<div *ngIf="fixdeposit == true && inputData == 'bond'">
+    <app-bond-mob></app-bond-mob>
+</div>
+

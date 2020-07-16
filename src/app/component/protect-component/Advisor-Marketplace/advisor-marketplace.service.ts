@@ -15,4 +15,12 @@ export class AdvisorMarketplaceService {
     const httpParams = new HttpParams().set('advisorId', data.advisorId);
     return this.http.get(apiConfig.MARKET_PLACE + appConfig.GET_CALL_DETAILS, httpParams);
   }
+
+  addCallDetails(data){ 
+    return this.http.post(apiConfig.MARKET_PLACE + appConfig.ADD_CALL_DETAILS, data);
+  }
+
+  addCallAvailable(data){
+    return this.http.post(apiConfig.MARKET_PLACE + appConfig.ADD_CALL_AVAILABLE, data);
+  }
 }

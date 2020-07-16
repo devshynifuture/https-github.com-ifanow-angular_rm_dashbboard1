@@ -101,13 +101,21 @@
             <div class="form-group mb-0">
                 <mat-form-field appearance="standard" floatLabel="never">
                     <mat-select class="form-control">
-                        <mat-option>
-                            Select relation
-                        </mat-option>
+                        <mat-option disabled value=''>Select option</mat-option>
+                        <mat-option *ngFor="let relation of relationList" [value]="relation.value">
+                            {{relation.name}}</mat-option>
                     </mat-select>
                     <mat-hint class="text-custom">Relation with group head</mat-hint>
                 </mat-form-field>
             </div>
         </div>
     </div>
+</div>
+<div class="row profile-save-bottom">
+    <div class="col-2"></div>
+    <div class="col-8 pt-8 pb-8">
+        <button (click)="editFamilyMember()" mat-stroked-button
+            class="btn-primary w-100 f-16 h-40 br-40">Submit</button>
+    </div>
+    <div class="col-2"></div>
 </div>
