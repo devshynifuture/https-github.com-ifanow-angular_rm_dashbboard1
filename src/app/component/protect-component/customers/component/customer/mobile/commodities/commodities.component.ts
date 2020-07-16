@@ -7,12 +7,14 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class CommoditiesComponent implements OnInit {
   inputData: any;
-
+  assetData: any;
+  commodities;
+  backToMf;
   constructor() { }
   @Input()
   set data(data) {
     this.inputData = data.assetType;
-    this.data = data.data;
+    this.assetData = data.data.assetList
     console.log('This is Input data of proceed ', data);
   }
   ngOnInit() {

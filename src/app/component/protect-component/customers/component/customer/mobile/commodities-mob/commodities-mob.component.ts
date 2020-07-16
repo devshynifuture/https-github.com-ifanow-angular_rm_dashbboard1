@@ -22,6 +22,7 @@ export class CommoditiesMobComponent implements OnInit {
   otherCv: any;
   assetSubType = {assetType:'',data:''};
   showBank: any;
+  backToMf
   constructor(private custumService: CustomerService, private eventService: EventService, private subInjectService: SubscriptionInject) { }
 
   ngOnInit() {
