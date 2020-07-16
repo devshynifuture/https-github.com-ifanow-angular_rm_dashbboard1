@@ -12,8 +12,10 @@ export class RealEstateMobComponent implements OnInit {
   advisorId: any;
   clientId: any;
   realEstateData: any;
+  showDetail
   @Output() outputValue = new EventEmitter<any>();
   realEstateCv: any;
+  assetSubType = {assetType:'',data:''};
 
   constructor(private custumService:CustomerService,private eventService:EventService) { }
 
@@ -41,5 +43,9 @@ export class RealEstateMobComponent implements OnInit {
   }
   changeValue(flag){
     this.outputValue.emit(flag);
+  }
+  openSubAsset(subAsset,value) {
+    this.assetSubType.assetType = subAsset;
+    this.assetSubType.data = value;
   }
 }
