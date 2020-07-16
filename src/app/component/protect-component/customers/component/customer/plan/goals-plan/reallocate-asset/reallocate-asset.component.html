@@ -69,11 +69,11 @@
     <div class="edit-footer mt-52">
         <div class="row">
             <div class="col-md-7 pl-0 text-left">
-                <button class="text-danger p-0" mat-button>UNALLOCATE</button>
+                <!-- <button class="text-danger p-0" mat-button>UNALLOCATE</button> -->
+                <button class="text-primitive mr-12" mat-button mat-dialog-close>Cancel</button>
             </div>
 
             <div class="col-md-5 pr-0 d-flex align-items-center justify-content-end">
-                <button class="text-primitive mr-12" mat-button mat-dialog-close>Cancel</button>
                 <app-progress-button (btnClick)="reallocate()" class="btn-bottom   br-0 text-inherit" [options]="barButtonOptions">
                 </app-progress-button>
             </div>

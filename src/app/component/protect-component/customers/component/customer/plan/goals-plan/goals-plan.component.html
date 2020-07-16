@@ -249,12 +249,12 @@
                         </div>
                     </div>
 
-                    <div class="row pt-28" [hidden]="!hasCostOfDelay || !loaderFn.loading">
+                    <div class="row pt-28" [hidden]="!hasCostOfDelay || loaderFn.loading">
                         <div class="col-md-12 p-0">
                             <h5 class="m-0 f-500 text-black pb-8">Cost of delay</h5>
                         </div>
                     </div>
-                    <div class="row b-a" [hidden]="!hasCostOfDelay || !loaderFn.loading">
+                    <div class="row b-a" [hidden]="!hasCostOfDelay || loaderFn.loading">
                         <div class="col-md-6" id="monthly-chart-container-main"></div>
                         <div class="col-md-6" id="lumpsum-chart-container-main"></div>
                     </div>
