@@ -95,6 +95,9 @@
                 </div>
             </div>
         </div>
+        <app-holder-name-mobile-view [holderListInput]="userData.bankData.holderNameList"
+            (holderList)="getHolderList($event)">
+        </app-holder-name-mobile-view>
         <div class="row pt-28">
             <div class="col-12 mob-pl-10 mob-pr-10">
                 <h5 class="m-0 roboto text-dark pb-10 f-16">MICR code</h5>

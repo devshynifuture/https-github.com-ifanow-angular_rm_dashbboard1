@@ -111,6 +111,8 @@ import { EpfMobComponent } from './component/customer/mobile/retirement-acc-mob/
 import { NpsMobComponent } from './component/customer/mobile/retirement-acc-mob/nps-mob/nps-mob.component';
 import { GratuityMobComponent } from './component/customer/mobile/retirement-acc-mob/gratuity-mob/gratuity-mob.component';
 import { GetRetirementMobComponent } from './component/customer/mobile/retirement-acc-mob/get-retirement-mob/get-retirement-mob.component';
+import { HolderNameMobileViewComponent } from './component/customer/mobile/profile/mobile-profile/holder-name-mobile-view/holder-name-mobile-view.component';
+import { CommonComponentModule } from '../common-component/common-component.module';
 
 
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
@@ -130,7 +132,7 @@ import { GetRetirementMobComponent } from './component/customer/mobile/retiremen
     MinorMemberFormComponent, RetirementAccMobComponent, RealEstateComponent, SmallSavingComponent, CashAndBankComponent, CommoditiesComponent, LiabilitiesComponent, LifeInsuranceComponent, GeneralInsuranceComponent,
     MobileViewMoreInfoComponent,
     CashAndBankMobComponent, StocksMobComponent, RealEstateMobComponent, SmallSavingMobComponent, CommoditiesMobComponent, LiabilitiesMobComponent, LifeInsuranceMobComponent, GeneralInsuranceMobComponent,
-    AddGoldMobComponent, BankDetailedAssetsComponent, FixedDepositMobComponent, BondMobComponent, RecurringDepositeMobComponent, AddOthersMobComponent, EpfMobComponent, NpsMobComponent, GratuityMobComponent, GetRetirementMobComponent],
+    AddGoldMobComponent, BankDetailedAssetsComponent, FixedDepositMobComponent, BondMobComponent, RecurringDepositeMobComponent, AddOthersMobComponent, EpfMobComponent, NpsMobComponent, GratuityMobComponent, GetRetirementMobComponent, HolderNameMobileViewComponent],
   imports: [
     // BrowserModule,
     CommonModule,
@@ -155,6 +157,7 @@ import { GetRetirementMobComponent } from './component/customer/mobile/retiremen
     TransactionEntryModule,
     SubscriptionEntry,
     SubscriptionUpperEntry,
+    CommonComponentModule
 
     // PlanModule
   ],

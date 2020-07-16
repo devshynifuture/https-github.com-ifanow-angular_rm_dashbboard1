@@ -277,7 +277,6 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       mapData.gv = goalSubData.goalFV;
       mapData.goalStartDate = goalSubData.goalStartDate;
       mapData.goalEndDate = goalSubData.goalStartDate; // because start hote hi khatam ho gaya
-      mapData.achievedValue = goalSubData.achievedValue;
       mapData.dashboardData = {
         goalYear: new Date(goalSubData.goalStartDate).getFullYear(),
         presentValue: goalSubData.goalPresentValue,
@@ -286,7 +285,8 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         debt_monthly: this.getSumOfJsonMap(goalSubData.sipAmountDebt) || 0,
         lump_equity: this.getSumOfJsonMap(goalSubData.lumpSumAmountEquity) || 0,
         lump_debt: this.getSumOfJsonMap(goalSubData.lumpSumAmountDebt) || 0,
-        goalProgress: (goalSubData.achievedValue / goalSubData.goalFV * 100),
+        goalProgress: goalSubData.goalAchievedPercentage,
+        achievedValue: goalSubData.achievedValue
       }
       mapData.remainingData = goalSubData;
       mapData.remainingData.differentGoalYears = [goalSubData.goalStartDate];
@@ -296,7 +296,6 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       mapData.year = (new Date(goalSubData.differentGoalYears[0]).getFullYear()) + ' - ' + (new Date(goalSubData.differentGoalYears[goalSubData.differentGoalYears.length - 1]).getFullYear());
       mapData.goalName = goalSubData.name;
       mapData.gv = goalSubData.futureValue;
-      mapData.achievedValue = goalSubData.achievedValue;
       mapData.goalStartDate = goalSubData.differentGoalYears[0];
       mapData.goalEndDate = goalSubData.differentGoalYears[goalSubData.differentGoalYears.length - 1];
       mapData.dashboardData = {
@@ -307,7 +306,8 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         debt_monthly: this.getSumOfJsonMap(goalSubData.sipAmountDebt),
         lump_equity: this.getSumOfJsonMap(goalSubData.lumpSumAmountEquity),
         lump_debt: this.getSumOfJsonMap(goalSubData.lumpSumAmountDebt),
-        goalProgress: (goalSubData.achievedValue / goalSubData.futureValue * 100),
+        goalProgress: goalSubData.goalAchievedPercentage,
+        achievedValue: goalSubData.achievedValue
       }
       mapData.remainingData = goalSubData;
     }
