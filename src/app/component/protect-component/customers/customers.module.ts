@@ -113,6 +113,7 @@ import { GratuityMobComponent } from './component/customer/mobile/retirement-acc
 import { GetRetirementMobComponent } from './component/customer/mobile/retirement-acc-mob/get-retirement-mob/get-retirement-mob.component';
 import { HolderNameMobileViewComponent } from './component/customer/mobile/profile/mobile-profile/holder-name-mobile-view/holder-name-mobile-view.component';
 import { CommonComponentModule } from '../common-component/common-component.module';
+import { MobInvestComponent } from './component/customer/mobile/mob-invest/mob-invest.component';
 
 
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
@@ -132,7 +133,7 @@ import { CommonComponentModule } from '../common-component/common-component.modu
     MinorMemberFormComponent, RetirementAccMobComponent, RealEstateComponent, SmallSavingComponent, CashAndBankComponent, CommoditiesComponent, LiabilitiesComponent, LifeInsuranceComponent, GeneralInsuranceComponent,
     MobileViewMoreInfoComponent,
     CashAndBankMobComponent, StocksMobComponent, RealEstateMobComponent, SmallSavingMobComponent, CommoditiesMobComponent, LiabilitiesMobComponent, LifeInsuranceMobComponent, GeneralInsuranceMobComponent,
-    AddGoldMobComponent, BankDetailedAssetsComponent, FixedDepositMobComponent, BondMobComponent, RecurringDepositeMobComponent, AddOthersMobComponent, EpfMobComponent, NpsMobComponent, GratuityMobComponent, GetRetirementMobComponent, HolderNameMobileViewComponent],
+    AddGoldMobComponent, BankDetailedAssetsComponent, FixedDepositMobComponent, BondMobComponent, RecurringDepositeMobComponent, AddOthersMobComponent, EpfMobComponent, NpsMobComponent, GratuityMobComponent, GetRetirementMobComponent, HolderNameMobileViewComponent, MobInvestComponent],
   imports: [
     // BrowserModule,
     CommonModule,
