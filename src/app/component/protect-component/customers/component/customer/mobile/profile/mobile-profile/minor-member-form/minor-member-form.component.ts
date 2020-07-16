@@ -31,7 +31,7 @@ export class MinorMemberFormComponent implements OnInit {
       data.relationshipId == 18 ||
       data.relationshipId == 19 ||
       data.relationshipId == 17) {
-      relationListFilterOnID(data)
+      this.relationList = relationListFilterOnID(data)
     }
     else {
       this.relationshipTypeMethod(data.genderId, data.age)
