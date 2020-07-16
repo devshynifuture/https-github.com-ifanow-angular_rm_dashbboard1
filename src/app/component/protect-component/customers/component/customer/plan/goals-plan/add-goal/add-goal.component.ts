@@ -134,7 +134,6 @@ export class AddGoalComponent implements OnInit {
     })
   }
   
-
   getFamilyMembersList() {
     const obj = {
       clientId: this.clientId,
