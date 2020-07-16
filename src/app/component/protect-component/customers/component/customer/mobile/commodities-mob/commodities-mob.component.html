@@ -1,4 +1,4 @@
-<div id="mob-fixed-income">
+<div id="mob-fixed-income" *ngIf="!showBank">
     <div class="row mob-bg-common pb-12 mobtop-navfixed">
       <div class="col-2" (click)="changeValue(false)">
         <span class="material-icons text-white">
@@ -27,14 +27,9 @@
           </div>
         </div>
       </div>
-      <div class="mob-add" (click)="addGold('addGold','open',null)">
-        <span class="material-icons text-white">
-      add
-      </span>
-      </div>
     <div class="pt-16">
         <div class="bg-white">
-          <div class="row pt-20 pb-20 mob-bb-1">
+          <div class="row pt-20 pb-20 mob-bb-1" (click)="showBank = true;openSubAsset('Gold')">
             <div class="col-8">
               <p class="mb-0">Gold</p>
             </div>
@@ -42,7 +37,7 @@
               <p class="m-0">{{goldCV ? '₹' : ''}}<span appFormatNumber [value]="goldCV"></span></p>
             </div>
           </div>
-          <div class="row pt-20 pb-20 mob-bb-1">
+          <div class="row pt-20 pb-20 mob-bb-1" (click)="showBank = true;openSubAsset('Others')">
             <div class="col-8">
               <p class="mb-0">Others</p>
             </div>
@@ -58,3 +53,6 @@
      
     </div>
     </div>
+    <div *ngIf="showBank">
+      <app-bank-detailed-assets [data]="assetSubType"></app-bank-detailed-assets>
+  </div>
