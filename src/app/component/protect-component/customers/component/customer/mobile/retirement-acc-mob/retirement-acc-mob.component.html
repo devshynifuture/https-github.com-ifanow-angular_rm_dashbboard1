@@ -1,4 +1,4 @@
-<div id="mob-fixed-income">
+<div id="mob-fixed-income" *ngIf="backToMf != true && showBank != true">
   <div class="row mob-bg-common pb-12 mobtop-navfixed">
     <div class="col-2" (click)="changeValue(false)">
       <span class="material-icons text-white">
@@ -29,34 +29,40 @@
     </div>
     <div class="pt-16">
       <div class="bg-white">
-        <div class="row pt-20 pb-20 mob-bb-1">
+        <div class="row pt-20 pb-20 mob-bb-1" (click)="openSubAsset('EPF')">
           <div class="col-8">
             <p class="mb-0">EPF</p>
           </div>
           <div class="col-4 text-right">
-            <p class="m-0">{{epfData.sumOfEpfBalanceTillToday ? '₹' : ''}}<span
+            <p class="m-0">{{epfData.sumOfEpfBalanceTillToday ? '₹' : '0'}}<span
                 appFormatNumber>{{epfData.sumOfEpfBalanceTillToday}}</span></p>
           </div>
         </div>
-        <div class="row pt-20 pb-20 mob-bb-1">
+        <div class="row pt-20 pb-20 mob-bb-1" (click)="openSubAsset('NPS')">
           <div class="col-8">
             <p class="mb-0">NPS</p>
           </div>
           <div class="col-4 text-right">
-            <p class="m-0">{{npsData.sumOfCurrentValue ? '₹' : ''}}<span
+            <p class="m-0">{{npsData.sumOfCurrentValue ? '₹' : '0'}}<span
                 appFormatNumber>{{npsData.sumOfCurrentValue}}</span></p>
           </div>
         </div>
-        <div class="row pt-20 pb-20 mob-bb-1">
+        <div class="row pt-20 pb-20 mob-bb-1" (click)="openSubAsset('Gratuity')">
           <div class="col-8">
             <p class="mb-0">Gratuity</p>
           </div>
           <div class="col-4 text-right">
-            <p class="m-0">{{gratuity.sumOfAmountReceived ? '₹' : ''}}<span
+            <p class="m-0">{{gratuity.sumOfAmountReceived ? '₹' : '0'}}<span
                 appFormatNumber>{{gratuity.sumOfAmountReceived}}</span></p>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
+<div *ngIf="backToMf == true">
+  <app-mobile-portfoilo></app-mobile-portfoilo>
+</div>
+<div *ngIf="showBank == true">
+  <app-get-retirement-mob [data]="assetSubType"></app-get-retirement-mob>
 </div>

@@ -201,7 +201,7 @@ export class AddEditBankMobileViewComponent implements OnInit {
   saveNext(flag) {
     if (this.bankForm.invalid) {
       this.bankForm.markAllAsTouched();
-      // this.holderList.markAllAsTouched();
+      this.holderList.markAllAsTouched();
       return;
     }
     else {

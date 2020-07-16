@@ -14,6 +14,7 @@ import { relationListFilterOnID } from 'src/app/component/protect-component/Peop
 })
 export class IndividualMemberFormComponent implements OnInit {
   relationList: { name: string; value: number; }[];
+  mobileData: any;
   constructor(
     private fb: FormBuilder,
     private datePipe: DatePipe,
@@ -34,7 +35,7 @@ export class IndividualMemberFormComponent implements OnInit {
       data.relationshipId == 18 ||
       data.relationshipId == 19 ||
       data.relationshipId == 17) {
-      relationListFilterOnID(data)
+      this.relationList = relationListFilterOnID(data)
     }
     else {
       this.relationshipTypeMethod(data.genderId, data.age)
@@ -46,6 +47,7 @@ export class IndividualMemberFormComponent implements OnInit {
   userData: any;
   @Input() categoryType;
   @Input() taxStatusType;
+  mobileNumberFlag = 'Mobile number';
 
   ngOnInit() {
   }
@@ -112,7 +114,21 @@ export class IndividualMemberFormComponent implements OnInit {
   toUpperCase(formControl, event) {
     this.utilService.toUpperCase(formControl, event);
   }
+  getNumberDetails(data) {
+    console.log(data);
+    this.mobileData = data;
+  }
+
   editFamilyMember() {
+    const mobileList = [];
+    this.mobileData.controls.forEach(element => {
+      console.log(element);
+      mobileList.push({
+        mobileNo: element.get('number').value,
+        verificationStatus: 0,
+        isdCodeId: element.get('code').value
+      });
+    });
     const obj = {
       adminAdvisorId: AuthService.getAdminId(),
       advisorId: AuthService.getClientData().advisorId,
@@ -130,7 +146,7 @@ export class IndividualMemberFormComponent implements OnInit {
       familyMemberType: this.categoryType,
       isKycCompliant: 1,
       aadhaarNumber: null,
-      // mobileList,
+      mobileList,
       bio: null,
       remarks: null,
       emailList: [
@@ -139,7 +155,7 @@ export class IndividualMemberFormComponent implements OnInit {
           verificationStatus: 0
         }
       ],
-      // guardianData: gardianObj,
+      guardianData: null,
       invTypeCategory: 0,
       categoryTypeflag: null,
       anniversaryDate: null

@@ -13,6 +13,7 @@ import { relationListFilterOnID } from 'src/app/component/protect-component/Peop
 })
 export class MinorMemberFormComponent implements OnInit {
   relationList: { name: string; value: number; }[];
+  mobileData: any;
   constructor(
     private fb: FormBuilder,
     public utilService: UtilService,
@@ -31,7 +32,7 @@ export class MinorMemberFormComponent implements OnInit {
       data.relationshipId == 18 ||
       data.relationshipId == 19 ||
       data.relationshipId == 17) {
-      relationListFilterOnID(data)
+      this.relationList = relationListFilterOnID(data)
     }
     else {
       this.relationshipTypeMethod(data.genderId, data.age)
@@ -45,9 +46,15 @@ export class MinorMemberFormComponent implements OnInit {
   @Input() categoryType;
   @Input() taxStatusType;
   @Output() savedData = new EventEmitter();
+  mobileNumberFlag = 'Mobile number';
 
 
   ngOnInit() {
+  }
+
+  getNumberDetails(data) {
+    console.log(data);
+    this.mobileData = data;
   }
 
   createMinorForm(data) {
@@ -110,14 +117,14 @@ export class MinorMemberFormComponent implements OnInit {
 
   editFamilyMember() {
     const mobileList = [];
-    // this.mobileData.controls.forEach(element => {
-    //   console.log(element);
-    //   mobileList.push({
-    //     mobileNo: element.get('number').value,
-    //     verificationStatus: 0,
-    //     isdCodeId: element.get('code').value
-    //   });
-    // });
+    this.mobileData.controls.forEach(element => {
+      console.log(element);
+      mobileList.push({
+        mobileNo: element.get('number').value,
+        verificationStatus: 0,
+        isdCodeId: element.get('code').value
+      });
+    });
 
     let gardianObj;
     gardianObj = {
