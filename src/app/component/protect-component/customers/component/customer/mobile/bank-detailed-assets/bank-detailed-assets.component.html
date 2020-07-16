@@ -21,11 +21,12 @@
                     <div class="col-8">
                         <p class="mb-0">
                             <span appFormatNumber>
-                                {{item.description}} | {{item.fdNumber}} | 'FD'
+                                {{item.description}} {{item.fdNumber}} {{'FD'}}
                             </span></p>
                     </div>
                     <div class="col-4 text-right">
-                        <p class="m-0">₹{{item.currentValue}}</p>
+                        <p class="m-0">₹
+                            <span appFormatNumber>{{item.currentValue}}</span></p>
                     </div>
                 </div>
             </div>
@@ -38,7 +39,7 @@
                     <div class="col-8">
                         <p class="mb-0">
                             <span appFormatNumber>
-                                {{item.description}} | {{item.rdNumber}} | 'RD'
+                                {{item.description}} {{item.rdNumber}} {{'RD'}}
                             </span></p>
                     </div>
                     <div class="col-4 text-right">
@@ -55,7 +56,7 @@
                     <div class="col-8">
                         <p class="mb-0">
                             <span appFormatNumber>
-                                {{item.description}} | {{item.bondName}} | 'Bond'
+                                {{item.description}} | {{item.bondName}} | {{'Bond'}}
                             </span></p>
                     </div>
                     <div class="col-4 text-right">

@@ -18,6 +18,8 @@ export class FixedIncomeMobComponent implements OnInit {
   advisorId: any;
   clientId: any;
   dataSource: any = new MatTableDataSource();
+  dataSource1: any = new MatTableDataSource();
+  dataSource2: any = new MatTableDataSource();
   noData: string;
   hideFilter: boolean;
   dataList: any;
@@ -55,8 +57,16 @@ export class FixedIncomeMobComponent implements OnInit {
   @Output() changeCount = new EventEmitter();
 
   openSubAsset(subAsset) {
-    this.assetSubType = Object.assign(this.assetSubType, { assetType: subAsset });
-    this.assetSubType = Object.assign(this.assetSubType, { asset: this.dataSource.data });
+    if (subAsset == 'Fixed deposite') {
+      this.assetSubType = Object.assign(this.assetSubType, { assetType: subAsset });
+      this.assetSubType = Object.assign(this.assetSubType, { asset: this.dataSource.data });
+    } else if (subAsset == 'Bond') {
+      this.assetSubType = Object.assign(this.assetSubType, { assetType: subAsset });
+      this.assetSubType = Object.assign(this.assetSubType, { asset: this.dataSource2.data });
+    } else {
+      this.assetSubType = Object.assign(this.assetSubType, { assetType: subAsset });
+      this.assetSubType = Object.assign(this.assetSubType, { asset: this.dataSource1.data });
+    }
     this.showBank = true;
   }
   getFixedDepositList() {
@@ -108,11 +118,11 @@ export class FixedIncomeMobComponent implements OnInit {
       clientId: this.clientId,
       advisorId: this.advisorId
     };
-    this.dataSource.data = [{}, {}, {}];
+    this.dataSource1.data = [{}, {}, {}];
     this.customerService.getRecurringDeposit(obj).subscribe(
       data => this.getRecurringDepositRes(data), (error) => {
         this.eventService.showErrorMessage(error);
-        this.dataSource.data = [];
+        this.dataSource1.data = [];
       }
     );
   }
@@ -125,9 +135,9 @@ export class FixedIncomeMobComponent implements OnInit {
         console.log('FixedIncomeComponent getRecuringDepositRes data *** ', data);
         this.dataList = data.assetList;
         this.hideFilter = false;
-        this.dataSource.data = data.assetList;
-        this.dataSource.sort = this.recurringDepositTableSort;
-        UtilService.checkStatusId(this.dataSource.filteredData);
+        this.dataSource1.data = data.assetList;
+        this.dataSource1.sort = this.recurringDepositTableSort;
+        UtilService.checkStatusId(this.dataSource1.filteredData);
         this.totalCurrentValue = data.totalCurrentValue;
         this.totalCurrentValue = Math.round(this.totalCurrentValue)
         this.sumOfMonthlyContribution = data.sumOfMonthlyContribution;
@@ -136,7 +146,7 @@ export class FixedIncomeMobComponent implements OnInit {
     }
     else {
       this.noData = 'No scheme found';
-      this.dataSource.data = [];
+      this.dataSource1.data = [];
       this.hideFilter = true;
     }
   }
@@ -145,11 +155,11 @@ export class FixedIncomeMobComponent implements OnInit {
       clientId: this.clientId,
       advisorId: this.advisorId
     };
-    this.dataSource.data = [{}, {}, {}];
+    this.dataSource2.data = [{}, {}, {}];
     this.customerService.getBonds(obj).subscribe(
       data => this.getBondsRes(data), (error) => {
         this.eventService.showErrorMessage(error);
-        this.dataSource.data = [];
+        this.dataSource2.data = [];
       }
     );
   }
@@ -164,9 +174,9 @@ export class FixedIncomeMobComponent implements OnInit {
         console.log('getBondsRes ******** ', data);
         this.dataList = data.assetList;
         this.hideFilter = false;
-        this.dataSource.data = data.assetList;
-        this.dataSource.sort = this.bondListTableSort;
-        UtilService.checkStatusId(this.dataSource.filteredData);
+        this.dataSource2.data = data.assetList;
+        this.dataSource2.sort = this.bondListTableSort;
+        UtilService.checkStatusId(this.dataSource2.filteredData);
         this.sumAmountInvestedB = data.sumOfAmountInvested;
         this.sumCouponAmount = data.sumOfCouponAmount;
         this.sumCurrentValueB = data.sumOfCurrentValue;
@@ -175,7 +185,7 @@ export class FixedIncomeMobComponent implements OnInit {
       }
     } else {
       this.noData = 'No scheme found';
-      this.dataSource.data = [];
+      this.dataSource2.data = [];
       this.hideFilter = true;
     }
   }
