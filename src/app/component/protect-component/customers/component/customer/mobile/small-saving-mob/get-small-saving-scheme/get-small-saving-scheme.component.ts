@@ -1,15 +1,15 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-get-retirement-mob',
-  templateUrl: './get-retirement-mob.component.html',
-  styleUrls: ['./get-retirement-mob.component.scss']
+  selector: 'app-get-small-saving-scheme',
+  templateUrl: './get-small-saving-scheme.component.html',
+  styleUrls: ['./get-small-saving-scheme.component.scss']
 })
-export class GetRetirementMobComponent implements OnInit {
+export class GetSmallSavingSchemeComponent implements OnInit {
+  asset: any[];
   inputData: any;
-  asset: any;
+  backToSS;
 
-  constructor() { }
   @Input()
   set data(data) {
     this.inputData = data;

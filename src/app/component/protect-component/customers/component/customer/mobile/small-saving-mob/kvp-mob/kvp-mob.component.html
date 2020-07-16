@@ -1,17 +1,17 @@
-<div id="mob-fixed-income" *ngIf="backToretirement != true">
+<div id="mob-fixed-income">
     <div class="row mob-bg-common pb-12 mobtop-navfixed">
         <div class="col-2">
-            <span class="material-icons text-white" (click)="backToretirement =true">
+            <span class="material-icons text-white">
                 keyboard_backspace
             </span>
         </div>
         <div class="col-7 p-0">
-            <h5 class="m-0 f-18 text-white pt-4">Add gratuity</h5>
+            <h5 class="m-0 f-18 text-white pt-4">Add KVP</h5>
         </div>
     </div>
-    <div [formGroup]="gratuity" class="bg-grey lter pt-80 mb-48 add-fixed-desposit">
+    <div [formGroup]="KVPFormScheme" class="bg-grey lter pt-80 mb-48 add-fixed-desposit">
         <div formArrayName="getCoOwnerName">
-            <div *ngFor="let obj of gratuity.controls['getCoOwnerName'].controls; let pointIndex=index"
+            <div *ngFor="let obj of KVPFormScheme.controls['getCoOwnerName'].controls; let pointIndex=index"
                 [formGroupName]="pointIndex">
                 <div class="col-12">
                     <p class="m-0 roboto f-400 text-dark f-16 pb-10">
@@ -19,7 +19,7 @@
                 </div>
                 <div class="row">
                     <div class="pb-20 mob-pr-10 mob-pl-10"
-                        [ngClass]="gratuity.value.getCoOwnerName.length > 1?'col-7' : 'col-9    '">
+                        [ngClass]="KVPFormScheme.value.getCoOwnerName.length > 1?'col-7' : 'col-9    '">
                         <div class="form-group mb-0">
                             <mat-form-field>
                                 <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
@@ -39,7 +39,7 @@
                             </mat-form-field>
                         </div>
                     </div>
-                    <div class="col-2" *ngIf="gratuity.value.getCoOwnerName.length > 1">
+                    <div class="col-2" *ngIf="KVPFormScheme.value.getCoOwnerName.length > 1">
                         <div class="form-group mb-0">
                             <mat-form-field>
                                 <input matInput class="form-control br-0 percentage" type="number"
@@ -54,10 +54,10 @@
                         </div>
                     </div>
                     <div class="col-2">
-                        <i *ngIf="gratuity.value.getCoOwnerName.length < 3"
+                        <i *ngIf="KVPFormScheme.value.getCoOwnerName.length < 3"
                             class="material-icons text-primitive f-20 c-p float-left"
                             (click)="addNewCoOwner(undefined)">add</i>
-                        <i *ngIf="gratuity.value.getCoOwnerName.length > 1"
+                        <i *ngIf="KVPFormScheme.value.getCoOwnerName.length > 1"
                             class="material-icons text-primitive f-20 c-p pl-10 pt-8"
                             (click)="removeCoOwner(pointIndex)">remove</i>
                     </div>
@@ -66,71 +66,67 @@
         </div>
 
         <div class="col-12 pt-28 pb-20 mob-pr-10 mob-pl-10">
-            <p class="m-0 roboto f-400 text-dark f-16 pb-10">Last drawn salary</p>
-            <p class="m-0 f-12 text-custom">Basic+DA</p>
+            <p class="m-0 roboto f-400 text-dark f-16 pb-10">Amount invested</p>
             <div class="form-group mb-0">
                 <mat-form-field>
-                    <input autocomplete="off" matInput #amountRecived type="text" appInputValueValidation
-                        [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0 rupess"
-                        formControlName="amountRecived">
-                    <mat-error class="f-12"
-                        [ngClass]="{'v-h':!(isAmountRecived && getFormControl().amountRecived.invalid || getFormControl().amountRecived.touched && getFormControl().amountRecived.invalid)}">
-                        This field is required
+                    <input matInput matInput autocomplete="off" formControlName="amtInvested" #amountInvest type="text"
+                        maxlength="10" class="form-control br-0 rupess" appInputValueValidation
+                        [inputValidator]="validatorType.NUMBER_ONLY">
+                    <mat-error *ngIf="KVPFormScheme.get('amtInvested').errors?.required" class="f-12">
+                        Amount invested is required
                     </mat-error>
-                    <mat-hint align="end" class="f-12">{{amountRecived.value.length}}/10</mat-hint>
+                    <mat-error *ngIf="(KVPFormScheme.get('amtInvested').errors?.min)" class="f-12">
+                        Should be greater than 1000
+                    </mat-error>
+                    <mat-hint align="end" class="f-12">{{amountInvest.value.length}}/10</mat-hint>
                 </mat-form-field>
             </div>
         </div>
         <div class="col-12 pt-28 pb-20 mob-pr-10 mob-pl-10">
-            <p class="m-0 roboto f-400 text-dark f-16 pb-10">Date of joining the organization</p>
+            <p class="m-0 roboto f-400 text-dark f-16 pb-10">Commencement date</p>
             <div class="form-group mb-0">
                 <mat-form-field class="ba-date">
-                    <input autocomplete="off" (click)="picker.open()" matInput formControlName="yearOfJoining"
-                        class="form-control br-0 b-0" [matDatepicker]="picker" [max]="maxDate" readonly>
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
+                    <input matInput (click)="KVPpicker.open()" formControlName="commDate" [min]="minDate"
+                        [max]="maxDate" [matDatepicker]="KVPpicker" class="form-control br-0 b-0" readonly>
+                    <mat-datepicker-toggle matSuffix [for]="KVPpicker"></mat-datepicker-toggle>
+                    <mat-datepicker #KVPpicker></mat-datepicker>
                     <mat-error class="f-12">
                         This field is required
                     </mat-error>
                 </mat-form-field>
             </div>
         </div>
-        <div class="col-12 pt-28 pb-20 mob-pr-10 mob-pl-10">
-            <p class="m-0 roboto f-400 text-dark f-16 pb-10">Employee type</p>
-            <div class="form-group mb-0">
-                <mat-form-field>
-                    <mat-select matInput formControlName="employmentType" class="form-control br-0">
-                        <mat-option [value]="" disabled>Select option</mat-option>
-                        <mat-option [value]="1">Employee covered by POGA,1972</mat-option>
-                        <mat-option [value]="2">Employee not covered by POGA,1972</mat-option>
-                    </mat-select>
-                    <mat-error class="f-12">
-                        This field is required
-                    </mat-error>
-                </mat-form-field>
+
+        <div class="row pt-40">
+            <div *ngIf="isOptionalField==false" (click)="moreFields()" class="col-md-5 text-right">
+                <h5 class="m-0 pt-8 text-custom c-p">Show less</h5>
             </div>
-        </div>
-        <div class="row">
-            <div *ngIf="showHide == true" class="col-5 text-right">
-                <h5 (click)="showLess(showHide)" class="m-0 pt-8 text-custom c-p">Show less</h5>
-            </div>
-            <div *ngIf="showHide == false" class="col-5 text-right">
-                <h5 (click)="showLess(showHide)" class="m-0 pt-8 text-custom c-p">+ Add more [optional data] </h5>
+            <div *ngIf="isOptionalField" (click)="moreFields()" class="col-md-5 text-right">
+                <h5 class="m-0 pt-8 text-custom c-p">+ Add more [optional data] </h5>
             </div>
             <div class="col-md-5">
-
             </div>
         </div>
-        <div *ngIf="showHide == true">
-            <div *ngIf="showHide == true">
+        <div *ngIf="isOptionalField == false">
+            <div *ngIf="isOptionalField == false">
                 <div class="col-12 pt-28 pb-20 mob-pr-10 mob-pl-10">
-                    <p class="m-0 roboto f-400 text-dark f-16 pb-10"> Name of organization</p>
+                    <p class="m-0 roboto f-400 text-dark f-16 pb-10">Certificate number</p>
                     <div class="form-group mb-0">
                         <mat-form-field>
-                            <input autocomplete="off" matInput #nameOfOrg maxlength="40" class="form-control br-0"
-                                formControlName="nameOfOrg">
+                            <input autocomplete="off" matInput formControlName="certificateNo" type="text"
+                                class="form-control br-0">
                             <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
-                            <mat-hint align="end" class="f-12">{{nameOfOrg.value.length}}/40</mat-hint>
+                            <!-- <mat-hint align="end" class="f-12">{{poBranch.value.length}}/20</mat-hint> -->
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-12 pt-28 pb-20 mob-pr-10 mob-pl-10">
+                    <p class="m-0 roboto f-400 text-dark f-16 pb-10">PO branch</p>
+                    <div class="form-group mb-0">
+                        <mat-form-field> <input autocomplete="off" matInput formControlName="poBranch" #poBranch
+                                type="text" maxlength="20" class="form-control br-0">
+                            <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
+                            <mat-hint align="end" class="f-12">{{poBranch.value.length}}/20</mat-hint>
                         </mat-form-field>
                     </div>
                 </div>
@@ -149,25 +145,15 @@
                             </mat-form-field>
                         </div>
                     </div>
-                </div>
-
-                <div class="col-12 pt-28 pb-20 mob-pr-10 mob-pl-10">
-                    <p class="m-0 roboto f-400 text-dark f-16 pb-10">Institution name</p>
-                    <div class="form-group mb-0">
-                        <mat-form-field>
-                            <input matInput autocomplete="off" type="text" #institution maxlength="50"
-                                class="form-control br-0" formControlName="institution">
-                            <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
-                            <mat-hint align="end" class="f-12">{{institution.value.length}}/50</mat-hint>
-                        </mat-form-field>
+                    <div class="col-2 p-0 pt-8 d-flex">
+                        <i class="material-icons text-primitive c-p float-left" (click)="openDialog(null)">add</i>
                     </div>
                 </div>
                 <div class="col-12 pt-28 pb-20 mob-pr-10 mob-pl-10">
-                    <p class="m-0 roboto f-400 text-dark f-16 pb-10">Institution name</p>
+                    <p class="m-0 roboto f-400 text-dark f-16 pb-10">Description</p>
                     <div class="form-group mb-0">
-                        <mat-form-field>
-                            <input matInput autocomplete="off" #description maxlength="60" class="form-control br-0"
-                                formControlName="description" type="text">
+                        <mat-form-field> <input autocomplete="off" matInput formControlName="description" #description
+                                maxlength="60" class="form-control br-0">
                             <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
                             <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
                         </mat-form-field>
@@ -175,7 +161,7 @@
                 </div>
             </div>
             <div formArrayName="getNomineeName">
-                <div *ngFor="let obj of gratuity.controls['getNomineeName'].controls; let pointIndex=index"
+                <div *ngFor="let obj of KVPFormScheme.controls['getNomineeName'].controls; let pointIndex=index"
                     [formGroupName]="pointIndex">
                     <div class="col-12">
                         <p class="m-0 roboto f-400 text-dark f-16 pb-10">
@@ -202,7 +188,7 @@
                                 </mat-form-field>
                             </div>
                         </div>
-                        <div class="col-2" *ngIf="gratuity.value.getCoOwnerName.length > 1">
+                        <div class="col-2" *ngIf="KVPFormScheme.value.getCoOwnerName.length > 1">
                             <div class="form-group mb-0">
                                 <mat-form-field>
                                     <input matInput class="form-control br-0 percentage" type="number"
@@ -220,10 +206,10 @@
                             </div>
                         </div>
                         <div class="col-2">
-                            <i *ngIf="gratuity.value.getNomineeName.length < 3"
+                            <i *ngIf="KVPFormScheme.value.getNomineeName.length < 3"
                                 class="material-icons text-primitive f-20 c-p float-left"
                                 (click)="addNewNominee(undefined)">add</i>
-                            <i *ngIf="gratuity.value.getNomineeName.length > 1"
+                            <i *ngIf="KVPFormScheme.value.getNomineeName.length > 1"
                                 class="material-icons text-primitive f-20 c-p pl-10"
                                 (click)="removeNewNominee(pointIndex)">remove</i>
                         </div>
@@ -235,13 +221,10 @@
     <div *ngIf="adviceShowHeaderAndFooter">
         <div class="row mob-proccess-fixed br-0 pb-16">
             <div class="col-12 text-right pt-8 pb-8">
-                <app-progress-button (btnClick)="saveEPF()" [options]="barButtonOptions">
+                <app-progress-button (btnClick)="addKVP()" [options]="barButtonOptions">
                 </app-progress-button>
             </div>
         </div>
     </div>
 
-</div>
-<div *ngIf="backToretirement == true">
-    <app-get-retirement-mob></app-get-retirement-mob>
 </div>

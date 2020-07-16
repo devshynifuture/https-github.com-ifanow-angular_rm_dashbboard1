@@ -926,14 +926,13 @@
         <div class="bg-grey lter">
           <ul class="pl-28 icons-top-mob">
             <li class="pr-16">
-              <a
-                href="https://mail.google.com/mail/u/0/?view=cm&fs=1&to=someone@example.com&su=SUBJECT&body=BODY&bcc=someone.else@example.com&tf=1">
+              <a href="emailto:{{orgnisationData.email}}">
                 <img src="/assets/images/svg/mob-mail.svg">
               </a></li>
             <li class="pr-16">
               <a href="tel:{{orgnisationData.mobileNumber}}"><img src="/assets/images/svg/mob-tel.svg"></a>
             </li>
-            <li><a href="whatsapp://send?text=The text to share!" data-action="share/whatsapp/share"><img
+            <li><a href="https://wa.me/{{orgnisationData.mobileNumber}}"><img
                   src="/assets/images/svg/whats-mob.svg"></a></li>
           </ul>
 
@@ -963,13 +962,14 @@
 
           <p class="text-dark f-12 roboto m-0 f-400">Contact me</p>
           <ul class="pt-10 pb-44">
-            <li class="pr-16"><img src="/assets/images/svg/mob-mail.svg"></li>
+            <li class="pr-16">
+              <a href="emailto:{{orgnisationData.email}}">
+                <img src="/assets/images/svg/mob-mail.svg"></a></li>
             <li class="pr-16">
               <a href="tel:{{advisorPersonalData.mobileNo}}"><img src="/assets/images/svg/mob-tel.svg"></a>
             </li>
             <li>
-              <a href="whatsapp://send?text=The text to share!" data-action="share/whatsapp/share"><img
-                  src="/assets/images/svg/whats-mob.svg"></a>
+              <a href="https://wa.me/{{advisorPersonalData.mobileNo}}"><img src="/assets/images/svg/whats-mob.svg"></a>
             </li>
           </ul>
         </div>
