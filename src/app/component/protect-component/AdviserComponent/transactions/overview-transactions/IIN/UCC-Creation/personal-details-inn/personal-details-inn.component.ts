@@ -1,15 +1,17 @@
-import { Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { DatePipe } from '@angular/common';
-import { UtilService, ValidatorType } from 'src/app/services/util.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
-import { OnlineTransactionService } from '../../../../online-transaction.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { MatInput } from '@angular/material';
-import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import {Component, Input, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {DatePipe} from '@angular/common';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {ProcessTransactionService} from '../../../doTransaction/process-transaction.service';
+import {OnlineTransactionService} from '../../../../online-transaction.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {MatInput} from '@angular/material';
+import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
+// import moment from "moment";
+const moment = require('moment');
 
 @Component({
   selector: 'app-personal-details-inn',
@@ -18,14 +20,15 @@ import { PeopleService } from 'src/app/component/protect-component/PeopleCompone
 })
 export class PersonalDetailsInnComponent implements OnInit {
   activeDetailsClass = 'first';
+  maxDateForAdultDob = moment().subtract(18, 'years');
 
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
-    private processTransaction: ProcessTransactionService,
-    private onlineTransact: OnlineTransactionService, private datePipe: DatePipe,
-    private peopleService: PeopleService, private custumService: CustomerService,
-    public utils: UtilService,
-    public eventService: EventService) {
+              private processTransaction: ProcessTransactionService,
+              private onlineTransact: OnlineTransactionService, private datePipe: DatePipe,
+              private peopleService: PeopleService, private custumService: CustomerService,
+              public utils: UtilService,
+              public eventService: EventService) {
     this.clientId = AuthService.getClientId();
   }
 
@@ -34,7 +37,10 @@ export class PersonalDetailsInnComponent implements OnInit {
     this.inputData = data;
     console.log('Data in personal detail : ', data);
     this.clientData = data.clientData;
-    this.obj1 = { ...data };
+    this.obj1 = {...data};
+    if (!this.inputData.taxMaster.minorFlag) {
+      this.maxDate = this.maxDateForAdultDob;
+    }
     if (data && data.holderList) {
       this.getdataForm(data.holderList[0]);
       this.firstHolder = data.holderList[0];
@@ -109,6 +115,7 @@ export class PersonalDetailsInnComponent implements OnInit {
       event.target.value = event.target.value.replace(/\b\w/g, l => l.toUpperCase());
     }
   }
+
   getClientOrFamilyDetails(data) {
     if (data.userType == 2) {
       this.sendObj = {
@@ -142,7 +149,12 @@ export class PersonalDetailsInnComponent implements OnInit {
           if (this.addressList.mobileList.length > 0) {
             this.addressList.mobileNo = this.addressList.mobileList[0].mobileNo;
           }
+          if (this.addressList.guardianData) {
+            this.addressList.fatherName = this.addressList.guardianData.name;
+            this.addressList.guardianDob = this.addressList.guardianData.birthDate;
+          }
           this.getdataForm(this.addressList);
+
         },
         err => {
           console.error(err);
@@ -159,7 +171,7 @@ export class PersonalDetailsInnComponent implements OnInit {
     } else if (!data.address) {
       data.address = null;
     }
-
+    console.log('getdataForm data: ', data);
     this.personalDetails = this.fb.group({
       clientId: [data && data.clientId ? (data.clientId) : '0'],
       familyMemberId: [data && data.familyMemberId ? (data.familyMemberId) : '0'],
@@ -173,6 +185,7 @@ export class PersonalDetailsInnComponent implements OnInit {
       dateOfBirth: [!data ? '' : (data.dob) ? new Date(data.dob) : new Date(data.dateOfBirth), [Validators.required]],
       gender: [!data ? '1' : data.genderId ? data.genderId + '' : data.gender, [Validators.required]],
       email: [!data ? '' : data.email],
+      guardianDateOfBirth: [!data.guardianDateOfBirth ? (data.guardianDob) ? new Date(data.guardianDob) : new Date() : new Date(data.guardianDateOfBirth), this.inputData.taxMaster.minorFlag ? [Validators.required] : []],
       // aadharNumber: [!data ? '' : (data.aadharNumber) ? data.aadharNumber : data.aadhaarNumber],
       mobileNo: [!data ? '' : data.mobileNo],
       phoneNo: [!data ? '' : data.phoneNo],
@@ -267,6 +280,8 @@ export class PersonalDetailsInnComponent implements OnInit {
     holderList.push(this.firstHolder);
 
     this.obj1.firstHolder.dob = new Date(this.firstHolder.dateOfBirth).getTime();
+    this.obj1.firstHolder.guardianDob = new Date(this.firstHolder.guardianDateOfBirth).getTime();
+
     this.obj1.secondHolder = this.secondHolder;
     if (this.secondHolder && this.secondHolder.clientName) {
       this.obj1.secondHolder.dob = new Date(this.secondHolder.dateOfBirth).getTime();
