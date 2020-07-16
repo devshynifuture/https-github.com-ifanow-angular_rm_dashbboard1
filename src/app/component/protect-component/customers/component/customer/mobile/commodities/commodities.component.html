@@ -6,7 +6,7 @@
             </span>
         </div>
         <div class="col-7 p-0">
-            <h5 class="m-0 f-18 text-white pt-4">{{inputData.assetType}}</h5>
+            <h5 class="m-0 f-18 text-white pt-4">{{inputData}}</h5>
         </div>
         <div class="col-3 text-right">
             <span class="material-icons text-white">
@@ -55,10 +55,10 @@
             </span></button>
     </div>
 </div>
-<div *ngIf="commodities == true && inputData.assetType == 'Gold'">
+<div *ngIf="commodities == true && inputData == 'Gold'">
     <app-add-gold-mob></app-add-gold-mob>
 </div>
-<div *ngIf="commodities == true && inputData.assetType == 'Others'">
+<div *ngIf="commodities == true && inputData == 'Others'">
     <app-add-others-mob></app-add-others-mob>
 </div>
 <div *ngIf="backToMf == true">
