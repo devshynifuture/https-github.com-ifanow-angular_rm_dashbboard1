@@ -19,15 +19,31 @@ export class RetirementAccMobComponent implements OnInit {
   epfCv: any;
   npsCv: any;
   gratuityCv: any;
+  assetSubType: any;
+  showBank: boolean;
 
   constructor(private custumService:CustomerService,private eventService:EventService) { }
 
   ngOnInit() {
+    this.assetSubType = {}
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getEpf();
     this.getNps();
     this.getGratuity();
+  }
+  openSubAsset(subAsset) {
+    if (subAsset == 'EPF') {
+      this.assetSubType = Object.assign(this.assetSubType, { assetType: subAsset });
+      this.assetSubType = Object.assign(this.assetSubType, { asset: this.epfData });
+    } else if (subAsset == 'NPS') {
+      this.assetSubType = Object.assign(this.assetSubType, { assetType: subAsset });
+      this.assetSubType = Object.assign(this.assetSubType, { asset: this.npsData.data });
+    } else {
+      this.assetSubType = Object.assign(this.assetSubType, { assetType: subAsset });
+      this.assetSubType = Object.assign(this.assetSubType, { asset: this.gratuity });
+    }
+    this.showBank = true;
   }
   getEpf(){
     const obj = {
