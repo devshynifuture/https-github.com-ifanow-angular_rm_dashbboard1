@@ -16,7 +16,7 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
 })
 export class ReallocateAssetComponent implements OnInit {
 
-  remainingAllocation:string = '0';
+  remainingAllocation:number = 0;
   availableAllocation:number = 0;
   reallocationFG:FormGroup;
   allocationData:any = {};
@@ -24,10 +24,10 @@ export class ReallocateAssetComponent implements OnInit {
   subscriber = new Subscriber();
   advisorId:any;
   clientId:any;
-  decimalValidator = ValidatorType;
+  decimalValidator = ValidatorType.NUMBER_ONLY_WITH_TWO_DECIMAL;
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
-    text: 'Save',
+    text: 'SAVE',
     buttonColor: 'accent',
     barColor: 'accent',
     raised: true,
@@ -37,6 +37,7 @@ export class ReallocateAssetComponent implements OnInit {
     disabled: false,
     fullWidth: false,
   };
+  allocationToThisGoal:number = 0;
 
   constructor(
     public dialogRef: MatDialogRef<ReallocateAssetComponent>,
@@ -53,31 +54,30 @@ export class ReallocateAssetComponent implements OnInit {
   }
 
   ngOnInit() {
-    let allocationToThisGoal = 0;
     const otherAllocated = this.allocationData.goalAssetMapping.filter(map => {
       if(map.goalId == this.goalData.remainingData.id && map.goalType == this.goalData.remainingData.goalType) {
-        allocationToThisGoal = map.percentAllocated;
+        this.allocationToThisGoal = map.percentAllocated;
         return false;
       } else {
         return map.percentAllocated;
       }
     })
+    this.availableAllocation = 100 - otherAllocated.reduce((a, v) => a + v, 0);
     
     this.reallocationFG = this.fb.group({
-      allocatedPercentage: [allocationToThisGoal, [Validators.required]]
+      allocatedPercentage: [this.allocationToThisGoal, [Validators.required, Validators.max(this.availableAllocation), Validators.min(1)]]
     });
 
     this.subscriber.add(
       this.reallocationFG.controls.allocatedPercentage.valueChanges.subscribe((value:string) => {
         if(value) {
-          this.remainingAllocation = (this.availableAllocation - parseFloat(value)).toFixed(2);
+          this.remainingAllocation = (this.availableAllocation - parseFloat(value));
         } else {
-          this.remainingAllocation = '0';
+          this.remainingAllocation = 0;
         }
       })
     )
 
-    this.availableAllocation = 100 - otherAllocated.reduce((a, v) => a + v, 0);
   }
 
   reallocate(){
@@ -87,13 +87,14 @@ export class ReallocateAssetComponent implements OnInit {
     }
     this.barButtonOptions.active = true;
     let obj = {
+      id: this.allocationData.id,
       advisorId: this.advisorId,
       clientId:this.clientId,
       assetId: this.allocationData.assetId,
       assetType: this.allocationData.assetType,
       goalId: this.goalData.remainingData.id,
       goalType: this.goalData.goalType,
-      percentAllocated: parseFloat(this.reallocationFG.controls.allocatedPercentage.value).toFixed(2)
+      percentAllocated: parseFloat(parseFloat(this.reallocationFG.controls.allocatedPercentage.value).toFixed(2))
     }
     this.plansService.allocateOtherAssetToGoal(obj).subscribe(res => {
       this.eventService.openSnackBar("Asset allocation updated");

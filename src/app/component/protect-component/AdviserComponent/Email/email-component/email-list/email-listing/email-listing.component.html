@@ -96,8 +96,15 @@
                 <ng-container matColumnDef="emailers">
                     <th mat-header-cell *matHeaderCellDef> </th>
                     <td mat-cell *matCellDef="let element; index as i" (click)="redirectMessages(element, i)">
-                        {{element.emailers | truncate:25}} {{ element.messageCount
-                        <=1 ? '': element.messageCount }} </td>
+                        <span *ngIf="isCustomerEmail">
+                            {{element.emailers | truncate:30}}
+                            {{ element.messageCount <=1 ? '': element.messageCount }}
+                        </span>
+                        <span *ngIf="!isCustomerEmail">
+                            {{element.emailers | truncate:25}}
+                            {{ element.messageCount<=1 ? '': element.messageCount }}
+                        </span>
+                    </td>
                 </ng-container>
 
                 <!-- subject and message Column -->
@@ -105,12 +112,18 @@
                     <th mat-header-cell *matHeaderCellDef> </th>
                     <td mat-cell *matCellDef="let element; index as i" class="" (click)="redirectMessages(element, i)">
                         <div class="row w-100 align-items-center">
-                            <div class="col-md-6 p-0">
+                            <div class="col-md-6 p-0" *ngIf="isCustomerEmail">
                                 {{element.subjectMessage.subject | truncate:25}}
                             </div>
+                            <div class="col-md-6 p-0" *ngIf="!isCustomerEmail">
+                                {{element.subjectMessage.subject | truncate:35}}
+                            </div>
                             <div class="col-md-5 p-0">
-                                <p class="m-0 text-primitive">
+                                <p class="m-0 text-primitive" *ngIf="isCustomerEmail">
                                     {{element.subjectMessage.message | truncate:25}}
+                                </p>
+                                <p class="m-0 text-primitive" *ngIf="!isCustomerEmail">
+                                    {{element.subjectMessage.message | truncate:35}}
                                 </p>
                             </div>
                             <div class="col-md-1 p-0">
@@ -119,9 +132,6 @@
                                 </span>
                             </div>
                         </div>
-
-
-
                     </td>
                 </ng-container>
 

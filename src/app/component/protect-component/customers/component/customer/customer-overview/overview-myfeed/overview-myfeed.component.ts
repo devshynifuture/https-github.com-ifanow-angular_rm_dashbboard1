@@ -1,21 +1,20 @@
-import { Component, OnInit, ViewChild, ElementRef, HostListener, AfterViewInit, OnDestroy } from '@angular/core';
-import { AuthService } from 'src/app/auth-service/authService';
-import { CustomerService } from '../../customer.service';
-import { LoaderFunction, UtilService } from 'src/app/services/util.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { Chart } from 'angular-highcharts';
-import { AppConstants } from 'src/app/services/app-constants';
-import { RoutingState } from 'src/app/services/routing-state.service';
-import { slideInAnimation } from 'src/app/animation/router.animation';
-import { PlanService } from '../../plan/plan.service';
-import { Router } from '@angular/router';
-import { OrgSettingServiceService } from 'src/app/component/protect-component/AdviserComponent/setting/org-setting-service.service';
-import { EnumServiceService } from 'src/app/services/enum-service.service';
-import { DatePipe } from '@angular/common';
-import { MfServiceService } from '../../accounts/assets/mutual-fund/mf-service.service';
-import { WebworkerService } from 'src/app/services/web-worker.service';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { BulkEmailTestComponent } from '../../accounts/assets/mutual-fund/bulk-email-test/bulk-email-test.component';
+import {AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AuthService} from 'src/app/auth-service/authService';
+import {CustomerService} from '../../customer.service';
+import {LoaderFunction, UtilService} from 'src/app/services/util.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {Chart} from 'angular-highcharts';
+import {AppConstants} from 'src/app/services/app-constants';
+import {slideInAnimation} from 'src/app/animation/router.animation';
+import {PlanService} from '../../plan/plan.service';
+import {Router} from '@angular/router';
+import {OrgSettingServiceService} from 'src/app/component/protect-component/AdviserComponent/setting/org-setting-service.service';
+import {EnumServiceService} from 'src/app/services/enum-service.service';
+import {DatePipe} from '@angular/common';
+import {MfServiceService} from '../../accounts/assets/mutual-fund/mf-service.service';
+import {WebworkerService} from 'src/app/services/web-worker.service';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {BulkEmailTestComponent} from '../../accounts/assets/mutual-fund/bulk-email-test/bulk-email-test.component';
 
 @Component({
   selector: 'app-overview-myfeed',
@@ -264,10 +263,10 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
 
   // highlight scroll links solution
   // https://stackoverflow.com/a/54447174
-  @ViewChild('allFeedsSection', { static: true }) allFeedsSection: ElementRef;
-  @ViewChild('riskProfileSection', { static: true }) riskProfileSection: ElementRef;
-  @ViewChild('cashFlowSection', { static: true }) cashFlowSection: ElementRef;
-  @ViewChild('portFolioSection', { static: true }) portFolioSection: ElementRef;
+  @ViewChild('allFeedsSection', {static: true}) allFeedsSection: ElementRef;
+  @ViewChild('riskProfileSection', {static: true}) riskProfileSection: ElementRef;
+  @ViewChild('cashFlowSection', {static: true}) cashFlowSection: ElementRef;
+  @ViewChild('portFolioSection', {static: true}) portFolioSection: ElementRef;
   allFeedsSectionOffset: any = 0;
   riskProfileSectionOffset: any = 0;
   cashFlowSectionOffset: any = 0;
@@ -373,6 +372,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       }
     )
   }
+
   generateUpload(data) {
 
     const fragmentData = {
@@ -393,6 +393,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       }
     );
   }
+
   getAppearanceSettings() {
     this.loaderFn.increaseCounter()
     let obj = {
@@ -860,28 +861,28 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
   routeAndAddQueryParams(value) {
     switch (value) {
       case 'Fixed Income':
-        this.router.navigate(['/customer/detail/account/assets'], { queryParams: { tab: 'tab3' } });
+        this.router.navigate(['/customer/detail/account/assets'], {queryParams: {tab: 'tab3'}});
         break;
       case 'Real estate':
-        this.router.navigate(['/customer/detail/account/assets'], { queryParams: { tab: 'tab4' } });
+        this.router.navigate(['/customer/detail/account/assets'], {queryParams: {tab: 'tab4'}});
         break;
       case 'Stocks':
-        this.router.navigate(['/customer/detail/account/assets'], { queryParams: { tab: 'tab2' } });
+        this.router.navigate(['/customer/detail/account/assets'], {queryParams: {tab: 'tab2'}});
         break;
       case 'Mutual funds':
-        this.router.navigate(['/customer/detail/account/assets'], { queryParams: { tab: 'tab1' } });
+        this.router.navigate(['/customer/detail/account/assets'], {queryParams: {tab: 'tab1'}});
         break;
       case 'Retirement accounts':
-        this.router.navigate(['/customer/detail/account/assets'], { queryParams: { tab: 'tab5' } });
+        this.router.navigate(['/customer/detail/account/assets'], {queryParams: {tab: 'tab5'}});
         break;
       case 'Small savings':
-        this.router.navigate(['/customer/detail/account/assets'], { queryParams: { tab: 'tab6' } });
+        this.router.navigate(['/customer/detail/account/assets'], {queryParams: {tab: 'tab6'}});
         break;
       case 'Cash and bank':
-        this.router.navigate(['/customer/detail/account/assets'], { queryParams: { tab: 'tab7' } });
+        this.router.navigate(['/customer/detail/account/assets'], {queryParams: {tab: 'tab7'}});
         break;
       case 'Commodities':
-        this.router.navigate(['/customer/detail/account/assets'], { queryParams: { tab: 'tab8' } });
+        this.router.navigate(['/customer/detail/account/assets'], {queryParams: {tab: 'tab8'}});
         break;
       case 'Documents':
         this.router.navigate(['/customer/detail/overview/documents']);
@@ -951,8 +952,8 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
         // mfService: this.mfService
       };
       // Create a new
-      this.worker = new Worker('src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mutual-fund.worker.ts', { type: 'module' });
-      this.worker.onmessage = ({ data }) => {
+      this.worker = new Worker('src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mutual-fund.worker.ts', {type: 'module'});
+      this.worker.onmessage = ({data}) => {
         this.totalValue = data.totalValue;
         this.generateMFallocationChartData(categoryList); // for Calculating MF categories percentage
         this.generateSubCategorywiseChartData(this.mutualFund.subCategoryData);
@@ -967,11 +968,13 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       // You should add a fallback so that your program still executes correctly.
     }
   }
+
   generateSubCategorywiseChartData(data) {
     data = this.mfServiceService.sorting(data, 'currentValue');
     console.log(data);
 
   }
+
   getMutualFundResponse(data) {
     this.tabsLoaded.mfPortfolioSummaryData.isLoading = false;
     if (data) {
@@ -1078,7 +1081,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       y: 0,
       percentage: 0,
       color: AppConstants.DONUT_CHART_COLORS[4],
-      dataLabels: { enabled: false }
+      dataLabels: {enabled: false}
     }
     data.forEach((data, ind) => {
       if (ind < 4) {

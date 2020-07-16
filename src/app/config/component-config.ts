@@ -294,7 +294,6 @@ export const appConfig = {
   EDIT_SINGLE_YEAR_GOAL_PREFERENCE: 'goal-planning/single-year/edit',
   SAVE_ASSET_ALLOCATION_PREFERENCE: 'goal-planning/asset-allocation/update',
   GET_MF_DATA: 'goal-planning/goal/mf/list/get',
-  SAVE_MF_ASSET_TO_GOAL: 'goal-planning/goal/mf/allocate',
   SAVE_ASSET_TO_GOAL: 'goal-planning/asset/allocate',
   REMOVE_ALLOCATION: 'goal-planning/asset/allocate',
   CALCULATE_TOTAL_VALUES: 'account/asset/summary',
@@ -606,6 +605,31 @@ export const appConfig = {
   ACTIVITY_ADD_COMMENT: 'rmdashboard/dashboard/ifa-onboard/activity/chat/post',
   ACTIVITY_UPDATE_COMMENT: 'rmdashboard/dashboard/ifa-onboard/activity/chat/edit',
   ACTIVITY_DELETECOMMENT: 'rmdashboard/dashboard/ifa-onboard/activity/chat/delete',
+  /********************************* TASKS Section ****************************************/
+
+  ACTIVITY_GET_ALL_TASK_LIST: 'activity/task/list/get',
+  ACTIVITY_GET_ALL_TASK_STATUS_LIST: 'activity/task/global-data/get',
+  ACTIVITY_TASK_GET_TASK_TEMPLATE_LIST: 'activity/task/template-list/get',
+  ACTIVITY_TASK_GET_INDIVIDUAL_TASK_TEMPLATE: 'activity/task/template/get',
+  ACTIVITY_TASK_SUBTASK_ADD: 'activity/task/sub-task/add',
+  ACTIVITY_TASK_ADD_COLLABORATOR: 'activity/task/collaborator/add',
+  ACTIVITY_ADD_TASK: 'activity/task/add',
+  ACTIVITY_ADD_ATTACHMENT_UPLOAD_URL_GET: 'activity/task/attachment-upload-url/get',
+  ACTIVITY_ADD_TASK_SUBTASK_ATTACHMENT: 'activity/task/sub-task/attachment/add',
+  ACTIVITY_DELETE_TASK: 'activity/task/delete',
+  ACTIVITY_DELETE_ATTACHMENT_TASK_SUBTASK: 'activity/task/attachment/delete',
+  ACTIVITY_DELETE_COMMENT_TASK_SUBTASK: 'activity/task/comment/delete',
+  ACTIVITY_DELETE_COLLABORATOR_FROM_TASK: '/activity/task/collaborator/delete',
+  ACTIVITY_DELETE_SUBTASK_FROM_TASK: 'activity/task/sub-task/delete',
+  ACTIVITY_MARK_TASK_OR_SUBTASK_DONE: 'activity/task/sub-task/status/update',
+  ACTIVITY_GET_ATTACHMENT_DOWNLOAD_OF_TASK_SUBTASK: 'activity/task/attachment-download-url/get',
+
+
+
+
+
+
+
   GET_STAGE_COMMENT: 'rmdashboard/dashboard/ifa-onboard/stages/chat/get',
   EDIT_STAGE_COMMENT: 'rmdashboard/dashboard/ifa-onboard/stages/chat/edit',
   DELETE_STAGE_COMMENT: 'rmdashboard/dashboard/ifa-onboard/stages/chat/delete',
@@ -825,8 +849,9 @@ export const appConfig = {
   GET_GOAL_SUMMARY: 'admin/dashboard/goal/summary',
 
   ///////////////////////////// market place //////////////////////////
-  GET_CALL_DETAILS: 'marketplace/call/settings/get'
-
+  GET_CALL_DETAILS: 'marketplace/call/settings/get',
+  ADD_CALL_DETAILS: 'marketplace/call/settings/edit',
+  ADD_CALL_AVAILABLE: 'marketplace/call/settings/non-working/days/edit'
 };
 
 

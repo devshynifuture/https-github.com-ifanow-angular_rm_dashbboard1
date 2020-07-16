@@ -183,7 +183,8 @@
   <div *ngIf="hideShowFlag=='FamilyMember'">
     <div class="row mob-bg-common pb-12 mobtop-navfixed">
       <div class="col-2">
-        <img (click)="hideShowFlag='profile'" src="/assets/images/svg/mob-left-arrow.svg" class="c-p pt-4">
+        <img (click)="hideShowFlag='profile';getFamilyMemberList()" src="/assets/images/svg/mob-left-arrow.svg"
+          class="c-p pt-4">
       </div>
       <div class="col-10 pl-0">
         <h5 class="m-0 f-18 text-white pt-4 roboto">{{selectedFamilyMember.name}}</h5>
@@ -217,7 +218,7 @@
           <p class="m-0 roboto text-dark pt-10">Basic details</p>
         </div>
       </div>
-      <div class="row bt-primitive pt-12 pb-12">
+      <div (click)="hideShowFlag='moreInfo'" class="row bt-primitive pt-12 pb-12">
         <div class="col-1 pl-0">
           <img src="/assets/images/svg/more-info.svg" class="m-0">
         </div>
@@ -241,7 +242,8 @@
           <p class="m-0 roboto text-dark pt-10">Bank</p>
         </div>
       </div>
-      <div (click)="hideShowFlag='demat'" class="row bt-primitive pt-12 pb-12">
+      <div *ngIf="selectedFamilyMember.familyMemberType==1" (click)="hideShowFlag='demat'"
+        class="row bt-primitive pt-12 pb-12">
         <div class="col-1 pl-0">
           <img src="/assets/images/svg/demat.svg" class="m-0">
         </div>
@@ -343,7 +345,7 @@
         <img (click)="hideShowFlag='profile'" src="/assets/images/svg/mob-left-arrow.svg" class="c-p pt-4">
       </div>
       <div class="col-10 pl-0">
-        <h5 class="m-0 f-18 text-white pt-4 roboto">Change password</h5>
+        <h5 class="m-0 f-18 text-white pt-4 roboto">Raise query</h5>
       </div>
     </div>
     <div class="bg-grey lter h-100vh">
@@ -518,8 +520,8 @@
           <p class="m-0 pb-4 roboto f-400">Investor category</p>
           <div class="form-group mb-0">
             <mat-select [formControl]="catergoryType" class="form-control">
-              <mat-option [value]=1>Individual</mat-option>
-              <mat-option [value]=2>Minor</mat-option>
+              <mat-option *ngIf="selectedFamilyMember.familyMemberType==1" [value]=1>Individual</mat-option>
+              <mat-option *ngIf="selectedFamilyMember.familyMemberType==2" [value]=2>Minor</mat-option>
             </mat-select>
           </div>
         </div>
@@ -532,14 +534,18 @@
             </mat-select>
           </div>
         </div>
-        <app-individual-member-form [categoryType]="catergoryType.value" [taxStatusType]="taxStatus.value"
-          [formData]="selectedFamilyMember" *ngIf="catergoryType.value==1">
+        <app-individual-member-form (savedData)="getSavedData($event)" [categoryType]="catergoryType.value"
+          [taxStatusType]="taxStatus.value" [formData]="selectedFamilyMember" *ngIf="catergoryType.value==1">
         </app-individual-member-form>
-        <app-minor-member-form [categoryType]="catergoryType.value" [taxStatusType]="taxStatus.value"
-          [formData]="selectedFamilyMember" *ngIf="catergoryType.value==2"></app-minor-member-form>
+        <app-minor-member-form (savedData)="getSavedData($event)" [categoryType]="catergoryType.value"
+          [taxStatusType]="taxStatus.value" [formData]="selectedFamilyMember" *ngIf="catergoryType.value==2">
+        </app-minor-member-form>
       </div>
     </div>
   </div>
+  <app-mobile-view-more-info (savedData)="getSavedData($event)" (backfunc)="backfunc($event)"
+    [fmData]="selectedFamilyMember" *ngIf="hideShowFlag=='moreInfo'">
+  </app-mobile-view-more-info>
   <!-- end -->
   <!-- More info form -->
   <!-- <div class="bg-grey lter pb-90 pt-90">

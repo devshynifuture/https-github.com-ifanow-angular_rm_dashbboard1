@@ -1,5 +1,6 @@
 <!-- protfolio mobile screen start -->
-<div *ngIf="showMf != true && showFixedIncome != true && showRetirementAccount != true">
+<div
+  *ngIf="showMf != true && showFixedIncome != true && showRetirementAccount != true && !showStocks && !showRealEstate && !showCashAndBank && !showCommodities &&!showSmallSavings && !showLiablities && !showLifeInsurance && !showGenralInsurance">
   <div class="row mob-bg-common pb-12 mobtop-navfixed" *ngIf="openMenue != true">
     <div class="col-2" (click)="openMenu(openMenue)">
       <span class="material-icons text-white">
@@ -114,6 +115,8 @@
                 <!-- <div class="insur" *ngIf="assetType == 7">I</div>
             <div class="insur" *ngIf="assetType == 7">GI</div> -->
                 <div class="commodities" *ngIf="portData.assetType == 12">C</div>
+                <div class="commodities" *ngIf="portData.assetType == 14">LI</div>
+                <div class="commodities" *ngIf="portData.assetType == 15">GI</div>
               </div>
               <div class="col-10 pl-8 pr-0">
 
@@ -813,6 +816,8 @@
      </div>
      </div>
   </div> -->
+
+
 <div *ngIf="showMf == true">
   <app-mutual-funds></app-mutual-funds>
 </div>
@@ -821,5 +826,28 @@
 </div>
 <div *ngIf="showRetirementAccount == true">
   <app-retirement-acc-mob (outputValue)="getValue($event)"></app-retirement-acc-mob>
-
+</div>
+<div *ngIf="showStocks == true">
+  <app-stocks-mob (outputValue)="getValue($event)"></app-stocks-mob>
+</div>
+<div *ngIf="showRealEstate == true">
+  <app-real-estate-mob (outputValue)="getValue($event)"></app-real-estate-mob>
+</div>
+<div *ngIf="showSmallSavings == true">
+  <app-small-saving-mob (outputValue)="getValue($event)"></app-small-saving-mob>
+</div>
+<div *ngIf="showCashAndBank == true">
+  <app-cash-and-bank-mob (outputValue)="getValue($event)"></app-cash-and-bank-mob>
+</div>
+<div *ngIf="showCommodities == true">
+  <app-commodities-mob (outputValue)="getValue($event)"></app-commodities-mob>
+</div>
+<div *ngIf="showLiablities == true">
+  <app-liabilities-mob (outputValue)="getValue($event)"></app-liabilities-mob>
+</div>
+<div *ngIf="showLifeInsurance == true">
+  <app-life-insurance-mob (outputValue)="getValue($event)"></app-life-insurance-mob>
+</div>
+<div *ngIf="showGenralInsurance == true">
+  <app-general-insurance-mob (outputValue)="getValue($event)"></app-general-insurance-mob>
 </div>

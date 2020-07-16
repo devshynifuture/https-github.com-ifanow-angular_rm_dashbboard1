@@ -252,7 +252,12 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     if(this.selectedGoalId) {
       this.loadSelectedGoalData(this.allGoals.find(goal => goal.remainingData.id == this.selectedGoalId));
     } else {
-      this.loadSelectedGoalData(this.allGoals[0]);
+      if(this.allGoals.length > 0) {
+        this.loadSelectedGoalData(this.allGoals[0]);
+      } else {
+        this.selectedGoalId = null;
+        this.selectedGoal = {};
+      }
     }
   }
 
@@ -436,8 +441,15 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         }
         this.plansService.deleteGoal(deleteObj).subscribe((data) => {
           this.eventService.openSnackBar("Goal has been deleted successfully", "Dismiss");
-          this.allGoals = this.allGoals.filter(goal => goal.id != this.selectedGoal.id);
-          this.loadSelectedGoalData(this.allGoals[0]);
+          this.allGoals = this.allGoals.filter(goal => goal.remainingData.id != this.selectedGoalId);
+          this.selectedGoalId = null;
+          if(this.allGoals.length > 0) {
+            this.loadSelectedGoalData(this.allGoals[0]);
+          } else {
+            this.selectedGoal = {};
+          }
+          // update asset list if user deletes goal and the list is still open
+          this.allocateOtherAssetService.refreshAssetList.next();
           dialogRef.close()
         }, (err) => { this.eventService.openSnackBar(err, "Dismiss") })
       },
@@ -457,7 +469,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     if(event.previousContainer === event.container || !event.isPointerOverContainer) {
       return;
     }
-    this.allocateOtherAssetService.allocateAssetToGoal(event, this.advisor_client_id, this.selectedGoal);
+    this.allocateOtherAssetService.allocateOtherAssetToGoal(event, this.advisor_client_id, this.selectedGoal);
   }
 
   removeAllocation(allocation) {
@@ -470,6 +482,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       positiveMethod: () => {
         let obj = {
           ...this.advisor_client_id,
+          id: allocation.id,
           assetId: allocation.assetId,
           assetType: allocation.assetType,
           goalId: this.selectedGoal.remainingData.id,
@@ -479,6 +492,8 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         this.plansService.allocateOtherAssetToGoal(obj).subscribe(res => {
           const assetIndex =  this.allocatedList.findIndex((asset) => asset.assetId == allocation.assetId);
           this.allocatedList.splice(assetIndex, 1);
+          // update asset list if user deletes goal and the list is still open
+          this.allocateOtherAssetService.refreshAssetList.next();
           this.eventService.openSnackBar("Asset unallocated");
           dialogRef.close();
         }, err => {
@@ -499,7 +514,8 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       allocationData: allocation
     }
     this.dialog.open(ReallocateAssetComponent, {
-      width: '400px',
+      width: '600px',
+      height: '400px',
       data: dialogData,
       autoFocus: false,
     });
