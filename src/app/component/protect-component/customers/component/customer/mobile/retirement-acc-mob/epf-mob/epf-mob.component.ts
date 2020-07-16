@@ -58,6 +58,7 @@ export class EpfMobComponent implements OnInit {
   dataFM = [];
   familyList: any;
   flag: any;
+  backToretirement;
   bankList:any = [];
   adviceShowHeaderAndFooter: boolean = true;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
@@ -83,6 +84,8 @@ export class EpfMobComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.bankList = this.enumService.getBank();
+    this.getdataForm(null);
+
   }
   
   nomineesList() {
