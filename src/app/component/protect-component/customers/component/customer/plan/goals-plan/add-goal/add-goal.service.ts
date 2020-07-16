@@ -15,6 +15,7 @@ export class AddGoalService {
   ) { }
 
   refreshObservable = new Subject();
+  refreshAssetList = new Subject();
 
   allocateOtherAssetToGoal(event, advisor_client_id, selectedGoal){
 
@@ -43,6 +44,7 @@ export class AddGoalService {
     this.plansService.allocateOtherAssetToGoal(obj).subscribe(res => {
       this.refreshObservable.next();
       this.plansService.assetSubject.next(res);
+      this.refreshAssetList.next();
       this.eventService.openSnackBar("Asset allocated to goal", "Dismiss");
     }, err => {
       this.eventService.openSnackBar(err);

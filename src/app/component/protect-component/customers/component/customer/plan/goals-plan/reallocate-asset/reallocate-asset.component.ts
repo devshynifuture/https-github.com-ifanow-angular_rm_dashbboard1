@@ -27,7 +27,7 @@ export class ReallocateAssetComponent implements OnInit {
   decimalValidator = ValidatorType.NUMBER_ONLY_WITH_TWO_DECIMAL;
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
-    text: 'Save',
+    text: 'SAVE',
     buttonColor: 'accent',
     barColor: 'accent',
     raised: true,

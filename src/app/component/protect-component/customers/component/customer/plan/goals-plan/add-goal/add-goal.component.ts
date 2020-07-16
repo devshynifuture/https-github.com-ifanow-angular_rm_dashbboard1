@@ -6,6 +6,7 @@ import { LoaderFunction } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { Subscriber, Subscription } from 'rxjs';
+import { AddGoalService } from './add-goal.service';
 
 @Component({
   selector: 'app-add-goal',
@@ -79,7 +80,8 @@ export class AddGoalComponent implements OnInit {
     private loaderFn: LoaderFunction,
     private eventService: EventService,
     private peopleService: PeopleService,
-    private planService: PlanService
+    private planService: PlanService,
+    private allocateService: AddGoalService,
   ) {
     this.clientId = AuthService.getClientId();
     this.advisorId = AuthService.getAdvisorId();
@@ -91,7 +93,6 @@ export class AddGoalComponent implements OnInit {
     this.loadAssets();
     this.subscription.add(
       this.planService.assetSubject.subscribe((data:any) => {
-        
         this.allAssetsList = data.map(asset => {
           let absAllocation = 0;
           if(asset.goalAssetMapping) {
@@ -104,6 +105,12 @@ export class AddGoalComponent implements OnInit {
         this.filterAndSortAssets();
       })
     )
+    this.subscription.add(
+      this.allocateService.refreshAssetList.subscribe(()=> {
+        this.loadAssets();
+      })
+    )
+    
   }
 
   loadAssets(){
