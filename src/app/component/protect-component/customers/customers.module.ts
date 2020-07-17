@@ -129,6 +129,7 @@ import { PoMisMobComponent } from './component/customer/mobile/small-saving-mob/
 import { AddRealEstateMobComponent } from './component/customer/mobile/real-estate-mob/add-real-estate-mob/add-real-estate-mob.component';
 import { AddLiabilitiesMobComponent } from './component/customer/mobile/liabilities-mob/add-liabilities-mob/add-liabilities-mob.component';
 import { AddOtherPayablesMobComponent } from './component/customer/mobile/liabilities-mob/add-other-payables-mob/add-other-payables-mob.component';
+import { MobNpsComponent } from './component/customer/mobile/mob-nps/mob-nps.component';
 
 
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
@@ -148,7 +149,7 @@ import { AddOtherPayablesMobComponent } from './component/customer/mobile/liabil
     MinorMemberFormComponent, RetirementAccMobComponent, RealEstateComponent, SmallSavingComponent, CashAndBankComponent, CommoditiesComponent, LiabilitiesComponent, LifeInsuranceComponent, GeneralInsuranceComponent,
     MobileViewMoreInfoComponent,
     CashAndBankMobComponent, StocksMobComponent, RealEstateMobComponent, SmallSavingMobComponent, CommoditiesMobComponent, LiabilitiesMobComponent, LifeInsuranceMobComponent, GeneralInsuranceMobComponent,
-    AddGoldMobComponent, BankDetailedAssetsComponent, FixedDepositMobComponent, BondMobComponent, RecurringDepositeMobComponent, AddOthersMobComponent, EpfMobComponent, NpsMobComponent, GratuityMobComponent, GetRetirementMobComponent, HolderNameMobileViewComponent, MobInvestComponent, GetSmallSavingSchemeComponent, PpfMobComponent, NscMobComponent, SsyMobComponent, KvpMobComponent, ScssMobComponent, PoSavingsMobComponent, PoTdMobComponent, PoRdMobComponent, PoMisMobComponent, AddBankAccMobComponent, AddCashInHandMobComponent, AddRealEstateMobComponent, AddLiabilitiesMobComponent, AddOtherPayablesMobComponent],
+    AddGoldMobComponent, BankDetailedAssetsComponent, FixedDepositMobComponent, BondMobComponent, RecurringDepositeMobComponent, AddOthersMobComponent, EpfMobComponent, NpsMobComponent, GratuityMobComponent, GetRetirementMobComponent, HolderNameMobileViewComponent, MobInvestComponent, GetSmallSavingSchemeComponent, PpfMobComponent, NscMobComponent, SsyMobComponent, KvpMobComponent, ScssMobComponent, PoSavingsMobComponent, PoTdMobComponent, PoRdMobComponent, PoMisMobComponent, AddBankAccMobComponent, AddCashInHandMobComponent, AddRealEstateMobComponent, AddLiabilitiesMobComponent, AddOtherPayablesMobComponent, MobNpsComponent],
   imports: [
     // BrowserModule,
     CommonModule,
