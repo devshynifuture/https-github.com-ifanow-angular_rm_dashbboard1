@@ -1,1 +1,202 @@
-<p>add-other-payables-mob works!</p>
+<div id="mob-fixed-income">
+    <div class="row mob-bg-common pb-12 mobtop-navfixed">
+        <div class="col-2">
+            <span class="material-icons text-white">
+                keyboard_backspace
+            </span>
+        </div>
+        <div class="col-7 p-0">
+            <h5 class="m-0 f-18 text-white pt-4">Add Other payables</h5>
+        </div>
+    </div>
+    <div [formGroup]="otherLiabilityForm" class="bg-grey lter h-100vh pt-80 mb-48 add-fixed-desposit">
+        <div formArrayName="getCoOwnerName">
+            <div class="row" [ngClass]="{'pt-36': pointIndex>0}"
+                *ngFor="let obj of otherLiabilityForm.controls['getCoOwnerName'].controls; let pointIndex=index"
+                [formGroupName]="pointIndex">
+                <div class="col-md-5 pr-0 text-right">
+                    <h5 class="m-0 pt-8 pr-16">{{pointIndex != 0?'Co-B' : 'B'}}orrower{{pointIndex != 0?pointIndex:''}}</h5>
+                </div>
+                <div class="pl-0" [ngClass]="otherLiabilityForm.value.getCoOwnerName.length > 1?'col-md-3' : 'col-md-5'">
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
+                                (selectionChange)="disabledMember($event.value,'owner')"
+                                (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)'
+                                class="form-control br-0" [callMethod]='callMethod'>
+                                <mat-option value='' disabled>Select family members</mat-option>
+                                <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" [value]="f.userName">
+                                    <span>{{f.userName}}</span>
+                                </mat-option>
+                            </mat-select>
+                            <mat-error class="f-12">
+                                This field is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-2" *ngIf="otherLiabilityForm.value.getCoOwnerName.length > 1">
+                    <div class="form-group mb-0 iconPetage">
+                        <mat-form-field>
+                            <input matInput class="form-control br-0 percentage" type="number" formControlName="share"
+                                (focusout)="onChangeJointOwnership('owner')">
+                            <mat-error class="f-12" *ngIf="obj.controls['share'].hasError('required')">
+                                This field is required
+                            </mat-error>
+                            <mat-error class="f-12" *ngIf="obj.controls['share'].hasError('incorrect') ">
+                                Total percent should be 100%
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-2 p-0 d-flex align-items-center">
+                    <i *ngIf="otherLiabilityForm.value.getCoOwnerName.length < 3"
+                        class="material-icons text-primitive f-20 c-p float-left" (click)="addNewCoOwner(undefined)">add</i>
+                    <i *ngIf="otherLiabilityForm.value.getCoOwnerName.length > 1"
+                        class="material-icons text-primitive f-20 c-p pl-10" (click)="removeCoOwner(pointIndex)">remove</i>
+                </div>
+    
+            </div>
+        </div>
+        <div class="col-12 pt-28 pb-20 mob-pr-10 mob-pl-10">
+            <p class="m-0 roboto f-400 text-dark f-16 pb-10">Date of receipt</p>
+            <div class="form-group mb-0">
+                <mat-form-field class="ba-date">
+                    <input class="form-control b-0 br-0" #dateOfReceipt
+                    (ngModelChange)="dateChange(dateOfReceipt.value,'dateOfReceipt',dateOfRepayment.value)" matInput
+                    [max]="maxDate" [matDatepicker]="picker" formControlName="dateOfReceipt" readonly>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-error class="f-12"
+                    *ngIf="isdateValid && getFormControl().dateOfReceipt.invalid || (getFormControl().dateOfReceipt.touched && getFormControl().dateOfReceipt.invalid)">
+                    This field is required
+                </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-12 pt-28 pb-20 mob-pr-10 mob-pl-10">
+            <p class="m-0 roboto f-400 text-dark f-16 pb-10">Creditor name</p>
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input matInput #creditorName class="form-control br-0" formControlName="creditorName"
+                    maxlength="{{getFormControl().creditorName.maxLength}}">
+                <mat-error class="f-12"
+                    [ngClass]="{'v-h':!(isCreditorName && getFormControl().creditorName.invalid || getFormControl().creditorName.touched && getFormControl().creditorName.invalid)}">
+                    This field is required
+
+                </mat-error>
+                <mat-hint align="end" class="f-12">{{creditorName.value.length}}/20</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-12 pt-28 pb-20 mob-pr-10 mob-pl-10">
+            <p class="m-0 roboto f-400 text-dark f-16 pb-10">Amount borrowed</p>
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input matInput #amtBorrowed class="form-control rupess br-0" (keypress)="keyPress($event)"
+                    formControlName="amtBorrowed" maxlength="{{getFormControl().amtBorrowed.maxLength}}">
+                <mat-error class="f-12"
+                    [ngClass]="{'v-h':!(isAmtBorrowed && getFormControl().amtBorrowed.invalid || getFormControl().amtBorrowed.touched && getFormControl().amtBorrowed.invalid)}">
+                    This field is required
+
+                </mat-error>
+                <mat-hint align="end" class="f-12">{{amtBorrowed.value.length}}/10</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-12 pt-28 pb-20 mob-pr-10 mob-pl-10 iconPetage">
+            <p class="m-0 roboto f-400 text-dark f-16 pb-10">Interest</p>
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input matInput #interest class="form-control br-0 percentage" (keyup)="onChange($event)"
+                        (keypress)="keyPress($event)" formControlName="interest">
+                    <mat-error class="f-12">
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-12 pt-28 pb-20 mob-pr-10 mob-pl-10">
+            <p class="m-0 roboto f-400 text-dark f-16 pb-10">Date of repayment</p>
+            <div class="form-group mb-0">
+                <mat-form-field class="ba-date">
+                    <input [matDatepicker]="picker2"
+                    (ngModelChange)="dateChange(dateOfRepayment.value,'dateOfRepayment',dateOfReceipt.value)"
+                    #dateOfRepayment class="form-control b-0 br-0" formControlName="dateOfRepayment" matInput
+                    readonly>
+                <mat-datepicker-toggle [for]="picker2" matSuffix></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+                <mat-error class="f-12" *ngIf="(otherLiabilityForm.get('dateOfRepayment').errors?.required)">This
+                    field is required
+                </mat-error>
+                <mat-error class="f-12" *ngIf="(otherLiabilityForm.get('dateOfRepayment').errors?.max)">Date cannot
+                    be less than or equal to date of receipt
+
+                </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-12 pt-28 pb-20 mob-pr-10 mob-pl-10">
+            <p class="m-0 roboto f-400 text-dark f-16 pb-10">Outstanding balance</p>
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input matInput #balance class="form-control rupess br-0" (keypress)="keyPress($event)"
+                        formControlName="balance" maxlength="{{getFormControl().balance.maxLength}}">
+                    <mat-error class="f-12"
+                        [ngClass]="{'v-h':!(isBalance && getFormControl().balance.invalid || getFormControl().balance.touched && getFormControl().balance.invalid)}">
+                        This field is required
+
+                    </mat-error>
+                    <mat-hint align="end" class="f-12">{{balance.value.length}}/10</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+       
+        <div class="row">
+            <div *ngIf="show==true" class="col-5 text-right">
+                <h5 (click)="showLess()" class="m-0 pt-8 text-custom c-p">Show less</h5>
+            </div>
+            <div *ngIf="show==false" class="col-5 text-right">
+                <h5 (click)="showMore()" class="m-0 pt-8 text-custom c-p">+ Add more [optional data] </h5>
+            </div>
+            <div class="col-md-5">
+    
+            </div>
+        </div>
+        <div *ngIf="show == true">
+            <div *ngIf="show == true">
+                <div class="col-12 pt-28 pb-20 mob-pr-10 mob-pl-10">
+                    <p class="m-0 roboto f-400 text-dark f-16 pb-10">Collateral</p>
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <input matInput #collateral class="form-control br-0" formControlName="collateral"
+                            maxlength="{{getFormControl().collateral.maxLength}}">
+                        <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
+                        <mat-hint align="end" class="f-12">{{collateral.value.length}}/20</mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-12 pt-28 pb-20 mob-pr-10 mob-pl-10">
+                    <p class="m-0 roboto f-400 text-dark f-16 pb-10">Description</p>
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <input matInput autocomplete="off" #description maxlength="60" class="form-control br-0"
+                            formControlName="description" type="text">
+                        <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
+                        <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+                </div>
+        </div>
+    </div>
+    <div>
+        <div class="row mob-proccess-fixed br-0 pb-16">
+            <div class="col-12 text-right pt-8 pb-8">
+                <app-progress-button (btnClick)="saveFormData()" [options]="barButtonOptions">
+                </app-progress-button>
+            </div>
+        </div>
+    </div>
+
+</div>

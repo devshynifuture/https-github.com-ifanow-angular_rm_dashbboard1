@@ -17,6 +17,8 @@ import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component'
   styleUrls: ['./po-mis-mob.component.scss']
 })
 export class PoMisMobComponent implements OnInit {
+  moreFields;
+  isOptionalField;
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
     text: 'Save',
@@ -86,7 +88,7 @@ export class PoMisMobComponent implements OnInit {
     this.show = false;
     this.getPomisData(this.data);
     this.bankList = this.enumService.getBank();
-
+    this.isOptionalField = true;
   }
 
   close(flag) {
@@ -131,7 +133,7 @@ onChangeJointOwnership(data) {
   }
 }
 
-/***owner***/ 
+/***owner***/
 
 get getCoOwner() {
   return this.pomisForm.get('getCoOwnerName') as FormArray;
@@ -161,7 +163,7 @@ addNewCoOwner(data) {
     }
    }
   }
-  
+
 }
 
 removeCoOwner(item) {
@@ -182,9 +184,9 @@ removeCoOwner(item) {
   }
   this.disabledMember(null, null);
 }
-/***owner***/ 
+/***owner***/
 
-/***nominee***/ 
+/***nominee***/
 
 get getNominee() {
   return this.pomisForm.get('getNomineeName') as FormArray;
@@ -231,13 +233,13 @@ addNewNominee(data) {
       }
     }
    }
-   
-  
+
+
 }
-/***nominee***/ 
+/***nominee***/
 // ===================owner-nominee directive=====================//
 
-  
+
   getPomisData(data) {
     this.flag = data;
     (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : ''
@@ -275,7 +277,7 @@ addNewNominee(data) {
       id:[data.id]
     });
      // ==============owner-nominee Data ========================\\
-  /***owner***/ 
+  /***owner***/
   if(this.pomisForm.value.getCoOwnerName.length == 1){
     this.getCoOwner.controls['0'].get('share').setValue('100');
   }
@@ -286,23 +288,23 @@ addNewNominee(data) {
       this.addNewCoOwner(element);
     });
   }
-  
-/***owner***/ 
 
-/***nominee***/ 
+/***owner***/
+
+/***nominee***/
 if(data.nomineeList){
   if(data.nomineeList.length > 0){
-      
+
     this.getNominee.removeAt(0);
     data.nomineeList.forEach(element => {
       this.addNewNominee(element);
     });
   }
 }
-/***nominee***/ 
+/***nominee***/
 
 this.ownerData = {Fmember: this.nomineesListFM, controleData:this.pomisForm}
-// ==============owner-nominee Data ========================\\ 
+// ==============owner-nominee Data ========================\\
     // this.ownerData = this.pomisForm.controls;
     // this.familyMemberId = data.familyMemberId;
   }
@@ -319,7 +321,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.pomisForm}
       // this.pomisForm.controls["amtInvested"].markAsTouched();
       this.pomisForm.controls["amtInvested"].setValidators([Validators.required, Validators.min(1500),Validators.max(450000)]);;
       this.pomisForm.controls["amtInvested"].updateValueAndValidity();
-      this.join = false; 
+      this.join = false;
     }
   }
 
@@ -372,7 +374,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.pomisForm}
           // nominees: this.nominees,
           description: this.pomisForm.controls.description.value,
           // "createdDate":"2001-01-01"
-          
+
         };
 
         obj.nomineeList.forEach((element, index) => {
@@ -397,7 +399,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.pomisForm}
           this.eventService.openSnackBar(err, "Dismiss")
         }
         );
-      } 
+      }
       else if (this.flag == 'advicePOMIS') {
           this.custumService.getAdvicePomis(adviceObj).subscribe(
             data => this.getAdvicePomisRes(data),
@@ -406,7 +408,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.pomisForm}
               this.eventService.openSnackBar(err, "Dismiss")
             }
           );
-        } 
+        }
       else {
         this.custumService.addPOMIS(obj).subscribe(
           data => this.addPOMISRes(data),
@@ -429,7 +431,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.pomisForm}
       console.log(data);
       this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
       this.eventService.openSnackBar('Added successfully!', 'OK');
-      
+
     } else {
       this.eventService.openSnackBar('Error', 'Dismiss');
 
@@ -471,7 +473,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.pomisForm}
   openDialog(eventData): void {
     const dialogRef = this.dialog.open(LinkBankComponent, {
       width: '50%',
-      data:{bankList: this.bankList, userInfo: true} 
+      data:{bankList: this.bankList, userInfo: true}
     });
 
     dialogRef.afterClosed().subscribe(result => {

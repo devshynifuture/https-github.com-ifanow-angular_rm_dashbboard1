@@ -113,11 +113,11 @@
                 </mat-form-field>
             </div>
         </div>
-        <div class="row pt-40">
-            <div *ngIf="isOptionalField==false" (click)="moreFields()" class="col-md-5 text-right">
+        <div class="row">
+            <div *ngIf="isOptionalField==false" (click)="moreFields()" class="col-5 text-right">
                 <h5 class="m-0 pt-8 text-custom c-p">Show less</h5>
             </div>
-            <div *ngIf="isOptionalField" (click)="moreFields()" class="col-md-5 text-right">
+            <div *ngIf="isOptionalField" (click)="moreFields()" class="col-5 text-right">
                 <h5 class="m-0 pt-8 text-custom c-p">+ Add more [optional data] </h5>
             </div>
             <div class="col-md-5">
