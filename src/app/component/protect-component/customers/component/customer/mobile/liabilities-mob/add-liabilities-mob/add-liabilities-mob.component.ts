@@ -640,7 +640,8 @@ export class AddLiabilitiesMobComponent implements OnInit {
     if (data == 1) {
       data = this.loanTypeView;
       this.close(true);
-      (this._data.id == undefined) ? this.eventService.openSnackBar('Liability added successfully', 'OK') : this.eventService.openSnackBar('Liability edited successfully', 'OK');
+      // (this._data.id == undefined) ? this.eventService.openSnackBar('Liability added successfully', 'OK') : this.eventService.openSnackBar('Liability edited successfully', 'OK');
+      this.eventService.openSnackBar('Liability added successfully', 'OK');
     } else {
       this.eventService.openSnackBar('Error', 'Dismiss');
     }
