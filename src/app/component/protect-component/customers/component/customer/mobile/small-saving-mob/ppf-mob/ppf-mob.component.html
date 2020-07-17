@@ -1,7 +1,7 @@
 <div id="mob-fixed-income" *ngIf="backToSS != true">
     <div class="row mob-bg-common pb-12 mobtop-navfixed">
         <div class="col-2" (click)="backToSS = true">
-            <span class="material-icons text-white" >
+            <span class="material-icons text-white">
                 keyboard_backspace
             </span>
         </div>
@@ -186,6 +186,9 @@
 
             </div>
         </div>
+        <app-add-transaction-mob (outputEvent)="getFormData($event)" [data]='inputData'
+            [transactionViewData]="transactionViewData" [commencementDate]="commencementDate">
+        </app-add-transaction-mob>
         <div *ngIf="showHide == true">
             <div *ngIf="showHide == true">
                 <div class="col-12 pt-28 pb-20 mob-pr-10 mob-pl-10">
@@ -299,5 +302,5 @@
 
 </div>
 <div *ngIf="backToSS == true">
-  <app-small-saving-mob></app-small-saving-mob>
+    <app-small-saving-mob></app-small-saving-mob>
 </div>

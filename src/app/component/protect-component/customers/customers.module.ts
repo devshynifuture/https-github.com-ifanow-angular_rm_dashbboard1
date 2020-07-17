@@ -128,6 +128,7 @@ import { PoMisMobComponent } from './component/customer/mobile/small-saving-mob/
 import { AddRealEstateMobComponent } from './component/customer/mobile/real-estate-mob/add-real-estate-mob/add-real-estate-mob.component';
 import { AddLiabilitiesMobComponent } from './component/customer/mobile/liabilities-mob/add-liabilities-mob/add-liabilities-mob.component';
 import { AddOtherPayablesMobComponent } from './component/customer/mobile/liabilities-mob/add-other-payables-mob/add-other-payables-mob.component';
+import { AddTransactionMobComponent } from './component/customer/mobile/add-transaction-mob/add-transaction-mob.component';
 
 
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
@@ -147,7 +148,7 @@ import { AddOtherPayablesMobComponent } from './component/customer/mobile/liabil
     MinorMemberFormComponent, RetirementAccMobComponent, RealEstateComponent, SmallSavingComponent, CashAndBankComponent, CommoditiesComponent, LiabilitiesComponent, LifeInsuranceComponent, GeneralInsuranceComponent,
     MobileViewMoreInfoComponent,
     CashAndBankMobComponent, StocksMobComponent, RealEstateMobComponent, SmallSavingMobComponent, CommoditiesMobComponent, LiabilitiesMobComponent, LifeInsuranceMobComponent, GeneralInsuranceMobComponent,
-    AddGoldMobComponent, BankDetailedAssetsComponent, FixedDepositMobComponent, BondMobComponent, RecurringDepositeMobComponent, AddOthersMobComponent, EpfMobComponent, NpsMobComponent, GratuityMobComponent, GetRetirementMobComponent, HolderNameMobileViewComponent, GetSmallSavingSchemeComponent, PpfMobComponent, NscMobComponent, SsyMobComponent, KvpMobComponent, ScssMobComponent, PoSavingsMobComponent, PoTdMobComponent, PoRdMobComponent, PoMisMobComponent,AddBankAccMobComponent, AddCashInHandMobComponent, AddRealEstateMobComponent, AddLiabilitiesMobComponent, AddOtherPayablesMobComponent],
+    AddGoldMobComponent, BankDetailedAssetsComponent, FixedDepositMobComponent, BondMobComponent, RecurringDepositeMobComponent, AddOthersMobComponent, EpfMobComponent, NpsMobComponent, GratuityMobComponent, GetRetirementMobComponent, HolderNameMobileViewComponent, GetSmallSavingSchemeComponent, PpfMobComponent, NscMobComponent, SsyMobComponent, KvpMobComponent, ScssMobComponent, PoSavingsMobComponent, PoTdMobComponent, PoRdMobComponent, PoMisMobComponent,AddBankAccMobComponent, AddCashInHandMobComponent, AddRealEstateMobComponent, AddLiabilitiesMobComponent, AddOtherPayablesMobComponent, AddTransactionMobComponent],
   imports: [
     // BrowserModule,
     CommonModule,
@@ -181,7 +182,7 @@ import { AddOtherPayablesMobComponent } from './component/customer/mobile/liabil
   entryComponents: [EntryComponentsModule.getComponentList(),
   AccountEntryModule.getComponentList(), AdviceEntryModule.getComponentList(),
   PlanEntryModule.getComponentList(), CustomerOverviewEntryModule.getComponentList(),
-    UploadDocumentComponent, EditDocumentPopupComponent]
+    UploadDocumentComponent, EditDocumentPopupComponent,AddTransactionMobComponent]
 })
 export class CustomersModule {
 }

@@ -122,7 +122,6 @@ disabledMember(value, type) {
     disControl : type
   }
 }
-
 displayControler(con) {
   console.log('value selected', con);
   if(con.owner != null && con.owner){
