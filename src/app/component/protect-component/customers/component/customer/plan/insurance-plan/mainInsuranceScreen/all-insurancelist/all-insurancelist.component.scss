@@ -73,3 +73,32 @@ ul>li:before {
 ::ng-deep .mat-progress-bar-fill::after {
     background-color: #008FFF !important;
 }
+
+.insuListFixedHeader {
+    position: fixed;
+    width: 20.2%;
+    z-index: 1;
+    background: #fff;
+}
+
+.zIndex2 {
+    position: relative;
+    z-index: 2;
+}
+
+.leftScroll {
+    height: 520px;
+    overflow-x: auto;
+}
+
+.leftScroll::-webkit-scrollbar {
+    width: 4px;
+}
+
+.leftScroll::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.leftScroll::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
