@@ -11,13 +11,15 @@ export class MutualFundDetailsComponent implements OnInit {
   mutualFundSchemeMaster: any;
   mutualFund: any;
   showDetails: boolean;
+  mutualFundTransactions: any;
+  mutualFundData: any;
 
   constructor() { }
   @Input()
   set data(data) {
     this.inputData = data;
-    this.mutualFundSchemeMaster = data.mutualFundSchemeMaster[0]
-    this.mutualFund = this.mutualFundSchemeMaster.mutualFund
+    this.mutualFundData = data
+    this.mutualFundTransactions = data.mutualFundTransactions
     console.log('This is Input data of proceed ', data);
   }
   get data() {
