@@ -142,6 +142,18 @@
     border: 0px !important;
   }
 
+  .invest-btn {
+    background: linear-gradient(180deg, #94E9B6 0%, #5BCF7F 100%) !important;
+    border-radius: 4px !important;
+    color: #fff;
+    font-family: "Roboto";
+    font-size: 12px;
+    line-height: 22px !important;
+    height: 30px !important;
+    padding: 0 33px !important;
+    border: 0px !important;
+  }
+
   .balanced-btn {
     background: linear-gradient(180deg, #94E9B6 0%, #5BCF7F 100%) !important;
     border-radius: 4px !important;
@@ -330,6 +342,7 @@
       width: 100%;
     }
   }
+
 
 
 }

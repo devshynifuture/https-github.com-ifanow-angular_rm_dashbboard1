@@ -79,7 +79,7 @@ export class SsyMobComponent implements OnInit {
   requestDataForOwnerList = { age: 18, greaterOrLesser: 1, clientId: 0 };
   requestDataForGuardList = { age: 18, greaterOrLesser: 2, clientId: 0 };
 
-  isOptionalField: boolean;
+  isOptionalField: boolean = true;
   advisorId: any;
   editApi: any;
   transactionData: any[] = [];

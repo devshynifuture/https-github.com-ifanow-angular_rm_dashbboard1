@@ -9,7 +9,8 @@ export class GetSmallSavingSchemeComponent implements OnInit {
   asset: any[];
   inputData: any;
   backToSS;
-
+  fixdeposit;
+  backToMf;
   @Input()
   set data(data) {
     this.inputData = data;
