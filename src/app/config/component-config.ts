@@ -294,7 +294,6 @@ export const appConfig = {
   EDIT_SINGLE_YEAR_GOAL_PREFERENCE: 'goal-planning/single-year/edit',
   SAVE_ASSET_ALLOCATION_PREFERENCE: 'goal-planning/asset-allocation/update',
   GET_MF_DATA: 'goal-planning/goal/mf/list/get',
-  SAVE_MF_ASSET_TO_GOAL: 'goal-planning/goal/mf/allocate',
   SAVE_ASSET_TO_GOAL: 'goal-planning/asset/allocate',
   REMOVE_ALLOCATION: 'goal-planning/asset/allocate',
   CALCULATE_TOTAL_VALUES: 'account/asset/summary',
@@ -854,8 +853,9 @@ export const appConfig = {
   GET_GOAL_SUMMARY: 'admin/dashboard/goal/summary',
 
   ///////////////////////////// market place //////////////////////////
-  GET_CALL_DETAILS: 'marketplace/call/settings/get'
-
+  GET_CALL_DETAILS: 'marketplace/call/settings/get',
+  ADD_CALL_DETAILS: 'marketplace/call/settings/edit',
+  ADD_CALL_AVAILABLE: 'marketplace/call/settings/non-working/days/edit'
 };
 
 

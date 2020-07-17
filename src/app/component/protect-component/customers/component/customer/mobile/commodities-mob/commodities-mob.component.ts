@@ -20,8 +20,10 @@ export class CommoditiesMobComponent implements OnInit {
   othersData: any;
   goldCV: any;
   otherCv: any;
-
-  constructor(private custumService:CustomerService,private eventService:EventService,private subInjectService:SubscriptionInject) { }
+  assetSubType = {assetType:'',data:''};
+  showBank: any;
+  backToMf
+  constructor(private custumService: CustomerService, private eventService: EventService, private subInjectService: SubscriptionInject) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -29,49 +31,49 @@ export class CommoditiesMobComponent implements OnInit {
     this.getGold();
     this.getOthers();
   }
-  getGold(){
+  getGold() {
     const obj = {
       clientId: this.clientId,
       advisorId: this.advisorId
     };
     this.custumService.getGold(obj).subscribe(
       data => {
-        if(data){
+        if (data) {
           this.goldData = data;
           this.goldCV = data.sumOfMarketValue;
           this.calculateSum();
         }
       }, (error) => {
         this.eventService.showErrorMessage(error);
-  
+
       }
     );
   }
-  getOthers(){
+  getOthers() {
     const obj = {
       clientId: this.clientId,
       advisorId: this.advisorId
     };
     this.custumService.getOthers(obj).subscribe(
       data => {
-        if(data){
+        if (data) {
           this.othersData = data;
           this.otherCv = data.sumOfMarketValue
           this.calculateSum();
         }
       }, (error) => {
         this.eventService.showErrorMessage(error);
-  
+
       }
     );
   }
-  calculateSum(){
-    this.totalCurrentValue = this.goldCV+this.otherCv
+  calculateSum() {
+    this.totalCurrentValue = (this.goldCV ? this.goldCV : 0) + (this.otherCv ? this.otherCv : 0)
   }
-  changeValue(flag){
+  changeValue(flag) {
     this.outputValue.emit(flag);
   }
-  addGold(value, state, data){
+  addGold(value, state, data) {
     let popupHeaderText = !!data ? 'Edit Gold' : 'Add Gold';
     const fragmentData = {
       flag: value,
@@ -100,5 +102,9 @@ export class CommoditiesMobComponent implements OnInit {
 
       }
     );
+  }
+  openSubAsset(subAsset,value) {
+    this.assetSubType.assetType = subAsset;
+    this.assetSubType.data = value;
   }
 }

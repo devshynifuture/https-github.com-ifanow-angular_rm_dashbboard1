@@ -1,8 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/auth-service/authService';
+import { Component, OnInit, Input } from '@angular/core';
 import { EventService } from 'src/app/Data-service/event.service';
-import { UtilService } from 'src/app/services/util.service';
-import { FixedDepositMobComponent } from '../fixed-income-mob/fixed-deposit-mob/fixed-deposit-mob.component';
 import { upperSliderAnimation, rightSliderAnimation } from 'src/app/animation/animation';
 
 @Component({
@@ -17,10 +14,20 @@ import { upperSliderAnimation, rightSliderAnimation } from 'src/app/animation/an
 export class BankDetailedAssetsComponent implements OnInit {
   fixdeposit
   backToMf
+  inputData: any;
+  asset: any;
   constructor(
     public eventService : EventService,
   ) { }
-
+  @Input()
+  set data(data) {
+    this.inputData = data;
+    this.asset = data.asset
+    console.log('This is Input data of proceed ', data);
+  }
+  get data() {
+    return this.inputData;
+  }
   ngOnInit() {
   }
   addFixedDeposit(){     

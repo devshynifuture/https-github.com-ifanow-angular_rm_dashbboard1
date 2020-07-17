@@ -14,7 +14,11 @@ export class CashAndBankMobComponent implements OnInit {
   totalCurrentValue = 0;
   bankAccData: any;
   cashInHandData: any;
+  showDetail
   @Output() outputValue = new EventEmitter<any>();
+  assetSubType = {assetType:'',data:''};
+
+
   accCv: any;
   cashInHandCv: any;
   constructor(private custumService:CustomerService,private eventService:EventService) { }
@@ -62,9 +66,13 @@ export class CashAndBankMobComponent implements OnInit {
     );
   }
   calculateSum(){
-    this.totalCurrentValue = this.accCv+this.cashInHandCv
+    this.totalCurrentValue = (this.accCv ? this.accCv : 0)+(this.cashInHandCv ? this.cashInHandCv :0)
   }
   changeValue(flag){
     this.outputValue.emit(flag);
+  }
+  openSubAsset(subAsset,value) {
+    this.assetSubType.assetType = subAsset;
+    this.assetSubType.data = value;
   }
 }

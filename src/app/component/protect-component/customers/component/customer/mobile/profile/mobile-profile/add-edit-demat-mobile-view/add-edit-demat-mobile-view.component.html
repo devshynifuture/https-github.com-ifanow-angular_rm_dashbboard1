@@ -13,6 +13,9 @@
             <h3 class="m-0 roboto f-400 text-dark">Add new demat</h3>
         </div>
     </div>
+    <app-holder-name-mobile-view [holderListInput]="userData.dematData.holderNameList"
+        (holderList)="getHolderList($event)">
+    </app-holder-name-mobile-view>
     <!-- <div class="row pt-28">
         <div class="col-12 mob-pl-10 mob-pr-10">
             <h5 class="m-0 roboto text-dark pb-10 f-16">Add IFSC</h5>
@@ -117,6 +120,9 @@
             </div>
         </div>
     </div>
+    <app-mobile-view-add-number [isResidential]="userData" (numberArray)="getNumberDetails($event)"
+        [flag]="mobileNumberFlag" [isResidential]="taxStatusType" [numberList]="userData.mobileList">
+    </app-mobile-view-add-number>
     <div class="row pt-28">
         <div class="col-12 mob-pl-10 mob-pr-10">
             <h5 class="m-0 roboto text-dark pb-10 f-16">Linked bank account</h5>
@@ -164,7 +170,7 @@
     <div class="col-2"></div>
     <div class="col-8 pt-8 pb-8">
         <button (click)="saveNext('')" mat-stroked-button class="btn-primary w-100 f-16 h-40 br-40">Add
-            address</button>
+            demat</button>
     </div>
     <div class="col-2"></div>
 </div>

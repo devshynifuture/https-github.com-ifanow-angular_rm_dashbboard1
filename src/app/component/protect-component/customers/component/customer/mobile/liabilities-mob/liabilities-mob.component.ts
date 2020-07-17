@@ -15,6 +15,10 @@ export class LiabilitiesMobComponent implements OnInit {
   liabilityCv: any;
   otherPayableCv: any;
   totalCurrentValue: any;
+  showDetail
+  liabilityData: any;
+  otherPayableeData: any;
+  assetSubType = {assetType:'',data:''};
 
   constructor(private custumService:CustomerService,private eventService:EventService) { }
 
@@ -32,6 +36,7 @@ export class LiabilitiesMobComponent implements OnInit {
     this.custumService.getLiabilty(obj).subscribe(
       data => {
         if(data){
+          this.liabilityData = data;
           this.liabilityCv = data.totalLoanAmount;
           this.calculateSum();
         }
@@ -49,6 +54,7 @@ export class LiabilitiesMobComponent implements OnInit {
     this.custumService.getOtherPayables(obj).subscribe(
       data => {
         if(data){
+          this.otherPayableeData = data;
           this.otherPayableCv = 0
           data.forEach(element => {
             this.otherPayableCv += element.amountBorrowed
@@ -65,6 +71,10 @@ export class LiabilitiesMobComponent implements OnInit {
     this.outputValue.emit(flag);
   }
   calculateSum(){
-    this.totalCurrentValue = this.liabilityCv+this.otherPayableCv
+    this.totalCurrentValue = (this.liabilityCv ? this.liabilityCv : 0)+(this.otherPayableCv ? this.otherPayableCv : 0)
+  }
+  openSubAsset(subAsset,value) {
+    this.assetSubType.assetType = subAsset;
+    this.assetSubType.data = value;
   }
 }

@@ -1,0 +1,66 @@
+<div id="mob-fixed-income" *ngIf="commodities != true && backToMf != true">
+    <div class="row mob-bg-common pb-12 mobtop-navfixed">
+        <div class="col-2" (click)="backToMf = true">
+            <span class="material-icons text-white">
+                keyboard_backspace
+            </span>
+        </div>
+        <div class="col-7 p-0">
+            <h5 class="m-0 f-18 text-white pt-4">{{inputData}}</h5>
+        </div>
+        <div class="col-3 text-right">
+            <span class="material-icons text-white">
+                filter_list
+            </span>
+        </div>
+    </div>
+    <div class="pt-80 p-8 h-100vh" *ngIf="inputData == 'Gold'">
+        <div class="pt-16" *ngFor="let item of assetData;let i = index">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20 mob-bb-1">
+                    <div class="col-8">
+                        <p class="mb-0">
+                            <span appFormatNumber>
+                                {{(item.description) ? item.description : 'GOLD '+(i+1)}} 
+                            </span></p>
+                    </div>
+                    <div class="col-4 text-right">
+                        <p class="m-0">₹
+                            <span appFormatNumber>{{item.marketValue}}</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pt-80 p-8 h-100vh" *ngIf="inputData == 'Others'">
+        <div class="pt-16" *ngFor="let item of assetData; let i = index">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20 mob-bb-1">
+                    <div class="col-8">
+                        <p class="mb-0">
+                            <span appFormatNumber>
+                                {{(item.description) ? item.description : 'OTHERS '+(i+1)}}
+                            </span></p>
+                    </div>
+                    <div class="col-4 text-right">
+                        <p class="m-0">₹<span appFormatNumber>{{item.marketValue}}</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="document-bottom-action">
+        <button (click)="commodities = true" mat-stroked-button class="btn-primary"><span class="material-icons">
+                add
+            </span></button>
+    </div>
+</div>
+<div *ngIf="commodities == true && inputData == 'Gold'">
+    <app-add-gold-mob></app-add-gold-mob>
+</div>
+<div *ngIf="commodities == true && inputData == 'Others'">
+    <app-add-others-mob></app-add-others-mob>
+</div>
+<div *ngIf="backToMf == true">
+<app-commodities-mob></app-commodities-mob>
+</div>

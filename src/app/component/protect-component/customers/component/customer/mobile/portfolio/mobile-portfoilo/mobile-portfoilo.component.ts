@@ -109,6 +109,13 @@ export class MobilePortfoiloComponent implements OnInit {
   showLiablities: boolean;
   showSmallSavings: boolean;
   showCommodities: boolean;
+  lifeInsuranceCv: any;
+  generalInsuranceCv: any;
+  liObj: {};
+  giObj: {};
+  showLifeInsurance: boolean;
+  showGenralInsurance: boolean;
+  allDataPort: any;
   constructor(
     public customerService : CustomerService,
     public loaderFn: LoaderFunction,
@@ -128,8 +135,59 @@ export class MobilePortfoiloComponent implements OnInit {
   }
   ngOnInit() {
     this.portFolioData = [];
+    this.getLifeInsurance();
+    this.generalInsurance();
     this.getAssetAllocationData()
     this.initializePieChart()
+  }
+  getLifeInsurance(){
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      insuranceTypeId: 1,
+
+    };
+    this.customerService.getInsuranceData(obj).subscribe(
+      data => {
+      console.log(data);
+      this.lifeInsuranceCv = data.currentValueSum;
+      this.liObj={
+        currentValue : this.lifeInsuranceCv, 
+        assetType : 14,
+        assetTypeString:'Life insurance'
+
+      }
+      this.portFolioData.push(this.liObj)
+      // Object.assign( this.portFolioData, {currentValue : this.lifeInsuranceCv, assetType : 14});
+      },
+      error => {
+        this.eventService.showErrorMessage(error);
+      }
+    );
+  }
+  generalInsurance(){
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      insuranceSubTypeId: 0
+    };
+    this.customerService.getGeneralInsuranceData(obj).subscribe(
+      data => {
+      console.log(data);
+      this.generalInsuranceCv = data.totalSumInsured
+      this.giObj={
+        currentValue : this.generalInsuranceCv, 
+        assetType : 15,
+        assetTypeString:'General insurance'
+
+      }
+      this.portFolioData.push(this.giObj)
+      // Object.assign( this.portFolioData, {currentValue : this.generalInsuranceCv, assetType : 15});
+      },
+      error => {
+        this.eventService.showErrorMessage(error);
+      }
+    );
   }
   openAsset(asset){
     console.log('assets',asset)
@@ -150,7 +208,11 @@ export class MobilePortfoiloComponent implements OnInit {
       this.showLiablities = true;
     }else if(asset.assetType == 10){
      this.showSmallSavings = true;
-    }
+    }else if(asset.assetType == 14){
+      this.showLifeInsurance = true;
+     }else if(asset.assetType == 15){
+      this.showGenralInsurance = true;
+     }
   }
   openMenu(flag) {
     if (flag == false) {
@@ -175,11 +237,26 @@ export class MobilePortfoiloComponent implements OnInit {
       } else {
         let stock = res.find(d => d.assetType == 6);
         this.portFolioData = res;
+        this.allDataPort = res
+        this.portFolioData = this.portFolioData.filter(element => element.assetType != 5);
       this.portFolioData.forEach(element => {
         if(element.assetType == 5){
           this.mfData.push(element)
         }
       });
+      this.liObj={
+        currentValue : this.lifeInsuranceCv, 
+        assetType : 14,
+        assetTypeString:'Life insurance'
+      }
+      this.portFolioData.push(this.liObj)
+      this.giObj={
+        currentValue : this.generalInsuranceCv, 
+        assetType : 15,
+        assetTypeString:'General insurance'
+      }
+      this.portFolioData.push(this.giObj)
+
         console.log('assets',this.portFolioData)
         if (stock) {
           this.portFolioData = this.portFolioData.filter(d => d.assetType != 6);
@@ -309,5 +386,7 @@ export class MobilePortfoiloComponent implements OnInit {
     this.showCommodities = value;
     this.showSmallSavings = value;
     this.showLiablities = value;
+    this.showGenralInsurance = value;
+    this.showLifeInsurance = value;
   }
 }

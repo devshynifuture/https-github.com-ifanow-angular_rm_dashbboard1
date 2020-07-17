@@ -27,7 +27,7 @@ export class ReallocateAssetComponent implements OnInit {
   decimalValidator = ValidatorType.NUMBER_ONLY_WITH_TWO_DECIMAL;
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
-    text: 'Save',
+    text: 'SAVE',
     buttonColor: 'accent',
     barColor: 'accent',
     raised: true,
@@ -54,18 +54,11 @@ export class ReallocateAssetComponent implements OnInit {
   }
 
   ngOnInit() {
-    const otherAllocated = this.allocationData.goalAssetMapping.filter(map => {
-      if(map.goalId == this.goalData.remainingData.id && map.goalType == this.goalData.remainingData.goalType) {
-        this.allocationToThisGoal = map.percentAllocated;
-        return false;
-      } else {
-        return map.percentAllocated;
-      }
-    })
-    this.availableAllocation = 100 - otherAllocated.reduce((a, v) => a + v, 0);
+    this.availableAllocation = 100 - this.allocationData.allocatedToOtherGoal;
+    this.remainingAllocation = 100 - this.allocationData.allocatedToOtherGoal - this.allocationData.percentAllocated;
     
     this.reallocationFG = this.fb.group({
-      allocatedPercentage: [this.allocationToThisGoal, [Validators.required, Validators.max(this.availableAllocation), Validators.min(1)]]
+      allocatedPercentage: [this.allocationData.percentAllocated, [Validators.required, Validators.max(this.availableAllocation), Validators.min(1)]]
     });
 
     this.subscriber.add(

@@ -15,19 +15,36 @@ export class RetirementAccMobComponent implements OnInit {
   npsData: any;
   gratuity: any;
   totalCurrentValue = 0;
+  backToMf;
   @Output() outputValue = new EventEmitter<any>();
   epfCv: any;
   npsCv: any;
   gratuityCv: any;
+  assetSubType: any;
+  showBank: boolean;
 
   constructor(private custumService:CustomerService,private eventService:EventService) { }
 
   ngOnInit() {
+    this.assetSubType = {}
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getEpf();
     this.getNps();
     this.getGratuity();
+  }
+  openSubAsset(subAsset) {
+    if (subAsset == 'EPF') {
+      this.assetSubType = Object.assign(this.assetSubType, { assetType: subAsset });
+      this.assetSubType = Object.assign(this.assetSubType, { asset: this.epfData });
+    } else if (subAsset == 'NPS') {
+      this.assetSubType = Object.assign(this.assetSubType, { assetType: subAsset });
+      this.assetSubType = Object.assign(this.assetSubType, { asset: this.npsData.data });
+    } else {
+      this.assetSubType = Object.assign(this.assetSubType, { assetType: subAsset });
+      this.assetSubType = Object.assign(this.assetSubType, { asset: this.gratuity });
+    }
+    this.showBank = true;
   }
   getEpf(){
     const obj = {
@@ -43,7 +60,7 @@ export class RetirementAccMobComponent implements OnInit {
         }
       }, (error) => {
         this.eventService.showErrorMessage(error);
-  
+
       }
     );
   }
@@ -61,7 +78,7 @@ export class RetirementAccMobComponent implements OnInit {
         }
       }, (error) => {
         this.eventService.showErrorMessage(error);
-     
+
       }
     );
   }
@@ -86,6 +103,7 @@ export class RetirementAccMobComponent implements OnInit {
     this.outputValue.emit(flag);
   }
   calculateSum(){
-    this.totalCurrentValue = this.epfCv+this.npsCv+this.gratuityCv
+    this.totalCurrentValue = (this.epfCv ? this.epfCv : 0)+(this.npsCv ? this.npsCv : 0)
+    +(this.gratuityCv ? this.gratuityCv :0)
   }
 }

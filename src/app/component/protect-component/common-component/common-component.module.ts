@@ -1,14 +1,14 @@
-import {NgModule} from '@angular/core';
-import {ConfirmDialogComponent} from './confirm-dialog/confirm-dialog.component';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MaterialModule} from '../../../material/material';
-import {FroalaComponent} from './froala/froala.component';
-import {FroalaEditorModule, FroalaViewModule} from 'angular-froala-wysiwyg';
-import {CommonModule} from '@angular/common';
-import {ErrorPageComponent} from './error-page/error-page.component';
-import {DataNotFoundComponent} from './data-not-found/data-not-found.component';
+import { NgModule } from '@angular/core';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MaterialModule } from '../../../material/material';
+import { FroalaComponent } from './froala/froala.component';
+import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
+import { CommonModule } from '@angular/common';
+import { ErrorPageComponent } from './error-page/error-page.component';
+import { DataNotFoundComponent } from './data-not-found/data-not-found.component';
 // import {PhotoUploadComponent} from './photo-upload/photo-upload.component';
-import {FileUploadModule} from 'ng2-file-upload';
+import { FileUploadModule } from 'ng2-file-upload';
 import { ImageCropperComponent } from './image-cropper/image-cropper.component';
 // import { OwnerNomineeComponent } from './owner-nominee/owner-nominee.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
@@ -19,11 +19,12 @@ import { CustomDirectiveModule } from 'src/app/common/directives/common-directiv
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { CustomCommonModule } from 'src/app/common/custom.common.module';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { MobileViewAddNumberComponent } from './mobile-view-add-number/mobile-view-add-number.component';
 
 @NgModule({
   declarations: [
-    FroalaComponent, ConfirmDialogComponent, ErrorPageComponent, DataNotFoundComponent, ImageCropperComponent, WelcomePageComponent, ReplaceUserComponent, AddNumberComponent, ResetPasswordComponent],
-  exports: [FroalaComponent, ConfirmDialogComponent, ImageCropperComponent, ReplaceUserComponent, AddNumberComponent, ResetPasswordComponent],
+    FroalaComponent, ConfirmDialogComponent, ErrorPageComponent, DataNotFoundComponent, ImageCropperComponent, WelcomePageComponent, ReplaceUserComponent, AddNumberComponent, ResetPasswordComponent, MobileViewAddNumberComponent],
+  exports: [FroalaComponent, ConfirmDialogComponent, ImageCropperComponent, ReplaceUserComponent, AddNumberComponent, ResetPasswordComponent, MobileViewAddNumberComponent],
   imports: [
     MaterialModule,
     CommonModule,

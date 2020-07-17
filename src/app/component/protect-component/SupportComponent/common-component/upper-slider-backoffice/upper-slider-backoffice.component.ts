@@ -1,15 +1,15 @@
-import { AuthService } from './../../../../../auth-service/authService';
-import { SupportService } from './../../support.service';
-import { ExcelService } from './../../../customers/component/customer/excel.service';
-import { ConfirmDialogComponent } from './../../../common-component/confirm-dialog/confirm-dialog.component';
-import { EventService } from './../../../../../Data-service/event.service';
-import { UtilService } from './../../../../../services/util.service';
-import { Component, OnInit } from '@angular/core';
-import { ReconciliationDetailsViewComponent } from '../reconciliation-details-view/reconciliation-details-view.component';
-import { SubscriptionInject } from '../../../AdviserComponent/Subscriptions/subscription-inject.service';
-import { MatDialog, MatTableDataSource } from '@angular/material';
-import { DatePipe } from '@angular/common';
-import { ReconciliationService } from '../../../AdviserComponent/backOffice/backoffice-aum-reconciliation/reconciliation/reconciliation.service';
+import {AuthService} from './../../../../../auth-service/authService';
+import {SupportService} from './../../support.service';
+import {ExcelService} from './../../../customers/component/customer/excel.service';
+import {ConfirmDialogComponent} from './../../../common-component/confirm-dialog/confirm-dialog.component';
+import {EventService} from './../../../../../Data-service/event.service';
+import {UtilService} from './../../../../../services/util.service';
+import {Component, OnInit} from '@angular/core';
+import {ReconciliationDetailsViewComponent} from '../reconciliation-details-view/reconciliation-details-view.component';
+import {SubscriptionInject} from '../../../AdviserComponent/Subscriptions/subscription-inject.service';
+import {MatDialog, MatTableDataSource} from '@angular/material';
+import {DatePipe} from '@angular/common';
+import {ReconciliationService} from '../../../AdviserComponent/backOffice/backoffice-aum-reconciliation/reconciliation/reconciliation.service';
 
 
 @Component({
@@ -29,7 +29,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
     private datePipe: DatePipe,
     private reconService: ReconciliationService,
     private util: UtilService
-  ) { }
+  ) {
+  }
 
   displayedColumns: string[] = ['doneOne', 'totalfolios', 'before_recon', 'after_recon', 'aum_balance', 'transaction', 'export_folios'];
   displayedColumns1: string[] = ['name', 'folioNumber', 'unitsIfanow', 'unitsRta', 'difference', 'transactions'];
@@ -139,7 +140,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
   }
 
   teamMemberListGet() {
-    this.reconService.getTeamMemberListValues({ advisorId: this.advisorId })
+    this.reconService.getTeamMemberListValues({advisorId: this.advisorId})
       .subscribe(data => {
         if (data && data.length !== 0) {
           console.log('team members: ', data);
@@ -170,6 +171,20 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
     console.log(objArr);
     this.dataSource.data = objArr;
+  }
+
+  getFolioCount() {
+    const isParent = this.isRmLogin ? true : ((this.parentId === this.advisorId) ? true : false);
+
+    const data = {
+      advisorIds: [...this.adminAdvisorIds],
+      arnRiaDetailId: this.brokerId,
+      rt: this.data.rtId,
+      parentId: (this.adminId && this.adminId == 0) ? this.advisorId : (this.parentId ? this.parentId : this.advisorId),
+      isParent,
+    };
+    // http://dev.ifanow.in:8080/futurewise/api/v1/test/backoffice/folioCount/get?advisorIds=5435&arnRiaDetailId=105&parentId=5435&rt=2
+
   }
 
   // getDataFromObsAfterDeletingTransacn() {
@@ -263,7 +278,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
             transactionDate: res.transactionDate,
             rtId: this.data.rtId,
             doneOn: doneOnFormatted,
-            // when rm login is creted this will get value from localStorage
+            // when rm login is created this will get value from localStorage
             rmId: this.rmId
           };
           if (doStartRecon) {
@@ -457,7 +472,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
   getBackofficeAumFileOrderListDeleteReorder() {
     this.isLoading = true;
     this.dataSource3.data = ELEMENT_DATA3;
-    this.supportService.getBackofficeAumOrderListValues({ aumReconId: this.aumReconId })
+    this.supportService.getBackofficeAumOrderListValues({aumReconId: this.aumReconId})
       .subscribe(res => {
         this.isLoading = false;
         console.log(res);
@@ -466,7 +481,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
             if (element && element.folios !== '') {
               const obj = {
                 count: element.folios.split(',').length,
-                file: new Blob([element.folios.split(',').join('\n')], { type: 'text/plain' })
+                file: new Blob([element.folios.split(',').join('\n')], {type: 'text/plain'})
               };
               element.folios = obj;
             }
@@ -519,17 +534,17 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
     // creation of excel sheet
     const headerData = [
-      { width: 40, key: 'Investor Name' },
-      { width: 15, key: 'Asset Id' },
-      { width: 50, key: 'Scheme Name' },
-      { width: 15, key: 'Scheme Code' },
-      { width: 20, key: 'Folio Number' },
-      { width: 15, key: 'RTA Type' },
-      { width: 15, key: 'IFANOW Units' },
-      { width: 15, key: 'RTA Units' },
-      { width: 15, key: 'RTA Bal as on' },
-      { width: 15, key: 'Unit Difference' },
-      { width: 20, key: 'Amount Difference' }
+      {width: 40, key: 'Investor Name'},
+      {width: 15, key: 'Asset Id'},
+      {width: 50, key: 'Scheme Name'},
+      {width: 15, key: 'Scheme Code'},
+      {width: 20, key: 'Folio Number'},
+      {width: 15, key: 'RTA Type'},
+      {width: 15, key: 'IFANOW Units'},
+      {width: 15, key: 'RTA Units'},
+      {width: 15, key: 'RTA Bal as on'},
+      {width: 15, key: 'Unit Difference'},
+      {width: 20, key: 'Amount Difference'}
     ];
     const excelData = [];
     const footer = [];
@@ -854,7 +869,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
     // post call
     this.postReqForBackOfficeUnmatchedFolios();
 
-    this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: true });
+    this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
   }
 
   setSubTabState(state) {
@@ -915,9 +930,33 @@ interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  { doneOne: '', totalfolios: '', before_recon: '', after_recon: '', aum_balance: '', transaction: '', export_folios: '' },
-  { doneOne: '', totalfolios: '', before_recon: '', after_recon: '', aum_balance: '', transaction: '', export_folios: '' },
-  { doneOne: '', totalfolios: '', before_recon: '', after_recon: '', aum_balance: '', transaction: '', export_folios: '' },
+  {
+    doneOne: '',
+    totalfolios: '',
+    before_recon: '',
+    after_recon: '',
+    aum_balance: '',
+    transaction: '',
+    export_folios: ''
+  },
+  {
+    doneOne: '',
+    totalfolios: '',
+    before_recon: '',
+    after_recon: '',
+    aum_balance: '',
+    transaction: '',
+    export_folios: ''
+  },
+  {
+    doneOne: '',
+    totalfolios: '',
+    before_recon: '',
+    after_recon: '',
+    aum_balance: '',
+    transaction: '',
+    export_folios: ''
+  },
 ];
 
 
@@ -931,13 +970,13 @@ interface PeriodicElement1 {
 }
 
 const ELEMENT_DATA1: PeriodicElement1[] = [
-  { name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: '' },
-  { name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: '' },
+  {name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: ''},
+  {name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: ''},
 ];
 
 const ELEMENT_DATA2: PeriodicElement1[] = [
-  { name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: '' },
-  { name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: '' },
+  {name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: ''},
+  {name: '', folioNumber: '', unitsIfanow: '', unitsRta: '', difference: '', transactions: ''},
 ];
 
 interface PeriodicElement3 {
