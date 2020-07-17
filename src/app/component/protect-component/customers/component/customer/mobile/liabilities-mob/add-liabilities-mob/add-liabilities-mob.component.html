@@ -14,7 +14,7 @@
             <div [ngClass]="{'pt-36': pointIndex>0}" class="row"
                 *ngFor="let obj of addLiabilityForm.controls['getCoOwnerName'].controls; let pointIndex=index"
                 [formGroupName]="pointIndex">
-                <div class="col-md-5 pr-0 text-right">
+                <div  class="m-0 roboto f-400 text-dark f-16 pb-10">
                     <h5 class="m-0 pt-8 ">{{pointIndex != 0?'Co-B' : 'B'}}orrower{{pointIndex != 0?pointIndex:''}}</h5>
                 </div>
                 <div [ngClass]="addLiabilityForm.value.getCoOwnerName.length > 1?'col-md-3' : 'col-md-5'">
@@ -269,10 +269,10 @@
                 </div>
             </div>
         </div>
-        <!-- <app-add-transaction (outputEvent)="getFormData($event)"
+        <app-add-transaction-mob (outputEvent)="getFormData($event)"
         [commencementDate]="addLiabilityForm.get('CommencementDate').value" [data]="editData"
         [transactionViewData]="transactionViewData">
-    </app-add-transaction> -->
+    </app-add-transaction-mob>
     </div>
     <div >
         <div class="row mob-proccess-fixed br-0 pb-16">
