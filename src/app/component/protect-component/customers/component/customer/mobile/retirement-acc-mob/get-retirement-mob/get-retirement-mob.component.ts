@@ -8,7 +8,8 @@ import { Component, OnInit, Input } from '@angular/core';
 export class GetRetirementMobComponent implements OnInit {
   inputData: any;
   asset: any;
-
+  backToMf;
+  fixdeposit;
   constructor() { }
   @Input()
   set data(data) {

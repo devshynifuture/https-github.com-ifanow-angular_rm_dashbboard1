@@ -15,6 +15,7 @@ import { AuthService } from 'src/app/auth-service/authService';
   styleUrls: ['./add-gold-mob.component.scss']
 })
 export class AddGoldMobComponent implements OnInit {
+  getBank;
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
     text: 'Save',
@@ -122,7 +123,7 @@ export class AddGoldMobComponent implements OnInit {
     }
   }
 
-  /***owner***/ 
+  /***owner***/
 
   get getCoOwner() {
     return this.gold.get('getCoOwnerName') as FormArray;
@@ -149,7 +150,7 @@ export class AddGoldMobComponent implements OnInit {
       }
      }
     }
-   
+
   }
 
   removeCoOwner(item) {
@@ -169,9 +170,9 @@ export class AddGoldMobComponent implements OnInit {
     }
     this.disabledMember(null, null);
   }
-  /***owner***/ 
+  /***owner***/
 
-  /***nominee***/ 
+  /***nominee***/
 
   get getNominee() {
     return this.gold.get('getNomineeName') as FormArray;
@@ -196,7 +197,7 @@ export class AddGoldMobComponent implements OnInit {
   }
 
 
-  
+
   addNewNominee(data) {
     this.getNominee.push(this.fb.group({
       name: [data ? data.name : ''], sharePercentage: [data ? String(data.sharePercentage) : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
@@ -218,10 +219,10 @@ export class AddGoldMobComponent implements OnInit {
         }
       }
      }
-     
-    
+
+
   }
-  /***nominee***/ 
+  /***nominee***/
   // ===================owner-nominee directive=====================//
 
   Close(flag) {
