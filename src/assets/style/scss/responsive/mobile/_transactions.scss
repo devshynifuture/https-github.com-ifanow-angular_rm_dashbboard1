@@ -650,6 +650,12 @@
       border-color: #02B875;
     }
 
+    ul.timeline>li.danger-mob:before {
+      background-color: #FF6823;
+      color: #fff;
+      border-color: #FF6823;
+    }
+
     button {
       height: 24px !important;
       line-height: 22px !important;

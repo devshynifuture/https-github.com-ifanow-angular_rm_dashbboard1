@@ -4,6 +4,11 @@
     input.mat-input-element {
       background: #fff;
     }
+
+    .mat-radio-label-content {
+      white-space: normal;
+
+    }
   }
 
   .commom-btn-mob {
@@ -65,6 +70,7 @@
   .img-contact-mob-top {
     bottom: 30px;
     position: relative;
+    border-radius: 10px;
   }
 
   .document-bottom-action {
@@ -93,6 +99,15 @@
       box-shadow: none !important;
     }
 
+    .mat-radio-label {
+      height: auto !important;
+
+    }
+
+    .mat-radio-button {
+      margin-bottom: 9px !important;
+    }
+
     .mat-expansion-panel-header-description {
       flex-grow: 0;
       margin-right: 0px;
@@ -112,6 +127,7 @@
       margin-bottom: 20px;
       padding-top: 10px;
       padding-bottom: 10px;
+      height: 100% !important;
     }
 
     .mob-proccess-fixed {
@@ -123,6 +139,11 @@
           background: #008FFF;
         }
       }
+    }
+
+    .bg-white {
+      box-shadow: none !important;
+      border-radius: 0px !important;
     }
   }
 

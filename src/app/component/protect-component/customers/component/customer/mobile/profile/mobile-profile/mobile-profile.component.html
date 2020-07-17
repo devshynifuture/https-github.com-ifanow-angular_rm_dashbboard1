@@ -8,7 +8,7 @@
         <img src="/assets/images/svg/mob-left-arrow.svg" class="c-p pt-4">
       </div>
       <div class="col-10 pl-0">
-        <h5 class="m-0 f-18 text-white pt-4 roboto">Profile</h5>
+        <h5 class="m-0 f-18 text-white roboto">Profile</h5>
       </div>
     </div>
     <div class="bg-grey lter pt-80 pb-90" *ngIf="openMenue != true">
@@ -18,8 +18,8 @@
         </div>
       </div>
       <div class="row mob-scroll">
-        <div (click)="selectFamilyMember(member)" *ngFor="let member of familyMembers" class="col-9 pl-0">
-          <div class="bg-white br-4 ba-half-grey">
+        <div (click)="selectFamilyMember(member)" *ngFor="let member of familyMembers" class="col-8 pl-0">
+          <div class="bg-white br-4 ba-half-grey w-210">
             <div class="row pt-16 pb-36">
               <div class="col-3">
                 <img src="/assets/images/people.png">
@@ -59,7 +59,7 @@
       </div>
       <div class="row pt-40">
         <div class="col-12 pl-8">
-          <h5 class="m-0 roboto f-400 text-dark pb-10">Document vault</h5>
+          <h5 class="m-0 roboto f-400 text-dark pb-10 f-16">Document vault</h5>
         </div>
         <div class="col-12 pl-8 pr-8">
           <div class="bg-white br-4 ba-half-grey">
@@ -72,12 +72,12 @@
                 <li class="pr-8"><img src="/assets/images/people.png" class="w36"></li>
                 <li><img src="/assets/images/people.png" class="w36"></li> -->
                   <li *ngFor="let fam of documentVault.familyStats | slice:0:5" class="pr-8">
-                    <img class="w36" *ngIf="fam.relationshipId==2" src="/assets/images/svg/man-profile.svg">
-                    <img class="w36" *ngIf="fam.relationshipId==3" src="/assets/images/svg/women-profile-icon.svg">
-                    <img class="w36" *ngIf="fam.relationshipId==4" src="/assets/images/svg/son-profile.svg">
-                    <img class="w36" *ngIf="fam.relationshipId==5" src="/assets/images/svg/daughter-profile.svg">
-                    <img class="w36" *ngIf="fam.relationshipId==7" src="/assets/images/svg/mother-profile.svg">
-                    <img class="w36" *ngIf="fam.relationshipId==6" src="/assets/images/svg/father-profile.svg">
+                    <img class="w36" *ngIf="fam.relationshipId==2" src="/assets/images/d1.png">
+                    <img class="w36" *ngIf="fam.relationshipId==3" src="/assets/images/d2.png">
+                    <img class="w36 h-36" *ngIf="fam.relationshipId==4" src="/assets/images/svg/son-profile.svg">
+                    <img class="w36 h-36" *ngIf="fam.relationshipId==5" src="/assets/images/svg/daughter-profile.svg">
+                    <img class="w36" *ngIf="fam.relationshipId==7" src="/assets/images/d4.png">
+                    <img class="w36" *ngIf="fam.relationshipId==6" src="/assets/images/d3.png">
                   </li>
                   <!-- <li class="pr-8"><img class="w36" *ngIf="fam.relationshipId==3"
                     src="/assets/images/svg/women-profile-icon.svg"></li> -->
@@ -94,7 +94,7 @@
                   {{documentVault.fileStats[0].filesCount}} items in your
                   vault. {{documentVault.fileStats[0].totalKbs/1024 | number : '0.0-2'}}MB space used
                 </p>
-                <button mat-stroked-button class="btn-primary w-100">Access your vault</button>
+                <button mat-stroked-button class="btn-primary w-100 h-40 f-16">Access your vault</button>
               </div>
               <div class="col-4 p-0 text-center pt-28">
                 <img src="/assets/images/secure.png">
@@ -105,12 +105,12 @@
       </div>
       <div class="row pt-40">
         <div class="col-12 pl-8">
-          <h5 class="m-0 roboto f-400 text-dark pb-10">Risk profile</h5>
+          <h5 class="m-0 roboto f-400 f-16 text-dark pb-10">Risk profile</h5>
         </div>
       </div>
       <div (click)="hideShowFlag='riskProfile';loadGlobalRiskProfile()" class="row">
         <div class="col-12 pl-8 pr-8">
-          <div class="row bg-white pt-16 pb-16">
+          <div class="row bg-white pt-16 pb-16 bx-none br-0">
             <div class="col-10">
               <p class="m-0 roboto f-400 text-dark pt-4">Manage your risk profile</p>
             </div>
@@ -127,7 +127,7 @@
       </div>
       <div (click)="hideShowFlag='raiseQuery'" class="row">
         <div class="col-12 pl-8 pr-8">
-          <div class="row bg-white pt-16 pb-16">
+          <div class="row bg-white pt-16 pb-16 bx-none br-0">
             <div class="col-10">
               <p class="m-0 roboto f-400 text-dark pt-4">Raise a query</p>
             </div>
@@ -140,7 +140,7 @@
       <div (click)="hideShowFlag='contactUs';getAdvisorPersonalDetails();getOrgaizationDetails()" class="mt-10">
         <div class="row">
           <div class="col-12 pl-8 pr-8">
-            <div class="row bg-white pt-16 pb-16">
+            <div class="row bg-white pt-16 pb-16 bx-none br-0">
               <div class="col-10">
                 <p class="m-0 roboto f-400 text-dark pt-4">Contact us</p>
               </div>
@@ -154,7 +154,7 @@
       <div (click)="hideShowFlag='changePassword'" class="mt-10">
         <div class="row">
           <div class="col-12 pl-8 pr-8">
-            <div class="row bg-white pt-16 pb-16">
+            <div class="row bg-white pt-16 pb-16 bx-none br-0">
               <div class="col-10">
                 <p class="m-0 roboto f-400 text-dark pt-4">Change password</p>
               </div>
@@ -168,7 +168,7 @@
       <div class="mt-10">
         <div class="row pb-44">
           <div class="col-12 pl-8 pr-8">
-            <div class="row bg-white pt-16 pb-16">
+            <div class="row bg-white pt-16 pb-16 bx-none br-0">
               <div class="col-10">
                 <p class="m-0 roboto f-400 text-dark pt-4">Sign out</p>
               </div>
@@ -187,7 +187,7 @@
           class="c-p pt-4">
       </div>
       <div class="col-10 pl-0">
-        <h5 class="m-0 f-18 text-white pt-4 roboto">{{selectedFamilyMember.name}}</h5>
+        <h5 class="m-0 f-18 text-white roboto">{{selectedFamilyMember.name}}</h5>
       </div>
     </div>
     <div class="row pt-90 bg-grey lter">
@@ -276,7 +276,7 @@
         <img (click)="hideShowFlag='profile'" src="/assets/images/svg/mob-left-arrow.svg" class="c-p pt-4">
       </div>
       <div class="col-10 pl-0">
-        <h5 class="m-0 f-18 text-white pt-4 roboto">Change password</h5>
+        <h5 class="m-0 f-18 text-white roboto">Change password</h5>
       </div>
     </div>
     <div class="bg-grey lter h-100vh">
@@ -297,10 +297,10 @@
             </mat-form-field>
           </div>
         </div>
-        <div class="col-12 pt-40 mob-pl-10 mob-pr-10">
+        <div class="col-12 pt-28 mob-pl-10 mob-pr-10">
           <h5 class="m-0 roboto text-dark f-16">New password</h5>
           <p [ngClass]="{'text-success': setNewPasswordForm.get('newPassword').valid}"
-            class="pb-6 m-0 roboto f-12 roboto">Min 8 characters, One uppercase & one lowercase</p>
+            class="lh-16 m-0 roboto f-12 text-custom f-400">Min 8 characters, One uppercase & one lowercase</p>
           <div class="form-group mb-0">
             <mat-form-field floatLabel="never" appearance="standard">
               <input autocomplete="off" formControlName="newPassword" matInput class="form-control text-primitive"
@@ -313,7 +313,7 @@
             </mat-form-field>
           </div>
         </div>
-        <div class="col-12 pt-40 mob-pl-10 mob-pr-10">
+        <div class="col-12 pt-28 mob-pl-10 mob-pr-10">
           <h5 class="m-0 roboto text-dark pb-10 f-16">Confirm new password</h5>
           <div class="form-group mb-0">
             <mat-form-field floatLabel="never" appearance="standard">
@@ -345,21 +345,22 @@
         <img (click)="hideShowFlag='profile'" src="/assets/images/svg/mob-left-arrow.svg" class="c-p pt-4">
       </div>
       <div class="col-10 pl-0">
-        <h5 class="m-0 f-18 text-white pt-4 roboto">Raise query</h5>
+        <h5 class="m-0 f-18 text-white roboto">Raise query</h5>
       </div>
     </div>
     <div class="bg-grey lter h-100vh">
-      <div class="row pt-90">
+      <!-- <div class="row pt-90">
         <div class="col-12 pl-8">
           <h3 class="m-0 roboto text-dark">Raise a query</h3>
         </div>
-      </div>
-      <div class="row pt-28">
+      </div> -->
+      <div class="row pt-90">
         <div class="col-12 mob-pl-10 mob-pr-10">
-          <h5 class="m-0 roboto text-dark pb-10 f-16">Tell us about your query</h5>
+          <h5 class="m-0 roboto f-400 text-dark pb-10 f-16">Tell us about your query</h5>
           <div class="form-group mb-0">
-            <mat-form-field>
-              <textarea matInput class="form-control text-primitive h-300" plac="Write something here.."></textarea>
+            <mat-form-field floatLabel="never" appearance="standard">
+              <textarea matInput class="form-control text-primitive h-300 bg-white"
+                plac="Write something here.."></textarea>
             </mat-form-field>
           </div>
         </div>
@@ -511,7 +512,7 @@
         <img (click)="hideShowFlag='FamilyMember'" src="/assets/images/svg/mob-left-arrow.svg" class="c-p pt-4">
       </div>
       <div class="col-10 pl-0">
-        <h5 class="m-0 f-18 text-white pt-4 roboto">Basic details</h5>
+        <h5 class="m-0 f-18 text-white roboto">Basic details</h5>
       </div>
     </div>
     <div class="bg-grey lter pb-28 pt-90">
@@ -912,13 +913,13 @@
         <img (click)="hideShowFlag='profile'" src="/assets/images/svg/mob-left-arrow.svg" class="c-p pt-4">
       </div>
       <div class="col-10 pl-0">
-        <h5 class="m-0 f-18 text-white pt-4 roboto">Contact us</h5>
+        <h5 class="m-0 f-18 text-white roboto">Contact us</h5>
       </div>
     </div>
-    <div class="row pt-90">
-      <div class="col-12 mob-pr-10 pb-16 pl-30">
+    <div class="row pt-90 bg-white pb-28">
+      <div class="col-8 mob-pr-10 pb-16 pl-30">
         <h5 class="m-0 roboto text-dark pb-10 f-16 pb-16 f-500">{{orgnisationData.companyName}}</h5>
-        <img [src]="orgnisationData.logoUrl" class="m-auto d-initial pb-16">
+        <img [src]="orgnisationData.logoUrl" class="m-auto d-initial b-a w-100">
       </div>
     </div>
     <div class="row pb-16">
@@ -947,18 +948,18 @@
         </div>
       </div>
     </div>
-    <div class="row pt-72">
+    <div class="row pt-72 bg-white">
       <div class="col-12 p-0 bg-grey lter">
         <div class="row pl-30 pt-10">
           <div class="col-4 pl-0">
-            <img [src]="advisorPersonalData.profilePic" class="m-auto d-initial img-contact-mob-top">
+            <img [src]="advisorPersonalData.profilePic" class="m-auto d-initial img-contact-mob-top w-100">
           </div>
           <div class="col-8 pl-0">
             <p class="text-custom f-12 roboto m-0 f-400">Financial advisor</p>
             <p class="m-0 roboto text-dark f-400 pt-4">{{advisorPersonalData.fullName}}</p>
           </div>
         </div>
-        <div class="col-12 p-0 pt-20 pl-30">
+        <div class="col-12 p-0 pt-20 pl-30 pb-60">
 
           <p class="text-dark f-12 roboto m-0 f-400">Contact me</p>
           <ul class="pt-10 pb-44">
@@ -984,10 +985,10 @@
         <img (click)="hideShowFlag='profile'" src="/assets/images/svg/mob-left-arrow.svg" class="c-p pt-4">
       </div>
       <div class="col-10 pl-0">
-        <h5 class="m-0 f-18 text-white pt-4 roboto">Risk profile</h5>
+        <h5 class="m-0 f-18 text-white roboto">Risk profile</h5>
       </div>
     </div>
-    <div *ngIf="showResults==false">
+    <div *ngIf="showResults==false" class="bg-white">
       <div class="row pt-90 pb-20">
         <div class="col-12 pl-20">
           <h5 class="m-0 f-500 roboto text-dark f-16">Take the risk profile test</h5>
@@ -996,7 +997,7 @@
       <div class="row">
         <div class="col-12 pb-44">
           <mat-accordion *ngFor="let item of riskAssessmentQuestionList;  let i = index">
-            <mat-expansion-panel [expanded]="!item.done">
+            <mat-expansion-panel [expanded]="!item.done" class="">
               <mat-expansion-panel-header class="bg-grey lter mob-pl-10 mob-pr-10">
                 <mat-panel-title class="text-dark">
                   {{i+1}}. {{item.question || item.riskAssessmentQuestion}}
@@ -1004,7 +1005,7 @@
                 <mat-panel-description class="align-items-center">
                   <mat-icon *ngIf="!(item.selectedChoiceId || item.riskAssessmentChoice)" class="text-primary">
                     query_builder </mat-icon>
-                  <mat-icon *ngIf="(item.selectedChoiceId || item.riskAssessmentChoice)" class="text-success">
+                  <mat-icon *ngIf="(item.selectedChoiceId || item.riskAssessmentChoice)" class="text-primary">
                     check_circle_outline
                   </mat-icon>
                 </mat-panel-description>
@@ -1013,7 +1014,7 @@
 
                 <mat-radio-button
                   (click)="item.selectedChoiceId = choice.id;item.weight = choice.weight;item.done = false;item.choice = choice.choice"
-                  class="w-100" *ngFor="let choice of item.riskAssessmentChoices; let i = index"
+                  class="w-100 text-custom" *ngFor="let choice of item.riskAssessmentChoices; let i = index"
                   [checked]="choice.selected" [value]="choice" [disabled]="choice.disabled">
                   {{choice.choice}}<br>
                 </mat-radio-button>
@@ -1052,23 +1053,26 @@
         
          </mat-expansion-panel> -->
           </mat-accordion>
-          <button (click)="submitRiskAnalysis()" mat-stroked-button class="mob-btn-primary w-60">Submit</button>
+
         </div>
       </div>
-      <div class="row bg-white mob-proccess-fixed br-0">
+      <!-- <div class="row bg-white mob-proccess-fixed br-0">
         <div class="col-12 text-center pt-8 pb-8">
           <button mat-stroked-button class="mob-btn-primary w-60">Submit</button>
         </div>
+      </div> -->
+      <div class="text-center pb-90">
+        <button (click)="submitRiskAnalysis()" mat-stroked-button class="btn-primary w-60">Submit</button>
       </div>
     </div>
-    <div *ngIf="feedsRiskProfile.riskProfileId && showResults">
+    <div *ngIf="feedsRiskProfile.riskProfileId && showResults" class="bg-white h-100vh">
       <div class="pl-28 pt-90">
         <div class="row">
-          <div class="col-12 ">
+          <div class="col-12 text-center">
             <h5 class="m-0 f-16 roboto f-500 text-dark">Your risk profile:{{feedsRiskProfile.riskProfileStatus}}</h5>
           </div>
         </div>
-        <div class="row pt-16">
+        <div class="row pt-16 pl-24">
           <div class="col-4 pr-0">
             <div class="ba-3x">
               <h1 class="m-0 text-dark roboto f-400 text-center pt-20 pb-20">{{feedsRiskProfile.riskAssessmentScore}}
@@ -1095,17 +1099,17 @@
               class="h-105">
           </div>
           <img src="/assets/images/svg/conservative.svg" *ngIf="feedsRiskProfile.riskProfileId == 5">
-          <p class="text-dark m-0 text-dark lh-16 f-400 roboto">Test last taken on:
+          <p class="text-dark m-0 text-left lh-16 f-400 roboto pt-12">Test last taken on:
             {{feedsRiskProfile.riskAssessmentDate | date:'dd/MM/yyyy'}}</p>
         </div>
       </div>
 
-      <div class="row pt-48">
+      <div class="row pt-36">
         <div class="col-2">
         </div>
         <div class="col-8">
           <button mat-stroked-button (click)="getRiskProfileList()"
-            class="btn-primary w-100 br-40 f-16 h-40 lh-40">Retake the test</button>
+            class="btn-primary w-100 br-4 f-16 h-40 lh-40">Retake the test</button>
         </div>
         <div class="col-2"></div>
       </div>
@@ -1670,7 +1674,7 @@
 
   <div class="row bg-white mob-proccess-fixed br-0">
     <div class="col-12 text-center pt-8 pb-8">
-      <button mat-stroked-button class="btn-primary h-40 br-4 w-60">Save & Next</button>
+      <button mat-stroked-button class="btn-primary h-40 br-4 w-60">Save</button>
     </div>
   </div>
 </div>
