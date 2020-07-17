@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-cash-and-bank',
@@ -6,9 +6,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cash-and-bank.component.scss']
 })
 export class CashAndBankComponent implements OnInit {
-
+  inputData: any;
+  assetData: any;
+  cashAndBank;
+  backToMf;
   constructor() { }
-
+  @Input()
+  set data(data) {
+    this.inputData = data.assetType;
+    this.assetData = data.data.assetList
+    console.log('This is Input data of proceed ', data);
+  }
   ngOnInit() {
   }
 

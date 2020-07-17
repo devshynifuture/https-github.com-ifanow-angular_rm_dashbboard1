@@ -32,6 +32,9 @@
             </div>
         </div>
     </div>
+    <div *ngIf="inputData.assetType == 'EPF' && asset.length == 0">
+        <p class="m-0 f-14 roboto f-400 pt-20 pb-20 text-center">no data found</p>
+    </div>
     <div class="pt-80 p-8 h-100vh" *ngIf="inputData.assetType == 'NPS'">
         <div class="pt-16" *ngFor="let item of asset">
             <div class="bg-white">
@@ -49,6 +52,9 @@
             </div>
         </div>
     </div>
+    <div *ngIf="inputData.assetType == 'NPS' && asset.length == 0">
+        <p class="m-0 f-14 roboto f-400 pt-20 pb-20 text-center">no data found</p>
+    </div>
     <div class="pt-80 p-8 h-100vh" *ngIf="inputData.assetType == 'Gratuity'">
         <div class="pt-16" *ngFor="let item of asset">
             <div class="bg-white">
@@ -56,7 +62,7 @@
                     <div class="col-8">
                         <p class="mb-0">
                             <span appFormatNumber>
-                                {{item.description}} | {{item.bondName}} | {{'Bond'}}
+                                {{item.description}} | {{item.bondName}} | {{'Gratuity'}}
                             </span></p>
                     </div>
                     <div class="col-4 text-right">
@@ -65,6 +71,9 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div *ngIf="inputData.assetType == 'Gratuity' && asset.length == 0">
+        <p class="m-0 f-14 roboto f-400 pt-20 pb-20 text-center">no data found</p>
     </div>
     <div class="document-bottom-action">
         <button (click)="fixdeposit = true" mat-stroked-button class="btn-primary"><span class="material-icons">

@@ -1,1 +1,67 @@
-<p>liabilities works!</p>
+<div id="mob-fixed-income" *ngIf="liabilities != true && backToMf != true">
+        <div class="row mob-bg-common pb-12 mobtop-navfixed">
+            <div class="col-2" (click)="backToMf = true">
+                <span class="material-icons text-white">
+                    keyboard_backspace
+                </span>
+            </div>
+            <div class="col-7 p-0">
+                <h5 class="m-0 f-18 text-white pt-4">{{inputData}}</h5>
+            </div>
+            <div class="col-3 text-right">
+                <span class="material-icons text-white">
+                    filter_list
+                </span>
+            </div>
+        </div>
+        <div class="pt-80 p-8 h-100vh" *ngIf="inputData == 'Liabilities'">
+            <div class="pt-16" *ngFor="let item of assetData;let i = index">
+                <div class="bg-white">
+                    <div class="row pt-20 pb-20 mob-bb-1">
+                        <div class="col-8">
+                            <p class="mb-0">
+                                <span appFormatNumber>
+                                    {{'Liabilities '+(i+1)}} (`)
+
+                                </span></p>
+                        </div>
+                        <div class="col-4 text-right">
+                            <p class="m-0">₹
+                                <span appFormatNumber>{{item.loanAmount}}</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pt-80 p-8 h-100vh" *ngIf="inputData == 'Other payables'">
+            <div class="pt-16" *ngFor="let item of assetData; let i = index">
+                <div class="bg-white">
+                    <div class="row pt-20 pb-20 mob-bb-1">
+                        <div class="col-8">
+                            <p class="mb-0">
+                                <span appFormatNumber>
+                                    {{(item.description) ? item.description : 'Other payables '+(i+1)}}
+                                </span></p>
+                        </div>
+                        <div class="col-4 text-right">
+                            <p class="m-0">₹<span appFormatNumber>{{item.amountBorrowed}}</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="document-bottom-action">
+            <button (click)="liabilities = true" mat-stroked-button class="btn-primary"><span class="material-icons">
+                    add
+                </span></button>
+        </div>
+    </div>
+    <div *ngIf="liabilities == true && inputData == 'Liabilities'">
+        <app-add-liabilities-mob></app-add-liabilities-mob>
+    </div>
+    <div *ngIf="liabilities == true && inputData == 'Other payables'">
+            <app-add-other-payables-mob></app-add-other-payables-mob>
+        </div>
+    <div *ngIf="backToMf == true">
+    <app-liabilities-mob></app-liabilities-mob>
+    </div>

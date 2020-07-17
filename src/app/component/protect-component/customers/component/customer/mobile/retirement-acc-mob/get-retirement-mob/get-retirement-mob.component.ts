@@ -13,7 +13,7 @@ export class GetRetirementMobComponent implements OnInit {
   @Input()
   set data(data) {
     this.inputData = data;
-    if(this.asset){
+    if(data.asset){
       this.asset = data.asset.assetList
     }else{
       this.asset = []

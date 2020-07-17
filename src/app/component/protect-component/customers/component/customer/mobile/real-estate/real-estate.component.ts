@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-real-estate',
@@ -6,7 +6,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./real-estate.component.scss']
 })
 export class RealEstateComponent implements OnInit {
+  realEstateData
+  backToMf
+  inputData: any;
+  assetData: any;
 
+  @Input()
+  set data(data) {
+    this.inputData = data.assetType;
+    this.assetData = data.data.assetList
+    console.log('This is Input data of proceed ', data);
+  }
   constructor() { }
 
   ngOnInit() {

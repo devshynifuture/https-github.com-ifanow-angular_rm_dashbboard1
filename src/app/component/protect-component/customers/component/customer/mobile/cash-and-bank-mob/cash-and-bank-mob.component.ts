@@ -14,7 +14,11 @@ export class CashAndBankMobComponent implements OnInit {
   totalCurrentValue = 0;
   bankAccData: any;
   cashInHandData: any;
+  showDetail
   @Output() outputValue = new EventEmitter<any>();
+  assetSubType = {assetType:'',data:''};
+
+
   accCv: any;
   cashInHandCv: any;
   constructor(private custumService:CustomerService,private eventService:EventService) { }
@@ -66,5 +70,9 @@ export class CashAndBankMobComponent implements OnInit {
   }
   changeValue(flag){
     this.outputValue.emit(flag);
+  }
+  openSubAsset(subAsset,value) {
+    this.assetSubType.assetType = subAsset;
+    this.assetSubType.data = value;
   }
 }

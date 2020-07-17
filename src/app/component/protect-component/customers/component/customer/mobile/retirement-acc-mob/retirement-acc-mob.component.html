@@ -43,7 +43,7 @@
             <p class="mb-0">NPS</p>
           </div>
           <div class="col-4 text-right">
-            <p class="m-0">{{npsData.sumOfCurrentValue ? '₹' : '0'}}<span
+            <p class="m-0">{{npsData.sumOfCurrentValue ? '₹' : ''}}<span
                 appFormatNumber>{{npsData.sumOfCurrentValue}}</span></p>
           </div>
         </div>
@@ -52,7 +52,7 @@
             <p class="mb-0">Gratuity</p>
           </div>
           <div class="col-4 text-right">
-            <p class="m-0">{{gratuity.sumOfAmountReceived ? '₹' : '0'}}<span
+            <p class="m-0">{{gratuity ? '₹' : '0'}}<span
                 appFormatNumber>{{gratuity.sumOfAmountReceived}}</span></p>
           </div>
         </div>
