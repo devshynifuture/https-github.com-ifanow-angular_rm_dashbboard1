@@ -103,6 +103,7 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
   }
 
   ngOnInit() {
+    this.showFilter = 'tab1';
     this.show = false;
     this.showTransact = false;
     this.showSelect = false;

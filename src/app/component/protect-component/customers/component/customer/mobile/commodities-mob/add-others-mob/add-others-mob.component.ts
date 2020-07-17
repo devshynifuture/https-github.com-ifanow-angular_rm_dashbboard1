@@ -30,6 +30,7 @@ export class AddOthersMobComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
+  getBank;
   validatorType = ValidatorType
   inputData: any;
   ownerName: any;
@@ -120,7 +121,7 @@ export class AddOthersMobComponent implements OnInit {
     }
   }
 
-  /***owner***/ 
+  /***owner***/
 
   get getCoOwner() {
     return this.others.get('getCoOwnerName') as FormArray;
@@ -147,7 +148,7 @@ export class AddOthersMobComponent implements OnInit {
       }
      }
     }
-   
+
   }
 
   removeCoOwner(item) {
@@ -167,9 +168,9 @@ export class AddOthersMobComponent implements OnInit {
     }
     this.disabledMember(null, null);
   }
-  /***owner***/ 
+  /***owner***/
 
-  /***nominee***/ 
+  /***nominee***/
 
   get getNominee() {
     return this.others.get('getNomineeName') as FormArray;
@@ -194,7 +195,7 @@ export class AddOthersMobComponent implements OnInit {
   }
 
 
-  
+
   addNewNominee(data) {
     this.getNominee.push(this.fb.group({
       name: [data ? data.name : ''], sharePercentage: [data ? String(data.sharePercentage) : 0], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0],isClient: [data ? data.isClient : 0]
@@ -216,10 +217,10 @@ export class AddOthersMobComponent implements OnInit {
         }
       }
      }
-     
-    
+
+
   }
-  /***nominee***/ 
+  /***nominee***/
   // ===================owner-nominee directive=====================//
 
   Close(flag) {
