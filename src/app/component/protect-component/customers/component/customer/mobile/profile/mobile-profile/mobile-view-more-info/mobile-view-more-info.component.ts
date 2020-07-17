@@ -16,7 +16,7 @@ export class MobileViewMoreInfoComponent implements OnInit {
   validatorType = ValidatorType;
   @Output() backfunc = new EventEmitter();
   @Output() savedData = new EventEmitter();
-
+  date;
 
   constructor(
     private fb: FormBuilder,

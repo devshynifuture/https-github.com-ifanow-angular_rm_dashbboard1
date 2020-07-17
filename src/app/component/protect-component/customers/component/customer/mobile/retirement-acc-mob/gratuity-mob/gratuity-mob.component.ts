@@ -17,6 +17,7 @@ import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component'
   styleUrls: ['./gratuity-mob.component.scss']
 })
 export class GratuityMobComponent implements OnInit {
+  backToretirement;
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
     text: 'Save',
@@ -75,7 +76,7 @@ export class GratuityMobComponent implements OnInit {
     this.bankList = this.enumService.getBank();
     this.getdataForm(null);
   }
- 
+
 
   showLess(value) {
     if (value == true) {
@@ -125,7 +126,7 @@ onChangeJointOwnership(data) {
   }
 }
 
-/***owner***/ 
+/***owner***/
 
 get getCoOwner() {
   return this.gratuity.get('getCoOwnerName') as FormArray;
@@ -152,7 +153,7 @@ addNewCoOwner(data) {
     }
    }
   }
-  
+
 }
 
 removeCoOwner(item) {
@@ -172,9 +173,9 @@ removeCoOwner(item) {
   }
   this.disabledMember(null, null);
 }
-/***owner***/ 
+/***owner***/
 
-/***nominee***/ 
+/***nominee***/
 
 get getNominee() {
   return this.gratuity.get('getNomineeName') as FormArray;
@@ -221,10 +222,10 @@ addNewNominee(data) {
       }
     }
    }
-  
-  
+
+
 }
-/***nominee***/ 
+/***nominee***/
 // ===================owner-nominee directive=====================//
   // getDateYMD(){
   //   let now = moment();
@@ -254,7 +255,7 @@ addNewNominee(data) {
       bankAcNo: [(data == undefined) ? '' : data.userBankMappingId,],
       description: [(data == undefined) ? '' : data.description,],
       id: [(data == undefined) ? '' : data.id,],
-      
+
       // familyMemberId: [[(data == undefined) ? '' : data.familyMemberId],],
       getNomineeName: this.fb.array([this.fb.group({
         name: [''],
@@ -264,7 +265,7 @@ addNewNominee(data) {
       })])
     });
     // ==============owner-nominee Data ========================\\
-  /***owner***/ 
+  /***owner***/
   if(this.gratuity.value.getCoOwnerName.length == 1){
     this.getCoOwner.controls['0'].get('share').setValue('100');
   }
@@ -275,23 +276,23 @@ addNewNominee(data) {
       this.addNewCoOwner(element);
     });
   }
-  
-/***owner***/ 
 
-/***nominee***/ 
+/***owner***/
+
+/***nominee***/
 if(data.nomineeList){
   if(data.nomineeList.length > 0){
-      
+
     this.getNominee.removeAt(0);
     data.nomineeList.forEach(element => {
       this.addNewNominee(element);
     });
   }
 }
-/***nominee***/ 
+/***nominee***/
 
 this.ownerData = {Fmember: this.nomineesListFM, controleData:this.gratuity}
-// ==============owner-nominee Data ========================\\ 
+// ==============owner-nominee Data ========================\\
     // this.familyMemberId = this.gratuity.controls.familyMemberId.value
     // this.familyMemberId = this.familyMemberId[0]
     // this.gratuity.controls.maturityDate.setValue(new Date(data.maturityDate));
@@ -396,15 +397,15 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.gratuity}
     openDialog(eventData): void {
       const dialogRef = this.dialog.open(LinkBankComponent, {
         width: '50%',
-        data:{bankList: this.bankList, userInfo: true} 
+        data:{bankList: this.bankList, userInfo: true}
       });
-  
+
       dialogRef.afterClosed().subscribe(result => {
         setTimeout(() => {
           this.bankList = this.enumService.getBank();
         }, 5000);
       })
-  
+
     }
   //link bank
 }

@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./life-insurance.component.scss']
 })
 export class LifeInsuranceComponent implements OnInit {
-
+  changeValue;
   constructor() { }
 
   ngOnInit() {
