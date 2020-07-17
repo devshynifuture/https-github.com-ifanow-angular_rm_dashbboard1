@@ -624,6 +624,10 @@ export const appConfig = {
   ACTIVITY_DELETE_SUBTASK_FROM_TASK: 'activity/task/sub-task/delete',
   ACTIVITY_MARK_TASK_OR_SUBTASK_DONE: 'activity/task/sub-task/status/update',
   ACTIVITY_GET_ATTACHMENT_DOWNLOAD_OF_TASK_SUBTASK: 'activity/task/attachment-download-url/get',
+  ACTIVITY_TASK_EDIT: 'activity/task/edit',
+  ACTIVITY_SUBTASK_EDIT: 'activity/task/sub-task/edit',
+  ACTIVITY_ADD_COMMENT_TASK_SUBTASK: 'activity/task/sub-task/comment/add',
+  ACTIVITY_EDIT_COMMENT_TASK_SUBTASK: 'activity/task/comment/edit',
 
 
 

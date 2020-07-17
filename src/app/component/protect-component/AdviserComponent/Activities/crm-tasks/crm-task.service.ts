@@ -57,7 +57,24 @@ export class CrmTaskService {
     return this.http.post(apiConfig.MAIN_URL + appConfig.ACTIVITY_ADD_TASK_SUBTASK_ATTACHMENT, data);
   }
 
+  addCommentOnActivityTaskOrSubTask(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ACTIVITY_ADD_COMMENT_TASK_SUBTASK, data);
+  }
+
+
   // put calls
+
+  editActivityTask(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.ACTIVITY_TASK_EDIT, data);
+  }
+
+  saveEditedCommentOnActivityTaskOrSubTask(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.ACTIVITY_EDIT_COMMENT_TASK_SUBTASK, data);
+  }
+
+  saveEditedSubTaskValues(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.ACTIVITY_SUBTASK_EDIT, data);
+  }
 
   deleteActivityTask(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.ACTIVITY_DELETE_TASK, data);
