@@ -176,21 +176,20 @@
             </div>
         </div>
         <div class="row">
-            <div *ngIf="showHide == true" class="col-5 text-right">
-                <h5 (click)="showLess(showHide)" class="m-0 pt-8 text-custom c-p">Show less</h5>
+            <div *ngIf="isOptionalField==false" (click)="moreFields()" class="col-5 text-right">
+                <h5 class="m-0 pt-8 text-custom c-p">Show less</h5>
             </div>
-            <div *ngIf="showHide == false" class="col-5 text-right">
-                <h5 (click)="showLess(showHide)" class="m-0 pt-8 text-custom c-p">+ Add more [optional data] </h5>
+            <div *ngIf="isOptionalField" (click)="moreFields()" class="col-5 text-right">
+                <h5 class="m-0 pt-8 text-custom c-p">+ Add more [optional data] </h5>
             </div>
             <div class="col-md-5">
-
             </div>
         </div>
         <app-add-transaction-mob (outputEvent)="getFormData($event)" [data]='inputData'
             [transactionViewData]="transactionViewData" [commencementDate]="commencementDate">
         </app-add-transaction-mob>
-        <div *ngIf="showHide == true">
-            <div *ngIf="showHide == true">
+        <div *ngIf="isOptionalField == false">
+            <div *ngIf="isOptionalField == false">
                 <div class="col-12 pt-28 pb-20 mob-pr-10 mob-pl-10">
                     <p class="m-0 roboto f-400 text-dark f-16 pb-10">PPF number</p>
                     <div class="form-group mb-0">
