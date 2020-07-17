@@ -205,12 +205,12 @@ export class SubmitReviewInnComponent implements OnInit {
     });
     this.allData.bankDetailList.forEach(element => {
       if (element.address && element.ifscCode) {
-        this.toSendObjBankList.push({element});
+        this.toSendObjBankList.push(element);
       }
     });
     this.allData.nomineeList.forEach(element => {
       if (element.address && element.name) {
-        this.toSendObjNomineeList.push({element});
+        this.toSendObjNomineeList.push(element);
       }
     });
     this.allData.holderList = this.toSendObjHolderList;
