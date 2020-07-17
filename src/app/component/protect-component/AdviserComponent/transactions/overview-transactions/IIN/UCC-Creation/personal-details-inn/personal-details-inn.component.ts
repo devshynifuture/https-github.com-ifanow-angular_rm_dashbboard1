@@ -36,6 +36,7 @@ export class PersonalDetailsInnComponent implements OnInit {
   set data(data) {
     this.inputData = data;
     console.log('Data in personal detail : ', data);
+
     this.clientData = data.clientData;
     this.obj1 = {...data};
     if (!this.inputData.taxMaster.minorFlag) {
@@ -219,15 +220,17 @@ export class PersonalDetailsInnComponent implements OnInit {
   }
 
   SendToForm(formId, flag) {
-    this.activeDetailsClass = formId;
 
     if (flag == true) {
       this.doneData = true;
     }
     if (formId == 'first') {
 
-      this.savePersonalDetails(this.holder.type);
+
       if (this.holder.type == 'first') {
+        if (!this.savePersonalDetails(this.holder.type)) {
+          return;
+        }
       } else {
         if (this.firstHolder && this.firstHolder.panNumber) {
           this.holder.type = formId;
@@ -254,6 +257,10 @@ export class PersonalDetailsInnComponent implements OnInit {
           this.reset();
           this.thirdHolderButtonLabel = '+ Add Holder';
           this.holder.type = formId;
+          this.getdataForm(this.secondHolder);
+        } else {
+          // this.getdataForm(this.firstHolder);
+          return;
         }
       }
     } else if (formId == 'third') {
@@ -269,11 +276,17 @@ export class PersonalDetailsInnComponent implements OnInit {
             this.reset();
           }
           this.holder.type = formId;
+        } else if (this.holder.type == 'first') {
+          return;
+        } else if (this.holder.type == 'second') {
+          return;
         }
       }
     } else {
       this.savePersonalDetails(formId);
     }
+    this.activeDetailsClass = this.holder.type;
+
 
     this.obj1.firstHolder = this.firstHolder;
     const holderList: any = [];
