@@ -20,9 +20,6 @@ import {PeopleService} from 'src/app/component/protect-component/PeopleComponent
 })
 export class SubmitReviewInnComponent implements OnInit {
 
-  isFileUploading = false;
-  isSuccessful = false;
-
   constructor(private onlineTransact: OnlineTransactionService, private fb: FormBuilder,
               private eventService: EventService, public dialog: MatDialog, private peopleService: PeopleService) {
   }
@@ -30,6 +27,33 @@ export class SubmitReviewInnComponent implements OnInit {
   get data() {
     return this.inputData;
   }
+
+
+  @Input()
+  set data(data) {
+    this.doneData = {};
+    this.inputData = data;
+    console.log('submit and review component inputData : ', this.inputData);
+    this.allData = {...data};
+    this.clientData = this.clientData;
+    this.doneData.nominee = true;
+    this.doneData.bank = true;
+    this.doneData.contact = true;
+    this.doneData.personal = true;
+    this.doneData.fatca = true;
+    this.doneData.submit = false;
+    if (data && data.firstHolder) {
+      // this.getdataForm(data.firstHolder)
+      // this.firstHolder = data.firstHolder
+      // this.secondHolder = data.secondHolder
+      // this.thirdHolder = data.thirdHolder
+      // console.log('return data', data)
+    }
+    // this.generalDetails = data
+  }
+
+  isFileUploading = false;
+  isSuccessful = false;
 
   dialogRef;
 
@@ -64,29 +88,7 @@ export class SubmitReviewInnComponent implements OnInit {
   responseMessage: any;
   statusString: any;
 
-
-  @Input()
-  set data(data) {
-    this.doneData = {};
-    this.inputData = data;
-    console.log('submit and review component inputData : ', this.inputData);
-    this.allData = data;
-    this.clientData = this.clientData;
-    this.doneData.nominee = true;
-    this.doneData.bank = true;
-    this.doneData.contact = true;
-    this.doneData.personal = true;
-    this.doneData.fatca = true;
-    this.doneData.submit = false;
-    if (data && data.firstHolder) {
-      // this.getdataForm(data.firstHolder)
-      // this.firstHolder = data.firstHolder
-      // this.secondHolder = data.secondHolder
-      // this.thirdHolder = data.thirdHolder
-      // console.log('return data', data)
-    }
-    // this.generalDetails = data
-  }
+  tempObj;
 
   close() {
     const fragmentData = {
@@ -191,8 +193,6 @@ export class SubmitReviewInnComponent implements OnInit {
     this.bse = this.brokerCredentials.filter(element => element.aggregatorType == this.platform);
   }
 
-  tempObj;
-
   submit(singleBrokerCred) {
     // this.doneData = true;
     this.toSendObjHolderList = [];
@@ -200,25 +200,23 @@ export class SubmitReviewInnComponent implements OnInit {
     this.toSendObjNomineeList = [];
     this.allData.holderList.forEach(element => {
       if (element.email) {
-        this.toSendObjHolderList.push(element);
+        this.toSendObjHolderList.push({...element});
       }
     });
     this.allData.bankDetailList.forEach(element => {
       if (element.address && element.ifscCode) {
         this.toSendObjBankList.push(element);
       }
-
     });
     this.allData.nomineeList.forEach(element => {
-      if (element.address && element.nomineeName) {
+      if (element.address && element.name) {
         this.toSendObjNomineeList.push(element);
       }
-
     });
     this.allData.holderList = this.toSendObjHolderList;
     this.allData.bankDetailList = this.toSendObjBankList;
     this.allData.nomineeList = this.toSendObjNomineeList;
-    this.inputData.clientData = this.clientData;
+    // this.inputData.clientData = this.clientData;
 
     const firstHolder = this.allData.holderList[0];
     // this.inputData.taxMaster
@@ -273,18 +271,18 @@ export class SubmitReviewInnComponent implements OnInit {
     }
     this.isSuccessful = true;
     this.tempObj.bankDetailList.forEach(element => {
-      element['userId'] = (this.tempObj.ownerName.familyMemberId) ? this.tempObj.ownerName.familyMemberId : this.tempObj.ownerName.clientId;
-      element['userType'] = this.tempObj.ownerName.userType
+      element.userId = (this.tempObj.ownerName.familyMemberId) ? this.tempObj.ownerName.familyMemberId : this.tempObj.ownerName.clientId;
+      element.userType = this.tempObj.ownerName.userType;
       this.peopleService.addEditClientBankDetails(element).subscribe(
-        data => console.log("Address add/edit")
-      )
+        data => console.log('Address add/edit')
+      );
     });
-    this.tempObj.holderList[0].address['userId'] = (this.tempObj.ownerName.familyMemberId) ? this.tempObj.ownerName.familyMemberId : this.tempObj.ownerName.clientId;
-    this.tempObj.holderList[0].address['userType'] = this.tempObj.ownerName.userType
-    const obj = this.tempObj.holderList[0].address
+    this.tempObj.holderList[0].address.userId = (this.tempObj.ownerName.familyMemberId) ? this.tempObj.ownerName.familyMemberId : this.tempObj.ownerName.clientId;
+    this.tempObj.holderList[0].address.userType = this.tempObj.ownerName.userType;
+    const obj = this.tempObj.holderList[0].address;
     this.peopleService.addEditClientAddress(obj).subscribe(
-      data => console.log("Bank add/edit")
-    )
+      data => console.log('Bank add/edit')
+    );
   }
 
   getTokenRes(data) {
