@@ -1,66 +1,101 @@
 <!-- Mutul funds -->
-<div id="mob-mutualfunds" *ngIf="backtoMf != true && showmfDetails != true">
-    <div class="row mob-bg-common pb-12 mobtop-navfixed">
-        <div class="col-2">
-            <span class="material-icons text-white" (click)="backtoMf = true">
-              <img src="/assets/images/svg/mob-left-arrow.svg">
-            </span>
-        </div>
-        <div class="col-7 pl-0">
-            <h5 class="m-0 f-18 text-white pt-4">Mutual Funds</h5>
-        </div>
-        <div class="col-3 text-right">
-            <span class="material-icons text-white">
-                search
-            </span>
-        </div>
+<div id="mob-mutualfunds" *ngIf="backtoMf != true && showmfDetailsMf != true">
+  <div class="row mob-bg-common pb-12 mobtop-navfixed">
+    <div class="col-2">
+      <span class="material-icons text-white" (click)="backtoMf = true">
+        <img src="/assets/images/svg/mob-left-arrow.svg">
+      </span>
     </div>
-    <div class="pt-80 p-8 pb-20">
-        <div class="row chart-details">
-            <div class="col-12 text-center p-0">
-                <div class="row pl-20 pb-16 pt-24">
-                    <div class="col-6 p-0">
-                      <div class="h-147 w-100" [chart]="mfSubCategoryPieConfig"></div>
-                    </div>
-                    <div class="col-6">
-                      <div class="pb-12" *ngFor="let data of mfSubCatAllocationData">
-                        <div class="d-flex">
-                            <span class="pointNumber" [style.background-color]="data.color">
-                            </span>
-                            <span class="f-12 lh-12 roboto f-400 m-0"> ₹</span>
-                            <span class="f-12 lh-12 roboto f-400 m-0 br" appFormatNumber>{{(data.y)}}</span>
-                            <span class="f-12 lh-12 roboto f-400 m-0 pl-4">
-                                {{'('+(data.percentage | number:'1.2-2')+'%)'}}</span>
-                        </div>
-                    </div>
-                    </div>
-                </div>
+    <div class="col-7 pl-0">
+      <h5 class="m-0 f-18 text-white pt-4">Mutual Funds</h5>
+    </div>
+    <div class="col-3 text-right">
+      <span class="material-icons text-white">
+        search
+      </span>
+    </div>
+  </div>
+  <div class="pt-80 p-8 pb-20">
+    <div class="row chart-details">
+      <div class="col-12 text-center p-0">
+        <div class="row pl-20 pb-16 pt-24">
+          <div class="col-6 p-0">
+            <div class="h-147 w-100" [chart]="mfSubCategoryPieConfig"></div>
+          </div>
+          <div class="col-6">
+            <div class="pb-12" *ngFor="let data of mfSubCatAllocationData">
+              <div class="d-flex">
+                <span class="pointNumber" [style.background-color]="data.color">
+                </span>
+                <span class="f-12 lh-12 roboto f-400 m-0"> ₹</span>
+                <span class="f-12 lh-12 roboto f-400 m-0 br" appFormatNumber>{{(data.y)}}</span>
+                <span class="f-12 lh-12 roboto f-400 m-0 pl-4">
+                  {{'('+(data.percentage | number:'1.2-2')+'%)'}}</span>
+              </div>
             </div>
+          </div>
         </div>
-        <div class="bg-white mt-20">
-            <div class="row pt-16 pb-16" *ngFor="let item of subCategoryData">
-                <div class="col-11" >
-                    <p class="f-13 mb-0">{{item.subCategory}}</p>
-                    <div class="row pt-12">
-                        <div class="col-6 mob-br-1 p-0">
-                            <p class="mob-text-xs">Amt. Invested</p>
-                            <p class="m-0 f-13 pt-4">
-                              <span  appFormatNumber>₹ {{item.amountInvested}}</span></p>
-                        </div>
-                        <div class="col-6 pr-0">
-                            <p class="mob-text-xs">XIRR</p>
-                            <p class="m-0 f-13 pt-4 mob-text-success">{{item.xirr}}%</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-1 pl-0 pt-28" (click)="showmfDetails = true; mfDetailsData = item;">
-                    <img src="/assets/images/svg/mob-down-arrow.svg">
-                </div>
+      </div>
+    </div>
+    <div class="bg-white mt-20">
+      <div class="row pt-16 pb-16" *ngFor="let item of subCategoryData">
+        <div class="col-11">
+          <p class="f-13 mb-0">{{item.subCategory}}</p>
+          <div class="row pt-12">
+            <div class="col-6 mob-br-1 p-0">
+              <p class="mob-text-xs">Amt. Invested</p>
+              <p class="m-0 f-13 pt-4">
+                <span appFormatNumber>₹ {{item.amountInvested}}</span></p>
             </div>
+            <div class="col-6 pr-0">
+              <p class="mob-text-xs">XIRR</p>
+              <p class="m-0 f-13 pt-4 mob-text-success">{{item.xirr}}%</p>
+            </div>
+          </div>
         </div>
-        <div class="mt-16">
-            <div class="bg-white">
-                <!-- <div class="row pt-16 pb-16">
+        <div class="col-1 pl-0 pt-28" (click)="showDetailsFun(showDetails,item);">
+          <img src="/assets/images/svg/mob-down-arrow.svg">
+        </div>
+        <div *ngIf="item.showDetailsMfData == true">
+          <div class="bg-white" *ngFor="let mf of mutualFundList">
+            <div class="mob-bg-success">
+              <div class="row pt-16">
+                <div class="col-7 pr-0">
+                  <p class="m-0 mob-wbb">{{mf.schemeName}}</p>
+                </div>
+                <div class="col-5 pl-0">
+                  <p class="m-0 mob-wbb">Folio - {{mf.folioNumber}}</p>
+                </div>
+              </div>
+              <div class="row pt-12 pb-16">
+                <div class="col-4 mob-br-success-1 pr-8">
+                  <p class="mob-text-xs">Amt. Invested</p>
+                  <p class="pt-4 m-0">
+                    <span appFormatNumber>₹ {{mf.amountInvested}}</span></p>
+                </div>
+                <div class="col-4 mob-br-success-1 pr-8">
+                  <p class="mob-text-xs">Gain/Loss</p>
+                  <p class="pt-4 m-0 mob-text-success">Rs. 10,29,091</p>
+                </div>
+                <div class="col-3">
+                  <p class="mob-text-xs">Returns</p>
+                  <span class="pt-4 m-0 mob-text-success" appFormatNumber>{{mf.xirr | number : '1.2'}}%</span>
+                </div>
+                <div class="col-1 pl-0" (click)="showmfDetailsMf = true;mfDetailsData = mf">
+                  <img src="/assets/images/svg/mob-right-arrow-selected.svg">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+   
+
+
+    <div class="mt-16">
+      <div class="bg-white">
+        <!-- <div class="row pt-16 pb-16">
                     <div class="col-11">
                         <p class="f-13 mb-0">Reliance Agro Fund</p>
                         <div class="row pt-12">
@@ -78,7 +113,7 @@
                         <img src="/assets/images/svg/mob-up-arrow.svg">
                     </div>
                 </div> -->
-                <!-- <div class="mob-bg-success">
+        <!-- <div class="mob-bg-success">
                     <div class="row pt-16">
                         <div class="col-4 pr-0">
                             <p class="m-0 mob-wbb">Sunanda Singh</p>
@@ -105,7 +140,7 @@
                         </div>
                     </div>
                 </div> -->
-                <!-- <div class="mt-4 mob-bg-success">
+        <!-- <div class="mt-4 mob-bg-success">
                     <div class="row pt-16">
                         <div class="col-4 pr-0">
                             <p class="m-0 mob-wbb">Sunanda Singh</p>
@@ -132,9 +167,9 @@
                         </div>
                     </div>
                 </div> -->
-            </div>
-        </div>
+      </div>
     </div>
+  </div>
 </div>
 
 <!-- end -->
@@ -652,6 +687,6 @@
 <div *ngIf="backtoMf == true">
   <app-mobile-portfoilo></app-mobile-portfoilo>
 </div>
-<div *ngIf="showmfDetails == true">
-<app-mutual-fund-details [data]="mfDetailsData"></app-mutual-fund-details>
+<div *ngIf="showmfDetailsMf == true">
+  <app-mutual-fund-details [data]="mfDetailsData"></app-mutual-fund-details>
 </div>
