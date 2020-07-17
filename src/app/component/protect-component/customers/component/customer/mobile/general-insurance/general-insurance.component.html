@@ -170,30 +170,30 @@
     </div>
     </div>
     <div class="document-bottom-action">
-        <button (click)="lifeInsuranceData = true" mat-stroked-button class="btn-primary"><span class="material-icons">
+        <button (click)="generalInsuranceData = true" mat-stroked-button class="btn-primary"><span class="material-icons">
                 add
             </span></button>
     </div>
 </div>
-<div *ngIf="lifeInsuranceData == true && inputData == 'Health insurance'">
+<div *ngIf="generalInsuranceData == true && inputData == 'Health insurance'">
     <app-add-health-mob></app-add-health-mob>
 </div>
-<div *ngIf="lifeInsuranceData == true && inputData == 'Personal accident insurance'">
+<div *ngIf="generalInsuranceData == true && inputData == 'Personal accident insurance'">
     <app-add-personal-accident-mob></app-add-personal-accident-mob>
 </div>
-<div *ngIf="lifeInsuranceData == true && inputData == 'Critical illness insurance'">
+<div *ngIf="generalInsuranceData == true && inputData == 'Critical illness insurance'">
     <app-critical-illnes-mob></app-critical-illnes-mob>
 </div>
-<div *ngIf="lifeInsuranceData == true && inputData == 'Motor insurance'">
+<div *ngIf="generalInsuranceData == true && inputData == 'Motor insurance'">
     <app-motor-insurance-mob></app-motor-insurance-mob>
 </div>
-<div *ngIf="lifeInsuranceData == true && inputData == 'Travel insurance'">
+<div *ngIf="generalInsuranceData == true && inputData == 'Travel insurance'">
     <app-travel-insurance-mob></app-travel-insurance-mob>
 </div>
-<div *ngIf="lifeInsuranceData == true && inputData == 'Home insurance'">
+<div *ngIf="generalInsuranceData == true && inputData == 'Home insurance'">
     <app-home-insurance-mob></app-home-insurance-mob>
 </div>
-<div *ngIf="lifeInsuranceData == true && inputData == 'Fire & special perils insurance'">
+<div *ngIf="generalInsuranceData == true && inputData == 'Fire & special perils insurance'">
     <app-fire-insurance-mob></app-fire-insurance-mob>
 </div>
 <div *ngIf="backToMf == true">
