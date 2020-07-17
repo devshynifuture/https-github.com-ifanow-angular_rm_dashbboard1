@@ -43,8 +43,8 @@
     </div>
     <div class="col-md-6 p-0 mt-20">
       <p class="m-0 f-12 text-uppercase text-primitive">ARN/RIA and EUIN</p>
-      <p
-        class="m-0 text-black roboto">{{transactionData.brokerCode}} {{ transactionData.euin ? transactionData.euin : ''}}</p>
+      <p class="m-0 text-black roboto">{{transactionData.brokerCode}}
+        {{ transactionData.euin ? transactionData.euin : ''}}</p>
     </div>
     <div class="col-md-6 p-0 mt-20">
       <p class="m-0 f-12 text-uppercase text-primitive">Transaction platform</p>
@@ -85,7 +85,7 @@
       </p>
     </div>
     <div *ngIf="transactionData.perpetualFlag||(transactionData.startDate&&transactionData.endDate>0)"
-         class="col-md-6 p-0 mt-20">
+      class="col-md-6 p-0 mt-20">
       <p class="m-0 f-12 text-uppercase text-primitive">End Date</p>
       <p class="m-0 text-black roboto">
         {{transactionData.perpetualFlag ? 'Continue until cancelled' : (transactionData.endDate | date:'dd/MM/yyyy')}}
@@ -104,7 +104,7 @@
     </div>
     <div class="col-md-5 p-0 text-right right">
       <button (click)="refresh(transactionData)" *ngIf="transactionData.status !=7" class="primary-sm"
-              mat-stroked-button>REFRESH
+        mat-stroked-button>REFRESH
       </button>
     </div>
     <div class="col-md-2 p-0  ">
