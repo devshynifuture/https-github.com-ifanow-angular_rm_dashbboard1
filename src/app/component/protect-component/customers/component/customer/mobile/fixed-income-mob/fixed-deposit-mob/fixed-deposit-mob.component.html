@@ -9,54 +9,379 @@
             <h5 class="m-0 f-18 text-white pt-4">Add fixed deposit</h5>
         </div>
     </div>
-    <div class="bg-grey lter h-100vh pt-80 mb-48 add-fixed-desposit">
-        <div class="row">
-            <div class="col-12 pb-20 mob-pr-10 mob-pl-10">
-                <p class="m-0 roboto f-400 text-dark f-16 pb-10">Owner</p>
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input matInput class="form-control text-primitive" value="Select owner">
-                    </mat-form-field>
+    <div [formGroup]="fixedDeposit" class="bg-grey lter pt-80 mb-48 add-fixed-desposit">
+        <div formArrayName="getCoOwnerName">
+            <div *ngFor="let obj of fixedDeposit.controls['getCoOwnerName'].controls; let pointIndex=index"
+                [formGroupName]="pointIndex">
+                <div class="col-12">
+                    <p class="m-0 roboto f-400 text-dark f-16 pb-10">
+                        {{pointIndex != 0?'Co-o' : 'O'}}wner{{pointIndex != 0?pointIndex:''}}</p>
+                </div>
+                <div class="row">
+                    <div class="pb-20 mob-pr-10 mob-pl-10"
+                        [ngClass]="fixedDeposit.value.getCoOwnerName.length > 1?'col-7' : 'col-9    '">
+                        <div class="form-group mb-0">
+                            <mat-form-field>
+                                <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
+                                    (selectionChange)="disabledMember($event.value,'owner')"
+                                    (valueChange3)='displayControler($event)' (emitBank)='getBank()'
+                                    (emitBank)='getBank()' (valueChange1)='lisNominee($event)' class="form-control br-0"
+                                    [callMethod]='callMethod'>
+                                    <mat-option value='' disabled>Select family members</mat-option>
+                                    <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable"
+                                        [value]="f.userName">
+                                        <span>{{f.userName}}</span>
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error class="f-12">
+                                    This field is required
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-2" *ngIf="fixedDeposit.value.getCoOwnerName.length > 1">
+                        <div class="form-group mb-0">
+                            <mat-form-field>
+                                <input matInput class="form-control br-0 percentage" type="number"
+                                    formControlName="share" (focusout)="onChangeJointOwnership('owner')">
+                                <mat-error class="f-12" *ngIf="obj.controls['share'].hasError('required')">
+                                    This field is required
+                                </mat-error>
+                                <mat-error class="f-12" *ngIf="obj.controls['share'].hasError('incorrect') ">
+                                    Total percent should be 100%
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <i *ngIf="fixedDeposit.value.getCoOwnerName.length < 3"
+                            class="material-icons text-primitive f-20 c-p float-left"
+                            (click)="addNewCoOwner(undefined)">add</i>
+                        <i *ngIf="fixedDeposit.value.getCoOwnerName.length > 1"
+                            class="material-icons text-primitive f-20 c-p pl-10 pt-8"
+                            (click)="removeCoOwner(pointIndex)">remove</i>
+                    </div>
                 </div>
             </div>
+        </div>
 
-            <div class="col-12 pt-28 pb-20 mob-pr-10 mob-pl-10">
-                <p class="m-0 roboto f-400 text-dark f-16 pb-10">FD Type</p>
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input matInput class="form-control text-primitive" value="Select FD Type">
-                    </mat-form-field>
+        <div class="col-12 pt-28 pb-20 mob-pr-10 mob-pl-10">
+            <p class="m-0 roboto f-400 text-dark f-16 pb-10">FD Type</p>
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <mat-select #FDType formControlName="FDType" class="form-control br-0">
+                        <mat-option value="" disabled>Select option</mat-option>
+                        <mat-option value="1">Bank FD</mat-option>
+                        <mat-option value="2">Corporate FD</mat-option>
+                    </mat-select>
+                    <mat-error class="f-12 pt-4"
+                        [ngClass]="{'v-h':!(isFDType && getFormControl().FDType.invalid || getFormControl().FDType.touched && getFormControl().FDType.invalid)}">
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-12 pt-28 pb-20 mob-pr-10 mob-pl-10">
+            <p class="m-0 roboto f-400 text-dark f-16 pb-10">Commencement date</p>
+            <div class="form-group mb-0">
+                <mat-form-field class="ba-date">
+                    <input class="form-control b-0" (focus)="picker.open()" (click)="picker.open()"
+                        (dateChange)="checkDate()" matInput formControlName="commencementDate" [max]="maxDate"
+                        [matDatepicker]="picker" readonly>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error class="f-12 pt-4">
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-12 pt-28 pb-20 mob-pr-10 mob-pl-10">
+            <p class="m-0 roboto f-400 text-dark f-16 pb-10">Amount invested</p>
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input matInput #amountInvest type="text" appInputValueValidation
+                        [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control br-0 rupess"
+                        formControlName="amountInvest">
+                    <mat-error class="f-12 pt-4">
+                        This field is required
+                    </mat-error>
+                    <mat-hint align="end" class="f-12">{{amountInvest.value.length}}/10</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-12 pt-28 pb-20 mob-pr-10 mob-pl-10 iconPetage">
+            <p class="m-0 roboto f-400 text-dark f-16 pb-10">Interest rate</p>
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input matInput #interestRate matInput type="number" (keyup)="onChange($event)"
+                        appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                        class="form-control br-0 percentage" formControlName="interestRate">
+                    <mat-error class="f-12 pt-4">
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-12 pt-28 pb-20 mob-pr-10 mob-pl-10">
+            <p class="m-0 roboto f-400 text-dark f-16 pb-10"></p>
+            <div class="form-group mb-0">
+                <mat-radio-group aria-label="Select an option" (change)="getMaturityDate($event)" id="custom-radio"
+                    formControlName="maturity">
+                    <mat-radio-button value="1" class="b-ua radioBtn text-custom"
+                        [checked]="fixedDeposit.get('maturity').value==1"
+                        [ngClass]="{'b-a-custom': fixedDeposit.get('maturity').value==1,'text-primary':fixedDeposit.get('maturity').value==1,'borderRadio':fixedDeposit.get('maturity').value==2}"
+                        (click)="haveMaturity(false)">I have tenure
+                    </mat-radio-button>
+
+                    <mat-radio-button class="  pr-10 radioBtn" value="2"
+                        [checked]="fixedDeposit.get('maturity').value==2"
+                        [ngClass]="{'b-a-custom': fixedDeposit.get('maturity').value==2,'text-primary':fixedDeposit.get('maturity').value==2,'borderRadio text-custom':fixedDeposit.get('maturity').value==1}"
+                        (click)="haveMaturity(true)">I have maturity date
+                    </mat-radio-button>
+                </mat-radio-group>
+                <mat-error class="f-12 pt-4"
+                    [ngClass]="{'v-h':!(!tenureValid && getFormControl().maturity.invalid || getFormControl().maturity.touched && getFormControl().maturity.invalid)}">
+                    This field is required
+                </mat-error>
+            </div>
+        </div>
+        <div class="col-12 pt-28 pb-20 mob-pr-10 mob-pl-10" *ngIf="fixedDeposit.get('maturity').value==1">
+            <p class="m-0 roboto f-400 text-dark f-16 pb-10">Tenure</p>
+            <div class="form-group mb-0">
+                <div class="row">
+                    <div class="col-4 p-0">
+                        <mat-select formControlName="tenureY" class="form-control btb-0 br-none brtb-0"
+                            (selectionChange)="getDateYMD()">
+                            <mat-option value="0">0 Year</mat-option>
+                            <mat-option *ngFor="let Y of fdYears" [value]="Y">
+                                <span>{{Y == 1? Y+" year" : Y+" years"}}</span>
+                            </mat-option>
+                        </mat-select>
+                    </div>
+                    <div class="col-4 p-0">
+                        <mat-select formControlName="tenureM" class="form-control btb-0 bltb-0 br-none "
+                            (selectionChange)="getDateYMD()">
+                            <mat-option value="0">0 Month</mat-option>
+                            <mat-option *ngFor="let M of fdMonths" [value]="M">
+                                <span>{{M == 1? M+" Month" : M+" Months" }}</span>
+                            </mat-option>
+                        </mat-select>
+                    </div>
+                    <div class="col-4 p-0">
+                        <mat-select formControlName="tenureD" class="form-control bltb-0"
+                            (selectionChange)="getDateYMD()">
+                            <mat-option value="0">0 Day</mat-option>
+                            <mat-option *ngFor="let D of fdDays" [value]="D">
+                                <span>{{D == 1? D+" Day" : D+" Days" }}</span>
+                            </mat-option>
+                        </mat-select>
+                    </div>
+                    <mat-error class="f-12 pt-4" *ngIf="!tenureValid">
+                        <b>This field is required</b>
+                    </mat-error>
+                    <mat-error class="f-12 pt-4" [ngClass]="{'v-h': !tenureFlag}">Tenure is not valid
+                    </mat-error>
                 </div>
             </div>
-            <div class="col-12 pt-28 pb-20 mob-pr-10 mob-pl-10">
-                <p class="m-0 roboto f-400 text-dark f-16 pb-10">Commencement date</p>
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input matInput class="form-control text-primitive" value="Enter date">
-                    </mat-form-field>
+        </div>
+        <div class="col-12 pt-28 pb-20 mob-pr-10 mob-pl-10" *ngIf="fixedDeposit.get('maturity').value==2">
+            <p class="m-0 roboto f-400 text-dark f-16 pb-10">Maturity date</p>
+            <div class="form-group mb-0">
+                <mat-form-field class="ba-date">
+                    <input class="form-control b-0" (focus)="picker1.open()" (click)="picker1.open()"
+                        (dateChange)="checkDate()" matInput formControlName="maturityDate" [min]="validMaturity"
+                        [matDatepicker]="picker1" readonly>
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                    <mat-error class="f-12 pt-4 w-s">
+                        {{fixedDeposit.get('maturityDate').value == "Invalid Date"? 'This field is required':'Maturity date should be greater than commencement date'}}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-12 pt-28 pb-20 mob-pr-10 mob-pl-10">
+            <p class="m-0 roboto f-400 text-dark f-16 pb-10">Interest option</p>
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <mat-select #payOpt formControlName="payOpt" class="form-control br-0" (change)="getIntPayout()">
+                        <mat-option value="" disabled> Select option</mat-option>
+                        <mat-option [value]="1"> Cumulative</mat-option>
+                        <mat-option [value]="2">Interest payout</mat-option>
+                    </mat-select>
+                    <mat-error class="f-12 pt-4">
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-12 pt-28 pb-20 mob-pr-10 mob-pl-10" *ngIf="fixedDeposit.value.payOpt == 1">
+            <p class="m-0 roboto f-400 text-dark f-16 pb-10">Compounding frequency</p>
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <mat-select #compound formControlName="compound" class="form-control br-0">
+                        <mat-option value="" disabled>Select option</mat-option>
+                        <mat-option [value]="2">Monthly</mat-option>
+                        <mat-option [value]="3">Quarterly</mat-option>
+                        <mat-option [value]="4">Half yearly</mat-option>
+                        <mat-option [value]="5">Yearly</mat-option>
+                    </mat-select>
+                    <mat-error class="f-12 pt-4">
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-12 pt-28 pb-20 mob-pr-10 mob-pl-10" *ngIf="fixedDeposit.value.payOpt == 2">
+            <p class="m-0 roboto f-400 text-dark f-16 pb-10">Frequency of payout</p>
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <mat-select #frequencyOfPayoutPerYear formControlName="frequencyOfPayoutPerYear"
+                        class="form-control br-0">
+                        <mat-option value="" disabled> Select option</mat-option>
+                        <mat-option [value]="2">Monthly</mat-option>
+                        <mat-option [value]="3">Quarterly</mat-option>
+                        <mat-option [value]="4">Half yearly</mat-option>
+                        <mat-option [value]="5">Yearly</mat-option>
+                    </mat-select>
+                    <mat-error class="f-12 pt-4">
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div *ngIf="showHide == true" class="col-5 text-right">
+                <h5 (click)="showLess(showHide)" class="m-0 pt-8 text-custom c-p">Show less</h5>
+            </div>
+            <div *ngIf="showHide == false" class="col-5 text-right">
+                <h5 (click)="showLess(showHide)" class="m-0 pt-8 text-custom c-p">+ Add more [optional data] </h5>
+            </div>
+            <div class="col-md-5">
+
+            </div>
+        </div>
+        <div *ngIf="showHide == true">
+            <div *ngIf="showHide == true">
+                <div class="col-12 pt-28 pb-20 mob-pr-10 mob-pl-10">
+                    <p class="m-0 roboto f-400 text-dark f-16 pb-10">FD number</p>
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <input matInput autocomplete="off" #fdNo type="text" maxlength="18"
+                                class="form-control br-0" formControlName="fdNo">
+                            <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
+                            <mat-hint align="end" class="f-12">{{fdNo.value.length}}/18</mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-10 pt-28 pb-20 mob-pr-10 mob-pl-10">
+                        <p class="m-0 roboto f-400 text-dark f-16 pb-10">Linked bank account</p>
+                        <div class="form-group mb-0">
+                            <mat-form-field>
+                                <mat-select class="form-control" formControlName="bankACNo" matInput>
+                                    <mat-option *ngFor="let option of bankList ;index as i" [value]="option.id">
+                                        {{option.bankNameAndLast4Digit}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error>This field is required
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-2 p-0 pt-8 d-flex">
+                        <i class="material-icons text-primitive c-p float-left" (click)="openDialog(null)">add</i>
+                    </div>
+                </div>
+
+                <div class="col-12 pt-28 pb-20 mob-pr-10 mob-pl-10">
+                    <p class="m-0 roboto f-400 text-dark f-16 pb-10">Institution name</p>
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <input matInput autocomplete="off" type="text" #institution maxlength="50"
+                                class="form-control br-0" formControlName="institution">
+                            <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
+                            <mat-hint align="end" class="f-12">{{institution.value.length}}/50</mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-12 pt-28 pb-20 mob-pr-10 mob-pl-10">
+                    <p class="m-0 roboto f-400 text-dark f-16 pb-10">Institution name</p>
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <input matInput autocomplete="off" #description maxlength="60" class="form-control br-0"
+                                formControlName="description" type="text">
+                            <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
+                            <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
+                        </mat-form-field>
+                    </div>
                 </div>
             </div>
-            <div class="col-12 pt-28 pb-20 mob-pr-10 mob-pl-10">
-                <p class="m-0 roboto f-400 text-dark f-16 pb-10">Amount invested</p>
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input matInput class="form-control text-primitive" value="Enter amount invested">
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="col-12 pt-28 pb-20 mob-pr-10 mob-pl-10">
-                <p class="m-0 roboto f-400 text-dark f-16 pb-10">Interesr rate</p>
-                <div class="form-group mb-0">
-                    <mat-form-field>
-                        <input matInput class="form-control text-primitive" value="Enter Iinteresr rate">
-                    </mat-form-field>
+            <div formArrayName="getNomineeName">
+                <div *ngFor="let obj of fixedDeposit.controls['getNomineeName'].controls; let pointIndex=index"
+                    [formGroupName]="pointIndex">
+                    <div class="col-12">
+                        <p class="m-0 roboto f-400 text-dark f-16 pb-10">
+                            Nominee {{pointIndex + 1}}</p>
+                    </div>
+                    <div class="row">
+                        <div class="pb-20 mob-pr-10 mob-pl-10"
+                            [ngClass]="getNominee.length > 1?'col-md-7' : 'col-md-9'">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
+                                        (selectionChange)="disabledMember($event.value,'nominee')"
+                                        (valueChange1)='lisNominee($event)' class="form-control br-0"
+                                        [callMethod]='callMethod'>
+                                        <mat-option value='' disabled>Select family members</mat-option>
+                                        <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable"
+                                            [value]="f.userName">
+                                            <span>{{f.userName}}</span>
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error class="f-12">
+                                        This field is required
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-2" *ngIf="fixedDeposit.value.getCoOwnerName.length > 1">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput class="form-control br-0 percentage" type="number"
+                                        formControlName="sharePercentage"
+                                        (focusout)="onChangeJointOwnership('nominee')">
+                                    <mat-error class="f-12"
+                                        *ngIf="obj.controls['sharePercentage'].hasError('required')">
+                                        This field is required
+                                    </mat-error>
+                                    <mat-error class="f-12"
+                                        *ngIf="obj.controls['sharePercentage'].hasError('incorrect') ">
+                                        Total percent should be 100%
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <i *ngIf="fixedDeposit.value.getNomineeName.length < 3"
+                                class="material-icons text-primitive f-20 c-p float-left"
+                                (click)="addNewNominee(undefined)">add</i>
+                            <i *ngIf="fixedDeposit.value.getNomineeName.length > 1"
+                                class="material-icons text-primitive f-20 c-p pl-10"
+                                (click)="removeNewNominee(pointIndex)">remove</i>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row bg-white mob-proccess-fixed br-0">
-        <div class="col-12 text-center pt-8 pb-8">
-            <button mat-stroked-button class="mob-btn-primary w-60">Submit</button>
+    <div *ngIf="adviceShowHeaderAndFooter">
+        <div class="row mob-proccess-fixed br-0 pb-16">
+            <div class="col-12 text-right pt-8 pb-8">
+                <app-progress-button (btnClick)="saveFixedDeposit()" [options]="barButtonOptions">
+                </app-progress-button>
+            </div>
         </div>
     </div>
+
 </div>

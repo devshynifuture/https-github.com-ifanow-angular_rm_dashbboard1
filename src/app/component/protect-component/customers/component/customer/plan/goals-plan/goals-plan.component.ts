@@ -252,7 +252,12 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     if(this.selectedGoalId) {
       this.loadSelectedGoalData(this.allGoals.find(goal => goal.remainingData.id == this.selectedGoalId));
     } else {
-      this.loadSelectedGoalData(this.allGoals[0]);
+      if(this.allGoals.length > 0) {
+        this.loadSelectedGoalData(this.allGoals[0]);
+      } else {
+        this.selectedGoalId = null;
+        this.selectedGoal = {};
+      }
     }
   }
 
@@ -272,7 +277,6 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       mapData.gv = goalSubData.goalFV;
       mapData.goalStartDate = goalSubData.goalStartDate;
       mapData.goalEndDate = goalSubData.goalStartDate; // because start hote hi khatam ho gaya
-      mapData.achievedValue = goalSubData.achievedValue;
       mapData.dashboardData = {
         goalYear: new Date(goalSubData.goalStartDate).getFullYear(),
         presentValue: goalSubData.goalPresentValue,
@@ -281,7 +285,8 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         debt_monthly: this.getSumOfJsonMap(goalSubData.sipAmountDebt) || 0,
         lump_equity: this.getSumOfJsonMap(goalSubData.lumpSumAmountEquity) || 0,
         lump_debt: this.getSumOfJsonMap(goalSubData.lumpSumAmountDebt) || 0,
-        goalProgress: (goalSubData.achievedValue / goalSubData.goalFV * 100),
+        goalProgress: goalSubData.goalAchievedPercentage,
+        achievedValue: goalSubData.achievedValue
       }
       mapData.remainingData = goalSubData;
       mapData.remainingData.differentGoalYears = [goalSubData.goalStartDate];
@@ -291,7 +296,6 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       mapData.year = (new Date(goalSubData.differentGoalYears[0]).getFullYear()) + ' - ' + (new Date(goalSubData.differentGoalYears[goalSubData.differentGoalYears.length - 1]).getFullYear());
       mapData.goalName = goalSubData.name;
       mapData.gv = goalSubData.futureValue;
-      mapData.achievedValue = goalSubData.achievedValue;
       mapData.goalStartDate = goalSubData.differentGoalYears[0];
       mapData.goalEndDate = goalSubData.differentGoalYears[goalSubData.differentGoalYears.length - 1];
       mapData.dashboardData = {
@@ -302,7 +306,8 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         debt_monthly: this.getSumOfJsonMap(goalSubData.sipAmountDebt),
         lump_equity: this.getSumOfJsonMap(goalSubData.lumpSumAmountEquity),
         lump_debt: this.getSumOfJsonMap(goalSubData.lumpSumAmountDebt),
-        goalProgress: (goalSubData.achievedValue / goalSubData.futureValue * 100),
+        goalProgress: goalSubData.goalAchievedPercentage,
+        achievedValue: goalSubData.achievedValue
       }
       mapData.remainingData = goalSubData;
     }
@@ -436,8 +441,15 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         }
         this.plansService.deleteGoal(deleteObj).subscribe((data) => {
           this.eventService.openSnackBar("Goal has been deleted successfully", "Dismiss");
-          this.allGoals = this.allGoals.filter(goal => goal.id != this.selectedGoal.id);
-          this.loadSelectedGoalData(this.allGoals[0]);
+          this.allGoals = this.allGoals.filter(goal => goal.remainingData.id != this.selectedGoalId);
+          this.selectedGoalId = null;
+          if(this.allGoals.length > 0) {
+            this.loadSelectedGoalData(this.allGoals[0]);
+          } else {
+            this.selectedGoal = {};
+          }
+          // update asset list if user deletes goal and the list is still open
+          this.allocateOtherAssetService.refreshAssetList.next();
           dialogRef.close()
         }, (err) => { this.eventService.openSnackBar(err, "Dismiss") })
       },
@@ -457,7 +469,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     if(event.previousContainer === event.container || !event.isPointerOverContainer) {
       return;
     }
-    this.allocateOtherAssetService.allocateAssetToGoal(event, this.advisor_client_id, this.selectedGoal);
+    this.allocateOtherAssetService.allocateOtherAssetToGoal(event, this.advisor_client_id, this.selectedGoal);
   }
 
   removeAllocation(allocation) {
@@ -480,6 +492,8 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         this.plansService.allocateOtherAssetToGoal(obj).subscribe(res => {
           const assetIndex =  this.allocatedList.findIndex((asset) => asset.assetId == allocation.assetId);
           this.allocatedList.splice(assetIndex, 1);
+          // update asset list if user deletes goal and the list is still open
+          this.allocateOtherAssetService.refreshAssetList.next();
           this.eventService.openSnackBar("Asset unallocated");
           dialogRef.close();
         }, err => {

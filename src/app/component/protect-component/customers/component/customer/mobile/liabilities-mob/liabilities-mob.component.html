@@ -1,0 +1,53 @@
+<div id="mob-fixed-income" *ngIf="!showDetail">
+    <div class="row mob-bg-common pb-12 mobtop-navfixed">
+      <div class="col-2" (click)="changeValue(false)">
+        <span class="material-icons text-white">
+        keyboard_backspace
+        </span>
+      </div>
+      <div class="col-7 p-0">
+        <h5 class="m-0 f-18 text-white pt-4">Liabilities</h5>
+      </div>
+      <div class="col-3 text-right">
+        <span class="material-icons text-white">
+        filter_list
+        </span>
+      </div>
+    </div>
+      <div class="pt-80 p-8 h-100vh">
+      <div class="bg-white">
+        <div class="row pt-20 pb-20">
+          <div class="col-2">
+             <div class="mf hw-40 f-14 pt-16">L</div>
+          </div>
+          <div class="col-10 pl-8 pt-4">
+            <p class="m-0 f-12 lh-12">Current Value:</p>
+            <h3 class="mob-text-success mb-0 pt-4">{{totalCurrentValue ? 'Rs.' : ''}}  <span appFormatNumber [value]="totalCurrentValue ? totalCurrentValue : '-'"></span></h3>
+          </div>
+        </div>
+      </div>
+    <div class="pt-16">
+        <div class="bg-white">
+          <div class="row pt-20 pb-20 mob-bb-1" (click)="showDetail = true;openSubAsset('Liabilities',liabilityData)">
+            <div class="col-8">
+              <p class="mb-0">Liabilities</p>
+            </div>
+            <div class="col-4 text-right">
+              <p class="m-0">{{liabilityCv ? '₹' : ''}}<span appFormatNumber [value]="liabilityCv ? liabilityCv : ''"></span></p>
+            </div>
+          </div>
+          <div class="row pt-20 pb-20 mob-bb-1" (click)="showDetail = true;openSubAsset('Other payables',otherPayableeData)">
+            <div class="col-8">
+              <p class="mb-0">Other payables</p>
+            </div>
+            <div class="col-4 text-right">
+              <p class="m-0">{{otherPayableCv ? '₹' : ''}}<span appFormatNumber [value]="otherPayableCv ? otherPayableCv : ''"></span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <div *ngIf="showDetail">
+        <app-liabilities [data]="assetSubType"></app-liabilities>
+    </div>

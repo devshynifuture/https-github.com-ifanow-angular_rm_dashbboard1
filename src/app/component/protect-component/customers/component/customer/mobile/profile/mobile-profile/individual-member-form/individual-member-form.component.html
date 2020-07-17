@@ -26,27 +26,8 @@
             </div>
         </div>
     </div>
-    <div class="row pt-32">
-        <div class="col-12 mob-pl-10 mob-pr-10">
-            <h5 class="m-0 roboto text-dark pb-10 f-16">Mobile</h5>
-            <div class="row">
-                <div class="col-4 pl-0 mob-pr-10">
-                    <mat-form-field appearance="standard" floatLabel="never">
-                        <mat-select class="form-control">
-                            <mat-option>
-                                +91 (IND)
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-                <div class="col-8 pr-0 mob-pl-10">
-                    <mat-form-field appearance="standard" floatLabel="never">
-                        <input matInput class="form-control text-primitive" value="Enter mobile">
-                    </mat-form-field>
-                </div>
-            </div>
-        </div>
-    </div>
+    <app-mobile-view-add-number (numberArray)="getNumberDetails($event)" [flag]="mobileNumberFlag"
+        [isResidential]="taxStatusType" [numberList]="userData.mobileList"></app-mobile-view-add-number>
     <div class="row pt-32">
         <div class="col-12 mob-pl-10 mob-pr-10">
             <h5 class="m-0 roboto text-dark pb-10 f-16">Enter your PAN</h5>
@@ -100,14 +81,22 @@
             <h5 class="m-0 roboto text-dark pb-10 f-16">Relation</h5>
             <div class="form-group mb-0">
                 <mat-form-field appearance="standard" floatLabel="never">
-                    <mat-select class="form-control">
-                        <mat-option>
-                            Select relation
-                        </mat-option>
+                    <mat-select formControlName="relationType" class="form-control">
+                        <mat-option disabled value=''>Select option</mat-option>
+                        <mat-option *ngFor="let relation of relationList" [value]="relation.value">
+                            {{relation.name}}</mat-option>
                     </mat-select>
                     <mat-hint class="text-custom">Relation with group head</mat-hint>
                 </mat-form-field>
             </div>
         </div>
     </div>
+</div>
+<div class="row profile-save-bottom">
+    <div class="col-2"></div>
+    <div class="col-8 pt-8 pb-8">
+        <button (click)="editFamilyMember()" mat-stroked-button
+            class="btn-primary w-100 f-16 h-40 br-40">Submit</button>
+    </div>
+    <div class="col-2"></div>
 </div>

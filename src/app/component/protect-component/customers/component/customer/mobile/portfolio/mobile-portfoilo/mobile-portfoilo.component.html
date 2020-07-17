@@ -1,134 +1,143 @@
 <!-- protfolio mobile screen start -->
-<div *ngIf="showMf != true && showFixedIncome != true && showRetirementAccount != true">
-<div class="row mob-bg-common pb-12 mobtop-navfixed" *ngIf="openMenue != true">
-  <div class="col-2" (click)="openMenu(openMenue)">
-    <span class="material-icons text-white">
-      menu
-    </span>
+<div
+  *ngIf="showMf != true && showFixedIncome != true && showRetirementAccount != true && !showStocks && !showRealEstate && !showCashAndBank && !showCommodities &&!showSmallSavings && !showLiablities && !showLifeInsurance && !showGenralInsurance">
+  <div class="row mob-bg-common pb-12 mobtop-navfixed" *ngIf="openMenue != true">
+    <div class="col-2" (click)="openMenu(openMenue)">
+      <span class="material-icons text-white">
+        menu
+      </span>
+    </div>
+    <div class="col-7 pl-0" (click)="openMenu(openMenue)">
+      <h5 class="m-0 f-18 text-white pt-4">Portfolio</h5>
+    </div>
+    <div class="col-3 text-right">
+      <span class="material-icons text-white">
+        search
+      </span>
+    </div>
   </div>
-  <div class="col-7 pl-0" (click)="openMenu(openMenue)">
-    <h5 class="m-0 f-18 text-white pt-4">Portfolio</h5>
+  <div *ngIf="openMenue == true">
+    <app-mobile-left-sidenav></app-mobile-left-sidenav>
   </div>
-  <div class="col-3 text-right">
-    <span class="material-icons text-white">
-      search
-    </span>
-  </div>
-</div>
-<div *ngIf="openMenue == true">
-  <app-mobile-left-sidenav></app-mobile-left-sidenav>
-</div>
-<div id="mob-portfolio" *ngIf="openMenue != true">
+  <div id="mob-portfolio" *ngIf="openMenue != true">
 
 
-  <div class="p-8 pt-80 pb-28">
-    <h5 class="m-0 text-black f-16 roboto pb-16 f-500"> Asset allocation</h5>
-    <div class="bg-white br-10">
-
-      <div class="row pt-20 pb-20" *ngIf="portFolioData.length > 0">
-        <div class="col-7">
-          <!-- <div class="highcharts-figure" id="piechartMutualFund"></div> -->
-          <div class="h-200" [chart]="assetAllocationPieConfig">
-          </div>
-
-
-        </div>
-        <div class="col-5 pt-48 pl-0">
-          <div class="chart-data" *ngFor="let data of chartData">
-            <div class="d-flex pt-12">
-              <!-- <div class="hw-10 bg-1 br-2">
-                      </div> -->
-              <span class="pointNumber" [style.background-color]="data.color">
-              </span>
-              <span class="f-12 lh-12 roboto f-400 m-0"
-                appFormatNumber>{{(data.y/chartTotal*100) | number : '0.2-2'}}%</span>
-            </div>
-            <p class="f-12  lh-12 roboto text-custom m-0 f-400 pt-6 pl-10">{{data.name}}</p>
-
-          </div>
-        </div>
-      </div>
-      <div class="col-12 p-0 pt-40" *ngIf="portFolioData.length ==0">
+    <div class="p-8 pt-80 pb-28">
       <h5 class="m-0 text-black f-16 roboto pb-16 f-500"> Asset allocation</h5>
       <div class="bg-white br-10">
 
-          <div class="row pt-20 pb-20">
+        <div class="row pt-20 pb-20" *ngIf="portFolioData.length > 0">
+          <div class="col-7">
+            <!-- <div class="highcharts-figure" id="piechartMutualFund"></div> -->
+            <div class="h-200" [chart]="assetAllocationPieConfig">
+            </div>
+
+
+          </div>
+          <div class="col-5 pl-0 d-flex flex-column">
+            <div class="chart-data" *ngFor="let data of chartData">
+              <div class="d-flex pt-12">
+                <!-- <div class="hw-10 bg-1 br-2">
+                      </div> -->
+                <span class="pointNumber" [style.background-color]="data.color">
+                </span>
+                <span class="f-12 lh-12 roboto f-400 m-0"
+                  appFormatNumber>{{(data.y/chartTotal*100) | number : '0.2-2'}}%</span>
+              </div>
+              <p class="f-12  lh-12 roboto text-custom m-0 f-400 pt-6 pl-10">{{data.name}}</p>
+
+            </div>
+          </div>
+        </div>
+        <div class="col-12 p-0 pt-40" *ngIf="portFolioData.length ==0">
+          <h5 class="m-0 text-black f-16 roboto pb-16 f-500"> Asset allocation</h5>
+          <div class="bg-white br-10">
+
+            <div class="row pt-20 pb-20">
               <div class="col-6">
-                  <p class="m-0 roboto f-400">Once your data is uploaded, this chart will come to life</p>
-                  <p class="m-0 roboto f-400 pt-16 pb-16">Let’s get some data in here. There are lot’s of
-                      things you
-                      can add to
-                      your portfolio. Let’s get going.</p>
-                  <button [routerLink]="['/customer/detail/account/summary']"
-                      class="vaultBtn mb-4 bg-primary f-16 text-white" mat-stroked-button>
-                      Add data
-                  </button>
+                <p class="m-0 roboto f-400">Once your data is uploaded, this chart will come to life</p>
+                <p class="m-0 roboto f-400 pt-16 pb-16">Let’s get some data in here. There are lot’s of
+                  things you
+                  can add to
+                  your portfolio. Let’s get going.</p>
+                <button [routerLink]="['/customer/detail/account/summary']"
+                  class="vaultBtn mb-4 bg-primary f-16 text-white" mat-stroked-button>
+                  Add data
+                </button>
 
               </div>
               <div class="col-6 full-center pl-0">
 
-                  <img class="w-100" src="assets/images/svg/asset-allocation-empty-state.svg">
+                <img class="w-100" src="assets/images/svg/asset-allocation-empty-state.svg">
 
               </div>
+            </div>
           </div>
+        </div>
       </div>
-  </div>
-    </div>
-    <div class="row pt-28 pb-20">
-      <div class="col-md-12 pl-8">
-        <p class="m-0 f-16">Asset Breakdown</p>
+      <div class="row pt-28 pb-20">
+        <div class="col-md-12 pl-8">
+          <p class="m-0 f-16">Asset Breakdown</p>
+        </div>
       </div>
-    </div>
-    <div class="row breakdown pt-16 pb-16">
-      <div class="col-10" *ngIf="mfData[0]">
-        <h4 class="m-0">₹<span appFormatNumber>{{mfData[0].currentValue}}</span></h4>
-        <div class="row pt-8">
-          <div class="col-1 pl-0">
-            <div class="mf">MF</div>
+      <div class="mb-16">
+        <div class="row breakdown pt-16 pb-16">
+          <div class="col-9" *ngIf="mfData[0]">
+            <h4 class="m-0">₹<span appFormatNumber>{{mfData[0].currentValue}}</span></h4>
+            <div class="row pt-8">
+              <div class="col-1 pl-0">
+                <div class="mf">MF</div>
+              </div>
+              <div class="col-9 pl-8">
+                <p class="f-12 m-0 pt-4">{{mfData[0].assetTypeString}}</p>
+              </div>
+
+            </div>
           </div>
-          <div class="col-9 pl-8">
-            <p class="f-12 m-0 pt-4">{{mfData[0].assetTypeString}}</p>
-          </div>
-          <div class="col-2 pl-0 pt-8">
+          <div class="col-3 pl-0 pt-12 pr-12 text-right">
             <button mat-flat-button class="view-all" (click)="showMf = true;">View all</button>
           </div>
         </div>
       </div>
-    </div>
-    <div class="row breakdown pt-16 pb-16" *ngFor="let portData of portFolioData">
-      <div class="col-10" *ngIf="portData.assetType != 5" (click)="openAsset(portData)">
-        <h4 class="m-0">₹<span appFormatNumber>{{portData.currentValue}}</span></h4>
-        <div class="row pt-8">
-          <div class="col-1 pl-0">
-            <div class="re" *ngIf="portData.assetType == 8">RE</div>
-            <div class="fi" *ngIf="portData.assetType == 7">FI</div>
-            <div class="st" *ngIf="portData.assetType == 10">ST</div>
-            <div class="ra" *ngIf="portData.assetType == 9">FI</div>
-            <div class="ca" *ngIf="portData.assetType == 31">CB</div>
-            <div class="liabi" *ngIf="portData.assetType == 2">L</div>
-            <div class="sss" *ngIf="portData.assetType == 6">ST</div>
-            <!-- <div class="insur" *ngIf="assetType == 7">I</div>
+      <div class="row pb-48">
+        <div class="col-6 mb-16 pl-0 pr-8" *ngFor="let portData of portFolioData">
+          <div class="col-12 breakdown pt-16 pb-16" *ngIf="portData.assetType != 5" (click)="openAsset(portData)">
+            <h4 class="m-0">₹<span appFormatNumber>{{portData.currentValue}}</span></h4>
+            <div class="row pt-8">
+              <div class="col-2 pl-0">
+                <div class="re" *ngIf="portData.assetType == 8">RE</div>
+                <div class="fi" *ngIf="portData.assetType == 7">FI</div>
+                <div class="st" *ngIf="portData.assetType == 10">ST</div>
+                <div class="ra" *ngIf="portData.assetType == 9">FI</div>
+                <div class="ca" *ngIf="portData.assetType == 31">CB</div>
+                <div class="liabi" *ngIf="portData.assetType == 2">L</div>
+                <div class="sss" *ngIf="portData.assetType == 6">ST</div>
+                <!-- <div class="insur" *ngIf="assetType == 7">I</div>
             <div class="insur" *ngIf="assetType == 7">GI</div> -->
-            <div class="commodities" *ngIf="portData.assetType == 12">C</div>
-          </div>
-          <div class="col-11 pl-8">
+                <div class="commodities" *ngIf="portData.assetType == 12">C</div>
+                <div class="commodities" *ngIf="portData.assetType == 14">LI</div>
+                <div class="commodities" *ngIf="portData.assetType == 15">GI</div>
+              </div>
+              <div class="col-10 pl-8 pr-0">
 
-            <p class="f-12 m-0 pt-4">{{portData.assetTypeString}}</p>
+                <p class="f-12 m-0 pt-4 ws-nowrap">{{portData.assetTypeString}}</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+
+    </div>
+    <div class="bottom-mob-footer">
+      <ul class="">
+        <li><img src="/assets/images/svg/mob-nav-1.svg"></li>
+        <li><img src="/assets/images/svg/mob-nav-2.svg"></li>
+        <li><img src="/assets/images/svg/goal-mob.svg"></li>
+        <li> <img src="/assets/images/svg/mob-nav-3.svg"></li>
+        <li><img src="/assets/images/svg/people-blue.svg"></li>
+      </ul>
     </div>
   </div>
-  <div class="bottom-mob-footer">
-    <ul class="">
-      <li><img src="/assets/images/svg/mob-nav-1.svg"></li>
-      <li><img src="/assets/images/svg/mob-nav-2.svg"></li>
-      <li><img src="/assets/images/svg/goal-mob.svg"></li>
-      <li> <img src="/assets/images/svg/mob-nav-3.svg"></li>
-      <li><img src="/assets/images/svg/people-blue.svg"></li>
-    </ul>
-  </div>
-</div>
 </div>
 <!-- end protfolio  -->
 <!-- Mutul funds -->
@@ -807,12 +816,39 @@
      </div>
      </div>
   </div> -->
-  <div *ngIf="showMf == true">
-    <app-mutual-funds></app-mutual-funds>
-   </div>
-   <div *ngIf="showFixedIncome == true">
-     <app-fixed-income-mob></app-fixed-income-mob>
-   </div>
-   <div *ngIf="showRetirementAccount == true">
-    <app-retirement-acc-mob (outputValue)="getValue($event)"></app-retirement-acc-mob>
-  </div>
+
+
+<div *ngIf="showMf == true">
+  <app-mutual-funds></app-mutual-funds>
+</div>
+<div *ngIf="showFixedIncome == true">
+  <app-fixed-income-mob></app-fixed-income-mob>
+</div>
+<div *ngIf="showRetirementAccount == true">
+  <app-retirement-acc-mob (outputValue)="getValue($event)"></app-retirement-acc-mob>
+</div>
+<div *ngIf="showStocks == true">
+  <app-stocks-mob (outputValue)="getValue($event)"></app-stocks-mob>
+</div>
+<div *ngIf="showRealEstate == true">
+  <app-real-estate-mob (outputValue)="getValue($event)"></app-real-estate-mob>
+</div>
+<div *ngIf="showSmallSavings == true">
+  <app-small-saving-mob (outputValue)="getValue($event)"></app-small-saving-mob>
+</div>
+<div *ngIf="showCashAndBank == true">
+  <app-cash-and-bank-mob (outputValue)="getValue($event)"></app-cash-and-bank-mob>
+</div>
+<div *ngIf="showCommodities == true">
+  <app-commodities-mob (outputValue)="getValue($event)"></app-commodities-mob>
+</div>
+<div *ngIf="showLiablities == true">
+  <app-liabilities-mob (outputValue)="getValue($event)"></app-liabilities-mob>
+</div>
+<div *ngIf="showLifeInsurance == true">
+  <!-- <app-life-insurance-mob (outputValue)="getValue($event)"></app-life-insurance-mob> -->
+  <app-life-insurance></app-life-insurance>
+</div>
+<div *ngIf="showGenralInsurance == true">
+  <app-general-insurance-mob (outputValue)="getValue($event)"></app-general-insurance-mob>
+</div>

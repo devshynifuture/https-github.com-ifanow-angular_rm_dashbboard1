@@ -10,16 +10,16 @@
     <div class="pt-90 pl-20 pr-20 bg-grey lter h-100vh">
         <div (click)="addEditAddress(singleAddress)" *ngFor="let singleAddress of addressList" class="row mob-card">
             <div class="col-2">
-                <img src="/assets/images/sbi.png">
+                <img src="/assets/images/svg/mobile/mob-home.svg">
             </div>
             <div class="col-10">
-                <p class="m-0 roboto f-400 lh-22">State Bank of India</p>
-                <p class="m-0 roboto f-400 text-custom lh-18">A/c: 303189189000</p>
+                <p class="m-0 roboto f-400 lh-22">{{singleAddress.address1}}</p>
+                <p class="m-0 roboto f-400 text-custom lh-18">{{singleAddress.address2}}</p>
                 <div class="row pt-20">
                     <div class="col-6 pl-0">
-                        <p class="m-0 f-12 roboto f-400 text-custom lh-15">Address</p>
+                        <p class="m-0 f-12 roboto f-400 text-custom lh-15">State</p>
                         <p class="m-0 f-12 roboto f-400 text-dark lh-15">
-                            {{singleAddress.address1}}{{singleAddress.address2}}</p>
+                            {{singleAddress.state}}</p>
                     </div>
                     <div class="col-6 pl-0">
                         <p class="m-0 f-12 roboto f-400 text-custom lh-15">Branch</p>
@@ -29,14 +29,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row profile-save-bottom">
-            <div class="col-2"></div>
-            <div class="col-8 pt-8 pb-8">
-                <button (click)="addEditAddress(null)" mat-stroked-button class="btn-primary w-100 f-16 h-40 br-40">Add
-                    address</button>
-            </div>
-            <div class="col-2"></div>
         </div>
         <!-- <div class="mt-28">
         <div class="row mob-card">
@@ -59,6 +51,14 @@
             </div>
         </div>
     </div> -->
+    </div>
+    <div class="row profile-save-bottom">
+        <div class="col-2"></div>
+        <div class="col-8 pt-8 pb-8">
+            <button (click)="addEditAddress(null)" mat-stroked-button class="btn-primary w-100 f-16 h-40 br-40">Add
+                address</button>
+        </div>
+        <div class="col-2"></div>
     </div>
 </div>
 <app-add-edit-document-mobile-view (backFunc)="addEditFlag($event)" *ngIf="selectedAddress" [data]="selectedAddress">

@@ -18,64 +18,91 @@
             <button class="mr-12 br-0 pl-8 text-primitive" mat-stroked-button><img class="pr-12"
                     src="/assets/images/svg/addon-three.svg">FILTERS
             </button>
-          <!--      TODO    (click)="openTask('addt
+            <!--      TODO    (click)="openTask('addt
           ask','open')"-->
-          <button (click)="openAddTask('')" class="btn-primary br-0 pl-8" mat-stroked-button>
-              ADD NEW
+            <button (click)="openAddTask(null)" class="btn-primary br-0 pl-8" mat-stroked-button>
+                ADD NEW
             </button>
         </div>
     </div>
     <div class="wrapper-20 pt-0">
-        <table [dataSource]="dataSource" class="mt-8" id="table-low" mat-table>
-            <ng-container matColumnDef="checkbox">
+        <table [dataSource]="dataSource" class="mt-8" id="table-low" mat-table [appSkeletonLoading]="isLoading">
+            <!-- <ng-container matColumnDef="checkbox">
                 <th *matHeaderCellDef mat-header-cell>
                     <mat-checkbox></mat-checkbox>
                 </th>
                 <td *matCellDef="let element" mat-cell>
                     <mat-checkbox></mat-checkbox>
                 </td>
-            </ng-container>
+            </ng-container> -->
             <ng-container matColumnDef="client">
                 <th *matHeaderCellDef class="" mat-header-cell> Client</th>
-                <td *matCellDef="let element" mat-cell> {{element.client}} </td>
+                <td *matCellDef="let element" mat-cell (click)="openAddTask(element)">
+                    <div class="bar">
+                        {{element.client}}
+                    </div>
+                </td>
             </ng-container>
             <ng-container matColumnDef="member">
                 <th *matHeaderCellDef class="" mat-header-cell> Family member</th>
-                <td *matCellDef="let element" mat-cell> {{element.member}} </td>
+                <td *matCellDef="let element" mat-cell (click)="openAddTask(element)">
+                    <div class="bar">{{element.member}} </div>
+                </td>
             </ng-container>
             <ng-container matColumnDef="des">
                 <th *matHeaderCellDef class="" mat-header-cell> Description</th>
-                <td *matCellDef="let element" mat-cell> {{element.des}} <span class="f-14 pl-12 text-primitive">1/3 2
-                        <img class="c-p" src="assets/images/svg/msg-chart.svg"></span></td>
+                <td *matCellDef="let element" mat-cell (click)="openAddTask(element)">
+                    <div class="bar">
+                        {{element.des}}
+                        <span class="f-14 pl-12 text-primitive">1/3 2
+                            <img class="c-p" src="assets/images/svg/msg-chart.svg">
+                        </span>
+                    </div>
+                </td>
             </ng-container>
             <ng-container matColumnDef="cat">
                 <th *matHeaderCellDef mat-header-cell> Category</th>
-                <td *matCellDef="let element" mat-cell> {{element.cat}} </td>
+                <td *matCellDef="let element" mat-cell (click)="openAddTask(element)">
+                    <div class="bar"> {{element.cat}} </div>
+                </td>
             </ng-container>
             <ng-container matColumnDef="assigned">
                 <th *matHeaderCellDef mat-header-cell> Assigned to</th>
-                <td *matCellDef="let element" mat-cell> {{element.assigned}} </td>
+                <td *matCellDef="let element" mat-cell (click)="openAddTask(element)">
+                    <div class="bar"> {{element.assigned}} </div>
+                </td>
             </ng-container>
             <ng-container matColumnDef="dueDate">
                 <th *matHeaderCellDef mat-header-cell> Due date</th>
-                <td *matCellDef="let element" mat-cell> {{element.dueDate}} </td>
+                <td *matCellDef="let element" mat-cell (click)="openAddTask(element)">
+                    <div class="bar">{{element.dueDate}} </div>
+                </td>
             </ng-container>
-            <ng-container matColumnDef="status">
+            <ng-container matColumnDef="taskStatus">
                 <th *matHeaderCellDef mat-header-cell> Status</th>
-                <td *matCellDef="let element" mat-cell> {{element.status}} </td>
+                <td *matCellDef="let element" mat-cell>
+                    <div class="bar">{{element.taskStatus}}</div>
+                </td>
             </ng-container>
             <ng-container matColumnDef="menuList">
                 <th *matHeaderCellDef mat-header-cell></th>
                 <td *matCellDef="let element" [matMenuTriggerFor]="menu" class="c-p" mat-cell>
-                    <img src="/assets/images/svg/dot-menu.svg" class="">
-                    <mat-menu #menu="matMenu">
-                        <button mat-menu-item>Item 1</button>
-                        <button mat-menu-item>Item 2</button>
-                    </mat-menu>
+                    <div class="bar">
+                        <img src="/assets/images/svg/dot-menu.svg" class="">
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="deleteTask(element.id)">Delete</button>
+                            <button mat-menu-item>Item 2</button>
+                        </mat-menu>
+                    </div>
                 </td>
             </ng-container>
             <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
             <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
         </table>
+        <div class="b-a text-center p-44" *ngIf="dataSource.data ===null">
+            <h5>
+                No Data Found
+            </h5>
+        </div>
     </div>
 </div>
