@@ -64,7 +64,7 @@ export class NomineeDetailsIinComponent implements OnInit {
   addressList: any;
   isLoading = false;
   maxDate = new Date();
-  maxDateForAdultDob;
+  // maxDateForAdultDob;
   countryList;
   filterCountryName: Observable<any[]>;
   activeDetailsClass = 'first';
@@ -91,7 +91,7 @@ export class NomineeDetailsIinComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.maxDateForAdultDob = new Date();
+    // this.maxDateForAdultDob = new Date();
 
     if (this.firstHolderNominee) {
       this.getdataForm(this.firstHolderNominee);
@@ -143,11 +143,11 @@ export class NomineeDetailsIinComponent implements OnInit {
   }
 
   selectRelation(value) {
-    if (value.value != 'Son' || value.value != 'Daughter' || value.value != 'Brother' || value.value != 'Sister') {
-      this.maxDateForAdultDob = moment().subtract(18, 'years');
-    } else {
-      this.maxDateForAdultDob = new Date();
-    }
+    // if (value.value != 'Son' && value.value != 'Daughter') {
+    //   this.maxDateForAdultDob = moment().subtract(18, 'years');
+    // } else {
+    //   this.maxDateForAdultDob = new Date();
+    // }
   }
 
   getNomineeList(data, shouldSetValue) {
@@ -354,23 +354,24 @@ export class NomineeDetailsIinComponent implements OnInit {
       this.doneData = true;
       value = {};
       const obj = {
-        ownerName: this.inputData.ownerName,
-        holdingType: this.inputData.holdingType,
-        taxMaster: this.inputData.taxMaster,
-        taxMasterId: this.inputData.taxMasterId,
-        holderList: this.inputData.holderList,
-        bankDetailList: this.inputData.bankDetailList,
+        ...this.inputData,
+        // ownerName: this.inputData.ownerName,
+        // holdingType: this.inputData.holdingType,
+        // taxMaster: this.inputData.taxMaster,
+        // taxMasterId: this.inputData.taxMasterId,
+        // holderList: this.inputData.holderList,
+        // bankDetailList: this.inputData.bankDetailList,
         nomineeList: this.nominee,
         id: 2,
         aggregatorType: 1,
-        familyMemberId: this.inputData.familyMemberId,
-        clientId: this.inputData.clientId,
-        advisorId: this.inputData.advisorId,
-        generalDetails: this.inputData.generalDetails,
-        fatcaDetail: this.inputData.fatcaDetail,
+        // familyMemberId: this.inputData.familyMemberId,
+        // clientId: this.inputData.clientId,
+        // advisorId: this.inputData.advisorId,
+        // generalDetails: this.inputData.generalDetails,
+        // fatcaDetail: this.inputData.fatcaDetail,
         commMode: 1,
         confirmationFlag: 1,
-        inputData: this.inputData,
+        // inputData: this.inputData,
       };
       this.openFatcaDetails(obj);
     }
