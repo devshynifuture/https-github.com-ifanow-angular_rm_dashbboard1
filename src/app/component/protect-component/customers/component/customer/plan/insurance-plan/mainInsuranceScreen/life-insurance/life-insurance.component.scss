@@ -73,3 +73,15 @@ ul>li:before {
 ::ng-deep .mat-progress-bar-fill::after {
     background-color: #008FFF !important;
 }
+
+.insuFixedHeader {
+    position: fixed;
+    width: 77%;
+    z-index: 100;
+    background: #fff;
+}
+
+.fix-sticky {
+    position: fixed;
+    width: 23%;
+}

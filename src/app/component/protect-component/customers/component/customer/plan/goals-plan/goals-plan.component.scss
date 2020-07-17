@@ -187,7 +187,7 @@
  .sticky-top {
      //  position: -webkit-sticky;
      position: sticky;
-     top: 140px;
+     top: 195px;
      z-index: 2;
  }
  
@@ -208,4 +208,21 @@
  .fix-sticky {
      position: fixed;
      width: 23%;
+ }
+ 
+ .leftScroll {
+     height: 520px;
+     overflow-x: auto;
+ }
+ 
+ .leftScroll::-webkit-scrollbar {
+     width: 4px;
+ }
+ 
+ .leftScroll::-webkit-scrollbar-track {
+     background: #f1f1f1;
+ }
+ 
+ .leftScroll::-webkit-scrollbar-thumb:hover {
+     background: #555;
  }
