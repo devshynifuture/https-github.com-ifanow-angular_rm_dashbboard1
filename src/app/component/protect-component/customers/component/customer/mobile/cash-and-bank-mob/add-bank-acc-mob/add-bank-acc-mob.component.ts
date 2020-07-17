@@ -396,6 +396,7 @@ export class AddBankAccMobComponent implements OnInit {
         description: this.bankAccounts.controls.description.value,
         nominees: this.nominees,
         nomineeList: this.bankAccounts.value.getNomineeName,
+        id:''
 
       };
       obj.nomineeList.forEach((element, index) => {

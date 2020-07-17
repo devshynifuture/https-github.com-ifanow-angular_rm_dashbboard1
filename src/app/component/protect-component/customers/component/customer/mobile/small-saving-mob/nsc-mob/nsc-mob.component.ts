@@ -75,6 +75,7 @@ export class NscMobComponent implements OnInit {
   constructor(private datePipe: DatePipe, public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService, public dialog: MatDialog, private enumService: EnumServiceService) { }
   isOptionalField
   ngOnInit() {
+    this.isOptionalField = true;
     if (this.data && this.data.flag) {
       this.adviceShowHeaderAndFooter = false;
     } else {

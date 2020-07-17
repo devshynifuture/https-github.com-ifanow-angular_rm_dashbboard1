@@ -88,7 +88,7 @@ export class PoMisMobComponent implements OnInit {
     this.show = false;
     this.getPomisData(this.data);
     this.bankList = this.enumService.getBank();
-
+    this.isOptionalField = true;
   }
 
   close(flag) {
