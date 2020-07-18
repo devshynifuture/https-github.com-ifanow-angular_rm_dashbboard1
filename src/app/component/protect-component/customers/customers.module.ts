@@ -156,6 +156,11 @@ import { DetailedPoTdMobComponent } from './component/customer/mobile/small-savi
 import { DetailedPpfComponent } from './component/customer/mobile/small-saving-mob/ppf-mob/detailed-ppf/detailed-ppf.component';
 import { DetailedScssMobComponent } from './component/customer/mobile/small-saving-mob/scss-mob/detailed-scss-mob/detailed-scss-mob.component';
 import { DetailedSsyMobComponent } from './component/customer/mobile/small-saving-mob/ssy-mob/detailed-ssy-mob/detailed-ssy-mob.component';
+import { DetailedViewBankAccMobComponent } from './component/customer/mobile/cash-and-bank-mob/add-bank-acc-mob/detailed-view-bank-acc-mob/detailed-view-bank-acc-mob.component';
+import { DetailedViewCashInHandMobComponent } from './component/customer/mobile/cash-and-bank-mob/add-cash-in-hand-mob/detailed-view-cash-in-hand-mob/detailed-view-cash-in-hand-mob.component';
+import { DetailedViewGoldMobComponent } from './component/customer/mobile/commodities-mob/add-gold-mob/detailed-view-gold-mob/detailed-view-gold-mob.component';
+import { DetailedViewOthersMobComponent } from './component/customer/mobile/commodities-mob/add-others-mob/detailed-view-others-mob/detailed-view-others-mob.component';
+import { DetailedViewRealEstateMobComponent } from './component/customer/mobile/real-estate-mob/add-real-estate-mob/detailed-view-real-estate-mob/detailed-view-real-estate-mob.component';
 
 
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
@@ -191,7 +196,7 @@ import { DetailedSsyMobComponent } from './component/customer/mobile/small-savin
     AddCashInHandMobComponent, AddRealEstateMobComponent, AddLiabilitiesMobComponent, AddOtherPayablesMobComponent,
     AddInsuranceMobComponent, AddHealthMobComponent, AddPersonalAccidentMobComponent, CriticalIllnesMobComponent,
     MotorInsuranceMobComponent, TravelInsuranceMobComponent, HomeInsuranceMobComponent, FireInsuranceMobComponent,
-    DetailedViewLifeInsuranceMobComponent, DetailedViewGeneralInsuranceMobComponent, DetailedEpfMobComponent, DetailedGrauityMobComponent, DetailedNpsMobComponent, DetailedKvpMobComponent, DetailedNscMobComponent, DetailedPoMisMobComponent, DetailedPoRdMobComponent, DetailedPoSavingsComponent, DetailedPoTdMobComponent, DetailedPpfComponent, DetailedScssMobComponent, DetailedSsyMobComponent],
+    DetailedViewLifeInsuranceMobComponent, DetailedViewGeneralInsuranceMobComponent, DetailedEpfMobComponent, DetailedGrauityMobComponent, DetailedNpsMobComponent, DetailedKvpMobComponent, DetailedNscMobComponent, DetailedPoMisMobComponent, DetailedPoRdMobComponent, DetailedPoSavingsComponent, DetailedPoTdMobComponent, DetailedPpfComponent, DetailedScssMobComponent, DetailedSsyMobComponent, DetailedViewBankAccMobComponent, DetailedViewCashInHandMobComponent, DetailedViewGoldMobComponent, DetailedViewOthersMobComponent, DetailedViewRealEstateMobComponent],
   imports: [
     // BrowserModule,
     CommonModule,
