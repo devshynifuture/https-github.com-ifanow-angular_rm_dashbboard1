@@ -44,9 +44,12 @@
                     <p class="mob-text-xs f-14 pt-24"> Coupon rate</p>
                     <p class="mob-text-xs f-14 pt-24">Coupon option</p>
                     <p class="mob-text-xs f-14 pt-24">Compounding frequency</p>
-                    <p class="mob-text-xs f-14 pt-24"*ngIf="fdData.couponPayoutFrequencyId == 2">Frequency of coupon payouts</p>
-                    <p class="mob-text-xs f-14 pt-24"*ngIf="fdData.couponPayoutFrequencyId == 2">Payout received till date</p>
-                    <p class="mob-text-xs f-14 pt-24"*ngIf="fdData.couponPayoutFrequencyId == 2">Payout received till maturity</p>
+                    <p class="mob-text-xs f-14 pt-24" *ngIf="fdData.couponPayoutFrequencyId == 2">Frequency of coupon
+                        payouts</p>
+                    <p class="mob-text-xs f-14 pt-24" *ngIf="fdData.couponPayoutFrequencyId == 2">Payout received till
+                        date</p>
+                    <p class="mob-text-xs f-14 pt-24" *ngIf="fdData.couponPayoutFrequencyId == 2">Payout received till
+                        maturity</p>
                     <p class="mob-text-xs f-14 pt-24">Current value</p>
                     <p class="mob-text-xs f-14 pt-24">Maturity value</p>
                     <p class="mob-text-xs f-14 pt-24">Total interest earned till date</p>
@@ -75,31 +78,26 @@
                     <p class="m-0 pt-24">
                         {{fdData.compounding==4?"Half yearly":"Yearly"}}
                     </p>
-
-
                     <div *ngIf="!matured && fdData.couponPayoutFrequencyId == 2">
                         <p class="m-0 pt-24">
                             {{fdData.totalAmountReceivedTillToday? "₹" : ""}}<span
                                 appFormatNumber>{{fdData.totalAmountReceivedTillToday}}</span>
                         </p>
                     </div>
-                    <div *ngIf="matured && fdData.couponPayoutFrequencyId == 2" >
+                    <div *ngIf="matured && fdData.couponPayoutFrequencyId == 2">
                         <p class="m-0 pt-24">
                             {{fdData.totalAmountReceivedTillMaturity? "₹" : ""}}<span
                                 appFormatNumber>{{fdData.totalAmountReceivedTillMaturity}}</span>
                         </p>
                     </div>
-
                     <p class="m-0 pt-24" *ngIf="fdData.couponPayoutFrequencyId == 2">
                         {{fdData.totalAmountReceivedTillMaturity? '₹':''}}<span
                             appFormatNumber>{{(fdData.totalAmountReceivedTillMaturity)?fdData.totalAmountReceivedTillMaturity:'-'}}</span>
                     </p>
-
                     <p class="m-0 pt-12">₹{{fdData.currentValue? '₹':''}}<span
                             appFormatNumber>{{(fdData.currentValue)?fdData.currentValue:'-'}}</span></p>
                     <p class="m-0 pt-24">₹{{fdData.maturityValue? '₹':''}}<span
                             appFormatNumber>{{(fdData.maturityValue)?fdData.maturityValue:'-'}}</span></p>
-
                     <div *ngIf="!matured">
                         <p class="m-0 pt-24">
                             {{fdData.currentValue? "₹" : ""}}<span
@@ -112,8 +110,6 @@
                                 appFormatNumber>{{fdData.maturityValue - fdData.amountInvested}}</span>
                         </p>
                     </div>
-
-
                     <p class="m-0 pt-24 wb">{{fdData.bankNameAndLast4Digit}}</p>
                     <p class="m-0 pt-24">{{fdData.description}}</p>
                 </div>

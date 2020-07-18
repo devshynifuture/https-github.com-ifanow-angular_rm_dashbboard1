@@ -31,9 +31,9 @@
                 </div>
             </div>
             <div *ngIf="assetData.length == 0">
-                    <span>
-                        No data found
-                    </span>
+                <span>
+                    No data found
+                </span>
             </div>
         </div>
     </div>
@@ -48,15 +48,16 @@
                             </span></p>
                     </div>
                     <div class="col-4 text-right">
-                        <p class="m-0">{{item.currentValue ? '₹' : ''}}<span appFormatNumber>{{item.currentValue ? item.currentValue : '-'}}</span></p>
+                        <p class="m-0">{{item.currentValue ? '₹' : ''}}<span
+                                appFormatNumber>{{item.currentValue ? item.currentValue : '-'}}</span></p>
                     </div>
                 </div>
             </div>
         </div>
         <div *ngIf="assetData.length == 0">
-                <span>
-                    No data found
-                </span>
+            <span>
+                No data found
+            </span>
         </div>
     </div>
     <div class="pt-80 p-8 h-100vh" *ngIf="inputData == 'ULIP insurance'">
@@ -70,15 +71,16 @@
                             </span></p>
                     </div>
                     <div class="col-4 text-right">
-                        <p class="m-0">{{item.currentValue ? '₹' : ''}}<span appFormatNumber>{{item.currentValue ? item.currentValue : '-'}}</span></p>
+                        <p class="m-0">{{item.currentValue ? '₹' : ''}}<span
+                                appFormatNumber>{{item.currentValue ? item.currentValue : '-'}}</span></p>
                     </div>
                 </div>
             </div>
         </div>
         <div *ngIf="assetData.length == 0">
-                <span>
-                    No data found
-                </span>
+            <span>
+                No data found
+            </span>
         </div>
     </div>
     <div class="document-bottom-action">
@@ -100,8 +102,115 @@
     <app-detailed-view-life-insurance-mob [data]="detailedViewData" (outputValue)="getValue($event)"></app-detailed-view-life-insurance-mob>
 </div>
 <div *ngIf="backToMf == true">
-<app-life-insurance-mob></app-life-insurance-mob>
+    <app-life-insurance-mob></app-life-insurance-mob>
+</div> 
+<!-- <div id="mob-fixed-income" *ngIf="lifeInsuranceData != true && backToMf != true && !showDetailView"> -->
+<!-- <div id="mob-fixed-income" *ngIf="lifeInsuranceData != true && backToMf != true">
+    <div class="row mob-bg-common pb-12 mobtop-navfixed">
+        <div class="col-2" (click)="backToMf = true">
+            <span class="material-icons text-white">
+                keyboard_backspace
+            </span>
+        </div>
+        <div class="col-7 p-0">
+            <h5 class="m-0 f-18 text-white pt-4">{{inputData}}</h5>
+        </div>
+        <div class="col-3 text-right">
+            <span class="material-icons text-white">
+                filter_list
+            </span>
+        </div>
+    </div>
+    <div class="pt-80 p-8 h-100vh" *ngIf="inputData == 'Term insurance'">
+        <div class="pt-16" *ngFor="let item of assetData;let i = index" (click)="showDetailView = true;detailedViewData = item">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20 mob-bb-1">
+                    <div class="col-8">
+                        <p class="mb-0">
+                            <span appFormatNumber>
+                                {{(item.policyName) ? item.policyName : 'LI '+(i+1)}} {{'| '+item.policyNumber}}
+                            </span></p>
+                    </div>
+                    <div class="col-4 text-right">
+                        <p class="m-0">{{item.currentValue ? '₹' : ''}}
+                            <span appFormatNumber>{{item.currentValue ? item.currentValue :'-'}}</span></p>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="assetData.length == 0">
+                <span>
+                    No data found
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="pt-80 p-8 h-100vh" *ngIf="inputData == 'Traditional insurance'" >
+        <div class="pt-16" *ngFor="let item of assetData; let i = index" (click)="showDetailView = true;detailedViewData = item">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20 mob-bb-1">
+                    <div class="col-8">
+                        <p class="mb-0">
+                            <span appFormatNumber>
+                                {{(item.policyName) ? item.policyName : 'LI '+(i+1)}}{{'| '+item.policyNumber}}
+                            </span></p>
+                    </div>
+                    <div class="col-4 text-right">
+                        <p class="m-0">{{item.currentValue ? '₹' : ''}}<span
+                                appFormatNumber>{{item.currentValue ? item.currentValue : '-'}}</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="assetData.length == 0">
+            <span>
+                No data found
+            </span>
+        </div>
+    </div>
+    <div class="pt-80 p-8 h-100vh" *ngIf="inputData == 'ULIP insurance'">
+        <div class="pt-16" *ngFor="let item of assetData; let i = index" (click)="showDetailView = true;detailedViewData = item"> 
+            <div class="bg-white">
+                <div class="row pt-20 pb-20 mob-bb-1">
+                    <div class="col-8">
+                        <p class="mb-0">
+                            <span appFormatNumber>
+                                {{(item.policyName) ? item.policyName : 'LI '+(i+1)}}{{'| '+item.policyNumber}}
+                            </span></p>
+                    </div>
+                    <div class="col-4 text-right">
+                        <p class="m-0">{{item.currentValue ? '₹' : ''}}<span
+                                appFormatNumber>{{item.currentValue ? item.currentValue : '-'}}</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="assetData.length == 0">
+            <span>
+                No data found
+            </span>
+        </div>
+    </div>
+    <div class="document-bottom-action">
+        <button (click)="lifeInsuranceData = true" mat-stroked-button class="btn-primary"><span class="material-icons">
+                add
+            </span></button>
+    </div>
 </div>
+<div *ngIf="lifeInsuranceData == true && inputData == 'Term insurance'">
+    <app-add-insurance-mob></app-add-insurance-mob>
+</div>
+<div *ngIf="lifeInsuranceData == true && inputData == 'Traditional insurance'">
+    <app-add-insurance-mob></app-add-insurance-mob>
+</div>
+<div *ngIf="lifeInsuranceData == true && inputData == 'ULIP insurance'">
+    <app-add-insurance-mob></app-add-insurance-mob>
+</div>
+<div *ngIf="showDetailView == true">
+    <app-detailed-view-life-insurance-mob [data]="detailedViewData" (outputValue)="getValue($event)"></app-detailed-view-life-insurance-mob>
+</div>
+<div *ngIf="backToMf == true">
+    <app-life-insurance-mob></app-life-insurance-mob>
+</div> -->
 <!-- <div id="mob-fixed-income">
     <div class="row mob-bg-common pb-12 mobtop-navfixed">
         <div class="col-2" (click)="changeValue(false)">
@@ -151,9 +260,9 @@
         </div>
     </div> -->
 
-    <!-- 2 policy deatils -->
+<!-- 2 policy deatils -->
 
-    <!-- <div class="p-8 h-100vh">
+<!-- <div class="p-8 h-100vh">
         <div class="pt-16">
             <div class="bg-white">
                 <div class="row pt-20 pb-20 mob-bb-1">
@@ -190,8 +299,8 @@
     </div> -->
 
 
-    <!-- deatils view Life insurance -->
-    <!-- <div class="pt-80 p-8 pb-90">
+<!-- deatils view Life insurance -->
+<!-- <div class="pt-80 p-8 pb-90">
         <div class="bg-white">
             <div class="row pt-12 pb-12">
                 <div class="col-2">
@@ -393,3 +502,22 @@
         </div>
     </div> -->
 <!-- </div> -->
+
+
+<!-- add screen mob ui -->
+
+<!-- <div class="row mob-bg-common pb-12 mobtop-navfixed">
+    <div class="col-2">
+        <span class="material-icons text-white">
+            menu
+        </span>
+    </div>
+    <div class="col-7 pl-0">
+        <h5 class="m-0 f-18 text-white pt-4">Add Life insurance </h5>
+    </div>
+    <div class="col-3 text-right">
+        <span class="material-icons text-white">
+            search
+        </span>
+    </div>
+</div> -->
