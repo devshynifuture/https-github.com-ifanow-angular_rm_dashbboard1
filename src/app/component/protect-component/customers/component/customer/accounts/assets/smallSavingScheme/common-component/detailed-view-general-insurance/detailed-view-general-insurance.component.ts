@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import {EnumServiceService} from '../../../../../../../../../../services/enum-service.service';
+import { CustomerService } from '../../../../../customer.service';
 
 @Component({
   selector: 'app-detailed-view-general-insurance',
@@ -19,16 +20,17 @@ export class DetailedViewGeneralInsuranceComponent implements OnInit {
   bankList: any;
 
   constructor(private subInjectService: SubscriptionInject,
-              private enumService: EnumServiceService) {
+              private enumService: EnumServiceService,private cusService:CustomerService) {
   }
 
   @Input()
   set data(inputData) {
+    this.getGlobalDataInsurance();
     this._data = inputData.data;
     this.allInsurance = inputData.allInsurance;
     this.insuranceSubTypeId = inputData.insuranceSubTypeId;
     console.log('AddLiabilitiesComponent Input data : ', this._data);
-    this.displayList = inputData.displayList;
+    // this.displayList = inputData.displayList;
     // this.generalData = this._data.data
     this.nominee = this._data.nominees;
     // this.owners = this._data.realEstateOwners.filter(element => element.ownerName != this.realEstate.ownerName);
@@ -69,6 +71,15 @@ export class DetailedViewGeneralInsuranceComponent implements OnInit {
     //   }
 
     // });
+  }
+  getGlobalDataInsurance() {
+    const obj = {};
+    this.cusService.getInsuranceGlobalData(obj).subscribe(
+      data => {
+        console.log(data),
+          this.displayList = data;
+      }
+    );
   }
 
   filter(filter1, filter2, key, key2, key3) {
