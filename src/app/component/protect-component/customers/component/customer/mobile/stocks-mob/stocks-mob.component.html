@@ -1,42 +1,178 @@
-<div id="mob-fixed-income" *ngIf="backToMf != true">
-    <div class="row mob-bg-common pb-12 mobtop-navfixed">
-      <div class="col-2" (click)="changeValue(false)">
-        <span class="material-icons text-white">
+<!-- <div id="mob-fixed-income" *ngIf="backToMf != true">
+  <div class="row mob-bg-common pb-12 mobtop-navfixed">
+    <div class="col-2" (click)="changeValue(false)">
+      <span class="material-icons text-white">
         keyboard_backspace
-        </span>
-      </div>
-      <div class="col-7 p-0">
-        <h5 class="m-0 f-18 text-white pt-4">Stocks</h5>
-      </div>
-      <div class="col-3 text-right">
-        <span class="material-icons text-white">
+      </span>
+    </div>
+    <div class="col-7 p-0">
+      <h5 class="m-0 f-18 text-white pt-4">Stocks</h5>
+    </div>
+    <div class="col-3 text-right">
+      <span class="material-icons text-white">
         filter_list
-        </span>
-      </div>
+      </span>
     </div>
-      <div class="pt-80 p-8 h-100vh">
-      <div class="bg-white">
-        <div class="row pt-20 pb-20">
-          <div class="col-2">
-             <div class="mf hw-40 f-14 pt-16">ST</div>
-          </div>
-          <div class="col-10 pl-8 pt-4">
-            <p class="m-0 f-12 lh-12">Current Value:</p>
-            <h3 class="mob-text-success mb-0 pt-4">{{stockCv ? 'Rs.' : ''}}  <span appFormatNumber [value]="stockCv ? stockCv : '-'"></span></h3>
-          </div>
+  </div>
+  <div class="pt-80 p-8 h-100vh">
+    <div class="bg-white">
+      <div class="row pt-20 pb-20">
+        <div class="col-2">
+          <div class="mf hw-40 f-14 pt-16">ST</div>
+        </div>
+        <div class="col-10 pl-8 pt-4">
+          <p class="m-0 f-12 lh-12">Current Value:</p>
+          <h3 class="mob-text-success mb-0 pt-4">{{stockCv ? 'Rs.' : ''}} <span appFormatNumber
+              [value]="stockCv ? stockCv : '-'"></span></h3>
         </div>
       </div>
+    </div>
     <div class="pt-16">
-        <div class="bg-white">
-          <div class="row pt-20 pb-20 mob-bb-1">
-            <div class="col-8">
-              <p class="mb-0">Stocks</p>
-            </div>
-            <div class="col-4 text-right">
-              <p class="m-0">{{stockCv ? '₹' : ''}}<span appFormatNumber [value]="stockCv ? stockCv : ''"></span></p>
-            </div>
+      <div class="bg-white">
+        <div class="row pt-20 pb-20 mob-bb-1">
+          <div class="col-8">
+            <p class="mb-0">Stocks</p>
+          </div>
+          <div class="col-4 text-right">
+            <p class="m-0">{{stockCv ? '₹' : ''}}<span appFormatNumber [value]="stockCv ? stockCv : ''"></span></p>
           </div>
         </div>
       </div>
     </div>
+  </div>
+</div> -->
+
+
+<!-- stock list -->
+<!-- <div class="stock-mob-list pl-8 pr-8 pt-90 bg-grey lter h-100vh">
+  <div class="row stocks">
+    <div class="col-2">
+      <img src="/assets/images/svg/mobile/stock-1.svg">
     </div>
+    <div class="col-10 pl-0">
+      <p class="m-0 lh-12 roboto f-400 f-16">Portfolio summary</p>
+      <p class="m-0 lh-15 roboto text-custom f-400 pt-4">Add just the overall portfolio summary. Time saver!</p>
+    </div>
+  </div>
+  <div class="row stocks">
+    <div class="col-2">
+      <img src="/assets/images/svg/mobile/stock-1.svg">
+    </div>
+    <div class="col-10 pl-0">
+      <p class="m-0 lh-12 roboto f-400 f-16">Scrip level holdings</p>
+      <p class="m-0 lh-15 roboto text-custom f-400 pt-4">Add transaction data at scheme level for better reporting.</p>
+    </div>
+  </div>
+  <div class="row stocks">
+    <div class="col-2">
+      <img src="/assets/images/svg/mobile/stock-1.svg">
+    </div>
+    <div class="col-10 pl-0">
+      <p class="m-0 lh-12 roboto f-400 f-16">Scrip level transactions</p>
+      <p class="m-0 lh-15 roboto text-custom f-400 pt-4">Import data via CAS reports provided by CAMS.</p>
+    </div>
+  </div>
+</div> -->
+
+
+<!-- Add portfolio summary -->
+
+<!-- <div class="pt-90 pl-10 pr-10 bg-grey lter">
+  <div class="row">
+    <div class="col-12 p-0">
+      <p class="m-0 roboto f-400">Owner</p>
+      <mat-form-field>
+        <mat-select class="form-control">
+          <mat-option>
+            Rahul jain
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-12 p-0 pt-32">
+      <p class="m-0 roboto f-400">Current market value</p>
+      <mat-form-field class="iconRupess" floatLabel="never" appearance="standard">
+        <input matInput class="form-control rupess">
+      </mat-form-field>
+    </div>
+    <div class="col-12 p-0 pt-32">
+      <p class="m-0 roboto f-400">Value as on</p>
+      <mat-form-field class="iconRupess" floatLabel="never" appearance="standard">
+        <input matInput class="form-control bg-white" placeholder="Enter date">
+      </mat-form-field>
+    </div>
+    <div class="col-12 p-0 pt-32">
+      <p class="m-0 roboto f-400">Amount invested</p>
+      <mat-form-field class="iconRupess" floatLabel="never" appearance="standard">
+        <input matInput class="form-control rupess">
+      </mat-form-field>
+    </div>
+    <div class="col-12 p-0 pt-32">
+      <p class="m-0 roboto f-400">Portfolio name</p>
+      <mat-form-field class="iconRupess" floatLabel="never" appearance="standard">
+        <input matInput class="form-control bg-white" placeholder="Enter portfolio name">
+      </mat-form-field>
+    </div>
+  </div>
+</div> -->
+
+
+<!-- Add scrip level holdings -->
+
+<div class="pt-90 pl-10 pr-10 bg-grey lter">
+  <div class="row">
+    <div class="col-12 p-0">
+      <p class="m-0 roboto f-400 pb-6">Owner</p>
+      <mat-form-field>
+        <mat-select class="form-control">
+          <mat-option>
+            Rahul jain
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-12 p-0 pt-32">
+      <p class="m-0 roboto f-400 pb-6">Portfolio name</p>
+      <mat-form-field>
+        <mat-select class="form-control">
+          <mat-option>
+            Rahul jain
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-12 p-0 pt-32 pb-10">
+      <h5 class="m-0 f-400 roboto">Holdings</h5>
+    </div>
+  </div>
+</div>
+<div class="row b pl-10 pr-10 pb-36">
+  <div class="col-12 p-0 pt-10">
+    <p class="m-0 roboto f-400">Scrip name</p>
+    <mat-form-field floatLabel="never" appearance="standard">
+      <input matInput class="form-control bg-white" placeholder="Enter scrip name">
+    </mat-form-field>
+  </div>
+  <div class="col-12 p-0 pt-32">
+    <p class="m-0 roboto f-400">Quantity</p>
+    <mat-form-field floatLabel="never" appearance="standard">
+      <input matInput class="form-control bg-white" placeholder="Enter scrip name">
+    </mat-form-field>
+  </div>
+  <div class="col-12 p-0 pt-32">
+    <p class="m-0 roboto f-400">Quantity as on</p>
+    <mat-form-field floatLabel="never" appearance="standard">
+      <input matInput class="form-control bg-white" placeholder="Enter date">
+    </mat-form-field>
+  </div>
+  <div class="col-12 p-0 pt-32">
+    <p class="m-0 roboto f-400">Amount invested</p>
+    <mat-form-field floatLabel="never" appearance="standard">
+      <input matInput class="form-control bg-white" placeholder="Enter Amount">
+    </mat-form-field>
+  </div>
+
+</div>
+<div class="col-12 p-0 pt-12 pb-60 pl-10">
+  <p class="m-0 f-400 roboto text-custom c-p">+ Add more</p>
+</div>
