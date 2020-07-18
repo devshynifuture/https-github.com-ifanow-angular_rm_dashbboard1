@@ -256,8 +256,13 @@ export class ReconciliationDetailsViewComponent implements OnInit {
 
 
   deleteTransactionApi(value) {
+    // value = value.map(element => String(element));
     this.selection.clear();
     this.mainLoader = true;
+    // let dateObj = new Date(this.data.aumDate);
+    // let dateFormat = dateObj.getFullYear() + '-' + `${(dateObj.getMonth() + 1) < 10 ? '0' : ''}` + (dateObj.getMonth() + 1) + '-' + dateObj.getDate();
+    // value.unshift(dateFormat);
+
     this.reconService.deleteAumTransaction(value)
       .subscribe(res => {
         console.log('this transactions are deleted:::', res);
@@ -267,9 +272,9 @@ export class ReconciliationDetailsViewComponent implements OnInit {
         this.dataSource.data.map(item => {
           item.unitOne = String(res.units);
           this.changesInUnitOne = String(res.units);
-          item.difference = String(parseFloat(res.units) - parseFloat(item.unitsRta));
-          this.data.difference = String(parseFloat(item.unitOne) - parseFloat(item.unitsRta));
-          if (this.data && item.difference === '0.000') {
+          item.difference = String((parseFloat(res.units) - parseFloat(item.unitsRta)).toFixed(3));
+          this.data.difference = String((parseFloat(item.unitOne) - parseFloat(item.unitsRta)).toFixed(3));
+          if (this.data && (Math.round(parseFloat(item.difference)) === 0)) {
             this.disableFreezeBtn = false;
           } else {
             this.disableFreezeBtn = true;

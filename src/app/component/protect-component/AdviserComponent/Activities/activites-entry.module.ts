@@ -1,4 +1,3 @@
-import { GmailDatePipe } from './../Email/email-component/email-list/email-listing/gmail-date.pipe';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AddTasksComponent } from './crm-tasks/add-tasks/add-tasks.component';
@@ -10,8 +9,7 @@ import { CustomDirectiveModule } from '../../../../common/directives/common-dire
 
 @NgModule({
   declarations: [
-    AddTasksComponent,
-    GmailDatePipe
+    AddTasksComponent
   ],
   imports: [
     CommonModule,

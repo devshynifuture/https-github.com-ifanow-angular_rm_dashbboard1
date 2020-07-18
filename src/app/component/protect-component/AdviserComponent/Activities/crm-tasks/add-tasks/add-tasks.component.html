@@ -304,7 +304,7 @@
             </div>
         </div>
 
-        <div class="row pb-10" *ngFor="let item of commentList">
+        <div class="row pb-10" *ngFor="let item of commentList; index as i">
             <div class="col-md-1 text-center p-0 pl-30">
                 <img src="assets/images/svg/avtarProfile.svg" class="c-p">
             </div>
@@ -313,23 +313,24 @@
                     <div class="col-md-8 p-0">
                         <h5 class="f-500 roboto">
                             {{ item.name }}
-                            <span class="text-primitive f-12"> {{ item.commentTime | gmailDate }}</span>
+                            <span class="text-primitive f-12"> {{ item.commentTime | dateAgo }}</span>
                         </h5>
                     </div>
                     <div class="col-md-4 editDelectText text-right">
-                        <a class="f-12 c-p" *ngIf="!isCommentTaskEditMode"
-                            (click)="isCommentTaskEditMode = true; commentTaskEditInput.value = item.commentMsg">Edit</a>
-                        <a class="f-12 c-p" *ngIf="isCommentTaskEditMode" (click)="saveEditedComment(item, i)">Save</a>
-                        <a class="f-12 c-p" (click)="deleteComment(item, i)">Delete</a>
+                        <a class="f-12 c-p" *ngIf="!item.editMode" (click)="toggleEditMode(item, 'task')">Edit</a>
+                        <a class="f-12 pl-5 c-p" *ngIf="item.editMode"
+                            (click)="saveEditedComment(item, 'task', i)">Save</a>
+                        <a class="f-12 pl-5 c-p" (click)="deleteCommentTaskSubTask(item, 'task',i)">Delete</a>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 p-0">
-                        <p class="f-14" *ngIf="!isCommentTaskEditMode">
+                        <p class="f-14" *ngIf="!item.editMode">
                             {{  item.commentMsg }}
                         </p>
-                        <p class="f-14" *ngIf="isCommentTaskEditMode">
-                            <input type="text" #commentTaskEditInput>
+                        <p class="f-14 form-group" *ngIf="item.editMode">
+                            <input type="text" (focusout)="commentTaskInput = refInput.value" #refInput
+                                class="form-control" name="commentTaskInput">
                         </p>
                     </div>
                 </div>
@@ -480,7 +481,7 @@
             </div>
         </div>
 
-        <div class="row pb-10" *ngFor="let item of subTaskCommentList">
+        <div class="row pb-10" *ngFor="let item of subTaskCommentList; index as i">
             <div class="col-md-1 text-center p-0 pl-30">
                 <img src="assets/images/svg/avtarProfile.svg" class="c-p">
             </div>
@@ -490,24 +491,24 @@
                         <h5 class="f-500 roboto">
                             {{ item.name }}
                             <span class="text-primitive f-12">
-                                {{item.commentTime | gmailDate }}
+                                {{item.commentTime | dateAgo }}
                             </span>
                         </h5>
                     </div>
                     <div class="col-md-4 editDelectText text-right">
-                        <a class="f-12 c-p" *ngIf="!isCommentSubTaskEditMode"
-                            (click)="isCommentSubTaskEditMode = true; commentSubTaskInput.value = item.commentMsg">Edit</a>
-                        <a class="f-12 c-p" *ngIf="isCommentSubTaskEditMode"
-                            (click)="saveEditedComment(item, i)">Save</a>
-                        <a class="f-12 c-p" (click)="deleteComment(item, i)">Delete</a>
+                        <a class="f-12 c-p" *ngIf="!item.editMode" (click)="toggleEditMode(item, 'subTask')">Edit</a>
+                        <a class="f-12 c-p" *ngIf="item.editMode"
+                            (click)="saveEditedComment(item, 'subTask',i)">Save</a>
+                        <a class="f-12 c-p" (click)="deleteCommentTaskSubTask(item, 'subTask',i)">Delete</a>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12 p-0">
-                        <p class="f-14" *ngIf="!isCommentSubTaskEditMode"> {{ item.commentMsg }}
+                        <p class="f-14" *ngIf="!item.editMode"> {{ item.commentMsg }}
                         </p>
-                        <p class="f-12" *ngIf="isCommentSubTaskEditMode">
-                            <input type="text" #commentSubTaskInput>
+                        <p class="f-12 form-group" *ngIf="item.editMode">
+                            <input type="text" (focusout)="commentSubTaskInput = refSubTaskInput.value" #refSubTaskInput
+                                class="form-control" name="commentSubTaskInput">
                         </p>
                     </div>
                 </div>
@@ -526,7 +527,7 @@
         <div class="col-md-11">
             <mat-form-field>
                 <input class="form-control bg-white br-0 text-left" matInput #commentInput type="text"
-                    (keyup.enter)="onCreateCommentTaskSubTask(commentInput.value)">
+                    (keyup.enter)="onCreateCommentTaskSubTask(commentInput.value); commentInput.value=''">
             </mat-form-field>
 
             <div class="row pt-10">
@@ -545,7 +546,8 @@
                     </span>
 
                     <span *ngIf="data">
-                        <img src="assets/images/svg/avtar-logo.svg" class="c-p ml-12" (click)="onAddingCollaborator(null)">
+                        <img src="assets/images/svg/avtar-logo.svg" class="c-p ml-12"
+                            (click)="onAddingCollaborator(null)">
                     </span>
                 </div>
             </div>
@@ -555,6 +557,7 @@
 
 </div>
 
+
 <div class="bottom-fixed-50 wrapper-12 pt-16">
     <div class="row">
         <div class="col-md-4">
@@ -563,10 +566,16 @@
         <div class="col-md-4">
         </div>
         <div class="col-md-4 text-right" *ngIf="tabState === 1">
-            <h5 class="mb-0 pt-8 text-white c-p" (click)="onCreateTask()">Create</h5>
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="onCreateTask()" [ngClass]="isMainLoading ? 'cur-wait': ''">
+                Create</h5>
         </div>
         <div class="col-md-4 text-right" *ngIf="tabState === 2">
-            <h5 class="mb-0 pt-8 text-white c-p" (click)="editedSubTaskSave()">Save Changes</h5>
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="editedSubTaskSave()"
+                [ngClass]="isMainLoading ? 'cur-wait': ''">Save Changes</h5>
         </div>
     </div>
+</div>
+
+<div class="row" *ngIf="isMainLoading">
+    <mat-spinner class="loader middle-of-slider" [diameter]="30"></mat-spinner>
 </div>

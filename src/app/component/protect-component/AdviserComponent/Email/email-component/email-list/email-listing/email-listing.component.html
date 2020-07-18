@@ -141,7 +141,7 @@
                     </th>
                     <td mat-cell *matCellDef="let element" class="p-no text-right">
                         <span class="d-block" data-show="date">
-                            {{element.date | gmailDate}}
+                            {{element.date | dateAgo }}
                         </span>
                         <span class="d-none" data-show="icons">
                             <button mat-icon-button (click)="moveThreadToTrash(element)" [disabled]="trashAction">
