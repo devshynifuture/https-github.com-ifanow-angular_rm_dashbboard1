@@ -21,7 +21,7 @@
                         <div class="col-8">
                             <p class="mb-0">
                                 <span appFormatNumber>
-                                    {{'Liabilities '+(i+1)}} (`)
+                                    {{'Liabilities '+(i+1)}} ({{(item.loanTypeId == 1)?'Home Loan':(item.loanTypeId == 2)?'Vehicle':(item.loanTypeId == 3)?'Education':(item.loanTypeId == 4)?'Credit Card':(item.loanTypeId == 5)?'Personal':'Mortgage'}})
 
                                 </span></p>
                         </div>

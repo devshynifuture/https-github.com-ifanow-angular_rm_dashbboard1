@@ -1,6 +1,6 @@
-<div id="mob-fixed-income">
+<div id="mob-fixed-income"  *ngIf="!showDetail && !backToMf">
     <div class="row mob-bg-common pb-12 mobtop-navfixed">
-      <div class="col-2" (click)="changeValue(false)">
+      <div class="col-2"  (click)="backToMf = true">
         <span class="material-icons text-white">
         keyboard_backspace
         </span>
@@ -28,7 +28,7 @@
       </div>
     <div class="pt-16">
         <div class="bg-white">
-          <div class="row pt-20 pb-20 mob-bb-1">
+          <div class="row pt-20 pb-20 mob-bb-1" (click)="showDetail = true;openSubAsset('Term insurance',termData)">
             <div class="col-8">
               <p class="mb-0">Term</p>
             </div>
@@ -36,7 +36,7 @@
               <p class="m-0">{{termCv ? '₹' : ''}}<span appFormatNumber [value]="termCv ? termCv : '-'"></span></p>
             </div>
           </div>
-          <div class="row pt-20 pb-20 mob-bb-1">
+          <div class="row pt-20 pb-20 mob-bb-1" (click)="showDetail = true;openSubAsset('Traditional insurance',traditionalData)">
             <div class="col-8">
               <p class="mb-0">Traditional</p>
             </div>
@@ -44,7 +44,7 @@
               <p class="m-0">{{traditionalCv ? '₹' : ''}}<span appFormatNumber [value]="traditionalCv ? traditionalCv : '-'"></span></p>
             </div>
           </div>
-          <div class="row pt-20 pb-20 mob-bb-1">
+          <div class="row pt-20 pb-20 mob-bb-1" (click)="showDetail = true;openSubAsset('ULIP insurance',UlipData)">
             <div class="col-8">
               <p class="mb-0">ULIP</p>
             </div>
@@ -56,3 +56,9 @@
       </div>
     </div>
     </div>
+    <div *ngIf="showDetail">
+      <app-life-insurance [data]="assetSubType"></app-life-insurance>
+  </div>
+  <div *ngIf="backToMf == true">
+    <app-mobile-portfoilo></app-mobile-portfoilo>
+  </div>

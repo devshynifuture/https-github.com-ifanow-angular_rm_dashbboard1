@@ -15,6 +15,7 @@ export class RetirementAccMobComponent implements OnInit {
   npsData: any;
   gratuity: any;
   totalCurrentValue = 0;
+  backToMf;
   @Output() outputValue = new EventEmitter<any>();
   epfCv: any;
   npsCv: any;
@@ -59,7 +60,7 @@ export class RetirementAccMobComponent implements OnInit {
         }
       }, (error) => {
         this.eventService.showErrorMessage(error);
-  
+
       }
     );
   }
@@ -77,7 +78,7 @@ export class RetirementAccMobComponent implements OnInit {
         }
       }, (error) => {
         this.eventService.showErrorMessage(error);
-     
+
       }
     );
   }

@@ -10,6 +10,7 @@ export class CashAndBankComponent implements OnInit {
   assetData: any;
   cashAndBank;
   backToMf;
+  bankAccData;
   constructor() { }
   @Input()
   set data(data) {

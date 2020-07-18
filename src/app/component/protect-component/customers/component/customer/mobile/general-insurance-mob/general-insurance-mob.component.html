@@ -1,4 +1,4 @@
-<div id="mob-fixed-income">
+<div id="mob-fixed-income" *ngIf="!showDetail">
     <div class="row mob-bg-common pb-12 mobtop-navfixed">
       <div class="col-2" (click)="changeValue(false)">
         <span class="material-icons text-white">
@@ -28,7 +28,7 @@
       </div>
     <div class="pt-16">
         <div class="bg-white">
-          <div class="row pt-20 pb-20 mob-bb-1">
+          <div class="row pt-20 pb-20 mob-bb-1" (click)="showDetail = true;openSubAsset('Health insurance',healthData)">
             <div class="col-8">
               <p class="mb-0">Health</p>
             </div>
@@ -36,7 +36,7 @@
               <p class="m-0">{{HealthCv ? '₹' : ''}}<span appFormatNumber [value]="HealthCv ? HealthCv : '-'"></span></p>
             </div>
           </div>
-          <div class="row pt-20 pb-20 mob-bb-1">
+          <div class="row pt-20 pb-20 mob-bb-1" (click)="showDetail = true;openSubAsset('Personal accident insurance',personalAccidentData)">
             <div class="col-8">
               <p class="mb-0">Personal accident</p>
             </div>
@@ -44,7 +44,7 @@
               <p class="m-0">{{personalAccidentCv ? '₹' : ''}}<span appFormatNumber [value]="personalAccidentCv ? personalAccidentCv : '-'"></span></p>
             </div>
           </div>
-          <div class="row pt-20 pb-20 mob-bb-1">
+          <div class="row pt-20 pb-20 mob-bb-1" (click)="showDetail = true;openSubAsset('Critical illness insurance',criticalIllnesData)">
             <div class="col-8">
               <p class="mb-0">Critical illness</p>
             </div>
@@ -52,7 +52,7 @@
               <p class="m-0">{{criticalIllnessCv ? '₹' : ''}}<span appFormatNumber [value]="criticalIllnessCv ? criticalIllnessCv : '-'" ></span></p>
             </div>
           </div>
-          <div class="row pt-20 pb-20 mob-bb-1">
+          <div class="row pt-20 pb-20 mob-bb-1" (click)="showDetail = true;openSubAsset('Motor insurance',motorData)">
             <div class="col-8">
               <p class="mb-0">Motor</p>
             </div>
@@ -60,7 +60,7 @@
               <p class="m-0">{{motorCv ? '₹' : ''}}<span appFormatNumber [value]="motorCv ? motorCv : '-'" ></span></p>
             </div>
           </div>
-          <div class="row pt-20 pb-20 mob-bb-1">
+          <div class="row pt-20 pb-20 mob-bb-1" (click)="showDetail = true;openSubAsset('Travel insurance',travelData)">
             <div class="col-8">
               <p class="mb-0">Travel</p>
             </div>
@@ -68,7 +68,7 @@
               <p class="m-0">{{travelCv ? '₹' : ''}}<span appFormatNumber [value]="travelCv ? travelCv : '-'" ></span></p>
             </div>
           </div>
-          <div class="row pt-20 pb-20 mob-bb-1">
+          <div class="row pt-20 pb-20 mob-bb-1" (click)="showDetail = true;openSubAsset('Home insurance',homeData)">
             <div class="col-8">
               <p class="mb-0">Home</p>
             </div>
@@ -76,7 +76,7 @@
               <p class="m-0">{{HomewCv ? '₹' : ''}}<span appFormatNumber [value]="HomewCv ? HomewCv : '-'" ></span></p>
             </div>
           </div>
-          <div class="row pt-20 pb-20 mob-bb-1">
+          <div class="row pt-20 pb-20 mob-bb-1" (click)="showDetail = true;openSubAsset('Fire & special perils insurance',fireData)">
             <div class="col-8">
               <p class="mb-0">Fire & special perils</p>
             </div>
@@ -88,3 +88,6 @@
       </div>
     </div>
     </div>
+    <div *ngIf="showDetail">
+      <app-general-insurance [data]="assetSubType"></app-general-insurance>
+  </div>

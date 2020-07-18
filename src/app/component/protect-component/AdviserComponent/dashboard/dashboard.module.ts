@@ -8,6 +8,7 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardGuideDialogComponent } from './dashboard-guide-dialog/dashboard-guide-dialog.component';
 import { DashboardService } from './dashboard.service';
 import { CustomCommonModule } from 'src/app/common/custom.common.module';
+import { SlickCarouselModule } from 'ngx-slick-carousel';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { CustomCommonModule } from 'src/app/common/custom.common.module';
     ReactiveFormsModule,
     CustomDirectiveModule,
     DashboardRoutingModule,
-    CustomCommonModule
+    CustomCommonModule,
+    SlickCarouselModule
   ],
   exports: [],
   providers: [DashboardService]

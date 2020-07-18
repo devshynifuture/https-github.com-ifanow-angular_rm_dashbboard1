@@ -17,6 +17,8 @@ import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component'
   styleUrls: ['./ppf-mob.component.scss']
 })
 export class PpfMobComponent implements OnInit {
+  showLess;
+  showHide;
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
     text: 'Save',
@@ -122,7 +124,6 @@ disabledMember(value, type) {
     disControl : type
   }
 }
-
 displayControler(con) {
   console.log('value selected', con);
   if(con.owner != null && con.owner){
@@ -140,7 +141,7 @@ onChangeJointOwnership(data) {
   }
 }
 
-/***owner***/ 
+/***owner***/
 
 get getCoOwner() {
   return this.ppfSchemeForm.get('getCoOwnerName') as FormArray;
@@ -167,7 +168,7 @@ addNewCoOwner(data) {
     }
    }
   }
- 
+
 }
 
 removeCoOwner(item) {
@@ -187,9 +188,9 @@ removeCoOwner(item) {
   }
   this.disabledMember(null, null);
 }
-/***owner***/ 
+/***owner***/
 
-/***nominee***/ 
+/***nominee***/
 
 get getNominee() {
   return this.ppfSchemeForm.get('getNomineeName') as FormArray;
@@ -236,12 +237,12 @@ addNewNominee(data) {
       }
     }
    }
-  
-  
+
+
 }
-/***nominee***/ 
+/***nominee***/
 // ===================owner-nominee directive=====================//
-  
+
 
   moreFields() {
     (this.isOptionalField) ? this.isOptionalField = false : this.isOptionalField = true
@@ -260,7 +261,7 @@ addNewNominee(data) {
       extenMaturity: ['']
     }));
   }
-  
+
   askExtended:boolean= false;
   invalidExtended:boolean= false;
   setCommencementDate(extended) {
@@ -289,7 +290,7 @@ addNewNominee(data) {
       this.addExtendedMaturity();
       this.askExtended =false;
     }
-   
+
     console.log('commencentDAte',new Date(maturityDate))
     if(new Date(this.maxDate).getTime() > maturityDate){
       this.askExtended =true;
@@ -297,7 +298,7 @@ addNewNominee(data) {
         this.addExtendedMaturity();
       }
     }
-    
+
     this.ppfSchemeForm.get('maturityDate').patchValue(new Date(maturityDate));
   }
 
@@ -350,9 +351,9 @@ addNewNominee(data) {
       })]),
       id: [data.id]
     })
-   
+
       // ==============owner-nominee Data ========================\\
-  /***owner***/ 
+  /***owner***/
   if(this.ppfSchemeForm.value.getCoOwnerName.length == 1){
     this.getCoOwner.controls['0'].get('share').setValue('100');
   }
@@ -363,20 +364,20 @@ addNewNominee(data) {
       this.addNewCoOwner(element);
     });
   }
-  
-/***owner***/ 
 
-/***nominee***/ 
+/***owner***/
+
+/***nominee***/
 if(data.nomineeList){
   if(data.nomineeList.length > 0){
-      
+
     this.getNominee.removeAt(0);
     data.nomineeList.forEach(element => {
       this.addNewNominee(element);
     });
   }
 }
-/***nominee***/ 
+/***nominee***/
 
 this.ownerData = {Fmember: this.nomineesListFM, controleData:this.ppfSchemeForm}
 // ==============owner-nominee Data ========================\\
@@ -440,7 +441,7 @@ removedList:any=[];
   //       }
   //       finalTransctList.push(obj);
   //     // }
-     
+
   //   // });
   // }
     if (this.transactionData.length > 0) {
@@ -571,7 +572,7 @@ removedList:any=[];
   }
 
   isFormValuesForAdviceValid() {
-    
+
     if (this.ppfSchemeForm.valid ||
       (this.ppfSchemeForm.valid && this.ppfSchemeForm.valid) ||
       (this.ppfSchemeForm.valid && this.ppfSchemeForm.valid && this.nomineesList.length !== 0 && this.transactionData.length !== 0)) {
@@ -605,7 +606,7 @@ removedList:any=[];
   openDialog(eventData): void {
     const dialogRef = this.dialog.open(LinkBankComponent, {
       width: '50%',
-      data:{bankList: this.bankList, userInfo: true} 
+      data:{bankList: this.bankList, userInfo: true}
     });
 
     dialogRef.afterClosed().subscribe(result => {

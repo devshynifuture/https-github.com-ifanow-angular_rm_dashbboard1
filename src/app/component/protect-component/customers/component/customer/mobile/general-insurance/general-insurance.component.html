@@ -1,1 +1,201 @@
-<p>general-insurance works!</p>
+<div id="mob-fixed-income" *ngIf="generalInsuranceData != true && backToMf != true">
+    <div class="row mob-bg-common pb-12 mobtop-navfixed">
+        <div class="col-2" (click)="backToMf = true">
+            <span class="material-icons text-white">
+                keyboard_backspace
+            </span>
+        </div>
+        <div class="col-7 p-0">
+            <h5 class="m-0 f-18 text-white pt-4">{{inputData}}</h5>
+        </div>
+        <div class="col-3 text-right">
+            <span class="material-icons text-white">
+                filter_list
+            </span>
+        </div>
+    </div>
+    <div class="pt-80 p-8 h-100vh" *ngIf="inputData == 'Health insurance'">
+        <div class="pt-16" *ngFor="let item of assetData;let i = index">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20 mob-bb-1">
+                    <div class="col-8">
+                        <p class="mb-0">
+                            <span appFormatNumber>
+                                {{(item.insurerName) ? item.insurerName : 'GI '+(i+1)}} {{'| '+item.policyNumber}}
+                            </span></p>
+                    </div>
+                    <div class="col-4 text-right">
+                        <p class="m-0">{{item.sumInsuredIdv ? '₹' : ''}}
+                            <span appFormatNumber>{{item.sumInsuredIdv ? item.sumInsuredIdv :'-'}}</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="assetData.length == 0">
+                <span>
+                    No data found
+                </span>
+        </div>
+    </div>
+    <div class="pt-80 p-8 h-100vh" *ngIf="inputData == 'Personal accident insurance'">
+        <div class="pt-16" *ngFor="let item of assetData; let i = index">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20 mob-bb-1">
+                    <div class="col-8">
+                        <p class="mb-0">
+                            <span appFormatNumber>
+                                {{(item.insurerName) ? item.insurerName : 'GI '+(i+1)}}{{'| '+item.policyNumber}}
+                            </span></p>
+                    </div>
+                    <div class="col-4 text-right">
+                        <p class="m-0">{{item.sumInsuredIdv ? '₹' : ''}}<span appFormatNumber>{{item.sumInsuredIdv ? item.sumInsuredIdv : '-'}}</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="assetData.length == 0">
+            <span>
+                No data found
+            </span>
+    </div>
+    </div>
+    <div class="pt-80 p-8 h-100vh" *ngIf="inputData == 'Critical illness insurance'">
+        <div class="pt-16" *ngFor="let item of assetData; let i = index">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20 mob-bb-1">
+                    <div class="col-8">
+                        <p class="mb-0">
+                            <span appFormatNumber>
+                                {{(item.insurerName) ? item.insurerName : 'GI '+(i+1)}}{{'| '+item.policyNumber}}
+                            </span></p>
+                    </div>
+                    <div class="col-4 text-right">
+                        <p class="m-0">{{item.sumInsuredIdv ? '₹' : ''}}<span appFormatNumber>{{item.sumInsuredIdv ? item.sumInsuredIdv : '-'}}</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="assetData.length == 0">
+            <span>
+                No data found
+            </span>
+    </div>
+    </div>
+    <div class="pt-80 p-8 h-100vh" *ngIf="inputData == 'Motor insurance'">
+        <div class="pt-16" *ngFor="let item of assetData; let i = index">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20 mob-bb-1">
+                    <div class="col-8">
+                        <p class="mb-0">
+                            <span appFormatNumber>
+                                {{(item.insurerName) ? item.insurerName : 'GI '+(i+1)}}{{'| '+item.policyNumber}}
+                            </span></p>
+                    </div>
+                    <div class="col-4 text-right">
+                        <p class="m-0">{{item.sumInsuredIdv ? '₹' : ''}}<span appFormatNumber>{{item.sumInsuredIdv ? item.sumInsuredIdv : '-'}}</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="assetData.length == 0">
+            <span>
+                No data found
+            </span>
+    </div>
+    </div>
+    <div class="pt-80 p-8 h-100vh" *ngIf="inputData == 'Travel insurance'">
+        <div class="pt-16" *ngFor="let item of assetData; let i = index">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20 mob-bb-1">
+                    <div class="col-8">
+                        <p class="mb-0">
+                            <span appFormatNumber>
+                                {{(item.insurerName) ? item.insurerName : 'GI '+(i+1)}}{{'| '+item.policyNumber}}
+                            </span></p>
+                    </div>
+                    <div class="col-4 text-right">
+                        <p class="m-0">{{item.sumInsuredIdv ? '₹' : ''}}<span appFormatNumber>{{item.sumInsuredIdv ? item.sumInsuredIdv : '-'}}</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="assetData.length == 0">
+            <span>
+                No data found
+            </span>
+    </div>
+    </div>
+    <div class="pt-80 p-8 h-100vh" *ngIf="inputData == 'Home insurance'">
+        <div class="pt-16" *ngFor="let item of assetData; let i = index">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20 mob-bb-1">
+                    <div class="col-8">
+                        <p class="mb-0">
+                            <span appFormatNumber>
+                                {{(item.insurerName) ? item.insurerName : 'GI '+(i+1)}}{{'| '+item.policyNumber}}
+                            </span></p>
+                    </div>
+                    <div class="col-4 text-right">
+                        <p class="m-0">{{item.sumInsuredIdv ? '₹' : ''}}<span appFormatNumber>{{item.sumInsuredIdv ? item.sumInsuredIdv : '-'}}</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="assetData.length == 0">
+            <span>
+                No data found
+            </span>
+    </div>
+    </div>
+    <div class="pt-80 p-8 h-100vh" *ngIf="inputData == 'Fire & special perils insurance'">
+        <div class="pt-16" *ngFor="let item of assetData; let i = index">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20 mob-bb-1">
+                    <div class="col-8">
+                        <p class="mb-0">
+                            <span appFormatNumber>
+                                {{(item.insurerName) ? item.insurerName : 'GI '+(i+1)}}{{'| '+item.policyNumber}}
+                            </span></p>
+                    </div>
+                    <div class="col-4 text-right">
+                        <p class="m-0">{{item.sumInsuredIdv ? '₹' : ''}}<span appFormatNumber>{{item.sumInsuredIdv ? item.sumInsuredIdv : '-'}}</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="assetData.length == 0">
+            <span>
+                No data found
+            </span>
+    </div>
+    </div>
+    <div class="document-bottom-action">
+        <button (click)="generalInsuranceData = true" mat-stroked-button class="btn-primary"><span class="material-icons">
+                add
+            </span></button>
+    </div>
+</div>
+<div *ngIf="generalInsuranceData == true && inputData == 'Health insurance'">
+    <app-add-health-mob></app-add-health-mob>
+</div>
+<div *ngIf="generalInsuranceData == true && inputData == 'Personal accident insurance'">
+    <app-add-personal-accident-mob></app-add-personal-accident-mob>
+</div>
+<div *ngIf="generalInsuranceData == true && inputData == 'Critical illness insurance'">
+    <app-critical-illnes-mob></app-critical-illnes-mob>
+</div>
+<div *ngIf="generalInsuranceData == true && inputData == 'Motor insurance'">
+    <app-motor-insurance-mob></app-motor-insurance-mob>
+</div>
+<div *ngIf="generalInsuranceData == true && inputData == 'Travel insurance'">
+    <app-travel-insurance-mob></app-travel-insurance-mob>
+</div>
+<div *ngIf="generalInsuranceData == true && inputData == 'Home insurance'">
+    <app-home-insurance-mob></app-home-insurance-mob>
+</div>
+<div *ngIf="generalInsuranceData == true && inputData == 'Fire & special perils insurance'">
+    <app-fire-insurance-mob></app-fire-insurance-mob>
+</div>
+<div *ngIf="backToMf == true">
+<app-general-insurance-mob></app-general-insurance-mob>
+</div>

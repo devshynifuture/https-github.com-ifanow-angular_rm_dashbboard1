@@ -130,6 +130,20 @@ import { AddRealEstateMobComponent } from './component/customer/mobile/real-esta
 import { AddLiabilitiesMobComponent } from './component/customer/mobile/liabilities-mob/add-liabilities-mob/add-liabilities-mob.component';
 import { AddOtherPayablesMobComponent } from './component/customer/mobile/liabilities-mob/add-other-payables-mob/add-other-payables-mob.component';
 import { MobNpsComponent } from './component/customer/mobile/mob-nps/mob-nps.component';
+import { AddTransactionMobComponent } from './component/customer/mobile/add-transaction-mob/add-transaction-mob.component';
+import { DetailedBondMobComponent } from './component/customer/mobile/fixed-income-mob/bond-mob/detailed-bond-mob/detailed-bond-mob.component';
+import { DetailedFixedDepositMobComponent } from './component/customer/mobile/fixed-income-mob/fixed-deposit-mob/detailed-fixed-deposit-mob/detailed-fixed-deposit-mob.component';
+import { DetailedRecurringDepositMobComponent } from './component/customer/mobile/fixed-income-mob/recurring-deposite-mob/detailed-recurring-deposit-mob/detailed-recurring-deposit-mob.component';
+import { AddInsuranceMobComponent } from './component/customer/mobile/life-insurance-mob/add-insurance-mob/add-insurance-mob.component';
+import { AddHealthMobComponent } from './component/customer/mobile/general-insurance-mob/add-health-mob/add-health-mob.component';
+import { AddPersonalAccidentMobComponent } from './component/customer/mobile/general-insurance-mob/add-personal-accident-mob/add-personal-accident-mob.component';
+import { CriticalIllnesMobComponent } from './component/customer/mobile/general-insurance-mob/critical-illnes-mob/critical-illnes-mob.component';
+import { MotorInsuranceMobComponent } from './component/customer/mobile/general-insurance-mob/motor-insurance-mob/motor-insurance-mob.component';
+import { TravelInsuranceMobComponent } from './component/customer/mobile/general-insurance-mob/travel-insurance-mob/travel-insurance-mob.component';
+import { HomeInsuranceMobComponent } from './component/customer/mobile/general-insurance-mob/home-insurance-mob/home-insurance-mob.component';
+import { FireInsuranceMobComponent } from './component/customer/mobile/general-insurance-mob/fire-insurance-mob/fire-insurance-mob.component';
+import { DetailedViewLifeInsuranceMobComponent } from './component/customer/mobile/life-insurance-mob/detailed-view-life-insurance-mob/detailed-view-life-insurance-mob.component';
+import { DetailedViewGeneralInsuranceMobComponent } from './component/customer/mobile/general-insurance-mob/detailed-view-general-insurance-mob/detailed-view-general-insurance-mob.component';
 
 
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
@@ -149,7 +163,23 @@ import { MobNpsComponent } from './component/customer/mobile/mob-nps/mob-nps.com
     MinorMemberFormComponent, RetirementAccMobComponent, RealEstateComponent, SmallSavingComponent, CashAndBankComponent, CommoditiesComponent, LiabilitiesComponent, LifeInsuranceComponent, GeneralInsuranceComponent,
     MobileViewMoreInfoComponent,
     CashAndBankMobComponent, StocksMobComponent, RealEstateMobComponent, SmallSavingMobComponent, CommoditiesMobComponent, LiabilitiesMobComponent, LifeInsuranceMobComponent, GeneralInsuranceMobComponent,
-    AddGoldMobComponent, BankDetailedAssetsComponent, FixedDepositMobComponent, BondMobComponent, RecurringDepositeMobComponent, AddOthersMobComponent, EpfMobComponent, NpsMobComponent, GratuityMobComponent, GetRetirementMobComponent, HolderNameMobileViewComponent, MobInvestComponent, GetSmallSavingSchemeComponent, PpfMobComponent, NscMobComponent, SsyMobComponent, KvpMobComponent, ScssMobComponent, PoSavingsMobComponent, PoTdMobComponent, PoRdMobComponent, PoMisMobComponent, AddBankAccMobComponent, AddCashInHandMobComponent, AddRealEstateMobComponent, AddLiabilitiesMobComponent, AddOtherPayablesMobComponent, MobNpsComponent],
+    BankDetailedAssetsComponent, FixedDepositMobComponent, BondMobComponent,
+    RecurringDepositeMobComponent, AddOthersMobComponent, EpfMobComponent, NpsMobComponent, GratuityMobComponent,
+    GetRetirementMobComponent,
+    NscMobComponent, SsyMobComponent, KvpMobComponent, AddBankAccMobComponent, AddCashInHandMobComponent, AddRealEstateMobComponent, AddLiabilitiesMobComponent, AddOtherPayablesMobComponent, AddTransactionMobComponent, BankDetailedAssetsComponent, FixedDepositMobComponent, BondMobComponent, RecurringDepositeMobComponent, AddOthersMobComponent, EpfMobComponent, NpsMobComponent, GratuityMobComponent, GetRetirementMobComponent, HolderNameMobileViewComponent, MobInvestComponent, GetSmallSavingSchemeComponent, PpfMobComponent, NscMobComponent, SsyMobComponent, KvpMobComponent, ScssMobComponent, PoSavingsMobComponent, PoTdMobComponent, PoRdMobComponent, PoMisMobComponent, AddBankAccMobComponent, AddCashInHandMobComponent, AddRealEstateMobComponent, AddLiabilitiesMobComponent, AddOtherPayablesMobComponent, DetailedBondMobComponent, DetailedFixedDepositMobComponent, DetailedRecurringDepositMobComponent,
+    AddGoldMobComponent, MobNpsComponent,
+    HolderNameMobileViewComponent, NscMobComponent,
+    SsyMobComponent, KvpMobComponent,
+    PoRdMobComponent, PoMisMobComponent, AddBankAccMobComponent, AddCashInHandMobComponent, AddRealEstateMobComponent,
+    AddLiabilitiesMobComponent, AddOtherPayablesMobComponent, AddTransactionMobComponent, BankDetailedAssetsComponent,
+    FixedDepositMobComponent, BondMobComponent, RecurringDepositeMobComponent, AddOthersMobComponent,
+    NpsMobComponent, GratuityMobComponent, MobInvestComponent,
+    GetSmallSavingSchemeComponent, PpfMobComponent, NscMobComponent, SsyMobComponent, KvpMobComponent, ScssMobComponent,
+    PoSavingsMobComponent, PoTdMobComponent, AddBankAccMobComponent,
+    AddCashInHandMobComponent, AddRealEstateMobComponent, AddLiabilitiesMobComponent, AddOtherPayablesMobComponent,
+    AddInsuranceMobComponent, AddHealthMobComponent, AddPersonalAccidentMobComponent, CriticalIllnesMobComponent,
+    MotorInsuranceMobComponent, TravelInsuranceMobComponent, HomeInsuranceMobComponent, FireInsuranceMobComponent,
+    DetailedViewLifeInsuranceMobComponent, DetailedViewGeneralInsuranceMobComponent],
   imports: [
     // BrowserModule,
     CommonModule,
@@ -183,7 +213,7 @@ import { MobNpsComponent } from './component/customer/mobile/mob-nps/mob-nps.com
   entryComponents: [EntryComponentsModule.getComponentList(),
   AccountEntryModule.getComponentList(), AdviceEntryModule.getComponentList(),
   PlanEntryModule.getComponentList(), CustomerOverviewEntryModule.getComponentList(),
-    UploadDocumentComponent, EditDocumentPopupComponent]
+    UploadDocumentComponent, EditDocumentPopupComponent, AddTransactionMobComponent]
 })
 export class CustomersModule {
 }
