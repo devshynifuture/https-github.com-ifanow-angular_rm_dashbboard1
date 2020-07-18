@@ -15,11 +15,12 @@ import { EventService } from 'src/app/Data-service/event.service';
 export class MutualFundsComponent implements OnInit {
   mutualFund: any;
   totalValue: any;
+  showmfDetailsMf;
   backtoMf;
-  showmfDetails;
+  showmfDetails: boolean = false;
   familyWiseAllocation: any;
   mfSubCategoryPieConfig: Chart;
-  mfAllocationPieConfig : Chart;
+  mfAllocationPieConfig: Chart;
   mfSubCatAllocationData: any[];
   worker: Worker;
   chartData: any[] = [
@@ -66,12 +67,14 @@ export class MutualFundsComponent implements OnInit {
   advisorId: any;
   subCategoryData: any;
   mfDetailsData
+  showDetails: boolean;
+  mutualFundList: any;
 
   constructor(
-    public mfServiceService : MfServiceService,
+    public mfServiceService: MfServiceService,
     public loaderFn: LoaderFunction,
-    public customerService : CustomerService,
-    public eventService :EventService,
+    public customerService: CustomerService,
+    public eventService: EventService,
 
   ) {
     this.clientId = AuthService.getClientId()
@@ -186,29 +189,45 @@ export class MutualFundsComponent implements OnInit {
     this.getMFPortfolioData();
 
   }
+  showDetailsFun(flag, mf) {
+    this.mutualFundList = mf.mutualFundSchemeMaster[0].mutualFund;
+    if (mf.showDetailsMfData == true) {
+
+      mf.showDetailsMfData = false
+
+    } else {
+
+      mf.showDetailsMfData = true
+
+    }
+  }
+
   getMFPortfolioData() {
     const obj = {
       clientId: this.clientData.clientId,
       advisorId: this.advisorId
     }
     this.tabsLoaded.mfPortfolioSummaryData.isLoading = true
-      this.loaderFn.increaseCounter();
-      this.customerService.getMutualFund(obj).subscribe(
-        data => this.getMutualFundResponse(data), (error) => {
-          this.eventService.openSnackBar(error, "DISMISS");
-          this.tabsLoaded.mfPortfolioSummaryData.dataLoaded = false;
-          this.tabsLoaded.mfPortfolioSummaryData.isLoading = false;
-        }
-      );
+    this.loaderFn.increaseCounter();
+    this.customerService.getMutualFund(obj).subscribe(
+      data => this.getMutualFundResponse(data), (error) => {
+        this.eventService.openSnackBar(error, "DISMISS");
+        this.tabsLoaded.mfPortfolioSummaryData.dataLoaded = false;
+        this.tabsLoaded.mfPortfolioSummaryData.isLoading = false;
+      }
+    );
   }
   getMutualFundResponse(data) {
-    this.subCategoryData=[]
+    this.subCategoryData = []
     this.tabsLoaded.mfPortfolioSummaryData.isLoading = false;
     if (data) {
       this.filterData = this.mfServiceService.doFiltering(data);
       this.mutualFund = this.filterData;
       this.subCategoryData = this.mutualFund.subCategoryData
-      console.log('mf data',this.mutualFund)
+      this.subCategoryData.forEach(element => {
+        element.showDetailsMfData = false
+      });
+      console.log('mf data', this.mutualFund)
       this.asyncFilter(this.filterData.mutualFundList, this.filterData.mutualFundCategoryMastersList)
 
       this.getFamilyMemberWiseAllocation(data); // for FamilyMemberWiseAllocation

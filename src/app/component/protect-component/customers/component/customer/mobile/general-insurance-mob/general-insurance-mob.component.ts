@@ -20,6 +20,17 @@ export class GeneralInsuranceMobComponent implements OnInit {
   personalAccidentCv: any;
   HealthCv: any;
   totalCurrentValue = 0;
+  helathData: any;
+  personalAccidentData: any;
+  criticalIllnesData: any;
+  motorData: any;
+  travelData: any;
+  homeData: any;
+  fireData: any;
+  healthData: any;
+  showDetail;
+  backToMf
+  assetSubType = {assetType:'',data:''};
 
   constructor(private custumService:CustomerService,private eventService:EventService) { }
 
@@ -43,6 +54,7 @@ export class GeneralInsuranceMobComponent implements OnInit {
     this.custumService.getGeneralInsuranceData(obj).subscribe(
       data => {
         if(data){
+          this.healthData = data;
           this.HealthCv = data.totalSumInsured;
           this.calculateSum();
         }
@@ -60,6 +72,7 @@ export class GeneralInsuranceMobComponent implements OnInit {
     this.custumService.getGeneralInsuranceData(obj).subscribe(
       data => {
         if(data){
+          this.personalAccidentData = data;
           this.personalAccidentCv = data.totalSumInsured;
           this.calculateSum();
         }
@@ -77,6 +90,7 @@ export class GeneralInsuranceMobComponent implements OnInit {
     this.custumService.getGeneralInsuranceData(obj).subscribe(
       data => {
         if(data){
+          this.criticalIllnesData = data;
           this.criticalIllnessCv = data.totalSumInsured;
           this.calculateSum();
         }
@@ -94,6 +108,7 @@ export class GeneralInsuranceMobComponent implements OnInit {
     this.custumService.getGeneralInsuranceData(obj).subscribe(
       data => {
         if(data){
+          this.motorData = data;
           this.motorCv = data.totalSumInsured;
           this.calculateSum();
         }
@@ -111,6 +126,7 @@ export class GeneralInsuranceMobComponent implements OnInit {
     this.custumService.getGeneralInsuranceData(obj).subscribe(
       data => {
         if(data){
+          this.travelData = data;
           this.travelCv = data.totalSumInsured;
           this.calculateSum();
         }
@@ -128,6 +144,7 @@ export class GeneralInsuranceMobComponent implements OnInit {
     this.custumService.getGeneralInsuranceData(obj).subscribe(
       data => {
         if(data){
+          this.homeData = data;
           this.HomewCv = data.totalSumInsured;
           this.calculateSum();
         }
@@ -146,6 +163,7 @@ export class GeneralInsuranceMobComponent implements OnInit {
     this.custumService.getGeneralInsuranceData(obj).subscribe(
       data => {
         if(data){
+          this.fireData =data;
           this.fireCv = data.totalSumInsured;
           this.calculateSum();
         }
@@ -165,5 +183,9 @@ export class GeneralInsuranceMobComponent implements OnInit {
    (this.HomewCv ? this.HomewCv : 0)+(this.fireCv ? this.fireCv : 0)
 
    console.log('totalCV',this.totalCurrentValue)
+  }
+  openSubAsset(subAsset,value) {
+    this.assetSubType.assetType = subAsset;
+    this.assetSubType.data = value;
   }
 }

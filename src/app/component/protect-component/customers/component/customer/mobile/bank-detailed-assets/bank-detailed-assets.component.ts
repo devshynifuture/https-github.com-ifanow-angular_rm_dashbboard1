@@ -16,6 +16,8 @@ export class BankDetailedAssetsComponent implements OnInit {
   backToMf
   inputData: any;
   asset: any;
+  showFDDetails;
+  showRDDetails;
   constructor(
     public eventService : EventService,
   ) { }

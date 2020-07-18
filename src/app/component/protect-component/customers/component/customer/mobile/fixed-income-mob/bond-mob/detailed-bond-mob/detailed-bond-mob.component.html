@@ -1,0 +1,119 @@
+<div class="row mob-bg-common pb-12 mobtop-navfixed">
+    <div class="col-2">
+        <span class="material-icons text-white">
+            keyboard_backspace
+        </span>
+    </div>
+    <div class="col-7 p-0">
+        <h5 class="m-0 f-18 text-white pt-4">Bonds - Detailed view</h5>
+    </div>
+    <div class="col-3 text-right">
+        <span class="material-icons text-white">
+            filter_list
+        </span>
+    </div>
+</div>
+<div class="pt-80 p-8">
+    <div class="bg-white">
+        <div class="row pt-12 pb-12">
+            <div class="col-2">
+                <div class="circular-small"></div>
+            </div>
+            <div class="col-7 pl-0">
+                <p class="mb-0 pt-8">{{(fdData.description)?fdData.description:'FD'}}</p>
+            </div>
+            <div class="col-3 text-right pl-0">
+                <p class="m-0 pt-8">
+                    ₹<span appFormatNumber [value]="fdData.currentValue">{{fdData.currentValue}}</span>0</p>
+            </div>
+        </div>
+    </div>
+    <div class="pt-16">
+        <div class="bg-white">
+            <div class="row pt-20 pb-20">
+                <div class="col-7">
+                    <p class="mob-text-xs f-14">Owner</p>
+                    <p class="mob-text-xs f-14 pt-24" *ngIf="fdData.ownerList.length == 2">Co-owner 1</p>
+                    <p class="mob-text-xs f-14 pt-24" *ngIf="fdData.ownerList.length == 2">Co-owner 2</p>
+                    <p class="mob-text-xs f-14 pt-24">Bond name</p>
+                    <p class="mob-text-xs f-14 pt-24">Bond type</p>
+                    <p class="mob-text-xs f-14 pt-24">Amount invested</p>
+                    <p class="mob-text-xs f-14 pt-24">Commencement date</p>
+                    <p class="mob-text-xs f-14 pt-24">Tenure(in Years)</p>
+                    <p class="mob-text-xs f-14 pt-24"> Maturity date</p>
+                    <p class="mob-text-xs f-14 pt-24"> Coupon rate</p>
+                    <p class="mob-text-xs f-14 pt-24">Coupon option</p>
+                    <p class="mob-text-xs f-14 pt-24">Compounding frequency</p>
+                    <p class="mob-text-xs f-14 pt-24" *ngIf="fdData.couponPayoutFrequencyId == 2">Frequency of coupon
+                        payouts</p>
+                    <p class="mob-text-xs f-14 pt-24" *ngIf="fdData.couponPayoutFrequencyId == 2">Payout received till
+                        date</p>
+                    <p class="mob-text-xs f-14 pt-24" *ngIf="fdData.couponPayoutFrequencyId == 2">Payout received till
+                        maturity</p>
+                    <p class="mob-text-xs f-14 pt-24">Current value</p>
+                    <p class="mob-text-xs f-14 pt-24">Maturity value</p>
+                    <p class="mob-text-xs f-14 pt-24">Total interest earned till date</p>
+                    <p class="mob-text-xs f-14 pt-24">Bank account number</p>
+                    <p class="mob-text-xs f-14 pt-24">Description</p>
+                    <p class="mob-text-xs f-14 pt-24"> Nominee</p>
+                </div>
+                <div class="col-5 text-right pl-0">
+                    <div *ngFor="let item of fdData.ownerList">
+                        <p class="m-0">{{item.name}}</p>
+                    </div>
+                    <p class="m-0 pt-24">{{fdData.bondName}}</p>
+                    <p class="m-0 pt-24">{{(fdData.type=="1")?'Tax free':(fdData.type=="2")?'Non tax free':'-'}}</p>
+                    <p class="m-0 pt-24">
+                        {{fdData.amountInvested? '₹':''}}<span
+                            appFormatNumber>{{(fdData.amountInvested)?fdData.amountInvested:'-'}}</span></p>
+                    <p class="m-0 pt-24">{{fdData.commencementDate | date:'dd/MM/yyyy'}}</p>
+                    <p class="m-0 pt-24">{{fdData.tenure}}</p>
+                    <p class="m-0 pt-24">{{fdData.maturityDate | date:'dd/MM/yyyy'}}</p>
+                    <p class="m-0 pt-24">
+                        {{fdData.couponRate | number: '1.2-2'}}<span *ngIf="fdData.couponRate">%</span>
+                    </p>
+                    <p class="m-0 pt-24">
+                        {{fdData.couponPayoutFrequencyId==1?'Cumulative':'Non-cumulative'}}
+                    </p>
+                    <p class="m-0 pt-24">
+                        {{fdData.compounding==4?"Half yearly":"Yearly"}}
+                    </p>
+                    <div *ngIf="!matured && fdData.couponPayoutFrequencyId == 2">
+                        <p class="m-0 pt-24">
+                            {{fdData.totalAmountReceivedTillToday? "₹" : ""}}<span
+                                appFormatNumber>{{fdData.totalAmountReceivedTillToday}}</span>
+                        </p>
+                    </div>
+                    <div *ngIf="matured && fdData.couponPayoutFrequencyId == 2">
+                        <p class="m-0 pt-24">
+                            {{fdData.totalAmountReceivedTillMaturity? "₹" : ""}}<span
+                                appFormatNumber>{{fdData.totalAmountReceivedTillMaturity}}</span>
+                        </p>
+                    </div>
+                    <p class="m-0 pt-24" *ngIf="fdData.couponPayoutFrequencyId == 2">
+                        {{fdData.totalAmountReceivedTillMaturity? '₹':''}}<span
+                            appFormatNumber>{{(fdData.totalAmountReceivedTillMaturity)?fdData.totalAmountReceivedTillMaturity:'-'}}</span>
+                    </p>
+                    <p class="m-0 pt-12">₹{{fdData.currentValue? '₹':''}}<span
+                            appFormatNumber>{{(fdData.currentValue)?fdData.currentValue:'-'}}</span></p>
+                    <p class="m-0 pt-24">₹{{fdData.maturityValue? '₹':''}}<span
+                            appFormatNumber>{{(fdData.maturityValue)?fdData.maturityValue:'-'}}</span></p>
+                    <div *ngIf="!matured">
+                        <p class="m-0 pt-24">
+                            {{fdData.currentValue? "₹" : ""}}<span
+                                appFormatNumber>{{fdData.currentValue - fdData.amountInvested}}</span>
+                        </p>
+                    </div>
+                    <div *ngIf="matured">
+                        <p class="m-0 pt-24">
+                            {{fdData.maturityValue? "₹" : ""}}<span
+                                appFormatNumber>{{fdData.maturityValue - fdData.amountInvested}}</span>
+                        </p>
+                    </div>
+                    <p class="m-0 pt-24 wb">{{fdData.bankNameAndLast4Digit}}</p>
+                    <p class="m-0 pt-24">{{fdData.description}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

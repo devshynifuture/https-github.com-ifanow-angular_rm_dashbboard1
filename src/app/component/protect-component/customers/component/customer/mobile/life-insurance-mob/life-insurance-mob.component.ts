@@ -16,6 +16,11 @@ export class LifeInsuranceMobComponent implements OnInit {
   termCv: any;
   traditionalCv: number;
   ulipCv: number;
+  backToMf;
+  assetSubType = {assetType:'',data:''};
+  UlipData: any;
+  traditionalData: any;
+  termData: any;
 
   constructor(private custumService:CustomerService,private eventService:EventService) { }
 
@@ -36,8 +41,9 @@ export class LifeInsuranceMobComponent implements OnInit {
     this.custumService.getLifeInsuranceData(obj).subscribe(
       data => {
         if(data){
+          this.termData = data;
           this.termCv = 0;
-          data.forEach(element => {
+          data.insuranceList.forEach(element => {
             this.termCv =+ element.currentValue
           });
           this.calculateSum();
@@ -57,8 +63,9 @@ export class LifeInsuranceMobComponent implements OnInit {
     this.custumService.getLifeInsuranceData(obj).subscribe(
       data => {
         if(data){
+          this.traditionalData = data;
           this.traditionalCv = 0;
-          data.forEach(element => {
+          data.insuranceList.forEach(element => {
             this.traditionalCv =+ element.currentValue
           });
           this.calculateSum();
@@ -78,8 +85,9 @@ export class LifeInsuranceMobComponent implements OnInit {
     this.custumService.getLifeInsuranceData(obj).subscribe(
       data => {
         if(data){
+          this.UlipData = data;
           this.ulipCv = 0;
-          data.forEach(element => {
+          data.insuranceList.forEach(element => {
             this.ulipCv =+ element.currentValue
           });
           this.calculateSum();
@@ -94,5 +102,9 @@ export class LifeInsuranceMobComponent implements OnInit {
   }
   calculateSum(){
     this.totalCurrentValue = (this.termCv ? this.termCv : 0)+(this.traditionalCv ? this.traditionalCv : 0)+(this.ulipCv ? this.ulipCv : 0)
+  }
+  openSubAsset(subAsset,value) {
+    this.assetSubType.assetType = subAsset;
+    this.assetSubType.data = value;
   }
 }

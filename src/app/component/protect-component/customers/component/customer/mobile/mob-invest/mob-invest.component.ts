@@ -27,6 +27,7 @@ export class MobInvestComponent implements OnInit {
   }
   familyMembers: any;
   selectedtTransaction: any;
+  transactionFlag = 'mainScreen';
 
   constructor(
     private customerService: CustomerService,
@@ -104,7 +105,7 @@ export class MobInvestComponent implements OnInit {
 
   selectTransaction(transactionData) {
     this.selectedtTransaction = transactionData;
-
+    this.transactionFlag = 'transactionStatus';
     switch (true) {
       case (this.selectedtTransaction.transactionType == 'ORDER' || this.selectedtTransaction.transactionType == 'PURCHASE'):
         this.transactionStatusList = detailStatusObj.transactionDetailStatus.ORDER;

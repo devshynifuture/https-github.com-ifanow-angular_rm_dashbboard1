@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-life-insurance',
@@ -7,9 +7,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LifeInsuranceComponent implements OnInit {
   changeValue;
+  inputData: any;
+  assetData: any;
+  lifeInsuranceData;
+  backToMf;
+  bankAccData;
+  detailedViewData;
+  showDetailView = false;
   constructor() { }
+  @Input()
+  set data(data) {
+    this.inputData = data.assetType;
+    this.assetData = data.data ? data.data.insuranceList : []
+    console.log('This is Input data of proceed ', data);
+  }
 
   ngOnInit() {
   }
-
+  getValue(value){
+    this.showDetailView = value;
+  }
 }

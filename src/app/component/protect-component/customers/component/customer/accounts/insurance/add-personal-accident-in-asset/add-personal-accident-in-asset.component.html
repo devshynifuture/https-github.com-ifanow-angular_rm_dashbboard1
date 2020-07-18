@@ -20,7 +20,7 @@
     <div formArrayName="getCoOwnerName">
         <div class="row" *ngFor="let obj of personalAccidentForm.controls['getCoOwnerName'].controls; let pointIndex=index" [formGroupName]="pointIndex">
             <div class="col-md-5 pr-0 text-right">
-                <h5 class="m-0 pt-8 ">Name of policy holder</h5>
+                <h5 cclass="m-0 roboto f-400 text-dark f-16 pb-10">Name of policy holder</h5>
             </div>
             <div class="pr-0" [ngClass]="personalAccidentForm.value.getCoOwnerName.length > 1?'col-md-3' : 'col-md-5'">
                 <div class="form-group mb-0">
