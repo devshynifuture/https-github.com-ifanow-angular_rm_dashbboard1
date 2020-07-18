@@ -8,7 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class DetailedPpfComponent implements OnInit {
   inputData: any;
   detailedData: any;
-
+  backToSS : boolean = false;
   constructor() { }
   @Input()
   set data(data) {

@@ -1,1 +1,78 @@
-<p>detailed-ssy-mob works!</p>
+<div class="row mob-bg-common pb-12 mobtop-navfixed" *ngIf="backToSS != true">
+    <div class="col-2">
+        <span class="material-icons text-white" (click)="backToSS = true">
+            keyboard_backspace
+        </span>
+    </div>
+    <div class="col-7 p-0">
+        <h5 class="m-0 f-18 text-white pt-4">SSY - Detailed view</h5>
+    </div>
+    <div class="col-3 text-right">
+        <span class="material-icons text-white">
+            filter_list
+        </span>
+    </div>
+</div>
+<div class="pt-80 p-8">
+    <div class="bg-white">
+        <div class="row pt-12 pb-12">
+            <div class="col-2">
+                <div class="circular-small"></div>
+            </div>
+            <div class="col-7 pl-0">
+                <p class="mb-0 pt-8">{{(detailedData.description)?detailedData.description:'SSY'}}</p>
+            </div>
+            <div class="col-3 text-right pl-0">
+                <p class="m-0 pt-8">
+                    ₹<span appFormatNumber [value]="detailedData.currentValue">{{detailedData.currentValue}}</span>0</p>
+            </div>
+        </div>
+    </div>
+    <div class="pt-16">
+        <div class="bg-white">
+            <div class="row pt-20 pb-20">
+                <div class="col-7">
+                    <p class="mob-text-xs f-14">Owner</p>
+                    <p class="mob-text-xs f-14 pt-24" *ngIf="detailedData.ownerList.length == 2">Co-owner 1</p>
+                    <p class="mob-text-xs f-14 pt-24" *ngIf="detailedData.ownerList.length == 2">Co-owner 2</p>
+
+                    <p class="mob-text-xs f-14 pt-24">Guardian</p>
+                    <p class="mob-text-xs f-14 pt-24">Account balance</p>
+                    <p class="mob-text-xs f-14 pt-24">Balance as on</p>
+                    <p class="mob-text-xs f-14 pt-24">Future approx contribution</p>
+                    <p class="mob-text-xs f-14 pt-24">Current value</p>
+                    <p class="mob-text-xs f-14 pt-24">Frequency</p>
+                    <p class="mob-text-xs f-14 pt-24">SSY account number</p>
+                    <p class="mob-text-xs f-14 pt-24">Link Bank account</p>
+                    <p class="mob-text-xs f-14 pt-24">PO branch</p>
+                    <p class="mob-text-xs f-14 pt-24">Description</p>
+                </div>
+                <div class="col-5 text-right pl-0">
+                    <div *ngFor="let item of detailedData.ownerList">
+                        <p class="m-0">{{item.name}}</p>
+                    </div>
+                    <p class="m-0 pt-24"> {{(detailedData.guardianName)?detailedData.guardianName:'-'}}</p>
+                    <p class="m-0 pt-24"> ₹<span appFormatNumber>{{detailedData.accountBalance}}</span></p>
+                    <p class="m-0 pt-24">
+                        {{ (detailedData.balanceAsOn)?(detailedData.balanceAsOn | date: 'dd/MM/yyyy' ):'-' }}</p>
+                    <p class="m-0 pt-24">{{detailedData.currentValue? "₹" : ""}}<span appFormatNumber>{{detailedData.currentValue?detailedData.currentValue:'-'}}</span>
+                    </p>
+                    <p class="m-0 pt-12">₹<span appFormatNumber>{{detailedData.accumalatedValue}}</span>
+                        {{detailedData.accumalatedValue? "₹" : ""}}<span
+                            appFormatNumber>{{detailedData.accumalatedValue?detailedData.accumalatedValue:'-'}}</span>
+                    </p>
+                    <p class="m-0 pt-24">
+                        {{ (detailedData.frequency==2)? 'Monthly':(detailedData.frequency==3)?'Quarterly':(detailedData.frequency==4)?'Half yearly':(data.frequency==5)?'Yearly':'-' }}
+                    </p>
+                    <p class="m-0 pt-24"> {{(detailedData.ssyNo)?detailedData.ssyNo:'-'}}</p>
+                    <p class="m-0 pt-24">{{detailedData.bankNameAndLast4Digit}}</p>
+                    <p class="m-0 pt-24"> {{detailedData.postOfficeBranch ? detailedData.postOfficeBranch:'-'}}</p>
+                    <p class="m-0 pt-24">{{(detailedData.description)?detailedData.description:'-'}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="backToSS">
+    <app-small-saving-mob></app-small-saving-mob>
+</div>

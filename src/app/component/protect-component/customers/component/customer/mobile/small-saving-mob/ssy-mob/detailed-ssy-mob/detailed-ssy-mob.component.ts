@@ -8,7 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class DetailedSsyMobComponent implements OnInit {
   detailedData: any;
   inputData: any;
-
+  backToSS: boolean = false;
   constructor() { }
   @Input()
   set data(data) {

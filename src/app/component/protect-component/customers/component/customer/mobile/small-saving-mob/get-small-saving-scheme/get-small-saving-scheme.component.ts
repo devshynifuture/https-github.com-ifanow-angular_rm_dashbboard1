@@ -11,16 +11,17 @@ export class GetSmallSavingSchemeComponent implements OnInit {
   backToSS;
   fixdeposit;
   backToMf;
-  showDetailedPPF;
-  showDetailedKVP;
-  showDetailedNSC;
-  showDetailedPORD;
-  showDetailedPOSavings;
-  showDetailedPOTD;
-  showDetailedPOMis;
-  showDetailedSSY;
+  showDetailedPPF:boolean=false;
+  showDetailedKVP : boolean = false;
+  showDetailedNSC : boolean = false;
+  showDetailedPORD : boolean = false;
+  showDetailedPOSavings : boolean = false;
+  showDetailedPOTD : boolean = false;
+  showDetailedPOMis : boolean = false;
+  showDetailedSSY : boolean = false;
   detailedData;
-  showDetailedSCSS;
+  showDetailedSCSS : boolean = false;
+  showDetailed: boolean;
   @Input()
   set data(data) {
     this.inputData = data;
@@ -36,5 +37,27 @@ export class GetSmallSavingSchemeComponent implements OnInit {
   }
   ngOnInit() {
   }
-
+  openDetailed(item){
+    console.log('sdgfhkjagdshjfghjdgas',item) 
+    this.detailedData = item;
+    if(this.inputData.assetType == 'PPF'){
+          this.showDetailedPPF = true
+    }else if(this.inputData.assetType == 'KVP'){
+          this.showDetailedKVP = true
+    }else if(this.inputData.assetType == 'SCSS'){
+      this.showDetailedSCSS = true      
+    }else if(this.inputData.assetType == 'SSY'){
+      this.showDetailedSSY = true      
+    }else if(this.inputData.assetType == 'PO RD'){
+      this.showDetailedPORD = true      
+    }else if(this.inputData.assetType == 'PO TD'){
+      this.showDetailedPOTD = true      
+    }else if(this.inputData.assetType == 'PO Savings'){
+      this.showDetailedPOSavings = true      
+    }else if(this.inputData.assetType == 'PO Mis'){
+      this.showDetailedPOMis = true      
+    }else if(this.inputData.assetType == 'NSC'){
+      this.showDetailedNSC = true
+    }
+  }
 }
