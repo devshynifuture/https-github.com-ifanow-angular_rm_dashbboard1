@@ -1,4 +1,4 @@
-<div id="mob-fixed-income" *ngIf="lifeInsuranceData != true && backToMf != true">
+<div id="mob-fixed-income" *ngIf="lifeInsuranceData != true && backToMf != true && !showDetailView">
     <div class="row mob-bg-common pb-12 mobtop-navfixed">
         <div class="col-2" (click)="backToMf = true">
             <span class="material-icons text-white">
@@ -15,7 +15,7 @@
         </div>
     </div>
     <div class="pt-80 p-8 h-100vh" *ngIf="inputData == 'Term insurance'">
-        <div class="pt-16" *ngFor="let item of assetData;let i = index">
+        <div class="pt-16" *ngFor="let item of assetData;let i = index" (click)="showDetailView = true;detailedViewData = item">
             <div class="bg-white">
                 <div class="row pt-20 pb-20 mob-bb-1">
                     <div class="col-8">
@@ -37,8 +37,8 @@
             </div>
         </div>
     </div>
-    <div class="pt-80 p-8 h-100vh" *ngIf="inputData == 'Traditional insurance'">
-        <div class="pt-16" *ngFor="let item of assetData; let i = index">
+    <div class="pt-80 p-8 h-100vh" *ngIf="inputData == 'Traditional insurance'" >
+        <div class="pt-16" *ngFor="let item of assetData; let i = index" (click)="showDetailView = true;detailedViewData = item">
             <div class="bg-white">
                 <div class="row pt-20 pb-20 mob-bb-1">
                     <div class="col-8">
@@ -60,7 +60,7 @@
         </div>
     </div>
     <div class="pt-80 p-8 h-100vh" *ngIf="inputData == 'ULIP insurance'">
-        <div class="pt-16" *ngFor="let item of assetData; let i = index">
+        <div class="pt-16" *ngFor="let item of assetData; let i = index" (click)="showDetailView = true;detailedViewData = item"> 
             <div class="bg-white">
                 <div class="row pt-20 pb-20 mob-bb-1">
                     <div class="col-8">
@@ -95,6 +95,9 @@
 </div>
 <div *ngIf="lifeInsuranceData == true && inputData == 'ULIP insurance'">
     <app-add-insurance-mob></app-add-insurance-mob>
+</div>
+<div *ngIf="showDetailView == true">
+    <app-detailed-view-life-insurance-mob [data]="detailedViewData"></app-detailed-view-life-insurance-mob>
 </div>
 <div *ngIf="backToMf == true">
 <app-life-insurance-mob></app-life-insurance-mob>

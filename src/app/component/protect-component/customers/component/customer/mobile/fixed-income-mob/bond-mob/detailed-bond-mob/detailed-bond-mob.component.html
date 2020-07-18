@@ -77,13 +77,13 @@
                     </p>
 
 
-                    <div *ngIf="!matured" *ngIf="fdData.couponPayoutFrequencyId == 2">
+                    <div *ngIf="!matured && fdData.couponPayoutFrequencyId == 2">
                         <p class="m-0 pt-24">
                             {{fdData.totalAmountReceivedTillToday? "₹" : ""}}<span
                                 appFormatNumber>{{fdData.totalAmountReceivedTillToday}}</span>
                         </p>
                     </div>
-                    <div *ngIf="matured" *ngIf="fdData.couponPayoutFrequencyId == 2">
+                    <div *ngIf="matured && fdData.couponPayoutFrequencyId == 2" >
                         <p class="m-0 pt-24">
                             {{fdData.totalAmountReceivedTillMaturity? "₹" : ""}}<span
                                 appFormatNumber>{{fdData.totalAmountReceivedTillMaturity}}</span>

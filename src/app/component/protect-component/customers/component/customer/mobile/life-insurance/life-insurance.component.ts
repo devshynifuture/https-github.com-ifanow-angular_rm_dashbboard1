@@ -12,6 +12,8 @@ export class LifeInsuranceComponent implements OnInit {
   lifeInsuranceData;
   backToMf;
   bankAccData;
+  detailedViewData;
+  showDetailView = false;
   constructor() { }
   @Input()
   set data(data) {

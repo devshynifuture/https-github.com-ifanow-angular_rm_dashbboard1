@@ -1,1 +1,236 @@
-<p>detailed-view-life-insurance-mob works!</p>
+ <!-- deatils view Life insurance -->
+ <div id="mob-fixed-income" *ngIf="!backPage">
+ <div class="row mob-bg-common pb-12 mobtop-navfixed">
+    <div class="col-2" (click)="backPage = true">
+        <span class="material-icons text-white">
+            keyboard_backspace
+        </span>
+    </div>
+    <div class="col-7 p-0">
+        <h5 class="m-0 f-18 text-white pt-4">{{showInsurance}} - Detailed view</h5>
+    </div>
+    <div class="col-3 text-right">
+        <span class="material-icons text-white">
+            filter_list
+        </span>
+    </div>
+</div>   
+ <div class="pt-80 p-8 pb-90">
+        <div class="bg-white">
+            <div class="row pt-12 pb-12">
+                <div class="col-2">
+                    <div class="circular-small"></div>
+                </div>
+                <div class="col-7 pl-0">
+                    <p class="mb-0 pt-8">{{(_data.policyName) ? _data.policyName : 'LI '+(i+1)}} {{'| '+_data.policyNumber}}
+                    </p>
+                </div>
+                <div class="col-3 text-right pl-0">
+                    <p class="m-0">{{_data.currentValue ? '₹' : ''}}
+                        <span appFormatNumber>{{_data.currentValue ? _data.currentValue :'-'}}</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-24">
+            <div class="col-12 pl-0">
+                <h5 class="m-0 f-16 roboto f-400">Policy details
+                </h5>
+            </div>
+        </div>
+        <div class="pt-16">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20">
+                    <div class="col-7">
+                        <p class="mob-text-xs f-14">Life assured
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Proposer
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Policy name
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Policy number
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Commencement date
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Sum assured
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Premium amount
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Premium frequency
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Policy tenure
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Premium paying term
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Policy status
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Last unpaid premium
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Current value
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Duration remaining
+                        </p>
+                    </div>
+                    <div class="col-5 text-right pl-0">
+                        <p class="m-0"> {{(_data.lifeAssuredName) ? _data.lifeAssuredName : '-'}}
+                        </p>
+                        <p class="m-0 pt-24"> {{(_data.familyMemberName) ? _data.familyMemberName : '-'}}</p>
+                        <p class="m-0 pt-24"> {{(_data.policyName) ? _data.policyName : '-'}}</p>
+                        <p class="m-0 pt-24"> {{(_data.policyNumber) ? _data.policyNumber : '-'}}</p>
+                        <p class="m-0 pt-24">{{(_data.commencementDate) ? (_data.commencementDate | date:'dd/MM/yyyy') : '-'}}</p>
+                        <p class="m-0 pt-24">{{(_data.sumAssured) ? '₹' : ''}}<span appFormatNumber>
+                            {{(_data.sumAssured) ? _data.sumAssured : '-'}}</span></p>
+                        <p class="m-0 pt-24">{{(_data.premiumAmount) ? '₹' : ''}}<span appFormatNumber>{{(_data.premiumAmount) ? _data.premiumAmount : '-'}}</span></p>
+                        <p class="m-0 pt-24">{{(_data.frequency == 12) ? 'Monthly' : (_data.frequency == 4) ? 'Quarterly' : (_data.frequency == 2) ? 'Half yearly' : (_data.frequency == 1) ? 'Yearly' : (_data.frequency == 3) ? 'Single premium' : '-'}}</p>
+                        <p class="m-0 pt-24">{{(_data.policyTenure) ? (_data.policyTenure + ' Y') : '-'}}</p>
+                        <p class="m-0 pt-24">{{(_data.premiumPayingTerm) ? (_data.premiumPayingTerm + ' Y') : '-'}}</p>
+                        <p class="m-0 pt-24">{{(_data.policyStatusId == 1) ? 'In force' : (_data.policyStatusId == 2) ? 'Lapsed' : (_data.policyStatusId == 3) ? 'Fully paid up' : (_data.policyStatusId == 4) ? 'Partial paid up' : '-'}}</p>
+                        <p class="m-0 pt-24">{{(_data.lastUnpaidPremium) ? (_data.lastUnpaidPremium | date:'dd/MM/yyyy') : '-'}}</p>
+                        <p class="m-0 pt-24">{{(_data.currentValue) ? '₹' : ''}}<span appFormatNumber>{{(_data.currentValue == 'Infinity') ? 0 : _data.currentValue}}</span></p>
+                        <p class="m-0 pt-24">{{(_data.durationRemaining) ? _data.durationRemaining : '-'}} </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-24">
+            <div class="col-12 pl-0">
+                <h5 class="m-0 f-16 roboto f-400">Loan details
+                </h5>
+            </div>
+        </div>
+        <div class="pt-16">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20">
+                    <div class="col-7">
+                        <p class="mob-text-xs f-14">Loan available
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Loan taken
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Loan taken on
+                        </p>
+                    </div>
+                    <div class="col-5 text-right pl-0">
+                        <p class="m-0">{(_data.loanAvailable) ? '₹' : ''}}<span appFormatNumber>
+                            {{(_data.loanAvailable) ? _data.loanAvailable : '-'}}</span></p>
+                        <p class="m-0 pt-24">{{(_data.loanTaken) ? '₹' : ''}}<span appFormatNumber>{{(_data.loanTaken) ? _data.loanTaken : '-'}}</span></p>
+                        <p class="m-0 pt-24">{{(_data.loanTakenOn) ? (_data.loanTakenOn | date:'dd/MM/yyyy') : '-'}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-24">
+            <div class="col-12 pl-0">
+                <h5 class="m-0 f-16 roboto f-400">Key details
+                </h5>
+            </div>
+        </div>
+        <div class="pt-16">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20">
+                    <div class="col-7">
+                        <p class="mob-text-xs f-14">Current risk cover
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Surrender value
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24" *ngFor="let data of nominee; let i = index">
+                                Nominee {{i + 1}}
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Assumed rate
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Linked bank account
+                        </p>
+                    </div>
+                    <div class="col-5 text-right pl-0">
+                        <p class="m-0">{{(_data.riskCover) ? '₹' : ''}}<span appFormatNumber>
+                            {{(_data.riskCover) ? _data.riskCover : '-'}}</span></p>
+                        <p class="m-0 pt-24"> {{(_data.surrenderValue) ? '₹' : ''}}<span appFormatNumber>
+                            {{(_data.surrenderValue) ? _data.surrenderValue : '-'}}</span></p>
+                        <p class="m-0 pt-24"> {{(_data.assumedRate) ? (_data.assumedRate + '%') : '-'}}</p>
+                        <p class="m-0 pt-24">-</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-24">
+            <div class="col-12 pl-0">
+                <h5 class="m-0 f-16 roboto f-400">Miscellaneous details
+                </h5>
+            </div>
+        </div>
+        <div class="pt-16">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20">
+                    <div class="col-7">
+                        <p class="mob-text-xs f-14">Premium payment mode
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Advisor name
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Service branch
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Linked bank account
+                        </p>
+                    </div>
+                    <div class="col-5 text-right pl-0">
+                        <p class="m-0">-</p>
+                        <p class="m-0 pt-24">-</p>
+                        <p class="m-0 pt-24">-</p>
+                        <p class="m-0 pt-24">-</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-24">
+            <div class="col-12 pl-0">
+                <h5 class="m-0 f-16 roboto f-400">Cash inflow
+                </h5>
+            </div>
+        </div>
+        <div class="pt-16">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20">
+                    <div class="col-7">
+                        <p class="mob-text-xs f-14">Type
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Date
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Amount
+                        </p>
+                    </div>
+                    <div class="col-5 text-right pl-0">
+                        <p class="m-0">-</p>
+                        <p class="m-0 pt-24">-</p>
+                        <p class="m-0 pt-24">-</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-24">
+            <div class="col-12 pl-0">
+                <h5 class="m-0 f-16 roboto f-400">Riders
+                </h5>
+            </div>
+        </div>
+        <div class="pt-16">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20">
+                    <div class="col-7">
+                        <p class="mob-text-xs f-14">Accidental benefit
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Double accidental benefit
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Critical illness
+                        </p>
+                    </div>
+                    <div class="col-5 text-right pl-0">
+                        <p class="m-0">-</p>
+                        <p class="m-0 pt-24">-</p>
+                        <p class="m-0 pt-24">-</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div *ngIf="backPage">
+        <app-life-insurance></app-life-insurance>
+    </div>
+<!-- </div> -->
