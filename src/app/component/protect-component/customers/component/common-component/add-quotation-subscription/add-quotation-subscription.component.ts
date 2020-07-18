@@ -7,7 +7,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { CommonFroalaComponent } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/common-froala/common-froala.component';
 import { Router } from '@angular/router';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-import { SettingsService } from 'src/app/component/protect-component/AdviserComponent/setting/settings.service';
+import { SettingsService } from 'src/app/component/Services/settings.service';
 
 @Component({
   selector: 'app-add-quotation-subscription',

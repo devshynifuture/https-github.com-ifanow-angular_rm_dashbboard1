@@ -1,19 +1,19 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild, ViewChildren} from '@angular/core';
-import {MatSort, MatTableDataSource} from '@angular/material';
-import {FormatNumberDirective} from 'src/app/format-number.directive';
-import {CustomerService} from '../../../../../customer.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {ReconciliationService} from 'src/app/component/protect-component/AdviserComponent/backOffice/backoffice-aum-reconciliation/reconciliation/reconciliation.service';
-import {MfServiceService} from '../../mf-service.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {UtilService} from 'src/app/services/util.service';
-import {ExcelGenService} from 'src/app/services/excel-gen.service';
-import {PdfGenService} from 'src/app/services/pdf-gen.service';
-import {RightFilterDuplicateComponent} from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
-import {ActivatedRoute, Router} from '@angular/router';
-import {BackOfficeService} from 'src/app/component/protect-component/AdviserComponent/backOffice/back-office.service';
+import { Component, EventEmitter, OnInit, Output, ViewChild, ViewChildren } from '@angular/core';
+import { MatSort, MatTableDataSource } from '@angular/material';
+import { FormatNumberDirective } from 'src/app/format-number.directive';
+import { CustomerService } from '../../../../../customer.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { MfServiceService } from '../../mf-service.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
+import { ExcelGenService } from 'src/app/services/excel-gen.service';
+import { PdfGenService } from 'src/app/services/pdf-gen.service';
+import { RightFilterDuplicateComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BackOfficeService } from 'src/app/component/Services/back-office.service';
 import { DatePipe } from '@angular/common';
+import { ReconciliationService } from 'src/app/component/Services/reconciliation.service';
 
 @Component({
   selector: 'app-mutual-funds-capital',
@@ -23,7 +23,7 @@ import { DatePipe } from '@angular/common';
 export class MutualFundsCapitalComponent implements OnInit {
   details;
   reportDate;
-  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChildren(FormatNumberDirective) formatNumber;
   displayedColumns: string[] = ['schemeName', 'folioNumber', 'investorName', 'stGain', 'stLoss', 'ltGain', 'indexedGain', 'liloss', 'indexedLoss'];
   // dataSource = ;
@@ -74,10 +74,10 @@ export class MutualFundsCapitalComponent implements OnInit {
   capitalGainData: any;
   toDate: Date;
   fromDate: Date;
-  finalValue={};
-  GTReinvesment=0;
-  GTdividendPayout=0;
-  GTdividendReinvestment=0;
+  finalValue = {};
+  GTReinvesment = 0;
+  GTdividendPayout = 0;
+  GTdividendReinvestment = 0;
   fragmentData = { isSpinner: false };
   setCapitaSummary: any;
   bulkData: any;
@@ -86,14 +86,14 @@ export class MutualFundsCapitalComponent implements OnInit {
   clientData: any;
   getOrgData: any;
   familyMemberId: number;
-  familyList =[];
+  familyList = [];
   // capitalGainData: any;
   constructor(private pdfGen: PdfGenService,
-              public routerActive: ActivatedRoute,
-              private datePipe: DatePipe,
-              private route: Router,
-              private backOfficeService: BackOfficeService,
-              private excel: ExcelGenService, private UtilService: UtilService, private custumService: CustomerService, private eventService: EventService, private reconService: ReconciliationService, private MfServiceService: MfServiceService, private subInjectService: SubscriptionInject) {
+    public routerActive: ActivatedRoute,
+    private datePipe: DatePipe,
+    private route: Router,
+    private backOfficeService: BackOfficeService,
+    private excel: ExcelGenService, private UtilService: UtilService, private custumService: CustomerService, private eventService: EventService, private reconService: ReconciliationService, private MfServiceService: MfServiceService, private subInjectService: SubscriptionInject) {
 
 
     this.routerActive.queryParamMap.subscribe((queryParamMap) => {
@@ -135,12 +135,12 @@ export class MutualFundsCapitalComponent implements OnInit {
     this.routerActive.queryParamMap.subscribe((queryParamMap) => {
       if (queryParamMap.has('clientId')) {
         let param1 = queryParamMap['params'];
-        this.clientId = parseInt(param1.clientId) 
+        this.clientId = parseInt(param1.clientId)
         this.advisorId = parseInt(param1.advisorId)
         this.familyMemberId = parseInt(param1.familyMemberId)
         this.familyList = []
-        const obj={
-        id:this.familyMemberId
+        const obj = {
+          id: this.familyMemberId
         }
         this.familyList.push(obj)
         this.fromDateYear = (param1.from);
@@ -162,10 +162,10 @@ export class MutualFundsCapitalComponent implements OnInit {
       .subscribe(res => {
         this.mutualFund = res;
       })
-    if(this.bulkData){
+    if (this.bulkData) {
       this.fromDateYear = this.bulkData.from;
       this.toDateYear = this.bulkData.to;
-    }else{
+    } else {
       this.fromDateYear = 2019;
       this.toDateYear = 2020;
     }
@@ -328,7 +328,7 @@ export class MutualFundsCapitalComponent implements OnInit {
       this.setCapitaSummary.GTReinvesment = this.GTReinvesment
 
       this.MfServiceService.setCapitalSummary(this.setCapitaSummary)
-      if(this.route.url.split('?')[0] == '/pdf/capitalGainSummary'){
+      if (this.route.url.split('?')[0] == '/pdf/capitalGainSummary') {
         this.generatePdfBulk()
       }
       this.objSendToDetailedCapital = {
@@ -360,7 +360,7 @@ export class MutualFundsCapitalComponent implements OnInit {
       if (this.rightFilterData) {
         mutualFund = this.MfServiceService.filterArray(mutualFund, 'familyMemberId', this.rightFilterData.family_member_list, 'id');
       }
-      if(this.familyList.length > 0){
+      if (this.familyList.length > 0) {
         this.mfList = this.MfServiceService.filterArray(this.mfList, 'familyMemberId', this.familyList, 'id');
       }
       mutualFund.forEach(element => {
@@ -418,7 +418,7 @@ export class MutualFundsCapitalComponent implements OnInit {
       if (this.rightFilterData) {
         this.mfList = this.MfServiceService.filterArray(this.mfList, 'familyMemberId', this.rightFilterData.family_member_list, 'id');
       }
-      if(this.familyList.length > 0){
+      if (this.familyList.length > 0) {
         this.mfList = this.MfServiceService.filterArray(this.mfList, 'familyMemberId', this.familyList, 'id');
       }
       this.mfList.forEach(element => {
@@ -570,16 +570,16 @@ export class MutualFundsCapitalComponent implements OnInit {
       let para = this.mfCapitalTemplate.nativeElement.innerHTML
       let obj = {
         htmlInput: para,
-        name: (this.clientData.name)?this.clientData.name:''+'s'+'MF capital gain summary'+date,
+        name: (this.clientData.name) ? this.clientData.name : '' + 's' + 'MF capital gain summary' + date,
         landscape: true,
         key: 'showPieChart',
-        clientId : this.clientId,
-        advisorId : this.advisorId,
+        clientId: this.clientId,
+        advisorId: this.advisorId,
         fromEmail: 'devshyni@futurewise.co.in',
         toEmail: 'futurewisejunkmail@gmail.com'
       }
       this.UtilService.bulkHtmlToPdf(obj)
-     // this.UtilService.htmlToPdf(para, 'MF_Capital_Gain_Summary', true, this.fragmentData, '', '')
+      // this.UtilService.htmlToPdf(para, 'MF_Capital_Gain_Summary', true, this.fragmentData, '', '')
     }, 200);
 
 

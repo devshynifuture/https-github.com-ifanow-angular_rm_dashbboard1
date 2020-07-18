@@ -6,8 +6,8 @@ import { CustomerService } from '../../../../customer.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { MfServiceService } from '../mf-service.service';
 import { map } from 'rxjs/operators';
-import { SettingsService } from 'src/app/component/protect-component/AdviserComponent/setting/settings.service';
 import { ActivatedRoute } from '@angular/router';
+import { SettingsService } from 'src/app/component/Services/settings.service';
 
 @Component({
   selector: 'app-mutual-fund',
@@ -58,7 +58,7 @@ export class MutualFundComponent implements OnInit {
           let param1 = queryParamMap['params'];
           this.clientId = param1.clientId
           this.advisorId = param1.advisorId
-          console.log('2423425',param1)
+          console.log('2423425', param1)
         }
       }
     });
@@ -109,7 +109,7 @@ export class MutualFundComponent implements OnInit {
       }
     );
   }
-  getDataCount(){
+  getDataCount() {
     this.changeCount.emit("call");
   }
   doFiltering(data) {

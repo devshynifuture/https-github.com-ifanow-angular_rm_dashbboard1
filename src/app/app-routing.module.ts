@@ -1,13 +1,12 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {SelectivePreloadingStrategyService} from './services/selective-preloading-strategy.service';
-import {ErrorPageComponent} from './component/protect-component/common-component/error-page/error-page.component';
-import {WelcomePageComponent} from './component/protect-component/common-component/welcome-page/welcome-page.component';
-import {DataNotFoundComponent} from './component/protect-component/common-component/data-not-found/data-not-found.component';
-import {AuthGuard} from './guards/auth.guard';
-import {FormTestComponent} from './test/form-test/form-test.component';
-import {BackofficeDashboardComponent} from './component/protect-component/AdviserComponent/backOffice/backoffice-dashboard/backoffice-dashboard.component';
-import {AdvisorGuard} from './guards/advisor.guard';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { SelectivePreloadingStrategyService } from './services/selective-preloading-strategy.service';
+import { ErrorPageComponent } from './component/protect-component/common-component/error-page/error-page.component';
+import { WelcomePageComponent } from './component/protect-component/common-component/welcome-page/welcome-page.component';
+import { DataNotFoundComponent } from './component/protect-component/common-component/data-not-found/data-not-found.component';
+import { AuthGuard } from './guards/auth.guard';
+import { FormTestComponent } from './test/form-test/form-test.component';
+import { AdvisorGuard } from './guards/advisor.guard';
 
 const routes: Routes = [
   {
@@ -25,11 +24,7 @@ const routes: Routes = [
     canActivate: [AuthGuard, AdvisorGuard],
 
   },
-  {
-    path: 'pdf',
-    loadChildren: () => import('./component/protect-component/AdviserComponent/backOffice/backoffice-mis/pdf.module').then(m => m.PdfModule),
 
-  },
   /*
   {
     path: 'pdf/summary',
@@ -77,11 +72,6 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'support',
-    loadChildren: () => import('./component/protect-component/SupportComponent/support.module').then(m => m.SupportModule),
-    canActivate: [AuthGuard],
-  },
-  {
     path: 'subscription-upper',
     loadChildren: () => import('./component/protect-component/AdviserComponent/Subscriptions/subscription-upper-entry-module').then(m => m.SubscriptionUpperEntry)
   },
@@ -91,10 +81,7 @@ const routes: Routes = [
     loadChildren: () => import('./component/gmail-redirect/gmail-redirect.module')
       .then(m => m.GmailRedirectModule)
   },
-  {
-    path: 'backoffice',
-    component: BackofficeDashboardComponent
-  },
+
   {
     path: 'cus',
     loadChildren: () => import('./component/protect-component/customer-feedback/cus-feedback.module').then(m => m.CusFeedbackModule)

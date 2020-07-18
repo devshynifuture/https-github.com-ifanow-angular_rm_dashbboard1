@@ -14,7 +14,6 @@ import { ImageCropperComponent } from './image-cropper/image-cropper.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { ReplaceUserComponent } from './replace-user/replace-user.component';
-import { AddNumberComponent } from '../PeopleComponent/people/Component/people-clients/add-client/add-number/add-number.component';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { CustomCommonModule } from 'src/app/common/custom.common.module';
@@ -23,8 +22,8 @@ import { MobileViewAddNumberComponent } from './mobile-view-add-number/mobile-vi
 
 @NgModule({
   declarations: [
-    FroalaComponent, ConfirmDialogComponent, ErrorPageComponent, DataNotFoundComponent, ImageCropperComponent, WelcomePageComponent, ReplaceUserComponent, AddNumberComponent, ResetPasswordComponent, MobileViewAddNumberComponent],
-  exports: [FroalaComponent, ConfirmDialogComponent, ImageCropperComponent, ReplaceUserComponent, AddNumberComponent, ResetPasswordComponent, MobileViewAddNumberComponent],
+    FroalaComponent, ConfirmDialogComponent, ErrorPageComponent, DataNotFoundComponent, ImageCropperComponent, WelcomePageComponent, ReplaceUserComponent, ResetPasswordComponent, MobileViewAddNumberComponent],
+  exports: [FroalaComponent, ConfirmDialogComponent, ImageCropperComponent, ReplaceUserComponent, ResetPasswordComponent, MobileViewAddNumberComponent],
   imports: [
     MaterialModule,
     CommonModule,
@@ -40,7 +39,7 @@ import { MobileViewAddNumberComponent } from './mobile-view-add-number/mobile-vi
 
     // AppModule
   ],
-  entryComponents: [ConfirmDialogComponent, ImageCropperComponent, ReplaceUserComponent, AddNumberComponent, ResetPasswordComponent]
+  entryComponents: [ConfirmDialogComponent, ImageCropperComponent, ReplaceUserComponent, ResetPasswordComponent]
 })
 export class CommonComponentModule {
 }

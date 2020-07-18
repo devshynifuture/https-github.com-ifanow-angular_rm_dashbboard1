@@ -1,17 +1,17 @@
-import {Component, OnInit, QueryList, ViewChildren, Input} from '@angular/core';
-import {ValidatorType, UtilService} from 'src/app/services/util.service';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {MatInput, MatDialog} from '@angular/material';
-import {FormBuilder, FormArray, Validators} from '@angular/forms';
-import {CustomerService} from '../../../customer.service';
-import {EnumDataService} from 'src/app/services/enum-data.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {DatePipe} from '@angular/common';
-import {EventService} from 'src/app/Data-service/event.service';
-import {EnumServiceService} from 'src/app/services/enum-service.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {LinkBankComponent} from 'src/app/common/link-bank/link-bank.component';
-import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { Component, OnInit, QueryList, ViewChildren, Input } from '@angular/core';
+import { ValidatorType, UtilService } from 'src/app/services/util.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { MatInput, MatDialog } from '@angular/material';
+import { FormBuilder, FormArray, Validators } from '@angular/forms';
+import { CustomerService } from '../../../customer.service';
+import { EnumDataService } from 'src/app/services/enum-data.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { DatePipe } from '@angular/common';
+import { EventService } from 'src/app/Data-service/event.service';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
+import { PeopleService } from 'src/app/component/Services/people.service';
 
 
 @Component({
@@ -275,7 +275,7 @@ export class AddBankAccMobComponent implements OnInit {
   }
 
   Close(flag) {
-    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: flag});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
 
   onlyTextNotSplChar(event: any) {
@@ -344,7 +344,7 @@ export class AddBankAccMobComponent implements OnInit {
     }
     /***nominee***/
 
-    this.ownerData = {Fmember: this.nomineesListFM, controleData: this.bankAccounts};
+    this.ownerData = { Fmember: this.nomineesListFM, controleData: this.bankAccounts };
     // ==============owner-nominee Data ========================\\
   }
 
@@ -396,7 +396,7 @@ export class AddBankAccMobComponent implements OnInit {
         description: this.bankAccounts.controls.description.value,
         nominees: this.nominees,
         nomineeList: this.bankAccounts.value.getNomineeName,
-        id:''
+        id: ''
 
       };
       obj.nomineeList.forEach((element, index) => {
@@ -453,7 +453,7 @@ export class AddBankAccMobComponent implements OnInit {
   getAdviceBankAccountRes(data) {
     this.barButtonOptions.active = false;
     this.eventService.openSnackBar('Bank account added successfully', 'OK');
-    this.subInjectService.changeNewRightSliderState({flag: 'addedbankAc', state: 'close', data, refreshRequired: true});
+    this.subInjectService.changeNewRightSliderState({ flag: 'addedbankAc', state: 'close', data, refreshRequired: true });
   }
 
   addBankAccountsRes(data) {
@@ -494,7 +494,7 @@ export class AddBankAccMobComponent implements OnInit {
   openDialog(eventData): void {
     const dialogRef = this.dialog.open(LinkBankComponent, {
       width: '50%',
-      data: {bankList: this.bankList, userInfo: true}
+      data: { bankList: this.bankList, userInfo: true }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -505,5 +505,5 @@ export class AddBankAccMobComponent implements OnInit {
 
   }
 
-// link bank
+  // link bank
 }

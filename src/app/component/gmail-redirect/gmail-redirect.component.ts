@@ -1,4 +1,3 @@
-import { EmailServiceService } from './../protect-component/AdviserComponent/Email/email-service.service';
 import { appConfig } from './../../config/component-config';
 import { apiConfig } from './../../config/main-config';
 import { AuthService } from './../../auth-service/authService';

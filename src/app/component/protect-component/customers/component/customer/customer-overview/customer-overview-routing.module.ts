@@ -1,7 +1,7 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
-import {CustomerOverviewComponent} from './customer-overview.component';
+import { CustomerOverviewComponent } from './customer-overview.component';
 
 const routes: Routes = [
   {
@@ -9,13 +9,10 @@ const routes: Routes = [
     children: [
       {
         path: 'myfeed',
-        data: {animation: 'Tab1', preload: true},
+        data: { animation: 'Tab1', preload: true },
         loadChildren: () => import('./overview-myfeed/overview-myfeed.module').then(m => m.OverviewMyfeedModule)
       },
-      {
-        path: 'profile',
-        loadChildren: () => import('./overview-profile/overview-profile.module').then(m => m.OverviewProfileModule)
-      },
+
       {
         path: 'documents',
         loadChildren: () => import('./overview-documents/documents.module').then(m => m.DocumentsModule)

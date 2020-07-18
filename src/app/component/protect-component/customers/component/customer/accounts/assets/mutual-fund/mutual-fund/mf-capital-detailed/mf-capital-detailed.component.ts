@@ -1,13 +1,13 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {MatTableDataSource} from '@angular/material';
-import {MfServiceService} from '../../mf-service.service';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {UtilService} from 'src/app/services/util.service';
-import {CustomerService} from '../../../../../customer.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {RightFilterDuplicateComponent} from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
-import {ActivatedRoute, Router} from '@angular/router';
-import {BackOfficeService} from 'src/app/component/protect-component/AdviserComponent/backOffice/back-office.service';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { MatTableDataSource } from '@angular/material';
+import { MfServiceService } from '../../mf-service.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
+import { CustomerService } from '../../../../../customer.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { RightFilterDuplicateComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BackOfficeService } from 'src/app/component/Services/back-office.service';
 import { DatePipe } from '@angular/common';
 
 // import { MutualFundAllTransactionComponent } from '../mutual-fund-all-transaction/mutual-fund-all-transaction.component';
@@ -70,7 +70,7 @@ export class MfCapitalDetailedComponent implements OnInit {
   familyList = [];
   constructor(private MfServiceService: MfServiceService,
     public routerActive: ActivatedRoute,
-    private backOfficeService : BackOfficeService,
+    private backOfficeService: BackOfficeService,
     private datePipe: DatePipe,
     private route: Router,
     private subInjectService: SubscriptionInject, private UtilService: UtilService, private custumService: CustomerService) {
@@ -85,11 +85,11 @@ export class MfCapitalDetailedComponent implements OnInit {
         this.fromDateYear = param1.from,
           this.toDateYear = param1.to,
           console.log('2423425', param1)
-          this.familyList = []
-          const obj={
-          id:this.familyMemberId
-          }
-          this.familyList.push(obj)
+        this.familyList = []
+        const obj = {
+          id: this.familyMemberId
+        }
+        this.familyList.push(obj)
       }
       else {
         this.advisorId = AuthService.getAdvisorId();
@@ -322,7 +322,7 @@ export class MfCapitalDetailedComponent implements OnInit {
       if (this.rightFilterData) {
         mfList = this.MfServiceService.filterArray(mfList, 'familyMemberId', this.rightFilterData.family_member_list, 'id');
       }
-      if(this.familyList.length > 0){
+      if (this.familyList.length > 0) {
         this.mfList = this.MfServiceService.filterArray(this.mfList, 'familyMemberId', this.familyList, 'id');
       }
       mfList.forEach(element => {
@@ -545,7 +545,7 @@ export class MfCapitalDetailedComponent implements OnInit {
       if (this.rightFilterData) {
         mutualFund = this.MfServiceService.filterArray(mutualFund, 'familyMemberId', this.rightFilterData.family_member_list, 'id');
       }
-      if(this.familyList.length > 0){
+      if (this.familyList.length > 0) {
         this.mutualFund = this.MfServiceService.filterArray(this.mutualFund, 'familyMemberId', this.familyList, 'id');
       }
       mutualFund.forEach(element => {
@@ -617,7 +617,7 @@ export class MfCapitalDetailedComponent implements OnInit {
       let para = this.mfCapitalTemplate.nativeElement.innerHTML
       let obj = {
         htmlInput: para,
-        name: (this.clientData.name)?this.clientData.name:''+'s'+'MF capital gain detailed'+date,
+        name: (this.clientData.name) ? this.clientData.name : '' + 's' + 'MF capital gain detailed' + date,
         landscape: true,
         key: 'showPieChart',
         clientId: this.clientId,

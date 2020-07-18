@@ -8,8 +8,8 @@ import { LoginService } from 'src/app/component/no-protected/login/login.service
 import { EventService } from 'src/app/Data-service/event.service';
 import { PlanService } from '../../../plan/plan.service';
 import Highcharts from 'highcharts';
-import { SettingsService } from 'src/app/component/protect-component/AdviserComponent/setting/settings.service';
 import { EnumDataService } from 'src/app/services/enum-data.service';
+import { SettingsService } from 'src/app/component/Services/settings.service';
 
 @Component({
   selector: 'app-mobile-profile',

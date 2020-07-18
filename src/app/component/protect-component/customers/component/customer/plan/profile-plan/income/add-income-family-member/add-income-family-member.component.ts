@@ -4,7 +4,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { PeopleService } from 'src/app/component/Services/people.service';
 
 @Component({
   selector: 'app-add-income-family-member',
@@ -21,7 +21,7 @@ export class AddIncomeFamilyMemberComponent implements OnInit {
   ownerCount = 0;
   checkFamList: boolean;
 
-  constructor(private peopleService :PeopleService,private subInjectService: SubscriptionInject, private custumService: CustomerService, private utils: UtilService, private eventService: EventService) {
+  constructor(private peopleService: PeopleService, private subInjectService: SubscriptionInject, private custumService: CustomerService, private utils: UtilService, private eventService: EventService) {
   }
 
   ngOnInit() {
@@ -52,7 +52,7 @@ export class AddIncomeFamilyMemberComponent implements OnInit {
       clientId: this.clientId,
     };
     // this.custumService.getListOfFamilyByClient(obj).subscribe(
-      this.peopleService.getClientFamilyMemberListAsset(obj).subscribe(
+    this.peopleService.getClientFamilyMemberListAsset(obj).subscribe(
       data => this.getListOfFamilyByClientRes(data)
     );
   }

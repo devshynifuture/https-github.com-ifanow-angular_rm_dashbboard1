@@ -3,9 +3,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { DatePipe } from '@angular/common';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { PeopleService } from 'src/app/component/Services/people.service';
 import { EventService } from 'src/app/Data-service/event.service';
-import { relationListFilterOnID } from 'src/app/component/protect-component/PeopleComponent/people/Component/people-clients/add-client/client-basic-details/relationypeMethods';
 
 @Component({
   selector: 'app-individual-member-form',
@@ -35,7 +34,7 @@ export class IndividualMemberFormComponent implements OnInit {
       data.relationshipId == 18 ||
       data.relationshipId == 19 ||
       data.relationshipId == 17) {
-      this.relationList = relationListFilterOnID(data)
+      // this.relationList = relationListFilterOnID(data)
     }
     else {
       this.relationshipTypeMethod(data.genderId, data.age)

@@ -1,10 +1,10 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { DialogData } from 'src/app/component/protect-component/AdviserComponent/Activities/calendar/calendar.component';
 import { FormBuilder, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { ValidatorType } from 'src/app/services/util.service';
 import { PlanService } from '../../plan.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { DialogData } from 'src/app/component/protect-component/interface';
 
 @Component({
   selector: 'app-manage-exclusions',

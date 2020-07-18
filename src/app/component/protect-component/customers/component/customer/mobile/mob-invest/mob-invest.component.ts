@@ -3,8 +3,8 @@ import { CustomerService } from '../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService } from 'src/app/services/util.service';
-import { detailStatusObj } from 'src/app/component/protect-component/AdviserComponent/transactions/transactions-list/transaction-detail/detailStatus';
-import { OnlineTransactionService } from 'src/app/component/protect-component/AdviserComponent/transactions/online-transaction.service';
+import { detailStatusObj } from 'src/app/component/Services/detailStatus';
+import { OnlineTransactionService } from 'src/app/component/Services/online-transaction.service';
 
 @Component({
   selector: 'app-mob-invest',

@@ -1,7 +1,7 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {DialogData} from 'src/app/component/protect-component/AdviserComponent/Activities/calendar/calendar.component';
-import {FormArray, FormBuilder, Validators} from '@angular/forms';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { FormArray, FormBuilder, Validators } from '@angular/forms';
+import { DialogData } from 'src/app/component/protect-component/interface';
 
 @Component({
   selector: 'app-manage-deployment',
@@ -41,7 +41,7 @@ export class ManageDeploymentComponent implements OnInit {
     }))
   }
   close(flag) {
-    this.dialogRef.close({isRefreshRequired:flag})
+    this.dialogRef.close({ isRefreshRequired: flag })
   }
   removeAsset(index) {
     this.assetAllcation.controls.assetAllocationList.removeAt(index)

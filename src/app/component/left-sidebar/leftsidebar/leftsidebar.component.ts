@@ -9,10 +9,10 @@ import { DialogContainerComponent } from '../../../common/dialog-container/dialo
 import { DynamicComponentService } from '../../../services/dynamic-component.service';
 import { dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation } from '../../../animation/animation';
 import { EnumDataService } from '../../../services/enum-data.service';
-import { SettingsService } from '../../protect-component/AdviserComponent/setting/settings.service';
 import { UtilService } from 'src/app/services/util.service';
-import { PeopleService } from '../../protect-component/PeopleComponent/people.service';
+import { PeopleService } from '../../Services/people.service';
 import { map, startWith } from 'rxjs/operators';
+import { SettingsService } from '../../Services/settings.service';
 
 @Component({
   selector: 'app-leftsidebar',

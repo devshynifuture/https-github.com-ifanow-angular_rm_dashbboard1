@@ -4,7 +4,7 @@ import { PlanService } from '../../plan.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { LoaderFunction } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { PeopleService } from 'src/app/component/Services/people.service';
 import { Subscriber, Subscription } from 'rxjs';
 import { AddGoalService } from './add-goal.service';
 
@@ -18,14 +18,14 @@ export class AddGoalComponent implements OnInit {
 
   @Input() data: any = {};
   @Input() popupHeaderText: string = 'KEY INFO';
-  allAssetsList:any[] = [];
-  clientId:any;
+  allAssetsList: any[] = [];
+  clientId: any;
 
-  familyList:any[] = [{familyMemberId: 'all', displayName: 'All'}];
-  displayedAssets:any[] = [];
-  currentAllocationFilter:string = 'all';
-  currentFamilyFilter:any = 'all';
-  currentSort:string = 'v-H2L';
+  familyList: any[] = [{ familyMemberId: 'all', displayName: 'All' }];
+  displayedAssets: any[] = [];
+  currentAllocationFilter: string = 'all';
+  currentFamilyFilter: any = 'all';
+  currentSort: string = 'v-H2L';
   allocationBtnList = [
     {
       name: 'All Assets',
@@ -48,7 +48,7 @@ export class AddGoalComponent implements OnInit {
       filter: 'not-deployed',
     },
   ];
-  sortBtnList:any[] = [
+  sortBtnList: any[] = [
     {
       name: 'Value - high to low',
       sortKey: 'v-H2L'
@@ -73,9 +73,9 @@ export class AddGoalComponent implements OnInit {
   advisorId: any;
   subscription = new Subscription();
 
-  
+
   constructor(
-    private subInjectService: SubscriptionInject, 
+    private subInjectService: SubscriptionInject,
     private goalService: PlanService,
     private loaderFn: LoaderFunction,
     private eventService: EventService,
@@ -92,40 +92,40 @@ export class AddGoalComponent implements OnInit {
     this.getFamilyMembersList();
     this.loadAssets();
     this.subscription.add(
-      this.planService.assetSubject.subscribe((data:any) => {
+      this.planService.assetSubject.subscribe((data: any) => {
         this.allAssetsList = data.map(asset => {
           let absAllocation = 0;
-          if(asset.goalAssetMapping) {
+          if (asset.goalAssetMapping) {
             asset.goalAssetMapping.forEach(element => {
               absAllocation += element.percentAllocated;
             });
           }
-          return {absAllocation, ...asset};
+          return { absAllocation, ...asset };
         })
         this.filterAndSortAssets();
       })
     )
     this.subscription.add(
-      this.allocateService.refreshAssetList.subscribe(()=> {
+      this.allocateService.refreshAssetList.subscribe(() => {
         this.loadAssets();
       })
     )
-    
+
   }
 
-  loadAssets(){
-    let obj = {advisorId: this.advisorId, clientId: this.clientId}
+  loadAssets() {
+    let obj = { advisorId: this.advisorId, clientId: this.clientId }
     this.loaderFn.increaseCounter();
-    this.goalService.getAssetsForAllocation(obj).subscribe((data)=>{
+    this.goalService.getAssetsForAllocation(obj).subscribe((data) => {
       this.allAssetsList = data;
       this.allAssetsList = this.allAssetsList.map(asset => {
         let absAllocation = 0;
-        if(asset.goalAssetMapping) {
+        if (asset.goalAssetMapping) {
           asset.goalAssetMapping.forEach(element => {
             absAllocation += element.percentAllocated;
           });
         }
-        return {absAllocation, ...asset};
+        return { absAllocation, ...asset };
       })
       this.loaderFn.decreaseCounter();
     }, err => {
@@ -133,7 +133,7 @@ export class AddGoalComponent implements OnInit {
       this.eventService.openSnackBar(err, "Dismiss")
     })
   }
-  
+
   getFamilyMembersList() {
     const obj = {
       clientId: this.clientId,
@@ -144,7 +144,7 @@ export class AddGoalComponent implements OnInit {
         if (data && data.length > 0) {
           this.familyList = data;
         }
-        this.familyList.unshift({familyMemberId: 'all', displayName: 'All'})
+        this.familyList.unshift({ familyMemberId: 'all', displayName: 'All' })
         this.loaderFn.decreaseCounter();
       },
       err => {
@@ -154,14 +154,14 @@ export class AddGoalComponent implements OnInit {
     );
   }
 
-  filterAndSortAssets(){
+  filterAndSortAssets() {
     this.filterByFamily(this.currentFamilyFilter);
     this.filterByAllocation(this.currentAllocationFilter);
     this.sortList();
   }
 
   filterByFamily(member) {
-    if(member.asset_owner_id == -1) {
+    if (member.asset_owner_id == -1) {
       this.displayedAssets = this.allAssetsList;
     } else {
       this.displayedAssets = this.allAssetsList.filter((obj) => {
@@ -187,7 +187,7 @@ export class AddGoalComponent implements OnInit {
       case 'not-deployed':
         this.displayedAssets = this.displayedAssets.filter(asset => !asset.isDeployed);
         break;
-    
+
       default:
         console.error("Invalid asset filter id found", filterType);
         break;
@@ -197,37 +197,37 @@ export class AddGoalComponent implements OnInit {
   sortList() {
     switch (this.currentSort) {
       case 'v-H2L': // value high to low
-        this.displayedAssets = this.displayedAssets.sort((a,b)=>{
+        this.displayedAssets = this.displayedAssets.sort((a, b) => {
           return b.currentValue - a.currentValue;
         });
         break;
 
       case 'v-L2H': // value low to high
-        this.displayedAssets = this.displayedAssets.sort((a,b)=>{
+        this.displayedAssets = this.displayedAssets.sort((a, b) => {
           return a.currentValue - b.currentValue;
         });
         break;
 
       case 'asset': // asset type
-        this.displayedAssets = this.displayedAssets.sort((a,b) => {
+        this.displayedAssets = this.displayedAssets.sort((a, b) => {
           return b.assetType - a.assetType;
         });
         break;
 
       case 'm-N2F': // maturity near to far
-        this.displayedAssets = this.displayedAssets.sort((a,b)=> {
+        this.displayedAssets = this.displayedAssets.sort((a, b) => {
           return a.maturityDate - b.maturityDate;
         });
         break;
 
       case 'm-F2N': // maturity far to near
-        this.displayedAssets = this.displayedAssets.sort((a,b) => {
+        this.displayedAssets = this.displayedAssets.sort((a, b) => {
           return b.maturityDate - a.maturityDate;
         });
         break;
     }
   }
-  
+
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }

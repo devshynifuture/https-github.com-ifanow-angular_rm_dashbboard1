@@ -1,8 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormBuilder } from '@angular/forms';
-import { DialogData } from 'src/app/component/protect-component/AdviserComponent/Activities/calendar/calendar.component';
 import { EventService } from 'src/app/Data-service/event.service';
+import { DialogData } from 'src/app/component/protect-component/interface';
 
 @Component({
   selector: 'app-preview',
@@ -28,7 +28,7 @@ export class PreviewComponent implements OnInit {
       this.getLoader()
     }, 4000);
   }
-  getLoader(){
+  getLoader() {
     this.loadSpinner = false
   }
   onNoClick(value): void {

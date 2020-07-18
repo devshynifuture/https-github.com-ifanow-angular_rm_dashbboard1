@@ -6,7 +6,7 @@ import { DatePipe } from '@angular/common';
 import { PlanService } from '../../plan.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { AuthService } from 'src/app/auth-service/authService';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { PeopleService } from 'src/app/component/Services/people.service';
 import { UtilService, LoaderFunction } from 'src/app/services/util.service';
 import { MatTableDataSource } from '@angular/material';
 import { AddGoalService } from '../add-goal/add-goal.service';
@@ -21,15 +21,15 @@ import { Subscriber } from 'rxjs';
 export class MfAllocationsComponent implements OnInit, OnDestroy {
   displayedColumns = ['position', 'name', 'weight'];
   dataSource = [];
-  displayedColumns1 = ['scheme', 'value', 'goal','icons'];
+  displayedColumns1 = ['scheme', 'value', 'goal', 'icons'];
   dataSource1 = new MatTableDataSource([]);
 
-  @Input() data:any = {};
+  @Input() data: any = {};
   advisorId;
   clientId;
-  mfList:any[] = [];
-  familyList:any[] = [];
-  
+  mfList: any[] = [];
+  familyList: any[] = [];
+
   schemeFilterValue = 'all';
   folioFilterValue = 'all';
   assetFilterValue = 'all';
@@ -58,13 +58,13 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
     this.getFamilyMembersList();
     this.loadMFData();
     this.subscriber.add(
-      this.allocationService.refreshObservable.subscribe(()=>{
+      this.allocationService.refreshObservable.subscribe(() => {
         this.loadMFData();
       })
     );
   }
 
-  initializeRequiredTable(){
+  initializeRequiredTable() {
     let required = this.data.dashboardData;
     let tableSource = [];
     // logic for saving status
@@ -116,18 +116,18 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
     );
   }
 
-  loadMFData(){
+  loadMFData() {
     this.loaderFn.increaseCounter();
-    this.planService.getMFList({advisorId: this.advisorId, clientId: this.clientId}).subscribe(res => {
+    this.planService.getMFList({ advisorId: this.advisorId, clientId: this.clientId }).subscribe(res => {
       this.mfList = res;
       this.mfList = this.mfList.map(mf => {
         let absAllocation = 0;
-        if(mf.goalAssetMapping.length > 0) {
+        if (mf.goalAssetMapping.length > 0) {
           mf.goalAssetMapping.forEach(element => {
             absAllocation += element.percentAllocated;
           });
         }
-        return {absAllocation, ...mf};
+        return { absAllocation, ...mf };
       })
       this.loaderFn.decreaseCounter();
     }, err => {
@@ -135,12 +135,12 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
       this.loaderFn.decreaseCounter();
     })
   }
-  
-  filterAssets(){
+
+  filterAssets() {
     let tableSource = [];
     let family = [];
 
-    if(this.selectedFamFilter == 'all') {
+    if (this.selectedFamFilter == 'all') {
       family = this.familyList;
     } else {
       family = this.familyList.filter(fam => fam.id == this.selectedFamFilter);
@@ -151,10 +151,10 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
     mfList = this.filterByScheme(mfList);
     mfList = this.filterByAssetType(mfList);
 
-    if(family.length > 0 && mfList.length > 0) {
+    if (family.length > 0 && mfList.length > 0) {
       family.forEach(fam => {
-        tableSource.push({isFamily: true, ...fam});
-        tableSource.push(mfList.filter(mf => mf.familyMemberId == fam.familyMemberId).map(mf => {return {isFamily: false, ...mf}}));
+        tableSource.push({ isFamily: true, ...fam });
+        tableSource.push(mfList.filter(mf => mf.familyMemberId == fam.familyMemberId).map(mf => { return { isFamily: false, ...mf } }));
       })
       tableSource = tableSource.flat();
     }
@@ -162,8 +162,8 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
     this.dataSource1.data = tableSource;
   }
 
-  filterByFolio(mfList:Array<any>){
-    switch(this.folioFilterValue) {
+  filterByFolio(mfList: Array<any>) {
+    switch (this.folioFilterValue) {
       case 'all':
         return mfList;
       case 'zero':
@@ -173,8 +173,8 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
     }
   }
 
-  filterByScheme(mfList:Array<any>){
-    switch(this.schemeFilterValue) {
+  filterByScheme(mfList: Array<any>) {
+    switch (this.schemeFilterValue) {
       case 'all':
         return mfList;
       case 'unallocated':
@@ -184,8 +184,8 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
     }
   }
 
-  filterByAssetType(mfList:Array<any>){
-    switch(this.assetFilterValue) {
+  filterByAssetType(mfList: Array<any>) {
+    switch (this.assetFilterValue) {
       case 'all':
         return mfList;
       case 'equity':
@@ -196,33 +196,33 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
     }
   }
 
-  allocateAssetToGoal(data){
+  allocateAssetToGoal(data) {
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
       goalId: this.data.remainingData.id,
       mfId: data.id
     }
-    this.allocationService.allocateMFToGoal(data, {advisorId: this.advisorId, clientId: this.clientId}, this.data);
-    
+    this.allocationService.allocateMFToGoal(data, { advisorId: this.advisorId, clientId: this.clientId }, this.data);
+
   }
 
 
-  removeFromAllocation(data, goal){
+  removeFromAllocation(data, goal) {
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
       goalId: goal.id,
       mfId: data.id
     }
-    
+
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({state: 'close'});
+    this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.subscriber.unsubscribe();
   }
 }

@@ -9,15 +9,7 @@ import { SubscriptionEntry } from '../../protect-component/AdviserComponent/Subs
 import { SubscriptionUpperEntry } from '../../protect-component/AdviserComponent/Subscriptions/subscription-upper-entry-module';
 import { LeftsidebarComponent } from './leftsidebar.component';
 import { DynamicComponentService } from '../../../services/dynamic-component.service';
-import { TransactionsModule } from '../../protect-component/AdviserComponent/transactions/transactions.module';
-import { TransactionEntryModule } from '../../protect-component/AdviserComponent/transactions/transaction.entry.module';
-import { SupportEntryModule } from '../../protect-component/SupportComponent/support.entry.module';
-import { SettingEntryModule } from '../../protect-component/AdviserComponent/setting/setting-entry/setting-entry.module';
 // import { ScrollDispatchModule } from '@angular/cdk/scrolling';
-import { PeopleEntryModule } from '../../protect-component/PeopleComponent/people/people-entry-module';
-import { ActivitesEntryModule } from '../../protect-component/AdviserComponent/Activities/activites-entry.module';
-import { BackofficeAumReconciliationEntryModule } from '../../protect-component/AdviserComponent/backOffice/backoffice-aum-reconciliation/backoffice-aum-reconciliation.entry.module';
-import { MarketPlaceEntryModule } from '../../protect-component/Advisor-Marketplace/advisor-marketplace.entry.module';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MY_FORMATS2 } from '../../../constants/date-format.constant';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
@@ -36,23 +28,12 @@ import { DashboardEntryModule } from '../../protect-component/AdviserComponent/d
     SubscriptionUpperEntry,
     LeftsidebarRoutingModule,
     // ScrollDispatchModule,
-    TransactionsModule,
-    TransactionEntryModule,
-    SupportEntryModule,
-    SettingEntryModule,
-    PeopleEntryModule,
-    ActivitesEntryModule,
-    BackofficeAumReconciliationEntryModule,
-    MarketPlaceEntryModule,
+
     CustomDirectiveModule,
     DashboardEntryModule
   ],
   entryComponents: [
     SubscriptionEntry.getComponentList(),
-    SupportEntryModule.getComponentList(),
-    SettingEntryModule.getComponentList(),
-    PeopleEntryModule.getComponentList(),
-    MarketPlaceEntryModule.getComponentList(),
     DashboardEntryModule.getComponentList()
   ],
   providers: [

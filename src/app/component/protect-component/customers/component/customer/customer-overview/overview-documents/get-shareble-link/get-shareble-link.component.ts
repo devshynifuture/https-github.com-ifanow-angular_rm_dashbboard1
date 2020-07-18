@@ -1,11 +1,11 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatChipInputEvent, MatDialogRef} from '@angular/material';
-import {DialogData} from 'src/app/component/protect-component/AdviserComponent/Activities/calendar/calendar.component';
-import {FormBuilder, Validators} from '@angular/forms';
-import {EventService} from 'src/app/Data-service/event.service';
-import {ValidatorType} from 'src/app/services/util.service';
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatChipInputEvent, MatDialogRef } from '@angular/material';
+import { FormBuilder, Validators } from '@angular/forms';
+import { EventService } from 'src/app/Data-service/event.service';
+import { ValidatorType } from 'src/app/services/util.service';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { AuthService } from 'src/app/auth-service/authService';
+import { DialogData } from 'src/app/component/protect-component/interface';
 
 
 @Component({
@@ -34,13 +34,13 @@ export class GetSharebleLinkComponent implements OnInit {
   getClientData: any;
 
   constructor(public dialogRef: MatDialogRef<GetSharebleLinkComponent>, private fb: FormBuilder,
-              @Inject(MAT_DIALOG_DATA) public data: DialogData, private eventService: EventService,) {
-  
-              this.getClientData = AuthService.getClientData()
-              console.log('clientData',this.getClientData)
-              let userInfo = AuthService.getUserInfo()
-              console.log('userInfo',userInfo)
-              }
+    @Inject(MAT_DIALOG_DATA) public data: DialogData, private eventService: EventService, ) {
+
+    this.getClientData = AuthService.getClientData()
+    console.log('clientData', this.getClientData)
+    let userInfo = AuthService.getUserInfo()
+    console.log('userInfo', userInfo)
+  }
 
   ngOnInit() {
     const ELEMENT_DATA = this.dataS;
@@ -96,7 +96,7 @@ export class GetSharebleLinkComponent implements OnInit {
     const value = event.value.trim();
     if (value && value.length > 0) {
       if (this.validatorType.EMAIL.test(value)) {
-        this.emailIdList.push({emailAddress: value});
+        this.emailIdList.push({ emailAddress: value });
       } else {
         this.eventService.openSnackBar('Enter valid email address');
       }

@@ -21,13 +21,12 @@ import { CustomCommonModule } from './common/custom.common.module';
 import { DatePipe } from '@angular/common';
 import { MatExpansionModule, MatSortModule, MatTableModule } from '@angular/material';
 // import { SubscriptionModule } from './component/protect-component/AdviserComponent/Subscriptions/subscription.module';
-import { EmailEntryModule } from './component/protect-component/AdviserComponent/Email/email.entry.module';
 import 'zone.js/dist/zone';
 // import { SubscriptionUpperEntry } from './component/protect-component/AdviserComponent/Subscriptions/subscription-upper-entry-module';
 import { FormTestComponent } from './test/form-test/form-test.component';
 import { CustomDirectiveModule } from './common/directives/common-directive.module';
-import { BackofficeDashboardComponent } from './component/protect-component/AdviserComponent/backOffice/backoffice-dashboard/backoffice-dashboard.component';
 import { ScrollDispatchModule } from '@angular/cdk/scrolling';
+import { CommonComponentModule } from './component/protect-component/common-component/common-component.module';
 
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
@@ -46,7 +45,6 @@ import { ScrollDispatchModule } from '@angular/cdk/scrolling';
     // AddLiabilitiesComponent,
     // AddInsuranceComponent
     FormTestComponent,
-    BackofficeDashboardComponent,
 
   ],
   imports: [
@@ -74,9 +72,9 @@ import { ScrollDispatchModule } from '@angular/cdk/scrolling';
     DragDropModule,
 
     CustomCommonModule,
-    EmailEntryModule,
     AppRoutingModule,
     CustomDirectiveModule,
+    CommonComponentModule
     // AssetsModule,
 
     // SubscriptionUpperEntry

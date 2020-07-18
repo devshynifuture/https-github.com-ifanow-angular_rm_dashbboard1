@@ -1,11 +1,10 @@
-import {Directive, EventEmitter, Input, Output} from '@angular/core';
-import {AuthService} from 'src/app/auth-service/authService';
-import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import {ClientBankComponent} from 'src/app/component/protect-component/PeopleComponent/people/Component/people-clients/add-client/client-bank/client-bank.component';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {UtilService} from 'src/app/services/util.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {HostListener} from '@angular/core/src/metadata/*';
+import { Directive, EventEmitter, Input, Output } from '@angular/core';
+import { AuthService } from 'src/app/auth-service/authService';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { HostListener } from '@angular/core/src/metadata/*';
 
 @Directive({
   selector: '[appBankAccount]'
@@ -18,8 +17,8 @@ export class BankAccountDirective {
   @Output() outputValue = new EventEmitter<any>();
 
   constructor(private custumService: CustomerService,
-              private subInjectService: SubscriptionInject,
-              private utilService: UtilService, private eventService: EventService) {
+    private subInjectService: SubscriptionInject,
+    private utilService: UtilService, private eventService: EventService) {
   }
 
   _data;
@@ -62,7 +61,7 @@ export class BankAccountDirective {
       data,
       id: 1,
       state: 'open50',
-      componentName: ClientBankComponent,
+      // componentName: ClientBankComponent,
 
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(

@@ -3,7 +3,7 @@ import { AuthService } from '../../../../../../auth-service/authService';
 import { Router } from '@angular/router';
 import { EventService } from 'src/app/Data-service/event.service';
 import { RoutingState } from 'src/app/services/routing-state.service';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { PeopleService } from 'src/app/component/Services/people.service';
 
 @Component({
   selector: 'app-customer-overview',

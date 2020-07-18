@@ -1,11 +1,11 @@
-import {Component, OnInit, Input} from '@angular/core';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {PlanService} from '../plan.service';
-import {AuthService} from 'src/app/auth-service/authService';
+import { Component, OnInit, Input } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { PlanService } from '../plan.service';
+import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService, LoaderFunction } from 'src/app/services/util.service';
 import { CustomerService } from '../../customer.service';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { PeopleService } from 'src/app/component/Services/people.service';
 import { AppConstants } from 'src/app/services/app-constants';
 
 @Component({
@@ -20,14 +20,14 @@ export class AddGoalsComponent implements OnInit {
   goalTypeFirstRowListData: any;
   goalTypeSecondRowListData: any;
   advisorId: any;
-  familyList:any[] = [];
+  familyList: any[] = [];
   @Input() data;
   clientName: string;
   clientId: any;
 
   constructor(
-    public subInjectService: SubscriptionInject, 
-    private eventService: EventService, 
+    public subInjectService: SubscriptionInject,
+    private eventService: EventService,
     private planService: PlanService,
     private utilService: UtilService,
     private peopleService: PeopleService,
@@ -45,7 +45,7 @@ export class AddGoalsComponent implements OnInit {
   }
 
   close() {
-    this.eventService.changeUpperSliderState({state: 'close'});
+    this.eventService.changeUpperSliderState({ state: 'close' });
   }
 
   // load goal types and related images to display
@@ -193,16 +193,16 @@ export class AddGoalsComponent implements OnInit {
           element.defaults = {
             ageIncreament: 5,
             cost: 3000000,
-            planningForRelative: [AppConstants.RELATIONSHIP_SON,AppConstants.RELATIONSHIP_DAUGHTER], // children
+            planningForRelative: [AppConstants.RELATIONSHIP_SON, AppConstants.RELATIONSHIP_DAUGHTER], // children
           }
           break;
         case AppConstants.VACATION_GOAL: // Vacation
-        element.questions = {
-          Q1: 'Which year you plan to travel',
-          Q2: 'Travel expense in today\'s value',
-          Q3: 'Give this goal a name',
-          Q4: 'Notes'
-        }
+          element.questions = {
+            Q1: 'Which year you plan to travel',
+            Q2: 'Travel expense in today\'s value',
+            Q3: 'Give this goal a name',
+            Q4: 'Notes'
+          }
           element.validations = {
             minAgeFromPresent: 0,
             maxAgeFromPresent: 50,
@@ -218,13 +218,13 @@ export class AddGoalsComponent implements OnInit {
           }
           break;
         case AppConstants.EDUCATION_GOAL: // Education
-        element.questions = {
-          Q: 'Who are you planning this for?',
-          Q1: 'Member\'s age at the time of course?',
-          Q2: 'Annual Course expenses in today\'s value',
-          Q3: 'Give this goal a name',
-          Q4: 'Notes'
-        }
+          element.questions = {
+            Q: 'Who are you planning this for?',
+            Q1: 'Member\'s age at the time of course?',
+            Q2: 'Annual Course expenses in today\'s value',
+            Q3: 'Give this goal a name',
+            Q4: 'Notes'
+          }
           element.validations = {
             minAge: 2,
             maxAge: 60,
@@ -238,7 +238,7 @@ export class AddGoalsComponent implements OnInit {
           element.defaults = {
             gap: 5,
             cost: 3000000,
-            planningForRelative: [AppConstants.RELATIONSHIP_SELF,AppConstants.RELATIONSHIP_SON,AppConstants.RELATIONSHIP_DAUGHTER], // children // abhishek said self too
+            planningForRelative: [AppConstants.RELATIONSHIP_SELF, AppConstants.RELATIONSHIP_SON, AppConstants.RELATIONSHIP_DAUGHTER], // children // abhishek said self too
           }
           break;
         case AppConstants.EMERGENCY_GOAL: // Emergency
@@ -281,7 +281,7 @@ export class AddGoalsComponent implements OnInit {
           element.defaults = {
             ageIncreament: 5,
             cost: 500000,
-            planningForRelative: [AppConstants.RELATIONSHIP_SON,AppConstants.RELATIONSHIP_DAUGHTER], // children
+            planningForRelative: [AppConstants.RELATIONSHIP_SON, AppConstants.RELATIONSHIP_DAUGHTER], // children
           }
           break;
         case AppConstants.BIG_SPEND_GOAL: // Big Spends
@@ -334,19 +334,19 @@ export class AddGoalsComponent implements OnInit {
     this.goalTypeSecondRowListData = data.slice(5, 10);
     this.loaderFn.decreaseCounter();
   }
-  
+
   // TODO:- understand implementation of retirement goal
   setGoalTypeData(data) {
-    if(this.validateIfUserAllowedToCreateGoal(data)){
+    if (this.validateIfUserAllowedToCreateGoal(data)) {
       this.goalTypeData = data;
-      this.showGoalType = [AppConstants.VACATION_GOAL, AppConstants.EDUCATION_GOAL].includes(data.id) ? 'multiYear' : 'singleYear' 
+      this.showGoalType = [AppConstants.VACATION_GOAL, AppConstants.EDUCATION_GOAL].includes(data.id) ? 'multiYear' : 'singleYear'
     }
   }
 
   validateIfUserAllowedToCreateGoal(goalTypeData) {
     // family validation
     let owner = this.familyList.filter((member) => goalTypeData.defaults.planningForRelative.includes(member.relationshipId));
-    if(owner.length == 0) {
+    if (owner.length == 0) {
       this.eventService.openSnackBar("No family member found for such goal", "Dismiss");
       return false;
     }
@@ -355,7 +355,7 @@ export class AddGoalsComponent implements OnInit {
     // age validation can also be added?
   }
 
-  cancelGoal(){
+  cancelGoal() {
     this.goalTypeData = undefined;
     this.showGoalType = undefined;
   }

@@ -7,12 +7,12 @@ import { AuthService } from '../../../../../../../auth-service/authService';
 import { ValidatorType, UtilService } from '../../../../../../../services/util.service';
 import { MatChipInputEvent, MatDialog } from '@angular/material';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { OrgSettingServiceService } from '../../../../setting/org-setting-service.service';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { PeopleService } from 'src/app/component/Services/people.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { element } from 'protractor';
 import { DatePipe } from '@angular/common';
 import { DocumentPreviewComponent } from '../document-preview/document-preview.component';
+import { OrgSettingServiceService } from 'src/app/services/org-setting-service.service';
 
 @Component({
   selector: 'app-email-only',

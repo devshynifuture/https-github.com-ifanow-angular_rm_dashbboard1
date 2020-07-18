@@ -15,7 +15,7 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
 import { RightFilterDuplicateComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BackOfficeService } from 'src/app/component/protect-component/AdviserComponent/backOffice/back-office.service';
+import { BackOfficeService } from 'src/app/component/Services/back-office.service';
 
 @Component({
   selector: 'app-mutual-fund-unrealized-tran',
@@ -519,10 +519,10 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       this.mfService.changeShowMutualFundDropDown(false);
       this.mutualFundList = this.mutualFund.mutualFundList;
       // this.asyncFilter(this.mutualFundList);
-      if(!this.isBulkEmailing){
+      if (!this.isBulkEmailing) {
         this.asyncFilter(this.mfData.mutualFundList);
       }
-   
+
       // this.initValueOnInit();
       // if (this.mfData) {
       //   this.mfData.advisorData = this.mfService.getPersonalDetails(this.advisorId);
@@ -1028,7 +1028,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         toEmail: 'futurewisejunkmail@gmail.com'
       }
       this.utilService.bulkHtmlToPdf(obj)
-        this.utilService.htmlToPdf(para, 'transaction', true, this.fragmentData, '', '')
+      this.utilService.htmlToPdf(para, 'transaction', true, this.fragmentData, '', '')
     }, 200);
   }
   getDetails() {

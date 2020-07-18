@@ -10,7 +10,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { EventService } from 'src/app/Data-service/event.service';
 import { Router } from '@angular/router';
-import { SettingsService } from '../../../../setting/settings.service';
+import { SettingsService } from 'src/app/component/Services/settings.service';
 
 @Component({
   selector: 'app-search-client-add-quotation',

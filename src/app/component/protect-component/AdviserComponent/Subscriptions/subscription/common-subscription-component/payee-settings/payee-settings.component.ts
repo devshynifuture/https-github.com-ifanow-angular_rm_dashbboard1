@@ -8,7 +8,7 @@ import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { PostalService } from 'src/app/services/postal.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { MatInput } from '@angular/material';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { PeopleService } from 'src/app/component/Services/people.service';
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
 
 @Component({

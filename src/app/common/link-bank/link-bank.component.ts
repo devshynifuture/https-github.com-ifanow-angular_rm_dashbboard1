@@ -5,7 +5,7 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { ValidatorType, UtilService } from 'src/app/services/util.service';
 import { SubscriptionService } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription.service';
 import { PostalService } from 'src/app/services/postal.service';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { PeopleService } from 'src/app/component/Services/people.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
@@ -102,7 +102,7 @@ export class LinkBankComponent implements OnInit {
       ifscCode: [data.ifscCode, [Validators.required]],
       bankName: [data.bankName, [Validators.required]],
       micrName: [data.micrNo],
-      accNumber: [data.accountNumber, [Validators.required,Validators.minLength(9), Validators.maxLength(18)]],
+      accNumber: [data.accountNumber, [Validators.required, Validators.minLength(9), Validators.maxLength(18)]],
       accType: [(data.accountType) ? data.accountType : '', [Validators.required]],
       branchName: [data.branchName, [Validators.required]],
       branchCountry: [(data.address) ? data.address.country : '', [Validators.required]],
@@ -258,7 +258,7 @@ export class LinkBankComponent implements OnInit {
         addressId: null
       };
       if (this.userInfo) {
-        obj.userId = this.enumDataService.userData[0].id==0?this.enumDataService.userData[0].clientId:this.enumDataService.userData[0].id;
+        obj.userId = this.enumDataService.userData[0].id == 0 ? this.enumDataService.userData[0].clientId : this.enumDataService.userData[0].id;
         obj.userType = this.enumDataService.userData[0].userType;
       }
 

@@ -63,7 +63,6 @@ import { CustomerOverviewEntryModule } from './component/customer/customer-overv
 import { TransactionSuccessfulComponent } from './component/customer/transaction-successful/transaction-successful.component';
 import { MatStepperModule } from '@angular/material/stepper';
 import { AdvisorAndOrganizationInfoService } from './resolvers/advisor-and-organization-info.service';
-import { TransactionEntryModule } from '../AdviserComponent/transactions/transaction.entry.module';
 import { SubscriptionEntry } from '../AdviserComponent/Subscriptions/subscription.entry.module';
 import { SubscriptionUpperEntry } from '../AdviserComponent/Subscriptions/subscription-upper-entry-module';
 import { MobileMyfeedComponent } from './component/customer/mobile/myfeed/mobile-myfeed/mobile-myfeed.component';
@@ -213,7 +212,6 @@ import { DetailedSsyMobComponent } from './component/customer/mobile/small-savin
     CustomerOverviewEntryModule,
     CustomDirectiveModule,
     MatStepperModule,
-    TransactionEntryModule,
     SubscriptionEntry,
     SubscriptionUpperEntry,
     CommonComponentModule

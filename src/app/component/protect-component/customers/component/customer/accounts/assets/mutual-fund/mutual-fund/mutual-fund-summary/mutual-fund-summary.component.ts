@@ -20,10 +20,9 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { map } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RightFilterDuplicateComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
-import { BackOfficeService } from 'src/app/component/protect-component/AdviserComponent/backOffice/back-office.service';
+import { BackOfficeService } from 'src/app/component/Services/back-office.service';
 import { DatePipe } from '@angular/common';
-import { OnlineTransactionComponent } from 'src/app/component/protect-component/AdviserComponent/transactions/overview-transactions/doTransaction/online-transaction/online-transaction.component';
-import { OnlineTransactionService } from 'src/app/component/protect-component/AdviserComponent/transactions/online-transaction.service';
+import { OnlineTransactionService } from 'src/app/component/Services/online-transaction.service';
 
 
 @Component({
@@ -105,7 +104,7 @@ export class MutualFundSummaryComponent implements OnInit {
     private router: Router,
     private datePipe: DatePipe,
     public routerActive: ActivatedRoute,
-    private onlineTransact : OnlineTransactionService,
+    private onlineTransact: OnlineTransactionService,
     private activatedRoute: ActivatedRoute) {
     this.routerActive.queryParamMap.subscribe((queryParamMap) => {
       if (queryParamMap.has('clientId')) {
@@ -157,7 +156,7 @@ export class MutualFundSummaryComponent implements OnInit {
         this.viewMode = res;
       })
     this.getFilterData(2);
-   // this.getDefaultDetails(null)
+    // this.getDefaultDetails(null)
   }
   ngAfterViewInit() {
     //this.showDownload == true
@@ -525,7 +524,7 @@ export class MutualFundSummaryComponent implements OnInit {
 
             } else {
               this.mfService.setSummaryData(this.dataSummary)
-              if(this.router.url.split('?')[0] == '/pdf/summary'){
+              if (this.router.url.split('?')[0] == '/pdf/summary') {
                 this.showDownload = true
                 this.generatePdfBulk()
               }
@@ -932,17 +931,17 @@ export class MutualFundSummaryComponent implements OnInit {
       let para = this.summaryTemplate.nativeElement.innerHTML
       let obj = {
         htmlInput: para,
-        name:(this.clientData.name)?this.clientData.name:''+'s'+'Summary'+date,
+        name: (this.clientData.name) ? this.clientData.name : '' + 's' + 'Summary' + date,
         landscape: true,
         key: 'showPieChart',
-        clientId : this.clientId,
-        advisorId : this.advisorId,
+        clientId: this.clientId,
+        advisorId: this.advisorId,
         fromEmail: 'devshyni@futurewise.co.in',
         toEmail: 'futurewisejunkmail@gmail.com'
       }
-     let response = this.utilService.bulkHtmlToPdf(obj)
-     console.log('********',response)
-     //this.utilService.htmlToPdf(para, 'Summary', true, this.fragmentData, '', '')
+      let response = this.utilService.bulkHtmlToPdf(obj)
+      console.log('********', response)
+      //this.utilService.htmlToPdf(para, 'Summary', true, this.fragmentData, '', '')
     }, 400);
   }
   getDetails() {
@@ -994,17 +993,17 @@ export class MutualFundSummaryComponent implements OnInit {
       }
     }
   }
-  openTransaction(data){
+  openTransaction(data) {
     const routeName = this.router.url.split('/')[1];
     if (routeName == 'customer') {
       this.isAdvisorSection = false;
     }
     const fragmentData = {
       flag: 'addNewTransaction',
-      data: { isAdvisorSection: this.isAdvisorSection, flag: 'addNewTransaction',data:data },
+      data: { isAdvisorSection: this.isAdvisorSection, flag: 'addNewTransaction', data: data },
       id: 1,
       state: 'open65',
-      componentName: OnlineTransactionComponent,
+      // componentName: OnlineTransactionComponent,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {

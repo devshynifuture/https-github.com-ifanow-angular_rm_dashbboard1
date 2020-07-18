@@ -3,12 +3,12 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
-import { BackOfficeService } from '../../protect-component/AdviserComponent/backOffice/back-office.service';
+import { BackOfficeService } from '../../Services/back-office.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { MatProgressButtonOptions } from '../../../common/progress-button/progress-button.component';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { LoginService } from './login.service';
-import { PeopleService } from '../../protect-component/PeopleComponent/people.service';
+import { PeopleService } from '../../Services/people.service';
 import { interval } from 'rxjs';
 
 @Component({

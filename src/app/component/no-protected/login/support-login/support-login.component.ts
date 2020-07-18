@@ -8,8 +8,8 @@ import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { LoginService } from '../login.service';
 import { interval } from 'rxjs';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-import { BackOfficeService } from 'src/app/component/protect-component/AdviserComponent/backOffice/back-office.service';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { BackOfficeService } from 'src/app/component/Services/back-office.service';
+import { PeopleService } from 'src/app/component/Services/people.service';
 
 @Component({
   selector: 'app-support-login',

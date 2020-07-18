@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { GmailInboxResponseI } from '../component/protect-component/AdviserComponent/Email/email-component/email.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -80,7 +79,7 @@ export class EmailUtilService {
     };
   }
 
-  static decodeGmailThreadExtractMessage(gmailThread: GmailInboxResponseI): Object {
+  static decodeGmailThreadExtractMessage(gmailThread): Object {
     let decodedPartArray = [];
     let id = gmailThread.id;
     let tempHeaders: {}[];
@@ -165,7 +164,7 @@ export class EmailUtilService {
     return { decodedPart: decodedPartArray, headers: tempHeaders };
   }
 
-  static getGmailLabelIdsFromMessages(gmailThread: GmailInboxResponseI): Object[] {
+  static getGmailLabelIdsFromMessages(gmailThread): Object[] {
     let labelIdsArray: Object[] = [];
     gmailThread.messages.forEach((message) => {
       const { labelIds } = message;
@@ -258,7 +257,7 @@ export class EmailUtilService {
     return attachmentObjects;
   }
 
-  static getIdAndDateAndSnippetOfGmailThreadMessages(gmailThread: GmailInboxResponseI): Object[] {
+  static getIdAndDateAndSnippetOfGmailThreadMessages(gmailThread): Object[] {
     let arrayObj: Object[] = [];
     gmailThread.messages.forEach((message) => {
       const { historyId, id, internalDate, threadId, snippet } = message;
@@ -267,12 +266,12 @@ export class EmailUtilService {
     return arrayObj;
   }
 
-  static getIdsOfGmailThreads(gmailThread: GmailInboxResponseI): Object {
+  static getIdsOfGmailThreads(gmailThread): Object {
     const { historyId, id } = gmailThread;
     return { historyId, id };
   }
 
-  static getIdsOfGmailMessages(gmailThread: GmailInboxResponseI): string[] {
+  static getIdsOfGmailMessages(gmailThread): string[] {
     let idArray: string[] = [];
     gmailThread.messages.forEach(message => {
       const { id } = message;
@@ -281,7 +280,7 @@ export class EmailUtilService {
     return idArray;
   }
 
-  static getSubjectAndFromOfGmailHeaders(gmailThread: GmailInboxResponseI): Object {
+  static getSubjectAndFromOfGmailHeaders(gmailThread): Object {
     let headerSubjectArray: string[] = [];
     let headerFromArray: string[] = [];
     gmailThread.messages.forEach((message) => {

@@ -14,14 +14,15 @@ import { InvoiceHistoryComponent } from '../Subscriptions/subscription/common-su
 import { ChangePayeeComponent } from '../Subscriptions/subscription/common-subscription-component/change-payee/change-payee.component';
 import { DeleteSubscriptionComponent } from '../Subscriptions/subscription/common-subscription-component/delete-subscription/delete-subscription.component';
 import { ConfirmDialogComponent } from '../../common-component/confirm-dialog/confirm-dialog.component';
-import { BackOfficeService } from '../backOffice/back-office.service';
-import { OnlineTransactionService } from '../transactions/online-transaction.service';
-import { TransactionEnumService } from '../transactions/transaction-enum.service';
+import { BackOfficeService } from '../../../Services/back-office.service';
+
 import { DashboardService } from './dashboard.service';
 import { FormControl } from '@angular/forms';
-import { calendarService } from '../Activities/calendar/calendar.service';
-import { EmailServiceService } from '../Email/email-service.service';
 import { DatePipe } from '@angular/common';
+import { EmailServiceService } from 'src/app/component/Services/email-service.service';
+import { OnlineTransactionService } from 'src/app/component/Services/online-transaction.service';
+import { TransactionEnumService } from 'src/app/component/Services/transaction-enum.service';
+import { calendarService } from 'src/app/services/calendar.service';
 
 export interface PeriodicElement {
   name: string;

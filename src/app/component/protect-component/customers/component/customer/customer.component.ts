@@ -6,10 +6,9 @@ import { EventService } from '../../../../../Data-service/event.service';
 import { SubscriptionInject } from '../../../AdviserComponent/Subscriptions/subscription-inject.service';
 import { DynamicComponentService } from '../../../../../services/dynamic-component.service';
 import { dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation } from '../../../../../animation/animation';
-import { PeopleService } from '../../../PeopleComponent/people.service';
+import { PeopleService } from '../../../../Services/people.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EnumDataService } from '../../../../../services/enum-data.service';
-import { ChangeClientPasswordComponent } from './customer-overview/overview-profile/change-client-password/change-client-password.component';
 import { UtilService } from 'src/app/services/util.service';
 
 @Component({
@@ -154,7 +153,7 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
       data,
       id: 1,
       state: 'open50',
-      componentName: ChangeClientPasswordComponent,
+      // componentName: ChangeClientPasswordComponent,
 
     };
     const rightSideDataSub = this.subinject.changeNewRightSliderState(fragmentData).subscribe(

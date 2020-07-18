@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { DialogData } from '../../../../Activities/calendar/calendar.component';
+import { DialogData } from 'src/app/component/protect-component/interface';
 
 @Component({
   selector: 'app-document-preview',

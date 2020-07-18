@@ -1,7 +1,7 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {CustomerComponent} from './component/customer/customer.component';
-import {AdvisorAndOrganizationInfoService} from './resolvers/advisor-and-organization-info.service';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { CustomerComponent } from './component/customer/customer.component';
+import { AdvisorAndOrganizationInfoService } from './resolvers/advisor-and-organization-info.service';
 import { MobileMyfeedComponent } from './component/customer/mobile/myfeed/mobile-myfeed/mobile-myfeed.component';
 
 
@@ -10,11 +10,11 @@ const routes: Routes = [
 
     path: 'mobile',
     component: MobileMyfeedComponent,
-    resolve: {advisorInfo: AdvisorAndOrganizationInfoService},
+    resolve: { advisorInfo: AdvisorAndOrganizationInfoService },
     children: [
       {
         path: 'overview',
-        data: {animation: 'Tab1', preload: true},
+        data: { animation: 'Tab1', preload: true },
         loadChildren: () => import('./component/customer/customer-overview/customer-overview.module').then(m => m.CustomerOverviewModule)
       },
       {
@@ -37,13 +37,6 @@ const routes: Routes = [
         path: 'activity',
         loadChildren: () => import('./component/customer/customer-activity/customer-activity.module')
           .then(m => m.CustomerActivityModule),
-        data: { preload: true }
-
-      },
-      {
-        path: 'transact',
-        loadChildren: () => import('./component/customer/customer-transact/customer-transact.module')
-          .then(m => m.CustomerTransactModule),
         data: { preload: true }
 
       },
