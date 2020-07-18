@@ -11,6 +11,16 @@ export class GetSmallSavingSchemeComponent implements OnInit {
   backToSS;
   fixdeposit;
   backToMf;
+  showDetailedPPF;
+  showDetailedKVP;
+  showDetailedNSC;
+  showDetailedPORD;
+  showDetailedPOSavings;
+  showDetailedPOTD;
+  showDetailedPOMis;
+  showDetailedSSY;
+  detailedData;
+  showDetailedSCSS;
   @Input()
   set data(data) {
     this.inputData = data;
