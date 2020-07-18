@@ -144,6 +144,18 @@ import { HomeInsuranceMobComponent } from './component/customer/mobile/general-i
 import { FireInsuranceMobComponent } from './component/customer/mobile/general-insurance-mob/fire-insurance-mob/fire-insurance-mob.component';
 import { DetailedViewLifeInsuranceMobComponent } from './component/customer/mobile/life-insurance-mob/detailed-view-life-insurance-mob/detailed-view-life-insurance-mob.component';
 import { DetailedViewGeneralInsuranceMobComponent } from './component/customer/mobile/general-insurance-mob/detailed-view-general-insurance-mob/detailed-view-general-insurance-mob.component';
+import { DetailedEpfMobComponent } from './component/customer/mobile/retirement-acc-mob/epf-mob/detailed-epf-mob/detailed-epf-mob.component';
+import { DetailedGrauityMobComponent } from './component/customer/mobile/retirement-acc-mob/gratuity-mob/detailed-grauity-mob/detailed-grauity-mob.component';
+import { DetailedNpsMobComponent } from './component/customer/mobile/retirement-acc-mob/nps-mob/detailed-nps-mob/detailed-nps-mob.component';
+import { DetailedKvpMobComponent } from './component/customer/mobile/small-saving-mob/kvp-mob/detailed-kvp-mob/detailed-kvp-mob.component';
+import { DetailedNscMobComponent } from './component/customer/mobile/small-saving-mob/nsc-mob/detailed-nsc-mob/detailed-nsc-mob.component';
+import { DetailedPoMisMobComponent } from './component/customer/mobile/small-saving-mob/po-mis-mob/detailed-po-mis-mob/detailed-po-mis-mob.component';
+import { DetailedPoRdMobComponent } from './component/customer/mobile/small-saving-mob/po-rd-mob/detailed-po-rd-mob/detailed-po-rd-mob.component';
+import { DetailedPoSavingsComponent } from './component/customer/mobile/small-saving-mob/po-savings-mob/detailed-po-savings/detailed-po-savings.component';
+import { DetailedPoTdMobComponent } from './component/customer/mobile/small-saving-mob/po-td-mob/detailed-po-td-mob/detailed-po-td-mob.component';
+import { DetailedPpfComponent } from './component/customer/mobile/small-saving-mob/ppf-mob/detailed-ppf/detailed-ppf.component';
+import { DetailedScssMobComponent } from './component/customer/mobile/small-saving-mob/scss-mob/detailed-scss-mob/detailed-scss-mob.component';
+import { DetailedSsyMobComponent } from './component/customer/mobile/small-saving-mob/ssy-mob/detailed-ssy-mob/detailed-ssy-mob.component';
 
 
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
@@ -179,7 +191,7 @@ import { DetailedViewGeneralInsuranceMobComponent } from './component/customer/m
     AddCashInHandMobComponent, AddRealEstateMobComponent, AddLiabilitiesMobComponent, AddOtherPayablesMobComponent,
     AddInsuranceMobComponent, AddHealthMobComponent, AddPersonalAccidentMobComponent, CriticalIllnesMobComponent,
     MotorInsuranceMobComponent, TravelInsuranceMobComponent, HomeInsuranceMobComponent, FireInsuranceMobComponent,
-    DetailedViewLifeInsuranceMobComponent, DetailedViewGeneralInsuranceMobComponent],
+    DetailedViewLifeInsuranceMobComponent, DetailedViewGeneralInsuranceMobComponent, DetailedEpfMobComponent, DetailedGrauityMobComponent, DetailedNpsMobComponent, DetailedKvpMobComponent, DetailedNscMobComponent, DetailedPoMisMobComponent, DetailedPoRdMobComponent, DetailedPoSavingsComponent, DetailedPoTdMobComponent, DetailedPpfComponent, DetailedScssMobComponent, DetailedSsyMobComponent],
   imports: [
     // BrowserModule,
     CommonModule,
