@@ -1,4 +1,12 @@
 @media(max-width: 767px) {
+
+  .iconRupess,
+  .iconPetage {
+    .mat-form-field-infix {
+      background-color: #fff !important;
+    }
+  }
+
   .mob-circle {
     height: 60px;
     width: 60px;
