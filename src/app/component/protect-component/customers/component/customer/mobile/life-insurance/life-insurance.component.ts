@@ -12,6 +12,8 @@ export class LifeInsuranceComponent implements OnInit {
   lifeInsuranceData;
   backToMf;
   bankAccData;
+  detailedViewData;
+  showDetailView = false;
   constructor() { }
   @Input()
   set data(data) {
@@ -22,5 +24,7 @@ export class LifeInsuranceComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  getValue(value){
+    this.showDetailView = value;
+  }
 }

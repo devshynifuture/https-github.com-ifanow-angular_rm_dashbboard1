@@ -1,4 +1,4 @@
-<div id="mob-fixed-income" *ngIf="generalInsuranceData != true && backToMf != true">
+<div id="mob-fixed-income" *ngIf="generalInsuranceData != true && backToMf != true && !showDetailView">
     <div class="row mob-bg-common pb-12 mobtop-navfixed">
         <div class="col-2" (click)="backToMf = true">
             <span class="material-icons text-white">
@@ -15,7 +15,7 @@
         </div>
     </div>
     <div class="pt-80 p-8 h-100vh" *ngIf="inputData == 'Health insurance'">
-        <div class="pt-16" *ngFor="let item of assetData;let i = index">
+        <div class="pt-16" *ngFor="let item of assetData;let i = index" (click)="showDetailView = true;detailedViewData = item">
             <div class="bg-white">
                 <div class="row pt-20 pb-20 mob-bb-1">
                     <div class="col-8">
@@ -38,7 +38,7 @@
         </div>
     </div>
     <div class="pt-80 p-8 h-100vh" *ngIf="inputData == 'Personal accident insurance'">
-        <div class="pt-16" *ngFor="let item of assetData; let i = index">
+        <div class="pt-16" *ngFor="let item of assetData; let i = index" (click)="showDetailView = true;detailedViewData = item">
             <div class="bg-white">
                 <div class="row pt-20 pb-20 mob-bb-1">
                     <div class="col-8">
@@ -60,7 +60,7 @@
     </div>
     </div>
     <div class="pt-80 p-8 h-100vh" *ngIf="inputData == 'Critical illness insurance'">
-        <div class="pt-16" *ngFor="let item of assetData; let i = index">
+        <div class="pt-16" *ngFor="let item of assetData; let i = index" (click)="showDetailView = true;detailedViewData = item">
             <div class="bg-white">
                 <div class="row pt-20 pb-20 mob-bb-1">
                     <div class="col-8">
@@ -82,7 +82,7 @@
     </div>
     </div>
     <div class="pt-80 p-8 h-100vh" *ngIf="inputData == 'Motor insurance'">
-        <div class="pt-16" *ngFor="let item of assetData; let i = index">
+        <div class="pt-16" *ngFor="let item of assetData; let i = index" (click)="showDetailView = true;detailedViewData = item">
             <div class="bg-white">
                 <div class="row pt-20 pb-20 mob-bb-1">
                     <div class="col-8">
@@ -104,7 +104,7 @@
     </div>
     </div>
     <div class="pt-80 p-8 h-100vh" *ngIf="inputData == 'Travel insurance'">
-        <div class="pt-16" *ngFor="let item of assetData; let i = index">
+        <div class="pt-16" *ngFor="let item of assetData; let i = index" (click)="showDetailView = true;detailedViewData = item">
             <div class="bg-white">
                 <div class="row pt-20 pb-20 mob-bb-1">
                     <div class="col-8">
@@ -126,7 +126,7 @@
     </div>
     </div>
     <div class="pt-80 p-8 h-100vh" *ngIf="inputData == 'Home insurance'">
-        <div class="pt-16" *ngFor="let item of assetData; let i = index">
+        <div class="pt-16" *ngFor="let item of assetData; let i = index" (click)="showDetailView = true;detailedViewData = item">
             <div class="bg-white">
                 <div class="row pt-20 pb-20 mob-bb-1">
                     <div class="col-8">
@@ -148,7 +148,7 @@
     </div>
     </div>
     <div class="pt-80 p-8 h-100vh" *ngIf="inputData == 'Fire & special perils insurance'">
-        <div class="pt-16" *ngFor="let item of assetData; let i = index">
+        <div class="pt-16" *ngFor="let item of assetData; let i = index" (click)="showDetailView = true;detailedViewData = item">
             <div class="bg-white">
                 <div class="row pt-20 pb-20 mob-bb-1">
                     <div class="col-8">
@@ -199,3 +199,6 @@
 <div *ngIf="backToMf == true">
 <app-general-insurance-mob></app-general-insurance-mob>
 </div>
+<div *ngIf="showDetailView == true">
+        <app-detailed-view-general-insurance-mob [data]="detailedViewData" (outputValue)="getValue($event)"></app-detailed-view-general-insurance-mob>
+    </div>

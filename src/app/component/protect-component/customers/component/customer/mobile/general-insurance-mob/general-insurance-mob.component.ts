@@ -29,6 +29,7 @@ export class GeneralInsuranceMobComponent implements OnInit {
   fireData: any;
   healthData: any;
   showDetail;
+  backToMf
   assetSubType = {assetType:'',data:''};
 
   constructor(private custumService:CustomerService,private eventService:EventService) { }
