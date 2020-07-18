@@ -14,7 +14,7 @@
         </span>
     </div>
 </div>
-<div class="pt-80 p-8">
+<div class="pt-80 p-8" *ngIf="backToSS != true">
     <div class="bg-white">
         <div class="row pt-12 pb-12">
             <div class="col-2">
@@ -66,7 +66,7 @@
                     <p class="m-0 pt-24 wb"> ₹<span appFormatNumber [value]="detailedData.totalPayoutTillMaturity">{{data.totalPayoutTillMaturity}}</span></p>
                     <p class="m-0 pt-24 wb">{{detailedData.scssNumber? detailedData.scssNumber :'-'}}</p>
                     <p class="m-0 pt-24 wb"> {{ detailedData.rate | number: '1.2-2'}}%</p>
-                    <p class="m-0 pt-24">{{bank.bankNameAndLast4Digit}}</p>
+                    <p class="m-0 pt-24">{{detailedData.bankNameAndLast4Digit}}</p>
                     <p class="m-0 pt-24"> {{detailedData.postOfficeBranch ? detailedData.postOfficeBranch:'-'}}</p>
                     <p class="m-0 pt-24">{{(detailedData.description)?detailedData.description:'-'}}</p>
                 </div>
