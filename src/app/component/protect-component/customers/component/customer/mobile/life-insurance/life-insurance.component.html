@@ -97,7 +97,7 @@
     <app-add-insurance-mob></app-add-insurance-mob>
 </div>
 <div *ngIf="showDetailView == true">
-    <app-detailed-view-life-insurance-mob [data]="detailedViewData"></app-detailed-view-life-insurance-mob>
+    <app-detailed-view-life-insurance-mob [data]="detailedViewData" (outputValue)="getValue($event)"></app-detailed-view-life-insurance-mob>
 </div>
 <div *ngIf="backToMf == true">
 <app-life-insurance-mob></app-life-insurance-mob>

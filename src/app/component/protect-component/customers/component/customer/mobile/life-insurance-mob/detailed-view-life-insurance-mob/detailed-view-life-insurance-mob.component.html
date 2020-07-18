@@ -1,7 +1,7 @@
  <!-- deatils view Life insurance -->
- <div id="mob-fixed-income" *ngIf="!backPage">
+ <div id="mob-fixed-income" *ngIf="backPage!= true">
  <div class="row mob-bg-common pb-12 mobtop-navfixed">
-    <div class="col-2" (click)="backPage = true">
+    <div class="col-2" (click)="changeValue(false)">
         <span class="material-icons text-white">
             keyboard_backspace
         </span>
@@ -91,13 +91,13 @@
                 </div>
             </div>
         </div>
-        <div class="row pt-24">
+        <div class="row pt-24"  *ngIf="_data.insuranceSubTypeId != 1" >
             <div class="col-12 pl-0">
                 <h5 class="m-0 f-16 roboto f-400">Loan details
                 </h5>
             </div>
         </div>
-        <div class="pt-16">
+        <div class="pt-16"  *ngIf="_data.insuranceSubTypeId != 1" >
             <div class="bg-white">
                 <div class="row pt-20 pb-20">
                     <div class="col-7">
@@ -109,7 +109,7 @@
                         </p>
                     </div>
                     <div class="col-5 text-right pl-0">
-                        <p class="m-0">{(_data.loanAvailable) ? '₹' : ''}}<span appFormatNumber>
+                        <p class="m-0">{{(_data.loanAvailable) ? '₹' : ''}}<span appFormatNumber>
                             {{(_data.loanAvailable) ? _data.loanAvailable : '-'}}</span></p>
                         <p class="m-0 pt-24">{{(_data.loanTaken) ? '₹' : ''}}<span appFormatNumber>{{(_data.loanTaken) ? _data.loanTaken : '-'}}</span></p>
                         <p class="m-0 pt-24">{{(_data.loanTakenOn) ? (_data.loanTakenOn | date:'dd/MM/yyyy') : '-'}}</p>
@@ -129,23 +129,82 @@
                     <div class="col-7">
                         <p class="mob-text-xs f-14">Current risk cover
                         </p>
-                        <p class="mob-text-xs f-14 pt-24">Surrender value
+                        <p class="mob-text-xs f-14 pt-24" *ngIf="_data.insuranceSubTypeId != 1">Surrender value
                         </p>
-                        <p class="mob-text-xs f-14 pt-24" *ngFor="let data of nominee; let i = index">
-                                Nominee {{i + 1}}
+                        <p class="mob-text-xs f-14 pt-24" *ngIf="_data.insuranceSubTypeId != 1">Assumed rate
                         </p>
-                        <p class="mob-text-xs f-14 pt-24">Assumed rate
-                        </p>
-                        <p class="mob-text-xs f-14 pt-24">Linked bank account
-                        </p>
+                        <div *ngFor="let data of nominee; let i = index">
+                            <p  class="mob-text-xs f-14 pt-24">
+                                    Nominee {{i + 1}}
+                            </p>
+                            <p class="mob-text-xs f-14 pt-24">
+                                    Nominee relation{{i + 1}}
+                            </p>
+                        </div>
+                        <div *ngIf="_data.ulipFundDetails.length > 0 && _data.insuranceSubTypeId == 3">
+                        <div *ngFor="let data of _data.ulipFundDetails; let i = index">
+                                <p  class="mob-text-xs f-14 pt-24" *ngIf="data.fundName">
+                                        Fund name {{i + 1}}
+
+                                </p>
+                                <p  class="mob-text-xs f-14 pt-24" *ngIf="data.equityRatio">
+                                        Equity ratio {{i + 1}}
+                                </p>
+                                <p  class="mob-text-xs f-14 pt-24" *ngIf="data.debtRatio">
+                                        Debt ratio {{i + 1}}
+                                </p>
+                                <p  class="mob-text-xs f-14 pt-24" *ngIf="data.units">
+                                        Units {{i + 1}}
+                                </p>
+                                <p  class="mob-text-xs f-14 pt-24" *ngIf="data.nav">
+                                        NAV {{i + 1}}
+
+                                </p>
+                                <p  class="mob-text-xs f-14 pt-24" *ngIf="data.fundValue">
+                                        Fund value {{i + 1}}
+
+                                </p>
+                            </div>
+                        </div>
+                        
                     </div>
                     <div class="col-5 text-right pl-0">
                         <p class="m-0">{{(_data.riskCover) ? '₹' : ''}}<span appFormatNumber>
                             {{(_data.riskCover) ? _data.riskCover : '-'}}</span></p>
-                        <p class="m-0 pt-24"> {{(_data.surrenderValue) ? '₹' : ''}}<span appFormatNumber>
+                        <p class="m-0 pt-24" *ngIf="_data.insuranceSubTypeId != 1"> {{(_data.surrenderValue) ? '₹' : ''}}<span appFormatNumber>
                             {{(_data.surrenderValue) ? _data.surrenderValue : '-'}}</span></p>
-                        <p class="m-0 pt-24"> {{(_data.assumedRate) ? (_data.assumedRate + '%') : '-'}}</p>
-                        <p class="m-0 pt-24">-</p>
+                        <p class="m-0 pt-24" *ngIf="_data.insuranceSubTypeId != 1"> {{(_data.assumedRate) ? (_data.assumedRate + '%') : '-'}}</p>
+                        <div  *ngFor="let data of nominee; let i = index">
+                               <p class="mob-text-xs f-14 pt-24">
+                                    {{ (data.name) ? data.name : '-' }}
+                               </p> 
+                               <p class="mob-text-xs f-14 pt-24">
+                                    {{ (data.relationName) ? data.relationName : '-' }}
+                               </p>
+                            </div>
+                            <div *ngIf="_data.ulipFundDetails.length > 0 && _data.insuranceSubTypeId == 3">
+                                    <div *ngFor="let data of _data.ulipFundDetails; let i = index">
+                                            <p  class="mob-text-xs f-14 pt-24"  *ngIf="data.fundName">
+                                                    {{ (data.fundName) ? data.fundName : '-' }}
+            
+                                            </p>
+                                            <p  class="mob-text-xs f-14 pt-24" *ngIf="data.equityRatio">
+                                                    {{ (data.equityRatio) ? data.equityRatio : '-' }} {{(data.equityRatio) ? '%' : ''}}
+                                            </p>
+                                            <p  class="mob-text-xs f-14 pt-24" *ngIf="data.debtRatio">
+                                                    {{ (data.debtRatio) ? data.debtRatio : '-' }} {{(data.debtRatio) ? '%' : ''}}
+                                            </p>
+                                            <p  class="mob-text-xs f-14 pt-24" *ngIf="data.units"> 
+                                                    {{ (data.units) ? data.units : '-' }}
+                                            </p>
+                                            <p  class="mob-text-xs f-14 pt-24" *ngIf="data.nav">
+                                                    {{(data.nav) ? '₹' : ''}}{{ (data.nav) ? data.nav : '-' }}
+                                            </p>
+                                            <p  class="mob-text-xs f-14 pt-24" *ngIf="data.fundValue">
+                                                    {{(_data.fundValue) ? '₹' : ''}}<span appFormatNumber>{{ (data.fundValue) ? data.fundValue : '-' }}</span>
+                                            </p>
+                                        </div>
+                                    </div>
                     </div>
                 </div>
             </div>
@@ -170,10 +229,11 @@
                         </p>
                     </div>
                     <div class="col-5 text-right pl-0">
-                        <p class="m-0">-</p>
-                        <p class="m-0 pt-24">-</p>
-                        <p class="m-0 pt-24">-</p>
-                        <p class="m-0 pt-24">-</p>
+                        <p class="m-0">{{(_data.premiumPaymentMode == '1') ? 'Cheque' : (_data.premiumPaymentMode == '2') ? 'Cash' : (_data.premiumPaymentMode == '3') ? 'Net banking' : (_data.premiumPaymentMode == '4') ? 'Credit card' : (_data.premiumPaymentMode == '5') ? 'NACH' : (_data.premiumPaymentMode
+                                == '6') ? 'ECS' : '-'}}</p>
+                        <p class="m-0 pt-24">{{(_data.advisorName) ? _data.advisorName : '-'}}</p>
+                        <p class="m-0 pt-24">{{(_data.serviceBranch) ? (_data.serviceBranch) : '-'}}</p>
+                        <p class="m-0 pt-24">{{(_data.bankName) ? _data.bankName : '-'}}</p>
                     </div>
                 </div>
             </div>
@@ -184,25 +244,40 @@
                 </h5>
             </div>
         </div>
-        <div class="pt-16">
+        <div class="pt-16" *ngIf="cashFlowList.length > 0">
             <div class="bg-white">
                 <div class="row pt-20 pb-20">
-                    <div class="col-7">
-                        <p class="mob-text-xs f-14">Type
+                    <div class="col-7"  *ngFor="let data of cashFlowList; let i = index">
+                                    <p class="mob-text-xs f-14 pt-24">
+                                            Type {{i + 1}}
+
+                                    </p> 
+                                    <p class="mob-text-xs f-14 pt-24">
+                                            Date {{i + 1}}
+
+                                    </p>
+                                    <p class="mob-text-xs f-14 pt-24">
+                                            Amount {{i + 1}}
+
+                                    </p>
+                        <!-- <p class="mob-text-xs f-14">Type
                         </p>
                         <p class="mob-text-xs f-14 pt-24">Date
                         </p>
                         <p class="mob-text-xs f-14 pt-24">Amount
-                        </p>
+                        </p> -->
                     </div>
-                    <div class="col-5 text-right pl-0">
-                        <p class="m-0">-</p>
-                        <p class="m-0 pt-24">-</p>
-                        <p class="m-0 pt-24">-</p>
+                    <div class="col-5 text-right pl-0" *ngFor="let data of cashFlowList; let i = index">
+                        <p class="m-0 pt-24">{{(data.cashFlowType == 1) ? 'Survival benefit' : (data.cashFlowType == 2) ? 'Maturity benefit' : (data.cashFlowType == 3) ? 'Annuity' : '-'}}</p>
+                        <p class="m-0 pt-24">{{(data.cashFlowYear) ? (data.cashFlowYear | date:'dd/MM/yyyy') : '-'}}</p>
+                        <p class="m-0 pt-24"> {{(data.cashFlowApproxAmount) ? '₹' : ''}}<span appFormatNumber>{{(data.cashFlowApproxAmount) ? data.cashFlowApproxAmount : '-'}}</span></p>
                     </div>
                 </div>
             </div>
         </div>
+        <div *ngIf="cashFlowList.length == 0">
+                <p class="m-0 f-14 roboto f-400 pt-20 pb-20 text-center">no data found</p>
+            </div>
         <div class="row pt-24">
             <div class="col-12 pl-0">
                 <h5 class="m-0 f-16 roboto f-400">Riders
@@ -221,16 +296,16 @@
                         </p>
                     </div>
                     <div class="col-5 text-right pl-0">
-                        <p class="m-0">-</p>
-                        <p class="m-0 pt-24">-</p>
-                        <p class="m-0 pt-24">-</p>
+                        <p class="m-0"> {{(_data.ridersAccidentalBenifits) ? '₹' : ''}}<span appFormatNumber>{{(_data.ridersAccidentalBenifits) ? _data.ridersAccidentalBenifits : '-'}}</span></p>
+                        <p class="m-0 pt-24"> {{(_data.ridersDoubleAccidentalBenefit) ? '₹' : ''}}<span appFormatNumber>{{(_data.ridersDoubleAccidentalBenefit) ? _data.ridersDoubleAccidentalBenefit : '-'}}</span></p>
+                        <p class="m-0 pt-24"> {{(_data.ridersCriticalIllness) ? '₹' : ''}}<span appFormatNumber>{{(_data.ridersCriticalIllness) ? _data.ridersCriticalIllness : '-'}}</span></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     </div>
-    <div *ngIf="backPage">
+    <div *ngIf="backPage == true">
         <app-life-insurance></app-life-insurance>
     </div>
 <!-- </div> -->

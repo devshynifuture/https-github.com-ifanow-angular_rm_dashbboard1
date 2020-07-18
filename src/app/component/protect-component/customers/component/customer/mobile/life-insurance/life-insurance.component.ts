@@ -24,5 +24,7 @@ export class LifeInsuranceComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  getValue(value){
+    this.showDetailView = value;
+  }
 }

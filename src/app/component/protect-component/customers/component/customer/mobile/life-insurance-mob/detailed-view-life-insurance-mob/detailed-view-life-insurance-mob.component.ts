@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 
@@ -14,7 +14,9 @@ export class DetailedViewLifeInsuranceMobComponent implements OnInit {
   nominee: any;
   cashFlowList: any;
   bankList: any;
-  backPage;
+  backPage = false;
+  @Output() outputValue = new EventEmitter<any>();
+
   constructor(private enumService: EnumServiceService, private subInjectService: SubscriptionInject) { }
   @Input()
   set data(inputData) {
@@ -37,6 +39,9 @@ export class DetailedViewLifeInsuranceMobComponent implements OnInit {
         this._data.bankName = element.bankName;
       }
     });
+  }
+  changeValue(flag){
+    this.outputValue.emit(flag);
   }
 
 }
