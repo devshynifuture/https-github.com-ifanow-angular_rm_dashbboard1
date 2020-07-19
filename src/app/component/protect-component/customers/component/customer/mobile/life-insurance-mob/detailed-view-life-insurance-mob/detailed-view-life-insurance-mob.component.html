@@ -14,7 +14,7 @@
             filter_list
         </span>
     </div>
-</div>   
+</div>
  <div class="pt-80 p-8 pb-90">
         <div class="bg-white">
             <div class="row pt-12 pb-12">
@@ -22,7 +22,8 @@
                     <div class="circular-small"></div>
                 </div>
                 <div class="col-7 pl-0">
-                    <p class="mb-0 pt-8">{{(_data.policyName) ? _data.policyName : 'LI '+(i+1)}} {{'| '+_data.policyNumber}}
+<!--                  /*+(i+1)*/-->
+                    <p class="mb-0 pt-8">{{(_data.policyName) ? _data.policyName : 'LI '}} {{'| '+_data.policyNumber}}
                     </p>
                 </div>
                 <div class="col-3 text-right pl-0">
@@ -166,7 +167,7 @@
                                 </p>
                             </div>
                         </div>
-                        
+
                     </div>
                     <div class="col-5 text-right pl-0">
                         <p class="m-0">{{(_data.riskCover) ? '₹' : ''}}<span appFormatNumber>
@@ -177,7 +178,7 @@
                         <div  *ngFor="let data of nominee; let i = index">
                                <p class="mob-text-xs f-14 pt-24">
                                     {{ (data.name) ? data.name : '-' }}
-                               </p> 
+                               </p>
                                <p class="mob-text-xs f-14 pt-24">
                                     {{ (data.relationName) ? data.relationName : '-' }}
                                </p>
@@ -186,7 +187,7 @@
                                     <div *ngFor="let data of _data.ulipFundDetails; let i = index">
                                             <p  class="mob-text-xs f-14 pt-24"  *ngIf="data.fundName">
                                                     {{ (data.fundName) ? data.fundName : '-' }}
-            
+
                                             </p>
                                             <p  class="mob-text-xs f-14 pt-24" *ngIf="data.equityRatio">
                                                     {{ (data.equityRatio) ? data.equityRatio : '-' }} {{(data.equityRatio) ? '%' : ''}}
@@ -194,7 +195,7 @@
                                             <p  class="mob-text-xs f-14 pt-24" *ngIf="data.debtRatio">
                                                     {{ (data.debtRatio) ? data.debtRatio : '-' }} {{(data.debtRatio) ? '%' : ''}}
                                             </p>
-                                            <p  class="mob-text-xs f-14 pt-24" *ngIf="data.units"> 
+                                            <p  class="mob-text-xs f-14 pt-24" *ngIf="data.units">
                                                     {{ (data.units) ? data.units : '-' }}
                                             </p>
                                             <p  class="mob-text-xs f-14 pt-24" *ngIf="data.nav">
@@ -251,7 +252,7 @@
                                     <p class="mob-text-xs f-14 pt-24">
                                             Type {{i + 1}}
 
-                                    </p> 
+                                    </p>
                                     <p class="mob-text-xs f-14 pt-24">
                                             Date {{i + 1}}
 

@@ -11,5 +11,5 @@ export class MobNpsComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  changeValue(flag){}
 }

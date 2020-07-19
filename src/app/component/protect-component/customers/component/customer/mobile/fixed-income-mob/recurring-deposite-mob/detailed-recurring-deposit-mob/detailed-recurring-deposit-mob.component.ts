@@ -8,7 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class DetailedRecurringDepositMobComponent implements OnInit {
   fdData: any;
   inputData: any;
-
+  recuringDeposit;
   constructor() { }
   @Input()
   set data(data) {

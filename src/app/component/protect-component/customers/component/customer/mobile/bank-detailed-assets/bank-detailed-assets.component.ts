@@ -12,19 +12,21 @@ import { upperSliderAnimation, rightSliderAnimation } from 'src/app/animation/an
   ],
 })
 export class BankDetailedAssetsComponent implements OnInit {
-  fixdeposit
-  backToMf
+  fixdeposit;
+  backToMf;
+  showBondDetails;
+  FDDetails;
   inputData: any;
   asset: any;
   showFDDetails;
   showRDDetails;
   constructor(
-    public eventService : EventService,
+    public eventService: EventService,
   ) { }
   @Input()
   set data(data) {
     this.inputData = data;
-    this.asset = data.asset
+    this.asset = data.asset;
     console.log('This is Input data of proceed ', data);
   }
   get data() {
@@ -32,6 +34,6 @@ export class BankDetailedAssetsComponent implements OnInit {
   }
   ngOnInit() {
   }
-  addFixedDeposit(){     
+  addFixedDeposit() {
       }
 }

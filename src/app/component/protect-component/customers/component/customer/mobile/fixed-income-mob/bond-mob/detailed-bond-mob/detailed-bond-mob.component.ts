@@ -8,7 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class DetailedBondMobComponent implements OnInit {
   inputData: any;
   fdData: any;
-
+  matured;
   constructor() { }
   @Input()
   set data(data) {

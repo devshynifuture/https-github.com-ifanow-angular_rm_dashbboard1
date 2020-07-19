@@ -10,6 +10,7 @@ export class GeneralInsuranceComponent implements OnInit {
   assetData: any;
   cashAndBank;
   backToMf;
+  detailedViewData;
   generalInsuranceData;
   showDetailView = false;
   constructor() { }
