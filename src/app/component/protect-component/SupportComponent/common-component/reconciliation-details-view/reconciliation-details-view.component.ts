@@ -256,12 +256,12 @@ export class ReconciliationDetailsViewComponent implements OnInit {
 
 
   deleteTransactionApi(value) {
-    // value = value.map(element => String(element));
+    value = value.map(element => String(element));
     this.selection.clear();
     this.mainLoader = true;
-    // let dateObj = new Date(this.data.aumDate);
-    // let dateFormat = dateObj.getFullYear() + '-' + `${(dateObj.getMonth() + 1) < 10 ? '0' : ''}` + (dateObj.getMonth() + 1) + '-' + dateObj.getDate();
-    // value.unshift(dateFormat);
+    let dateObj = new Date(this.data.aumDate);
+    let dateFormat = dateObj.getFullYear() + '-' + `${(dateObj.getMonth() + 1) < 10 ? '0' : ''}` + (dateObj.getMonth() + 1) + '-' + dateObj.getDate();
+    value.unshift(dateFormat);
 
     this.reconService.deleteAumTransaction(value)
       .subscribe(res => {
