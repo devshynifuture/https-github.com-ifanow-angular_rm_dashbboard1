@@ -457,7 +457,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
               mutualFundTransaction: item.mutualFundTransaction,
               transactions: '',
               isUnfreezeClicked: false,
-              isFreezeClicked: false
+              isFreezeClicked: false,
+              keep: item.keep
             });
           });
           this.dataSource2.data = arrValue;
