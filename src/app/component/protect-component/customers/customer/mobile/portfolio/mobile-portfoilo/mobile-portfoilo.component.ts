@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { Chart } from 'angular-highcharts';
 import { AppConstants } from 'src/app/services/app-constants';
-import { LoaderFunction } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { CustomerService } from 'src/app/component/Services/customer.service';
 
@@ -118,7 +117,6 @@ export class MobilePortfoiloComponent implements OnInit {
   allDataPort: any;
   constructor(
     public customerService: CustomerService,
-    public loaderFn: LoaderFunction,
     public eventService: EventService
   ) {
     this.clientId = AuthService.getClientId()
@@ -230,7 +228,7 @@ export class MobilePortfoiloComponent implements OnInit {
     }
 
 
-    this.loaderFn.increaseCounter();
+  //  this.loaderFn.increaseCounter();
     this.customerService.getAllFeedsPortFolio(obj).subscribe(res => {
       if (res == null) {
         this.portFolioData = [];
@@ -308,11 +306,11 @@ export class MobilePortfoiloComponent implements OnInit {
           this.assetAllocationPieChartDataMgnt(this.chartData);
         }
       }
-      this.loaderFn.decreaseCounter();
+    //  this.loaderFn.decreaseCounter();
     }, err => {
       this.hasError = true;
       this.eventService.openSnackBar(err, "Dismiss")
-      this.loaderFn.decreaseCounter();
+      //this.loaderFn.decreaseCounter();
     })
   }
   assetAllocationPieChartDataMgnt(data) {
