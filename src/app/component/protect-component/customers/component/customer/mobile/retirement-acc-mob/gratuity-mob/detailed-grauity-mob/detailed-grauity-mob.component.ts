@@ -12,7 +12,7 @@ export class DetailedGrauityMobComponent implements OnInit {
   constructor() { }
   @Input()
   set data(data) {
-    this.inputData = data.assetList;
+    this.inputData = data;
     console.log('This is Input data of proceed ', data);
     this.detailedData  = this.inputData
   }

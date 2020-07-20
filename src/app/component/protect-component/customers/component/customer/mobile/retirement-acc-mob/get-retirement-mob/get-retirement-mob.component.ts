@@ -24,6 +24,7 @@ export class GetRetirementMobComponent implements OnInit {
       this.asset = []
     }
     console.log('This is Input data of proceed ', data);
+    console.log('This is Input data of proceed ', this.asset);
   }
   get data() {
     return this.inputData;
@@ -31,10 +32,10 @@ export class GetRetirementMobComponent implements OnInit {
   ngOnInit() {
   }
   openDetailed(item) {
-    if (this.inputData.assetTpye == 'EPF') {
+    if (this.inputData.assetType == 'EPF') {
       this.showDetailsEPF = true
       this.detailedData = item
-    } else if (this.inputData.assetTpye =='NPS') {
+    } else if (this.inputData.assetType =='NPS') {
       this.showDetailsNPS = true
       this.detailedData = item
     } else {
