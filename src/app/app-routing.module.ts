@@ -7,6 +7,7 @@ import { DataNotFoundComponent } from './component/protect-component/common-comp
 import { AuthGuard } from './guards/auth.guard';
 import { FormTestComponent } from './test/form-test/form-test.component';
 import { AdvisorGuard } from './guards/advisor.guard';
+import { ClientGuard } from './guards/client.guard';
 
 const routes: Routes = [
   {
@@ -17,13 +18,12 @@ const routes: Routes = [
   },
   // TODO remove for old login
 
-  {
-    path: 'admin',
-    loadChildren: () => import('./component/left-sidebar/leftsidebar/leftsidebar.module').then(m => m.LeftsidebarModule),
-    // outlet: 'mainrouter',
-    canActivate: [AuthGuard, AdvisorGuard],
+  // {
+  //   path: 'admin',
+  //   loadChildren: () => import('./component/left-sidebar/leftsidebar/leftsidebar.module').then(m => m.LeftsidebarModule),
+  //   canActivate: [AuthGuard, AdvisorGuard],
 
-  },
+  // },
 
   /*
   {
@@ -69,7 +69,7 @@ const routes: Routes = [
       //   component: OverviewComponent
       // }
     ],
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, ClientGuard],
   },
   {
     path: '',
