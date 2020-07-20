@@ -396,7 +396,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
       this.filteredAumListWithIsMappedToMinusOne = this.aumList.filter(item => {
         return item.isMapped === -1;
       });
-      console.log(this.filteredAumListWithIsMappedToMinusOne);
+      console.log("mapped to -1::", this.filteredAumListWithIsMappedToMinusOne);
 
       this.filteredAumListWithIsMappedToMinusOne.forEach(element => {
         mutualFundIds.push(element.mutualFundId);
@@ -413,29 +413,53 @@ export class UpperSliderBackofficeComponent implements OnInit {
     // if (this.didAumReportListGot) {
     this.isLoadingForDuplicate = true;
     this.dataSource2.data = ELEMENT_DATA2;
-    console.log("this is what im sending for duplicate folio data", data);
+    // console.log("this is what im sending for duplicate folio data", data);
     this.reconService.getDuplicateFolioDataValues(data)
       // this.reconService.getDuplicateDataValues(data)
       .subscribe(res => {
         this.isLoadingForDuplicate = false;
         if (res) {
-          console.log('this is some duplicate values:::::::::', res, this.aumList);
+          console.log('this is some duplicate values:::::::::', res, this.filteredAumListWithIsMappedToMinusOne);
           let filteredArrValue = [];
           const arrValue = [];
           if (this.data.flag === 'report') {
-            res.forEach(element => {
-              filteredArrValue = this.aumListReportValue.filter(item => {
-                return item.mutualFundId === element.id ? item : null;
-              });
-            });
+            for (let i in res) {
+              for (let f in this.aumListReportValue) {
+                if (res[i].id == this.aumListReportValue[f].mutualFundId) {
+                  filteredArrValue.push(res[i]);
+                }
+              }
+            }
           } else {
-            res.forEach(element => {
-              filteredArrValue = this.aumList.filter(item => {
-                return item.mutualFundId === element.id ? item : null;
-              });
-            });
-          }
+            for (let i in res) {
+              for (let f in this.filteredAumListWithIsMappedToMinusOne) {
+                if (res[i].id == this.filteredAumListWithIsMappedToMinusOne[f].mutualFundId) {
+                  let item = this.filteredAumListWithIsMappedToMinusOne[f];
+                  filteredArrValue.push({
+                    id: item.id,
+                    shemeName: item.shemeName,
+                    folioNumber: item.folioNumber,
+                    mutualFundId: item.mutualFundId,
+                    advisorId: item.advisorId,
+                    broker_id: item.broker_id,
+                    aumUnits: (item.aumUnits).toFixed(3),
+                    calculatedUnits: (item.calculatedUnits).toFixed(3),
+                    difference: (item.calculatedUnits - item.aumUnits).toFixed(3),
+                    freezeDate: item.freezeDate ? item.freezeDate : null,
+                    isMapped: item.isMapped,
+                    aumDate: item.aumDate,
+                    brokerCode: item.brokerCode,
+                    schemeCode: item.schemeCode,
+                    mutualFundTransaction: res[i].mutualFundTransactions,
+                    transactions: '',
+                    isUnfreezeClicked: false,
+                    isFreezeClicked: false,
+                  });
 
+                }
+              }
+            }
+          }
 
           console.log('htis is filered value::::', filteredArrValue);
           filteredArrValue.forEach(item => {
@@ -446,19 +470,17 @@ export class UpperSliderBackofficeComponent implements OnInit {
               mutualFundId: item.mutualFundId,
               advisorId: item.advisorId,
               brokerId: item.broker_id,
-              unitsRta: (item.aumUnits).toFixed(3),
-              unitsIfanow: (item.calculatedUnits).toFixed(3),
-              difference: (item.calculatedUnits - item.aumUnits).toFixed(3),
+              unitsRta: item.aumUnits,
+              unitsIfanow: item.calculatedUnits,
+              difference: item.difference,
               freezeDate: item.freezeDate ? item.freezeDate : null,
               isMapped: item.isMapped,
               aumDate: item.aumDate,
-              brokerCode: item.brokerCode,
               schemeCode: item.schemeCode,
               mutualFundTransaction: item.mutualFundTransaction,
               transactions: '',
               isUnfreezeClicked: false,
               isFreezeClicked: false,
-              keep: item.keep
             });
           });
           this.dataSource2.data = arrValue;
@@ -497,9 +519,14 @@ export class UpperSliderBackofficeComponent implements OnInit {
   deleteAndReorder() {
     const isParent = this.isRmLogin ? true : ((this.parentId === this.advisorId) ? true : false);
     let mutualFundIds = [];
+    let aumIds = [];
     this.filteredAumListWithIsMappedToMinusOne.forEach(element => {
       if (Math.abs(element.calculatedUnits - element.aumUnits) !== 0) {
-        mutualFundIds.push(element.mutualFundId);
+        if (element.mutualFundId !== 0) {
+          mutualFundIds.push(element.mutualFundId);
+        } else {
+          aumIds.push(element.id);
+        }
       }
     });
 
@@ -510,6 +537,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
         advisorIds: [this.advisorId],
         rtId: this.data.rtId,
         mutualFundIds,
+        aumIds,
         parentId: this.parentId,
         isParent
       };
