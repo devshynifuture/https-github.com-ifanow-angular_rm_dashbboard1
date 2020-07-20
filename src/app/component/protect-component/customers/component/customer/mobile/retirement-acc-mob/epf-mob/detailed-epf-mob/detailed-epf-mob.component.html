@@ -24,7 +24,7 @@
             </div>
             <div class="col-3 text-right pl-0">
                 <p class="m-0 pt-8">
-                    ₹<span appFormatNumber [value]="detailedData.currentValue">{{detailedData.currentValue}}</span>0</p>
+                    ₹<span appFormatNumber [value]="detailedData.currentEpfValue">{{detailedData.currentEpfValue}}</span>0</p>
             </div>
         </div>
     </div>
@@ -51,16 +51,16 @@
                     <div *ngFor="let item of detailedData.ownerList">
                         <p class="m-0">{{item.name}}</p>
                     </div>
-                    <p class="m-0 pt-24">{{detailedData.employersMonthlyContribution?'₹':''}}<span appFormatNumber>{{detailedData.employersMonthlyContribution?epf.employersMonthlyContribution:'-'}}</span></p>
-                    <p class="m-0 pt-24">{{detailedData.employeesMonthlyContribution?'₹':''}}<span appFormatNumber>{{detailedData.employeesMonthlyContribution?epf.employeesMonthlyContribution:'-'}}</span></p>
-                    <p class="m-0 pt-24">{{detailedData.voluntaryContribution? "₹" : ""}}<span appFormatNumber>{{detailedData.voluntaryContribution? epf.voluntaryContribution : "-"}}</span></p>
+                    <p class="m-0 pt-24"><span appFormatNumber>{{detailedData.employersMonthlyContribution?detailedData.employersMonthlyContribution:'-'}}</span></p>
+                    <p class="m-0 pt-24"><span appFormatNumber>{{detailedData.employeesMonthlyContribution?detailedData.employeesMonthlyContribution:'-'}}</span></p>
+                    <p class="m-0 pt-24">{{detailedData.voluntaryContribution? "₹" : ""}}<span appFormatNumber>{{detailedData.voluntaryContribution? detailedData.voluntaryContribution : "-"}}</span></p>
                     <p class="m-0 pt-24">{{detailedData.maturityDate | date:'dd/MM/yyyy'}}</p>
                     <p class="m-0 pt-12">₹<span appFormatNumber>{{detailedData.accountBalanceEpf}}</span></p>
                     <p class="m-0 pt-24">₹<span appFormatNumber>{{detailedData.accountBalanceEps}}</span></p>
                     <p class="m-0 pt-24 wb">{{(detailedData.balanceAsOn)?(detailedData.balanceAsOn | date:'dd/MM/yyyy'):'-'}}</p>
                     <p class="m-0 pt-24 wb">{{detailedData.rate | number: '1.2-2'}}{{detailedData.rate?'%':''}}</p>
                     <p class="m-0 pt-24">{{detailedData.salaryGrowthRate | number: '1.2-2'}}{{detailedData.salaryGrowthRate?'%':''}}</p>
-                    <p class="m-0 pt-24">{{detailedData.epfNo?epf.epfNo:'-'}}</p>
+                    <p class="m-0 pt-24">{{detailedData.epfNo?detailedData.epfNo:'-'}}</p>
                     <p class="m-0 pt-24"> {{detailedData.description?detailedData.bankNameAndLast4Digit:'-'}}</p>
                     <p class="m-0 pt-24">{{detailedData.description?detailedData.description:'-'}}</p>
                 </div>
