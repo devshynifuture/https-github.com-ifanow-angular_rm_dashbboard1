@@ -1,172 +1,3 @@
-<div class="popup-header-fix-35">
-    <div class="row bb-1">
-        <div class="col-md-10 p-0">
-            <h4 class="mb-0 wrapper-20">EPF - Detailed view</h4>
-        </div>
-        <div class="col-md-2 text-left">
-            <div class="wrapper-12">
-                <i class="material-icons c-p pt-8 v-middle" (click)="close()"> clear</i>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="pl-20 pr-20 mt-44 pb-48">
-    <div class="row pt-40">
-        <div class="col-md-12 p-0">
-            <div class="insurance-ui bt">
-                <div class="row bb p-8 b-l br" *ngFor="let obj of epf.ownerList; let i = index">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        {{i != 0?'Co-o' : 'O'}}wner{{i != 0?i:''}}
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{obj.name}}
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Employer's monthly contribution
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{epf.employersMonthlyContribution?'₹':''}}<span appFormatNumber>{{epf.employersMonthlyContribution?epf.employersMonthlyContribution:'-'}}</span>
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Employees monthly contribution
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{epf.employeesMonthlyContribution?'₹':''}}<span appFormatNumber>{{epf.employeesMonthlyContribution?epf.employeesMonthlyContribution:'-'}}</span>
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Voluntary contribution
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{epf.voluntaryContribution? "₹" : ""}}<span appFormatNumber>{{epf.voluntaryContribution? epf.voluntaryContribution : "-"}}</span>
-                    </div>
-                    <!-- <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{epf.employeesMonthlyContribution?utils.formatter(epf.employeesMonthlyContribution):'-'}}
-                    </div> -->
-                </div>
-
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Account balance - EPF
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="epf.accountBalanceEpf != 0">
-                        ₹<span appFormatNumber>{{epf.accountBalanceEpf}}</span>
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Account balance - EPS
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="epf.accountBalanceEps != 0">
-                        ₹<span appFormatNumber>{{epf.accountBalanceEps}}</span>
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Balance as on
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{(epf.balanceAsOn)?(epf.balanceAsOn | date:'dd/MM/yyyy'):'-'}}
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Current value -EPF
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="epf.currentEpfValue != 0">
-                        ₹<span appFormatNumber>{{epf.currentEpfValue}}</span>
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Current value -EPS
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="epf.currentEpsValue != 0">
-                        ₹<span appFormatNumber>{{epf.currentEpsValue}}</span>
-                    </div>
-                </div>
-
-                <!-- <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Retirement year
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{epf.maturityYear?epf.maturityYear:'-'}}
-                    </div>
-                </div> -->
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Interest rate
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{epf.rate | number: '1.2-2'}}{{epf.rate?'%':''}}
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Annual salary growth rate
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{epf.salaryGrowthRate | number: '1.2-2'}}{{epf.salaryGrowthRate?'%':''}}
-                    </div>
-                </div>
-
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-6 text-left f-14 roboto p-0">
-                        Member ID
-                    </div>
-                    <div class="col-md-6 text-right f-14 roboto p-0">
-                        {{epf.epfNo?epf.epfNo:'-'}}
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Bank account number
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" [hidden]="!epf.userBankMappingId" *ngFor="let bank of bankList">
-                        <div [ngSwitch]="epf.userBankMappingId">
-                            <div *ngSwitchCase="bank.id">{{bank.bankNameAndLast4Digit}}</div>
-                        </div>
-                    </div>
-                    <div *ngIf="!epf.userBankMappingId" class="col-md-4 text-right f-14 roboto p-0">
-                        {{'-'}}
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Description
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{epf.description?epf.description:'-'}}
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br" *ngIf="!epf.nomineeList">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Nominee
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        -
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br" *ngFor="let obj of epf.nomineeList; let i = index">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Nominee {{i + 1}}
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{obj.name}}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
 <div class="row mob-bg-common pb-12 mobtop-navfixed" *ngIf="backToSS != true">
     <div class="col-2">
         <span class="material-icons text-white" (click)="backToSS = true">
@@ -174,7 +5,7 @@
         </span>
     </div>
     <div class="col-7 p-0">
-        <h5 class="m-0 f-18 text-white pt-4">KVP - Detailed view</h5>
+        <h5 class="m-0 f-18 text-white pt-4">EPF - Detailed view</h5>
     </div>
     <div class="col-3 text-right">
         <span class="material-icons text-white">
@@ -189,7 +20,7 @@
                 <div class="circular-small"></div>
             </div>
             <div class="col-7 pl-0">
-                <p class="mb-0 pt-8">{{(detailedData.description)?detailedData.description:'FD'}}</p>
+                <p class="mb-0 pt-8">{{(detailedData.description)?detailedData.description:'EPF'}}</p>
             </div>
             <div class="col-3 text-right pl-0">
                 <p class="m-0 pt-8">
