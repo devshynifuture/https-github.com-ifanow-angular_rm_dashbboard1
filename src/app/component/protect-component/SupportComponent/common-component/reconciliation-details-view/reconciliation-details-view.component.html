@@ -255,14 +255,14 @@
                 <ng-container matColumnDef="action">
                     <th class="br" mat-header-cell *matHeaderCellDef> Action </th>
                     <td class="br" mat-cell *matCellDef="let element; index as i">
-                        <div class="bar">
+                        <div class="bar" [ngClass]="disableDeletionForTable2 ? 'disableClass': ''">
                             <button mat-stroked-button [ngClass]="element.keep ? 'disableClass': ''"
-                                [disabled]="element.keep" (click)="shouldKeepOrRemove(1, element)"
+                                [disabled]="element.keep" (click)="shouldKeepOrRemove(1, element, i)"
                                 class="btn-primary mr-12 text-white btn-xs h-22">
                                 Keep
                             </button>
                             <button mat-stroked-button [ngClass]="element.keep ? '' : 'disableClass'"
-                                [disabled]="!element.keep" (click)="shouldKeepOrRemove(0, element)"
+                                [disabled]="!element.keep" (click)="shouldKeepOrRemove(0, element, i)"
                                 class="btn-danger text-white btn-xs h-22">
                                 Remove
                             </button>
@@ -279,7 +279,8 @@
                 </h5>
             </div>
             <div class="col-lg-12 text-right">
-                <button class="ba-black" mat-button (click)="putAumTransactionKeepOrRemove()">
+                <button class="ba-black" mat-button (click)="putAumTransactionKeepOrRemove()"
+                    [disabled]="!canUpdateTransactions">
                     Update Transactions
                 </button>
             </div>
