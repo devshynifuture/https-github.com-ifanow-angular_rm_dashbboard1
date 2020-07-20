@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-detailed-view-others-mob',
@@ -6,10 +6,22 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./detailed-view-others-mob.component.scss']
 })
 export class DetailedViewOthersMobComponent implements OnInit {
+  others: any;
+  @Output() outputValue = new EventEmitter<any>();
 
   constructor() { }
+  @Input()
+  set data(inputData) {
+    this.others = inputData;
+  }
 
+  get data() {
+    return this.others;
+  }
   ngOnInit() {
+  }
+  changeValue(flag){
+    this.outputValue.emit(flag);
   }
 
 }
