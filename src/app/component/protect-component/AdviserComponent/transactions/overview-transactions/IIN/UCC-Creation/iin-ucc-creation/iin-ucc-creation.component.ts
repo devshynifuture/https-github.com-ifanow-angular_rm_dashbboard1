@@ -50,8 +50,6 @@ export class IinUccCreationComponent implements OnInit, AfterViewInit {
     } else {
       this.greeting = 'Good evening';
     }
-    this.taxStatusList = this.enumService.getIndividualTaxList();
-    this.taxStatusList.push(...this.enumService.getMinorTaxList());
     console.log('this.taxStatusList :', this.taxStatusList);
   }
 
@@ -98,7 +96,6 @@ export class IinUccCreationComponent implements OnInit, AfterViewInit {
       holdingType: [(!data) ? '' : data.holdingType, [Validators.required]],
       taxMaster: [(!data) ? {taxMasterId: 1, description: 'Individual'} : data.taxMaster, [Validators.required]],
     });
-    this.setDefaultTaxStatus();
     this.generalDetails.controls.ownerName.valueChanges
       .subscribe(newValue => {
         this.filteredStates = new Observable(this.clientData).pipe(startWith(''),
@@ -178,6 +175,24 @@ export class IinUccCreationComponent implements OnInit, AfterViewInit {
     this.familyMemberData = value;
     this.familyMemberId = value.familyMemberId;
     this.clientData = value;
+    let clientType = 1;
+    if (value.clientType > 0) {
+      clientType = value.clientType;
+    } else if (value.familyMemberType > 0) {
+      clientType = value.familyMemberType;
+    }
+    console.log('selected member : ', value);
+    if (clientType == 1) {
+      this.taxStatusList = this.enumService.getIndividualTaxList();
+      this.setDefaultTaxStatus();
+    } else if (clientType == 2) {
+      this.taxStatusList = this.enumService.getMinorTaxList();
+      this.setDefaultTaxStatus();
+    } else {
+      this.taxStatusList = [];
+      this.generalDetails.controls.taxMaster.setValue('');
+    }
+
   }
 
   displayFn(user) {

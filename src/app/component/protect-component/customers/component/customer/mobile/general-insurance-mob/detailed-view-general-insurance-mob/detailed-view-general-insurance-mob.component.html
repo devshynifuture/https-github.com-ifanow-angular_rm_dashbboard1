@@ -1,0 +1,452 @@
+<div id="mob-fixed-income">
+    <div class="row mob-bg-common pb-12 mobtop-navfixed">
+        <div class="col-2" (click)="changeValue(false)">
+            <span class="material-icons text-white">
+                keyboard_backspace
+            </span>
+        </div>
+        <div class="col-7 p-0">
+            <h5 class="m-0 f-18 text-white pt-4">{{showInsurance}} - Detailed view</h5>
+        </div>
+        <div class="col-3 text-right">
+            <span class="material-icons text-white">
+                filter_list
+            </span>
+        </div>
+    </div>
+    <div class="pt-80 p-8 pb-90">
+        <div class="bg-white">
+            <div class="row pt-12 pb-12">
+                <div class="col-2">
+                    <div class="circular-small"></div>
+                </div>
+                <div class="col-7 pl-0">
+                    <p class="mb-0 pt-8">
+                        {{(_data.insurerName) ? _data.insurerName : 'GI '}}{{'| '+_data.policyNumber}}
+
+                    </p>
+                </div>
+                <div class="col-3 text-right pl-0">
+                    <p class="m-0">{{_data.sumInsuredIdv ? '₹' : ''}}<span
+                            appFormatNumber>{{_data.sumInsuredIdv ? _data.sumInsuredIdv : '-'}}</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-24">
+            <div class="col-12 pl-0">
+                <h5 class="m-0 f-16 roboto f-400">Policy details
+                </h5>
+            </div>
+        </div>
+        <div class="pt-16">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20">
+                    <div class="col-7">
+                        <p class="mob-text-xs f-14"
+                            *ngIf="_data.policyHolderName && showInsurance != 'Travel' && showInsurance!='Health'&& showInsurance != 'Personal accident' && showInsurance!='Critical illness'">
+                            Name of policy holder
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24"
+                            *ngIf="showInsurance!='Personal accident' && showInsurance!='Critical illness'  && _data.policyType && showInsurance!='Health' ">
+                            Plan type
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24" *ngIf="_data.policyNumber">Policy number
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24" *ngIf="_data.insurerName">Name of insurer
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24" *ngIf="_data.policyName && showInsurance !='Motor'">Policy
+                            name
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24" *ngIf="_data.planName">Plan name
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24" *ngIf="_data.premiumAmount">Premium
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24" *ngIf="_data.geographyId">Geography
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24" *ngIf="_data.policyStartDate"> Policy start date
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24" *ngIf="_data.policyExpiryDate"> Policy expiry date
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24"
+                            *ngIf="_data.sumInsuredIdv && showInsurance != 'Travel' && showInsurance != 'Health' && showInsurance != 'Personal accident'">
+                            Insured declared value
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24"
+                            *ngIf="_data.sumInsuredIdv && showInsurance == 'Travel' && _data.policyFeatureId == 0">Sum
+                            insured
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24" *ngIf="_data.noClaimBonus">No claim bonus
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24" *ngIf="_data.specialDiscount">Special discount
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24" *ngIf="_data.copay">Copay
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24" *ngIf="_data.cumulativeBonus"> Cumulative bonus
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24" *ngIf="_data.policyInceptionDate"> Policy inception date
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Duration remaining
+                        </p>
+                    </div>
+                    <div class="col-5 text-right pl-0">
+                        <p class="m-0"
+                            *ngIf="_data.policyHolderName && showInsurance != 'Travel' && showInsurance!='Health'&& showInsurance != 'Personal accident' && showInsurance!='Critical illness'">
+                            {{(_data.policyHolderName) ? _data.policyHolderName : '-'}}
+                        </p>
+                        <p class="m-0 pt-24"
+                            *ngIf="showInsurance!='Personal accident' && showInsurance!='Critical illness'  && _data.policyType && showInsurance!='Health' ">
+                            {{ _data.policyType}}</p>
+                        <p class="m-0 pt-24" *ngIf="_data.policyNumber">
+                            {{(_data.policyNumber) ? _data.policyNumber : '-'}}</p>
+                        <p class="m-0 pt-24" *ngIf="_data.insurerName">{{(_data.insurerName) ? _data.insurerName : '-'}}
+                        </p>
+                        <p class="m-0 pt-24" *ngIf="_data.policyName && showInsurance !='Motor'">
+                            {{(_data.policyName) ? _data.policyName : '-'}}</p>
+                        <p class="m-0 pt-24" *ngIf="_data.planName">{{(_data.planName) ? _data.planName : '-'}}</p>
+                        <p class="m-0 pt-24" *ngIf="_data.premiumAmount">{{(_data.premiumAmount) ? '₹' : ''}}<span
+                                appFormatNumber>{{(_data.premiumAmount) ? _data.premiumAmount : '-'}}</span></p>
+                        <p class="m-0 pt-24" *ngIf="_data.geographyId">
+                            {{(_data.geographyId == 1) ? "Worldwide" : (_data.geographyId == 2) ? "Worldwide excluding USA & Canada" : (_data.geographyId == 3) ? "Asia" : '-' }}
+                        </p>
+                        <p class="m-0 pt-24" *ngIf="_data.policyStartDate">
+                            {{(_data.policyStartDate) ? (_data.policyStartDate | date:'dd/MM/yyyy') : '-'}}</p>
+                        <p class="m-0 pt-24" *ngIf="_data.policyExpiryDate">
+                            {{(_data.policyExpiryDate) ? (_data.policyExpiryDate | date:'dd/MM/yyyy') : '-'}}</p>
+                        <p class="m-0 pt-24"
+                            *ngIf="_data.sumInsuredIdv && showInsurance != 'Travel' && showInsurance != 'Health' && showInsurance != 'Personal accident'">
+                            {{(_data.sumInsuredIdv) ? '₹' : ''}}<span appFormatNumber>
+                                {{(_data.sumInsuredIdv) ? _data.sumInsuredIdv : '-'}}</span>
+                        </p>
+                        <p class="m-0 pt-24"
+                            *ngIf="_data.sumInsuredIdv && showInsurance == 'Travel' && _data.policyFeatureId == 0">
+                            {{(_data.sumInsuredIdv) ? '₹' : ''}}<span appFormatNumber>
+                                {{(_data.sumInsuredIdv) ? _data.sumInsuredIdv : '-'}}</span></p>
+                        <p class="m-0 pt-24" *ngIf="_data.noClaimBonus">
+                            {{(_data.noClaimBonus) ? _data.noClaimBonus + '%' : '-'}}{{(_data.copay) ? '%' : ''}}
+                        </p>
+                        <p class="m-0 pt-24" *ngIf="_data.specialDiscount">
+                            {{(_data.specialDiscount) ? _data.specialDiscount + '%' : '-'}}{{(_data.copay) ? '%' : ''}}
+                        </p>
+                        <div class="m-0 pt-24" *ngIf="_data.copay">
+                            <p *ngIf="_data.copayRupeesOrPercent == 1">
+                                {{(_data.copay) ? '₹' : ''}}<span
+                                    appFormatNumber>{{(_data.copay) ? _data.copay : '-'}}</span>
+                            </p>
+                            <p *ngIf="_data.copayRupeesOrPercent == 2">
+                                {{(_data.copay) ? _data.copay : '-'}}{{(_data.copay) ? '%' : ''}}
+                            </p>
+                        </div>
+                        <div class="m-0 pt-24" *ngIf="_data.cumulativeBonus">
+                            <p *ngIf="_data.cumulativeBonusRupeesOrPercent == 1">
+                                {{(_data.cumulativeBonus) ? '₹' : ''}}<span
+                                    appFormatNumber>{{(_data.cumulativeBonus) ? _data.cumulativeBonus : '-'}}</span>
+                            </p>
+                            <p *ngIf="_data.cumulativeBonusRupeesOrPercent == 2">
+                                {{(_data.cumulativeBonus) ? _data.cumulativeBonus : '-'}}{{(_data.cumulativeBonus) ? '%' : ''}}
+                            </p>
+                        </div>
+                        <p class="m-0 pt-24" *ngIf="_data.policyInceptionDate">
+                            {{(_data.policyInceptionDate) ? (_data.policyInceptionDate | date:'dd/MM/yyyy') : '-'}}
+                        </p>
+                        <p class="m-0 pt-24" *ngIf="_data.durationRemaining">
+                            {{(_data.durationRemaining) ? _data.durationRemaining : '-'}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-24" *ngIf="showInsurance =='Motor'">
+            <div class="col-12 pl-0">
+                <h5 class="m-0 f-16 roboto f-400">Vehicle details
+                </h5>
+            </div>
+        </div>
+        <div class="pt-16" *ngIf="showInsurance =='Motor'">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20">
+                    <div class="col-7">
+                        <p class="mob-text-xs f-14"> Vehicle type
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Vehicle registration number
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Vehicle registration date
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24"> Make/Model of vehicle
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24"> Engine number
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Chassis number
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Fuel type
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24"> CC/GVW
+                        </p>
+                    </div>
+                    <div class="col-5 text-right pl-0">
+                        <p class="m-0">
+                            {{(_data.vehicleTypeId == 1) ? 'Two wheeler' : (_data.vehicleTypeId == 2) ? 'Four wheeler' : '-'}}
+                        </p>
+                        <p class="m-0 pt-24">{{(_data.vehicleRegNo) ? _data.vehicleRegNo : '-'}}</p>
+                        <p class="m-0 pt-24">
+                            {{(_data.vehicleRegistrationDate) ? (_data.vehicleRegistrationDate | date:'dd/MM/yyyy') : '-'}}
+                        </p>
+                        <p class="m-0 pt-24">{{(_data.vehicleModel) ? _data.vehicleModel : '-'}}</p>
+                        <p class="m-0 pt-24">{{(_data.engineNo) ? _data.engineNo : '-'}}</p>
+                        <p class="m-0 pt-24">{{(_data.chasisNo) ? _data.chasisNo : '-'}}</p>
+                        <p class="m-0 pt-24">
+                            {{(_data.fuelTypeId == 1) ? 'Petrol' : (_data.fuelTypeId == 2) ? 'Petrol + CNG/LPG company fitted' : (_data.fuelTypeId == 3) ? 'Petrol + CNG/LPG fitted after the purchase' : (_data.fuelTypeId == 4) ? 'Diesel' : '-' }}
+                        </p>
+                        <p class="m-0 pt-24">{{(_data.ccGvw) ? _data.ccGvw : '-'}}</p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-24"
+            *ngIf="showInsurance !='Motor' && showInsurance !='Home' && showInsurance !='Fire & special perils'">
+            <div class="col-12 pl-0">
+                <h5 class="m-0 f-16 roboto f-400">Insured details
+                </h5>
+            </div>
+        </div>
+        <div class="pt-16"
+            *ngIf="showInsurance !='Motor' && showInsurance !='Home' && showInsurance !='Fire & special perils'">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20">
+                    <div class="col-7">
+                        <p class="mob-text-xs f-14" *ngIf=" _data.policyHolderName"> Name of policy holder
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24"
+                            *ngIf="showInsurance!='Personal accident' && showInsurance != 'Travel'">Plan type
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24" *ngIf="showInsurance =='Health'">Deductible sum insured
+                        </p>
+                        <div
+                            *ngIf="_data.insuredMembers && _data.policyType=='Individual' || (showInsurance == 'Travel' &&  _data.policyFeatureId == 0)">
+                            <div *ngFor="let item of _data.insuredMembers ; let i = index">
+                                <p class="mob-text-xs f-14 pt-24">
+                                    {{(item.name) ? item.name : '-'}}
+                                </p>
+                            </div>
+                        </div>
+                        <div
+                            *ngIf="_data.insuredMembers && _data.policyType=='Family floater'  || (showInsurance == 'Travel' &&  _data.policyFeatureId == 1)">
+                            <div *ngFor="let item of _data.insuredMembers ; let i = index">
+                                <p class="mob-text-xs f-14 pt-24">
+                                    Insured member{{i + 1}}
+                                </p>
+                            </div>
+                        </div>
+                        <div *ngIf="_data.insuredMembers && showInsurance == 'Personal accident' ">
+                            <div *ngFor="let item of _data.insuredMembers ; let i = index">
+                                <p class="mob-text-xs f-14 pt-24">
+                                    Name of insured{{i + 1}}
+                                </p>
+                                <p class="mob-text-xs f-14 pt-24">
+                                    AD sum insured{{i + 1}}
+
+                                </p>
+                                <p class="mob-text-xs f-14 pt-24">
+                                    TTD sum insured {{i + 1}}
+                                </p>
+                            </div>
+                        </div>
+                        <p class="mob-text-xs f-14 pt-24"
+                            *ngIf=" _data.policyType=='Family floater' || (showInsurance == 'Travel' &&  _data.policyFeatureId == 1)">
+                            Sum insured
+                        </p>
+                    </div>
+                    <div class="col-5 text-right pl-0">
+                        <p class="m-0" *ngIf=" _data.policyHolderName">
+                            {{(_data.policyHolderName) ? _data.policyHolderName : '-'}}</p>
+                        <p class="m-0 pt-24" *ngIf="showInsurance!='Personal accident' && showInsurance != 'Travel'">
+                            {{(_data.policyFeatureId == 0) ? 'Standard' : (_data.policyFeatureId == 1) ? 'Top up' : (_data.policyFeatureId == 2) ? 'Super top up' : '-' }}
+                            ,{{(_data.policyType) ? _data.policyType : '-'}}
+                        </p>
+                        <p class="m-0 pt-24" *ngIf="showInsurance =='Health'">
+                            {{(_data.deductibleSumInsured) ? '₹' : ''}}<span
+                                appFormatNumber>{{(_data.deductibleSumInsured) ? _data.deductibleSumInsured : '-'}}</span>
+                        </p>
+                        <div
+                            *ngIf="_data.insuredMembers && _data.policyType=='Individual' || (showInsurance == 'Travel' &&  _data.policyFeatureId == 0)">
+                            <div *ngFor="let item of _data.insuredMembers ; let i = index">
+                                <p class="m-0 pt-24">
+                                    {{(item.sumInsured) ? '₹' : ''}}<span
+                                        appFormatNumber>{{(item.sumInsured) ? item.sumInsured : '-'}}</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div
+                            *ngIf="_data.insuredMembers && _data.policyType=='Family floater'  || (showInsurance == 'Travel' &&  _data.policyFeatureId == 1)">
+                            <div *ngFor="let item of _data.insuredMembers ; let i = index">
+                                <p class="m-0 pt-24">
+                                    {{(item.name) ? item.name : '-'}}
+                                </p>
+                            </div>
+                        </div>
+                        <div *ngIf="_data.insuredMembers && showInsurance == 'Personal accident' ">
+                            <div *ngFor="let item of _data.insuredMembers ; let i = index">
+                                <p class="m-0 pt-24">
+                                    {{(item.name) ? item.name : '-'}}
+                                </p>
+                                <p class="m-0 pt-24">
+                                    {{(item.sumInsured) ? '₹' : ''}}<span
+                                        appFormatNumber>{{(item.sumInsured) ? item.sumInsured : '-'}}</span>
+                                </p>
+                                <p class="m-0 pt-24">
+                                    {{(item.ttdSumInsured) ? '₹' : ''}}<span
+                                        appFormatNumber>{{(item.ttdSumInsured) ? item.ttdSumInsured : '-'}}</span>
+                                </p>
+                            </div>
+                        </div>
+                        <p class="m-0 pt-24"
+                            *ngIf=" _data.policyType=='Family floater' || (showInsurance == 'Travel' &&  _data.policyFeatureId == 1)">
+                            {{(_data.sumInsuredIdv) ? '₹' : ''}}<span
+                                appFormatNumber>{{(_data.sumInsuredIdv) ? _data.sumInsuredIdv : '-'}}</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-24">
+            <div class="col-12 pl-0">
+                <h5 class="m-0 f-16 roboto f-400">Miscellaneous details
+                </h5>
+            </div>
+        </div>
+        <div class="pt-16">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20">
+                    <div class="col-7">
+                        <div *ngFor="let data of nominee; let i = index">
+                            <p class="mob-text-xs f-14 pt-24">
+                                Nominee {{i + 1}}
+                            </p>
+                            <p class="mob-text-xs f-14 pt-24">
+                                Nominee relation{{i + 1}}
+                            </p>
+                        </div>
+                        <p class="mob-text-xs f-14">Exclusions/Special conditions
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24" *ngIf="_data.hypothetication">Hypothecation/Financier name
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Advisor name
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24"> Service branch
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24"
+                            *ngIf="showInsurance !='Home' && showInsurance !='Fire & special perils' ">Linked bank
+                            account
+                        </p>
+                        <div
+                            *ngIf="showInsurance != 'Personal accident' && showInsurance!='Critical illness'  && showInsurance != 'Travel'">
+                            <p class="mob-text-xs f-14 pt-24">Add ons
+                            </p>
+                            <div *ngIf="_data.addOns?.length > 0 && showInsurance !='Motor'">
+                                <div *ngFor="let data of this._data.addOns; let i = index">
+                                    <p class="mob-text-xs f-14 pt-24">
+                                        {{(data.add_on) ? data.add_on : '-'}}
+                                    </p>
+                                </div>
+                            </div>
+                            <div *ngIf="_data.addOns?.length > 0 && showInsurance =='Motor'">
+                                <div *ngFor="let data of this._data.addOns; let i = index">
+                                    <p class="mob-text-xs f-14 pt-24">
+                                        Add on {{i + 1}}
+                                    </p>
+                                </div>
+                            </div>
+                            <div *ngIf="_data.addOns?.length == 0" class="text-center">
+                                <p>No data found</p>
+                            </div>
+                        </div>
+                        <div
+                            *ngIf="showInsurance!='Health' && showInsurance!='Critical illness' &&  showInsurance!='Motor' ">
+                            <p class="mob-text-xs f-14 pt-24">Plan features
+                            </p>
+                            <div
+                                *ngIf="_data.policyFeatures?.length > 0 && showInsurance !='Home' && showInsurance !='Fire & special perils'">
+                                <div *ngFor="let data of _data.policyFeatures; let i = index">
+                                    <p class="mob-text-xs f-14 pt-24">
+                                        Plan features {{i + 1}}
+                                    </p>
+                                </div>
+                            </div>
+                            <div
+                                *ngIf="_data.policyFeatures?.length > 0 && showInsurance =='Home' || showInsurance =='Fire & special perils'">
+                                <div *ngFor="let item of _data.policyFeatures ; let i = index">
+                                    <p class="mob-text-xs f-14 pt-24">
+                                        {{(item.type) ? item.type : '-'}}
+
+                                    </p>
+                                </div>
+                            </div>
+                            <div *ngIf="_data.policyFeatures?.length == 0" class="text-center">
+                                <p>No data found</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-5 text-right pl-0">
+                        <div *ngFor="let data of nominee; let i = index">
+                            <p class="mob-text-xs f-14 pt-24">
+                                {{ (data.name) ? data.name : '-' }}
+                            </p>
+                            <p class="mob-text-xs f-14 pt-24">
+                                {{ (data.relationName) ? data.relationName : '-' }}
+                            </p>
+                        </div>
+                        <p class="m-0  pt-24">{{(_data.exclusion) ? _data.exclusion : '-'}}</p>
+                        <p class="m-0 pt-24" *ngIf="_data.hypothetication">
+                            {{(_data.hypothetication) ? _data.hypothetication : '-'}}</p>
+                        <p class="m-0 pt-24">{{(_data.advisorName) ? _data.advisorName : '-'}}</p>
+                        <p class="m-0 pt-24">{{(_data.serviceBranch) ? _data.serviceBranch : '-'}}</p>
+                        <p class="m-0 pt-24" *ngIf="showInsurance !='Home' && showInsurance !='Fire & special perils' ">
+                            {{(_data.bankName) ? _data.bankName : '-'}}</p>
+                        <div
+                            *ngIf="showInsurance != 'Personal accident' && showInsurance!='Critical illness'  && showInsurance != 'Travel'">
+                            <p class="mob-text-xs f-14 pt-24">Add ons
+                            </p>
+                            <div *ngIf="_data.addOns?.length > 0 && showInsurance !='Motor'">
+                                <div *ngFor="let data of this._data.addOns; let i = index">
+                                    <p class="mob-text-xs f-14 pt-24">
+                                        {{(data.addOnSumInsured) ? '₹' : ''}}<span
+                                            appFormatNumber>{{(data.addOnSumInsured) ? data.addOnSumInsured : '-'}}</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div *ngIf="_data.addOns?.length > 0 && showInsurance =='Motor'">
+                                <div *ngFor="let data of this._data.addOns; let i = index">
+                                    <p class="mob-text-xs f-14 pt-24">
+                                        {{(data.add_on) ? data.add_on : '-'}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                        *ngIf="showInsurance!='Health' && showInsurance!='Critical illness' &&  showInsurance!='Motor' ">
+                        <p class="mob-text-xs f-14 pt-24">Plan features
+                        </p>
+                        <div  *ngIf="_data.policyFeatures?.length > 0 && showInsurance !='Home' && showInsurance !='Fire & special perils'">
+                            <div *ngFor="let data of _data.policyFeatures; let i = index">
+                                <p class="mob-text-xs f-14 pt-24">
+                                        {{(data.type) ? data.type : '-'}}
+                                </p>
+                            </div>
+                        </div>
+                        <div  *ngIf="_data.policyFeatures?.length > 0 && showInsurance =='Home' || showInsurance =='Fire & special perils'">
+                            <div *ngFor="let item of _data.policyFeatures ; let i = index">
+                                <p class="mob-text-xs f-14 pt-24">
+                                        {{(item.featureSumInsured) ? '₹' : ''}}<span
+                                        appFormatNumber>{{(item.featureSumInsured) ? item.featureSumInsured : '-'}}</span>
+
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

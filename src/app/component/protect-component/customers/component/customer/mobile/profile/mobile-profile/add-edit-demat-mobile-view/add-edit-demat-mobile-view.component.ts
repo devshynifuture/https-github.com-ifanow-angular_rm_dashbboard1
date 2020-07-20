@@ -316,38 +316,38 @@ export class AddEditDematMobileViewComponent implements OnInit {
     // (this.dematForm.value.modeOfHolding == '1') ? this.dematForm.get('holderName').setValidators([Validators.required]) : this.dematForm.get('holderName').clearValidators();
     // this.dematForm.get('holderName').updateValueAndValidity();
     if (this.dematForm.invalid) {
-      // this.holderList.markAllAsTouched();
+      this.holderList.markAllAsTouched();
       this.dematForm.markAllAsTouched();
       return;
     }
-    //  else if (this.holderList.invalid) {
-    //   this.holderList.markAllAsTouched();
-    // } else if (this.mobileData.invalid) {
-    //   this.mobileData.markAllAsTouched();
-    // }
+    else if (this.holderList.invalid) {
+      this.holderList.markAllAsTouched();
+    } else if (this.mobileData.invalid) {
+      this.mobileData.markAllAsTouched();
+    }
     else {
       const mobileList = [];
       const holderList = [];
-      // if (this.mobileData) {
-      //   this.mobileData.controls.forEach(element => {
-      //     console.log(element);
-      //     mobileList.push({
-      //       id: 0,
-      //       mobileNo: element.get('number').value,
-      //       isdCodeId: element.get('code').value
-      //     });
-      //   });
-      // }
-      // if (this.holderList) {
-      //   this.holderList.controls.forEach(element => {
-      //     holderList.push({
-      //       // fMDetailTypeId: 1,
-      //       name: element.get('name').value,
-      //       id: element.get('id').value,
-      //       dematId: (this.userData.dematData) ? this.userData.dematData.dematId : (this.dematList) ? this.dematList.dematId : null
-      //     });
-      //   });
-      // }
+      if (this.mobileData) {
+        this.mobileData.controls.forEach(element => {
+          console.log(element);
+          mobileList.push({
+            id: 0,
+            mobileNo: element.get('number').value,
+            isdCodeId: element.get('code').value
+          });
+        });
+      }
+      if (this.holderList) {
+        this.holderList.controls.forEach(element => {
+          holderList.push({
+            // fMDetailTypeId: 1,
+            name: element.get('name').value,
+            id: element.get('id').value,
+            dematId: (this.userData.dematData) ? this.userData.dematData.dematId : (this.dematList) ? this.dematList.dematId : null
+          });
+        });
+      }
       //  else {
       //   holderList.push({
       //     // fMDetailTypeId: 1,

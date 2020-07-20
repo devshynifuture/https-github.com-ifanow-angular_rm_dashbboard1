@@ -20,6 +20,8 @@ import { ReconciliationService } from '../../../AdviserComponent/backOffice/back
 export class UpperSliderBackofficeComponent implements OnInit {
   arrWithTransCheckTrueAndisMappedMinusOne: any = [];
   markFolioIndex: any;
+  totalCount: any;
+  aumFileCount: any;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -157,19 +159,56 @@ export class UpperSliderBackofficeComponent implements OnInit {
   }
 
   bindDataWithSummaryTable() {
-    let objArr = [];
-    objArr = [{
-      doneOne: this.data.doneOn,
-      aum_balance: this.data.aumBalanceDate,
-      transaction: this.data.transactionDate,
-      export_folios: '',
-      totalfolios: this.data.totalFolioCount,
-      before_recon: this.data.unmatchedCountBeforeRecon,
-      after_recon: this.data.unmatchedCountAfterRecon
-    }];
 
-    console.log(objArr);
-    this.dataSource.data = objArr;
+    // needs to call total Count api
+
+    const isParent = (this.isRmLogin) ? true : (this.parentId === this.advisorId) ? true : false;
+    const data = {
+      advisorIds: [...this.adminAdvisorIds],
+      brokerId: this.brokerId,
+      rt: this.data.rtId,
+      arnRiaDetailId: this.brokerId,
+      parentId: (this.adminId && this.adminId == 0) ? this.advisorId : (this.parentId ? this.parentId : this.advisorId),
+      isParent,
+    };
+    this.supportService.getFolioCountValues(data)
+      .subscribe(res => {
+        this.totalCount = res[0];
+        this.aumFileCount = res[1];
+        if (this.totalCount !== 0 && this.aumFileCount !== 0) {
+          let objArr = [];
+          objArr = [{
+            doneOne: this.data.doneOn,
+            aum_balance: this.data.aumBalanceDate,
+            transaction: this.data.transactionDate,
+            export_folios: '',
+            totalfolios: this.data.totalFolioCount,
+            before_recon: this.data.unmatchedCountBeforeRecon,
+            after_recon: this.data.unmatchedCountAfterRecon
+          }];
+
+          console.log(objArr);
+          this.dataSource.data = objArr;
+        } else if (this.totalCount === 0) {
+          this.eventService.openSnackBar('No Data Found', 'DISMISS');
+        } else if (this.aumFileCount === 0) {
+          this.eventService.openSnackBar('Aum File Not Uploaded', 'DISMISS');
+        }
+      })
+  }
+
+  getFolioCount() {
+    const isParent = this.isRmLogin ? true : ((this.parentId === this.advisorId) ? true : false);
+
+    const data = {
+      advisorIds: [...this.adminAdvisorIds],
+      arnRiaDetailId: this.brokerId,
+      rt: this.data.rtId,
+      parentId: (this.adminId && this.adminId == 0) ? this.advisorId : (this.parentId ? this.parentId : this.advisorId),
+      isParent,
+    };
+    // http://dev.ifanow.in:8080/futurewise/api/v1/test/backoffice/folioCount/get?advisorIds=5435&arnRiaDetailId=105&parentId=5435&rt=2
+
   }
 
   // getDataFromObsAfterDeletingTransacn() {
@@ -201,105 +240,138 @@ export class UpperSliderBackofficeComponent implements OnInit {
       advisorIds: [...this.adminAdvisorIds],
       brokerId: this.brokerId,
       rt: this.data.rtId,
+      arnRiaDetailId: this.brokerId,
       parentId: (this.adminId && this.adminId == 0) ? this.advisorId : (this.parentId ? this.parentId : this.advisorId),
       isParent,
     };
 
-    this.supportService.getAumReconListGetValues(data)
+    this.supportService.getFolioCountValues(data)
       .subscribe(res => {
-        let objArr = [];
-        console.log('this is summary values::::', res);
-        if (res && res.aumList) {
-          this.canExportExcelSheet = 'true';
-          this.aumList = res.aumList;
-          const arrayValue = [];
+        if (res) {
+          console.log("this is some response for total Count", res);
+          if (res.length !== 0) {
+            this.totalCount = res[0];
+            this.aumFileCount = res[1];
 
-          this.filteredAumListWithIsMappedToMinusOne = this.aumList.filter(element => {
-            return element.isMapped === -1;
-          });
 
-          const arrWithTransactionCheckedTrue = this.filteredAumListWithIsMappedToMinusOne.filter(item => {
-            return item.transactionCheck === true;
-          });
+            if (this.totalCount !== 0 && this.aumFileCount !== 0) {
+              const data = {
+                advisorIds: [...this.adminAdvisorIds],
+                arnRiaDetailId: this.brokerId,
+                rt: this.data.rtId,
+                parentId: (this.adminId && this.adminId == 0) ? this.advisorId : (this.parentId ? this.parentId : this.advisorId),
+                isParent,
+                brokerId: this.brokerId
+              };
+              this.supportService.getAumReconListGetValues(data)
+                .subscribe(res => {
+                  let objArr = [];
+                  console.log('this is summary values::::', res);
+                  if (res && res.aumList) {
+                    this.canExportExcelSheet = 'true';
+                    this.aumList = res.aumList;
+                    const arrayValue = [];
 
-          console.log('see the difference::::::::', this.filteredAumListWithIsMappedToMinusOne, res.aumList, arrWithTransactionCheckedTrue);
-          this.arrWithTransCheckTrueAndisMappedMinusOne = arrWithTransactionCheckedTrue;
+                    this.filteredAumListWithIsMappedToMinusOne = this.aumList.filter(element => {
+                      return element.isMapped === -1;
+                    });
 
-          arrWithTransactionCheckedTrue.forEach(element => {
-            // check  and compare date object and can delete value
-            arrayValue.push({
-              name: element.shemeName,
-              folioNumber: element.folioNumber,
-              unitsIfanow: element.calculatedUnits.toFixed(3),
-              unitsRta: (element.aumUnits).toFixed(3),
-              difference: (element.calculatedUnits - element.aumUnits).toFixed(3),
-              transaction: '',
-              mutualFundId: element.mutualFundId,
-              freezeDate: (element.hasOwnProperty('freezeDate') && element.freezeDate) ? element.freezeDate : null,
-              investorName: element.investorName,
-              isUnfreezeClicked: false,
-              isFreezeClicked: false,
-              mutualFundTransaction: element.mutualFundTransaction
-            });
-          });
-          if (arrayValue.length !== 0) {
-            this.dataSource1.data = arrayValue;
+                    const arrWithTransactionCheckedTrue = this.filteredAumListWithIsMappedToMinusOne.filter(item => {
+                      return item.transactionCheck === true;
+                    });
 
+                    console.log('see the difference::::::::', this.filteredAumListWithIsMappedToMinusOne, res.aumList, arrWithTransactionCheckedTrue);
+                    this.arrWithTransCheckTrueAndisMappedMinusOne = arrWithTransactionCheckedTrue;
+
+                    arrWithTransactionCheckedTrue.forEach(element => {
+                      // check  and compare date object and can delete value
+                      arrayValue.push({
+                        name: element.shemeName,
+                        folioNumber: element.folioNumber,
+                        unitsIfanow: element.calculatedUnits.toFixed(3),
+                        unitsRta: (element.aumUnits).toFixed(3),
+                        difference: (element.calculatedUnits - element.aumUnits).toFixed(3),
+                        transaction: '',
+                        mutualFundId: element.mutualFundId,
+                        freezeDate: (element.hasOwnProperty('freezeDate') && element.freezeDate) ? element.freezeDate : null,
+                        investorName: element.investorName,
+                        isUnfreezeClicked: false,
+                        isFreezeClicked: false,
+                        mutualFundTransaction: element.mutualFundTransaction,
+                        aumDate: element.aumDate
+                      });
+                    });
+                    if (arrayValue.length !== 0) {
+                      this.dataSource1.data = arrayValue;
+
+                    } else {
+                      this.dataSource1.data = null;
+                    }
+                    const doneOnDate = new Date(res.doneOn);
+                    const doneOnFormatted = doneOnDate.getFullYear() + '-' +
+                      this.util.addZeroBeforeNumber((doneOnDate.getMonth() + 1), 2) + '-' +
+                      this.util.addZeroBeforeNumber(doneOnDate.getDate(), 2);
+                    // console.log("datas available till now:::::", this.data, res);
+                    const data = {
+                      advisorId: this.advisorId,
+                      brokerId: this.brokerId,
+                      totalFolioCount: this.totalCount,
+                      matchedCount: res.mappedCount,
+                      aumBalanceDate: res.aumList[0].aumDate,
+                      unmatchedCountBeforeRecon: res.unmappedCount,
+                      transactionDate: res.transactionDate,
+                      rtId: this.data.rtId,
+                      doneOn: doneOnFormatted,
+                      // when rm login is created this will get value from localStorage
+                      rmId: this.rmId
+                    };
+                    if (doStartRecon) {
+                      this.reconService.putBackofficeReconAdd(data)
+                        .subscribe(res => {
+                          console.log('started reconciliation::::::::::::', res);
+                          if (this.data.startRecon) {
+                            this.aumReconId = res;
+                          }
+                        }, err => {
+                          console.error(err);
+                        });
+                    }
+
+                    // aum date for all object is the same
+                    objArr = [{
+                      doneOne: res.doneOn,
+                      aum_balance: res.aumList[0].aumDate,
+                      transaction: res.transactionDate,
+                      export_folios: '',
+                      totalfolios: this.totalCount,
+                      before_recon: res.unmappedCount,
+                      after_recon: res.unmappedCount
+                    }];
+
+                    this.filteredAumListWithIsMappedToMinusOne.forEach(element => {
+                      this.mutualFundIds.push(element.mutualFundId);
+                    });
+                  } else {
+                    this.canExportExcelSheet = 'false';
+                    this.dataSource1.data = null;
+                    objArr = null;
+                    this.eventService.openSnackBar("All folios are Matched", "DISMISS");
+                  }
+                  this.dataSource.data = objArr;
+                  this.isLoading = false;
+                });
+            } else if (this.totalCount === 0) {
+              this.eventService.openSnackBar('No Data Found', 'DISMISS');
+            } else if (this.aumFileCount === 0) {
+              this.eventService.openSnackBar('Aum File Not Uploaded', 'DISMISS');
+            }
           } else {
-            this.dataSource1.data = null;
+            this.eventService.openSnackBar('No Data found!', "DISMISS");
           }
-          const doneOnDate = new Date(res.doneOn);
-          const doneOnFormatted = doneOnDate.getFullYear() + '-' +
-            this.util.addZeroBeforeNumber((doneOnDate.getMonth() + 1), 2) + '-' +
-            this.util.addZeroBeforeNumber(doneOnDate.getDate(), 2);
-          // console.log("datas available till now:::::", this.data, res);
-          const data = {
-            advisorId: this.advisorId,
-            brokerId: this.brokerId,
-            totalFolioCount: res.totalFolioCount,
-            matchedCount: res.mappedCount,
-            aumBalanceDate: res.aumList[0].aumDate,
-            unmatchedCountBeforeRecon: res.unmappedCount,
-            transactionDate: res.transactionDate,
-            rtId: this.data.rtId,
-            doneOn: doneOnFormatted,
-            // when rm login is creted this will get value from localStorage
-            rmId: this.rmId
-          };
-          if (doStartRecon) {
-            this.reconService.putBackofficeReconAdd(data)
-              .subscribe(res => {
-                console.log('started reconciliation::::::::::::', res);
-                if (this.data.startRecon) {
-                  this.aumReconId = res;
-                }
-              }, err => {
-                console.error(err);
-              });
-          }
-
-          // aum date for all object is the same
-          objArr = [{
-            doneOne: res.doneOn,
-            aum_balance: res.aumList[0].aumDate,
-            transaction: res.transactionDate,
-            export_folios: '',
-            totalfolios: res.totalFolioCount,
-            before_recon: res.unmappedCount,
-            after_recon: res.unmappedCount
-          }];
-
-          this.filteredAumListWithIsMappedToMinusOne.forEach(element => {
-            this.mutualFundIds.push(element.mutualFundId);
-          });
-        } else {
-          this.canExportExcelSheet = 'false';
-          this.dataSource1.data = null;
-          objArr = null;
         }
-        this.dataSource.data = objArr;
-        this.isLoading = false;
-      });
+      }, err => console.error(err))
+
+
   }
 
   getDuplicateFolioList() {
@@ -324,7 +396,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
       this.filteredAumListWithIsMappedToMinusOne = this.aumList.filter(item => {
         return item.isMapped === -1;
       });
-      console.log(this.filteredAumListWithIsMappedToMinusOne);
+      console.log("mapped to -1::", this.filteredAumListWithIsMappedToMinusOne);
 
       this.filteredAumListWithIsMappedToMinusOne.forEach(element => {
         mutualFundIds.push(element.mutualFundId);
@@ -341,29 +413,53 @@ export class UpperSliderBackofficeComponent implements OnInit {
     // if (this.didAumReportListGot) {
     this.isLoadingForDuplicate = true;
     this.dataSource2.data = ELEMENT_DATA2;
-    console.log("this is what im sending for duplicate folio data", data);
+    // console.log("this is what im sending for duplicate folio data", data);
     this.reconService.getDuplicateFolioDataValues(data)
       // this.reconService.getDuplicateDataValues(data)
       .subscribe(res => {
         this.isLoadingForDuplicate = false;
         if (res) {
-          console.log('this is some duplicate values:::::::::', res, this.aumList);
+          console.log('this is some duplicate values:::::::::', res, this.filteredAumListWithIsMappedToMinusOne);
           let filteredArrValue = [];
           const arrValue = [];
           if (this.data.flag === 'report') {
-            res.forEach(element => {
-              filteredArrValue = this.aumListReportValue.filter(item => {
-                return item.mutualFundId === element.id ? item : null;
-              });
-            });
+            for (let i in res) {
+              for (let f in this.aumListReportValue) {
+                if (res[i].id == this.aumListReportValue[f].mutualFundId) {
+                  filteredArrValue.push(res[i]);
+                }
+              }
+            }
           } else {
-            res.forEach(element => {
-              filteredArrValue = this.aumList.filter(item => {
-                return item.mutualFundId === element.id ? item : null;
-              });
-            });
-          }
+            for (let i in res) {
+              for (let f in this.filteredAumListWithIsMappedToMinusOne) {
+                if (res[i].id == this.filteredAumListWithIsMappedToMinusOne[f].mutualFundId) {
+                  let item = this.filteredAumListWithIsMappedToMinusOne[f];
+                  filteredArrValue.push({
+                    id: item.id,
+                    shemeName: item.shemeName,
+                    folioNumber: item.folioNumber,
+                    mutualFundId: item.mutualFundId,
+                    advisorId: item.advisorId,
+                    broker_id: item.broker_id,
+                    aumUnits: (item.aumUnits).toFixed(3),
+                    calculatedUnits: (item.calculatedUnits).toFixed(3),
+                    difference: (item.calculatedUnits - item.aumUnits).toFixed(3),
+                    freezeDate: item.freezeDate ? item.freezeDate : null,
+                    isMapped: item.isMapped,
+                    aumDate: item.aumDate,
+                    brokerCode: item.brokerCode,
+                    schemeCode: item.schemeCode,
+                    mutualFundTransaction: res[i].mutualFundTransactions,
+                    transactions: '',
+                    isUnfreezeClicked: false,
+                    isFreezeClicked: false,
+                  });
 
+                }
+              }
+            }
+          }
 
           console.log('htis is filered value::::', filteredArrValue);
           filteredArrValue.forEach(item => {
@@ -374,18 +470,17 @@ export class UpperSliderBackofficeComponent implements OnInit {
               mutualFundId: item.mutualFundId,
               advisorId: item.advisorId,
               brokerId: item.broker_id,
-              unitsRta: (item.aumUnits).toFixed(3),
-              unitsIfanow: (item.calculatedUnits).toFixed(3),
-              difference: (item.calculatedUnits - item.aumUnits).toFixed(3),
+              unitsRta: item.aumUnits,
+              unitsIfanow: item.calculatedUnits,
+              difference: item.difference,
               freezeDate: item.freezeDate ? item.freezeDate : null,
               isMapped: item.isMapped,
               aumDate: item.aumDate,
-              brokerCode: item.brokerCode,
               schemeCode: item.schemeCode,
               mutualFundTransaction: item.mutualFundTransaction,
               transactions: '',
               isUnfreezeClicked: false,
-              isFreezeClicked: false
+              isFreezeClicked: false,
             });
           });
           this.dataSource2.data = arrValue;
@@ -424,9 +519,14 @@ export class UpperSliderBackofficeComponent implements OnInit {
   deleteAndReorder() {
     const isParent = this.isRmLogin ? true : ((this.parentId === this.advisorId) ? true : false);
     let mutualFundIds = [];
+    let aumIds = [];
     this.filteredAumListWithIsMappedToMinusOne.forEach(element => {
       if (Math.abs(element.calculatedUnits - element.aumUnits) !== 0) {
-        mutualFundIds.push(element.mutualFundId);
+        if (element.mutualFundId !== 0) {
+          mutualFundIds.push(element.mutualFundId);
+        } else {
+          aumIds.push(element.id);
+        }
       }
     });
 
@@ -437,6 +537,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
         advisorIds: [this.advisorId],
         rtId: this.data.rtId,
         mutualFundIds,
+        aumIds,
         parentId: this.parentId,
         isParent
       };
@@ -655,6 +756,12 @@ export class UpperSliderBackofficeComponent implements OnInit {
                     this.dataSource1.data[this.markFolioIndex].unitsIfanow = sideBarData.changesInUnitOne;
                     let unitsRta = this.dataSource1.data[this.markFolioIndex].unitsRta;
                     this.dataSource1.data[this.markFolioIndex].difference = String(parseFloat(sideBarData.changesInUnitOne) - parseFloat(unitsRta));
+                    let diff = parseFloat(sideBarData.changesInUnitOne) - parseFloat(unitsRta)
+                    if (Math.round(diff) === 0) {
+                      this.dataSource.data.map(item => {
+                        item.totalfolios = String(parseFloat(item.totalfolios) - 1);
+                      });
+                    }
                   }
 
                 } else if (sideBarData.fromAllFolioOrDuplicateTab === 2) {
@@ -915,9 +1022,33 @@ interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  { doneOne: '', totalfolios: '', before_recon: '', after_recon: '', aum_balance: '', transaction: '', export_folios: '' },
-  { doneOne: '', totalfolios: '', before_recon: '', after_recon: '', aum_balance: '', transaction: '', export_folios: '' },
-  { doneOne: '', totalfolios: '', before_recon: '', after_recon: '', aum_balance: '', transaction: '', export_folios: '' },
+  {
+    doneOne: '',
+    totalfolios: '',
+    before_recon: '',
+    after_recon: '',
+    aum_balance: '',
+    transaction: '',
+    export_folios: ''
+  },
+  {
+    doneOne: '',
+    totalfolios: '',
+    before_recon: '',
+    after_recon: '',
+    aum_balance: '',
+    transaction: '',
+    export_folios: ''
+  },
+  {
+    doneOne: '',
+    totalfolios: '',
+    before_recon: '',
+    after_recon: '',
+    aum_balance: '',
+    transaction: '',
+    export_folios: ''
+  },
 ];
 
 

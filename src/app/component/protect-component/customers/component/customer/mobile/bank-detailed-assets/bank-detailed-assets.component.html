@@ -1,4 +1,4 @@
-<div id="mob-fixed-income" *ngIf="fixdeposit != true && backToMf != true">
+<div id="mob-fixed-income" *ngIf="fixdeposit != true && backToMf != true && showFDDetails != true && showBondDetails != true &&showRDDetails!=true">
     <div class="row mob-bg-common pb-12 mobtop-navfixed">
         <div class="col-2" (click)="backToMf = true">
             <span class="material-icons text-white">
@@ -6,7 +6,7 @@
             </span>
         </div>
         <div class="col-7 p-0">
-            <h5 class="m-0 f-18 text-white pt-4">Fixed deposits</h5>
+            <h5 class="m-0 f-18 text-white pt-4">{{inputData.assetType}}</h5>
         </div>
         <div class="col-3 text-right">
             <span class="material-icons text-white">
@@ -14,31 +14,53 @@
             </span>
         </div>
     </div>
-    <div class="pt-80 p-8 h-100vh">
-        <div class="pt-16">
-            <div class="bg-white">
+    <div class="pt-80 p-8 h-100vh" *ngIf="inputData.assetType == 'Fixed deposite'">
+        <div class="pt-16" *ngFor="let item of asset">
+            <div class="bg-white" (click)="showFDDetails = true; FDDetails = item" >
                 <div class="row pt-20 pb-20 mob-bb-1">
                     <div class="col-8">
-                        <p class="mb-0">ICICI bank | 908908484</p>
+                        <p class="mb-0">
+                            <span appFormatNumber>
+                                {{item.description}} {{item.fdNumber}} {{'FD'}}
+                            </span></p>
                     </div>
                     <div class="col-4 text-right">
-                        <p class="m-0">₹5,00,000</p>
+                        <p class="m-0">₹
+                            <span appFormatNumber></span>{{item.currentValue}}</p>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="pt-80 p-8 h-100vh" *ngIf="inputData.assetType == 'Recurring deposite'">
+        <div class="pt-16" *ngFor="let item of asset">
+            <div class="bg-white"  (click)="showRDDetails = true; FDDetails = item">
                 <div class="row pt-20 pb-20 mob-bb-1">
                     <div class="col-8">
-                        <p class="mb-0">HDFC bank</p>
+                        <p class="mb-0">
+                            <span appFormatNumber>
+                                {{item.description}} {{item.rdNumber}} {{'RD'}}
+                            </span></p>
                     </div>
                     <div class="col-4 text-right">
-                        <p class="m-0">₹3,00,000</p>
+                        <p class="m-0">₹{{item.currentValue}}</p>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="pt-80 p-8 h-100vh" *ngIf="inputData.assetType == 'Bond'">
+        <div class="pt-16" *ngFor="let item of asset">
+            <div class="bg-white" (click)="showBondDetails = true; FDDetails = item">
                 <div class="row pt-20 pb-20 mob-bb-1">
                     <div class="col-8">
-                        <p class="mb-0">Kotak mahindra</p>
+                        <p class="mb-0">
+                            <span appFormatNumber>
+                                {{item.description}} | {{item.bondName}} | {{'Bond'}}
+                            </span></p>
                     </div>
                     <div class="col-4 text-right">
-                        <p class="m-0">₹1,50,000</p>
+                        <p class="m-0">₹{{item.currentValue}}</p>
                     </div>
                 </div>
             </div>
@@ -50,13 +72,30 @@
             </span></button>
     </div>
 </div>
-<div *ngIf="fixdeposit==true && inputData == 'fd'">
+<div *ngIf="fixdeposit==true && inputData.assetType == 'Fixed deposite'">
     <app-fixed-deposit-mob></app-fixed-deposit-mob>
 </div>
-<div *ngIf="backToMf == true">
-    <app-fixed-income-mob></app-fixed-income-mob>
+<div *ngIf="fixdeposit==true && inputData.assetType == 'Recurring deposite'">
+    <app-recurring-deposite-mob></app-recurring-deposite-mob>
 </div>
-<div *ngIf="fixdeposit == true && inputData == 'bond'">
+<div *ngIf="fixdeposit == true && inputData.assetType == 'Bond'">
     <app-bond-mob></app-bond-mob>
 </div>
-
+<div *ngIf="fixdeposit == true && inputData.assetType == 'Gold'">
+    <app-add-gold-mob></app-add-gold-mob>
+</div>
+<div *ngIf="fixdeposit == true && inputData.assetType == 'Others'">
+    <app-add-others-mob></app-add-others-mob>
+</div>
+<div *ngIf="backToMf == true">
+<app-fixed-income-mob></app-fixed-income-mob>
+</div>
+<div *ngIf="showFDDetails == true">
+    <app-detailed-fixed-deposit-mob [data]="FDDetails"></app-detailed-fixed-deposit-mob>
+</div>
+<div *ngIf="showRDDetails == true">
+    <app-detailed-recurring-deposit-mob [data]="FDDetails"></app-detailed-recurring-deposit-mob>
+</div>
+<div *ngIf="showBondDetails == true">
+    <app-detailed-bond-mob [data]="FDDetails"></app-detailed-bond-mob>
+</div>

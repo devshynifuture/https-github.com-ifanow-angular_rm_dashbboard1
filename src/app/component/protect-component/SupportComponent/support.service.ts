@@ -38,6 +38,10 @@ export class SupportService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_GET_AUM_RECON_LIST, data)
   }
 
+  getFolioCountValues(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.BACKOFFICE_FOLIO_COUNTS, data);
+  }
+
   putAumTransactionKeepOrRemove(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.BACKOFFICE_PUT_AUM_TRANSACTION_KEEP_OR_REMOVE, data);
   }

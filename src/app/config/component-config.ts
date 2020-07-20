@@ -294,7 +294,6 @@ export const appConfig = {
   EDIT_SINGLE_YEAR_GOAL_PREFERENCE: 'goal-planning/single-year/edit',
   SAVE_ASSET_ALLOCATION_PREFERENCE: 'goal-planning/asset-allocation/update',
   GET_MF_DATA: 'goal-planning/goal/mf/list/get',
-  SAVE_MF_ASSET_TO_GOAL: 'goal-planning/goal/mf/allocate',
   SAVE_ASSET_TO_GOAL: 'goal-planning/asset/allocate',
   REMOVE_ALLOCATION: 'goal-planning/asset/allocate',
   CALCULATE_TOTAL_VALUES: 'account/asset/summary',
@@ -580,6 +579,7 @@ export const appConfig = {
   // BACKOFFICE_GET_GROUP_HEAD_NAME_LIST: 'backoffice/foliowise/groupHead/list/get',
   // BACKOFFICE_GET_INVESTOR_NAME_LIST: 'backoffice/foliowise/applicaName/list/get',
   BACKOFFICE_PUT_DELETE_UNFREEZE_TRANSACTION: 'backoffice/delete/unfreeze/transaction',
+  BACKOFFICE_FOLIO_COUNTS: 'backoffice/folioCount/get',
 
   BACKOFFICE_FILE_UPLOAD_TYPE: 'backoffice/file-upload/types/get',
   BACKOFFICE_FILTER: 'backoffice/file-upload/filter/get',
@@ -624,6 +624,10 @@ export const appConfig = {
   ACTIVITY_DELETE_SUBTASK_FROM_TASK: 'activity/task/sub-task/delete',
   ACTIVITY_MARK_TASK_OR_SUBTASK_DONE: 'activity/task/sub-task/status/update',
   ACTIVITY_GET_ATTACHMENT_DOWNLOAD_OF_TASK_SUBTASK: 'activity/task/attachment-download-url/get',
+  ACTIVITY_TASK_EDIT: 'activity/task/edit',
+  ACTIVITY_SUBTASK_EDIT: 'activity/task/sub-task/edit',
+  ACTIVITY_ADD_COMMENT_TASK_SUBTASK: 'activity/task/sub-task/comment/add',
+  ACTIVITY_EDIT_COMMENT_TASK_SUBTASK: 'activity/task/comment/edit',
 
 
 

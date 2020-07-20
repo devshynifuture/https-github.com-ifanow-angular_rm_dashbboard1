@@ -1,3 +1,4 @@
+import { DateAgoPipe } from './../../../../../../services/date-ago.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EmailListComponent } from './email-list.component';
 import { EmailViewComponent } from './email-view/email-view.component';
@@ -9,12 +10,12 @@ import { EmailListRoutingModule } from './email-list-routing.module';
 import { EmailListingComponent } from './email-listing/email-listing.component';
 
 import { EmailReplyComponent } from './email-reply/email-reply.component';
-import { GmailDatePipe } from './email-listing/gmail-date.pipe';
 import { TruncateStringPipe } from 'src/app/truncate.pipe';
 import { ShowListActionsDirective } from './email-listing/show-list-actions.directive';
 import { GoogleConnectComponent } from './email-listing/google-connect/google-connect.component';
 import { DomSanitizerPipe } from '../../../../../../services/dom-sanitizer.pipe';
 import { CustomCommonModule } from 'src/app/common/custom.common.module';
+import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 
 
 
@@ -25,7 +26,6 @@ import { CustomCommonModule } from 'src/app/common/custom.common.module';
     EmailListingComponent,
     EmailReplyComponent,
     EmailViewComponent,
-    GmailDatePipe,
     TruncateStringPipe,
     DomSanitizerPipe,
     ShowListActionsDirective,
@@ -35,12 +35,12 @@ import { CustomCommonModule } from 'src/app/common/custom.common.module';
     CommonModule,
     MaterialModule,
     FormsModule,
+    CustomDirectiveModule,
     ReactiveFormsModule,
     EmailListRoutingModule,
     CustomCommonModule
   ],
   exports: [
-    GmailDatePipe,
     TruncateStringPipe
   ]
 })

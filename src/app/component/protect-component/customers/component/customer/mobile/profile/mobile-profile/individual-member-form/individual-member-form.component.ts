@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { DatePipe } from '@angular/common';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { relationListFilterOnID } from 'src/app/component/protect-component/PeopleComponent/people/Component/people-clients/add-client/client-basic-details/relationypeMethods';
 
 @Component({
   selector: 'app-individual-member-form',
@@ -13,6 +14,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 })
 export class IndividualMemberFormComponent implements OnInit {
   relationList: { name: string; value: number; }[];
+  mobileData: any;
   constructor(
     private fb: FormBuilder,
     private datePipe: DatePipe,
@@ -23,7 +25,21 @@ export class IndividualMemberFormComponent implements OnInit {
   @Output() savedData = new EventEmitter();
   @Input() set formData(data) {
     this.userData = data;
-    this.relationshipTypeMethod(data.gender, data.age)
+    if (data.relationshipId == 10 ||
+      data.relationshipId == 8 ||
+      data.relationshipId == 9 ||
+      data.relationshipId == 11 ||
+      data.relationshipId == 12 ||
+      data.relationshipId == 15 ||
+      data.relationshipId == 16 ||
+      data.relationshipId == 18 ||
+      data.relationshipId == 19 ||
+      data.relationshipId == 17) {
+      this.relationList = relationListFilterOnID(data)
+    }
+    else {
+      this.relationshipTypeMethod(data.genderId, data.age)
+    }
     this.createIndividualForm(data);
   }
   individualForm: FormGroup;
@@ -31,6 +47,7 @@ export class IndividualMemberFormComponent implements OnInit {
   userData: any;
   @Input() categoryType;
   @Input() taxStatusType;
+  mobileNumberFlag = 'Mobile number';
 
   ngOnInit() {
   }
@@ -97,7 +114,21 @@ export class IndividualMemberFormComponent implements OnInit {
   toUpperCase(formControl, event) {
     this.utilService.toUpperCase(formControl, event);
   }
+  getNumberDetails(data) {
+    console.log(data);
+    this.mobileData = data;
+  }
+
   editFamilyMember() {
+    const mobileList = [];
+    this.mobileData.controls.forEach(element => {
+      console.log(element);
+      mobileList.push({
+        mobileNo: element.get('number').value,
+        verificationStatus: 0,
+        isdCodeId: element.get('code').value
+      });
+    });
     const obj = {
       adminAdvisorId: AuthService.getAdminId(),
       advisorId: AuthService.getClientData().advisorId,
@@ -115,7 +146,7 @@ export class IndividualMemberFormComponent implements OnInit {
       familyMemberType: this.categoryType,
       isKycCompliant: 1,
       aadhaarNumber: null,
-      // mobileList,
+      mobileList,
       bio: null,
       remarks: null,
       emailList: [
@@ -124,7 +155,7 @@ export class IndividualMemberFormComponent implements OnInit {
           verificationStatus: 0
         }
       ],
-      // guardianData: gardianObj,
+      guardianData: null,
       invTypeCategory: 0,
       categoryTypeflag: null,
       anniversaryDate: null

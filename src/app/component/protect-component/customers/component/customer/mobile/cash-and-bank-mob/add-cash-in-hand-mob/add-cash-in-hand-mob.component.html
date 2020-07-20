@@ -1,0 +1,135 @@
+<div id="mob-fixed-income">
+    <div class="row mob-bg-common pb-12 mobtop-navfixed">
+        <div class="col-2">
+            <span class="material-icons text-white">
+                keyboard_backspace
+            </span>
+        </div>
+        <div class="col-7 p-0">
+            <h5 class="m-0 f-18 text-white pt-4">Add Cash in hand</h5>
+        </div>
+    </div>
+    <div [formGroup]="cashInHand" class="bg-grey lter pt-80 mb-48 add-fixed-desposit">
+        <div formArrayName="getCoOwnerName">
+            <div *ngFor="let obj of cashInHand.controls['getCoOwnerName'].controls; let pointIndex=index"
+                [formGroupName]="pointIndex">
+                <div class="col-12">
+                    <p class="m-0 roboto f-400 text-dark f-16 pb-10">
+                        {{pointIndex != 0?'Co-o' : 'O'}}wner{{pointIndex != 0?pointIndex:''}}</p>
+                </div>
+                <div class="row">
+                    <div class="pb-20 mob-pr-10 mob-pl-10"
+                        [ngClass]="cashInHand.value.getCoOwnerName.length > 1?'col-7' : 'col-9    '">
+                        <div class="form-group mb-0">
+                            <mat-form-field>
+                                <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
+                                    (selectionChange)="disabledMember($event.value,'owner')"
+                                    (valueChange3)='displayControler($event)' (emitBank)='getBank()'
+                                    (emitBank)='getBank()' (valueChange1)='lisNominee($event)' class="form-control br-0"
+                                    [callMethod]='callMethod'>
+                                    <mat-option value='' disabled>Select family members</mat-option>
+                                    <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable"
+                                        [value]="f.userName">
+                                        <span>{{f.userName}}</span>
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error class="f-12">
+                                    This field is required
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-2" *ngIf="cashInHand.value.getCoOwnerName.length > 1">
+                        <div class="form-group mb-0">
+                            <mat-form-field>
+                                <input matInput class="form-control br-0 percentage" type="number"
+                                    formControlName="share" (focusout)="onChangeJointOwnership('owner')">
+                                <mat-error class="f-12" *ngIf="obj.controls['share'].hasError('required')">
+                                    This field is required
+                                </mat-error>
+                                <mat-error class="f-12" *ngIf="obj.controls['share'].hasError('incorrect') ">
+                                    Total percent should be 100%
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <!-- <div class="col-2">
+                        <i *ngIf="cashInHand.value.getCoOwnerName.length < 3"
+                            class="material-icons text-primitive f-20 c-p float-left"
+                            (click)="addNewCoOwner(undefined)">add</i>
+                        <i *ngIf="cashInHand.value.getCoOwnerName.length > 1"
+                            class="material-icons text-primitive f-20 c-p pl-10 pt-8"
+                            (click)="removeCoOwner(pointIndex)">remove</i>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+        <div class="col-12 pt-28 pb-20 mob-pr-10 mob-pl-10">
+            <p class="m-0 roboto f-400 text-dark f-16 pb-10">Cash balance</p>
+            <div class="form-group mb-0">
+                <mat-form-field>
+                    <input autocomplete="off" matInput #cashBalance type="text" appInputValueValidation
+                        [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" class="form-control rupess br-0"
+                        formControlName="cashBalance">
+                    <mat-error class="f-12">
+                        This field is required
+                    </mat-error>
+                    <mat-hint align="end" class="f-12">{{cashBalance.value.length}}/10</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-12 pt-28 pb-20 mob-pr-10 mob-pl-10">
+            <p class="m-0 roboto f-400 text-dark f-16 pb-10">Balance as on </p>
+            <div class="form-group mb-0">
+                <mat-form-field class="ba-date">
+                    <input autocomplete="off" matInput (focus)="picker.open()" formControlName="balanceAsOn"
+                        class="form-control br-0 b-0" [matDatepicker]="picker" [max]="maxDate" readonly>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error class="f-12"
+                        [ngClass]="{'v-h':!(isBalanceAsOn && getFormControl().balanceAsOn.invalid || getFormControl().balanceAsOn.touched && getFormControl().balanceAsOn.invalid)}">
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div *ngIf="showHide == true" class="col-5 text-right">
+                <h5 (click)="showLess(showHide)" class="m-0 pt-8 text-custom c-p">Show less</h5>
+            </div>
+            <div *ngIf="showHide == false" class="col-5 text-right">
+                <h5 (click)="showLess(showHide)" class="m-0 pt-8 text-custom c-p">+ Add more [optional data] </h5>
+            </div>
+            <div class="col-md-5">
+
+            </div>
+        </div>
+        <div *ngIf="showHide == true">
+            <div *ngIf="showHide == true">
+                <div class="col-12 pt-28 pb-20 mob-pr-10 mob-pl-10">
+                    <p class="m-0 roboto f-400 text-dark f-16 pb-10">Description</p>
+                    <div class="form-group mb-0">
+                        <mat-form-field>
+                            <input autocomplete="off" matInput #description maxlength="60" appInputValueValidation
+                                [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPACE" class="form-control br-0"
+                                formControlName="description">
+                            <mat-hint align="start" class="f-12 ml-8">Optional</mat-hint>
+                            <mat-hint align="end" class="f-12">{{description.value.length}}/60</mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <div *ngIf="adviceShowHeaderAndFooter">
+        <div class="row mob-proccess-fixed br-0 pb-16">
+            <div class="col-12 text-right pt-8 pb-8">
+                <app-progress-button (btnClick)="saveCashInHand()" [options]="barButtonOptions">
+                </app-progress-button>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -61,6 +61,7 @@ export class BondMobComponent implements OnInit {
   callMethod: any;
   adviceShowHeaderAndFooter: boolean = true;
   bankList: any = [];
+  backtoFixedIncome;
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
   constructor(public utils: UtilService, private eventService: EventService, private fb: FormBuilder, private custumService: CustomerService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public dialog: MatDialog, private enumService: EnumServiceService,) {
@@ -85,7 +86,7 @@ export class BondMobComponent implements OnInit {
     } else {
       this.adviceShowHeaderAndFooter = true;
     }
-    // this.getdataForm()
+    this.getdataForm(this.inputData)
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.bankList = this.enumService.getBank();

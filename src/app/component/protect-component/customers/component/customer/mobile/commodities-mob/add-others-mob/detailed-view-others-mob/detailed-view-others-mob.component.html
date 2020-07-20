@@ -1,0 +1,77 @@
+
+ <div id="mob-fixed-income" *ngIf="backPage!= true">
+<div class="row mob-bg-common pb-12 mobtop-navfixed">
+    <div class="col-2" (click)="changeValue(false)">
+        <span class="material-icons text-white">
+            keyboard_backspace
+        </span>
+    </div>
+    <div class="col-7 p-0">
+        <h5 class="m-0 f-18 text-white pt-4">Others - Detailed view</h5>
+    </div>
+    <div class="col-3 text-right">
+        <span class="material-icons text-white">
+            filter_list
+        </span>
+    </div>
+</div>
+<div class="pt-80 p-8">
+    <div class="bg-white">
+        <div class="row pt-12 pb-12">
+            <div class="col-2">
+                <div class="circular-small"></div>
+            </div>
+            <div class="col-7 pl-0">
+                <p class="mb-0 pt-8">{{(others.description && others.description!="") ? others.description:'OTHERS'}}</p>
+            </div>
+            <div class="col-3 text-right pl-0">
+                <p class="m-0 pt-8">
+                    ₹<span appFormatNumber [value]="others.marketValue">{{others.marketValue}}</span>0</p>
+            </div>
+        </div>
+    </div>
+    <div class="pt-16">
+        <div class="bg-white">
+            <div class="row pt-20 pb-20">
+                <div class="col-7">
+                    <p class="mob-text-xs f-14" *ngIf="others.ownerList.length == 1">Owner</p>
+                    <p class="mob-text-xs f-14 pt-24" *ngIf="others.ownerList.length == 2">Co-owner 1</p>
+                    <p class="mob-text-xs f-14 pt-24" *ngIf="others.ownerList.length == 3">Co-owner 2</p>
+                    <p class="mob-text-xs f-14 pt-24">Type of commodity</p>
+                    <p class="mob-text-xs f-14 pt-24">Market value</p>
+                    <p class="mob-text-xs f-14 pt-24">Market value as on date</p>
+                    <p class="mob-text-xs f-14 pt-24">Purchase value</p>
+                    <p class="mob-text-xs f-14 pt-24">Date of purchase</p>
+                    <p class="mob-text-xs f-14 pt-24">Growth rate</p>
+                    <p class="mob-text-xs f-14 pt-24">Description</p>
+                    <div *ngFor="let data of others.nomineeList; let i = index">
+                        <p  class="mob-text-xs f-14 pt-24">
+                                Nominee {{i + 1}}
+                        </p>
+                    </div>
+                </div>
+                <div class="col-5 text-right pl-0">
+                    <div *ngFor="let item of others.ownerList">
+                        <p class="m-0">{{item.name}}<span *ngIf="others.ownerList.length > 1">sharing {{others.share}}% ownership</span></p>
+                    </div>
+                    <p class="m-0 pt-24" >{{others.commodityTypeId == 1? 'Art' : others.commodityTypeId == 2 ? 'Antiques' : others.commodityTypeId == 3 ? 'Liquor' : others.commodityTypeId == 4 ? 'Stamps' : others.commodityTypeId == 5 ? 'Coins' : others.commodityTypeId == 6 ? 'Silver' : others.commodityTypeId == 7 ? 'Diamond' :others.commodityTypeId == 8 ? 'Other' :'-'}}</p>
+                    <p class="m-0 pt-24">{{others.marketValue ? '₹' : ''}}<span appFormatNumber>{{others.marketValue ? others.marketValue : '-'}}</span></p>
+                    <p class="m-0 pt-24">{{others.marketValueAsOnDate |  date:'dd/MM/yyyy'}}</p>
+                    <p class="m-0 pt-24">{{others.purchaseValue ? '₹' : ''}}<span appFormatNumber>{{others.purchaseValue ? others.purchaseValue :'-'}}</span></p>
+                    <p class="m-0 pt-24"> {{others.dateOfPurchase |  date:'dd/MM/yyyy'}}</p>
+                    <p class="m-0 pt-24">{{others.growthRate | number: '1.2-2'}}{{others.growthRate ?'%':'-'}}</p>
+                    <p class="m-0 pt-24">{{others.description?others.description:'-'}}</p>
+                    <div  *ngFor="let data of others.nomineeList; let i = index">
+                        <p class="mob-text-xs f-14 pt-24">
+                             {{ (data.name) ? data.name : '-' }}
+                        </p> 
+                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div *ngIf="backPage == true">
+    <app-commodities></app-commodities>
+</div>

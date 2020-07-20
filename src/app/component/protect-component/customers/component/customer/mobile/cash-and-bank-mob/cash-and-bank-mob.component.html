@@ -1,7 +1,7 @@
-<div id="mob-fixed-income">
+<div id="mob-fixed-income" *ngIf="!showDetail && backToMf != true">
     <div class="row mob-bg-common pb-12 mobtop-navfixed">
       <div class="col-2" (click)="changeValue(false)">
-        <span class="material-icons text-white">
+        <span class="material-icons text-white" (click)="backToMf = true">
         keyboard_backspace
         </span>
       </div>
@@ -28,7 +28,7 @@
       </div>
     <div class="pt-16">
         <div class="bg-white">
-          <div class="row pt-20 pb-20 mob-bb-1">
+          <div class="row pt-20 pb-20 mob-bb-1" (click)="showDetail = true;openSubAsset('Bank accounts',bankAccData)">
             <div class="col-8">
               <p class="mb-0">Bank accounts</p>
             </div>
@@ -36,7 +36,7 @@
               <p class="m-0">{{accCv ? '₹' : ''}}<span appFormatNumber [value]="accCv ? accCv : ''"></span></p>
             </div>
           </div>
-          <div class="row pt-20 pb-20 mob-bb-1">
+          <div class="row pt-20 pb-20 mob-bb-1" (click)="showDetail = true;openSubAsset('Cash in hand',cashInHandData)">
             <div class="col-8">
               <p class="mb-0">Cash in hand</p>
             </div>
@@ -48,3 +48,9 @@
       </div>
     </div>
     </div>
+    <div *ngIf="showDetail">
+      <app-cash-and-bank [data]="assetSubType"></app-cash-and-bank>
+  </div>
+  <div *ngIf="backToMf == true">
+    <app-mobile-portfoilo></app-mobile-portfoilo>
+  </div>

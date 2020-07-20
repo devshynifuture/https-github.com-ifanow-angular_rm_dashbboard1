@@ -1,0 +1,27 @@
+<div *ngIf="holderListResponse" [formGroup]="holderNamesForm">
+    <div [formGroup]="holderName" *ngFor="let holderName of holderNameList.controls;index as i" class="row">
+        <div class="col-11 mob-pl-10 mob-pr-10">
+            <h5 class="m-0 roboto text-dark pb-10 f-16">
+                <span *ngIf="i==0">First</span>
+                <span *ngIf="i==1">Second</span>
+                <span *ngIf="i==2">Third</span> holder name
+            </h5>
+            <div class="form-group mb-0">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input (input)="capitalise($event)" placeholder="Enter holder name" autocomplete="off" #name
+                        appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPEC_CHAR"
+                        [maxLength]="50" formControlName="name" matInput class="form-control text-primitive">
+                    <mat-hint align="end" class="f-12">{{name.value.length}}/50</mat-hint>
+                    <mat-error>This field is required</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="col-1 mob-pl-10 mob-pr-10">
+            <i *ngIf="i+1==holderNameList.length && i<2" (click)="addHolders(null)" class="material-icons c-p f-20">
+                add </i>
+
+            <i *ngIf="i+1!=holderNameList.length || i==2" (click)="removeHolders(i)" class="material-icons c-p f-20">
+                remove </i>
+        </div>
+    </div>
+</div>

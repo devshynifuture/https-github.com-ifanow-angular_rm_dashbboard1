@@ -649,12 +649,23 @@
       color: #fff;
       border-color: #02B875;
     }
+    ul.timeline>li.danger-mob:before {
+      background-color: #FF6823;
+      color: #fff;
+      border-color: #FF6823;
+    }
+
+    ul.timeline>li.danger-mob:before {
+      background-color: #FF6823;
+      color: #fff;
+      border-color: #FF6823;
+    }
 
     button {
       height: 24px !important;
       line-height: 22px !important;
       font-size: 12px;
-      width: 50px !important;
+      width: 50px;
       padding: 0 10px;
       border-radius: 2px !important;
     }

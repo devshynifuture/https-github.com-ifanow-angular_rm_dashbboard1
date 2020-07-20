@@ -1,0 +1,104 @@
+<div id="mob-fixed-income" *ngIf="fixdeposit != true && backToMf != true && showDetailsEPF != true && showDetailsGratuity != true">
+    <div class="row mob-bg-common pb-12 mobtop-navfixed">
+        <div class="col-2" (click)="backToMf = true">
+            <span class="material-icons text-white">
+                keyboard_backspace
+            </span>
+        </div>
+        <div class="col-7 p-0">
+            <h5 class="m-0 f-18 text-white pt-4">{{inputData.assetType}}</h5>
+        </div>
+        <div class="col-3 text-right">
+            <span class="material-icons text-white">
+                filter_list
+            </span>
+        </div>
+    </div>
+    <div class="pt-80 p-8 h-100vh" *ngIf="inputData.assetType == 'EPF'">
+        <div class="pt-16" *ngFor="let item of asset">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20 mob-bb-1" (click)="openDetailed(item)">
+                    <div class="col-8">
+                        <p class="mb-0">
+                            <span appFormatNumber>
+                                {{item.description}} {{item.fdNumber}} {{'EPF'}}
+                            </span></p>
+                    </div>
+                    <div class="col-4 text-right">
+                        <p class="m-0">₹
+                            <span appFormatNumber [value]="item.currentEpfValue">{{item.currentEpfValue}}</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="inputData.assetType == 'EPF' && asset.length == 0">
+        <p class="m-0 f-14 roboto f-400 pt-20 pb-20 text-center">no data found</p>
+    </div>
+    <div class="pt-80 p-8 h-100vh" *ngIf="inputData.assetType == 'NPS'">
+        <div class="pt-16" *ngFor="let item of asset">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20 mob-bb-1" (click)="openDetailed(item)">
+                    <div class="col-8">
+                        <p class="mb-0">
+                            <span appFormatNumber>
+                                {{item.description}} {{item.rdNumber}} {{'RD'}}
+                            </span></p>
+                    </div>
+                    <div class="col-4 text-right">
+                        <p class="m-0">₹{{item.currentValue}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="inputData.assetType == 'NPS' && asset.length == 0">
+        <p class="m-0 f-14 roboto f-400 pt-20 pb-20 text-center">no data found</p>
+    </div>
+    <div class="pt-80 p-8 h-100vh" *ngIf="inputData.assetType == 'Gratuity'">
+        <div class="pt-16" *ngFor="let item of asset">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20 mob-bb-1" (click)="openDetailed(item)">
+                    <div class="col-8">
+                        <p class="mb-0">
+                            <span appFormatNumber>
+                                {{item.description}} | {{item.bondName}} | {{'Gratuity'}}
+                            </span></p>
+                    </div>
+                    <div class="col-4 text-right">
+                        <p class="m-0">₹<span appFormatNumber [value]="item.gratuityReceived">{{item.gratuityReceived}}</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="inputData.assetType == 'Gratuity' && asset.length == 0">
+        <p class="m-0 f-14 roboto f-400 pt-20 pb-20 text-center">no data found</p>
+    </div>
+    <div class="document-bottom-action">
+        <button (click)="fixdeposit = true" mat-stroked-button class="btn-primary"><span class="material-icons">
+                add
+            </span></button>
+    </div>
+</div>
+<div *ngIf="fixdeposit==true && inputData.assetType == 'EPF'">
+    <app-epf-mob></app-epf-mob>
+</div>
+<div *ngIf="fixdeposit==true && inputData.assetType == 'NPS'">
+    <app-nps-mob></app-nps-mob>
+</div>
+<div *ngIf="fixdeposit == true && inputData.assetType == 'Gratuity'">
+    <app-gratuity-mob></app-gratuity-mob>
+</div>
+<div *ngIf="backToMf == true">
+<app-retirement-acc-mob></app-retirement-acc-mob>
+</div>
+<div *ngIf="showDetailsEPF == true">
+<app-detailed-epf-mob [data]="detailedData"></app-detailed-epf-mob>
+</div>
+<div *ngIf="showDetailsNPS == true">
+    <app-detailed-nps-mob [data]="detailedData"></app-detailed-nps-mob>
+</div>
+<div *ngIf="showDetailsGratuity == true">
+   <app-detailed-grauity-mob [data]="detailedData"></app-detailed-grauity-mob>
+</div>
