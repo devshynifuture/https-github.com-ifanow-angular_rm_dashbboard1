@@ -29,9 +29,10 @@ export class GeneralInsuranceMobComponent implements OnInit {
   fireData: any;
   healthData: any;
   showDetail;
-  assetSubType = { assetType: '', data: '' };
+  backToMf
+  assetSubType = {assetType:'',data:''};
 
-  constructor(private custumService: CustomerService, private eventService: EventService) { }
+  constructor(private custumService:CustomerService,private eventService:EventService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -44,7 +45,7 @@ export class GeneralInsuranceMobComponent implements OnInit {
     this.getHomeInsurance();
     this.getFireInsurance();
   }
-  getHealthInsurance() {
+  getHealthInsurance(){
     const obj = {
       clientId: this.clientId,
       advisorId: this.advisorId,
@@ -52,7 +53,7 @@ export class GeneralInsuranceMobComponent implements OnInit {
     };
     this.custumService.getGeneralInsuranceData(obj).subscribe(
       data => {
-        if (data) {
+        if(data){
           this.healthData = data;
           this.HealthCv = data.totalSumInsured;
           this.calculateSum();
@@ -61,8 +62,8 @@ export class GeneralInsuranceMobComponent implements OnInit {
         this.eventService.showErrorMessage(error);
       }
     );
-  }
-  getPersonalAccidentInsurance() {
+  } 
+  getPersonalAccidentInsurance(){
     const obj = {
       clientId: this.clientId,
       advisorId: this.advisorId,
@@ -70,7 +71,7 @@ export class GeneralInsuranceMobComponent implements OnInit {
     };
     this.custumService.getGeneralInsuranceData(obj).subscribe(
       data => {
-        if (data) {
+        if(data){
           this.personalAccidentData = data;
           this.personalAccidentCv = data.totalSumInsured;
           this.calculateSum();
@@ -79,8 +80,8 @@ export class GeneralInsuranceMobComponent implements OnInit {
         this.eventService.showErrorMessage(error);
       }
     );
-  }
-  getCriticalIllnessInsurance() {
+  } 
+  getCriticalIllnessInsurance(){
     const obj = {
       clientId: this.clientId,
       advisorId: this.advisorId,
@@ -88,7 +89,7 @@ export class GeneralInsuranceMobComponent implements OnInit {
     };
     this.custumService.getGeneralInsuranceData(obj).subscribe(
       data => {
-        if (data) {
+        if(data){
           this.criticalIllnesData = data;
           this.criticalIllnessCv = data.totalSumInsured;
           this.calculateSum();
@@ -97,8 +98,8 @@ export class GeneralInsuranceMobComponent implements OnInit {
         this.eventService.showErrorMessage(error);
       }
     );
-  }
-  getMotorInsurance() {
+  } 
+  getMotorInsurance(){
     const obj = {
       clientId: this.clientId,
       advisorId: this.advisorId,
@@ -106,7 +107,7 @@ export class GeneralInsuranceMobComponent implements OnInit {
     };
     this.custumService.getGeneralInsuranceData(obj).subscribe(
       data => {
-        if (data) {
+        if(data){
           this.motorData = data;
           this.motorCv = data.totalSumInsured;
           this.calculateSum();
@@ -116,7 +117,7 @@ export class GeneralInsuranceMobComponent implements OnInit {
       }
     );
   }
-  getTravelInsurance() {
+  getTravelInsurance(){
     const obj = {
       clientId: this.clientId,
       advisorId: this.advisorId,
@@ -124,7 +125,7 @@ export class GeneralInsuranceMobComponent implements OnInit {
     };
     this.custumService.getGeneralInsuranceData(obj).subscribe(
       data => {
-        if (data) {
+        if(data){
           this.travelData = data;
           this.travelCv = data.totalSumInsured;
           this.calculateSum();
@@ -133,8 +134,8 @@ export class GeneralInsuranceMobComponent implements OnInit {
         this.eventService.showErrorMessage(error);
       }
     );
-  }
-  getHomeInsurance() {
+  } 
+  getHomeInsurance(){
     const obj = {
       clientId: this.clientId,
       advisorId: this.advisorId,
@@ -142,7 +143,7 @@ export class GeneralInsuranceMobComponent implements OnInit {
     };
     this.custumService.getGeneralInsuranceData(obj).subscribe(
       data => {
-        if (data) {
+        if(data){
           this.homeData = data;
           this.HomewCv = data.totalSumInsured;
           this.calculateSum();
@@ -151,8 +152,8 @@ export class GeneralInsuranceMobComponent implements OnInit {
         this.eventService.showErrorMessage(error);
       }
     );
-  }
-  getFireInsurance() {
+  } 
+  getFireInsurance(){
     const obj = {
       clientId: this.clientId,
       advisorId: this.advisorId,
@@ -161,8 +162,8 @@ export class GeneralInsuranceMobComponent implements OnInit {
     };
     this.custumService.getGeneralInsuranceData(obj).subscribe(
       data => {
-        if (data) {
-          this.fireData = data;
+        if(data){
+          this.fireData =data;
           this.fireCv = data.totalSumInsured;
           this.calculateSum();
         }
@@ -171,19 +172,19 @@ export class GeneralInsuranceMobComponent implements OnInit {
       }
     );
   }
-  changeValue(flag) {
+  changeValue(flag){
     this.outputValue.emit(flag);
   }
-  calculateSum() {
-    console.log('persolena', this.personalAccidentCv)
-    this.totalCurrentValue = (this.HealthCv ? this.HealthCv : 0) +
-      (this.personalAccidentCv ? this.personalAccidentCv : 0) + (this.criticalIllnessCv ? this.criticalIllnessCv : 0)
-      + (this.motorCv ? this.motorCv : 0) + (this.travelCv ? this.travelCv : 0) +
-      (this.HomewCv ? this.HomewCv : 0) + (this.fireCv ? this.fireCv : 0)
+  calculateSum(){
+    console.log('persolena',this.personalAccidentCv)
+   this.totalCurrentValue = (this.HealthCv ? this.HealthCv : 0) +
+   (this.personalAccidentCv ? this.personalAccidentCv : 0 )+ (this.criticalIllnessCv ? this.criticalIllnessCv : 0)
+   +(this.motorCv ? this.motorCv : 0)+(this.travelCv ? this.travelCv : 0)+
+   (this.HomewCv ? this.HomewCv : 0)+(this.fireCv ? this.fireCv : 0)
 
-    console.log('totalCV', this.totalCurrentValue)
+   console.log('totalCV',this.totalCurrentValue)
   }
-  openSubAsset(subAsset, value) {
+  openSubAsset(subAsset,value) {
     this.assetSubType.assetType = subAsset;
     this.assetSubType.data = value;
   }

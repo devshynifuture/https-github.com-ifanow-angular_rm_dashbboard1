@@ -10,7 +10,9 @@ export class GeneralInsuranceComponent implements OnInit {
   assetData: any;
   cashAndBank;
   backToMf;
+  detailedViewData;
   generalInsuranceData;
+  showDetailView = false;
   constructor() { }
   @Input()
   set data(data) {
@@ -20,5 +22,7 @@ export class GeneralInsuranceComponent implements OnInit {
   }
   ngOnInit() {
   }
-
+  getValue(value){
+    this.showDetailView = value;
+  }
 }
