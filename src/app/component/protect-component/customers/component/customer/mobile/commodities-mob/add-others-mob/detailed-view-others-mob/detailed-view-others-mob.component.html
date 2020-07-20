@@ -22,7 +22,7 @@
                 <div class="circular-small"></div>
             </div>
             <div class="col-7 pl-0">
-                <p class="mb-0 pt-8">{{(others.description)?others.description:'OTHERS'}}</p>
+                <p class="mb-0 pt-8">{{(others.description && others.description!="") ? others.description:'OTHERS'}}</p>
             </div>
             <div class="col-3 text-right pl-0">
                 <p class="m-0 pt-8">
@@ -34,9 +34,9 @@
         <div class="bg-white">
             <div class="row pt-20 pb-20">
                 <div class="col-7">
-                    <p class="mob-text-xs f-14">Owner</p>
-                    <p class="mob-text-xs f-14 pt-24" *ngIf="fdData.ownerList.length == 2">Co-owner 1</p>
-                    <p class="mob-text-xs f-14 pt-24" *ngIf="fdData.ownerList.length == 2">Co-owner 2</p>
+                    <p class="mob-text-xs f-14" *ngIf="others.ownerList.length == 1">Owner</p>
+                    <p class="mob-text-xs f-14 pt-24" *ngIf="others.ownerList.length == 2">Co-owner 1</p>
+                    <p class="mob-text-xs f-14 pt-24" *ngIf="others.ownerList.length == 3">Co-owner 2</p>
                     <p class="mob-text-xs f-14 pt-24">Type of commodity</p>
                     <p class="mob-text-xs f-14 pt-24">Market value</p>
                     <p class="mob-text-xs f-14 pt-24">Market value as on date</p>
@@ -52,18 +52,9 @@
                 </div>
                 <div class="col-5 text-right pl-0">
                     <div *ngFor="let item of others.ownerList">
-                        <p class="m-0">{{item.name}}</p>
+                        <p class="m-0">{{item.name}}<span *ngIf="others.ownerList.length > 1">sharing {{others.share}}% ownership</span></p>
                     </div>
-                    <div [ngSwitch]="others.commodityTypeId">
-                        <p class="m-0 pt-24" *ngSwitchCase="1">Art</p>
-                        <p class="m-0 pt-24" *ngSwitchCase="2">Antiques</p>
-                        <p class="m-0 pt-24" *ngSwitchCase="3">Liquor</p>
-                        <p class="m-0 pt-24" *ngSwitchCase="4">Stamps</div>
-                        <p class="m-0 pt-24" *ngSwitchCase="5">Coins</p>
-                        <p class="m-0 pt-24" *ngSwitchCase="6">Silver</p>
-                        <p class="m-0 pt-24" *ngSwitchCase="7">Diamond</p>
-                        <p class="m-0 pt-24" *ngSwitchCase="8">Other</p>
-                    </div>
+                    <p class="m-0 pt-24" >{{others.commodityTypeId == 1? 'Art' : others.commodityTypeId == 2 ? 'Antiques' : others.commodityTypeId == 3 ? 'Liquor' : others.commodityTypeId == 4 ? 'Stamps' : others.commodityTypeId == 5 ? 'Coins' : others.commodityTypeId == 6 ? 'Silver' : others.commodityTypeId == 7 ? 'Diamond' :others.commodityTypeId == 8 ? 'Other' :'-'}}</p>
                     <p class="m-0 pt-24">{{others.marketValue ? '₹' : ''}}<span appFormatNumber>{{others.marketValue ? others.marketValue : '-'}}</span></p>
                     <p class="m-0 pt-24">{{others.marketValueAsOnDate |  date:'dd/MM/yyyy'}}</p>
                     <p class="m-0 pt-24">{{others.purchaseValue ? '₹' : ''}}<span appFormatNumber>{{others.purchaseValue ? others.purchaseValue :'-'}}</span></p>

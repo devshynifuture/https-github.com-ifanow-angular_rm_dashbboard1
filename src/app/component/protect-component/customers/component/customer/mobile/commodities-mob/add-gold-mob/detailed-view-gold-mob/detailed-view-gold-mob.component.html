@@ -54,12 +54,8 @@
                         <p class="m-0">{{item.name}}</p>
                     </div>
                     <p class="m-0 pt-24">{{gold.approximatePurchaseValue ? '₹' : ''}} <span appFormatNumber>{{gold.approximatePurchaseValue ? gold.approximatePurchaseValue : '-'}}</span></p>
-                    <div class="m-0 pt-24"  [ngSwitch]="gold.formOfGold">
-                        <p class="m-0 pt-24"  *ngSwitchCase="1">Bars</p>
-                        <p class="m-0 pt-24"  *ngSwitchCase="2">Coins</p>
-                        <p class="m-0 pt-24"  *ngSwitchCase="3">Jewelry</p>
-                    </div>
-                    <p class="m-0 pt-24">{{gold.purchasedGramsOrTola}} {{gold.gramsOrTola == 1? 'tolas' : 'grams'}}</p>
+                    <p class="m-0 pt-24" >{{gold.formOfGold == 1 ? 'Bars' : gold.formOfGold  == 2 ? 'Coins' : gold.formOfGold == 3 ? 'Jewelry' : '' }}</p>
+                    <p class="m-0 pt-24">{{gold.gramsOrTola == 1? 'tolas' : 'grams'}}</p>
                     <p class="m-0 pt-24">{{gold.carat}}</p>
                     <p class="m-0 pt-24">{{gold.purchaseYear}}</p>
                     <p class="m-0 pt-24">{{gold.marketValue ? '₹' : ''}}<span appFormatNumber>{{gold.marketValue}}</span></p>
