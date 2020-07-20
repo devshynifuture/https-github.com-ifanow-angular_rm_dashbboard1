@@ -1,7 +1,7 @@
 <div id="mob-fixed-income" *ngIf="backToMf != true && showBank != true">
   <div class="row mob-bg-common pb-12 mobtop-navfixed">
     <div class="col-2" (click)="changeValue(false)">
-      <span class="material-icons text-white">
+      <span class="material-icons text-white" (click)="backToMf = true">
         keyboard_backspace
       </span>
     </div>
