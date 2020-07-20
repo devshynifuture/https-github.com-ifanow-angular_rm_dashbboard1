@@ -47,6 +47,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
   keepStatus = [];
   disableDeletionForTable2: boolean = false;
   refreshAfterUpdateKeepOrRemove = false;
+  isKeepArray = [];
 
   constructor(
     private subscriptionInject: SubscriptionInject,
@@ -264,14 +265,14 @@ export class ReconciliationDetailsViewComponent implements OnInit {
     this.selection.clear();
     this.mainLoader = true;
     let dateObj = new Date(this.data.aumDate);
-    let dateFormat = dateObj.getFullYear() + '-' + `${(dateObj.getMonth() + 1) < 10 ? '0' : ''}` + (dateObj.getMonth() + 1) + '-' + dateObj.getDate();
+    let dateFormat = dateObj.getFullYear() + '-' + `${(dateObj.getMonth() + 1) < 10 ? '0' : ''}` + (dateObj.getMonth() + 1) + '-' + `${(dateObj.getDate()) < 10 ? '0' : ''}` + dateObj.getDate();
     value.unshift(dateFormat);
 
     this.reconService.deleteAumTransaction(value)
       .subscribe(res => {
         console.log('this transactions are deleted:::', res);
         this.dataSource1.data = this.tableData1.filter(item => {
-          return (!value.includes(item.id)) ? item : null;
+          return (!value.includes(String(item.id))) ? item : null;
         });
         this.dataSource.data.map(item => {
           item.unitOne = String(res.units);
@@ -399,16 +400,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
   }
 
   putAumTransactionKeepOrRemove() {
-    const isKeepArray = [];
-    this.dataSource2.data.forEach(item => {
-      isKeepArray.push({
-        id: item.id,
-        isKeep: item.keep
-      });
-    });
-    this.isKeepOrRemoveTransactions = isKeepArray;
-    console.log(this.isKeepOrRemoveTransactions);
-    this.supportService.putAumTransactionKeepOrRemove(this.isKeepOrRemoveTransactions)
+    this.supportService.putAumTransactionKeepOrRemove(this.isKeepArray)
       .subscribe(res => {
         this.keepStatus = [];
         this.dataSource2.data.forEach(item => {
@@ -439,10 +431,38 @@ export class ReconciliationDetailsViewComponent implements OnInit {
     if (this.disableDeletionForTable2) {
       this.eventService.openSnackBar("Please Unfreeze Folio", "DISMISS");
     } else {
-
       const id = this.dataSource2.data.indexOf(element);
+      let dateObj = new Date(this.data.aumDate);
+      let dateFormat = dateObj.getFullYear() + '-' + `${(dateObj.getMonth() + 1) < 10 ? '0' : ''}` + (dateObj.getMonth() + 1) + '-' + `${(dateObj.getDate()) < 10 ? '0' : ''}` + dateObj.getDate();
 
-      this.dataSource2.data[id].keep = (value === 1 ? true : false);
+      if (value == 1) {
+        this.dataSource2.data[id].keep = true;
+
+      } else {
+        this.dataSource2.data[id].keep = false;
+      }
+
+      if (this.isKeepArray.length !== 0 && this.isKeepArray.some(item => item.id === element.id)) {
+        let itemObj = this.isKeepArray.find(i => i.id === element.id);
+        let index1 = this.isKeepArray.indexOf(itemObj);
+        this.isKeepArray[index1] = {
+          id: element.id,
+          aumDate: dateFormat,
+          isKeep: value == 1 ? true : false
+        }
+        if (this.keepStatus[index] === this.isKeepArray[index1].isKeep) {
+          this.isKeepArray.splice(index1, 1);
+        }
+      } else if (this.isKeepArray.length === 0 || this.isKeepArray.some(item => item.id !== element.id)) {
+        this.isKeepArray.push({
+          id: element.id,
+          aumDate: dateFormat,
+          isKeep: value == 1 ? true : false
+        });
+      }
+
+      console.log(this.isKeepArray);
+
       let changedKeepStatus = [];
 
       this.dataSource2.data.forEach(item => {
