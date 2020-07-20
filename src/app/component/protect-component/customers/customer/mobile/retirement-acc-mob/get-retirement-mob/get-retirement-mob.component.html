@@ -1,4 +1,4 @@
-<div id="mob-fixed-income" *ngIf="fixdeposit != true && backToMf != true">
+<div id="mob-fixed-income" *ngIf="fixdeposit != true && backToMf != true && showDetailsEPF != true && showDetailsGratuity != true">
     <div class="row mob-bg-common pb-12 mobtop-navfixed">
         <div class="col-2" (click)="backToMf = true">
             <span class="material-icons text-white">
@@ -17,7 +17,7 @@
     <div class="pt-80 p-8 h-100vh" *ngIf="inputData.assetType == 'EPF'">
         <div class="pt-16" *ngFor="let item of asset">
             <div class="bg-white">
-                <div class="row pt-20 pb-20 mob-bb-1">
+                <div class="row pt-20 pb-20 mob-bb-1" (click)="openDetailed(item)">
                     <div class="col-8">
                         <p class="mb-0">
                             <span appFormatNumber>
@@ -26,7 +26,7 @@
                     </div>
                     <div class="col-4 text-right">
                         <p class="m-0">₹
-                            <span appFormatNumber></span>{{item.currentValue}}</p>
+                            <span appFormatNumber [value]="item.currentEpfValue">{{item.currentEpfValue}}</span></p>
                     </div>
                 </div>
             </div>
@@ -38,7 +38,7 @@
     <div class="pt-80 p-8 h-100vh" *ngIf="inputData.assetType == 'NPS'">
         <div class="pt-16" *ngFor="let item of asset">
             <div class="bg-white">
-                <div class="row pt-20 pb-20 mob-bb-1">
+                <div class="row pt-20 pb-20 mob-bb-1" (click)="openDetailed(item)">
                     <div class="col-8">
                         <p class="mb-0">
                             <span appFormatNumber>
@@ -58,7 +58,7 @@
     <div class="pt-80 p-8 h-100vh" *ngIf="inputData.assetType == 'Gratuity'">
         <div class="pt-16" *ngFor="let item of asset">
             <div class="bg-white">
-                <div class="row pt-20 pb-20 mob-bb-1">
+                <div class="row pt-20 pb-20 mob-bb-1" (click)="openDetailed(item)">
                     <div class="col-8">
                         <p class="mb-0">
                             <span appFormatNumber>
@@ -66,7 +66,7 @@
                             </span></p>
                     </div>
                     <div class="col-4 text-right">
-                        <p class="m-0">₹{{item.currentValue}}</p>
+                        <p class="m-0">₹<span appFormatNumber [value]="item.gratuityReceived">{{item.gratuityReceived}}</span></p>
                     </div>
                 </div>
             </div>
@@ -93,9 +93,12 @@
 <div *ngIf="backToMf == true">
 <app-retirement-acc-mob></app-retirement-acc-mob>
 </div>
-<div>
-<app-detailed-epf-mob></app-detailed-epf-mob>
+<div *ngIf="showDetailsEPF == true">
+<app-detailed-epf-mob [data]="detailedData"></app-detailed-epf-mob>
 </div>
-<div>
-    <app-detailed-grauity-mob></app-detailed-grauity-mob>
+<div *ngIf="showDetailsNPS == true">
+    <app-detailed-nps-mob [data]="detailedData"></app-detailed-nps-mob>
+</div>
+<div *ngIf="showDetailsGratuity == true">
+   <app-detailed-grauity-mob [data]="detailedData"></app-detailed-grauity-mob>
 </div>
