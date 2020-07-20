@@ -14,7 +14,7 @@ export class DetailedGrauityMobComponent implements OnInit {
   set data(data) {
     this.inputData = data;
     console.log('This is Input data of proceed ', data);
-    this.detailedData  = data
+    this.detailedData  = this.inputData
   }
   get data() {
     return this.inputData;

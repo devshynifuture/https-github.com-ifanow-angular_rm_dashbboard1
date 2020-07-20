@@ -43,6 +43,10 @@ export class ReconciliationDetailsViewComponent implements OnInit {
   isUnfreezeClicked: boolean = false;
   isFreezeClicked: boolean = false;
   changesInUnitOne: string = '';
+  canUpdateTransactions = false;
+  keepStatus = [];
+  disableDeletionForTable2: boolean = false;
+  refreshAfterUpdateKeepOrRemove = false;
 
   constructor(
     private subscriptionInject: SubscriptionInject,
@@ -234,8 +238,8 @@ export class ReconciliationDetailsViewComponent implements OnInit {
     if (this.data && this.data.mutualFundId) {
       this.reconService.putUnfreezeFolio(this.data.mutualFundId)
         .subscribe(res => {
-          console.log(res);
-
+          // console.log(res);
+          this.disableDeletionForTable2 = false;
           this.disableUnfreezeBtn = true;
           if (this.data.difference === '0.000') {
             this.disableFreezeBtn = false;
@@ -345,14 +349,17 @@ export class ReconciliationDetailsViewComponent implements OnInit {
         if (this.data.hasOwnProperty('freezeDate') && this.data.freezeDate) {
           let date1 = new Date(element.transactionDate);
           let date2 = new Date(element.freezeDate);
-          if (date1.getTime() > date2.getTime()) {
+          if (date1.getTime() >= date2.getTime()) {
             canDeleteTransaction = true;
           } else {
             canDeleteTransaction = false;
           }
+          this.disableDeletionForTable2 = true;
         } else {
+          this.disableDeletionForTable2 = false;
           canDeleteTransaction = true;
         }
+        this.keepStatus.push(element.keep);
         this.tableData1.push({
           srNo: index1 + 1,
           id: element.id,
@@ -403,25 +410,63 @@ export class ReconciliationDetailsViewComponent implements OnInit {
     console.log(this.isKeepOrRemoveTransactions);
     this.supportService.putAumTransactionKeepOrRemove(this.isKeepOrRemoveTransactions)
       .subscribe(res => {
-        console.log(res);
+        this.keepStatus = [];
+        this.dataSource2.data.forEach(item => {
+          this.keepStatus.push(item.keep);
+        });
+        this.canUpdateTransactions = false;
+        this.refreshAfterUpdateKeepOrRemove = true;
+        // console.log(res);
         this.dataSource.data.map(element => {
           element.unitOne = String(parseFloat(res.units).toFixed(3));
           this.changesInUnitOne = String(parseFloat(res.units).toFixed(3));
           element.difference = String((parseFloat(res.units) - parseFloat(element.unitsRta)).toFixed(3));
-          if (element.difference === '0.000') {
+
+          if (Math.round(parseFloat(element.difference)) === 0) {
             this.disableFreezeBtn = false;
+          } else {
+            this.disableFreezeBtn = true;
           }
+
         });
+        this.mainLoader = false;
+        this.shouldDeleteMultiple = false;
+
       });
   }
 
-  shouldKeepOrRemove(value, element) {
-    const id = this.dataSource2.data.indexOf(element);
-    this.dataSource2.data[id].keep = (value === 1 ? true : false);
+  shouldKeepOrRemove(value, element, index) {
+    if (this.disableDeletionForTable2) {
+      this.eventService.openSnackBar("Please Unfreeze Folio", "DISMISS");
+    } else {
+
+      const id = this.dataSource2.data.indexOf(element);
+
+      this.dataSource2.data[id].keep = (value === 1 ? true : false);
+      let changedKeepStatus = [];
+
+      this.dataSource2.data.forEach(item => {
+        changedKeepStatus.push(item.keep);
+      })
+      for (let i = 0; i <= this.keepStatus.length; i++) {
+        if (this.keepStatus[i] !== changedKeepStatus[i]) {
+          this.canUpdateTransactions = true;
+          break;
+        } else {
+          this.canUpdateTransactions = false;
+        }
+      }
+    }
   }
 
   dialogClose() {
-    let refreshRequired = (this.data.difference === '0.000') ? true : false;
+
+    let refreshRequired = (Math.round(this.data.difference) === 0) ? true : false;
+
+    if (this.data.fromAllFolioOrDuplicateTab == 2 && this.refreshAfterUpdateKeepOrRemove) {
+      refreshRequired = true;
+    }
+
     this.subscriptionInject
       .changeNewRightSliderState({
         state: 'close',

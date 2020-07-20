@@ -21,11 +21,11 @@
                 <div class="circular-small"></div>
             </div>
             <div class="col-7 pl-0">
-                <p class="mb-0 pt-8">{{(detailedData.description)?detailedData.description:'EPF'}}</p>
+                <p class="mb-0 pt-8">{{(detailedData.description)?detailedData.description:'Gratuity'}}</p>
             </div>
             <div class="col-3 text-right pl-0">
                 <p class="m-0 pt-8">
-                    ₹<span appFormatNumber [value]="detailedData.currentValue">{{detailedData.currentValue}}</span>0</p>
+                    ₹<span appFormatNumber [value]="detailedData.gratuityReceived">{{detailedData.gratuityReceived}}</span>0</p>
             </div>
         </div>
     </div>
