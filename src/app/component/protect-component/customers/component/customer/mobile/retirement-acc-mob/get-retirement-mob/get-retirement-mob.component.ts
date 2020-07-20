@@ -10,13 +10,17 @@ export class GetRetirementMobComponent implements OnInit {
   asset: any;
   backToMf;
   fixdeposit;
+  showDetailsEPF: boolean = false;
+  showDetailsNPS: boolean = false;
+  showDetailsGratuity: boolean = false;
+  detailedData: any;
   constructor() { }
   @Input()
   set data(data) {
     this.inputData = data;
-    if(data.asset){
+    if (data.asset) {
       this.asset = data.asset.assetList
-    }else{
+    } else {
       this.asset = []
     }
     console.log('This is Input data of proceed ', data);
@@ -26,5 +30,16 @@ export class GetRetirementMobComponent implements OnInit {
   }
   ngOnInit() {
   }
-
+  openDetailed(item) {
+    if (this.inputData.assetTpye == 'EPF') {
+      this.showDetailsEPF = true
+      this.detailedData = item
+    } else if (this.inputData.assetTpye =='NPS') {
+      this.showDetailsNPS = true
+      this.detailedData = item
+    } else {
+      this.showDetailsGratuity = true
+      this.detailedData = item
+    }
+  }
 }

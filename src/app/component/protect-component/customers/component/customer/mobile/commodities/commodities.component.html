@@ -1,4 +1,4 @@
-<div id="mob-fixed-income" *ngIf="commodities != true && backToMf != true">
+<div id="mob-fixed-income" *ngIf="commodities != true && backToMf != true && !showDetailView">
     <div class="row mob-bg-common pb-12 mobtop-navfixed">
         <div class="col-2" (click)="backToMf = true">
             <span class="material-icons text-white">
@@ -15,7 +15,7 @@
         </div>
     </div>
     <div class="pt-80 p-8 h-100vh" *ngIf="inputData == 'Gold'">
-        <div class="pt-16" *ngFor="let item of assetData;let i = index">
+        <div class="pt-16" *ngFor="let item of assetData;let i = index" (click)="showDetailView = true;detailedViewData = item">
             <div class="bg-white">
                 <div class="row pt-20 pb-20 mob-bb-1">
                     <div class="col-8">
@@ -33,7 +33,7 @@
         </div>
     </div>
     <div class="pt-80 p-8 h-100vh" *ngIf="inputData == 'Others'">
-        <div class="pt-16" *ngFor="let item of assetData; let i = index">
+        <div class="pt-16" *ngFor="let item of assetData; let i = index" (click)="showDetailView = true;detailedViewData = item">
             <div class="bg-white">
                 <div class="row pt-20 pb-20 mob-bb-1">
                     <div class="col-8">
@@ -60,6 +60,12 @@
 </div>
 <div *ngIf="commodities == true && inputData == 'Others'">
     <app-add-others-mob></app-add-others-mob>
+</div>
+<div *ngIf="showDetailView == true && inputData == 'Gold'">
+    <app-detailed-view-gold-mob [data]="detailedViewData" (outputValue)="getValue($event)"></app-detailed-view-gold-mob>
+</div>
+<div *ngIf="showDetailView == true && inputData == 'Others'">
+    <app-detailed-view-others-mob [data]="detailedViewData" (outputValue)="getValue($event)"></app-detailed-view-others-mob>
 </div>
 <div *ngIf="backToMf == true">
 <app-commodities-mob></app-commodities-mob>
