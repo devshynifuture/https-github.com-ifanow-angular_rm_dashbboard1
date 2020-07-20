@@ -13,6 +13,7 @@ export class LifeInsuranceMobComponent implements OnInit {
   clientId: any;
   advisorId: any;
   totalCurrentValue = 0;
+  showDetail;
   termCv: any;
   traditionalCv: number;
   ulipCv: number;

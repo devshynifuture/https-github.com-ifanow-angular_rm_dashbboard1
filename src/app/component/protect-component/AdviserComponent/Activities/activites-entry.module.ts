@@ -8,7 +8,9 @@ import { CustomDirectiveModule } from '../../../../common/directives/common-dire
 
 
 @NgModule({
-  declarations: [AddTasksComponent],
+  declarations: [
+    AddTasksComponent
+  ],
   imports: [
     CommonModule,
     MaterialModule,

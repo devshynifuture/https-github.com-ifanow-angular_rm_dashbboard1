@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { CustomerService } from '../../customer.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { UtilService } from 'src/app/services/util.service';
-import { detailStatusObj } from 'src/app/component/protect-component/AdviserComponent/transactions/transactions-list/transaction-detail/detailStatus';
-import { OnlineTransactionService } from 'src/app/component/protect-component/AdviserComponent/transactions/online-transaction.service';
+import {Component, OnInit} from '@angular/core';
+import {CustomerService} from '../../customer.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {UtilService} from 'src/app/services/util.service';
+import {detailStatusObj} from 'src/app/component/protect-component/AdviserComponent/transactions/transactions-list/transaction-detail/detailStatus';
+import {OnlineTransactionService} from 'src/app/component/protect-component/AdviserComponent/transactions/online-transaction.service';
 
 @Component({
   selector: 'app-mob-invest',
@@ -34,7 +34,8 @@ export class MobInvestComponent implements OnInit {
     public eventService: EventService,
     private utils: UtilService,
     private onlineTransact: OnlineTransactionService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.clientId = AuthService.getClientId()
@@ -46,6 +47,9 @@ export class MobInvestComponent implements OnInit {
 
   getTnxStatus(id) {
     return UtilService.getTransactionStatusFromStatusId(id);
+  }
+
+  openMenu() {
   }
 
   getFamilyMemberList() {

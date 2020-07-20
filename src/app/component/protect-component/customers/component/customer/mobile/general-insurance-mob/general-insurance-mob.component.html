@@ -1,6 +1,6 @@
-<div id="mob-fixed-income" *ngIf="!showDetail">
+<div id="mob-fixed-income" *ngIf="!showDetail && !backToMf">
     <div class="row mob-bg-common pb-12 mobtop-navfixed">
-      <div class="col-2" (click)="changeValue(false)">
+      <div class="col-2" (click)="backToMf = true">
         <span class="material-icons text-white">
         keyboard_backspace
         </span>
@@ -90,4 +90,7 @@
     </div>
     <div *ngIf="showDetail">
       <app-general-insurance [data]="assetSubType"></app-general-insurance>
+  </div>
+  <div *ngIf="backToMf == true">
+    <app-mobile-portfoilo></app-mobile-portfoilo>
   </div>
