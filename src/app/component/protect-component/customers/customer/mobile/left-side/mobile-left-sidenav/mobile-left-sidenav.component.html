@@ -1,5 +1,5 @@
 <mat-drawer-container class="mob-sidenav">
-    <mat-drawer mode="over" #drawer opened="true">
+    <mat-drawer mode="over" #drawer opened="false">
         <div class="persondeatils pt-20 pl-16 pb-20">
             <img src="/assets/images/people.png" class="text-left">
             <p class="m-0 pt-12 pl-4 text-white">Rahul Santosh Jain</p>
@@ -8,31 +8,31 @@
 
 
             <div class="col-12 pl-32">
-                <div class="d-flex">
+                <div [routerLink]="['/customer/mobile/myfeed']" class="d-flex">
                     <img src="/assets/images/svg/mobile/mob-home.svg">
-                    <p class="m-0 pl-24 pt-6 f-500 roboto" (click)="openSection('Home');drawer.close()">Home</p>
+                    <p class="m-0 pl-24 pt-6 f-500 roboto" (click)="clientHeader='Home';drawer.close()">Home</p>
                 </div>
-                <div class="d-flex pt-24">
+                <div [routerLink]="['/customer/mobile/portfolio']" class="d-flex pt-24">
                     <img src="/assets/images/svg/mobile/mob-prot.svg">
-                    <p class="m-0 pl-24 pt-6 f-500 roboto" (click)="openSection('Portfolio');drawer.close()">Portfolio
+                    <p class="m-0 pl-24 pt-6 f-500 roboto" (click)="clientHeader='Portfolio';drawer.close()">Portfolio
                     </p>
                 </div>
                 <div class="d-flex pt-24">
                     <img src="/assets/images/svg/mobile/mob-plan.svg">
-                    <p class="m-0 pl-24 pt-6 f-500 roboto" (click)="openSection('Home');drawer.close()">Plan</p>
+                    <p class="m-0 pl-24 pt-6 f-500 roboto" (click)="clientHeader='Portfolio';drawer.close()">Plan</p>
                 </div>
-                <div class="d-flex pt-24">
+                <div [routerLink]="['/customer/mobile/invest']" class="d-flex pt-24">
                     <img src="/assets/images/svg/mobile/mob-innvest.svg">
-                    <p class="m-0 pl-24 pt-6 f-500 roboto" (click)="openSection('Transaction');drawer.close()">Invest
+                    <p class="m-0 pl-24 pt-6 f-500 roboto" (click)="clientHeader='Invest';drawer.close()">Invest
                     </p>
                 </div>
-                <div class="d-flex pt-24">
+                <div [routerLink]="['/customer/mobile/profile']" class="d-flex pt-24">
                     <img src="/assets/images/svg/mob-nav-4.svg">
-                    <p class="m-0 pl-24 pt-6 f-500 roboto" (click)="openSection('Profile');drawer.close()">Profile</p>
+                    <p class="m-0 pl-24 pt-6 f-500 roboto" (click)="clientHeader='Profile';drawer.close()">Profile</p>
                 </div>
-                <div class="d-flex pt-24">
+                <div [routerLink]="['/customer/mobile/document']" class="d-flex pt-24">
                     <img src="/assets/images/svg/mobile/mob-doc.svg">
-                    <p class="m-0 pl-24 pt-6 f-500 roboto" (click)="openSection('Documents');drawer.close()">Documents
+                    <p class="m-0 pl-24 pt-6 f-500 roboto" (click)="clientHeader='Documents';drawer.close()">Documents
                     </p>
                 </div>
                 <div class="d-flex pt-24">
@@ -42,7 +42,8 @@
                 </div>
                 <div class="d-flex pt-24">
                     <img src="/assets/images/svg/mobile/mob-contact.svg">
-                    <p class="m-0 pl-24 pt-6 f-500 roboto" (click)="openSection('Home');drawer.close()">Contact us</p>
+                    <p class="m-0 pl-24 pt-6 f-500 roboto" (click)="clientHeader='Contact us';drawer.close()">Contact us
+                    </p>
                 </div>
                 <div class="d-flex pt-24">
                     <img src="/assets/images/svg/mobile/mob-share.svg">
@@ -58,8 +59,27 @@
         </div>
     </mat-drawer>
     <div id="mob-advisor-profile">
+<<<<<<< HEAD
         <div *ngIf="home == true">
             <app-mobile-myfeed [data]="dataTosend"></app-mobile-myfeed>
+=======
+        <div class="row mob-bg-common pb-12 mobtop-navfixed">
+            <div class="col-2" (click)="drawer.toggle()">
+                <span class="material-icons text-white">
+                    menu
+                </span>
+            </div>
+            <div class="col-7 pl-0" (click)="drawer.toggle()">
+                <h5 class="m-0 f-18 text-white">{{clientHeader}}</h5>
+            </div>
+            <div class="col-3 text-right">
+                <span class="material-icons text-white">
+                    search
+                </span>
+            </div>
+        </div>
+        <!-- <div *ngIf="home == true">
+>>>>>>> 9cc7253d9a4c4b02d8772b7633ed8e8e0e05200c
         </div>
         <div *ngIf="document== true">
             <app-mobile-document [data]="dataTosend"></app-mobile-document>
@@ -71,9 +91,8 @@
             <app-mobile-profile [data]="dataTosend"></app-mobile-profile>
         </div>
         <div *ngIf="transaction== true">
-            <!-- <app-mobile-transactions [data]="dataTosend"></app-mobile-transactions> -->
             <app-mob-invest></app-mob-invest>
-        </div>
-
+        </div> -->
+        <router-outlet></router-outlet>
     </div>
 </mat-drawer-container>

@@ -1,7 +1,4 @@
-<div *ngIf="openMenue == true">
-    <app-mobile-left-sidenav></app-mobile-left-sidenav>
-</div>
-<div class="row mob-bg-common pb-12  mobtop-navfixed pt-12" *ngIf="openMenue != true">
+<div *ngIf="folderData.length>0" class="row mob-bg-common pb-12  mobtop-navfixed pt-12">
     <div class="col-2 full-center">
         <span>
             <img src="/assets/images/svg/mob-left-arrow.svg"
