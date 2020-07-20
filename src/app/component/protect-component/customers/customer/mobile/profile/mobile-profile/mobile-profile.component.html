@@ -3,14 +3,14 @@
 </div>
 <div id="mobile-profile">
   <div *ngIf="hideShowFlag=='profile'">
-    <div class="row mob-bg-common pb-12 mobtop-navfixed">
+    <!-- <div class="row mob-bg-common pb-12 mobtop-navfixed">
       <div class="col-2" (click)="openMenu(openMenue)">
         <img src="/assets/images/svg/mob-left-arrow.svg" class="c-p pt-4">
       </div>
       <div class="col-10 pl-0">
         <h5 class="m-0 f-18 text-white roboto">Profile</h5>
       </div>
-    </div>
+    </div> -->
     <div class="bg-grey lter pt-80 pb-90" *ngIf="openMenue != true">
       <div class="row">
         <div class="col-12 pl-8 pb-10">
@@ -91,10 +91,14 @@
                     src="/assets/images/svg/father-profile.svg"></li> -->
                 </ul>
                 <p *ngIf="documentVault.fileStats" class="pt-8 m-0 roboto f-400 text-dark pb-12">
-                  {{documentVault.fileStats[0].filesCount}} items in your
-                  vault. {{documentVault.fileStats[0].totalKbs/1024 | number : '0.0-2'}}MB space used
+                  <span *ngIf="documentVault.fileStats[0]">{{documentVault.fileStats[0].filesCount}}</span> items in
+                  your
+                  vault. <span
+                    *ngIf="documentVault.fileStats[0]">{{documentVault.fileStats[0].totalKbs/1024 | number : '0.0-2'}}</span>MB
+                  space used
                 </p>
-                <button mat-stroked-button class="btn-primary w-100 h-40 f-16">Access your vault</button>
+                <button [routerLink]="['/customer/mobile/document']" mat-stroked-button
+                  class="btn-primary w-100 h-40 f-16">Access your vault</button>
               </div>
               <div class="col-4 p-0 text-center pt-28">
                 <img src="/assets/images/secure.png">

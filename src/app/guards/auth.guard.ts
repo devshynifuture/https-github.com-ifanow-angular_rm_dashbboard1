@@ -16,14 +16,15 @@ export class AuthGuard implements CanActivate {
       // }
       if (state && state.url.includes('/login')) {
         // TODO comment for old login
-        if (this.authService.isAdvisor()) {
-          this.myRoute.navigate(['admin', 'subscription', 'dashboard']);
-        } else if (AuthService.getUserInfo().isRmLogin) {
-          this.myRoute.navigate(['support', 'dashboard']);
+        if (this.authService.isClient()) {
+          this.myRoute.navigate(['/customer/mobile']);
         }
-        else {
-          this.myRoute.navigate(['customer', 'detail', 'overview', 'myfeed']);
-        }
+        //  else if (AuthService.getUserInfo().isRmLogin) {
+        //   this.myRoute.navigate(['support', 'dashboard']);
+        // }
+        // else {
+        //   this.myRoute.navigate(['customer', 'mobile']);
+        // }
         return false;
       }
       // const user = this.authService.decode();
