@@ -15,13 +15,18 @@ export class CashAndBankMobComponent implements OnInit {
   bankAccData: any;
   cashInHandData: any;
   showDetail
+
+  // change this declared to fix build issue
+  backToMf
+  // ........
+
   @Output() outputValue = new EventEmitter<any>();
-  assetSubType = {assetType:'',data:''};
+  assetSubType = { assetType: '', data: '' };
 
 
   accCv: any;
   cashInHandCv: any;
-  constructor(private custumService:CustomerService,private eventService:EventService) { }
+  constructor(private custumService: CustomerService, private eventService: EventService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -29,49 +34,49 @@ export class CashAndBankMobComponent implements OnInit {
     this.getBankAcc();
     this.getCashInHand();
   }
-  getBankAcc(){
+  getBankAcc() {
     const obj = {
       clientId: this.clientId,
       advisorId: this.advisorId
     };
     this.custumService.getBankAccounts(obj).subscribe(
       data => {
-        if(data){
+        if (data) {
           this.bankAccData = data;
           this.accCv = data.sumOfAccountBalance;
           this.calculateSum();
         }
       }, (error) => {
         this.eventService.showErrorMessage(error);
-  
+
       }
     );
   }
-  getCashInHand(){
+  getCashInHand() {
     const obj = {
       clientId: this.clientId,
       advisorId: this.advisorId
     };
     this.custumService.getCashInHand(obj).subscribe(
       data => {
-        if(data){
+        if (data) {
           this.cashInHandData = data;
-          this.cashInHandCv= data.sumOfCashValue;
+          this.cashInHandCv = data.sumOfCashValue;
           this.calculateSum();
         }
       }, (error) => {
         this.eventService.showErrorMessage(error);
-  
+
       }
     );
   }
-  calculateSum(){
-    this.totalCurrentValue = (this.accCv ? this.accCv : 0)+(this.cashInHandCv ? this.cashInHandCv :0)
+  calculateSum() {
+    this.totalCurrentValue = (this.accCv ? this.accCv : 0) + (this.cashInHandCv ? this.cashInHandCv : 0)
   }
-  changeValue(flag){
+  changeValue(flag) {
     this.outputValue.emit(flag);
   }
-  openSubAsset(subAsset,value) {
+  openSubAsset(subAsset, value) {
     this.assetSubType.assetType = subAsset;
     this.assetSubType.data = value;
   }

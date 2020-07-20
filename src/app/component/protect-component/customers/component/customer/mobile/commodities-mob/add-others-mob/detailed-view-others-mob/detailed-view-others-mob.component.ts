@@ -7,6 +7,9 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class DetailedViewOthersMobComponent implements OnInit {
   others: any;
+  // declared to fix ubuild issue
+  backPage
+  // ....
   @Output() outputValue = new EventEmitter<any>();
 
   constructor() { }
@@ -20,7 +23,7 @@ export class DetailedViewOthersMobComponent implements OnInit {
   }
   ngOnInit() {
   }
-  changeValue(flag){
+  changeValue(flag) {
     this.outputValue.emit(flag);
   }
 

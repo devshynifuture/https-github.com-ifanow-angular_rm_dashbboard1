@@ -8,6 +8,10 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class DetailedViewGoldMobComponent implements OnInit {
   _data: any;
   gold: any;
+  // declared to fix build issue
+  backPage
+  // ...
+
   @Output() outputValue = new EventEmitter<any>();
 
   constructor() { }
@@ -23,7 +27,7 @@ export class DetailedViewGoldMobComponent implements OnInit {
   }
   ngOnInit() {
   }
-  changeValue(flag){
+  changeValue(flag) {
     this.outputValue.emit(flag);
   }
 }
