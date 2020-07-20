@@ -1,0 +1,38 @@
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { FormBuilder } from '@angular/forms';
+import { EventService } from 'src/app/Data-service/event.service';
+import { DialogData } from 'src/app/component/protect-component/interface';
+
+@Component({
+  selector: 'app-preview',
+  templateUrl: './preview.component.html',
+  styleUrls: ['./preview.component.scss']
+})
+export class PreviewComponent implements OnInit {
+  link: any;
+  loadSpinner: boolean = false;
+  selectedElement: any;
+  constructor(public dialogRef: MatDialogRef<PreviewComponent>, private fb: FormBuilder,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData, private eventService: EventService, ) {
+  }
+
+  ngOnInit() {
+    console.log('preview == ', this.data);
+    this.link = this.data.bank;
+    this.selectedElement = this.data.selectedElement
+    console.log('preview == ', this.selectedElement);
+    console.log('link == ', this.link);
+    this.loadSpinner = true
+    setTimeout(() => {
+      this.getLoader()
+    }, 4000);
+  }
+  getLoader() {
+    this.loadSpinner = false
+  }
+  onNoClick(value): void {
+    this.dialogRef.close(this.link);
+
+  }
+}

@@ -1,0 +1,49 @@
+// Improtant files
+
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import '~material-design-icons/iconfont/material-icons.css';
+@import '~saturn-datepicker/bundle.css';
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
+// some baisc and useful file form project
+
+@import'./assets/style/scss/variable';
+@import'./assets/style/scss/_color';
+@import'./assets/style/scss/_helper';
+@import'./assets/style/scss/_common';
+@import'./assets/style/scss/_form';
+@import './assets/style/scss/_sidenavbar';
+@import './assets/style/scss/_card';
+@import'./assets/style/scss/table';
+@import'./assets/style/scss/plugin';
+@import'./assets/style/scss/border';
+@import'./assets/style/scss/fixing';
+@import'./assets/style/scss/height-width';
+@import'./assets/style/scss/progressbar';
+@import'./assets/style/scss/loaders';
+@import'./assets/style/scss/_footer';
+
+// module wise css files
+@import'./assets/style/scss/subscriptions/_subscriptions';
+@import'./assets/style/scss/account/account';
+@import'./assets/style/scss/activity/activity';
+@import'./assets/style/scss/Crm/_crm';
+@import'./assets/style/scss/Advice/_advice';
+@import'./assets/style/scss/profile/profile';
+@import'./assets/style/scss/plan/plan';
+@import'./assets/style/scss/Transactions/transactions';
+@import'./assets/style/scss/setting/setting';
+@import'./assets/style/scss/people/people';
+@import'./assets/style/scss/backoffice/backoffice';
+@import'./assets/style/scss/marketplace/marketplace';
+@import'./assets/style/scss/advisor-dashboard/advisor-dashboard';
+
+// responsive style
+@import'./assets/style/scss/responsive/transaction-media';
+@import'./assets/style/scss/responsive/mobile/login';
+@import'./assets/style/scss/responsive/mobile/mobcommon';
+@import'./assets/style/scss/responsive/mobile/portfolio';
+@import'./assets/style/scss/responsive/mobile/goal';
+@import'./assets/style/scss/responsive/mobile/transactions';
+@import'./assets/style/scss/responsive/mobile/profile';
+@import'./assets/style/scss/responsive/mobile/myfeed';

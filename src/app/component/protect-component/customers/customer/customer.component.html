@@ -1,0 +1,110 @@
+<div id="ui-customer-container">
+
+    <div class="col-md-12">
+        <!-- <h1 *ngIf="!clientId">Please select client</h1> -->
+        <div *ngIf="isOverlayVisible" [@dialogContainer]="dialogState" class="custom-overlay" (click)="close()">
+        </div>
+        <div [@upperSliderOpenClose]="upperSliderData.state" class="upper_slider">
+            <ng-template #dynamicUpper></ng-template>
+        </div>
+        <div [@openClose]="currentState" class="right_sidenav">
+            <ng-template #dynamic></ng-template>
+        </div>
+    </div>
+    <div class="row" id="ui-customer">
+        <div class="col-md-2 p-0 d-flex align-items-center c-p" (click)="goHome()">
+            <div class="imgClient">
+                <img [src]="authService.orgData.logoUrl || organizationLogo">
+            </div>
+
+        </div>
+        <div class="col-md-8">
+            <nav mat-tab-nav-bar>
+                <a [routerLink]="['/customer/detail/overview']" routerLinkActive="successBorder"
+                    mat-tab-link>OVERVIEW</a>
+                <a [routerLink]="['/customer/detail/account']" routerLinkActive="successBorder"
+                    mat-tab-link>PORTFOLIO</a>
+                <a class="planWidth" [routerLink]="['/customer/detail/plan']" routerLinkActive="successBorder"
+                    mat-tab-link>PLAN</a>
+                <a [routerLink]="['/customer/detail/activity']" routerLinkActive="successBorder"
+                    mat-tab-link>ACTIVITY</a>
+                <a [routerLink]="['/customer/detail/transact']" mat-tab-link
+                    routerLinkActive="successBorder">TRANSACT</a>
+            </nav>
+        </div>
+        <div
+            class="col-md-2 hide-on-800 d-flex align-items-center justify-content-end right-fixed tablate-none ng-tns-c1-0">
+            <nav mat-tab-nav-bar>
+                <a class="sidenav-link" mat-list-item *ngIf="user.userType == 1 || user.userType == 8">
+                    <img [src]="authService.profilePic" [matMenuTriggerFor]="menu" class="c-p header-img">
+                    <!-- <mat-menu #menu="matMenu">
+                        <button (click)="logout()" mat-menu-item>Logout</button>
+                    </mat-menu> -->
+                    <mat-menu #menu="matMenu" class="log-out maxw-320 p-0"
+                        style="width: 320px !important;max-width: 320px !important;">
+                        <div class="pl-20 maxw-320" style="width: 320px !important;max-width: 320px !important;">
+                            <div class="row bb-1 pt-20 pb-20">
+                                <div class="col-md-3 p-0">
+                                    <img [src]="authService.profilePic" class="w-100 br-10">
+                                </div>
+                                <div class="col-md-9 d-flex justify-content-center flex-column pt-32">
+                                    <p class="m-0 text-diff roboto f-400 f-16">{{advisorName}}</p>
+                                    <p class="text-custom m-0 roboto f-400">{{role}}</p>
+                                </div>
+                            </div>
+
+                            <ul class="d-block bb-1 pb-20">
+                                <li class="text-left pt-20 f-14 c-p"
+                                    *ngIf="userInfo.userType==1 || userInfo.userType==8"
+                                    [routerLink]="['/admin/setting/orgprofile']">Profile</li>
+                                <li class="text-left pt-20 f-14 c-p" *ngIf="userInfo.userType==1">Account & Billing</li>
+                                <li class="text-left pt-20 f-14 c-p" *ngIf="userInfo.userType==1">Refer & Earn
+                                </li>
+                                <li class="text-left pt-20 f-14 c-p" *ngIf="userInfo.userType==8">Change password</li>
+                            </ul>
+                            <p (click)="logout()" class="c-p mb-0 pb-20 pt-20 f-400">Logout</p>
+                        </div>
+                    </mat-menu>
+                </a>
+                <a class="sidenav-link" mat-list-item *ngIf="user.userType == 2">
+                    <img [src]="authService.clientProfilePic" [matMenuTriggerFor]="menu" class="c-p header-img">
+                    <!-- <mat-menu #menu="matMenu">
+                        <button (click)="logout()" mat-menu-item>Logout</button>
+                    </mat-menu> -->
+                    <mat-menu #menu="matMenu" class="log-out maxw-320 p-0"
+                        style="width: 320px !important;max-width: 320px !important;">
+                        <div class="pl-20 maxw-320" style="width: 320px !important;max-width: 320px !important;">
+                            <div class="row bb-1 pt-20 pb-20">
+                                <div class="col-md-3 p-0">
+                                    <img [src]="authService.clientProfilePic" class="w-100 br-10">
+                                </div>
+                                <div class="col-md-9 d-flex justify-content-center flex-column pt-32">
+                                    <p class="m-0 text-diff roboto f-400 f-16">{{advisorName}}</p>
+                                    <p class="text-custom m-0 roboto f-400 wb">{{clientName}}</p>
+                                </div>
+                            </div>
+
+                            <ul class="d-block bb-1 pb-20">
+                                <li class="text-left pt-20 f-14 c-p"
+                                    [routerLink]="['/customer/detail/overview/profile']">Profile</li>
+                                <li class="text-left pt-20 f-14 c-p"
+                                    (click)="openChangePassword('changeClientPassword',clientData)">Change password</li>
+                                <!-- <li class="text-left pt-20 f-14 pb-20 c-p">Refer & Earn</li> -->
+                            </ul>
+                            <p (click)="logout()" class="c-p mb-0 pb-20 pt-20">Logout</p>
+                        </div>
+                    </mat-menu>
+                </a>
+            </nav>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 p-0">
+            <router-outlet></router-outlet>
+            <ng-template>
+                <router-outlet></router-outlet>
+            </ng-template>
+        </div>
+    </div>
+
+</div>

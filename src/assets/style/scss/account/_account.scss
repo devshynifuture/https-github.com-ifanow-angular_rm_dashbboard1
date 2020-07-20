@@ -1,0 +1,621 @@
+.fddate {
+  .radioBtn .mat-radio-label {
+    padding-left: 8px !important;
+    height: 40px !important;
+  }
+}
+
+#ui-plan-summary .light-blue {
+  .mat-progress-bar-buffer {
+    background: #626262 !important;
+  }
+
+  .mat-progress-bar-fill::after {
+    background-color: #84BDF3 !important;
+  }
+}
+
+#ui-plan-summary .light-red {
+  .mat-progress-bar-fill::after {
+    background-color: #EA5970 !important;
+  }
+
+  .mat-progress-bar-buffer {
+    background: #626262 !important;
+  }
+}
+
+.face-sheet-radio {
+  display: flex;
+
+  .mat-radio-button {
+    min-width: 0px !important;
+    font-size: 10px !important;
+  }
+
+  // .mat-radio-inner-circle,
+  // .mat-radio-outer-circle,
+  // .mat-radio-container,
+  // .mat-radio-outer-circle {
+  //   height: 10px !important;
+  //   width: 10px !important;
+  // }
+  .mat-radio-label {
+    display: grid !important;
+    padding: 0 !important;
+  }
+
+  .mat-radio-label {
+    display: block !important;
+  }
+}
+
+.mutualfunds-capital-equity {
+  border-collapse: separate;
+  border: 1px solid #DADCE0 !important;
+  border-bottom: 0px !important;
+
+  .secoundTable {
+    border: 1px solid #DADCE0 !important;
+  }
+}
+
+#ui-assets-account {
+  .vertical-menu {
+    width: 16.70vw;
+    height: calc(100vh - 147px);
+    display: block !important;
+    text-align: left;
+    position: fixed;
+  }
+
+  li {
+    height: 40px;
+    line-height: 40px;
+    padding: 0 0px 0 24px;
+    font-size: 14px;
+    text-align: left;
+    margin-bottom: 10px;
+  }
+}
+
+// .mutualfunds-capital-equity#tabele-low {
+//   #table-low th.mat-column-header-row-first-group,
+//   #table-low th.mat-column-header-row-second-group,
+//   #table-low th.mat-column-header-row-third-group {
+//     background-color: #fff !important;
+//   }
+//   .th.mat-header-cell
+// }
+// #table-low th.header-tables {
+//     background-color: #fff !important;
+//     border-bottom: 0px !important;
+// }
+#debt-header,
+.grand-total-mfcapital {
+  #table-low th {
+    word-break: break-word !important;
+    padding: 7px 5px !important;
+  }
+}
+
+.remove-padding-matfield {
+  .mat-form-field-appearance-standard .mat-form-field-flex {
+    padding-top: 0px !important;
+  }
+
+  .mat-expansion-panel-header-description {
+    flex-grow: 0;
+  }
+}
+
+.mf-capital-details {
+  #table-low tbody td {
+    padding: 6px 6px !important;
+  }
+}
+
+.account-empty-state {
+  height: 150px;
+  justify-content: center;
+  border: 1px solid #e8ecef;
+}
+
+.gain-loss {
+  width: calc(100% - 62.24%);
+  padding-left: 5px;
+  border-left: 1px solid #dee5e7;
+}
+
+.redemption {
+  width: calc(100% - 54.50%);
+  border-right: 1px solid #dee5e7;
+}
+
+#ui-profile-plan {
+  pointer-events: initial !important;
+}
+
+.sticy-now {
+  position: sticky;
+  top: 140px;
+  z-index: 1020;
+}
+
+.riskProfileBox {
+  .mat-expansion-panel-header-title {
+    margin-right: 52px;
+  }
+
+  .mat-expansion-panel-header {
+    background: #F5F7F7;
+  }
+
+  .mat-expansion-panel-header.mat-expanded:focus,
+  .mat-expansion-panel-header.mat-expanded:hover {
+    background: #F5F7F7;
+  }
+
+  .mat-expansion-panel:not([class*=mat-elevation-z]) {
+    box-shadow: none !important;
+  }
+
+  .mat-expansion-panel-header-description {
+    flex-grow: 0 !important;
+  }
+
+  .mat-expansion-panel-body {
+    margin-top: 12px !important;
+  }
+}
+
+.risk-profile-history {
+  min-width: 50px !important;
+  padding: 0 8px !important;
+}
+
+.highcharts-credits {
+  display: none !important;
+}
+
+.sticky-risk-pofile {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 140px;
+
+  .mat-progress-bar {
+    height: 30px;
+  }
+
+  .mat-progress-bar-buffer {
+    background: #D9DEE1;
+  }
+}
+
+@media(max-width:1292px) {
+  .btn140 {
+    width: 135px !important;
+  }
+
+  .recommendations,
+  .btn140 {
+    font-size: 13px;
+  }
+}
+
+@media(max-width:1224px) {}
+
+@media(max-width:1200px) {
+
+  #ui-assets-account,
+  #ui-profile-plan {
+    li {
+      padding: 0 0px 24px 13px !important;
+    }
+  }
+
+  .pb-md-0 {
+    padding-bottom: 0px !important;
+  }
+
+  .pb-md-20 {
+    padding-bottom: 20px !important;
+  }
+
+  #ui-insurance {
+    li {
+      padding: 13px !important;
+
+      .f-700 {
+        font-size: 12px;
+      }
+
+      .row {
+        flex-wrap: nowrap;
+      }
+    }
+  }
+
+  .cashflow,
+  .familymember-wise {
+    padding-left: 0px !important;
+    padding-top: 20px !important;
+  }
+
+  .scheme-wise {
+    padding-right: 0px !important;
+
+    #table-low th {
+      background-color: #fff !important;
+    }
+  }
+
+  div.overflow-y {
+    overflow: auto;
+    white-space: nowrap;
+
+    .w-1024 {
+      width: 1024px;
+    }
+  }
+}
+
+.scheme-wise-allocation#table-low,
+.category-wise-allocation#table-low,
+.family-member-wise-allocation#table-low,
+.sub-category-wise#table-low {
+  th {
+    background-color: #fff !important;
+    font-weight: 500;
+    cursor: pointer;
+  }
+}
+
+.scheme-wise-allocation {
+  td.mat-footer-cell {
+    padding: 8px !important;
+    cursor: pointer;
+  }
+}
+
+.summary-transactions {
+  #table-low {
+    tr.mat-header-row {
+      height: 44px;
+    }
+
+    tr.mat-row {
+      height: 36px;
+    }
+
+    tbody td {
+      padding: 0px 8px !important;
+    }
+
+    .mat-icon-button {
+      line-height: 30px !important;
+      height: 30px !important;
+      width: 24px !important;
+    }
+  }
+}
+
+.grand-total-mfcapital {
+  width: 100%;
+
+  #table-low {
+    tr {
+      border-bottom: 0px !important;
+    }
+
+    thead tr,
+    th {
+      background-color: #fff !important;
+    }
+  }
+}
+
+.fixed-deposit,
+.table-header-normal {
+  #tbs .mat-sort-header-button {
+    white-space: nowrap !important;
+  }
+}
+
+.right-hc {
+  .mat-sort-header-container {
+    float: right !important;
+  }
+
+  // .mat-sort-header-arrow {
+  //   display: none;
+  // }
+}
+
+.right-hcb {
+  .mat-sort-header-container {
+    float: right !important;
+  }
+
+  // .mat-sort-header-arrow {
+  //   display: none;
+  // }
+  .mat-sort-header-button {
+    text-align: right;
+  }
+}
+
+.no-cursor {
+  .mat-sort-header-container {
+    .mat-sort-header-button {
+      cursor: auto !important;
+    }
+  }
+}
+
+@media(max-width:1142px) {
+
+  // .mat-radio-button#mat-radio-3 {
+  //   min-width: 135px;
+  //   width: 165px;
+  // }
+  #ui-insurance {
+    li {
+      padding: 10px !important;
+    }
+  }
+
+  .future-contribution {
+    .f-14 {
+      font-size: 13px !important;
+    }
+
+    h5 {
+      font-size: 14px !important;
+    }
+  }
+
+  .tabView {
+    .mat-tab-header-pagination-controls-enabled .mat-tab-header-pagination {
+      display: none !important;
+    }
+
+    .mat-tab-label {
+      padding: 0 16px !important;
+    }
+  }
+
+  .individual-income {
+    .incomeSourcesBox {
+      display: block !important;
+      margin: 0 auto !important;
+    }
+
+    .ws-nowrap {
+      white-space: inherit !important;
+    }
+
+    h5.text-custom {
+      font-size: 14px;
+    }
+
+    .col-md-3.d-flex {
+      display: block !important;
+
+      .mr-28 {
+        margin-right: 0px !important;
+      }
+
+      .ml-12 {
+        margin-left: 0px !important;
+      }
+    }
+  }
+}
+
+@media(max-width:1092px) {
+
+  #ui-assets-account,
+  #ui-liabilities,
+  #ui-insurance #ui-profile-plan,
+  #ui-overview-subscription,
+  #ui-documents-overview,
+  #ui-overview-profile,
+  #ui-activity {
+    li {
+      padding: 0 0px 0px 8px !important;
+      font-size: 13px;
+    }
+  }
+
+  .rs-pl-15 {
+    padding-left: 15px !important;
+  }
+
+  .add-liabilities {
+    .f-14 {
+      font-size: 13px !important;
+    }
+  }
+
+  .superannuation {
+    #tbs .mat-sort-header-button {
+      white-space: nowrap !important;
+    }
+  }
+}
+
+@media(max-width:1042px) {
+  h5 {
+    font-size: 15px;
+  }
+
+  h4 {
+    font-size: 16px;
+  }
+
+  .fddate {
+    .radioBtn .mat-radio-label {
+      padding-left: 5px !important;
+    }
+
+    #mat-radio-5 {
+      min-width: 130px !important;
+    }
+
+    #mat-radio-6 {
+      min-width: 150px !important;
+    }
+  }
+}
+
+@media(max-width:1024px) {
+  .radioBtn .mat-radio-label {
+    min-width: 125px !important;
+    height: 37px !important;
+  }
+
+  .popup-header-fix-60 {
+    .f-17 {
+      font-size: 16px !important;
+    }
+  }
+
+  #ui-assets-account,
+  #ui-profile-plan,
+  #ui-liabilities,
+  #investmentPlan,
+  #ui-overview-subscription,
+  #ui-documents-overview,
+  #ui-overview-profile,
+  #ui-activity {
+    li {
+      font-size: 13px !important;
+    }
+  }
+
+  .tabView {
+
+    .f-16,
+    h5 {
+      font-size: 14px !important;
+    }
+  }
+}
+
+@media(max-width:954px) {
+
+  #ui-assets-account,
+  #ui-liabilities,
+  #ui-insurance,
+  #ui-profile-plan,
+  #investmentPlan,
+  #ui-overview-subscription,
+  #ui-documents-overview,
+  #ui-overview-profile,
+  #ui-activity {
+
+    .vertical-menu {
+      width: 20vw !important;
+    }
+
+    .mat-drawer-side {
+      max-width: 20vw;
+    }
+  }
+
+  .responsive-left-side {
+    width: 18vw !important;
+  }
+
+
+  .responsive-left-side-top {
+    max-width: 20vw !important;
+  }
+
+  // .responsive-left-side {
+  //   width: 18vw !important;
+  // }
+
+  .responsive-right-side-top {
+    max-width: 80vw !important;
+  }
+}
+
+@media(max-width:860px) {
+
+  #ui-assets-account,
+  #ui-liabilities,
+  #ui-insurance,
+  #ui-profile-plan,
+  #investmentPlan,
+  #ui-overview-subscription,
+  #ui-documents-overview,
+  #ui-overview-profile,
+  #ui-activity {
+
+    .vertical-menu {
+      width: 22vw !important;
+    }
+
+    .mat-drawer-side {
+      max-width: 22vw;
+    }
+  }
+
+  .responsive-left-side {
+    width: 18vw !important;
+  }
+
+
+  .responsive-left-side-top {
+    max-width: 22vw !important;
+  }
+
+  // .responsive-left-side {
+  //   width: 18vw !important;
+  // }
+
+  .responsive-right-side-top {
+    max-width: 78vw !important;
+  }
+}
+
+@media(max-width:782px) {
+
+  #ui-assets-account,
+  #ui-liabilities,
+  #ui-insurance,
+  #ui-profile-plan,
+  #investmentPlan,
+  #ui-overview-subscription,
+  #ui-documents-overview,
+  #ui-overview-profile,
+  #ui-activity {
+
+    .vertical-menu {
+      width: 23vw !important;
+    }
+
+    .mat-drawer-side {
+      max-width: 23vw;
+    }
+  }
+
+  .responsive-left-side {
+    width: 23vw !important;
+  }
+
+
+  .responsive-left-side-top {
+    max-width: 23vw !important;
+  }
+
+  // .responsive-left-side {
+  //   width: 18vw !important;
+  // }
+
+  .responsive-right-side-top {
+    max-width: 77vw !important;
+  }
+}

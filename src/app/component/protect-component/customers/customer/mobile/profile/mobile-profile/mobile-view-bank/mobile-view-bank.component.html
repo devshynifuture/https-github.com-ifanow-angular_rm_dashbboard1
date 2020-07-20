@@ -1,0 +1,44 @@
+<div *ngIf="!selectedBank">
+    <div class="row mob-bg-common pb-12 mobtop-navfixed">
+        <div (click)="back()" class="col-2">
+            <img src="/assets/images/svg/mob-left-arrow.svg" class="c-p pt-4">
+        </div>
+        <div class="col-10 pl-0">
+            <h5 class="m-0 f-18 text-white pt-4 roboto">Bank accounts</h5>
+        </div>
+    </div>
+    <div class="pt-90 pl-20 pr-20 bg-grey lter h-100vh">
+        <div (click)="addEditBank(singleBank)" *ngFor="let singleBank of bankList" class="row mob-card">
+            <div class="col-2">
+                <img src="/assets/images/sbi.png">
+            </div>
+            <div class="col-10">
+                <p class="m-0 roboto f-400 lh-22">{{singleBank.bankName}}</p>
+                <p class="m-0 roboto f-400 text-custom lh-18">A/c: {{singleBank.accountNumber}}</p>
+                <div class="row pt-20">
+                    <div class="col-6 pl-0">
+                        <p class="m-0 f-12 roboto f-400 text-custom lh-15">IFSC</p>
+                        <p class="m-0 f-12 roboto f-400 text-dark lh-15">
+                            {{singleBank.ifscCode}}</p>
+                    </div>
+                    <div class="col-6 pl-0">
+                        <p class="m-0 f-12 roboto f-400 text-custom lh-15">Branch</p>
+                        <p class="m-0 f-12 roboto f-400 text-dark lh-15">{{singleBank.address.city}} -
+                            {{singleBank.address.pinCode}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row profile-save-bottom">
+            <div class="col-2"></div>
+            <div class="col-8 pt-8 pb-8">
+                <button (click)="addEditBank(null)" mat-stroked-button class="btn-primary w-100 f-16 h-40 br-40">Add
+                    bank</button>
+            </div>
+            <div class="col-2"></div>
+        </div>
+    </div>
+</div>
+<app-add-edit-bank-mobile-view (backFunc)="addEditFlag($event)" *ngIf="selectedBank" [data]="selectedBank">
+</app-add-edit-bank-mobile-view>

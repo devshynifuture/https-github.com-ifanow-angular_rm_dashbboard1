@@ -1,0 +1,75 @@
+<div class="row mob-bg-common pb-12 mobtop-navfixed">
+    <div class="col-2">
+        <span class="material-icons text-white">
+            keyboard_backspace
+        </span>
+    </div>
+    <div class="col-7 p-0">
+        <h5 class="m-0 f-18 text-white pt-4">Fixed deposits - Detailed view</h5>
+    </div>
+    <div class="col-3 text-right">
+        <span class="material-icons text-white">
+            filter_list
+        </span>
+    </div>
+</div>
+<div class="pt-80 p-8">
+    <div class="bg-white">
+        <div class="row pt-12 pb-12">
+            <div class="col-2">
+                <div class="circular-small"></div>
+            </div>
+            <div class="col-7 pl-0">
+                <p class="mb-0 pt-8">{{(fdData.description)?fdData.description:'FD'}}</p>
+            </div>
+            <div class="col-3 text-right pl-0">
+                <p class="m-0 pt-8">
+                    ₹<span appFormatNumber [value]="fdData.currentValue">{{fdData.currentValue}}</span>0</p>
+            </div>
+        </div>
+    </div>
+    <div class="pt-16">
+        <div class="bg-white">
+            <div class="row pt-20 pb-20">
+                <div class="col-7">
+                    <p class="mob-text-xs f-14">Owner</p>
+                    <p class="mob-text-xs f-14 pt-24" *ngIf="fdData.ownerList.length == 2">Co-owner 1</p>
+                    <p class="mob-text-xs f-14 pt-24" *ngIf="fdData.ownerList.length == 2">Co-owner 2</p>
+                    <p class="mob-text-xs f-14 pt-24">Type of FD</p>
+                    <p class="mob-text-xs f-14 pt-24">Amount invested</p>
+                    <p class="mob-text-xs f-14 pt-24">Commencement date</p>
+                    <p class="mob-text-xs f-14 pt-24">Interest rate</p>
+                    <p class="mob-text-xs f-14 pt-24">Maturity Date</p>
+                    <p class="mob-text-xs f-14 pt-24">Interest payout option</p>
+                    <p class="mob-text-xs f-14 pt-24">Frequency of payout per year</p>
+                    <p class="mob-text-xs f-14 pt-12">Ownership type</p>
+                    <p class="mob-text-xs f-14 pt-24">Current value</p>
+                    <p class="mob-text-xs f-14 pt-24">Maturity value</p>
+                    <p class="mob-text-xs f-14 pt-24">FD number</p>
+                    <p class="mob-text-xs f-14 pt-24">Bank account number</p>
+                    <p class="mob-text-xs f-14 pt-24">Institution name</p>
+                    <p class="mob-text-xs f-14 pt-24">Description</p>
+                </div>
+                <div class="col-5 text-right pl-0">
+                    <div *ngFor="let item of fdData.ownerList">
+                        <p class="m-0">{{item.name}}</p>
+                    </div>
+                    <p class="m-0 pt-24">{{(fdData.fdType==1)?'Bank FD':'Corporate FD'}}</p>
+                    <p class="m-0 pt-24">₹<span appFormatNumber [value]="fdData.amountInvested">{{fdData.amountInvested}}</span></p>
+                    <p class="m-0 pt-24">{{fdData.commencementDate | date:'dd/MM/yyyy'}}</p>
+                    <p class="m-0 pt-24">{{fdData.interestRate}}%</p>
+                    <p class="m-0 pt-24">{{fdData.maturityDate | date:'dd/MM/yyyy'}}</p>
+                    <p class="m-0 pt-24">Interest payout</p>
+                    <p class="m-0 pt-24">{{fdData.frequencyOfPayoutPerYear}}</p>
+                    <p class="m-0 pt-24">{{fdData.ownershipType}}</p>
+                    <p class="m-0 pt-12">₹<span appFormatNumber [value]="fdData.currentValue">{{fdData.currentValue}}</span></p>
+                    <p class="m-0 pt-24">₹<span appFormatNumber [value]="fdData.maturityValue">{{fdData.maturityValue}}</span></p>
+                    <p class="m-0 pt-24 wb">{{fdData.fdNumber}}</p>
+                    <p class="m-0 pt-24">{{fdData.bank}}</p>
+                    <p class="m-0 pt-24">{{fdData.institutionName}}</p>
+                    <p class="m-0 pt-24">{{fdData.description}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

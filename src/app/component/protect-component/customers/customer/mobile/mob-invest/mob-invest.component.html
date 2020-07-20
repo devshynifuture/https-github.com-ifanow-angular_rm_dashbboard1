@@ -1,0 +1,222 @@
+<div *ngIf="transactionFlag=='mainScreen'">
+    <div class="row mob-bg-common pb-12 mobtop-navfixed">
+        <div class="col-2">
+            <span (click)="openMenu(openMenue)" class="material-icons text-white">
+                menu
+            </span>
+        </div>
+        <div class="col-7 pl-0">
+            <h5 class="m-0 f-18 text-white">Invest</h5>
+        </div>
+        <div class="col-3 text-right">
+            <span class="material-icons text-white">
+                search
+            </span>
+        </div>
+    </div>
+    <div class="pt-90 pl-8 pr-8">
+        <div class="row pt-12 pb-12 mob-invest-1 ">
+            <div class="col-12 pr-0">
+                <p class="roboto f-500 m-0 lh-22">Top up your portfolio.</p>
+                <p class="roboto f-500 m-0 pt-4 lh-22"> Invest in existing schemes.</p>
+                <button (click)="transactionFlag='nutualfundTransaction'" mat-stroked-button
+                    class="invest-btn br-4 mt-10">Invest now</button>
+            </div>
+        </div>
+        <div class="row pt-12 pb-12 mob-invest-2 ">
+            <div class="col-12 pr-0">
+                <p class="roboto f-500 m-0 lh-22">Invest in top rated schemes
+                </p>
+                <p class="roboto f-500 m-0 pt-4 lh-22"> curated by our experts</p>
+                <button mat-stroked-button class="invest-btn br-4 mt-10">Explore schemes</button>
+            </div>
+        </div>
+        <div class="row pt-40">
+            <div class="col-12 pl-0">
+                <h5 class="m-0 f-16 roboto f-400 lh-20">Recent online transactions</h5>
+            </div>
+            <div class="col-12 d-flex p-0 overflow-y pt-10">
+                <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="sliderConfig" #slickModal2="slick-carousel"
+                    (wheel)="carouselWheelEvent(slickModal2, $event)">
+                    <div class="pr-20" ngxSlickItem *ngFor="let tnx of recentTransactions">
+                        <div (click)="selectTransaction(tnx)" class="w-300">
+
+                            <div class="row bg-white br-4">
+                                <div class="col-12 pt-16 pb-16">
+                                    <div class="row">
+                                        <div class="col-9 pl-0">
+                                            <p class="m-0 roboto f-400 text-mob-common">{{tnx.transactionType}}</p>
+                                        </div>
+                                        <div class="col-3 pr-0">
+                                            <p class="m-0 roboto f-400 text-custom f-12 pt-4">{{tnx.type}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row pt-8">
+                                        <div class="col-9 pl-0">
+                                            <p class="m-0 roboto f-400 text-mob-common f-16">₹<span
+                                                    appFormatNumber>{{tnx.amount | number : '0.0-2'}}</span></p>
+                                        </div>
+                                        <div class="col-3 pr-0 pl-0">
+                                            <p class="m-0 roboto f-400 text-custom f-10">
+                                                {{tnx.orderDate | date:'dd/MM h:mm a'}}</p>
+                                        </div>
+                                        <div class="col-12 pl-0 pt-8">
+                                            <p class="m-0 roboto f-400 text-custom f-10 ws-normal">Aditya Birla Sun
+                                                Life
+                                                {{tnx.schemeName}}</p>
+                                            <p class="m-0 roboto f-400 text-custom f-12 pt-10">{{clientData.name}}
+                                            </p>
+                                            <button mat-stroked-button
+                                                [ngClass]="{'btn-primary-outline': tnx.status!=7,'btn-danger-outline':tnx.status==7}"
+                                                class="mt-8 h-20 lh-16 f-10 br-2 pl-4 pr-4">UNITS
+                                                {{getTnxStatus(tnx.status)}}</button>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+
+                            <!-- <div *ngIf="recentTransactions.length == 0">
+                            No data Found
+                        </div> -->
+                        </div>
+                    </div>
+                </ngx-slick-carousel>
+            </div>
+        </div>
+        <div class="mt-28">
+            <div class="row pt-12 pb-12 mob-invest-1 ">
+                <div class="col-12 pr-0">
+                    <p class="roboto f-500 m-0 lh-22">Transact online in
+                    </p>
+                    <p class="roboto f-500 m-0 pt-4 lh-22"> Mutual Funds in a jiffy.</p>
+                    <button mat-stroked-button class="invest-btn br-4 mt-10">Quick Transact</button>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-28 pb-60">
+            <div class="col-12 pl-0">
+                <h5 class="m-0 roboto f-400 f-16 pb-10">Investment readiness</h5>
+            </div>
+            <div *ngFor="let member of familyMembers" class="row mob-scroll ml-0">
+                <div class="col-10 pl-0 pr-0">
+                    <div class="bg-white br-4 ba-half-grey w-210">
+                        <div class="row pt-16 pb-36">
+                            <div class="col-4">
+                                <img src="/assets/images/people.png">
+                            </div>
+                            <div class="col-8 pl-8">
+                                <p class="f-12 m-0 roboto f-400 pt-8">{{member.name}}</p>
+                                <p class="f-10 m-0 roboto text-custom f-400">{{member.pan ? member.pan :'N/A'}}</p>
+                            </div>
+                        </div>
+                        <div class="col-12 pb-8">
+                            <button mat-stroked-button
+                                class="text-success ba-success mr-12 commom-btn-mob lh-18 f-12"><img
+                                    src="/assets/images/svg/mob-kyc-active.svg" class="pr-8">KYC</button>
+                            <button mat-stroked-button class="text-danger ba-danger commom-btn-mob lh-18 f-12"><img
+                                    src="/assets/images/svg/mob-danger.svg" class="pr-8">Investment A/c</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- Transaction status -->
+<div *ngIf="transactionFlag=='transactionStatus'">
+    <div class="row mob-bg-common pb-12 mobtop-navfixed">
+        <div class="col-2">
+            <img (click)="transactionFlag='mainScreen'" src="/assets/images/svg/mob-left-arrow.svg" class="c-p pt-4">
+        </div>
+        <div class="col-7 pl-0">
+            <h5 class="m-0 f-18 text-white">Transaction status</h5>
+        </div>
+        <div class="col-3 text-right">
+            <span class="material-icons text-white">
+                search
+            </span>
+        </div>
+    </div>
+    <div class="col-12 mob-timeline pb-48 pr-16 pl-20 pt-90">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-9 pl-0">
+                        <h5 class="f-500 roboto text-black pt-10 m-0">Status</h5>
+                    </div>
+                    <div class="col-3 text-right">
+                        <button (click)="refresh(selectedtTransaction)" *ngIf="selectedtTransaction.status !=7"
+                            mat-stroked-button
+                            class="btn-primary-outline mt-8 h-20 lh-16 f-12 w66 br-2 pl-4 pr-4">REFRESH
+
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 pl-0">
+                <ul *ngIf="!(selectedtTransaction.status==0 || selectedtTransaction.status==1 || selectedtTransaction.status==7)"
+                    class="timeline">
+                    <li *ngFor="let singleStep of transactionStatusList"
+                        [ngClass]="{'selected-mob': singleStep.checked,'non-mob':singleStep.checked==false}"
+                        class="selected-mob">
+                        <span>{{singleStep.name}}</span>
+                        <p class="m-0 roboto text-danger f-12 f-400">{{singleStep.helper}}</p>
+                    </li>
+                    <!-- <li>
+                        <span>Payment successful</span>
+                    </li>
+                    <li class="non-mob">
+                        <span>Order submitted to AMC</span>
+                    </li>
+                    <li class="non-mob">
+                        <span>Order processed</span>
+                    </li>
+                    <li class="non-mob">
+                        <span>Units allotted</span>
+                    </li>
+                    <li class="non-mob">
+                        <span>Transaction reflecting in portfolio</span>
+                    </li> -->
+
+                </ul>
+                <ul *ngIf="selectedtTransaction.status==7" class="timeline">
+                    <li class="danger-mob">
+                        <span>Transaction rejected</span>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<app-mutual-funds *ngIf="transactionFlag=='nutualfundTransaction'"></app-mutual-funds>
+
+
+<!-- Quick Transact -->
+
+<!-- <div class="row pl-8 pr-8 pt-90">
+    <div class="col-12 bg-white br-4">
+        <div class="row pt-16">
+            <div class="col-3 pl-8">
+                <img src="/assets/images/relinace.png">
+            </div>
+            <div class="col-9">
+                <p class="m-0 roboto f-400 lh-24">Motilal Oswal NASDAQ 100
+                    Exchange Traded Fund</p>
+                <p class="m-0 roboto f-400 f-12 text-custom lh-24">Investor Name: Sunil Shinde</p>
+                <p class="m-0 roboto f-400 f-12 text-custom lh-24">IIN: 1234034934014</p>
+                <p class="m-0 roboto f-400 f-12 text-custom lh-24">Folio No.: 109239844</p>
+                <p class="m-0 roboto f-400 f-12 text-custom lh-24">IBank: State Bank of India</p>
+                <p class="m-0 roboto f-400 f-12 text-custom lh-24">Bank A/c: 1010098982377</p>
+            </div>
+            <div class="col-12 pl-8 pr-0 pt-20 pb-20">
+                <button mat-stroked-button class="transaction-top w-100 b-0 br-4">Quick Transact</button>
+            </div>
+        </div>
+    </div>
+</div> -->

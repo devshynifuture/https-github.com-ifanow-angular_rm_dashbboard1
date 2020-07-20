@@ -1,0 +1,413 @@
+<!-- <div id="mob-fixed-income" *ngIf="lifeInsuranceData != true && backToMf != true">
+    <div class="row mob-bg-common pb-12 mobtop-navfixed">
+        <div class="col-2" (click)="backToMf = true">
+            <span class="material-icons text-white">
+                keyboard_backspace
+            </span>
+        </div>
+        <div class="col-7 p-0">
+            <h5 class="m-0 f-18 text-white pt-4">{{inputData}}</h5>
+        </div>
+        <div class="col-3 text-right">
+            <span class="material-icons text-white">
+                filter_list
+            </span>
+        </div>
+    </div>
+    <div class="pt-80 p-8 h-100vh" *ngIf="inputData == 'Term insurance'">
+        <div class="pt-16" *ngFor="let item of assetData;let i = index">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20 mob-bb-1">
+                    <div class="col-8">
+                        <p class="mb-0">
+                            <span appFormatNumber>
+                                {{(item.policyName) ? item.policyName : 'LI '+(i+1)}} {{'| '+item.policyNumber}}
+                            </span></p>
+                    </div>
+                    <div class="col-4 text-right">
+                        <p class="m-0">{{item.currentValue ? '₹' : ''}}
+                            <span appFormatNumber>{{item.currentValue ? item.currentValue :'-'}}</span></p>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="assetData.length == 0">
+                <span>
+                    No data found
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="pt-80 p-8 h-100vh" *ngIf="inputData == 'Traditional insurance'">
+        <div class="pt-16" *ngFor="let item of assetData; let i = index">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20 mob-bb-1">
+                    <div class="col-8">
+                        <p class="mb-0">
+                            <span appFormatNumber>
+                                {{(item.policyName) ? item.policyName : 'LI '+(i+1)}}{{'| '+item.policyNumber}}
+                            </span></p>
+                    </div>
+                    <div class="col-4 text-right">
+                        <p class="m-0">{{item.currentValue ? '₹' : ''}}<span
+                                appFormatNumber>{{item.currentValue ? item.currentValue : '-'}}</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="assetData.length == 0">
+            <span>
+                No data found
+            </span>
+        </div>
+    </div>
+    <div class="pt-80 p-8 h-100vh" *ngIf="inputData == 'ULIP insurance'">
+        <div class="pt-16" *ngFor="let item of assetData; let i = index">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20 mob-bb-1">
+                    <div class="col-8">
+                        <p class="mb-0">
+                            <span appFormatNumber>
+                                {{(item.policyName) ? item.policyName : 'LI '+(i+1)}}{{'| '+item.policyNumber}}
+                            </span></p>
+                    </div>
+                    <div class="col-4 text-right">
+                        <p class="m-0">{{item.currentValue ? '₹' : ''}}<span
+                                appFormatNumber>{{item.currentValue ? item.currentValue : '-'}}</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="assetData.length == 0">
+            <span>
+                No data found
+            </span>
+        </div>
+    </div>
+    <div class="document-bottom-action">
+        <button (click)="lifeInsuranceData = true" mat-stroked-button class="btn-primary"><span class="material-icons">
+                add
+            </span></button>
+    </div>
+</div>
+<div *ngIf="lifeInsuranceData == true && inputData == 'Term insurance'">
+    <app-add-insurance-mob></app-add-insurance-mob>
+</div>
+<div *ngIf="lifeInsuranceData == true && inputData == 'Traditional insurance'">
+    <app-add-insurance-mob></app-add-insurance-mob>
+</div>
+<div *ngIf="lifeInsuranceData == true && inputData == 'ULIP insurance'">
+    <app-add-insurance-mob></app-add-insurance-mob>
+</div>
+<div *ngIf="backToMf == true">
+    <app-life-insurance-mob></app-life-insurance-mob>
+</div> -->
+<!-- <div id="mob-fixed-income">
+    <div class="row mob-bg-common pb-12 mobtop-navfixed">
+        <div class="col-2" (click)="changeValue(false)">
+            <span class="material-icons text-white">
+                keyboard_backspace
+            </span>
+        </div>
+        <div class="col-7 p-0">
+            <h5 class="m-0 f-18 text-white pt-4">Life insurance</h5>
+        </div>
+        <div class="col-3 text-right">
+            <span class="material-icons text-white">
+                filter_list
+            </span>
+        </div>
+    </div>
+    <div class="pt-80 p-8 h-100vh">
+        <div class="pt-16">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20 mob-bb-1">
+                    <div class="col-8">
+                        <p class="mb-0">Term insurance </p>
+                    </div>
+                    <div class="col-4 text-right">
+                        <p class="m-0">₹ 20,000,000</p>
+                    </div>
+                </div>
+                <div class="row pt-20 pb-20 mob-bb-1">
+                    <div class="col-8">
+                        <p class="mb-0">Traditional insurance
+                        </p>
+                    </div>
+                    <div class="col-4 text-right">
+                        <p class="m-0">₹ 20,000,000</p>
+                    </div>
+                </div>
+                <div class="row pt-20 pb-20 mob-bb-1">
+                    <div class="col-8">
+                        <p class="mb-0">ULIP insurance
+                        </p>
+                    </div>
+                    <div class="col-4 text-right">
+                        <p class="m-0">₹ 20,000,000</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+<!-- 2 policy deatils -->
+
+<!-- <div class="p-8 h-100vh">
+        <div class="pt-16">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20 mob-bb-1">
+                    <div class="col-8">
+                        <p class="mb-0">AEGON Religare Assure Plus ...
+                        </p>
+                    </div>
+                    <div class="col-4 text-right">
+                        <p class="m-0">₹ 20,000,000</p>
+                    </div>
+                </div>
+                <div class="row pt-20 pb-20 mob-bb-1">
+                    <div class="col-8">
+                        <p class="mb-0">LIC Amulya Jeevan - Table...
+
+                        </p>
+                    </div>
+                    <div class="col-4 text-right">
+                        <p class="m-0">₹ 20,000,000</p>
+                    </div>
+                </div>
+                <div class="row pt-20 pb-20 mob-bb-1">
+                    <div class="col-8">
+                        <p class="mb-0">AEGON Religare Decreasing..
+
+                        </p>
+                    </div>
+                    <div class="col-4 text-right">
+                        <p class="m-0">₹ 20,000,000</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+
+<!-- deatils view Life insurance -->
+<!-- <div class="pt-80 p-8 pb-90">
+        <div class="bg-white">
+            <div class="row pt-12 pb-12">
+                <div class="col-2">
+                    <div class="circular-small"></div>
+                </div>
+                <div class="col-7 pl-0">
+                    <p class="mb-0 pt-8">Life insurance</p>
+                </div>
+                <div class="col-3 text-right pl-0">
+                    <p class="m-0 pt-8">₹2,00,000</p>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-24">
+            <div class="col-12 pl-0">
+                <h5 class="m-0 f-16 roboto f-400">Policy details
+                </h5>
+            </div>
+        </div>
+        <div class="pt-16">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20">
+                    <div class="col-7">
+                        <p class="mob-text-xs f-14">Life assured
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Proposer
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Policy name
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Policy number
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Commencement date
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Sum assured
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Premium frequency
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Policy tenure
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Premium paying term
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Policy status
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Last unpaid premium
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Current value
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Duration remaining
+                        </p>
+                    </div>
+                    <div class="col-5 text-right pl-0">
+                        <p class="m-0">Rahul Jain</p>
+                        <p class="m-0 pt-24">Shilpa Jain</p>
+                        <p class="m-0 pt-24">Corporate FD</p>
+                        <p class="m-0 pt-24">-</p>
+                        <p class="m-0 pt-24">-</p>
+                        <p class="m-0 pt-24">-</p>
+                        <p class="m-0 pt-24">-</p>
+                        <p class="m-0 pt-24">-</p>
+                        <p class="m-0 pt-24">-</p>
+                        <p class="m-0 pt-24">-</p>
+                        <p class="m-0 pt-24">-</p>
+                        <p class="m-0 pt-24">-</p>
+                        <p class="m-0 pt-24">-</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-24">
+            <div class="col-12 pl-0">
+                <h5 class="m-0 f-16 roboto f-400">Loan details
+                </h5>
+            </div>
+        </div>
+        <div class="pt-16">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20">
+                    <div class="col-7">
+                        <p class="mob-text-xs f-14">Loan available
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Loan taken
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Loan taken on
+                        </p>
+                    </div>
+                    <div class="col-5 text-right pl-0">
+                        <p class="m-0">-</p>
+                        <p class="m-0 pt-24">-</p>
+                        <p class="m-0 pt-24">-</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-24">
+            <div class="col-12 pl-0">
+                <h5 class="m-0 f-16 roboto f-400">Key details
+                </h5>
+            </div>
+        </div>
+        <div class="pt-16">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20">
+                    <div class="col-7">
+                        <p class="mob-text-xs f-14">Current risk cover
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Surrender value
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Assumed rate
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Linked bank account
+                        </p>
+                    </div>
+                    <div class="col-5 text-right pl-0">
+                        <p class="m-0">-</p>
+                        <p class="m-0 pt-24">-</p>
+                        <p class="m-0 pt-24">-</p>
+                        <p class="m-0 pt-24">-</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-24">
+            <div class="col-12 pl-0">
+                <h5 class="m-0 f-16 roboto f-400">Miscellaneous details
+                </h5>
+            </div>
+        </div>
+        <div class="pt-16">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20">
+                    <div class="col-7">
+                        <p class="mob-text-xs f-14">Premium payment mode
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Advisor name
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Service branch
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Linked bank account
+                        </p>
+                    </div>
+                    <div class="col-5 text-right pl-0">
+                        <p class="m-0">-</p>
+                        <p class="m-0 pt-24">-</p>
+                        <p class="m-0 pt-24">-</p>
+                        <p class="m-0 pt-24">-</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-24">
+            <div class="col-12 pl-0">
+                <h5 class="m-0 f-16 roboto f-400">Cash inflow
+                </h5>
+            </div>
+        </div>
+        <div class="pt-16">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20">
+                    <div class="col-7">
+                        <p class="mob-text-xs f-14">Type
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Date
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Amount
+                        </p>
+                    </div>
+                    <div class="col-5 text-right pl-0">
+                        <p class="m-0">-</p>
+                        <p class="m-0 pt-24">-</p>
+                        <p class="m-0 pt-24">-</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-24">
+            <div class="col-12 pl-0">
+                <h5 class="m-0 f-16 roboto f-400">Riders
+                </h5>
+            </div>
+        </div>
+        <div class="pt-16">
+            <div class="bg-white">
+                <div class="row pt-20 pb-20">
+                    <div class="col-7">
+                        <p class="mob-text-xs f-14">Accidental benefit
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Double accidental benefit
+                        </p>
+                        <p class="mob-text-xs f-14 pt-24">Critical illness
+                        </p>
+                    </div>
+                    <div class="col-5 text-right pl-0">
+                        <p class="m-0">-</p>
+                        <p class="m-0 pt-24">-</p>
+                        <p class="m-0 pt-24">-</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+<!-- </div> -->
+
+
+<!-- add screen mob ui -->
+
+<div class="row mob-bg-common pb-12 mobtop-navfixed">
+    <div class="col-2">
+        <span class="material-icons text-white">
+            menu
+        </span>
+    </div>
+    <div class="col-7 pl-0">
+        <h5 class="m-0 f-18 text-white pt-4">Add Life insurance </h5>
+    </div>
+    <div class="col-3 text-right">
+        <span class="material-icons text-white">
+            search
+        </span>
+    </div>
+</div>

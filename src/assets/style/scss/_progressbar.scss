@@ -1,0 +1,27 @@
+.progress {
+  height: 139px;
+  width: 139px;
+  display: block;
+  margin: 0 auto;
+  background: #fff;
+}
+
+.addgoal-common {
+  .mat-progress-bar {
+    height: 30px !important;
+  }
+
+  .mat-progress-bar-fill::after {
+    background-color: #D9DEE1 !important;
+  }
+}
+
+.bg-primary-progress .mat-progress-bar {
+  .mat-progress-bar-background {
+    fill: #D9DEE1 !important;
+  }
+
+  .mat-progress-bar-fill::after {
+    background-color: #008FFF !important;
+  }
+}

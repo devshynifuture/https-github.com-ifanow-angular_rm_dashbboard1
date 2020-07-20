@@ -1,0 +1,78 @@
+import { Directive, EventEmitter, Input, Output } from '@angular/core';
+import { AuthService } from 'src/app/auth-service/authService';
+import { UtilService } from 'src/app/services/util.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { HostListener } from '@angular/core/src/metadata/*';
+import { SubscriptionInject } from 'src/app/component/Services/subscription-inject.service';
+import { CustomerService } from 'src/app/component/Services/customer.service';
+
+@Directive({
+  selector: '[appBankAccount]'
+})
+export class BankAccountDirective {
+  bankAccountList: any;
+  advisorId: any;
+  clientId: any;
+  clientData: any;
+  @Output() outputValue = new EventEmitter<any>();
+
+  constructor(private custumService: CustomerService,
+    private subInjectService: SubscriptionInject,
+    private utilService: UtilService, private eventService: EventService) {
+  }
+
+  _data;
+
+  get data() {
+    return this._data;
+  }
+
+  @Input()
+  set data(data) {
+    this._data = data;
+    this.bankAccountList = data.controleData;
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
+    this.clientData = AuthService.getClientData();
+    this.getAccountList();
+  }
+
+  @HostListener('click', ['$event'])
+  public onClick(event: MouseEvent) {
+    this.openBankForm(this.clientData);
+  }
+
+  getAccountList() {
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId
+    };
+    this.custumService.getBankAccount(obj).subscribe(
+      data => this.getBankAccountRes(data)
+    );
+  }
+
+  getBankAccountRes(data) {
+    this.outputValue.emit(data);
+  }
+
+  openBankForm(data) {
+    const fragmentData = {
+      data,
+      id: 1,
+      state: 'open50',
+      // componentName: ClientBankComponent,
+
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        if (UtilService.isDialogClose(sideBarData)) {
+          this.eventService.openSnackBar('Bank added successfully', 'Ok');
+          this.getAccountList();
+          rightSideDataSub.unsubscribe();
+        }
+
+      }
+    );
+  }
+}

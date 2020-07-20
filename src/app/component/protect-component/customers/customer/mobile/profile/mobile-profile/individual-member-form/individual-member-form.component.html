@@ -1,0 +1,102 @@
+<div [formGroup]="individualForm">
+    <div class="row pt-32">
+        <div class="col-12 mob-pl-10 mob-pr-10">
+            <h5 class="m-0 roboto text-dark pb-10 f-16">Full name</h5>
+            <div class="form-group mb-0">
+                <mat-form-field appearance="standard" floatLabel="never">
+                    <input #fullName (input)="capitalise($event)" [inputValidator]="validatorType.TEXT_ONLY"
+                        [maxLength]="50" appInputValueValidation autocomplete="off" class="form-control"
+                        formControlName="fullName" matInput placeholder="Enter name">
+                    <mat-error>This field is required</mat-error>
+                    <mat-hint align="end">{{fullName.value.length}}/50</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-32">
+        <div class="col-12 mob-pl-10 mob-pr-10">
+            <h5 class="m-0 roboto text-dark pb-10 f-16">Email</h5>
+            <div class="form-group mb-0">
+                <mat-form-field appearance="standard" floatLabel="never">
+                    <app-email-domain-auto-suggest formControlName="email" placeholder="Enter email">
+                    </app-email-domain-auto-suggest>
+                    <mat-error *ngIf="individualForm.get('email').errors?.pattern">Email is not valid</mat-error>
+                    <mat-hint>Optional</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <app-mobile-view-add-number (numberArray)="getNumberDetails($event)" [flag]="mobileNumberFlag"
+        [isResidential]="taxStatusType" [numberList]="userData.mobileList"></app-mobile-view-add-number>
+    <div class="row pt-32">
+        <div class="col-12 mob-pl-10 mob-pr-10">
+            <h5 class="m-0 roboto text-dark pb-10 f-16">Enter your PAN</h5>
+            <div class="form-group mb-0">
+                <mat-form-field appearance="standard" floatLabel="never">
+                    <input #pan (input)="toUpperCase(individualForm.get('pan'),$event)"
+                        [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation autocomplete="off"
+                        class="form-control" formControlName="pan" matInput maxlength="10" placeholder="Enter pan">
+                    <mat-hint align="end">{{pan.value.length}}/ 10</mat-hint>
+                    <mat-error *ngIf="individualForm.get('pan').errors?.pattern">Pan invalid
+                    </mat-error>
+                    <mat-hint>Optional</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-32">
+        <div class="col-12 mob-pl-10 mob-pr-10">
+            <h5 class="m-0 roboto text-dark pb-10 f-16">Date of birth</h5>
+            <div class="form-group mb-0">
+                <mat-form-field class="ba-date">
+                    <input (click)="dobAsPerRecord.open()" [matDatepicker]="dobAsPerRecord"
+                        class="form-control text-primitive" formControlName="dobAsPerRecord" matInput readonly>
+                    <mat-datepicker-toggle [for]="dobAsPerRecord" matSuffix>
+                    </mat-datepicker-toggle>
+                    <mat-datepicker #dobAsPerRecord></mat-datepicker>
+                    <mat-hint>Optional</mat-hint>
+                    <!-- <input matInput  value="DD/MM/YYYY"> -->
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-32">
+        <div class="col-12 mob-pl-10 mob-pr-10">
+            <h5 class="m-0 roboto text-dark pb-10 f-16">Gender</h5>
+            <mat-radio-group formControlName="gender" aria-label="Select an option">
+                <mat-radio-button
+                    [ngClass]="{'bu-primary': individualForm.get('gender').value=='1','borderRadio':individualForm.get('gender').value!='1','text-primary':individualForm.get('gender').value=='1','text-custom':individualForm.get('gender').value!='1'}"
+                    value="1" class="wh-99 bg-white">Male</mat-radio-button>
+                <mat-radio-button
+                    [ngClass]="{'bu-primary': individualForm.get('gender').value=='2','borderRadio':individualForm.get('gender').value!='2','text-primary':individualForm.get('gender').value=='2','text-custom':individualForm.get('gender').value!='2'}"
+                    value="2" class=" wh-116 bg-white">Female</mat-radio-button>
+                <mat-radio-button
+                    [ngClass]="{'bu-primary': individualForm.get('gender').value=='3','borderRadio':individualForm.get('gender').value!='3','text-primary':individualForm.get('gender').value=='3','text-custom':individualForm.get('gender').value!='3'}"
+                    value="3" class=" wh-102 bg-white">Other</mat-radio-button>
+            </mat-radio-group>
+        </div>
+    </div>
+    <div class="row pt-32">
+        <div class="col-12 mob-pl-10 mob-pr-10">
+            <h5 class="m-0 roboto text-dark pb-10 f-16">Relation</h5>
+            <div class="form-group mb-0">
+                <mat-form-field appearance="standard" floatLabel="never">
+                    <mat-select formControlName="relationType" class="form-control">
+                        <mat-option disabled value=''>Select option</mat-option>
+                        <mat-option *ngFor="let relation of relationList" [value]="relation.value">
+                            {{relation.name}}</mat-option>
+                    </mat-select>
+                    <mat-hint class="text-custom">Relation with group head</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row profile-save-bottom">
+    <div class="col-2"></div>
+    <div class="col-8 pt-8 pb-8">
+        <button (click)="editFamilyMember()" mat-stroked-button
+            class="btn-primary w-100 f-16 h-40 br-40">Submit</button>
+    </div>
+    <div class="col-2"></div>
+</div>

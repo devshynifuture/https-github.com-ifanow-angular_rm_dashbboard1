@@ -1,0 +1,67 @@
+<div id="mob-fixed-income" *ngIf="backToMf != true && showBank != true">
+  <div class="row mob-bg-common pb-12 mobtop-navfixed">
+    <div class="col-2" (click)="backToMf = true">
+      <span class="material-icons text-white">
+        keyboard_backspace
+      </span>
+    </div>
+    <div class="col-7 p-0">
+      <h5 class="m-0 f-18 text-white pt-4">Fixed income</h5>
+    </div>
+    <div class="col-3 text-right">
+      <span class="material-icons text-white">
+        filter_list
+      </span>
+    </div>
+  </div>
+  <div class="pt-80 p-8 h-100vh">
+    <div class="bg-white">
+      <div class="row pt-20 pb-20">
+        <div class="col-2">
+          <div class="mf hw-40 f-14 pt-16">FI</div>
+        </div>
+        <div class="col-10 pl-8 pt-4">
+          <p class="m-0 f-12 lh-12">Current Value:</p>
+          <h3 class="mob-text-success mb-0 pt-4"> Rs. 10,29,091</h3>
+        </div>
+      </div>
+    </div>
+    <div class="pt-16">
+      <div class="bg-white">
+        <div class="row pt-20 pb-20 mob-bb-1" (click)="openSubAsset('Fixed deposite')">
+          <div class="col-8">
+            <p class="mb-0">Fixed deposit</p>
+          </div>
+          <div class="col-4 text-right">
+            <p class="m-0">
+              <span>₹{{sumCurrentValue}}</span></p>
+          </div>
+        </div>
+        <div class="row pt-20 pb-20 mob-bb-1" (click)="openSubAsset('Recurring deposite')">
+          <div class="col-8">
+            <p class="mb-0">Recurring deposit</p>
+          </div>
+          <div class="col-4 text-right">
+            <p class="m-0">
+              <span>₹{{totalCurrentValue || '0'}}</span></p>
+          </div>
+        </div>
+        <div class="row pt-20 pb-20 mob-bb-1" (click)="openSubAsset('Bond')">
+          <div class="col-8">
+            <p class="mb-0">Bonds</p>
+          </div>
+          <div class="col-4 text-right">
+            <p class="m-0">
+              <span>₹{{sumCurrentValueB || '0'}}</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="backToMf == true">
+  <app-mobile-portfoilo></app-mobile-portfoilo>
+</div>
+<div *ngIf="showBank == true">
+  <app-bank-detailed-assets [data]="assetSubType"></app-bank-detailed-assets>
+</div>

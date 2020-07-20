@@ -1,0 +1,13 @@
+<div class="col-md-5">
+  <div class="form-group mb-0">
+    <input type="email" placeholder="{{inputValue.placeholder}}" [(ngModel)]="inputValue.data" (ngModelChange)="inputModelChange.emit(inputValue)" formControlName="planName" maxlength="{{inputValue.maxLength}}" class="form-control br-2">
+  </div>
+  <div class="row">
+    <div class="col-md-8">
+      <mat-error class="f-12">{{inputValue.errorMessage}}</mat-error>
+    </div>
+    <div class="col-md-4">
+      <p class="mb-0 f-12 text-custom text-right pt-4">{{inputValue.data?.length?inputValue.data.length:0}}/{{inputValue.maxLength}}</p>
+    </div>
+  </div>
+</div>

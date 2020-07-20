@@ -1,0 +1,101 @@
+<div id="mob-schemes" *ngIf="backToMf != true">
+    <div class="row pb-12 mobtop-navfixed bg-white br-0">
+        <div class="col-2">
+            <span class="material-icons text-dark" (click)="backToMf = true">
+                keyboard_backspace
+            </span>
+        </div>
+    </div>
+    <div class="pt-80">
+        <div class="row pb-20">
+            <div class="col-3">
+                <img src="/assets/images/svg/relince.svg">
+            </div>
+            <div class="col-6 p-0">
+                <p class="m-0 lh-24 pt-2">{{mutualFundData.schemeName}}</p>
+            </div>
+        </div>
+        <div class="mob-bg-success">
+            <div class="row pt-16">
+                <div class="col-7">
+                    <p class="m-0">{{mutualFundData.ownerName}}</p>
+                </div>
+                <div class="col-4 pl-0">
+                    <p class="m-0 ws-nowrap">Folio - {{mutualFundData.folioNumber}}</p>
+                </div>
+            </div>
+            <div class="row pt-12 pb-16">
+                <div class="col-4 mob-br-success-1">
+                    <p class="mob-text-xs">Amt. Invested</p>
+                    <p class="pt-4 m-0">Rs. {{mutualFundData.amountInvested}}}</p>
+                </div>
+                <div class="col-4 mob-br-success-1">
+                    <p class="mob-text-xs">Gain/Loss</p>
+                    <p class="pt-4 m-0 mob-text-success">Rs. 10,29,091</p>
+                </div>
+                <div class="col-4">
+                    <p class="mob-text-xs">Returns</p>
+                    <p class="pt-4 m-0 mob-text-success">{{mutualFundData.xirr}}%</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="mt-4 mb-20">
+        <div class="row mob-bg-success pt-16 pb-16">
+            <div class="col-7">
+                <p class="mob-text-xs f-14">Dividend Earned</p>
+            </div>
+            <div class="col-5 pl-0">
+                <p class="m-0">Rs. 12,10,29,091</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="p-8">
+        <div class="row bg-white pt-12">
+            <div class="col-6 pl-8">
+                <p class="mob-text-xs">NAV (09 Nov 2018)</p>
+                <h5 class="m-0 f-16 mob-text-success">Rs. 24.53</h5>
+            </div>
+            <div class="col-6">
+                <p class="mob-text-xs">Units</p>
+                <h5 class="m-0 f-16">40.009</h5>
+            </div>
+            <div class="col-12">
+                <img src="/assets/images/svg/mob-line-chart.svg" class="pt-40 pb-20 w-100">
+            </div>
+        </div>
+        <p class="mob-text-xs pt-12">*Mutual Funds Investments are subject to market risks, please read the Offer
+            Document carefully before investing. </p>
+        <h4 class="m-0 pt-28 pb-16">Transaction History</h4>
+        <div class="bg-white" *ngFor="let transact of mutualFundTransactions">
+            <div class="row pt-20 pb-20">
+                <div class="col-7 pr-0">
+                    <div class="row">
+                        <div class="col-1 pl-0">
+                            <div class="circular-small"></div>
+                        </div>
+                        <div class="col-11">
+                            <p class="f-11 m-0">{{transact.fwTransactionType}}</p>
+                            <p class="mob-text-xs pt-4">Units : {{transact.unit}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-5 text-right">
+                    <p class="m-0 pr-4">Rs. {{transact.amount}}</p>
+                    <p class="mob-text-xs pt-4 pr-4">{{transact.transactionDate | date:'dd/MM/yyyy'}}</p>
+                </div>
+            </div>
+            <hr>
+        </div>
+        <div class="mob-add">
+            <span class="material-icons text-white">
+                add
+            </span>
+        </div>
+    </div>
+</div>
+<div *ngIf="backToMf == true">
+    <app-mutual-funds></app-mutual-funds>
+</div>

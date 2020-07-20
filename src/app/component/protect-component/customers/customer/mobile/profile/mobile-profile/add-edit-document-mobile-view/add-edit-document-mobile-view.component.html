@@ -1,0 +1,142 @@
+<div class="row mob-bg-common pb-12 mobtop-navfixed">
+    <div (click)="back()" class="col-2">
+        <img src="/assets/images/svg/mob-left-arrow.svg" class="c-p pt-4">
+    </div>
+    <div class="col-10 pl-0">
+        <h5 class="m-0 f-18 text-white pt-4 roboto">{{userData.addressData?'Edit':'Add'}} address</h5>
+    </div>
+</div>
+<div [formGroup]="addressForm" class="bg-grey lter pb-28 pt-90">
+    <!-- <div class="row">
+     <div class="col-12 mob-pl-10 mob-pr-10">
+       <h5 class="m-0 roboto text-dark pb-10 f-16">Proof type</h5>
+        <mat-radio-group aria-label="Select an option">
+           <mat-radio-button value="1" class="bu-primary text-primary mw-145 bg-white">Residential</mat-radio-button>
+           <mat-radio-button value="2" class="b-ua text-custom mw-130 bg-white">Business</mat-radio-button>
+         </mat-radio-group>
+     </div>
+    </div> -->
+    <div class="row ">
+        <div class="col-12 mob-pl-10 mob-pr-10">
+            <h5 class="m-0 roboto text-dark pb-10 f-16">Address proof type</h5>
+            <mat-form-field>
+                <mat-select formControlName="addProofType" (selectionChange)="changeAddrProofNumber($event)"
+                    class="form-control">
+                    <mat-option disabled value="">Select proof type</mat-option>
+                    <mat-option value="1">Passport</mat-option>
+                    <mat-option value="2">Aadhaar</mat-option>
+                    <mat-option value="3">Driving licence</mat-option>
+                    <mat-option value="4">Voter's ID card</mat-option>
+                    <mat-option value="5">NREGA job card</mat-option>
+                    <mat-option value="6">Others</mat-option>
+                </mat-select>
+                <mat-hint>Optional</mat-hint>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row pt-32">
+        <div class="col-12 mob-pl-10 mob-pr-10">
+            <h5 class="m-0 roboto text-dark pb-10 f-16">Proof ID number</h5>
+            <div class="form-group mb-0">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input #proofNumber placeholder="Enter id proof" [maxLength]="maxLength"
+                        (input)="toUpperCase(addressForm.get('proofIdNum'),$event)" appInputValueValidation
+                        [inputValidator]="validatorType.ALPHA_NUMERIC" autocomplete="off" formControlName="proofIdNum"
+                        matInput class="form-control text-primitive">
+                    <mat-hint>Optional</mat-hint>
+                    <mat-error *ngIf="addressForm.get('proofIdNum').errors?.pattern">Invalid proof number</mat-error>
+                    <mat-hint *ngIf="maxLength" align="end">{{proofNumber.value.length}}/{{maxLength}}</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-32">
+        <div class="col-12 mob-pl-10 mob-pr-10">
+            <h5 class="m-0 roboto text-dark pb-10 f-16">Address line 1</h5>
+            <div class="form-group mb-0">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input matInput class="form-control text-primitive" placeholder="Flat/building/street"
+                        autocomplete="off" #add1 maxlength="100" formControlName="addressLine1">
+                    <mat-error>This field is required</mat-error>
+                    <mat-hint align="end">{{add1.value.length}}/100</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-32">
+        <div class="col-12 mob-pl-10 mob-pr-10">
+            <h5 class="m-0 roboto text-dark pb-10 f-16">Address line 2</h5>
+            <div class="form-group mb-0">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input placeholder="Block/locality" autocomplete="off" #add2 matInput maxlength="100"
+                        formControlName="addressLine2" matInput class="form-control text-primitive">
+                    <mat-hint>Optional</mat-hint>
+                    <mat-hint align="end">{{add2.value.length}}/100</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-32">
+        <div class="col-12 mob-pl-10 mob-pr-10">
+            <h5 class="m-0 roboto text-dark pb-10 f-16">Pin code</h5>
+            <div class="form-group mb-0">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input autocomplete="off" placeholder="Enter pin code" maxlength="6" #pinCode
+                        (focusout)="getPostalPin($event.target.value)" appInputValueValidation
+                        [inputValidator]="validatorType.NUMBER_ONLY" matInput formControlName="pinCode" matInput
+                        class="form-control text-primitive">
+                    <mat-hint align="end" class="f-12">{{pinCode.value.length}}/6</mat-hint>
+                    <mat-error>This field is required</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-32">
+        <div class="col-12 mob-pl-10 mob-pr-10">
+            <h5 class="m-0 roboto text-dark pb-10 f-16">City</h5>
+            <div class="form-group mb-0">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input placeholder="Enter your city" autocomplete="off" #city formControlName="city"
+                        appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" maxlength="30" matInput
+                        class="form-control text-primitive">
+                    <mat-error>This field is required</mat-error>
+                    <mat-hint align="end" class="f-12">{{city.value.length}}/30</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-32">
+        <div class="col-12 mob-pl-10 mob-pr-10">
+            <h5 class="m-0 roboto text-dark pb-10 f-16">State</h5>
+            <div class="form-group mb-0">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input placeholder="Enter your state" autocomplete="off" #state matInput appInputValueValidation
+                        [inputValidator]="validatorType.TEXT_ONLY" maxlength="30" formControlName="state"
+                        class="form-control text-primitive">
+                    <mat-error>This field is required</mat-error>
+                    <mat-hint align="end" class="f-12">{{state.value.length}}/30</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-32">
+        <div class="col-12 mob-pl-10 mob-pr-10">
+            <h5 class="m-0 roboto text-dark pb-10 f-16">Country</h5>
+            <div class="form-group mb-0">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input autocomplete="off" placeholder="Enter your country" #country formControlName="country"
+                        appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY" maxlength="30" matInput
+                        class="form-control text-primitive">
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row profile-save-bottom">
+    <div class="col-2"></div>
+    <div class="col-8 pt-8 pb-8">
+        <button (click)="saveNext()" mat-stroked-button class="btn-primary w-100 f-16 h-40 br-40">Add
+            address</button>
+    </div>
+    <div class="col-2"></div>
+</div>

@@ -1,0 +1,85 @@
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ControlValueAccessor} from '@angular/forms';
+
+@Component({
+  selector: 'app-froala',
+  templateUrl: './froala.component.html',
+  styleUrls: ['./froala.component.scss']
+})
+export class FroalaComponent implements ControlValueAccessor, OnInit {
+  data: any;
+  plainText: any;
+
+  constructor() {
+
+  }
+
+  // End ControlValueAccesor methods.
+  _model;
+
+  config: Object = {
+    attribution: false,
+    charCounterCount: false,
+    // toolbarButtons: ['getPDF']
+
+  };
+
+  get model() {
+    return this._model;
+  }
+
+  @Output() modelChange = new EventEmitter();
+
+  @Input() set model(model) {
+    this._model = model;
+  }
+
+  @Input() readonly: boolean = false;
+
+  ngOnInit(): void {
+    // var editor = new FroalaEditor('#example')
+
+    // const froalaComponent = new FroalaEditor('div#froala-editor', {
+    //   toolbarButtons: ['getPDF']
+    // });
+    this.config = {
+      events : {
+        'froalaEditor.initialized' : function(e, editor) {
+          if(this.readonly) {
+            editor.edit.off();
+          }
+        }
+      }
+    }
+  }
+
+  // Begin ControlValueAccesor methods.
+  onChange = (data) => {
+    // this.plainText = data.replace(/<[^>]*>/g, '');
+    this.save(data);
+  }
+  onTouched = () => {
+  }
+
+  // Form model content changed.
+  writeValue(content: any): void {
+    this.model = content;
+    this.modelChange.emit(this.model);
+  }
+
+  registerOnChange(fn: (_: any) => void): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: () => void): void {
+    this.onTouched = fn;
+  }
+
+  save(data) {
+    this.modelChange.emit(data);
+  }
+
+  // saveData(data) {
+  //   this.modelChange.emit(data);
+  // }
+}

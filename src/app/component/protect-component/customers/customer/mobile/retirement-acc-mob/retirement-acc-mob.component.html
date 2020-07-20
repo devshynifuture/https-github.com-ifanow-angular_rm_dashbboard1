@@ -1,0 +1,68 @@
+<div id="mob-fixed-income" *ngIf="backToMf != true && showBank != true">
+  <div class="row mob-bg-common pb-12 mobtop-navfixed">
+    <div class="col-2" (click)="changeValue(false)">
+      <span class="material-icons text-white">
+        keyboard_backspace
+      </span>
+    </div>
+    <div class="col-7 p-0">
+      <h5 class="m-0 f-18 text-white">Retirement accounts</h5>
+    </div>
+    <div class="col-3 text-right">
+      <span class="material-icons text-white">
+        filter_list
+      </span>
+    </div>
+  </div>
+  <div class="pt-80 p-8 h-100vh">
+    <div class="bg-white">
+      <div class="row pt-20 pb-20">
+        <div class="col-2">
+          <div class="mf hw-40 f-14 pt-16">RA</div>
+        </div>
+        <div class="col-10 pl-8 pt-4">
+          <p class="m-0 f-12 lh-12">Current Value:</p>
+          <h3 class="mob-text-success mb-0 pt-4">{{totalCurrentValue ? 'Rs.' : ''}} <span
+              appFormatNumber>{{totalCurrentValue ? totalCurrentValue : '-'}}</span></h3>
+        </div>
+      </div>
+    </div>
+    <div class="pt-16">
+      <div class="bg-white">
+        <div class="row pt-20 pb-20 mob-bb-1" (click)="openSubAsset('EPF')">
+          <div class="col-8">
+            <p class="mb-0">EPF</p>
+          </div>
+          <div class="col-4 text-right">
+            <p class="m-0">{{epfData.sumOfEpfBalanceTillToday ? '₹' : '0'}}<span
+                appFormatNumber >{{epfData.sumOfEpfBalanceTillToday}}</span></p>
+          </div>
+        </div>
+        <div class="row pt-20 pb-20 mob-bb-1" (click)="openSubAsset('NPS')">
+          <div class="col-8">
+            <p class="mb-0">NPS</p>
+          </div>
+          <div class="col-4 text-right">
+            <p class="m-0">{{npsData.sumOfCurrentValue ? '₹' : ''}}<span
+                appFormatNumber>{{npsData.sumOfCurrentValue}}</span></p>
+          </div>
+        </div>
+        <div class="row pt-20 pb-20 mob-bb-1" (click)="openSubAsset('Gratuity')">
+          <div class="col-8">
+            <p class="mb-0">Gratuity</p>
+          </div>
+          <div class="col-4 text-right">
+            <p class="m-0">{{gratuity ? '₹' : '0'}}<span
+                appFormatNumber>{{gratuity.sumOfAmountReceived}}</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="backToMf == true">
+  <app-mobile-portfoilo></app-mobile-portfoilo>
+</div>
+<div *ngIf="showBank == true">
+  <app-get-retirement-mob [data]="assetSubType"></app-get-retirement-mob>
+</div>

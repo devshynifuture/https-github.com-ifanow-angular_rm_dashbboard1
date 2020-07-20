@@ -1,0 +1,29 @@
+        @media(max-width:1224px) {}
+        
+        @media(max-width:1200px) {}
+        
+        @media(max-width:1142px) {
+            #uiTransactions {
+                h3 {
+                    font-size: 16px;
+                }
+                .mat-tab-link {
+                    font-size: 12px !important;
+                    height: 54px !important;
+                    width: 90px !important;
+                    min-width: 90px !important;
+                    padding-right: 5px !important;
+                    padding-left: 5px !important;
+                }
+            }
+            .details_ui ul li {
+                display: flex;
+                align-items: center;
+                font-size: 12px !important;
+                margin-bottom: 15px !important;
+            }
+            .heightScroll {
+                height: 380px !important;
+                overflow-y: scroll;
+            }
+        }

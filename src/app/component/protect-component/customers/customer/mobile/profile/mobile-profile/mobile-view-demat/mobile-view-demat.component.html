@@ -1,0 +1,42 @@
+<div *ngIf="!selectedDemat">
+    <div class="row mob-bg-common pb-12 mobtop-navfixed">
+        <div (click)="back()" class="col-2">
+            <img src="/assets/images/svg/mob-left-arrow.svg" class="c-p pt-4">
+        </div>
+        <div class="col-10 pl-0">
+            <h5 class="m-0 f-18 text-white pt-4 roboto">Demat accounts</h5>
+        </div>
+    </div>
+    <div class="pt-90 mob-pl-10 mob-pr-10 bg-grey lter h-100vh">
+        <div (click)="addEditDemat(singleDemat)" *ngFor="let singleDemat of dematList" class="row mob-card">
+            <div class="col-2">
+                <img src="/assets/images/svg/mob-demat.svg">
+            </div>
+            <div class="col-10">
+                <p class="m-0 roboto f-400 lh-22">{{singleDemat.depositoryParticipantName}}</p>
+                <p class="m-0 roboto f-400 text-custom lh-18">DP ID: {{singleDemat.depositoryParticipantId}}</p>
+                <div class="row pt-20">
+                    <div class="col-6 pl-0">
+                        <p class="m-0 f-12 roboto f-400 text-custom lh-15">Demat client ID</p>
+                        <p class="m-0 f-12 roboto f-400 text-dark lh-15">{{singleDemat.dematClientId}}</p>
+                    </div>
+                    <div class="col-6 pl-0">
+                        <p class="m-0 f-12 roboto f-400 text-custom lh-15">Mode of holding</p>
+                        <p class="m-0 f-12 roboto f-400 text-dark lh-15">
+                            {{(singleDemat.holderNameList.length==1)?'Single':'Joint'}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row profile-save-bottom">
+            <div class="col-2"></div>
+            <div class="col-8 pt-8 pb-8">
+                <button (click)="addEditDemat(null)" mat-stroked-button class="btn-primary w-100 f-16 h-40 br-40">Add
+                    Demat</button>
+            </div>
+            <div class="col-2"></div>
+        </div>
+    </div>
+</div>
+<app-add-edit-demat-mobile-view (backFunc)="addEditFlag($event)" *ngIf="selectedDemat" [data]="selectedDemat">
+</app-add-edit-demat-mobile-view>
