@@ -33,7 +33,6 @@ import { AddEditDematMobileViewComponent } from './customer/mobile/profile/mobil
 import { AddEditDocumentMobileViewComponent } from './customer/mobile/profile/mobile-profile/add-edit-document-mobile-view/add-edit-document-mobile-view.component';
 import { IndividualMemberFormComponent } from './customer/mobile/profile/mobile-profile/individual-member-form/individual-member-form.component';
 import { MinorMemberFormComponent } from './customer/mobile/profile/mobile-profile/minor-member-form/minor-member-form.component';
-import { RetirementAccMobComponent } from './customer/mobile/retirement-acc-mob/retirement-acc-mob.component';
 import { RealEstateComponent } from './customer/mobile/real-estate/real-estate.component';
 import { SmallSavingComponent } from './customer/mobile/small-saving/small-saving.component';
 import { CashAndBankComponent } from './customer/mobile/cash-and-bank/cash-and-bank.component';
@@ -108,6 +107,7 @@ import { CustomerOverviewEntryModule } from './customer/customer-overview/custom
 import { MobileMyfeedComponent } from './customer/mobile/mobile-myfeed/mobile-myfeed.component';
 import { DetailedViewGoldMobComponent } from './customer/mobile/commodities-mob/add-gold-mob/detailed-view-gold-mob/detailed-view-gold-mob.component';
 import { DetailedViewRealEstateMobComponent } from './customer/mobile/real-estate-mob/add-real-estate-mob/detailed-view-real-estate-mob/detailed-view-real-estate-mob.component';
+import { RetirementAccMobComponent } from './customer/mobile/retirement-acc-mob/retirement-acc-mob.component';
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
 // import { FactShitComponent } from './component/common-component/fact-shit/fact-shit.component';
 // import { TransactionsComponent } from './component/common-component/transactions/transactions.component';
