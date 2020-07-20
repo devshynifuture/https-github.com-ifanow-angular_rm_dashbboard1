@@ -10,6 +10,7 @@ export class CommoditiesComponent implements OnInit {
   assetData: any;
   commodities;
   backToMf;
+  showDetailView: any;
   constructor() { }
   @Input()
   set data(data) {
@@ -19,5 +20,7 @@ export class CommoditiesComponent implements OnInit {
   }
   ngOnInit() {
   }
-
+  getValue(value){
+    this.showDetailView = value;
+  }
 }

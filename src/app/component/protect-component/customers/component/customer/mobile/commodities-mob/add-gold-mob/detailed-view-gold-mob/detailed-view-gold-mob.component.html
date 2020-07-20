@@ -1,1 +1,80 @@
-<p>detailed-view-gold-mob works!</p>
+<div id="mob-fixed-income" *ngIf="backPage!= true">
+<div class="row mob-bg-common pb-12 mobtop-navfixed">
+    <div class="col-2" (click)="changeValue(false)">
+        <span class="material-icons text-white">
+            keyboard_backspace
+        </span>
+    </div>
+    <div class="col-7 p-0">
+        <h5 class="m-0 f-18 text-white pt-4">Gold - Detailed view</h5>
+    </div>
+    <div class="col-3 text-right">
+        <span class="material-icons text-white">
+            filter_list
+        </span>
+    </div>
+</div>
+<div class="pt-80 p-8">
+    <div class="bg-white">
+        <div class="row pt-12 pb-12">
+            <div class="col-2">
+                <div class="circular-small"></div>
+            </div>
+            <div class="col-7 pl-0">
+                <p class="mb-0 pt-8">{{(gold.description)?gold.description:'GOLD'}}</p>
+            </div>
+            <div class="col-3 text-right pl-0">
+                <p class="m-0 pt-8">
+                    ₹<span appFormatNumber [value]="gold.marketValue">{{gold.marketValue}}</span>0</p>
+            </div>
+        </div>
+    </div>
+    <div class="pt-16">
+        <div class="bg-white">
+            <div class="row pt-20 pb-20">
+                <div class="col-7">
+                    <p class="mob-text-xs f-14" *ngIf="gold.ownerList.length == 1">Owner</p>
+                    <p class="mob-text-xs f-14 pt-24" *ngIf="gold.ownerList.length == 2">Co-owner 1</p>
+                    <p class="mob-text-xs f-14 pt-24" *ngIf="gold.ownerList.length == 3">Co-owner 2</p>
+                    <p class="mob-text-xs f-14 pt-24">Approx purchase value</p>
+                    <p class="mob-text-xs f-14 pt-24">Form of gold</p>
+                    <p class="mob-text-xs f-14 pt-24">Quantity of gold purchased</p>
+                    <p class="mob-text-xs f-14 pt-24">Carats</p>
+                    <p class="mob-text-xs f-14 pt-24">Purchase year</p>
+                    <p class="mob-text-xs f-14 pt-24">Market value</p>
+                    <p class="mob-text-xs f-14 pt-24">Description</p>
+                    <div *ngFor="let data of gold.nomineeList; let i = index">
+                        <p  class="mob-text-xs f-14 pt-24">
+                                Nominee {{i + 1}}
+                        </p>
+                    </div>
+                </div>
+                <div class="col-5 text-right pl-0">
+                    <div *ngFor="let item of gold.ownerList">
+                        <p class="m-0">{{item.name}}</p>
+                    </div>
+                    <p class="m-0 pt-24">{{gold.approximatePurchaseValue ? '₹' : ''}} <span appFormatNumber>{{gold.approximatePurchaseValue ? gold.approximatePurchaseValue : '-'}}</span></p>
+                    <div class="m-0 pt-24"  [ngSwitch]="gold.formOfGold">
+                        <p class="m-0 pt-24"  *ngSwitchCase="1">Bars</p>
+                        <p class="m-0 pt-24"  *ngSwitchCase="2">Coins</p>
+                        <p class="m-0 pt-24"  *ngSwitchCase="3">Jewelry</p>
+                    </div>
+                    <p class="m-0 pt-24">{{gold.purchasedGramsOrTola}} {{gold.gramsOrTola == 1? 'tolas' : 'grams'}}</p>
+                    <p class="m-0 pt-24">{{gold.carat}}</p>
+                    <p class="m-0 pt-24">{{gold.purchaseYear}}</p>
+                    <p class="m-0 pt-24">{{gold.marketValue ? '₹' : ''}}<span appFormatNumber>{{gold.marketValue}}</span></p>
+                    <p class="m-0 pt-24">{{gold.description}}</p>
+                    <div  *ngFor="let data of gold.nomineeList; let i = index">
+                        <p class="mob-text-xs f-14 pt-24">
+                             {{ (data.name) ? data.name : '-' }}
+                        </p> 
+                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div *ngIf="backPage == true">
+    <app-commodities></app-commodities>
+</div>
