@@ -104,8 +104,8 @@ export class MobileMyfeedComponent implements OnInit {
     public loaderFn: LoaderFunction,
     public mfServiceService: MfServiceService,
   ) {
-    this.clientId = AuthService.getClientId()
-    this.advisorId = AuthService.getAdvisorId()
+    // this.clientId = AuthService.getClientId()
+    // this.advisorId = AuthService.getAdvisorId()
     this.clientData = AuthService.getClientData()
     this.imgGenderSrc = this.clientData.profilePicUrl;
   }
@@ -248,7 +248,7 @@ export class MobileMyfeedComponent implements OnInit {
   getAssetAllocationData() {
     const obj = {
       clientId: this.clientData.clientId,
-      advisorId: this.advisorId,
+      advisorId: this.clientData.advisorId,
       targetDate: new Date().getTime()
     }
     this.tabsLoaded.portfolioData.isLoading = true;
@@ -326,7 +326,7 @@ export class MobileMyfeedComponent implements OnInit {
   loadDocumentValutData() {
     const obj = {
       clientId: this.clientData.clientId,
-      advisorId: this.advisorId,
+      advisorId: this.clientData.advisorId,
       limit: 5
     }
     this.customerService.getDocumentsFeed(obj).subscribe(res => {
@@ -385,7 +385,7 @@ export class MobileMyfeedComponent implements OnInit {
   loadRecentTransactions() {
     const obj = {
       clientId: this.clientData.clientId,
-      advisorId: this.advisorId,
+      advisorId: this.clientData.advisorId,
       familyMemberId: 0
     }
 
@@ -410,7 +410,7 @@ export class MobileMyfeedComponent implements OnInit {
   loadRiskProfile() {
     const obj = {
       clientId: this.clientData.clientId,
-      advisorId: this.advisorId
+      advisorId: this.clientData.advisorId
     }
     this.customerService.getRiskProfile(obj).subscribe(res => {
       if (res == null || res[0].id === 0) {
@@ -601,7 +601,7 @@ export class MobileMyfeedComponent implements OnInit {
   getMFPortfolioData() {
     const obj = {
       clientId: this.clientData.clientId,
-      advisorId: this.advisorId
+      advisorId: this.clientData.advisorId
     }
     this.tabsLoaded.mfPortfolioSummaryData.isLoading = true
     this.loaderFn.increaseCounter();

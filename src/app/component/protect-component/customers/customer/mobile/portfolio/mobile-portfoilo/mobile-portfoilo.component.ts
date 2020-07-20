@@ -119,8 +119,8 @@ export class MobilePortfoiloComponent implements OnInit {
     public customerService: CustomerService,
     public eventService: EventService
   ) {
-    this.clientId = AuthService.getClientId()
-    this.advisorId = AuthService.getAdvisorId()
+    // this.clientId = AuthService.getClientId()
+    // this.advisorId = AuthService.getAdvisorId()
     this.clientData = AuthService.getClientData()
   }
   @Input()
@@ -140,15 +140,20 @@ export class MobilePortfoiloComponent implements OnInit {
   }
   getLifeInsurance() {
     const obj = {
-      advisorId: this.advisorId,
-      clientId: this.clientId,
+      advisorId: this.clientData.advisorId,
+      clientId: this.clientData.clientId,
       insuranceTypeId: 1,
 
     };
     this.customerService.getInsuranceData(obj).subscribe(
       data => {
         console.log(data);
-        this.lifeInsuranceCv = data.currentValueSum;
+        if(data){
+          this.lifeInsuranceCv = data.currentValueSum;
+        }else{
+          this.lifeInsuranceCv = 0;
+
+        }
         this.liObj = {
           currentValue: this.lifeInsuranceCv,
           assetType: 14,
@@ -165,14 +170,19 @@ export class MobilePortfoiloComponent implements OnInit {
   }
   generalInsurance() {
     const obj = {
-      advisorId: this.advisorId,
-      clientId: this.clientId,
+      advisorId: this.clientData.advisorId,
+      clientId: this.clientData.clientId,
       insuranceSubTypeId: 0
     };
     this.customerService.getGeneralInsuranceData(obj).subscribe(
       data => {
         console.log(data);
-        this.generalInsuranceCv = data.totalSumInsured
+        if(data){
+          this.generalInsuranceCv = data.totalSumInsured
+        }else{
+          this.generalInsuranceCv = 0
+
+        }
         this.giObj = {
           currentValue: this.generalInsuranceCv,
           assetType: 15,
@@ -223,7 +233,7 @@ export class MobilePortfoiloComponent implements OnInit {
     this.mfData = []
     const obj = {
       clientId: this.clientData.clientId,
-      advisorId: this.advisorId,
+      advisorId: this.clientData.advisorId,
       targetDate: new Date().getTime()
     }
 

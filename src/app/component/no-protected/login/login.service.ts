@@ -70,8 +70,11 @@ export class LoginService {
 
   handleUserData(authService: AuthService, router: Router, userData) {
     authService.setToken('authTokenInLoginComponnennt');
+    authService.setUserInfo(userData)
     authService.setClientData(userData);
     router.navigate(['customer', 'mobile']);
+
+
     // if (userData.userType == 1 || userData.userType == 8) {
     //   router.navigate(['admin', 'subscription', 'dashboard']);
     // } else if (userData.isRmLogin) {
