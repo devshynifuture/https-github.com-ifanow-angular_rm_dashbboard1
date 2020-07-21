@@ -761,7 +761,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
                   if (sideBarData.changesInUnitOne !== '') {
                     this.dataSource1.data[this.markFolioIndex].unitsIfanow = sideBarData.changesInUnitOne;
                     let unitsRta = this.dataSource1.data[this.markFolioIndex].unitsRta;
-                    this.dataSource1.data[this.markFolioIndex].difference = String(parseFloat(sideBarData.changesInUnitOne) - parseFloat(unitsRta));
+                    this.dataSource1.data[this.markFolioIndex].difference = String((parseFloat(sideBarData.changesInUnitOne) - parseFloat(unitsRta)).toFixed(3));
                     let diff = parseFloat(sideBarData.changesInUnitOne) - parseFloat(unitsRta)
                     if (Math.round(diff) === 0) {
                       this.dataSource.data.map(item => {
@@ -779,7 +779,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
                   if (sideBarData.changesInUnitOne !== '') {
                     this.dataSource2.data[this.markFolioIndex].unitsIfanow = sideBarData.changesInUnitOne;
                     let unitsRta = this.dataSource2.data[this.markFolioIndex].unitsRta;
-                    this.dataSource2.data[this.markFolioIndex].difference = String(parseFloat(sideBarData.changesInUnitOne) - parseFloat(unitsRta));
+                    this.dataSource2.data[this.markFolioIndex].difference = String((parseFloat(sideBarData.changesInUnitOne) - parseFloat(unitsRta)).toFixed(3));
                   }
                 }
               }
@@ -937,8 +937,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
   postReqForBackOfficeUnmatchedFolios() {
     const data = [];
-    if (this.aumList) {
-      this.aumList.forEach(element => {
+    if (this.filteredAumListWithIsMappedToMinusOne) {
+      this.filteredAumListWithIsMappedToMinusOne.forEach(element => {
         data.push({
           advisorId: this.advisorId,
           aumReconId: this.aumReconId,
