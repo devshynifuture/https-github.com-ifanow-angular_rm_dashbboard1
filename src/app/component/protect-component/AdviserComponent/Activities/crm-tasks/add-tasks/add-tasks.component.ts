@@ -222,34 +222,39 @@ export class AddTasksComponent implements OnInit {
   }
 
   editedSubTaskSave() {
+    if (this.editSubTaskForm.valid) {
+      let assignedToChanged = (this.selectedSubTask.assignedTo !== this.editSubTaskForm.get('assignedTo').value) ? true : false;
+      let data = {
+        taskNumber: this.selectedSubTask.taskNumber,
+        assignedTo: this.editSubTaskForm.get('assignedTo').value,
+        assignedToChanged, //(true if assigned to is changed),
+        description: this.editSubTaskForm.get('description').value,
+        turnAroundTime: this.editSubTaskForm.get('turnAroundTime').value,
+        advisorId: this.advisorId,
+        taskId: this.selectedSubTask.taskId,
+        id: this.selectedSubTask.id
+      }
 
-    let assignedToChanged = (this.selectedSubTask.assignedTo !== this.editSubTaskForm.get('assignedTo').value) ? true : false;
-    let data = {
-      taskNumber: this.selectedSubTask.taskNumber,
-      assignedTo: this.editSubTaskForm.get('assignedTo').value,
-      assignedToChanged, //(true if assigned to is changed),
-      description: this.editSubTaskForm.get('description').value,
-      turnAroundTime: this.editSubTaskForm.get('turnAroundTime').value,
-      advisorId: this.advisorId,
-      taskId: this.selectedSubTask.taskId,
-      id: this.selectedSubTask.id
+      if (this.selectedSubTask.dueDate) {
+        let date = new Date(this.selectedSubTask.dueDate)
+        let dueDate = date.getFullYear() + "-" + (date.getMonth() + 1) + '-' + date.getDate();
+        data['dueDate'] = dueDate;
+      }
+
+      this.crmTaskService.saveEditedSubTaskValues(data)
+        .subscribe(res => {
+          if (res) {
+            console.log("edited response:", res)
+            this.eventService.openSnackBar('Successfully Saved!', 'DISMISS');
+          } else {
+            this.eventService.openSnackBar('Saving Failed!', 'DISMISS');
+          }
+        }, err => console.error(err));
+    } else {
+      this.editSubTaskForm.markAllAsTouched();
+      this.eventService.openSnackBar("Please fill ");
     }
 
-    if (this.selectedSubTask.dueDate) {
-      let date = new Date(this.selectedSubTask.dueDate)
-      let dueDate = date.getFullYear() + "-" + (date.getMonth() + 1) + '-' + date.getDate();
-      data['dueDate'] = dueDate;
-    }
-
-    this.crmTaskService.saveEditedSubTaskValues(data)
-      .subscribe(res => {
-        if (res) {
-          console.log("edited response:", res)
-          this.eventService.openSnackBar('Successfully Saved!', 'DISMISS');
-        } else {
-          this.eventService.openSnackBar('Saving Failed!', 'DISMISS');
-        }
-      }, err => console.error(err));
   }
 
   getTeamMemberObject(value) {
