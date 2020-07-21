@@ -413,14 +413,13 @@ export class ReconciliationDetailsViewComponent implements OnInit {
           element.unitOne = String(parseFloat(res.units).toFixed(3));
           this.changesInUnitOne = String(parseFloat(res.units).toFixed(3));
           element.difference = String((parseFloat(res.units) - parseFloat(element.unitsRta)).toFixed(3));
-
           if (Math.round(parseFloat(element.difference)) === 0) {
             this.disableFreezeBtn = false;
           } else {
             this.disableFreezeBtn = true;
           }
-
         });
+        this.isKeepArray = [];
         this.mainLoader = false;
         this.shouldDeleteMultiple = false;
 
