@@ -108,6 +108,7 @@ import { MobileMyfeedComponent } from './customer/mobile/mobile-myfeed/mobile-my
 import { DetailedViewGoldMobComponent } from './customer/mobile/commodities-mob/add-gold-mob/detailed-view-gold-mob/detailed-view-gold-mob.component';
 import { DetailedViewRealEstateMobComponent } from './customer/mobile/real-estate-mob/add-real-estate-mob/detailed-view-real-estate-mob/detailed-view-real-estate-mob.component';
 import { RetirementAccMobComponent } from './customer/mobile/retirement-acc-mob/retirement-acc-mob.component';
+import { DetailedViewOthersMobComponent } from './customer/mobile/commodities-mob/add-others-mob/detailed-view-others-mob/detailed-view-others-mob.component';
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
 // import { FactShitComponent } from './component/common-component/fact-shit/fact-shit.component';
 // import { TransactionsComponent } from './component/common-component/transactions/transactions.component';
@@ -142,7 +143,7 @@ import { RetirementAccMobComponent } from './customer/mobile/retirement-acc-mob/
     AddInsuranceMobComponent, AddHealthMobComponent, AddPersonalAccidentMobComponent, CriticalIllnesMobComponent,
     MotorInsuranceMobComponent, TravelInsuranceMobComponent, HomeInsuranceMobComponent, FireInsuranceMobComponent,
     DetailedViewLifeInsuranceMobComponent, DetailedViewGeneralInsuranceMobComponent, DetailedEpfMobComponent, DetailedGrauityMobComponent, DetailedNpsMobComponent, DetailedKvpMobComponent, DetailedNscMobComponent, DetailedPoMisMobComponent, DetailedPoRdMobComponent, DetailedPoSavingsComponent, DetailedPoTdMobComponent, DetailedPpfComponent, DetailedScssMobComponent, DetailedSsyMobComponent, MobileMyfeedComponent,
-    MutualFundsComponent, MutualFundDetailsComponent, DetailedViewGoldMobComponent, DetailedViewRealEstateMobComponent],
+    MutualFundsComponent, MutualFundDetailsComponent, DetailedViewGoldMobComponent, DetailedViewRealEstateMobComponent, DetailedViewOthersMobComponent],
   imports: [
     // BrowserModule,
     CommonModule,

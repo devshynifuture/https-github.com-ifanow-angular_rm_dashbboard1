@@ -70,7 +70,7 @@ export class LoginService {
 
   handleUserData(authService: AuthService, router: Router, userData) {
     authService.setToken('authTokenInLoginComponnennt');
-    authService.setUserInfo(userData)
+    // authService.setUserInfo(userData)
     authService.setClientData(userData);
     router.navigate(['customer', 'mobile']);
 
