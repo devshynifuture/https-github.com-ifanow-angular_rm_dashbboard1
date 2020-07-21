@@ -698,7 +698,7 @@ export class AddTasksComponent implements OnInit {
         subCategoryId: this.selectedTemplate !== null ? this.selectedTemplate.subcategoryId : 0,
         subSubCategoryId: this.selectedTemplate !== null ? this.selectedTemplate.subSubCategoryId : 0,
         adviceTypeId: this.selectedTemplate !== null ? this.selectedTemplate.subSubCategoryId : 0,
-        subTask: subTaskArr,
+        subTasks: subTaskArr,
       }
       console.log("this is add task create data", data);
       this.crmTaskService.addTask(data)
