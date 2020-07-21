@@ -29,6 +29,7 @@ export class CrmTasksComponent implements OnInit {
   }
 
   initPoint() {
+    this.dataSource.data = ELEMENT_DATA;
     this.isLoading = true;
     console.log("iniitialized");
     this.getTaskStatus()
@@ -45,8 +46,6 @@ export class CrmTasksComponent implements OnInit {
   }
 
   getAllTaskList({ taskStatus }) {
-    this.isLoading = true;
-    this.dataSource.data = ELEMENT_DATA;
     const data = {
       advisorId: this.advisorId,
       offset: 0,

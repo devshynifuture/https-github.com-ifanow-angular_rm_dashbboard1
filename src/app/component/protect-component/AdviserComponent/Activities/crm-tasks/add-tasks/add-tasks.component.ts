@@ -93,7 +93,7 @@ export class AddTasksComponent implements OnInit {
         searchClientList: [data.displayName, Validators.required],
         assignedTo: [data.assignedTo, Validators.required],
         taskDueDate: [moment(data.dueDateTimeStamp), Validators.required],
-        taskDescription: [data.des,],
+        taskDescription: [data.des, Validators.required],
         familyMemberId: [data.familyMemberId,],
         subTask: this.fb.array([])
       });
@@ -338,6 +338,11 @@ export class AddTasksComponent implements OnInit {
       })
   }
 
+  toggleCheckSubTask(value, item, index) {
+    console.log("this is some subtask check uncheck value", value)
+    this.markTaskOrSubTaskDone('subTask', item, value);
+  }
+
   deleteAttachmentOfTaskSubTask(id, index, choice) {
     this.crmTaskService.deleteAttachmentTaskSubTask(id)
       .subscribe(res => {
@@ -421,17 +426,17 @@ export class AddTasksComponent implements OnInit {
       }, err => console.error(err))
   }
 
-  markTaskOrSubTaskDone(choice) {
+  markTaskOrSubTaskDone(choice, subTaskItem, value) {
     let data;
     if (choice === 'task') {
       data = {
         taskId: this.data.id,
-        status: 1
+        status: value == true ? 1 : 0
       }
     } else if (choice === 'subTask') {
       data = {
-        subTaskId: this.selectedSubTask.id,
-        status: 1
+        subTaskId: subTaskItem.id,
+        status: value == true ? 1 : 0
       }
     }
 
@@ -627,6 +632,15 @@ export class AddTasksComponent implements OnInit {
       });
     }
     return temp + 1;
+  }
+
+  formValidationOfTaskForm() {
+    if (this.addTaskForm.valid) {
+      this.onCreateTask();
+    } else {
+      this.addTaskForm.markAllAsTouched();
+      this.eventService.openSnackBar("Please fill required Fields", "DISMISS");
+    }
   }
 
   onCreateTask() {

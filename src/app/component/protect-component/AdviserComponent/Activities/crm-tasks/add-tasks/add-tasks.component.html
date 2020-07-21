@@ -2,11 +2,11 @@
     <div class="row bb-1">
         <div class="col-md-8 d-flex align-items-center">
             <span class="b-primitive p-5 f-14 d-flex align-items-center br-4" *ngIf="tabState === 1"
-                (click)="markTaskOrSubTaskDone('task')">
+                (click)="markTaskOrSubTaskDone('task', null, (status === 1))">
                 <i class="material-icons mr-4"> done</i> Mark complete
             </span>
             <span class="b-primitive p-5 f-14 d-flex align-items-center br-4" *ngIf="tabState === 2"
-                (click)="markTaskOrSubTaskDone('subTask')">
+                (click)="markTaskOrSubTaskDone('subTask', selectedSubTask, (selectedSubTask.status === 1))">
                 <i class="material-icons mr-4"> done</i> Mark complete
             </span>
         </div>
@@ -172,7 +172,7 @@
     </div>
 
 
-    <div class="row pt-28">
+    <div class="row pt-28" *ngIf="data !== null">
         <div class="col-md-12 pl-30">
             <h5 class="f-500 m-0"> Sub-tasks </h5>
         </div>
@@ -182,9 +182,10 @@
         <div class="col-md-12 pl-30">
             <div class="row pt-5 bt-1 bb-1">
                 <div class="col-md-1 pl-10">
-                    <mat-checkbox [checked]="item.isCompleted"></mat-checkbox>
+                    <mat-checkbox [checked]="item.status == 1" #subTaskCompleteCheckbox
+                        (change)="toggleCheckSubTask(subTaskCompleteCheckbox.checked, item, i)"></mat-checkbox>
                 </div>
-                <div class="col-md-6 pl-0">
+                <div class="col-md-6 pl-0" [ngClass]="subTaskCompleteCheckbox.checked ? 'line-through': ''">
                     {{ item.description }}
                 </div>
                 <div class="col-md-4 pr-30 text-right">
@@ -246,7 +247,7 @@
         </div>
     </div>
 
-    <div class="row pt-14">
+    <div class="row pt-14" *ngIf="data!==null">
         <div class="col-md-12 text-primitive f-14 pl-30" (click)="addSubTask(null)">
             <img src="assets/images/svg/plus-icon-gray.svg" class="c-p"> Add sub-task
         </div>
@@ -566,7 +567,8 @@
         <div class="col-md-4">
         </div>
         <div class="col-md-4 text-right" *ngIf="tabState === 1">
-            <h5 class="mb-0 pt-8 text-white c-p" (click)="onCreateTask()" [ngClass]="isMainLoading ? 'cur-wait': ''">
+            <h5 class="mb-0 pt-8 text-white c-p" (click)="formValidationOfTaskForm()"
+                [ngClass]="isMainLoading ? 'cur-wait': ''">
                 Create</h5>
         </div>
         <div class="col-md-4 text-right" *ngIf="tabState === 2">

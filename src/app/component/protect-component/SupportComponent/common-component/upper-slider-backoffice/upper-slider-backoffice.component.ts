@@ -318,23 +318,29 @@ export class UpperSliderBackofficeComponent implements OnInit {
                       totalFolioCount: this.totalCount,
                       matchedCount: res.mappedCount,
                       aumBalanceDate: res.aumList[0].aumDate,
-                      unmatchedCountBeforeRecon: res.unmappedCount,
+                      unmatchedCountBeforeRecon: this.totalCount - res.unmappedCount,
                       transactionDate: res.transactionDate,
                       rtId: this.data.rtId,
                       doneOn: doneOnFormatted,
                       // when rm login is created this will get value from localStorage
                       rmId: this.rmId
                     };
-                    if (doStartRecon) {
-                      this.reconService.putBackofficeReconAdd(data)
-                        .subscribe(res => {
-                          console.log('started reconciliation::::::::::::', res);
-                          if (this.data.startRecon) {
-                            this.aumReconId = res;
-                          }
-                        }, err => {
-                          console.error(err);
-                        });
+
+                    if (res.unmappedCount === 0) {
+                      this.eventService.openSnackBar("All Folios are Matched", "DISMISS");
+
+                    } else {
+                      if (doStartRecon) {
+                        this.reconService.putBackofficeReconAdd(data)
+                          .subscribe(res => {
+                            console.log('started reconciliation::::::::::::', res);
+                            if (this.data.startRecon) {
+                              this.aumReconId = res;
+                            }
+                          }, err => {
+                            console.error(err);
+                          });
+                      }
                     }
 
                     // aum date for all object is the same
