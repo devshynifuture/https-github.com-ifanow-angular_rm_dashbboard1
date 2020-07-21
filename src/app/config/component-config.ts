@@ -606,6 +606,7 @@ export const appConfig = {
   ACTIVITY_ADD_COMMENT: 'rmdashboard/dashboard/ifa-onboard/activity/chat/post',
   ACTIVITY_UPDATE_COMMENT: 'rmdashboard/dashboard/ifa-onboard/activity/chat/edit',
   ACTIVITY_DELETECOMMENT: 'rmdashboard/dashboard/ifa-onboard/activity/chat/delete',
+
   /********************************* TASKS Section ****************************************/
 
   ACTIVITY_GET_ALL_TASK_LIST: 'activity/task/list/get',

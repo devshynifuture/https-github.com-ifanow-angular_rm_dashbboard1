@@ -56,6 +56,8 @@ export class AddTasksComponent implements OnInit {
   taskCommentForm: FormGroup;
 
   isMainLoading = false;
+  showAttachments = false;
+  showSubTasks = false;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -201,7 +203,6 @@ export class AddTasksComponent implements OnInit {
         }
     }
 
-
     this.crmTaskService.saveEditedCommentOnActivityTaskOrSubTask(data)
       .subscribe(res => {
         if (res) {
@@ -252,7 +253,7 @@ export class AddTasksComponent implements OnInit {
         }, err => console.error(err));
     } else {
       this.editSubTaskForm.markAllAsTouched();
-      this.eventService.openSnackBar("Please fill ");
+      this.eventService.openSnackBar("Please fill required fields!", "DISMISS");
     }
 
   }
