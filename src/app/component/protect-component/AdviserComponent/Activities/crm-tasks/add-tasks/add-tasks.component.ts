@@ -56,8 +56,6 @@ export class AddTasksComponent implements OnInit {
   taskCommentForm: FormGroup;
 
   isMainLoading = false;
-  showAttachments = false;
-  showSubTasks = false;
 
   constructor(
     private subInjectService: SubscriptionInject,

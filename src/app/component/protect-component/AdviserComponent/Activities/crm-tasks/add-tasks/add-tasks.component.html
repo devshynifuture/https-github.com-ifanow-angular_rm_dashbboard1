@@ -1,14 +1,26 @@
 <div class="popup-header-fix-50">
     <div class="row bb-1">
         <div class="col-md-8 d-flex align-items-center">
-            <span class="b-primitive p-5 f-14 d-flex align-items-center br-4" *ngIf="tabState === 1"
-                (click)="markTaskOrSubTaskDone('task', null, (status === 1))">
+            <span class="b-primitive p-5 f-14 d-flex align-items-center br-4"
+                *ngIf="tabState === 1 && data.status !== 1"
+                (click)="markTaskOrSubTaskDone('task', null, (data.status === 1))">
                 <i class="material-icons mr-4"> done</i> Mark complete
             </span>
-            <span class="b-primitive p-5 f-14 d-flex align-items-center br-4" *ngIf="tabState === 2"
+            <span class="btn-primary p-5 f-14 d-flex align-items-center br-4"
+                *ngIf="tabState === 1 && data.status === 1">
+                Completed
+            </span>
+            <span class="b-primitive p-5 f-14 d-flex align-items-center br-4"
+                *ngIf="tabState === 2 && (selectedSubTask.status !== 1) "
                 (click)="markTaskOrSubTaskDone('subTask', selectedSubTask, (selectedSubTask.status === 1))">
                 <i class="material-icons mr-4"> done</i> Mark complete
             </span>
+            <span class="btn-primary p-5 f-14 d-flex align-items-center br-4"
+                *ngIf="tabState === 2 && (selectedSubTask.status === 1) "
+                (click)="markTaskOrSubTaskDone('subTask', selectedSubTask, (selectedSubTask.status === 1))">
+                Completed
+            </span>
+
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
@@ -20,10 +32,13 @@
 
 <div class="mt-80 pb-160 " [formGroup]="addTaskForm" *ngIf="tabState == 1">
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-8" *ngIf="data !== null">
+            <h4 class="f-500">
+                {{ data.des }}
+            </h4>
         </div>
         <div class="col-md-4 text-right">
-            <img src="assets/images/svg/attchment-icon.svg" class="c-p ml-12" (click)="showAttachments = true">
+            <img src="assets/images/svg/attchment-icon.svg" class="c-p ml-12">
             <img src="assets/images/svg/sub-task-icon.svg" class="c-p ml-12">
             <img src="assets/images/svg/delect-icon.svg" (click)="deleteTask(null)" class="c-p ml-12">
             <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
@@ -174,12 +189,12 @@
 
     <div class="row pt-28" *ngIf="data !== null">
         <div class="col-md-12 pl-30">
-            <h5 class="f-500 m-0" (click)="showSubTasks = true"> Sub-tasks </h5>
+            <h5 class="f-500 m-0"> Sub-tasks </h5>
         </div>
     </div>
 
     <div class="row pt-5 pb-5" *ngFor="let item of subTaskList; index as i">
-        <div class="col-md-12 pl-30" *ngIf="showSubTasks">
+        <div class="col-md-12 pl-30">
             <div class="row pt-5 bt-1 bb-1">
                 <div class="col-md-1 pl-10">
                     <mat-checkbox [checked]="item.status == 1" #subTaskCompleteCheckbox
@@ -303,7 +318,7 @@
     </div>
 
 
-    <div class="bg-grey lter pt-20" *ngIf="commentList.length !==0">
+    <div class="bg-grey lter pt-20 mb-44" *ngIf="commentList.length !==0">
         <div class="row">
             <div class="col-md-12 pl-30">
                 <h5 class="f-500 roboto">Comments</h5>
@@ -480,7 +495,7 @@
     </div>
 
 
-    <div class="bg-grey lter pt-20" *ngIf="subTaskCommentList.length !==0">
+    <div class="bg-grey lter pt-20 mb-44" *ngIf="subTaskCommentList.length !==0">
         <div class="row">
             <div class="col-md-12 pl-30">
                 <h5 class="f-500 roboto">Comments</h5>
