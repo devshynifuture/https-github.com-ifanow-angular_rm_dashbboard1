@@ -34,7 +34,7 @@
             <mat-form-field appearance="standard" floatLabel="never">
               <input [inputValidator]="validatorType.TEXT_ONLY" (input)="capitalise($event)"
                      [matAutocomplete]="auto1" appInputValueValidation class="form-control"
-                     formControlName="nomineeName" matInput maxlength="30"
+                     formControlName="name" matInput maxlength="30"
                      placeholder="Start typing to see nominee name" type="text">
               <mat-autocomplete #auto1="matAutocomplete">
                 <mat-option (click)="selectedNominee(fm)" *ngFor="let fm of nomineeFmList"
