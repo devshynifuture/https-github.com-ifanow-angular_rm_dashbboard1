@@ -80,8 +80,12 @@ export class NomineeDetailsIinComponent implements OnInit {
     this.doneData.nominee = false;
     if (data && data.nomineeList) {
       this.firstHolderNominee = data.nomineeList[0];
-      this.secondHolderNominee = data.nomineeList[1];
-      this.thirdHolderNominee = data.nomineeList[2];
+      if (data.nomineeList.length > 1) {
+        this.secondHolderNominee = data.nomineeList[1];
+      }
+      if (data.nomineeList.length > 2) {
+        this.thirdHolderNominee = data.nomineeList[2];
+      }
       this.getdataForm(this.firstHolderNominee);
     } else {
     }
@@ -310,40 +314,70 @@ export class NomineeDetailsIinComponent implements OnInit {
   }
 
   SendToForm(value, flag) {
-    this.activeDetailsClass = value;
     if (value == 'first') {
-      this.saveNomineeDetails(value);
-      if (this.firstHolderNominee) {
-        this.holder.type = value;
-        this.nomineeDetails.setValue(this.firstHolderNominee);
+      if (this.holder.type == 'first') {
+        if (!this.saveNomineeDetails(value)) {
+          return;
+        }
       } else {
-        return;
+        this.saveNomineeDetails(value);
+        if (this.firstHolderNominee) {
+          this.holder.type = value;
+          this.nomineeDetails.setValue(this.firstHolderNominee);
+        } else {
+          return;
+        }
       }
     } else if (value == 'second') {
-      this.saveNomineeDetails(value);
-      if (this.secondHolderNominee) {
-        this.holder.type = value;
-        this.nomineeDetails.setValue(this.secondHolderNominee);
+      if (this.holder.type == 'first') {
+        if (!this.saveNomineeDetails(value)) {
+          return;
+        }
+      } else if (this.holder.type == 'second' && !flag) {
+        if (!this.saveNomineeDetails(value)) {
+          return;
+        }
       } else {
-        this.reset();
+        this.saveNomineeDetails(value);
+        if (this.secondHolderNominee) {
+          this.holder.type = value;
+          this.nomineeDetails.setValue(this.secondHolderNominee);
+        } else {
+          this.reset();
+        }
       }
     } else if (value == 'third') {
-      this.saveNomineeDetails(value);
-      if (this.thirdHolderNominee) {
-        this.holder.type = value;
-        this.nomineeDetails.setValue(this.thirdHolderNominee);
+      if (this.holder.type == 'first') {
+        if (!this.saveNomineeDetails(value)) {
+          return;
+        }
+      } else if (this.holder.type == 'second') {
+        if (!this.saveNomineeDetails(value)) {
+          return;
+        }
       } else {
-        this.reset();
+        this.saveNomineeDetails(value);
+        if (this.thirdHolderNominee) {
+          this.holder.type = value;
+          this.nomineeDetails.setValue(this.thirdHolderNominee);
+        } else {
+          this.reset();
+        }
       }
 
     } else {
       this.saveNomineeDetails(value);
     }
+    this.activeDetailsClass = value;
 
     this.obj1 = [];
     this.obj1.push(this.firstHolderNominee);
-    this.obj1.push(this.secondHolderNominee);
-    this.obj1.push(this.thirdHolderNominee);
+    if (this.secondHolderNominee) {
+      this.obj1.push(this.secondHolderNominee);
+    }
+    if (this.thirdHolderNominee) {
+      this.obj1.push(this.thirdHolderNominee);
+    }
     this.obj1.forEach(element => {
       if (element) {
         this.getObj = this.setObj(element, value);
@@ -411,9 +445,10 @@ export class NomineeDetailsIinComponent implements OnInit {
           this.nomineeDetails.controls[element].markAsTouched();
         }
       }
+      return false;
     } else {
       this.setEditHolder(this.holder.type, value);
-
+      return true;
     }
   }
 

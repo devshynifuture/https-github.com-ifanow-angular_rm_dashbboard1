@@ -28,7 +28,7 @@ export class AddTasksComponent implements OnInit {
   taskNumberArr = [];
   addTaskForm: FormGroup;
   isPrefilled = false;
-
+  status;
   data = null;
   showDefaultDropDownOnSearch = false;
   taskTemplateList: any;

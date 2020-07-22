@@ -359,44 +359,60 @@ export class BankDetailsIINComponent implements OnInit {
   }
 
   SendToForm(value, flag) {
-    this.activeDetailsClass = value;
     if (value == 'first') {
-      this.saveBankDetails(value);
-      this.formId = value;
-      if (this.firstHolderBank) {
-        this.setValueFun(this.firstHolderBank);
+      if (this.formId == 'first') {
+        if (!this.saveBankDetails(value)) {
+          return;
+        }
       } else {
-        return;
+        this.saveBankDetails(value);
+        if (this.firstHolderBank && this.firstHolderBank.validated) {
+          this.setValueFun(this.firstHolderBank);
+        } else {
+          return;
+        }
       }
-      this.formId = value;
+
     } else if (value == 'second') {
-      if (this.secondHolderBank && this.secondHolderBank.bankName) {
-        this.saveBankDetails(value);
-        this.setValueFun(this.secondHolderBank);
-      } else if (this.bankList && this.bankList[1] && this.bankList[1].bankName) {
-        this.secondHolderBank = this.bankList[1];
-        this.saveBankDetails(value);
-        this.setValueFun(this.secondHolderBank);
+      if (this.formId == 'second' && !flag) {
+        if (!this.saveBankDetails(value)) {
+          return;
+        }
       } else {
-        this.reset();
+        this.saveBankDetails(value);
+        if (this.secondHolderBank && this.secondHolderBank.validated) {
+          this.setValueFun(this.secondHolderBank);
+        } else if (this.bankList && this.bankList[1] && this.bankList[1].bankName) {
+          this.secondHolderBank = this.bankList[1];
+          this.saveBankDetails(value);
+          this.setValueFun(this.secondHolderBank);
+        } else {
+          this.reset();
+        }
       }
-      this.formId = value;
     } else if (value == 'third') {
-      if (this.thirdHolderBank && this.thirdHolderBank.bankName) {
-        this.formId = value;
-        this.saveBankDetails(value);
-        this.setValueFun(this.thirdHolderBank);
-      } else if (this.bankList && this.bankList[2] && this.bankList[2].bankName) {
-        this.thirdHolderBank = this.bankList[2];
-        this.saveBankDetails(value);
-        this.setValueFun(this.thirdHolderBank);
+      if (this.formId == 'third' && !flag) {
+        if (!this.saveBankDetails(value)) {
+          return;
+        }
       } else {
-        this.reset();
+        this.saveBankDetails(value);
+        if (this.thirdHolderBank && this.thirdHolderBank.validated) {
+          this.setValueFun(this.thirdHolderBank);
+        } else if (this.bankList && this.bankList[2] && this.bankList[2].bankName) {
+          this.thirdHolderBank = this.bankList[2];
+          this.saveBankDetails(value);
+          this.setValueFun(this.thirdHolderBank);
+        } else {
+          this.reset();
+        }
       }
-      this.formId = value;
     } else {
       this.saveBankDetails(value);
     }
+    this.activeDetailsClass = value;
+    this.formId = value;
+
     this.obj1 = [];
     this.obj1.push(this.firstHolderBank);
     if (this.secondHolderBank && this.secondHolderBank.validated) {
