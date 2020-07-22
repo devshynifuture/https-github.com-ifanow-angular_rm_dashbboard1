@@ -22,6 +22,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
   markFolioIndex: any;
   totalCount: any;
   aumFileCount: any;
+  aumDate: any;
+  duplicateFolioWithIsMappedMinusOne: any = [];
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -270,6 +272,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
                   if (res && res.aumList) {
                     this.canExportExcelSheet = 'true';
                     this.aumList = res.aumList;
+                    this.aumDate = res.aumList[0].aumDate;
                     const arrayValue = [];
 
                     this.filteredAumListWithIsMappedToMinusOne = this.aumList.filter(element => {
@@ -312,35 +315,10 @@ export class UpperSliderBackofficeComponent implements OnInit {
                       this.util.addZeroBeforeNumber((doneOnDate.getMonth() + 1), 2) + '-' +
                       this.util.addZeroBeforeNumber(doneOnDate.getDate(), 2);
                     // console.log("datas available till now:::::", this.data, res);
-                    const data = {
-                      advisorId: this.advisorId,
-                      brokerId: this.brokerId,
-                      totalFolioCount: this.totalCount,
-                      matchedCount: res.mappedCount,
-                      aumBalanceDate: res.aumList[0].aumDate,
-                      unmatchedCountBeforeRecon: this.totalCount - res.unmappedCount,
-                      transactionDate: res.transactionDate,
-                      rtId: this.data.rtId,
-                      doneOn: doneOnFormatted,
-                      // when rm login is created this will get value from localStorage
-                      rmId: this.rmId
-                    };
+
 
                     if (res.unmappedCount === 0) {
                       this.eventService.openSnackBar("All Folios are Matched", "DISMISS");
-
-                    } else {
-                      if (doStartRecon) {
-                        this.reconService.putBackofficeReconAdd(data)
-                          .subscribe(res => {
-                            console.log('started reconciliation::::::::::::', res);
-                            if (this.data.startRecon) {
-                              this.aumReconId = res;
-                            }
-                          }, err => {
-                            console.error(err);
-                          });
-                      }
                     }
 
                     // aum date for all object is the same
@@ -405,13 +383,24 @@ export class UpperSliderBackofficeComponent implements OnInit {
       console.log("mapped to -1::", this.filteredAumListWithIsMappedToMinusOne);
 
       this.filteredAumListWithIsMappedToMinusOne.forEach(element => {
-        mutualFundIds.push(element.mutualFundId);
+        if (element.mutualFundId !== 0)
+          mutualFundIds.push(element.mutualFundId);
       });
+
+      let aumDateObj = new Date(this.aumDate);
+      let aumDateFormated = aumDateObj.getFullYear() + '-'
+        + `${(aumDateObj.getMonth() + 1) < 10 ? '0' : ''}`
+        + (aumDateObj.getMonth() + 1) + '-'
+        + `${aumDateObj.getDate() < 10 ? '0' : ''}`
+        + aumDateObj.getDate();
+
+
       data = {
         advisorIds: [...this.adminAdvisorIds],
         aum: {
           folio: mutualFundIds
         },
+        aumDate: aumDateFormated,
         parentId: this.parentId,
         isParent
       };
@@ -469,7 +458,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
           console.log('htis is filered value::::', filteredArrValue);
           filteredArrValue.forEach(item => {
-            arrValue.push({
+            this.duplicateFolioWithIsMappedMinusOne.push({
               id: item.id,
               name: item.shemeName,
               folioNumber: item.folioNumber,
@@ -489,7 +478,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
               isFreezeClicked: false,
             });
           });
-          this.dataSource2.data = arrValue;
+          this.dataSource2.data = this.duplicateFolioWithIsMappedMinusOne;
         } else {
           this.dataSource2.data = null;
         }
@@ -745,9 +734,10 @@ export class UpperSliderBackofficeComponent implements OnInit {
               if (sideBarData.refreshRequired) {
                 if (sideBarData.fromAllFolioOrDuplicateTab === 1) {
                   this.handlingDataVariable(false);
-                } else if (sideBarData.fromAllFolioOrDuplicateTab === 2) {
-                  this.getDuplicateFolioList();
                 }
+                // else if (sideBarData.fromAllFolioOrDuplicateTab === 2) {
+                //   this.getDuplicateFolioList();
+                // }
               }
             } else {
               if (sideBarData.hasOwnProperty('deletedTransactionsIndexes') && sideBarData.deletedTransactionsIndexes.length !== 0) {
@@ -759,14 +749,33 @@ export class UpperSliderBackofficeComponent implements OnInit {
                   }
 
                   if (sideBarData.changesInUnitOne !== '') {
-                    this.dataSource1.data[this.markFolioIndex].unitsIfanow = sideBarData.changesInUnitOne;
+                    this.dataSource1.data[this.markFolioIndex].unitsIfanow = sideBarData.changesInUnitOne.toFixed(3);
                     let unitsRta = this.dataSource1.data[this.markFolioIndex].unitsRta;
                     this.dataSource1.data[this.markFolioIndex].difference = String((parseFloat(sideBarData.changesInUnitOne) - parseFloat(unitsRta)).toFixed(3));
                     let diff = parseFloat(sideBarData.changesInUnitOne) - parseFloat(unitsRta)
                     if (Math.round(diff) === 0) {
                       this.dataSource.data.map(item => {
-                        item.totalfolios = String(parseFloat(item.totalfolios) - 1);
+                        item.after_recon = String(parseFloat(item.after_recon) - 1);
                       });
+
+                      let obj = this.dataSource1.data[this.markFolioIndex];
+
+                      if (this.data.flag === 'report') {
+
+                        let desiredObj = this.aumListReportValue.find(item => item.mutualFundId === obj['mutualFundId']);
+                        let removeIndex = this.aumListReportValue.indexOf(desiredObj);
+                        this.aumListReportValue.splice(removeIndex, 1);
+                        this.reportDuplicateFoliosIsMappedToMinusOne = this.aumListReportValue.filter(item => {
+                          return item.isMapped === -1
+                        });
+                      } else {
+                        let desiredObj = this.aumList.find(item => item.mutualFundId === obj['mutualFundId']);
+                        let removeIndex = this.aumList.indexOf(desiredObj);
+                        this.aumList.splice(removeIndex, 1);
+                        this.filteredAumListWithIsMappedToMinusOne = this.aumList.filter(item => {
+                          return item.isMapped === -1;
+                        })
+                      }
                     }
                   }
 
@@ -777,9 +786,31 @@ export class UpperSliderBackofficeComponent implements OnInit {
                     mfTransArr.splice(index, 1);
                   }
                   if (sideBarData.changesInUnitOne !== '') {
-                    this.dataSource2.data[this.markFolioIndex].unitsIfanow = sideBarData.changesInUnitOne;
+                    this.dataSource2.data[this.markFolioIndex].unitsIfanow = sideBarData.changesInUnitOne.toFixed(3);
                     let unitsRta = this.dataSource2.data[this.markFolioIndex].unitsRta;
                     this.dataSource2.data[this.markFolioIndex].difference = String((parseFloat(sideBarData.changesInUnitOne) - parseFloat(unitsRta)).toFixed(3));
+                    let diff = parseFloat(sideBarData.changesInUnitOne) - parseFloat(unitsRta);
+                    if (Math.round(diff) === 0) {
+                      this.dataSource.data.map(item => {
+                        item.after_recon = String(parseFloat(item.after_recon) - 1);
+                      });
+                      let obj = this.dataSource2.data[this.markFolioIndex];
+
+                      let desiredObj = this.aumList.find(item => item.mutualFundId === obj['id']);
+                      let removeIndex = this.aumList.indexOf(desiredObj);
+
+                      this.aumList.splice(removeIndex, 1);
+
+                      this.filteredAumListWithIsMappedToMinusOne = this.aumList(item => {
+                        return item.isMapped === -1;
+                      });
+
+                    }
+
+
+
+
+
                   }
                 }
               }
@@ -965,7 +996,36 @@ export class UpperSliderBackofficeComponent implements OnInit {
   dialogClose() {
     console.log('this is clicked');
     // post call
-    this.postReqForBackOfficeUnmatchedFolios();
+
+    // const data = {
+    //   advisorId: this.advisorId,
+    //   brokerId: this.brokerId,
+    //   totalFolioCount: this.totalCount,
+    //   matchedCount: res.mappedCount,
+    //   aumBalanceDate: res.aumList[0].aumDate,
+    //   unmatchedCountBeforeRecon: this.totalCount - res.unmappedCount,
+    //   // unmatchedCountAfterRecon: 
+    //   transactionDate: res.transactionDate,
+    //   rtId: this.data.rtId,
+    //   doneOn: doneOnFormatted,
+    //   // when rm login is created this will get value from localStorage
+    //   rmId: this.rmId
+    // };
+
+
+
+    // this.reconService.putBackofficeReconAdd(data)
+    //   .subscribe(res => {
+    //     console.log('started reconciliation::::::::::::', res);
+    //     if (this.data.startRecon) {
+    //       this.aumReconId = res;
+    //       this.postReqForBackOfficeUnmatchedFolios();
+    //     }
+    //   }, err => {
+    //     console.error(err);
+    //   });
+
+
 
     this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: true });
   }

@@ -46,6 +46,10 @@ export class SupportService {
     return this.http.put(apiConfig.MAIN_URL + appConfig.BACKOFFICE_PUT_AUM_TRANSACTION_KEEP_OR_REMOVE, data);
   }
 
+  recalculateBalanceUnitData(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.RM_RECALCULATE_BALANCE_UNITS, data);
+  }
+
   getBackofficeReports(data) {
     return null;
   }

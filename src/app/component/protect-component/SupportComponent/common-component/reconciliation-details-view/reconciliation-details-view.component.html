@@ -256,7 +256,7 @@
                     <th class="br" mat-header-cell *matHeaderCellDef> Action </th>
                     <td class="br" mat-cell *matCellDef="let element; index as i">
                         <div class="bar" [ngClass]="disableDeletionForTable2 ? 'disableClass': ''">
-                            <button mat-stroked-button [ngClass]="element.keep ? 'disableClass': ''"
+                            <button mat-stroked-button [ngClass]=" element.keep ? 'disableClass' : ''"
                                 [disabled]="element.keep" (click)="shouldKeepOrRemove(1, element, i)"
                                 class="btn-primary mr-12 text-white btn-xs h-22">
                                 Keep

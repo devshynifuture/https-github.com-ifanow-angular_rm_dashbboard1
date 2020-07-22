@@ -343,9 +343,9 @@ export class ReconciliationDetailsViewComponent implements OnInit {
   }
 
   allFolioTransactionTableDataBinding() {
-
     if (this.data && this.data.tableData.length !== 0) {
       let canDeleteTransaction;
+
       this.data.tableData.forEach((element, index1) => {
         if (this.data.hasOwnProperty('freezeDate') && this.data.freezeDate) {
           let date1 = new Date(element.transactionDate);
@@ -482,9 +482,9 @@ export class ReconciliationDetailsViewComponent implements OnInit {
 
     let refreshRequired = (Math.round(this.data.difference) === 0) ? true : false;
 
-    if (this.data.fromAllFolioOrDuplicateTab == 2 && this.refreshAfterUpdateKeepOrRemove) {
-      refreshRequired = true;
-    }
+    // if (this.data.fromAllFolioOrDuplicateTab == 2 && this.refreshAfterUpdateKeepOrRemove) {
+    //   refreshRequired = true;
+    // }
 
     this.subscriptionInject
       .changeNewRightSliderState({

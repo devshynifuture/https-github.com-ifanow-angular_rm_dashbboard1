@@ -124,7 +124,7 @@
                 <td mat-cell *matCellDef="let element" class="b-a text-center">
                     <div class="bar">
                         <mat-menu #appMenu="matMenu">
-                            <button mat-menu-item>Recalculate Balance Units</button>
+                            <button mat-menu-item (click)="recalculateBalanceUnit()">Recalculate Balance Units</button>
                             <button mat-menu-item>Deactivate Account</button>
                             <button mat-menu-item>Merge Scheme Code</button>
                             <button mat-menu-item (click)="openOrderHistoricalFile('')">Order Historical file</button>

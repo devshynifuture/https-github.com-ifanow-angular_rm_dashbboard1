@@ -56,6 +56,9 @@ export class AddTasksComponent implements OnInit {
   taskCommentForm: FormGroup;
 
   isMainLoading = false;
+  dayOfWeek: any;
+  recurringTaskFrequency: any;
+  isRecurringTaskForm = false;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -78,48 +81,8 @@ export class AddTasksComponent implements OnInit {
     this.initPoint();
   }
 
-  formInit(data) {
-    if (data !== null) {
-      this.subTaskList = data.subTasks;
-      this.isManual = true;
-      this.showManualToggle = false;
-      let tempClientList = this.enumDataService.getClientSearchData('');
-      this.selectedClient = tempClientList.find(item => item.clientId = data.clientId);
-      data.displayName = this.selectedClient.displayName;
-      this.setTeamMember(data.assignedTo);
-
-      this.addTaskForm = this.fb.group({
-        searchTemplateList: [data.taskTemplateId, Validators.required],
-        searchClientList: [data.displayName, Validators.required],
-        assignedTo: [data.assignedTo, Validators.required],
-        taskDueDate: [moment(data.dueDateTimeStamp), Validators.required],
-        taskDescription: [data.des, Validators.required],
-        familyMemberId: [data.familyMemberId,],
-        subTask: this.fb.array([])
-      });
-
-      this.editSubTaskForm = this.fb.group({
-        description: [, Validators.required],
-        turnAroundTime: [, Validators.required],
-        assignedTo: [, Validators.required],
-        taskDueDate: [, Validators.required],
-      });
-      this.selectClient(this.selectedClient);
-
-    } else {
-      this.addTaskForm = this.fb.group({
-        searchTemplateList: [, Validators.required],
-        searchClientList: [, Validators.required],
-        assignedTo: [, Validators.required],
-        taskDueDate: [, Validators.required],
-        taskDescription: [,],
-        familyMemberId: [,],
-        subTask: this.fb.array([]),
-      });
-    }
-  }
-
   initPoint() {
+    this.getTaskRecurringData()
     if (this.data !== null) {
       this.collaboratorList = this.data.collaborators;
       this.commentList = this.data.comments;
@@ -131,7 +94,6 @@ export class AddTasksComponent implements OnInit {
     this.formInit(this.data);
     this.getTaskTemplateList();
     this.getTeamMemberList();
-    this.addTaskForm.valueChanges.subscribe(res => console.log("form value changes:", res));
 
     this.clientList = this.addTaskForm.get('searchClientList').valueChanges
       .pipe(
@@ -161,10 +123,70 @@ export class AddTasksComponent implements OnInit {
       );
   }
 
+  getTaskRecurringData() {
+    this.crmTaskService.getTaskStatusValues({})
+      .subscribe(res => {
+        if (res) {
+          this.dayOfWeek = res.dayOfWeek;
+          this.recurringTaskFrequency = res.recurringTaskFrequency;
+        }
+      })
+  }
+
+  formInit(data) {
+    if (data !== null) {
+      this.subTaskList = data.subTasks;
+      this.isManual = true;
+      this.showManualToggle = false;
+      let tempClientList = this.enumDataService.getClientSearchData('');
+      this.selectedClient = tempClientList.find(item => item.clientId = data.clientId);
+      data.displayName = this.selectedClient.displayName;
+      this.setTeamMember(data.assignedTo);
+
+      this.addTaskForm = this.fb.group({
+        searchTemplateList: [data.taskTemplateId, Validators.required],
+        searchClientList: [data.displayName, Validators.required],
+        assignedTo: [data.assignedTo, Validators.required],
+        taskDueDate: [moment(data.dueDateTimeStamp), Validators.required],
+        taskDescription: [data.des, Validators.required],
+        familyMemberId: [data.familyMemberId,],
+        subTask: this.fb.array([]),
+        continuesTill: [,],
+        isRecurring: [,],
+        frequency: [,],
+        every: [,]
+      });
+
+      this.editSubTaskForm = this.fb.group({
+        description: [, Validators.required],
+        turnAroundTime: [, Validators.required],
+        assignedTo: [, Validators.required],
+        taskDueDate: [, Validators.required],
+      });
+      this.selectClient(this.selectedClient);
+
+    } else {
+      this.addTaskForm = this.fb.group({
+        searchTemplateList: [, Validators.required],
+        searchClientList: [, Validators.required],
+        assignedTo: [, Validators.required],
+        taskDueDate: [, Validators.required],
+        taskDescription: [,],
+        familyMemberId: [,],
+        subTask: this.fb.array([]),
+      });
+    }
+  }
+
   changeFillFormState() {
     this.isManual = !this.isManual;
     this.addTaskForm.reset();
     this.subTaskList = [];
+  }
+
+  makeTaskRecurring() {
+    this.isRecurringTaskForm = !this.isRecurringTaskForm;
+
   }
 
   changeTabState(subTaskItem, value) {

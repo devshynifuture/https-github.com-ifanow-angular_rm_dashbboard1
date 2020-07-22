@@ -1,26 +1,27 @@
 <div class="popup-header-fix-50">
     <div class="row bb-1">
         <div class="col-md-8 d-flex align-items-center">
-            <span class="b-primitive p-5 f-14 d-flex align-items-center br-4"
-                *ngIf="tabState === 1 && data.status !== 1"
-                (click)="markTaskOrSubTaskDone('task', null, (data.status === 1))">
-                <i class="material-icons mr-4"> done</i> Mark complete
+            <span *ngIf="data !==null">
+                <span class="b-primitive p-5 f-14 d-flex align-items-center br-4"
+                    *ngIf="tabState === 1 && data.status !== 1"
+                    (click)="markTaskOrSubTaskDone('task', null, (data.status === 1))">
+                    <i class="material-icons mr-4"> done</i> Mark complete
+                </span>
+                <span class="btn-primary p-5 f-14 d-flex align-items-center br-4"
+                    *ngIf="tabState === 1 && data.status === 1">
+                    Completed
+                </span>
+                <span class="b-primitive p-5 f-14 d-flex align-items-center br-4"
+                    *ngIf="tabState === 2 && (selectedSubTask.status !== 1) "
+                    (click)="markTaskOrSubTaskDone('subTask', selectedSubTask, (selectedSubTask.status === 1))">
+                    <i class="material-icons mr-4"> done</i> Mark complete
+                </span>
+                <span class="btn-primary p-5 f-14 d-flex align-items-center br-4"
+                    *ngIf="tabState === 2 && (selectedSubTask.status === 1) "
+                    (click)="markTaskOrSubTaskDone('subTask', selectedSubTask, (selectedSubTask.status === 1))">
+                    Completed
+                </span>
             </span>
-            <span class="btn-primary p-5 f-14 d-flex align-items-center br-4"
-                *ngIf="tabState === 1 && data.status === 1">
-                Completed
-            </span>
-            <span class="b-primitive p-5 f-14 d-flex align-items-center br-4"
-                *ngIf="tabState === 2 && (selectedSubTask.status !== 1) "
-                (click)="markTaskOrSubTaskDone('subTask', selectedSubTask, (selectedSubTask.status === 1))">
-                <i class="material-icons mr-4"> done</i> Mark complete
-            </span>
-            <span class="btn-primary p-5 f-14 d-flex align-items-center br-4"
-                *ngIf="tabState === 2 && (selectedSubTask.status === 1) "
-                (click)="markTaskOrSubTaskDone('subTask', selectedSubTask, (selectedSubTask.status === 1))">
-                Completed
-            </span>
-
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-12">
@@ -91,6 +92,12 @@
             <mat-checkbox (click)="changeFillFormState()"></mat-checkbox>
             <img src="/assets/images/svg/plus.svg" alt="plus icon" class="pr-5">
             Add Manually
+        </div>
+
+        <div class="col-md-3">
+            <mat-checkbox (click)="makeTaskRecurring()"></mat-checkbox>
+            <img src="/assets/images/svg/plus.svg" alt="plus icon" class="pr-5">
+            Make a Recurring Task
         </div>
     </div>
 
