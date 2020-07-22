@@ -360,8 +360,8 @@ export class ReconciliationDetailsViewComponent implements OnInit {
           .subscribe(res => {
             if (res) {
               this.isLoading = false;
-              if (res.mutualFundTrasaction.length !== 0) {
-                res.mutualFundTransaction.forEach((element, index1) => {
+              if (res[0].mutualFundTransactions.length !== 0) {
+                res[0].mutualFundTransactions.forEach((element, index1) => {
                   if (this.data.hasOwnProperty('freezeDate') && this.data.freezeDate) {
                     let date1 = new Date(element.transactionDate);
                     let date2 = new Date(element.freezeDate);

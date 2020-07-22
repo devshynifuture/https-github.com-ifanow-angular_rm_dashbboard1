@@ -402,7 +402,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
       data = {
         advisorIds: [...this.adminAdvisorIds],
         aum: {
-          folio: mutualFundIds
+          folio: mutualFundIds,
         },
         aumDate: aumDateFormated,
         parentId: this.parentId,
@@ -713,6 +713,13 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
     const isParent = this.isRmLogin ? true : ((this.parentId === this.advisorId) ? true : false);
 
+    let aumDateObj = new Date(this.aumDate);
+    let aumDateFormated = aumDateObj.getFullYear() + '-'
+      + `${(aumDateObj.getMonth() + 1) < 10 ? '0' : ''}`
+      + (aumDateObj.getMonth() + 1) + '-'
+      + `${aumDateObj.getDate() < 10 ? '0' : ''}`
+      + aumDateObj.getDate();
+
     const fragmentData = {
       flag,
       data: {
@@ -721,7 +728,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
           advisorIds: [...this.adminAdvisorIds],
           isParent,
           parentId: this.parentId,
-          aumDate: this.aumDate
+          aumDate: aumDateFormated
         },
         tableType,
         tableData,
