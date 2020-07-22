@@ -24,6 +24,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
   aumFileCount: any;
   aumDate: any;
   duplicateFolioWithIsMappedMinusOne: any = [];
+  summaryDoneOnDate: any;
+  summaryTransactionDate: any;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -273,6 +275,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
                     this.canExportExcelSheet = 'true';
                     this.aumList = res.aumList;
                     this.aumDate = res.aumList[0].aumDate;
+                    this.summaryDoneOnDate = res.doneOn;
+                    this.summaryTransactionDate = res.transactionDate;
                     const arrayValue = [];
 
                     this.filteredAumListWithIsMappedToMinusOne = this.aumList.filter(element => {
@@ -416,7 +420,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
         if (res) {
           console.log('this is some duplicate values:::::::::', res, this.filteredAumListWithIsMappedToMinusOne);
           let filteredArrValue = [];
-          const arrValue = [];
+          // const arrValue = [];
           if (this.data.flag === 'report') {
             for (let i in res) {
               for (let f in this.aumListReportValue) {
@@ -706,10 +710,19 @@ export class UpperSliderBackofficeComponent implements OnInit {
         tableData = element.mutualFundTransaction;
       }
     }
+
+    const isParent = this.isRmLogin ? true : ((this.parentId === this.advisorId) ? true : false);
+
     const fragmentData = {
       flag,
       data: {
         ...element,
+        dataForDuplicateTransactionCall: {
+          advisorIds: [...this.adminAdvisorIds],
+          isParent,
+          parentId: this.parentId,
+          aumDate: this.aumDate
+        },
         tableType,
         tableData,
         brokerId: this.brokerId,
@@ -996,34 +1009,38 @@ export class UpperSliderBackofficeComponent implements OnInit {
   dialogClose() {
     console.log('this is clicked');
     // post call
+    let dataObj = this.dataSource.data[0];
+    let matchedCount = this.totalCount - parseFloat(dataObj.after_recon);
+    let dateObjDoneOn = new Date(this.summaryDoneOnDate);
+    let doneOnFormatted = dateObjDoneOn.getFullYear() + '-' +
+      `${(dateObjDoneOn.getMonth() + 1) < 10 ? '0' : ''}` +
+      (dateObjDoneOn.getMonth() + 1) + "-" +
+      `${dateObjDoneOn.getDate() < 10 ? 0 : ''}` + dateObjDoneOn.getDate();
 
-    // const data = {
-    //   advisorId: this.advisorId,
-    //   brokerId: this.brokerId,
-    //   totalFolioCount: this.totalCount,
-    //   matchedCount: res.mappedCount,
-    //   aumBalanceDate: res.aumList[0].aumDate,
-    //   unmatchedCountBeforeRecon: this.totalCount - res.unmappedCount,
-    //   // unmatchedCountAfterRecon: 
-    //   transactionDate: res.transactionDate,
-    //   rtId: this.data.rtId,
-    //   doneOn: doneOnFormatted,
-    //   // when rm login is created this will get value from localStorage
-    //   rmId: this.rmId
-    // };
+    const data = {
+      advisorId: this.advisorId,
+      brokerId: this.brokerId,
+      totalFolioCount: this.totalCount,
+      matchedCount,
+      aumBalanceDate: this.aumDate,
+      unmatchedCountBeforeRecon: dataObj.before_recon,
+      unmatchedCountAfterRecon: dataObj.after_recon,
+      transactionDate: this.summaryTransactionDate,
+      rtId: this.data.rtId,
+      doneOn: doneOnFormatted,
+      rmId: this.rmId
+    };
 
-
-
-    // this.reconService.putBackofficeReconAdd(data)
-    //   .subscribe(res => {
-    //     console.log('started reconciliation::::::::::::', res);
-    //     if (this.data.startRecon) {
-    //       this.aumReconId = res;
-    //       this.postReqForBackOfficeUnmatchedFolios();
-    //     }
-    //   }, err => {
-    //     console.error(err);
-    //   });
+    this.reconService.putBackofficeReconAdd(data)
+      .subscribe(res => {
+        console.log('started reconciliation::::::::::::', res);
+        if (this.data.startRecon) {
+          this.aumReconId = res;
+          this.postReqForBackOfficeUnmatchedFolios();
+        }
+      }, err => {
+        console.error(err);
+      });
 
 
 

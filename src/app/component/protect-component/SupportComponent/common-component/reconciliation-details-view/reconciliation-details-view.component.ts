@@ -48,6 +48,8 @@ export class ReconciliationDetailsViewComponent implements OnInit {
   disableDeletionForTable2: boolean = false;
   refreshAfterUpdateKeepOrRemove = false;
   isKeepArray = [];
+  duplicateTransactionList: any;
+  isLoading: boolean;
 
   constructor(
     private subscriptionInject: SubscriptionInject,
@@ -345,49 +347,106 @@ export class ReconciliationDetailsViewComponent implements OnInit {
   allFolioTransactionTableDataBinding() {
     if (this.data && this.data.tableData.length !== 0) {
       let canDeleteTransaction;
+      if (this.data.tableType === "duplicate-folios") {
 
-      this.data.tableData.forEach((element, index1) => {
-        if (this.data.hasOwnProperty('freezeDate') && this.data.freezeDate) {
-          let date1 = new Date(element.transactionDate);
-          let date2 = new Date(element.freezeDate);
-          if (date1.getTime() >= date2.getTime()) {
-            canDeleteTransaction = true;
-          } else {
-            canDeleteTransaction = false;
+        const data = {
+          ...this.data.dataForDuplicateTransactionCall,
+          aum: {
+            folio: [...this.data.mutualFundId]
           }
-          this.disableDeletionForTable2 = true;
-        } else {
-          this.disableDeletionForTable2 = false;
-          canDeleteTransaction = true;
         }
-        this.keepStatus.push(element.keep);
-        this.tableData1.push({
-          srNo: index1 + 1,
-          id: element.id,
-          transactionType: element.fwTransactionType,
-          date: element.transactionDate,
-          amount: element.amount,
-          units: element.unit,
-          balanceUnits: element.balanceUnits,
-          actions: '',
-          keep: element.keep,
-          nav: element.purchasePrice ? element.purchasePrice : null,
-          canDeleteTransaction
+        this.isLoading = true;
+        this.reconService.getDuplicateFolioDataValues(data)
+          .subscribe(res => {
+            if (res) {
+              this.isLoading = false;
+              if (res.mutualFundTrasaction.length !== 0) {
+                res.mutualFundTransaction.forEach((element, index1) => {
+                  if (this.data.hasOwnProperty('freezeDate') && this.data.freezeDate) {
+                    let date1 = new Date(element.transactionDate);
+                    let date2 = new Date(element.freezeDate);
+                    if (date1.getTime() >= date2.getTime()) {
+                      canDeleteTransaction = true;
+                    } else {
+                      canDeleteTransaction = false;
+                    }
+                    this.disableDeletionForTable2 = true;
+                  } else {
+                    this.disableDeletionForTable2 = false;
+                    canDeleteTransaction = true;
+                  }
+                  this.keepStatus.push(element.keep);
+                  this.tableData1.push({
+                    srNo: index1 + 1,
+                    id: element.id,
+                    transactionType: element.fwTransactionType,
+                    date: element.transactionDate,
+                    amount: element.amount,
+                    units: element.unit,
+                    balanceUnits: element.balanceUnits,
+                    actions: '',
+                    keep: element.keep,
+                    nav: element.purchasePrice ? element.purchasePrice : null,
+                    canDeleteTransaction
+                  });
+                  if (!(this.filterList.includes(element.fwTransactionType))) {
+                    this.filterList.push(element.fwTransactionType);
+                  }
+                });
+                this.dataSource2.data = this.tableData1;
+              } else {
+                this.eventService.openSnackBar("No Transaction Found", 'DISMISS');
+                this.dataSource2.data = null;
+              }
+            } else {
+              this.eventService.openSnackBar("Transaction Fetch Failed", "DISMISS");
+            }
+          })
+      } else if (this.data.tableType === "all-folios") {
+        this.data.tableData.forEach((element, index1) => {
+          if (this.data.hasOwnProperty('freezeDate') && this.data.freezeDate) {
+            let date1 = new Date(element.transactionDate);
+            let date2 = new Date(element.freezeDate);
+            if (date1.getTime() >= date2.getTime()) {
+              canDeleteTransaction = true;
+            } else {
+              canDeleteTransaction = false;
+            }
+            this.disableDeletionForTable2 = true;
+          } else {
+            this.disableDeletionForTable2 = false;
+            canDeleteTransaction = true;
+          }
+          this.keepStatus.push(element.keep);
+          this.tableData1.push({
+            srNo: index1 + 1,
+            id: element.id,
+            transactionType: element.fwTransactionType,
+            date: element.transactionDate,
+            amount: element.amount,
+            units: element.unit,
+            balanceUnits: element.balanceUnits,
+            actions: '',
+            keep: element.keep,
+            nav: element.purchasePrice ? element.purchasePrice : null,
+            canDeleteTransaction
+          });
+          if (!(this.filterList.includes(element.fwTransactionType))) {
+            this.filterList.push(element.fwTransactionType);
+          }
         });
-        if (!(this.filterList.includes(element.fwTransactionType))) {
-          this.filterList.push(element.fwTransactionType);
+        // populate table filters
+
+        console.log(this.tableData1);
+        if (this.data.tableType == 'all-folios') {
+          this.dataSource1.data = this.tableData1;
         }
-      });
-      // populate table filters
 
-      console.log(this.tableData1);
-      if (this.data.tableType == 'all-folios') {
-        this.dataSource1.data = this.tableData1;
+        if (this.data.tableType === 'duplicate-folios') {
+          this.dataSource2.data = this.tableData1;
+        }
       }
 
-      if (this.data.tableType === 'duplicate-folios') {
-        this.dataSource2.data = this.tableData1;
-      }
     } else {
       if (this.data.tableType == 'all-folios') {
         this.dataSource1.data = null;
@@ -481,11 +540,6 @@ export class ReconciliationDetailsViewComponent implements OnInit {
   dialogClose() {
 
     let refreshRequired = (Math.round(this.data.difference) === 0) ? true : false;
-
-    // if (this.data.fromAllFolioOrDuplicateTab == 2 && this.refreshAfterUpdateKeepOrRemove) {
-    //   refreshRequired = true;
-    // }
-
     this.subscriptionInject
       .changeNewRightSliderState({
         state: 'close',

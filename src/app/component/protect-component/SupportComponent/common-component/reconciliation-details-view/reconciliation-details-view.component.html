@@ -193,7 +193,7 @@
             </div>
         </div>
         <div *ngIf="tableEntriesType == 2">
-            <table mat-table [dataSource]="dataSource2" id="table-low" class="mt-8">
+            <table mat-table [dataSource]="dataSource2" id="table-low" class="mt-8" [appSkeletonLoading]="isLoading">
                 <!-- transaction Type Column -->
                 <ng-container matColumnDef="srNo">
                     <th class="br" mat-header-cell *matHeaderCellDef>
