@@ -9,12 +9,15 @@ export class DetailedEpfMobComponent implements OnInit {
   detailedData: any;
   inputData: any;
 
+  // declared to fix build issue
+  backToSS
+  // .....
   constructor() { }
   @Input()
   set data(data) {
-    this.inputData = data.assetList;
+    this.inputData = data;
     console.log('This is Input data of proceed ', data);
-    this.detailedData  = this.inputData
+    this.detailedData = data
   }
   get data() {
     return this.inputData;

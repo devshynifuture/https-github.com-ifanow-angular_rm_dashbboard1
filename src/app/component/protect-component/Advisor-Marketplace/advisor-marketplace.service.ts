@@ -17,10 +17,10 @@ export class AdvisorMarketplaceService {
   }
 
   addCallDetails(data){ 
-    return this.http.post(apiConfig.MARKET_PLACE + appConfig.ADD_CALL_DETAILS, data);
+    return this.http.put(apiConfig.MARKET_PLACE + appConfig.ADD_CALL_DETAILS, data);
   }
 
   addCallAvailable(data){
-    return this.http.post(apiConfig.MARKET_PLACE + appConfig.ADD_CALL_AVAILABLE, data);
+    return this.http.put(apiConfig.MARKET_PLACE + appConfig.ADD_CALL_AVAILABLE, data);
   }
 }

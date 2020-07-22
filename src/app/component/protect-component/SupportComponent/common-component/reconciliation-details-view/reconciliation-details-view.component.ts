@@ -43,6 +43,13 @@ export class ReconciliationDetailsViewComponent implements OnInit {
   isUnfreezeClicked: boolean = false;
   isFreezeClicked: boolean = false;
   changesInUnitOne: string = '';
+  canUpdateTransactions = false;
+  keepStatus = [];
+  disableDeletionForTable2: boolean = false;
+  refreshAfterUpdateKeepOrRemove = false;
+  isKeepArray = [];
+  duplicateTransactionList: any;
+  isLoading: boolean;
 
   constructor(
     private subscriptionInject: SubscriptionInject,
@@ -234,8 +241,8 @@ export class ReconciliationDetailsViewComponent implements OnInit {
     if (this.data && this.data.mutualFundId) {
       this.reconService.putUnfreezeFolio(this.data.mutualFundId)
         .subscribe(res => {
-          console.log(res);
-
+          // console.log(res);
+          this.disableDeletionForTable2 = false;
           this.disableUnfreezeBtn = true;
           if (this.data.difference === '0.000') {
             this.disableFreezeBtn = false;
@@ -260,14 +267,14 @@ export class ReconciliationDetailsViewComponent implements OnInit {
     this.selection.clear();
     this.mainLoader = true;
     let dateObj = new Date(this.data.aumDate);
-    let dateFormat = dateObj.getFullYear() + '-' + `${(dateObj.getMonth() + 1) < 10 ? '0' : ''}` + (dateObj.getMonth() + 1) + '-' + dateObj.getDate();
+    let dateFormat = dateObj.getFullYear() + '-' + `${(dateObj.getMonth() + 1) < 10 ? '0' : ''}` + (dateObj.getMonth() + 1) + '-' + `${(dateObj.getDate()) < 10 ? '0' : ''}` + dateObj.getDate();
     value.unshift(dateFormat);
 
     this.reconService.deleteAumTransaction(value)
       .subscribe(res => {
         console.log('this transactions are deleted:::', res);
         this.dataSource1.data = this.tableData1.filter(item => {
-          return (!value.includes(item.id)) ? item : null;
+          return (!value.includes(String(item.id))) ? item : null;
         });
         this.dataSource.data.map(item => {
           item.unitOne = String(res.units);
@@ -338,48 +345,108 @@ export class ReconciliationDetailsViewComponent implements OnInit {
   }
 
   allFolioTransactionTableDataBinding() {
-
     if (this.data && this.data.tableData.length !== 0) {
       let canDeleteTransaction;
-      this.data.tableData.forEach((element, index1) => {
-        if (this.data.hasOwnProperty('freezeDate') && this.data.freezeDate) {
-          let date1 = new Date(element.transactionDate);
-          let date2 = new Date(element.freezeDate);
-          if (date1.getTime() > date2.getTime()) {
-            canDeleteTransaction = true;
-          } else {
-            canDeleteTransaction = false;
+      if (this.data.tableType === "duplicate-folios") {
+
+        const data = {
+          ...this.data.dataForDuplicateTransactionCall,
+          aum: {
+            folio: [...this.data.mutualFundId]
           }
-        } else {
-          canDeleteTransaction = true;
         }
-        this.tableData1.push({
-          srNo: index1 + 1,
-          id: element.id,
-          transactionType: element.fwTransactionType,
-          date: element.transactionDate,
-          amount: element.amount,
-          units: element.unit,
-          balanceUnits: element.balanceUnits,
-          actions: '',
-          keep: element.keep,
-          nav: element.purchasePrice ? element.purchasePrice : null,
-          canDeleteTransaction
+        this.isLoading = true;
+        this.reconService.getDuplicateFolioDataValues(data)
+          .subscribe(res => {
+            if (res) {
+              this.isLoading = false;
+              if (res[0].mutualFundTransactions.length !== 0) {
+                res[0].mutualFundTransactions.forEach((element, index1) => {
+                  if (this.data.hasOwnProperty('freezeDate') && this.data.freezeDate) {
+                    let date1 = new Date(element.transactionDate);
+                    let date2 = new Date(element.freezeDate);
+                    if (date1.getTime() >= date2.getTime()) {
+                      canDeleteTransaction = true;
+                    } else {
+                      canDeleteTransaction = false;
+                    }
+                    this.disableDeletionForTable2 = true;
+                  } else {
+                    this.disableDeletionForTable2 = false;
+                    canDeleteTransaction = true;
+                  }
+                  this.keepStatus.push(element.keep);
+                  this.tableData1.push({
+                    srNo: index1 + 1,
+                    id: element.id,
+                    transactionType: element.fwTransactionType,
+                    date: element.transactionDate,
+                    amount: element.amount,
+                    units: element.unit,
+                    balanceUnits: element.balanceUnits,
+                    actions: '',
+                    keep: element.keep,
+                    nav: element.purchasePrice ? element.purchasePrice : null,
+                    canDeleteTransaction
+                  });
+                  if (!(this.filterList.includes(element.fwTransactionType))) {
+                    this.filterList.push(element.fwTransactionType);
+                  }
+                });
+                this.dataSource2.data = this.tableData1;
+              } else {
+                this.eventService.openSnackBar("No Transaction Found", 'DISMISS');
+                this.dataSource2.data = null;
+              }
+            } else {
+              this.eventService.openSnackBar("Transaction Fetch Failed", "DISMISS");
+            }
+          })
+      } else if (this.data.tableType === "all-folios") {
+        this.data.tableData.forEach((element, index1) => {
+          if (this.data.hasOwnProperty('freezeDate') && this.data.freezeDate) {
+            let date1 = new Date(element.transactionDate);
+            let date2 = new Date(element.freezeDate);
+            if (date1.getTime() >= date2.getTime()) {
+              canDeleteTransaction = true;
+            } else {
+              canDeleteTransaction = false;
+            }
+            this.disableDeletionForTable2 = true;
+          } else {
+            this.disableDeletionForTable2 = false;
+            canDeleteTransaction = true;
+          }
+          this.keepStatus.push(element.keep);
+          this.tableData1.push({
+            srNo: index1 + 1,
+            id: element.id,
+            transactionType: element.fwTransactionType,
+            date: element.transactionDate,
+            amount: element.amount,
+            units: element.unit,
+            balanceUnits: element.balanceUnits,
+            actions: '',
+            keep: element.keep,
+            nav: element.purchasePrice ? element.purchasePrice : null,
+            canDeleteTransaction
+          });
+          if (!(this.filterList.includes(element.fwTransactionType))) {
+            this.filterList.push(element.fwTransactionType);
+          }
         });
-        if (!(this.filterList.includes(element.fwTransactionType))) {
-          this.filterList.push(element.fwTransactionType);
+        // populate table filters
+
+        console.log(this.tableData1);
+        if (this.data.tableType == 'all-folios') {
+          this.dataSource1.data = this.tableData1;
         }
-      });
-      // populate table filters
 
-      console.log(this.tableData1);
-      if (this.data.tableType == 'all-folios') {
-        this.dataSource1.data = this.tableData1;
+        if (this.data.tableType === 'duplicate-folios') {
+          this.dataSource2.data = this.tableData1;
+        }
       }
 
-      if (this.data.tableType === 'duplicate-folios') {
-        this.dataSource2.data = this.tableData1;
-      }
     } else {
       if (this.data.tableType == 'all-folios') {
         this.dataSource1.data = null;
@@ -392,36 +459,87 @@ export class ReconciliationDetailsViewComponent implements OnInit {
   }
 
   putAumTransactionKeepOrRemove() {
-    const isKeepArray = [];
-    this.dataSource2.data.forEach(item => {
-      isKeepArray.push({
-        id: item.id,
-        isKeep: item.keep
-      });
-    });
-    this.isKeepOrRemoveTransactions = isKeepArray;
-    console.log(this.isKeepOrRemoveTransactions);
-    this.supportService.putAumTransactionKeepOrRemove(this.isKeepOrRemoveTransactions)
+    this.supportService.putAumTransactionKeepOrRemove(this.isKeepArray)
       .subscribe(res => {
-        console.log(res);
+        this.keepStatus = [];
+        this.dataSource2.data.forEach(item => {
+          this.keepStatus.push(item.keep);
+        });
+        this.canUpdateTransactions = false;
+        this.refreshAfterUpdateKeepOrRemove = true;
+        // console.log(res);
         this.dataSource.data.map(element => {
           element.unitOne = String(parseFloat(res.units).toFixed(3));
           this.changesInUnitOne = String(parseFloat(res.units).toFixed(3));
           element.difference = String((parseFloat(res.units) - parseFloat(element.unitsRta)).toFixed(3));
-          if (element.difference === '0.000') {
+          if (Math.round(parseFloat(element.difference)) === 0) {
             this.disableFreezeBtn = false;
+          } else {
+            this.disableFreezeBtn = true;
           }
         });
+        this.isKeepArray = [];
+        this.mainLoader = false;
+        this.shouldDeleteMultiple = false;
+
       });
   }
 
-  shouldKeepOrRemove(value, element) {
-    const id = this.dataSource2.data.indexOf(element);
-    this.dataSource2.data[id].keep = (value === 1 ? true : false);
+  shouldKeepOrRemove(value, element, index) {
+    if (this.disableDeletionForTable2) {
+      this.eventService.openSnackBar("Please Unfreeze Folio", "DISMISS");
+    } else {
+      const id = this.dataSource2.data.indexOf(element);
+      let dateObj = new Date(this.data.aumDate);
+      let dateFormat = dateObj.getFullYear() + '-' + `${(dateObj.getMonth() + 1) < 10 ? '0' : ''}` + (dateObj.getMonth() + 1) + '-' + `${(dateObj.getDate()) < 10 ? '0' : ''}` + dateObj.getDate();
+
+      if (value == 1) {
+        this.dataSource2.data[id].keep = true;
+
+      } else {
+        this.dataSource2.data[id].keep = false;
+      }
+
+      if (this.isKeepArray.length !== 0 && this.isKeepArray.some(item => item.id === element.id)) {
+        let itemObj = this.isKeepArray.find(i => i.id === element.id);
+        let index1 = this.isKeepArray.indexOf(itemObj);
+        this.isKeepArray[index1] = {
+          id: element.id,
+          aumDate: dateFormat,
+          isKeep: value == 1 ? true : false
+        }
+        if (this.keepStatus[index] === this.isKeepArray[index1].isKeep) {
+          this.isKeepArray.splice(index1, 1);
+        }
+      } else if (this.isKeepArray.length === 0 || this.isKeepArray.some(item => item.id !== element.id)) {
+        this.isKeepArray.push({
+          id: element.id,
+          aumDate: dateFormat,
+          isKeep: value == 1 ? true : false
+        });
+      }
+
+      console.log(this.isKeepArray);
+
+      let changedKeepStatus = [];
+
+      this.dataSource2.data.forEach(item => {
+        changedKeepStatus.push(item.keep);
+      })
+      for (let i = 0; i <= this.keepStatus.length; i++) {
+        if (this.keepStatus[i] !== changedKeepStatus[i]) {
+          this.canUpdateTransactions = true;
+          break;
+        } else {
+          this.canUpdateTransactions = false;
+        }
+      }
+    }
   }
 
   dialogClose() {
-    let refreshRequired = (this.data.difference === '0.000') ? true : false;
+
+    let refreshRequired = (Math.round(this.data.difference) === 0) ? true : false;
     this.subscriptionInject
       .changeNewRightSliderState({
         state: 'close',

@@ -1,3 +1,4 @@
+import { AuthService } from './../../../../auth-service/authService';
 import { SubscriptionInject } from "./../../AdviserComponent/Subscriptions/subscription-inject.service";
 import { UtilService } from "./../../../../services/util.service";
 import { Component, OnInit, ViewChild } from "@angular/core";
@@ -25,6 +26,7 @@ export class MyIfasComponent implements OnInit {
   ) { }
 
   filterName;
+  parentId = AuthService.getParentId();
 
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   displayedColumns = [
@@ -86,6 +88,19 @@ export class MyIfasComponent implements OnInit {
       (err) => this.eventService.openSnackBar(err, "Dismiss")
     );
   }
+
+  recalculateBalanceUnit() {
+
+    this.supportService.recalculateBalanceUnitData({ parentId: this.parentId })
+      .subscribe(res => {
+        if (res) {
+          this.eventService.openSnackBar("Recalculation of Balance Units is Done", "DISMISS");
+        } else {
+          this.eventService.openSnackBar("Recalculation of Balance Units Failed", "DISMISS");
+        }
+      })
+  }
+
 
   openOrderHistoricalFile(data) {
     const fragmentData = {

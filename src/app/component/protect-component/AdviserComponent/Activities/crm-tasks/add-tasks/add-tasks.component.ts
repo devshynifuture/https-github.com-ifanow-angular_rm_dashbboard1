@@ -28,7 +28,7 @@ export class AddTasksComponent implements OnInit {
   taskNumberArr = [];
   addTaskForm: FormGroup;
   isPrefilled = false;
-
+  status;
   data = null;
   showDefaultDropDownOnSearch = false;
   taskTemplateList: any;
@@ -56,6 +56,9 @@ export class AddTasksComponent implements OnInit {
   taskCommentForm: FormGroup;
 
   isMainLoading = false;
+  dayOfWeek: any;
+  recurringTaskFrequency: any;
+  isRecurringTaskForm = false;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -78,48 +81,8 @@ export class AddTasksComponent implements OnInit {
     this.initPoint();
   }
 
-  formInit(data) {
-    if (data !== null) {
-      this.subTaskList = data.subTasks;
-      this.isManual = true;
-      this.showManualToggle = false;
-      let tempClientList = this.enumDataService.getClientSearchData('');
-      this.selectedClient = tempClientList.find(item => item.clientId = data.clientId);
-      data.displayName = this.selectedClient.displayName;
-      this.setTeamMember(data.assignedTo);
-
-      this.addTaskForm = this.fb.group({
-        searchTemplateList: [data.taskTemplateId, Validators.required],
-        searchClientList: [data.displayName, Validators.required],
-        assignedTo: [data.assignedTo, Validators.required],
-        taskDueDate: [moment(data.dueDateTimeStamp), Validators.required],
-        taskDescription: [data.des,],
-        familyMemberId: [data.familyMemberId,],
-        subTask: this.fb.array([])
-      });
-
-      this.editSubTaskForm = this.fb.group({
-        description: [, Validators.required],
-        turnAroundTime: [, Validators.required],
-        assignedTo: [, Validators.required],
-        taskDueDate: [, Validators.required],
-      });
-      this.selectClient(this.selectedClient);
-
-    } else {
-      this.addTaskForm = this.fb.group({
-        searchTemplateList: [, Validators.required],
-        searchClientList: [, Validators.required],
-        assignedTo: [, Validators.required],
-        taskDueDate: [, Validators.required],
-        taskDescription: [,],
-        familyMemberId: [,],
-        subTask: this.fb.array([]),
-      });
-    }
-  }
-
   initPoint() {
+    this.getTaskRecurringData()
     if (this.data !== null) {
       this.collaboratorList = this.data.collaborators;
       this.commentList = this.data.comments;
@@ -131,7 +94,6 @@ export class AddTasksComponent implements OnInit {
     this.formInit(this.data);
     this.getTaskTemplateList();
     this.getTeamMemberList();
-    this.addTaskForm.valueChanges.subscribe(res => console.log("form value changes:", res));
 
     this.clientList = this.addTaskForm.get('searchClientList').valueChanges
       .pipe(
@@ -161,10 +123,70 @@ export class AddTasksComponent implements OnInit {
       );
   }
 
+  getTaskRecurringData() {
+    this.crmTaskService.getTaskStatusValues({})
+      .subscribe(res => {
+        if (res) {
+          this.dayOfWeek = res.dayOfWeek;
+          this.recurringTaskFrequency = res.recurringTaskFrequency;
+        }
+      })
+  }
+
+  formInit(data) {
+    if (data !== null) {
+      this.subTaskList = data.subTasks;
+      this.isManual = true;
+      this.showManualToggle = false;
+      let tempClientList = this.enumDataService.getClientSearchData('');
+      this.selectedClient = tempClientList.find(item => item.clientId = data.clientId);
+      data.displayName = this.selectedClient.displayName;
+      this.setTeamMember(data.assignedTo);
+
+      this.addTaskForm = this.fb.group({
+        searchTemplateList: [data.taskTemplateId, Validators.required],
+        searchClientList: [data.displayName, Validators.required],
+        assignedTo: [data.assignedTo, Validators.required],
+        taskDueDate: [moment(data.dueDateTimeStamp), Validators.required],
+        taskDescription: [data.des, Validators.required],
+        familyMemberId: [data.familyMemberId,],
+        subTask: this.fb.array([]),
+        continuesTill: [,],
+        isRecurring: [,],
+        frequency: [,],
+        every: [,]
+      });
+
+      this.editSubTaskForm = this.fb.group({
+        description: [, Validators.required],
+        turnAroundTime: [, Validators.required],
+        assignedTo: [, Validators.required],
+        taskDueDate: [, Validators.required],
+      });
+      this.selectClient(this.selectedClient);
+
+    } else {
+      this.addTaskForm = this.fb.group({
+        searchTemplateList: [, Validators.required],
+        searchClientList: [, Validators.required],
+        assignedTo: [, Validators.required],
+        taskDueDate: [, Validators.required],
+        taskDescription: [,],
+        familyMemberId: [,],
+        subTask: this.fb.array([]),
+      });
+    }
+  }
+
   changeFillFormState() {
     this.isManual = !this.isManual;
     this.addTaskForm.reset();
     this.subTaskList = [];
+  }
+
+  makeTaskRecurring() {
+    this.isRecurringTaskForm = !this.isRecurringTaskForm;
+
   }
 
   changeTabState(subTaskItem, value) {
@@ -201,7 +223,6 @@ export class AddTasksComponent implements OnInit {
         }
     }
 
-
     this.crmTaskService.saveEditedCommentOnActivityTaskOrSubTask(data)
       .subscribe(res => {
         if (res) {
@@ -222,34 +243,39 @@ export class AddTasksComponent implements OnInit {
   }
 
   editedSubTaskSave() {
+    if (this.editSubTaskForm.valid) {
+      let assignedToChanged = (this.selectedSubTask.assignedTo !== this.editSubTaskForm.get('assignedTo').value) ? true : false;
+      let data = {
+        taskNumber: this.selectedSubTask.taskNumber,
+        assignedTo: this.editSubTaskForm.get('assignedTo').value,
+        assignedToChanged, //(true if assigned to is changed),
+        description: this.editSubTaskForm.get('description').value,
+        turnAroundTime: this.editSubTaskForm.get('turnAroundTime').value,
+        advisorId: this.advisorId,
+        taskId: this.selectedSubTask.taskId,
+        id: this.selectedSubTask.id
+      }
 
-    let assignedToChanged = (this.selectedSubTask.assignedTo !== this.editSubTaskForm.get('assignedTo').value) ? true : false;
-    let data = {
-      taskNumber: this.selectedSubTask.taskNumber,
-      assignedTo: this.editSubTaskForm.get('assignedTo').value,
-      assignedToChanged, //(true if assigned to is changed),
-      description: this.editSubTaskForm.get('description').value,
-      turnAroundTime: this.editSubTaskForm.get('turnAroundTime').value,
-      advisorId: this.advisorId,
-      taskId: this.selectedSubTask.taskId,
-      id: this.selectedSubTask.id
+      if (this.selectedSubTask.dueDate) {
+        let date = new Date(this.selectedSubTask.dueDate)
+        let dueDate = date.getFullYear() + "-" + (date.getMonth() + 1) + '-' + date.getDate();
+        data['dueDate'] = dueDate;
+      }
+
+      this.crmTaskService.saveEditedSubTaskValues(data)
+        .subscribe(res => {
+          if (res) {
+            console.log("edited response:", res)
+            this.eventService.openSnackBar('Successfully Saved!', 'DISMISS');
+          } else {
+            this.eventService.openSnackBar('Saving Failed!', 'DISMISS');
+          }
+        }, err => console.error(err));
+    } else {
+      this.editSubTaskForm.markAllAsTouched();
+      this.eventService.openSnackBar("Please fill required fields!", "DISMISS");
     }
 
-    if (this.selectedSubTask.dueDate) {
-      let date = new Date(this.selectedSubTask.dueDate)
-      let dueDate = date.getFullYear() + "-" + (date.getMonth() + 1) + '-' + date.getDate();
-      data['dueDate'] = dueDate;
-    }
-
-    this.crmTaskService.saveEditedSubTaskValues(data)
-      .subscribe(res => {
-        if (res) {
-          console.log("edited response:", res)
-          this.eventService.openSnackBar('Successfully Saved!', 'DISMISS');
-        } else {
-          this.eventService.openSnackBar('Saving Failed!', 'DISMISS');
-        }
-      }, err => console.error(err));
   }
 
   getTeamMemberObject(value) {
@@ -338,6 +364,11 @@ export class AddTasksComponent implements OnInit {
       })
   }
 
+  toggleCheckSubTask(value, item, index) {
+    console.log("this is some subtask check uncheck value", value)
+    this.markTaskOrSubTaskDone('subTask', item, value);
+  }
+
   deleteAttachmentOfTaskSubTask(id, index, choice) {
     this.crmTaskService.deleteAttachmentTaskSubTask(id)
       .subscribe(res => {
@@ -421,17 +452,17 @@ export class AddTasksComponent implements OnInit {
       }, err => console.error(err))
   }
 
-  markTaskOrSubTaskDone(choice) {
+  markTaskOrSubTaskDone(choice, subTaskItem, value) {
     let data;
     if (choice === 'task') {
       data = {
         taskId: this.data.id,
-        status: 1
+        status: value == true ? 1 : 0
       }
     } else if (choice === 'subTask') {
       data = {
-        subTaskId: this.selectedSubTask.id,
-        status: 1
+        subTaskId: subTaskItem.id,
+        status: value == true ? 1 : 0
       }
     }
 
@@ -629,6 +660,15 @@ export class AddTasksComponent implements OnInit {
     return temp + 1;
   }
 
+  formValidationOfTaskForm() {
+    if (this.addTaskForm.valid) {
+      this.onCreateTask();
+    } else {
+      this.addTaskForm.markAllAsTouched();
+      this.eventService.openSnackBar("Please fill required Fields", "DISMISS");
+    }
+  }
+
   onCreateTask() {
     let subTaskArr = [];
     let taskNumberForSubTask;
@@ -698,7 +738,7 @@ export class AddTasksComponent implements OnInit {
         subCategoryId: this.selectedTemplate !== null ? this.selectedTemplate.subcategoryId : 0,
         subSubCategoryId: this.selectedTemplate !== null ? this.selectedTemplate.subSubCategoryId : 0,
         adviceTypeId: this.selectedTemplate !== null ? this.selectedTemplate.subSubCategoryId : 0,
-        subTask: subTaskArr,
+        subTasks: subTaskArr,
       }
       console.log("this is add task create data", data);
       this.crmTaskService.addTask(data)

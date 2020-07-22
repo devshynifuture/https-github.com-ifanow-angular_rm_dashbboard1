@@ -103,7 +103,7 @@ export class RetirementAccMobComponent implements OnInit {
     this.outputValue.emit(flag);
   }
   calculateSum(){
-    this.totalCurrentValue = (this.epfCv ? this.epfCv : 0)+(this.npsCv ? this.npsCv : 0)
-    +(this.gratuityCv ? this.gratuityCv :0)
+    this.totalCurrentValue = (this.epfData.sumOfEpfBalanceTillToday ? this.epfData.sumOfEpfBalanceTillToday : 0)+(this.npsData.sumOfCurrentValue ? this.npsData.sumOfCurrentValue : 0)
+    +(this.gratuity.sumOfAmountReceived ? this.gratuity.sumOfAmountReceived :0)
   }
 }

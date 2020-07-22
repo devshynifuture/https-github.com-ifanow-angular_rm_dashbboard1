@@ -76,7 +76,8 @@
 					</mat-radio-button>
 					<mat-radio-button [value]="3" class="b-ua text-custom">60 mins</mat-radio-button>
 				</mat-radio-group>
-				<mat-error class="f-12 pt-4" *ngIf="callDetails.controls['callDurationId'].hasError('required') && callDetails.controls['callDurationId'].touched">
+				<mat-error class="f-12 pt-4"
+					*ngIf="callDetails.controls['callDurationId'].hasError('required') && callDetails.controls['callDurationId'].touched">
 					This field is required
 				</mat-error>
 			</div>
@@ -89,8 +90,8 @@
 			<div class="col-md-2 pl-0">
 				<div class="form-group mb-0">
 					<mat-form-field>
-						<input matInput class="form-control" appInputValueValidation
-						[inputValidator]="validatorType.NUMBER_ONLY" formControlName="rollingDays">
+						<input matInput class="form-control" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+							formControlName="rollingDays">
 						<mat-error class="f-12 pt-4">
 							This field is required
 						</mat-error>
@@ -175,56 +176,55 @@
 				</p>
 			</div>
 			<div class="col-md-6 pl-0 pr-0" formArrayName="callDate">
-				<div class="row" *ngFor="let obj of callDetails.controls['callDate'].controls; let i=index"
-				[formGroupName]="i" [ngClass]="i>0?'pt-44':''">
+				<div class="row" *ngFor="let obj of callDetails.controls['callDate'].controls; let i=index" [formGroupName]="i"
+					[ngClass]="i>0?'pt-44':''">
 					<div class="col-md-4  pl-0 ">
 						<h5 class="m-0 f-14 ">Start date</h5>
 						<div class="form-group mb-0">
 							<mat-form-field class="ba-date">
-                                <input (click)="picker.open()" (focus)="picker.open()" autocomplete="off" matInput
-                                    formControlName="startDate" [matDatepicker]="picker" [min]="minStart"
-                                    class="form-control br-0 b-0" readonly>
-                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                <mat-datepicker #picker></mat-datepicker>
-                                <mat-error class="f-12">
-                                    This field is required
-                                </mat-error>
-                            </mat-form-field>
+								<input (click)="picker.open()" (focus)="picker.open()" autocomplete="off" matInput
+									formControlName="startDate" [matDatepicker]="picker" [min]="minStart"
+									(dateChange)="dateChange('start', obj, i)" class="form-control br-0 b-0" readonly>
+								<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+								<mat-datepicker #picker></mat-datepicker>
+								<mat-error class="f-12">
+									This field is required
+								</mat-error>
+							</mat-form-field>
 						</div>
 					</div>
 					<div class="col-md-4 pr-0 ">
 						<h5 class="m-0 f-14">End date</h5>
 						<div class="form-group mb-0">
 							<mat-form-field class="ba-date">
-                                <input (click)="picker2.open()" (focus)="picker2.open()" autocomplete="off" matInput
-                                    formControlName="endDate" [matDatepicker]="picker2" [min]="obj.controls['startDate'].value"
-                                    class="form-control br-0 b-0" readonly>
-                                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-                                <mat-datepicker #picker2></mat-datepicker>
-                                <mat-error class="f-12">
-                                    This field is required
-                                </mat-error>
-                            </mat-form-field>
+								<input (click)="picker2.open()" (focus)="picker2.open()" autocomplete="off" matInput
+									(dateChange)="dateChange('end', obj, i)" formControlName="endDate" [matDatepicker]="picker2"
+									[min]="obj.controls['startDate'].value" class="form-control br-0 b-0" readonly>
+								<mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+								<mat-datepicker #picker2></mat-datepicker>
+								<mat-error class="f-12">
+									This field is required
+								</mat-error>
+							</mat-form-field>
 						</div>
 					</div>
 					<div class="col-md-2 pr-0 d-flex align-items-center">
-						<i *ngIf="callDetails.value.callDate.length < 3"
-							class="material-icons text-primitive f-20 c-p float-left" (click)="addCallDates(null)">add</i>
-						<i *ngIf="callDetails.value.callDate.length > 1"
-							class="material-icons text-primitive f-20 c-p pl-10 pt-8"
+						<i *ngIf="callDetails.value.callDate.length < 3" class="material-icons text-primitive f-20 c-p float-left"
+							(click)="addCallDates(null, i)">add</i>
+						<i *ngIf="callDetails.value.callDate.length > 1" class="material-icons text-primitive f-20 c-p pl-10 pt-8"
 							(click)="removeCoOwner(i,obj)">remove</i>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="row pt-44" *ngIf="!callSetting">
+	<div class="row pt-44">
 		<div class="col-md-8 right text-right">
 			<app-progress-button (btnClick)="addCallSetting()" [options]="barButtonOptions">
 			</app-progress-button>
 		</div>
 	</div>
-	
+
 	<!-- <div class="row pt-44">
 		<div class="col-md-12 pl-48">
 			<h5 class="m-0 roboto text-dark f-400">Availability</h5>

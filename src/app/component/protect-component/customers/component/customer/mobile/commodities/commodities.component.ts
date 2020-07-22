@@ -11,6 +11,11 @@ export class CommoditiesComponent implements OnInit {
   commodities;
   backToMf;
   showDetailView: any;
+
+  // change this declared to fix build issue
+  detailedViewData;
+  // 
+
   constructor() { }
   @Input()
   set data(data) {
@@ -20,7 +25,7 @@ export class CommoditiesComponent implements OnInit {
   }
   ngOnInit() {
   }
-  getValue(value){
+  getValue(value) {
     this.showDetailView = value;
   }
 }

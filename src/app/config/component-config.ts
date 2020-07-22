@@ -576,6 +576,7 @@ export const appConfig = {
   BACKOFFICE_POST_UNMATCHED_FOLIOS_ADD: 'backoffice/aum/recon/unmatched/folios/add',
   BACKOFFICE_GET_AUM_REPORT_LIST: 'backoffice/aum/reconciliation/report/get',
   BACKOFFICE_GET_FOLIO_BASED_SEARCH_LIST: 'backoffice/folio/based/on/search/list/get',
+  RM_RECALCULATE_BALANCE_UNITS: 'recalculate/balance/unit',
   // BACKOFFICE_GET_GROUP_HEAD_NAME_LIST: 'backoffice/foliowise/groupHead/list/get',
   // BACKOFFICE_GET_INVESTOR_NAME_LIST: 'backoffice/foliowise/applicaName/list/get',
   BACKOFFICE_PUT_DELETE_UNFREEZE_TRANSACTION: 'backoffice/delete/unfreeze/transaction',
@@ -606,6 +607,7 @@ export const appConfig = {
   ACTIVITY_ADD_COMMENT: 'rmdashboard/dashboard/ifa-onboard/activity/chat/post',
   ACTIVITY_UPDATE_COMMENT: 'rmdashboard/dashboard/ifa-onboard/activity/chat/edit',
   ACTIVITY_DELETECOMMENT: 'rmdashboard/dashboard/ifa-onboard/activity/chat/delete',
+
   /********************************* TASKS Section ****************************************/
 
   ACTIVITY_GET_ALL_TASK_LIST: 'activity/task/list/get',
