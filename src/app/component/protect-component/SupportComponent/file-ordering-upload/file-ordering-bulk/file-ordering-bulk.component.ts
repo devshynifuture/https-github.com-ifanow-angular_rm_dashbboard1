@@ -94,6 +94,7 @@ export class FileOrderingBulkComponent implements OnInit {
   rtId;
 
   getRtaList() {
+    this.isLoading = true;
     this.reconService.getRTListValues({})
       .subscribe(res => {
         if (res && res.length !== 0) {
@@ -271,7 +272,6 @@ export class FileOrderingBulkComponent implements OnInit {
   }
 
   fileOrderBulkHistoryListGet(data) {
-    this.isLoading = true;
     this.fileOrderingUploadService
       .getBulkFileOrderListData(data)
       .subscribe((data) => {

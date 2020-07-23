@@ -28,6 +28,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
   summaryTransactionDate: any;
   isDeleteAndReorderClicked: boolean = false;
   fromClose: boolean = false;
+  errorMessage: string;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -179,6 +180,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
     };
     this.supportService.getFolioCountValues(data)
       .subscribe(res => {
+        this.isLoading = false;
         this.totalCount = res[0];
         this.aumFileCount = res[1];
         if (this.totalCount !== 0 && this.aumFileCount !== 0) {
@@ -196,9 +198,13 @@ export class UpperSliderBackofficeComponent implements OnInit {
           console.log(objArr);
           this.dataSource.data = objArr;
         } else if (this.totalCount === 0) {
-          this.eventService.openSnackBar('No Data Found', 'DISMISS');
+          this.dataSource.data = null;
+          this.errorMessage = "No Data Found";
+          this.eventService.openSnackBarNoDuration('No Data Found', 'DISMISS');
         } else if (this.aumFileCount === 0) {
-          this.eventService.openSnackBar('Aum File Not Uploaded', 'DISMISS');
+          this.dataSource.data = null;
+          this.errorMessage = "Aum File Not Uploaded";
+          this.eventService.openSnackBarNoDuration('Aum File Not Uploaded', 'DISMISS');
         }
       })
   }
@@ -225,7 +231,6 @@ export class UpperSliderBackofficeComponent implements OnInit {
             this.totalCount = res[0];
             this.aumFileCount = res[1];
 
-
             if (this.totalCount !== 0 && this.aumFileCount !== 0) {
               const data = {
                 advisorIds: [...this.adminAdvisorIds],
@@ -240,6 +245,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
                   let objArr = [];
                   console.log('this is summary values::::', res);
                   if (res && res.aumList) {
+                    this.isLoading = false;
                     this.canExportExcelSheet = 'true';
                     this.aumList = res.aumList;
                     this.aumDate = res.aumList[0].aumDate;
@@ -298,40 +304,6 @@ export class UpperSliderBackofficeComponent implements OnInit {
                     }];
                     this.dataSource.data = objArr;
 
-                    // if (doStartRecon) {
-                    //   let dataObj = this.dataSource.data[0];
-                    //   let matchedCount = this.totalCount - parseFloat(dataObj.after_recon);
-                    //   let dateObjDoneOn = new Date(this.summaryDoneOnDate);
-                    //   let doneOnFormatted = dateObjDoneOn.getFullYear() + '-' +
-                    //     `${(dateObjDoneOn.getMonth() + 1) < 10 ? '0' : ''}` +
-                    //     (dateObjDoneOn.getMonth() + 1) + "-" +
-                    //     `${dateObjDoneOn.getDate() < 10 ? 0 : ''}` + dateObjDoneOn.getDate();
-
-                    //   const data = {
-                    //     advisorId: this.advisorId,
-                    //     brokerId: this.brokerId,
-                    //     totalFolioCount: this.totalCount,
-                    //     matchedCount,
-                    //     aumBalanceDate: this.aumDate,
-                    //     unmatchedCountBeforeRecon: dataObj.before_recon,
-                    //     unmatchedCountAfterRecon: dataObj.after_recon,
-                    //     transactionDate: this.summaryTransactionDate,
-                    //     rtId: this.data.rtId,
-                    //     doneOn: doneOnFormatted,
-                    //     rmId: this.rmId
-                    //   };
-
-                    //   this.reconService.putBackofficeReconAdd(data)
-                    //     .subscribe(res => {
-                    //       console.log('started reconciliation::::::::::::', res);
-                    //       if (this.data.startRecon) {
-                    //         this.aumReconId = res;
-
-                    //       }
-                    //     }, err => {
-                    //       console.error(err);
-                    //     });
-                    // }
 
                     if (res.unmappedCount === 0) {
                       this.eventService.openSnackBar("All Folios are Matched", "DISMISS");
@@ -352,12 +324,18 @@ export class UpperSliderBackofficeComponent implements OnInit {
                   this.isLoading = false;
                 });
             } else if (this.totalCount === 0) {
-              this.eventService.openSnackBar('No Data Found', 'DISMISS');
+              this.isLoading = false;
+              this.dataSource.data = null;
+              this.errorMessage = "No Data Found";
+              this.eventService.openSnackBarNoDuration('No Data Found', 'DISMISS');
             } else if (this.aumFileCount === 0) {
-              this.eventService.openSnackBar('Aum File Not Uploaded', 'DISMISS');
+              this.isLoading = false;
+              this.dataSource.data = null;
+              this.errorMessage = "Aum File Not Uploaded";
+              this.eventService.openSnackBarNoDuration('Aum File Not Uploaded', 'DISMISS');
             }
           } else {
-            this.eventService.openSnackBar('No Data found!', "DISMISS");
+            this.eventService.openSnackBarNoDuration('No Data found!', "DISMISS");
           }
         }
       }, err => console.error(err))

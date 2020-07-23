@@ -21,7 +21,7 @@
 <div class="row pt-90 pb-48">
     <div class="col-md-8">
         <mat-tab-group id="ui-backoffice-tabs" (selectedTabChange)="onMainTabChanged($event)">
-            <mat-tab >
+            <mat-tab>
                 <ng-template mat-tab-label>
                     <h5 class="f-500">
                         Summary
@@ -122,7 +122,7 @@
                     </div>
                     <div class="col-md-12 p-0" *ngIf="dataSource.data === null">
                         <h4 class="d-flex justify-content-center p-44 b-a">
-                            No Data Found
+                            {{ errorMessage }}
                         </h4>
                     </div>
                 </div>
@@ -298,8 +298,7 @@
 
             <mat-tab [disabled]="isTabDisabled">
                 <ng-template mat-tab-label>
-                    <div matTooltip="Kindly, click on export button"
-                        [matTooltipDisabled]="!isTabDisabled">
+                    <div matTooltip="Kindly, click on export button" [matTooltipDisabled]="!isTabDisabled">
                         <h5 [ngClass]="{'text-custom': isTabDisabled}">
                             Deletion & reordering
                         </h5>
