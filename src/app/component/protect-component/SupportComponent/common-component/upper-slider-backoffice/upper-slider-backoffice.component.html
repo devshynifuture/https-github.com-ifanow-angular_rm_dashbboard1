@@ -110,7 +110,7 @@
                                         [matTooltip]="canExportExcelSheet === 'intermediate'? 'Loading...': (canExportExcelSheet == 'false' ? 'No Data Found': (canExportExcelSheet == 'true'? 'Click Now': null))"
                                         [matTooltipDisabled]="didAumReportListGot" matTooltipPosition="below">
                                         <button class="bg-grey lt classExport " mat-button *ngIf="!isLoading"
-                                            [disabled]="(canExportExcelSheet == 'false')"
+                                            [disabled]="(canExportExcelSheet == 'false') || (canExportExcelSheet == 'intermediate')"
                                             (click)="exportToExcelSheet('export-folios', element)">Export</button>
                                     </div>
                                 </td>

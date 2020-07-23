@@ -29,6 +29,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
   isDeleteAndReorderClicked: boolean = false;
   fromClose: boolean = false;
   errorMessage: string;
+  reportListWithIsMappedToMinusOne: any;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -183,6 +184,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
         this.isLoading = false;
         this.totalCount = res[0];
         this.aumFileCount = res[1];
+
         if (this.totalCount !== 0 && this.aumFileCount !== 0) {
           let objArr = [];
           objArr = [{
@@ -353,9 +355,23 @@ export class UpperSliderBackofficeComponent implements OnInit {
       this.reportDuplicateFoliosIsMappedToMinusOne.forEach(element => {
         mutualFundIds.push(element.mutualFundId);
       });
+
+      let aumDateObj = new Date(this.aumDate);
+      let aumDateFormated = aumDateObj.getFullYear() + '-'
+        + `${(aumDateObj.getMonth() + 1) < 10 ? '0' : ''}`
+        + (aumDateObj.getMonth() + 1) + '-'
+        + `${aumDateObj.getDate() < 10 ? '0' : ''}`
+        + aumDateObj.getDate();
+      const isParent = this.isRmLogin ? true : ((this.parentId === this.advisorId) ? true : false);
+
       data = {
         advisorIds: [this.advisorId],
-        folio: mutualFundIds
+        aum: {
+          folio: mutualFundIds,
+        },
+        aumDate: aumDateFormated,
+        parentId: this.parentId,
+        isParent
       };
     } else {
       let mutualFundIds = [];
@@ -405,9 +421,29 @@ export class UpperSliderBackofficeComponent implements OnInit {
           // const arrValue = [];
           if (this.data.flag === 'report') {
             for (let i in res) {
-              for (let f in this.aumListReportValue) {
-                if (res[i].id == this.aumListReportValue[f].mutualFundId) {
-                  filteredArrValue.push(res[i]);
+              for (let f in this.reportListWithIsMappedToMinusOne) {
+                if (res[i].id == this.reportListWithIsMappedToMinusOne[f].mutualFundId) {
+                  let item = this.reportListWithIsMappedToMinusOne[f];
+                  filteredArrValue.push({
+                    id: item.id,
+                    shemeName: item.shemeName,
+                    folioNumber: item.folioNumber,
+                    mutualFundId: item.mutualFundId,
+                    advisorId: item.advisorId,
+                    broker_id: item.broker_id,
+                    aumUnits: (item.aumUnits).toFixed(3),
+                    calculatedUnits: (item.calculatedUnits).toFixed(3),
+                    difference: (item.calculatedUnits - item.aumUnits).toFixed(3),
+                    freezeDate: item.freezeDate ? item.freezeDate : null,
+                    isMapped: item.isMapped,
+                    aumDate: item.aumDate,
+                    brokerCode: item.brokerCode,
+                    schemeCode: item.schemeCode,
+                    mutualFundTransaction: res[i].mutualFundTransactions,
+                    transactions: '',
+                    isUnfreezeClicked: false,
+                    isFreezeClicked: false,
+                  });
                 }
               }
             }
@@ -483,6 +519,9 @@ export class UpperSliderBackofficeComponent implements OnInit {
   onMainTabChanged(event) {
     console.log(event);
     if (event.index === 2) {
+      if (this.dataSource3.data === null) {
+        this.eventService.openSnackBarNoDuration("No Delete And Reorder List found", "DISMISS");
+      }
       this.reconciliationAdd();
     }
   }
@@ -989,6 +1028,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
         this.isLoading = false;
         console.log('this is aum report list get:::', res);
         if (res) {
+          this.aumDate = res[0].aumDate;
           this.didAumReportListGot = true;
           this.canExportExcelSheet = 'true';
           const arrayValue = [];
@@ -996,6 +1036,10 @@ export class UpperSliderBackofficeComponent implements OnInit {
           const reportListWithIsMapMinusOneAndTransacCheckTrue = this.aumListReportValue.filter(item => {
             return item.isMapped === -1 && item.transactionCheck === true;
           });
+
+          this.reportListWithIsMappedToMinusOne = res.filter(item => {
+            return item.isMapped === -1;
+          })
           console.log('this is aum report ismap -1 and transac check true::', reportListWithIsMapMinusOneAndTransacCheckTrue);
           reportListWithIsMapMinusOneAndTransacCheckTrue.forEach(element => {
             arrayValue.push({
@@ -1010,16 +1054,23 @@ export class UpperSliderBackofficeComponent implements OnInit {
               investorName: element.investorName,
               isUnfreezeClicked: false,
               isFreezeClicked: false,
-              mutualFundTransaction: element.mutualFundTransaction
+              mutualFundTransaction: element.mutualFundTransaction,
+              aumDate: element.aumDate
             });
           });
-          this.dataSource1.data = arrayValue;
+          if (arrayValue.length === 0) {
+            this.dataSource1.data = null;
+          } else {
+            this.dataSource1.data = arrayValue;
+          }
+
         } else {
           this.canExportExcelSheet = 'false';
           this.didAumReportListGot = false;
           this.dataSource1.data = null;
         }
       }, err => {
+        this.dataSource1.data = null;
         console.error(err);
       });
   }
