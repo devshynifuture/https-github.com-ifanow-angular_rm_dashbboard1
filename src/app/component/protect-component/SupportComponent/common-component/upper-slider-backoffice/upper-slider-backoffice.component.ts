@@ -319,13 +319,6 @@ export class UpperSliderBackofficeComponent implements OnInit {
                       this.util.addZeroBeforeNumber((doneOnDate.getMonth() + 1), 2) + '-' +
                       this.util.addZeroBeforeNumber(doneOnDate.getDate(), 2);
                     // console.log("datas available till now:::::", this.data, res);
-
-
-                    if (res.unmappedCount === 0) {
-                      this.eventService.openSnackBar("All Folios are Matched", "DISMISS");
-                    }
-
-                    // aum date for all object is the same
                     objArr = [{
                       doneOne: res.doneOn,
                       aum_balance: res.aumList[0].aumDate,
@@ -335,7 +328,48 @@ export class UpperSliderBackofficeComponent implements OnInit {
                       before_recon: res.unmappedCount,
                       after_recon: res.unmappedCount
                     }];
+                    this.dataSource.data = objArr;
 
+                    if (doStartRecon) {
+                      let dataObj = this.dataSource.data[0];
+                      let matchedCount = this.totalCount - parseFloat(dataObj.after_recon);
+                      let dateObjDoneOn = new Date(this.summaryDoneOnDate);
+                      let doneOnFormatted = dateObjDoneOn.getFullYear() + '-' +
+                        `${(dateObjDoneOn.getMonth() + 1) < 10 ? '0' : ''}` +
+                        (dateObjDoneOn.getMonth() + 1) + "-" +
+                        `${dateObjDoneOn.getDate() < 10 ? 0 : ''}` + dateObjDoneOn.getDate();
+
+                      const data = {
+                        advisorId: this.advisorId,
+                        brokerId: this.brokerId,
+                        totalFolioCount: this.totalCount,
+                        matchedCount,
+                        aumBalanceDate: this.aumDate,
+                        unmatchedCountBeforeRecon: dataObj.before_recon,
+                        unmatchedCountAfterRecon: dataObj.after_recon,
+                        transactionDate: this.summaryTransactionDate,
+                        rtId: this.data.rtId,
+                        doneOn: doneOnFormatted,
+                        rmId: this.rmId
+                      };
+
+                      this.reconService.putBackofficeReconAdd(data)
+                        .subscribe(res => {
+                          console.log('started reconciliation::::::::::::', res);
+                          if (this.data.startRecon) {
+                            this.aumReconId = res;
+
+                          }
+                        }, err => {
+                          console.error(err);
+                        });
+                    }
+
+                    if (res.unmappedCount === 0) {
+                      this.eventService.openSnackBar("All Folios are Matched", "DISMISS");
+                    }
+
+                    // aum date for all object is the same
                     this.filteredAumListWithIsMappedToMinusOne.forEach(element => {
                       this.mutualFundIds.push(element.mutualFundId);
                     });
@@ -343,9 +377,10 @@ export class UpperSliderBackofficeComponent implements OnInit {
                     this.canExportExcelSheet = 'false';
                     this.dataSource1.data = null;
                     objArr = null;
+                    this.dataSource.data = objArr;
                     this.eventService.openSnackBar("All folios are Matched", "DISMISS");
                   }
-                  this.dataSource.data = objArr;
+
                   this.isLoading = false;
                 });
             } else if (this.totalCount === 0) {
@@ -1016,40 +1051,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
   dialogClose() {
     console.log('this is clicked');
     // post call
-    let dataObj = this.dataSource.data[0];
-    let matchedCount = this.totalCount - parseFloat(dataObj.after_recon);
-    let dateObjDoneOn = new Date(this.summaryDoneOnDate);
-    let doneOnFormatted = dateObjDoneOn.getFullYear() + '-' +
-      `${(dateObjDoneOn.getMonth() + 1) < 10 ? '0' : ''}` +
-      (dateObjDoneOn.getMonth() + 1) + "-" +
-      `${dateObjDoneOn.getDate() < 10 ? 0 : ''}` + dateObjDoneOn.getDate();
-
-    const data = {
-      advisorId: this.advisorId,
-      brokerId: this.brokerId,
-      totalFolioCount: this.totalCount,
-      matchedCount,
-      aumBalanceDate: this.aumDate,
-      unmatchedCountBeforeRecon: dataObj.before_recon,
-      unmatchedCountAfterRecon: dataObj.after_recon,
-      transactionDate: this.summaryTransactionDate,
-      rtId: this.data.rtId,
-      doneOn: doneOnFormatted,
-      rmId: this.rmId
-    };
-
-    this.reconService.putBackofficeReconAdd(data)
-      .subscribe(res => {
-        console.log('started reconciliation::::::::::::', res);
-        if (this.data.startRecon) {
-          this.aumReconId = res;
-          this.postReqForBackOfficeUnmatchedFolios();
-        }
-      }, err => {
-        console.error(err);
-      });
-
-
+    this.postReqForBackOfficeUnmatchedFolios();
 
     this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: true });
   }
