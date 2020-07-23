@@ -26,6 +26,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
   duplicateFolioWithIsMappedMinusOne: any = [];
   summaryDoneOnDate: any;
   summaryTransactionDate: any;
+  isDeleteAndReorderClicked: boolean = false;
+  fromClose: boolean = false;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -201,40 +203,6 @@ export class UpperSliderBackofficeComponent implements OnInit {
       })
   }
 
-  getFolioCount() {
-    const isParent = this.isRmLogin ? true : ((this.parentId === this.advisorId) ? true : false);
-
-    const data = {
-      advisorIds: [...this.adminAdvisorIds],
-      arnRiaDetailId: this.brokerId,
-      rt: this.data.rtId,
-      parentId: (this.adminId && this.adminId == 0) ? this.advisorId : (this.parentId ? this.parentId : this.advisorId),
-      isParent,
-    };
-    // http://dev.ifanow.in:8080/futurewise/api/v1/test/backoffice/folioCount/get?advisorIds=5435&arnRiaDetailId=105&parentId=5435&rt=2
-
-  }
-
-  // getDataFromObsAfterDeletingTransacn() {
-  //   console.log('updoate ifanow units function called');
-  //   this.isLoading = true;
-  //   this.supportService.getDataThroughObs().subscribe(res => {
-  //     console.log('this is something coming from obs:::::::::::', res);
-  //     this.isLoading = false;
-  //     if (res !== '') {
-  //       // update units ifanow
-  //       console.log('this is response that im getting::::', res);
-
-  //       this.dataSource1.data.map(item => {
-  //         item.unitsIfanow = String((res.units).toFixed(3));
-  //         item.difference = String((parseInt(item.unitsIfanow) - parseInt(item.unitsRta)).toFixed(3));
-  //       });
-  //       this.getBackofficeAumReconListSummary(false);
-  //       this.getDuplicateFolioList();
-  //     }
-  //   });
-  // }
-
   getBackofficeAumReconListSummary(doStartRecon) {
     this.isLoading = true;
     this.dataSource.data = ELEMENT_DATA;
@@ -330,40 +298,40 @@ export class UpperSliderBackofficeComponent implements OnInit {
                     }];
                     this.dataSource.data = objArr;
 
-                    if (doStartRecon) {
-                      let dataObj = this.dataSource.data[0];
-                      let matchedCount = this.totalCount - parseFloat(dataObj.after_recon);
-                      let dateObjDoneOn = new Date(this.summaryDoneOnDate);
-                      let doneOnFormatted = dateObjDoneOn.getFullYear() + '-' +
-                        `${(dateObjDoneOn.getMonth() + 1) < 10 ? '0' : ''}` +
-                        (dateObjDoneOn.getMonth() + 1) + "-" +
-                        `${dateObjDoneOn.getDate() < 10 ? 0 : ''}` + dateObjDoneOn.getDate();
+                    // if (doStartRecon) {
+                    //   let dataObj = this.dataSource.data[0];
+                    //   let matchedCount = this.totalCount - parseFloat(dataObj.after_recon);
+                    //   let dateObjDoneOn = new Date(this.summaryDoneOnDate);
+                    //   let doneOnFormatted = dateObjDoneOn.getFullYear() + '-' +
+                    //     `${(dateObjDoneOn.getMonth() + 1) < 10 ? '0' : ''}` +
+                    //     (dateObjDoneOn.getMonth() + 1) + "-" +
+                    //     `${dateObjDoneOn.getDate() < 10 ? 0 : ''}` + dateObjDoneOn.getDate();
 
-                      const data = {
-                        advisorId: this.advisorId,
-                        brokerId: this.brokerId,
-                        totalFolioCount: this.totalCount,
-                        matchedCount,
-                        aumBalanceDate: this.aumDate,
-                        unmatchedCountBeforeRecon: dataObj.before_recon,
-                        unmatchedCountAfterRecon: dataObj.after_recon,
-                        transactionDate: this.summaryTransactionDate,
-                        rtId: this.data.rtId,
-                        doneOn: doneOnFormatted,
-                        rmId: this.rmId
-                      };
+                    //   const data = {
+                    //     advisorId: this.advisorId,
+                    //     brokerId: this.brokerId,
+                    //     totalFolioCount: this.totalCount,
+                    //     matchedCount,
+                    //     aumBalanceDate: this.aumDate,
+                    //     unmatchedCountBeforeRecon: dataObj.before_recon,
+                    //     unmatchedCountAfterRecon: dataObj.after_recon,
+                    //     transactionDate: this.summaryTransactionDate,
+                    //     rtId: this.data.rtId,
+                    //     doneOn: doneOnFormatted,
+                    //     rmId: this.rmId
+                    //   };
 
-                      this.reconService.putBackofficeReconAdd(data)
-                        .subscribe(res => {
-                          console.log('started reconciliation::::::::::::', res);
-                          if (this.data.startRecon) {
-                            this.aumReconId = res;
+                    //   this.reconService.putBackofficeReconAdd(data)
+                    //     .subscribe(res => {
+                    //       console.log('started reconciliation::::::::::::', res);
+                    //       if (this.data.startRecon) {
+                    //         this.aumReconId = res;
 
-                          }
-                        }, err => {
-                          console.error(err);
-                        });
-                    }
+                    //       }
+                    //     }, err => {
+                    //       console.error(err);
+                    //     });
+                    // }
 
                     if (res.unmappedCount === 0) {
                       this.eventService.openSnackBar("All Folios are Matched", "DISMISS");
@@ -533,6 +501,50 @@ export class UpperSliderBackofficeComponent implements OnInit {
     // }
   }
 
+  reconciliationAdd() {
+    this.isDeleteAndReorderClicked = true;
+
+    if (this.dataSource.data !== null) {
+      let dataObj = this.dataSource.data[0];
+      let matchedCount = this.totalCount - parseFloat(dataObj.after_recon);
+      let dateObjDoneOn = new Date(this.summaryDoneOnDate);
+      let doneOnFormatted = dateObjDoneOn.getFullYear() + '-' +
+        `${(dateObjDoneOn.getMonth() + 1) < 10 ? '0' : ''}` +
+        (dateObjDoneOn.getMonth() + 1) + "-" +
+        `${dateObjDoneOn.getDate() < 10 ? 0 : ''}` + dateObjDoneOn.getDate();
+
+      const data = {
+        advisorId: this.advisorId,
+        brokerId: this.brokerId,
+        totalFolioCount: this.totalCount,
+        matchedCount,
+        aumBalanceDate: this.aumDate,
+        unmatchedCountBeforeRecon: dataObj.before_recon,
+        unmatchedCountAfterRecon: dataObj.after_recon,
+        transactionDate: this.summaryTransactionDate,
+        rtId: this.data.rtId,
+        doneOn: doneOnFormatted,
+        rmId: this.rmId
+      };
+
+      this.reconService.putBackofficeReconAdd(data)
+        .subscribe(res => {
+          console.log('started reconciliation::::::::::::', res);
+          if (this.data.startRecon) {
+            this.aumReconId = res;
+            if (this.fromClose) {
+              this.postReqForBackOfficeUnmatchedFolios();
+            }
+          }
+        }, err => {
+          console.error(err);
+        });
+    } else {
+      this.eventService.openSnackBar("Reconciliation cannot be started as data is not present", "DISMISS");
+    }
+
+  }
+
   retryFileOrder() {
     const data = {
       id: this.aumReconId,
@@ -551,42 +563,47 @@ export class UpperSliderBackofficeComponent implements OnInit {
   }
 
   deleteAndReorder() {
-    const isParent = this.isRmLogin ? true : ((this.parentId === this.advisorId) ? true : false);
-    let mutualFundIds = [];
-    let aumIds = [];
-    this.filteredAumListWithIsMappedToMinusOne.forEach(element => {
-      if (Math.abs(element.calculatedUnits - element.aumUnits) !== 0) {
-        if (element.mutualFundId !== 0) {
-          mutualFundIds.push(element.mutualFundId);
-        } else {
-          aumIds.push(element.id);
+    if (this.aumReconId !== null) {
+      const isParent = this.isRmLogin ? true : ((this.parentId === this.advisorId) ? true : false);
+      let mutualFundIds = [];
+      let aumIds = [];
+      this.filteredAumListWithIsMappedToMinusOne.forEach(element => {
+        if (Math.abs(element.calculatedUnits - element.aumUnits) !== 0) {
+          if (element.mutualFundId !== 0) {
+            mutualFundIds.push(element.mutualFundId);
+          } else {
+            aumIds.push(element.id);
+          }
         }
+      });
+
+      if (mutualFundIds && mutualFundIds.length !== 0) {
+        const data = {
+          id: this.aumReconId,
+          brokerId: this.brokerId,
+          advisorIds: [this.advisorId],
+          rtId: this.data.rtId,
+          mutualFundIds,
+          aumIds,
+          parentId: this.parentId,
+          isParent
+        };
+        console.log('this is requestjson for delete and reorder:::: ', data);
+        this.reconService.deleteAndReorder(data)
+          .subscribe(res => {
+            console.log(res);
+            this.getBackofficeAumFileOrderListDeleteReorder();
+          }, err => {
+            console.error(err);
+          });
+
+      } else {
+        this.eventService.openSnackBar("No Mutual Fund ids found to delete", "DISMISS");
       }
-    });
-
-    if (mutualFundIds && mutualFundIds.length !== 0) {
-      const data = {
-        id: this.aumReconId,
-        brokerId: this.brokerId,
-        advisorIds: [this.advisorId],
-        rtId: this.data.rtId,
-        mutualFundIds,
-        aumIds,
-        parentId: this.parentId,
-        isParent
-      };
-      console.log('this is requestjson for delete and reorder:::: ', data);
-      this.reconService.deleteAndReorder(data)
-        .subscribe(res => {
-          console.log(res);
-          this.getBackofficeAumFileOrderListDeleteReorder();
-        }, err => {
-          console.error(err);
-        });
-
     } else {
-      this.eventService.openSnackBar("No Mutual Fund ids found to delete", "DISMISS");
+      this.eventService.openSnackBarNoDuration("Reconciliation not started try again, close and open this page again", "DISMISS");
     }
+
   }
 
   getBackofficeAumFileOrderListDeleteReorder() {
@@ -1051,7 +1068,12 @@ export class UpperSliderBackofficeComponent implements OnInit {
   dialogClose() {
     console.log('this is clicked');
     // post call
-    this.postReqForBackOfficeUnmatchedFolios();
+    if (!this.isDeleteAndReorderClicked) {
+      this.fromClose = true;
+      this.reconciliationAdd();
+    } else {
+      this.postReqForBackOfficeUnmatchedFolios();
+    }
 
     this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: true });
   }

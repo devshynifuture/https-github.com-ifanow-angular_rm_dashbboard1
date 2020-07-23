@@ -298,7 +298,8 @@
 
             <mat-tab [disabled]="isTabDisabled">
                 <ng-template mat-tab-label>
-                    <div matTooltip="Kindly, click on export button" [matTooltipDisabled]="!isTabDisabled">
+                    <div [(click)]="isTabDisabled ? $event.preventDefault() : reconciliationAdd()"
+                        matTooltip="Kindly, click on export button" [matTooltipDisabled]="!isTabDisabled">
                         <h5 [ngClass]="{'text-custom': isTabDisabled}">
                             Deletion & reordering
                         </h5>
