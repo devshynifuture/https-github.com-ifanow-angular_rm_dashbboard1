@@ -56,7 +56,7 @@
             </div>
             <div class="col-md-2 p-0 d-flex align-items-center">
                 <i *ngIf="addLiabilityForm.value.getCoOwnerName.length < 3"
-                    class="material-icons text-primitive f-20 c-p float-left" (click)="     (undefined)">add</i>
+                    class="material-icons text-primitive f-20 c-p float-left" (click)="addNewCoOwner(undefined)">add</i>
                 <i *ngIf="addLiabilityForm.value.getCoOwnerName.length > 1"
                     class="material-icons text-primitive f-20 c-p pl-10" (click)="removeCoOwner(pointIndex)">remove</i>
             </div>

@@ -583,6 +583,12 @@ export class AddLiabilitiesComponent implements OnInit, DataComponent {
         }
       });
     }
+    this.addLiabilityForm.value.getCoOwnerName.forEach(element => {
+      if(element.familyMemberId == 0){
+        element.familyMemberId = this.clientId;
+        element.isClient = 1;
+      }
+    });
     this.addLiabilityForm.get('poDate').setErrors();
     if (this.addLiabilityForm.invalid) {
       this.addLiabilityForm.markAllAsTouched();
