@@ -415,6 +415,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
     // if (this.didAumReportListGot) {
     this.isLoadingForDuplicate = true;
     this.dataSource2.data = ELEMENT_DATA2;
+    this.duplicateFolioWithIsMappedMinusOne = [];
     // console.log("this is what im sending for duplicate folio data", data);
     this.reconService.getDuplicateFolioDataValues(data)
       // this.reconService.getDuplicateDataValues(data)

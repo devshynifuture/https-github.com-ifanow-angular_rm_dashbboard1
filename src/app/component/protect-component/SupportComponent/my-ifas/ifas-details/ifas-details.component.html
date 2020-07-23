@@ -45,7 +45,7 @@
                                     <th class="br w-11" mat-header-cell *matHeaderCellDef> ARN/RIA </th>
                                     <td class="br w-11" mat-cell *matCellDef="let element">
                                         <div class="bar">
-                                            {{(isLoading)?'': (element.arnOrRia==1)?'ARN':'RIA'}}
+                                            {{(isLoading)?'': element.arnRiaNumber}}
                                         </div>
                                     </td>
                                 </ng-container>
@@ -149,7 +149,7 @@
                                 <ng-container matColumnDef="arn">
                                     <th class="br w-11" mat-header-cell *matHeaderCellDef> ARN/RIA </th>
                                     <td class="br w-11" mat-cell *matCellDef="let element">
-                                        <div class="bar">{{(isLoading)?'': (element.arnOrRia==1)?'ARN':'RIA'}}</div>
+                                        <div class="bar">{{(isLoading)?'': element.arnRiaNumber}}</div>
                                     </td>
                                 </ng-container>
                                 <ng-container matColumnDef="doneOn">
@@ -251,7 +251,7 @@
                                 <ng-container matColumnDef="arn">
                                     <th class="br w-11" mat-header-cell *matHeaderCellDef> ARN/RIA </th>
                                     <td class="br w-11" mat-cell *matCellDef="let element">
-                                        <div class="bar">{{(isLoading)?'': (element.arnOrRia==1)?'ARN':'RIA'}}
+                                        <div class="bar">{{(isLoading)?'': element.arnRiaNumber}}
                                         </div>
                                     </td>
                                 </ng-container>

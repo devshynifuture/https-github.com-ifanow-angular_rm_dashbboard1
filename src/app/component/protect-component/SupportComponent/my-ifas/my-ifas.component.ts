@@ -102,6 +102,22 @@ export class MyIfasComponent implements OnInit {
       })
   }
 
+  mergeSchemeCodeBulk() {
+    let data = [];
+    this.tableData.forEach(item => {
+      data.push(item.advisorId);
+    })
+    this.supportService.postMergeSchemeCodeBulk(data)
+      .subscribe(res => {
+        if (res) {
+          console.log(res);
+          this.eventService.openSnackBar("Bulk Scheme Code Merging done", "DISMISS");
+        } else {
+          this.eventService.openSnackBar("Bulk Scheme Code Merging Failed", "DISMISS");
+        }
+      }, err => console.error(err));
+  }
+
   recalculateBalanceUnit(data) {
     this.supportService.recalculateBalanceUnitData({ parentId: data.advisorId })
       .subscribe(res => {

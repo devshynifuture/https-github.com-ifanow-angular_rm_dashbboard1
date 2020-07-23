@@ -54,6 +54,10 @@ export class SupportService {
     return this.http.put(apiConfig.MAIN_URL + appConfig.BACKOFFICE_MERGE_SCHEME_CODE, data);
   }
 
+  postMergeSchemeCodeBulk(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.BACKOFFICE_MERGE_SCHEME_CODE_BULK, data);
+  }
+
   getBackofficeReports(data) {
     return null;
   }
