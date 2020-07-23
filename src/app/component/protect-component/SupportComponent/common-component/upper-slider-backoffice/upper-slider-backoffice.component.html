@@ -20,8 +20,8 @@
 
 <div class="row pt-90 pb-48">
     <div class="col-md-8">
-        <mat-tab-group id="ui-backoffice-tabs">
-            <mat-tab>
+        <mat-tab-group id="ui-backoffice-tabs" (selectedTabChange)="onMainTabChanged($event)">
+            <mat-tab >
                 <ng-template mat-tab-label>
                     <h5 class="f-500">
                         Summary
@@ -298,8 +298,8 @@
 
             <mat-tab [disabled]="isTabDisabled">
                 <ng-template mat-tab-label>
-                    <div [(click)]="isTabDisabled ? $event.preventDefault() : reconciliationAdd()"
-                        matTooltip="Kindly, click on export button" [matTooltipDisabled]="!isTabDisabled">
+                    <div matTooltip="Kindly, click on export button"
+                        [matTooltipDisabled]="!isTabDisabled">
                         <h5 [ngClass]="{'text-custom': isTabDisabled}">
                             Deletion & reordering
                         </h5>

@@ -501,6 +501,13 @@ export class UpperSliderBackofficeComponent implements OnInit {
     // }
   }
 
+  onMainTabChanged(event) {
+    console.log(event);
+    if (event.index === 2) {
+      this.reconciliationAdd();
+    }
+  }
+
   reconciliationAdd() {
     this.isDeleteAndReorderClicked = true;
 
