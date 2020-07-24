@@ -165,48 +165,20 @@ export class UpperSliderBackofficeComponent implements OnInit {
   }
 
   bindDataWithSummaryTable() {
+    let objArr = [];
+    objArr = [{
+      doneOne: this.data.doneOn,
+      aum_balance: this.data.aumBalanceDate,
+      transaction: this.data.transactionDate,
+      export_folios: '',
+      totalfolios: this.data.totalFolioCount,
+      before_recon: this.data.unmatchedCountBeforeRecon,
+      after_recon: this.data.unmatchedCountAfterRecon
+    }];
 
-    // needs to call total Count api
+    console.log(objArr);
+    this.dataSource.data = objArr;
 
-    const isParent = (this.isRmLogin) ? true : (this.parentId === this.advisorId) ? true : false;
-    const data = {
-      advisorIds: [...this.adminAdvisorIds],
-      brokerId: this.brokerId,
-      rt: this.data.rtId,
-      arnRiaDetailId: this.brokerId,
-      parentId: (this.adminId && this.adminId == 0) ? this.advisorId : (this.parentId ? this.parentId : this.advisorId),
-      isParent,
-    };
-    this.supportService.getFolioCountValues(data)
-      .subscribe(res => {
-        this.isLoading = false;
-        this.totalCount = res[0];
-        this.aumFileCount = res[1];
-
-        if (this.totalCount !== 0 && this.aumFileCount !== 0) {
-          let objArr = [];
-          objArr = [{
-            doneOne: this.data.doneOn,
-            aum_balance: this.data.aumBalanceDate,
-            transaction: this.data.transactionDate,
-            export_folios: '',
-            totalfolios: this.data.totalFolioCount,
-            before_recon: this.data.unmatchedCountBeforeRecon,
-            after_recon: this.data.unmatchedCountAfterRecon
-          }];
-
-          console.log(objArr);
-          this.dataSource.data = objArr;
-        } else if (this.totalCount === 0) {
-          this.dataSource.data = null;
-          this.errorMessage = "No Data Found";
-          this.eventService.openSnackBarNoDuration('No Data Found', 'DISMISS');
-        } else if (this.aumFileCount === 0) {
-          this.dataSource.data = null;
-          this.errorMessage = "Aum File Not Uploaded";
-          this.eventService.openSnackBarNoDuration('Aum File Not Uploaded', 'DISMISS');
-        }
-      })
   }
 
   getBackofficeAumReconListSummary() {
@@ -508,18 +480,10 @@ export class UpperSliderBackofficeComponent implements OnInit {
         this.eventService.openSnackBar(err, "DISMISS");
         this.isLoadingForDuplicate = false;
       });
-    // } else {
-    //   this.eventService.openSnackBar('No Aum Report List Found', 'Dismiss');
-    //   this.dataSource2.data = null;
-    // }
   }
 
   onMainTabChanged(event) {
-    console.log(event);
     if (event.index === 2) {
-      if (this.dataSource3.data === null) {
-        this.eventService.openSnackBarNoDuration("No Delete And Reorder List found", "DISMISS");
-      }
       this.reconciliationAdd();
     }
   }
@@ -553,11 +517,11 @@ export class UpperSliderBackofficeComponent implements OnInit {
         this.reconService.putBackofficeReconAdd(data)
           .subscribe(res => {
             console.log('started reconciliation::::::::::::', res);
-            if (this.data.startRecon) {
-              this.aumReconId = res;
-              if (this.fromClose) {
-                this.postReqForBackOfficeUnmatchedFolios();
-              }
+            this.aumReconId = res;
+            if (this.fromClose) {
+              this.postReqForBackOfficeUnmatchedFolios();
+            } else {
+              this.getBackofficeAumFileOrderListDeleteReorder();
             }
           }, err => {
             console.error(err);
@@ -591,39 +555,46 @@ export class UpperSliderBackofficeComponent implements OnInit {
       const isParent = this.isRmLogin ? true : ((this.parentId === this.advisorId) ? true : false);
       let mutualFundIds = [];
       let aumIds = [];
-      this.filteredAumListWithIsMappedToMinusOne.forEach(element => {
-        if (Math.abs(element.calculatedUnits - element.aumUnits) !== 0) {
-          if (element.mutualFundId !== 0) {
-            mutualFundIds.push(element.mutualFundId);
-          } else {
-            aumIds.push(element.id);
+      if (this.data.flag === 'report') {
+        this.reportListWithIsMappedToMinusOne.forEach(element => {
+          if (Math.abs(element.calculatedUnits - element.aumUnits) !== 0) {
+            if (element.mutualFundId !== 0) {
+              mutualFundIds.push(element.mutualFundId);
+            } else {
+              aumIds.push(element.id);
+            }
           }
-        }
-      });
-
-      if (mutualFundIds && mutualFundIds.length !== 0) {
-        const data = {
-          id: this.aumReconId,
-          brokerId: this.brokerId,
-          advisorIds: [this.advisorId],
-          rtId: this.data.rtId,
-          mutualFundIds,
-          aumIds,
-          parentId: this.parentId,
-          isParent
-        };
-        console.log('this is requestjson for delete and reorder:::: ', data);
-        this.reconService.deleteAndReorder(data)
-          .subscribe(res => {
-            console.log(res);
-            this.getBackofficeAumFileOrderListDeleteReorder();
-          }, err => {
-            console.error(err);
-          });
-
+        });
       } else {
-        this.eventService.openSnackBar("No Mutual Fund ids found to delete", "DISMISS");
+        this.filteredAumListWithIsMappedToMinusOne.forEach(element => {
+          if (Math.abs(element.calculatedUnits - element.aumUnits) !== 0) {
+            if (element.mutualFundId !== 0) {
+              mutualFundIds.push(element.mutualFundId);
+            } else {
+              aumIds.push(element.id);
+            }
+          }
+        });
       }
+      const data = {
+        id: this.aumReconId,
+        brokerId: this.brokerId,
+        advisorIds: [this.advisorId],
+        rtId: this.data.rtId,
+        mutualFundIds,
+        aumIds,
+        parentId: this.parentId,
+        isParent
+      };
+      console.log('this is requestjson for delete and reorder:::: ', data);
+      this.reconService.deleteAndReorder(data)
+        .subscribe(res => {
+          console.log(res);
+          this.getBackofficeAumFileOrderListDeleteReorder();
+        }, err => {
+          console.error(err);
+        });
+
     } else {
       this.eventService.openSnackBarNoDuration("Reconciliation not started try again, close and open this page again", "DISMISS");
     }
@@ -642,7 +613,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
             if (element && element.folios !== '') {
               const obj = {
                 count: element.folios.split(',').length,
-                file: new Blob([element.folios.split(',').join('\n\n')], { type: 'text/plain' })
+                file: new Blob([element.folios.split(',').join('\n')], { type: 'text/plain' })
               };
               element.folios = obj;
             }
@@ -669,6 +640,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
           });
 
           console.log('deleted reorder values::::', res);
+
           this.dataSource3.data = res;
         } else {
           this.dataSource3.data = null;
@@ -741,7 +713,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
         excelData.push(Object.assign(data));
       });
-      ExcelService.exportExcel(headerData, header, excelData, footer, value, this.data.clientName);
+      ExcelService.exportExcel(headerData, header, excelData, footer, value, this.data.clientName, this.upperHeaderName);
     } else {
       if (this.didAumReportListGot && this.aumListReportValue.length !== 0) {
         const rtName = this.getRtName(this.data.rtId);
@@ -761,7 +733,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
           ];
           excelData.push(Object.assign(data));
         });
-        ExcelService.exportExcel(headerData, header, excelData, footer, value, this.data.clientName);
+        let nameValue = + "-" + this.upperHeaderName;
+        ExcelService.exportExcel(headerData, header, excelData, footer, value, this.data.clientName, this.upperHeaderName);
       } else {
         this.eventService.openSnackBar('No Aum Report List Found', 'Dismiss');
       }
@@ -864,13 +837,17 @@ export class UpperSliderBackofficeComponent implements OnInit {
                         this.reportDuplicateFoliosIsMappedToMinusOne = this.aumListReportValue.filter(item => {
                           return item.isMapped === -1
                         });
+
+
+                        this.getDuplicateFolioList();
                       } else {
                         let desiredObj = this.aumList.find(item => item.mutualFundId === obj['mutualFundId']);
                         let removeIndex = this.aumList.indexOf(desiredObj);
                         this.aumList.splice(removeIndex, 1);
                         this.filteredAumListWithIsMappedToMinusOne = this.aumList.filter(item => {
                           return item.isMapped === -1;
-                        })
+                        });
+                        this.getDuplicateFolioList();
                       }
                     }
                   }
@@ -1116,7 +1093,6 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
   dialogClose() {
     console.log('this is clicked');
-    // post call
     if (!this.isDeleteAndReorderClicked) {
       this.fromClose = true;
       this.reconciliationAdd();

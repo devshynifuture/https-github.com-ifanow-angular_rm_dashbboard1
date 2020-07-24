@@ -52,7 +52,8 @@
                                 <ng-container matColumnDef="doneOn">
                                     <th class="br" mat-header-cell *matHeaderCellDef> Last done on </th>
                                     <td class="br" mat-cell *matCellDef="let element">
-                                        <div class="bar">{{(isLoading)?'': element.doneOn | date:'dd/MM/yyyy'}}
+                                        <div class="bar">
+                                            {{(isLoading)?'': element.doneOn | date:'dd/MM/yyyy HH: mm aaa'}}
                                         </div>
                                     </td>
                                 </ng-container>
@@ -87,14 +88,16 @@
                                 <ng-container matColumnDef="aumbalance">
                                     <th mat-header-cell *matHeaderCellDef> AUM balance </th>
                                     <td mat-cell *matCellDef="let element">
-                                        <div class="bar">{{(isLoading)?'':element.aumBalanceDate | date:'dd/MM/yyyy'}}
+                                        <div class="bar">
+                                            {{(isLoading)?'':element.aumBalanceDate | date:'dd/MM/yyyy HH: mm aaa'}}
                                         </div>
                                     </td>
                                 </ng-container>
                                 <ng-container matColumnDef="transaction">
                                     <th class="br" mat-header-cell *matHeaderCellDef> Transaction </th>
                                     <td class="br" mat-cell *matCellDef="let element">
-                                        <div class="bar">{{(isLoading)?'':element.transactionDate | date:'dd/MM/yyyy'}}
+                                        <div class="bar">
+                                            {{(isLoading)?'':element.transactionDate | date:'dd/MM/yyyy HH: mm aaa'}}
                                         </div>
                                     </td>
                                 </ng-container>
@@ -155,7 +158,8 @@
                                 <ng-container matColumnDef="doneOn">
                                     <th class="br" mat-header-cell *matHeaderCellDef> Last done on </th>
                                     <td class="br" mat-cell *matCellDef="let element">
-                                        <div class="bar">{{(isLoading)?'': element.doneOn | date:'dd/MM/yyyy'}} </div>
+                                        <div class="bar">
+                                            {{(isLoading)?'': element.doneOn | date:'dd/MM/yyyy HH: mm aaa'}} </div>
                                     </td>
                                 </ng-container>
                                 <ng-container matColumnDef="name">
@@ -185,7 +189,8 @@
                                 <ng-container matColumnDef="aumbalance">
                                     <th mat-header-cell *matHeaderCellDef> AUM balance </th>
                                     <td mat-cell *matCellDef="let element">
-                                        <div class="bar">{{(isLoading)?'': element.aumBalanceDate | date:'dd/MM/yyyy'}}
+                                        <div class="bar">
+                                            {{(isLoading)?'': element.aumBalanceDate | date:'dd/MM/yyyy HH: mm aaa'}}
                                         </div>
                                     </td>
                                 </ng-container>
@@ -193,7 +198,8 @@
                                     <th class="br" mat-header-cell *matHeaderCellDef> Transaction </th>
                                     <td class="br" mat-cell *matCellDef="let element">
 
-                                        <div class="bar">{{(isLoading)?'': element.transactionDate | date:'dd/MM/yyyy'}}
+                                        <div class="bar">
+                                            {{(isLoading)?'': element.transactionDate | date:'dd/MM/yyyy HH: mm aaa'}}
                                         </div>
                                     </td>
                                 </ng-container>
@@ -258,7 +264,8 @@
                                 <ng-container matColumnDef="doneOn">
                                     <th class="br" mat-header-cell *matHeaderCellDef> Last done on </th>
                                     <td class="br" mat-cell *matCellDef="let element">
-                                        <div class="bar">{{(isLoading)?'': element.doneOn | date:'dd/MM/yyyy'}} </div>
+                                        <div class="bar">
+                                            {{(isLoading)?'': element.doneOn | date:'dd/MM/yyyy HH: mm aaa'}} </div>
                                     </td>
                                 </ng-container>
                                 <ng-container matColumnDef="name">
@@ -288,14 +295,16 @@
                                 <ng-container matColumnDef="aumbalance">
                                     <th mat-header-cell *matHeaderCellDef> AUM balance </th>
                                     <td mat-cell *matCellDef="let element">
-                                        <div class="bar">{{(isLoading)?'': element.aumBalanceDate | date:'dd/MM/yyyy'}}
+                                        <div class="bar">
+                                            {{(isLoading)?'': element.aumBalanceDate | date:'dd/MM/yyyy HH: mm aaa'}}
                                         </div>
                                     </td>
                                 </ng-container>
                                 <ng-container matColumnDef="transaction">
                                     <th class="br" mat-header-cell *matHeaderCellDef> Transaction </th>
                                     <td class="br" mat-cell *matCellDef="let element">
-                                        <div class="bar">{{(isLoading)?'': element.transactionDate | date:'dd/MM/yyyy'}}
+                                        <div class="bar">
+                                            {{(isLoading)?'': element.transactionDate | date:'dd/MM/yyyy HH: mm aaa'}}
                                         </div>
                                     </td>
                                 </ng-container>
