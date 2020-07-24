@@ -532,7 +532,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
     if (this.dataSource.data !== null) {
       let dataObj = this.dataSource.data[0];
       let matchedCount = this.totalCount - parseFloat(dataObj.after_recon);
-      let dateObjDoneOn = new Date(this.summaryDoneOnDate);
+      let dateObjDoneOn = new Date(dataObj.doneOne);
       let doneOnFormatted = dateObjDoneOn.getFullYear() + '-' +
         `${(dateObjDoneOn.getMonth() + 1) < 10 ? '0' : ''}` +
         (dateObjDoneOn.getMonth() + 1) + "-" +
@@ -578,9 +578,10 @@ export class UpperSliderBackofficeComponent implements OnInit {
     this.reconService.putFileOrderRetry(data)
       .subscribe(res => {
         console.log('retried values:::::::', res);
-
         if (res === 1) {
           this.getBackofficeAumFileOrderListDeleteReorder();
+        } else {
+          this.eventService.openSnackBar("Retrying Skipped Files Failed", "DISMISS")
         }
       }, err => {
         console.error(err);
@@ -643,7 +644,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
             if (element && element.folios !== '') {
               const obj = {
                 count: element.folios.split(',').length,
-                file: new Blob([element.folios.split(',').join('\n')], { type: 'text/plain' })
+                file: new Blob([element.folios.split(',').join('\n\n')], { type: 'text/plain' })
               };
               element.folios = obj;
             }
@@ -1077,28 +1078,41 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
   postReqForBackOfficeUnmatchedFolios() {
     const data = [];
-    if (this.filteredAumListWithIsMappedToMinusOne) {
-      this.filteredAumListWithIsMappedToMinusOne.forEach(element => {
-        data.push({
-          advisorId: this.advisorId,
-          aumReconId: this.aumReconId,
-          mutualFundId: element.mutualFundId,
-          aumUnits: element.aumUnits,
-          mutualFundUnits: element.calculatedUnits,
-          aumDate: this.datePipe.transform(element.aumDate, 'yyyy-MM-dd'),
+    if (this.data.flag === 'report') {
+      if (this.reportDuplicateFoliosIsMappedToMinusOne.length !== 0) {
+        this.reportDuplicateFoliosIsMappedToMinusOne.forEach(element => {
+          data.push({
+            advisorId: this.advisorId,
+            aumReconId: this.aumReconId,
+            mutualFundId: element.mutualFundId,
+            aumUnits: element.aumUnits,
+            mutualFundUnits: element.calculatedUnits,
+            aumDate: this.datePipe.transform(element.aumDate, 'yyyy-MM-dd'),
+          });
+        })
+      }
+    } else {
+      if (this.filteredAumListWithIsMappedToMinusOne.length !== 0) {
+        this.filteredAumListWithIsMappedToMinusOne.forEach(element => {
+          data.push({
+            advisorId: this.advisorId,
+            aumReconId: this.aumReconId,
+            mutualFundId: element.mutualFundId,
+            aumUnits: element.aumUnits,
+            mutualFundUnits: element.calculatedUnits,
+            aumDate: this.datePipe.transform(element.aumDate, 'yyyy-MM-dd'),
+          });
         });
-      });
-
-      console.log('this is what we are sending to post req::', data);
-
-      // need to discuss with ajay
-      this.reconService.postBackOfficeUnmatchedFoliosData(data)
-        .subscribe(res => {
-          console.log(' backoffice unmateched Folio, post ', res);
-        }, err => {
-          console.error(err);
-        });
+      }
     }
+    console.log('this is what we are sending to post req::', data);
+    // need to discuss with ajay
+    this.reconService.postBackOfficeUnmatchedFoliosData(data)
+      .subscribe(res => {
+        console.log(' backoffice unmateched Folio, post ', res);
+      }, err => {
+        console.error(err);
+      });
 
   }
 
