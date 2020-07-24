@@ -838,8 +838,6 @@ export class UpperSliderBackofficeComponent implements OnInit {
                           return item.isMapped === -1
                         });
 
-
-                        this.getDuplicateFolioList();
                       } else {
                         let desiredObj = this.aumList.find(item => item.mutualFundId === obj['mutualFundId']);
                         let removeIndex = this.aumList.indexOf(desiredObj);
@@ -847,7 +845,6 @@ export class UpperSliderBackofficeComponent implements OnInit {
                         this.filteredAumListWithIsMappedToMinusOne = this.aumList.filter(item => {
                           return item.isMapped === -1;
                         });
-                        this.getDuplicateFolioList();
                       }
                     }
                   }
@@ -867,23 +864,25 @@ export class UpperSliderBackofficeComponent implements OnInit {
                       this.dataSource.data.map(item => {
                         item.after_recon = String(parseFloat(item.after_recon) - 1);
                       });
+
                       let obj = this.dataSource2.data[this.markFolioIndex];
+                      if (this.data.flag === 'report') {
+                        let desiredObj = this.aumListReportValue.find(item => item.mutualFundId === obj['mutualFundId']);
+                        let removeIndex = this.aumListReportValue.indexOf(desiredObj);
+                        this.aumListReportValue.splice(removeIndex, 1);
+                        this.reportDuplicateFoliosIsMappedToMinusOne = this.aumListReportValue.filter(item => {
+                          return item.isMapped === -1
+                        });
+                      } else {
 
-                      let desiredObj = this.aumList.find(item => item.mutualFundId === obj['id']);
-                      let removeIndex = this.aumList.indexOf(desiredObj);
-
-                      this.aumList.splice(removeIndex, 1);
-
-                      this.filteredAumListWithIsMappedToMinusOne = this.aumList(item => {
-                        return item.isMapped === -1;
-                      });
-
+                        let desiredObj = this.aumList.find(item => item.mutualFundId === obj['mutualFundId']);
+                        let removeIndex = this.aumList.indexOf(desiredObj);
+                        this.aumList.splice(removeIndex, 1);
+                        this.filteredAumListWithIsMappedToMinusOne = this.aumList.filter(item => {
+                          return item.isMapped === -1;
+                        });
+                      }
                     }
-
-
-
-
-
                   }
                 }
               }
