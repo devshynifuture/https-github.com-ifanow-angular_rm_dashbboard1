@@ -30,6 +30,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
   fromClose: boolean = false;
   errorMessage: string;
   reportListWithIsMappedToMinusOne: any;
+  startReconciliation: any = false;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -123,17 +124,14 @@ export class UpperSliderBackofficeComponent implements OnInit {
     }
 
     if (this.data.startRecon) {
+      this.startReconciliation = this.data.startRecon;
       this.rtId = this.data.rtId;
       this.isFranklinTab = (this.getRtName(this.rtId) === 'FRANKLIN_TEMPLETON') ? true : false;
 
       console.log('start recon is true::::');
       this.isLoading = true;
 
-      if (doStartRecon) {
-        this.getBackofficeAumReconListSummary(true);
-      } else {
-        this.getBackofficeAumReconListSummary(false);
-      }
+      this.getBackofficeAumReconListSummary();
       this.dataSource3.data = null;
 
     } else if (this.data.startRecon === false) {
@@ -211,7 +209,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
       })
   }
 
-  getBackofficeAumReconListSummary(doStartRecon) {
+  getBackofficeAumReconListSummary() {
     this.isLoading = true;
     this.dataSource.data = ELEMENT_DATA;
     this.dataSource1.data = ELEMENT_DATA1;
@@ -546,28 +544,28 @@ export class UpperSliderBackofficeComponent implements OnInit {
         aumBalanceDate: this.aumDate,
         unmatchedCountBeforeRecon: dataObj.before_recon,
         unmatchedCountAfterRecon: dataObj.after_recon,
-        transactionDate: this.summaryTransactionDate,
+        transactionDate: dataObj.transaction,
         rtId: this.data.rtId,
         doneOn: doneOnFormatted,
         rmId: this.rmId
       };
-
-      this.reconService.putBackofficeReconAdd(data)
-        .subscribe(res => {
-          console.log('started reconciliation::::::::::::', res);
-          if (this.data.startRecon) {
-            this.aumReconId = res;
-            if (this.fromClose) {
-              this.postReqForBackOfficeUnmatchedFolios();
+      if (this.data.startRecon) {
+        this.reconService.putBackofficeReconAdd(data)
+          .subscribe(res => {
+            console.log('started reconciliation::::::::::::', res);
+            if (this.data.startRecon) {
+              this.aumReconId = res;
+              if (this.fromClose) {
+                this.postReqForBackOfficeUnmatchedFolios();
+              }
             }
-          }
-        }, err => {
-          console.error(err);
-        });
+          }, err => {
+            console.error(err);
+          });
+      }
     } else {
       this.eventService.openSnackBar("Reconciliation cannot be started as data is not present", "DISMISS");
     }
-
   }
 
   retryFileOrder() {
@@ -1079,8 +1077,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
   postReqForBackOfficeUnmatchedFolios() {
     const data = [];
     if (this.data.flag === 'report') {
-      if (this.reportDuplicateFoliosIsMappedToMinusOne.length !== 0) {
-        this.reportDuplicateFoliosIsMappedToMinusOne.forEach(element => {
+      if (this.reportListWithIsMappedToMinusOne.length !== 0) {
+        this.reportListWithIsMappedToMinusOne.forEach(element => {
           data.push({
             advisorId: this.advisorId,
             aumReconId: this.aumReconId,
