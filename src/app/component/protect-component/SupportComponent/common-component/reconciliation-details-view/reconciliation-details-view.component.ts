@@ -1,8 +1,9 @@
+import { style } from '@angular/animations';
 import { AuthService } from './../../../../../auth-service/authService';
 import { EventService } from './../../../../../Data-service/event.service';
 import { SupportService } from './../../support.service';
 import { SubscriptionInject } from './../../../AdviserComponent/Subscriptions/subscription-inject.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener, ElementRef, Renderer2 } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { ReconciliationService } from '../../../AdviserComponent/backOffice/backoffice-aum-reconciliation/reconciliation/reconciliation.service';
@@ -51,8 +52,23 @@ export class ReconciliationDetailsViewComponent implements OnInit {
   duplicateTransactionList: any;
   isLoading: boolean;
   changedBalanceUnits: any = [];
+  outsideClickCount = 0;
+
+  // @HostListener('document:mouseover', ['$event']) hoverOut(event) {
+  //   if (!(this.eRef.nativeElement.contains(event.target))) {
+  //     event.preventDefault();
+  //   }
+  // }
+
+  @HostListener('document:click', ['$event']) clickOutDisable(event) {
+    if (!(this.eRef.nativeElement.contains(event.target))) {
+      event.preventDefault();
+    }
+  }
 
   constructor(
+    private eRef: ElementRef,
+    private renderer2: Renderer2,
     private subscriptionInject: SubscriptionInject,
     private reconService: ReconciliationService,
     private eventService: EventService,
@@ -305,6 +321,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
         this.shouldDeleteMultiple = false;
 
         this.eventService.openSnackBar("Deleted Transaction Successfully", "DISMISS");
+        this.sendValueToParent();
         // this.dataSource.data['unitOne'] = this.dataSource.data['unitOne'] - res.units;
         // this.dataSource.data['difference'] = this.dataSource.data['unitOne'] - this.dataSource.data['unitsRta'];
         // this.supportService.sendDataThroughObs(res);
@@ -545,7 +562,6 @@ export class ReconciliationDetailsViewComponent implements OnInit {
 
       if (value == 1) {
         this.dataSource2.data[id].keep = true;
-
       } else {
         this.dataSource2.data[id].keep = false;
       }
@@ -587,6 +603,22 @@ export class ReconciliationDetailsViewComponent implements OnInit {
     }
   }
 
+  sendValueToParent() {
+    let refreshRequired = (Math.round(this.data.difference) === 0) ? true : false;
+    if (refreshRequired) {
+      this.subscriptionInject.setRefreshRequired()
+    }
+
+    this.subscriptionInject.setSliderData({
+      fromAllFolioOrDuplicateTab: this.data.fromAllFolioOrDuplicateTab,
+      deletedTransactionsIndexes: this.deletedTransactions,
+      isUnfreezeClicked: this.isUnfreezeClicked,
+      isFreezeClicked: this.isFreezeClicked,
+      changesInUnitOne: this.changesInUnitOne,
+      changedBalanceUnits: this.changedBalanceUnits
+    })
+  }
+
   dialogClose() {
 
     let refreshRequired = (Math.round(this.data.difference) === 0) ? true : false;
@@ -594,12 +626,14 @@ export class ReconciliationDetailsViewComponent implements OnInit {
       .changeNewRightSliderState({
         state: 'close',
         refreshRequired,
-        fromAllFolioOrDuplicateTab: this.data.fromAllFolioOrDuplicateTab,
-        deletedTransactionsIndexes: this.deletedTransactions,
-        isUnfreezeClicked: this.isUnfreezeClicked,
-        isFreezeClicked: this.isFreezeClicked,
-        changesInUnitOne: this.changesInUnitOne,
-        changedBalanceUnits: this.changedBalanceUnits
+        data: {
+          fromAllFolioOrDuplicateTab: this.data.fromAllFolioOrDuplicateTab,
+          deletedTransactionsIndexes: this.deletedTransactions,
+          isUnfreezeClicked: this.isUnfreezeClicked,
+          isFreezeClicked: this.isFreezeClicked,
+          changesInUnitOne: this.changesInUnitOne,
+          changedBalanceUnits: this.changedBalanceUnits
+        }
       });
   }
 

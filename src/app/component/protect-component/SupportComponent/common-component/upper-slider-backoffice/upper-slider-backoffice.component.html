@@ -176,7 +176,7 @@
                         <div *ngIf="subTabState == 1">
 
                             <table mat-table [dataSource]="dataSource1" id="table-low" class=" " appSkeletonLoading
-                                [appSkeletonLoading]="isLoading">
+                                [appSkeletonLoading]="isLoading || canExportExcelSheet === 'intermediate'">
 
                                 <ng-container matColumnDef="name">
                                     <th class="b-a" mat-header-cell *matHeaderCellDef> Scheme name </th>

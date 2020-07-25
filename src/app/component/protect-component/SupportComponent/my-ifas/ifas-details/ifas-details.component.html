@@ -53,7 +53,7 @@
                                     <th class="br" mat-header-cell *matHeaderCellDef> Last done on </th>
                                     <td class="br" mat-cell *matCellDef="let element">
                                         <div class="bar">
-                                            {{(isLoading)?'': element.doneOn | date:'dd/MM/yyyy HH: mm aaa'}}
+                                            {{(isLoading)?'': element.doneOn | date:'short'}}
                                         </div>
                                     </td>
                                 </ng-container>
@@ -159,7 +159,7 @@
                                     <th class="br" mat-header-cell *matHeaderCellDef> Last done on </th>
                                     <td class="br" mat-cell *matCellDef="let element">
                                         <div class="bar">
-                                            {{(isLoading)?'': element.doneOn | date:'dd/MM/yyyy HH: mm aaa'}} </div>
+                                            {{(isLoading)?'': element.doneOn | date:'short'}} </div>
                                     </td>
                                 </ng-container>
                                 <ng-container matColumnDef="name">
@@ -265,7 +265,7 @@
                                     <th class="br" mat-header-cell *matHeaderCellDef> Last done on </th>
                                     <td class="br" mat-cell *matCellDef="let element">
                                         <div class="bar">
-                                            {{(isLoading)?'': element.doneOn | date:'dd/MM/yyyy HH: mm aaa'}} </div>
+                                            {{(isLoading)?'': element.doneOn | date:'short'}} </div>
                                     </td>
                                 </ng-container>
                                 <ng-container matColumnDef="name">

@@ -621,7 +621,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
             if (element && element.folios !== '') {
               const obj = {
                 count: element.folios.split(',').length,
-                file: new Blob([element.folios.split(',').join('\n')], { type: 'text/plain' })
+                file: new Blob([element.folios.split(',').join('\r\n')], { type: 'text/plain' })
               };
               element.folios = obj;
             }
@@ -809,7 +809,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
               console.log('this is sidebardata in subs subs 3 ani: is refresh Required??? ', sideBarData);
 
               if (sideBarData.refreshRequired) {
-                if (sideBarData.fromAllFolioOrDuplicateTab === 1) {
+                if (sideBarData.data.fromAllFolioOrDuplicateTab === 1) {
                   this.handlingDataVariable(false);
                 }
                 // else if (sideBarData.fromAllFolioOrDuplicateTab === 2) {
@@ -817,22 +817,22 @@ export class UpperSliderBackofficeComponent implements OnInit {
                 // }
               }
             } else {
-              if (sideBarData.hasOwnProperty('deletedTransactionsIndexes') && sideBarData.deletedTransactionsIndexes.length !== 0) {
-                if (sideBarData.fromAllFolioOrDuplicateTab === 1) {
+              if (sideBarData.data.hasOwnProperty('deletedTransactionsIndexes') && sideBarData.data.deletedTransactionsIndexes.length !== 0) {
+                if (sideBarData.data.fromAllFolioOrDuplicateTab === 1) {
                   let mfTransArr = this.dataSource1.data[this.markFolioIndex]['mutualFundTransaction'];
-                  for (let i = sideBarData.deletedTransactionsIndexes.length - 1; i >= 0; i--) {
-                    let index = sideBarData.deletedTransactionsIndexes[i];
+                  for (let i = sideBarData.data.deletedTransactionsIndexes.length - 1; i >= 0; i--) {
+                    let index = sideBarData.data.deletedTransactionsIndexes[i];
                     mfTransArr.splice(index, 1);
                   }
                   mfTransArr.map((element, index) => {
-                    element.balanceUnits = sideBarData.changedBalanceUnits[index]
+                    element.balanceUnits = sideBarData.data.changedBalanceUnits[index]
                   });
 
-                  if (sideBarData.changesInUnitOne !== '') {
-                    this.dataSource1.data[this.markFolioIndex].unitsIfanow = sideBarData.changesInUnitOne;
+                  if (sideBarData.data.changesInUnitOne !== '') {
+                    this.dataSource1.data[this.markFolioIndex].unitsIfanow = sideBarData.data.changesInUnitOne;
                     let unitsRta = this.dataSource1.data[this.markFolioIndex].unitsRta;
-                    this.dataSource1.data[this.markFolioIndex].difference = String((parseFloat(sideBarData.changesInUnitOne) - parseFloat(unitsRta)).toFixed(3));
-                    let diff = parseFloat(sideBarData.changesInUnitOne) - parseFloat(unitsRta)
+                    this.dataSource1.data[this.markFolioIndex].difference = String((parseFloat(sideBarData.data.changesInUnitOne) - parseFloat(unitsRta)).toFixed(3));
+                    let diff = parseFloat(sideBarData.data.changesInUnitOne) - parseFloat(unitsRta)
                     if (Math.round(diff) === 0) {
                       this.dataSource.data.map(item => {
                         item.after_recon = String(parseFloat(item.after_recon) - 1);
@@ -860,55 +860,50 @@ export class UpperSliderBackofficeComponent implements OnInit {
                     }
                   }
 
-                } else if (sideBarData.fromAllFolioOrDuplicateTab === 2) {
-                  let mfTransArr = this.dataSource2.data[this.markFolioIndex]['mutualFundTransaction'];
-                  for (let i = sideBarData.deletedTransactionsIndexes.length - 1; i >= 0; i--) {
-                    let index = sideBarData.deletedTransactionsIndexes[i];
-                    mfTransArr.splice(index, 1);
-                  }
-                  if (sideBarData.changesInUnitOne !== '') {
-                    this.dataSource2.data[this.markFolioIndex].unitsIfanow = sideBarData.changesInUnitOne.toFixed(3);
-                    let unitsRta = this.dataSource2.data[this.markFolioIndex].unitsRta;
-                    this.dataSource2.data[this.markFolioIndex].difference = String((parseFloat(sideBarData.changesInUnitOne) - parseFloat(unitsRta)).toFixed(3));
-                    let diff = parseFloat(sideBarData.changesInUnitOne) - parseFloat(unitsRta);
-                    if (Math.round(diff) === 0) {
-                      this.dataSource.data.map(item => {
-                        item.after_recon = String(parseFloat(item.after_recon) - 1);
+                }
+              } else if (sideBarData.data.fromAllFolioOrDuplicateTab === 2) {
+                if (sideBarData.data.changesInUnitOne !== '') {
+                  this.dataSource2.data[this.markFolioIndex].unitsIfanow = sideBarData.data.changesInUnitOne;
+                  let unitsRta = this.dataSource2.data[this.markFolioIndex].unitsRta;
+                  this.dataSource2.data[this.markFolioIndex].difference = String((parseFloat(sideBarData.data.changesInUnitOne) - parseFloat(unitsRta)).toFixed(3));
+                  let diff = parseFloat(sideBarData.data.changesInUnitOne) - parseFloat(unitsRta);
+                  if (Math.round(diff) === 0) {
+                    this.dataSource.data.map(item => {
+                      item.after_recon = String(parseFloat(item.after_recon) - 1);
+                    });
+
+                    let obj = this.dataSource2.data[this.markFolioIndex];
+                    if (this.data.flag === 'report') {
+                      let desiredObj = this.aumListReportValue.find(item => item.mutualFundId === obj['mutualFundId']);
+                      let removeIndex = this.aumListReportValue.indexOf(desiredObj);
+                      this.aumListReportValue.splice(removeIndex, 1);
+                      this.reportDuplicateFoliosIsMappedToMinusOne = this.aumListReportValue.filter(item => {
+                        return item.isMapped === -1
                       });
+                    } else {
 
-                      let obj = this.dataSource2.data[this.markFolioIndex];
-                      if (this.data.flag === 'report') {
-                        let desiredObj = this.aumListReportValue.find(item => item.mutualFundId === obj['mutualFundId']);
-                        let removeIndex = this.aumListReportValue.indexOf(desiredObj);
-                        this.aumListReportValue.splice(removeIndex, 1);
-                        this.reportDuplicateFoliosIsMappedToMinusOne = this.aumListReportValue.filter(item => {
-                          return item.isMapped === -1
-                        });
-                      } else {
-
-                        let desiredObj = this.aumList.find(item => item.mutualFundId === obj['mutualFundId']);
-                        let removeIndex = this.aumList.indexOf(desiredObj);
-                        this.aumList.splice(removeIndex, 1);
-                        this.filteredAumListWithIsMappedToMinusOne = this.aumList.filter(item => {
-                          return item.isMapped === -1;
-                        });
-                      }
+                      let desiredObj = this.aumList.find(item => item.mutualFundId === obj['mutualFundId']);
+                      let removeIndex = this.aumList.indexOf(desiredObj);
+                      this.aumList.splice(removeIndex, 1);
+                      this.filteredAumListWithIsMappedToMinusOne = this.aumList.filter(item => {
+                        return item.isMapped === -1;
+                      });
                     }
                   }
                 }
               }
-              if (sideBarData.hasOwnProperty('fromAllFolioOrDuplicateTab') && sideBarData.fromAllFolioOrDuplicateTab === 1) {
-                this.dataSource1.data[this.markFolioIndex]['isUnfreezeClicked'] = sideBarData.isUnfreezeClicked;
-                this.dataSource1.data[this.markFolioIndex]['isFreezeClicked'] = sideBarData.isFreezeClicked;
+              if (sideBarData.data.hasOwnProperty('fromAllFolioOrDuplicateTab') && sideBarData.data.fromAllFolioOrDuplicateTab === 1) {
+                this.dataSource1.data[this.markFolioIndex]['isUnfreezeClicked'] = sideBarData.data.isUnfreezeClicked;
+                this.dataSource1.data[this.markFolioIndex]['isFreezeClicked'] = sideBarData.data.isFreezeClicked;
 
-                if (sideBarData.isUnfreezeClicked) {
+                if (sideBarData.data.isUnfreezeClicked) {
                   if (this.dataSource1.data[this.markFolioIndex]['mutualFundTransaction'].length !== 0) {
                     this.dataSource1.data[this.markFolioIndex]['mutualFundTransaction'].forEach(element => {
                       element.canDeleteTransaction = true;
                     });
                   }
                 }
-                if (sideBarData.isFreezeClicked) {
+                if (sideBarData.data.isFreezeClicked) {
                   if (this.dataSource1.data[this.markFolioIndex]['mutualFundTransaction'].length !== 0) {
                     this.dataSource1.data[this.markFolioIndex]['mutualFundTransaction'].forEach(element => {
                       element.canDeleteTransaction = false;
@@ -916,18 +911,18 @@ export class UpperSliderBackofficeComponent implements OnInit {
                   }
                 }
               }
-              if (sideBarData.hasOwnProperty('fromAllFolioOrDuplicateTab') && sideBarData.fromAllFolioOrDuplicateTab === 2) {
-                this.dataSource2.data[this.markFolioIndex]['isUnfreezeClicked'] = sideBarData.isUnfreezeClicked;
-                this.dataSource2.data[this.markFolioIndex]['isFreezeClicked'] = sideBarData.isFreezeClicked;
+              if (sideBarData.data.hasOwnProperty('fromAllFolioOrDuplicateTab') && sideBarData.data.fromAllFolioOrDuplicateTab === 2) {
+                this.dataSource2.data[this.markFolioIndex]['isUnfreezeClicked'] = sideBarData.data.isUnfreezeClicked;
+                this.dataSource2.data[this.markFolioIndex]['isFreezeClicked'] = sideBarData.data.isFreezeClicked;
 
-                if (sideBarData.isUnfreezeClicked) {
+                if (sideBarData.data.isUnfreezeClicked) {
                   if (this.dataSource2.data[this.markFolioIndex]['mutualFundTransaction'].length !== 0) {
                     this.dataSource2.data[this.markFolioIndex]['mutualFundTransaction'].forEach(element => {
                       element.canDeleteTransaction = true;
                     });
                   }
                 }
-                if (sideBarData.isFreezeClicked) {
+                if (sideBarData.data.isFreezeClicked) {
                   if (this.dataSource2.data[this.markFolioIndex]['mutualFundTransaction'].length !== 0) {
                     this.dataSource2.data[this.markFolioIndex]['mutualFundTransaction'].forEach(element => {
                       element.canDeleteTransaction = false;
