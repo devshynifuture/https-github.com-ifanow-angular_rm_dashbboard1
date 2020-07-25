@@ -29,8 +29,9 @@ export class UpperSliderBackofficeComponent implements OnInit {
   isDeleteAndReorderClicked: boolean = false;
   fromClose: boolean = false;
   errorMessage: string;
-  reportListWithIsMappedToMinusOne: any;
+  reportListWithIsMappedToMinusOne: any = [];
   startReconciliation: any = false;
+  showCelebrationGif: boolean = true;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -118,6 +119,9 @@ export class UpperSliderBackofficeComponent implements OnInit {
   }
 
   handlingDataVariable(doStartRecon?) {
+
+    this.isTabDisabled = this.data.flag === 'report' ? false : true;
+
     if (this.data) {
       this.aumReconId = this.data.id;
       this.brokerId = this.data.brokerId;
@@ -279,6 +283,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
                     if (res.unmappedCount === 0) {
                       this.eventService.openSnackBar("All Folios are Matched", "DISMISS");
+                      this.showCelebrationGif = true;
+                      this.errorMessage = "All Folios are Matched";
                     }
 
                     // aum date for all object is the same
@@ -291,6 +297,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
                     objArr = null;
                     this.dataSource.data = objArr;
                     this.eventService.openSnackBar("All folios are Matched", "DISMISS");
+                    this.showCelebrationGif = true;
+                    this.errorMessage = "All Folios are Matched";
                   }
 
                   this.isLoading = false;
