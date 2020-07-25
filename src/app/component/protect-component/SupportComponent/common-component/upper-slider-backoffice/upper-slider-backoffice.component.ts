@@ -816,9 +816,12 @@ export class UpperSliderBackofficeComponent implements OnInit {
                     let index = sideBarData.deletedTransactionsIndexes[i];
                     mfTransArr.splice(index, 1);
                   }
+                  mfTransArr.map((element, index) => {
+                    element.balanceUnits = sideBarData.changedBalanceUnits[index]
+                  });
 
                   if (sideBarData.changesInUnitOne !== '') {
-                    this.dataSource1.data[this.markFolioIndex].unitsIfanow = sideBarData.changesInUnitOne.toFixed(3);
+                    this.dataSource1.data[this.markFolioIndex].unitsIfanow = sideBarData.changesInUnitOne;
                     let unitsRta = this.dataSource1.data[this.markFolioIndex].unitsRta;
                     this.dataSource1.data[this.markFolioIndex].difference = String((parseFloat(sideBarData.changesInUnitOne) - parseFloat(unitsRta)).toFixed(3));
                     let diff = parseFloat(sideBarData.changesInUnitOne) - parseFloat(unitsRta)
