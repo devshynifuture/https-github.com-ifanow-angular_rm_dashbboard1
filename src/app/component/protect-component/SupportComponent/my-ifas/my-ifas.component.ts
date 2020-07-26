@@ -76,6 +76,7 @@ export class MyIfasComponent implements OnInit {
               logout: element.logout ? element.logout : " - ",
               adminAdvisorId: element.adminAdvisorId,
               menu: "",
+              advisorId: element.advisorId
             });
           });
           this.tableData = tableArray;
@@ -89,11 +90,39 @@ export class MyIfasComponent implements OnInit {
     );
   }
 
-  recalculateBalanceUnit() {
-
-    this.supportService.recalculateBalanceUnitData({ parentId: this.parentId })
+  mergeSchemeCode(data) {
+    this.supportService.putMergeSchemeCode({ parentId: data.advisorId })
       .subscribe(res => {
         if (res) {
+          console.log("merge query response::", res);
+          this.eventService.openSnackBar("Merge scheme code done Successfully", "DISMISS");
+        } else {
+          this.eventService.openSnackBar("Merge Scheme Code", "DISMISS")
+        }
+      })
+  }
+
+  mergeSchemeCodeBulk() {
+    let data = [];
+    this.tableData.forEach(item => {
+      data.push(item.advisorId);
+    })
+    this.supportService.postMergeSchemeCodeBulk(data)
+      .subscribe(res => {
+        if (res) {
+          console.log(res);
+          this.eventService.openSnackBar("Bulk Scheme Code Merging done", "DISMISS");
+        } else {
+          this.eventService.openSnackBar("Bulk Scheme Code Merging Failed", "DISMISS");
+        }
+      }, err => console.error(err));
+  }
+
+  recalculateBalanceUnit(data) {
+    this.supportService.recalculateBalanceUnitData({ parentId: data.advisorId })
+      .subscribe(res => {
+        if (res) {
+          console.log("recalculate balance unit response::", res);
           this.eventService.openSnackBar("Recalculation of Balance Units is Done", "DISMISS");
         } else {
           this.eventService.openSnackBar("Recalculation of Balance Units Failed", "DISMISS");

@@ -23,7 +23,7 @@ export class ExcelService {
 
   constructor() { }
 
-  static async exportExcel(headerData, header, excelData: any, footer: any[], metaData: any, clientName?) {
+  static async exportExcel(headerData, header, excelData: any, footer: any[], metaData: any, clientName?, rtName?) {
     const wb = new Excel.Workbook();
     const ws = wb.addWorksheet();
     const meta1 = ws.getCell('A1');
@@ -67,7 +67,7 @@ export class ExcelService {
     const buf = await wb.xlsx.writeBuffer();
     let date = new Date().getDate();
     let month = (new Date().getMonth() + 1);
-    saveAs(new Blob([buf]), metaData + '-' + `${String(date).length === 1 ? '0' : ''}${date}` + '-' + `${String(month).length === 1 ? '0' : ''}${month}` + '-' + new Date().getFullYear() + '.xlsx');
+    saveAs(new Blob([buf]), metaData + '-' + (rtName ? rtName : '') + "-" + `${String(date).length === 1 ? '0' : ''}${date}` + '-' + `${String(month).length === 1 ? '0' : ''}${month}` + '-' + new Date().getFullYear() + '.xlsx');
   }
 
 }

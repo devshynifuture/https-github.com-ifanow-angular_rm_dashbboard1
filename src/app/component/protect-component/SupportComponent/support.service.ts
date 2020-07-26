@@ -47,7 +47,15 @@ export class SupportService {
   }
 
   recalculateBalanceUnitData(data) {
-    return this.http.put(apiConfig.MAIN_URL + appConfig.RM_RECALCULATE_BALANCE_UNITS, data);
+    return this.http.put(apiConfig.MAIN_URL + appConfig.BACKOFFICE_RM_RECALCULATE_BALANCE_UNITS, data);
+  }
+
+  putMergeSchemeCode(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.BACKOFFICE_MERGE_SCHEME_CODE, data);
+  }
+
+  postMergeSchemeCodeBulk(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.BACKOFFICE_MERGE_SCHEME_CODE_BULK, data);
   }
 
   getBackofficeReports(data) {

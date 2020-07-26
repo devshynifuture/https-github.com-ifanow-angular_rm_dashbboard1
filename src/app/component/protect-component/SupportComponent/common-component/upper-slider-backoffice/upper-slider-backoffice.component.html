@@ -20,7 +20,7 @@
 
 <div class="row pt-90 pb-48">
     <div class="col-md-8">
-        <mat-tab-group id="ui-backoffice-tabs">
+        <mat-tab-group id="ui-backoffice-tabs" (selectedTabChange)="onMainTabChanged($event)">
             <mat-tab>
                 <ng-template mat-tab-label>
                     <h5 class="f-500">
@@ -110,7 +110,7 @@
                                         [matTooltip]="canExportExcelSheet === 'intermediate'? 'Loading...': (canExportExcelSheet == 'false' ? 'No Data Found': (canExportExcelSheet == 'true'? 'Click Now': null))"
                                         [matTooltipDisabled]="didAumReportListGot" matTooltipPosition="below">
                                         <button class="bg-grey lt classExport " mat-button *ngIf="!isLoading"
-                                            [disabled]="(canExportExcelSheet == 'false')"
+                                            [disabled]="(canExportExcelSheet == 'false') || (canExportExcelSheet == 'intermediate')"
                                             (click)="exportToExcelSheet('export-folios', element)">Export</button>
                                     </div>
                                 </td>
@@ -120,10 +120,17 @@
                             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                         </table>
                     </div>
+
                     <div class="col-md-12 p-0" *ngIf="dataSource.data === null">
-                        <h4 class="d-flex justify-content-center p-44 b-a">
-                            No Data Found
+                        <h4 class="d-flex justify-content-center p-44 b-a" *ngIf="!showCelebrationGif">
+                            {{ errorMessage }}
                         </h4>
+                        <div *ngIf="showCelebrationGif" class="text-center b-a p-44">
+                            <img src="/assets/images/gif/animation_500_kcw54v9k.gif" alt="celebration image gif">
+                            <h4 class="text-center mt-10">
+                                {{ errorMessage }}
+                            </h4>
+                        </div>
                     </div>
                 </div>
             </mat-tab>
@@ -169,7 +176,7 @@
                         <div *ngIf="subTabState == 1">
 
                             <table mat-table [dataSource]="dataSource1" id="table-low" class=" " appSkeletonLoading
-                                [appSkeletonLoading]="isLoading">
+                                [appSkeletonLoading]="isLoading || canExportExcelSheet === 'intermediate'">
 
                                 <ng-container matColumnDef="name">
                                     <th class="b-a" mat-header-cell *matHeaderCellDef> Scheme name </th>
@@ -397,7 +404,7 @@
                             <ng-container matColumnDef="transactionAddedInFiles">
                                 <th class="b-a" mat-header-cell *matHeaderCellDef> Trx in file </th>
                                 <td class="b-a" mat-cell *matCellDef="let element">
-                                    <div class="bar"> {{element.transactionAddedInFiles}} </div>
+                                    <div class="bar"> {{element.totalTransactions}} </div>
                                 </td>
                             </ng-container>
 
