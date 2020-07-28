@@ -14,6 +14,7 @@ import { UtilService } from 'src/app/services/util.service';
 })
 export class ReconKarvyComponent implements OnInit {
   adminAdvisorIds: any[] = [];
+  subAdvisorList = [];
   adminId = AuthService.getAdminId();
 
   clientName = AuthService.getUserInfo().name;
@@ -41,22 +42,23 @@ export class ReconKarvyComponent implements OnInit {
   ngOnInit() {
     this.dataSource = new MatTableDataSource<ElementI>(ELEMENT_DATA);
     this.getBrokerList();
-    this.teamMemberListGet();
+    // this.teamMemberListGet();
+    this.getSubAdvisorList();
   }
 
-  teamMemberListGet() {
-    this.reconService.getTeamMemberListValues({ advisorId: this.advisorId })
-      .subscribe(data => {
-        if (data && data.length !== 0) {
-          data.forEach(element => {
-            this.adminAdvisorIds.push(element.adminAdvisorId);
-          });
-        } else {
-          this.adminAdvisorIds = [...this.advisorId];
-          this.eventService.openSnackBar('No Team Member Found', 'Dismiss');
-        }
-      });
-  }
+  // teamMemberListGet() {
+  //   this.reconService.getTeamMemberListValues({ advisorId: this.advisorId })
+  //     .subscribe(data => {
+  //       if (data && data.length !== 0) {
+  //         data.forEach(element => {
+  //           this.adminAdvisorIds.push(element.adminAdvisorId);
+  //         });
+  //       } else {
+  //         this.adminAdvisorIds = [...this.advisorId];
+  //         this.eventService.openSnackBar('No Team Member Found', 'Dismiss');
+  //       }
+  //     });
+  // }
 
 
   getBrokerList() {
@@ -64,6 +66,16 @@ export class ReconKarvyComponent implements OnInit {
       .subscribe(res => {
         this.brokerList = res;
       });
+  }
+
+  getSubAdvisorList() {
+    this.reconService.getSubAdvisorListValues({ advisorId: this.advisorId })
+      .subscribe(res => {
+        if (res) {
+          console.log("this is subAdvisor list::::", res);
+          this.subAdvisorList = res;
+        }
+      })
   }
 
 
@@ -74,7 +86,7 @@ export class ReconKarvyComponent implements OnInit {
       this.isBrokerSelected = true;
 
       const data = {
-        advisorIds: [...this.adminAdvisorIds],
+        advisorIds: [this.advisorId, ...this.subAdvisorList],
         brokerId: this.selectBrokerForm.get('selectBrokerId').value,
         rmId: this.rmId,
         rtId: this.rtId,

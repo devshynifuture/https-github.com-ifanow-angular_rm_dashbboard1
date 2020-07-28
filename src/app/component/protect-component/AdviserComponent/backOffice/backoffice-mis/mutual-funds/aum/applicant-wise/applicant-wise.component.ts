@@ -460,6 +460,7 @@ export class ApplicantWiseComponent implements OnInit {
   applicantNameGet(data) {
     this.isLoading = false;
     if (data) {
+      console.log("here we have client id needed::::::::::", data);
       this.applicantName = data;
       this.excelInitApplicant();
       this.applicantName.forEach(o => {
@@ -488,7 +489,8 @@ export class ApplicantWiseComponent implements OnInit {
         arnRiaDetailsId: (this.data) ? this.data.arnRiaDetailId : -1,
         parentId: (this.data) ? this.data.parentId : -1,
         familyMembertId: applicantData.id,
-        clientTotalAum: applicantData.totalAum
+        clientTotalAum: applicantData.totalAum,
+        clientId: applicantData.clientId,
       }
       this.backoffice.getAumApplicantCategory(obj).subscribe(
         data => {
@@ -558,7 +560,8 @@ export class ApplicantWiseComponent implements OnInit {
         parentId: (this.data) ? this.data.parentId : -1,
         familyMembertId: catData.familyMemberId,
         categoryId: catData.id,
-        categoryTotalAum: catData.totalAum
+        categoryTotalAum: catData.totalAum,
+        clientId: catData.clientId,
       }
       this.backoffice.getAumApplicantSubCategory(obj).subscribe(
         data => {
@@ -624,7 +627,8 @@ export class ApplicantWiseComponent implements OnInit {
         parentId: (this.data) ? this.data.parentId : -1,
         familyMembertId: subCatData.familyMemberId,
         subCategoryId: subCatData.id,
-        subCategoryTotalAum: subCatData.totalAum
+        subCategoryTotalAum: subCatData.totalAum,
+        clientId: subCatData.clientId
       }
       this.backoffice.getAumApplicantScheme(obj).subscribe(
         data => {

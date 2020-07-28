@@ -15,6 +15,7 @@ import { UtilService } from 'src/app/services/util.service';
 export class ReconFranklinComponent implements OnInit {
   adminAdvisorIds: any[] = [];
   adminId: number = AuthService.getAdminId();
+  subAdvisorList: any = [];
 
   constructor(
     private reconService: ReconciliationService,
@@ -41,28 +42,37 @@ export class ReconFranklinComponent implements OnInit {
   ngOnInit() {
     this.dataSource = new MatTableDataSource<ElementI>(ELEMENT_DATA);
     this.getBrokerList();
-    this.teamMemberListGet();
+    this.subAdvisorList();
   }
 
-  teamMemberListGet() {
-    this.reconService.getTeamMemberListValues({ advisorId: this.advisorId })
-      .subscribe(data => {
-        if (data && data.length !== 0) {
-          data.forEach(element => {
-            this.adminAdvisorIds.push(element.adminAdvisorId);
-          });
-        } else {
-          this.adminAdvisorIds = [...this.advisorId];
-          this.eventService.openSnackBar('No Team Member Found', 'Dismiss');
-        }
-      });
-  }
+  // teamMemberListGet() {
+  //   this.reconService.getTeamMemberListValues({ advisorId: this.advisorId })
+  //     .subscribe(data => {
+  //       if (data && data.length !== 0) {
+  //         data.forEach(element => {
+  //           this.adminAdvisorIds.push(element.adminAdvisorId);
+  //         });
+  //       } else {
+  //         this.adminAdvisorIds = [...this.advisorId];
+  //         this.eventService.openSnackBar('No Team Member Found', 'Dismiss');
+  //       }
+  //     });
+  // }
 
   getBrokerList() {
     this.reconService.getBrokerListValues({ advisorId: this.advisorId })
       .subscribe(res => {
         this.brokerList = res;
       });
+  }
+  getSubAdvisorList() {
+    this.reconService.getSubAdvisorListValues({ advisorId: this.advisorId })
+      .subscribe(res => {
+        if (res) {
+          console.log("this is subAdvisor list::::", res);
+          this.subAdvisorList = res;
+        }
+      })
   }
 
   getAumReconHistoryData() {
@@ -71,7 +81,7 @@ export class ReconFranklinComponent implements OnInit {
       this.dataSource.data = ELEMENT_DATA;
       this.isBrokerSelected = true;
       const data = {
-        advisorIds: [...this.adminAdvisorIds],
+        advisorIds: [this.advisorId, ...this.subAdvisorList],
         brokerId: this.selectBrokerForm.get('selectBrokerId').value,
         rmId: this.rmId,
         rtId: this.rtId,

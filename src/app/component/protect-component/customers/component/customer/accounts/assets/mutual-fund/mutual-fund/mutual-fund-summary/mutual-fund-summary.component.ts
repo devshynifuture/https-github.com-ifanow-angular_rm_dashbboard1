@@ -83,6 +83,8 @@ export class MutualFundSummaryComponent implements OnInit {
   noSubBroker: boolean = false;
   noMapping: boolean;
   isAdvisorSection: boolean;
+  isClient = AuthService.getUserInfo().clientId ? true : false;
+
   @Input()
   set data(data) {
     this.inputData = data;
@@ -105,7 +107,7 @@ export class MutualFundSummaryComponent implements OnInit {
     private router: Router,
     private datePipe: DatePipe,
     public routerActive: ActivatedRoute,
-    private onlineTransact : OnlineTransactionService,
+    private onlineTransact: OnlineTransactionService,
     private activatedRoute: ActivatedRoute) {
     this.routerActive.queryParamMap.subscribe((queryParamMap) => {
       if (queryParamMap.has('clientId')) {
@@ -127,12 +129,16 @@ export class MutualFundSummaryComponent implements OnInit {
     if (data) {
       this.clientId = data.clientId
       this.addedData = true;
-      this.ngOnInit()
+      this.initPoint();
     }
     return this.dataSummary
   }
 
   ngOnInit() {
+    this.initPoint();
+  }
+
+  initPoint() {
     if (localStorage.getItem('token') != 'authTokenInLoginComponnennt') {
       localStorage.setItem('token', 'authTokenInLoginComponnennt')
     }
@@ -157,7 +163,7 @@ export class MutualFundSummaryComponent implements OnInit {
         this.viewMode = res;
       })
     this.getFilterData(2);
-   // this.getDefaultDetails(null)
+    // this.getDefaultDetails(null)
   }
   ngAfterViewInit() {
     //this.showDownload == true
@@ -167,6 +173,27 @@ export class MutualFundSummaryComponent implements OnInit {
 
     }
   }
+
+  orderSOA(element) {
+    const data = {
+      isClient: this.isClient,
+      mutualFundId: element.id,
+      userId: AuthService.getUserId()
+    }
+    console.log("this is what i am ordering for soa", data);
+
+    this.customerService.orderSoaMutualFund(data)
+      .subscribe(res => {
+        if (res) {
+          console.log(res);
+          this.eventService.openSnackBar(res, "DISMISS");
+        } else {
+          this.eventService.openSnackBar("Error Ordering SOA!", "DISMISS");
+        }
+      })
+
+  }
+
   getFilterData(value) {
     this.customDataSource = [];
     let transactionView = [];
@@ -193,7 +220,7 @@ export class MutualFundSummaryComponent implements OnInit {
     }
     this.customerService.getSaveFilters(obj).subscribe(
       data => {
-        console.log(data);
+        console.log("---save filter values---", data);
         if (data) {
           let allClient = [];
           let currentClient = [];
@@ -510,6 +537,7 @@ export class MutualFundSummaryComponent implements OnInit {
         this.customDataSource.data = []
         this.summary.data = [{}, {}, {}];
         this.summary.data = data.customDataSourceData;
+        console.log("this is summary Data:::", data.customDataSourceData)
         this.customDataSource.data = data.customDataSourceData;
         this.displayedColumns.forEach(element => {
           this.styleObject(element)
@@ -525,7 +553,7 @@ export class MutualFundSummaryComponent implements OnInit {
 
             } else {
               this.mfService.setSummaryData(this.dataSummary)
-              if(this.router.url.split('?')[0] == '/pdf/summary'){
+              if (this.router.url.split('?')[0] == '/pdf/summary') {
                 this.showDownload = true
                 this.generatePdfBulk()
               }
@@ -753,7 +781,8 @@ export class MutualFundSummaryComponent implements OnInit {
             this.addedData = true;
             this.mfService.setDataForMfGet('');
             this.mfService.setMfData('');
-            this.ngOnInit();
+            // this.ngOnInit();
+            this.initPoint();
             // this.getMutualFund();
           }
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
@@ -822,7 +851,8 @@ export class MutualFundSummaryComponent implements OnInit {
                 this.addedData = true;
                 this.mfService.setDataForMfGet('');
                 this.mfService.setMfData('');
-                this.ngOnInit();
+                // this.ngOnInit();
+                this.initPoint();
 
                 // this.getMutualFund();
               }
@@ -874,7 +904,8 @@ export class MutualFundSummaryComponent implements OnInit {
             this.addedData = true;
             this.mfService.setDataForMfGet('');
             this.mfService.setMfData('');
-            this.ngOnInit();
+            // this.ngOnInit();
+            this.initPoint();
             // this.getMutualFund();
           }
           console.log('this is sidebardata in subs subs 2: ', sideBarData);
@@ -899,7 +930,8 @@ export class MutualFundSummaryComponent implements OnInit {
         upperSliderData => {
           if (UtilService.isDialogClose(upperSliderData)) {
             if (UtilService.isRefreshRequired(upperSliderData)) {
-              this.ngOnInit();
+              // this.ngOnInit();
+              this.initPoint()
               // code to refresh ...
               // this.getMutualFund();
               // this.getMutualFundResponse(upperSliderData);
@@ -932,17 +964,17 @@ export class MutualFundSummaryComponent implements OnInit {
       let para = this.summaryTemplate.nativeElement.innerHTML
       let obj = {
         htmlInput: para,
-        name:(this.clientData.name)?this.clientData.name:''+'s'+'Summary'+date,
+        name: (this.clientData.name) ? this.clientData.name : '' + 's' + 'Summary' + date,
         landscape: true,
         key: 'showPieChart',
-        clientId : this.clientId,
-        advisorId : this.advisorId,
+        clientId: this.clientId,
+        advisorId: this.advisorId,
         fromEmail: 'devshyni@futurewise.co.in',
         toEmail: 'futurewisejunkmail@gmail.com'
       }
-     let response = this.utilService.bulkHtmlToPdf(obj)
-     console.log('********',response)
-     //this.utilService.htmlToPdf(para, 'Summary', true, this.fragmentData, '', '')
+      let response = this.utilService.bulkHtmlToPdf(obj)
+      console.log('********', response)
+      //this.utilService.htmlToPdf(para, 'Summary', true, this.fragmentData, '', '')
     }, 400);
   }
   getDetails() {
@@ -994,14 +1026,14 @@ export class MutualFundSummaryComponent implements OnInit {
       }
     }
   }
-  openTransaction(data){
+  openTransaction(data) {
     const routeName = this.router.url.split('/')[1];
     if (routeName == 'customer') {
       this.isAdvisorSection = false;
     }
     const fragmentData = {
       flag: 'addNewTransaction',
-      data: { isAdvisorSection: this.isAdvisorSection, flag: 'addNewTransaction',data:data },
+      data: { isAdvisorSection: this.isAdvisorSection, flag: 'addNewTransaction', data: data },
       id: 1,
       state: 'open65',
       componentName: OnlineTransactionComponent,

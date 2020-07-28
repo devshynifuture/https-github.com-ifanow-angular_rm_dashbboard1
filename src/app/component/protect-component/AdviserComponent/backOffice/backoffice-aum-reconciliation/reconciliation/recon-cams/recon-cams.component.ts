@@ -32,7 +32,7 @@ export class ReconCamsComponent implements OnInit {
   isBrokerSelected: boolean = false;
   parentId = AuthService.getParentId() ? AuthService.getParentId() : this.advisorId;
   adminId = AuthService.getAdminId();
-  adminAdvisorIds: any[] = [];
+  subAdvisorList = [];
 
   @Input() rtId;
   displayedColumns: string[] = ['doneOn', 'doneBy', 'totalFolioCount', 'unmatchedCountBeforeRecon', 'unmatchedCountAfterRecon', 'aumBalanceDate', 'transactionDate', 'deleted', 'reordered', 'orderSuccess', 'orderFailed', 'action']
@@ -40,22 +40,22 @@ export class ReconCamsComponent implements OnInit {
   ngOnInit() {
     this.dataSource = new MatTableDataSource<ElementI>(ELEMENT_DATA);
     this.getBrokerList();
-    this.teamMemberListGet()
+    this.getSubAdvisorList();
   }
 
-  teamMemberListGet() {
-    this.reconService.getTeamMemberListValues({ advisorId: this.advisorId })
-      .subscribe(data => {
-        if (data && data.length !== 0) {
-          data.forEach(element => {
-            this.adminAdvisorIds.push(element.adminAdvisorId);
-          });
-        } else {
-          this.adminAdvisorIds = [...this.advisorId];
-          this.eventService.openSnackBar('No Team Member Found', 'Dismiss');
-        }
-      });
-  }
+  // teamMemberListGet() {
+  //   this.reconService.getTeamMemberListValues({ advisorId: this.advisorId })
+  //     .subscribe(data => {
+  //       if (data && data.length !== 0) {
+  //         data.forEach(element => {
+  //           this.adminAdvisorIds.push(element.adminAdvisorId);
+  //         });
+  //       } else {
+  //         this.adminAdvisorIds = [...this.advisorId];
+  //         this.eventService.openSnackBar('No Team Member Found', 'Dismiss');
+  //       }
+  //     });
+  // }
 
   getBrokerList() {
     this.reconService.getBrokerListValues({ advisorId: this.advisorId })
@@ -64,6 +64,16 @@ export class ReconCamsComponent implements OnInit {
           this.brokerList = res;
         }
       });
+  }
+
+  getSubAdvisorList() {
+    this.reconService.getSubAdvisorListValues({ advisorId: this.advisorId })
+      .subscribe(res => {
+        if (res) {
+          console.log("this is subAdvisor list::::", res);
+          this.subAdvisorList = res;
+        }
+      })
   }
 
   getAumReconHistoryData() {
@@ -75,7 +85,7 @@ export class ReconCamsComponent implements OnInit {
       this.dataSource.data = ELEMENT_DATA;
       this.isBrokerSelected = true;
       const data = {
-        advisorIds: [...this.adminAdvisorIds],
+        advisorIds: [this.advisorId, ...this.subAdvisorList],
         brokerId: this.selectBrokerForm.get('selectBrokerId').value,
         rmId: this.rmId,
         rtId: this.rtId,
