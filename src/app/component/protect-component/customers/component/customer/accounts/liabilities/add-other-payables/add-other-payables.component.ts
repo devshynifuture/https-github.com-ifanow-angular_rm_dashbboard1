@@ -395,6 +395,12 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.otherLiability
         }
       });
     }
+    this.otherLiabilityForm.value.getCoOwnerName.forEach(element => {
+      if(element.familyMemberId == 0){
+        element.familyMemberId = this.clientId;
+        element.isClient = 1;
+      }
+    });
     if (this.otherLiabilityForm.invalid) {
       this.otherLiabilityForm.markAllAsTouched();
       this.inputs.find(input => !input.ngControl.valid).focus();
