@@ -96,8 +96,13 @@ export class SipApplicantWiseComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.parentId = AuthService.getParentId() ? AuthService.getParentId() : this.advisorId;
-    this.viewMode = 'All';
-    this.arnRiaValue = -1;
+    if (this.data.hasOwnProperty('arnRiaValue') && this.data.hasOwnProperty('viewMode')) {
+      this.arnRiaValue = this.data.arnRiaValue;
+      this.viewMode = this.data.viewMode;
+    } else {
+      this.viewMode = "All";
+      this.arnRiaValue = -1;
+    }
     this.schemeWiseApplicantGet();
   }
 

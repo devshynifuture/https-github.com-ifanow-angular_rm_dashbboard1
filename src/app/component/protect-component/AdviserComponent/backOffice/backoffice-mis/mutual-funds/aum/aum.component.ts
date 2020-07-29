@@ -214,7 +214,7 @@ export class AumComponent implements OnInit {
     //   arnRiaDetailsId: this.arnRiaValue,
     //   parentId: this.parentId
     // }
-    this.backoffice.getMisData(this.advisorId).subscribe(
+    this.backoffice.getMisData({ advisorId: this.advisorId, arnRiaDetailsId: this.arnRiaValue }).subscribe(
       data => this.getFileResponseDataForMis(data),
       err => {
         this.isLoading = false;
@@ -253,6 +253,7 @@ export class AumComponent implements OnInit {
 
   }
   getFileResponseDataForMis(data) {
+    console.log("this is totalaum data:::", data);
     this.isLoading = false;
     this.MiscData1 = data;
   }
@@ -275,7 +276,9 @@ export class AumComponent implements OnInit {
     this.objTosend = {
       arnRiaDetailId: this.arnRiaValue,
       parentId: this.parentId,
-      adminAdvisorIds: this.adminAdvisorIds
+      adminAdvisorIds: this.adminAdvisorIds,
+      arnRiaValue: this.arnRiaValue,
+      viewMode: this.viewMode
     }
   }
   getGraphData() {

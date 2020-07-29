@@ -50,7 +50,7 @@ export class BackOfficeService {
   }
 
   getMisData(data) {
-    const httpParams = new HttpParams().set('advisorId', data);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_MIS_DATA, httpParams);
   }
 

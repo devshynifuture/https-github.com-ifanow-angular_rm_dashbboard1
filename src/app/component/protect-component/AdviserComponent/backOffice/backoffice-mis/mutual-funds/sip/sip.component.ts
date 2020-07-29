@@ -39,7 +39,7 @@ export class SipComponent implements OnInit {
   isExpiredLoading = true;
   isRejectionLoading = true;
   mode: any;
-  objTosend: { arnRiaId: any; parentId: any; adminAdvisorIds: any; };
+  objTosend: { arnRiaId: any; parentId: any; adminAdvisorIds: any; arnRiaValue: number; viewMode: string; };
   loaderValue: number;
   constructor(private backoffice: BackOfficeService, private dataService: EventService, private reconService: ReconciliationService, private mfService: MfServiceService) { }
   ngOnInit() {
@@ -109,7 +109,9 @@ export class SipComponent implements OnInit {
     this.objTosend = {
       arnRiaId: this.arnRiaId,
       parentId: this.parentId,
-      adminAdvisorIds: this.adminAdvisorIds
+      adminAdvisorIds: this.adminAdvisorIds,
+      viewMode: this.viewMode,
+      arnRiaValue: this.arnRiaId
     }
   }
   getArnRiaList() {
@@ -304,7 +306,9 @@ export class SipComponent implements OnInit {
     this.objTosend = {
       arnRiaId: this.arnRiaId,
       parentId: this.parentId,
-      adminAdvisorIds: this.adminAdvisorIds
+      adminAdvisorIds: this.adminAdvisorIds,
+      viewMode: this.viewMode,
+      arnRiaValue: this.arnRiaId
     }
   }
   newSip() {
