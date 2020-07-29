@@ -97,6 +97,9 @@ export class CategoryWiseComponent implements OnInit {
   subCategoryWiseTotalArr = [];
   schemeWiseTotalArr = [];
   applicantWiseTotalArr = [];
+  arnRiaValue: any;
+  viewMode: any;
+  arnRiaList = [];
   // categoryTotal: number = 0;
   // subCategoryTotal: number = 0;
   // applicantTotal: number = 0;
@@ -108,12 +111,44 @@ export class CategoryWiseComponent implements OnInit {
   ngOnInit() {
     this.clientId = AuthService.getClientId();
     this.parentId = AuthService.getParentId() ? AuthService.getParentId() : this.advisorId;
+    this.viewMode = 'All';
+    this.arnRiaValue = -1;
+    this.getArnRiaList();
     this.getSubCatSchemeName();
 
 
     // this.clientFolioWise();
     // this.getSubCatAum();
   }
+
+  changeValueOfArnRia(item) {
+    if (item.name !== 'All') {
+      this.arnRiaValue = item.id
+      this.viewMode = item.number;
+    } else {
+      this.arnRiaValue = -1;
+    }
+    this.getSubCatSchemeName();
+  }
+
+  getArnRiaList() {
+    this.backoffice.getArnRiaList(this.advisorId).subscribe(
+      data => {
+        if (data) {
+          // this.advisorId = 0;
+          this.arnRiaList = data;
+          const obj = {
+            number: 'All',
+            id: -1
+          }
+          this.arnRiaList.unshift(obj);
+        } else {
+          // this.dataService.openSnackBar("No Arn Ria List Found", "Dismiss")
+        }
+      }
+    )
+  }
+
   sortBy(applicant, propertyName) {
     this.propertyName = propertyName;
     this.reverse = (propertyName !== null && this.propertyName === propertyName) ? !this.reverse : false;
@@ -171,7 +206,7 @@ export class CategoryWiseComponent implements OnInit {
     this.category = [{}, {}, {}];
     const obj = {
       advisorId: (this.parentId) ? 0 : (this.data.arnRiaDetailId != -1) ? 0 : [this.data.adminAdvisorIds],
-      arnRiaDetailsId: (this.data) ? this.data.arnRiaDetailId : -1,
+      arnRiaDetailsId: this.arnRiaValue,
       parentId: (this.data) ? this.data.parentId : -1
     }
     this.backoffice.getTotalByAumScheme(obj).subscribe(

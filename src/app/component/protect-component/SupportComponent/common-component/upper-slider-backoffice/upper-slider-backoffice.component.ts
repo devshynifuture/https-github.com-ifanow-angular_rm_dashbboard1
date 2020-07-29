@@ -107,7 +107,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
           });
 
           this.upperHeaderName = this.getRtName(this.data.rtId);
-          this.getSubAdvisorList();
+          this.teamMemberListGet()
         } else {
           this.eventService.openSnackBar('Error In Fetching RTA List', 'Dismiss');
         }
@@ -151,23 +151,23 @@ export class UpperSliderBackofficeComponent implements OnInit {
     console.log('this is data that we got from franklin:::::::', this.data);
   }
 
-  // teamMemberListGet() {
-  //   this.reconService.getTeamMemberListValues({ advisorId: this.advisorId })
-  //     .subscribe(data => {
-  //       if (data && data.length !== 0) {
-  //         console.log('team members: ', data);
-  //         data.forEach(element => {
-  //           this.adminAdvisorIds.push(element.adminAdvisorId);
-  //         });
-  //       } else {
-  //         this.adminAdvisorIds = [this.advisorId];
-  //         this.eventService.openSnackBar('No Team Member Found', 'Dismiss');
-  //       }
-  //       this.handlingDataVariable(true);
-  //     }, err => {
-  //       console.log(err);
-  //     });
-  // }
+  teamMemberListGet() {
+    this.reconService.getTeamMemberListValues({ advisorId: this.advisorId })
+      .subscribe(data => {
+        if (data && data.length !== 0) {
+          console.log('team members: ', data);
+          data.forEach(element => {
+            this.adminAdvisorIds.push(element.adminAdvisorId);
+          });
+        } else {
+          this.adminAdvisorIds = [this.advisorId];
+          this.eventService.openSnackBar('No Team Member Found', 'Dismiss');
+        }
+        this.handlingDataVariable(true);
+      }, err => {
+        console.log(err);
+      });
+  }
 
   bindDataWithSummaryTable() {
     let objArr = [];
@@ -192,7 +192,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
     this.dataSource1.data = ELEMENT_DATA1;
     const isParent = (this.isRmLogin) ? true : (this.parentId === this.advisorId) ? true : false;
     const data = {
-      advisorIds: [this.advisorId, ...this.subAdvisorList],
+      advisorIds: [...this.adminAdvisorIds],
       brokerId: this.brokerId,
       rt: this.data.rtId,
       arnRiaDetailId: this.brokerId,
@@ -210,7 +210,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
             if (this.totalCount !== 0 && this.aumFileCount !== 0) {
               const data = {
-                advisorIds: [this.advisorId, ...this.subAdvisorList],
+                advisorIds: [...this.adminAdvisorIds],
                 arnRiaDetailId: this.brokerId,
                 rt: this.data.rtId,
                 parentId: (this.adminId && this.adminId == 0) ? this.advisorId : (this.parentId ? this.parentId : this.advisorId),
@@ -376,7 +376,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
 
       data = {
-        advisorIds: [this.advisorId, ...this.subAdvisorList],
+        advisorIds: [...this.adminAdvisorIds],
         aum: {
           folio: mutualFundIds,
         },
@@ -783,7 +783,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
       data: {
         ...element,
         dataForDuplicateTransactionCall: {
-          advisorIds: [this.advisorId, ...this.subAdvisorList],
+          advisorIds: [...this.adminAdvisorIds],
           isParent,
           parentId: this.parentId,
           aumDate: aumDateFormated
@@ -978,24 +978,11 @@ export class UpperSliderBackofficeComponent implements OnInit {
     this.deleteReorderOrDeleteDisabled = 'deleteReorder';
   }
 
-
-  getSubAdvisorList() {
-    this.reconService.getSubAdvisorListValues({ advisorId: this.advisorId })
-      .subscribe(res => {
-        if (res) {
-          console.log("this is subAdvisor list::::", res);
-          this.subAdvisorList = res;
-          this.handlingDataVariable(true);
-        }
-      })
-  }
-
-
   deleteUnfreezeTransaction() {
     const isParent = this.isRmLogin ? true : ((this.parentId === this.advisorId) ? true : false);
     const data = {
       id: this.data.id,
-      advisorIds: [this.advisorId, ...this.subAdvisorList],
+      advisorIds: [...this.adminAdvisorIds],
       parentId: this.parentId,
       isParent,
       brokerId: this.brokerId,

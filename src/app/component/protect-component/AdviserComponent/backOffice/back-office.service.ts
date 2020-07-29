@@ -93,17 +93,17 @@ export class BackOfficeService {
   }
 
   getAumApplicantCategory(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId).set('familyMembertId', data.familyMembertId).set('clientTotalAum', data.clientTotalAum);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId).set('familyMembertId', data.familyMembertId).set('clientTotalAum', data.clientTotalAum).set('clientId', data.clientId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_AUM_APPLICANT_CATEGORY, httpParams);
   }
 
   getAumApplicantSubCategory(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId).set('familyMembertId', data.familyMembertId).set('categoryId', data.categoryId).set('categoryTotalAum', data.categoryTotalAum);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId).set('familyMembertId', data.familyMembertId).set('categoryId', data.categoryId).set('categoryTotalAum', data.categoryTotalAum).set('clientId', data.clientId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_AUM_APPLICANT_SUB_CATEGORY, httpParams);
   }
 
   getAumApplicantScheme(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId).set('familyMembertId', data.familyMembertId).set('subCategoryId', data.subCategoryId).set('subCategoryTotalAum', data.subCategoryTotalAum);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId).set('familyMembertId', data.familyMembertId).set('subCategoryId', data.subCategoryId).set('subCategoryTotalAum', data.subCategoryTotalAum).set('clientId', data.clientId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_AUM_APPLICANT_SCHEME, httpParams);
   }
 
@@ -304,22 +304,22 @@ export class BackOfficeService {
   getDetailsClientAdvisor(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CLIENT_ADVISOR_DEATILS, data);
   }
-  rederToHtmlToPdf(data){
+  rederToHtmlToPdf(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.HTML_TO_PDF, data);
   }
   getClientFolioWise(data) {
     return this.http.getEncoded(apiConfig.MAIN_URL + appConfig.GET_BASE_64, data, 10000);
   }
-  getClientIdByLoop(data){
+  getClientIdByLoop(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.GET_CLIENT_IN_LOOP, data);
   }
-  getOrderList(data){
+  getOrderList(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ORDER_LIST, data);
   }
-  getMutualFundClientList(data){
+  getMutualFundClientList(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_MF_CLIENTS, data);
   }
-  saveSetting(data){
+  saveSetting(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.SAVE_SETTING, data);
   }
 }
