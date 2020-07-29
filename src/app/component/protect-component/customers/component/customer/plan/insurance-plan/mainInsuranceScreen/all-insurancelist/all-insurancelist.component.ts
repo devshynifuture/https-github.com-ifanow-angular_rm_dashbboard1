@@ -8,6 +8,9 @@ import { AddInsurancePlanningComponent } from '../../add-insurance-planning/add-
 import { AddInsuranceUpperComponent } from '../../add-insurance-upper/add-insurance-upper.component';
 import { AddSuggestPolicyComponent } from '../../add-suggest-policy/add-suggest-policy.component';
 import { CurrentPolicyComponent } from '../../current-policy/current-policy.component';
+import { PlanService } from '../../../plan.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-all-insurancelist',
@@ -18,11 +21,12 @@ export class AllInsurancelistComponent implements OnInit {
 
 
   displayedColumns = ['pname', 'sum2', 'premium2', 'status', 'empty'];
-  dataSource = ELEMENT_DATA;
   displayedColumns1 = ['name', 'sum', 'premium', 'returns', 'advice'];
   dataSource1 = ELEMENT_DATA1;
   displayedColumns2 = ['name', 'annual', 'amt', 'icons'];
   dataSource2 = ELEMENT_DATA2;
+  dataSource: any = new MatTableDataSource();
+
   insuranceList = [{
     heading:'Life insurance',
     advice:'1,80,00,000',
@@ -60,16 +64,55 @@ export class AllInsurancelistComponent implements OnInit {
     familyMem :'Rahul Jain',
   }]
   detailsInsurance: any;
-  constructor(private subInjectService: SubscriptionInject, private eventService: EventService) {
+  clientId: any;
+  advisorId: any;
+  insuranceLoader: boolean;
+  counter: any;
+  data: Array<any> = [{}, {}, {}];
+  constructor(private subInjectService: SubscriptionInject, 
+    private planService : PlanService,
+    private eventService: EventService) {
+      this.advisorId = AuthService.getAdvisorId()
+      this.clientId = AuthService.getClientId()
   }
 
   isLoading = true;
 
   ngOnInit() {
     this.detailsInsurance = this.insuranceList[0]
+    this.getInsuranceList()
   }
   openDetailsInsurance(insurance){
     this.detailsInsurance = insurance
+  }
+  getInsuranceList(){
+    console.log('shgshgjhkf')
+    let obj =  {
+      clientId : this.clientId,
+      advisorId : this.advisorId
+    }
+    this.loader(1);
+    this.planService.getInsurancePlaningList(obj).subscribe(
+      data => this.getInsurancePlaningListRes(data),
+      err => {
+        this.eventService.openSnackBar(err, 'Dismiss');
+        this.insuranceLoader = true;
+        this.loader(-1);
+      }
+    );
+  }
+  getInsurancePlaningListRes(data){
+    this.loader(-1);
+    console.log('incurance list',data)
+    this.dataSource = data
+  }
+  loader(increamenter) {
+    this.counter += increamenter;
+    if (this.counter == 0) {
+      this.isLoading = false;
+    } else {
+      this.isLoading = true;
+    }
   }
   addnewinsurance(data) {
     console.log('hello mf button clicked');
@@ -206,9 +249,9 @@ export interface PeriodicElement {
   symbol: string;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: "HDFC Ergo My Health Suraksha", name: '7,00,000', weight: "19,201", symbol: 'Waiting for approval' },
-];
+// const ELEMENT_DATA: PeriodicElement[] = [
+//   { position: "HDFC Ergo My Health Suraksha", name: '7,00,000', weight: "19,201", symbol: 'Waiting for approval' },
+// ];
 
 export interface PeriodicElement1 {
   name: string;

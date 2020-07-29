@@ -181,4 +181,22 @@ export class PlanService {
   removeAllocation(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.REMOVE_ALLOCATION, data);
   }
+  getInsurancePlaningList(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_INSURANCE_LIST, data);
+  }
+  addInsurance(data){
+    return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_INSURANCE, data);
+  }
+  getFamilyDetailsInsurance(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_FAMILYMEMBER_DETAILS, data);
+  }
+  getLifeInuranceNeedAnalysis(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_LIFE_NEED_ANALYSIS, data);
+  }
+  getLifeInsuranceAnalysisMapToPlan(data){
+    return this.http.put(apiConfig.MAIN_URL + appConfig.GET_LIFE_NEED_ANALYSIS_MAP, data);
+  }
+  saveLifeInsuranceAnalysis(data){
+    return this.http.put(apiConfig.MAIN_URL + appConfig.LIFE_ANALYSIS_ADD, data);
+  }
 }
