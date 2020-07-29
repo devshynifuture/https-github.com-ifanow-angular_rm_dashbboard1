@@ -127,6 +127,9 @@ export class SipSchemeWiseComponent implements OnInit {
   subCatList: any[];
   caesedForm: any;
   parentId: any;
+  viewMode;
+  arnRiaList;
+  arnRiaValue;
 
   constructor(private datePipe: DatePipe, private eventService: EventService, private backoffice: BackOfficeService, private fb: FormBuilder, public sip: SipComponent, private mfService: MfServiceService) { }
 
@@ -138,6 +141,37 @@ export class SipSchemeWiseComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.parentId = AuthService.getParentId() ? AuthService.getParentId() : this.advisorId;
+    this.viewMode = 'All';
+    this.arnRiaValue = -1;
+    this.getArnRiaList();
+    this.getSchemeWiseGet();
+  }
+
+  getArnRiaList() {
+    this.backoffice.getArnRiaList(this.advisorId).subscribe(
+      data => {
+        if (data) {
+          // this.advisorId = 0;
+          this.arnRiaList = data;
+          const obj = {
+            number: 'All',
+            id: -1
+          }
+          this.arnRiaList.unshift(obj);
+        } else {
+          // this.dataService.openSnackBar("No Arn Ria List Found", "Dismiss")
+        }
+      }
+    )
+  }
+
+  changeValueOfArnRia(item) {
+    if (item.name !== 'All') {
+      this.arnRiaValue = item.id
+      this.viewMode = item.number;
+    } else {
+      this.arnRiaValue = -1;
+    }
     this.getSchemeWiseGet();
   }
   sortBy(applicant, propertyName) {
@@ -191,7 +225,7 @@ export class SipSchemeWiseComponent implements OnInit {
     this.filteredArray = [{}, {}, {}]
     const obj = {
       advisorId: (this.parentId) ? 0 : (this.data.arnRiaId != -1) ? 0 : [this.data.adminAdvisorIds],
-      arnRiaDetailsId: (this.data) ? this.data.arnRiaId : -1,
+      arnRiaDetailsId: this.arnRiaValue,
       parentId: (this.data) ? this.data.parentId : -1
     }
     this.backoffice.Sip_Schemewise_Get(obj).subscribe(
@@ -281,7 +315,7 @@ export class SipSchemeWiseComponent implements OnInit {
       schemeData.subCatList = [{}, {}, {}];
       const obj = {
         advisorId: (this.parentId) ? 0 : (this.data.arnRiaId != -1) ? 0 : [this.data.adminAdvisorIds],
-        arnRiaDetailsId: (this.data) ? this.data.arnRiaId : -1,
+        arnRiaDetailsId: this.arnRiaValue,
         parentId: (this.data) ? this.data.parentId : -1,
         schemeId: schemeData.mutualFundSchemeMasterId
       }
@@ -407,7 +441,7 @@ export class SipSchemeWiseComponent implements OnInit {
       ApplicantData.applicantList = [{}, {}, {}];
       const obj = {
         advisorId: (this.parentId) ? 0 : (this.data.arnRiaId != -1) ? 0 : [this.data.adminAdvisorIds],
-        arnRiaDetailsId: (this.data) ? this.data.arnRiaId : -1,
+        arnRiaDetailsId: this.arnRiaValue,
         parentId: (this.data) ? this.data.parentId : -1,
 
         schemeId: ApplicantData.mutualFundSchemeMasterId,
