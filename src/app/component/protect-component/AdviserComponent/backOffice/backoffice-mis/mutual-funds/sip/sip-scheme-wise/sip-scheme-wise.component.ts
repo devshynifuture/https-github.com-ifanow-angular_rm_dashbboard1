@@ -145,7 +145,7 @@ export class SipSchemeWiseComponent implements OnInit {
       this.arnRiaValue = this.data.arnRiaValue;
       this.viewMode = this.data.viewMode;
     } else {
-      this.viewMode = "All";
+      this.viewMode = 'All';
       this.arnRiaValue = -1;
     }
     this.getArnRiaList();
@@ -161,18 +161,18 @@ export class SipSchemeWiseComponent implements OnInit {
           const obj = {
             number: 'All',
             id: -1
-          }
+          };
           this.arnRiaList.unshift(obj);
         } else {
           // this.dataService.openSnackBar("No Arn Ria List Found", "Dismiss")
         }
       }
-    )
+    );
   }
 
   changeValueOfArnRia(item) {
     if (item.name !== 'All') {
-      this.arnRiaValue = item.id
+      this.arnRiaValue = item.id;
       this.viewMode = item.number;
     } else {
       this.arnRiaValue = -1;
@@ -222,33 +222,33 @@ export class SipSchemeWiseComponent implements OnInit {
     this.changedValue.emit(true);
     //  this.sip.sipComponent=true;
     this.filteredArray.forEach(element => {
-      element.showCategory = true
+      element.showCategory = true;
     });
   }
   getSchemeWiseGet() {
     this.arrayOfExcelData = [];
     this.isLoading = true;
-    this.filteredArray = [{}, {}, {}]
+    this.filteredArray = [{}, {}, {}];
     const obj = {
-      advisorId: (this.parentId) ? 0 : (this.data.arnRiaId != -1) ? 0 : [this.data.adminAdvisorIds],
+      advisorId: (this.parentId == this.advisorId) ? 0 : this.advisorId,
       arnRiaDetailsId: this.arnRiaValue,
       parentId: (this.data) ? this.data.parentId : -1
-    }
+    };
     this.backoffice.Sip_Schemewise_Get(obj).subscribe(
       data => this.getSchemeWiseRes(data),
       err => {
         this.isLoading = false;
-        this.filteredArray = []
+        this.filteredArray = [];
       }
-    )
+    );
   }
   addCeasesdDate(sip, investor, date) {
-    var obj = {
+    const obj = {
       id: sip.id,
       mutualFundId: sip.mutualFundId,
       amount: sip.amount,
       ceaseDate: this.datePipe.transform(this.caesedForm.controls.ceaseddate.value, 'yyyy/MM/dd'),
-    }
+    };
     this.backoffice.addCeasedDate(obj).subscribe(
       data => {
         console.log(data);
@@ -258,15 +258,15 @@ export class SipSchemeWiseComponent implements OnInit {
       err => {
 
       }
-    )
+    );
 
   }
   getSchemeWiseRes(data) {
     this.isLoading = false;
     if (data) {
       this.category = data;
-      console.log("main category::::", this.category);
-      this.excelInitClientList()
+      console.log('main category::::', this.category);
+      this.excelInitClientList();
       this.category.forEach(o => {
         o.showCategory = true;
         this.totalOfSipAmount += o.sipAmount;
@@ -315,21 +315,21 @@ export class SipSchemeWiseComponent implements OnInit {
     schemeData.showCategory = !schemeData.showCategory;
     if (schemeData.showCategory == false) {
       this.selectedCategory = index;
-      this.isLoadingCategory = true
-      schemeData.subCatList = []
-      this.subCatList = []
+      this.isLoadingCategory = true;
+      schemeData.subCatList = [];
+      this.subCatList = [];
       schemeData.subCatList = [{}, {}, {}];
       const obj = {
-        advisorId: (this.parentId) ? 0 : (this.data.arnRiaId != -1) ? 0 : [this.data.adminAdvisorIds],
+        advisorId: (this.parentId == this.advisorId) ? 0 : this.advisorId,
         arnRiaDetailsId: this.arnRiaValue,
         parentId: (this.data) ? this.data.parentId : -1,
         schemeId: schemeData.mutualFundSchemeMasterId
-      }
+      };
       this.backoffice.Scheme_Wise_Investor_Get(obj).subscribe(
         data => {
-          this.isLoadingCategory = false
+          this.isLoadingCategory = false;
           if (data) {
-            console.log("tihs is sub category data:::", data);
+            console.log('tihs is sub category data:::', data);
             data.forEach(element => {
               element.showSubCategory = true;
               element.mutualFundSchemeMasterId = schemeData.mutualFundSchemeMasterId;
@@ -340,17 +340,17 @@ export class SipSchemeWiseComponent implements OnInit {
             this.appendingOfValuesInExcel(data, index, 'investor');
 
           } else {
-            this.subCatList = []
-            schemeData.subCatList = []
-            this.isLoadingCategory = false
+            this.subCatList = [];
+            schemeData.subCatList = [];
+            this.isLoadingCategory = false;
           }
         },
         err => {
-          this.subCatList = []
-          schemeData.subCatList = []
-          this.isLoadingCategory = false
+          this.subCatList = [];
+          schemeData.subCatList = [];
+          this.isLoadingCategory = false;
         }
-      )
+      );
     } else {
       this.removeValuesFromExcel('investor', index);
       if (schemeData.hasOwnProperty('subCatList') && schemeData.subCatList.length !== 0) {
@@ -439,43 +439,43 @@ export class SipSchemeWiseComponent implements OnInit {
     console.log(this.arrayOfExcelData);
   }
   showSchemeName(index, subcashowSubcat, ApplicantData) {
-    ApplicantData.showSubCategory = !ApplicantData.showSubCategory
+    ApplicantData.showSubCategory = !ApplicantData.showSubCategory;
     if (ApplicantData.showSubCategory == false) {
       this.selectedCategoryApp = index;
-      this.isLoadingSubCategory = true
-      this.applicantListArr = []
+      this.isLoadingSubCategory = true;
+      this.applicantListArr = [];
       ApplicantData.applicantList = [{}, {}, {}];
       const obj = {
-        advisorId: (this.parentId) ? 0 : (this.data.arnRiaId != -1) ? 0 : [this.data.adminAdvisorIds],
+        advisorId: (this.parentId == this.advisorId) ? 0 : this.advisorId,
         arnRiaDetailsId: this.arnRiaValue,
         parentId: (this.data) ? this.data.parentId : -1,
 
         schemeId: ApplicantData.mutualFundSchemeMasterId,
         clientId: ApplicantData.clientId
-      }
+      };
       this.backoffice.scheme_wise_Applicants_Get(obj).subscribe(
         data => {
-          this.isLoadingSubCategory = false
+          this.isLoadingSubCategory = false;
           if (data) {
-            console.log("this is  scheme Data data::", data);
+            console.log('this is  scheme Data data::', data);
             data.forEach(o => {
               o.isEdit = false;
             });
             ApplicantData.applicantList = data;
-            this.applicantListArr = data
+            this.applicantListArr = data;
             this.appendingOfValuesInExcel(data, index, 'schemes');
           } else {
-            this.applicantListArr = []
+            this.applicantListArr = [];
             ApplicantData.applicantList = [];
-            this.isLoadingSubCategory = false
+            this.isLoadingSubCategory = false;
           }
         },
         err => {
-          this.applicantListArr = []
+          this.applicantListArr = [];
           ApplicantData.applicantList = [];
-          this.isLoadingSubCategory = false
+          this.isLoadingSubCategory = false;
         }
-      )
+      );
     } else {
       this.removeValuesFromExcel('schemes', index);
       if (ApplicantData.hasOwnProperty('applicantList') && ApplicantData.applicantList.length !== 0) {
@@ -495,7 +495,7 @@ export class SipSchemeWiseComponent implements OnInit {
         sipCount: element.sipCount,
         weightInPerc: element.weightInPercentage,
         subCatList: [],
-      }
+      };
       this.arrayOfExcelData.push(data);
       sumAmtTotal += element.sipAmount;
       sumWeightInPercTotal += element.weightInPercentage;
@@ -525,7 +525,7 @@ export class SipSchemeWiseComponent implements OnInit {
     }, this.amcTotalList);
   }
   investorWiseExcelSheet(index) {
-    let copyOfExcelData = JSON.parse(JSON.stringify(this.arrayOfExcelData));
+    const copyOfExcelData = JSON.parse(JSON.stringify(this.arrayOfExcelData));
     copyOfExcelData.forEach((element, index1) => {
       if (index1 === index) {
         return;
@@ -534,8 +534,8 @@ export class SipSchemeWiseComponent implements OnInit {
       }
     });
 
-    let arrayOfExcelHeaders = this.arrayOfHeaders.slice();
-    let arrayOfExcelStyles = this.arrayOfHeaderStyles.slice();
+    const arrayOfExcelHeaders = this.arrayOfHeaders.slice();
+    const arrayOfExcelStyles = this.arrayOfHeaderStyles.slice();
 
     arrayOfExcelStyles.shift();
     arrayOfExcelHeaders.shift();
@@ -547,8 +547,8 @@ export class SipSchemeWiseComponent implements OnInit {
     }, this.investorTotalList);
   }
   applicantWiseExcelReport(index, amcIndex) {
-    let applicantList = this.arrayOfExcelData[this.selectedCategory].subCatList[this.selectedCategoryApp].schemeList;
-    let newarr = [];
+    const applicantList = this.arrayOfExcelData[this.selectedCategory].subCatList[this.selectedCategoryApp].schemeList;
+    const newarr = [];
     applicantList.forEach(element => {
       newarr.push({
         field1: element.index,

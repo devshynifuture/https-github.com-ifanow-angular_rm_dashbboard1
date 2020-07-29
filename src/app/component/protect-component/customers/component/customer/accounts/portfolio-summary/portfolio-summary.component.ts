@@ -9,6 +9,7 @@ import {Subscription} from 'rxjs';
 import {EnumServiceService} from 'src/app/services/enum-service.service';
 import {EnumDataService} from 'src/app/services/enum-data.service';
 import {UtilService} from 'src/app/services/util.service';
+import {element} from "protractor";
 
 @Component({
   selector: 'app-portfolio-summary',
@@ -169,7 +170,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
 
           this.letsideBarLoader = false;
           this.summaryMap = tempSummaryTotalValue;
-          this.pieChart('piechartMutualFund', this.summaryTotalValue);
+          // this.pieChart('piechartMutualFund', this.summaryTotalValue);
         }
       },
       err => {
@@ -181,6 +182,23 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     );
     this.getSummaryList(obj);
     this.getCashFlowList(obj);
+  }
+
+  getAssetAllocationSummary() {
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      targetDate: this.asOnDate
+    };
+    this.cusService.getAssetAllocationSummary(obj).subscribe(
+      data => {
+        console.log(data);
+        this.pieChart('piechartMutualFund', data);
+      },
+      err => {
+        this.finalTotal = 0;
+      }
+    );
   }
 
   getSummaryList(obj) {
@@ -521,11 +539,17 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
 
   pieChart(id, data) {
     const dataSeriesList = [];
-    data = data.filter(element => element.assetType != 2);
+    let totalValue = 0;
+    data = data.filter(element => {
+      totalValue += element.currentValue;
+      return element.assetType != 2;
+    });
     data = data.filter(element => element.currentValue != 0);
     data.forEach(element => {
-      const totalAssetData = this.totalAssetsWithoutLiability + this.liabilityTotal;
-      const dividedValue = element.currentValue / totalAssetData;
+    });
+    data.forEach(element => {
+      // const totalAssetData = totalValue;
+      const dividedValue = element.currentValue / totalValue;
       dataSeriesList.push({
         name: element.assetTypeString,
         y: dividedValue * 100,

@@ -298,6 +298,8 @@ export const appConfig = {
   REMOVE_ALLOCATION: 'goal-planning/asset/allocate',
   CALCULATE_TOTAL_VALUES: 'account/asset/summary',
   GET_SUMMARY_LIST: 'account/asset/summary/list',
+  GET_ASSET_ALLOCATION_SUMMARY_LIST: 'account/asset/asset-allocation/summary/get',
+
   GET_CASHFLOW_LIST: 'cashflow/monthly/list/get',
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE: 'account/asset/real-estate/get',
@@ -632,11 +634,6 @@ export const appConfig = {
   ACTIVITY_SUBTASK_EDIT: 'activity/task/sub-task/edit',
   ACTIVITY_ADD_COMMENT_TASK_SUBTASK: 'activity/task/sub-task/comment/add',
   ACTIVITY_EDIT_COMMENT_TASK_SUBTASK: 'activity/task/comment/edit',
-
-
-
-
-
 
 
   GET_STAGE_COMMENT: 'rmdashboard/dashboard/ifa-onboard/stages/chat/get',
