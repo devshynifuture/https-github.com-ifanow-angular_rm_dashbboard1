@@ -85,6 +85,9 @@ export class AmcWiseComponent implements OnInit {
   amcWiseTotal = [];
   schemeWiseTotal = [];
   applicantWiseTotal = [];
+  viewMode;
+  arnRiaValue;
+  arnRiaList = [];
 
   constructor(public aum: AumComponent, private backoffice: BackOfficeService, private dataService: EventService, private mfService: MfServiceService) { }
 
@@ -92,8 +95,45 @@ export class AmcWiseComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.parentId = AuthService.getParentId() ? AuthService.getParentId() : this.advisorId;
+    if (this.data.hasOwnProperty('arnRiaValue') && this.data.hasOwnProperty('viewMode')) {
+      this.arnRiaValue = this.data.arnRiaValue;
+      this.viewMode = this.data.viewMode;
+    } else {
+      this.viewMode = "All";
+      this.arnRiaValue = -1;
+    }
+    this.getArnRiaList();
     this.getAmcWiseData();
   }
+
+  getArnRiaList() {
+    this.backoffice.getArnRiaList(this.advisorId).subscribe(
+      data => {
+        if (data) {
+          // this.advisorId = 0;
+          this.arnRiaList = data;
+          const obj = {
+            number: 'All',
+            id: -1
+          }
+          this.arnRiaList.unshift(obj);
+        } else {
+          // this.dataService.openSnackBar("No Arn Ria List Found", "Dismiss")
+        }
+      }
+    )
+  }
+
+  changeValueOfArnRia(item) {
+    if (item.name !== 'All') {
+      this.arnRiaValue = item.id
+      this.viewMode = item.number;
+    } else {
+      this.arnRiaValue = -1;
+    }
+    this.getAmcWiseData();
+  }
+
   sortBy(applicant, propertyName) {
     this.propertyName = propertyName;
     this.reverse = (propertyName !== null && this.propertyName === propertyName) ? !this.reverse : false;
@@ -141,7 +181,7 @@ export class AmcWiseComponent implements OnInit {
     this.amcList = [{}, {}, {}]
     const obj = {
       advisorId: (this.parentId) ? 0 : (this.data.arnRiaDetailId != -1) ? 0 : [this.data.adminAdvisorIds],
-      arnRiaDetailsId: (this.data) ? this.data.arnRiaDetailId : -1,
+      arnRiaDetailsId: this.arnRiaValue,
       parentId: (this.data) ? this.data.parentId : -1
     }
     this.backoffice.amcWiseGet(obj).subscribe(
@@ -321,7 +361,7 @@ export class AmcWiseComponent implements OnInit {
       schemeData.applicantList = [{}, {}, {}];
       const obj = {
         advisorId: (this.parentId) ? 0 : (this.data.arnRiaDetailId != -1) ? 0 : [this.data.adminAdvisorIds],
-        arnRiaDetailsId: (this.data) ? this.data.arnRiaDetailId : -1,
+        arnRiaDetailsId: this.arnRiaValue,
         parentId: (this.data) ? this.data.parentId : -1,
         schemeMasterId: schemeData.id,
         totalAum: schemeData.totalAum
@@ -354,7 +394,7 @@ export class AmcWiseComponent implements OnInit {
       schemeMasterId: 1345,
       totalAum: 2000,
       advisorId: (this.parentId) ? 0 : (this.data.arnRiaDetailId != -1) ? 0 : [this.data.adminAdvisorIds],
-      arnRiaDetailsId: (this.data) ? this.data.arnRiaDetailId : -1,
+      arnRiaDetailsId: this.arnRiaValue,
       parentId: (this.data) ? this.data.parentId : -1,
     }
     this.backoffice.amcWiseApplicantGet(obj)

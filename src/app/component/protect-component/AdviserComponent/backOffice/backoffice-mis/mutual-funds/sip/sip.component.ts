@@ -34,20 +34,21 @@ export class SipComponent implements OnInit {
   viewMode: string;
   isLoading = true;
   parentId;
-  adminAdvisorIds=[];
-  isExpiringLoading=true;
-  isExpiredLoading=true;
-  isRejectionLoading=true;
+  adminAdvisorIds = [];
+  isExpiringLoading = true;
+  isExpiredLoading = true;
+  isRejectionLoading = true;
   mode: any;
-  objTosend: { arnRiaId: any; parentId: any; adminAdvisorIds: any; };
+  objTosend: { arnRiaId: any; parentId: any; adminAdvisorIds: any; arnRiaValue: number; viewMode: string; };
   loaderValue: number;
-  constructor(private backoffice: BackOfficeService, private dataService: EventService, private reconService: ReconciliationService,private mfService:MfServiceService) { }
+  constructor(private backoffice: BackOfficeService, private dataService: EventService, private reconService: ReconciliationService, private mfService: MfServiceService) { }
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.parentId = AuthService.getParentId() ? AuthService.getParentId() : this.advisorId;
     this.clientId = AuthService.getClientId();
+    this.arnRiaId = -1;
+    this.viewMode = 'All';
     this.teamMemberListGet();
-    this.viewMode = 'Select option';
     // if (this.parentId !== 0) {
     //   this.getArnRiaList();
     // } else {
@@ -98,17 +99,19 @@ export class SipComponent implements OnInit {
 
   changeArnRiaValue(item) {
     this.arnRiaId = item.number;
-    if(item.number != 'All'){
+    if (item.number != 'All') {
       this.arnRiaId = item.id;
-    }else{
+    } else {
       this.arnRiaId = -1;
     }
     this.viewMode = item.number;
     this.initPoint();
-    this.objTosend={
-      arnRiaId :this.arnRiaId,
+    this.objTosend = {
+      arnRiaId: this.arnRiaId,
       parentId: this.parentId,
-      adminAdvisorIds:this.adminAdvisorIds
+      adminAdvisorIds: this.adminAdvisorIds,
+      viewMode: this.viewMode,
+      arnRiaValue: this.arnRiaId
     }
   }
   getArnRiaList() {
@@ -124,7 +127,7 @@ export class SipComponent implements OnInit {
           this.initPoint();
         } else {
           this.dataService.openSnackBar("No Arn Ria List Found", "Dismiss");
-          this.arnRiaList=[];
+          this.arnRiaList = [];
           this.initPoint();
 
         }
@@ -134,13 +137,13 @@ export class SipComponent implements OnInit {
   sipCountGet() {
     this.isLoading = true
     const obj = {
-      advisorId: (this.parentId) ? 0 : (this.arnRiaId!=-1) ? 0 :[this.adminAdvisorIds],
+      advisorId: (this.parentId) ? 0 : (this.arnRiaId != -1) ? 0 : [this.adminAdvisorIds],
       arnRiaDetailsId: this.arnRiaId,
       parentId: this.parentId
     }
     this.backoffice.getSipcountGet(obj).subscribe(
       data => this.getsipCountGet(data),
-      err=>{
+      err => {
         this.isLoading = false;
         this.sipCount = '';
       }
@@ -179,7 +182,7 @@ export class SipComponent implements OnInit {
   expiredGet() {
     this.isExpiredLoading = true;
     const obj = {
-      advisorId: (this.parentId) ? 0 : (this.arnRiaId!=-1) ? 0 :[this.adminAdvisorIds],
+      advisorId: (this.parentId) ? 0 : (this.arnRiaId != -1) ? 0 : [this.adminAdvisorIds],
       arnRiaDetailsId: this.arnRiaId,
       limit: 10,
       offset: 0,
@@ -188,14 +191,14 @@ export class SipComponent implements OnInit {
     this.backoffice.GET_expired(obj).subscribe(
       data => {
         this.isExpiredLoading = false;
-        if(data){
-          let res=this.filterByDate(data);
+        if (data) {
+          let res = this.filterByDate(data);
           this.expiredSip = res;
-        }else{
+        } else {
           this.expiredSip = [];
         }
       },
-      err=>{
+      err => {
         this.isExpiredLoading = false;
         this.expiredSip = [];
       }
@@ -204,7 +207,7 @@ export class SipComponent implements OnInit {
   expiringGet() {
     this.isExpiringLoading = true;
     const obj = {
-      advisorId: (this.parentId) ? 0 : (this.arnRiaId!=-1) ? 0 :[this.adminAdvisorIds],
+      advisorId: (this.parentId) ? 0 : (this.arnRiaId != -1) ? 0 : [this.adminAdvisorIds],
       arnRiaDetailsId: this.arnRiaId,
       limit: 10,
       offset: 0,
@@ -213,24 +216,24 @@ export class SipComponent implements OnInit {
     this.backoffice.GET_EXPIRING(obj).subscribe(
       data => {
         this.isExpiringLoading = false;
-        if(data){
-          let res=this.filterByDate(data);
+        if (data) {
+          let res = this.filterByDate(data);
           this.expiringSip = res;
-        }else{
-          this.expiringSip=[];
+        } else {
+          this.expiringSip = [];
         }
 
       },
-      err=>{
+      err => {
         this.isExpiringLoading = false;
-        this.expiringSip=[];
+        this.expiringSip = [];
 
       }
     )
   }
   sipRejectionGet() {
     const obj = {
-      advisorId:(this.parentId) ? 0 : (this.arnRiaId!=-1) ? 0 :[this.adminAdvisorIds],
+      advisorId: (this.parentId) ? 0 : (this.arnRiaId != -1) ? 0 : [this.adminAdvisorIds],
       arnRiaDetailsId: this.arnRiaId,
       limit: 10,
       offset: 0,
@@ -238,15 +241,15 @@ export class SipComponent implements OnInit {
     }
     this.backoffice.GET_SIP_REJECTION(obj).subscribe(
       data => {
-        if(data){
+        if (data) {
           this.isLoading = false;
           this.rejectionSip = data;
-        }else{
+        } else {
           this.isLoading = false;
           this.rejectionSip = [];
         }
       },
-      err=>{
+      err => {
         this.isLoading = false;
         this.rejectionSip = [];
       }
@@ -255,7 +258,7 @@ export class SipComponent implements OnInit {
   getSipPanCount() {
     this.isLoading = true;
     const obj = {
-      advisorId: (this.parentId) ? 0 : (this.arnRiaId!=-1) ? 0 :[this.adminAdvisorIds],
+      advisorId: (this.parentId) ? 0 : (this.arnRiaId != -1) ? 0 : [this.adminAdvisorIds],
       arnRiaDetailsId: this.arnRiaId,
       parentId: this.parentId
     }
@@ -264,16 +267,16 @@ export class SipComponent implements OnInit {
         this.sipPanCount = data.sipCount;
         this.getWbrPanCount();
       },
-      err=>{
-        this.sipPanCount='';
-        this.clientWithoutSip=0;
+      err => {
+        this.sipPanCount = '';
+        this.clientWithoutSip = 0;
 
       }
     )
   }
   getWbrPanCount() {
     const obj = {
-      advisorId: (this.parentId) ? 0 : (this.arnRiaId!=-1) ? 0 :[this.adminAdvisorIds],
+      advisorId: (this.parentId) ? 0 : (this.arnRiaId != -1) ? 0 : [this.adminAdvisorIds],
       arnRiaDetailsId: this.arnRiaId,
       parentId: this.parentId
     }
@@ -283,7 +286,7 @@ export class SipComponent implements OnInit {
         this.wbrCount = data.folioCount;
         this.clientWithoutSip = (this.sipPanCount / data.folioCount) * 100;
         this.clientWithoutSip = (!this.clientWithoutSip || this.clientWithoutSip == Infinity) ? 0 : this.clientWithoutSip;
-        (this.clientWithoutSip > 100) ? this.clientWithoutSip =100 : this.clientWithoutSip
+        (this.clientWithoutSip > 100) ? this.clientWithoutSip = 100 : this.clientWithoutSip
       }
     )
   }
@@ -291,19 +294,21 @@ export class SipComponent implements OnInit {
     this.sipshow = true;
     this.showMainWrapperFlag = false;
   }
-  filterByDate(data){
+  filterByDate(data) {
     data = data.filter(item => item.dateDiff <= 90);
-    data = this.mfService.sorting(data,'dateDiff')
+    data = this.mfService.sorting(data, 'dateDiff')
     return data
   }
-  amcWise(value,mode) {
-    this.mode=mode;
+  amcWise(value, mode) {
+    this.mode = mode;
     this.sipcomponentWise = value;
     this.sipComponent = false;
-    this.objTosend={
-      arnRiaId :this.arnRiaId,
+    this.objTosend = {
+      arnRiaId: this.arnRiaId,
       parentId: this.parentId,
-      adminAdvisorIds:this.adminAdvisorIds
+      adminAdvisorIds: this.adminAdvisorIds,
+      viewMode: this.viewMode,
+      arnRiaValue: this.arnRiaId
     }
   }
   newSip() {

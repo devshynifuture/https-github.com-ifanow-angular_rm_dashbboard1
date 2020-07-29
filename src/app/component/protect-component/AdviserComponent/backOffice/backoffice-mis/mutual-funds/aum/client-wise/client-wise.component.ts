@@ -91,6 +91,10 @@ export class ClientWiseComponent implements OnInit {
   schemeWiseTotal = [];
   scheme2WiseTotal = [];
 
+  arnRiaValue;
+  viewMode;
+  arnRiaList = [];
+
   constructor(public aum: AumComponent, private backoffice: BackOfficeService, private mfService: MfServiceService) { }
 
 
@@ -113,7 +117,44 @@ export class ClientWiseComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.parentId = AuthService.getParentId() ? AuthService.getParentId() : this.advisorId;
+    console.log("this is what i m getting :: ", this.data);
+    if (this.data.hasOwnProperty('arnRiaValue') && this.data.hasOwnProperty('viewMode')) {
+      this.arnRiaValue = this.data.arnRiaValue;
+      this.viewMode = this.data.viewMode;
+    } else {
+      this.viewMode = "All";
+      this.arnRiaValue = -1;
+    }
+    this.getArnRiaList()
     this.getClientTotalAum();
+  }
+  changeValueOfArnRia(item) {
+    if (item.name !== 'All') {
+      this.arnRiaValue = item.id
+      this.viewMode = item.number;
+    } else {
+      this.arnRiaValue = -1;
+    }
+    this.getClientTotalAum();
+  }
+
+
+  getArnRiaList() {
+    this.backoffice.getArnRiaList(this.advisorId).subscribe(
+      data => {
+        if (data) {
+          // this.advisorId = 0;
+          this.arnRiaList = data;
+          const obj = {
+            number: 'All',
+            id: -1
+          }
+          this.arnRiaList.unshift(obj);
+        } else {
+          // this.dataService.openSnackBar("No Arn Ria List Found", "Dismiss")
+        }
+      }
+    )
   }
   sortBy(applicant, propertyName) {
     this.propertyName = propertyName;
@@ -171,7 +212,7 @@ export class ClientWiseComponent implements OnInit {
     let obj = {
       'clientId': this.clientId,
       'advisorId': this.advisorId,
-      arnRiaDetailsId: 123
+      arnRiaDetailsId: this.arnRiaValue
     }
     this.backoffice.getAumClientScheme(obj).subscribe(
       data => {
@@ -179,6 +220,7 @@ export class ClientWiseComponent implements OnInit {
     )
   }
   getClientTotalAum() {
+    this.arrayOfExcelData = [];
     this.isLoading = true;
     this.clientList = [{}, {}, {}];
     let obj = {
@@ -206,7 +248,7 @@ export class ClientWiseComponent implements OnInit {
       this.isLoadingInvestor = true;
       const obj = {
         advisorId: (this.parentId) ? 0 : (this.data.arnRiaDetailId != -1) ? 0 : [this.data.adminAdvisorIds],
-        arnRiaDetailsId: (this.data) ? this.data.arnRiaDetailId : -1,
+        arnRiaDetailsId: this.arnRiaValue,
         parentId: (this.data) ? this.data.parentId : -1,
         clientId: clientData.id,
         totalAum: clientData.totalAum
@@ -311,7 +353,7 @@ export class ClientWiseComponent implements OnInit {
     arrayOfExcelHeaderStyles.shift();
     arrayOfExcelHeaderStyles.shift();
 
-    ExcelMisService.exportExcel2(arrayOfExcelHeaders, arrayOfExcelHeaderStyles, copyOfExcelData[clientIndex].investorList[investorIndex].schemeList, 'MIS Report - Client wise AUM', 'client-wise-aum-mis', {
+    ExcelMisService.exportExcel4(arrayOfExcelHeaders, arrayOfExcelHeaderStyles, copyOfExcelData[clientIndex].investorList[investorIndex].schemeList, 'MIS Report - Client wise AUM', 'client-wise-aum-mis', {
       clientList: true,
       investorList: true,
       schemeList: false,
@@ -458,7 +500,7 @@ export class ClientWiseComponent implements OnInit {
       this.isLoadingScheme = true
       const obj = {
         advisorId: (this.parentId) ? 0 : (this.data.arnRiaDetailId != -1) ? 0 : [this.data.adminAdvisorIds],
-        arnRiaDetailsId: (this.data) ? this.data.arnRiaDetailId : -1,
+        arnRiaDetailsId: this.arnRiaValue,
         parentId: (this.data) ? this.data.parentId : -1,
         familyMemberId: investorData.familyMemberId,
         totalAum: investorData.totalAum,
@@ -508,7 +550,7 @@ export class ClientWiseComponent implements OnInit {
       schemeData.folioList = [{}, {}, {}];
       const obj = {
         advisorId: (this.parentId) ? 0 : (this.data.arnRiaDetailId != -1) ? 0 : [this.data.adminAdvisorIds],
-        arnRiaDetailsId: (this.data) ? this.data.arnRiaDetailId : -1,
+        arnRiaDetailsId: this.arnRiaValue,
         parentId: (this.data) ? this.data.parentId : -1,
         familyMemberId: schemeData.familyMemberId,
         totalAum: schemeData.totalAum,

@@ -49,7 +49,8 @@ export class AumComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.parentId = AuthService.getParentId() ? AuthService.getParentId() : this.advisorId;
     this.teamMemberListGet();
-    this.viewMode = 'Select option';
+    this.viewMode = 'All';
+    this.arnRiaValue = -1;
 
     // if parentId = 0 arnRiaDetails selection will be disabled 
     // if parentId present use it and arn Ria deail selection with advisor Id as 0
@@ -98,14 +99,16 @@ export class AumComponent implements OnInit {
   }
 
   changeValueOfArnRia(item) {
+    console.log("value for arn ria number::", item.id);
     this.clientTotalAum = [{}, {}, {}];
     this.amcTotalAum = [{}, {}, {}];
     this.category = [{}, {}, {}];
     this.subcategory = [{}, {}, {}];
     this.viewMode = item.number;
-    if(item.number != 'All'){
+    if (item.number != 'All') {
       this.arnRiaValue = item.id;
-    }else{
+
+    } else {
       this.arnRiaValue = -1;
     }
     this.initPoint();
@@ -132,7 +135,7 @@ export class AumComponent implements OnInit {
             id: -1
           }
           this.arnRiaList.unshift(obj);
-         this.initPoint();
+          this.initPoint();
         } else {
           this.initPoint();
 
@@ -165,43 +168,43 @@ export class AumComponent implements OnInit {
     this.isLoadingTopClients = true;
 
     const obj = {
-      advisorId:(this.parentId) ? 0 : (this.arnRiaValue!=-1) ? 0 :[this.adminAdvisorIds],
+      advisorId: (this.parentId) ? 0 : (this.arnRiaValue != -1) ? 0 : [this.adminAdvisorIds],
       arnRiaDetailsId: this.arnRiaValue,
       parentId: this.parentId
     }
     this.backoffice.getClientTotalAUM(obj).subscribe(
       data => this.getFileResponseDataAum(data),
-      err =>{
-        this.isLoadingTopClients =false;
+      err => {
+        this.isLoadingTopClients = false;
         this.clientTotalAum = [];
         this.amcTotalAum = [];
         this.getFilerrorResponse(err)
-      } 
+      }
     )
   }
-  getClientWithoutMf(){
+  getClientWithoutMf() {
     this.isLoading = true;
 
     const obj = {
-      advisorIds:[this.adminAdvisorIds],
+      advisorIds: [this.adminAdvisorIds],
       parentId: this.parentId
     }
     this.backoffice.getclientWithoutMf(obj).subscribe(
       data => {
-        if(data){
+        if (data) {
           console.log(data);
           this.clientWithoutMF = data.countWithoutMF / data.clientCount * 100;
           this.clientWithoutMF = (!this.clientWithoutMF || this.clientWithoutMF == Infinity) ? 0 : this.clientWithoutMF;
-          (this.clientWithoutMF > 100) ? this.clientWithoutMF =100 : this.clientWithoutMF
-        }else{
+          (this.clientWithoutMF > 100) ? this.clientWithoutMF = 100 : this.clientWithoutMF
+        } else {
           this.clientWithoutMF = 0;
         }
 
       },
-      err =>{
-        this.isLoading =false;
+      err => {
+        this.isLoading = false;
         this.clientWithoutMF = 0;
-      } 
+      }
     )
   }
   getMisData() {
@@ -211,7 +214,7 @@ export class AumComponent implements OnInit {
     //   arnRiaDetailsId: this.arnRiaValue,
     //   parentId: this.parentId
     // }
-    this.backoffice.getMisData(this.advisorId).subscribe(
+    this.backoffice.getMisData({ advisorId: this.advisorId, arnRiaDetailsId: this.arnRiaValue }).subscribe(
       data => this.getFileResponseDataForMis(data),
       err => {
         this.isLoading = false;
@@ -224,14 +227,14 @@ export class AumComponent implements OnInit {
     this.isLoadingCategory = true;
 
     const obj = {
-      advisorId: (this.parentId) ? 0 : (this.arnRiaValue!=-1) ? 0 :[this.adminAdvisorIds],
+      advisorId: (this.parentId) ? 0 : (this.arnRiaValue != -1) ? 0 : [this.adminAdvisorIds],
       arnRiaDetailId: this.arnRiaValue,
       parentId: this.parentId
     }
     this.backoffice.getSubCatAum(obj).subscribe(
       data => this.getFileResponseDataForSub(data),
       err => {
-        this.isLoadingCategory =false;
+        this.isLoadingCategory = false;
         this.category = [];
         this.subcategory = [];
         this.getFilerrorResponse(err)
@@ -250,6 +253,7 @@ export class AumComponent implements OnInit {
 
   }
   getFileResponseDataForMis(data) {
+    console.log("this is totalaum data:::", data);
     this.isLoading = false;
     this.MiscData1 = data;
   }
@@ -269,18 +273,20 @@ export class AumComponent implements OnInit {
   categoryWise(value) {
     this.componentWise = value;
     this.aumComponent = false;
-    this.objTosend={
-      arnRiaDetailId :this.arnRiaValue,
+    this.objTosend = {
+      arnRiaDetailId: this.arnRiaValue,
       parentId: this.parentId,
-      adminAdvisorIds:this.adminAdvisorIds
+      adminAdvisorIds: this.adminAdvisorIds,
+      arnRiaValue: this.arnRiaValue,
+      viewMode: this.viewMode
     }
   }
   getGraphData() {
     this.aumGraph = null;
     const obj = {
-      advisorId: (this.parentId) ? 0 : (this.arnRiaValue!=-1) ? 0 :[this.adminAdvisorIds],
+      advisorId: (this.parentId) ? 0 : (this.arnRiaValue != -1) ? 0 : [this.adminAdvisorIds],
       arnRiaDetailsId: this.arnRiaValue,
-      parentId:this.parentId
+      parentId: this.parentId
     }
     this.backoffice.aumGraphGet(obj).subscribe(
       data => {
@@ -289,8 +295,8 @@ export class AumComponent implements OnInit {
           this.pieChart('pieChartAum', data);
         }, 1000);
       },
-      err=>{
-        this.aumGraph='';
+      err => {
+        this.aumGraph = '';
       }
     )
   }

@@ -46,6 +46,9 @@ export class SipAmcWiseComponent implements OnInit {
   caesedForm: any;
   parentId: any;
   maxDate = new Date();
+  arnRiaList: any = [];
+  arnRiaValue: any;
+  viewMode: any;
   constructor(private datePipe: DatePipe, private eventService: EventService, private backoffice: BackOfficeService, public sip: SipComponent, private fb: FormBuilder, private mfService: MfServiceService) { }
   teamMemberId = 2929;
   @Output() changedValue = new EventEmitter();
@@ -138,6 +141,41 @@ export class SipAmcWiseComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.parentId = AuthService.getParentId() ? AuthService.getParentId() : this.advisorId;
+    if (this.data.hasOwnProperty('arnRiaValue') && this.data.hasOwnProperty('viewMode')) {
+      this.arnRiaValue = this.data.arnRiaValue;
+      this.viewMode = this.data.viewMode;
+    } else {
+      this.viewMode = "All";
+      this.arnRiaValue = -1;
+    }
+    this.amcGet();
+  }
+
+  getArnRiaList() {
+    this.backoffice.getArnRiaList(this.advisorId).subscribe(
+      data => {
+        if (data) {
+          // this.advisorId = 0;
+          this.arnRiaList = data;
+          const obj = {
+            number: 'All',
+            id: -1
+          }
+          this.arnRiaList.unshift(obj);
+        } else {
+          // this.dataService.openSnackBar("No Arn Ria List Found", "Dismiss")
+        }
+      }
+    )
+  }
+
+  changeValueOfArnRia(item) {
+    if (item.name !== 'All') {
+      this.arnRiaValue = item.id
+      this.viewMode = item.number;
+    } else {
+      this.arnRiaValue = -1;
+    }
     this.amcGet();
   }
 

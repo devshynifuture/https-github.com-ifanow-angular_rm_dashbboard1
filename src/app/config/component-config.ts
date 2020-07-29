@@ -712,6 +712,8 @@ export const appConfig = {
   UPDATE_APPEARANCE_SETTING: 'setting/preferences/appearance/update',
   GET_USER_ROLES: 'setting/users-roles/role/get',
   GET_CLIENT_ROLES: 'setting/users-roles/client-role/get',
+  ORDER_SOA_MUTUAL_FUND: 'mutual-fund/SOA/fetch',
+
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
   GET_PROFILE: 'gmail/users/getProfile',

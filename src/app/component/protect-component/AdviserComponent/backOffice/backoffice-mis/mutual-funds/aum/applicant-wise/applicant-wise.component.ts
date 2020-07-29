@@ -42,6 +42,9 @@ export class ApplicantWiseComponent implements OnInit {
   schemeListArr: any[];
   @Input() data;
   parentId: any;
+  clientIdToPass;
+  arnRiaList = [];
+  arnRiaValue;
 
   constructor(public aum: AumComponent, private backoffice: BackOfficeService, private mfService: MfServiceService) { }
   applicantName;
@@ -124,11 +127,21 @@ export class ApplicantWiseComponent implements OnInit {
   subCatWiseTotal = [];
   subCatSchemeWiseTotal = [];
   schemeWiseTotal = [];
+  viewMode;
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.parentId = AuthService.getParentId() ? AuthService.getParentId() : this.advisorId;
+    if (this.data.hasOwnProperty('arnRiaValue') && this.data.hasOwnProperty('viewMode')) {
+      this.arnRiaValue = this.data.arnRiaValue;
+      this.viewMode = this.data.viewMode;
+    } else {
+      this.viewMode = "All";
+      this.arnRiaValue = -1;
+    }
+
+    this.getArnRiaList();
     this.aumApplicantWiseTotalaumApplicantNameGet();
   }
   sortBy(applicant, propertyName) {
@@ -201,7 +214,7 @@ export class ApplicantWiseComponent implements OnInit {
     this.applicantName = [{}, {}, {}]
     const obj = {
       advisorId: (this.parentId) ? 0 : (this.data.arnRiaDetailId != -1) ? 0 : [this.data.adminAdvisorIds],
-      arnRiaDetailsId: (this.data) ? this.data.arnRiaDetailId : -1,
+      arnRiaDetailsId: this.arnRiaValue,
       parentId: (this.data) ? this.data.parentId : -1
     }
     this.backoffice.getAumApplicantWiseTotalaumApplicantName(obj).subscribe(
@@ -460,6 +473,7 @@ export class ApplicantWiseComponent implements OnInit {
   applicantNameGet(data) {
     this.isLoading = false;
     if (data) {
+      console.log("here we have client id needed::::::::::", data);
       this.applicantName = data;
       this.excelInitApplicant();
       this.applicantName.forEach(o => {
@@ -473,8 +487,38 @@ export class ApplicantWiseComponent implements OnInit {
     this.showLoader = false;
   }
 
+  getArnRiaList() {
+    this.backoffice.getArnRiaList(this.advisorId).subscribe(
+      data => {
+        if (data) {
+          // this.advisorId = 0;
+          this.arnRiaList = data;
+          const obj = {
+            number: 'All',
+            id: -1
+          }
+          this.arnRiaList.unshift(obj);
+        } else {
+          // this.dataService.openSnackBar("No Arn Ria List Found", "Dismiss")
+        }
+      }
+    )
+  }
+
+  changeValueOfArnRia(item) {
+    if (item.name !== 'All') {
+      this.arnRiaValue = item.id
+      this.viewMode = item.number;
+    } else {
+      this.arnRiaValue = -1;
+    }
+    this.aumApplicantWiseTotalaumApplicantNameGet();
+  }
+
 
   category(applicantData, index) {
+    this.clientIdToPass = applicantData.clientId;
+
     this.selectedApplicant = index;
     applicantData.show = !applicantData.show;
 
@@ -485,10 +529,11 @@ export class ApplicantWiseComponent implements OnInit {
       this.categoryListArr = [];
       const obj = {
         advisorId: (this.parentId) ? 0 : (this.data.arnRiaDetailId != -1) ? 0 : [this.data.adminAdvisorIds],
-        arnRiaDetailsId: (this.data) ? this.data.arnRiaDetailId : -1,
+        arnRiaDetailsId: this.arnRiaValue,
         parentId: (this.data) ? this.data.parentId : -1,
         familyMembertId: applicantData.id,
-        clientTotalAum: applicantData.totalAum
+        clientTotalAum: applicantData.totalAum,
+        clientId: this.clientIdToPass
       }
       this.backoffice.getAumApplicantCategory(obj).subscribe(
         data => {
@@ -554,11 +599,12 @@ export class ApplicantWiseComponent implements OnInit {
       this.subCategoryList = []
       const obj = {
         advisorId: (this.parentId) ? 0 : (this.data.arnRiaDetailId != -1) ? 0 : [this.data.adminAdvisorIds],
-        arnRiaDetailsId: (this.data) ? this.data.arnRiaDetailId : -1,
+        arnRiaDetailsId: this.arnRiaValue,
         parentId: (this.data) ? this.data.parentId : -1,
         familyMembertId: catData.familyMemberId,
         categoryId: catData.id,
-        categoryTotalAum: catData.totalAum
+        categoryTotalAum: catData.totalAum,
+        clientId: this.clientIdToPass
       }
       this.backoffice.getAumApplicantSubCategory(obj).subscribe(
         data => {
@@ -620,11 +666,12 @@ export class ApplicantWiseComponent implements OnInit {
       subCatData.schemeList = [{}, {}, {}];
       const obj = {
         advisorId: (this.parentId) ? 0 : (this.data.arnRiaDetailId != -1) ? 0 : [this.data.adminAdvisorIds],
-        arnRiaDetailsId: (this.data) ? this.data.arnRiaDetailId : -1,
+        arnRiaDetailsId: this.arnRiaValue,
         parentId: (this.data) ? this.data.parentId : -1,
         familyMembertId: subCatData.familyMemberId,
         subCategoryId: subCatData.id,
-        subCategoryTotalAum: subCatData.totalAum
+        subCategoryTotalAum: subCatData.totalAum,
+        clientId: this.clientIdToPass
       }
       this.backoffice.getAumApplicantScheme(obj).subscribe(
         data => {

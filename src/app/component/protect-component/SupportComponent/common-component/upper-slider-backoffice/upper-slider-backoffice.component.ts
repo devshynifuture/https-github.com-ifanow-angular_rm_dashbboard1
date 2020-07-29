@@ -32,6 +32,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
   reportListWithIsMappedToMinusOne: any = [];
   startReconciliation: any = false;
   showCelebrationGif: boolean = true;
+  subAdvisorList: any;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -106,7 +107,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
           });
 
           this.upperHeaderName = this.getRtName(this.data.rtId);
-          this.teamMemberListGet();
+          this.teamMemberListGet()
         } else {
           this.eventService.openSnackBar('Error In Fetching RTA List', 'Dismiss');
         }
@@ -981,7 +982,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
     const isParent = this.isRmLogin ? true : ((this.parentId === this.advisorId) ? true : false);
     const data = {
       id: this.data.id,
-      advisorIds: [this.advisorId],
+      advisorIds: [...this.adminAdvisorIds],
       parentId: this.parentId,
       isParent,
       brokerId: this.brokerId,

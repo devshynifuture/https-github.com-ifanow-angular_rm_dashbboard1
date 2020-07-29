@@ -285,7 +285,12 @@
 
                                 <button mat-menu-item (click)="openFolioMaster(element)">Folio master details</button>
                                 <button mat-menu-item (click)="openSipDetails(element)">SIP details</button>
-                                <button mat-menu-item class="bt-1" (click)="openTransaction(element)">Transact online</button>
+                                <button mat-menu-item class="bt-1" (click)="openTransaction(element)">Transact
+                                    online</button>
+                                <button mat-menu-item (click)="orderSOA(element)"
+                                    *ngIf="element.rtMasterId === 1 || element.rtMasterId === 2">
+                                    Order SOA
+                                </button>
 
                                 <button mat-menu-item class="bt-1"
                                     (click)="openUpperFragment('addTransaction', element)">View
@@ -398,9 +403,9 @@
                 *ngIf="getOrgData && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
                 <img width="250px" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
             </td> -->
-            <td style="text-align: left;" colspan="3"
-                *ngIf="getOrgData">
-                <div *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
+            <td style="text-align: left;" colspan="3" *ngIf="getOrgData">
+                <div
+                    *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
                     <img width="250px" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
                 </div>
                 <div *ngIf="getOrgData && getOrgData.reportLogoUrl == null">

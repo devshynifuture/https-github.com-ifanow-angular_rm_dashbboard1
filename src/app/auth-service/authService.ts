@@ -27,9 +27,9 @@ export class AuthService {
     return this.getUserInfo().advisorId;
   }
 
-  static getAdminAdvisorId(){
+  static getAdminAdvisorId() {
     let adminid = this.getUserInfo().adminAdvisorId;
-    if(adminid > 0) {
+    if (adminid > 0) {
       return adminid
     } else {
       return this.getUserInfo().advisorId;
@@ -138,18 +138,15 @@ export class AuthService {
     return orgData ? orgData.logoUrl : '';
   }
 
-  static getClientRoles(data)
-  {
+  static getClientRoles(data) {
     return sessionStorage.getItem('clientRoles');
   }
 
-  static getAdvisorRoles(data)
-  {
+  static getAdvisorRoles(data) {
     return localStorage.getItem('advisorRoles');
   }
 
-  static getTeamMemberRoles(data)
-  {
+  static getTeamMemberRoles(data) {
     return localStorage.getItem('teamMemberRoles');
 
   }
