@@ -353,7 +353,7 @@ export class ClientWiseComponent implements OnInit {
     arrayOfExcelHeaderStyles.shift();
     arrayOfExcelHeaderStyles.shift();
 
-    ExcelMisService.exportExcel3(arrayOfExcelHeaders, arrayOfExcelHeaderStyles, copyOfExcelData[clientIndex].investorList[investorIndex].schemeList, 'MIS Report - Client wise AUM', 'client-wise-aum-mis', {
+    ExcelMisService.exportExcel4(arrayOfExcelHeaders, arrayOfExcelHeaderStyles, copyOfExcelData[clientIndex].investorList[investorIndex].schemeList, 'MIS Report - Client wise AUM', 'client-wise-aum-mis', {
       clientList: true,
       investorList: true,
       schemeList: false,
