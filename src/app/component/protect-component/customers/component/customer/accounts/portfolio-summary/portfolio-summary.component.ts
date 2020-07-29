@@ -1,14 +1,14 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { EventService } from 'src/app/Data-service/event.service';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {EventService} from 'src/app/Data-service/event.service';
 import * as Highcharts from 'highcharts';
-import { AuthService } from 'src/app/auth-service/authService';
-import { CustomerService } from '../../customer.service';
-import { DatePipe } from '@angular/common';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { Subscription } from 'rxjs';
-import { EnumServiceService } from 'src/app/services/enum-service.service';
-import { EnumDataService } from 'src/app/services/enum-data.service';
-import { UtilService } from 'src/app/services/util.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {CustomerService} from '../../customer.service';
+import {DatePipe} from '@angular/common';
+import {FormGroup, FormBuilder} from '@angular/forms';
+import {Subscription} from 'rxjs';
+import {EnumServiceService} from 'src/app/services/enum-service.service';
+import {EnumDataService} from 'src/app/services/enum-data.service';
+import {UtilService} from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-portfolio-summary',
@@ -25,8 +25,8 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
   asOnDate: any;
   summaryMap;
   graphList: any[];
-  totalAssetsWithoutLiability;
-  liabilityTotal;
+  totalAssetsWithoutLiability = 0;
+  liabilityTotal = 0;
   nightyDayData: any;
   oneDay: any;
   displayedColumns: string[] = ['description', 'date', 'amount'];
@@ -34,7 +34,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
   expenseList = [];
   incomeList = [];
   userData: any;
-  filterCashFlow = { income: [], expense: [] };
+  filterCashFlow = {income: [], expense: []};
   inflowFlag;
   yearArr = Array(12).fill('').map((v, i) => this.datePipe.transform(new Date().setMonth(new Date().getMonth() + i), 'MMM'));
 
@@ -71,11 +71,11 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     {
       currentValue: 0,
       percentage: 0
-    }
+    };
 
   cashFlowFG: FormGroup;
   subscription = new Subscription();
-  noCashflowData: boolean = false;
+  noCashflowData = false;
 
   finalTotal: number;
   cashflowFlag: boolean;
@@ -84,21 +84,23 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
   allBanks: any[] = [];
   families: any[] = [];
   cashFlowDescNaming: any[] = [];
+
   constructor(
     public eventService: EventService,
     private cusService: CustomerService,
     private datePipe: DatePipe,
     private fb: FormBuilder,
     private enumService: EnumServiceService,
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.cashFlowFG = this.fb.group({
-      'inflow': [true],
-      'outflow': [true],
-      'bankfilter': ['all'],
-      'familyfilter': ['all']
-    })
+      inflow: [true],
+      outflow: [true],
+      bankfilter: ['all'],
+      familyfilter: ['all']
+    });
     this.userData = AuthService.getUserInfo();
     this.asOnDate = new Date().getTime();
     this.advisorId = AuthService.getAdvisorId();
@@ -110,8 +112,8 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
 
   subscribeToCashflowChanges() {
     this.cashFlowFG.valueChanges.subscribe(() => {
-      this.filterCashflowData()
-    })
+      this.filterCashflowData();
+    });
   }
 
   calculateTotalSummaryValues() {
@@ -130,6 +132,22 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
           this.totalAssets = 0;
           this.summaryTotalValue = Object.assign([], data);
           console.log(this.summaryTotalValue);
+          this.liabilityTotal = 0;
+          this.totalAssetsWithoutLiability = 0;
+          this.totalOfLiabilitiesAndTotalAssset(this.summaryTotalValue);
+
+          this.summaryTotalValue.forEach(element => {
+            if (element.assetType == 2) {
+              const dividedValue = element.currentValue / this.liabilityTotal;
+              element.percentage = (dividedValue * 100).toFixed(2);
+            } else if (!element.currentValue || element.currentValue == 0) {
+              element.percentage = 0;
+              element.currentValue = 0;
+            } else {
+              const dividedValue = element.currentValue / this.totalAssetsWithoutLiability;
+              element.percentage = (dividedValue * 100).toFixed(2);
+            }
+          });
           // this.mutualFundValue = data[3];
           this.mutualFundValue = data.filter(element => element.assetType == 5);
           this.mutualFundValue = this.mutualFundValue[0];
@@ -146,22 +164,9 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
           this.cashAndFLow = data.filter(element => element.assetType == 31);
           this.cashAndFLow = this.cashAndFLow[0];
           this.Commodities = data.filter(element => element.assetType == 12);
-          this.Commodities = this.Commodities[0]
+          this.Commodities = this.Commodities[0];
           const tempSummaryTotalValue: any = {};
-          this.summaryTotalValue.forEach(element => {
-            tempSummaryTotalValue[element.assetType] = element;
-            if (element.currentValue == element.investedAmount) {
-              element.percentage = 0;
-            } else {
-              const topValue = element.currentValue - element.investedAmount;
-              const dividedValue = topValue / element.investedAmount;
-              element.percentage = (dividedValue * 100).toFixed(2);
-              element.positiveFlag = (Math.sign(element.percentage) == 1) ? true : false;
-            }
-            this.totalAssetsWithoutLiability = 0;
-            this.liabilityTotal = 0;
-          });
-          this.totalOfLiabilitiesAndTotalAssset(this.summaryTotalValue);
+
           this.letsideBarLoader = false;
           this.summaryMap = tempSummaryTotalValue;
           this.pieChart('piechartMutualFund', this.summaryTotalValue);
@@ -205,7 +210,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
         this.lineChart('container');
       },
       err => {
-        this.finalTotal = 0
+        this.finalTotal = 0;
       }
     );
   }
@@ -227,7 +232,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
         this.sortDataUsingFlowType(data);
       },
       err => {
-        this.cashFlowViewDataSource = []
+        this.cashFlowViewDataSource = [];
         this.noCashflowData = true;
       }
     );
@@ -237,37 +242,36 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     this.inflowFlag = false;
     this.outflowFlag = false;
 
-    if (ObjectArray['expense'].length > 0 && ObjectArray['income'].length > 0) {
-      this.cashFlowViewDataSource = ObjectArray['expense'];
-      this.cashFlowViewDataSource = this.cashFlowViewDataSource.concat(ObjectArray['income']);
-      ObjectArray['expense'].forEach(element => {
-        element['colourFlag'] = false;
+    if (ObjectArray.expense.length > 0 && ObjectArray.income.length > 0) {
+      this.cashFlowViewDataSource = ObjectArray.expense;
+      this.cashFlowViewDataSource = this.cashFlowViewDataSource.concat(ObjectArray.income);
+      ObjectArray.expense.forEach(element => {
+        element.colourFlag = false;
         this.expenseList.push(-Math.abs(Math.round(element.currentValue)));
         this.expenseList.push(0);
       });
-      ObjectArray['income'].forEach(element => {
-        element['colourFlag'] = true;
+      ObjectArray.income.forEach(element => {
+        element.colourFlag = true;
         this.incomeList.push(Math.round(element.currentValue));
         this.incomeList.push(0);
       });
       this.inflowFlag = true;
       this.outflowFlag = true;
-    } else if (ObjectArray['expense'].length > 0) {
-      this.cashFlowViewDataSource = ObjectArray['expense'];
-      ObjectArray['expense'].forEach(element => {
-        element['colourFlag'] = false;
+    } else if (ObjectArray.expense.length > 0) {
+      this.cashFlowViewDataSource = ObjectArray.expense;
+      ObjectArray.expense.forEach(element => {
+        element.colourFlag = false;
         this.expenseList.push(Math.abs(Math.round(element.currentValue)));
       });
       this.outflowFlag = true;
-    } else if (ObjectArray['income'].length > 0) {
-      this.cashFlowViewDataSource = ObjectArray['income'];
-      ObjectArray['income'].forEach(element => {
-        element['colourFlag'] = true;
+    } else if (ObjectArray.income.length > 0) {
+      this.cashFlowViewDataSource = ObjectArray.income;
+      ObjectArray.income.forEach(element => {
+        element.colourFlag = true;
         this.incomeList.push(Math.round(element.currentValue));
       });
       this.inflowFlag = true;
-    }
-    else {
+    } else {
       this.cashFlowViewDataSource = [];
     }
     this.cashFlow('cashFlow', ObjectArray);
@@ -275,29 +279,29 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
 
   createFilterList() {
     this.allBanks = [];
-    let cashflows = [...this.filterCashFlow.expense, ...this.filterCashFlow.income];
+    const cashflows = [...this.filterCashFlow.expense, ...this.filterCashFlow.income];
 
-    let banks = [...new Set(cashflows.map(flow => flow.userBankMappingId))]
+    const banks = [...new Set(cashflows.map(flow => flow.userBankMappingId))];
     this.allBanks = banks.map(bank => {
-      let tnx = cashflows.find(tnx => tnx.userBankMappingId === bank);
-      let bankObj = {
+      const tnx = cashflows.find(tnx => tnx.userBankMappingId === bank);
+      const bankObj = {
         name: tnx.bankName,
         id: bank
-      }
+      };
       // non linked bank id is 0
       if (bank === 0) {
-        bankObj.name = 'Non-linked banks'
+        bankObj.name = 'Non-linked banks';
       }
       return bankObj;
     });
 
-    let families = [...new Set(cashflows.map(flow => flow.familyMemberId))]
+    const families = [...new Set(cashflows.map(flow => flow.familyMemberId))];
     this.families = families.map(family => {
-      let tnx = cashflows.find(tnx => tnx.familyMemberId === family);
-      let bankObj = {
+      const tnx = cashflows.find(tnx => tnx.familyMemberId === family);
+      const bankObj = {
         name: tnx.ownerName,
         id: family
-      }
+      };
       return bankObj;
     });
   }
@@ -317,10 +321,10 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
       cashflows = cashflows.filter(flow => flow.familyMemberId === this.cashFlowFG.controls.familyfilter.value);
     }
 
-    let cashflowObj = {
+    const cashflowObj = {
       income: [],
       expense: []
-    }
+    };
     if (this.cashFlowFG.controls.inflow.value) {
       cashflowObj.income = cashflows.filter(flow => flow.inputOutputFlag === 1);
     }
@@ -333,12 +337,14 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
   }
 
   checkNumberPositiveAndNegative(value: number) {
-    if (value == 0) {
-      return undefined;
-    } else {
-      const result = Math.sign(value);
-      return (result == -1) ? false : true;
-    }
+    return undefined;
+
+    /* if (value == 0) {
+       return undefined;
+     } else {
+       const result = Math.sign(value);
+       return (result == -1) ? false : true;
+     }*/
   }
 
 
@@ -401,25 +407,25 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     console.log(data);
     const thisMonthStart = UtilService.getStartOfTheDay(new Date(new Date().setDate(1)));
     const thisMonthEnd = UtilService.getEndOfDay(new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0));
-    const { income, expense } = data;
+    const {income, expense} = data;
     income.forEach(element => {
-      element['month'] = this.datePipe.transform(new Date(element.targetDate), 'MMM')
+      element.month = this.datePipe.transform(new Date(element.targetDate), 'MMM');
     });
     expense.forEach(element => {
-      element['month'] = this.datePipe.transform(new Date(element.targetDate), 'MMM')
+      element.month = this.datePipe.transform(new Date(element.targetDate), 'MMM');
     });
 
     const incomeGraph = this.yearArr.map((month, i) => {
       return income.filter(e => e.month == month)
         .map(e => e.currentValue)
         .reduce((acc, curr) => acc + curr, 0);
-    })
+    });
 
     const expenseGraph = this.yearArr.map((month, i) => {
       return expense.filter(e => e.month == month)
         .map(e => e.currentValue)
         .reduce((acc, curr) => acc + curr, 0);
-    })
+    });
 
     new Highcharts.Chart('cashFlow', {
       chart: {
@@ -570,7 +576,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
   }
 
   getShortForm(elem) {
-    let name = this.cashFlowDescNaming.find(asset => asset.assetType === elem.assetType);
+    const name = this.cashFlowDescNaming.find(asset => asset.assetType === elem.assetType);
     if (name) {
       return name.assetShortName;
     }
