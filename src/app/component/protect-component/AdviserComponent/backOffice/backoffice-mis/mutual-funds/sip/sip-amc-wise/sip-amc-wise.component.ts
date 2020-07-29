@@ -148,6 +148,7 @@ export class SipAmcWiseComponent implements OnInit {
       this.viewMode = "All";
       this.arnRiaValue = -1;
     }
+    this.getArnRiaList();
     this.amcGet();
   }
 

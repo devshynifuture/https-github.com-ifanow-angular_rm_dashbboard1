@@ -125,7 +125,7 @@ export class ClientWiseComponent implements OnInit {
       this.viewMode = "All";
       this.arnRiaValue = -1;
     }
-    this.getArnRiaList()
+    this.getArnRiaList();
     this.getClientTotalAum();
   }
   changeValueOfArnRia(item) {

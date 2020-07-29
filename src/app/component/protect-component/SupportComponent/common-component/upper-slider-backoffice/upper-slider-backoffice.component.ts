@@ -31,7 +31,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
   errorMessage: string;
   reportListWithIsMappedToMinusOne: any = [];
   startReconciliation: any = false;
-  showCelebrationGif: boolean = true;
+  // showCelebrationGif: boolean = true;
   subAdvisorList: any;
 
   constructor(
@@ -284,7 +284,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
                     if (res.unmappedCount === 0) {
                       this.eventService.openSnackBar("All Folios are Matched", "DISMISS");
-                      this.showCelebrationGif = true;
+                      // this.showCelebrationGif = true;
                       this.errorMessage = "All Folios are Matched";
                     }
 
@@ -298,7 +298,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
                     objArr = null;
                     this.dataSource.data = objArr;
                     this.eventService.openSnackBar("All folios are Matched", "DISMISS");
-                    this.showCelebrationGif = true;
+                    // this.showCelebrationGif = true;
                     this.errorMessage = "All Folios are Matched";
                   }
 

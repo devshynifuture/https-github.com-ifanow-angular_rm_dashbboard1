@@ -106,6 +106,7 @@ export class SipClientWiseComponent implements OnInit {
       this.viewMode = "All";
       this.arnRiaValue = -1;
     }
+    this.getArnRiaList();
     this.clientWiseClientName();
   }
 

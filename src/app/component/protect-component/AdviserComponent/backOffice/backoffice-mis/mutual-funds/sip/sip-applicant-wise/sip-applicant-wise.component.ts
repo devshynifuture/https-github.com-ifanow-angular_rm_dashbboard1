@@ -103,6 +103,7 @@ export class SipApplicantWiseComponent implements OnInit {
       this.viewMode = "All";
       this.arnRiaValue = -1;
     }
+    this.getArnRiaList();
     this.schemeWiseApplicantGet();
   }
 
