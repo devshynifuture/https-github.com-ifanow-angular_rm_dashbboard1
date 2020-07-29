@@ -266,6 +266,7 @@ export class SipAmcWiseComponent implements OnInit {
     //  this.sip.sipComponent=true;
   }
   amcGet() {
+    this.arrayOfExcelData = [];
     this.isLoading = true;
     this.amcList = [{}, {}, {}];
     this.filteredArray = [{}, {}, {}];

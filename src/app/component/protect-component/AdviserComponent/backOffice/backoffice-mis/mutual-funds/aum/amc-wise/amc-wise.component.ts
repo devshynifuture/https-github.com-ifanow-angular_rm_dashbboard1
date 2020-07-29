@@ -177,6 +177,7 @@ export class AmcWiseComponent implements OnInit {
     this.changedValue.emit(true);
   }
   getAmcWiseData() {
+    this.arrayOfExcelData = [];
     this.isLoading = true;
     this.amcList = [{}, {}, {}]
     const obj = {

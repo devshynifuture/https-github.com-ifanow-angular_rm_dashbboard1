@@ -171,6 +171,7 @@ export class SipApplicantWiseComponent implements OnInit {
     //  this.sip.sipComponent=true;
   }
   schemeWiseApplicantGet() {
+    this.arrayOfExcelData = [];
     this.isLoading = true;
     this.filteredArray = [{}, {}, {}];
     const obj = {

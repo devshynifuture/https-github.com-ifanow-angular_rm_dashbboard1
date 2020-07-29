@@ -260,6 +260,7 @@ export class SipClientWiseComponent implements OnInit {
   }
 
   clientWiseClientName() {
+    this.arrayOfExcelData = [];
     this.isLoading = true;
     this.filteredArray = [{}, {}, {}];
     const obj = {

@@ -210,6 +210,7 @@ export class ApplicantWiseComponent implements OnInit {
     }
   }
   aumApplicantWiseTotalaumApplicantNameGet() {
+    this.arrayOfExcelData = [];
     this.isLoading = true;
     this.applicantName = [{}, {}, {}]
     const obj = {

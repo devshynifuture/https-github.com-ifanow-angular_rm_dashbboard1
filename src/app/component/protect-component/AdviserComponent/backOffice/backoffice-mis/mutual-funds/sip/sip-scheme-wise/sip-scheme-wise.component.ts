@@ -226,6 +226,7 @@ export class SipSchemeWiseComponent implements OnInit {
     });
   }
   getSchemeWiseGet() {
+    this.arrayOfExcelData = [];
     this.isLoading = true;
     this.filteredArray = [{}, {}, {}]
     const obj = {

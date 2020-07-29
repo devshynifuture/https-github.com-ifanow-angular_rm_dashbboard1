@@ -207,6 +207,7 @@ export class CategoryWiseComponent implements OnInit {
     }
   }
   getSubCatSchemeName() {
+    this.arrayOfExcelData = [];
     this.isLoading = true;
     this.category = [{}, {}, {}];
     const obj = {
