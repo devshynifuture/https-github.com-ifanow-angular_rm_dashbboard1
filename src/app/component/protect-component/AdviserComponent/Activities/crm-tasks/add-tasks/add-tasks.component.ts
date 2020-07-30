@@ -61,6 +61,7 @@ export class AddTasksComponent implements OnInit {
   isRecurringTaskForm = false;
   editCommentForm = new FormControl();
   recurringTaskFreqId: any;
+  commentEditValue = '';
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -193,7 +194,6 @@ export class AddTasksComponent implements OnInit {
   }
 
   makeTaskRecurring() {
-
     this.isRecurringTaskForm = !this.isRecurringTaskForm;
   }
 
@@ -201,9 +201,11 @@ export class AddTasksComponent implements OnInit {
     if (value === 2) {
       this.selectedSubTask = subTaskItem;
       this.subTaskCommentList = subTaskItem.comments;
-      this.subTaskCommentList.map(element => {
-        element.editMode = false;
-      });
+      if (this.subTaskCommentList.length !== 0) {
+        this.subTaskCommentList.map(element => {
+          element.editMode = false;
+        });
+      }
       this.subTaskAttachmentList = subTaskItem.attachments;
       this.editSubTaskForm.patchValue({
         description: subTaskItem.description,
@@ -215,19 +217,19 @@ export class AddTasksComponent implements OnInit {
     this.tabState = value;
   }
 
-  saveEditedComment(item, choice, index) {
+  saveEditedComment(item, choice, index, value) {
     let data;
     switch (choice) {
       case 'task':
         data = {
           id: item.id,
-          commentMsg: this.commentTaskInput
+          commentMsg: value
         }
         break;
       case 'subTask':
         data = {
           id: item.id,
-          commentMsg: this.commentSubTaskInput
+          commentMsg: value
         }
     }
 
@@ -600,12 +602,10 @@ export class AddTasksComponent implements OnInit {
         .subscribe(res => {
           if (res) {
             console.log("sub taks appended successfully!", res);
-            this.subTaskList.push({
-              isCompleted: false,
-              assignedTo: data.value.assignedTo,
-              description: data.value.description,
-              turnAroundTime: data.value.turnAroundTime,
-            })
+            res.comments = [];
+            res.attachments = [];
+            res.status = 0;
+            this.subTaskList.push(res)
             this.addTaskForm.get(`subTask.${formGroupIndex}`).reset();
             this.eventService.openSnackBar("Successfully appended Subtask ", "DISMISS");
           }
@@ -627,18 +627,22 @@ export class AddTasksComponent implements OnInit {
   onAddingCollaborator(data) {
     console.log(data);
     if (this.data !== null) {
-      const obj = {
-        taskId: this.data.id,
-        userId: this.selectedTeamMemberId
+      if (this.canAddCollaborators(this.selectedTeamMemberId)) {
+        const obj = {
+          taskId: this.data.id,
+          userId: this.selectedTeamMemberId
+        }
+        this.crmTaskService.addCollaboratorToTask(obj)
+          .subscribe(res => {
+            if (res) {
+              console.log('this is added res of collaborator', res);
+              this.collaboratorList.push(res);
+              this.eventService.openSnackBar("Successfully added Collaborator to the task");
+            }
+          })
+      } else {
+        this.eventService.openSnackBar("Already exists!", "DISMISS");
       }
-      this.crmTaskService.addCollaboratorToTask(obj)
-        .subscribe(res => {
-          if (res) {
-            console.log('this is added res of collaborator', res);
-            this.collaboratorList.push(res);
-            this.eventService.openSnackBar("Successfully added Collaborator to the task");
-          }
-        })
     }
   }
 
@@ -780,6 +784,14 @@ export class AddTasksComponent implements OnInit {
     }
   }
 
+  canAddCollaborators(userId): boolean {
+    if (!(this.collaboratorList.some(item => item.userId === userId))) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   onCreateCommentTaskSubTask(value) {
     let data;
     let choice = this.tabState === 1 ? 'task' : (this.tabState === 2) ? 'subTask' : '';
@@ -821,14 +833,14 @@ export class AddTasksComponent implements OnInit {
 
   toggleEditMode(item, choice) {
     item.editMode = true;
-    switch (choice) {
-      case 'task': this.commentTaskInput = item.commentMsg;
-        // add dynamic form
-        break;
-      case 'subTask': this.commentSubTaskInput = item.commentMsg;
-        // add dynamic form
-        break;
-    }
+    // switch (choice) {
+    //   case 'task': this.commentTaskInput = item.commentMsg;
+    //     // add dynamic form
+    //     break;
+    //   case 'subTask': this.commentSubTaskInput = item.commentMsg;
+    //     // add dynamic form
+    //     break;
+    // }
 
   }
 

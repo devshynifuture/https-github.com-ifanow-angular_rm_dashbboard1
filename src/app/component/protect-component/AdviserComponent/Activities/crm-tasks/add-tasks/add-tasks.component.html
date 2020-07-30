@@ -391,7 +391,7 @@
                     <div class="col-md-4 editDelectText text-right">
                         <a class="f-12 c-p" *ngIf="!item.editMode" (click)="toggleEditMode(item, 'task')">Edit</a>
                         <a class="f-12 pl-5 c-p" *ngIf="item.editMode"
-                            (click)="saveEditedComment(item, 'task', i)">Save</a>
+                            (click)="saveEditedComment(item, 'task', i, refTaskComment.value)">Save</a>
                         <a class="f-12 pl-5 c-p" (click)="deleteCommentTaskSubTask(item, 'task',i)">Delete</a>
                     </div>
                 </div>
@@ -401,9 +401,7 @@
                             {{  item.commentMsg }}
                         </p>
                         <p class="f-14 form-group" *ngIf="item.editMode">
-                            <input type="text" [formControl]="editCommentForm"
-                                (focusout)="commentTaskInput = refInput.value" #refInput class="form-control"
-                                name="commentTaskInput">
+                            <input type="text" #refTaskComment class="form-control" [value]="item.commentMsg">
                         </p>
                     </div>
                 </div>
@@ -571,7 +569,7 @@
                     <div class="col-md-4 editDelectText text-right">
                         <a class="f-12 c-p" *ngIf="!item.editMode" (click)="toggleEditMode(item, 'subTask')">Edit</a>
                         <a class="f-12 c-p" *ngIf="item.editMode"
-                            (click)="saveEditedComment(item, 'subTask',i)">Save</a>
+                            (click)="saveEditedComment(item, 'subTask',i, refSubTaskComment.value)">Save</a>
                         <a class="f-12 c-p" (click)="deleteCommentTaskSubTask(item, 'subTask',i)">Delete</a>
                     </div>
                 </div>
@@ -580,13 +578,17 @@
                         <p class="f-14" *ngIf="!item.editMode"> {{ item.commentMsg }}
                         </p>
                         <p class="f-12 form-group" *ngIf="item.editMode">
-                            <input type="text" (focusout)="commentSubTaskInput = refSubTaskInput.value" #refSubTaskInput
-                                class="form-control" name="commentSubTaskInput">
+                            <input type="text" #refSubTaskComment class="form-control" [value]="item.commentMsg">
                         </p>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="bg-grey lter pt-20 mb-44" *ngIf="subTaskCommentList.length===0">
+        <h5 class="b-a text-center">
+            No Comments Yet
+        </h5>
     </div>
 </div>
 
@@ -600,6 +602,7 @@
         <div class="col-md-11">
             <mat-form-field>
                 <input class="form-control bg-white br-0 text-left" matInput #commentInput type="text"
+                    [disabled]="data===null"
                     (keyup.enter)="onCreateCommentTaskSubTask(commentInput.value); commentInput.value=''">
             </mat-form-field>
 
