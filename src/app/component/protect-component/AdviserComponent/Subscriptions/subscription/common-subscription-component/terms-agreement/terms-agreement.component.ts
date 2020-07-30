@@ -111,7 +111,7 @@ export class TermsAgreementComponent implements OnInit {
     // this.eventService.changeUpperSliderState({ state: 'close' ,});
     this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: false });
 
-
+ 
   }
   getDocumentPlaceholderList(data) {
     this.placeHolderLoader = true
