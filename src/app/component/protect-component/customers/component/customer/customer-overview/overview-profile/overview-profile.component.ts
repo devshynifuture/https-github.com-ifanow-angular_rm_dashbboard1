@@ -80,6 +80,7 @@ export class OverviewProfileComponent implements OnInit {
     this.getBankList(this.clientData);
     this.enumDataService.getDataForTaxMasterService();
     this.getFamilyMembersList(this.clientData);
+    this.enumDataService.searchClientList();
   }
 
   getClientData(data) {
@@ -322,6 +323,7 @@ export class OverviewProfileComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           if (sideBarData.refreshRequired || this.cancelFlagService.getCancelFlag()) {
             this.getFamilyMembersList(this.clientData);
+            this.enumDataService.searchClientList();
             this.cancelFlagService.setCancelFlag(undefined);
             this.clientSuggeService.setEmptySuggestionList();
             this.familyMemberList = undefined;

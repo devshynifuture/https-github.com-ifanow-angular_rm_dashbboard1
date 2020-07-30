@@ -31,7 +31,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
   errorMessage: string;
   reportListWithIsMappedToMinusOne: any = [];
   startReconciliation: any = false;
-  showCelebrationGif: boolean = true;
+  // showCelebrationGif: boolean = true;
+  subAdvisorList: any;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -106,7 +107,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
           });
 
           this.upperHeaderName = this.getRtName(this.data.rtId);
-          this.teamMemberListGet();
+          this.teamMemberListGet()
         } else {
           this.eventService.openSnackBar('Error In Fetching RTA List', 'Dismiss');
         }
@@ -283,7 +284,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
                     if (res.unmappedCount === 0) {
                       this.eventService.openSnackBar("All Folios are Matched", "DISMISS");
-                      this.showCelebrationGif = true;
+                      // this.showCelebrationGif = true;
                       this.errorMessage = "All Folios are Matched";
                     }
 
@@ -297,7 +298,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
                     objArr = null;
                     this.dataSource.data = objArr;
                     this.eventService.openSnackBar("All folios are Matched", "DISMISS");
-                    this.showCelebrationGif = true;
+                    // this.showCelebrationGif = true;
                     this.errorMessage = "All Folios are Matched";
                   }
 
@@ -981,7 +982,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
     const isParent = this.isRmLogin ? true : ((this.parentId === this.advisorId) ? true : false);
     const data = {
       id: this.data.id,
-      advisorIds: [this.advisorId],
+      advisorIds: [...this.adminAdvisorIds],
       parentId: this.parentId,
       isParent,
       brokerId: this.brokerId,

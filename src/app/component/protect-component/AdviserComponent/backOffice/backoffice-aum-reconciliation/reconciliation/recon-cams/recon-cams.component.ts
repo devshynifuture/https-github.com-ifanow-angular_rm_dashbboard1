@@ -21,6 +21,7 @@ export class ReconCamsComponent implements OnInit {
   ) { }
 
   brokerList: any[] = [];
+  adminAdvisorIds = [];
   dataSource;
   rmId = AuthService.getRmId() ? AuthService.getRmId() : 0;
   advisorId = AuthService.getAdvisorId();
@@ -32,7 +33,7 @@ export class ReconCamsComponent implements OnInit {
   isBrokerSelected: boolean = false;
   parentId = AuthService.getParentId() ? AuthService.getParentId() : this.advisorId;
   adminId = AuthService.getAdminId();
-  adminAdvisorIds: any[] = [];
+  subAdvisorList = [];
 
   @Input() rtId;
   displayedColumns: string[] = ['doneOn', 'doneBy', 'totalFolioCount', 'unmatchedCountBeforeRecon', 'unmatchedCountAfterRecon', 'aumBalanceDate', 'transactionDate', 'deleted', 'reordered', 'orderSuccess', 'orderFailed', 'action']
@@ -40,7 +41,7 @@ export class ReconCamsComponent implements OnInit {
   ngOnInit() {
     this.dataSource = new MatTableDataSource<ElementI>(ELEMENT_DATA);
     this.getBrokerList();
-    this.teamMemberListGet()
+    this.teamMemberListGet();
   }
 
   teamMemberListGet() {

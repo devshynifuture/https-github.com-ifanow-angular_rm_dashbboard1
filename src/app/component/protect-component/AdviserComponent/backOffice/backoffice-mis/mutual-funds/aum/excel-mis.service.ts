@@ -1418,6 +1418,51 @@ export class ExcelMisService {
             })
         }
 
+        if (choice === 'client-wise-aum-mis') {
+            arrayOfExcelData.forEach((schemeElement, index1) => {
+
+                if (index1 == 0) {
+                    currentRowPos = 5;
+                    ws.getRow(currentRowPos).values = arrayOfHeaders[0];
+                    ws.columns = arrayOfHeaderStyle[0];
+                    headCell = ws.getRow(currentRowPos);
+                    headCell.font = { bold: true };
+                } else {
+                    currentRowPos = currentRowPos + 2;
+                    ws.getRow(currentRowPos).values = arrayOfHeaders[0];
+                    ws.columns = arrayOfHeaderStyle[0];
+                    headCell = ws.getRow(currentRowPos);
+                    headCell.font = { bold: true };
+                }
+
+                ws.addRow([
+                    schemeElement.index,
+                    schemeElement.name,
+                    schemeElement.totalAum,
+                    schemeElement.weightInPerc
+                ])
+
+                if (schemeElement.schemeFolioList.length !== 0) {
+                    schemeElement.schemeFolioList.forEach(element => {
+                        currentRowPos = currentRowPos + 2;
+                        ws.getRow(currentRowPos).values = arrayOfHeaders[1];
+
+                        ws.columns = arrayOfHeaderStyle[1];
+                        headCell = ws.getRow(currentRowPos);
+                        headCell.font = { bold: true };
+                        ws.addRow([
+                            element.index,
+                            element.name,
+                            element.folioNumber,
+                            element.totalAum,
+                            element.balanceUnit,
+                            element.weightInPerc
+                        ]);
+                    });
+                }
+            });
+        }
+
         //
         const last = ws.addRow(totalArray);
         last.font = { bold: true };

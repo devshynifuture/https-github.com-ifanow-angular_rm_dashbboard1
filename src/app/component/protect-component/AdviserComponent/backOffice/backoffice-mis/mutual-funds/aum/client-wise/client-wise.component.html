@@ -5,6 +5,23 @@
   <div *ngIf="aum.aumComponent==false">
     <div class="wrapper-20 bg-white">
       <div class="row">
+        <div class="col-md-12 pr-0 mb-10">
+          <div class="right text-right">
+            <button [matMenuTriggerFor]="menu" class="ba-black borderLine br-0" mat-stroked-button>
+              {{viewMode}}
+              <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down
+              </mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <div *ngFor="let item of arnRiaList">
+                <button (click)="changeValueOfArnRia(item)" mat-menu-item [value]="item.value">{{item.number}}</button>
+              </div>
+            </mat-menu>
+          </div>
+
+        </div>
+      </div>
+      <div class="row">
         <div class="col-md-6 pl-0">
           <h3 class="pt-8 mb-0">Client Wise AUM</h3>
         </div>
@@ -131,12 +148,12 @@
                         <td>
                           <div [ngClass]="{'bar': isLoadingInvestor}">
                             {{isLoadingInvestor ? ' ' : '₹ '}}<span appFormatNumber
-                              *ngIf="!isLoadingInvestor">{{isLoadingInvestor ? '' : name.totalAum}}</span>
+                              *ngIf="!isLoadingInvestor">{{isLoadingInvestor ? '' : investor.totalAum}}</span>
                           </div>
                         </td>
                         <td>
                           <div [ngClass]="{'bar': isLoadingInvestor}">
-                            {{(isLoadingInvestor) ? '' : (name.weightInPercentage | number:'1.2-2')}}{{(isLoadingInvestor) ? '' : '%'}}
+                            {{(isLoadingInvestor) ? '' : (investor.weightInPercentage | number:'1.2-2')}}{{(isLoadingInvestor) ? '' : '%'}}
                           </div>
                         </td>
                         <td (click)="getSchemeName(investor, investorIndex, clientIndex)">
@@ -300,7 +317,8 @@
                                         </td>
                                         <td>
                                           <div [ngClass]="{'bar': isLoadingFolio}">
-                                            {{isLoadingFolio ? ' ' : '₹ '}}<span appFormatNumber
+<!--                                            {{isLoadingFolio ? ' ' : '₹ '}}-->
+                                            <span appFormatNumber
                                               *ngIf="!isLoadingFolio">{{(isLoadingFolio) ? '' : (folio.balanceUnit | number:'1.2-2')}}</span>
                                           </div>
                                         </td>

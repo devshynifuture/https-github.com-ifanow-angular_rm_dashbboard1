@@ -8,6 +8,24 @@
     <div *ngIf="aum.aumComponent==false" id="ui-category">
         <div class="wrapper-20 bg-white">
             <div class="row">
+                <div class="col-md-12 pr-0 mb-10">
+                    <div class="right text-right">
+                        <button [matMenuTriggerFor]="menu" class="ba-black borderLine br-0" mat-stroked-button>
+                            {{viewMode}}
+                            <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down
+                            </mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <div *ngFor="let item of arnRiaList">
+                                <button (click)="changeValueOfArnRia(item)" mat-menu-item
+                                    [value]="item.value">{{item.number}}</button>
+                            </div>
+                        </mat-menu>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-6 pl-0">
                     <h3 class="pt-8 mb-0">Category Wise AUM</h3>
                 </div>
@@ -281,7 +299,7 @@
                                                                             *ngFor="let applicant of scheme.clientList;let i = index">
                                                                             <tr>
                                                                                 <td>{{applicant.name}} </td>
-                                                                                <td>{{'₹ '}}{{applicant.balanceUnit | number:'1.2-2'}}
+                                                                                <td><!--{{'₹ '}}-->{{applicant.balanceUnit | number:'1.2-2'}}
                                                                                 </td>
                                                                                 <td>{{applicant.folioNumber}} </td>
                                                                                 <td>{{'₹ '}}<span appFormatNumber

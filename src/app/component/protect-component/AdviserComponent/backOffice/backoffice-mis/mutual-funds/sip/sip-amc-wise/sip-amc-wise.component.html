@@ -2,6 +2,24 @@
     <div *ngIf="sip.sipComponent==false" id="ui-category">
         <div class="wrapper-20 bg-white">
             <div class="row">
+                <div class="col-md-12 pr-0 mb-10">
+                    <div class="right text-right">
+                        <button [matMenuTriggerFor]="menu" class="ba-black borderLine br-0" mat-stroked-button>
+                            {{viewMode}}
+                            <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down
+                            </mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <div *ngFor="let item of arnRiaList">
+                                <button (click)="changeValueOfArnRia(item)" mat-menu-item
+                                    [value]="item.value">{{item.number}}</button>
+                            </div>
+                        </mat-menu>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-6 pl-0">
                     <h3 class="pt-8 mb-0">AMC Wise SIP </h3>
                 </div>
@@ -15,7 +33,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row" *ngIf="!isLoading && filteredArray.length > 0">
+            <div class="row" *ngIf="!isLoading && amcList.length > 0">
                 <div class="col-md-8"></div>
                 <div ng-init="schemeFilter=''" class="col-md-4 pr-0 mt-12 mb-12">
                     <input type="text" class="form-control" placeholder="Search AMC Name" [(ngModel)]="amcFilter"

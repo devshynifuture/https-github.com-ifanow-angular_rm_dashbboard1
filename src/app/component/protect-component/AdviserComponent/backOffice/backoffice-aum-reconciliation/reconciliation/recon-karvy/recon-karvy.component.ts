@@ -14,6 +14,7 @@ import { UtilService } from 'src/app/services/util.service';
 })
 export class ReconKarvyComponent implements OnInit {
   adminAdvisorIds: any[] = [];
+  subAdvisorList = [];
   adminId = AuthService.getAdminId();
 
   clientName = AuthService.getUserInfo().name;
@@ -66,7 +67,6 @@ export class ReconKarvyComponent implements OnInit {
       });
   }
 
-
   getAumReconHistoryData() {
     if (this.selectBrokerForm.get('selectBrokerId').value) {
       this.isLoading = true;
@@ -74,7 +74,7 @@ export class ReconKarvyComponent implements OnInit {
       this.isBrokerSelected = true;
 
       const data = {
-        advisorIds: [...this.adminAdvisorIds],
+        advisorIds: [this.advisorId, ...this.subAdvisorList],
         brokerId: this.selectBrokerForm.get('selectBrokerId').value,
         rmId: this.rmId,
         rtId: this.rtId,

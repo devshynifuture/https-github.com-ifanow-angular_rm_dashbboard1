@@ -15,6 +15,7 @@ import { UtilService } from 'src/app/services/util.service';
 export class ReconFranklinComponent implements OnInit {
   adminAdvisorIds: any[] = [];
   adminId: number = AuthService.getAdminId();
+  subAdvisorList: any = [];
 
   constructor(
     private reconService: ReconciliationService,

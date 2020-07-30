@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 // import {Router} from '@angular/router';
-import { Router } from '@angular/router';
+import {Router} from '@angular/router';
 
 @Injectable()
 export class AuthService {
@@ -27,10 +27,10 @@ export class AuthService {
     return this.getUserInfo().advisorId;
   }
 
-  static getAdminAdvisorId(){
+  static getAdminAdvisorId() {
     let adminid = this.getUserInfo().adminAdvisorId;
-    if(adminid > 0) {
-      return adminid
+    if (adminid > 0) {
+      return adminid;
     } else {
       return this.getUserInfo().advisorId;
     }
@@ -55,6 +55,7 @@ export class AuthService {
       return null;
     }
   }
+
   static setClientRolesSettings(data) {
     sessionStorage.setItem('clientRoles', JSON.stringify(data));
   }
@@ -89,6 +90,7 @@ export class AuthService {
     let clientDataString = localStorage.getItem('profileData');
     return clientDataString ? JSON.parse(clientDataString) : undefined;
   }
+
   static getOrgDetails() {
     let orgData = localStorage.getItem('orgData');
     return orgData ? JSON.parse(orgData) : undefined;
@@ -138,18 +140,15 @@ export class AuthService {
     return orgData ? orgData.logoUrl : '';
   }
 
-  static getClientRoles(data)
-  {
+  static getClientRoles(data) {
     return sessionStorage.getItem('clientRoles');
   }
 
-  static getAdvisorRoles(data)
-  {
+  static getAdvisorRoles(data) {
     return localStorage.getItem('advisorRoles');
   }
 
-  static getTeamMemberRoles(data)
-  {
+  static getTeamMemberRoles(data) {
     return localStorage.getItem('teamMemberRoles');
 
   }
