@@ -169,9 +169,9 @@ export class AddFixedFeeComponent implements OnInit {
         serviceCode: this.fixedFeeData.controls.code.value,
         serviceName: this.fixedFeeData.controls.serviceName.value,
         servicePricing: {
-          id: (this._data) ? this._data.servicePricing.id : '',
+          id: (this._data) ? this._data.servicePricing.id : 0,
           // autoRenew: 0,
-          billEvery: this.fixedFeeData.controls.billEvery.value,
+          billEvery: this.fixedFeeData.controls.billEvery.value ? this.fixedFeeData.controls.billEvery.value : 0,
           billingCycle: this.fixedFeeData.get('Duration').value,
           billingMode: parseInt(this.fixedFeeData.controls.billingMode.value),
           billingNature: parseInt(this.fixedFeeData.controls.billingNature.value),
