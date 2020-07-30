@@ -1,23 +1,23 @@
-import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { AddMutualFundComponent } from '../add-mutual-fund/add-mutual-fund.component';
-import { MFSchemeLevelHoldingsComponent } from '../mfscheme-level-holdings/mfscheme-level-holdings.component';
-import { MFSchemeLevelTransactionsComponent } from '../mfscheme-level-transactions/mfscheme-level-transactions.component';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { UtilService } from 'src/app/services/util.service';
-import { EventService } from 'src/app/Data-service/event.service';
+import {Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {AddMutualFundComponent} from '../add-mutual-fund/add-mutual-fund.component';
+import {MFSchemeLevelHoldingsComponent} from '../mfscheme-level-holdings/mfscheme-level-holdings.component';
+import {MFSchemeLevelTransactionsComponent} from '../mfscheme-level-transactions/mfscheme-level-transactions.component';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {UtilService} from 'src/app/services/util.service';
+import {EventService} from 'src/app/Data-service/event.service';
 import * as Highcharts from 'highcharts';
 import HC_exporting from 'highcharts/modules/exporting';
-import { CustomerService } from '../../../../../customer.service';
-import { MatTableDataSource } from '@angular/material';
-import { map } from 'rxjs/operators';
-import { MfServiceService } from '../../mf-service.service';
-import { WebworkerService } from 'src/app/services/web-worker.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { SettingsService } from 'src/app/component/protect-component/AdviserComponent/setting/settings.service';
-import { DatePipe } from '@angular/common';
-import { RightFilterDuplicateComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
-import { ActivatedRoute, Router } from '@angular/router';
-import { BackOfficeService } from 'src/app/component/protect-component/AdviserComponent/backOffice/back-office.service';
+import {CustomerService} from '../../../../../customer.service';
+import {MatTableDataSource} from '@angular/material';
+import {map} from 'rxjs/operators';
+import {MfServiceService} from '../../mf-service.service';
+// import { WebworkerService } from 'src/app/services/web-worker.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {SettingsService} from 'src/app/component/protect-component/AdviserComponent/setting/settings.service';
+import {DatePipe} from '@angular/common';
+import {RightFilterDuplicateComponent} from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
+import {ActivatedRoute, Router} from '@angular/router';
+import {BackOfficeService} from 'src/app/component/protect-component/AdviserComponent/backOffice/back-office.service';
 
 HC_exporting(Highcharts);
 
@@ -111,7 +111,7 @@ export class MutualFundOverviewComponent implements OnInit {
     public routerActive: ActivatedRoute,
     private backOfficeService: BackOfficeService,
     private router: Router,
-    public eventService: EventService, private custumService: CustomerService, private MfServiceService: MfServiceService, private workerService: WebworkerService, private settingService: SettingsService) {
+    public eventService: EventService, private custumService: CustomerService, private MfServiceService: MfServiceService, private settingService: SettingsService) {
     this.routerActive.queryParamMap.subscribe((queryParamMap) => {
       if (queryParamMap.has('clientId')) {
         const param1 = queryParamMap['params'];

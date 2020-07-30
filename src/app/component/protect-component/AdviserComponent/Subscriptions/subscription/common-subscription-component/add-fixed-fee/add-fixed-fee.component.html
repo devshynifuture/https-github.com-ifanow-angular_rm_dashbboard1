@@ -96,7 +96,7 @@
             <h5 class="text-right pt-12 mb-0">Billing nature</h5>
         </div>
         <div class="col-md-6">
-            <mat-radio-group formControlName="billingNature">
+            <mat-radio-group formControlName="billingNature" (change)="changedBillingNature($event.value)">
                 <mat-radio-button value="1"
                     [ngClass]="{'b-a-custom': fixedFeeData.get('billingNature').value==1,'text-primary' :fixedFeeData.get('billingNature').value==1,'b-a':fixedFeeData.get('billingNature').value==2}"
                     class="b-a-custom radioBtn text-primary custom-radio">Recurring
