@@ -407,8 +407,8 @@ export class ClientWiseComponent implements OnInit {
 
   excelInitClientList() {
     let data = {};
-    let sumAumTotalTemp = 0;
-    let sumWeightInPercTemp = 0;
+    let sumAumTotal = 0;
+    let sumWeightInPercTotal = 0;
     this.clientList.forEach((element, index1) => {
       data = {
         index: index1 + 1,
@@ -417,11 +417,18 @@ export class ClientWiseComponent implements OnInit {
         weightInPerc: element.weightInPercentage,
         investorList: [],
       };
-      sumAumTotalTemp = sumAumTotalTemp + element.totalAum;
-      sumWeightInPercTemp = sumWeightInPercTemp + element.weightInPercentage;
+      sumAumTotal = sumAumTotal + element.totalAum;
+      sumWeightInPercTotal = sumWeightInPercTotal + element.weightInPercentage;
       this.arrayOfExcelData.push(data);
     });
-    this.clientWiseTotal = ['Total', '', sumAumTotalTemp, sumWeightInPercTemp];
+    let totalAumObj: any = {};
+    if (this.data && this.data.totalAumObj) {
+      totalAumObj = this.data.totalAumObj;
+      this.clientWiseTotal = ['Total', '', totalAumObj.totalAum, 100];
+    }
+    console.log('totalAumObj : ', totalAumObj);
+    console.log('sumAumTotal : ', sumAumTotal);
+    console.log('sumWeightInPercTotal : ', sumWeightInPercTotal);
   }
 
   appendingOfValuesInExcel(iterable, index, choice) {
@@ -487,6 +494,15 @@ export class ClientWiseComponent implements OnInit {
         this.totalCurrentValue += o.totalAum;
         this.totalWeight += o.weightInPercentage;
       });
+      let totalAumObj: any = {};
+      if (this.data && this.data.totalAumObj) {
+        totalAumObj = this.data.totalAumObj;
+        console.log('totalAumObj : ', totalAumObj);
+        console.log('sumAumTotal : ', this.totalCurrentValue);
+        console.log('sumWeightInPercTotal : ', this.totalWeight);
+        this.totalCurrentValue = totalAumObj.totalAum;
+        this.totalWeight = 100;
+      }
       this.showLoader = false;
     } else {
       this.clientList = [];
