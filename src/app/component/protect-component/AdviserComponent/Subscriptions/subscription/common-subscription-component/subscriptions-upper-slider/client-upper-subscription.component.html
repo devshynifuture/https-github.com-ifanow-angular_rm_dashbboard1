@@ -65,7 +65,7 @@
                     </th>
                     <td *matCellDef="let element" class="w-23" mat-cell>
                         <div class="bar">
-                            {{element.serviceName}}
+                            <span *ngIf="!isLoading"> {{element.serviceName}}</span>
                         </div>
                     </td>
                 </ng-container>
@@ -74,14 +74,16 @@
                     <td *matCellDef="let element" mat-cell>
                         <div class="bar" *ngIf="isLoading">
                         </div>
-                        <div (click)="Open('open',element)" class="bar text-primary text-underline c-p"
-                            *ngIf="element.startsOn==undefined  && element.feeTypeId==1">
-                            {{isLoading ? ' ' : 'View details'}} </div>
-                        <div appFormatNumber class="c-p" *ngIf="element.startsOn && element.feeTypeId==1">
-                            ₹ {{element.pricing}}</div>
-                        <div appFormatNumber (click)="Open('open',element)" *ngIf="element.feeTypeId==2"
-                            class="text-primary text-underline c-p">
-                            View details</div>
+                        <span *ngIf="!isLoading">
+                            <div (click)="Open('open',element)" class="bar text-primary text-underline c-p"
+                                *ngIf="element.startsOn==undefined  && element.feeTypeId==1">
+                                {{isLoading ? ' ' : 'View details'}} </div>
+                            <div appFormatNumber class="c-p" *ngIf="element.startsOn && element.feeTypeId==1">
+                                ₹ {{element.pricing}}</div>
+                            <div appFormatNumber (click)="Open('open',element)" *ngIf="element.feeTypeId==2"
+                                class="text-primary text-underline c-p">
+                                View details</div>
+                        </span>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="type">
@@ -89,7 +91,7 @@
                     </th>
                     <td *matCellDef="let element" mat-cell>
                         <div class="bar">
-                            {{element.serviceTypeName}}
+                            <span *ngIf="!isLoading"> {{element.serviceTypeName}}</span>
                         </div>
                     </td>
                 </ng-container>
@@ -100,17 +102,19 @@
                     <td *matCellDef="let element" mat-cell>
                         <div class="bar">
                         </div>
-                        {{element.subscriptionNumber}}
+                        <span *ngIf="!isLoading"> {{element.subscriptionNumber}}</span>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="status">
                     <th *matHeaderCellDef class="f-18" mat-header-cell mat-sort-header="status"> Status</th>
                     <td *matCellDef="let element" mat-cell>
                         <div class="bar">
-                            <span *ngIf="element.status==1" class="text-primary t-10 ">NOT STARTED</span>
-                            <span *ngIf="element.status==2" class="text-primary t-10 ">LIVE</span>
-                            <span *ngIf="element.status==3" class="text-custom t-10 ">FUTURE</span>
-                            <span *ngIf="element.status==4" class="text-danger t-10 ">CANCELLED</span>
+                            <span *ngIf="!isLoading">
+                                <span *ngIf="element.status==1" class="text-primary t-10 ">NOT STARTED</span>
+                                <span *ngIf="element.status==2" class="text-primary t-10 ">LIVE</span>
+                                <span *ngIf="element.status==3" class="text-custom t-10 ">FUTURE</span>
+                                <span *ngIf="element.status==4" class="text-danger t-10 ">CANCELLED</span>
+                            </span>
                         </div>
                     </td>
                 </ng-container>
@@ -120,11 +124,13 @@
                     <th *matHeaderCellDef mat-header-cell> Activation date</th>
                     <td *matCellDef="let element" mat-cell>
                         <div class="bar">
-                            <div *ngIf="element.status!=1"> {{element.startsOn | date:'dd/MM/yyyy'}}</div>
-                            <div (click)="openPlanSlider('createSub','open',element)"
-                                *ngIf="isAdvisor && element.status==1">
-                                <button class="btn-header btn-xs ml-8 br-0 btn-sm" mat-stroked-button>START</button>
-                            </div>
+                            <span *ngIf="!isLoading">
+                                <div *ngIf="element.status!=1"> {{element.startsOn | date:'dd/MM/yyyy'}}</div>
+                                <div (click)="openPlanSlider('createSub','open',element)"
+                                    *ngIf="isAdvisor && element.status==1">
+                                    <button class="btn-header btn-xs ml-8 br-0 btn-sm" mat-stroked-button>START</button>
+                                </div>
+                            </span>
                         </div>
                     </td>
                 </ng-container>
@@ -134,7 +140,7 @@
                     </th>
                     <td *matCellDef="let element" mat-cell>
                         <div class="bar">
-                            {{element.prevBillingDate | date:'dd/MM/yyyy'}}
+                            <span *ngIf="!isLoading"> {{element.prevBillingDate | date:'dd/MM/yyyy'}}</span>
                         </div>
                     </td>
                 </ng-container>
@@ -144,7 +150,7 @@
                     </th>
                     <td *matCellDef="let element" mat-cell>
                         <div class="bar">
-                            {{element.nextBillingDate | date:'dd/MM/yyyy'}}
+                            <span *ngIf="!isLoading"> {{element.nextBillingDate | date:'dd/MM/yyyy'}}</span>
                         </div>
                     </td>
                 </ng-container>
@@ -155,7 +161,7 @@
                     </th>
                     <td *matCellDef="let element" mat-cell>
                         <div class="bar">
-                            {{getFeeTypeName(element.feeMode)}}
+                            <span *ngIf="!isLoading">{{getFeeTypeName(element.feeMode)}}</span>
                         </div>
                     </td>
                 </ng-container>
