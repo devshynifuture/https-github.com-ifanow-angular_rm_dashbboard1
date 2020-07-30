@@ -310,6 +310,17 @@ export class CategoryWiseComponent implements OnInit {
       });
     });
 
+
+    let totalAumObj: any = {};
+    if (this.data && this.data.totalAumObj) {
+      totalAumObj = this.data.totalAumObj;
+      console.log('totalAumObj : ', totalAumObj);
+      console.log('sumAumTotal : ', this.totalCurrentValue);
+      console.log('sumWeightInPercTotal : ', this.totalWeight);
+      this.totalCurrentValue = totalAumObj.totalAum;
+      this.totalWeight = 100;
+    }
+
   }
 
   showSchemeName(subCategory, index, catIndex) {
@@ -408,8 +419,8 @@ export class CategoryWiseComponent implements OnInit {
 
   excelInitOfCategories() {
     let dataValue = {};
-    let sumTotalAumTemp = 0;
-    let sumWeightInPercTemp = 0;
+    let sumAumTotal = 0;
+    let sumWeightInPercTotal = 0;
     this.category.forEach((element, index1) => {
       dataValue = {
         index: index1 + 1,
@@ -419,10 +430,17 @@ export class CategoryWiseComponent implements OnInit {
         subCatList: []
       };
       this.arrayOfExcelData.push(dataValue);
-      sumTotalAumTemp = sumTotalAumTemp + element.totalAum;
-      sumWeightInPercTemp = sumWeightInPercTemp + element.weightInPercentage;
+      sumAumTotal = sumAumTotal + element.totalAum;
+      sumWeightInPercTotal = sumWeightInPercTotal + element.weightInPercentage;
     });
-    this.categoryWiseTotalArr = ['Total', '', sumTotalAumTemp, sumWeightInPercTemp];
+    let totalAumObj: any = {};
+    if (this.data && this.data.totalAumObj) {
+      totalAumObj = this.data.totalAumObj;
+      this.categoryWiseTotalArr = ['Total', '', totalAumObj.totalAum, 100];
+    }
+    console.log('totalAumObj : ', totalAumObj);
+    console.log('sumAumTotal : ', sumAumTotal);
+    console.log('sumWeightInPercTotal : ', sumWeightInPercTotal);
   }
 
   appendingOfValuesInExcel(iterable, index, choice) {

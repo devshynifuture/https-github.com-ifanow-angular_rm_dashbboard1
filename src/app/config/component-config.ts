@@ -869,7 +869,9 @@ export const appConfig = {
   ///////////////////////////// market place //////////////////////////
   GET_CALL_DETAILS: 'marketplace/call/settings/get',
   ADD_CALL_DETAILS: 'marketplace/call/settings/edit',
-  ADD_CALL_AVAILABLE: 'marketplace/call/settings/non-working/days/edit'
+  ADD_CALL_AVAILABLE: 'marketplace/call/settings/non-working/days/edit',
+  GET_WEBPUSH_PUBLIC_KEY: 'notification/public-signing-key/get'
+
 };
 
 
