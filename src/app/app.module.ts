@@ -28,6 +28,8 @@ import { FormTestComponent } from './test/form-test/form-test.component';
 import { CustomDirectiveModule } from './common/directives/common-directive.module';
 import { BackofficeDashboardComponent } from './component/protect-component/AdviserComponent/backOffice/backoffice-dashboard/backoffice-dashboard.component';
 import { ScrollDispatchModule } from '@angular/cdk/scrolling';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
@@ -77,6 +79,7 @@ import { ScrollDispatchModule } from '@angular/cdk/scrolling';
     EmailEntryModule,
     AppRoutingModule,
     CustomDirectiveModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     // AssetsModule,
 
     // SubscriptionUpperEntry
