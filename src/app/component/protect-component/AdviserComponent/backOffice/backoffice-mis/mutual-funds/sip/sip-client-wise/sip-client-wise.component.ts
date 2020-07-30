@@ -1,13 +1,13 @@
-import {Component, OnInit, ViewChildren, Output, EventEmitter, Input} from '@angular/core';
-import {BackOfficeService} from '../../../../back-office.service';
-import {SipComponent} from '../sip.component';
-import {AuthService} from 'src/app/auth-service/authService';
-import {FormatNumberDirective} from 'src/app/format-number.directive';
-import {ExcelMisSipService} from '../../aum/excel-mis-sip.service';
-import {MfServiceService} from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
-import {FormBuilder} from '@angular/forms';
-import {DatePipe} from '@angular/common';
-import {EventService} from 'src/app/Data-service/event.service';
+import { Component, OnInit, ViewChildren, Output, EventEmitter, Input } from '@angular/core';
+import { BackOfficeService } from '../../../../back-office.service';
+import { SipComponent } from '../sip.component';
+import { AuthService } from 'src/app/auth-service/authService';
+import { FormatNumberDirective } from 'src/app/format-number.directive';
+import { ExcelMisSipService } from '../../aum/excel-mis-sip.service';
+import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
+import { FormBuilder } from '@angular/forms';
+import { DatePipe } from '@angular/common';
+import { EventService } from 'src/app/Data-service/event.service';
 
 @Component({
   selector: 'app-sip-client-wise',
@@ -61,23 +61,23 @@ export class SipClientWiseComponent implements OnInit {
   ];
   arrayOfHeaderStyles: any[][] = [
     [
-      {width: 10, key: 'Sr. No.'},
-      {width: 50, key: 'Client Name'},
-      {width: 30, key: 'SIP Amount'},
-      {width: 10, key: '% Weight'}
+      { width: 10, key: 'Sr. No.' },
+      { width: 50, key: 'Client Name' },
+      { width: 30, key: 'SIP Amount' },
+      { width: 10, key: '% Weight' }
     ],
     [
-      {width: 10, key: 'Sr. No.'},
-      {width: 40, key: 'Applicant Name'},
-      {width: 50, key: 'Scheme Name'},
-      {width: 40, key: 'Folio Number'},
-      {width: 40, key: 'Registered Date'},
-      {width: 40, key: 'From Date'},
-      {width: 40, key: 'To Date'},
-      {width: 30, key: 'Trigger Day'},
-      {width: 30, key: 'Frequency'},
-      {width: 30, key: 'Amount'},
-      {width: 10, key: '% Weight'},
+      { width: 10, key: 'Sr. No.' },
+      { width: 40, key: 'Applicant Name' },
+      { width: 50, key: 'Scheme Name' },
+      { width: 40, key: 'Folio Number' },
+      { width: 40, key: 'Registered Date' },
+      { width: 40, key: 'From Date' },
+      { width: 40, key: 'To Date' },
+      { width: 30, key: 'Trigger Day' },
+      { width: 30, key: 'Frequency' },
+      { width: 30, key: 'Amount' },
+      { width: 10, key: '% Weight' },
     ]
   ];
   selectedClient: any;
@@ -168,7 +168,11 @@ export class SipClientWiseComponent implements OnInit {
   }
 
   aumReport() {
-    this.changedValue.emit(true);
+    this.changedValue.emit({
+      value: true,
+      arnRiaValue: this.arnRiaValue,
+      viewMode: this.viewMode
+    });
 
     this.filteredArray.forEach(element => {
       element.showCategory = true;
@@ -272,6 +276,9 @@ export class SipClientWiseComponent implements OnInit {
   clientWiseClientName() {
     this.arrayOfExcelData = [];
     this.isLoading = true;
+    this.totalOfSipAmount = 0;
+    this.totalOfSipCount = 0;
+    this.totalWeight = 0;
     this.filteredArray = [{}, {}, {}];
     const obj = {
       advisorId: (this.parentId == this.advisorId) ? 0 : this.advisorId,

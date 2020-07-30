@@ -1,9 +1,9 @@
-import {Component, OnInit, Output, EventEmitter, Input} from '@angular/core';
-import {AumComponent} from '../aum.component';
-import {BackOfficeService} from '../../../../back-office.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {ExcelMisService} from '../excel-mis.service';
-import {MfServiceService} from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { AumComponent } from '../aum.component';
+import { BackOfficeService } from '../../../../back-office.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { ExcelMisService } from '../excel-mis.service';
+import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
 
 @Component({
   selector: 'app-applicant-wise',
@@ -90,37 +90,37 @@ export class ApplicantWiseComponent implements OnInit {
   ];
   arrayOfHeaderStyles: any[][] = [
     [
-      {width: 10, key: 'Sr. No.'},
-      {width: 50, key: 'Applicant Name'},
-      {width: 30, key: 'Current Value'},
-      {width: 10, key: '% Weight'}
+      { width: 10, key: 'Sr. No.' },
+      { width: 50, key: 'Applicant Name' },
+      { width: 30, key: 'Current Value' },
+      { width: 10, key: '% Weight' }
     ],
     [
-      {width: 10, key: 'Sr. No.'},
-      {width: 50, key: 'Category Name'},
-      {width: 30, key: 'Current Value'},
-      {width: 10, key: '% Weight'}
+      { width: 10, key: 'Sr. No.' },
+      { width: 50, key: 'Category Name' },
+      { width: 30, key: 'Current Value' },
+      { width: 10, key: '% Weight' }
     ],
     [
-      {width: 10, key: 'Sr. No.'},
-      {width: 50, key: 'Sub Category Name'},
-      {width: 30, key: 'Current Name'},
-      {width: 10, key: '% Weight'}
+      { width: 10, key: 'Sr. No.' },
+      { width: 50, key: 'Sub Category Name' },
+      { width: 30, key: 'Current Name' },
+      { width: 10, key: '% Weight' }
     ],
     [
-      {width: 10, key: 'Sr. No.'},
-      {width: 30, key: 'Scheme Name'},
-      {width: 30, key: 'Folio'},
-      {width: 30, key: 'Current Value'},
-      {width: 10, key: '% Weight'},
+      { width: 10, key: 'Sr. No.' },
+      { width: 30, key: 'Scheme Name' },
+      { width: 30, key: 'Folio' },
+      { width: 30, key: 'Current Value' },
+      { width: 10, key: '% Weight' },
     ],
     [
-      {width: 10, key: 'Sr. No.'},
-      {width: 30, key: 'Scheme Name'},
-      {width: 30, key: 'Folio Number'},
-      {width: 30, key: 'Current Value'},
-      {width: 30, key: 'Balance Unit'},
-      {width: 10, key: '% Weight'},
+      { width: 10, key: 'Sr. No.' },
+      { width: 30, key: 'Scheme Name' },
+      { width: 30, key: 'Folio Number' },
+      { width: 30, key: 'Current Value' },
+      { width: 30, key: 'Balance Unit' },
+      { width: 10, key: '% Weight' },
     ]
   ];
 
@@ -220,7 +220,9 @@ export class ApplicantWiseComponent implements OnInit {
   aumApplicantWiseTotalaumApplicantNameGet() {
     this.arrayOfExcelData = [];
     this.isLoading = true;
-    this.applicantName = [{}, {}, {}];
+    this.totalCurrentValue = 0;
+    this.totalWeight = 0;
+    this.applicantName = [{}, {}, {}]
     const obj = {
       advisorId: (this.parentId == this.advisorId) ? 0 : this.advisorId,
       arnRiaDetailsId: this.arnRiaValue,
@@ -428,13 +430,13 @@ export class ApplicantWiseComponent implements OnInit {
         iterable.forEach((element, index1) => {
           this.arrayOfExcelData[this.selectedApplicant].categoryList[this.selectedCat]
             .subCategoryList[index].schemeList.push({
-            index: index1 + 1,
-            name: element.schemeName,
-            folioNumber: element.folioNumber,
-            totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
-            weightInPerc: element.weightInPercentage,
-            schemeFolioList: []
-          });
+              index: index1 + 1,
+              name: element.schemeName,
+              folioNumber: element.folioNumber,
+              totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+              weightInPerc: element.weightInPercentage,
+              schemeFolioList: []
+            });
           sumAumTotal = sumAumTotal + element.totalAum;
           sumWeightInPercTotal = sumWeightInPercTotal + element.weightInPercentage;
         });
@@ -444,13 +446,13 @@ export class ApplicantWiseComponent implements OnInit {
         iterable.forEach((element, index1) => {
           this.arrayOfExcelData[this.selectedApplicant].categoryList[this.selectedCat]
             .subCategoryList[this.selectedScheme].schemeList[index].schemeFolioList.push({
-            index: index1 + 1,
-            name: element.schemeName,
-            folioNumber: element.folioNumber,
-            totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
-            balanceUnit: this.mfService.mutualFundRoundAndFormat(element.balanceUnit, 2),
-            weightInPerc: element.weightInPercentage
-          });
+              index: index1 + 1,
+              name: element.schemeName,
+              folioNumber: element.folioNumber,
+              totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+              balanceUnit: this.mfService.mutualFundRoundAndFormat(element.balanceUnit, 2),
+              weightInPerc: element.weightInPercentage
+            });
           sumAumTotal = sumAumTotal + element.totalAum;
           sumWeightInPercTotal = sumWeightInPercTotal + element.weightInPercentage;
         });
@@ -744,7 +746,11 @@ export class ApplicantWiseComponent implements OnInit {
   }
 
   aumReport() {
-    this.changedValue.emit(true);
+    this.changedValue.emit({
+      value: true,
+      arnRiaValue: this.arnRiaValue,
+      viewMode: this.viewMode
+    });
     this.applicantName.forEach(element => {
       element.show = true;
     });

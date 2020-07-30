@@ -1,10 +1,10 @@
-import {Component, OnInit, Input} from '@angular/core';
-import {BackOfficeService} from '../../../back-office.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {AuthService} from 'src/app/auth-service/authService';
+import { Component, OnInit, Input } from '@angular/core';
+import { BackOfficeService } from '../../../back-office.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AuthService } from 'src/app/auth-service/authService';
 import * as Highcharts from 'highcharts';
-import {ReconciliationService} from '../../../backoffice-aum-reconciliation/reconciliation/reconciliation.service';
-import {MfServiceService} from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
+import { ReconciliationService } from '../../../backoffice-aum-reconciliation/reconciliation/reconciliation.service';
+import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
 
 
 @Component({
@@ -60,7 +60,7 @@ export class SipComponent implements OnInit {
   }
 
   teamMemberListGet() {
-    this.reconService.getTeamMemberListValues({advisorId: this.advisorId})
+    this.reconService.getTeamMemberListValues({ advisorId: this.advisorId })
       .subscribe(data => {
         if (data && data.length !== 0) {
           console.log('team members: ', data);
@@ -158,7 +158,8 @@ export class SipComponent implements OnInit {
   }
 
   getsipCountGet(data) {
-    this.isLoading = false;
+    console.log("this is some totalCount and percent value:", data);
+    this.isLoading = false
     this.sipCount = data;
   }
 
@@ -172,10 +173,10 @@ export class SipComponent implements OnInit {
   }
 
   display(value) {
+    this.viewMode = value.viewMode;
+    this.arnRiaId = value.arnRiaValue;
     this.sipComponent = true;
-    setTimeout(() => {
-      this.pieChart('pieChartSip');
-    }, 1000);
+    this.initPoint();
   }
 
   getAllSip() {

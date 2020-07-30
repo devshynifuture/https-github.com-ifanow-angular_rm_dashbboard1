@@ -60,7 +60,7 @@
                                             <div class="col-md-7 p-0 text-right">
                                                 <h1 class="text-diff f-24 mb-0 pb-8">
                                                     <span *ngIf="!isLoading && sipCount" appFormatNumber>
-                                                        {{(sipCount.totalAmount) ? sipCount.totalAmount : 0}}</span>
+                                                        {{(sipCount.avgSipAmount) ? sipCount.avgSipAmount : 0}}</span>
                                                     <span *ngIf="isLoading">{{''}}</span>
                                                 </h1>
                                                 <p class="f-12 mb-0 text-diff" *ngIf="!isLoading">Average SIP</p>
@@ -89,10 +89,15 @@
                                         <div class="row" *ngIf="!isLoading">
                                             <div class="col-md-12 p-0">
                                                 <div class="text-center">
-                                                    <h1 class="text-diff f-300 f-40 mb-4 pt-8">13.22%</h1>
+                                                    <h1 class="text-diff f-300 f-40 mb-4 pt-8">
+                                                        {{ sipCount.sipLinkedToGoalPercent }}%</h1>
 
-                                                    <p class="text-diff f-14 mb-0 pt-12 l-21">Out of 5370 folios, 13.4%
-                                                        (716 folios) are currently linked to financial goals of your
+                                                    <p class="text-diff f-14 mb-0 pt-12 l-21">
+                                                        Out of {{ sipCount.totalCount }} SIP,
+                                                        {{ sipCount.sipLinkedToGoalPercent }}%
+                                                        ({{ sipCount.sipLinkedToGoalCount }} SIP) are currently
+                                                        linked to
+                                                        financial goals of your
                                                         clients
                                                     </p>
                                                 </div>
