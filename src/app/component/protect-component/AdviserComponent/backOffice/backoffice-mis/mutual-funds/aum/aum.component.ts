@@ -152,9 +152,12 @@ export class AumComponent implements OnInit {
   }
   display(value) {
     this.aumComponent = true;
-    setTimeout(() => {
-      this.pieChart('pieChartAum', this.aumGraph);
-    }, 600);
+    this.viewMode = value.viewMode;
+    this.arnRiaValue = value.arnRiaValue;
+    this.initPoint();
+    // setTimeout(() => {
+    //   this.pieChart('pieChartAum', this.aumGraph);
+    // }, 600);
   }
 
   hideSubTableList() {

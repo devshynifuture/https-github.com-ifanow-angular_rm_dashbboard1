@@ -209,6 +209,8 @@ export class CategoryWiseComponent implements OnInit {
   getSubCatSchemeName() {
     this.arrayOfExcelData = [];
     this.isLoading = true;
+    this.totalCurrentValue = 0;
+    this.totalWeight = 0;
     this.category = [{}, {}, {}];
     const obj = {
       advisorId: (this.parentId) ? 0 : (this.data.arnRiaDetailId != -1) ? 0 : [this.data.adminAdvisorIds],
@@ -379,7 +381,11 @@ export class CategoryWiseComponent implements OnInit {
   }
 
   aumReport() {
-    this.changedValue.emit(true);
+    this.changedValue.emit({
+      value: true,
+      arnRiaValue: this.arnRiaValue,
+      viewMode: this.viewMode
+    });
     this.category.forEach(element => {
       element.showCategory = true
     });

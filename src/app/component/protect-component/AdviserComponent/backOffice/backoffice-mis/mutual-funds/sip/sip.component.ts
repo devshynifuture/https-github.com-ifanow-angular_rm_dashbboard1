@@ -150,6 +150,7 @@ export class SipComponent implements OnInit {
     )
   }
   getsipCountGet(data) {
+    console.log("this is some totalCount and percent value:", data);
     this.isLoading = false
     this.sipCount = data;
   }
@@ -161,10 +162,10 @@ export class SipComponent implements OnInit {
     this.showMainWrapperFlag = true;
   }
   display(value) {
+    this.viewMode = value.viewMode;
+    this.arnRiaId = value.arnRiaValue;
     this.sipComponent = true;
-    setTimeout(() => {
-      this.pieChart('pieChartSip');
-    }, 1000);
+    this.initPoint();
   }
   getAllSip() {
     const obj = {

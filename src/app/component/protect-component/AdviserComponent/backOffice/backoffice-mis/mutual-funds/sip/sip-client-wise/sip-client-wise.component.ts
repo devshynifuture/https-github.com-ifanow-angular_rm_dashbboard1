@@ -164,7 +164,11 @@ export class SipClientWiseComponent implements OnInit {
     }
   }
   aumReport() {
-    this.changedValue.emit(true);
+    this.changedValue.emit({
+      value: true,
+      arnRiaValue: this.arnRiaValue,
+      viewMode: this.viewMode
+    });
 
     this.filteredArray.forEach(element => {
       element.showCategory = true
@@ -263,6 +267,9 @@ export class SipClientWiseComponent implements OnInit {
   clientWiseClientName() {
     this.arrayOfExcelData = [];
     this.isLoading = true;
+    this.totalOfSipAmount = 0;
+    this.totalOfSipCount = 0;
+    this.totalWeight = 0;
     this.filteredArray = [{}, {}, {}];
     const obj = {
       advisorId: (this.parentId) ? 0 : (this.data.arnRiaId != -1) ? 0 : [this.data.adminAdvisorIds],

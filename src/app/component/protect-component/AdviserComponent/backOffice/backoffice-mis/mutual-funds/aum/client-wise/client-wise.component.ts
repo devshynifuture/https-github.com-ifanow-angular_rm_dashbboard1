@@ -221,6 +221,8 @@ export class ClientWiseComponent implements OnInit {
   }
   getClientTotalAum() {
     this.arrayOfExcelData = [];
+    this.totalCurrentValue = 0;
+    this.totalWeight = 0;
     this.isLoading = true;
     this.clientList = [{}, {}, {}];
     let obj = {
@@ -589,7 +591,11 @@ export class ClientWiseComponent implements OnInit {
     this.clientList[this.selectedClient].subList[this.selectedInvestor].schemes[index].showScheme = (show) ? show = false : show = true;
   }
   aumReport() {
-    this.changedValue.emit(true);
+    this.changedValue.emit({
+      value: true,
+      arnRiaValue: this.arnRiaValue,
+      viewMode: this.viewMode
+    });
     this.clientList.forEach(element => {
       element.show = true
     });

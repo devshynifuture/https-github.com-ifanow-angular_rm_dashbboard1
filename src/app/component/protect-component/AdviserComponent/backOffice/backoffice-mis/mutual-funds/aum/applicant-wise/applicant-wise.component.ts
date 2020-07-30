@@ -212,6 +212,8 @@ export class ApplicantWiseComponent implements OnInit {
   aumApplicantWiseTotalaumApplicantNameGet() {
     this.arrayOfExcelData = [];
     this.isLoading = true;
+    this.totalCurrentValue = 0;
+    this.totalWeight = 0;
     this.applicantName = [{}, {}, {}]
     const obj = {
       advisorId: (this.parentId) ? 0 : (this.data.arnRiaDetailId != -1) ? 0 : [this.data.adminAdvisorIds],
@@ -729,7 +731,11 @@ export class ApplicantWiseComponent implements OnInit {
     subCat.showSubCategory = (subCat.showSubCategory) ? subCat.showSubCategory = false : subCat.showSubCategory = true;
   }
   aumReport() {
-    this.changedValue.emit(true);
+    this.changedValue.emit({
+      value: true,
+      arnRiaValue: this.arnRiaValue,
+      viewMode: this.viewMode
+    });
     this.applicantName.forEach(element => {
       element.show = true
     });

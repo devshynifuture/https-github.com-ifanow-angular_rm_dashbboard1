@@ -260,7 +260,11 @@ export class SipAmcWiseComponent implements OnInit {
     }
   }
   aumReport() {
-    this.changedValue.emit(true);
+    this.changedValue.emit({
+      value: true,
+      arnRiaValue: this.arnRiaValue,
+      viewMode: this.viewMode
+    });
     this.filteredArray.forEach(element => {
       element.showCategory = true
     });
@@ -269,11 +273,14 @@ export class SipAmcWiseComponent implements OnInit {
   amcGet() {
     this.arrayOfExcelData = [];
     this.isLoading = true;
+    this.totalOfSipAmount = 0;
+    this.totalOfSipCount = 0;
+    this.totalWeight = 0;
     this.amcList = [{}, {}, {}];
     this.filteredArray = [{}, {}, {}];
     const obj = {
       advisorId: (this.parentId) ? 0 : (this.data.arnRiaId != -1) ? 0 : [this.data.adminAdvisorIds],
-      arnRiaDetailsId: (this.data) ? this.data.arnRiaId : -1,
+      arnRiaDetailsId: this.arnRiaValue,
       parentId: (this.data) ? this.data.parentId : -1
     }
     this.backoffice.GET_SIP_AMC(obj).subscribe(
@@ -313,7 +320,7 @@ export class SipAmcWiseComponent implements OnInit {
       schemeData.schemeList = [{}, {}, {}];
       const obj = {
         advisorId: (this.parentId) ? 0 : (this.data.arnRiaId != -1) ? 0 : [this.data.adminAdvisorIds],
-        arnRiaDetailsId: (this.data) ? this.data.arnRiaId : -1,
+        arnRiaDetailsId: this.arnRiaValue,
         parentId: (this.data) ? this.data.parentId : -1,
         sipAmount: schemeData.sipAmount,
         amcId: schemeData.amcId
@@ -484,7 +491,7 @@ export class SipAmcWiseComponent implements OnInit {
       investorData.investorList = [{}, {}, {}];
       const obj = {
         advisorId: (this.parentId) ? 0 : (this.data.arnRiaId != -1) ? 0 : [this.data.adminAdvisorIds],
-        arnRiaDetailsId: (this.data) ? this.data.arnRiaId : -1,
+        arnRiaDetailsId: this.arnRiaValue,
         parentId: (this.data) ? this.data.parentId : -1,
         schemeId: investorData.mutualFundSchemeMasterId,
         sipAmount: investorData.sipAmount,
@@ -541,7 +548,7 @@ export class SipAmcWiseComponent implements OnInit {
         schemeId: applicantData.mutualFundSchemeMasterId,
         sipAmount: applicantData.sipAmount,
         advisorId: (this.parentId) ? 0 : (this.data.arnRiaId != -1) ? 0 : [this.data.adminAdvisorIds],
-        arnRiaDetailsId: (this.data) ? this.data.arnRiaId : -1,
+        arnRiaDetailsId: this.arnRiaValue,
         parentId: (this.data) ? this.data.parentId : -1
       }
       this.backoffice.Sip_Investors_Applicant_Get(obj).subscribe(
@@ -574,7 +581,7 @@ export class SipAmcWiseComponent implements OnInit {
   schemeInvestorGet() {
     const obj = {
       advisorId: (this.parentId) ? 0 : (this.data.arnRiaId != -1) ? 0 : [this.data.adminAdvisorIds],
-      arnRiaDetailsId: (this.data) ? this.data.arnRiaId : -1,
+      arnRiaDetailsId: this.arnRiaValue,
       parentId: (this.data) ? this.data.parentId : -1,
       schemeId: 122,
       sipAmount: 5000,
@@ -589,7 +596,7 @@ export class SipAmcWiseComponent implements OnInit {
       amcId: 123,
       sipAmount: 5000,
       advisorId: (this.parentId) ? 0 : (this.data.arnRiaId != -1) ? 0 : [this.data.adminAdvisorIds],
-      arnRiaDetailsId: (this.data) ? this.data.arnRiaId : -1,
+      arnRiaDetailsId: this.arnRiaValue,
       parentId: (this.data) ? this.data.parentId : -1
     }
     this.backoffice.GET_SIP_AMC_SCHEME(obj).subscribe(
@@ -603,7 +610,7 @@ export class SipAmcWiseComponent implements OnInit {
       schemeId: 123,
       sipAmount: 2000,
       advisorId: (this.parentId) ? 0 : (this.data.arnRiaId != -1) ? 0 : [this.data.adminAdvisorIds],
-      arnRiaDetailsId: (this.data) ? this.data.arnRiaId : -1,
+      arnRiaDetailsId: this.arnRiaValue,
       parentId: (this.data) ? this.data.parentId : -1
     }
     this.backoffice.Sip_Investors_Applicant_Get(obj).subscribe(

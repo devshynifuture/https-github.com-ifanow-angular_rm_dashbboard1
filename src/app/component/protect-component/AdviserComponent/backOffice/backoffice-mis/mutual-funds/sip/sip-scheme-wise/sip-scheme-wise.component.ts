@@ -219,7 +219,11 @@ export class SipSchemeWiseComponent implements OnInit {
     }
   }
   aumReport() {
-    this.changedValue.emit(true);
+    this.changedValue.emit({
+      value: true,
+      arnRiaValue: this.arnRiaValue,
+      viewMode: this.viewMode
+    });
     //  this.sip.sipComponent=true;
     this.filteredArray.forEach(element => {
       element.showCategory = true
@@ -227,6 +231,9 @@ export class SipSchemeWiseComponent implements OnInit {
   }
   getSchemeWiseGet() {
     this.arrayOfExcelData = [];
+    this.totalOfSipAmount = 0;
+    this.totalOfSipCount = 0;
+    this.totalWeight = 0;
     this.isLoading = true;
     this.filteredArray = [{}, {}, {}]
     const obj = {
