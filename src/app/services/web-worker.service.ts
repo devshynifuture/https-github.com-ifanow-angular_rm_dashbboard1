@@ -6,9 +6,9 @@ import { Injectable } from '@angular/core';
  * <code>Function</code>. It also handles the execution and "<i>promisification</i>" of the
  * created web worker.</p>
  */
-@Injectable({
-  providedIn: 'root'
-})
+// @Injectable({
+//   providedIn: 'root'
+// })
 export class WebworkerService {
   // tslint:disable-next-line
   private workerFunctionToUrlMap = new WeakMap<Function, string>();
