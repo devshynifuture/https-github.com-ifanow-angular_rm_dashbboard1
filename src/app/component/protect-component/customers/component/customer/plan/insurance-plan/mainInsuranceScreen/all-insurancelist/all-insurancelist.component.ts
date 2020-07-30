@@ -8,6 +8,9 @@ import { AddInsurancePlanningComponent } from '../../add-insurance-planning/add-
 import { AddInsuranceUpperComponent } from '../../add-insurance-upper/add-insurance-upper.component';
 import { AddSuggestPolicyComponent } from '../../add-suggest-policy/add-suggest-policy.component';
 import { CurrentPolicyComponent } from '../../current-policy/current-policy.component';
+import { PlanService } from '../../../plan.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-all-insurancelist',
@@ -18,58 +21,114 @@ export class AllInsurancelistComponent implements OnInit {
 
 
   displayedColumns = ['pname', 'sum2', 'premium2', 'status', 'empty'];
-  dataSource = ELEMENT_DATA;
   displayedColumns1 = ['name', 'sum', 'premium', 'returns', 'advice'];
   dataSource1 = ELEMENT_DATA1;
   displayedColumns2 = ['name', 'annual', 'amt', 'icons'];
   dataSource2 = ELEMENT_DATA2;
+  dataSource: any = new MatTableDataSource();
+
   insuranceList = [{
-    heading:'Life insurance',
-    advice:'1,80,00,000',
-    logo:'/assets/images/svg/LIsmall.svg',
-    familyMem :'Rahul Jain',
+    heading: 'Life insurance',
+    logo: '/assets/images/svg/LIsmall.svg',
   }, {
-    heading:'Health insurance',
-    advice:'1,80,00,000',
-    logo:'/assets/images/svg/HIsmall.svg',
-    familyMem :'Rahul Jain,Shilpa Jain',
+    heading: 'Health insurance',
+    logo: '/assets/images/svg/HIsmall.svg',
   }, {
-    heading:'Critical illness',
-    advice:'1,80,00,000',
-    logo:'/assets/images/svg/CIsmall.svg',
-    familyMem :'Rahul Jain',
-  },{
-    heading:'Cancer care',
-    advice:'1,80,00,000',
-    logo:'/assets/images/svg/CCsmall.svg',
-    familyMem :'Rahul Jain',
-  },{
-    heading:'Personal accident',
-    advice:'1,80,00,000',
-    logo:'/assets/images/svg/PAsmall.svg',
-    familyMem :'Rahul Jain',
-  },{
-    heading:'Fire insurance',
-    advice:'1,80,00,000',
-    logo:'/assets/images/svg/FIsmall.svg',
-    familyMem :'Rahul Jain',
-  },{
-    heading:'Householders',
-    advice:'1,80,00,000',
-    logo:'/assets/images/svg/Hsmall.svg',
-    familyMem :'Rahul Jain',
+    heading: 'Critical illness',
+    logo: '/assets/images/svg/CIsmall.svg',
+  }, {
+    heading: 'Cancer care',
+    logo: '/assets/images/svg/CCsmall.svg',
+  }, {
+    heading: 'Personal accident',
+    logo: '/assets/images/svg/PAsmall.svg',
+  }, {
+    heading: 'Fire insurance',
+    logo: '/assets/images/svg/FIsmall.svg',
+  }, {
+    heading: 'Householders',
+    logo: '/assets/images/svg/Hsmall.svg',
   }]
   detailsInsurance: any;
-  constructor(private subInjectService: SubscriptionInject, private eventService: EventService) {
+  clientId: any;
+  advisorId: any;
+  insuranceLoader: boolean;
+  counter: any;
+  data: Array<any> = [{}, {}, {}];
+  showIsurance: boolean = false;
+  constructor(private subInjectService: SubscriptionInject,
+    private planService: PlanService,
+    private eventService: EventService) {
+    this.advisorId = AuthService.getAdvisorId()
+    this.clientId = AuthService.getClientId()
   }
 
   isLoading = true;
 
   ngOnInit() {
-    this.detailsInsurance = this.insuranceList[0]
+    this.detailsInsurance = {}
+    this.getInsuranceList()
   }
-  openDetailsInsurance(insurance){
+  openDetailsInsurance(insurance) {
+    console.log('insurance',insurance)
     this.detailsInsurance = insurance
+    this.showIsurance = true
+  }
+  getInsuranceList() {
+    let obj = {
+      clientId: this.clientId,
+      advisorId: this.advisorId
+    }
+    this.loader(1);
+    this.planService.getInsurancePlaningList(obj).subscribe(
+      data => this.getInsurancePlaningListRes(data),
+      err => {
+        this.eventService.openSnackBar(err, 'Dismiss');
+        this.insuranceLoader = true;
+        this.loader(-1);
+      }
+    );
+  }
+  getInsurancePlaningListRes(data) {
+    this.loader(-1);
+    console.log('incurance list', data)
+    this.dataSource = data
+    this.dataSource.forEach(element => {
+      if (element.insuranceType == 1) {
+        element.heading = 'Life insurance'
+        element.logo = '/assets/images/svg/LIsmall.svg'
+      } else if (element.insuranceType == 5) {
+        element.heading = 'Health insurance'
+        element.logo = '/assets/images/svg/HIsmall.svg'
+      } else if (element.insuranceType == 6) {
+        element.heading = 'Critical illness'
+        element.logo = '/assets/images/svg/CIsmall.svg'
+      } else if (element.insuranceType == 4) {
+        element.heading = 'Cancer care'
+        element.logo = '/assets/images/svg/CCsmall.svg'
+      } else if (element.insuranceType == 10) {
+        element.heading = 'Fire insurance'
+        element.logo = '/assets/images/svg/FIsmall.svg'
+      } else if (element.insuranceType = 11) {
+        element.heading = 'Householders'
+        element.logo = '/assets/images/svg/Hsmall.svg'
+      } else if (element.insuranceType = 7) {
+        element.heading = 'Personal accident'
+        element.logo = '/assets/images/svg/PAsmall.svg'
+      }
+    });
+    console.log(this.dataSource)
+    this.insuranceList = this.dataSource
+    this.detailsInsurance = this.insuranceList[0]
+    this.showIsurance = true;
+  }
+  loader(increamenter) {
+    this.counter += increamenter;
+    if (this.counter == 0) {
+      this.isLoading = false;
+    } else {
+      this.isLoading = true;
+    }
   }
   addnewinsurance(data) {
     console.log('hello mf button clicked');
@@ -206,9 +265,9 @@ export interface PeriodicElement {
   symbol: string;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: "HDFC Ergo My Health Suraksha", name: '7,00,000', weight: "19,201", symbol: 'Waiting for approval' },
-];
+// const ELEMENT_DATA: PeriodicElement[] = [
+//   { position: "HDFC Ergo My Health Suraksha", name: '7,00,000', weight: "19,201", symbol: 'Waiting for approval' },
+// ];
 
 export interface PeriodicElement1 {
   name: string;

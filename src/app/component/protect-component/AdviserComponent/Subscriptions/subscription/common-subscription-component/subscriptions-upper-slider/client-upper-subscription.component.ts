@@ -259,11 +259,7 @@ export class ClientUpperSubscriptionComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        const obj = {
-          advisorId: this.advisorId,
-          id: subData.id
-        };
-        this.subscription.deleteSubscriptionData(obj).subscribe(
+        this.subscription.deleteSubscriptionData(subData.id).subscribe(
           data => {
             this.deletedData(data);
             dialogRef.close(subData);

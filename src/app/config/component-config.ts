@@ -301,6 +301,16 @@ export const appConfig = {
   GET_ASSET_ALLOCATION_SUMMARY_LIST: 'account/asset/asset-allocation/summary/get',
 
   GET_CASHFLOW_LIST: 'cashflow/monthly/list/get',
+  /////////////////////////Insurance plan/////////////////////////////
+  GET_INSURANCE_LIST:'insurance/planning/list/get',
+  ADD_INSURANCE:'insurance/planning/life/insurance/add',
+  GET_FAMILYMEMBER_DETAILS:'insurance/planning/family-member/info/get',
+  GET_LIFE_NEED_ANALYSIS:'insurance/planning/life/insurance/need/analysis/get',
+  ADD_LIFE_NEED_ANALYSIS_MAP:'insurance/planning/life/insurance/need/analysis/map/to/plan',
+  REMOVE_LIFE_NEED_ANALYSIS_MAP:'insurance/planning/life/insurance/delete',
+  LIFE_ANALYSIS_ADD:'insurance/planning/life/insurance/need/analysis/save',
+  GET_DETAILED_INSURANCE:'insurance/planning/life/insurance/need/analysis/mapped/to/plan/get',
+
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE: 'account/asset/real-estate/get',
   ADD_EPF_EPS: 'account/asset/epf-eps/add',

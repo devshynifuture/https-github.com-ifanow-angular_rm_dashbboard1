@@ -13,6 +13,7 @@ import { CommonFroalaComponent } from '../common-froala/common-froala.component'
 import { EmailOnlyComponent } from '../email-only/email-only.component';
 import { Router } from '@angular/router';
 import { Location, DatePipe } from '@angular/common';
+import { ExcelService } from 'src/app/component/protect-component/customers/component/customer/excel.service';
 
 // import { window } from 'rxjs/operators';
 
@@ -320,6 +321,7 @@ export class DocumentComponent implements OnInit {
   }
 
   openEsignDocument(element) {
+    this._clientData['clientId'] = this._clientData.id;
     const data = {
       advisorId: this.advisorId,
       clientData: this._clientData,
@@ -344,18 +346,24 @@ export class DocumentComponent implements OnInit {
     this.openSendEmailComponent('eSignDocument', data);
   }
 
-  openSendEmail() {
+  openSendEmail(documentData) {
+    this._clientData['clientId'] = this._clientData.id;
     const data = {
       advisorId: this.advisorId,
       clientData: this._clientData,
       templateType: 4, // 2 is for quotation
       documentList: []
     };
-    this.dataSource.filteredData.forEach(singleElement => {
-      if (singleElement.selected) {
-        data.documentList.push(singleElement);
-      }
-    });
+    if (documentData == undefined) {
+      this.dataSource.filteredData.forEach(singleElement => {
+        if (singleElement.selected) {
+          data.documentList.push(singleElement);
+        }
+      });
+    }
+    else {
+      data.documentList.push(documentData);
+    }
     this.openSendEmailComponent('email', data);
   }
 

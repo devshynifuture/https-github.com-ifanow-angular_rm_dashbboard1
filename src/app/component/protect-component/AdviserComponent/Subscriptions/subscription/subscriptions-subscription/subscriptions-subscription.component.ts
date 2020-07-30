@@ -475,15 +475,11 @@ export class SubscriptionsSubscriptionComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        const obj = {
-          advisorId: this.advisorId,
-          id: subData.id
-        };
-        this.subService.deleteSubscriptionData(obj).subscribe(
+        this.subService.deleteSubscriptionData(subData.id).subscribe(
           data => {
             this.deletedData(data);
             dialogRef.close(subData);
-            this.getClientSubData(false, true);
+            this.getClientSubData(false, false);
           }
         );
 

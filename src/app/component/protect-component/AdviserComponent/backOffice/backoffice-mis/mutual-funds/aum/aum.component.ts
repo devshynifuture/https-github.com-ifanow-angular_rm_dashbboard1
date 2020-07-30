@@ -297,7 +297,8 @@ export class AumComponent implements OnInit {
       parentId: this.parentId,
       adminAdvisorIds: this.adminAdvisorIds,
       arnRiaValue: this.arnRiaValue,
-      viewMode: this.viewMode
+      viewMode: this.viewMode,
+      totalAumObj: this.MiscData1
     };
   }
 
