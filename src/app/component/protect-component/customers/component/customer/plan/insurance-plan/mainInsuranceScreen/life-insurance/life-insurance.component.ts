@@ -106,7 +106,7 @@ export class LifeInsuranceComponent implements OnInit {
   getDetailsInsuranceRes(data){
     console.log('getDetailsInsuranceRes res',data)
     this.insuranceDetails = data
-    
+
   }
   loader(increamenter) {
     this.counter += increamenter;
@@ -134,6 +134,7 @@ export class LifeInsuranceComponent implements OnInit {
       }
     );
   }
+
   suggestPolicy(data) {
     const fragmentData = {
       flag: 'opencurrentpolicies',

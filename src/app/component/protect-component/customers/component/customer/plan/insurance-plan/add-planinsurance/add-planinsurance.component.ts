@@ -36,9 +36,7 @@ export class AddPlaninsuranceComponent implements OnInit {
     value: 10,
     disabled: false,
     fullWidth: false,
-    // buttonIcon: {
-    //   fontIcon: 'favorite'
-    // }
+
   };
   barButtonOptions2: MatProgressButtonOptions = {
     active: false,
@@ -51,13 +49,22 @@ export class AddPlaninsuranceComponent implements OnInit {
     value: 10,
     disabled: false,
     fullWidth: false,
-    // buttonIcon: {
-    //   fontIcon: 'favorite'
-    // }
+  };
+  barButtonOptions3: MatProgressButtonOptions = {
+    active: false,
+    text: 'SAVE',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
   };
   manualObj: any;
   tab: any;
-  sendObj: { id: any; };
+  sendObj: any;
   needBase: any;
   id: any;
   constructor(private subInjectService: SubscriptionInject,
@@ -112,6 +119,32 @@ export class AddPlaninsuranceComponent implements OnInit {
       }
     });
   }
+  saveAnalysis() {
+    if (this.tab == 1) {
+      this.sendObj = {
+        lifeInsurancePlanningId: this.needBase.lifeInsurancePlanningId,
+        needTypeId: this.needBase.needTypeId,
+        adviceAmount: this.needBase.adviceAmount,
+        plannerNotes: this.needBase.plannerNotes
+      }
+    } else {
+      this.sendObj = {
+        lifeInsurancePlanningId: this.manualObj.lifeInsurancePlanningId,
+        needTypeId: this.manualObj.needTypeId,
+        adviceAmount: this.manualObj.adviceAmount,
+        plannerNotes: this.manualObj.plannerNotes
+      }
+    }
+    this.planService.saveLifeInsuranceAnalysis(this.sendObj).subscribe(
+      data => this.saveLifeInsuranceAnalysisRes(data),
+      err => {
+        this.eventService.openSnackBar(err, 'Dismiss');
+      }
+    );
+  }
+  saveLifeInsuranceAnalysisRes(data) {
+    console.log('saveLifeInsuranceAnalysisRes', data)
+  }
   tabChanged(event) {
     console.log('tabChanged', event)
     this.tab = event.index
@@ -132,7 +165,7 @@ export class AddPlaninsuranceComponent implements OnInit {
     );
   }
   removeToPlan() {
-  
+
     if (this.tab == 1) {
       this.id = this.manualObj.id
     } else {
