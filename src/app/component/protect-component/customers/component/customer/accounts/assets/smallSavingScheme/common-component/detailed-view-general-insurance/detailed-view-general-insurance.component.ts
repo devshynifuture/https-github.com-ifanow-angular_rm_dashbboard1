@@ -52,8 +52,7 @@ export class DetailedViewGeneralInsuranceComponent implements OnInit {
 
   ngOnInit() {
     this.bankAccountDetails = {accountList: '', controleData: ''};
-    this._data.addOns = this.filter(this._data.addOns, this.displayList.addOns, 'id', 'addOnId', 'add_on');
-    this._data.policyFeatures = this.filter(this._data.policyFeatures, this.displayList.policyFeature, 'id', 'policyFeatureId', 'type');
+   
     // this._data.policyTypes = this.filter(this._data.policyTypes,this.displayList.policyFeature,'id','policyFeatureId','type')
     this.allInsurance.forEach(element => {
       if (element.id == this._data.insuranceSubTypeId) {
@@ -78,7 +77,10 @@ export class DetailedViewGeneralInsuranceComponent implements OnInit {
       data => {
         console.log(data),
           this.displayList = data;
+          this._data.addOns = this.filter(this._data.addOns, this.displayList.addOns, 'id', 'addOnId', 'add_on');
+          this._data.policyFeatures = this.filter(this._data.policyFeatures, this.displayList.policyFeature, 'id', 'policyFeatureId', 'type');
       }
+      
     );
   }
 
