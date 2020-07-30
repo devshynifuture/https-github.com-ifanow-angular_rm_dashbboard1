@@ -8,6 +8,8 @@ import { AddInsurancePlanningComponent } from './add-insurance-planning/add-insu
 import { AddNewInsuranceComponent } from './add-new-insurance/add-new-insurance.component';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AddInsuranceUpperComponent } from './add-insurance-upper/add-insurance-upper.component';
+import { AuthService } from 'src/app/auth-service/authService';
+import { PlanService } from '../plan.service';
 
 @Component({
   selector: 'app-insurance-plan',
@@ -21,14 +23,25 @@ export class InsurancePlanComponent implements OnInit {
   dataSource1 = ELEMENT_DATA1;
   displayedColumns2 = ['name', 'annual', 'amt', 'icons'];
   dataSource2 = ELEMENT_DATA2;
+  clientId: any;
+  advisorId: any;
+  insuranceLoader: boolean;
+  counter: any;
 
-  constructor(private subInjectService: SubscriptionInject, private eventService: EventService) {
+  constructor(
+    private subInjectService: SubscriptionInject, 
+    private eventService: EventService,
+    private planService : PlanService,
+    ) {
+    this.advisorId = AuthService.getAdvisorId()
+    this.clientId =AuthService.getClientId()
   }
 
   isLoading = true;
 
   ngOnInit() {
   }
+
   addnewinsurance(data) {
     console.log('hello mf button clicked');
     const fragmentData = {

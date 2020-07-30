@@ -6,6 +6,8 @@ import { CustomerService } from '../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AddSuggestPolicyComponent } from '../../add-suggest-policy/add-suggest-policy.component';
 import { AddRecommendationsInsuComponent } from '../../add-recommendations-insu/add-recommendations-insu.component';
+import { PlanService } from '../../../plan.service';
+import { AuthService } from 'src/app/auth-service/authService';
 
 @Component({
   selector: 'app-life-insurance',
@@ -49,7 +51,20 @@ export class LifeInsuranceComponent implements OnInit {
   }]
   logo: any;
   getData: any;
-  constructor(private subInjectService: SubscriptionInject, private custumService: CustomerService, private utils: UtilService, private eventService: EventService) { }
+  advisorId: any;
+  clientId: any;
+  counter: any;
+  isLoading: boolean;
+  insuranceDetails: any;
+  constructor(private subInjectService: SubscriptionInject, 
+    private custumService: CustomerService, 
+    private utils: UtilService,
+    private eventService: EventService,
+    private planService :  PlanService,
+    ) { 
+      this.advisorId = AuthService.getAdvisorId();
+      this.clientId = AuthService.getClientId();
+  }
 
   @Input()
   set data(data) {
@@ -63,6 +78,7 @@ export class LifeInsuranceComponent implements OnInit {
   ngOnInit() {
     console.log('inputData', this.inputData)
   }
+
   setDetails(data) {
     this.getData = data
     this.setLogo.forEach(element => {
@@ -70,6 +86,35 @@ export class LifeInsuranceComponent implements OnInit {
         this.logo = element.logo
       }
     });
+    this.getDetailsInsurance()
+  }
+  getDetailsInsurance(){
+    let obj = {
+      clientId: this.clientId,
+      familyMemberId : this.inputData.familyMemberId,
+      id:this.inputData.id,
+    }
+    this.loader(1);
+    this.planService.getDetailsInsurance(obj).subscribe(
+      data => this.getDetailsInsuranceRes(data),
+      err => {
+        this.eventService.openSnackBar(err, 'Dismiss');
+        this.loader(-1);
+      }
+    );
+  }
+  getDetailsInsuranceRes(data){
+    console.log('getDetailsInsuranceRes res',data)
+    this.insuranceDetails = data
+    
+  }
+  loader(increamenter) {
+    this.counter += increamenter;
+    if (this.counter == 0) {
+      this.isLoading = false;
+    } else {
+      this.isLoading = true;
+    }
   }
   needAnalysis(data) {
     const fragmentData = {

@@ -253,7 +253,7 @@
                                             with esign
                                             request
                                         </a>
-                                        <a (click)="openSendEmail()" *ngIf="dataCount == 1" mat-menu-item>Email
+                                        <a (click)="openSendEmail(null)" *ngIf="dataCount == 1" mat-menu-item>Email
                                             only
                                         </a>
                                         <a (click)="deleteModal(null)" *ngIf="dataCount==1" class="b-t"
@@ -402,7 +402,7 @@
                                                 (click)="openEsignDocument(element)">Email
                                                 with esign
                                                 request</a>
-                                            <a mat-menu-item (click)="openSendEmail()">Email only</a>
+                                            <a mat-menu-item (click)="openSendEmail(element)">Email only</a>
                                         </mat-menu>
                                     </div>
                                 </td>
