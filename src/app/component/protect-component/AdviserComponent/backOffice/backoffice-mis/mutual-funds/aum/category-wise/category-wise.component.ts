@@ -1,10 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { BackOfficeService } from '../../../../back-office.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { AumComponent } from '../aum.component';
-import { AuthService } from 'src/app/auth-service/authService';
-import { ExcelMisService } from '../excel-mis.service';
-import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {BackOfficeService} from '../../../../back-office.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {AumComponent} from '../aum.component';
+import {AuthService} from 'src/app/auth-service/authService';
+import {ExcelMisService} from '../excel-mis.service';
+import {MfServiceService} from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
 
 @Component({
   selector: 'app-category-wise',
@@ -52,29 +52,29 @@ export class CategoryWiseComponent implements OnInit {
   ];
   arrayOfHeaderStyles: { width: number; key: string; }[][] = [
     [
-      { width: 10, key: 'Sr. No.' },
-      { width: 50, key: 'Category Name' },
-      { width: 30, key: 'Current Value' },
-      { width: 10, key: '% Weight' }
+      {width: 10, key: 'Sr. No.'},
+      {width: 50, key: 'Category Name'},
+      {width: 30, key: 'Current Value'},
+      {width: 10, key: '% Weight'}
     ],
     [
-      { width: 10, key: 'Sr. No.' },
-      { width: 50, key: 'Sub Category Name' },
-      { width: 30, key: 'Current Value' },
-      { width: 10, key: '% Weight' }
+      {width: 10, key: 'Sr. No.'},
+      {width: 50, key: 'Sub Category Name'},
+      {width: 30, key: 'Current Value'},
+      {width: 10, key: '% Weight'}
     ],
     [
-      { width: 10, key: 'Sr. No.' },
-      { width: 50, key: 'Scheme Name' },
-      { width: 30, key: 'Current Value' },
-      { width: 10, key: '% Weight' }
+      {width: 10, key: 'Sr. No.'},
+      {width: 50, key: 'Scheme Name'},
+      {width: 30, key: 'Current Value'},
+      {width: 10, key: '% Weight'}
     ],
     [
-      { width: 50, key: 'Applicant Name' },
-      { width: 30, key: 'Balance Unit' },
-      { width: 30, key: 'Folio' },
-      { width: 30, key: 'Current Amount' },
-      { width: 10, key: '% Weight' },
+      {width: 50, key: 'Applicant Name'},
+      {width: 30, key: 'Balance Unit'},
+      {width: 30, key: 'Folio'},
+      {width: 30, key: 'Current Amount'},
+      {width: 10, key: '% Weight'},
     ]
   ];
   arrayOfExcelData: any[] = [];
@@ -106,16 +106,19 @@ export class CategoryWiseComponent implements OnInit {
   // schemeTotal: number = 0;
   constructor(
     private backoffice: BackOfficeService, private dataService: EventService, public aum: AumComponent, private mfService: MfServiceService
-  ) { }
+  ) {
+  }
+
   selectedCategory;
+
   ngOnInit() {
     this.clientId = AuthService.getClientId();
-    this.parentId = AuthService.getParentId() ? AuthService.getParentId() : this.advisorId;
+    this.parentId = AuthService.getAdminAdvisorId();
     if (this.data.hasOwnProperty('arnRiaValue') && this.data.hasOwnProperty('viewMode')) {
       this.arnRiaValue = this.data.arnRiaValue;
       this.viewMode = this.data.viewMode;
     } else {
-      this.viewMode = "All";
+      this.viewMode = 'All';
       this.arnRiaValue = -1;
     }
     this.getArnRiaList();
@@ -128,7 +131,7 @@ export class CategoryWiseComponent implements OnInit {
 
   changeValueOfArnRia(item) {
     if (item.name !== 'All') {
-      this.arnRiaValue = item.id
+      this.arnRiaValue = item.id;
       this.viewMode = item.number;
     } else {
       this.arnRiaValue = -1;
@@ -145,13 +148,13 @@ export class CategoryWiseComponent implements OnInit {
           const obj = {
             number: 'All',
             id: -1
-          }
+          };
           this.arnRiaList.unshift(obj);
         } else {
           // this.dataService.openSnackBar("No Arn Ria List Found", "Dismiss")
         }
       }
-    )
+    );
   }
 
   sortBy(applicant, propertyName) {
@@ -167,6 +170,7 @@ export class CategoryWiseComponent implements OnInit {
       );
     }
   }
+
   sortBySubCat(applicant, propertyName) {
     this.propertyName2 = propertyName;
     this.reverse2 = (propertyName !== null && this.propertyName2 === propertyName) ? !this.reverse2 : false;
@@ -180,6 +184,7 @@ export class CategoryWiseComponent implements OnInit {
       );
     }
   }
+
   sortByScheme(applicant, propertyName) {
     this.propertyName3 = propertyName;
     this.reverse3 = (propertyName !== null && this.propertyName3 === propertyName) ? !this.reverse3 : false;
@@ -193,6 +198,7 @@ export class CategoryWiseComponent implements OnInit {
       );
     }
   }
+
   sortByApplicant(applicant, propertyName) {
     this.propertyName4 = propertyName;
     this.reverse4 = (propertyName !== null && this.propertyName4 === propertyName) ? !this.reverse4 : false;
@@ -206,31 +212,33 @@ export class CategoryWiseComponent implements OnInit {
       );
     }
   }
+
   getSubCatSchemeName() {
+    this.arrayOfExcelData = [];
     this.isLoading = true;
     this.category = [{}, {}, {}];
     const obj = {
-      advisorId: (this.parentId) ? 0 : (this.data.arnRiaDetailId != -1) ? 0 : [this.data.adminAdvisorIds],
+      advisorId: (this.parentId == this.advisorId) ? 0 : this.advisorId,
       arnRiaDetailsId: this.arnRiaValue,
       parentId: (this.data) ? this.data.parentId : -1
-    }
+    };
     this.backoffice.getTotalByAumScheme(obj).subscribe(
       data => this.getFileResponseDataForSubSchemeName(data),
       err => this.getFilerrorResponse(err)
-    )
+    );
   }
 
-  clientFolioWise() {
-    const obj = {
-      amcName: 'Aditya Birla',
-      teamMemberId: this.teamMemberId
-    }
-    this.backoffice.getClientFolioWiseInCategory(obj).subscribe(
-      data => {
-      },
-      err => this.getFilerrorResponse(err)
-    )
-  }
+  // clientFolioWise() {
+  //   const obj = {
+  //     amcName: 'Aditya Birla',
+  //     teamMemberId: this.teamMemberId
+  //   };
+  //   this.backoffice.getClientFolioWiseInCategory(obj).subscribe(
+  //     data => {
+  //     },
+  //     err => this.getFilerrorResponse(err)
+  //   );
+  // }
 
   showSubTableList(index, category, catIndex) {
 
@@ -297,10 +305,11 @@ export class CategoryWiseComponent implements OnInit {
 
       o.subCategoryList.forEach(sub => {
         sub.showSubCategory = true;
-      })
+      });
     });
 
   }
+
   showSchemeName(subCategory, index, catIndex) {
     this.selectedSubCategory = index;
     this.selectedCategory = catIndex;
@@ -342,7 +351,7 @@ export class CategoryWiseComponent implements OnInit {
         }
       });
     }
-    console.log("this is category:::::", category);
+    console.log('this is category:::::', category);
   }
 
   closeAllBottomOpenedSubCat(subCatElement) {
@@ -357,6 +366,7 @@ export class CategoryWiseComponent implements OnInit {
       });
     }
   }
+
   closeAllBottomOpenedScheme(schemeElement) {
     if (schemeElement.clientList.length !== 0) {
       schemeElement.clientList.forEach(element => {
@@ -380,14 +390,14 @@ export class CategoryWiseComponent implements OnInit {
   aumReport() {
     this.changedValue.emit(true);
     this.category.forEach(element => {
-      element.showCategory = true
+      element.showCategory = true;
     });
   }
 
   getFilerrorResponse(err) {
     this.isLoading = false;
     this.category = [];
-    this.dataService.openSnackBar(err, 'Dismiss')
+    this.dataService.openSnackBar(err, 'Dismiss');
   }
 
   excelInitOfCategories() {
@@ -406,7 +416,7 @@ export class CategoryWiseComponent implements OnInit {
       sumTotalAumTemp = sumTotalAumTemp + element.totalAum;
       sumWeightInPercTemp = sumWeightInPercTemp + element.weightInPercentage;
     });
-    this.categoryWiseTotalArr = ['Total', '', sumTotalAumTemp, sumWeightInPercTemp]
+    this.categoryWiseTotalArr = ['Total', '', sumTotalAumTemp, sumWeightInPercTemp];
   }
 
   appendingOfValuesInExcel(iterable, index, choice) {
@@ -445,7 +455,7 @@ export class CategoryWiseComponent implements OnInit {
             applicantList: [],
           });
           sumTotalAumTemp = sumTotalAumTemp + element.totalAum;
-          sumTotalWeightInPercTemp = sumTotalWeightInPercTemp + element.weightInPercentage
+          sumTotalWeightInPercTemp = sumTotalWeightInPercTemp + element.weightInPercentage;
         });
         this.schemeWiseTotalArr = ['Total', '', sumTotalAumTemp, sumTotalWeightInPercTemp];
         break;
@@ -456,14 +466,14 @@ export class CategoryWiseComponent implements OnInit {
         iterable.forEach((element, index1) => {
           this.arrayOfExcelData[this.selectedCategory].subCatList[this.selectedSubCategory]
             .schemeList[index].applicantList.push({
-              name: element.name,
-              balanceUnit: this.mfService.mutualFundRoundAndFormat(element.balanceUnit, 2),
-              folioNumber: element.folioNumber,
-              totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
-              weightInPerc: element.weightInPercentage,
-            });
+            name: element.name,
+            balanceUnit: this.mfService.mutualFundRoundAndFormat(element.balanceUnit, 2),
+            folioNumber: element.folioNumber,
+            totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+            weightInPerc: element.weightInPercentage,
+          });
           sumTotalAumTemp = sumTotalAumTemp + element.totalAum;
-          sumTotalWeightInPercTemp = sumTotalWeightInPercTemp + element.weightInPercentage
+          sumTotalWeightInPercTemp = sumTotalWeightInPercTemp + element.weightInPercentage;
         });
         this.applicantWiseTotalArr = ['Total', '', '', sumTotalAumTemp, sumTotalWeightInPercTemp];
         break;
@@ -480,7 +490,7 @@ export class CategoryWiseComponent implements OnInit {
   }
 
   subCategoryWiseExcelSheet(index) {
-    let copyOfExcelData = JSON.parse(JSON.stringify(this.arrayOfExcelData));
+    const copyOfExcelData = JSON.parse(JSON.stringify(this.arrayOfExcelData));
 
     copyOfExcelData.forEach((element, index1) => {
       if (index1 === index) {
@@ -491,8 +501,8 @@ export class CategoryWiseComponent implements OnInit {
         }
       }
     });
-    let arrayOfExcelHeaders = this.arrayOfHeaders.slice();
-    let arrayOfExcelStyles = this.arrayOfHeaderStyles.slice();
+    const arrayOfExcelHeaders = this.arrayOfHeaders.slice();
+    const arrayOfExcelStyles = this.arrayOfHeaderStyles.slice();
     arrayOfExcelStyles.shift();
     arrayOfExcelHeaders.shift();
 
@@ -505,8 +515,8 @@ export class CategoryWiseComponent implements OnInit {
   }
 
   applicantWiseExcelSheet(index) {
-    let applicantList = this.arrayOfExcelData[this.selectedCategory].subCatList[this.selectedSubCategory].schemeList[this.selectedClientIndex].applicantList;
-    let newarr = [];
+    const applicantList = this.arrayOfExcelData[this.selectedCategory].subCatList[this.selectedSubCategory].schemeList[this.selectedClientIndex].applicantList;
+    const newarr = [];
     applicantList.forEach(element => {
       newarr.push({
         field1: element.name,
@@ -515,12 +525,12 @@ export class CategoryWiseComponent implements OnInit {
         field4: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
         field5: element.weightInPerc,
       });
-    })
+    });
     ExcelMisService.exportExcel(this.arrayOfHeaderStyles[3], this.arrayOfHeaders[3], newarr, [], 'MIS Report - Category Wise AUM', this.applicantWiseTotalArr);
   }
 
   schemeWiseExcelSheet(catIndex, subCatIndex) {
-    let copyOfExcelData = JSON.parse(JSON.stringify(this.arrayOfExcelData));
+    const copyOfExcelData = JSON.parse(JSON.stringify(this.arrayOfExcelData));
 
     copyOfExcelData.forEach((element, index1) => {
       if (index1 === catIndex) {
@@ -534,8 +544,8 @@ export class CategoryWiseComponent implements OnInit {
       }
     });
 
-    let arrayOfExcelHeaders = this.arrayOfHeaders.slice();
-    let arrayOfExcelStyles = this.arrayOfHeaderStyles.slice();
+    const arrayOfExcelHeaders = this.arrayOfHeaders.slice();
+    const arrayOfExcelStyles = this.arrayOfHeaderStyles.slice();
     arrayOfExcelStyles.shift();
     arrayOfExcelStyles.shift();
     arrayOfExcelHeaders.shift();

@@ -4,7 +4,7 @@
 import {ElementRef, Injectable, Input, OnDestroy} from '@angular/core';
 import {DatePipe, DecimalPipe} from '@angular/common';
 import {EventService} from '../Data-service/event.service';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {SubscriptionService} from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
 import {FormGroup} from '@angular/forms';
 import {BehaviorSubject, Subject} from 'rxjs';
@@ -195,6 +195,14 @@ export class UtilService {
 
   static obfuscateMobile(mobileNo: string) {
     return mobileNo.substr(0, 2) + 'XXXXX' + mobileNo.substr(7, 9);
+  }
+
+  public static getHttpParam(data) {
+    let httpParams = new HttpParams();
+    for (const key of Object.keys(data)) {
+      httpParams = httpParams.set(key, data[key]);
+    }
+    return httpParams;
   }
 
   setSubscriptionStepData(data) {
@@ -630,11 +638,12 @@ export function escapeRegExp(s: string): string {
  * @callback setFunctionToExeOnZero:- sets the callback you'd like to execute once counter reaches 0
  */
 export class LoaderFunction implements OnDestroy {
-  private apiDebounceSubject: Subject<any> = new Subject()
 
   public get loading() {
     return this.isLoading;
   }
+
+  private apiDebounceSubject: Subject<any> = new Subject()
 
   private counter = 0;
   private isLoading = false;
