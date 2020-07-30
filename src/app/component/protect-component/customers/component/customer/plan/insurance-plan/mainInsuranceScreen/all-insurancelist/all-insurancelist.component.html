@@ -1,5 +1,5 @@
 <div id="ui-planinsurance">
-    <div class="row">
+    <div class="row" *ngIf="showIsurance == true">
         <div class="col-width-21 br-grey zIndex2 pb-44">
             <div class="row insuListFixedHeader pt-20 pb-10 bb-grey">
                 <div class="col-md-5 p-0">
@@ -27,8 +27,8 @@
                                     <img src={{insurance.logo}}>
                                 </div>
                                 <div class="col-md-9 pl-10 pr-0">
-                                    <p class="m-0 text-black roboto">{{insurance.familyMem}}</p>
-                                    <p class="m-0 text-black roboto pt-16"><span class="f-500">Advice: </span> {{insurance.advice}}
+                                    <p class="m-0 text-black roboto">{{insurance.holderName}}</p>
+                                    <p class="m-0 text-black roboto pt-16"><span class="f-500">Advice: </span> {{insurance.adviceAmount}}
                                     </p>
                                 </div>
                             </div>
@@ -41,6 +41,8 @@
 
 
         <!-- Life insurance - Rahul Jain -->
-        <app-life-insurance class="col-width-79 pb-44" [data]='detailsInsurance'></app-life-insurance>
+        
+            <app-life-insurance class="col-width-79 pb-44" [data]='detailsInsurance'></app-life-insurance>
+        
     </div>
 </div>

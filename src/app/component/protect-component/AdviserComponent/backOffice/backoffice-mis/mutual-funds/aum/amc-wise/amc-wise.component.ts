@@ -315,6 +315,11 @@ export class AmcWiseComponent implements OnInit {
   excelInitAmcList() {
     let sumAumTotal = 0;
     let sumWeightInPercTotal = 0;
+    let totalAumObj: any = {};
+    if (this.data && this.data.totalAumObj) {
+      totalAumObj = this.data.totalAumObj;
+      this.amcWiseTotal = ['Total', '', totalAumObj.totalAum, 100];
+    }
     this.amcList.forEach((element, index1) => {
       this.arrayOfExcelData.push({
         index: index1 + 1,
@@ -326,8 +331,10 @@ export class AmcWiseComponent implements OnInit {
       sumAumTotal += element.totalAum;
       sumWeightInPercTotal += element.weightInPercentage;
     });
-    this.amcWiseTotal = ['Total', '', sumAumTotal, sumWeightInPercTotal];
 
+    console.log('totalAumObj : ', totalAumObj);
+    console.log('sumAumTotal : ', sumAumTotal);
+    console.log('sumWeightInPercTotal : ', sumWeightInPercTotal);
   }
 
   getReponseAmcWiseGet(data) {
@@ -340,6 +347,16 @@ export class AmcWiseComponent implements OnInit {
         this.totalCurrentValue += o.totalAum;
         this.totalWeight += o.weightInPercentage;
       });
+
+      let totalAumObj: any = {};
+      if (this.data && this.data.totalAumObj) {
+        totalAumObj = this.data.totalAumObj;
+        console.log('totalAumObj : ', totalAumObj);
+        console.log('sumAumTotal : ', this.totalCurrentValue);
+        console.log('sumWeightInPercTotal : ', this.totalWeight);
+        this.totalCurrentValue = totalAumObj.totalAum;
+        this.totalWeight = 100;
+      }
     } else {
       this.amcList = [];
     }

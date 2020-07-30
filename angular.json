@@ -76,7 +76,9 @@
                   "maximumWarning": "2mb",
                   "maximumError": "8mb"
                 }
-              ]
+              ],
+              "serviceWorker": true,
+              "ngswConfigPath": "ngsw-config.json"
             },
             "devifanow": {
               "fileReplacements": [
