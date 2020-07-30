@@ -193,10 +193,16 @@ export class PlanService {
   getLifeInuranceNeedAnalysis(data){
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_LIFE_NEED_ANALYSIS, data);
   }
-  getLifeInsuranceAnalysisMapToPlan(data){
-    return this.http.put(apiConfig.MAIN_URL + appConfig.GET_LIFE_NEED_ANALYSIS_MAP, data);
+  addLifeInsuranceAnalysisMapToPlan(data){
+    return this.http.put(apiConfig.MAIN_URL + appConfig.ADD_LIFE_NEED_ANALYSIS_MAP, data);
   }
   saveLifeInsuranceAnalysis(data){
     return this.http.put(apiConfig.MAIN_URL + appConfig.LIFE_ANALYSIS_ADD, data);
+  }
+  removeLifeInsuranceAnalysisMapToPlan(data){
+    return this.http.put(apiConfig.MAIN_URL + appConfig.REMOVE_LIFE_NEED_ANALYSIS_MAP, data);
+  }
+  getDetailsInsurance(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DETAILED_INSURANCE, data);
   }
 }

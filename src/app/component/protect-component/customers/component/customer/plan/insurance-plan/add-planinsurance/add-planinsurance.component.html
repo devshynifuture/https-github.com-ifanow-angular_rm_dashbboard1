@@ -12,10 +12,24 @@
 </div>
 
 <div class="pt-80 pl-24 pr-24 pb-48 mb-48">
-
-    <button mat-stroked-button class="btn-primary br-0 right">ADD TO PLAN</button>
+    <div *ngIf="tab == 1">
+        <app-progress-button *ngIf="manualObj && manualObj.isMapped == 1" class=".btn-danger br-0 right"
+            (btnClick)="removeToPlan()" [options]="barButtonOptions2">
+        </app-progress-button>
+        <app-progress-button *ngIf="manualObj && manualObj.isMapped == 0" class="btn-primary br-0 right"
+            (btnClick)="addToPlan()" [options]="barButtonOptions">
+        </app-progress-button>
+    </div>
+    <div *ngIf="tab == 0">
+        <app-progress-button *ngIf="needBase && needBase.isMapped == 1" class=".btn-danger br-0 right"
+             [options]="barButtonOptions2">
+        </app-progress-button>
+        <app-progress-button *ngIf="needBase && needBase.isMapped == 0" class="btn-primary br-0 right"
+             [options]="barButtonOptions">
+        </app-progress-button>
+    </div>
     <!-- <button mat-stroked-button class="btn-danger text-white right">REMOVE FROM PLAN</button> -->
-    <mat-tab-group class="tabView">
+    <mat-tab-group class="tabView" (selectedTabChange)="tabChanged($event)">
 
         <mat-tab class="f-14 f-500 roboto" label="Needs based">
             <div class="row bg-grey lter p-9 ba-light pl-0 pr-0 bb">
@@ -403,13 +417,28 @@
         </mat-tab>
 
         <mat-tab class="f-14 f-500 roboto" label="Manual">
-            <div class="row">
-                <div class="col-md-4">
-
-                    <h5 class="m-0">Suggest insurance amount</h5>
-                    <div class="form-group mb-0">
+            <div [formGroup]="manualForm">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h5 class="m-0">Suggest insurance amount</h5>
+                        <div class="form-group mb-0">
+                            <mat-form-field>
+                                <input matInput class="form-control br-0 rupess" formControlName="insuranceAmount">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="row pt-20">
+                    <div class="col-md-11 p-0">
+                        Planner notes
+                    </div>
+                    <div class="col-md-1 text-right">
+                        <mat-icon _ngcontent-jrn-c337="" aria-hidden="true" role="img"
+                            class="mat-icon notranslate material-icons mat-icon-no-color">more_vert</mat-icon>
+                    </div>
+                    <div class="col-md-12 p-0">
                         <mat-form-field>
-                            <input matInput class="form-control br-0 rupess">
+                            <input matInput class="form-control br-0" formControlName="plannerNote">
                         </mat-form-field>
                     </div>
                 </div>
