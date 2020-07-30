@@ -9,7 +9,7 @@ import {Subscription} from 'rxjs';
 import {EnumServiceService} from 'src/app/services/enum-service.service';
 import {EnumDataService} from 'src/app/services/enum-data.service';
 import {UtilService} from 'src/app/services/util.service';
-import {element} from "protractor";
+import {element} from 'protractor';
 
 @Component({
   selector: 'app-portfolio-summary',
@@ -107,6 +107,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
     this.calculateTotalSummaryValues();
+    this.getAssetAllocationSummary();
     this.subscribeToCashflowChanges();
     this.cashFlowDescNaming = this.enumService.getAssetNamings();
   }
@@ -192,7 +193,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     };
     this.cusService.getAssetAllocationSummary(obj).subscribe(
       data => {
-        console.log(data);
+        console.log('getAssetAllocationSummary data: ', data);
         this.pieChart('piechartMutualFund', data);
       },
       err => {
@@ -210,7 +211,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
         this.graphList = [];
         let sortedDateList = [];
         sortedDateList = data;
-        sortedDateList.sort(function (a, b) {
+        sortedDateList.sort(function(a, b) {
           return a.targetDate - b.targetDate;
         });
         this.calculate1DayAnd90Days(sortedDateList);
@@ -419,6 +420,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
   dateChange(event) {
     this.asOnDate = new Date(event.value).getTime();
     this.calculateTotalSummaryValues();
+    this.getAssetAllocationSummary();
   }
 
   cashFlow(id, data) {
@@ -540,13 +542,17 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
   pieChart(id, data) {
     const dataSeriesList = [];
     let totalValue = 0;
+    // data = data.filter(element => {
+    //   totalValue += element.currentValue;
+    //   return element.assetType != 2;
+    // });
     data = data.filter(element => {
       totalValue += element.currentValue;
-      return element.assetType != 2;
+      return element.currentValue != 0;
     });
-    data = data.filter(element => element.currentValue != 0);
-    data.forEach(element => {
-    });
+    // data.forEach(element => {
+    //   totalValue += element.currentValue;
+    // });
     data.forEach(element => {
       // const totalAssetData = totalValue;
       const dividedValue = element.currentValue / totalValue;

@@ -1,13 +1,13 @@
-import { Component, OnInit, ViewChildren, EventEmitter, Output, Input } from '@angular/core';
-import { SipComponent } from '../sip.component';
-import { BackOfficeService } from '../../../../back-office.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { FormatNumberDirective } from 'src/app/format-number.directive';
-import { ExcelMisSipService } from '../../aum/excel-mis-sip.service';
-import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
-import { FormBuilder } from '@angular/forms';
-import { EventService } from 'src/app/Data-service/event.service';
-import { DatePipe } from '@angular/common';
+import {Component, OnInit, ViewChildren, EventEmitter, Output, Input} from '@angular/core';
+import {SipComponent} from '../sip.component';
+import {BackOfficeService} from '../../../../back-office.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {FormatNumberDirective} from 'src/app/format-number.directive';
+import {ExcelMisSipService} from '../../aum/excel-mis-sip.service';
+import {MfServiceService} from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
+import {FormBuilder} from '@angular/forms';
+import {EventService} from 'src/app/Data-service/event.service';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-sip-scheme-wise',
@@ -84,38 +84,38 @@ export class SipSchemeWiseComponent implements OnInit {
 
   arrayOfHeaderStyles: { width: number; key: string; }[][] = [
     [
-      { width: 10, key: 'Sr. No.' },
-      { width: 50, key: 'AMC Name' },
-      { width: 30, key: 'SIP Amount' },
-      { width: 30, key: 'SIP Count' },
-      { width: 10, key: '% Weight' }
+      {width: 10, key: 'Sr. No.'},
+      {width: 50, key: 'AMC Name'},
+      {width: 30, key: 'SIP Amount'},
+      {width: 30, key: 'SIP Count'},
+      {width: 10, key: '% Weight'}
     ],
     [
-      { width: 10, key: 'Sr. No.' },
-      { width: 50, key: 'Investor Name' },
-      { width: 30, key: 'SIP Amount' },
-      { width: 30, key: 'SIP Count' },
-      { width: 10, key: '% Weight' }
+      {width: 10, key: 'Sr. No.'},
+      {width: 50, key: 'Investor Name'},
+      {width: 30, key: 'SIP Amount'},
+      {width: 30, key: 'SIP Count'},
+      {width: 10, key: '% Weight'}
     ],
     [
-      { width: 10, key: 'Sr. No.' },
-      { width: 40, key: 'Applicant Name' },
-      { width: 50, key: 'Scheme Name' },
-      { width: 40, key: 'Folio Number' },
-      { width: 40, key: 'Registered Date' },
-      { width: 40, key: 'From Date' },
-      { width: 40, key: 'To Date' },
-      { width: 30, key: 'Trigger Day' },
-      { width: 30, key: 'Frequency' },
-      { width: 30, key: 'Amount' },
-      { width: 10, key: '% Weight' },
+      {width: 10, key: 'Sr. No.'},
+      {width: 40, key: 'Applicant Name'},
+      {width: 50, key: 'Scheme Name'},
+      {width: 40, key: 'Folio Number'},
+      {width: 40, key: 'Registered Date'},
+      {width: 40, key: 'From Date'},
+      {width: 40, key: 'To Date'},
+      {width: 30, key: 'Trigger Day'},
+      {width: 30, key: 'Frequency'},
+      {width: 30, key: 'Amount'},
+      {width: 10, key: '% Weight'},
     ],
     [
-      { width: 50, key: 'Applicant Name' },
-      { width: 30, key: 'Balance Unit' },
-      { width: 30, key: 'Folio' },
-      { width: 30, key: 'Current Amount' },
-      { width: 10, key: '% Weight' },
+      {width: 50, key: 'Applicant Name'},
+      {width: 30, key: 'Balance Unit'},
+      {width: 30, key: 'Folio'},
+      {width: 30, key: 'Current Amount'},
+      {width: 10, key: '% Weight'},
     ]
   ];
   arrayOfExcelData: any[] = [];
@@ -131,7 +131,8 @@ export class SipSchemeWiseComponent implements OnInit {
   arnRiaList;
   arnRiaValue;
 
-  constructor(private datePipe: DatePipe, private eventService: EventService, private backoffice: BackOfficeService, private fb: FormBuilder, public sip: SipComponent, private mfService: MfServiceService) { }
+  constructor(private datePipe: DatePipe, private eventService: EventService, private backoffice: BackOfficeService, private fb: FormBuilder, public sip: SipComponent, private mfService: MfServiceService) {
+  }
 
   ngOnInit() {
     this.caesedForm = this.fb.group({
@@ -179,6 +180,7 @@ export class SipSchemeWiseComponent implements OnInit {
     }
     this.getSchemeWiseGet();
   }
+
   sortBy(applicant, propertyName) {
     this.propertyName = propertyName;
     this.reverse = (propertyName !== null && this.propertyName === propertyName) ? !this.reverse : false;
@@ -192,6 +194,7 @@ export class SipSchemeWiseComponent implements OnInit {
       );
     }
   }
+
   sortByInvestor(applicant, propertyName) {
     this.propertyName2 = propertyName;
     this.reverse2 = (propertyName !== null && this.propertyName2 === propertyName) ? !this.reverse2 : false;
@@ -205,6 +208,7 @@ export class SipSchemeWiseComponent implements OnInit {
       );
     }
   }
+
   sortByApplicant(applicant, propertyName) {
     this.propertyName3 = propertyName;
     this.reverse3 = (propertyName !== null && this.propertyName3 === propertyName) ? !this.reverse3 : false;
@@ -218,6 +222,7 @@ export class SipSchemeWiseComponent implements OnInit {
       );
     }
   }
+
   aumReport() {
     this.changedValue.emit(true);
     //  this.sip.sipComponent=true;
@@ -225,6 +230,7 @@ export class SipSchemeWiseComponent implements OnInit {
       element.showCategory = true;
     });
   }
+
   getSchemeWiseGet() {
     this.arrayOfExcelData = [];
     this.isLoading = true;
@@ -242,6 +248,7 @@ export class SipSchemeWiseComponent implements OnInit {
       }
     );
   }
+
   addCeasesdDate(sip, investor, date) {
     const obj = {
       id: sip.id,
@@ -261,6 +268,7 @@ export class SipSchemeWiseComponent implements OnInit {
     );
 
   }
+
   getSchemeWiseRes(data) {
     this.isLoading = false;
     if (data) {
@@ -281,9 +289,10 @@ export class SipSchemeWiseComponent implements OnInit {
 
     this.showLoader = false;
   }
+
   filterArray() {
     // No users, empty list.
-    if (!this.category.length) {
+    if (this.category && this.category.length == 0) {
       this.filteredArray = [];
       return;
     }
@@ -308,9 +317,11 @@ export class SipSchemeWiseComponent implements OnInit {
     });
 
   }
+
   preventDefault(e) {
     e.preventDefault();
   }
+
   showSubTableList(index, category, schemeData) {
     schemeData.showCategory = !schemeData.showCategory;
     if (schemeData.showCategory == false) {
@@ -375,6 +386,7 @@ export class SipSchemeWiseComponent implements OnInit {
         break;
     }
   }
+
   appendingOfValuesInExcel(iterable, index, choice) {
     let sumAmtTotal = 0;
     let sumWeightInPercTotal = 0;
@@ -438,6 +450,7 @@ export class SipSchemeWiseComponent implements OnInit {
     }
     console.log(this.arrayOfExcelData);
   }
+
   showSchemeName(index, subcashowSubcat, ApplicantData) {
     ApplicantData.showSubCategory = !ApplicantData.showSubCategory;
     if (ApplicantData.showSubCategory == false) {
@@ -483,6 +496,7 @@ export class SipSchemeWiseComponent implements OnInit {
       }
     }
   }
+
   excelInitClientList() {
     let data = {};
     let sumAmtTotal = 0;
@@ -502,6 +516,7 @@ export class SipSchemeWiseComponent implements OnInit {
     });
     this.amcTotalList = ['Total', '', '', sumAmtTotal, sumWeightInPercTotal];
   }
+
   exportToExcelSheet(choice, catIndex, investorIndex) {
     switch (choice) {
       case 'scheme-wise':
@@ -524,6 +539,7 @@ export class SipSchemeWiseComponent implements OnInit {
       schemeList: false
     }, this.amcTotalList);
   }
+
   investorWiseExcelSheet(index) {
     const copyOfExcelData = JSON.parse(JSON.stringify(this.arrayOfExcelData));
     copyOfExcelData.forEach((element, index1) => {
@@ -546,6 +562,7 @@ export class SipSchemeWiseComponent implements OnInit {
       schemeList: false
     }, this.investorTotalList);
   }
+
   applicantWiseExcelReport(index, amcIndex) {
     const applicantList = this.arrayOfExcelData[this.selectedCategory].subCatList[this.selectedCategoryApp].schemeList;
     const newarr = [];

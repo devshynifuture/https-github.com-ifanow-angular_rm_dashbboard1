@@ -1,13 +1,14 @@
-import { Component, OnInit, ViewChildren, Output, EventEmitter, Input } from '@angular/core';
-import { BackOfficeService } from '../../../../back-office.service';
-import { SipComponent } from '../sip.component';
-import { AuthService } from 'src/app/auth-service/authService';
-import { FormatNumberDirective } from 'src/app/format-number.directive';
-import { ExcelMisSipService } from '../../aum/excel-mis-sip.service';
-import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
-import { FormBuilder } from '@angular/forms';
-import { EventService } from 'src/app/Data-service/event.service';
-import { DatePipe } from '@angular/common';
+import {Component, OnInit, ViewChildren, Output, EventEmitter, Input} from '@angular/core';
+import {BackOfficeService} from '../../../../back-office.service';
+import {SipComponent} from '../sip.component';
+import {AuthService} from 'src/app/auth-service/authService';
+import {FormatNumberDirective} from 'src/app/format-number.directive';
+import {ExcelMisSipService} from '../../aum/excel-mis-sip.service';
+import {MfServiceService} from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
+import {FormBuilder} from '@angular/forms';
+import {EventService} from 'src/app/Data-service/event.service';
+import {DatePipe} from '@angular/common';
+
 @Component({
   selector: 'app-sip-amc-wise',
   templateUrl: './sip-amc-wise.component.html',
@@ -49,7 +50,10 @@ export class SipAmcWiseComponent implements OnInit {
   arnRiaList: any = [];
   arnRiaValue: any;
   viewMode: any;
-  constructor(private datePipe: DatePipe, private eventService: EventService, private backoffice: BackOfficeService, public sip: SipComponent, private fb: FormBuilder, private mfService: MfServiceService) { }
+
+  constructor(private datePipe: DatePipe, private eventService: EventService, private backoffice: BackOfficeService, public sip: SipComponent, private fb: FormBuilder, private mfService: MfServiceService) {
+  }
+
   teamMemberId = 2929;
   @Output() changedValue = new EventEmitter();
   @Input() data;
@@ -98,38 +102,38 @@ export class SipAmcWiseComponent implements OnInit {
   ];
   arrayOfHeaderStyles: { width: number; key: string; }[][] = [
     [
-      { width: 10, key: 'Sr. No.' },
-      { width: 50, key: 'AMC Name' },
-      { width: 30, key: 'SIP Amount' },
-      { width: 30, key: 'SIP Count' },
-      { width: 10, key: '% Weight' }
+      {width: 10, key: 'Sr. No.'},
+      {width: 50, key: 'AMC Name'},
+      {width: 30, key: 'SIP Amount'},
+      {width: 30, key: 'SIP Count'},
+      {width: 10, key: '% Weight'}
     ],
     [
-      { width: 10, key: 'Sr. No.' },
-      { width: 50, key: 'Scheme Name' },
-      { width: 30, key: 'SIP Amount' },
-      { width: 30, key: 'SIP Count' },
-      { width: 10, key: '% Weight' }
+      {width: 10, key: 'Sr. No.'},
+      {width: 50, key: 'Scheme Name'},
+      {width: 30, key: 'SIP Amount'},
+      {width: 30, key: 'SIP Count'},
+      {width: 10, key: '% Weight'}
     ],
     [
-      { width: 10, key: 'Sr. No.' },
-      { width: 50, key: 'Investor Name' },
-      { width: 30, key: 'SIP Amount' },
-      { width: 30, key: 'SIP Count' },
-      { width: 10, key: '% Weight' }
+      {width: 10, key: 'Sr. No.'},
+      {width: 50, key: 'Investor Name'},
+      {width: 30, key: 'SIP Amount'},
+      {width: 30, key: 'SIP Count'},
+      {width: 10, key: '% Weight'}
     ],
     [
-      { width: 10, key: 'Sr. No.' },
-      { width: 40, key: 'Applicant Name' },
-      { width: 50, key: 'Scheme Name' },
-      { width: 40, key: 'Folio Number' },
-      { width: 45, key: 'Registered Date' },
-      { width: 45, key: 'From Date' },
-      { width: 45, key: 'To Date' },
-      { width: 30, key: 'Trigger Day' },
-      { width: 30, key: 'Frequency' },
-      { width: 30, key: 'Amount' },
-      { width: 10, key: '% Weight' },
+      {width: 10, key: 'Sr. No.'},
+      {width: 40, key: 'Applicant Name'},
+      {width: 50, key: 'Scheme Name'},
+      {width: 40, key: 'Folio Number'},
+      {width: 45, key: 'Registered Date'},
+      {width: 45, key: 'From Date'},
+      {width: 45, key: 'To Date'},
+      {width: 30, key: 'Trigger Day'},
+      {width: 30, key: 'Frequency'},
+      {width: 30, key: 'Amount'},
+      {width: 10, key: '% Weight'},
     ]
   ];
   arrayOfExcelData: any[] = [];
@@ -182,7 +186,7 @@ export class SipAmcWiseComponent implements OnInit {
 
   filterArray() {
     // No users, empty list.
-    if (!this.amcList.length) {
+    if (this.amcList && this.amcList.length == 0) {
       this.filteredArray = [];
       return;
     }
@@ -207,6 +211,7 @@ export class SipAmcWiseComponent implements OnInit {
     });
 
   }
+
   sortBy(applicant, propertyName) {
     this.propertyName = propertyName;
     this.reverse = (propertyName !== null && this.propertyName === propertyName) ? !this.reverse : false;
@@ -220,6 +225,7 @@ export class SipAmcWiseComponent implements OnInit {
       );
     }
   }
+
   sortByScheme(applicant, propertyName) {
     this.propertyName2 = propertyName;
     this.reverse2 = (propertyName !== null && this.propertyName2 === propertyName) ? !this.reverse2 : false;
@@ -233,6 +239,7 @@ export class SipAmcWiseComponent implements OnInit {
       );
     }
   }
+
   sortByInvestor(applicant, propertyName) {
     this.propertyName3 = propertyName;
     this.reverse3 = (propertyName !== null && this.propertyName3 === propertyName) ? !this.reverse3 : false;
@@ -246,6 +253,7 @@ export class SipAmcWiseComponent implements OnInit {
       );
     }
   }
+
   sortByApplicant(applicant, propertyName) {
     this.propertyName4 = propertyName;
     this.reverse4 = (propertyName !== null && this.propertyName4 === propertyName) ? !this.reverse4 : false;
@@ -259,6 +267,7 @@ export class SipAmcWiseComponent implements OnInit {
       );
     }
   }
+
   aumReport() {
     this.changedValue.emit(true);
     this.filteredArray.forEach(element => {
@@ -266,6 +275,7 @@ export class SipAmcWiseComponent implements OnInit {
     });
     //  this.sip.sipComponent=true;
   }
+
   amcGet() {
     this.arrayOfExcelData = [];
     this.isLoading = true;
@@ -302,6 +312,7 @@ export class SipAmcWiseComponent implements OnInit {
       }
     );
   }
+
   showSubTableList(index, category, schemeData) {
 
     schemeData.showCategory = !schemeData.showCategory;
@@ -353,6 +364,7 @@ export class SipAmcWiseComponent implements OnInit {
       }
     }
   }
+
   removeValuesFromExcel(whichList, clientIndex) {
 
     switch (whichList) {
@@ -367,6 +379,7 @@ export class SipAmcWiseComponent implements OnInit {
         break;
     }
   }
+
   addCeasesdDate(sip, investor, date) {
     const obj = {
       id: sip.id,
@@ -386,6 +399,7 @@ export class SipAmcWiseComponent implements OnInit {
     );
 
   }
+
   appendingOfValuesInExcel(iterable, index, choice) {
     let sumWeightInPerc = 0;
     let sumSipAmount = 0;
@@ -523,9 +537,11 @@ export class SipAmcWiseComponent implements OnInit {
       }
     }
   }
+
   preventDefault(e) {
     e.preventDefault();
   }
+
   showApplicantName(index, subcashowSubcat, applicantData) {
     this.selectedSubCategory = subcashowSubcat;
     applicantData.showInvestor = !applicantData.showInvestor;
@@ -571,19 +587,20 @@ export class SipAmcWiseComponent implements OnInit {
       this.removeValuesFromExcel('applicant', index);
     }
   }
- /* schemeInvestorGet() {
-    const obj = {
-      advisorId: (this.parentId == this.advisorId) ? 0 : (this.data.arnRiaId != -1) ? 0 : [this.data.adminAdvisorIds],
-      arnRiaDetailsId: (this.data) ? this.data.arnRiaId : -1,
-      parentId: (this.data) ? this.data.parentId : -1,
-      schemeId: 122,
-      sipAmount: 5000,
-    }
-    this.backoffice.GET_SIP_INVERSTORS(obj).subscribe(
-      data => {
-      }
-    )
-  }*/
+
+  /* schemeInvestorGet() {
+     const obj = {
+       advisorId: (this.parentId == this.advisorId) ? 0 : (this.data.arnRiaId != -1) ? 0 : [this.data.adminAdvisorIds],
+       arnRiaDetailsId: (this.data) ? this.data.arnRiaId : -1,
+       parentId: (this.data) ? this.data.parentId : -1,
+       schemeId: 122,
+       sipAmount: 5000,
+     }
+     this.backoffice.GET_SIP_INVERSTORS(obj).subscribe(
+       data => {
+       }
+     )
+   }*/
   // amcSchemeGet() {
   //   const obj = {
   //     amcId: 123,
@@ -628,6 +645,7 @@ export class SipAmcWiseComponent implements OnInit {
     }
 
   }
+
   amcWiseExcelReport() {
     ExcelMisSipService.exportExcel2(this.arrayOfHeaders, this.arrayOfHeaderStyles, this.arrayOfExcelData, 'MIS report - AMC wise SIP', 'amc-wise-aum-mis', {
       amcList: false,
@@ -636,6 +654,7 @@ export class SipAmcWiseComponent implements OnInit {
       applicantList: false
     }, this.amcWiseTotal);
   }
+
   schemeWiseExcelReport(catIndex) {
     const copyOfExcelData = JSON.parse(JSON.stringify(this.arrayOfExcelData));
 
@@ -659,6 +678,7 @@ export class SipAmcWiseComponent implements OnInit {
       applicantList: false
     }, this.schemeWiseTotal);
   }
+
   investorWiseExcelSheet(catIndex, subCatIndex) {
     const copyOfExcelData = JSON.parse(JSON.stringify(this.arrayOfExcelData));
     copyOfExcelData.forEach((element, index1) => {

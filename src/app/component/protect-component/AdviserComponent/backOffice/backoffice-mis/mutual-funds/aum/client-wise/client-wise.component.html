@@ -148,12 +148,12 @@
                         <td>
                           <div [ngClass]="{'bar': isLoadingInvestor}">
                             {{isLoadingInvestor ? ' ' : '₹ '}}<span appFormatNumber
-                              *ngIf="!isLoadingInvestor">{{isLoadingInvestor ? '' : name.totalAum}}</span>
+                              *ngIf="!isLoadingInvestor">{{isLoadingInvestor ? '' : investor.totalAum}}</span>
                           </div>
                         </td>
                         <td>
                           <div [ngClass]="{'bar': isLoadingInvestor}">
-                            {{(isLoadingInvestor) ? '' : (name.weightInPercentage | number:'1.2-2')}}{{(isLoadingInvestor) ? '' : '%'}}
+                            {{(isLoadingInvestor) ? '' : (investor.weightInPercentage | number:'1.2-2')}}{{(isLoadingInvestor) ? '' : '%'}}
                           </div>
                         </td>
                         <td (click)="getSchemeName(investor, investorIndex, clientIndex)">

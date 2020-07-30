@@ -1,13 +1,14 @@
-import { Component, OnInit, ViewChildren, Output, EventEmitter, Input } from '@angular/core';
-import { BackOfficeService } from '../../../../back-office.service';
-import { SipComponent } from '../sip.component';
-import { AuthService } from 'src/app/auth-service/authService';
-import { FormatNumberDirective } from 'src/app/format-number.directive';
-import { ExcelMisSipService } from '../../aum/excel-mis-sip.service';
-import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
-import { FormBuilder } from '@angular/forms';
-import { DatePipe } from '@angular/common';
-import { EventService } from 'src/app/Data-service/event.service';
+import {Component, OnInit, ViewChildren, Output, EventEmitter, Input} from '@angular/core';
+import {BackOfficeService} from '../../../../back-office.service';
+import {SipComponent} from '../sip.component';
+import {AuthService} from 'src/app/auth-service/authService';
+import {FormatNumberDirective} from 'src/app/format-number.directive';
+import {ExcelMisSipService} from '../../aum/excel-mis-sip.service';
+import {MfServiceService} from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
+import {FormBuilder} from '@angular/forms';
+import {DatePipe} from '@angular/common';
+import {EventService} from 'src/app/Data-service/event.service';
+
 @Component({
   selector: 'app-sip-client-wise',
   templateUrl: './sip-client-wise.component.html',
@@ -22,7 +23,7 @@ export class SipClientWiseComponent implements OnInit {
   @ViewChildren(FormatNumberDirective) formatNumber;
   totalOfSipAmount = 0;
   totalOfSipCount = 0;
-  totalWeight = 0
+  totalWeight = 0;
   clientFilter: any;
   filteredArray: any[];
   isLoading = false;
@@ -60,23 +61,23 @@ export class SipClientWiseComponent implements OnInit {
   ];
   arrayOfHeaderStyles: any[][] = [
     [
-      { width: 10, key: 'Sr. No.' },
-      { width: 50, key: 'Client Name' },
-      { width: 30, key: 'SIP Amount' },
-      { width: 10, key: '% Weight' }
+      {width: 10, key: 'Sr. No.'},
+      {width: 50, key: 'Client Name'},
+      {width: 30, key: 'SIP Amount'},
+      {width: 10, key: '% Weight'}
     ],
     [
-      { width: 10, key: 'Sr. No.' },
-      { width: 40, key: 'Applicant Name' },
-      { width: 50, key: 'Scheme Name' },
-      { width: 40, key: 'Folio Number' },
-      { width: 40, key: 'Registered Date' },
-      { width: 40, key: 'From Date' },
-      { width: 40, key: 'To Date' },
-      { width: 30, key: 'Trigger Day' },
-      { width: 30, key: 'Frequency' },
-      { width: 30, key: 'Amount' },
-      { width: 10, key: '% Weight' },
+      {width: 10, key: 'Sr. No.'},
+      {width: 40, key: 'Applicant Name'},
+      {width: 50, key: 'Scheme Name'},
+      {width: 40, key: 'Folio Number'},
+      {width: 40, key: 'Registered Date'},
+      {width: 40, key: 'From Date'},
+      {width: 40, key: 'To Date'},
+      {width: 30, key: 'Trigger Day'},
+      {width: 30, key: 'Frequency'},
+      {width: 30, key: 'Amount'},
+      {width: 10, key: '% Weight'},
     ]
   ];
   selectedClient: any;
@@ -88,8 +89,8 @@ export class SipClientWiseComponent implements OnInit {
   arnRiaValue: any;
   viewMode: any;
 
-  constructor(private datePipe: DatePipe, private eventService: EventService, private backoffice: BackOfficeService, public sip: SipComponent, private fb: FormBuilder, private mfService: MfServiceService) { }
-
+  constructor(private datePipe: DatePipe, private eventService: EventService, private backoffice: BackOfficeService, public sip: SipComponent, private fb: FormBuilder, private mfService: MfServiceService) {
+  }
 
 
   ngOnInit() {
@@ -103,7 +104,7 @@ export class SipClientWiseComponent implements OnInit {
       this.arnRiaValue = this.data.arnRiaValue;
       this.viewMode = this.data.viewMode;
     } else {
-      this.viewMode = "All";
+      this.viewMode = 'All';
       this.arnRiaValue = -1;
     }
     this.getArnRiaList();
@@ -119,24 +120,25 @@ export class SipClientWiseComponent implements OnInit {
           const obj = {
             number: 'All',
             id: -1
-          }
+          };
           this.arnRiaList.unshift(obj);
         } else {
           // this.dataService.openSnackBar("No Arn Ria List Found", "Dismiss")
         }
       }
-    )
+    );
   }
 
   changeValueOfArnRia(item) {
     if (item.name !== 'All') {
-      this.arnRiaValue = item.id
+      this.arnRiaValue = item.id;
       this.viewMode = item.number;
     } else {
       this.arnRiaValue = -1;
     }
     this.clientWiseClientName();
   }
+
   sortBy(applicant, propertyName) {
     this.propertyName = propertyName;
     this.reverse = (propertyName !== null && this.propertyName === propertyName) ? !this.reverse : false;
@@ -150,6 +152,7 @@ export class SipClientWiseComponent implements OnInit {
       );
     }
   }
+
   sortByApplicant(applicant, propertyName) {
     this.propertyName2 = propertyName;
     this.reverse2 = (propertyName !== null && this.propertyName2 === propertyName) ? !this.reverse2 : false;
@@ -163,13 +166,15 @@ export class SipClientWiseComponent implements OnInit {
       );
     }
   }
+
   aumReport() {
     this.changedValue.emit(true);
 
     this.filteredArray.forEach(element => {
-      element.showCategory = true
+      element.showCategory = true;
     });
   }
+
   exportToExcelSheet(choice, catIndex) {
     switch (choice) {
       case 'client-wise':
@@ -180,6 +185,7 @@ export class SipClientWiseComponent implements OnInit {
         break;
     }
   }
+
   excelInitClientList() {
     let data = {};
     let sumAmtTotal = 0;
@@ -191,7 +197,7 @@ export class SipClientWiseComponent implements OnInit {
         sipAmount: this.mfService.mutualFundRoundAndFormat(element.sipAmount, 0),
         weightInPerc: element.weightInPercentage,
         investorList: [],
-      }
+      };
       sumAmtTotal += element.sipAmount;
       sumWeightInPercTotal += element.weightInPercentage;
       this.arrayOfExcelData.push(data);
@@ -207,13 +213,14 @@ export class SipClientWiseComponent implements OnInit {
       schemeFolioList: false
     }, this.clientTotalArray);
   }
+
   addCeasesdDate(sip, investor, date) {
-    var obj = {
+    const obj = {
       id: sip.id,
       mutualFundId: sip.mutualFundId,
       amount: sip.amount,
       ceaseDate: this.datePipe.transform(this.caesedForm.controls.ceaseddate.value, 'yyyy/MM/dd'),
-    }
+    };
     this.backoffice.addCeasedDate(obj).subscribe(
       data => {
         console.log(data);
@@ -223,11 +230,12 @@ export class SipClientWiseComponent implements OnInit {
       err => {
 
       }
-    )
+    );
 
   }
+
   investorWiseExcelSheet(catIndex) {
-    let copyOfExcelData = JSON.parse(JSON.stringify(this.arrayOfExcelData));
+    const copyOfExcelData = JSON.parse(JSON.stringify(this.arrayOfExcelData));
     copyOfExcelData.forEach((element, index1) => {
       if (index1 === catIndex) {
         return;
@@ -235,8 +243,8 @@ export class SipClientWiseComponent implements OnInit {
         element.investorList = [];
       }
     });
-    let arrayOfExcelHeaders = this.arrayOfHeaders.slice();
-    let arrayOfExcelStyles = this.arrayOfHeaders.slice();
+    const arrayOfExcelHeaders = this.arrayOfHeaders.slice();
+    const arrayOfExcelStyles = this.arrayOfHeaders.slice();
 
     arrayOfExcelHeaders.shift();
     arrayOfExcelStyles.shift();
@@ -248,6 +256,7 @@ export class SipClientWiseComponent implements OnInit {
       schemeFolioList: false
     });
   }
+
   removeValuesFromExcel(whichList, index) {
 
     switch (whichList) {
@@ -268,7 +277,7 @@ export class SipClientWiseComponent implements OnInit {
       advisorId: (this.parentId == this.advisorId) ? 0 : this.advisorId,
       arnRiaDetailsId: (this.data) ? this.data.arnRiaId : -1,
       parentId: (this.data) ? this.data.parentId : -1
-    }
+    };
     this.backoffice.sipClientWiseClientName(obj).subscribe(
       data => {
         this.isLoading = false;
@@ -291,11 +300,13 @@ export class SipClientWiseComponent implements OnInit {
         this.isLoading = false;
         this.filteredArray = [];
       }
-    )
+    );
   }
+
   preventDefault(e) {
     e.preventDefault();
   }
+
   appendingOfValuesInExcel(iterable, index, choice) {
     let sumAmtTotal = 0;
     let sumWeightInPercTotal = 0;
@@ -336,9 +347,10 @@ export class SipClientWiseComponent implements OnInit {
         break;
     }
   }
+
   filterArray() {
     // No users, empty list.
-    if (!this.clientList.length) {
+    if (this.clientList && this.clientList.length == 0) {
       this.filteredArray = [];
       return;
     }
@@ -363,8 +375,9 @@ export class SipClientWiseComponent implements OnInit {
     });
 
   }
+
   showSubTableList(index, category, applicantData) {
-    applicantData.showCategory = !applicantData.showCategory
+    applicantData.showCategory = !applicantData.showCategory;
     if (applicantData.showCategory == false) {
       this.isLoadingApplicant = true;
       applicantData.applicantList = [];
@@ -375,17 +388,17 @@ export class SipClientWiseComponent implements OnInit {
         advisorId: (this.parentId == this.advisorId) ? 0 : this.advisorId,
         arnRiaDetailsId: (this.data) ? this.data.arnRiaId : -1,
         parentId: (this.data) ? this.data.parentId : -1
-      }
+      };
       this.backoffice.sipClientWiseApplicant(obj).subscribe(
         data => {
-          this.isLoadingApplicant = false
+          this.isLoadingApplicant = false;
           if (data) {
             data.forEach(o => {
               o.showSubCategory = true;
               o.isEdit = false;
             });
-            applicantData.applicantList = data
-            this.applicantList = data
+            applicantData.applicantList = data;
+            this.applicantList = data;
             if (applicantData.showCategory == false) {
               this.appendingOfValuesInExcel(data, index, 'applicant');
             }
@@ -393,10 +406,10 @@ export class SipClientWiseComponent implements OnInit {
         },
         err => {
           applicantData.applicantList = [];
-          this.applicantList = []
-          this.isLoadingApplicant = false
+          this.applicantList = [];
+          this.isLoadingApplicant = false;
         }
-      )
+      );
     } else {
       this.removeValuesFromExcel('applicant', index);
     }
