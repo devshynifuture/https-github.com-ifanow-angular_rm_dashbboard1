@@ -83,7 +83,8 @@ export class MutualFundSummaryComponent implements OnInit {
   noSubBroker: boolean = false;
   noMapping: boolean;
   isAdvisorSection: boolean;
-  isClient = AuthService.getUserInfo().clientId ? true : false;
+  isClient: boolean;
+  
 
   @Input()
   set data(data) {
@@ -119,6 +120,7 @@ export class MutualFundSummaryComponent implements OnInit {
       else {
         this.advisorId = AuthService.getAdvisorId();
         this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
+        this.isClient = AuthService.getUserInfo().clientId ? true : false;
       }
     });
   }
@@ -969,8 +971,8 @@ export class MutualFundSummaryComponent implements OnInit {
         key: 'showPieChart',
         clientId: this.clientId,
         advisorId: this.advisorId,
-        fromEmail: 'devshyni@futurewise.co.in',
-        toEmail: 'futurewisejunkmail@gmail.com'
+        fromEmail: this.clientDetails.advisorData.email,
+        toEmail: this.clientData.email
       }
       let response = this.utilService.bulkHtmlToPdf(obj)
       console.log('********', response)
