@@ -1,6 +1,6 @@
 <div class="popup-header-fix-50">
-    <div class="row bb-1">
-        <div class="col-md-8 d-flex align-items-center">
+    <div class="row bb-1 pt-18 pb-16">
+        <div class="col-md-10 d-flex align-items-center f-18">
             <span *ngIf="data !== null">
                 <span class="b-primitive p-5 f-14 d-flex align-items-center br-4"
                     *ngIf="tabState === 1 && data.status !== 1"
@@ -26,10 +26,10 @@
                 Add Task
             </span>
         </div>
-        <div class="col-md-4 text-right">
-            <div class="wrapper-12">
-                <i class="material-icons c-p pt-8 v-middle" (click)="close(true)"> clear</i>
-            </div>
+        <div class="col-md-2 full-center">
+
+            <i class="material-icons c-p" (click)="close(true)"> clear</i>
+
         </div>
     </div>
 </div>
@@ -63,12 +63,12 @@
     </div>
 
     <div class="row pt-16">
-        <div class="col-md-3 pr-0 pl-30 text-left">
-            <h5 class="m-0 f-14 pt-12">Task Description</h5>
+        <div class="col-md-4 text-right">
+            <h5 class="m-0 pt-12">Task Description</h5>
         </div>
-        <div class="col-md-8 pl-0" *ngIf="!isManual">
-            <mat-form-field floatLabel="never" appearance="standard">
-                <mat-select formControlName="searchTemplateList">
+        <div class="col-md-7 pl-0 arn-ria" *ngIf="!isManual">
+            <mat-form-field floatLabel="never" appearance="standard" class="form-group">
+                <mat-select formControlName="searchTemplateList" class="form-control">
                     <mat-option [value]="item.id" *ngFor="let item of taskTemplateList" (click)="prefillValues(item)">
                         {{ item.taskDescription }}
                     </mat-option>
@@ -78,9 +78,9 @@
                 </mat-error>
             </mat-form-field>
         </div>
-        <div class="col-md-8 pl-0" *ngIf="isManual">
+        <div class="col-md-7 pl-0 arn-ria" *ngIf="isManual">
             <mat-form-field floatLabel="never" appearance="standard" class="form-group">
-                <input type="text" matInput formControlName="taskDescription" class="form-control b-a"
+                <input type="text" matInput formControlName="taskDescription" class="form-control"
                     placeholder="Enter your task description here">
                 <mat-error>
                     This field is required
@@ -89,30 +89,30 @@
         </div>
     </div>
     <div class="row pt-5">
-        <div class="col-md-6">
+        <div class="col-md-4">
         </div>
-        <div class="col-md-3">
-            <mat-checkbox (click)="makeTaskRecurring()"></mat-checkbox>
+        <div class="col-md-5 pl-0">
+            <mat-checkbox (click)="makeTaskRecurring()"></mat-checkbox> Make a Recurring Task
             <img src="/assets/images/svg/plus.svg" alt="plus icon" class="pr-5">
-            Make a Recurring Task
+
         </div>
         <div class="col-md-3" *ngIf="showManualToggle">
-            <mat-checkbox [checked]="isManual" (click)="changeFillFormState()"></mat-checkbox>
+            <mat-checkbox [checked]="isManual" (click)="changeFillFormState()"></mat-checkbox> Add Manually
             <img src="/assets/images/svg/plus.svg" alt="plus icon" class="pr-5">
-            Add Manually
+
         </div>
 
 
     </div>
 
     <div class="row pt-16" *ngIf="isRecurringTaskForm">
-        <div class="col-md-3 pr-0 text-left pl-30">
+        <div class="col-md-4 text-right">
             <h5 class="m-0 f-14 pt-12">Recurring</h5>
         </div>
 
-        <div class="col-md-4 form-group pl-0">
+        <div class="col-md-4 form-group pl-0 arn-ria">
             <mat-form-field float="never" appearance="standard">
-                <mat-select>
+                <mat-select class="form-control">
                     <mat-option None>
                         Select Frequency
                     </mat-option>
@@ -140,15 +140,15 @@
         </div>
     </div>
 
-    <div class="row pt-16">
-        <div class="col-md-3 pr-0 text-left pl-30">
-            <h5 class="m-0 f-14 pt-12">Client</h5>
+    <div class="row pt-24">
+        <div class="col-md-4 text-right">
+            <h5 class="m-0 pt-12">Client</h5>
         </div>
 
-        <div class="col-md-4 form-group pl-0">
-            <mat-form-field>
-                <input class="form-control br-0 text-left" formControlName="searchClientList" matInput
-                    placeholder="Search" aria-label="State" [matAutocomplete]="auto">
+        <div class="col-md-4 form-group pl-0 mb-0 arn-ria">
+            <mat-form-field floatLabel="never" appearance="standard">
+                <input class="form-control br-0" formControlName="searchClientList" matInput placeholder="Search"
+                    aria-label="State" [matAutocomplete]="auto">
                 <mat-autocomplete #auto="matAutocomplete">
                     <mat-option *ngFor="let singleClient of clientList | async" (click)="selectClient(singleClient)"
                         [value]="singleClient.clientId">
@@ -174,7 +174,7 @@
             </mat-form-field>
         </div>
 
-        <div class="col-md-4 form-group pl-0">
+        <div class="col-md-4 form-group pl-0 mb-0">
             <mat-form-field>
                 <mat-select class="form-control br-0" formControlName="familyMemberId">
                     <mat-option None> Select family member</mat-option>
@@ -194,12 +194,12 @@
         </div>
     </div>
 
-    <div class="row pt-16">
-        <div class="col-md-3 pr-0 text-left pl-30">
-            <h5 class="m-0 f-14 pt-12">Assigned to</h5>
+    <div class="row pt-40">
+        <div class="col-md-4 full-end">
+            <h5 class="m-0 roboto f-400">Assigned to</h5>
         </div>
 
-        <div class="col-md-4 form-group pl-0">
+        <div class="col-md-4 form-group pl-0 mb-0">
             <mat-form-field>
                 <mat-select class="form-control br-0" formControlName="assignedTo">
                     <mat-option None> Team Member</mat-option>
@@ -215,12 +215,12 @@
         </div>
     </div>
 
-    <div class="row pt-16">
-        <div class="col-md-3 pr-0 text-left pl-30">
-            <h5 class="m-0 f-14 pt-12">Due date</h5>
+    <div class="row pt-32">
+        <div class="col-md-4 text-right">
+            <h5 class="m-0 roboto f-400 pt-12">Due date</h5>
         </div>
 
-        <div class="col-md-4 form-group pl-0">
+        <div class="col-md-4 form-group pl-0 mb-0">
             <mat-form-field class="ba-date">
                 <input class="form-control br-0 b-0" formControlName="taskDueDate" (input)="preventDefault($event)"
                     (focus)="picker.open()" matInput [matDatepicker]="picker">
@@ -230,11 +230,10 @@
                     This field is required
                 </mat-error>
             </mat-form-field>
-        </div>
-
-        <div class="col-md-4 form-group pl-0">
             <p class="f-12 l-18 text-primitive">Repeats every 6 months <br> on 8th day of the month</p>
         </div>
+
+
     </div>
 
 
@@ -446,7 +445,7 @@
         <div class="col-md-3 pr-0 text-left pl-30">
             <h5 class="m-0 f-14 pt-12">Sub Task Description</h5>
         </div>
-        <div class="col-md-7">
+        <div class="col-md-7 arn-ria">
             <mat-form-field floatLabel="never" appearance="standard" class="form-group">
                 <input type="text" matInput formControlName="description" class="form-control b-a"
                     placeholder="Enter your subtask description here">
@@ -456,12 +455,12 @@
             </mat-form-field>
         </div>
     </div>
-    <div class="row pt-16">
-        <div class="col-md-3 pr-0 text-left pl-30">
-            <h5 class="m-0 f-14 pt-12">Assigned to</h5>
+    <div class="row pt-40">
+        <div class="col-md-4 full-end">
+            <h5 class="m-0 roboto f-400">Assigned to</h5>
         </div>
 
-        <div class="col-md-4 form-group pl-0">
+        <div class="col-md-4 form-group mb-0">
             <mat-form-field>
                 <mat-select class="form-control br-0" formControlName="assignedTo">
                     <mat-option None> Team Member</mat-option>
@@ -477,12 +476,12 @@
         </div>
     </div>
 
-    <div class="row pt-16">
-        <div class="col-md-3 pr-0 text-left pl-30">
-            <h5 class="m-0 f-14 pt-12">Due date</h5>
+    <div class="row pt-32">
+        <div class="col-md-4 full-end">
+            <h5 class="m-0 roboto f-400">Due date</h5>
         </div>
 
-        <div class="col-md-4 form-group pl-0">
+        <div class="col-md-4 form-group mb-0">
             <mat-form-field class="ba-date">
                 <input class="form-control br-0 b-0" formControlName="taskDueDate" (input)="preventDefault($event)"
                     (focus)="picker3.open()" matInput [matDatepicker]="picker3">
@@ -494,7 +493,7 @@
             </mat-form-field>
         </div>
 
-        <div class="col-md-4 form-group pl-0">
+        <div class="col-md-4">
             <p class="f-12 l-18 text-primitive">Repeats every 6 months <br> on 8th day of the month</p>
         </div>
     </div>
@@ -596,8 +595,8 @@
 
 <div class="bottomCommentBox bg-grey lter">
     <div class="row pt-16">
-        <div class="col-md-1 p-0 pl-30">
-            <img src="assets/images/svg/avtar-1.svg" class="c-p ml-12 avatarImg">
+        <div class="col-md-1 pl-30">
+            <img src="assets/images/svg/avtar-1.svg" class="c-p avatarImg">
         </div>
         <div class="col-md-11">
             <mat-form-field>
@@ -645,10 +644,12 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="formValidationOfTaskForm()"
                 [ngClass]="isMainLoading ? 'cur-wait': ''">
                 Create</h5>
+            <button mat-stroked-button class="btn-primary" (click)="formValidationOfTaskForm()">Basic</button>
         </div>
         <div class="col-md-4 text-right" *ngIf="tabState === 2">
             <h5 class="mb-0 pt-8 text-white c-p" (click)="editedSubTaskSave()"
                 [ngClass]="isMainLoading ? 'cur-wait': ''">Save Changes</h5>
+            <button mat-stroked-button>Save Changes</button>
         </div>
     </div>
 </div>
