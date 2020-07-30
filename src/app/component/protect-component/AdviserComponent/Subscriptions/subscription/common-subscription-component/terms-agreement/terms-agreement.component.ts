@@ -109,7 +109,8 @@ export class TermsAgreementComponent implements OnInit {
     // this.subInjectService.rightSideData(value);
     // this.valueChange.emit(this.quotationDesignE);
     // this.eventService.changeUpperSliderState({ state: 'close' ,});
-    this.subInjectService.changeUpperRightSliderState({ state: 'close', refreshRequired: true });
+    this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: false });
+
 
   }
   getDocumentPlaceholderList(data) {
