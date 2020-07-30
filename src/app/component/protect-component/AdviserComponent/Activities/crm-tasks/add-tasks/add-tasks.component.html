@@ -317,7 +317,7 @@
         </div>
     </div>
 
-    <div class="row pt-14" *ngIf="data!==null">
+    <div class="row pt-14">
         <div class="col-md-12 text-primitive f-14 pl-30" (click)="addSubTask(null)">
             <img src="assets/images/svg/plus-icon-gray.svg" class="c-p"> Add sub-task
         </div>
@@ -390,7 +390,7 @@
                     <div class="col-md-4 editDelectText text-right">
                         <a class="f-12 c-p" *ngIf="!item.editMode" (click)="toggleEditMode(item, 'task')">Edit</a>
                         <a class="f-12 pl-5 c-p" *ngIf="item.editMode"
-                            (click)="saveEditedComment(item, 'task', i, refTaskComment.value)">Save</a>
+                            (click)="saveEditedComment(item, 'task', i)">Save</a>
                         <a class="f-12 pl-5 c-p" (click)="deleteCommentTaskSubTask(item, 'task',i)">Delete</a>
                     </div>
                 </div>
@@ -400,7 +400,8 @@
                             {{  item.commentMsg }}
                         </p>
                         <p class="f-14 form-group" *ngIf="item.editMode">
-                            <input type="text" #refTaskComment class="form-control" [value]="item.commentMsg">
+                            <input type="text" [formControl]="commentTaskFC" class="form-control"
+                                [value]="item.commentMsg">
                         </p>
                     </div>
                 </div>
@@ -568,7 +569,7 @@
                     <div class="col-md-4 editDelectText text-right">
                         <a class="f-12 c-p" *ngIf="!item.editMode" (click)="toggleEditMode(item, 'subTask')">Edit</a>
                         <a class="f-12 c-p" *ngIf="item.editMode"
-                            (click)="saveEditedComment(item, 'subTask',i, refSubTaskComment.value)">Save</a>
+                            (click)="saveEditedComment(item, 'subTask',i)">Save</a>
                         <a class="f-12 c-p" (click)="deleteCommentTaskSubTask(item, 'subTask',i)">Delete</a>
                     </div>
                 </div>
@@ -577,7 +578,8 @@
                         <p class="f-14" *ngIf="!item.editMode"> {{ item.commentMsg }}
                         </p>
                         <p class="f-12 form-group" *ngIf="item.editMode">
-                            <input type="text" #refSubTaskComment class="form-control" [value]="item.commentMsg">
+                            <input type="text" [formControl]="commentSubTaskFC" class="form-control"
+                                [value]="item.commentMsg">
                         </p>
                     </div>
                 </div>
@@ -601,12 +603,13 @@
         <div class="col-md-11">
             <mat-form-field>
                 <input class="form-control bg-white br-0 text-left" matInput #commentInput type="text"
-                    [disabled]="data===null"
+                    [disabled]="data===null" matTooltip="Cannot Add Comment while creating task"
+                    [matTooltipDisabled]="data!==null"
                     (keyup.enter)="onCreateCommentTaskSubTask(commentInput.value); commentInput.value=''">
             </mat-form-field>
 
             <div class="row pt-10">
-                <div class="col-md-12 f-14 p-0">
+                <div class="col-md-12 f-14 p-0" *ngIf="data!==null">
                     Collaborators
                     <span *ngFor="let item of collaboratorList">
                         <img [src]="item.profilePicUrl" class="c-p ml-12 avatarImg" [matTooltip]="item.name"
@@ -641,15 +644,12 @@
         <div class="col-md-4">
         </div>
         <div class="col-md-4 text-right" *ngIf="tabState === 1">
-            <h5 class="mb-0 pt-8 text-white c-p" (click)="formValidationOfTaskForm()"
-                [ngClass]="isMainLoading ? 'cur-wait': ''">
-                Create</h5>
-            <button mat-stroked-button class="btn-primary" (click)="formValidationOfTaskForm()">Basic</button>
+            <button class="btn-primary text-white c-p" (click)="formValidationOfTaskForm()"
+                [ngClass]="isMainLoading ? 'cur-wait': ''" mat-stroked-button>Create</button>
         </div>
         <div class="col-md-4 text-right" *ngIf="tabState === 2">
-            <h5 class="mb-0 pt-8 text-white c-p" (click)="editedSubTaskSave()"
-                [ngClass]="isMainLoading ? 'cur-wait': ''">Save Changes</h5>
-            <button mat-stroked-button>Save Changes</button>
+            <button mat-stroked-button class="btn-primary text-white c-p" (click)="editedSubTaskSave()"
+                [ngClass]="isMainLoading ? 'cur-wait': ''">Save Changes</button>
         </div>
     </div>
 </div>

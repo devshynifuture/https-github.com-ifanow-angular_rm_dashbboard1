@@ -59,7 +59,8 @@ export class AddTasksComponent implements OnInit {
   dayOfWeek: any;
   recurringTaskFrequencyList: any;
   isRecurringTaskForm = false;
-  editCommentForm = new FormControl();
+  commentSubTaskFC = new FormControl();
+  commentTaskFC = new FormControl();
   recurringTaskFreqId: any;
   commentEditValue = '';
 
@@ -207,29 +208,39 @@ export class AddTasksComponent implements OnInit {
         });
       }
       this.subTaskAttachmentList = subTaskItem.attachments;
-      this.editSubTaskForm.patchValue({
-        description: subTaskItem.description,
-        turnAroundTime: subTaskItem.turnAroundTime,
-        assignedTo: subTaskItem.assignedTo,
-        taskDueDate: moment(subTaskItem.taskDueDate)
-      })
+      if (this.editSubTaskForm) {
+        this.editSubTaskForm.patchValue({
+          description: subTaskItem.description,
+          turnAroundTime: subTaskItem.turnAroundTime,
+          assignedTo: subTaskItem.assignedTo,
+          taskDueDate: moment(subTaskItem.taskDueDate)
+        })
+      } else {
+        this.editSubTaskForm = this.fb.group({
+          description: [subTaskItem.description, Validators.required],
+          turnAroundTime: [subTaskItem.turnAroundTime, Validators.required],
+          assignedTo: [subTaskItem.assignedTo, Validators.required],
+          taskDueDate: [moment(), Validators.required],
+        });
+      }
+
     }
     this.tabState = value;
   }
 
-  saveEditedComment(item, choice, index, value) {
+  saveEditedComment(item, choice, index) {
     let data;
     switch (choice) {
       case 'task':
         data = {
           id: item.id,
-          commentMsg: value
+          commentMsg: this.commentTaskFC.value
         }
         break;
       case 'subTask':
         data = {
           id: item.id,
-          commentMsg: value
+          commentMsg: this.commentSubTaskFC.value
         }
     }
 
@@ -238,9 +249,9 @@ export class AddTasksComponent implements OnInit {
         if (res) {
           console.log("this is edit comment rees:", res);
           switch (choice) {
-            case 'task': this.commentList[index].commentMsg = this.commentTaskInput;
+            case 'task': this.commentList[index].commentMsg = this.commentTaskFC.value;
               break;
-            case 'subTask': this.subTaskCommentList[index].commentMsg = this.commentSubTaskInput;
+            case 'subTask': this.subTaskCommentList[index].commentMsg = this.commentSubTaskFC.value;
               break;
           }
           item.editMode = false;
@@ -376,6 +387,8 @@ export class AddTasksComponent implements OnInit {
 
   toggleCheckSubTask(value, item, index) {
     console.log("this is some subtask check uncheck value", value)
+    this.subTaskList[index].isCompleted = true;
+    this.subTaskList[index].status = 1;
     this.markTaskOrSubTaskDone('subTask', item, value);
   }
 
@@ -469,11 +482,13 @@ export class AddTasksComponent implements OnInit {
         taskId: this.data.id,
         status: value == true ? 1 : 0
       }
+      this.data.status = 1;
     } else if (choice === 'subTask') {
       data = {
         subTaskId: subTaskItem.id,
         status: value == true ? 1 : 0
       }
+
     }
 
     this.crmTaskService.markTaskOrSubTaskDone(data)
@@ -615,9 +630,13 @@ export class AddTasksComponent implements OnInit {
         isCompleted: false,
         assignedTo: data.value.assignedTo,
         description: data.value.description,
-        turnAroundTime: data.value.turnAroundTime
+        turnAroundTime: data.value.turnAroundTime,
+        comments: [],
+        attachments: [],
+        status: 0
       })
     }
+    this.addTaskForm.get(`subTask.${formGroupIndex}`).reset();
   }
 
   setRecurringFreq(item) {
@@ -698,9 +717,10 @@ export class AddTasksComponent implements OnInit {
     let taskNumberForSubTask;
     if (this.subTaskList.length !== 0) {
       this.subTaskList.forEach(element => {
+        let assignedTo = this.data !== null ? element.ownerId : element.assignedTo;
         subTaskArr.push({
-          taskNumber: this.getSubTaskNumber(),        //(order of task number should be maintained)
-          assignedTo: element.ownerId,   //(same as assignedTo above)
+          taskNumber: this.getSubTaskNumber(),
+          assignedTo,
           description: element.description,
           turnAroundTime: element.turnAroundTime
         });

@@ -112,6 +112,7 @@ export class CrmTasksComponent implements OnInit {
       .subscribe(res => {
         if (res) {
           this.eventService.openSnackBar("Task Successfully Deleted!!", "DISMISS");
+          this.initPoint();
         }
       })
   }
