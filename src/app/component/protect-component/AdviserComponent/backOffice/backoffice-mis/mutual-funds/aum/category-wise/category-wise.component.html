@@ -299,7 +299,7 @@
                                                                             *ngFor="let applicant of scheme.clientList;let i = index">
                                                                             <tr>
                                                                                 <td>{{applicant.name}} </td>
-                                                                                <td>{{'₹ '}}{{applicant.balanceUnit | number:'1.2-2'}}
+                                                                                <td><!--{{'₹ '}}-->{{applicant.balanceUnit | number:'1.2-2'}}
                                                                                 </td>
                                                                                 <td>{{applicant.folioNumber}} </td>
                                                                                 <td>{{'₹ '}}<span appFormatNumber

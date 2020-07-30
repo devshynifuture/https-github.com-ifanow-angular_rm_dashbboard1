@@ -3,6 +3,7 @@ import { HttpService } from 'src/app/http-service/http-service';
 import { apiConfig } from 'src/app/config/main-config';
 import { appConfig } from 'src/app/config/component-config';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import {UtilService} from "../../../../../services/util.service";
 
 @Injectable({
   providedIn: 'root'
@@ -901,8 +902,11 @@ export class CustomerService {
   }
 
   getCashFlowList(data) {
-    let httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId).set('targetDate', data.targetDate);
-    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CASHFLOW_LIST, httpParams);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CASHFLOW_LIST, UtilService.getHttpParam(data));
+  }
+
+  getAssetAllocationSummary(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ASSET_ALLOCATION_SUMMARY_LIST, UtilService.getHttpParam(data));
   }
 
   getOutFlowValuesMonthWise(data) {

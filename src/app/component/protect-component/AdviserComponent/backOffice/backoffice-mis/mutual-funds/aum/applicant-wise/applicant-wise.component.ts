@@ -35,10 +35,10 @@ export class ApplicantWiseComponent implements OnInit {
   selectedFolio: any;
   selectedClient: any;
   selectedCat: any;
-  isLoadingCategory: boolean = false;
+  isLoadingCategory = false;
   categoryListArr: any[];
-  isLoadingSubCategory: boolean = false;
-  isLoadingScheme: boolean = false;
+  isLoadingSubCategory = false;
+  isLoadingScheme = false;
   schemeListArr: any[];
   @Input() data;
   parentId: any;
@@ -46,7 +46,9 @@ export class ApplicantWiseComponent implements OnInit {
   arnRiaList = [];
   arnRiaValue;
 
-  constructor(public aum: AumComponent, private backoffice: BackOfficeService, private mfService: MfServiceService) { }
+  constructor(public aum: AumComponent, private backoffice: BackOfficeService, private mfService: MfServiceService) {
+  }
+
   applicantName;
   showLoader = true;
   teamMemberId = 2929;
@@ -132,18 +134,19 @@ export class ApplicantWiseComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.parentId = AuthService.getParentId() ? AuthService.getParentId() : this.advisorId;
+    this.parentId = AuthService.getAdminAdvisorId();
     if (this.data.hasOwnProperty('arnRiaValue') && this.data.hasOwnProperty('viewMode')) {
       this.arnRiaValue = this.data.arnRiaValue;
       this.viewMode = this.data.viewMode;
     } else {
-      this.viewMode = "All";
+      this.viewMode = 'All';
       this.arnRiaValue = -1;
     }
 
     this.getArnRiaList();
     this.aumApplicantWiseTotalaumApplicantNameGet();
   }
+
   sortBy(applicant, propertyName) {
     this.propertyName = propertyName;
     this.reverse = (propertyName !== null && this.propertyName === propertyName) ? !this.reverse : false;
@@ -157,6 +160,7 @@ export class ApplicantWiseComponent implements OnInit {
       );
     }
   }
+
   sortByCat(applicant, propertyName) {
     this.propertyName2 = propertyName;
     this.reverse2 = (propertyName !== null && this.propertyName2 === propertyName) ? !this.reverse2 : false;
@@ -170,6 +174,7 @@ export class ApplicantWiseComponent implements OnInit {
       );
     }
   }
+
   sortBySubCat(applicant, propertyName) {
     this.propertyName3 = propertyName;
     this.reverse3 = (propertyName !== null && this.propertyName3 === propertyName) ? !this.reverse3 : false;
@@ -183,6 +188,7 @@ export class ApplicantWiseComponent implements OnInit {
       );
     }
   }
+
   sortByScheme(applicant, propertyName) {
     this.propertyName4 = propertyName;
     this.reverse4 = (propertyName !== null && this.propertyName4 === propertyName) ? !this.reverse4 : false;
@@ -196,6 +202,7 @@ export class ApplicantWiseComponent implements OnInit {
       );
     }
   }
+
   sortByBalanceUnit(applicant, propertyName) {
     this.propertyName5 = propertyName;
     this.reverse5 = (propertyName !== null && this.propertyName5 === propertyName) ? !this.reverse5 : false;
@@ -209,6 +216,7 @@ export class ApplicantWiseComponent implements OnInit {
       );
     }
   }
+
   aumApplicantWiseTotalaumApplicantNameGet() {
     this.arrayOfExcelData = [];
     this.isLoading = true;
@@ -216,17 +224,17 @@ export class ApplicantWiseComponent implements OnInit {
     this.totalWeight = 0;
     this.applicantName = [{}, {}, {}]
     const obj = {
-      advisorId: (this.parentId) ? 0 : (this.data.arnRiaDetailId != -1) ? 0 : [this.data.adminAdvisorIds],
+      advisorId: (this.parentId == this.advisorId) ? 0 : this.advisorId,
       arnRiaDetailsId: this.arnRiaValue,
       parentId: (this.data) ? this.data.parentId : -1
-    }
+    };
     this.backoffice.getAumApplicantWiseTotalaumApplicantName(obj).subscribe(
       data => this.applicantNameGet(data),
       err => {
         this.isLoading = false;
         this.applicantName = [];
       }
-    )
+    );
   }
 
   applicantWiseExcelSheet() {
@@ -236,11 +244,11 @@ export class ApplicantWiseComponent implements OnInit {
       suCategoryList: false,
       schemeList: false,
       schemeFolioList: false
-    }, this.applicantWiseTotal)
+    }, this.applicantWiseTotal);
   }
 
   categoryWiseExcelSheet(applicantIndex, catIndex) {
-    let copyOfExcelData = JSON.parse(JSON.stringify(this.arrayOfExcelData));
+    const copyOfExcelData = JSON.parse(JSON.stringify(this.arrayOfExcelData));
 
     copyOfExcelData.forEach((element, index1) => {
       if (index1 === applicantIndex) {
@@ -250,8 +258,8 @@ export class ApplicantWiseComponent implements OnInit {
       }
     });
 
-    let arrayOfExcelHeaders = this.arrayOfHeaders.slice();
-    let arrayOfExcelStyles = this.arrayOfHeaderStyles.slice();
+    const arrayOfExcelHeaders = this.arrayOfHeaders.slice();
+    const arrayOfExcelStyles = this.arrayOfHeaderStyles.slice();
     arrayOfExcelHeaders.shift();
     arrayOfExcelStyles.shift();
 
@@ -265,7 +273,7 @@ export class ApplicantWiseComponent implements OnInit {
   }
 
   subCategoryWiseExcelSheet(applicantIndex, catIndex, subCatIndex) {
-    let copyOfExcelData = JSON.parse(JSON.stringify(this.arrayOfExcelData));
+    const copyOfExcelData = JSON.parse(JSON.stringify(this.arrayOfExcelData));
 
     copyOfExcelData.forEach((element, index1) => {
       if (index1 === applicantIndex) {
@@ -278,8 +286,8 @@ export class ApplicantWiseComponent implements OnInit {
         }
       }
     });
-    let arrayOfExcelHeaders = this.arrayOfHeaders.slice();
-    let arrayOfExcelStyles = this.arrayOfHeaderStyles.slice();
+    const arrayOfExcelHeaders = this.arrayOfHeaders.slice();
+    const arrayOfExcelStyles = this.arrayOfHeaderStyles.slice();
     arrayOfExcelHeaders.shift();
     arrayOfExcelHeaders.shift();
     arrayOfExcelStyles.shift();
@@ -295,7 +303,7 @@ export class ApplicantWiseComponent implements OnInit {
   }
 
   subCatSchemeWiseExcelSheet(applicantIndex, catIndex, subCatIndex, schemeIndex) {
-    let copyOfExcelData = JSON.parse(JSON.stringify(this.arrayOfExcelData));
+    const copyOfExcelData = JSON.parse(JSON.stringify(this.arrayOfExcelData));
 
     copyOfExcelData.forEach((element, index1) => {
       if (index1 === applicantIndex) {
@@ -311,8 +319,8 @@ export class ApplicantWiseComponent implements OnInit {
       }
     });
 
-    let arrayOfExcelHeaders = this.arrayOfHeaders.slice();
-    let arrayOfExcelStyles = this.arrayOfHeaderStyles.slice();
+    const arrayOfExcelHeaders = this.arrayOfHeaders.slice();
+    const arrayOfExcelStyles = this.arrayOfHeaderStyles.slice();
     arrayOfExcelHeaders.shift();
     arrayOfExcelHeaders.shift();
     arrayOfExcelHeaders.shift();
@@ -330,8 +338,8 @@ export class ApplicantWiseComponent implements OnInit {
   }
 
   schemeWiseExcelSheet() {
-    let schemeFolioList = this.arrayOfExcelData[this.selectedApplicant].categoryList[this.selectedCat].subCategoryList[this.selectedScheme].schemeList[this.selectedClient].schemeFolioList;
-    let newarr = [];
+    const schemeFolioList = this.arrayOfExcelData[this.selectedApplicant].categoryList[this.selectedCat].subCategoryList[this.selectedScheme].schemeList[this.selectedClient].schemeFolioList;
+    const newarr = [];
     schemeFolioList.forEach(element => {
       newarr.push({
         field1: element.index,
@@ -476,7 +484,7 @@ export class ApplicantWiseComponent implements OnInit {
   applicantNameGet(data) {
     this.isLoading = false;
     if (data) {
-      console.log("here we have client id needed::::::::::", data);
+      console.log('here we have client id needed::::::::::', data);
       this.applicantName = data;
       this.excelInitApplicant();
       this.applicantName.forEach(o => {
@@ -499,18 +507,18 @@ export class ApplicantWiseComponent implements OnInit {
           const obj = {
             number: 'All',
             id: -1
-          }
+          };
           this.arnRiaList.unshift(obj);
         } else {
           // this.dataService.openSnackBar("No Arn Ria List Found", "Dismiss")
         }
       }
-    )
+    );
   }
 
   changeValueOfArnRia(item) {
     if (item.name !== 'All') {
-      this.arnRiaValue = item.id
+      this.arnRiaValue = item.id;
       this.viewMode = item.number;
     } else {
       this.arnRiaValue = -1;
@@ -531,21 +539,21 @@ export class ApplicantWiseComponent implements OnInit {
       applicantData.categoryList = [{}, {}, {}];
       this.categoryListArr = [];
       const obj = {
-        advisorId: (this.parentId) ? 0 : (this.data.arnRiaDetailId != -1) ? 0 : [this.data.adminAdvisorIds],
+        advisorId: (this.parentId == this.advisorId) ? 0 : this.advisorId,
         arnRiaDetailsId: this.arnRiaValue,
         parentId: (this.data) ? this.data.parentId : -1,
         familyMembertId: applicantData.id,
         clientTotalAum: applicantData.totalAum,
         clientId: this.clientIdToPass
-      }
+      };
       this.backoffice.getAumApplicantCategory(obj).subscribe(
         data => {
           this.isLoadingCategory = false;
           if (data) {
-            console.log("this is category list data:::", data);
+            console.log('this is category list data:::', data);
             data.forEach(element => {
               element.showCategory = true;
-              element.familyMemberId = applicantData.id
+              element.familyMemberId = applicantData.id;
             });
             this.isLoadingCategory = false;
             applicantData.categoryList = data;
@@ -584,55 +592,58 @@ export class ApplicantWiseComponent implements OnInit {
       }
     }
   }
+
   sortCategoryApplicant(data, show, applicantData) {
     applicantData.category = data;
     applicantData.show = (show) ? show = false : show = true;
 
   }
+
   subCategory(catData, index, applicantIndex) {
 
     this.selectedCat = index;
     this.selectedApplicant = applicantIndex;
-    catData.showCategory = !catData.showCategory
+    catData.showCategory = !catData.showCategory;
 
     if (catData.showCategory == false) {
-      this.isLoadingSubCategory = true
+      this.isLoadingSubCategory = true;
       catData.subCatList = [];
       catData.subCatList = [{}, {}, {}];
-      this.subCategoryList = []
+      this.subCategoryList = [];
       const obj = {
-        advisorId: (this.parentId) ? 0 : (this.data.arnRiaDetailId != -1) ? 0 : [this.data.adminAdvisorIds],
+        advisorId: (this.parentId == this.advisorId) ? 0 : this.advisorId,
         arnRiaDetailsId: this.arnRiaValue,
         parentId: (this.data) ? this.data.parentId : -1,
         familyMembertId: catData.familyMemberId,
         categoryId: catData.id,
         categoryTotalAum: catData.totalAum,
         clientId: this.clientIdToPass
-      }
+      };
       this.backoffice.getAumApplicantSubCategory(obj).subscribe(
         data => {
-          this.isLoadingSubCategory = false
+          this.isLoadingSubCategory = false;
           if (data) {
             data.forEach(element => {
               element.showSubCategory = true;
-              element.familyMemberId = catData.familyMemberId;;
+              element.familyMemberId = catData.familyMemberId;
+
             });
             catData.subCatList = data;
-            this.subCategoryList = data
+            this.subCategoryList = data;
             this.subCategoryList = data;
             this.appendingOfValuesInExcel(data, index, 'sub-category');
           } else {
-            this.subCategoryList = []
+            this.subCategoryList = [];
             catData.subCatList = [];
-            this.isLoadingSubCategory = false
+            this.isLoadingSubCategory = false;
           }
         },
         err => {
-          this.subCategoryList = []
+          this.subCategoryList = [];
           catData.subCatList = [];
-          this.isLoadingSubCategory = false
+          this.isLoadingSubCategory = false;
         }
-      )
+      );
     } else {
       this.removeValuesFromExcel('sub-category', index);
 
@@ -655,50 +666,51 @@ export class ApplicantWiseComponent implements OnInit {
     category.showCategory = (showCategory) ? showCategory = false : showCategory = true;
     category.subCategoryList = data;
   }
+
   getScheme(subCatData, index, catIndex, applicantIndex) {
     this.selectedScheme = index;
     this.selectedCat = catIndex;
     this.selectedApplicant = applicantIndex;
 
-    subCatData.showSubCategory = !subCatData.showSubCategory
+    subCatData.showSubCategory = !subCatData.showSubCategory;
 
     if (subCatData.showSubCategory == false) {
-      this.isLoadingScheme = true
-      this.schemeListArr = []
-      subCatData.schemeList = []
+      this.isLoadingScheme = true;
+      this.schemeListArr = [];
+      subCatData.schemeList = [];
       subCatData.schemeList = [{}, {}, {}];
       const obj = {
-        advisorId: (this.parentId) ? 0 : (this.data.arnRiaDetailId != -1) ? 0 : [this.data.adminAdvisorIds],
+        advisorId: (this.parentId == this.advisorId) ? 0 : this.advisorId,
         arnRiaDetailsId: this.arnRiaValue,
         parentId: (this.data) ? this.data.parentId : -1,
         familyMembertId: subCatData.familyMemberId,
         subCategoryId: subCatData.id,
         subCategoryTotalAum: subCatData.totalAum,
         clientId: this.clientIdToPass
-      }
+      };
       this.backoffice.getAumApplicantScheme(obj).subscribe(
         data => {
-          this.isLoadingScheme = false
+          this.isLoadingScheme = false;
           if (data) {
             data.forEach(element => {
               element.showFolio = true;
             });
-            subCatData.schemeList = data
-            this.schemeListArr = data
+            subCatData.schemeList = data;
+            this.schemeListArr = data;
             this.schemeList = data;
             this.appendingOfValuesInExcel(data, index, 'schemes');
           } else {
-            this.schemeListArr = []
-            subCatData.schemeList = []
-            this.isLoadingScheme = false
+            this.schemeListArr = [];
+            subCatData.schemeList = [];
+            this.isLoadingScheme = false;
           }
         },
         err => {
-          this.schemeListArr = []
-          subCatData.schemeList = []
-          this.isLoadingScheme = false
+          this.schemeListArr = [];
+          subCatData.schemeList = [];
+          this.isLoadingScheme = false;
         }
-      )
+      );
     } else {
       this.removeValuesFromExcel('schemes', index);
 
@@ -710,6 +722,7 @@ export class ApplicantWiseComponent implements OnInit {
       }
     }
   }
+
   getSchemeFolio(schemeData, index, schemeIndex, catIndex, applicantIndex) {
 
     this.selectedApplicant = applicantIndex;
@@ -726,10 +739,12 @@ export class ApplicantWiseComponent implements OnInit {
       this.removeValuesFromExcel('scheme-folio', index);
     }
   }
+
   getResponseSchemeData(data, subCat) {
     subCat.schemes = data;
     subCat.showSubCategory = (subCat.showSubCategory) ? subCat.showSubCategory = false : subCat.showSubCategory = true;
   }
+
   aumReport() {
     this.changedValue.emit({
       value: true,
@@ -737,7 +752,7 @@ export class ApplicantWiseComponent implements OnInit {
       viewMode: this.viewMode
     });
     this.applicantName.forEach(element => {
-      element.show = true
+      element.show = true;
     });
   }
 

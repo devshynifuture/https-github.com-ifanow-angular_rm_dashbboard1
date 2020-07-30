@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 // import {Router} from '@angular/router';
-import { Router } from '@angular/router';
+import {Router} from '@angular/router';
 
 @Injectable()
 export class AuthService {
@@ -30,7 +30,7 @@ export class AuthService {
   static getAdminAdvisorId() {
     let adminid = this.getUserInfo().adminAdvisorId;
     if (adminid > 0) {
-      return adminid
+      return adminid;
     } else {
       return this.getUserInfo().advisorId;
     }
@@ -55,6 +55,7 @@ export class AuthService {
       return null;
     }
   }
+
   static setClientRolesSettings(data) {
     sessionStorage.setItem('clientRoles', JSON.stringify(data));
   }
@@ -89,6 +90,7 @@ export class AuthService {
     let clientDataString = localStorage.getItem('profileData');
     return clientDataString ? JSON.parse(clientDataString) : undefined;
   }
+
   static getOrgDetails() {
     let orgData = localStorage.getItem('orgData');
     return orgData ? JSON.parse(orgData) : undefined;

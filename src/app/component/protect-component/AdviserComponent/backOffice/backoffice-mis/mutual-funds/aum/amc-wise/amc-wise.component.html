@@ -212,7 +212,8 @@
                                                                 </td>
                                                                 <td>
                                                                     <div class="bar">
-                                                                        {{isLoadingApplicant ? ' ' : '₹ '}}<span
+<!--                                                                        {{isLoadingApplicant ? ' ' : '₹ '}}-->
+                                                                      <span
                                                                             appFormatNumber
                                                                             *ngIf="!isLoadingApplicant">{{isLoadingApplicant ? '' : applicant.balanceUnit | number :'1.2-2'}}</span>
                                                                     </div>

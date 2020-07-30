@@ -236,7 +236,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
-    this.parentId = AuthService.getParentId() ? AuthService.getParentId() : this.advisorId;
+    this.parentId = AuthService.getAdminAdvisorId();
     this.advisorName = AuthService.getUserInfo().name;
     this.excessAllow = localStorage.getItem('successStoringToken');
 
@@ -848,7 +848,7 @@ export class DashboardComponent implements OnInit {
 
   sipCountGet() {
     const obj = {
-      advisorId: (this.parentId) ? 0 : [this.advisorId],
+      advisorId: (this.parentId == this.advisorId) ? 0 : [this.advisorId],
       arnRiaDetailsId: -1,
       parentId: this.parentId
     };
