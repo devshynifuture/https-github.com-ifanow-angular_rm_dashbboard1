@@ -86,7 +86,7 @@
                 <ng-container matColumnDef="recipients">
                     <th mat-header-cell class="br " *matHeaderCellDef> Number of recipients </th>
                     <td mat-cell class="br c-p" *matCellDef="let element" (click)="openStatusReport(element)">
-                        <div class="bar"> {{isLoading ? '' : element.emailSentCount}} </div>
+                        <div class="bar"> {{isLoading ? '' : element.clientCount}} </div>
                     </td>
                 </ng-container>
 

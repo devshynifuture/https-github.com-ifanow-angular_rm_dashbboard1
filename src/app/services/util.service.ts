@@ -1,17 +1,17 @@
 // tslint:disable:radix
 // tslint:disable:triple-equals
 
-import {ElementRef, Injectable, Input, OnDestroy} from '@angular/core';
-import {DatePipe, DecimalPipe} from '@angular/common';
-import {EventService} from '../Data-service/event.service';
-import {HttpClient, HttpParams} from '@angular/common/http';
-import {SubscriptionService} from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
-import {FormGroup} from '@angular/forms';
-import {BehaviorSubject, Subject} from 'rxjs';
-import {AuthService} from '../auth-service/authService';
-import {quotationTemplate} from './quotationTemplate';
-import {debounce, debounceTime} from 'rxjs/operators';
-import {AppConstants} from './app-constants';
+import { ElementRef, Injectable, Input, OnDestroy } from '@angular/core';
+import { DatePipe, DecimalPipe } from '@angular/common';
+import { EventService } from '../Data-service/event.service';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { SubscriptionService } from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
+import { FormGroup } from '@angular/forms';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { AuthService } from '../auth-service/authService';
+import { quotationTemplate } from './quotationTemplate';
+import { debounce, debounceTime } from 'rxjs/operators';
+import { AppConstants } from './app-constants';
 
 
 @Injectable({
@@ -96,7 +96,7 @@ export class UtilService {
   static convertObjectToCustomArray(inputObject: object, keyNameForOutput: string, keyValueForOutput: string): object[] {
     const outputArray = [];
     Object.keys(inputObject).map(key => {
-      const object = {selected: false};
+      const object = { selected: false };
       object[keyNameForOutput] = inputObject[key];
       object[keyValueForOutput] = key;
 
@@ -186,11 +186,19 @@ export class UtilService {
 
   static obfuscateEmail(email: string) {
     let tempMail: string;
-    const indexOfAt = email.indexOf('@');
+    let arr = email.split("@");
     email = email.replace(/\./g, '');
-    const replaceTxt = email.substr(indexOfAt + 1, email.length);
-    tempMail = email.replace(replaceTxt, 'X'.repeat(email.length - indexOfAt));
-    return tempMail;
+    return this.nameMasking(arr[0]) + "@" + this.domainMasking(arr[1]);
+  }
+
+  static nameMasking(str) {
+    const midLength = Math.floor(str.length / 2);
+    const firstName = str.substr(0, midLength);
+    return firstName + "X".repeat(midLength + 1);
+  }
+
+  static domainMasking(str) {
+    return 'x'.repeat(str.indexOf('.')) + str.substr(str.indexOf('.'), str.length - 1)
   }
 
   static obfuscateMobile(mobileNo: string) {
@@ -409,20 +417,20 @@ export class UtilService {
     }
     return this.http.post(
       'http://dev.ifanow.in:8080/futurewise/api/v1/web//subscription/html-to-pdf', obj,
-      {responseType: 'blob'}).subscribe(
-      data => {
-        const file = new Blob([data], {type: 'application/pdf'});
-        fragData.isSpinner = false;
-        // window.open(fileURL,"hello");
-        const namePdf = this.client.name + '\'s ' + pdfName + ' as on ' + date;
-        const a = document.createElement('a');
-        a.href = window.URL.createObjectURL(file);
-        a.download = namePdf + '.pdf';
-        a.click();
-        // a.download = fileURL;
-        return (this.fileURL) ? this.fileURL : null;
-      }
-    );
+      { responseType: 'blob' }).subscribe(
+        data => {
+          const file = new Blob([data], { type: 'application/pdf' });
+          fragData.isSpinner = false;
+          // window.open(fileURL,"hello");
+          const namePdf = this.client.name + '\'s ' + pdfName + ' as on ' + date;
+          const a = document.createElement('a');
+          a.href = window.URL.createObjectURL(file);
+          a.download = namePdf + '.pdf';
+          a.click();
+          // a.download = fileURL;
+          return (this.fileURL) ? this.fileURL : null;
+        }
+      );
   }
 
   bulkHtmlToPdf(data) {
@@ -479,8 +487,8 @@ export class UtilService {
     for (let i = 0; i < byteString.length; i++) {
       ia[i] = byteString.charCodeAt(i);
     }
-    const imageBlob = new Blob([ia], {type: mimeString});
-    return new File([imageBlob], imageName, {type: 'image/png'});
+    const imageBlob = new Blob([ia], { type: mimeString });
+    return new File([imageBlob], imageName, { type: 'image/png' });
   }
 
   /**

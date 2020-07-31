@@ -102,6 +102,7 @@ export class EventDialog implements OnInit {
       this.eventForm.get("description").setValue(this.eventData.description);
       this.eventForm.get("startDateTime").setValue(this.eventData.start.dateTime);
       this.setEndDate();
+      this.setEventTime();
     }
 
     if (this.eventData.attendees != undefined) {
@@ -115,7 +116,23 @@ export class EventDialog implements OnInit {
     //   eventUI.scrollTop
       
     // }, 1000);
+    console.log(this.eventForm.value, "eventForm data");
+    
   }
+
+  setEventTime(){
+    for(let i = 0; i < this.timeArr.length; i++ ){
+      if(this.timeArr[i] > this.getCurrentTime()){
+        this.eventForm.get("startTime").setValue(this.timeArr[i]);
+        break;
+      }
+    }
+    this.setTime('start');
+  }
+
+ getCurrentTime(){
+  return new Date().getHours() +':'+ new Date().getMinutes()
+ }
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
