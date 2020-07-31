@@ -11,6 +11,7 @@ import { StockScripLevelTransactionComponent } from './stock-scrip-level-transac
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material';
 import { pieChart } from './highChart-pichart';
+import { StockDetailsViewComponent } from '../stock-details-view/stock-details-view.component';
 
 @Component({
   selector: 'app-asset-stocks',
@@ -18,7 +19,7 @@ import { pieChart } from './highChart-pichart';
   styleUrls: ['./asset-stocks.component.scss']
 })
 export class AssetStocksComponent implements OnInit {
-  displayedColumns25 = ['scrip', 'bal', 'price', 'mprice', 'amt', 'cvalue', 'gain', 'ret',
+  displayedColumns25 = ['scrip', 'amt', 'cvalue', 'gain', 'bal', 'price', 'mprice', 'ret',
      'dividend', 'icons'];
 
   footerColumns = ['scrip', /*'owner', 'bal', 'price', 'mprice',*/ 'amt', 'cvalue', 'gain', 'ret',
@@ -308,6 +309,27 @@ export class AssetStocksComponent implements OnInit {
         }
       }
     );
+  }
+  opendetailviews() {
+    // console.log('clicked');
+    const fragmentData = {
+      id: 1,
+      state: 'open35',
+      componentName: StockDetailsViewComponent
+    };
+
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            // refresh required.
+
+            rightSideDataSub.unsubscribe();
+          }
+        }
+      });
+
   }
 }
 
