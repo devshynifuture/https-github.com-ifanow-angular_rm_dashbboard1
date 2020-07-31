@@ -110,8 +110,15 @@ export class BankAccountsComponent implements OnInit {
       ParamValue : value,
     //  disControl : type
     }
-    this.bankAccounts.get("bankAcNo").setValue("");
-    this.bankAccounts.get("accountType").setValue("");
+
+    if(this.bankData){
+      this.bankAccounts.get("bankAcNo").setValue(this.bankData.userBankMappingId);
+      this.bankAccounts.get("accountType").setValue(this.bankData.accountType);
+    }
+    else{
+      this.bankAccounts.get("bankAcNo").setValue("");
+      this.bankAccounts.get("accountType").setValue("");
+    }
   }
 
   displayControler(con) {
@@ -253,6 +260,7 @@ export class BankAccountsComponent implements OnInit {
     var k = event.keyCode;
     return ((k > 64 && k < 91) || (k == 32) || (k > 96 && k < 123) || k == 8);
   }
+
   getdataForm(data) {
     this.flag = data;
     // // (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : ''
@@ -263,8 +271,8 @@ export class BankAccountsComponent implements OnInit {
     else {
       this.flag = "editBANK";
       (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : this.editData = data;
+      this.bankData = data;
     }
-    this.bankData = {};
     this.bankAccounts = this.fb.group({
       getCoOwnerName: this.fb.array([this.fb.group({
         name: ['', [Validators.required]],

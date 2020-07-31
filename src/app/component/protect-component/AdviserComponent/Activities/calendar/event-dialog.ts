@@ -122,7 +122,7 @@ export class EventDialog implements OnInit {
 
   setEventTime(){
     for(let i = 0; i < this.timeArr.length; i++ ){
-      if(this.timeArr[i] > this.getCurrentTime()){
+      if(this.timeArr[i] >= this.getCurrentTime(this.eventData.start)){
         this.eventForm.get("startTime").setValue(this.timeArr[i]);
         break;
       }
@@ -130,8 +130,16 @@ export class EventDialog implements OnInit {
     this.setTime('start');
   }
 
- getCurrentTime(){
-  return new Date().getHours() +':'+ new Date().getMinutes()
+ getCurrentTime(time){
+   let setTime = new Date(time.dateTime).getHours() +':'+ new Date(time.dateTime).getMinutes()
+   if(setTime.length == 3){
+    setTime = 0+setTime+0
+   }
+   if(parseInt(setTime) <= parseInt("00:00")){
+     return new Date().getHours() +':'+ new Date().getMinutes()
+   }else{
+     return setTime;
+   }
  }
 
   private _filter(value: string): string[] {

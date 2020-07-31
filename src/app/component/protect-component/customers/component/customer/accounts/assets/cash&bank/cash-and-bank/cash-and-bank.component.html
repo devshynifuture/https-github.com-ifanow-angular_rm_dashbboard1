@@ -79,8 +79,10 @@
                 <ng-container matColumnDef="type">
                     <th mat-sort-header="accountType" *matHeaderCellDef class="br" mat-header-cell> Account type</th>
                     <td *matCellDef="let element" class="br" mat-cell>
-                        <div class="bar">
-                            {{isLoading? ' ' : (element.accountType == 1) ? 'Current' : 'Savings'}} </div>
+                        <div class="bar"></div>
+                        <div *ngFor="let type of accountTypes" [ngSwitch]="element.accountType">
+                            <span *ngSwitchCase="type.id">{{type.name}}</span>
+                        </div>
                     </td>
                     <td *matFooterCellDef class="br text-right" mat-footer-cell></td>
                 </ng-container>
