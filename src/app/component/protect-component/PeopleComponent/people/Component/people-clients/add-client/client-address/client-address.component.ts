@@ -1,14 +1,14 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {PostalService} from 'src/app/services/postal.service';
-import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog} from '@angular/material';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { PostalService } from 'src/app/services/postal.service';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-client-address',
@@ -45,9 +45,9 @@ export class ClientAddressComponent implements OnInit {
   firstTimeEditFlag = false;
 
   constructor(private cusService: CustomerService, private fb: FormBuilder,
-              private subInjectService: SubscriptionInject, private postalService: PostalService,
-              private peopleService: PeopleService, private eventService: EventService,
-              private utilService: UtilService, public dialog: MatDialog) {
+    private subInjectService: SubscriptionInject, private postalService: PostalService,
+    private peopleService: PeopleService, private eventService: EventService,
+    private utilService: UtilService, public dialog: MatDialog) {
   }
 
   addressForm;
@@ -237,7 +237,7 @@ export class ClientAddressComponent implements OnInit {
         userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
         userType: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3,
         // addressType: this.addressForm.get('addressType').value,
-        proofType: isNaN(this.addressForm.get('addProofType').value) ? undefined : this.addressForm.get('addProofType').value,
+        proofType: (this.addressForm.get('addProofType').value == '') ? undefined : this.addressForm.get('addProofType').value,
         proofIdNumber: this.addressForm.get('proofIdNum').invalid ? undefined : this.addressForm.get('proofIdNum').value,
         userAddressMappingId: (this.userData.addressData) ? this.userData.addressData.userAddressMappingId : (this.addressList && this.userMappingIdFlag) ? this.addressList.userAddressMappingId : undefined,
         addressId: (this.userData.addressData) ? this.userData.addressData.addressId : (this.addressList && this.userMappingIdFlag) ? this.addressList.addressId : undefined
@@ -302,11 +302,11 @@ export class ClientAddressComponent implements OnInit {
   }
 
   close(data) {
-    (this.fieldFlag) ? this.cancelTab.emit('close') : (data == 'close' && this.fieldFlag == undefined) ? this.subInjectService.changeNewRightSliderState({state: 'close'}) :
-      this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: true});
+    (this.fieldFlag) ? this.cancelTab.emit('close') : (data == 'close' && this.fieldFlag == undefined) ? this.subInjectService.changeNewRightSliderState({ state: 'close' }) :
+      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
   }
 
   closeAndSave() {
-    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: true});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
   }
 }

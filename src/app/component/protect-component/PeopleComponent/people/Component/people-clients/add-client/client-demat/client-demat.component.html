@@ -47,7 +47,7 @@
       </div>
     </div> -->
   </div>
-  <app-add-holder-names *ngIf="dematList" [holderListInput]="dematList.holderNameList"
+  <app-add-holder-names *ngIf="dematList" [clientName]="clientName" [holderListInput]="dematList.holderNameList"
     (holderList)="getHolderList($event)">
   </app-add-holder-names>
   <div class="row pt-28">

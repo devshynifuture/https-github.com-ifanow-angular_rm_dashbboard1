@@ -222,6 +222,8 @@
       <div *ngIf="fieldFlag=='familyMember'" class="row pt-28">
         <div class="col-md-4 text-right full-end">
           <h5 class="m-0"> Relation</h5>
+          <p class="text-custom m-0 roboto f-12 mob-pt-10 mob-pb-5">Relation with group head
+          </p>
         </div>
         <div class="col-md-3 p-0">
           <div class="form-group">
@@ -449,7 +451,7 @@
         </div>
       </div>
 
-      <div *ngIf="fieldFlag=='familyMember'" class="row pt-28">
+      <div *ngIf="fieldFlag=='familyMember' && invTypeCategory=='1'" class="row pt-28">
         <div class="col-md-4 text-right full-end">
           <h5 class="m-0"> Relation</h5>
         </div>

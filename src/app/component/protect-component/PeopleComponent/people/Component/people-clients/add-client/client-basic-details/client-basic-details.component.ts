@@ -308,10 +308,6 @@ export class ClientBasicDetailsComponent implements OnInit {
       this.minorForm.controls.gEmail.disable();
       this.minorForm.controls.pan.disable();
     }
-    if (this.fieldFlag == 'familyMember') {
-      this.minorForm.controls.relationType.setValidators([Validators.required]);
-      this.minorForm.controls.relationType.updateValueAndValidity();
-    }
     this.minorForm.controls.gEmail.updateValueAndValidity();
     this.minorForm.controls.pan.updateValueAndValidity();
   }
@@ -710,7 +706,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       pan: (this.invTypeCategory == '1') ? this.basicDetails.controls.pan.value : this.minorForm.value.pan,
       residentFlag: parseInt(this.invTaxStatus),
       // taxStatusId: taxStatusId,
-      relationshipId: (this.invTypeCategory == '1') ? this.basicDetails.controls.relationType.value : this.minorForm.controls.relationType.value,
+      relationshipId: (this.invTypeCategory == '1') ? this.basicDetails.controls.relationType.value : this.basicDetailsData.relationshipId,
       familyMemberType: parseInt(this.invTypeCategory),
       isKycCompliant: 1,
       aadhaarNumber: null,
