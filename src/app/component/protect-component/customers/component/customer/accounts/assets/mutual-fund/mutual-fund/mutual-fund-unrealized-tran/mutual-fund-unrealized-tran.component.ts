@@ -1017,13 +1017,13 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         key: 'showPieChart',
         clientId: this.clientId,
         advisorId: this.advisorId,
-        fromEmail: this.clientDetails.advisorData.email,
-        toEmail: this.clientData.email
-        // fromEmail: 'devshyni@futurewise.co.in',
-        // toEmail: 'devshyni@futurewise.co.in'
+        // fromEmail: this.clientDetails.advisorData.email,
+        // toEmail: this.clientData.email
+        fromEmail: 'devshyni@futurewise.co.in',
+        toEmail: 'devshyni@futurewise.co.in'
       }
       this.utilService.bulkHtmlToPdf(obj)
-       // this.utilService.htmlToPdf(para, 'transaction', true, this.fragmentData, '', '')
+        this.utilService.htmlToPdf(para, 'transaction', true, this.fragmentData, '', '')
     }, 200);
   }
   getDetails() {
