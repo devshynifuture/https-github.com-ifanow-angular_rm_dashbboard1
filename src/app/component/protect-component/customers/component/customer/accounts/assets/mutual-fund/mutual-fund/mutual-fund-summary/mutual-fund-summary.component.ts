@@ -1,29 +1,27 @@
-import { Component, ElementRef, Input, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
-import { RightFilterComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter/right-filter.component';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { UtilService } from 'src/app/services/util.service';
-import { FolioMasterDetailsComponent } from 'src/app/component/protect-component/customers/component/common-component/folio-master-details/folio-master-details.component';
-import { SipDetailsComponent } from 'src/app/component/protect-component/customers/component/common-component/sip-details/sip-details.component';
-import { AddMutualFundComponent } from '../add-mutual-fund/add-mutual-fund.component';
-import { MFSchemeLevelHoldingsComponent } from '../mfscheme-level-holdings/mfscheme-level-holdings.component';
-import { MFSchemeLevelTransactionsComponent } from '../mfscheme-level-transactions/mfscheme-level-transactions.component';
-import { MfServiceService } from '../../mf-service.service';
-import { ExcelGenService } from 'src/app/services/excel-gen.service';
-import { MatTableDataSource, MatDialog } from '@angular/material';
-import { WebworkerService } from '../../../../../../../../../../services/web-worker.service';
-import { MUTUAL_FUND_SUMMARY } from '../../mutual-fund.script';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { UpperCustomerComponent } from 'src/app/component/protect-component/customers/component/common-component/upper-customer/upper-customer.component';
-import { EventService } from 'src/app/Data-service/event.service';
-import { CustomerService } from '../../../../../customer.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { map } from 'rxjs/operators';
-import { Router, ActivatedRoute } from '@angular/router';
-import { RightFilterDuplicateComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
-import { BackOfficeService } from 'src/app/component/protect-component/AdviserComponent/backOffice/back-office.service';
-import { DatePipe } from '@angular/common';
-import { OnlineTransactionComponent } from 'src/app/component/protect-component/AdviserComponent/transactions/overview-transactions/doTransaction/online-transaction/online-transaction.component';
-import { OnlineTransactionService } from 'src/app/component/protect-component/AdviserComponent/transactions/online-transaction.service';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {UtilService} from 'src/app/services/util.service';
+import {FolioMasterDetailsComponent} from 'src/app/component/protect-component/customers/component/common-component/folio-master-details/folio-master-details.component';
+import {SipDetailsComponent} from 'src/app/component/protect-component/customers/component/common-component/sip-details/sip-details.component';
+import {AddMutualFundComponent} from '../add-mutual-fund/add-mutual-fund.component';
+import {MFSchemeLevelHoldingsComponent} from '../mfscheme-level-holdings/mfscheme-level-holdings.component';
+import {MFSchemeLevelTransactionsComponent} from '../mfscheme-level-transactions/mfscheme-level-transactions.component';
+import {MfServiceService} from '../../mf-service.service';
+import {ExcelGenService} from 'src/app/services/excel-gen.service';
+import {MatDialog, MatTableDataSource} from '@angular/material';
+// import {WebworkerService} from '../../../../../../../../../../services/web-worker.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {UpperCustomerComponent} from 'src/app/component/protect-component/customers/component/common-component/upper-customer/upper-customer.component';
+import {EventService} from 'src/app/Data-service/event.service';
+import {CustomerService} from '../../../../../customer.service';
+import {AuthService} from 'src/app/auth-service/authService';
+import {map} from 'rxjs/operators';
+import {ActivatedRoute, Router} from '@angular/router';
+import {RightFilterDuplicateComponent} from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
+import {BackOfficeService} from 'src/app/component/protect-component/AdviserComponent/backOffice/back-office.service';
+import {DatePipe} from '@angular/common';
+import {OnlineTransactionComponent} from 'src/app/component/protect-component/AdviserComponent/transactions/overview-transactions/doTransaction/online-transaction/online-transaction.component';
+import {OnlineTransactionService} from 'src/app/component/protect-component/AdviserComponent/transactions/online-transaction.service';
 
 
 @Component({
@@ -84,7 +82,7 @@ export class MutualFundSummaryComponent implements OnInit {
   noMapping: boolean;
   isAdvisorSection: boolean;
   isClient: boolean;
-  
+
 
   @Input()
   set data(data) {
@@ -101,7 +99,7 @@ export class MutualFundSummaryComponent implements OnInit {
     private mfService: MfServiceService,
     private excel: ExcelGenService,
     private backOfficeService: BackOfficeService,
-    private workerService: WebworkerService,
+    // private workerService: WebworkerService,
     public dialog: MatDialog,
     public eventService: EventService,
     private customerService: CustomerService,

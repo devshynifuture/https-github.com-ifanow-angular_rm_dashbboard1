@@ -1,16 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { startWith } from 'rxjs/internal/operators/startWith';
-import { map } from 'rxjs/operators';
-import { FormControl } from '@angular/forms';
-import { AuthService } from 'src/app/auth-service/authService';
-import { SubscriptionService } from '../../../subscription.service';
-import { CommonFroalaComponent } from '../../common-subscription-component/common-froala/common-froala.component';
-import { UtilService } from 'src/app/services/util.service';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-import { EventService } from 'src/app/Data-service/event.service';
-import { Router } from '@angular/router';
-import { SettingsService } from '../../../../setting/settings.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {startWith} from 'rxjs/internal/operators/startWith';
+import {map} from 'rxjs/operators';
+import {FormControl} from '@angular/forms';
+import {AuthService} from 'src/app/auth-service/authService';
+import {SubscriptionService} from '../../../subscription.service';
+import {CommonFroalaComponent} from '../../common-subscription-component/common-froala/common-froala.component';
+import {UtilService} from 'src/app/services/util.service';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import {EventService} from 'src/app/Data-service/event.service';
+import {Router} from '@angular/router';
+import {SettingsService} from '../../../../setting/settings.service';
 
 @Component({
   selector: 'app-search-client-add-quotation',
@@ -42,15 +42,16 @@ export class SearchClientAddQuotationComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
-  feeStructureHtmlData: string = '';
+  feeStructureHtmlData = '';
   billerInfo: any;
   orgDetails: any;
 
   constructor(public subInjectService: SubscriptionInject,
-    private subService: SubscriptionService,
-    private eventService: EventService,
-    private router: Router,
-    private settingsService: SettingsService) { }
+              private subService: SubscriptionService,
+              private eventService: EventService,
+              private router: Router,
+              private settingsService: SettingsService) {
+  }
 
 
   @Input() set data(data) {
@@ -70,7 +71,7 @@ export class SearchClientAddQuotationComponent implements OnInit {
             const filterValue = state.toLowerCase();
             const list = this.clientList.filter(state => state.client_name.toLowerCase().includes(filterValue));
             if (list.length == 0) {
-              this.stateCtrl.setErrors({ invalid: true });
+              this.stateCtrl.setErrors({invalid: true});
               this.stateCtrl.markAsTouched();
             }
             return this.clientList.filter(state => state.client_name.toLowerCase().includes(filterValue));
@@ -104,12 +105,11 @@ export class SearchClientAddQuotationComponent implements OnInit {
         if (data && data.length > 0) {
           this.loader = false;
           this.noDataFoundFlag = false;
-          this.planSettingData = data
-        }
-        else {
+          this.planSettingData = data;
+        } else {
           this.loader = false;
           this.noDataFoundFlag = true;
-          this.planSettingData = undefined
+          this.planSettingData = undefined;
         }
       }
     );
@@ -118,51 +118,49 @@ export class SearchClientAddQuotationComponent implements OnInit {
   select(data) {
     this.planSettingData.forEach(element => {
       if (data.id == element.id) {
-        data.selected = true
-        this.selectedPlan = data
-      }
-      else {
+        data.selected = true;
+        this.selectedPlan = data;
+      } else {
         element.selected = false;
       }
-    })
+    });
   }
 
   createSubscription(value, data) {
     if (!data.quotation) {
-      this.eventService.openSnackBar("Please map quotation to plan", "Dismiss");
-      this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: false });
+      this.eventService.openSnackBar('Please map quotation to plan', 'Dismiss');
+      this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: false});
       this.router.navigate(['/admin/subscription/settings/documents']);
       return;
     }
-    data.quotation['planId'] = data.id;
+    data.quotation.planId = data.id;
     data.quotation.documentText = data.quotation.documentText.replace(new RegExp(UtilService.escapeRegExp('$plan_name'), 'g'), data.name);
-    data = data['quotation'];
-    data['feeStructureFlag'] = data.documentText.includes('$service_fee');
-    data['quotationFlag'] = true;
+    data = data.quotation;
+    data.feeStructureFlag = data.documentText.includes('$service_fee');
+    data.quotationFlag = true;
     this.getServicesForPlan(data);
   }
 
   getServicesForPlan(quotationData) {
     this.barButtonOptions.active = true;
-    const obj =
-    {
+    const obj = {
       advisorId: this.advisorId,
       planId: quotationData.planId
-    }
+    };
     this.subService.getSettingPlanServiceData(obj).subscribe(
       responseData => {
         if (responseData && responseData.length > 0) {
-          console.log(responseData);
+          console.log('getServicesForPlan responseData : ', responseData);
           this.createFeeStructureForFroala(responseData, quotationData);
         }
       }
-    )
+    );
   }
 
   createFeeStructureForFroala(responseData, quotationData) {
     let servicesName = '';
     responseData.forEach(element => {
-      let feeStructureTable = `<div class="hide">
+      const feeStructureTable = `<div class="hide">
 <table style="width: 100%; margin: 0px auto; border: 1px solid rgba(0, 0, 0, 0.12);" align="center">
    <tr>
        <td>
@@ -242,7 +240,7 @@ export class SearchClientAddQuotationComponent implements OnInit {
 <br>
 </div>`;
       this.feeStructureHtmlData += feeStructureTable;
-      servicesName += element.serviceName + ','
+      servicesName += element.serviceName + ',';
     });
     servicesName = servicesName.slice(0, -1);
     quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$service_fee'), 'g'), this.feeStructureHtmlData);
@@ -258,10 +256,18 @@ export class SearchClientAddQuotationComponent implements OnInit {
     this.settingsService.getOrgProfile(obj).subscribe(
       data => {
         if (data) {
+          console.log('getOrgProfiles data : ', data);
+
           this.orgDetails = data;
+          if (this.orgDetails.reportLogoUrl) {
+            const imageUrlViewer = '<img src=\'' + this.orgDetails.reportLogoUrl + '\'>';
+            quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$organization_profile_logo_for_reports'), 'g'), imageUrlViewer);
+          }
           quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$organization_profile_mobile'), 'g'), this.orgDetails.mobileNumber);
           quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$organization_profile_email'), 'g'), this.orgDetails.email);
           quotationData.documentText = quotationData.documentText.replace(new RegExp(UtilService.escapeRegExp('$company_name'), 'g'), this.orgDetails.companyName);
+
+          //
           // $logo_for_reports
           this.getProfileBillerData(quotationData);
         }
@@ -287,7 +293,7 @@ export class SearchClientAddQuotationComponent implements OnInit {
   }
 
   openFroala(data, value) {
-    data['isAdvisor'] = true;
+    data.isAdvisor = true;
     const fragmentData = {
       flag: value,
       data,
@@ -306,6 +312,6 @@ export class SearchClientAddQuotationComponent implements OnInit {
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
 }
