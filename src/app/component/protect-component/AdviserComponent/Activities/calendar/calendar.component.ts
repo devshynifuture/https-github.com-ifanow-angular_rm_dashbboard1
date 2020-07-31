@@ -59,7 +59,28 @@ export class CalendarComponent implements OnInit {
     this.curruntDayIndex = this.daysArr.indexOf(this.selectedDate);
     console.log(this.router.url, "router test");
 
+    // if(localStorage.getItem('successStoringToken')){
+    //   this.mailConnect(true);
+    // }
+    // else{
+    //   this.mailConnect(false);
+    // }
     this.excessAllow = localStorage.getItem('successStoringToken')
+  }
+
+  getEvent() {
+    let eventData = {
+      "calendarId": AuthService.getUserInfo().userName,
+      "userId": AuthService.getUserInfo().advisorId
+    }
+    this.calenderService.getEvent(eventData).subscribe((data) => {
+      if(data){
+        this.mailConnect(true);
+      }
+      else{
+        this.mailConnect(false);
+      }
+    })
   }
 
   mailConnect(done){
@@ -169,17 +190,17 @@ export class CalendarComponent implements OnInit {
 
   nextMonth() {
     switch (this.router.url) {
-      case '/admin/activies/day':
+      case '/admin/activies/calendar/day':
         this.viewDate = new Date(this.viewDate.setDate(this.viewDate.getDate() + 1))
         break;
-      case '/admin/activies/week':
+      case '/admin/activies/calendar/week':
         this.viewDate = new Date(this.viewDate.setDate(this.viewDate.getDate() + 7))
         this.selectedDate = this.viewDate.getDate();
         break;
-      case '/admin/activies/month':
+      case '/admin/activies/calendar/month':
         this.viewDate = new Date(this.viewDate.setMonth(this.viewDate.getMonth() + 1))
         break;
-      case '/admin/activies/schedule':
+      case '/admin/activies/calendar/schedule':
         this.viewDate = new Date(this.viewDate.setMonth(this.viewDate.getMonth() + 1))
         break;
     }
@@ -197,16 +218,16 @@ export class CalendarComponent implements OnInit {
   back: boolean = false;
   lastMonth() {
     switch (this.router.url) {
-      case '/admin/activies/day':
+      case '/admin/activies/calendar/day':
         this.viewDate = new Date(this.viewDate.setDate(this.viewDate.getDate() - 1))
         break;
-      case '/admin/activies/week':
+      case '/admin/activies/calendar/week':
         this.viewDate = new Date(this.viewDate.setDate(this.viewDate.getDate() - 7))
         break;
-      case '/admin/activies/month':
+      case '/admin/activies/calendar/month':
         this.viewDate = new Date(this.viewDate.setMonth(this.viewDate.getMonth() - 1))
         break;
-      case '/admin/activies/schedule':
+      case '/admin/activies/calendar/schedule':
         this.viewDate = new Date(this.viewDate.setMonth(this.viewDate.getMonth() - 1))
         break;
     }
