@@ -177,7 +177,8 @@ export class EnumDataService {
       data => {
         if (data) {
           data.forEach(element => {
-            element.name = this.toCamelCase(element.name);
+            if (element.id == 1 || element.id == 2 || element.id == 5)
+              element.name = this.toCamelCase(element.name);
           })
           this.accountTypes = data;
         }
