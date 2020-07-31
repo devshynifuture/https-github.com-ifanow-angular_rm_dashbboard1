@@ -1,10 +1,10 @@
-import { Component, HostListener, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { SubscriptionService } from '../../../subscription.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { AuthService } from '../../../../../../../auth-service/authService';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-import { Router } from '@angular/router';
-import { Location } from '@angular/common';
+import {Component, HostListener, Input, OnInit, Output, EventEmitter} from '@angular/core';
+import {SubscriptionService} from '../../../subscription.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {AuthService} from '../../../../../../../auth-service/authService';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import {Router} from '@angular/router';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-plans',
@@ -26,20 +26,29 @@ export class PlansComponent implements OnInit {
     // buttonIcon: {
     //   fontIcon: 'favorite'
     // }
-  }
+  };
   _upperData: any;
   flag: any;
 
-  constructor(private subService: SubscriptionService, private eventService: EventService, private router: Router, private location: Location) {
+  constructor(private subService: SubscriptionService, private eventService: EventService,
+              private router: Router, private location: Location) {
   }
 
   @Output() changePlanData = new EventEmitter();
 
 
   @Input() set upperData(upperData) {
-    this.flag = upperData.flag
+    console.log(' upperData plan : ', upperData);
+    this.flag = upperData.flag;
     this._upperData = upperData;
+    if (upperData && upperData.documentData && upperData.documentData.documentTypeId) {
+      if (upperData.documentData.documentTypeId == 7) {
+        this.isQuotation = true;
+      }
+    }
   }
+
+  isQuotation = false;
 
   get upperData(): any {
     return this._upperData;
@@ -47,17 +56,19 @@ export class PlansComponent implements OnInit {
 
   @Input() componentFlag: string;
   // @Input() upperData;
-  servicePlanData = [{ selected: false }, { selected: false }, { selected: false }];
+  servicePlanData = [{selected: false}, {selected: false}, {selected: false}];
   isLoading = false;
   mappedPlan = [];
   advisorId;
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
+    console.log(' ngOnInit componentFlag : ', this.componentFlag);
+
     if (this.componentFlag === 'documents') {
       this.getPlansMappedToDocument();
     } else if (this.componentFlag === 'plans') {
-      this.getPlansMapped()
+      this.getPlansMapped();
     } else {
       this.getPlansMappedToAdvisor();
     }
@@ -84,6 +95,7 @@ export class PlansComponent implements OnInit {
       data => this.getPlansMappedToAdvisorResponse(data)
     );
   }
+
   getPlansMapped() {
     this.isLoading = true;
 
@@ -98,10 +110,10 @@ export class PlansComponent implements OnInit {
     if (data) {
       this.servicePlanData = data;
       this.servicePlanData.forEach(element => {
-        if (element.selected == true) {
-          this.mappedPlan.push(element);
+          if (element.selected == true) {
+            this.mappedPlan.push(element);
+          }
         }
-      }
       );
     } else {
       this.servicePlanData = [];
@@ -109,6 +121,7 @@ export class PlansComponent implements OnInit {
 
 
   }
+
   getPlansMappedToDocument() {
     this.isLoading = true;
     const obj = {
@@ -125,8 +138,8 @@ export class PlansComponent implements OnInit {
     this.isLoading = false;
 
     if (data && data !== undefined && data !== null) {
-      for (let p of data) {
-        p['read'] = false;
+      for (const p of data) {
+        p.read = false;
       }
       this.servicePlanData = data;
       this.servicePlanData.forEach(element => {
@@ -140,11 +153,14 @@ export class PlansComponent implements OnInit {
   }
 
   dialogClose() {
-    this.eventService.changeUpperSliderState({ state: 'close' });
+    this.eventService.changeUpperSliderState({state: 'close'});
   }
 
   selectServicePlan(data) {
 
+    // if (this.isQuotation && !data.selected && this.mappedPlan.length > 0) {
+    //   return;
+    // }
     (data.selected == true) ? this.unmapPlanToService(data) : this.mapPlanToService(data);
   }
 
@@ -158,7 +174,7 @@ export class PlansComponent implements OnInit {
     // _.remove(this.mappedPlan, function (delData) {
     //   return delData.id == data.id;
     // });
-    this.mappedPlan = this.mappedPlan.filter(delData => delData.id != data.id)
+    this.mappedPlan = this.mappedPlan.filter(delData => delData.id != data.id);
   }
 
   saveMapping() {
@@ -167,13 +183,14 @@ export class PlansComponent implements OnInit {
     if (this.componentFlag === 'documents') {
       this.saveDocumentPlanMapping();
     } else if (this.componentFlag === 'plans') {
-      this.mapDocumentToPlan()
+      this.mapDocumentToPlan();
     } else if (this.componentFlag === 'services') {
-      this.mapDocumentToPlan()
+      this.mapDocumentToPlan();
     } else {
       this.saveServicePlanMapping();
     }
   }
+
   mapDocumentToPlan() {
     let obj = [];
     if (this.mappedPlan && this.mappedPlan !== null && this.mappedPlan !== undefined) {
@@ -196,7 +213,7 @@ export class PlansComponent implements OnInit {
           mappedType: this.upperData ? this.upperData.documentData.mappedType : null,
           mappingId: null
         }
-      ]
+      ];
     }
     this.subService.mapDocumentToService(obj).subscribe(
       data => {
@@ -215,7 +232,7 @@ export class PlansComponent implements OnInit {
     this.eventService.openSnackBar('Plans is mapped', 'OK');
     this.router.navigate(['/admin/subscription/settings', 'documents']);
     this.location.replaceState('/admin/subscription/settings/documents');
-    this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: true });
+    this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true});
   }
 
   saveDocumentPlanMapping() {
@@ -237,7 +254,7 @@ export class PlansComponent implements OnInit {
           advisorId: this.advisorId,
           planId: 0,
         }
-      ]
+      ];
     }
     this.subService.mapPlanToServiceSettings(obj).subscribe(
       data => {
