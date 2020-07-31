@@ -1,12 +1,12 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams, HttpResponse, HttpRequest} from '@angular/common/http';
-import {MatSnackBar} from '@angular/material';
-import {Observable, of} from 'rxjs';
-import {map} from 'rxjs/operators';
-import {HttpService} from 'src/app/http-service/http-service';
-import {apiConfig} from 'src/app/config/main-config';
-import {appConfig} from 'src/app/config/component-config'
-import {UtilService} from "../../../../services/util.service";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams, HttpResponse, HttpRequest } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { HttpService } from 'src/app/http-service/http-service';
+import { apiConfig } from 'src/app/config/main-config';
+import { appConfig } from 'src/app/config/component-config'
+import { UtilService } from "../../../../services/util.service";
 
 class CacheItem<T> {
   url: string;
@@ -332,7 +332,9 @@ export class BackOfficeService {
   getDetailsClientAdvisor(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CLIENT_ADVISOR_DEATILS, data);
   }
-
+  clientCount(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CLIENT_COUNT, data);
+  }
   rederToHtmlToPdf(data) {
     return this.http.post(apiConfig.MAIN_URL + appConfig.HTML_TO_PDF, data);
   }
@@ -348,7 +350,9 @@ export class BackOfficeService {
   getOrderList(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_ORDER_LIST, data);
   }
-
+  refreshCount(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.REFRESH_COUNT, data);
+  }
   getMutualFundClientList(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_MF_CLIENTS, data);
   }
