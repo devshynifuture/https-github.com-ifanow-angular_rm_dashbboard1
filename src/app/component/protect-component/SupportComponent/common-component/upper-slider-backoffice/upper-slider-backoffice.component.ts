@@ -716,7 +716,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
           element.calculatedUnits ? element.calculatedUnits : '0',
           element.aumUnits ? element.aumUnits : '0',
           element.aumDate ? this.datePipe.transform(element.aumDate) : '-',
-          element.calculatedUnits && element.aumUnits ? element.calculatedUnits - element.aumUnits : '0',
+          element.calculatedUnits - element.aumUnits,
           ((element.calculatedUnits * element.nav) - (element.aumUnits * element.nav)).toFixed(3)
         ];
 
@@ -737,7 +737,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
             element.calculatedUnits ? element.calculatedUnits : '0',
             element.aumUnits ? element.aumUnits : '0',
             element.aumDate ? this.datePipe.transform(element.aumDate) : '-',
-            element.calculatedUnits && element.aumUnits ? element.calculatedUnits - element.aumUnits : '0',
+            element.calculatedUnits - element.aumUnits,
             ((element.calculatedUnits * element.nav) - (element.aumUnits * element.nav)).toFixed(3)
           ];
           excelData.push(Object.assign(data));
