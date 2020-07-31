@@ -14,7 +14,7 @@
 <div class="mt-100">
     <div class="row">
         <div class="col-md-12">
-            <h3 class="text-success f-16 ">Good stuff this, Archit Gupta!</h3>
+            <h3 class="text-success f-16 ">Good stuff this, {{(userInfo)?userInfo.name:''}}!</h3>
             <h3 class="f-16 mb-28">The reports are now being sent...</h3>
         </div>
     </div>
@@ -27,9 +27,9 @@
             </div>
             <div class="bg-grey lter smallBoxReport">
                 <p class=" f-14 pl-10 mb-4 text-primitive">Sent to...</p>
-                <p class="mb-12 pl-10 d-flex align-items-center   f-20">{{inputData.emailSentCount}}
-                    <span class="primary-border c-p refeClassBox text-primary f-12">REFRESH</span> </p>
-                <mat-progress-bar mode="determinate" value="20"></mat-progress-bar>
+                <p class="mb-12 pl-10 d-flex align-items-center   f-20">{{(refreshCount)?refreshCount.emailSentCount:''}}
+                    <span class="primary-border c-p refeClassBox text-primary f-12"(click)="refresh()">REFRESH</span> </p>
+                <mat-progress-bar mode="determinate" value="{{(refreshCount)?refreshCount.emailSentCount:0}}"></mat-progress-bar>
             </div>
         </div>
     </div>

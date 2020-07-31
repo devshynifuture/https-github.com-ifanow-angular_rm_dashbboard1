@@ -222,11 +222,11 @@
                                                     class="f-14" mat-menu-item><img class="mr-20"
                                                         src="assets/images/svg/edit-name.svg">Rename
                                                 </button>
-                                                <!-- <button (click)="viewActivities(element)" *ngIf="valueTab != 4"
+                                                <button (click)="viewActivities(element)" *ngIf="valueTab != 4 && element.fileName == undefined"
                                                     class="f-14" mat-menu-item><img class="mr-20"
                                                         src="assets/images/svg/info-icon.svg">View
                                                     activity
-                                                </button> -->
+                                                </button>
                                                 <button (click)="openDialogCopy(element, 'Move')" *ngIf="valueTab != 4"
                                                     class="f-14" mat-menu-item><img class="mr-20"
                                                         src="assets/images/svg/move-to-icon.svg">Move
