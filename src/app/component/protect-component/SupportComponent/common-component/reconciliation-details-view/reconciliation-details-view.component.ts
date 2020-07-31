@@ -53,6 +53,8 @@ export class ReconciliationDetailsViewComponent implements OnInit {
   isLoading: boolean;
   changedBalanceUnits: any = [];
   outsideClickCount = 0;
+  filterBasedOn: any = null;
+  filterOnWhichTable: any = null;
 
   // @HostListener('document:mouseover', ['$event']) hoverOut(event) {
   //   if (!(this.eRef.nativeElement.contains(event.target))) {
@@ -246,10 +248,11 @@ export class ReconciliationDetailsViewComponent implements OnInit {
           this.disableFreezeBtn = true;
           this.disableUnfreezeBtn = false;
 
-          this.dataSource1.data.forEach(item => {
+          this.dataSource1.data.map(item => {
             item.canDeleteTransaction = false
           });
-
+          this.tableData1 = this.dataSource1.data;
+          this.sendValueToParent();
           this.eventService.openSnackBar("Freezed Folio Successfully", "DISMISS");
           // this.canDeleteTransaction = false;
         }, err => {
@@ -260,19 +263,23 @@ export class ReconciliationDetailsViewComponent implements OnInit {
 
   unfreezeFolioData() {
     this.isUnfreezeClicked = true;
+
     if (this.data && this.data.mutualFundId) {
       this.reconService.putUnfreezeFolio(this.data.mutualFundId)
         .subscribe(res => {
           // console.log(res);
           this.disableDeletionForTable2 = false;
           this.disableUnfreezeBtn = true;
-          if (this.data.difference === '0.000') {
+          if (Math.round(this.data.difference) === 0) {
             this.disableFreezeBtn = false;
           }
           // this.canDeleteTransaction = true;
-          this.dataSource1.data.forEach(item => {
-            item.canDeleteTransaction = true;
+          this.dataSource1.data.map(item => {
+            item.canDeleteTransaction = false;
           });
+
+          this.tableData1 = this.dataSource1.data;
+          this.sendValueToParent();
           this.eventService.openSnackBar("Unfreezed Folio Successfully", "DISMISS");
         }, err => {
           console.error(err);
@@ -299,6 +306,12 @@ export class ReconciliationDetailsViewComponent implements OnInit {
         this.dataSource1.data = this.tableData1.filter(item => {
           return (!value.includes(String(item.id))) ? item : null;
         });
+
+        this.tableData1 = this.dataSource1.data;
+
+        if (this.filterBasedOn && this.filterOnWhichTable) {
+          this.filterTableValues(this.filterBasedOn, this.filterOnWhichTable);
+        }
 
         this.dataSource.data.map(item => {
           item.unitOne = String(res.units);
@@ -385,6 +398,8 @@ export class ReconciliationDetailsViewComponent implements OnInit {
 
   filterTableValues(filterBasedOn, whichTable) {
     // this.filteredValues = [];
+    this.filterBasedOn = filterBasedOn;
+    this.filterOnWhichTable = whichTable
     if (whichTable === 1) {
       if (filterBasedOn === 'all') {
         this.dataSource1.data = this.tableData1;
@@ -431,7 +446,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
                   if (this.data.hasOwnProperty('freezeDate') && this.data.freezeDate) {
                     let date1 = new Date(element.transactionDate);
                     let date2 = new Date(element.freezeDate);
-                    if (date1.getTime() >= date2.getTime()) {
+                    if (date1.getTime() > date2.getTime()) {
                       canDeleteTransaction = true;
                     } else {
                       canDeleteTransaction = false;
@@ -473,7 +488,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
           if (this.data.hasOwnProperty('freezeDate') && this.data.freezeDate) {
             let date1 = new Date(element.transactionDate);
             let date2 = new Date(element.freezeDate);
-            if (date1.getTime() >= date2.getTime()) {
+            if (date1.getTime() > date2.getTime()) {
               canDeleteTransaction = true;
             } else {
               canDeleteTransaction = false;
@@ -532,6 +547,10 @@ export class ReconciliationDetailsViewComponent implements OnInit {
         this.dataSource2.data.forEach(item => {
           this.keepStatus.push(item.keep);
         });
+
+        if (this.filterBasedOn && this.filterOnWhichTable) {
+          this.filterTableValues(this.filterBasedOn, this.filterOnWhichTable);
+        }
         this.canUpdateTransactions = false;
         this.refreshAfterUpdateKeepOrRemove = true;
         // console.log(res);

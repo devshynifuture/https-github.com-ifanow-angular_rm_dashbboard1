@@ -161,7 +161,7 @@
                     <div class=" b-a p-0 height227 d-flex justify-content-center flex-column"
                         [ngClass]="(categories.Banks && categories.Banks.currentValue != 0) || (categories.fmcg && categories.fmcg.currentValue != 0) || (categories.Auto_Ancillaries && categories.Auto_Ancillaries.currentValue != 0) || (categories.OTHERS && categories.OTHERS.currentValue != 0)?'col-md-8':'col-md-12'"
                         [ngStyle]="{'border-left':(categories.Banks && categories.Banks.currentValue != 0) || (categories.fmcg && categories.fmcg.currentValue != 0) || (categories.Auto_Ancillaries && categories.Auto_Ancillaries.currentValue != 0) || (categories.OTHERS && categories.OTHERS.currentValue != 0)? 'none':''}">
-                        <div class="row b-t pt-10 pb-10" *ngIf="categories.Banks.perrcentage > 0">
+                        <div class="row bb pt-10 pb-10" *ngIf="categories.Banks.perrcentage > 0">
                             <div class="col-md-1">
                                 <div class="hw-16 mt-2 bg-Banking"></div>
                             </div>
@@ -363,6 +363,46 @@
                                 mat-header-cell style="background-color: #fff !important;"> Total
                             </th>
                         </ng-container>
+                        <ng-container matColumnDef="amt">
+                            <th *matHeaderCellDef class="br w-10 text-right" mat-header-cell> Amount invested</th>
+                            <th *matHeaderCellDef class="br" mat-header-cell></th>
+
+                            <td *matCellDef="let element" class="br text-right" mat-cell>
+                                <div class="bar">{{isLoading?'':'₹'}}<span *ngIf="!isLoading"
+                                        appFormatNumber>{{element.amountInvested}}</span></div>
+                            </td>
+                            <td *matFooterCellDef class="br proximaFont amt text-right f-600 p-8" mat-footer-cell>
+                                {{isLoading?'':'₹'}}<span *ngIf="!isLoading"
+                                    [value]="singlePortfolio.totalAmountInvested"
+                                    appFormatNumber>{{singlePortfolio.totalAmountInvested}}</span></td>
+                        </ng-container>
+                        <ng-container matColumnDef="cvalue">
+                            <th *matHeaderCellDef class="br w-10 text-right" mat-header-cell> Current value</th>
+                            <th *matHeaderCellDef class="br" mat-header-cell></th>
+
+                            <td *matCellDef="let element" class="br text-right" mat-cell>
+                                <div class="bar">{{isLoading?'':'₹'}}<span *ngIf="!isLoading"
+                                        appFormatNumber>{{element.currentMarketValue}}</span></div>
+                            </td>
+                            <td *matFooterCellDef class="br proximaFont amt text-right f-600 p-8" mat-footer-cell>
+                                {{isLoading?'':'₹'}}<span *ngIf="!isLoading" [value]="singlePortfolio.totalCurrentValue"
+                                    appFormatNumber>{{singlePortfolio.totalCurrentValue}}</span>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="gain">
+                            <th *matHeaderCellDef class="br w-10 text-right" mat-header-cell> Unrealized gain/loss</th>
+                            <th *matHeaderCellDef class="br" mat-header-cell></th>
+
+                            <td *matCellDef="let element" class="br text-right" mat-cell>
+                                <div class="bar">{{isLoading?'':'₹'}}<span *ngIf="!isLoading"
+                                        appFormatNumber>{{element.unrealizedGainLoss}}</span></div>
+                            </td>
+                            <td *matFooterCellDef class="br proximaFont amt text-right f-600 p-8" mat-footer-cell>
+                                {{isLoading?'':'₹'}}<span *ngIf="!isLoading"
+                                    [value]="singlePortfolio.totalUnrealizedGainLoss"
+                                    appFormatNumber>{{singlePortfolio.totalUnrealizedGainLoss}}</span>
+                            </td>
+                        </ng-container>
                         <!-- <ng-container matColumnDef="owner">
                             <th *matHeaderCellDef class="br w-18" mat-header-cell> Owner</th>
                             <th *matHeaderCellDef class="br" mat-header-cell></th>
@@ -410,46 +450,7 @@
                             <!--          <th mat-header-cell *matFooterCellDef class="br t-8 text-right"> Total</th>-->
 
                         </ng-container>
-                        <ng-container matColumnDef="amt">
-                            <th *matHeaderCellDef class="br w-10 text-right" mat-header-cell> Amount invested</th>
-                            <th *matHeaderCellDef class="br" mat-header-cell></th>
-
-                            <td *matCellDef="let element" class="br text-right" mat-cell>
-                                <div class="bar">{{isLoading?'':'₹'}}<span *ngIf="!isLoading"
-                                        appFormatNumber>{{element.amountInvested}}</span></div>
-                            </td>
-                            <td *matFooterCellDef class="br proximaFont amt text-right f-600 p-8" mat-footer-cell>
-                                {{isLoading?'':'₹'}}<span *ngIf="!isLoading"
-                                    [value]="singlePortfolio.totalAmountInvested"
-                                    appFormatNumber>{{singlePortfolio.totalAmountInvested}}</span></td>
-                        </ng-container>
-                        <ng-container matColumnDef="cvalue">
-                            <th *matHeaderCellDef class="br w-10 text-right" mat-header-cell> Current value</th>
-                            <th *matHeaderCellDef class="br" mat-header-cell></th>
-
-                            <td *matCellDef="let element" class="br text-right" mat-cell>
-                                <div class="bar">{{isLoading?'':'₹'}}<span *ngIf="!isLoading"
-                                        appFormatNumber>{{element.currentMarketValue}}</span></div>
-                            </td>
-                            <td *matFooterCellDef class="br proximaFont amt text-right f-600 p-8" mat-footer-cell>
-                                {{isLoading?'':'₹'}}<span *ngIf="!isLoading" [value]="singlePortfolio.totalCurrentValue"
-                                    appFormatNumber>{{singlePortfolio.totalCurrentValue}}</span>
-                            </td>
-                        </ng-container>
-                        <ng-container matColumnDef="gain">
-                            <th *matHeaderCellDef class="br w-10 text-right" mat-header-cell> Unrealized gain/loss</th>
-                            <th *matHeaderCellDef class="br" mat-header-cell></th>
-
-                            <td *matCellDef="let element" class="br text-right" mat-cell>
-                                <div class="bar">{{isLoading?'':'₹'}}<span *ngIf="!isLoading"
-                                        appFormatNumber>{{element.unrealizedGainLoss}}</span></div>
-                            </td>
-                            <td *matFooterCellDef class="br proximaFont amt text-right f-600 p-8" mat-footer-cell>
-                                {{isLoading?'':'₹'}}<span *ngIf="!isLoading"
-                                    [value]="singlePortfolio.totalUnrealizedGainLoss"
-                                    appFormatNumber>{{singlePortfolio.totalUnrealizedGainLoss}}</span>
-                            </td>
-                        </ng-container>
+                      
                         <ng-container matColumnDef="ret">
                             <th *matHeaderCellDef class="br w-10 text-right" mat-header-cell> Absolute returns</th>
                             <th *matHeaderCellDef class="br" mat-header-cell></th>
@@ -493,7 +494,7 @@
                                 <img class="c-p " src="/assets/images/svg/dot-menu.svg">
                                 <mat-menu #menu25="matMenu">
                                     <button mat-menu-item (click)="editStock(element,singlePortfolio)">Edit</button>
-                                    <button mat-menu-item>Detailed view</button>
+                                    <button mat-menu-item  (click)="opendetailviews(data)">Detailed view</button>
                                     <!-- <button mat-menu-item>Activity</button> -->
                                     <button mat-menu-item (click)="deleteModal('STOCK',element)">Delete</button>
                                 </mat-menu>

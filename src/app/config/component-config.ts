@@ -78,9 +78,11 @@ export const appConfig = {
   Fileorder_Status_Report_Get: 'asset/fileorder/status/report/get',
   ///////////////////////////////BULK EMAIL///////////////////////////////
   GET_CLIENT_ADVISOR_DEATILS: '/backoffice/bulk-report/advisor-client/detail/get',
+  GET_CLIENT_COUNT:'mutual-fund/report/client-count/get',
   HTML_TO_PDF: 'pdfAndEmail/bulk-mail/html-to-pdf',
   GET_CLIENT_IN_LOOP: 'mutual-fund/report/bulk-order/save',
   GET_ORDER_LIST: 'mutual-fund/report/bulk-order/list/get',
+  REFRESH_COUNT:'mutual-fund/report/bulk-order/refresh',
   GET_MF_CLIENTS: 'mutual-fund/report/client-setting/list/get',
   SAVE_SETTING: 'mutual-fund/report/client-setting/edit',
   /////////////////////////////Accounts///////////////////////////////////
