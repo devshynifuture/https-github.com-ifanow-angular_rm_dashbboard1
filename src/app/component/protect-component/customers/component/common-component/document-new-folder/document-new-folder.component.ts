@@ -38,7 +38,7 @@ export class DocumentNewFolderComponent implements OnInit {
     this.showSpinner = true
 
 
-    if (this.folderUpload != 'CREATE') {
+    if (this.folderUpload != 'CREATE'||this.folderUpload != 'Create') {
       let obj = {
         newFolder: value, rename: this.SendObj
       }
