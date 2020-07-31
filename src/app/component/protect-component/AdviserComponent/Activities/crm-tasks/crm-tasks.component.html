@@ -29,7 +29,7 @@
 
             <ng-container matColumnDef="client">
                 <th *matHeaderCellDef class="" mat-header-cell> Client</th>
-                <td *matCellDef="let element" mat-cell (click)="openAddTask(element)">
+                <td *matCellDef="let element" mat-cell (click)="openAddTask(element)" class="c-p">
                     <div class="bar">
                         {{element.client}}
                     </div>
