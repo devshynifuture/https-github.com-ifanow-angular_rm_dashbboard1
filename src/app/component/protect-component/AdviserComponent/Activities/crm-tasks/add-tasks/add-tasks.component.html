@@ -26,7 +26,7 @@
                 Add Task
             </span>
         </div>
-        <div class="col-md-2 full-center">
+        <div class="col-md-2 full-center pr-0">
 
             <i class="material-icons c-p" (click)="close(true)"> clear</i>
 
@@ -253,7 +253,7 @@
                 <div class="col-md-6 pl-0" [ngClass]="subTaskCompleteCheckbox.checked ? 'line-through': ''">
                     {{ item.description }}
                 </div>
-                <div class="col-md-5 pr-30 text-right">
+                <div class="col-md-5 pr-0 text-right">
                     <span class="material-icons c-p" (click)="changeTabState(item, 2)">
                         keyboard_arrow_right
                     </span>
@@ -262,13 +262,13 @@
         </div>
     </div>
     <div class="row pt-5 pb-5" *ngIf="data !== null && subTaskList.length === 0">
-        <h5 class="p-22 b-a text-center">
+        <h5 class=" col-md-12 text-center">
             No Sub tasks found, Try adding some
         </h5>
     </div>
 
     <div formArrayName="subTask" *ngFor="let item of subTask.controls; index as i">
-        <div class="row pb-16" [formGroupName]="i">
+        <div class="row" [formGroupName]="i">
             <div class="col-md-4 pl-30">
                 <mat-form-field>
                     <input class="form-control br-0 text-left" matInput type="text" formControlName="description">
@@ -317,8 +317,8 @@
         </div>
     </div>
 
-    <div class="row pt-14">
-        <div class="col-md-12 text-primitive f-14 pl-30" (click)="addSubTask(null)">
+    <div class="row pt-14 pb-28">
+        <div class="col-md-6 text-primitive f-14" (click)="addSubTask(null)">
             <img src="assets/images/svg/plus-icon-gray.svg" class="c-p"> Add sub-task
         </div>
     </div>
