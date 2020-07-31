@@ -249,17 +249,17 @@
             </div>
         </div>
 
-        <div class="row pt-5 pb-5" *ngFor="let item of subTaskList; index as i">
+        <div class="row" *ngFor="let item of subTaskList; index as i">
             <div class="col-md-12 pl-30">
-                <div class="row pt-5 bt-1 bb-1">
+                <div class="row pt-5 bt-1">
                     <div class="col-md-1 pl-10">
                         <mat-checkbox [checked]="item.status == 1" #subTaskCompleteCheckbox
                             (change)="toggleCheckSubTask(subTaskCompleteCheckbox.checked, item, i)"></mat-checkbox>
                     </div>
-                    <div class="col-md-6 pl-0" [ngClass]="subTaskCompleteCheckbox.checked ? 'line-through': ''">
+                    <div class="col-md-5 pl-0" [ngClass]="subTaskCompleteCheckbox.checked ? 'line-through': ''">
                         {{ item.description }}
                     </div>
-                    <div class="col-md-4 pr-30 text-right">
+                    <div class="col-md-6 text-right pr-0">
                         <span class="material-icons" (click)="changeTabState(item, 2)">
                             keyboard_arrow_right
                         </span>
@@ -324,7 +324,7 @@
         </div>
 
         <div class="row pt-14">
-            <div class="col-md-12 text-primitive f-14 pl-30" (click)="addSubTask(null)">
+            <div class="col-md-12 text-primitive f-14 pl-30 c-p" (click)="addSubTask(null)">
                 <img src="assets/images/svg/plus-icon-gray.svg" class="c-p"> Add sub-task
             </div>
         </div>
@@ -621,7 +621,7 @@
                 </mat-form-field>
 
                 <div class="row pt-10">
-                    <div class="col-md-12 f-14 p-0" *ngIf="data!==null">
+                    <div class="col-md-12 f-14 p-0 pb-16" *ngIf="data!==null">
                         Collaborators
                         <span *ngFor="let item of collaboratorList">
                             <img [src]="item.profilePicUrl" class="c-p ml-12 avatarImg" [matTooltip]="item.name"
