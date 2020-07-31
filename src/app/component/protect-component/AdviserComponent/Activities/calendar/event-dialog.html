@@ -28,14 +28,14 @@
                     </mat-form-field>
                 </div>
             </div>
-
-            <div class="col-md-4" *ngIf="showTime">
+            <!-- *ngIf="showTime" -->
+            <div class="col-md-4" >
                 <div class="row">
                     <div class="col-md-6 pl-0 pr-2">
                         <h5 class="text-black mb-4 f-14 ">Start time</h5>
                         <div class="form-group">
                             <mat-form-field>
-                                <mat-select class="form-control" matNativeControl formControlName="startTime" (change)="setTime('start')">
+                                <mat-select class="form-control" matNativeControl formControlName="startTime" (selectionChange)="setTime('start')">
                                     <mat-option *ngFor="let time of timeArr" [value]="time">{{time}}</mat-option>
                                 </mat-select>
                             </mat-form-field>
@@ -45,7 +45,7 @@
                         <h5 class="text-black mb-4 f-14 ">End time</h5>
                         <div class="form-group">
                             <mat-form-field>
-                                <mat-select class="form-control" matNativeControl formControlName="endTime" (change)="setTime('end')">
+                                <mat-select class="form-control" matNativeControl formControlName="endTime" (selectionChange)="setTime('end')">
                                     <mat-option *ngFor="let time of timeArr" [value]="time" [hidden]="eventForm.value.startTime > time"> {{time}} </mat-option>
                                 </mat-select>
                             </mat-form-field>

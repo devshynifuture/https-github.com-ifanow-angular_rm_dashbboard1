@@ -15,7 +15,9 @@ const routes: Routes = [
   { path: 'notes', component: CrmNotesComponent },
   { path: 'tasks', component: CrmTasksComponent },
   { path: 'opportunities', component: CrmOpportunitiesComponent },
-  { path: 'calendar', component: CalendarComponent }
+  { path: 'calendar', 
+    loadChildren: () => import('src/app/component/protect-component/AdviserComponent/Activities/calendar/calendar.module').then(m => m.CalendarModule),
+  }
 ];
 
 @NgModule({

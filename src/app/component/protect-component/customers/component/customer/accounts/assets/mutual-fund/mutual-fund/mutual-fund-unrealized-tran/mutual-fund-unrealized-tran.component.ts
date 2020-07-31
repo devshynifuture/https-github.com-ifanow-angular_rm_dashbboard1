@@ -210,13 +210,12 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     }
     this.dataTransaction.displayedColumns = this.displayedColumns
   }
-  // ngAfterViewInit() {
-  //   let para = document.getElementById('template');
-  //   if (para.innerHTML) {
-  //     this.generatePdfBulk()
-
-  //   }
-  // }
+  ngAfterViewInit() {
+    let para = document.getElementById('template');
+    if (para.innerHTML) {
+      this.generatePdfBulk()
+    }
+  }
 
   getFilterData(value) {
     this.mfService.getMfData()
@@ -679,23 +678,6 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         this.dataTransaction.viewMode = this.mode
         this.dataTransaction.setDefaultFilterData = this.setDefaultFilterData
         this.dataTransaction.columnHeader = this.columnHeader
-        if (mutualFund.flag == true) {
-          this.dataTransaction.flag = true
-          if (this.route.url.split('?')[0] == '/pdf/allTransactions') {
-            this.generatePdfBulk()
-          }
-          if (this.route.url.split('?')[0] == '/pdf/unrealisedTransactions') {
-            this.generatePdfBulk()
-          }
-        }
-        if (this.route.url.split('?')[0] == '/pdf/allTransactions' && this.isLoading == false) {
-          this.showDownload = true
-          this.generatePdfBulk()
-        }
-        if (this.route.url.split('?')[0] == '/pdf/unrealisedTransactions' && this.isLoading == false) {
-          this.showDownload = true
-          this.generatePdfBulk()
-        }
         this.mfService.setTransactionData(this.dataTransaction)
 
         if (this.viewMode == 'All Transactions' || this.viewMode == 'all transactions') {
@@ -709,6 +691,17 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         }
         // console.log(`MUTUALFUND COMPONENT page got message:`, data);
         this.isLoading = false;
+        if (mutualFund.flag == true) {
+          this.dataTransaction.flag = true
+        }
+        if (this.route.url.split('?')[0] == '/pdf/allTransactions' && this.isLoading == false) {
+          this.showDownload = true
+          this.generatePdfBulk()
+        }
+        if (this.route.url.split('?')[0] == '/pdf/unrealisedTransactions' && this.isLoading == false) {
+          this.showDownload = true
+          this.generatePdfBulk()
+        }
         this.changeInput.emit(false);
         // this.changeDetectorRef.detectChanges();
       };
@@ -1026,9 +1019,11 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         advisorId: this.advisorId,
         fromEmail: this.clientDetails.advisorData.email,
         toEmail: this.clientData.email
+        // fromEmail: 'devshyni@futurewise.co.in',
+        // toEmail: 'devshyni@futurewise.co.in'
       }
       this.utilService.bulkHtmlToPdf(obj)
-        this.utilService.htmlToPdf(para, 'transaction', true, this.fragmentData, '', '')
+       // this.utilService.htmlToPdf(para, 'transaction', true, this.fragmentData, '', '')
     }, 200);
   }
   getDetails() {

@@ -88,6 +88,7 @@ export class AddTasksComponent implements OnInit {
   initPoint() {
     this.getTaskRecurringData()
     if (this.data !== null) {
+      this.isManual = true;
       this.collaboratorList = this.data.collaborators;
       this.commentList = this.data.comments;
       this.commentList.map(element => {
@@ -142,7 +143,7 @@ export class AddTasksComponent implements OnInit {
   formInit(data) {
     if (data !== null) {
       this.subTaskList = data.subTasks;
-      this.showManualToggle = false;
+      // this.showManualToggle = false;
       let tempClientList = this.enumDataService.getClientSearchData('');
       this.selectedClient = tempClientList.find(item => item.clientId = data.clientId);
       data.displayName = this.selectedClient.displayName;
@@ -455,7 +456,11 @@ export class AddTasksComponent implements OnInit {
 
     if (this.selectedSubTask.dueDate) {
       let date = new Date(this.selectedSubTask.dueDate)
-      let dueDate = date.getFullYear() + "-" + `${(date.getMonth() + 1) < 10 ? '0' : ''}` + (date.getMonth() + 1) + '-' + date.getDate();
+      let dueDate = date.getFullYear() + "-"
+        + `${(date.getMonth() + 1) < 10 ? '0' : ''}`
+        + (date.getMonth() + 1) + '-'
+        + `${date.getDate() < 10 ? '0' : ''}`
+        + date.getDate();
       data['dueDate'] = dueDate;
     }
 
@@ -515,30 +520,12 @@ export class AddTasksComponent implements OnInit {
   }
 
   downloadAttachment(item) {
+    this.isMainLoading = true;
     this.crmTaskService.getAttachmentDownloadOfTaskSubTask({ taskAttachmentId: item.id })
       .subscribe(res => {
+        this.isMainLoading = false;
         if (res) {
           window.open(res);
-          // this.http.get(res, {})
-          //   .subscribe(res => {
-          //     if (res) {
-          //       window.open(res);
-          //     }
-          //   })
-          // const httpOptions = {
-          //   headers: new HttpHeaders()
-          //     .set('Content-Type', '')
-          // };
-          // this.http.getHttpClient(res, httpOptions)
-          //   .subscribe(res => {
-          //     if (res) {
-          //       console.log("download attachment response::", res);
-          //     }
-          //   }, err => console.error(err))
-          // let link = document.createElement('a');
-          // link.href = res;
-          // link.download = item.attachmentName;
-          // link.click();
         } else {
           this.eventService.openSnackBar("Fetching attachment Failed !", "DISMISS");
           console.log("hopefully this is error", res);
@@ -588,9 +575,11 @@ export class AddTasksComponent implements OnInit {
       attachmentName: value.attachmentName,
       s3Uuid: value.s3Uuid
     }
+    this.isMainLoading = true;
     this.crmTaskService.addAttachmentTaskSubTask(data)
       .subscribe(res => {
         if (res) {
+          this.isMainLoading = false;
           console.log("attachment aws respo:", res);
           if (choice === 'task') {
             this.attachmentList.push(res);
@@ -622,6 +611,7 @@ export class AddTasksComponent implements OnInit {
             this.subTaskList.push(res)
             this.addTaskForm.get(`subTask.${formGroupIndex}`).reset();
             this.eventService.openSnackBar("Successfully appended Subtask ", "DISMISS");
+            this.removeSubTask(formGroupIndex);
           }
         });
     } else {
@@ -721,10 +711,9 @@ export class AddTasksComponent implements OnInit {
     let taskNumberForSubTask;
     if (this.subTaskList.length !== 0) {
       this.subTaskList.forEach(element => {
-        let assignedTo = this.data !== null ? element.ownerId : element.assignedTo;
         subTaskArr.push({
           taskNumber: this.getSubTaskNumber(),
-          assignedTo,
+          assignedTo: element.ownerId,
           description: element.description,
           turnAroundTime: element.turnAroundTime
         });
@@ -871,6 +860,14 @@ export class AddTasksComponent implements OnInit {
   getFileData(fileList: FileList, choice) {
     let fileData = fileList.item(0);
     this.getUploadUrlForAttachment(fileData, choice);
+  }
+
+  taskUpperFile(fileList: FileList) {
+    if (this.tabState === 1) {
+      this.getFileData(fileList, 'task')
+    } else if (this.tabState === 2) {
+      this.getFileData(fileList, 'subTask')
+    }
   }
 
   preventDefault(event) {

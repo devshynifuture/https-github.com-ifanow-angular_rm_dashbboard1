@@ -14,7 +14,6 @@ import {DashEvent} from '../dash-event';
 })
 export class CalendarScheduleComponent implements OnInit {
   dialogData: any;
-
   viewDate: any;
   numbersOfDays: any;
   lastMonthDays: any;
@@ -33,6 +32,7 @@ export class CalendarScheduleComponent implements OnInit {
   current_day = new Date();
   userInfo: any;
   currentYear: any;
+  isLoading:boolean;
   private unSubcrip: Subscription;
   E = [];
   sun: any = [];
@@ -52,6 +52,7 @@ export class CalendarScheduleComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isLoading = true;  
     if(!this.calenderService.dayArrey){
     this.currentMonth = new Date().getMonth();
     this.currentYear = new Date().getFullYear();
@@ -106,8 +107,8 @@ export class CalendarScheduleComponent implements OnInit {
     this.calenderService.getEvent(eventData).subscribe((data) => {
 
       if (data != undefined) {
-
-        this.eventData = data;
+          this.isLoading = false;  
+          this.eventData = data;
 
         // console.log(data, "events calender", this.eventData);
         // this.formatedEvent = [];
@@ -239,6 +240,7 @@ export class CalendarScheduleComponent implements OnInit {
         this.currentMonthEvents.push(dayArr);
       }
     }
+
   }
 
   formateDate(date) {
