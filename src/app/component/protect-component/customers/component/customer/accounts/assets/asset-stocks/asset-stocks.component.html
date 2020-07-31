@@ -148,7 +148,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-7 pl-4 pr-0" *ngIf="(categories.Banks && categories.Banks.currentValue != 0) || (categories.fmcg && categories.fmcg.currentValue != 0) || (categories.Auto_Ancillaries && categories.Auto_Ancillaries.currentValue != 0) || (categories.OTHERS && categories.OTHERS.currentValue != 0)">
+            <div class="col-md-7 pl-4 pr-0"
+                *ngIf="(categories.Banks && categories.Banks.currentValue != 0) || (categories.fmcg && categories.fmcg.currentValue != 0) || (categories.Auto_Ancillaries && categories.Auto_Ancillaries.currentValue != 0) || (categories.OTHERS && categories.OTHERS.currentValue != 0)">
                 <div class="row">
                     <div class="col-md-4 p-0 b-a"
                         *ngIf="(categories.Banks && categories.Banks.currentValue != 0) || (categories.fmcg && categories.fmcg.currentValue != 0) || (categories.Auto_Ancillaries && categories.Auto_Ancillaries.currentValue != 0)|| (categories.OTHERS && categories.OTHERS.currentValue != 0)">
@@ -450,7 +451,7 @@
                             <!--          <th mat-header-cell *matFooterCellDef class="br t-8 text-right"> Total</th>-->
 
                         </ng-container>
-                      
+
                         <ng-container matColumnDef="ret">
                             <th *matHeaderCellDef class="br w-10 text-right" mat-header-cell> Absolute returns</th>
                             <th *matHeaderCellDef class="br" mat-header-cell></th>
@@ -494,7 +495,12 @@
                                 <img class="c-p " src="/assets/images/svg/dot-menu.svg">
                                 <mat-menu #menu25="matMenu">
                                     <button mat-menu-item (click)="editStock(element,singlePortfolio)">Edit</button>
-                                    <button mat-menu-item  (click)="opendetailviews(data)">Detailed view</button>
+                                    <!-- build issue -->
+
+                                    <button mat-menu-item (click)="opendetailviews()">Detailed view</button>
+
+                                    <!-- <button mat-menu-item  (click)="opendetailviews(data)">Detailed view</button> -->
+
                                     <!-- <button mat-menu-item>Activity</button> -->
                                     <button mat-menu-item (click)="deleteModal('STOCK',element)">Delete</button>
                                 </mat-menu>
