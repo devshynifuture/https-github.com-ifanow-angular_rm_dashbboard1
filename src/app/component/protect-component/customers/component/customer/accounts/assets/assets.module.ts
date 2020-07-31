@@ -34,6 +34,7 @@ import {MutualFundSummaryComponent} from './mutual-fund/mutual-fund/mutual-fund-
 import {MutualFundUnrealizedTranComponent} from './mutual-fund/mutual-fund/mutual-fund-unrealized-tran/mutual-fund-unrealized-tran.component';
 import {MutualFundGoalLinkageComponent} from './mutual-fund/mutual-fund/mutual-fund-goal-linkage/mutual-fund-goal-linkage.component';
 import {MfCapitalDetailedComponent} from './mutual-fund/mutual-fund/mf-capital-detailed/mf-capital-detailed.component';
+// import { StockDetailsViewComponent } from './stock-details-view/stock-details-view.component';
 
 
 @NgModule({
@@ -63,6 +64,7 @@ import {MfCapitalDetailedComponent} from './mutual-fund/mutual-fund/mf-capital-d
     PoTdSchemeComponent,
     PoMisSchemeComponent,
     MfCapitalDetailedComponent,
+    
   ],
   imports: [
     CommonModule,
