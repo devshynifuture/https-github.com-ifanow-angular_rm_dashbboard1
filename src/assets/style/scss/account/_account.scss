@@ -4,7 +4,16 @@
     height: 40px !important;
   }
 }
+.stock-transactions-details-view{
+  #table-low th{
+    padding: 6px !important;
+  }
+  tr.mat-header-row{
 
+    height: 40px !important;
+  }
+  tr.mat-row{height: 36px !important;}
+}
 #ui-plan-summary .light-blue {
   .mat-progress-bar-buffer {
     background: #626262 !important;
