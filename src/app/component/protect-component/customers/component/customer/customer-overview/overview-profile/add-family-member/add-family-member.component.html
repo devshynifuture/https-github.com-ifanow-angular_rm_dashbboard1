@@ -230,8 +230,9 @@
                     <div class="w-28 pl-10 pr-10">
                         <div class="form-group remove-padding-matfield">
                             <mat-form-field appearance="standard" floatLabel="never">
-                                <input #name (input)="capitalise($event)" class="form-control" formControlName="name"
-                                    matInput maxlength="50" placeholder="Enter name">
+                                <input [inputValidator]="validatorType.TEXT_ONLY" appInputValueValidation #name
+                                    (input)="capitalise($event)" class="form-control" formControlName="name" matInput
+                                    maxlength="50" placeholder="Enter name">
                                 <mat-error>This field is required</mat-error>
                                 <mat-hint align="end" class="f-12">{{name.value.length}}/50</mat-hint>
                             </mat-form-field>
