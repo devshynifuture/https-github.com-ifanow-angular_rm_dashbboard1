@@ -16,6 +16,7 @@ import { ScripFieldComponent } from './assets/asset-stocks/scrip-field/scrip-fie
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 import { CustomCommonModule } from 'src/app/common/custom.common.module';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { StockDetailsViewComponent } from './assets/stock-details-view/stock-details-view.component';
 export const componentList = [
   UpperCustomerComponent,
   AddAssetStocksComponent,
@@ -24,7 +25,8 @@ export const componentList = [
   AddScripComponent,
   StockScripLevelTransactionComponent,
   PortfolioFieldComponent,
-  ScripFieldComponent
+  ScripFieldComponent,
+  StockDetailsViewComponent
 ];
 
 @NgModule({

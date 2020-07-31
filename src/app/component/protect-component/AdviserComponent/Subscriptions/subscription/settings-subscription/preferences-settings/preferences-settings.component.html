@@ -20,10 +20,10 @@
                         [ngClass]="{'b-outline':viewMode =='tab4','':viewMode =='tab4'}" class=" c-p">
                         Subscriptions
                     </li>
-                    <li (click)="viewMode ='tab5'" [ngClass]="{'b-outline':viewMode =='tab5','':viewMode =='tab5'}"
-                        class=" c-p">
-                        Email settings
-                    </li>
+<!--                    <li (click)="viewMode ='tab5'" [ngClass]="{'b-outline':viewMode =='tab5','':viewMode =='tab5'}"-->
+<!--                        class=" c-p">-->
+<!--                        Email settings-->
+<!--                    </li>-->
                 </ul>
 
             </div>
@@ -326,18 +326,6 @@
                 </div>
                 <div *ngSwitchCase="'tab5'">
                     <div class="wrapper-12 pb-0">
-                        <!--                        <div class="row">-->
-                        <!--                            <div class="col-md-12">-->
-                        <!--                                <h4 class="fmd-17">Email configuration <span matBadge="4" matBadgeOverlap="false"-->
-                        <!--                                        class="text-danger ba-danger f-10">NOT CONFIGURED</span></h4>-->
-                        <!--                            </div>-->
-                        <!--                            <div class="col-md-5">-->
-
-                        <!--                                <div class="form-group">-->
-                        <!--                                    <input type="text" class="form-control br-0">-->
-                        <!--                                </div>-->
-                        <!--                            </div>-->
-                        <!--                        </div>-->
                         <div class="row pt-12">
                             <div class="col-md-12">
                                 <h4>Email templates</h4>
@@ -379,11 +367,6 @@
                                                 <div class="col-md-11 p-0">
                                                     <h3 class="f-20 l-26"> Quotations</h3>
                                                 </div>
-                                                <!-- <div class="col-md-1 p-0 text-right">
-                                                    <i class="material-icons  text-custom f-32">
-                                                        more_vert
-                                                    </i>
-                                                </div> -->
                                             </div>
                                         </div>
                                         <div class="wrapper-20 pl-24">
@@ -407,11 +390,6 @@
                                                 <div class="col-md-11 p-0">
                                                     <h3 class="f-20 l-26"> Documents with esign request</h3>
                                                 </div>
-                                                <!-- <div class="col-md-1 p-0 text-right">
-                                                    <i class="material-icons  text-custom f-32">
-                                                        more_vert
-                                                    </i>
-                                                </div> -->
                                             </div>
                                         </div>
                                         <div class="wrapper-20 pl-24">
@@ -425,8 +403,6 @@
                                     </mat-card>
                                 </div>
                             </div>
-
-
                             <div class="col-md-6 c-p" (click)="openEmailInvoice(this.storeData[3])">
                                 <div class="example-card">
                                     <mat-card class="p-0 b-a">
@@ -435,11 +411,6 @@
                                                 <div class="col-md-11 p-0">
                                                     <h3 class="f-20 l-26"> Documents without eSign request</h3>
                                                 </div>
-                                                <!-- <div class="col-md-1 p-0 text-right">
-                                                    <i class="material-icons  text-custom f-32">
-                                                        more_vert
-                                                    </i>
-                                                </div> -->
                                             </div>
                                         </div>
                                         <div class="wrapper-20 pl-24">

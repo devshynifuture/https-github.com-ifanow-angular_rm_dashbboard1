@@ -23,7 +23,7 @@
             <!-- <p class="m-0 text-black text-right c-p pr-16 pt-8" (click)="openFroala()">Activity log</p> -->
         </div>
     </div>
-    <div class="wrapper-20">
+    <div class="wrapper-20 pt-60">
         <div [ngClass]="{'pe-none': storeData.quotation}" class="row">
             <div class="col-md-12 p-0" *ngIf="storeData!=null">
                 <h3 class="mb-8 mt-20">{{storeData.documentName}}</h3>
@@ -89,14 +89,12 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close('close',false)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button mat-button class="btn-bottom br-0 text-inherit" (click)="save()"
-                *ngIf="changeFooter=='emailQuotation'">
+            <button mat-button class="btn-bottom br-0 text-inherit" (click)="save()" *ngIf="changeFooter=='emailQuotation'">
                 SAVE
             </button>
             <div *ngIf="changeFooter!='emailQuotation' || changeEmailOnly!=undefined">
                 <!--      <div *ngIf="changeFooter!='emailQuotation' || changeEmailOnly!=undefined || screenType!=undefined">-->
-                <button mat-button class="btn-bottom br-0 text-inherit mr-20"
-                    *ngIf="changeEmailOnly=='openEmailQuot'">Email
+                <button mat-button class="btn-bottom br-0 text-inherit mr-20" *ngIf="changeEmailOnly=='openEmailQuot'">Email
                     only <i class="material-icons">
                         arrow_drop_up
                     </i></button>
@@ -105,11 +103,9 @@
           class="material-icons">
           arrow_drop_up
         </i></button> -->
-                <button mat-button class="btn-bottom br-0 text-inherit" *ngIf="changeFooter=='viewQuotation' "
-                    (click)="save()">SAVE
+                <button mat-button class="btn-bottom br-0 text-inherit" *ngIf="changeFooter=='viewQuotation' " (click)="save()">SAVE
                 </button>
-                <button mat-button class="btn-bottom br-0 text-inherit" *ngIf="changeFooter!='viewQuotation'"
-                    (click)="Open('eSignRequestDocuments','open',null)">Email with eSign Request <i
+                <button mat-button class="btn-bottom br-0 text-inherit" *ngIf="changeFooter!='viewQuotation'" (click)="Open('eSignRequestDocuments','open',null)">Email with eSign Request <i
                         class="material-icons">
                         arrow_drop_up
                     </i></button>
@@ -124,8 +120,7 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close('close',false)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <button *ngIf="saveQuotationFlag==undefined" mat-button class="btn-bottom br-0 text-inherit pr-4 pl-4"
-                (click)="save()">SAVE</button>
+            <button *ngIf="saveQuotationFlag==undefined" mat-button class="btn-bottom br-0 text-inherit pr-4 pl-4" (click)="save()">SAVE</button>
             <button *ngIf="sendEmailFlag" mat-button class="btn-bottom p-0 mw-40 " [matMenuTriggerFor]="menu"><i
                     class="material-icons">
                     keyboard_arrow_up
@@ -137,8 +132,7 @@
             </mat-menu>
             <!-- <button *ngIf="saveQuotationFlag" mat-button class="btn-bottom br-0 text-inherit pr-4 pl-4"
                 (click)="createQuotation()">SAVE</button> -->
-            <app-progress-button *ngIf="saveQuotationFlag" (btnClick)="createQuotation()" class="br-0 text-inherit"
-                [options]="barButtonOptions">
+            <app-progress-button *ngIf="saveQuotationFlag" (btnClick)="createQuotation()" class="br-0 text-inherit" [options]="barButtonOptions">
             </app-progress-button>
         </div>
     </div>
