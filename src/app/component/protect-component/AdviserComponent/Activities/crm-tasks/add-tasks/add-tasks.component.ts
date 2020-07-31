@@ -526,26 +526,6 @@ export class AddTasksComponent implements OnInit {
         this.isMainLoading = false;
         if (res) {
           window.open(res);
-          // this.http.get(res, {})
-          //   .subscribe(res => {
-          //     if (res) {
-          //       window.open(res);
-          //     }
-          //   })
-          // const httpOptions = {
-          //   headers: new HttpHeaders()
-          //     .set('Content-Type', '')
-          // };
-          // this.http.getHttpClient(res, httpOptions)
-          //   .subscribe(res => {
-          //     if (res) {
-          //       console.log("download attachment response::", res);
-          //     }
-          //   }, err => console.error(err))
-          // let link = document.createElement('a');
-          // link.href = res;
-          // link.download = item.attachmentName;
-          // link.click();
         } else {
           this.eventService.openSnackBar("Fetching attachment Failed !", "DISMISS");
           console.log("hopefully this is error", res);
@@ -631,6 +611,7 @@ export class AddTasksComponent implements OnInit {
             this.subTaskList.push(res)
             this.addTaskForm.get(`subTask.${formGroupIndex}`).reset();
             this.eventService.openSnackBar("Successfully appended Subtask ", "DISMISS");
+            this.removeSubTask(formGroupIndex);
           }
         });
     } else {
