@@ -20,21 +20,21 @@ export class AddQuotationSubscriptionComponent implements OnInit {
   selectedPlan: any;
   clientData: any;
   noDataFoundFlag: boolean;
-  feeStructureHtmlData: string = '';
+  feeStructureHtmlData = '';
   orgDetails: any;
   billerInfo: any;
   organisationFlag: any;
   billerFlag: any;
 
   constructor(public subInjectService: SubscriptionInject,
-    private subService: SubscriptionService,
-    private eventService: EventService
-    , private router: Router,
-    private settingsService: SettingsService) { }
+              private subService: SubscriptionService,
+              private eventService: EventService
+    ,         private router: Router,
+              private settingsService: SettingsService) { }
 
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
-    text: 'SAVE',
+    text: 'NEXT',
     buttonColor: 'accent',
     barColor: 'accent',
     raised: true,
@@ -50,8 +50,8 @@ export class AddQuotationSubscriptionComponent implements OnInit {
 
 
   @Input() set data(data) {
-    data
-  };
+    data;
+  }
   ngOnInit() {
     this.data;
     this.advisorId = AuthService.getAdvisorId();
@@ -69,11 +69,10 @@ export class AddQuotationSubscriptionComponent implements OnInit {
       data => {
         if (data && data.length > 0) {
           this.noDataFoundFlag = false;
-          this.planSettingData = data
-        }
-        else {
+          this.planSettingData = data;
+        } else {
           this.noDataFoundFlag = true;
-          this.planSettingData = undefined
+          this.planSettingData = undefined;
         }
       }
     );
@@ -81,30 +80,29 @@ export class AddQuotationSubscriptionComponent implements OnInit {
 
   createSubscription(value, data) {
     if (!data.quotation) {
-      this.eventService.openSnackBar("Please map quotation to plan", "Dismiss");
+      this.eventService.openSnackBar('Please map quotation to plan', 'Dismiss');
       this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: false });
       this.router.navigate(['/admin/subscription/settings/documents']);
       return;
     }
-    data.quotation['planId'] = data.id;
+    data.quotation.planId = data.id;
     data.quotation.documentText = data.quotation.documentText.replace(new RegExp(UtilService.escapeRegExp('$plan_name'), 'g'), data.name);
-    data = data['quotation'];
-    data['feeStructureFlag'] = data.documentText.includes('$service_fee');
+    data = data.quotation;
+    data.feeStructureFlag = data.documentText.includes('$service_fee');
     // data['feeStructureFlag'] = data.documentText.includes('$service_name');
     // this.organisationFlag = data.documentText.includes('$organization');
     // this.billerFlag = data.documentText.includes('$biller');
-    data['quotationFlag'] = true;
+    data.quotationFlag = true;
     this.getServicesForPlan(data);
   }
 
 
   getServicesForPlan(quotationData) {
     this.barButtonOptions.active = true;
-    const obj =
-    {
+    const obj = {
       advisorId: this.advisorId,
       planId: quotationData.planId
-    }
+    };
     this.subService.getSettingPlanServiceData(obj).subscribe(
       responseData => {
         if (responseData && responseData.length > 0) {
@@ -113,7 +111,7 @@ export class AddQuotationSubscriptionComponent implements OnInit {
           this.createFeeStructureForFroala(responseData, quotationData);
         }
       }
-    )
+    );
   }
 
   createSubscriptionResponse(data) {
@@ -121,7 +119,7 @@ export class AddQuotationSubscriptionComponent implements OnInit {
   }
 
   openFroala(data, value) {
-    data['isAdvisor'] = true;
+    data.isAdvisor = true;
     const fragmentData = {
       flag: value,
       data,
@@ -142,7 +140,7 @@ export class AddQuotationSubscriptionComponent implements OnInit {
   createFeeStructureForFroala(responseData, quotationData) {
     let servicesName = '';
     responseData.forEach(element => {
-      let feeStructureTable = `<div class="hide">
+      const feeStructureTable = `<div class="hide">
 <table style="width: 100%; margin: 0px auto; border: 1px solid rgba(0, 0, 0, 0.12);" align="center">
    <tr>
        <td>
@@ -154,7 +152,7 @@ export class AddQuotationSubscriptionComponent implements OnInit {
                    </td>
                </tr>
            </table>
-       </td>  
+       </td>
    </tr>
    <tr>
        <td>
@@ -265,7 +263,7 @@ export class AddQuotationSubscriptionComponent implements OnInit {
         }
       },
       err => {
-        this.eventService.openSnackBar(err, "Dismiss")
+        this.eventService.openSnackBar(err, 'Dismiss');
       }
     );
   }
@@ -273,13 +271,12 @@ export class AddQuotationSubscriptionComponent implements OnInit {
   select(data) {
     this.planSettingData.forEach(element => {
       if (data.id == element.id) {
-        data.selected = true
-        this.selectedPlan = data
-      }
-      else {
+        data.selected = true;
+        this.selectedPlan = data;
+      } else {
         element.selected = false;
       }
-    })
+    });
   }
   Close(flag) {
     this.subInjectService.changeUpperRightSliderState({ state: 'close', refreshRequired: flag });
