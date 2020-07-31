@@ -2,7 +2,7 @@
     <div class="row bb-1 pt-18 pb-16">
         <div class="col-md-10 d-flex align-items-center f-18">
             <span *ngIf="data !== null">
-                <span class="b-primitive p-5 f-14 d-flex align-items-center br-4"
+                <span class="b-primitive p-5 f-14 d-flex align-items-center br-4 c-p"
                     *ngIf="tabState === 1 && data.status !== 1"
                     (click)="markTaskOrSubTaskDone('task', null, (data.status === 1))">
                     <i class="material-icons mr-4"> done</i> Mark complete
@@ -11,7 +11,7 @@
                     *ngIf="tabState === 1 && data.status === 1">
                     Completed
                 </span>
-                <span class="b-primitive p-5 f-14 d-flex align-items-center br-4"
+                <span class="b-primitive p-5 f-14 d-flex align-items-center br-4 c-p"
                     *ngIf="tabState === 2 && (selectedSubTask.status !== 1) "
                     (click)="markTaskOrSubTaskDone('subTask', selectedSubTask, (selectedSubTask.status === 1))">
                     <i class="material-icons mr-4"> done</i> Mark complete
@@ -35,9 +35,9 @@
 </div>
 
 <div class="mt-80 pb-160 " [formGroup]="addTaskForm" *ngIf="tabState == 1">
-    <div class="row">
+    <div class="row align-items-center">
         <div class="col-md-8">
-            <h4 class="f-500" *ngIf="data !== null">
+            <h4 class="f-500 m-0" *ngIf="data !== null">
                 {{ data.des }}
             </h4>
         </div>
@@ -253,8 +253,8 @@
                 <div class="col-md-6 pl-0" [ngClass]="subTaskCompleteCheckbox.checked ? 'line-through': ''">
                     {{ item.description }}
                 </div>
-                <div class="col-md-4 pr-30 text-right">
-                    <span class="material-icons" (click)="changeTabState(item, 2)">
+                <div class="col-md-5 pr-30 text-right">
+                    <span class="material-icons c-p" (click)="changeTabState(item, 2)">
                         keyboard_arrow_right
                     </span>
                 </div>
