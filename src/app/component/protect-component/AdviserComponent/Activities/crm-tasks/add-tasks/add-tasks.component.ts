@@ -142,7 +142,6 @@ export class AddTasksComponent implements OnInit {
   formInit(data) {
     if (data !== null) {
       this.subTaskList = data.subTasks;
-      this.isManual = true;
       this.showManualToggle = false;
       let tempClientList = this.enumDataService.getClientSearchData('');
       this.selectedClient = tempClientList.find(item => item.clientId = data.clientId);
@@ -171,7 +170,6 @@ export class AddTasksComponent implements OnInit {
       });
       this.selectClient(this.selectedClient);
     } else {
-      this.isManual = true;
       this.addTaskForm = this.fb.group({
         searchTemplateList: [,],
         searchClientList: [, Validators.required],
@@ -331,6 +329,7 @@ export class AddTasksComponent implements OnInit {
           this.taskTemplateList = res;
           console.log("this is task tempplate result::::", res);
         } else {
+          this.isManual = true;
           this.eventService.openSnackBar("No Task Template Found!!", "DISMISS");
         }
       })
@@ -683,6 +682,11 @@ export class AddTasksComponent implements OnInit {
         subTaskList.forEach(element => {
           this.subTaskList.push(element);
         });
+
+        this.subTaskList.map(item => {
+          item.comments = [];
+          item.attachments = [];
+        })
         console.log('this is subtask List::: ')
         if (res.assignedTo) {
           this.addTaskForm.patchValue({ assignedTo: res.assignedTo, taskDescription: item.taskDescription });

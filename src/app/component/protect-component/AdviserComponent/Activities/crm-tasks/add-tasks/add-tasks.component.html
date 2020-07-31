@@ -647,9 +647,10 @@
             <button class="btn-primary text-white c-p" (click)="formValidationOfTaskForm()"
                 [ngClass]="isMainLoading ? 'cur-wait': ''" mat-stroked-button>Create</button>
         </div>
-        <div class="col-md-4 text-right" *ngIf="tabState === 2">
-            <button mat-stroked-button class="btn-primary text-white c-p" (click)="editedSubTaskSave()"
-                [ngClass]="isMainLoading ? 'cur-wait': ''">Save Changes</button>
+        <div class="col-md-4 text-right" *ngIf="tabState === 2" matTooltip="You must create Task First"
+            [matTooltipDisabled]="data!==null">
+            <button mat-stroked-button [disabled]="data===null" class="btn-primary text-white c-p"
+                (click)="editedSubTaskSave()" [ngClass]="isMainLoading ? 'cur-wait': ''">Save Changes</button>
         </div>
     </div>
 </div>
