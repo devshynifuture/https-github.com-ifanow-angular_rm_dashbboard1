@@ -239,13 +239,13 @@
 
     <div class="row pt-28" *ngIf="data !== null">
         <div class="col-md-12 pl-30">
-            <h5 class="f-500 m-0"> Sub-tasks </h5>
+            <h5 class="f-500 m-0 pb-12"> Sub-tasks </h5>
         </div>
     </div>
 
-    <div class="row pt-5 pb-5" *ngFor="let item of subTaskList; index as i">
+    <div class="row " *ngFor="let item of subTaskList; index as i">
         <div class="col-md-12 pl-30">
-            <div class="row pt-5 bt-1 bb-1">
+            <div class="row pt-5 bt-1">
                 <div class="col-md-1 pl-10">
                     <mat-checkbox [checked]="item.status == 1" #subTaskCompleteCheckbox
                         (change)="toggleCheckSubTask(subTaskCompleteCheckbox.checked, item, i)"></mat-checkbox>
@@ -587,7 +587,7 @@
         </div>
     </div>
     <div class="bg-grey lter pt-20 mb-44" *ngIf="subTaskCommentList.length===0">
-        <h5 class="b-a text-center">
+        <h5 class="b-a text-center pt-24 pb-24">
             No Comments Yet
         </h5>
     </div>
