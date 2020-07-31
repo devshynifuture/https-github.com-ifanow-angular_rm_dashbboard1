@@ -3,8 +3,7 @@
         <div class="col-md-10 d-flex align-items-center f-18">
             <span *ngIf="data !== null">
                 <span class="b-primitive p-5 f-14 d-flex align-items-center br-4"
-                    *ngIf="tabState === 1 && data.status !== 1"
-                    (click)="markTaskOrSubTaskDone('task', null, (data.status === 1))">
+                    *ngIf="tabState === 1 && data.status !== 1" (click)="markTaskOrSubTaskDone('task', null, true)">
                     <i class="material-icons mr-4"> done</i> Mark complete
                 </span>
                 <span class="btn-primary p-5 f-14 d-flex align-items-center br-4"
@@ -13,12 +12,12 @@
                 </span>
                 <span class="b-primitive p-5 f-14 d-flex align-items-center br-4"
                     *ngIf="tabState === 2 && (selectedSubTask.status !== 1) "
-                    (click)="markTaskOrSubTaskDone('subTask', selectedSubTask, (selectedSubTask.status === 1))">
+                    (click)="markTaskOrSubTaskDone('subTask', selectedSubTask, true)">
                     <i class="material-icons mr-4"> done</i> Mark complete
                 </span>
                 <span class="btn-primary p-5 f-14 d-flex align-items-center br-4"
                     *ngIf="tabState === 2 && (selectedSubTask.status === 1) "
-                    (click)="markTaskOrSubTaskDone('subTask', selectedSubTask, (selectedSubTask.status === 1))">
+                    (click)="markTaskOrSubTaskDone('subTask', selectedSubTask, true)">
                     Completed
                 </span>
             </span>
@@ -34,627 +33,640 @@
     </div>
 </div>
 
-<div class="mt-80 pb-160 " [formGroup]="addTaskForm" *ngIf="tabState == 1">
-    <div class="row">
-        <div class="col-md-8">
-            <h4 class="f-500" *ngIf="data !== null">
-                {{ data.des }}
-            </h4>
-        </div>
-        <div class="col-md-4 text-right">
-            <img src="assets/images/svg/attchment-icon.svg" class="c-p ml-12">
-            <img src="assets/images/svg/sub-task-icon.svg" class="c-p ml-12">
-            <img src="assets/images/svg/delect-icon.svg" (click)="deleteTask(null)" class="c-p ml-12">
-            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-                <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu">
-                <button mat-menu-item>
-                    View linked item
+
+<div [ngClass]="isMainLoading ? 'd-none': ''">
+    <div class="mt-80 pb-160 pos-rel" [formGroup]="addTaskForm" *ngIf="tabState == 1">
+        <div class="row">
+            <div class="col-md-8">
+                <h4 class="f-500" *ngIf="data !== null">
+                    {{ data.des }}
+                </h4>
+            </div>
+            <div class="col-md-4 text-right">
+                <img src="assets/images/svg/attchment-icon.svg" *ngIf="data!==null" class="c-p ml-12"
+                    (click)="taskFileInput.click()">
+                <input type="file" #taskFileInput class="d-none" (change)="taskUpperFile($event.target.files)">
+
+                <img src="assets/images/svg/sub-task-icon.svg" class="c-p ml-12">
+                <img src="assets/images/svg/delect-icon.svg" (click)="deleteTask(null)" class="c-p ml-12">
+                <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                    <mat-icon>more_vert</mat-icon>
                 </button>
-                <button mat-menu-item disabled>
-                    View linked action plan
-                </button>
-                <button mat-menu-item>
-                    View activity log
-                </button>
-            </mat-menu>
-        </div>
-    </div>
-
-    <div class="row pt-16">
-        <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-12">Task Description</h5>
-        </div>
-        <div class="col-md-7 pl-0 arn-ria" *ngIf="!isManual">
-            <mat-form-field floatLabel="never" appearance="standard" class="form-group">
-                <mat-select formControlName="searchTemplateList" class="form-control">
-                    <mat-option [value]="item.id" *ngFor="let item of taskTemplateList" (click)="prefillValues(item)">
-                        {{ item.taskDescription }}
-                    </mat-option>
-                </mat-select>
-                <mat-error>
-                    This field is required
-                </mat-error>
-            </mat-form-field>
-        </div>
-        <div class="col-md-7 pl-0 arn-ria" *ngIf="isManual">
-            <mat-form-field floatLabel="never" appearance="standard" class="form-group">
-                <input type="text" matInput formControlName="taskDescription" class="form-control"
-                    placeholder="Enter your task description here">
-                <mat-error>
-                    This field is required
-                </mat-error>
-            </mat-form-field>
-        </div>
-    </div>
-    <div class="row pt-5">
-        <div class="col-md-4">
-        </div>
-        <div class="col-md-5 pl-0">
-            <mat-checkbox (click)="makeTaskRecurring()"></mat-checkbox> Make a Recurring Task
-            <img src="/assets/images/svg/plus.svg" alt="plus icon" class="pr-5">
-
-        </div>
-        <div class="col-md-3" *ngIf="showManualToggle">
-            <mat-checkbox [checked]="isManual" (click)="changeFillFormState()"></mat-checkbox> Add Manually
-            <img src="/assets/images/svg/plus.svg" alt="plus icon" class="pr-5">
-
-        </div>
-
-
-    </div>
-
-    <div class="row pt-16" *ngIf="isRecurringTaskForm">
-        <div class="col-md-4 text-right">
-            <h5 class="m-0 f-14 pt-12">Recurring</h5>
-        </div>
-
-        <div class="col-md-4 form-group pl-0 arn-ria">
-            <mat-form-field float="never" appearance="standard">
-                <mat-select class="form-control">
-                    <mat-option None>
-                        Select Frequency
-                    </mat-option>
-                    <mat-option *ngFor="let item of recurringTaskFrequencyList" (click)="setRecurringFreq(item)"
-                        [value]="item.id">
-                        {{ item.name }}
-                    </mat-option>
-                </mat-select>
-                <mat-error>
-                    This field is required
-                </mat-error>
-            </mat-form-field>
-        </div>
-
-        <div class="col-md-4 form-group pl-0">
-            <mat-form-field class="ba-date">
-                <input class="form-control br-0 b-0" formControlName="continuesTill" (input)="preventDefault($event)"
-                    (focus)="picker4.open()" matInput [matDatepicker]="picker4">
-                <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
-                <mat-datepicker #picker4></mat-datepicker>
-                <mat-error>
-                    This field is required
-                </mat-error>
-            </mat-form-field>
-        </div>
-    </div>
-
-    <div class="row pt-24">
-        <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-12">Client</h5>
-        </div>
-
-        <div class="col-md-4 form-group pl-0 mb-0 arn-ria">
-            <mat-form-field floatLabel="never" appearance="standard">
-                <input class="form-control br-0" formControlName="searchClientList" matInput placeholder="Search"
-                    aria-label="State" [matAutocomplete]="auto">
-                <mat-autocomplete #auto="matAutocomplete">
-                    <mat-option *ngFor="let singleClient of clientList | async" (click)="selectClient(singleClient)"
-                        [value]="singleClient.clientId">
-                        {{singleClient.displayName}}
-                    </mat-option>
-                    <mat-option></mat-option>
-
-                    <mat-option disabled *ngIf="showDefaultDropDownOnSearch && !isLoading">
-                        <p class="t-left m-0"> No Client Found</p>
-                    </mat-option>
-
-                    <!-- empty state -->
-
-                    <mat-option class="ht-100" *ngIf="showDefaultDropDownOnSearch && isLoading">
-                        <div class="skeletonAnimation" [appSkeletonLoading]="isLoading" appSkeletonLoading>
-                            <div class="bar height24"> </div>
-                        </div>
-                    </mat-option>
-                </mat-autocomplete>
-                <mat-error>
-                    This field is required
-                </mat-error>
-            </mat-form-field>
-        </div>
-
-        <div class="col-md-4 form-group pl-0 mb-0">
-            <mat-form-field>
-                <mat-select class="form-control br-0" formControlName="familyMemberId">
-                    <mat-option None> Select family member</mat-option>
-                    <mat-option [value]="item.familyMemberId" *ngFor="let item of familyMemberList">
-                        {{ item.displayName }}
-                    </mat-option>
-                    <mat-option class="relClass" *ngIf="isLoading">
-                        <div [appSkeletonLoading]="isLoading">
-                            <div class="bar height24"></div>
-                        </div>
-                    </mat-option>
-                </mat-select>
-                <mat-error>
-                    This field is required
-                </mat-error>
-            </mat-form-field>
-        </div>
-    </div>
-
-    <div class="row pt-40">
-        <div class="col-md-4 full-end">
-            <h5 class="m-0 roboto f-400">Assigned to</h5>
-        </div>
-
-        <div class="col-md-4 form-group pl-0 mb-0">
-            <mat-form-field>
-                <mat-select class="form-control br-0" formControlName="assignedTo">
-                    <mat-option None> Team Member</mat-option>
-                    <mat-option [value]="item.userId" *ngFor="let item of teamMemberList"
-                        (click)="setTeamMember(item.userId)">
-                        {{ item.fullName }}
-                    </mat-option>
-                </mat-select>
-                <mat-error>
-                    This field is required
-                </mat-error>
-            </mat-form-field>
-        </div>
-    </div>
-
-    <div class="row pt-32">
-        <div class="col-md-4 text-right">
-            <h5 class="m-0 roboto f-400 pt-12">Due date</h5>
-        </div>
-
-        <div class="col-md-4 form-group pl-0 mb-0">
-            <mat-form-field class="ba-date">
-                <input class="form-control br-0 b-0" formControlName="taskDueDate" (input)="preventDefault($event)"
-                    (focus)="picker.open()" matInput [matDatepicker]="picker">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-                <mat-error>
-                    This field is required
-                </mat-error>
-            </mat-form-field>
-            <p class="f-12 l-18 text-primitive">Repeats every 6 months <br> on 8th day of the month</p>
-        </div>
-
-
-    </div>
-
-
-    <div class="row pt-28" *ngIf="data !== null">
-        <div class="col-md-12 pl-30">
-            <h5 class="f-500 m-0"> Sub-tasks </h5>
-        </div>
-    </div>
-
-    <div class="row pt-5 pb-5" *ngFor="let item of subTaskList; index as i">
-        <div class="col-md-12 pl-30">
-            <div class="row pt-5 bt-1 bb-1">
-                <div class="col-md-1 pl-10">
-                    <mat-checkbox [checked]="item.status == 1" #subTaskCompleteCheckbox
-                        (change)="toggleCheckSubTask(subTaskCompleteCheckbox.checked, item, i)"></mat-checkbox>
-                </div>
-                <div class="col-md-6 pl-0" [ngClass]="subTaskCompleteCheckbox.checked ? 'line-through': ''">
-                    {{ item.description }}
-                </div>
-                <div class="col-md-4 pr-30 text-right">
-                    <span class="material-icons" (click)="changeTabState(item, 2)">
-                        keyboard_arrow_right
-                    </span>
-                </div>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item>
+                        View linked item
+                    </button>
+                    <button mat-menu-item disabled>
+                        View linked action plan
+                    </button>
+                    <button mat-menu-item>
+                        View activity log
+                    </button>
+                </mat-menu>
             </div>
         </div>
-    </div>
-    <div class="row pt-5 pb-5" *ngIf="data !== null && subTaskList.length === 0">
-        <h5 class="p-22 b-a text-center">
-            No Sub tasks found, Try adding some
-        </h5>
-    </div>
 
-    <div formArrayName="subTask" *ngFor="let item of subTask.controls; index as i">
-        <div class="row pb-16" [formGroupName]="i">
-            <div class="col-md-4 pl-30">
-                <mat-form-field>
-                    <input class="form-control br-0 text-left" matInput type="text" formControlName="description">
+        <div class="row pt-16">
+            <div class="col-md-4 text-right">
+                <h5 class="m-0 pt-12">Task Description</h5>
+            </div>
+            <div class="col-md-7 pl-0 arn-ria" *ngIf="!isManual">
+                <mat-form-field floatLabel="never" appearance="standard" class="form-group">
+                    <mat-select formControlName="searchTemplateList" class="form-control">
+                        <mat-option [value]="item.id" *ngFor="let item of taskTemplateList"
+                            (click)="prefillValues(item)">
+                            {{ item.taskDescription }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-7 pl-0 arn-ria" *ngIf="isManual">
+                <mat-form-field floatLabel="never" appearance="standard" class="form-group">
+                    <input type="text" matInput formControlName="taskDescription" class="form-control"
+                        placeholder="Enter your task description here">
+                    <mat-error>
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row pt-5">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-5 pl-0">
+                <mat-checkbox (click)="makeTaskRecurring()"></mat-checkbox> Make a Recurring Task
+                <img src="/assets/images/svg/plus.svg" alt="plus icon" class="pr-5">
+
+            </div>
+            <div class="col-md-3" *ngIf="showManualToggle">
+                <mat-checkbox [checked]="isManual" (change)="changeFillFormState()"></mat-checkbox> Add Manually
+                <img src="/assets/images/svg/plus.svg" alt="plus icon" class="pr-5">
+
+            </div>
+
+
+        </div>
+
+        <div class="row pt-16" *ngIf="isRecurringTaskForm">
+            <div class="col-md-4 text-right">
+                <h5 class="m-0 f-14 pt-12">Recurring</h5>
+            </div>
+
+            <div class="col-md-4 form-group pl-0 arn-ria">
+                <mat-form-field float="never" appearance="standard">
+                    <mat-select class="form-control">
+                        <mat-option None>
+                            Select Frequency
+                        </mat-option>
+                        <mat-option *ngFor="let item of recurringTaskFrequencyList" (click)="setRecurringFreq(item)"
+                            [value]="item.id">
+                            {{ item.name }}
+                        </mat-option>
+                    </mat-select>
                     <mat-error>
                         This field is required
                     </mat-error>
                 </mat-form-field>
             </div>
 
-            <div class="col-md-3 pl-0">
-                <div class="form-group matFormPadding">
-                    <mat-form-field appearance="standard" class="arrowRemoveBox" floatLabel="never">
-                        <mat-select formControlName="turnAroundTime">
-                            <mat-option *ngFor="let item of taskNumberArr" [value]="item">
-                                {{ 'T + ' + item }}
-                            </mat-option>
-                        </mat-select>
+            <div class="col-md-4 form-group pl-0">
+                <mat-form-field class="ba-date">
+                    <input class="form-control br-0 b-0" formControlName="continuesTill"
+                        (input)="preventDefault($event)" (focus)="picker4.open()" matInput [matDatepicker]="picker4">
+                    <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                    <mat-datepicker #picker4></mat-datepicker>
+                    <mat-error>
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row pt-24">
+            <div class="col-md-4 text-right">
+                <h5 class="m-0 pt-12">Client</h5>
+            </div>
+
+            <div class="col-md-4 form-group pl-0 mb-0 arn-ria">
+                <mat-form-field floatLabel="never" appearance="standard">
+                    <input class="form-control br-0" formControlName="searchClientList" matInput placeholder="Search"
+                        aria-label="State" [matAutocomplete]="auto">
+                    <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let singleClient of clientList | async" (click)="selectClient(singleClient)"
+                            [value]="singleClient.clientId">
+                            {{singleClient.displayName}}
+                        </mat-option>
+                        <mat-option></mat-option>
+
+                        <mat-option disabled *ngIf="showDefaultDropDownOnSearch && !isLoading">
+                            <p class="t-left m-0"> No Client Found</p>
+                        </mat-option>
+
+                        <!-- empty state -->
+
+                        <mat-option class="ht-100" *ngIf="showDefaultDropDownOnSearch && isLoading">
+                            <div class="skeletonAnimation" [appSkeletonLoading]="isLoading" appSkeletonLoading>
+                                <div class="bar height24"> </div>
+                            </div>
+                        </mat-option>
+                    </mat-autocomplete>
+                    <mat-error>
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-4 form-group pl-0 mb-0">
+                <mat-form-field>
+                    <mat-select class="form-control br-0" formControlName="familyMemberId">
+                        <mat-option None> Select family member</mat-option>
+                        <mat-option [value]="item.familyMemberId" *ngFor="let item of familyMemberList">
+                            {{ item.displayName }}
+                        </mat-option>
+                        <mat-option class="relClass" *ngIf="isLoading">
+                            <div [appSkeletonLoading]="isLoading">
+                                <div class="bar height24"></div>
+                            </div>
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row pt-40">
+            <div class="col-md-4 full-end">
+                <h5 class="m-0 roboto f-400">Assigned to</h5>
+            </div>
+
+            <div class="col-md-4 form-group pl-0 mb-0">
+                <mat-form-field>
+                    <mat-select class="form-control br-0" formControlName="assignedTo">
+                        <mat-option None> Team Member</mat-option>
+                        <mat-option [value]="item.userId" *ngFor="let item of teamMemberList"
+                            (click)="setTeamMember(item.userId)">
+                            {{ item.fullName }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row pt-32">
+            <div class="col-md-4 text-right">
+                <h5 class="m-0 roboto f-400 pt-12">Due date</h5>
+            </div>
+
+            <div class="col-md-4 form-group pl-0 mb-0">
+                <mat-form-field class="ba-date">
+                    <input class="form-control br-0 b-0" formControlName="taskDueDate" (input)="preventDefault($event)"
+                        (focus)="picker.open()" matInput [matDatepicker]="picker">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error>
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+                <p class="f-12 l-18 text-primitive">Repeats every 6 months <br> on 8th day of the month</p>
+            </div>
+
+
+        </div>
+
+
+        <div class="row pt-28" *ngIf="data !== null">
+            <div class="col-md-12 pl-30">
+                <h5 class="f-500 m-0"> Sub-tasks </h5>
+            </div>
+        </div>
+
+        <div class="row pt-5 pb-5" *ngFor="let item of subTaskList; index as i">
+            <div class="col-md-12 pl-30">
+                <div class="row pt-5 bt-1 bb-1">
+                    <div class="col-md-1 pl-10">
+                        <mat-checkbox [checked]="item.status == 1" #subTaskCompleteCheckbox
+                            (change)="toggleCheckSubTask(subTaskCompleteCheckbox.checked, item, i)"></mat-checkbox>
+                    </div>
+                    <div class="col-md-6 pl-0" [ngClass]="subTaskCompleteCheckbox.checked ? 'line-through': ''">
+                        {{ item.description }}
+                    </div>
+                    <div class="col-md-4 pr-30 text-right">
+                        <span class="material-icons" (click)="changeTabState(item, 2)">
+                            keyboard_arrow_right
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-5 pb-5" *ngIf="data !== null && subTaskList.length === 0">
+            <h5 class="p-22 b-a text-center">
+                No Sub tasks found, Try adding some
+            </h5>
+        </div>
+
+        <div formArrayName="subTask" *ngFor="let item of subTask.controls; index as i">
+            <div class="row pb-16" [formGroupName]="i">
+                <div class="col-md-4 pl-30">
+                    <mat-form-field>
+                        <input class="form-control br-0 text-left" matInput type="text" formControlName="description">
+                        <mat-error>
+                            This field is required
+                        </mat-error>
                     </mat-form-field>
                 </div>
-            </div>
 
-            <div class="col-md-3 pl-0">
-                <div class="form-group matFormPadding">
-                    <mat-form-field appearance="standard" class="arrowRemoveBox" floatLabel="never">
-                        <img class="img-pos-two" src="/assets/images/svg/people.svg">
-                        <mat-select class="form-control" formControlName="assignedTo">
-                            <mat-option None>
-                                Select Team Member
-                            </mat-option>
-                            <mat-option *ngFor="let item of teamMemberList" [value]="item.userId">
-                                {{ item.fullName }}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
+                <div class="col-md-3 pl-0">
+                    <div class="form-group matFormPadding">
+                        <mat-form-field appearance="standard" class="arrowRemoveBox" floatLabel="never">
+                            <mat-select formControlName="turnAroundTime">
+                                <mat-option *ngFor="let item of taskNumberArr" [value]="item">
+                                    {{ 'T + ' + item }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="col-md-3 pl-0">
+                    <div class="form-group matFormPadding">
+                        <mat-form-field appearance="standard" class="arrowRemoveBox" floatLabel="never">
+                            <img class="img-pos-two" src="/assets/images/svg/people.svg">
+                            <mat-select class="form-control" formControlName="assignedTo">
+                                <mat-option None>
+                                    Select Team Member
+                                </mat-option>
+                                <mat-option *ngFor="let item of teamMemberList" [value]="item.userId">
+                                    {{ item.fullName }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="col-md-1 p-0 d-flex  justify-content-sm-between">
+                    <i class="material-icons c-p mt-8 mr-3" (click)="appendSubTask(item, i)">
+                        add
+                    </i>
+                    <i class="material-icons c-p mt-8" (click)="removeSubTask(i)">
+                        remove
+                    </i>
                 </div>
             </div>
+        </div>
 
-            <div class="col-md-1 p-0 d-flex  justify-content-sm-between">
-                <i class="material-icons c-p mt-8 mr-3" (click)="appendSubTask(item, i)">
-                    add
-                </i>
-                <i class="material-icons c-p mt-8" (click)="removeSubTask(i)">
-                    remove
-                </i>
+        <div class="row pt-14">
+            <div class="col-md-12 text-primitive f-14 pl-30" (click)="addSubTask(null)">
+                <img src="assets/images/svg/plus-icon-gray.svg" class="c-p"> Add sub-task
             </div>
         </div>
-    </div>
-
-    <div class="row pt-14">
-        <div class="col-md-12 text-primitive f-14 pl-30" (click)="addSubTask(null)">
-            <img src="assets/images/svg/plus-icon-gray.svg" class="c-p"> Add sub-task
-        </div>
-    </div>
 
 
-    <div class="bg-white pt-20" *ngIf="data !== null" [ngClass]="commentList.length ===0 ? 'pb-60':'pb-20'">
-        <div class="row">
-            <div class="col-md-12 pl-30">
-                <h5 class="f-500 f-16 roboto">Attachments</h5>
+        <div class="bg-white pt-20" *ngIf="data !== null" [ngClass]="commentList.length ===0 ? 'pb-60':'pb-20'">
+            <div class="row">
+                <div class="col-md-12 pl-30">
+                    <h5 class="f-500 f-16 roboto">Attachments</h5>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-5 pl-30" *ngFor="let item of attachmentList; index as i">
-                <div class="row">
-                    <div class="col-md-4 pl-0 c-p" [matMenuTriggerFor]="menu2">
-                        <div class="attachment-img">
+            <div class="row">
+                <div class="col-md-5 pl-30" *ngFor="let item of attachmentList; index as i">
+                    <div class="row">
+                        <div class="col-md-4 pl-0 c-p" [matMenuTriggerFor]="menu2">
+                            <div class="attachment-img">
+                            </div>
                         </div>
-                    </div>
-                    <mat-menu #menu2="matMenu">
-                        <button mat-menu-item (click)="downloadAttachment(item)">
-                            <img src="/assets/images/svg/download-icon.svg" alt="download attachment image">
-                            Download
-                        </button>
-                        <button mat-menu-item (click)="deleteAttachmentOfTaskSubTask(item.id, i, 'task')">
-                            <img class="pr-20 pb-5" src="/assets/images/svg/delete.svg" alt="trash image">
-                            Remove
-                        </button>
-                    </mat-menu>
-                    <div class="col-md-8 p-0">
-                        <h6>{{ item.attachmentName}}</h6>
-                        <p class=" l-18 m-0 text-primitive f-12">UPLOADED TIME</p>
-                        <p class=" m-0 l-18 f-12">{{ item.uploadedTime | date:'dd/LL/yyyy hh:mm aaa' }}</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-2" [ngClass]="attachmentList.length === 0 ? 'pl-30': ''">
-                <div class="uploadImgBox c-p d-flex align-items-center justify-content-center"
-                    (click)="uploadFileRef.click()">
-                    <img src="assets/images/svg/plus-icon-gray.svg" class="c-p">
-                    <input type="file" class="d-none" #uploadFileRef
-                        (change)="getFileData($event.target.files, 'task')">
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-
-    <div class="bg-grey lter pt-20 mb-44" *ngIf="commentList.length !==0">
-        <div class="row">
-            <div class="col-md-12 pl-30">
-                <h5 class="f-500 roboto">Comments</h5>
-            </div>
-        </div>
-
-        <div class="row pb-10" *ngFor="let item of commentList; index as i">
-            <div class="col-md-1 text-center p-0 pl-30">
-                <img src="assets/images/svg/avtarProfile.svg" class="c-p">
-            </div>
-            <div class="col-md-11 pl-20 pr-20">
-                <div class="row">
-                    <div class="col-md-8 p-0">
-                        <h5 class="f-500 roboto">
-                            {{ item.name }}
-                            <span class="text-primitive f-12"> {{ item.commentTime | dateAgo }}</span>
-                        </h5>
-                    </div>
-                    <div class="col-md-4 editDelectText text-right">
-                        <a class="f-12 c-p" *ngIf="!item.editMode" (click)="toggleEditMode(item, 'task')">Edit</a>
-                        <a class="f-12 pl-5 c-p" *ngIf="item.editMode"
-                            (click)="saveEditedComment(item, 'task', i)">Save</a>
-                        <a class="f-12 pl-5 c-p" (click)="deleteCommentTaskSubTask(item, 'task',i)">Delete</a>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 p-0">
-                        <p class="f-14" *ngIf="!item.editMode">
-                            {{  item.commentMsg }}
-                        </p>
-                        <p class="f-14 form-group" *ngIf="item.editMode">
-                            <input type="text" [formControl]="commentTaskFC" class="form-control"
-                                [value]="item.commentMsg">
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="mt-80 pb-160" *ngIf="tabState === 2" [formGroup]="editSubTaskForm">
-    <div class="row pt-28">
-        <div class="col-md-1 pl-30">
-            <span class="material-icons f-500" (click)="changeTabState(null,1)">
-                keyboard_arrow_left
-            </span>
-        </div>
-        <div class="col-md-7">
-        </div>
-        <div class="col-md-4 text-right">
-            <img src="assets/images/svg/attchment-icon.svg" class="c-p ml-12">
-            <img src="assets/images/svg/sub-task-icon.svg" class="c-p ml-12">
-            <img src="assets/images/svg/delect-icon.svg" (click)="deleteSubTask()" class="c-p ml-12">
-            <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-                <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #menu="matMenu">
-                <button mat-menu-item>
-                    View linked item
-                </button>
-                <button mat-menu-item disabled>
-                    View linked action plan
-                </button>
-                <button mat-menu-item>
-                    View activity log
-                </button>
-            </mat-menu>
-        </div>
-    </div>
-
-    <!-- next page -->
-    <!-- next page -->
-    <div class="row pt-16">
-        <div class="col-md-3 pr-0 text-left pl-30">
-            <h5 class="m-0 f-14 pt-12">Sub Task Description</h5>
-        </div>
-        <div class="col-md-7 arn-ria">
-            <mat-form-field floatLabel="never" appearance="standard" class="form-group">
-                <input type="text" matInput formControlName="description" class="form-control b-a"
-                    placeholder="Enter your subtask description here">
-                <mat-error>
-                    This field is required
-                </mat-error>
-            </mat-form-field>
-        </div>
-    </div>
-    <div class="row pt-40">
-        <div class="col-md-4 full-end">
-            <h5 class="m-0 roboto f-400">Assigned to</h5>
-        </div>
-
-        <div class="col-md-4 form-group mb-0">
-            <mat-form-field>
-                <mat-select class="form-control br-0" formControlName="assignedTo">
-                    <mat-option None> Team Member</mat-option>
-                    <mat-option [value]="item.userId" *ngFor="let item of teamMemberList"
-                        (click)="setTeamMember(item.userId)">
-                        {{ item.fullName }}
-                    </mat-option>
-                </mat-select>
-                <mat-error>
-                    This field is required
-                </mat-error>
-            </mat-form-field>
-        </div>
-    </div>
-
-    <div class="row pt-32">
-        <div class="col-md-4 full-end">
-            <h5 class="m-0 roboto f-400">Due date</h5>
-        </div>
-
-        <div class="col-md-4 form-group mb-0">
-            <mat-form-field class="ba-date">
-                <input class="form-control br-0 b-0" formControlName="taskDueDate" (input)="preventDefault($event)"
-                    (focus)="picker3.open()" matInput [matDatepicker]="picker3">
-                <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
-                <mat-datepicker #picker3></mat-datepicker>
-                <mat-error>
-                    This field is required
-                </mat-error>
-            </mat-form-field>
-        </div>
-
-        <div class="col-md-4">
-            <p class="f-12 l-18 text-primitive">Repeats every 6 months <br> on 8th day of the month</p>
-        </div>
-    </div>
-
-
-    <div class="bg-white pt-20" *ngIf="data !==null" [ngClass]="subTaskAttachmentList.length ===0 ? 'pb-60':'pb-20'">
-        <div class="row">
-            <div class="col-md-12 pl-30">
-                <h5 class="f-500 f-16 roboto">Attachments</h5>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-5 pl-30" *ngFor="let item of subTaskAttachmentList; index as i">
-                <div class="row">
-                    <div class="col-md-4 pl-0 c-p" [matMenuTriggerFor]="menu2">
-                        <div class="attachment-img">
-                        </div>
-                    </div>
-                    <mat-menu #menu2="matMenu">
-                        <button mat-menu-item (click)="downloadAttachment(item)">
-                            <img src="/assets/images/svg/download-icon.svg" alt="download attachment image">
-                            Download
-                        </button>
-                        <button mat-menu-item (click)="deleteAttachmentOfTaskSubTask(item.id, i, 'subTask')">
-                            <img class="pr-20 pb-5" src="/assets/images/svg/delete.svg" alt="trash image">
-                            Remove
-                        </button>
-                    </mat-menu>
-                    <div class="col-md-8 p-0">
-                        <h6>{{ item.attachmentName}}</h6>
-                        <p class=" l-18 m-0 text-primitive f-12">UPLOADED TIME</p>
-                        <p class=" m-0 l-18 f-12">{{ item.uploadedTime | date:'dd/LL/yyyy hh:mm aaa' }}</p>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="col-md-2" [ngClass]="subTaskAttachmentList.length === 0 ? 'pl-30': ''">
-                <div class="uploadImgBox c-p d-flex align-items-center justify-content-center"
-                    (click)="uploadFileRef.click()">
-                    <img src="assets/images/svg/plus-icon-gray.svg" class="c-p">
-                    <input type="file" class="d-none" #uploadFileRef
-                        (change)="getFileData($event.target.files, 'subTask')">
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-
-    <div class="bg-grey lter pt-20 mb-44" *ngIf="subTaskCommentList.length !==0">
-        <div class="row">
-            <div class="col-md-12 pl-30">
-                <h5 class="f-500 roboto">Comments</h5>
-            </div>
-        </div>
-
-        <div class="row pb-10" *ngFor="let item of subTaskCommentList; index as i">
-            <div class="col-md-1 text-center p-0 pl-30">
-                <img src="assets/images/svg/avtarProfile.svg" class="c-p">
-            </div>
-            <div class="col-md-11 pl-20 pr-20">
-                <div class="row">
-                    <div class="col-md-8 p-0">
-                        <h5 class="f-500 roboto">
-                            {{ item.name }}
-                            <span class="text-primitive f-12">
-                                {{item.commentTime | dateAgo }}
-                            </span>
-                        </h5>
-                    </div>
-                    <div class="col-md-4 editDelectText text-right">
-                        <a class="f-12 c-p" *ngIf="!item.editMode" (click)="toggleEditMode(item, 'subTask')">Edit</a>
-                        <a class="f-12 c-p" *ngIf="item.editMode"
-                            (click)="saveEditedComment(item, 'subTask',i)">Save</a>
-                        <a class="f-12 c-p" (click)="deleteCommentTaskSubTask(item, 'subTask',i)">Delete</a>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 p-0">
-                        <p class="f-14" *ngIf="!item.editMode"> {{ item.commentMsg }}
-                        </p>
-                        <p class="f-12 form-group" *ngIf="item.editMode">
-                            <input type="text" [formControl]="commentSubTaskFC" class="form-control"
-                                [value]="item.commentMsg">
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="bg-grey lter pt-20 mb-44" *ngIf="subTaskCommentList.length===0">
-        <h5 class="b-a text-center">
-            No Comments Yet
-        </h5>
-    </div>
-</div>
-
-<!-- next pade ends -->
-
-<div class="bottomCommentBox bg-grey lter">
-    <div class="row pt-16">
-        <div class="col-md-1 pl-30">
-            <img src="assets/images/svg/avtar-1.svg" class="c-p avatarImg">
-        </div>
-        <div class="col-md-11">
-            <mat-form-field>
-                <input class="form-control bg-white br-0 text-left" matInput #commentInput type="text"
-                    [disabled]="data===null" matTooltip="Cannot Add Comment while creating task"
-                    [matTooltipDisabled]="data!==null"
-                    (keyup.enter)="onCreateCommentTaskSubTask(commentInput.value); commentInput.value=''">
-            </mat-form-field>
-
-            <div class="row pt-10">
-                <div class="col-md-12 f-14 p-0" *ngIf="data!==null">
-                    Collaborators
-                    <span *ngFor="let item of collaboratorList">
-                        <img [src]="item.profilePicUrl" class="c-p ml-12 avatarImg" [matTooltip]="item.name"
-                            [matMenuTriggerFor]="menu1">
-                        <mat-menu #menu1="matMenu">
-                            <button mat-menu-item (click)="removeCollaboratorFromTask(item.id)"
-                                [disabled]="item.default" matTooltip="Can't remove default Collaborator"
-                                [matTooltipDisabled]="!item.default">
+                        <mat-menu #menu2="matMenu">
+                            <button mat-menu-item (click)="downloadAttachment(item)">
+                                <img src="/assets/images/svg/download-icon.svg" alt="download attachment image">
+                                Download
+                            </button>
+                            <button mat-menu-item (click)="deleteAttachmentOfTaskSubTask(item.id, i, 'task')">
+                                <img class="pr-20 pb-5" src="/assets/images/svg/delete.svg" alt="trash image">
                                 Remove
                             </button>
                         </mat-menu>
-                    </span>
+                        <div class="col-md-8 p-0">
+                            <h6>{{ item.attachmentName}}</h6>
+                            <p class=" l-18 m-0 text-primitive f-12">UPLOADED TIME</p>
+                            <p class=" m-0 l-18 f-12">{{ item.uploadedTime | date:'dd/LL/yyyy hh:mm aaa' }}</p>
+                        </div>
+                    </div>
+                </div>
 
-                    <span *ngIf="data">
-                        <img src="assets/images/svg/avtar-logo.svg" class="c-p ml-12"
-                            (click)="onAddingCollaborator(null)">
-                    </span>
+                <div class="col-md-2" [ngClass]="attachmentList.length === 0 ? 'pl-30': ''">
+                    <div class="uploadImgBox c-p d-flex align-items-center justify-content-center"
+                        (click)="uploadFileRef.click()">
+                        <img src="assets/images/svg/plus-icon-gray.svg" class="c-p">
+                        <input type="file" class="d-none" #uploadFileRef
+                            (change)="getFileData($event.target.files, 'task')">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="bg-grey lter pt-20 mb-44" *ngIf="commentList.length !==0">
+            <div class="row">
+                <div class="col-md-12 pl-30">
+                    <h5 class="f-500 roboto">Comments</h5>
                 </div>
             </div>
 
+            <div class="row pb-10" *ngFor="let item of commentList; index as i">
+                <div class="col-md-1 text-center p-0 pl-30">
+                    <img src="assets/images/svg/avtarProfile.svg" class="c-p">
+                </div>
+                <div class="col-md-11 pl-20 pr-20">
+                    <div class="row">
+                        <div class="col-md-8 p-0">
+                            <h5 class="f-500 roboto">
+                                {{ item.name }}
+                                <span class="text-primitive f-12"> {{ item.commentTime | dateAgo }}</span>
+                            </h5>
+                        </div>
+                        <div class="col-md-4 editDelectText text-right">
+                            <a class="f-12 c-p" *ngIf="!item.editMode" (click)="toggleEditMode(item, 'task')">Edit</a>
+                            <a class="f-12 pl-5 c-p" *ngIf="item.editMode"
+                                (click)="saveEditedComment(item, 'task', i)">Save</a>
+                            <a class="f-12 pl-5 c-p" (click)="deleteCommentTaskSubTask(item, 'task',i)">Delete</a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 p-0">
+                            <p class="f-14" *ngIf="!item.editMode">
+                                {{  item.commentMsg }}
+                            </p>
+                            <p class="f-14 form-group" *ngIf="item.editMode">
+                                <input type="text" [formControl]="commentTaskFC" class="form-control"
+                                    [value]="item.commentMsg">
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-</div>
+    <div class="mt-80 pb-160" *ngIf="tabState === 2" [formGroup]="editSubTaskForm">
+        <div class="row pt-28">
+            <div class="col-md-1 pl-30">
+                <span class="material-icons f-500" (click)="changeTabState(null,1)">
+                    keyboard_arrow_left
+                </span>
+            </div>
+            <div class="col-md-7">
+            </div>
+            <div class="col-md-4 text-right">
+                <img src="assets/images/svg/attchment-icon.svg" class="c-p ml-12">
+                <img src="assets/images/svg/sub-task-icon.svg" class="c-p ml-12">
+                <img src="assets/images/svg/delect-icon.svg" (click)="deleteSubTask()" class="c-p ml-12">
+                <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item>
+                        View linked item
+                    </button>
+                    <button mat-menu-item disabled>
+                        View linked action plan
+                    </button>
+                    <button mat-menu-item>
+                        View activity log
+                    </button>
+                </mat-menu>
+            </div>
+        </div>
+
+        <!-- next page -->
+        <!-- next page -->
+        <div class="row pt-16">
+            <div class="col-md-3 pr-0 text-left pl-30">
+                <h5 class="m-0 f-14 pt-12">Sub Task Description</h5>
+            </div>
+            <div class="col-md-7 arn-ria">
+                <mat-form-field floatLabel="never" appearance="standard" class="form-group">
+                    <input type="text" matInput formControlName="description" class="form-control b-a"
+                        placeholder="Enter your subtask description here">
+                    <mat-error>
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row pt-40">
+            <div class="col-md-4 full-end">
+                <h5 class="m-0 roboto f-400">Assigned to</h5>
+            </div>
+
+            <div class="col-md-4 form-group mb-0">
+                <mat-form-field>
+                    <mat-select class="form-control br-0" formControlName="assignedTo">
+                        <mat-option None> Team Member</mat-option>
+                        <mat-option [value]="item.userId" *ngFor="let item of teamMemberList"
+                            (click)="setTeamMember(item.userId)">
+                            {{ item.fullName }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row pt-32">
+            <div class="col-md-4 full-end">
+                <h5 class="m-0 roboto f-400">Due date</h5>
+            </div>
+
+            <div class="col-md-4 form-group mb-0">
+                <mat-form-field class="ba-date">
+                    <input class="form-control br-0 b-0" formControlName="taskDueDate" (input)="preventDefault($event)"
+                        (focus)="picker3.open()" matInput [matDatepicker]="picker3">
+                    <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                    <mat-datepicker #picker3></mat-datepicker>
+                    <mat-error>
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-4">
+                <p class="f-12 l-18 text-primitive">Repeats every 6 months <br> on 8th day of the month</p>
+            </div>
+        </div>
 
 
-<div class="bottom-fixed-50 wrapper-12 pt-16">
-    <div class="row">
-        <div class="col-md-4">
-            <h5 class="mb-0 pt-8 text-white c-p" (click)="close(false)">Cancel</h5>
+        <div class="bg-white pt-20" *ngIf="data !==null"
+            [ngClass]="subTaskAttachmentList.length ===0 ? 'pb-60':'pb-20'">
+            <div class="row">
+                <div class="col-md-12 pl-30">
+                    <h5 class="f-500 f-16 roboto">Attachments</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5 pl-30" *ngFor="let item of subTaskAttachmentList; index as i">
+                    <div class="row">
+                        <div class="col-md-4 pl-0 c-p" [matMenuTriggerFor]="menu2">
+                            <div class="attachment-img">
+                            </div>
+                        </div>
+                        <mat-menu #menu2="matMenu">
+                            <button mat-menu-item (click)="downloadAttachment(item)">
+                                <img src="/assets/images/svg/download-icon.svg" alt="download attachment image">
+                                Download
+                            </button>
+                            <button mat-menu-item (click)="deleteAttachmentOfTaskSubTask(item.id, i, 'subTask')">
+                                <img class="pr-20 pb-5" src="/assets/images/svg/delete.svg" alt="trash image">
+                                Remove
+                            </button>
+                        </mat-menu>
+                        <div class="col-md-8 p-0">
+                            <h6>{{ item.attachmentName}}</h6>
+                            <p class=" l-18 m-0 text-primitive f-12">UPLOADED TIME</p>
+                            <p class=" m-0 l-18 f-12">{{ item.uploadedTime | date:'dd/LL/yyyy hh:mm aaa' }}</p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-md-2" [ngClass]="subTaskAttachmentList.length === 0 ? 'pl-30': ''">
+                    <div class="uploadImgBox c-p d-flex align-items-center justify-content-center"
+                        (click)="uploadFileRef.click()">
+                        <img src="assets/images/svg/plus-icon-gray.svg" class="c-p">
+                        <input type="file" class="d-none" #uploadFileRef
+                            (change)="getFileData($event.target.files, 'subTask')">
+                    </div>
+                </div>
+
+            </div>
         </div>
-        <div class="col-md-4">
+
+
+        <div class="bg-grey lter pt-20 mb-44" *ngIf="subTaskCommentList.length !==0">
+            <div class="row">
+                <div class="col-md-12 pl-30">
+                    <h5 class="f-500 roboto">Comments</h5>
+                </div>
+            </div>
+
+            <div class="row pb-10" *ngFor="let item of subTaskCommentList; index as i">
+                <div class="col-md-1 text-center p-0 pl-30">
+                    <img src="assets/images/svg/avtarProfile.svg" class="c-p">
+                </div>
+                <div class="col-md-11 pl-20 pr-20">
+                    <div class="row">
+                        <div class="col-md-8 p-0">
+                            <h5 class="f-500 roboto">
+                                {{ item.name }}
+                                <span class="text-primitive f-12">
+                                    {{item.commentTime | dateAgo }}
+                                </span>
+                            </h5>
+                        </div>
+                        <div class="col-md-4 editDelectText text-right">
+                            <a class="f-12 c-p" *ngIf="!item.editMode"
+                                (click)="toggleEditMode(item, 'subTask')">Edit</a>
+                            <a class="f-12 c-p" *ngIf="item.editMode"
+                                (click)="saveEditedComment(item, 'subTask',i)">Save</a>
+                            <a class="f-12 c-p" (click)="deleteCommentTaskSubTask(item, 'subTask',i)">Delete</a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 p-0">
+                            <p class="f-14" *ngIf="!item.editMode"> {{ item.commentMsg }}
+                            </p>
+                            <p class="f-12 form-group" *ngIf="item.editMode">
+                                <input type="text" [formControl]="commentSubTaskFC" class="form-control"
+                                    [value]="item.commentMsg">
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-md-4 text-right" *ngIf="tabState === 1">
-            <button class="btn-primary text-white c-p" (click)="formValidationOfTaskForm()"
-                [ngClass]="isMainLoading ? 'cur-wait': ''" mat-stroked-button>Create</button>
-        </div>
-        <div class="col-md-4 text-right" *ngIf="tabState === 2" matTooltip="You must create Task First"
-            [matTooltipDisabled]="data!==null">
-            <button mat-stroked-button [disabled]="data===null" class="btn-primary text-white c-p"
-                (click)="editedSubTaskSave()" [ngClass]="isMainLoading ? 'cur-wait': ''">Save Changes</button>
+        <div class="bg-grey lter pt-20 mb-44" *ngIf="subTaskCommentList.length===0">
+            <h5 class="b-a text-center">
+                No Comments Yet
+            </h5>
         </div>
     </div>
+
+    <!-- next pade ends -->
+
+    <div class="bottomCommentBox bg-grey lter">
+        <div class="row pt-16">
+            <div class="col-md-1 pl-30">
+                <img src="assets/images/svg/avtar-1.svg" class="c-p avatarImg">
+            </div>
+            <div class="col-md-11">
+                <mat-form-field>
+                    <span matTooltip="Cannot Add Comment while creating task" [matTooltipDisabled]="data!==null">
+                        <input class="form-control bg-white br-0 text-left" matInput #commentInput type="text"
+                            [disabled]="data===null"
+                            (keyup.enter)="onCreateCommentTaskSubTask(commentInput.value); commentInput.value=''">
+                    </span>
+                </mat-form-field>
+
+                <div class="row pt-10">
+                    <div class="col-md-12 f-14 p-0" *ngIf="data!==null">
+                        Collaborators
+                        <span *ngFor="let item of collaboratorList">
+                            <img [src]="item.profilePicUrl" class="c-p ml-12 avatarImg" [matTooltip]="item.name"
+                                [matMenuTriggerFor]="menu1">
+                            <mat-menu #menu1="matMenu">
+                                <button mat-menu-item (click)="removeCollaboratorFromTask(item.id)"
+                                    [disabled]="item.default" matTooltip="Can't remove default Collaborator"
+                                    [matTooltipDisabled]="!item.default">
+                                    Remove
+                                </button>
+                            </mat-menu>
+                        </span>
+
+                        <span *ngIf="data">
+                            <img src="assets/images/svg/avtar-logo.svg" class="c-p ml-12"
+                                (click)="onAddingCollaborator(null)">
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="bottom-fixed-50 wrapper-12 pt-16">
+        <div class="row">
+            <div class="col-md-4">
+                <h5 class="mb-0 pt-8 text-white c-p" (click)="close(false)">Cancel</h5>
+            </div>
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4 text-right" *ngIf="tabState === 1">
+                <button class="btn-primary text-white c-p" (click)="formValidationOfTaskForm()"
+                    [ngClass]="isMainLoading ? 'cur-wait': ''" mat-stroked-button>Create</button>
+            </div>
+            <div class="col-md-4 text-right" *ngIf="tabState === 2" matTooltip="You must create Task First"
+                [matTooltipDisabled]="data!==null">
+                <button mat-stroked-button [disabled]="data===null" class="btn-primary text-white c-p"
+                    (click)="editedSubTaskSave()" [ngClass]="isMainLoading ? 'cur-wait': ''">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <div class="row" *ngIf="isMainLoading">
-    <mat-spinner class="loader middle-of-slider" [diameter]="30"></mat-spinner>
+    <div class="col-md-12 d-flex justify-content-center align-items-center h-80vh">
+        <mat-spinner class="loadermiddle-of-slider" [diameter]="30"></mat-spinner>
+    </div>
 </div>
