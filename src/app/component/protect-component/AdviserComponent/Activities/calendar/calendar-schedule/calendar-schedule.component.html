@@ -128,6 +128,9 @@
     </div>
   </div>
 </div>
-<div *ngIf="currentMonthEvents.length <= 0" class="mt-20 text-center">
-    <h2>Schedule not found</h2>
+<div *ngIf="currentMonthEvents.length <= 0 && !isLoading" class="mt-20 text-center">
+    <h2>Schedule not found {{isLoading}}</h2>
+</div>
+<div *ngIf="isLoading">
+  <mat-spinner [diameter]="30" style="margin: 0px auto; margin-top: 100px;"></mat-spinner>
 </div>

@@ -24,7 +24,7 @@
             </button>
         </div>
     </div>
-    <div class="wrapper-20 pt-0">
+    <div class="wrapper-20 pt-0 crm-task">
         <table [dataSource]="dataSource" class="mt-8" id="table-low" mat-table [appSkeletonLoading]="isLoading">
 
             <ng-container matColumnDef="client">
@@ -37,7 +37,7 @@
             </ng-container>
             <ng-container matColumnDef="member">
                 <th *matHeaderCellDef class="" mat-header-cell> Family member</th>
-                <td *matCellDef="let element" mat-cell (click)="openAddTask(element)">
+                <td *matCellDef="let element" mat-cell (click)="openAddTask(element)" class="c-p">
                     <div class="bar">{{element.member}} </div>
                 </td>
             </ng-container>
@@ -56,25 +56,25 @@
             </ng-container>
             <ng-container matColumnDef="cat">
                 <th *matHeaderCellDef mat-header-cell> Category</th>
-                <td *matCellDef="let element" mat-cell (click)="openAddTask(element)">
+                <td *matCellDef="let element" mat-cell (click)="openAddTask(element)" class="c-p">
                     <div class="bar"> {{element.cat}} </div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="assigned">
                 <th *matHeaderCellDef mat-header-cell> Assigned to</th>
-                <td *matCellDef="let element" mat-cell (click)="openAddTask(element)">
+                <td *matCellDef="let element" mat-cell (click)="openAddTask(element)" class="c-p">
                     <div class="bar"> {{element.assigned}} </div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="dueDate">
                 <th *matHeaderCellDef mat-header-cell> Due date</th>
-                <td *matCellDef="let element" mat-cell (click)="openAddTask(element)">
+                <td *matCellDef="let element" mat-cell (click)="openAddTask(element)" class="c-p">
                     <div class="bar">{{element.dueDate}} </div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="taskStatus">
                 <th *matHeaderCellDef mat-header-cell> Status</th>
-                <td *matCellDef="let element" mat-cell>
+                <td *matCellDef="let element" mat-cell class="c-p">
                     <div class="bar">{{element.taskStatus}}</div>
                 </td>
             </ng-container>

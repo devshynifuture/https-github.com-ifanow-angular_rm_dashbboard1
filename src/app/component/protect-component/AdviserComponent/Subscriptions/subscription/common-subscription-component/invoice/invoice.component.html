@@ -384,17 +384,17 @@
                 <th *matHeaderCellDef mat-header-cell> Amount(₹)</th>
                 <td *matCellDef="let element" mat-cell><span appFormatNumber>{{element.amountReceived}}</span></td>
               </ng-container>
-              <ng-container matColumnDef="icons">
-                <th *matHeaderCellDef class="f-18 t-2" mat-header-cell></th>
-                <td *matCellDef="let element" class="t-2" mat-cell>
-                  <i [matMenuTriggerFor]="menu" class="material-icons c-p iconscolors">
-                    more_vert
-                  </i>
-                  <mat-menu #menu="matMenu">
-                    <a (click)="editForm(element)" mat-menu-item>Edit</a>
-                  </mat-menu>
-                </td>
-              </ng-container>
+<!--              <ng-container matColumnDef="icons">-->
+<!--                <th *matHeaderCellDef class="f-18 t-2" mat-header-cell></th>-->
+<!--                <td *matCellDef="let element" class="t-2" mat-cell>-->
+<!--                  <i [matMenuTriggerFor]="menu" class="material-icons c-p iconscolors">-->
+<!--                    more_vert-->
+<!--                  </i>-->
+<!--                  <mat-menu #menu="matMenu">-->
+<!--                    <a (click)="editForm(element)" mat-menu-item>Edit</a>-->
+<!--                  </mat-menu>-->
+<!--                </td>-->
+<!--              </ng-container>-->
               <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
               <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
             </table>

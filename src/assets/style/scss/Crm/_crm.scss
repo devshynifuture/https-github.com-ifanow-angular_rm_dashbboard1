@@ -257,6 +257,16 @@
 
 }
 
+.crm-task {
+  tr.mat-header-row {
+    height: 40px !important;
+  }
+
+  tr.mat-row {
+    height: 36px !important;
+  }
+}
+
 #email-froala {
   .fr-box.fr-basic .fr-wrapper {
     margin-bottom: 0px !important;

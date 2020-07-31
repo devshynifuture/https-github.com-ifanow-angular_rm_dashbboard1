@@ -237,16 +237,16 @@
             </div>
             <div class="col-md-4 p-0 right">
                 <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="right">
-                    <mat-button-toggle value="bold" routerLink="/admin/activies/day" routerLinkActive="btn-primary">Day
+                    <mat-button-toggle value="bold" routerLink="/admin/activies/calendar/day" routerLinkActive="btn-primary">Day
                     </mat-button-toggle>
-                    <mat-button-toggle value="italic" routerLink="/admin/activies/week" routerLinkActive="btn-primary">
+                    <mat-button-toggle value="italic" routerLink="/admin/activies/calendar/week" routerLinkActive="btn-primary">
                         Week
                     </mat-button-toggle>
-                    <mat-button-toggle value="underline" routerLink="/admin/activies/month"
+                    <mat-button-toggle value="underline" routerLink="/admin/activies/calendar/month"
                         routerLinkActive="btn-primary">
                         Month</mat-button-toggle>
                 </mat-button-toggle-group>
-                <button mat-stroked-button routerLink="/admin/activies/schedule" routerLinkActive="btn-primary" class="br-2 ba-black text-black right mr-16">Schedule</button>
+                <button mat-stroked-button routerLink="/admin/activies/calendar/schedule" routerLinkActive="btn-primary" class="br-2 ba-black text-black right mr-16">Schedule</button>
             </div>
         </div>
 
@@ -304,11 +304,11 @@
 
                             
                             [class.text-primitive]="i < addLastMonthDays || i > numbersOfDays + addLastMonthDays - 1"
-                            class="m-0 roboto f-11">{{day}}</p>
+                            class="m-0 roboto f-11"  (click)="addEvent(day,month+1,year)">{{day}}</p>
                     </div>
                 </div>
 
-                <div class="p-12" id="calendar-tabs" style=" top:30px;">
+                <!-- <div class="p-12" id="calendar-tabs" style=" top:30px;">
                     <mat-tab-group animationDuration="0ms">
                         <mat-tab label="Categories">
                             <div class="row">
@@ -344,7 +344,7 @@
 
                         </mat-tab>
                     </mat-tab-group>
-                </div>
+                </div> -->
             </div>
             <div class="col-md-10">
                 <router-outlet></router-outlet>
