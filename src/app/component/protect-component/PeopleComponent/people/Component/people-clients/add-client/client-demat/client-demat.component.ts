@@ -44,6 +44,7 @@ export class ClientDematComponent implements OnInit {
   disableBtn = false;
   saveAndNextFlag: any;
   storeTempDematData: any;
+  clientName: any;
   constructor(private cusService: CustomerService, private fb: FormBuilder,
     private subInjectService: SubscriptionInject, private peopleService: PeopleService,
     private eventService: EventService, public dialog: MatDialog) {
@@ -57,6 +58,7 @@ export class ClientDematComponent implements OnInit {
   idData;
   @Input() set data(data) {
     this.userData = data;
+    this.clientName = data.displayName
     this.storeTempDematData = Object.assign({}, data);
     this.clientData = (AuthService.getClientData()) ? AuthService.getClientData() : AuthService.getUserInfo();
     this.idData = (this.fieldFlag != 'familyMember') ? this.userData.clientId : this.userData.familyMemberId;
