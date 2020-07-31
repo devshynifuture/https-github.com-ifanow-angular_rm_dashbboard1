@@ -32,19 +32,19 @@ export class CommonFroalaComponent implements OnInit {
   }
 }
 */
-import { AfterViewInit, Component, ElementRef, forwardRef, Input, OnInit, ViewChild } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
-import { SubscriptionService } from '../../../subscription.service';
-import { escapeRegExp, UtilService } from 'src/app/services/util.service';
-import { EmailOnlyComponent } from '../email-only/email-only.component';
-import { AuthService } from '../../../../../../../auth-service/authService';
-import { PdfService } from '../../../../../../../services/pdf.service';
-import { SubscriptionDataService } from '../../../subscription-data.service';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import {AfterViewInit, Component, ElementRef, forwardRef, Input, OnInit, ViewChild} from '@angular/core';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {MatDialog} from '@angular/material';
+import {SubscriptionService} from '../../../subscription.service';
+import {escapeRegExp, UtilService} from 'src/app/services/util.service';
+import {EmailOnlyComponent} from '../email-only/email-only.component';
+import {AuthService} from '../../../../../../../auth-service/authService';
+import {PdfService} from '../../../../../../../services/pdf.service';
+import {SubscriptionDataService} from '../../../subscription-data.service';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
 // import { escapeRegExp } from '';
 
 // import html2canvas from 'html2canvas';
@@ -76,7 +76,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
     read: ElementRef,
     static: false
   }) renderElement: ElementRef;
-  feeStructureHtmlData: string = '';
+  feeStructureHtmlData = '';
   quotationData: any;
   saveQuotationFlag: any;
   sendEmailFlag: any;
@@ -98,8 +98,8 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
   };
 
   constructor(public subscription: SubscriptionService, public subInjectService: SubscriptionInject,
-    public eventService: EventService, public dialog: MatDialog, private utilService: UtilService,
-    private subDataService: SubscriptionDataService) {
+              public eventService: EventService, public dialog: MatDialog, private utilService: UtilService,
+              private subDataService: SubscriptionDataService) {
     this.advisorId = AuthService.getAdvisorId();
     // this.dataSub = this.subInjectService.singleProfileData.subscribe(
     //   data=>this.getcommanFroalaData(data)
@@ -113,7 +113,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
   @Input()
   set data(data) {
     this.inputData = data;
-    this.sendEmailFlag = data.sendEsignFlag
+    this.sendEmailFlag = data.sendEsignFlag;
     this.saveQuotationFlag = data.quotationFlag;
     this.getcommanFroalaData(data);
   }
@@ -144,13 +144,12 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
 
   getcommanFroalaData(data) {
     this.storeData = Object.assign({}, data);
-    const obj =
-    {
-      clientName: this.storeData.clientName,
-      clientAddress: '',
-      advisorName: AuthService.getUserInfo().name,
-      advisorAddress: ''
-    }
+    const obj = {
+        clientName: this.storeData.clientName,
+        clientAddress: '',
+        advisorName: AuthService.getUserInfo().name,
+        advisorAddress: ''
+      };
     this.storeData.documentText = this.utilService.replacePlaceholder(this.storeData.documentText, obj);
   }
 
@@ -160,8 +159,8 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
     // } else {
     //   this.subInjectService.rightSideData(value);
     // }
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data, refreshRequired: flag });
-    this.subInjectService.changeUpperRightSliderState({ state: 'close', data, refreshRequired: flag });
+    this.subInjectService.changeNewRightSliderState({state: 'close', data, refreshRequired: flag});
+    this.subInjectService.changeUpperRightSliderState({state: 'close', data, refreshRequired: flag});
     if (flag != close && this.storeData.quotation) {
       this.subInjectService.addSingleProfile(true);
     }
@@ -207,10 +206,12 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
     this.storeData.docText = data;
     this.renderElement.nativeElement.innerHTML = data;
   }
+
   saveSendEsign() {
-    this.inputData['sendEsign'] = true
+    this.inputData.sendEsign = true;
     this.save();
   }
+
   save() {
     if (this.storeData.quotation == true) {
       this.updateDataQuot(this.storeData);
@@ -253,8 +254,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
     if (this.inputData.sendEsign) {
       this.openSendEmailEsign();
       this.inputData.sendEsign = false;
-    }
-    else {
+    } else {
       this.Close('close', true);
     }
   }
@@ -318,8 +318,8 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
       margin: 1,
       filename: docName,
       // image: {type: 'jpeg', quality: 0.98},
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+      html2canvas: {scale: 2},
+      jsPDF: {unit: 'in', format: 'letter', orientation: 'portrait'}
     };
 
     // html2pdf().from(this.renderElement.nativeElement).save();
@@ -351,6 +351,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
       }
   */
   }
+
   openSendEmailEsign() {
     if (this.storeData.isDocument == true) {
       this.templateType = 3;
@@ -370,6 +371,7 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
     // });
     this.openEmail(data, 'email');
   }
+
   openSendEmail() {
     if (this.storeData.isDocument == true) {
       this.templateType = 4;
@@ -426,25 +428,24 @@ export class CommonFroalaComponent implements ControlValueAccessor, OnInit, Afte
 
   createQuotation() {
     this.barButtonOptions.active = true;
-    const obj =
-    {
-      "planId": this.storeData.planId,
-      "documentRepositoryId": this.storeData.documentRepositoryId,
-      "clientId": this.storeData.clientId,
-      "advisorId": this.advisorId,
-      "documentText": this.storeData.documentText
-    }
+    const obj = {
+        planId: this.storeData.planId,
+        documentRepositoryId: this.storeData.documentRepositoryId,
+        clientId: this.storeData.clientId,
+        advisorId: this.advisorId,
+        documentText: this.storeData.documentText
+      };
     this.subscription.createQuotation(obj).subscribe(
       data => {
         this.barButtonOptions.active = false;
-        this.eventService.openSnackBar("Quotation added sucessfully", "Dismiss");
-        this.Close('close', true)
+        this.eventService.openSnackBar('Quotation added sucessfully', 'Dismiss');
+        this.Close('close', true);
       },
       err => {
         this.barButtonOptions.active = false;
-        this.eventService.openSnackBar(err, "Dismiss");
+        this.eventService.openSnackBar(err, 'Dismiss');
       }
-    )
+    );
   }
 
 

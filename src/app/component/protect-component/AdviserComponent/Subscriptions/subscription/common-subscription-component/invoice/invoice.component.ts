@@ -135,7 +135,7 @@ export class InvoiceComponent implements OnInit {
   editAdd1;
   editAdd2;
   dataSource;
-  displayedColumns: string[] = ['date', 'reference', 'paymentMode', 'amount', 'icons'];
+  displayedColumns: string[] = ['date', 'reference', 'paymentMode', 'amount'/*, 'icons'*/];
   // dataSource = ELEMENT_DATA;
   feeCollectionMode: any;
   formObj: [{}];
