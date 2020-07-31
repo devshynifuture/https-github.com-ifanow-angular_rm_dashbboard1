@@ -21,6 +21,8 @@ export class LeftSidebarComponent implements OnInit {
   trashCount: any;
   starredCount: any;
   isCustomerEmail: boolean;
+  location: any;
+  unreadCount: number;
 
   constructor(
     private emailService: EmailServiceService,
@@ -43,6 +45,7 @@ export class LeftSidebarComponent implements OnInit {
     }
     let location;
     location = this.router.url.split('/')[this.router.url.split('/').length - 1];
+    this.location = location;
     if (this.router.url.split('/').includes('customer')) {
       this.isCustomerEmail = true;
     } else {
@@ -92,6 +95,10 @@ export class LeftSidebarComponent implements OnInit {
               break;
             case 'TRASH': this.trashCount = element.threadsTotal;
               break;
+
+          }
+          if ((this.location.toUpperCase() === 'INBOX' ? 'IMPORTANT' : '') === element.labelId) {
+            this.unreadCount = parseInt(element.threadsUnread);
           }
         });
       }

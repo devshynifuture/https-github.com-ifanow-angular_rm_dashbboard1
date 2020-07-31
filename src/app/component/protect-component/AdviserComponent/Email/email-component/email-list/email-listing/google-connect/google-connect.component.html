@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" [ngClass]="isLoading ? 'd-none': ''">
     <div class="col-md-12 text-center mt-80">
         <div *ngIf="connect == 'email'">
             <div class="row pb-48">
@@ -63,5 +63,10 @@
                 <input type="email" matInput formControlName="googleConnectEmail" placeholder="Enter Your Gmail Id">
             </p>
         </form>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 text-center loader-only" *ngIf="isLoading == true">
+        <mat-spinner [diameter]="30"></mat-spinner>
     </div>
 </div>
