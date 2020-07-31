@@ -1,12 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren } from '@angular/core';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { FormBuilder, Validators } from '@angular/forms';
-import { SubscriptionService } from '../../../subscription.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { AuthService } from '../../../../../../../auth-service/authService';
-import { UtilService, ValidatorType } from 'src/app/services/util.service';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-import { MatInput } from '@angular/material';
+import {Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren} from '@angular/core';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {FormBuilder, Validators} from '@angular/forms';
+import {SubscriptionService} from '../../../subscription.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {AuthService} from '../../../../../../../auth-service/authService';
+import {UtilService, ValidatorType} from 'src/app/services/util.service';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import {MatInput} from '@angular/material';
 
 @Component({
   selector: 'app-add-fixed-fee',
@@ -32,11 +32,11 @@ export class AddFixedFeeComponent implements OnInit {
     // buttonIcon: {
     //   fontIcon: 'favorite'
     // }
-  }
+  };
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
 
   constructor(public utils: UtilService, public subInjectService: SubscriptionInject, private fb: FormBuilder,
-    private subService: SubscriptionService, private eventService: EventService) {
+              private subService: SubscriptionService, private eventService: EventService) {
   }
 
   isServiceValid;
@@ -56,11 +56,14 @@ export class AddFixedFeeComponent implements OnInit {
     billEvery: [null, [Validators.required]],
     billingMode: [1]
   });
+
   @Input() set data(data) {
-    this.ischeckFixedData = data
-    this.getFeeFormData(data)
+    this.ischeckFixedData = data;
+    this.getFeeFormData(data);
   }
+
   @Output() outputFixedData = new EventEmitter();
+
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.setValidation(false);
@@ -68,6 +71,7 @@ export class AddFixedFeeComponent implements OnInit {
   }
 
   createFixedFeeForm(data) {
+    console.log('createFixedFeeForm data : ', data);
     this.fixedFeeData = this.fb.group({
       serviceName: [data, [Validators.required, Validators.maxLength(40)]],
       code: [data, [Validators.required]],
@@ -96,9 +100,22 @@ export class AddFixedFeeComponent implements OnInit {
     return this.fixedFeeData.controls;
   }
 
+  changedBillingNature(newOption) {
+    console.log('changedBillingNature newOption :  ', newOption);
+    if (newOption == 2) {
+      this.getFormControl().billEvery.clearValidators();
+      this.getFormControl().billEvery.clearAsyncValidators();
+      this.getFormControl().billEvery.updateValueAndValidity();
+
+    } else {
+      this.getFormControl().billEvery.setValidators([Validators.requiredTrue]);
+      this.getFormControl().billEvery.updateValueAndValidity();
+    }
+  }
+
   getFeeFormData(data) {
     if (data == '') {
-      this.createFixedFeeForm('')
+      this.createFixedFeeForm('');
       return;
     } else {
       this._data = data;
@@ -126,7 +143,7 @@ export class AddFixedFeeComponent implements OnInit {
   }
 
   Close(state) {
-    this.subInjectService.changeNewRightSliderState({ state: 'close' });
+    this.subInjectService.changeNewRightSliderState({state: 'close'});
     this.setValidation(false);
     this.createFixedFeeForm('');
   }
@@ -152,9 +169,9 @@ export class AddFixedFeeComponent implements OnInit {
         serviceCode: this.fixedFeeData.controls.code.value,
         serviceName: this.fixedFeeData.controls.serviceName.value,
         servicePricing: {
-          id: (this._data) ? this._data.servicePricing.id : '',
+          id: (this._data) ? this._data.servicePricing.id : 0,
           // autoRenew: 0,
-          billEvery: this.fixedFeeData.controls.billEvery.value,
+          billEvery: this.fixedFeeData.controls.billEvery.value ? this.fixedFeeData.controls.billEvery.value : 0,
           billingCycle: this.fixedFeeData.get('Duration').value,
           billingMode: parseInt(this.fixedFeeData.controls.billingMode.value),
           billingNature: parseInt(this.fixedFeeData.controls.billingNature.value),
@@ -170,7 +187,7 @@ export class AddFixedFeeComponent implements OnInit {
         }
       };
       this.dataToSend = obj;
-      Object.assign(this.dataToSend, { id: this.serviceId });
+      Object.assign(this.dataToSend, {id: this.serviceId});
       if (this.serviceId == undefined) {
         this.subService.createSettingService(obj).subscribe(
           data => {
@@ -199,11 +216,12 @@ export class AddFixedFeeComponent implements OnInit {
   saveFeeTypeDataResponse(data, state) {
     // this.outputFixedData.emit(data)
     this.eventService.openSnackBar('Service is created', 'OK');
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data: data });
+    this.subInjectService.changeNewRightSliderState({state: 'close', data});
   }
+
   saveFeeTypeDataEditResponse(data, state) {
     // this.outputFixedData.emit(this.dataToSend)
     this.eventService.openSnackBar('Service is created', 'OK');
-    this.subInjectService.changeNewRightSliderState({ state: 'close', data: this.dataToSend });
+    this.subInjectService.changeNewRightSliderState({state: 'close', data: this.dataToSend});
   }
 }

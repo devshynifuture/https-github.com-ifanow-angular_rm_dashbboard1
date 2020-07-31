@@ -1,5 +1,31 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ControlValueAccessor} from '@angular/forms';
+import 'froala-editor/js/froala_editor.pkgd.min.js';
+import 'froala-editor/js/plugins.pkgd.min.js';
+// import 'froala-editor/js/plugins/align.min.js';
+// // import 'froala-editor/js/plugins/char_counter.min.js';
+// import 'froala-editor/js/plugins/colors.min.js';
+// import 'froala-editor/js/plugins/draggable.min.js';
+// import 'froala-editor/js/plugins/emoticons.min.js';
+// import 'froala-editor/js/plugins/file.min.js';
+// import 'froala-editor/js/plugins/font_family.min.js';
+// import 'froala-editor/js/plugins/font_size.min.js';
+// import 'froala-editor/js/plugins/fullscreen.min';
+// import 'froala-editor/js/plugins/help.min.js';
+// import 'froala-editor/js/plugins/image.min.js';
+// import 'froala-editor/js/plugins/image_manager.min.js';
+// import 'froala-editor/js/plugins/link.min.js';
+// import 'froala-editor/js/plugins/lists.min.js';
+// import 'froala-editor/js/plugins/paragraph_format.min.js';
+// import 'froala-editor/js/plugins/paragraph_style.min.js';
+// import 'froala-editor/js/plugins/print.min.js';
+// import 'froala-editor/js/plugins/quick_insert.min.js';
+// import 'froala-editor/js/plugins/save.min.js';
+// import 'froala-editor/js/plugins/special_characters.min.js';
+// import 'froala-editor/js/plugins/table.min.js';
+// import 'froala-editor/js/plugins/video.min.js';
+// import 'froala-editor/js/plugins/url.min.js';
+// import 'froala-editor/js/plugins/word_paste.min.js';
 
 @Component({
   selector: 'app-froala',
@@ -18,10 +44,26 @@ export class FroalaComponent implements ControlValueAccessor, OnInit {
   _model;
 
   config: Object = {
+    key: 'XAG4eH3A3B10B8D6C5C-11VKOJ1FGULVKHXDXNDXc1d1Kg1SNdD5B4A4B3H3I3F3B7A4C3==',
     attribution: false,
-    charCounterCount: false,
-    // toolbarButtons: ['getPDF']
+    // attribution: false,
+    // charCounterCount: false,
+    // toolbarButtons: ['bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', '|', 'paragraphStyle', 'paragraphFormat', 'align', 'undo', 'redo', 'html'],
+    // toolbarInline: true,
+    // tableEditButtons: ['tableHeader', 'tableRemove', '|', 'tableRows', 'tableColumns',
+    //   'tableStyle', '-', 'tableCells', 'tableCellBackground', 'tableCellVerticalAlign',
+    //   'tableCellHorizontalAlign', 'tableCellStyle'],
+    // tableInsertHelper: true,
+    // tableInsertButtons: ['tableBack'],
 
+    // toolbarInline: true,
+    events: {
+      'froalaEditor.initialized': function (e, editor) {
+        if (this.readonly) {
+          editor.edit.off();
+        }
+      }
+    }
   };
 
   get model() {
@@ -42,15 +84,6 @@ export class FroalaComponent implements ControlValueAccessor, OnInit {
     // const froalaComponent = new FroalaEditor('div#froala-editor', {
     //   toolbarButtons: ['getPDF']
     // });
-    this.config = {
-      events : {
-        'froalaEditor.initialized' : function(e, editor) {
-          if(this.readonly) {
-            editor.edit.off();
-          }
-        }
-      }
-    }
   }
 
   // Begin ControlValueAccesor methods.

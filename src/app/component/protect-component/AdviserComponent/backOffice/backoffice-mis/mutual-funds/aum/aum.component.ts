@@ -23,7 +23,7 @@ export class AumComponent implements OnInit {
   category = [{}, {}, {}];
   subcategory = [{}, {}, {}];
   MiscData;
-  MiscData1;
+  MiscData1: any = {};
   aumComponent = true;
   componentWise;
   advisorId: any;
@@ -269,7 +269,9 @@ export class AumComponent implements OnInit {
   getFileResponseDataForMis(data) {
     console.log('this is totalaum data:::', data);
     this.isLoading = false;
-    this.MiscData1 = data;
+    if (data) {
+      this.MiscData1 = data;
+    }
   }
 
   getFileResponseDataForSub(data) {

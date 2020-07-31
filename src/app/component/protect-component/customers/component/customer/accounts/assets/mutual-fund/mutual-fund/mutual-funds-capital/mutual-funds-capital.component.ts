@@ -576,7 +576,8 @@ export class MutualFundsCapitalComponent implements OnInit {
         clientId : this.clientId,
         advisorId : this.advisorId,
         fromEmail: this.clientDetails.advisorData.email,
-        toEmail: this.clientData.email
+        toEmail: this.clientData.email,
+        
       }
       this.UtilService.bulkHtmlToPdf(obj)
      // this.UtilService.htmlToPdf(para, 'MF_Capital_Gain_Summary', true, this.fragmentData, '', '')

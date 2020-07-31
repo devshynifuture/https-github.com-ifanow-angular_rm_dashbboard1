@@ -17,6 +17,7 @@ export class CrmTasksComponent implements OnInit {
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   isLoading: boolean;
   advisorId = AuthService.getAdvisorId();
+  taskStatus: any;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -40,12 +41,17 @@ export class CrmTasksComponent implements OnInit {
       .subscribe(res => {
         if (res) {
           console.log(res);
-          this.getAllTaskList(res);
+          this.taskStatus = res.taskStatus;
+          this.getAllTaskList();
         }
       })
   }
 
-  getAllTaskList({ taskStatus }) {
+  getTaskNameFromTaskStatusList(taskStatus) {
+    return this.taskStatus.find(item => item.id === taskStatus).name;
+  }
+
+  getAllTaskList() {
     const data = {
       advisorId: this.advisorId,
       offset: 0,
@@ -68,7 +74,7 @@ export class CrmTasksComponent implements OnInit {
               assigned: element.assignedToName,
               dueDate,
               dueDateTimeStamp: element.dueDate,
-              taskStatus: taskStatus[index].name,
+              taskStatus: this.getTaskNameFromTaskStatusList(element.status),
               id: element.id,
               advisorId: element.advisorId,
               clientId: element.clientId,
@@ -106,6 +112,7 @@ export class CrmTasksComponent implements OnInit {
       .subscribe(res => {
         if (res) {
           this.eventService.openSnackBar("Task Successfully Deleted!!", "DISMISS");
+          this.initPoint();
         }
       })
   }

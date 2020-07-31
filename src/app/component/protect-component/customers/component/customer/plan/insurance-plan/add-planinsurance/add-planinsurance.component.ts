@@ -120,7 +120,7 @@ export class AddPlaninsuranceComponent implements OnInit {
     });
   }
   saveAnalysis() {
-    if (this.tab == 1) {
+    if (this.tab == 0) {
       this.sendObj = {
         lifeInsurancePlanningId: this.needBase.lifeInsurancePlanningId,
         needTypeId: this.needBase.needTypeId,

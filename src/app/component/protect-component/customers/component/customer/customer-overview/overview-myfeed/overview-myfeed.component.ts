@@ -12,7 +12,7 @@ import {OrgSettingServiceService} from 'src/app/component/protect-component/Advi
 import {EnumServiceService} from 'src/app/services/enum-service.service';
 import {DatePipe} from '@angular/common';
 import {MfServiceService} from '../../accounts/assets/mutual-fund/mf-service.service';
-import {WebworkerService} from 'src/app/services/web-worker.service';
+// import {WebworkerService} from 'src/app/services/web-worker.service';
 import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import {BulkEmailTestComponent} from '../../accounts/assets/mutual-fund/bulk-email-test/bulk-email-test.component';
 
@@ -153,7 +153,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     private enumSerice: EnumServiceService,
     private datePipe: DatePipe,
     private mfServiceService: MfServiceService,
-    private workerService: WebworkerService,
+    // private workerService: WebworkerService,
   ) {
     this.advisorId = AuthService.getAdvisorId();
     this.orgDetails = authService.orgData;

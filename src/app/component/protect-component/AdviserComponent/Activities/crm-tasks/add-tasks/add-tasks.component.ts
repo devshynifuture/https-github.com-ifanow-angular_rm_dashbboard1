@@ -59,8 +59,10 @@ export class AddTasksComponent implements OnInit {
   dayOfWeek: any;
   recurringTaskFrequencyList: any;
   isRecurringTaskForm = false;
-  editCommentForm = new FormControl();
+  commentSubTaskFC = new FormControl();
+  commentTaskFC = new FormControl();
   recurringTaskFreqId: any;
+  commentEditValue = '';
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -86,6 +88,7 @@ export class AddTasksComponent implements OnInit {
   initPoint() {
     this.getTaskRecurringData()
     if (this.data !== null) {
+      this.isManual = true;
       this.collaboratorList = this.data.collaborators;
       this.commentList = this.data.comments;
       this.commentList.map(element => {
@@ -140,8 +143,7 @@ export class AddTasksComponent implements OnInit {
   formInit(data) {
     if (data !== null) {
       this.subTaskList = data.subTasks;
-      this.isManual = true;
-      this.showManualToggle = false;
+      // this.showManualToggle = false;
       let tempClientList = this.enumDataService.getClientSearchData('');
       this.selectedClient = tempClientList.find(item => item.clientId = data.clientId);
       data.displayName = this.selectedClient.displayName;
@@ -169,7 +171,6 @@ export class AddTasksComponent implements OnInit {
       });
       this.selectClient(this.selectedClient);
     } else {
-      this.isManual = true;
       this.addTaskForm = this.fb.group({
         searchTemplateList: [,],
         searchClientList: [, Validators.required],
@@ -193,7 +194,6 @@ export class AddTasksComponent implements OnInit {
   }
 
   makeTaskRecurring() {
-
     this.isRecurringTaskForm = !this.isRecurringTaskForm;
   }
 
@@ -201,16 +201,28 @@ export class AddTasksComponent implements OnInit {
     if (value === 2) {
       this.selectedSubTask = subTaskItem;
       this.subTaskCommentList = subTaskItem.comments;
-      this.subTaskCommentList.map(element => {
-        element.editMode = false;
-      });
+      if (this.subTaskCommentList.length !== 0) {
+        this.subTaskCommentList.map(element => {
+          element.editMode = false;
+        });
+      }
       this.subTaskAttachmentList = subTaskItem.attachments;
-      this.editSubTaskForm.patchValue({
-        description: subTaskItem.description,
-        turnAroundTime: subTaskItem.turnAroundTime,
-        assignedTo: subTaskItem.assignedTo,
-        taskDueDate: moment(subTaskItem.taskDueDate)
-      })
+      if (this.editSubTaskForm) {
+        this.editSubTaskForm.patchValue({
+          description: subTaskItem.description,
+          turnAroundTime: subTaskItem.turnAroundTime,
+          assignedTo: subTaskItem.assignedTo,
+          taskDueDate: moment(subTaskItem.taskDueDate)
+        })
+      } else {
+        this.editSubTaskForm = this.fb.group({
+          description: [subTaskItem.description, Validators.required],
+          turnAroundTime: [subTaskItem.turnAroundTime, Validators.required],
+          assignedTo: [subTaskItem.assignedTo, Validators.required],
+          taskDueDate: [moment(), Validators.required],
+        });
+      }
+
     }
     this.tabState = value;
   }
@@ -221,13 +233,13 @@ export class AddTasksComponent implements OnInit {
       case 'task':
         data = {
           id: item.id,
-          commentMsg: this.commentTaskInput
+          commentMsg: this.commentTaskFC.value
         }
         break;
       case 'subTask':
         data = {
           id: item.id,
-          commentMsg: this.commentSubTaskInput
+          commentMsg: this.commentSubTaskFC.value
         }
     }
 
@@ -236,9 +248,9 @@ export class AddTasksComponent implements OnInit {
         if (res) {
           console.log("this is edit comment rees:", res);
           switch (choice) {
-            case 'task': this.commentList[index].commentMsg = this.commentTaskInput;
+            case 'task': this.commentList[index].commentMsg = this.commentTaskFC.value;
               break;
-            case 'subTask': this.subTaskCommentList[index].commentMsg = this.commentSubTaskInput;
+            case 'subTask': this.subTaskCommentList[index].commentMsg = this.commentSubTaskFC.value;
               break;
           }
           item.editMode = false;
@@ -318,6 +330,7 @@ export class AddTasksComponent implements OnInit {
           this.taskTemplateList = res;
           console.log("this is task tempplate result::::", res);
         } else {
+          this.isManual = true;
           this.eventService.openSnackBar("No Task Template Found!!", "DISMISS");
         }
       })
@@ -374,6 +387,8 @@ export class AddTasksComponent implements OnInit {
 
   toggleCheckSubTask(value, item, index) {
     console.log("this is some subtask check uncheck value", value)
+    this.subTaskList[index].isCompleted = true;
+    this.subTaskList[index].status = 1;
     this.markTaskOrSubTaskDone('subTask', item, value);
   }
 
@@ -441,7 +456,11 @@ export class AddTasksComponent implements OnInit {
 
     if (this.selectedSubTask.dueDate) {
       let date = new Date(this.selectedSubTask.dueDate)
-      let dueDate = date.getFullYear() + "-" + `${(date.getMonth() + 1) < 10 ? '0' : ''}` + (date.getMonth() + 1) + '-' + date.getDate();
+      let dueDate = date.getFullYear() + "-"
+        + `${(date.getMonth() + 1) < 10 ? '0' : ''}`
+        + (date.getMonth() + 1) + '-'
+        + `${date.getDate() < 10 ? '0' : ''}`
+        + date.getDate();
       data['dueDate'] = dueDate;
     }
 
@@ -467,11 +486,13 @@ export class AddTasksComponent implements OnInit {
         taskId: this.data.id,
         status: value == true ? 1 : 0
       }
+      this.data.status = 1;
     } else if (choice === 'subTask') {
       data = {
         subTaskId: subTaskItem.id,
         status: value == true ? 1 : 0
       }
+
     }
 
     this.crmTaskService.markTaskOrSubTaskDone(data)
@@ -499,30 +520,12 @@ export class AddTasksComponent implements OnInit {
   }
 
   downloadAttachment(item) {
+    this.isMainLoading = true;
     this.crmTaskService.getAttachmentDownloadOfTaskSubTask({ taskAttachmentId: item.id })
       .subscribe(res => {
+        this.isMainLoading = false;
         if (res) {
           window.open(res);
-          // this.http.get(res, {})
-          //   .subscribe(res => {
-          //     if (res) {
-          //       window.open(res);
-          //     }
-          //   })
-          // const httpOptions = {
-          //   headers: new HttpHeaders()
-          //     .set('Content-Type', '')
-          // };
-          // this.http.getHttpClient(res, httpOptions)
-          //   .subscribe(res => {
-          //     if (res) {
-          //       console.log("download attachment response::", res);
-          //     }
-          //   }, err => console.error(err))
-          // let link = document.createElement('a');
-          // link.href = res;
-          // link.download = item.attachmentName;
-          // link.click();
         } else {
           this.eventService.openSnackBar("Fetching attachment Failed !", "DISMISS");
           console.log("hopefully this is error", res);
@@ -572,9 +575,11 @@ export class AddTasksComponent implements OnInit {
       attachmentName: value.attachmentName,
       s3Uuid: value.s3Uuid
     }
+    this.isMainLoading = true;
     this.crmTaskService.addAttachmentTaskSubTask(data)
       .subscribe(res => {
         if (res) {
+          this.isMainLoading = false;
           console.log("attachment aws respo:", res);
           if (choice === 'task') {
             this.attachmentList.push(res);
@@ -600,14 +605,13 @@ export class AddTasksComponent implements OnInit {
         .subscribe(res => {
           if (res) {
             console.log("sub taks appended successfully!", res);
-            this.subTaskList.push({
-              isCompleted: false,
-              assignedTo: data.value.assignedTo,
-              description: data.value.description,
-              turnAroundTime: data.value.turnAroundTime,
-            })
+            res.comments = [];
+            res.attachments = [];
+            res.status = 0;
+            this.subTaskList.push(res)
             this.addTaskForm.get(`subTask.${formGroupIndex}`).reset();
             this.eventService.openSnackBar("Successfully appended Subtask ", "DISMISS");
+            this.removeSubTask(formGroupIndex);
           }
         });
     } else {
@@ -615,9 +619,13 @@ export class AddTasksComponent implements OnInit {
         isCompleted: false,
         assignedTo: data.value.assignedTo,
         description: data.value.description,
-        turnAroundTime: data.value.turnAroundTime
+        turnAroundTime: data.value.turnAroundTime,
+        comments: [],
+        attachments: [],
+        status: 0
       })
     }
+    this.addTaskForm.get(`subTask.${formGroupIndex}`).reset();
   }
 
   setRecurringFreq(item) {
@@ -627,18 +635,22 @@ export class AddTasksComponent implements OnInit {
   onAddingCollaborator(data) {
     console.log(data);
     if (this.data !== null) {
-      const obj = {
-        taskId: this.data.id,
-        userId: this.selectedTeamMemberId
+      if (this.canAddCollaborators(this.selectedTeamMemberId)) {
+        const obj = {
+          taskId: this.data.id,
+          userId: this.selectedTeamMemberId
+        }
+        this.crmTaskService.addCollaboratorToTask(obj)
+          .subscribe(res => {
+            if (res) {
+              console.log('this is added res of collaborator', res);
+              this.collaboratorList.push(res);
+              this.eventService.openSnackBar("Successfully added Collaborator to the task");
+            }
+          })
+      } else {
+        this.eventService.openSnackBar("Already exists!", "DISMISS");
       }
-      this.crmTaskService.addCollaboratorToTask(obj)
-        .subscribe(res => {
-          if (res) {
-            console.log('this is added res of collaborator', res);
-            this.collaboratorList.push(res);
-            this.eventService.openSnackBar("Successfully added Collaborator to the task");
-          }
-        })
     }
   }
 
@@ -660,6 +672,11 @@ export class AddTasksComponent implements OnInit {
         subTaskList.forEach(element => {
           this.subTaskList.push(element);
         });
+
+        this.subTaskList.map(item => {
+          item.comments = [];
+          item.attachments = [];
+        })
         console.log('this is subtask List::: ')
         if (res.assignedTo) {
           this.addTaskForm.patchValue({ assignedTo: res.assignedTo, taskDescription: item.taskDescription });
@@ -695,8 +712,8 @@ export class AddTasksComponent implements OnInit {
     if (this.subTaskList.length !== 0) {
       this.subTaskList.forEach(element => {
         subTaskArr.push({
-          taskNumber: this.getSubTaskNumber(),        //(order of task number should be maintained)
-          assignedTo: element.ownerId,   //(same as assignedTo above)
+          taskNumber: this.getSubTaskNumber(),
+          assignedTo: element.ownerId,
           description: element.description,
           turnAroundTime: element.turnAroundTime
         });
@@ -780,6 +797,14 @@ export class AddTasksComponent implements OnInit {
     }
   }
 
+  canAddCollaborators(userId): boolean {
+    if (!(this.collaboratorList.some(item => item.userId === userId))) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   onCreateCommentTaskSubTask(value) {
     let data;
     let choice = this.tabState === 1 ? 'task' : (this.tabState === 2) ? 'subTask' : '';
@@ -821,20 +846,28 @@ export class AddTasksComponent implements OnInit {
 
   toggleEditMode(item, choice) {
     item.editMode = true;
-    switch (choice) {
-      case 'task': this.commentTaskInput = item.commentMsg;
-        // add dynamic form
-        break;
-      case 'subTask': this.commentSubTaskInput = item.commentMsg;
-        // add dynamic form
-        break;
-    }
+    // switch (choice) {
+    //   case 'task': this.commentTaskInput = item.commentMsg;
+    //     // add dynamic form
+    //     break;
+    //   case 'subTask': this.commentSubTaskInput = item.commentMsg;
+    //     // add dynamic form
+    //     break;
+    // }
 
   }
 
   getFileData(fileList: FileList, choice) {
     let fileData = fileList.item(0);
     this.getUploadUrlForAttachment(fileData, choice);
+  }
+
+  taskUpperFile(fileList: FileList) {
+    if (this.tabState === 1) {
+      this.getFileData(fileList, 'task')
+    } else if (this.tabState === 2) {
+      this.getFileData(fileList, 'subTask')
+    }
   }
 
   preventDefault(event) {
