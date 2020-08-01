@@ -1,8 +1,8 @@
-<mat-toolbar class="row bg-black">
-    <div class="col-md-12 pr-0 full-end">
-        <button (click)="downloadDocumentAsPDF()" mat-button><i class="material-icons f-30 c-p color-white">
-                cloud_download
-            </i></button>
+<mat-toolbar class="row">
+    <div class="col-md-12 pl-20 full-end">
+        <a class="downloadPdf">
+            <img (click)="downloadDocumentAsPDF()" src="assets/images/svg/download-bordered.svg">
+        </a>
     </div>
 </mat-toolbar>
 
@@ -10,7 +10,7 @@
     <!-- <div class="col-md-4 bg-gray">
     </div> -->
     <div class="col-md-12">
-        <div #dataContainer>
+        <div class="p-20" #dataContainer>
         </div>
     </div>
     <!-- <div class="col-md-4 bg-gray">

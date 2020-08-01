@@ -16,6 +16,7 @@ import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
 import { FileUploadServiceService } from '../../file-upload-service.service';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { EnumDataService } from 'src/app/services/enum-data.service';
 
 @Component({
   selector: 'app-cash-and-bank',
@@ -54,7 +55,7 @@ export class CashAndBankComponent implements OnInit {
 
   constructor(private excel:ExcelGenService,  private pdfGen:PdfGenService, private subInjectService: SubscriptionInject,
     private fileUpload : FileUploadServiceService, private enumService: EnumServiceService,
-    private custumService: CustomerService, private eventService: EventService,
+    private custumService: CustomerService, private eventService: EventService, private enumDataService: EnumDataService,
     public utils: UtilService, public dialog: MatDialog) {
       this.clientData =AuthService.getClientData()
   }
@@ -62,7 +63,7 @@ export class CashAndBankComponent implements OnInit {
   @ViewChildren(FormatNumberDirective) formatNumber;
   bankList:any = [];
   clientFamilybankList:any = [];
-
+  accountTypes:any =[];
   ngOnInit() {
     this.showRequring = '1';
     this.advisorId = AuthService.getAdvisorId();
@@ -70,6 +71,7 @@ export class CashAndBankComponent implements OnInit {
     this.getBankAccountList();
     this.bankAccountList = new MatTableDataSource(this.data);
     this.bankList = this.enumService.getBank();
+    this.accountTypes = this.enumDataService.getBankAccountTypes();
     this.clientFamilybankList = this.enumService.getclientFamilybankList();
     console.log(this.bankList,"this.bankList",this.clientFamilybankList);
     
@@ -313,6 +315,7 @@ export class CashAndBankComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             (sideBarData.data == 1) ? this.getBankAccountList() : this.getCashInHandList();
+              
             console.log('this is sidebardata in subs subs 3 ani: ', sideBarData);
           }
           rightSideDataSub.unsubscribe();

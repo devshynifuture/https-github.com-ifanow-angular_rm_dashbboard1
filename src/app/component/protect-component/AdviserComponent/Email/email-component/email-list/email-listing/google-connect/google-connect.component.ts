@@ -75,7 +75,7 @@ export class GoogleConnectComponent implements OnInit {
         }
         else if (this.connect == "calendar") {
           this.isLoading = false;
-          this.router.navigate(['/admin/activies/month'], { relativeTo: this.activatedRoute });
+          this.router.navigate(['/admin/activies/calendar/month'], { relativeTo: this.activatedRoute });
           this.googleConnected.emit(localStorage.getItem('successStoringToken'));
         }
         else {

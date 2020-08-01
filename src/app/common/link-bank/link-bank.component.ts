@@ -266,6 +266,7 @@ export class LinkBankComponent implements OnInit {
         data => {
           this.barButtonOptions.active = false;
           this.enumDataService.getAccountList(this.enumDataService.userData);
+          this.enumDataService.getclientFamilybankList();
           // this.valueChange.emit("get-list");
           this.closeDialog("get-list");
         },

@@ -188,6 +188,12 @@ export class CalendarComponent implements OnInit {
 
   }
 
+  viewDayWeek(day,month,year){
+    this.viewDate = new Date(year,month,day);
+    this.daysArr = [];
+    this.updatecalendar();
+  }
+
   nextMonth() {
     switch (this.router.url) {
       case '/admin/activies/calendar/day':
