@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {SubscriptionService} from '../../../subscription.service';
-import {AuthService} from '../../../../../../../auth-service/authService';
-import {EventService} from 'src/app/Data-service/event.service';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import { Component, OnInit } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { SubscriptionService } from '../../../subscription.service';
+import { AuthService } from '../../../../../../../auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { error } from 'highcharts';
 
 @Component({
   selector: 'app-plan-rightslider',
@@ -32,13 +33,14 @@ export class PlanRightsliderComponent implements OnInit {
   advisorId;
   noDataFoundFlag: any;
   selectedPlanList: any = [];
+  isLoadingPlan;
 
   set data(data) {
     this.clientData = data;
   }
 
   constructor(private eventservice: EventService, public subInjectService: SubscriptionInject,
-              private subService: SubscriptionService) {
+    private subService: SubscriptionService) {
   }
 
   ngOnInit() {
@@ -50,15 +52,22 @@ export class PlanRightsliderComponent implements OnInit {
     const obj = {
       advisorId: this.advisorId
     };
+    this.isLoadingPlan = true;
     this.subService.getPlanOfAdvisorClients(obj).subscribe(
       data => {
+        this.isLoadingPlan = false;
         if (data && data.length > 0) {
           this.noDataFoundFlag = false;
           this.planSettingData = data;
         } else {
           this.noDataFoundFlag = true;
         }
+
+
+      }, error => {
+        this.isLoadingPlan = false;
       }
+
     );
   }
 
@@ -112,6 +121,6 @@ export class PlanRightsliderComponent implements OnInit {
   }
 
   Close(flag) {
-    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: flag});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
 }

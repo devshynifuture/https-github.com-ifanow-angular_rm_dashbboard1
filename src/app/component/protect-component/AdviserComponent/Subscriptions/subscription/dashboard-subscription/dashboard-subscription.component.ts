@@ -113,7 +113,7 @@ export class DashboardSubscriptionComponent implements OnInit {
 
     this.subService.getDashboardSubscriptionResponse(this.advisorId).subscribe(
       data => {
-        this.showLetsBegin = data.show;
+        this.showLetsBegin = !data.show;
         this.showLetsBeginData = data.advisorAccomplishedSubscriptionFinalList;
         this.utilservice.subscriptionStepData = this.showLetsBeginData
       }
