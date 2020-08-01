@@ -45,6 +45,7 @@ export class InvoiceComponent implements OnInit {
   rpyment = true;
   showDateError: string;
   moreStatus: any;
+  invoiceFeeCalculations: any;
 
   [x: string]: any;
 
@@ -135,7 +136,7 @@ export class InvoiceComponent implements OnInit {
   editAdd1;
   editAdd2;
   dataSource;
-  displayedColumns: string[] = ['date', 'reference', 'paymentMode', 'amount'/*, 'icons'*/];
+  displayedColumns: string[] = ['date', 'reference', 'paymentMode', 'amount', 'icons'];
   // dataSource = ELEMENT_DATA;
   feeCollectionMode: any;
   formObj: [{}];
@@ -622,12 +623,13 @@ export class InvoiceComponent implements OnInit {
     this.showRecord = true;
     // this.getRecordPayment(data);
     this.sendRecordPaymentData = data;
+    this.sendRecordPaymentData.balanceDue =this.storeData.balanceDue;
     this.sendRecordPaymentData.add = false;
     // this.sendRecordPaymentData.add=false;
   }
 
   cancel(value) {
-    if (value != undefined) {
+    if (value != "" ) {
       this.storeData.balanceDue = (value.balanceDue) ? value.balanceDue : '';
       this.storeData.status = value.status;
       if (value.status == 1) {
@@ -834,9 +836,9 @@ export class InvoiceComponent implements OnInit {
   }
 
   generatePdf() {
+    this.storeData.isSubscription = true;
     const para = document.getElementById('template');
-
-    this.utils.htmlToPdf(para.innerHTML, 'Test', '');
+    this.utils.htmlToPdf(para.innerHTML, 'Test', '',this.storeData);
   }
 
 

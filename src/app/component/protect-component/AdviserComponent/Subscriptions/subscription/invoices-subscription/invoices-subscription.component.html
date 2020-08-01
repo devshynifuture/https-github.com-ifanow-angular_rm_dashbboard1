@@ -132,8 +132,8 @@
                 </ng-container>
 
                 <ng-container matColumnDef="amt">
-                    <th *matHeaderCellDef class="f-18 textRight" mat-header-cell mat-sort-header="finalAmount">
-                        Amount
+                    <th *matHeaderCellDef class="f-18 text-right common-right pr-24" mat-header-cell mat-sort-header="finalAmount">
+                        Billed amount
                     </th>
                     <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element"
                         class="c-p text-right amt" mat-cell>

@@ -1,10 +1,10 @@
-import {Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionService} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription.service';
-import {EnumServiceService} from 'src/app/services/enum-service.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {MatInput} from '@angular/material';
+import { Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionService } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription.service';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { MatInput } from '@angular/material';
 
 @Component({
   selector: 'app-record-payment',
@@ -26,22 +26,24 @@ export class RecordPaymentComponent implements OnInit {
   balDue: any;
   tdsAmt: any;
   showError = false;
-  feeMode = [{name: 'Cheque', selected: false, value: 1}, {name: 'NEFT', selected: false, value: 2},
-    {name: 'Cash', selected: false, value: 3}, {name: 'ECS mandate', selected: false, value: 4}, {
-      name: 'Bank transfer',
-      selected: false,
-      value: 5
-    },
-    {name: 'Debit card', selected: false, value: 6}, {name: 'Credit card', selected: false, value: 7}, {
-      name: 'NACH mandate',
-      selected: false,
-      value: 8
-    }];
+  feeMode = [{ name: 'Cheque', selected: false, value: 1 }, { name: 'NEFT', selected: false, value: 2 },
+  { name: 'Cash', selected: false, value: 3 }, { name: 'ECS mandate', selected: false, value: 4 }, {
+    name: 'Bank transfer',
+    selected: false,
+    value: 5
+  },
+  { name: 'Debit card', selected: false, value: 6 }, { name: 'Credit card', selected: false, value: 7 }, {
+    name: 'NACH mandate',
+    selected: false,
+    value: 8
+  }];
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
+  isAdded = false;
+  paymentMode: any;
 
   constructor(public subService: SubscriptionService, private fb: FormBuilder,
-              public enumService: EnumServiceService, public AuthService: AuthService,
-              public utils: UtilService) {
+    public enumService: EnumServiceService, public AuthService: AuthService,
+    public utils: UtilService) {
   }
 
   @Input() InvRecordData;
@@ -55,8 +57,8 @@ export class RecordPaymentComponent implements OnInit {
       this.finalAmount = selectedInvRecord.finalAmount
       console.log(selectedInvRecord, "selectedInvRecord");
       this.getRecordPayment(selectedInvRecord);
-      this.rPayment.get('amountReceived').setValidators([Validators.max(selectedInvRecord.finalAmount)]);
-      this.rPayment.get('amountReceived').setValue(selectedInvRecord.finalAmount);
+      this.rPayment.get('amountReceived').setValidators([Validators.max(selectedInvRecord.balanceDue)]);
+      this.rPayment.get('amountReceived').setValue(selectedInvRecord.balanceDue);
       this.rPayment.get('tds').setValue("");
       this.rPayment.get('chargesIfAny').setValue("");
       this.rPayment.get('amountReceived').updateValueAndValidity();
@@ -86,7 +88,10 @@ export class RecordPaymentComponent implements OnInit {
     this.balDue = data.balanceDue;
 
     if (data.add == true) {
+      this.isAdded = data.add;
       data = '';
+    } else {
+      this.balDue = 0;
     }
     console.log('payee data', data);
     this.rPayment = this.fb.group({
@@ -138,7 +143,7 @@ export class RecordPaymentComponent implements OnInit {
   onChange() {
     this.tdsAmt = this.balDue - this.rPayment.get('amountReceived').value;
     if (this.rPayment.get('tds').value > this.tdsAmt) {
-      this.rPayment.get('tds').setErrors({incorrect: true});
+      this.rPayment.get('tds').setErrors({ incorrect: true });
 
       // this.showError = true
     }
@@ -190,30 +195,50 @@ export class RecordPaymentComponent implements OnInit {
     }
     const ELEMENT_DATA = this.formObj;
     this.dataSource = ELEMENT_DATA;
-    this.feeCollectionMode.forEach(o => {
-      if (o.name == this.dataSource[0].paymentMode) {
-        this.dataSource[0].paymentMode = o.value;
-      }
-    });
+    if (this.isAdded) {
+      this.feeCollectionMode.forEach(o => {
+        if (o.name == this.dataSource[0].paymentMode) {
+          this.dataSource[0].paymentMode = o.value;
+        }
+      });
+      this.dataSource[0].amountReceived = parseInt(this.dataSource[0].amountReceived);
+      this.dataSource[0].chargeIfAny = parseInt(this.dataSource[0].chargeIfAny);
+      this.dataSource[0].paymentMode = parseInt(this.dataSource[0].paymentMode);
+      // this.dataSource[0].gstTreatment = parseInt(this.dataSource[0].gstTreatment);
+      this.dataSource[0].TDS = parseInt(this.dataSource[0].TDS);
+      this.dataSource[0].paymentDate = this.dataSource[0].paymentDate.toISOString().slice(0, 10);
+    } else {
+      this.feeCollectionMode.forEach(o => {
+        if (o.name == this.rPayment.controls.paymentMode.value) {
+          this.paymentMode = o.value;
+        }
+      });
+    }
+
     // this.gstTreatment.forEach(o => {
     //   if (o.name == this.dataSource[0].gstTreatment) {
     //     this.dataSource[0].gstTreatment = o.value;
     //   }
     // });
-    this.dataSource[0].amountReceived = parseInt(this.dataSource[0].amountReceived);
-    this.dataSource[0].chargeIfAny = parseInt(this.dataSource[0].chargeIfAny);
-    this.dataSource[0].paymentMode = parseInt(this.dataSource[0].paymentMode);
-    // this.dataSource[0].gstTreatment = parseInt(this.dataSource[0].gstTreatment);
-    this.dataSource[0].TDS = parseInt(this.dataSource[0].TDS);
-    this.dataSource[0].paymentDate = this.dataSource[0].paymentDate.toISOString().slice(0, 10);
+
     if (this.InvRecordData.add != true) {
       const obj = {
         id: this.rPayment.controls.id.value,
-        paymentMode: this.dataSource[0].paymentMode,
-        amountReceived: this.dataSource[0].amountReceived,
-        chargesIfAny: this.dataSource[0].chargeIfAny,
-        notes: this.dataSource[0].notes,
-        tds: this.dataSource[0].TDS,
+        // paymentMode: this.dataSource[0].paymentMode,
+        // amountReceived: this.dataSource[0].amountReceived,
+        // chargesIfAny: this.dataSource[0].chargeIfAny,
+        // notes: this.dataSource[0].notes,
+        // tds: this.dataSource[0].TDS,
+        invoiceId: this.InvRecordData.id,
+        advisorId: this.advisorId,
+        amountReceived: this.rPayment.controls.amountReceived.value,
+        chargeIfAny: this.rPayment.controls.chargesIfAny.value,
+        tds: this.rPayment.controls.tds.value,
+        paymentDate: this.rPayment.controls.paymentDate.value,
+        paymentMode: this.paymentMode,
+        referenceNumber: this.InvRecordData.invoiceNumber,
+        notes: this.rPayment.controls.notes.value,
+
         // gstTreatmentId: this.dataSource[0].gstTreatment
       };
       this.subService.editPaymentReceive(obj).subscribe(
@@ -243,11 +268,20 @@ export class RecordPaymentComponent implements OnInit {
 
   getSubStagesRecordResponse(data) {
     console.log('data', data);
-    this.feeCollectionMode.forEach(o => {
-      if (o.value == this.dataSource[0].paymentMode) {
-        this.dataSource[0].paymentMode = o.name;
-      }
-    });
+    if(this.isAdded){
+      this.feeCollectionMode.forEach(o => {
+        if (o.value == this.dataSource[0].paymentMode) {
+          this.dataSource[0].paymentMode = o.name;
+        }
+      });
+    }else{
+      this.feeCollectionMode.forEach(o => {
+        if (o.name == this.rPayment.controls.paymentMode.value) {
+          this.paymentMode = o.value;
+        }
+      });
+    }
+
     const obj = {
       invoiceId: this.InvRecordData.id
     };
