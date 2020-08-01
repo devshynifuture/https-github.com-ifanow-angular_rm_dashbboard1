@@ -27,7 +27,8 @@
                     <th *matHeaderCellDef class="f-18 t-19" mat-header-cell mat-sort-header="planName"> Client & plan
                         details
                     </th>
-                    <td (click)="openPlanSlider('SUBSCRIPTIONS','open',element)"
+                    <!-- (click)="openPlanSlider('SUBSCRIPTIONS','open',element)" -->
+                    <td
                         *matCellDef="let element; let i = index;" class="c-p t-19" mat-cell>
                         <div class="bar">
                             {{element.clientName}} <br>
