@@ -9,7 +9,7 @@
                             <button mat-button (click)="viewMode='Budget';getBugetTab(viewMode)" [ngClass]="{'mat-stroked-button': viewMode == 'Budget','text-primary':viewMode == 'Budget'}">Budget</button>
                         </div>
 
-                        <div class="col-md-8  d-flex align-items-center justify-content-end pr-0">
+                        <div class="col-md-8 d-flex align-items-center justify-content-end pr-0">
 
                             <mat-chip-list class="newDateIcon">
                                 <mat-chip *ngFor="let dateFilter of filterDate; let i = index" class="bg-white b-a c-p f-400 p-12">
@@ -28,6 +28,7 @@
 
                                 </mat-chip>
                             </mat-chip-list>
+
 
                             <mat-form-field class="w-30 ml-16">
                                 <mat-select class="form-control" (selectionChange)="addFilterPeriod($event)" [(value)]="selectedPeriod">
@@ -71,6 +72,7 @@
                                         ADD NEW</button>
                                 </div>
                             </div>
+                            
                             <div class="row pt-12">
                                 <div class="col-md-7 pl-0">
                                     <div class="example-container mb-24 transactions-table">
@@ -151,13 +153,9 @@
                                             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                                             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                                         </table>
-                                        <div *ngIf="dataSource.data.length == 0 " class="d-flex flex-column align-items-center">
-                                            <img class="width400" src="assets/images/svg/clients-img.svg">
-                                            <h4 class="text-center pt-12">{{noData}}</h4>
-                                            <button mat-stroked-button class="btn-primary proximaFont addon v-middle" (click)="openExpenses('addExpenses',null)"> ADD NEW
-                                            </button>
-                                        </div>
+
                                     </div>
+
                                     <div *ngIf="dataSource1.data.length > 0">
                                         <h5 class="m-0 text-black" *ngIf="dataSource1.filteredData.length > 0">Recurring commitments
                                         </h5>
@@ -255,41 +253,21 @@
                                     <div class="text-center">
                                         <div class="highcharts-figure" id="piechartExpense"></div>
                                     </div>
-
-                                    <!-- <div class="row pt-60">
-                                        <div class="col-md-6 expenses-chart-first pl-0">
-                                            <p class="m-0 text-black"><span
-                                                    class="bg-warning pr-8 hw-10 br-50"></span>Groceries</p>
-                                            <p class="m-0 text-black"><span
-                                                    class="bg-success pr-8 hw-10 br-50"></span>Transportation</p>
-                                            <p class="m-0 text-black"><span
-                                                    class="bg-danger pr-8 hw-10 br-50"></span>School
-                                                fees
-                                            </p>
-                                            <p class="m-0 text-black"><span
-                                                    class="bg-primary pr-8 hw-10 br-50"></span>Dining out</p>
-                                            <p class="m-0 text-black"><span
-                                                    class="bg-warning pr-8 hw-10 br-50"></span>Leisure & Entertainment
-                                            </p>
-                                        </div>
-                                        <div class="col-md-6 expenses-chart-second pl-0">
-                                            <p class="m-0 text-black"><span
-                                                    class="bg-primary pr-8 hw-10 br-50"></span>Groceries</p>
-                                            <p class="m-0 text-black"><span
-                                                    class="bg-success pr-8 hw-10 br-50"></span>Transportation</p>
-                                            <p class="m-0 text-black"><span
-                                                    class="bg-warning pr-8 hw-10 br-50"></span>School fees</p>
-                                            <p class="m-0 text-black"><span
-                                                    class="bg-danger pr-8 hw-10 br-50"></span>Dining
-                                                out
-                                            </p>
-                                            <p class="m-0 text-black"><span
-                                                    class="bg-primary pr-8 hw-10 br-50"></span>Leisure & Entertainment
-                                            </p>
-                                        </div>
-                                    </div> -->
                                 </div>
                             </div>
+
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div *ngIf="dataSource.data.length == 0 " class="d-flex flex-column align-items-center">
+                                        <img class="width400" src="assets/images/svg/clients-img.svg">
+                                        <h4 class="text-center pt-12">{{noData}}</h4>
+                                        <button mat-stroked-button class="btn-primary proximaFont addon v-middle" (click)="openExpenses('addExpenses',null)"> ADD NEW
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                     <!--- Budget --->
