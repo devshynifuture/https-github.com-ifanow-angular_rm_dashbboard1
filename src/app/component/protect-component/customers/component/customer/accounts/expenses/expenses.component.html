@@ -1,5 +1,5 @@
 <div id="ui-expenses" class="account_side-menu">
-    <div class="row" >
+    <div class="row">
         <div class="col-md-12 p-0" [ngSwitch]="viewMode">
             <div [ngSwitch]="viewMode">
                 <div class="wrapper-8">
@@ -11,10 +11,11 @@
                             <button mat-button (click)="viewMode='Budget';getBugetTab(viewMode)"
                                 [ngClass]="{'mat-stroked-button': viewMode == 'Budget','text-primary':viewMode == 'Budget'}">Budget</button>
                         </div>
-                        <mat-chip-list class="newDateIcon" >
-                            <mat-chip *ngFor="let dateFilter of filterDate; let i = index" class="bg-white b-a c-p f-400 p-12">
+                        <mat-chip-list class="newDateIcon">
+                            <mat-chip *ngFor="let dateFilter of filterDate; let i = index"
+                                class="bg-white b-a c-p f-400 p-12">
                                 {{startDateDisp}} - {{endDateDisp}}
-                            <!-- <input  matInput autocomplete="off"
+                                <!-- <input  matInput autocomplete="off"
                             [(value)]="startDate" class="form-control br-0 b-0"
                             [matDatepicker]="policyStartDatePicker">
 
@@ -28,9 +29,10 @@
 
                             </mat-chip>
                         </mat-chip-list>
-                        <div class="col-md-8 right text-right pr-0" >
+                        <div class="col-md-8 right text-right pr-0">
                             <mat-form-field class="w-30">
-                                <mat-select class="form-control" (selectionChange)="addFilterPeriod($event)" [(value)]="selectedPeriod">
+                                <mat-select class="form-control" (selectionChange)="addFilterPeriod($event)"
+                                    [(value)]="selectedPeriod">
                                     <mat-option value="1">This month</mat-option>
                                     <mat-option value="2">Last month</mat-option>
                                     <mat-option value="3">This quarter</mat-option>
@@ -46,15 +48,18 @@
                     <div>
                         <div *ngSwitchCase="'Transactions'">
                             <div class="row">
-                                <div class="col-md-4 p-0" *ngIf="dataSource.data.length > 0 || dataSource1.data.length > 0">
+                                <div class="col-md-4 p-0"
+                                    *ngIf="dataSource.data.length > 0 || dataSource1.data.length > 0">
                                     <h4 class="m-0 text-black roboto pt-8">Transactions</h4>
                                 </div>
-                                <div class="col-md-8 p-0 right text-right justify-content-end d-flex align-items-center" *ngIf="dataSource.data.length > 0">
+                                <div class="col-md-8 p-0 right text-right justify-content-end d-flex align-items-center"
+                                    *ngIf="dataSource.data.length > 0">
                                     <button mat-stroked-button class="br-0 btn-sm p-0 min-52 text-custom">Help</button>
                                     <!-- <img src="assets/images/svg/download-bordered.svg" class="c-p"> -->
                                     <div class="pdfClass">
 
-                                        <a class="c-p downloadPdfIcon" [matMenuTriggerFor]="menu1" *ngIf="!fragmentData.isSpinner">
+                                        <a class="c-p downloadPdfIcon" [matMenuTriggerFor]="menu1"
+                                            *ngIf="!fragmentData.isSpinner">
                                             <img src="assets/images/svg/download-bordered.svg">
                                         </a>
 
@@ -72,20 +77,22 @@
                                         ADD NEW</button>
                                 </div>
                             </div>
-                            <div class="row pt-12">
+                            <div class="row pt-12" *ngIf="dataSource.data.length > 0 ">
                                 <div class="col-md-7 pl-0">
                                     <div class="example-container mb-24 transactions-table">
-                                        <table  matSort *ngIf="dataSource.data.length > 0" mat-table [dataSource]="dataSource"
-                                            id="table-low" class="skeletonAnimation" appSkeletonLoading
-                                            [appSkeletonLoading]="isLoading">
+                                        <table matSort *ngIf="dataSource.data.length > 0" mat-table
+                                            [dataSource]="dataSource" id="table-low" class="skeletonAnimation"
+                                            appSkeletonLoading [appSkeletonLoading]="isLoading">
                                             <ng-container matColumnDef="no">
                                                 <th mat-header-cell *matHeaderCellDef class="br"> No </th>
                                                 <td mat-cell *matCellDef="let element let i = index;" class="br">
-                                                    <div [ngClass]="{'bar': isLoading}"> {{isLoading ? '' : i + 1 }} </div>
+                                                    <div [ngClass]="{'bar': isLoading}"> {{isLoading ? '' : i + 1 }}
+                                                    </div>
                                                 </td>
                                             </ng-container>
                                             <ng-container matColumnDef="expense">
-                                                <th  mat-sort-header="expenseType"  mat-header-cell *matHeaderCellDef class="br"> Category </th>
+                                                <th mat-sort-header="expenseType" mat-header-cell *matHeaderCellDef
+                                                    class="br"> Category </th>
                                                 <td *matCellDef="let element" class="br" mat-cell>
                                                     <div [ngClass]="{'bar': isLoading}">
                                                         {{isLoading ? '' : element.expenseType}}
@@ -93,7 +100,8 @@
                                                 </td>
                                             </ng-container>
                                             <ng-container matColumnDef="date">
-                                                <th  mat-sort-header="expenseDoneOn"  mat-header-cell *matHeaderCellDef class="br"> Date </th>
+                                                <th mat-sort-header="expenseDoneOn" mat-header-cell *matHeaderCellDef
+                                                    class="br"> Date </th>
                                                 <td mat-cell *matCellDef="let element" class="br">
                                                     <div [ngClass]="{'bar': isLoading}">
                                                         {{isLoading ? '' : (element.expenseDoneOn | date:'dd/MM/yyyy')}}
@@ -101,15 +109,17 @@
                                                 </td>
                                             </ng-container>
                                             <ng-container matColumnDef="desc">
-                                                <th  mat-sort-header="description"  mat-header-cell *matHeaderCellDef class="br"> Description </th>
+                                                <th mat-sort-header="description" mat-header-cell *matHeaderCellDef
+                                                    class="br"> Description </th>
                                                 <td mat-cell *matCellDef="let element" class="br">
-                                                    <div  [ngClass]="{'bar': isLoading}">
+                                                    <div [ngClass]="{'bar': isLoading}">
                                                         {{isLoading ? '' : (element.description ? element.description : '-')}}
                                                     </div>
                                                 </td>
                                             </ng-container>
                                             <ng-container matColumnDef="mode">
-                                                <th  mat-sort-header="paymentModeId"  mat-header-cell *matHeaderCellDef class="br"> Mode </th>
+                                                <th mat-sort-header="paymentModeId" mat-header-cell *matHeaderCellDef
+                                                    class="br"> Mode </th>
                                                 <td mat-cell *matCellDef="let element" class="br">
                                                     <div [ngClass]="{'bar': isLoading}" *ngIf="!isLoading">
                                                         {{(element.paymentModeId == 2)? 'Debit card':(element.paymentModeId == 1)? 'Credit card':'-'}}
@@ -118,14 +128,17 @@
                                                 </td>
                                             </ng-container>
                                             <ng-container matColumnDef="amt">
-                                                <th  mat-sort-header="amount"  mat-header-cell *matHeaderCellDef class="br"> Amount </th>
+                                                <th mat-sort-header="amount" mat-header-cell *matHeaderCellDef
+                                                    class="br"> Amount </th>
                                                 <td mat-cell *matCellDef="let element" class="br">
-                                                    <div [ngClass]="{'bar': isLoading}">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{isLoading ? '' : element.amount }}</span>
+                                                    <div [ngClass]="{'bar': isLoading}">{{!isLoading? "₹" : ""}}<span
+                                                            appFormatNumber>{{isLoading ? '' : element.amount }}</span>
                                                     </div>
                                                 </td>
                                             </ng-container>
                                             <ng-container matColumnDef="status">
-                                                <th  mat-sort-header="status"  mat-header-cell *matHeaderCellDef class="br"> Status </th>
+                                                <th mat-sort-header="status" mat-header-cell *matHeaderCellDef
+                                                    class="br"> Status </th>
                                                 <td mat-cell *matCellDef="let element" class="br">
                                                     <div [ngClass]="{'bar': isLoading}">
                                                         {{isLoading ? '' : element.status}}
@@ -133,17 +146,21 @@
                                                 </td>
                                             </ng-container>
                                             <ng-container matColumnDef="icons">
-                                                <th    mat-header-cell *matHeaderCellDef class="t-2"> </th>
-                                                <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu4" class="c-p text-center">
+                                                <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
+                                                <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu4"
+                                                    class="c-p text-center">
                                                     <div [ngClass]="{'bar': isLoading}">
                                                         <!-- <i *ngIf="isLoading==false"
                                                             class="material-icons c-p text-black"
                                                             [matMenuTriggerFor]="menu4">more_vert</i> -->
-                                                            <img *ngIf="!isLoading" class="c-p" src="/assets/images/svg/dot-menu.svg">
+                                                        <img *ngIf="!isLoading" class="c-p"
+                                                            src="/assets/images/svg/dot-menu.svg">
                                                         <mat-menu #menu4="matMenu">
                                                             <button mat-menu-item
                                                                 (click)="element.isRecuring = false;openExpenses('editExpenses',element)">Edit</button>
-                                                            <button mat-menu-item (click)="detailedViewExpense(element,'Transactions')">Detailed view</button>
+                                                            <button mat-menu-item
+                                                                (click)="detailedViewExpense(element,'Transactions')">Detailed
+                                                                view</button>
                                                             <!-- <button mat-menu-item>Activity</button> -->
                                                             <button mat-menu-item
                                                                 (click)="deleteModal('expense',element)">Delete</button>
@@ -154,17 +171,11 @@
                                             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                                             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                                         </table>
-                                        <div *ngIf="dataSource.data.length == 0 "
-                                            class="d-flex flex-column align-items-center">
-                                            <img class="width400" src="assets/images/svg/clients-img.svg">
-                                            <h4 class="text-center pt-12">{{noData}}</h4>
-                                            <button mat-stroked-button class="btn-primary proximaFont addon v-middle"
-                                                (click)="openExpenses('addExpenses',null)"> ADD NEW
-                                            </button>
-                                        </div>
+
                                     </div>
                                     <div *ngIf="dataSource1.data.length > 0">
-                                        <h5 class="m-0 text-black" *ngIf="dataSource1.filteredData.length > 0">Recurring commitments</h5>
+                                        <h5 class="m-0 text-black" *ngIf="dataSource1.filteredData.length > 0">Recurring
+                                            commitments</h5>
                                         <div class="example-container mt-8 mb-24 other-commitments">
                                             <table matSort *ngIf="dataSource1.filteredData.length > 0" mat-table
                                                 [dataSource]="dataSource1" id="table-low" class="skeletonAnimation"
@@ -172,12 +183,14 @@
                                                 <ng-container matColumnDef="no">
                                                     <th mat-header-cell *matHeaderCellDef class="br"> No </th>
                                                     <td mat-cell *matCellDef="let element; let i = index;" class="br">
-                                                        <div [ngClass]="{'bar': isLoading}"> {{isLoading ? '' : i + 1 }} </div>
+                                                        <div [ngClass]="{'bar': isLoading}"> {{isLoading ? '' : i + 1 }}
+                                                        </div>
 
                                                     </td>
                                                 </ng-container>
                                                 <ng-container matColumnDef="expense">
-                                                    <th  mat-sort-header="expenseType"  mat-header-cell *matHeaderCellDef class="br"> Category
+                                                    <th mat-sort-header="expenseType" mat-header-cell *matHeaderCellDef
+                                                        class="br"> Category
                                                     </th>
                                                     <td mat-cell *matCellDef="let element" class="br">
                                                         <div [ngClass]="{'bar': isLoading}">
@@ -186,7 +199,8 @@
                                                     </td>
                                                 </ng-container>
                                                 <ng-container matColumnDef="date">
-                                                    <th  mat-sort-header="startsFrom"  mat-header-cell *matHeaderCellDef class="br text-left">
+                                                    <th mat-sort-header="startsFrom" mat-header-cell *matHeaderCellDef
+                                                        class="br text-left">
                                                         Date </th>
                                                     <td mat-cell *matCellDef="let element" class="br text-left">
                                                         <div [ngClass]="{'bar': isLoading}">
@@ -195,7 +209,8 @@
                                                     </td>
                                                 </ng-container>
                                                 <ng-container matColumnDef="desc">
-                                                    <th  mat-sort-header="desc"  mat-header-cell *matHeaderCellDef class="br"> Description </th>
+                                                    <th mat-sort-header="desc" mat-header-cell *matHeaderCellDef
+                                                        class="br"> Description </th>
                                                     <td mat-cell *matCellDef="let element" class="br">
                                                         <div [ngClass]="{'bar': isLoading}">
                                                             {{isLoading ? '' : (element.description ? element.description : '-')}}
@@ -203,7 +218,8 @@
                                                     </td>
                                                 </ng-container>
                                                 <ng-container matColumnDef="mode">
-                                                    <th  mat-sort-header="paymentModeId"  mat-header-cell *matHeaderCellDef class="br"> Mode </th>
+                                                    <th mat-sort-header="paymentModeId" mat-header-cell
+                                                        *matHeaderCellDef class="br"> Mode </th>
                                                     <td mat-cell *matCellDef="let element" class="br">
                                                         <div [ngClass]="{'bar': isLoading}" *ngIf="!isLoading">
                                                             {{(element.paymentModeId == 2)? 'Debit card':(element.paymentModeId == 1)? 'Credit card':'-'}}
@@ -214,15 +230,19 @@
                                                     </td>
                                                 </ng-container>
                                                 <ng-container matColumnDef="amt">
-                                                    <th  mat-sort-header="amount"  mat-header-cell *matHeaderCellDef class="br text-right"> Amount
+                                                    <th mat-sort-header="amount" mat-header-cell *matHeaderCellDef
+                                                        class="br text-right"> Amount
                                                     </th>
                                                     <td mat-cell *matCellDef="let element" class="br text-right">
-                                                        <div [ngClass]="{'bar': isLoading}">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{isLoading ? '' : element.amount }}</span>
+                                                        <div [ngClass]="{'bar': isLoading}">
+                                                            {{!isLoading? "₹" : ""}}<span
+                                                                appFormatNumber>{{isLoading ? '' : element.amount }}</span>
                                                         </div>
                                                     </td>
                                                 </ng-container>
                                                 <ng-container matColumnDef="status">
-                                                    <th  mat-sort-header="status"  mat-header-cell *matHeaderCellDef class="br"> Status </th>
+                                                    <th mat-sort-header="status" mat-header-cell *matHeaderCellDef
+                                                        class="br"> Status </th>
                                                     <td mat-cell *matCellDef="let element" class="br">
                                                         <div [ngClass]="{'bar': isLoading}">
                                                             {{isLoading ? '' : element.status}}
@@ -231,16 +251,20 @@
                                                 </ng-container>
                                                 <ng-container matColumnDef="icons">
                                                     <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
-                                                    <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu4" class="c-p text-center">
+                                                    <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu4"
+                                                        class="c-p text-center">
                                                         <div [ngClass]="{'bar': isLoading}">
                                                             <!-- <i *ngIf="isLoading==false"
                                                                 class="material-icons c-p text-black"
                                                                 [matMenuTriggerFor]="menu4">more_vert</i> -->
-                                                                <img *ngIf="!isLoading" class="c-p" src="/assets/images/svg/dot-menu.svg">
+                                                            <img *ngIf="!isLoading" class="c-p"
+                                                                src="/assets/images/svg/dot-menu.svg">
                                                             <mat-menu #menu4="matMenu">
                                                                 <button mat-menu-item
                                                                     (click)="element.isRecuring = true;openExpenses('editExpenses',element)">Edit</button>
-                                                                <button mat-menu-item (click)="detailedViewExpense(element,'Recurring commitments')">Detailed view</button>
+                                                                <button mat-menu-item
+                                                                    (click)="detailedViewExpense(element,'Recurring commitments')">Detailed
+                                                                    view</button>
                                                                 <!-- <button mat-menu-item>Activity</button> -->
                                                                 <button mat-menu-item
                                                                     (click)="deleteModal('expenseRecuring',element)">Delete</button>
@@ -295,29 +319,39 @@
                                     </div> -->
                                 </div>
                             </div>
+                            <div *ngIf="dataSource.data.length == 0 " class="d-flex flex-column align-items-center">
+                                <img class="width400" src="assets/images/svg/clients-img.svg">
+                                <h4 class="text-center pt-12">{{noData}}</h4>
+                                <button mat-stroked-button class="btn-primary proximaFont addon v-middle"
+                                    (click)="openExpenses('addExpenses',null)"> ADD NEW
+                                </button>
+                            </div>
                         </div>
                     </div>
                     <!--- Budget --->
                     <div *ngSwitchCase="'Budget'">
                         <div class="row">
-                            <div class="col-md-4 p-0" *ngIf="dataSource4.data.length > 0 || dataSource5.data.length > 0">
+                            <div class="col-md-4 p-0"
+                                *ngIf="dataSource4.data.length > 0 || dataSource5.data.length > 0">
                                 <h4 class="m-0 text-black roboto pt-8">Budget</h4>
                             </div>
-                            <div class="col-md-8 p-0 right text-right justify-content-end d-flex align-items-center" *ngIf="dataSource4.data.length > 0 || dataSource5.data.length > 0" >
+                            <div class="col-md-8 p-0 right text-right justify-content-end d-flex align-items-center"
+                                *ngIf="dataSource4.data.length > 0 || dataSource5.data.length > 0">
                                 <button mat-stroked-button class="br-0 btn-sm p-0 min-52 text-custom">Help</button>
-                                    <!-- <img src="assets/images/svg/download-bordered.svg" class="c-p"> -->
-                                    <div class="pdfClass">
+                                <!-- <img src="assets/images/svg/download-bordered.svg" class="c-p"> -->
+                                <div class="pdfClass">
 
-                                        <a class="c-p downloadPdfIcon" [matMenuTriggerFor]="menu2" *ngIf="!fragmentData.isSpinner">
-                                            <img src="assets/images/svg/download-bordered.svg">
-                                        </a>
+                                    <a class="c-p downloadPdfIcon" [matMenuTriggerFor]="menu2"
+                                        *ngIf="!fragmentData.isSpinner">
+                                        <img src="assets/images/svg/download-bordered.svg">
+                                    </a>
 
-                                        <mat-menu #menu2="matMenu">
-                                            <button mat-menu-item (click)="generatePdf('template2')">PDF</button>
-                                            <button (click)="Excel('Expenses','template2')" mat-menu-item>XLS</button>
-                                        </mat-menu>
-                                        <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
-                                    </div>
+                                    <mat-menu #menu2="matMenu">
+                                        <button mat-menu-item (click)="generatePdf('template2')">PDF</button>
+                                        <button (click)="Excel('Expenses','template2')" mat-menu-item>XLS</button>
+                                    </mat-menu>
+                                    <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
+                                </div>
                                 <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
                                 <!-- <button mat-stroked-button class="btn-default addon mr-12 v-middle">
                                     <i class="material-icons">filter_list</i>
@@ -331,7 +365,7 @@
                             </div>
                         </div>
 
-                        <div class="row pt-12">
+                        <div class="row pt-12" *ngIf="dataSource4.filteredData.length > 0">
                             <div class="col-md-7 pl-0 budget">
                                 <div class="example-container  mb-24 fixed-DEPOSIT">
                                     <table matSort *ngIf="dataSource4.filteredData.length > 0" mat-table
@@ -344,7 +378,8 @@
                                             </td>
                                         </ng-container>
                                         <ng-container matColumnDef="expense">
-                                            <th mat-sort-header="expenseType"  mat-sort-header="expenseType"  mat-header-cell *matHeaderCellDef class="br t-26"> Category </th>
+                                            <th mat-sort-header="expenseType" mat-sort-header="expenseType"
+                                                mat-header-cell *matHeaderCellDef class="br t-26"> Category </th>
                                             <td mat-cell *matCellDef="let element" class="br t-26">
                                                 <div [ngClass]="{'bar': isLoading}">
                                                     {{isLoading ? '' : element.expenseType}}
@@ -352,11 +387,14 @@
                                             </td>
                                         </ng-container>
                                         <ng-container matColumnDef="budget">
-                                            <th  mat-sort-header="amount"  mat-header-cell *matHeaderCellDef class="br t-10 text-right"> Budget
+                                            <th mat-sort-header="amount" mat-header-cell *matHeaderCellDef
+                                                class="br t-10 text-right"> Budget
                                             </th>
                                             <td mat-cell *matCellDef="let element" class="br t-10 text-right">
 
-                                                <div [ngClass]="{'bar': isLoading}">{{!isLoading && element.amount? "₹" : ""}}<span appFormatNumber>{{(isLoading) ? '' :  (element.amount ? element.amount : '-') }}</span>
+                                                <div [ngClass]="{'bar': isLoading}">
+                                                    {{!isLoading && element.amount? "₹" : ""}}<span
+                                                        appFormatNumber>{{(isLoading) ? '' :  (element.amount ? element.amount : '-') }}</span>
                                                 </div>
                                             </td>
                                         </ng-container>
@@ -366,31 +404,38 @@
                                                 <div [ngClass]="{'bar': isLoading}">
                                                     <mat-progress-bar *ngIf="isLoading==false" mode="determinate"
                                                         value="40" class="w-80"></mat-progress-bar>
-                                                        <span *ngIf="isLoading">{{''}}</span>
+                                                    <span *ngIf="isLoading">{{''}}</span>
                                                 </div>
                                             </td>
                                         </ng-container>
                                         <ng-container matColumnDef="spent">
-                                            <th mat-sort-header="spent"  mat-header-cell *matHeaderCellDef class="br text-right"> Spent </th>
+                                            <th mat-sort-header="spent" mat-header-cell *matHeaderCellDef
+                                                class="br text-right"> Spent </th>
                                             <td mat-cell *matCellDef="let element" class="br text-right">
 
-                                                <div [ngClass]="{'bar': isLoading}">{{!isLoading && element.spent ? "₹" : ""}}<span appFormatNumber>{{isLoading ? '' : (element.spent ? element.spent  : '-')}}</span>
+                                                <div [ngClass]="{'bar': isLoading}">
+                                                    {{!isLoading && element.spent ? "₹" : ""}}<span
+                                                        appFormatNumber>{{isLoading ? '' : (element.spent ? element.spent  : '-')}}</span>
                                                 </div>
                                             </td>
                                         </ng-container>
 
                                         <ng-container matColumnDef="icons">
                                             <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
-                                            <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu4" class="c-p text-center">
+                                            <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu4"
+                                                class="c-p text-center">
                                                 <div [ngClass]="{'bar': isLoading}">
                                                     <!-- <i *ngIf="isLoading==false"
                                                         class="material-icons c-p text-black"
                                                         [matMenuTriggerFor]="menu4">more_vert</i> -->
-                                                        <img *ngIf="!isLoading" class="c-p" src="/assets/images/svg/dot-menu.svg">
+                                                    <img *ngIf="!isLoading" class="c-p"
+                                                        src="/assets/images/svg/dot-menu.svg">
                                                     <mat-menu #menu4="matMenu">
                                                         <button mat-menu-item
                                                             (click)="element.isRecuring = false;openExpenses('editBudget',element)">Edit</button>
-                                                        <button mat-menu-item (click)="detailedViewExpense(element,'Budget')">Detailed view</button>
+                                                        <button mat-menu-item
+                                                            (click)="detailedViewExpense(element,'Budget')">Detailed
+                                                            view</button>
                                                         <!-- <button mat-menu-item>Activity</button> -->
                                                         <button mat-menu-item
                                                             (click)="deleteModal('budget',element)">Delete</button>
@@ -401,14 +446,7 @@
                                         <tr mat-header-row *matHeaderRowDef="displayedColumns4; sticky: true"></tr>
                                         <tr mat-row *matRowDef="let row; columns: displayedColumns4;"></tr>
                                     </table>
-                                    <div *ngIf="dataSource4.filteredData.length == 0 && dataSource4.filteredData.length == 0"
-                                        class="d-flex flex-column align-items-center">
-                                        <img class="width400" src="assets/images/svg/clients-img.svg">
-                                        <h4 class="text-center pt-12">{{noData}}</h4>
-                                        <button mat-stroked-button class="btn-primary proximaFont addon v-middle"
-                                            (click)="openExpenses('addBudget', null)"> ADD NEW
-                                        </button>
-                                    </div>
+
                                 </div>
 
                                 <h5 class="m-0 text-black" *ngIf="dataSource5.filteredData.length > 0"> Other
@@ -426,7 +464,8 @@
                                             </td>
                                         </ng-container>
                                         <ng-container matColumnDef="expense">
-                                            <th mat-sort-header="expenseType" mat-header-cell *matHeaderCellDef class="br t-26"> Category </th>
+                                            <th mat-sort-header="expenseType" mat-header-cell *matHeaderCellDef
+                                                class="br t-26"> Category </th>
                                             <td mat-cell *matCellDef="let element" class="br t-26">
                                                 <div [ngClass]="{'bar': isLoading}">
                                                     {{isLoading ? '' : element.expenseType}}
@@ -434,10 +473,13 @@
                                             </td>
                                         </ng-container>
                                         <ng-container matColumnDef="budget">
-                                            <th mat-sort-header="amount" mat-header-cell *matHeaderCellDef class="br t-10 text-right"> Budget
+                                            <th mat-sort-header="amount" mat-header-cell *matHeaderCellDef
+                                                class="br t-10 text-right"> Budget
                                             </th>
                                             <td mat-cell *matCellDef="let element" class="br t-10 text-right">
-                                                <div [ngClass]="{'bar': isLoading}">{{!isLoading && element.amount? "₹" : ""}}<span appFormatNumber>{{(isLoading) ? '' :  (element.amount ? element.amount : '-')}}</span>
+                                                <div [ngClass]="{'bar': isLoading}">
+                                                    {{!isLoading && element.amount? "₹" : ""}}<span
+                                                        appFormatNumber>{{(isLoading) ? '' :  (element.amount ? element.amount : '-')}}</span>
                                                 </div>
                                             </td>
                                         </ng-container>
@@ -447,32 +489,39 @@
                                                 <div [ngClass]="{'bar': isLoading}">
                                                     <mat-progress-bar *ngIf="isLoading==false" mode="determinate"
                                                         value="40"></mat-progress-bar>
-                                                        <span *ngIf="isLoading">{{''}}</span>
+                                                    <span *ngIf="isLoading">{{''}}</span>
 
                                                 </div>
                                             </td>
                                         </ng-container>
                                         <ng-container matColumnDef="spent">
-                                            <th mat-sort-header="spent" mat-header-cell *matHeaderCellDef class="br text-right"> Spent </th>
+                                            <th mat-sort-header="spent" mat-header-cell *matHeaderCellDef
+                                                class="br text-right"> Spent </th>
                                             <td mat-cell *matCellDef="let element" class="br text-right">
 
-                                                <div [ngClass]="{'bar': isLoading}">{{!isLoading && element.spent ? "₹" : ""}}<span appFormatNumber>{{isLoading ? '' : (element.spent ? element.spent : '-')}}</span>
+                                                <div [ngClass]="{'bar': isLoading}">
+                                                    {{!isLoading && element.spent ? "₹" : ""}}<span
+                                                        appFormatNumber>{{isLoading ? '' : (element.spent ? element.spent : '-')}}</span>
                                                 </div>
                                             </td>
                                         </ng-container>
 
                                         <ng-container matColumnDef="icons">
                                             <th mat-header-cell *matHeaderCellDef class="t-2"> </th>
-                                            <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu4" class="c-p text-center">
+                                            <td mat-cell *matCellDef="let element" [matMenuTriggerFor]="menu4"
+                                                class="c-p text-center">
                                                 <div [ngClass]="{'bar': isLoading}">
                                                     <!-- <i *ngIf="isLoading==false"
                                                         class="material-icons c-p text-black"
                                                         [matMenuTriggerFor]="menu4">more_vert</i> -->
-                                                        <img *ngIf="!isLoading" class="c-p" src="/assets/images/svg/dot-menu.svg">
+                                                    <img *ngIf="!isLoading" class="c-p"
+                                                        src="/assets/images/svg/dot-menu.svg">
                                                     <mat-menu #menu4="matMenu">
                                                         <button mat-menu-item
                                                             (click)="element.isRecuring = true;openExpenses('editBudget',element)">Edit</button>
-                                                        <button mat-menu-item (click)="detailedViewExpense(element,'Other commitments')">Detailed view</button>
+                                                        <button mat-menu-item
+                                                            (click)="detailedViewExpense(element,'Other commitments')">Detailed
+                                                            view</button>
                                                         <!-- <button mat-menu-item>Activity</button> -->
                                                         <button mat-menu-item
                                                             (click)="deleteModal('budgetRecuring',element)">Delete</button>
@@ -491,6 +540,14 @@
                                     <div class="highcharts-figure" id="bugetChart"></div>
                                 </div>
                             </div>
+                        </div>
+                        <div *ngIf="dataSource4.filteredData.length == 0 && dataSource4.filteredData.length == 0"
+                            class="d-flex flex-column align-items-center">
+                            <img class="width400" src="assets/images/svg/clients-img.svg">
+                            <h4 class="text-center pt-12">{{noData}}</h4>
+                            <button mat-stroked-button class="btn-primary proximaFont addon v-middle"
+                                (click)="openExpenses('addBudget', null)"> ADD NEW
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -523,20 +580,23 @@
                                 </tr>
                                 <tr *ngIf="userInfo">
                                     <td style="font-size: 14px; text-align: right;">
-                                        <span style="font-weight: 500;"> Mobile no:</span> {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : '-'}}
+                                        <span style="font-weight: 500;"> Mobile no:</span>
+                                        {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : '-'}}
                                     </td>
                                 </tr>
 
                                 <tr *ngIf="userInfo">
                                     <td style="font-size: 14px; text-align: right;">
-                                        <span style="font-weight: 500;">Email Id:</span> {{(details) ? details.emailId : '-'}}
+                                        <span style="font-weight: 500;">Email Id:</span>
+                                        {{(details) ? details.emailId : '-'}}
                                     </td>
                                 </tr>
 
                                 <tr>
 
                                     <td style="font-size: 14px; text-align: right;">
-                                        <span style="font-weight: 500;">Report as on:</span> {{reportDate | date:'dd-MMM-yyyy' }}
+                                        <span style="font-weight: 500;">Report as on:</span>
+                                        {{reportDate | date:'dd-MMM-yyyy' }}
                                     </td>
                                 </tr>
                             </table>
@@ -547,51 +607,69 @@
         </tr>
 
         <tr>
-            <td colspan="9" style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
+            <td colspan="9"
+                style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
                 Transactions & Recurring commitments</td>
         </tr>
         <tr>
             <td colspan="11">
-                <p style="margin: 0px; font-weight: 600;font-size: 14px;padding-top: 10px; padding-bottom: 10px;" *ngIf="clientData">
+                <p style="margin: 0px; font-weight: 600;font-size: 14px;padding-top: 10px; padding-bottom: 10px;"
+                    *ngIf="clientData">
                     Client name: {{(clientData.name) ? clientData.name : '-'}}</p>
             </td>
         </tr>
         <tr>
-            <td colspan="9" style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
+            <td colspan="9"
+                style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
                 Transactions</td>
         </tr>
-        <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;" *ngIf="dataSource.data.length > 0">
+        <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;"
+            *ngIf="dataSource.data.length > 0">
             <!-- <tr>
                 <td colspan="9" style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
                     Transactions </td>
             </tr> -->
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 No. </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Category</td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Date </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Description </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Mode </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Amount </td>
 
 
         </tr>
-        <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;" *ngFor="let item of dataSource.data ;index as i">
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+        <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;"
+            *ngFor="let item of dataSource.data ;index as i">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 {{i + 1}}</td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 {{item.expenseType}}</td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 {{item.expenseDoneOn | date:'dd/MM/yyyy'}}
             </td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 {{(item.description)?item.description:'-'}}</td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>  {{(item.paymentModeId == 2)? 'Debit card':(item.paymentModeId == 1)? 'Credit card':'-'}}</td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>{{item.amount}}</td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+                appFormatNumber>
+                {{(item.paymentModeId == 2)? 'Debit card':(item.paymentModeId == 1)? 'Credit card':'-'}}</td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+                appFormatNumber>{{item.amount}}</td>
 
 
         </tr>
@@ -602,41 +680,57 @@
             </td>
         </tr>
         <tr>
-            <td colspan="9" style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
+            <td colspan="9"
+                style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
                 Recurring commitments</td>
         </tr>
-        <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;" *ngIf="dataSource1.data.length > 0">
+        <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;"
+            *ngIf="dataSource1.data.length > 0">
             <!-- <tr>
                 <td colspan="9" style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
                     Other commitments </td>
             </tr> -->
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 No. </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Category</td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Date </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Description </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Mode </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Amount </td>
 
 
         </tr>
-        <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;" *ngFor="let item of dataSource1.data ;index as i">
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+        <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;"
+            *ngFor="let item of dataSource1.data ;index as i">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 {{i + 1}}</td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 {{item.expenseType}}</td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 {{item.expenseDoneOn | date:'dd/MM/yyyy'}}
             </td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                 {{(item.description)?item.description:'-'}}</td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>  {{(item.paymentModeId == 2)? 'Debit card':(item.paymentModeId == 1)? 'Credit card':'-'}}</td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>{{item.amount}}</td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+                appFormatNumber>
+                {{(item.paymentModeId == 2)? 'Debit card':(item.paymentModeId == 1)? 'Credit card':'-'}}</td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+                appFormatNumber>{{item.amount}}</td>
 
 
         </tr>
@@ -651,7 +745,7 @@
 <!-----------------------------------------BUDGETS AND OTHER COMMITMMENTS------------------------------------->
 
 
-<div #transactionExpens id="template2" class="hide"  *ngIf="viewMode == 'Budget'">
+<div #transactionExpens id="template2" class="hide" *ngIf="viewMode == 'Budget'">
     <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
 
         <tr>
@@ -670,20 +764,23 @@
                                 </tr>
                                 <tr *ngIf="userInfo">
                                     <td style="font-size: 14px; text-align: right;">
-                                        <span style="font-weight: 500;"> Mobile no:</span> {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : '-'}}
+                                        <span style="font-weight: 500;"> Mobile no:</span>
+                                        {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : '-'}}
                                     </td>
                                 </tr>
 
                                 <tr *ngIf="userInfo">
                                     <td style="font-size: 14px; text-align: right;">
-                                        <span style="font-weight: 500;">Email Id:</span> {{(details) ? details.emailId : '-'}}
+                                        <span style="font-weight: 500;">Email Id:</span>
+                                        {{(details) ? details.emailId : '-'}}
                                     </td>
                                 </tr>
 
                                 <tr>
 
                                     <td style="font-size: 14px; text-align: right;">
-                                        <span style="font-weight: 500;">Report as on:</span> {{reportDate | date:'dd-MMM-yyyy' }}
+                                        <span style="font-weight: 500;">Report as on:</span>
+                                        {{reportDate | date:'dd-MMM-yyyy' }}
                                     </td>
                                 </tr>
                             </table>
@@ -694,50 +791,64 @@
         </tr>
 
         <tr>
-            <td colspan="9" style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
+            <td colspan="9"
+                style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
                 Budget & Other commitments</td>
         </tr>
         <tr>
             <td colspan="11">
-                <p style="margin: 0px; font-weight: 600;font-size: 14px;padding-top: 10px; padding-bottom: 10px;" *ngIf="clientData">
+                <p style="margin: 0px; font-weight: 600;font-size: 14px;padding-top: 10px; padding-bottom: 10px;"
+                    *ngIf="clientData">
                     Client name: {{(clientData.name) ? clientData.name : '-'}}</p>
             </td>
         </tr>
         <tr>
-            <td colspan="9" style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
+            <td colspan="9"
+                style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
                 Budget</td>
         </tr>
-        <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;" *ngIf="dataSource.data.length > 0">
+        <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;"
+            *ngIf="dataSource.data.length > 0">
             <!-- <tr>
                 <td colspan="9" style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
                     Transactions </td>
             </tr> -->
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 No. </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Category</td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Budget </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Progress </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Spent </td>
 
 
         </tr>
-        <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;" *ngFor="let item of dataSource4.data ;index as i">
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+        <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;"
+            *ngFor="let item of dataSource4.data ;index as i">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 {{i + 1}}</td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 {{item.expenseType}}</td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 {{item.amount}}
             </td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>
-                <mat-progress-bar  mode="determinate"
-                value="40" class="w-80"></mat-progress-bar>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+                appFormatNumber>
+                <mat-progress-bar mode="determinate" value="40" class="w-80"></mat-progress-bar>
             </td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>{{item.spent}}</td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+                appFormatNumber>{{item.spent}}</td>
 
 
         </tr>
@@ -748,40 +859,52 @@
             </td>
         </tr>
         <tr>
-            <td colspan="9" style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
+            <td colspan="9"
+                style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
                 Other commitments</td>
         </tr>
-        <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;" *ngIf="dataSource5.data.length > 0">
+        <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;"
+            *ngIf="dataSource5.data.length > 0">
             <!-- <tr>
                 <td colspan="9" style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
                     Transactions </td>
             </tr> -->
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 No. </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Category</td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Budget </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Progress </td>
-            <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Spent </td>
 
 
         </tr>
-        <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;" *ngFor="let item of dataSource4.data ;index as i">
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+        <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;"
+            *ngFor="let item of dataSource4.data ;index as i">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 {{i + 1}}</td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 {{item.expenseType}}</td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <td
+                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 {{item.amount}}
             </td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>
-                <mat-progress-bar  mode="determinate"
-                value="40" class="w-80"></mat-progress-bar>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+                appFormatNumber>
+                <mat-progress-bar mode="determinate" value="40" class="w-80"></mat-progress-bar>
             </td>
-            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>{{item.spent}}</td>
+            <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
+                appFormatNumber>{{item.spent}}</td>
 
 
         </tr>
