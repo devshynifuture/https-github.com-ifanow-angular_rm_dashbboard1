@@ -62,7 +62,9 @@
                         <tbody *ngFor="let amc of amcList; let amcIndex = index">
                             <tr>
                                 <td>
-                                    <div [ngClass]="{'bar': isLoading}"> {{(isLoading)?'':amcIndex+1}} </div>
+                                    <div [ngClass]="{'bar': isLoading}">
+                                        {{(isLoading)?'':amcIndex+1}}
+                                    </div>
                                 </td>
                                 <td>
                                     <div [ngClass]="{'bar': isLoading}"> {{isLoading ? '' : amc.name}} </div>

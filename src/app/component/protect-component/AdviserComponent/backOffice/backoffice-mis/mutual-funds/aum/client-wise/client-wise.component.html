@@ -165,7 +165,7 @@
                                                     </div>
                                                 </td>
 
-                                                <td>
+                                                <td class="text-right">
                                                     <div [ngClass]="{'bar': isLoadingInvestor}">
                                                         {{(isLoadingInvestor) ? '' : (investor.weightInPercentage | number:'1.2-2')}}{{(isLoadingInvestor) ? '' : '%'}}
                                                     </div>
@@ -192,7 +192,7 @@
                                             <tr style="border: transparent !important">
                                                 <td class="innerTd two" colspan="6">
 
-                                                    <table *ngIf="investor.showInvestor == false && investor.schemeList?.length > 0" class="skeletonAnimation mt-8 mb-8" appSkeletonLoading [appSkeletonLoading]="isLoadingScheme" id="table-low">
+                                                    <table *ngIf="investor.showInvestor == false && investor.schemeList?.length > 0" class="skeletonAnimation table96 mt-8 mb-20" appSkeletonLoading [appSkeletonLoading]="isLoadingScheme" id="table-low">
                                                         <thead>
                                                             <tr class="h-40">
                                                                 <th class="w-10">Sr No.</th>
@@ -205,8 +205,8 @@
                                       class="material-icons ml-4 f-14 text-primitive">arrow_downward</i>
                                   </span>
                                                                 </th>
-                                                                <th (click)="sortByScheme(investor.schemeList,'totalAum')" class="w-25 c-p">
-                                                                    <span class="d-flex align-items-center"> Current
+                                                                <th (click)="sortByScheme(investor.schemeList,'totalAum')" class="c-p w-14 text-right">
+                                                                    <span class="d-flex align-items-center justify-content-end"> Current
                                     Value
                                     <i *ngIf="propertyName3=='totalAum' && !reverse3"
                                       class="material-icons ml-4 f-14 text-primitive">
@@ -215,8 +215,9 @@
                                       class="material-icons ml-4 f-14 text-primitive">arrow_downward</i>
                                   </span>
                                                                 </th>
-                                                                <th>% Weight</th>
-                                                                <th></th>
+                                                                <th class="w-14 text-right">% Weight</th>
+                                                <th></th>
+                                                <th></th>
 
                                                             </tr>
                                                         </thead>
@@ -232,13 +233,14 @@
                                                                         {{(isLoadingScheme) ? '' : scheme.schemeName}}
                                                                     </div>
                                                                 </td>
-                                                                <td>
+
+                                                                <td class="text-right">
                                                                     <div [ngClass]="{'bar': isLoadingScheme}">
                                                                         {{isLoadingScheme ? ' ' : '₹ '}}<span appFormatNumber *ngIf="!isLoadingScheme" [value]="scheme.totalAum"></span>
                                                                     </div>
-
                                                                 </td>
-                                                                <td>
+
+                                                                <td class="text-right">
                                                                     <div [ngClass]="{'bar': isLoadingScheme}">
                                                                         {{(isLoadingScheme) ? '' : (scheme.weightInPercentage | number:'1.2-2')}}
                                                                     </div>
@@ -250,9 +252,8 @@
                                     </i>
                                                                     </div>
                                                                 </td>
-                                                            </tr>
-                                                            <tr style="border: transparent !important">
-                                                                <td class="innerTd four" colspan="5">
+
+                                                                <td>
                                                                     <div class="d-block text-right" *ngIf="!scheme.showScheme">
                                                                         <button (click)="exportToExcelSheet('scheme2-wise',clientIndex, investorIndex, schemeIndex)" mat-icon-button *ngIf="!isLoadingScheme && scheme.folioList?.length > 0">
                                       <mat-icon>
@@ -260,7 +261,13 @@
                                       </mat-icon>
                                     </button>
                                                                     </div>
-                                                                    <table *ngIf="scheme.showScheme==false && scheme.folioList?.length > 0" class="skeletonAnimation mt-8 mb-8" appSkeletonLoading [appSkeletonLoading]="isLoadingFolio" id="table-low">
+                                                                </td>
+
+                                                            </tr>
+                                                            <tr style="border: transparent !important">
+                                                                <td class="innerTd four" colspan="6">
+                                                                   
+                                                                    <table *ngIf="scheme.showScheme==false && scheme.folioList?.length > 0" class="skeletonAnimation mt-8 table95 mb-8" appSkeletonLoading [appSkeletonLoading]="isLoadingFolio" id="table-low">
                                                                         <thead>
                                                                             <tr class="h-40">
                                                                                 <th class="w-10">Sr No.</th>
@@ -274,8 +281,8 @@
                                               class="material-icons ml-4 f-14 text-primitive">arrow_downward</i>
                                           </span>
                                                                                 </th>
-                                                                                <th (click)="sortByFolio(scheme.folioList,'folioNumber')" class="w-25 c-p">
-                                                                                    <span class="d-flex align-items-center">
+                                                                                <th (click)="sortByFolio(scheme.folioList,'folioNumber')" class="w-15 c-p">
+                                                                                    <span class="d-flex align-items-center  ">
                                             Folio Number
                                             <i *ngIf="propertyName4=='folioNumber' && !reverse4"
                                               class="material-icons ml-4 f-14 text-primitive">
@@ -284,8 +291,9 @@
                                               class="material-icons ml-4 f-14 text-primitive">arrow_downward</i>
                                           </span>
                                                                                 </th>
-                                                                                <th (click)="sortByFolio(scheme.folioList,'totalAum')" class="c-p">
-                                                                                    <span class="d-flex align-items-center">
+
+                                                                                <th (click)="sortByFolio(scheme.folioList,'totalAum')" class="c-p w-16">
+                                                                                    <span class="d-flex justify-content-end align-items-center">
                                             Balance Unit
                                             <i *ngIf="propertyName4=='totalAum' && !reverse4"
                                               class="material-icons ml-4 f-14 text-primitive">
@@ -294,7 +302,8 @@
                                               class="material-icons ml-4 f-14 text-primitive">arrow_downward</i>
                                           </span>
                                                                                 </th>
-                                                                                <th>% Weight</th>
+
+                                                                                <th class="w-15 text-right">% Weight</th>
                                                                                 <th></th>
                                                                             </tr>
                                                                         </thead>
@@ -316,18 +325,19 @@
                                                                                         {{(isLoadingFolio) ? '' : folio.folioNumber}}
                                                                                     </div>
                                                                                 </td>
-                                                                                <td>
+                                                                                <td class="text-right">
                                                                                     <div [ngClass]="{'bar': isLoadingFolio}">
                                                                                         {{isLoadingFolio ? ' ' : '₹ '}}<span appFormatNumber *ngIf="!isLoadingFolio" [value]="folio.totalAum"></span>
                                                                                     </div>
                                                                                 </td>
-                                                                                <td>
+                                                                                <td class="text-right">
                                                                                     <div [ngClass]="{'bar': isLoadingFolio}">
                                                                                         <!--                                            {{isLoadingFolio ? ' ' : '₹ '}}-->
                                                                                         <span appFormatNumber *ngIf="!isLoadingFolio">{{(isLoadingFolio) ? '' : (folio.balanceUnit | number:'1.2-2')}}</span>
                                                                                     </div>
                                                                                 </td>
-                                                                                <td>
+
+                                                                                <td class="text-right">
 
                                                                                     <div [ngClass]="{'bar': isLoadingFolio}">
                                                                                         {{(isLoadingFolio) ? '' : (folio.weightInPercentage | number:'1.2-2')}}
