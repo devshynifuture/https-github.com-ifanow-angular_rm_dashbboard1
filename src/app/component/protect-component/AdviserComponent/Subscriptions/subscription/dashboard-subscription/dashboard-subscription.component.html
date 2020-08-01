@@ -8,8 +8,14 @@
             </div>
             <div class=" col-md-7">
                 <h1>Hi {{advisorName}}, {{greeting}}</h1>
-                <p class="mb-0 pt-12">We’re excited to see you here! The dashboard currently looks barren. </p>
-                <p> Fret not. We’ll help you in this journey. We’re in this together. </p>
+
+                <div *ngIf="showLetsBegin">
+                    <p class="mb-0 pt-12">We’re excited to see you here! The dashboard currently looks barren. </p>
+                    <p> Fret not. We’ll help you in this journey. We’re in this together. </p>
+                </div>
+
+                <p *ngIf="!showLetsBegin && !isLoading"> Welcome back </p>
+
                 <button *ngIf="showLetsBegin" (click)="showSubscriptionSteps()" class="btn-red addon mb-28 mt-16" mat-flat-button>Let's begin
                     <i class="material-icons right text-right"> arrow_forward </i></button>
             </div>
