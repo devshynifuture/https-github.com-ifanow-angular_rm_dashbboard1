@@ -275,7 +275,7 @@ export class ReconciliationDetailsViewComponent implements OnInit {
           }
           // this.canDeleteTransaction = true;
           this.dataSource1.data.map(item => {
-            item.canDeleteTransaction = false;
+            item.canDeleteTransaction = true;
           });
 
           this.tableData1 = this.dataSource1.data;
@@ -449,7 +449,11 @@ export class ReconciliationDetailsViewComponent implements OnInit {
                     if (date1.getTime() > date2.getTime()) {
                       canDeleteTransaction = true;
                     } else {
-                      canDeleteTransaction = false;
+                      if (this.isUnfreezeClicked) {
+                        canDeleteTransaction = true;
+                      } else {
+                        canDeleteTransaction = false;
+                      }
                     }
                     this.disableDeletionForTable2 = true;
                   } else {
@@ -487,11 +491,15 @@ export class ReconciliationDetailsViewComponent implements OnInit {
         this.data.tableData.forEach((element, index1) => {
           if (this.data.hasOwnProperty('freezeDate') && this.data.freezeDate) {
             let date1 = new Date(element.transactionDate);
-            let date2 = new Date(element.freezeDate);
+            let date2 = new Date(this.data.freezeDate);
             if (date1.getTime() > date2.getTime()) {
               canDeleteTransaction = true;
             } else {
-              canDeleteTransaction = false;
+              if (this.isUnfreezeClicked) {
+                canDeleteTransaction = true
+              } else {
+                canDeleteTransaction = false;
+              }
             }
             this.disableDeletionForTable2 = true;
           } else {

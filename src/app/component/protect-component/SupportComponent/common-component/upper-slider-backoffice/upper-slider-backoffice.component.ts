@@ -1032,7 +1032,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
               difference: (element.calculatedUnits - element.aumUnits).toFixed(3),
               transaction: '',
               mutualFundId: element.mutualFundId,
-              freezeDate: (element.hasOwnProperty('freezeDate') && element.freezeDate) ? element.freeeDate : null,
+              freezeDate: (element.hasOwnProperty('freezeDate') && element.freezeDate) ? element.freezeDate : null,
               investorName: element.investorName,
               isUnfreezeClicked: false,
               isFreezeClicked: false,
