@@ -564,24 +564,33 @@ export class UpperSliderBackofficeComponent implements OnInit {
       const isParent = this.isRmLogin ? true : ((this.parentId === this.advisorId) ? true : false);
       let mutualFundIds = [];
       let aumIds = [];
+      let mfWithoutTrnxIds = [];
       if (this.data.flag === 'report') {
         this.reportListWithIsMappedToMinusOne.forEach(element => {
-          if (Math.abs(element.calculatedUnits - element.aumUnits) !== 0) {
-            if (element.mutualFundId !== 0) {
-              mutualFundIds.push(element.mutualFundId);
-            } else {
-              aumIds.push(element.id);
+          if (element.hasOwnProperty('mutualFundTransaction') && element.mutualFundTransaction.length !== 0) {
+            if (Math.abs(element.calculatedUnits - element.aumUnits) !== 0) {
+              if (element.mutualFundId !== 0) {
+                mutualFundIds.push(element.mutualFundId);
+              } else {
+                aumIds.push(element.id);
+              }
             }
+          } else {
+            mfWithoutTrnxIds.push(element.mutualFundId)
           }
         });
       } else {
         this.filteredAumListWithIsMappedToMinusOne.forEach(element => {
-          if (Math.abs(element.calculatedUnits - element.aumUnits) !== 0) {
-            if (element.mutualFundId !== 0) {
-              mutualFundIds.push(element.mutualFundId);
-            } else {
-              aumIds.push(element.id);
+          if (element.hasOwnProperty('mutualFundTransaction') && element.mutualFundTransaction.length !== 0) {
+            if (Math.abs(element.calculatedUnits - element.aumUnits) !== 0) {
+              if (element.mutualFundId !== 0) {
+                mutualFundIds.push(element.mutualFundId);
+              } else {
+                aumIds.push(element.id);
+              }
             }
+          } else {
+            mfWithoutTrnxIds.push(element.mutualFundId)
           }
         });
       }
@@ -592,6 +601,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
         rtId: this.data.rtId,
         mutualFundIds,
         aumIds,
+        mfWithoutTrnxIds,
         parentId: this.parentId,
         isParent
       };
