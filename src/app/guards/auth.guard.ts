@@ -17,7 +17,7 @@ export class AuthGuard implements CanActivate {
       if (state && state.url.includes('/login')) {
         // TODO comment for old login
         if (this.authService.isAdvisor()) {
-          this.myRoute.navigate(['admin', 'subscription', 'dashboard']);
+          this.myRoute.navigate(['admin', 'dashboard']);
         } else if (AuthService.getUserInfo().isRmLogin) {
           this.myRoute.navigate(['support', 'dashboard']);
         } else {
