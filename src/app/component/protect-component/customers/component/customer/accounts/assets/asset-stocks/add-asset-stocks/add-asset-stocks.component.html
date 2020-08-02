@@ -14,9 +14,7 @@
     <div class="row">
         <div class="col-md-12">
             <div formArrayName="getCoOwnerName">
-                <div [ngClass]="{'pt-36': pointIndex>0}" class="row"
-                    *ngFor="let obj of assetForm.controls['getCoOwnerName'].controls; let pointIndex=index"
-                    [formGroupName]="pointIndex">
+                <div [ngClass]="{'pt-36': pointIndex>0}" class="row" *ngFor="let obj of assetForm.controls['getCoOwnerName'].controls; let pointIndex=index" [formGroupName]="pointIndex">
                     <div class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8 ">{{pointIndex != 0?'Co-o' : 'O'}}wner{{pointIndex != 0?pointIndex:''}}</h5>
                         <p class="m-0 f-12 text-custom">In whose name is this asset</p>
@@ -24,10 +22,7 @@
                     <div class="pr-0" [ngClass]="assetForm.value.getCoOwnerName.length > 1?'col-md-3' : 'col-md-5'">
                         <div class="form-group mb-0">
                             <mat-form-field>
-                                <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData'
-                                    (selectionChange)="disabledMember($event.value,'owner')"
-                                    (valueChange3)='displayControler($event)'  (valueChange1)='lisNominee($event)'
-                                    class="form-control br-0" [callMethod]='callMethod'>
+                                <mat-select appOwnerNominee matInput formControlName="name" [data]='ownerData' (selectionChange)="disabledMember($event.value,'owner')" (valueChange3)='displayControler($event)' (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
                                     <!-- || f.familyMemberAge <= 60 -->
                                     <mat-option value='' disabled>Select family members</mat-option>
                                     <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable" (click)="selectedOwner(f.familyMemberId)" [value]="f.userName">
@@ -43,8 +38,7 @@
                     <div class="col-md-2" *ngIf="assetForm.value.getCoOwnerName.length > 1">
                         <div class="form-group mb-0 iconPetage">
                             <mat-form-field>
-                                <input matInput class="form-control br-0 percentage" type="number" formControlName="share"
-                                    (focusout)="onChangeJointOwnership('owner')">
+                                <input matInput class="form-control br-0 percentage" type="number" formControlName="share" (focusout)="onChangeJointOwnership('owner')">
                                 <mat-error class="f-12" *ngIf="obj.controls['share'].hasError('required')">
                                     This field is required
                                 </mat-error>
@@ -58,9 +52,7 @@
                         <!-- <i *ngIf="assetForm.value.getCoOwnerName.length < 3"
                             class="material-icons text-primitive f-20 c-p float-left"
                             (click)="addNewCoOwner(undefined)">add</i> -->
-                        <i *ngIf="assetForm.value.getCoOwnerName.length > 1"
-                            class="material-icons text-primitive f-20 c-p pl-10"
-                            (click)="removeCoOwner(pointIndex)">remove</i>
+                        <i *ngIf="assetForm.value.getCoOwnerName.length > 1" class="material-icons text-primitive f-20 c-p pl-10" (click)="removeCoOwner(pointIndex)">remove</i>
                     </div>
                 </div>
             </div>
@@ -74,8 +66,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0 iconRupess">
                 <mat-form-field>
-                    <input matInput autocomplete="off" formControlName="currentMarketValue" type="number" #institution
-                        maxlength="30" class="form-control rupess br-0">
+                    <input matInput autocomplete="off" formControlName="currentMarketValue" type="number" #institution maxlength="30" class="form-control rupess br-0">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
@@ -88,8 +79,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0 ">
                 <mat-form-field class="ba-date">
-                    <input matInput (click)="balanceAsOn.open()" (input)="preventDefault($event)" autocomplete="off" [max]="maxDate"
-                        formControlName="valueAsOn" class="form-control br-0 b-0" [matDatepicker]="balanceAsOn">
+                    <input matInput (click)="balanceAsOn.open()" (input)="preventDefault($event)" autocomplete="off" [max]="maxDate" formControlName="valueAsOn" class="form-control br-0 b-0" [matDatepicker]="balanceAsOn">
                     <mat-datepicker-toggle matSuffix [for]="balanceAsOn"></mat-datepicker-toggle>
                     <mat-datepicker #balanceAsOn></mat-datepicker>
                     <mat-error>This field is required
@@ -105,8 +95,7 @@
         <div class="col-md-3">
             <div class="form-group mb-0 iconRupess">
                 <mat-form-field>
-                    <input matInput autocomplete="off" formControlName="amtInvested" type="number" #institution
-                        maxlength="30" class="form-control rupess br-0">
+                    <input matInput autocomplete="off" formControlName="amtInvested" type="number" #institution maxlength="30" class="form-control rupess br-0">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
@@ -121,11 +110,11 @@
                 <mat-form-field>
                     <input matInput autocomplete="off" aria-label="State" formControlName="portfolioName" [matAutocomplete]="auto" class="form-control br-0 pl-8">
                     <!-- (click)="setForm(singlePorfolio)"  -->
-                    <mat-autocomplete #auto="matAutocomplete" >
-                        <mat-option *ngFor="let singlePorfolio of familyMemberPortfolio" [value]="singlePorfolio.portfolioName" >
+                    <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option *ngFor="let singlePorfolio of familyMemberPortfolio" [value]="singlePorfolio.portfolioName">
                             {{ singlePorfolio.portfolioName}}
                         </mat-option>
-                        
+
                     </mat-autocomplete>
                     <mat-error>This field is required</mat-error>
                     <!-- <input matInput autocomplete="off" type="text" formControlName="portfolioName" #institution
@@ -142,16 +131,16 @@
         <div class="col-md-5">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    
+
                     <input matInput class="form-control">
-                    <mat-hint>Optional</mat-hint>
-                  </mat-form-field>
+                    <mat-hint class="ml-8">Optional</mat-hint>
+                </mat-form-field>
             </div>
         </div>
         <div class="col-md-1 pl-0">
             <span class="material-icons c-p pt-8 text-custom">
                 add
-                </span>
+            </span>
         </div>
     </div>
     <div class="row pt-32">
@@ -161,16 +150,16 @@
         <div class="col-md-5">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    
+
                     <input matInput class="form-control">
-                    <mat-hint>Optional</mat-hint>
-                  </mat-form-field>
+                    <mat-hint class="ml-8">Optional</mat-hint>
+                </mat-form-field>
             </div>
         </div>
         <div class="col-md-1 pl-0">
             <span class="material-icons c-p pt-8 text-custom">
                 add
-                </span>
+            </span>
         </div>
     </div>
     <div class="row pt-32">
@@ -180,16 +169,16 @@
         <div class="col-md-5">
             <div class="form-group mb-0">
                 <mat-form-field>
-                    
+
                     <input matInput class="form-control">
-                    <mat-hint>Optional</mat-hint>
-                  </mat-form-field>
+                    <mat-hint class="ml-8">Optional</mat-hint>
+                </mat-form-field>
             </div>
         </div>
         <div class="col-md-1 pl-0">
             <span class="material-icons c-p pt-8 text-custom">
                 add
-                </span>
+            </span>
         </div>
     </div>
     <div class="row pt-32">
@@ -199,17 +188,17 @@
         <div class="col-md-3 pr-6">
             <mat-form-field>
                 <mat-select class="form-control">
-                  <mat-option value="option">Option</mat-option>
+                    <mat-option value="option">Option</mat-option>
                 </mat-select>
-              </mat-form-field>
+            </mat-form-field>
         </div>
         <div class="col-md-2 pl-6 pr-10">
             <mat-form-field class="iconPetage">
                 <input matInput class="form-control percentage">
-              </mat-form-field>
+            </mat-form-field>
         </div>
         <div class="col-md-1 p-0">
-           <p class="text-primitive m-0 pt-8 c-p ws-nowrap">+ Add nominee</p>
+            <p class="text-primitive m-0 pt-8 c-p ws-nowrap">+ Add nominee</p>
         </div>
     </div>
 </div>

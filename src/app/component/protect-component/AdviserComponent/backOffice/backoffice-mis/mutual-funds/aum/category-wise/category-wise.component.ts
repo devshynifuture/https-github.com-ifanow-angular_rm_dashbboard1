@@ -1,10 +1,10 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {BackOfficeService} from '../../../../back-office.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {AumComponent} from '../aum.component';
-import {AuthService} from 'src/app/auth-service/authService';
-import {ExcelMisService} from '../excel-mis.service';
-import {MfServiceService} from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { BackOfficeService } from '../../../../back-office.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { AumComponent } from '../aum.component';
+import { AuthService } from 'src/app/auth-service/authService';
+import { ExcelMisService } from '../excel-mis.service';
+import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
 
 @Component({
   selector: 'app-category-wise',
@@ -52,29 +52,29 @@ export class CategoryWiseComponent implements OnInit {
   ];
   arrayOfHeaderStyles: { width: number; key: string; }[][] = [
     [
-      {width: 10, key: 'Sr. No.'},
-      {width: 50, key: 'Category Name'},
-      {width: 30, key: 'Current Value'},
-      {width: 10, key: '% Weight'}
+      { width: 10, key: 'Sr. No.' },
+      { width: 50, key: 'Category Name' },
+      { width: 30, key: 'Current Value' },
+      { width: 10, key: '% Weight' }
     ],
     [
-      {width: 10, key: 'Sr. No.'},
-      {width: 50, key: 'Sub Category Name'},
-      {width: 30, key: 'Current Value'},
-      {width: 10, key: '% Weight'}
+      { width: 10, key: 'Sr. No.' },
+      { width: 50, key: 'Sub Category Name' },
+      { width: 30, key: 'Current Value' },
+      { width: 10, key: '% Weight' }
     ],
     [
-      {width: 10, key: 'Sr. No.'},
-      {width: 50, key: 'Scheme Name'},
-      {width: 30, key: 'Current Value'},
-      {width: 10, key: '% Weight'}
+      { width: 10, key: 'Sr. No.' },
+      { width: 50, key: 'Scheme Name' },
+      { width: 30, key: 'Current Value' },
+      { width: 10, key: '% Weight' }
     ],
     [
-      {width: 50, key: 'Applicant Name'},
-      {width: 30, key: 'Balance Unit'},
-      {width: 30, key: 'Folio'},
-      {width: 30, key: 'Current Amount'},
-      {width: 10, key: '% Weight'},
+      { width: 50, key: 'Applicant Name' },
+      { width: 30, key: 'Balance Unit' },
+      { width: 30, key: 'Folio' },
+      { width: 30, key: 'Current Amount' },
+      { width: 10, key: '% Weight' },
     ]
   ];
   arrayOfExcelData: any[] = [];
@@ -490,12 +490,12 @@ export class CategoryWiseComponent implements OnInit {
         iterable.forEach((element, index1) => {
           this.arrayOfExcelData[this.selectedCategory].subCatList[this.selectedSubCategory]
             .schemeList[index].applicantList.push({
-            name: element.name,
-            balanceUnit: this.mfService.mutualFundRoundAndFormat(element.balanceUnit, 2),
-            folioNumber: element.folioNumber,
-            totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
-            weightInPerc: element.weightInPercentage,
-          });
+              name: element.name,
+              balanceUnit: this.mfService.mutualFundRoundAndFormat(element.balanceUnit, 2),
+              folioNumber: element.folioNumber,
+              totalAum: this.mfService.mutualFundRoundAndFormat(element.totalAum, 0),
+              weightInPerc: element.weightInPercentage,
+            });
           sumTotalAumTemp = sumTotalAumTemp + element.totalAum;
           sumTotalWeightInPercTemp = sumTotalWeightInPercTemp + element.weightInPercentage;
         });
