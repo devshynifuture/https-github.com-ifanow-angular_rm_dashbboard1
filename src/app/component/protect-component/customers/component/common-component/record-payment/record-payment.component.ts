@@ -85,13 +85,21 @@ export class RecordPaymentComponent implements OnInit {
   }
 
   getRecordPayment(data) {
-    this.balDue = data.balanceDue;
-
+    // this.balDue = (data.balanceDue == 0 ) ? data.finalAmount : data.balanceDue ? data.balanceDue : 0;
+    if(data.balanceDue == 0){
+      this.balDue = data.amountReceived
+    } 
+    if(data.add == false && data.balanceDue != 0){
+      if(data.balanceDue > data.amountReceived){
+        this.balDue = data.balanceDue
+      }else{
+        this.balDue =data.amountReceived + data.balanceDue
+      }
+    }
     if (data.add == true) {
       this.isAdded = data.add;
+      this.balDue = data.balanceDue
       data = '';
-    } else {
-      this.balDue = 0;
     }
     console.log('payee data', data);
     this.rPayment = this.fb.group({
@@ -192,89 +200,89 @@ export class RecordPaymentComponent implements OnInit {
         notes: this.rPayment.controls.notes.value
       }];
 
+
+      const ELEMENT_DATA = this.formObj;
+      this.dataSource = ELEMENT_DATA;
+      if (this.isAdded) {
+        this.feeCollectionMode.forEach(o => {
+          if (o.name == this.dataSource[0].paymentMode) {
+            this.dataSource[0].paymentMode = o.value;
+          }
+        });
+        this.dataSource[0].amountReceived = parseInt(this.dataSource[0].amountReceived);
+        this.dataSource[0].chargeIfAny = parseInt(this.dataSource[0].chargeIfAny);
+        this.dataSource[0].paymentMode = parseInt(this.dataSource[0].paymentMode);
+        // this.dataSource[0].gstTreatment = parseInt(this.dataSource[0].gstTreatment);
+        this.dataSource[0].TDS = parseInt(this.dataSource[0].TDS);
+        this.dataSource[0].paymentDate = this.dataSource[0].paymentDate.toISOString().slice(0, 10);
+      } else {
+        this.feeCollectionMode.forEach(o => {
+          if (o.name == this.rPayment.controls.paymentMode.value) {
+            this.paymentMode = o.value;
+          }
+        });
+      }
+
+      // this.gstTreatment.forEach(o => {
+      //   if (o.name == this.dataSource[0].gstTreatment) {
+      //     this.dataSource[0].gstTreatment = o.value;
+      //   }
+      // });
+
+      if (this.InvRecordData.add != true) {
+        const obj = {
+          id: this.rPayment.controls.id.value,
+          // paymentMode: this.dataSource[0].paymentMode,
+          // amountReceived: this.dataSource[0].amountReceived,
+          // chargesIfAny: this.dataSource[0].chargeIfAny,
+          // notes: this.dataSource[0].notes,
+          // tds: this.dataSource[0].TDS,
+          invoiceId: this.InvRecordData.id,
+          advisorId: this.advisorId,
+          amountReceived: this.rPayment.controls.amountReceived.value,
+          chargeIfAny: this.rPayment.controls.chargesIfAny.value,
+          tds: this.rPayment.controls.tds.value,
+          paymentDate: this.rPayment.controls.paymentDate.value,
+          paymentMode: this.paymentMode,
+          referenceNumber: this.InvRecordData.referenceNumber,
+          notes: this.rPayment.controls.notes.value,
+
+          // gstTreatmentId: this.dataSource[0].gstTreatment
+        };
+        this.subService.editPaymentReceive(obj).subscribe(
+          data => this.getSubStagesRecordResponse(data)
+        );
+      } else {
+        const obj = {
+          invoiceId: this.InvRecordData.id,
+          paymentMode: this.dataSource[0].paymentMode,
+          amountReceived: this.dataSource[0].amountReceived,
+          paymentDate: this.dataSource[0].paymentDate,
+          tds: this.dataSource[0].TDS,
+          notes: this.dataSource[0].notes,
+          chargesIfAny: this.dataSource[0].chargeIfAny,
+          advisorId: this.dataSource[0].advisorId,
+          referenceNumber: this.InvRecordData.referenceNumber,
+          // gstTreatmentId: this.dataSource[0].gstTreatment
+
+        };
+        this.subService.getSubscriptionCompleteStages(obj).subscribe(
+          data => this.getSubStagesRecordResponse(data)
+        );
+
+      }
     }
-    const ELEMENT_DATA = this.formObj;
-    this.dataSource = ELEMENT_DATA;
-    if (this.isAdded) {
-      this.feeCollectionMode.forEach(o => {
-        if (o.name == this.dataSource[0].paymentMode) {
-          this.dataSource[0].paymentMode = o.value;
-        }
-      });
-      this.dataSource[0].amountReceived = parseInt(this.dataSource[0].amountReceived);
-      this.dataSource[0].chargeIfAny = parseInt(this.dataSource[0].chargeIfAny);
-      this.dataSource[0].paymentMode = parseInt(this.dataSource[0].paymentMode);
-      // this.dataSource[0].gstTreatment = parseInt(this.dataSource[0].gstTreatment);
-      this.dataSource[0].TDS = parseInt(this.dataSource[0].TDS);
-      this.dataSource[0].paymentDate = this.dataSource[0].paymentDate.toISOString().slice(0, 10);
-    } else {
-      this.feeCollectionMode.forEach(o => {
-        if (o.name == this.rPayment.controls.paymentMode.value) {
-          this.paymentMode = o.value;
-        }
-      });
-    }
-
-    // this.gstTreatment.forEach(o => {
-    //   if (o.name == this.dataSource[0].gstTreatment) {
-    //     this.dataSource[0].gstTreatment = o.value;
-    //   }
-    // });
-
-    if (this.InvRecordData.add != true) {
-      const obj = {
-        id: this.rPayment.controls.id.value,
-        // paymentMode: this.dataSource[0].paymentMode,
-        // amountReceived: this.dataSource[0].amountReceived,
-        // chargesIfAny: this.dataSource[0].chargeIfAny,
-        // notes: this.dataSource[0].notes,
-        // tds: this.dataSource[0].TDS,
-        invoiceId: this.InvRecordData.id,
-        advisorId: this.advisorId,
-        amountReceived: this.rPayment.controls.amountReceived.value,
-        chargeIfAny: this.rPayment.controls.chargesIfAny.value,
-        tds: this.rPayment.controls.tds.value,
-        paymentDate: this.rPayment.controls.paymentDate.value,
-        paymentMode: this.paymentMode,
-        referenceNumber: this.InvRecordData.invoiceNumber,
-        notes: this.rPayment.controls.notes.value,
-
-        // gstTreatmentId: this.dataSource[0].gstTreatment
-      };
-      this.subService.editPaymentReceive(obj).subscribe(
-        data => this.getSubStagesRecordResponse(data)
-      );
-    } else {
-      const obj = {
-        invoiceId: this.InvRecordData.id,
-        paymentMode: this.dataSource[0].paymentMode,
-        amountReceived: this.dataSource[0].amountReceived,
-        paymentDate: this.dataSource[0].paymentDate,
-        tds: this.dataSource[0].TDS,
-        notes: this.dataSource[0].notes,
-        chargesIfAny: this.dataSource[0].chargeIfAny,
-        advisorId: this.dataSource[0].advisorId,
-        referenceNumber: this.InvRecordData.invoiceNumber,
-        // gstTreatmentId: this.dataSource[0].gstTreatment
-
-      };
-      this.subService.getSubscriptionCompleteStages(obj).subscribe(
-        data => this.getSubStagesRecordResponse(data)
-      );
-
-    }
-
   }
 
   getSubStagesRecordResponse(data) {
     console.log('data', data);
-    if(this.isAdded){
+    if (this.isAdded) {
       this.feeCollectionMode.forEach(o => {
         if (o.value == this.dataSource[0].paymentMode) {
           this.dataSource[0].paymentMode = o.name;
         }
       });
-    }else{
+    } else {
       this.feeCollectionMode.forEach(o => {
         if (o.name == this.rPayment.controls.paymentMode.value) {
           this.paymentMode = o.value;

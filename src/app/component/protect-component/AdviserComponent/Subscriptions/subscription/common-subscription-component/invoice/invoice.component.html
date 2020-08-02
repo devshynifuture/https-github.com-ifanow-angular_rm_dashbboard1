@@ -241,7 +241,7 @@
                                                 Balance due
                                             </td>
                                             <td style="border-top: 1px solid #dee5e7; text-align: right; font-weight: 500; padding: 8px; border-bottom: 1px solid #dee5e7;font-size: 14px; ">
-                                                <span>&#8377;</span><span [value]="storeData.balanceDue" appFormatNumber>{{formatter(storeData.balanceDue)}}</span> </td>
+                                                <span>&#8377;</span><span [value]="storeData.balanceDue == 0 ? '0' : storeData.balanceDue ? storeData.balanceDue : '-'" appFormatNumber>{{storeData.balanceDue == 0 ? '0' : storeData.balanceDue  ? storeData.balanceDue :'-'}}</span> </td>
                                         </tr>
                                     </table>
                                 </td>
@@ -441,7 +441,7 @@
                                                 Balance due
                                             </td>
                                             <td style="border-top: 1px solid #dee5e7; text-align: right; font-weight: 500; padding: 8px; border-bottom: 1px solid #dee5e7;font-size: 14px; ">
-                                                <span>&#8377;</span><span [value]="storeData.balanceDue" appFormatNumber>{{formatter(storeData.balanceDue)}}</span> </td>
+                                                <span>&#8377;</span><span [value]="storeData.balanceDue == 0 ? '0' : storeData.balanceDue  ? storeData.balanceDue :'-'" appFormatNumber>{{storeData.balanceDue == 0 ? '0' : storeData.balanceDue  ? storeData.balanceDue : '-'}}</span> </td>
                                         </tr>
                                     </table>
                                 </td>
@@ -739,7 +739,7 @@
                                     Balance due
                                 </td>
                                 <td style="border-top: 1px solid #dee5e7; text-align: right; font-weight: 500; padding: 8px; border-bottom: 1px solid #dee5e7;font-size: 14px; ">
-                                    <span>&#8377;</span><span [value]="storeData.balanceDue" appFormatNumber>{{formatter(storeData.balanceDue)}}</span> </td>
+                                    <span>&#8377;</span><span [value]="storeData.balanceDue == 0 ? '0' : storeData.balanceDue ? storeData.balanceDue :'-'" appFormatNumber>{{storeData.balanceDue == 0 ? '0' : storeData.balanceDue ? storeData.balanceDue :'-'}}</span> </td>
                             </tr>
                         </table>
                     </td>
