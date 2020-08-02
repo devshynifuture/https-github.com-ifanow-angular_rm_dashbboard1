@@ -244,6 +244,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
                     arrWithTransactionCheckedTrue.forEach(element => {
                       // check  and compare date object and can delete value
                       arrayValue.push({
+                        id: element.id,
                         name: element.shemeName,
                         folioNumber: element.folioNumber,
                         unitsIfanow: element.calculatedUnits.toFixed(3),
@@ -488,6 +489,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
         console.error(err);
         this.eventService.openSnackBar(err, "DISMISS");
         this.isLoadingForDuplicate = false;
+        this.dataSource2.data = null;
       });
   }
 
@@ -576,7 +578,11 @@ export class UpperSliderBackofficeComponent implements OnInit {
               }
             }
           } else {
-            mfWithoutTrnxIds.push(element.mutualFundId)
+            if (element.mutualFundId && element.mutualFundId !== 0 && element.mutualFundId > 0) {
+              mfWithoutTrnxIds.push(element.mutualFundId)
+            } else {
+              aumIds.push(element.id);
+            }
           }
         });
       } else {
@@ -590,7 +596,11 @@ export class UpperSliderBackofficeComponent implements OnInit {
               }
             }
           } else {
-            mfWithoutTrnxIds.push(element.mutualFundId)
+            if (element.mutualFundId && element.mutualFundId !== 0 && element.mutualFundId > 0) {
+              mfWithoutTrnxIds.push(element.mutualFundId)
+            } else {
+              aumIds.push(element.id);
+            }
           }
         });
       }
@@ -843,13 +853,20 @@ export class UpperSliderBackofficeComponent implements OnInit {
                     this.dataSource1.data[this.markFolioIndex].unitsIfanow = sideBarData.data.changesInUnitOne;
                     let unitsRta = this.dataSource1.data[this.markFolioIndex].unitsRta;
                     this.dataSource1.data[this.markFolioIndex].difference = String((parseFloat(sideBarData.data.changesInUnitOne) - parseFloat(unitsRta)).toFixed(3));
-                    let diff = parseFloat(sideBarData.data.changesInUnitOne) - parseFloat(unitsRta)
+                    let diff = parseFloat(sideBarData.data.changesInUnitOne) - parseFloat(unitsRta);
+                    let obj = this.dataSource1.data[this.markFolioIndex];
+                    let objId = obj['id'];
+
+                    this.aumList.map(item => {
+                      if (item.id === objId) {
+                        item.calculatedUnits = parseFloat(sideBarData.data.changesInUnitOne)
+                        item.mutualFundTransaction = mfTransArr
+                      }
+                    });
                     if (Math.round(diff) === 0) {
                       this.dataSource.data.map(item => {
                         item.after_recon = String(parseFloat(item.after_recon) - 1);
                       });
-
-                      let obj = this.dataSource1.data[this.markFolioIndex];
 
                       if (this.data.flag === 'report') {
 
@@ -878,12 +895,19 @@ export class UpperSliderBackofficeComponent implements OnInit {
                   let unitsRta = this.dataSource2.data[this.markFolioIndex].unitsRta;
                   this.dataSource2.data[this.markFolioIndex].difference = String((parseFloat(sideBarData.data.changesInUnitOne) - parseFloat(unitsRta)).toFixed(3));
                   let diff = parseFloat(sideBarData.data.changesInUnitOne) - parseFloat(unitsRta);
+                  let obj = this.dataSource2.data[this.markFolioIndex];
+                  let objId = obj['id'];
+
+                  this.aumListReportValue.map(item => {
+                    if (item.id === objId) {
+                      item.calculatedUnits = parseFloat(sideBarData.data.changesInUnitOne)
+                    }
+                  });
                   if (Math.round(diff) === 0) {
                     this.dataSource.data.map(item => {
                       item.after_recon = String(parseFloat(item.after_recon) - 1);
                     });
 
-                    let obj = this.dataSource2.data[this.markFolioIndex];
                     if (this.data.flag === 'report') {
                       let desiredObj = this.aumListReportValue.find(item => item.mutualFundId === obj['mutualFundId']);
                       let removeIndex = this.aumListReportValue.indexOf(desiredObj);
@@ -1035,6 +1059,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
           console.log('this is aum report ismap -1 and transac check true::', reportListWithIsMapMinusOneAndTransacCheckTrue);
           reportListWithIsMapMinusOneAndTransacCheckTrue.forEach(element => {
             arrayValue.push({
+              id: element.id,
               name: element.shemeName,
               folioNumber: element.folioNumber,
               unitsIfanow: element.calculatedUnits.toFixed(3),
