@@ -56,7 +56,7 @@ export class AssetStocksComponent implements OnInit {
   @Output() changeCount = new EventEmitter();
   getStocksData() {
     this.isLoading = true;
-    this.portfolioData.stockListGroup = [{}, {}, {}]
+    this.portfolioData = [{ stockListGroup: [{}, {}, {}] }, { stockListGroup: [{}, {}, {}] }, { stockListGroup: [{}, {}, {}] }]
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId
