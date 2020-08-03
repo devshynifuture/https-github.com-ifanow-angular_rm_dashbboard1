@@ -80,10 +80,11 @@
                     <th *matHeaderCellDef class="f-18 t-14" mat-header-cell mat-sort-header="subscriptionNumber">
                         Subs #
                     </th>
-                    <td (click)="openPlanSlider('SUBSCRIPTIONS','open',element)" *matCellDef="let element"
+                    <td *matCellDef="let element"
                         class="t-14 c-p" mat-cell>
                         <div class="bar"> {{element.subscriptionNumber}} </div>
                     </td>
+                    <!-- (click)="openPlanSlider('SUBSCRIPTIONS','open',element)"  -->
                 </ng-container>
                 <!-- Weight Column -->
                 <ng-container matColumnDef="status">

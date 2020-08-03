@@ -40,7 +40,7 @@
                         {{(libility.loanTypeId == 1)?'Home Loan':(libility.loanTypeId == 2)?'Vehicle':(libility.loanTypeId == 3)?'Education':(libility.loanTypeId == 4)?'Credit Card':(libility.loanTypeId == 5)?'Personal':'Mortgage'}}
                     </div>
                 </div>
-                <div class="row bb p-8 b-l br">
+                <div class="row bb p-8 b-l br" *ngIf="libility.loanTypeId == 1">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                        Property name
                     </div>
