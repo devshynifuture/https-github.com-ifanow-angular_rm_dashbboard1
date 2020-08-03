@@ -44,7 +44,7 @@
         <div [ngSwitch]="viewMode" class="col-md-10  p-0 min-height responsive-right-side-top rs-pl-15">
             <div class="wrapper-8">
                 <div class="row pt-28 pb-4">
-                    <div class="col-md-6 pl-0 menuListDocument">
+                    <div class="col-md-8 pl-0 menuListDocument">
                         <ol class="documentBreadCrumb pt-8">
                             <li (click)="reset()" class="breadcrumb-item c-p paddingLeftNone">
                                 <p *ngIf="showResult == false" class="m-0 text-black roboto f-18 ">
@@ -85,7 +85,7 @@
                             </ol>
                         </ol>
                     </div>
-                    <div class="col-md-6 p-0 d-flex justify-content-end">
+                    <div class="col-md-4 p-0 d-flex justify-content-end">
                         <div class="input_class">
                             <input (keyup)="keyPress($event.target.value,tabValue)" class="b-a bg-grey lter mr-8"
                                 matInput value="">

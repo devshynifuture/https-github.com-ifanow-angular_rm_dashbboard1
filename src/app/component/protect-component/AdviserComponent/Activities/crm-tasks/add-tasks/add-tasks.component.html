@@ -112,18 +112,17 @@
         </div>
 
         <div class="row pt-16" *ngIf="isRecurringTaskForm">
-            <div class="col-md-4 text-right">
+            <div class="col-md-4 text-right pt-10">
                 <h5 class="m-0 f-14 pt-12">Recurring</h5>
             </div>
 
-            <div class="col-md-4 form-group pl-0 arn-ria">
-                <mat-form-field float="never" appearance="standard">
-                    <mat-select class="form-control">
+            <div class="col-md-4 pl-0">
+                <mat-form-field float="never" appearance="standard" class="form-group">
+                    <mat-select class="form-control" formControlName="frequency">
                         <mat-option None>
                             Select Frequency
                         </mat-option>
-                        <mat-option *ngFor="let item of recurringTaskFrequencyList" (click)="setRecurringFreq(item)"
-                            [value]="item.id">
+                        <mat-option *ngFor="let item of recurringTaskFrequencyList" [value]="item.id">
                             {{ item.name }}
                         </mat-option>
                     </mat-select>
@@ -133,12 +132,33 @@
                 </mat-form-field>
             </div>
 
-            <div class="col-md-4 form-group pl-0">
+            <div class="col-md-4 pl-0">
                 <mat-form-field class="ba-date">
                     <input class="form-control br-0 b-0" formControlName="continuesTill"
-                        (input)="preventDefault($event)" (focus)="picker4.open()" matInput [matDatepicker]="picker4">
-                    <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
-                    <mat-datepicker #picker4></mat-datepicker>
+                        (input)="preventDefault($event)" (focus)="picker2.open()" matInput [matDatepicker]="picker2">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                    <mat-error>
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row pt-16" *ngIf="addTaskForm.get('frequency').value === 1 && isRecurringTaskForm">
+            <div class="col-md-4 text-right pt-10">
+                <h5 class="m-0 f-14 pt-12">Every</h5>
+            </div>
+            <div class="col-md-4 pl-0">
+                <mat-form-field float="never" appearance="standard" class="form-group">
+                    <mat-select formControlName="every" class="form-control">
+                        <mat-option None>
+                            Select Day
+                        </mat-option>
+                        <mat-option *ngFor="let item of dayOfWeek" [value]="item.id">
+                            {{ item.name }}
+                        </mat-option>
+                    </mat-select>
                     <mat-error>
                         This field is required
                     </mat-error>
@@ -221,7 +241,7 @@
             </div>
         </div>
 
-        <div class="row pt-32">
+        <div class="row pt-32" *ngIf="!isRecurringTaskForm">
             <div class="col-md-4 text-right">
                 <h5 class="m-0 roboto f-400 pt-12">Due date</h5>
             </div>
@@ -238,8 +258,25 @@
                 </mat-form-field>
                 <p class="f-12 l-18 text-primitive">Repeats every 6 months <br> on 8th day of the month</p>
             </div>
+        </div>
 
+        <div class="row pt-32" *ngIf="isRecurringTaskForm">
+            <div class="col-md-4 text-right">
+                <h5 class="m-0 roboto f-400 pt-12">Turn Around Time</h5>
+            </div>
 
+            <div class="col-md-4 form-group pl-0 mb-0">
+                <mat-form-field>
+                    <mat-select formControlName="taskTurnAroundTime" class="form-control">
+                        <mat-option *ngFor="let item of taskNumberArr" [value]="item">
+                            {{ 'T + ' + item }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>
+                        This field is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
         </div>
 
 
