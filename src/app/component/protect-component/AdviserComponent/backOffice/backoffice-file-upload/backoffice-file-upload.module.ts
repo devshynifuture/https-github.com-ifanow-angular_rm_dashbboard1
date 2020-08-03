@@ -1,3 +1,4 @@
+import { BackofficeFileUploadComponent } from './backoffice-file-upload.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -11,11 +12,11 @@ import { BackofficeFileUploadAumComponent } from './backoffice-file-upload-aum/b
   declarations: [adminRoutingComponents, BackofficeFileUploadAumComponent],
   imports: [
     CommonModule,
-    BackofficeFileUploadRoutingModule,
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    CustomDirectiveModule
+    CustomDirectiveModule,
+    BackofficeFileUploadRoutingModule,
   ]
 })
 export class BackofficeFileUploadModule { }
