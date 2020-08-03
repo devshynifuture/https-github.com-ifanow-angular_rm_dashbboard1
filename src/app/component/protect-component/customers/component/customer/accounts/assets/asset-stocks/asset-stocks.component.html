@@ -158,6 +158,25 @@
                         </div>
                     </div>
 
+                    <!-- ------ loader ----- -->
+                   
+                    <!-- <div class="col-md-8">
+                        <div class="relClass mb-10">
+                            <div class="bar" [ngClass]="{'height24': isLoading}">  </div>
+                        </div>
+                        <div class="relClass mb-10">
+                            <div class="bar" [ngClass]="{'height24': isLoading}">  </div>
+                        </div>
+                        <div class="relClass mb-10">
+                            <div class="bar" [ngClass]="{'height24': isLoading}">  </div>
+                        </div>
+                        <div class="relClass mb-10">
+                            <div class="bar" [ngClass]="{'height24': isLoading}">  </div>
+                        </div>
+                        <div class="relClass mb-10">
+                            <div class="bar" [ngClass]="{'height24': isLoading}">  </div>
+                        </div>
+                    </div> -->
 
 
 
@@ -319,22 +338,10 @@
                         </h5>
                     </div>
                 </div>
-                <!-- <div *ngFor="let singlePortfolioCategory of singlePortfolio.categoryWiseStockList">
-       <div class="col-md-12 p-0">
-         <div class="bg-white text-center">
-             <h5 class="m-0 wrapper-8 b-a bb-0 text-primary">{{singlePortfolioCategory.categoryName}} 
-             </h5>
-         </div>
-     </div>
-   </div> -->
+                
                 <div class="stock-overview" style="width:100% !important;">
                     <table [dataSource]="singlePortfolio.stockListGroup " mat-table id="table-low">
-                        <!-- <ng-container matColumnDef="static-header">
-        <td *matHeaderCellDef [attr.colspan]="displayedColumns25.length"
-            class=" text-center text-primary bg-white" mat-header-cell>
-          dasdasdasd
-        </td>
-      </ng-container>-->
+                       
                         <ng-container matColumnDef="groupHeader">
                             <td *matCellDef="let group" [attr.colspan]="displayedColumns25.length" class="text-center text-primary f-500">
                                 {{group.group}}</td>
@@ -493,6 +500,8 @@
                     </table>
                 </div>
 
+
+                
             </div>
 
         </div>
