@@ -17,6 +17,7 @@ import { SettingEntryModule } from '../../protect-component/AdviserComponent/set
 import { PeopleEntryModule } from '../../protect-component/PeopleComponent/people/people-entry-module';
 import { ActivitesEntryModule } from '../../protect-component/AdviserComponent/Activities/activites-entry.module';
 import { BackofficeAumReconciliationEntryModule } from '../../protect-component/AdviserComponent/backOffice/backoffice-aum-reconciliation/backoffice-aum-reconciliation.entry.module';
+import { BackofficeFolioMappingEntryModule } from '../../protect-component/AdviserComponent/backOffice/backoffice-folio-mapping/backoffice-folio-mapping.entry.module';
 import { MarketPlaceEntryModule } from '../../protect-component/Advisor-Marketplace/advisor-marketplace.entry.module';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MY_FORMATS2 } from '../../../constants/date-format.constant';
@@ -43,6 +44,7 @@ import { DashboardEntryModule } from '../../protect-component/AdviserComponent/d
     PeopleEntryModule,
     ActivitesEntryModule,
     BackofficeAumReconciliationEntryModule,
+    BackofficeFolioMappingEntryModule,
     MarketPlaceEntryModule,
     CustomDirectiveModule,
     DashboardEntryModule
