@@ -37,7 +37,7 @@
 
             <ng-container matColumnDef="schemeName">
               <th mat-header-cell *matHeaderCellDef> Scheme name  </th>
-              <td mat-cell *matCellDef="let element"> {{element.schemeName}} </td>
+              <td mat-cell (click)="openFolio()"  *matCellDef="let element"> {{element.schemeName}} </td>
             </ng-container>
           
             <!-- Name Column -->
