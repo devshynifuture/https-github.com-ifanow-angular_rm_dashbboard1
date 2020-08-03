@@ -82,6 +82,7 @@ export class MutualFundSummaryComponent implements OnInit {
   noMapping: boolean;
   isAdvisorSection: boolean;
   isClient: boolean;
+  toDate: any;
 
 
   @Input()
@@ -113,6 +114,9 @@ export class MutualFundSummaryComponent implements OnInit {
         let param1 = queryParamMap['params'];
         this.clientId = parseInt(param1.clientId)
         this.advisorId = parseInt(param1.advisorId)
+        //this.setDefaultFilterData.toDate = param1.toDate;
+        this.toDate = param1.toDate;
+        this.toDate = this.datePipe.transform(this.toDate, 'dd-MMM-yyyy');
         console.log('2423425', param1)
       }
       else {
@@ -662,7 +666,7 @@ export class MutualFundSummaryComponent implements OnInit {
       transactionPeriod: this.setDefaultFilterData.transactionPeriod,
       transactionPeriodCheck: this.setDefaultFilterData.transactionPeriodCheck,
       fromDate: this.setDefaultFilterData.fromDate,
-      toDate: this.setDefaultFilterData.toDate,
+      toDate: (this.setDefaultFilterData.toDate)?this.setDefaultFilterData.toDate:this.toDate,
       savedFilterData: this.savedFilterData,
       selectFilter: (this.saveFilterData) ? this.saveFilterData.selectFilter : null,
       // transactionTypeList:this.setDefaultFilterData.transactionTypeList

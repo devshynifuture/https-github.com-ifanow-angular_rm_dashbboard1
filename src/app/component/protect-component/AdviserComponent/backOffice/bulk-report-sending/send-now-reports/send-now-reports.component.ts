@@ -192,6 +192,9 @@ export class SendNowReportsComponent implements OnInit {
     if(flag == 'fromDate'){
       this.fromDate = date.value
       this.date.fromDate = this.fromDate
+    }else if(flag=='reportASOn'){
+      this.toDate = date.value
+      this.date.toDate = this.toDate
     } else {
       this.toDate = date.value
       this.date.toDate = this.toDate
