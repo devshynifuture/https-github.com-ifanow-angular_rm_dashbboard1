@@ -157,11 +157,31 @@
                             </div>
                         </div>
                     </div>
-                    <div class=" b-a p-0 height227 d-flex justify-content-center flex-column" [ngClass]="(categories.Banks && categories.Banks.currentValue != 0) || (categories.fmcg && categories.fmcg.currentValue != 0) || (categories.Auto_Ancillaries && categories.Auto_Ancillaries.currentValue != 0) || (categories.OTHERS && categories.OTHERS.currentValue != 0)?'col-md-8':'col-md-12'"
+
+                    
+                   
+                     <div *ngIf="isLoading" class="col-md-8 b-a ">
+                        <div class="relClass mt-28 mb-10">
+                            <div class="bar" [ngClass]="{'height24': isLoading}">  </div>
+                        </div>
+                        <div class="relClass mb-10">
+                            <div class="bar" [ngClass]="{'height24': isLoading}">  </div>
+                        </div>
+                        <div class="relClass mb-10">
+                            <div class="bar" [ngClass]="{'height24': isLoading}">  </div>
+                        </div>
+                        <div class="relClass mb-10">
+                            <div class="bar" [ngClass]="{'height24': isLoading}">  </div>
+                        </div>
+                        <div class="relClass mb-10">
+                            <div class="bar" [ngClass]="{'height24': isLoading}">  </div>
+                        </div>
+                    </div> 
+
+
+
+                    <div *ngIf="!isLoading" class=" b-a p-0 height227 d-flex justify-content-center flex-column" [ngClass]="(categories.Banks && categories.Banks.currentValue != 0) || (categories.fmcg && categories.fmcg.currentValue != 0) || (categories.Auto_Ancillaries && categories.Auto_Ancillaries.currentValue != 0) || (categories.OTHERS && categories.OTHERS.currentValue != 0)?'col-md-8':'col-md-12'"
                         [ngStyle]="{'border-left':(categories.Banks && categories.Banks.currentValue != 0) || (categories.fmcg && categories.fmcg.currentValue != 0) || (categories.Auto_Ancillaries && categories.Auto_Ancillaries.currentValue != 0) || (categories.OTHERS && categories.OTHERS.currentValue != 0)? 'none':''}">
-
-
-
                         <div class="row bb pt-10 pb-10" *ngIf="categories.Banks.perrcentage > 0">
                             <div class="col-md-1">
                                 <div class="hw-16 mt-2 bg-Banking"></div>
@@ -311,6 +331,7 @@
                     </div>
                 </div>
             </div>
+
             <div [hidden]="portfolioData==undefined" *ngFor="let singlePortfolio of portfolioData" class="row pt-12" style="width:100% !important;">
                 <div class="col-md-12 p-0">
                     <div class="bg-white">
@@ -318,22 +339,10 @@
                         </h5>
                     </div>
                 </div>
-                <!-- <div *ngFor="let singlePortfolioCategory of singlePortfolio.categoryWiseStockList">
-       <div class="col-md-12 p-0">
-         <div class="bg-white text-center">
-             <h5 class="m-0 wrapper-8 b-a bb-0 text-primary">{{singlePortfolioCategory.categoryName}} 
-             </h5>
-         </div>
-     </div>
-   </div> -->
+                
                 <div class="stock-overview" style="width:100% !important;">
                     <table [dataSource]="singlePortfolio.stockListGroup " mat-table id="table-low">
-                        <!-- <ng-container matColumnDef="static-header">
-        <td *matHeaderCellDef [attr.colspan]="displayedColumns25.length"
-            class=" text-center text-primary bg-white" mat-header-cell>
-          dasdasdasd
-        </td>
-      </ng-container>-->
+                       
                         <ng-container matColumnDef="groupHeader">
                             <td *matCellDef="let group" [attr.colspan]="displayedColumns25.length" class="text-center text-primary f-500">
                                 {{group.group}}</td>
@@ -492,6 +501,8 @@
                     </table>
                 </div>
 
+
+                
             </div>
 
         </div>
