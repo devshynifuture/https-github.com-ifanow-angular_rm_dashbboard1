@@ -158,10 +158,10 @@
                         </div>
                     </div>
 
-                    <!-- ------ loader ----- -->
+                    
                    
-                    <!-- <div class="col-md-8">
-                        <div class="relClass mb-10">
+                     <div *ngIf="isLoading" class="col-md-8 b-a ">
+                        <div class="relClass mt-28 mb-10">
                             <div class="bar" [ngClass]="{'height24': isLoading}">  </div>
                         </div>
                         <div class="relClass mb-10">
@@ -176,11 +176,11 @@
                         <div class="relClass mb-10">
                             <div class="bar" [ngClass]="{'height24': isLoading}">  </div>
                         </div>
-                    </div> -->
+                    </div> 
 
 
 
-                    <div class=" b-a p-0 height227 d-flex justify-content-center flex-column" [ngClass]="(categories.Banks && categories.Banks.currentValue != 0) || (categories.fmcg && categories.fmcg.currentValue != 0) || (categories.Auto_Ancillaries && categories.Auto_Ancillaries.currentValue != 0) || (categories.OTHERS && categories.OTHERS.currentValue != 0)?'col-md-8':'col-md-12'"
+                    <div *ngIf="!isLoading" class=" b-a p-0 height227 d-flex justify-content-center flex-column" [ngClass]="(categories.Banks && categories.Banks.currentValue != 0) || (categories.fmcg && categories.fmcg.currentValue != 0) || (categories.Auto_Ancillaries && categories.Auto_Ancillaries.currentValue != 0) || (categories.OTHERS && categories.OTHERS.currentValue != 0)?'col-md-8':'col-md-12'"
                         [ngStyle]="{'border-left':(categories.Banks && categories.Banks.currentValue != 0) || (categories.fmcg && categories.fmcg.currentValue != 0) || (categories.Auto_Ancillaries && categories.Auto_Ancillaries.currentValue != 0) || (categories.OTHERS && categories.OTHERS.currentValue != 0)? 'none':''}">
                         <div class="row bb pt-10 pb-10" *ngIf="categories.Banks.perrcentage > 0">
                             <div class="col-md-1">
@@ -331,6 +331,7 @@
                     </div>
                 </div>
             </div>
+
             <div [hidden]="portfolioData==undefined" *ngFor="let singlePortfolio of portfolioData" class="row pt-12" style="width:100% !important;">
                 <div class="col-md-12 p-0">
                     <div class="bg-white">

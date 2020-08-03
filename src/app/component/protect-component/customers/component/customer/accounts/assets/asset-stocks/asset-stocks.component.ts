@@ -45,6 +45,7 @@ export class AssetStocksComponent implements OnInit {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getStocksData();
+    this.isLoading = true;
   }
 
   pieChart(id) {
