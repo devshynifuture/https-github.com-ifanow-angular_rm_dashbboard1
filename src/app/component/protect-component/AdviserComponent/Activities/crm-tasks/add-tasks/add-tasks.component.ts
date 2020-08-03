@@ -153,10 +153,11 @@ export class AddTasksComponent implements OnInit {
         searchTemplateList: [data.taskTemplateId,],
         searchClientList: [data.displayName, Validators.required],
         assignedTo: [data.assignedTo, Validators.required],
-        taskDueDate: [moment(data.dueDateTimeStamp), Validators.required],
+        taskDueDate: [moment(data.dueDateTimeStamp),],
         taskDescription: [data.des, Validators.required],
         familyMemberId: [data.familyMemberId,],
         subTask: this.fb.array([]),
+        taskTurnAroundTime: [,],
         continuesTill: [,],
         isRecurring: [,],
         frequency: [,],
@@ -175,10 +176,11 @@ export class AddTasksComponent implements OnInit {
         searchTemplateList: [,],
         searchClientList: [, Validators.required],
         assignedTo: [, Validators.required],
-        taskDueDate: [, Validators.required],
+        taskDueDate: [,],
         taskDescription: [, Validators.required],
         familyMemberId: [,],
         subTask: this.fb.array([]),
+        taskTurnAroundTime: [,],
         continuesTill: [,],
         isRecurring: [,],
         frequency: [,],
@@ -630,6 +632,7 @@ export class AddTasksComponent implements OnInit {
 
   setRecurringFreq(item) {
     this.recurringTaskFreqId = item.id;
+
   }
 
   onAddingCollaborator(data) {
@@ -699,6 +702,14 @@ export class AddTasksComponent implements OnInit {
 
   formValidationOfTaskForm() {
     if (this.addTaskForm.valid) {
+      if (!this.isRecurringTaskForm) {
+        if (this.addTaskForm.get('dueDate').value == null) {
+          this.addTaskForm.get('dueDate').setValidators([Validators.required]);
+          this.addTaskForm.get('dueDate').markAsTouched();
+        } else {
+          this.addTaskForm.get('dueDate').setErrors(null);
+        }
+      }
       this.onCreateTask();
     } else {
       this.addTaskForm.markAllAsTouched();
@@ -769,7 +780,6 @@ export class AddTasksComponent implements OnInit {
         assignedTo: this.addTaskForm.get('assignedTo').value,
         description: this.addTaskForm.get('taskDescription').value,
         familyMemberId: this.addTaskForm.get('familyMemberId').value,
-        dueDate: this.addTaskForm.get('taskDueDate').value.format("YYYY-MM-DD"),
         taskTemplateId: this.selectedTemplate !== null ? this.selectedTemplate.id : 0,
         categoryId: this.selectedTemplate !== null ? this.selectedTemplate.categoryId : 0,
         subCategoryId: this.selectedTemplate !== null ? this.selectedTemplate.subcategoryId : 0,
@@ -779,11 +789,12 @@ export class AddTasksComponent implements OnInit {
       }
       if (this.isRecurringTaskForm) {
         data['isRecurring'] = true;
-        data['frequency'] = this.recurringTaskFreqId;
+        data['frequency'] = this.addTaskForm.get('frequency').value;
         data['continuesTill'] = this.addTaskForm.get('continuesTill').value.format("YYYY-MM-DD");
-        if (this.recurringTaskFreqId === 1) {
-          data['every'] = 1;
-        }
+        data['taskTurnAroundTime'] = this.addTaskForm.get('taskTurnAroundTime').value;
+        data['every'] = this.addTaskForm.get('every').value;
+      } else {
+        data['dueDate'] = this.addTaskForm.get('taskDueDate').value.format("YYYY-MM-DD");
       }
       console.log("this is add task create data", data);
       this.crmTaskService.addTask(data)
