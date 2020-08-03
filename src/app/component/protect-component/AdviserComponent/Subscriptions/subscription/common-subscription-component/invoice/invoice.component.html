@@ -28,7 +28,7 @@
             </div>
         </div>
         <div class="row pb-28">
-            <div class="col-md-4 p-0 max-height-100">
+            <div class="col-md-4 sticky-top p-0 max-height-100">
                 <div (click)="passInvoice(strData,i,$event)" *ngFor="let strData of dataInvoices let i=index" [ngClass]="(strData.id==storeData.id)?'bg-grey lter':'b-b'" class="invoiceSpacing b-b c-p">
                     <div class="row">
                         <div class="col-md-8 pl-0">
@@ -59,6 +59,8 @@
                         </div>
                     </div>
                 </div>
+
+
             </div>
             <div class="col-md-8 p-0 bl-1 ">
                 <div *ngIf="showRecord==false && feeCalc==false" class="row pt-16 pb-16">
@@ -145,16 +147,18 @@
                                             </td>
 
                                             <td style="text-align: right;">
-                                                <span style="color: #008FFF; font-size: 36px;">
-                                                    <span *ngIf="storeData.status==0">UNPAID</span>
-                                                <span *ngIf="storeData.status==1">PAID</span>
-                                                <span *ngIf="storeData.status==2">OVERDUE</span>
-                                                <span *ngIf="storeData.status==3">PARTIALLY
+                                                <!-- style="color: #008FFF; font-size: 36px;" -->
+                                                <span style="font-size: 36px;">
+                                                    <span *ngIf="storeData.status==0" class="text-primary t-10 f-500 c-p">UNPAID</span>
+                                                <span *ngIf="storeData.status==1" class="text-success t-10 f-500 c-p">PAID</span>
+                                                <span *ngIf="storeData.status==2"  class="text-danger t-10 f-500 c-p">OVERDUE</span>
+                                                <span *ngIf="storeData.status==3" class="text-warning t-10 f-500 c-p">PARTIALLY
                                                         PAID</span>
-                                                <span *ngIf="storeData.status==4">SENT</span>
-                                                <span *ngIf="storeData.status==5">VOID</span>
-                                                <span *ngIf="storeData.status==6">WRITE OFF</span>
+                                                <span *ngIf="storeData.status==4" class="text-primary t-10 f-500 c-p">SENT</span>
+                                                <span *ngIf="storeData.status==5" class="text-lighter t-10 f-500 c-p">VOID</span>
+                                                <span *ngIf="storeData.status==6" class="text-balck t-10 f-500 c-p">WRITE OFF</span>
                                                 </span>
+                                               
                                             </td>
                                         </tr>
                                     </table>
@@ -237,7 +241,7 @@
                                                 Balance due
                                             </td>
                                             <td style="border-top: 1px solid #dee5e7; text-align: right; font-weight: 500; padding: 8px; border-bottom: 1px solid #dee5e7;font-size: 14px; ">
-                                                <span>&#8377;</span><span [value]="storeData.finalAmount" appFormatNumber>{{formatter(storeData.finalAmount)}}</span> </td>
+                                                <span>&#8377;</span><span [value]="storeData.balanceDue == 0 ? '0' : storeData.balanceDue ? storeData.balanceDue : '-'" appFormatNumber>{{storeData.balanceDue == 0 ? '0' : storeData.balanceDue  ? storeData.balanceDue :'-'}}</span> </td>
                                         </tr>
                                     </table>
                                 </td>
@@ -245,9 +249,16 @@
 
                             <tr>
                                 <td colspan="2">
-                                    <hr style="border: 0.5px solid #dee5e7; margin-left: 10px;
-                                    margin-right: 10px;
-                                    margin-top: 30px;">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <hr style="border: 0.5px solid #dee5e7; margin-left: 10px;
+                                                    margin-right: 10px;
+                                                    margin-top: 30px;">
+                                            </td>
+                                        </tr>
+                                    </table>
+
                                 </td>
                             </tr>
 
@@ -338,15 +349,15 @@
                                             </td>
 
                                             <td style="text-align: right;">
-                                                <span style="color: #008FFF; font-size: 36px;">
-                                                    <span *ngIf="storeData.status==0">UNPAID</span>
-                                                <span *ngIf="storeData.status==1">PAID</span>
-                                                <span *ngIf="storeData.status==2">OVERDUE</span>
-                                                <span *ngIf="storeData.status==3">PARTIALLY
+                                                <span style="font-size: 36px;">
+                                                    <span *ngIf="storeData.status==0" class="text-primary t-10 f-500 c-p">UNPAID</span>
+                                                <span *ngIf="storeData.status==1" class="text-success t-10 f-500 c-p">PAID</span>
+                                                <span *ngIf="storeData.status==2"  class="text-danger t-10 f-500 c-p">OVERDUE</span>
+                                                <span *ngIf="storeData.status==3" class="text-warning t-10 f-500 c-p">PARTIALLY
                                                         PAID</span>
-                                                <span *ngIf="storeData.status==4">SENT</span>
-                                                <span *ngIf="storeData.status==5">VOID</span>
-                                                <span *ngIf="storeData.status==6">WRITE OFF</span>
+                                                <span *ngIf="storeData.status==4" class="text-primary t-10 f-500 c-p">SENT</span>
+                                                <span *ngIf="storeData.status==5" class="text-lighter t-10 f-500 c-p">VOID</span>
+                                                <span *ngIf="storeData.status==6" class="text-balck t-10 f-500 c-p">WRITE OFF</span>
                                                 </span>
                                             </td>
                                         </tr>
@@ -430,7 +441,7 @@
                                                 Balance due
                                             </td>
                                             <td style="border-top: 1px solid #dee5e7; text-align: right; font-weight: 500; padding: 8px; border-bottom: 1px solid #dee5e7;font-size: 14px; ">
-                                                <span>&#8377;</span><span [value]="storeData.finalAmount" appFormatNumber>{{formatter(storeData.finalAmount)}}</span> </td>
+                                                <span>&#8377;</span><span [value]="storeData.balanceDue == 0 ? '0' : storeData.balanceDue  ? storeData.balanceDue :'-'" appFormatNumber>{{storeData.balanceDue == 0 ? '0' : storeData.balanceDue  ? storeData.balanceDue : '-'}}</span> </td>
                                         </tr>
                                     </table>
                                 </td>
@@ -640,15 +651,15 @@
                                 </td>
 
                                 <td style="text-align: right;">
-                                    <span style="color: #008FFF; font-size: 36px;">
-                                        <span *ngIf="storeData.status==0">UNPAID</span>
-                                    <span *ngIf="storeData.status==1">PAID</span>
-                                    <span *ngIf="storeData.status==2">OVERDUE</span>
-                                    <span *ngIf="storeData.status==3">PARTIALLY
+                                    <span style="font-size: 36px;">
+                                        <span *ngIf="storeData.status==0" class="text-primary t-10 f-500 c-p">UNPAID</span>
+                                    <span *ngIf="storeData.status==1" class="text-success t-10 f-500 c-p">PAID</span>
+                                    <span *ngIf="storeData.status==2"  class="text-danger t-10 f-500 c-p">OVERDUE</span>
+                                    <span *ngIf="storeData.status==3" class="text-warning t-10 f-500 c-p">PARTIALLY
                                             PAID</span>
-                                    <span *ngIf="storeData.status==4">SENT</span>
-                                    <span *ngIf="storeData.status==5">VOID</span>
-                                    <span *ngIf="storeData.status==6">WRITE OFF</span>
+                                    <span *ngIf="storeData.status==4" class="text-primary t-10 f-500 c-p">SENT</span>
+                                    <span *ngIf="storeData.status==5" class="text-lighter t-10 f-500 c-p">VOID</span>
+                                    <span *ngIf="storeData.status==6" class="text-balck t-10 f-500 c-p">WRITE OFF</span>
                                     </span>
                                 </td>
                             </tr>
@@ -728,33 +739,49 @@
                                     Balance due
                                 </td>
                                 <td style="border-top: 1px solid #dee5e7; text-align: right; font-weight: 500; padding: 8px; border-bottom: 1px solid #dee5e7;font-size: 14px; ">
-                                    <span>&#8377;</span><span [value]="storeData.finalAmount" appFormatNumber>{{formatter(storeData.finalAmount)}}</span> </td>
+                                    <span>&#8377;</span><span [value]="storeData.balanceDue == 0 ? '0' : storeData.balanceDue ? storeData.balanceDue :'-'" appFormatNumber>{{storeData.balanceDue == 0 ? '0' : storeData.balanceDue ? storeData.balanceDue :'-'}}</span> </td>
                             </tr>
                         </table>
                     </td>
+                </tr>
 
-                    <tr>
-                        <td>
-                            <table style="width: 100%; margin-bottom: 15px; margin-top: 10px;">
-                                <tr>
-                                    <td style="padding-left: 10px;">
-                                        <h4 style="margin: 0px; font-weight:normal; font-size: 14px;"> Footnote description
-                                        </h4>
-                                        <p style="margin: 0px; font-size: 12px;"> {{storeData.footnote}}</p>
-                                    </td>
-                                </tr>
+                <tr>
+                    <td colspan="2">
+                        <table>
+                            <tr>
+                                <td>
+                                    <hr style="border: 0.5px solid #dee5e7; margin-left: 10px;
+                                            margin-right: 10px;
+                                            margin-top: 30px;">
+                                </td>
+                            </tr>
+                        </table>
 
-                                <tr>
-                                    <td style="padding-left: 10px; padding-top: 10px;">
-                                        <h4 style="margin: 0px; font-weight:normal; font-size: 14px;"> Terms & conditions
-                                        </h4>
-                                        <p style="margin: 0px; font-size: 12px;"> {{storeData.terms}}</p>
-                                    </td>
-                                </tr>
+                    </td>
+                </tr>
 
-                            </table>
-                        </td>
-                    </tr>
+                <tr>
+                    <td>
+                        <table style="width: 100%; margin-bottom: 15px; margin-top: 10px;">
+                            <tr>
+                                <td style="padding-left: 10px;">
+                                    <h4 style="margin: 0px; font-weight:normal; font-size: 14px;"> Footnote description
+                                    </h4>
+                                    <p style="margin: 0px; font-size: 12px;"> {{storeData.footnote}}</p>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style="padding-left: 10px; padding-top: 10px;">
+                                    <h4 style="margin: 0px; font-weight:normal; font-size: 14px;"> Terms & conditions
+                                    </h4>
+                                    <p style="margin: 0px; font-size: 12px;"> {{storeData.terms}}</p>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </td>
+                </tr>
             </table>
 
             <div *ngIf="storeData.feeCalculation" class="mt-10 vaibahv">

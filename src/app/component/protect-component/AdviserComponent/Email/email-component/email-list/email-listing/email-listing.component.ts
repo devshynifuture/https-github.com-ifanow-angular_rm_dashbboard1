@@ -143,11 +143,11 @@ export class EmailListingComponent implements OnInit {
     this.paginatorSubscription = this.emailService.getProfile()
       .subscribe(response => {
         if (!response) {
-          this.isLoading = false;
           this.eventService.openSnackBar("You must connect your gmail account", "Dismiss");
           if (localStorage.getItem('successStoringToken')) {
             localStorage.removeItem('successStoringToken');
           }
+          this.isLoading = false;
           this.router.navigate(['google-connect'], { relativeTo: this.activatedRoute });
         } else {
           // this.paginatorLength = response.threadsTotal;
@@ -371,7 +371,7 @@ export class EmailListingComponent implements OnInit {
     this.showPrevPaginationBtn = false;
 
     if (data === 'INBOX') {
-      data = 'IMPORTANT';
+      data = 'INBOX';
     }
 
     let clientData;
@@ -392,6 +392,8 @@ export class EmailListingComponent implements OnInit {
         queryParams = `{ in:draft } { (from to): ${receiverEmail} }`
       } else if (this.location === 'trash') {
         queryParams = `{ in:trash } { (from to): ${receiverEmail} }`
+      } else if (this.location === 'inbox') {
+        queryParams = `[ in:inbox -category:{social promotions updates forums} ]`
       } else {
         queryParams = `{ (from to): ${receiverEmail} }`;
       }
@@ -403,14 +405,19 @@ export class EmailListingComponent implements OnInit {
         q: queryParams
       }
     } else {
+      let queryParams;
       data = {
         labelIds: data,
         pageToken: (page == 'next') ? (this.nextPageToken ? this.nextPageToken : '') : '',
         maxResults: 50
       }
+      if (this.location === 'inbox') {
+        queryParams = `[ in:inbox -category:{social promotions forums} ]`
+        data.q = queryParams
+      }
     }
     // console.log("this is query parameters: ", encodeURIComponent(queryParams));
-
+    console.log("this is some data that im sending", data);
     this.listSubscription = this.emailService.getMailInboxList(data)
       .subscribe(responseData => {
         if (responseData) {

@@ -38,7 +38,7 @@ export class GoogleConnectDialogComponent {
         this.router.navigate(['/admin/dashboard'], { relativeTo: this.activatedRoute });
       }
       else if(this.connect == 'calendar'){
-        this.router.navigate(['/admin/activies/month'], { relativeTo: this.activatedRoute });
+        this.router.navigate(['/admin/activies/calendar/month'], { relativeTo: this.activatedRoute });
       }
       else{
         this.router.navigate(['/admin/emails/inbox'], { relativeTo: this.activatedRoute });

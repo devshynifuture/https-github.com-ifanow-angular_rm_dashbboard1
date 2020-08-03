@@ -326,7 +326,8 @@ export class CreateSubscriptionComponent implements OnInit {
           billEvery: (this.serviceData.billingNature == '2') ? 0 : this.serviceData.billEvery,
           billingCycle: (this.serviceData.billingNature == '2') ? 0 : this.serviceData.billingCycle,
           billingMode: this.serviceData.billingMode,
-          billingNature: (this.serviceData.billingNature == '2') ? 0 : this.serviceData.billingNature,
+          // billingNature: (this.serviceData.billingNature == '2') ? 0 : this.serviceData.billingNature,
+          billingNature:this.serviceData.billingNature,
           feeTypeId: this.serviceData.feeTypeId,
           subscriptionAssetPricingList: [
             {

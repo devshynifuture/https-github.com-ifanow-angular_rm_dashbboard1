@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter} from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { AddAssetStocksComponent } from './add-asset-stocks/add-asset-stocks.component';
@@ -20,18 +20,21 @@ import { StockDetailsViewComponent } from '../stock-details-view/stock-details-v
 })
 export class AssetStocksComponent implements OnInit {
   displayedColumns25 = ['scrip', 'amt', 'cvalue', 'gain', 'bal', 'price', 'mprice', 'ret',
-     'dividend', 'icons'];
+    'dividend', 'icons'];
 
   footerColumns = ['scrip', /*'owner', 'bal', 'price', 'mprice',*/ 'amt', 'cvalue', 'gain', 'ret',
-     'dividend', 'icons'];
+    'dividend', 'icons'];
   dataSource25 = ELEMENT_DATA25;
   advisorId: any;
   clientId: any;
   assetStockData: any;
-  portfolioData: any=[];
+  portfolioData: any = [];
   isLoading = true;
   noData: string;
-  
+
+  // build issue
+  data;
+
   constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject,
     private cusService: CustomerService, private eventService: EventService) {
   }
@@ -52,7 +55,7 @@ export class AssetStocksComponent implements OnInit {
   @Output() changeCount = new EventEmitter();
   getStocksData() {
     this.isLoading = true;
-    this.portfolioData.stockListGroup = [{},{},{}]
+    this.portfolioData.stockListGroup = [{}, {}, {}]
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId
@@ -74,74 +77,74 @@ export class AssetStocksComponent implements OnInit {
     );
   }
 
-  categories:any={
-    Banks:{},
-    fmcg:{},
-    Auto_Ancillaries:{},
-    OTHERS:{},
-    Information_Technology:{}
+  categories: any = {
+    Banks: {},
+    fmcg: {},
+    Auto_Ancillaries: {},
+    OTHERS: {},
+    Information_Technology: {}
   };
-  grandTotalUnrealizedGainLoss:any;
-  grandTotalAmountInvested:any;
-  grandTotalCurrentValue:any;
-  stockListGroup:any = [];
-  gain:boolean = true;
+  grandTotalUnrealizedGainLoss: any;
+  grandTotalAmountInvested: any;
+  grandTotalCurrentValue: any;
+  stockListGroup: any = [];
+  gain: boolean = true;
   getStocksDataRes(data) {
     console.log('AssetStockComponent getStocksDataRes data : ', data);
-    if(data){
-      this.categories.Banks = data.categories.Banks?data.categories.Banks:{currentValue:0,perrcentage:0};
-      this.categories.fmcg = data.categories.fmcg?data.categories.fmcg:{currentValue:0,perrcentage:0};
-      this.categories.Auto_Ancillaries = data.categories.Auto_Ancillaries?data.categories.Auto_Ancillaries:{currentValue:0,perrcentage:0};
-      this.categories.OTHERS = data.categories.OTHERS?data.categories.OTHERS:{currentValue:0,perrcentage:0};
-      this.categories.Information_Technology = data.categories.Information_Technology?data.categories.Information_Technology:{currentValue:0,perrcentage:0};
-      this.categories.OTHERS.perrcentage = data.categories.OTHERS.currentValue == 0? 0 :data.categories.OTHERS.perrcentage;
-      
+    if (data) {
+      this.categories.Banks = data.categories.Banks ? data.categories.Banks : { currentValue: 0, perrcentage: 0 };
+      this.categories.fmcg = data.categories.fmcg ? data.categories.fmcg : { currentValue: 0, perrcentage: 0 };
+      this.categories.Auto_Ancillaries = data.categories.Auto_Ancillaries ? data.categories.Auto_Ancillaries : { currentValue: 0, perrcentage: 0 };
+      this.categories.OTHERS = data.categories.OTHERS ? data.categories.OTHERS : { currentValue: 0, perrcentage: 0 };
+      this.categories.Information_Technology = data.categories.Information_Technology ? data.categories.Information_Technology : { currentValue: 0, perrcentage: 0 };
+      this.categories.OTHERS.perrcentage = data.categories.OTHERS.currentValue == 0 ? 0 : data.categories.OTHERS.perrcentage;
+
     }
-    if(data.emptyPortfolioList.length > 0){
-      let deleteArr=[]
-     data.emptyPortfolioList.forEach(ep => {
-       deleteArr.push(ep.id)
-     });
-     this.cusService.deletePortfolio(deleteArr).subscribe(data => {
-       console.log("emty porfolio deleted");
-     },
-     error => this.eventService.showErrorMessage(error)
-     )
-   }
+    if (data.emptyPortfolioList.length > 0) {
+      let deleteArr = []
+      data.emptyPortfolioList.forEach(ep => {
+        deleteArr.push(ep.id)
+      });
+      this.cusService.deletePortfolio(deleteArr).subscribe(data => {
+        console.log("emty porfolio deleted");
+      },
+        error => this.eventService.showErrorMessage(error)
+      )
+    }
     if (data.portfolios.length != 0) {
       this.isLoading = false;
       this.assetStockData = data;
       this.portfolioData = data.portfolios;
-     this.grandTotalUnrealizedGainLoss = data.grandTotalUnrealizedGainLoss;
-     this.grandTotalAmountInvested = data.grandTotalAmountInvested;
-     this.grandTotalCurrentValue = data.grandTotalCurrentValue;
-     if(Math.sign(this.grandTotalUnrealizedGainLoss) == 1){
-      this.gain = true;
-     }
-     else{
-      this.gain = false;
-     }
-     
+      this.grandTotalUnrealizedGainLoss = data.grandTotalUnrealizedGainLoss;
+      this.grandTotalAmountInvested = data.grandTotalAmountInvested;
+      this.grandTotalCurrentValue = data.grandTotalCurrentValue;
+      if (Math.sign(this.grandTotalUnrealizedGainLoss) == 1) {
+        this.gain = true;
+      }
+      else {
+        this.gain = false;
+      }
+
       this.portfolioData.forEach(p => {
-        
+
         p.categoryWiseStockList.forEach((s, i) => {
           for (let index = 0; index < s.stockList.length; index++) {
-              if(index == 0 && s.categoryName){
-                this.stockListGroup.push({group:s.categoryName});
-              }
-              if(s.stockListForEditView){
-                s.stockList[index]['stockListForEditView'] = s.stockListForEditView;
-              }
-              this.stockListGroup.push(s.stockList[index]);
+            if (index == 0 && s.categoryName) {
+              this.stockListGroup.push({ group: s.categoryName });
             }
+            if (s.stockListForEditView) {
+              s.stockList[index]['stockListForEditView'] = s.stockListForEditView;
+            }
+            this.stockListGroup.push(s.stockList[index]);
+          }
         });
         p['stockListGroup'] = this.stockListGroup;
         this.stockListGroup = [];
       });
-      console.log(this.portfolioData,"this.portfolioData 123");
-      
+      console.log(this.portfolioData, "this.portfolioData 123");
+
     } else {
-      this.portfolioData = []; 
+      this.portfolioData = [];
       this.noData = 'No Stocks Found';
       this.isLoading = false;
     }
@@ -196,18 +199,18 @@ export class AssetStocksComponent implements OnInit {
   }
 
   deleteModal(value, data) {
-   let deleteArry = []
-    if(data.stockListForEditView){
-      if(data.stockListForEditView.length > 0){
-      data.stockListForEditView.forEach(d => {
-        deleteArry.push(d.id);
-      });
+    let deleteArry = []
+    if (data.stockListForEditView) {
+      if (data.stockListForEditView.length > 0) {
+        data.stockListForEditView.forEach(d => {
+          deleteArry.push(d.id);
+        });
       }
     }
-    else{
+    else {
       deleteArry.push(data.id);
     }
-    
+
     const dialogData = {
       data: value,
       header: 'DELETE',

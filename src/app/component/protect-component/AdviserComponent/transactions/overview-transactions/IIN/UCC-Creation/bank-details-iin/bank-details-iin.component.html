@@ -1,145 +1,136 @@
 <div class="dialogclose">
-  <div class="row popup-header-fix-100">
-    <div class="col-md-2 border-right-1 p-0">
-      <img class="imgAdLogo" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
-    </div>
-    <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
+    <div class="row popup-header-fix-100">
+        <div class="col-md-2 border-right-1 p-0">
+            <img class="imgAdLogo" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
+        </div>
+        <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
 
-      <p class="f-16 mb-0">
-        Investment onboarding - IIN/UCC
-      </p>
-    </div>
-    <!-- (click)="dialogClose()" for prod build  -->
-    <div class="col-md-2 text-right">
-      <i (click)="close();" class="material-icons pt-16 c-p pr-16">
+            <p class="f-16 mb-0">
+                Investment onboarding - IIN/UCC
+            </p>
+        </div>
+        <!-- (click)="dialogClose()" for prod build  -->
+        <div class="col-md-2 text-right">
+            <i (click)="close();" class="material-icons pt-16 c-p pr-16">
         clear
       </i>
+        </div>
     </div>
-  </div>
 </div>
 
 <div class="pt-60 mb-100" [formGroup]="bankDetailsForm">
-  <div class="row">
-    <app-left-side-inn-ucc-list [data]='doneData'></app-left-side-inn-ucc-list>
-    <div class="col-md-7 offset-2 p-0 bl-1 ">
-      <div class="p-20">
-        <h3 class="f-18 mb-28 f-600">Bank details #1</h3>
-        <div *ngIf="bankList.length > 1" class="row">
-          <div class="col-md-4 pr-0  d-flex align-items-center justify-content-end ">
-            <h5 class="m-0 ">Select bank account</h5>
-          </div>
-          <div class="col-md-5 form-group">
-            <mat-form-field>
-              <mat-select class="form-control" formControlName="bankACNo" matInput>
-                <mat-option disabled value=''>Select bank account</mat-option>
-                <mat-option (click)="selectedBank(option)" *ngFor="let option of bankList ;index as i"
-                  [value]="option.bankACNo">
-                  {{option.bankACNo}}</mat-option>
-              </mat-select>
-              <mat-error>This field is required
-              </mat-error>
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="row pt-20">
-          <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
-            <h3 class="f-16 m-0"> IFSC code </h3>
-          </div>
-          <div class="col-md-3 form-group">
+    <div class="row">
+        <app-left-side-inn-ucc-list [data]='doneData'></app-left-side-inn-ucc-list>
+        <div class="col-md-7 offset-2 p-0 bl-1 ">
+            <div class="p-20">
+                <h3 class="f-18 mb-28 f-600">Bank details #1</h3>
+                <div *ngIf="bankList.length > 1" class="row">
+                    <div class="col-md-4 pr-0  d-flex align-items-center justify-content-end ">
+                        <h5 class="m-0 ">Select bank account</h5>
+                    </div>
+                    <div class="col-md-5 form-group">
+                        <mat-form-field>
+                            <mat-select class="form-control" formControlName="bankACNo" matInput>
+                                <mat-option disabled value=''>Select bank account</mat-option>
+                                <mat-option (click)="selectedBank(option)" *ngFor="let option of bankList ;index as i" [value]="option.bankACNo">
+                                    {{option.bankACNo}}</mat-option>
+                            </mat-select>
+                            <mat-error>This field is required
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row pt-20">
+                    <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
+                        <h3 class="f-16 m-0"> IFSC code </h3>
+                    </div>
+                    <div class="col-md-3 form-group">
 
-            <mat-form-field appearance="standard" floatLabel="never">
-              <input #ifcCode (input)="toUpperCase(bankDetailsForm.get('ifscCode'),$event)"
-                [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="11" appInputValueValidation
-                autocomplete="off" class="form-control" formControlName="ifscCode" matInput placeholder="Enter IFSC   ">
-              <mat-hint align="end" class="">{{ifcCode.value.length}}/11</mat-hint>
-              <mat-error *ngIf="bankDetailsForm.get('ifscCode').errors?.required">This field is required
-              </mat-error>
-              <mat-error *ngIf="bankDetailsForm.get('ifscCode').errors?.invalidIfsc">Ifsc code invalid
-              </mat-error>
-            </mat-form-field>
-          </div>
-        </div>
+                        <mat-form-field appearance="standard" floatLabel="never">
+                            <input #ifcCode (input)="toUpperCase(bankDetailsForm.get('ifscCode'),$event)" [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="11" appInputValueValidation autocomplete="off" class="form-control" formControlName="ifscCode" matInput placeholder="Enter IFSC   ">
+                            <mat-hint align="end" class="">{{ifcCode.value.length}}/11</mat-hint>
+                            <mat-error *ngIf="bankDetailsForm.get('ifscCode').errors?.required">This field is required
+                            </mat-error>
+                            <mat-error *ngIf="bankDetailsForm.get('ifscCode').errors?.invalidIfsc">Ifsc code invalid
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
 
-        <div class="row pt-20">
-          <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
-            <h3 class="f-16 m-0"> Bank name </h3>
-          </div>
-          <div class="col-md-5 form-group">
-            <mat-form-field appearance="standard" floatLabel="never">
-              <input [inputValidator]="validatorType.TEXT_ONLY" [maxlength]="30" appInputValueValidation
-                class="form-control" formControlName="bankName" matInput placeholder="Ente Bank name" type="text">
-              <mat-error class="">This field is required</mat-error>
-            </mat-form-field>
-          </div>
-        </div>
+                <div class="row pt-20">
+                    <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
+                        <h3 class="f-16 m-0"> Bank name </h3>
+                    </div>
+                    <div class="col-md-5 form-group">
+                        <mat-form-field appearance="standard" floatLabel="never">
+                            <input [inputValidator]="validatorType.TEXT_ONLY" [maxlength]="30" appInputValueValidation class="form-control" formControlName="bankName" matInput placeholder="Ente Bank name" type="text">
+                            <mat-error class="">This field is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
 
-        <div class="row pt-20">
-          <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
-            <h3 class="f-16   m-0">MICR code</h3>
-          </div>
-          <div class="col-md-3 form-group">
-            <mat-form-field appearance="standard" floatLabel="never">
-              <input #micrNo [inputValidator]="validatorType.ALPHA_NUMERIC" [maxlength]="9" appInputValueValidation
-                class="form-control" formControlName="micrNo" matInput placeholder="Enter MICR code" type="text">
-              <mat-error class="">This field is required</mat-error>
-              <mat-hint align="end" class=" text-custom">
-                {{micrNo.value.length}} / 9
-              </mat-hint>
-            </mat-form-field>
-          </div>
+                <div class="row pt-20">
+                    <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
+                        <h3 class="f-16   m-0">MICR code</h3>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <mat-form-field appearance="standard" floatLabel="never">
+                            <input #micrNo [inputValidator]="validatorType.ALPHA_NUMERIC" [maxlength]="9" appInputValueValidation class="form-control" formControlName="micrNo" matInput placeholder="Enter MICR code" type="text">
+                            <mat-error class="">This field is required</mat-error>
+                            <mat-hint align="end" class=" text-custom">
+                                {{micrNo.value.length}} / 9
+                            </mat-hint>
+                        </mat-form-field>
+                    </div>
 
-        </div>
+                </div>
 
-        <div class="row pt-20">
-          <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
-            <h3 class="f-16 m-0"> Account number</h3>
-          </div>
-          <div class="col-md-5 form-group">
-            <mat-form-field appearance="standard" floatLabel="never">
-              <input #accountNumber [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="18" [maxlength]="16"
-                appInputValueValidation class="form-control" formControlName="accountNumber" matInput
-                placeholder="Enter Account number" type="text">
-              <mat-error class="">This field is required</mat-error>
-              <mat-hint align="end" class=" text-custom">
-                {{accountNumber.value.length}} / 18
-              </mat-hint>
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="row pt-32">
-          <div class="col-md-4 text-right pr-0">
-            <h3 class="f-16 mt-16 mb-0">Account type</h3>
-          </div>
-          <div class="col-md-5 ">
-            <div class="form-group helperBoxText mb-10">
-              <mat-form-field appearance="standard" floatLabel="never">
-                <mat-select class="form-control" formControlName="accountType">
-                  <mat-option disabled value=''>Select payment mode</mat-option>
-                  <mat-option *ngFor="let account of accountTypes" [value]="account.id"> {{account.name}}</mat-option>
-                </mat-select>
-                <mat-error class="f-12">This field is required</mat-error>
-              </mat-form-field>
-            </div>
-            <p class="mb-0 f-12 c-p"
-              matTooltip="This method of payment will be used to transfer your dividend's payout to your bank.">
-              For dividend transfer</p>
-          </div>
-        </div>
+                <div class="row pt-20">
+                    <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
+                        <h3 class="f-16 m-0"> Account number</h3>
+                    </div>
+                    <div class="col-md-5 form-group">
+                        <mat-form-field appearance="standard" floatLabel="never">
+                            <input #accountNumber [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="18" [maxlength]="16" appInputValueValidation class="form-control" formControlName="accountNumber" matInput placeholder="Enter Account number" type="text">
+                            <mat-error class="">This field is required</mat-error>
+                            <mat-hint align="end" class=" text-custom">
+                                {{accountNumber.value.length}} / 16
+                            </mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row pt-32">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 mt-16 mb-0">Account type</h3>
+                    </div>
+                    <div class="col-md-5 ">
+                        <div class="form-group helperBoxText mb-10">
+                            <mat-form-field appearance="standard" floatLabel="never">
+                                <mat-select class="form-control" formControlName="accountType">
+                                    <mat-option disabled value=''>Select payment mode</mat-option>
+                                    <mat-option *ngFor="let account of accountTypes" [value]="account.id"> {{account.name}}</mat-option>
+                                </mat-select>
+                                <mat-error class="f-12">This field is required</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <p class="mb-0 f-12 c-p" matTooltip="This method of payment will be used to transfer your dividend's payout to your bank.">
+                            For dividend transfer</p>
+                    </div>
+                </div>
 
-        <div class="row pt-28">
-          <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
-            <h3 class="f-16  m-0"> Branch name </h3>
-          </div>
-          <div class="col-md-5 form-group">
-            <mat-form-field appearance="standard" floatLabel="never">
-              <input [inputValidator]="validatorType.TEXT_ONLY" [maxlength]="30" appInputValueValidation
-                class="form-control" formControlName="branchName" matInput placeholder="Enter Branch name" type="text">
-              <mat-error class="">This field is required</mat-error>
-            </mat-form-field>
-          </div>
-        </div>
+                <div class="row pt-28">
+                    <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
+                        <h3 class="f-16  m-0"> Branch name </h3>
+                    </div>
+                    <div class="col-md-5 form-group">
+                        <mat-form-field appearance="standard" floatLabel="never">
+                            <input [inputValidator]="validatorType.TEXT_ONLY" [maxlength]="30" appInputValueValidation class="form-control" formControlName="branchName" matInput placeholder="Enter Branch name" type="text">
+                            <mat-error class="">This field is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
 
-        <!-- <div class="row pt-20">
+                <!-- <div class="row pt-20">
             <div class="col-md-4 text-right pr-0">
                 <h3 class="f-16 pt-20 m-0"> Branch code </h3>
             </div>
@@ -151,150 +142,142 @@
             </div>
         </div> -->
 
-        <div class="row pt-20">
-          <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
-            <h3 class="f-16   m-0"> Branch address line 1 </h3>
-          </div>
-          <div class="col-md-5 form-group">
-            <mat-form-field appearance="standard" floatLabel="never">
-              <input class="form-control" formControlName="address1" matInput maxlength="100"
-                placeholder="Enter Branch address line 1" type="text">
-              <mat-error class="">This field is required</mat-error>
-            </mat-form-field>
-          </div>
-        </div>
+                <div class="row pt-20">
+                    <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
+                        <h3 class="f-16   m-0"> Branch address line 1 </h3>
+                    </div>
+                    <div class="col-md-5 form-group">
+                        <mat-form-field appearance="standard" floatLabel="never">
+                            <input class="form-control" formControlName="address1" matInput maxlength="100" placeholder="Enter Branch address line 1" type="text">
+                            <mat-error class="">This field is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
 
-        <div class="row pt-20">
-          <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
-            <h3 class="f-16   m-0"> Branch address line 2 </h3>
-          </div>
-          <div class="col-md-5 form-group">
-            <mat-form-field appearance="standard" floatLabel="never">
-              <input class="form-control" formControlName="address2" matInput maxlength="100"
-                placeholder="Enter Branch address line 2" type="text">
-              <mat-error class="">This field is required</mat-error>
-            </mat-form-field>
-          </div>
-        </div>
+                <div class="row pt-20">
+                    <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
+                        <h3 class="f-16   m-0"> Branch address line 2 </h3>
+                    </div>
+                    <div class="col-md-5 form-group">
+                        <mat-form-field appearance="standard" floatLabel="never">
+                            <input class="form-control" formControlName="address2" matInput maxlength="100" placeholder="Enter Branch address line 2" type="text">
+                            <mat-error class="">This field is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
 
-        <div class="row pt-20">
-          <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
-            <h3 class="f-16   m-0"> Branch Pin code </h3>
-          </div>
-          <div class="col-md-3 pr-0 form-group">
-            <mat-form-field appearance="standard" floatLabel="never">
-              <input #pincode (focusout)="getPostalPin($event.target.value)"
-                [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6" appInputValueValidation
-                class="form-control" formControlName="pinCode" matInput maxlength="10"
-                placeholder="Enter Branch pin code" type="text">
-              <mat-error class="">This field is required</mat-error>
-              <mat-hint align="end" class=" text-custom">
-                {{pincode.value.length}} / 6
-              </mat-hint>
-            </mat-form-field>
-          </div>
-          <div class="col-md-1 p-0 d-flex align-items-center justify-content-center mt-8">
-            <mat-spinner *ngIf="isLoading==true" [diameter]="30"></mat-spinner>
-          </div>
-        </div>
+                <div class="row pt-20">
+                    <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
+                        <h3 class="f-16   m-0"> Branch Pin code </h3>
+                    </div>
+                    <div class="col-md-3 pr-0 form-group">
+                        <mat-form-field appearance="standard" floatLabel="never">
+                            <input #pincode (focusout)="getPostalPin($event.target.value)" [inputValidator]="validatorType.NUMBER_ONLY" [maxLength]="6" appInputValueValidation class="form-control" formControlName="pinCode" matInput maxlength="10" placeholder="Enter Branch pin code"
+                                type="text">
+                            <mat-error class="">This field is required</mat-error>
+                            <mat-hint align="end" class=" text-custom">
+                                {{pincode.value.length}} / 6
+                            </mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-1 p-0 d-flex align-items-center justify-content-center mt-8">
+                        <mat-spinner *ngIf="isLoading==true" [diameter]="30"></mat-spinner>
+                    </div>
+                </div>
 
-        <div class="row pt-20">
-          <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
-            <h3 class="f-16  m-0"> Branch state </h3>
-          </div>
-          <div class="col-md-5 form-group">
-            <mat-form-field appearance="standard" floatLabel="never">
-              <input class="form-control" formControlName="state" matInput maxlength="30"
-                placeholder="Enter Branch state" type="text">
-              <mat-error class="">This field is required</mat-error>
-            </mat-form-field>
-          </div>
-        </div>
+                <div class="row pt-20">
+                    <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
+                        <h3 class="f-16  m-0"> Branch state </h3>
+                    </div>
+                    <div class="col-md-5 form-group">
+                        <mat-form-field appearance="standard" floatLabel="never">
+                            <input class="form-control" formControlName="state" matInput maxlength="30" placeholder="Enter Branch state" type="text">
+                            <mat-error class="">This field is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
 
-        <div class="row pt-20">
-          <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
-            <h3 class="f-16   m-0"> Branch city </h3>
-          </div>
-          <div class="col-md-5 form-group">
-            <mat-form-field appearance="standard" floatLabel="never">
-              <input class="form-control" formControlName="city" matInput maxlength="30" placeholder="Enter Branch city"
-                type="text">
-              <mat-error class="">This field is required</mat-error>
-            </mat-form-field>
-          </div>
-        </div>
+                <div class="row pt-20">
+                    <div class="col-md-4 d-flex align-items-center justify-content-end pr-0">
+                        <h3 class="f-16   m-0"> Branch city </h3>
+                    </div>
+                    <div class="col-md-5 form-group">
+                        <mat-form-field appearance="standard" floatLabel="never">
+                            <input class="form-control" formControlName="city" matInput maxlength="30" placeholder="Enter Branch city" type="text">
+                            <mat-error class="">This field is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
 
-        <div class="row pt-20">
-          <div class="col-md-4  d-flex align-items-center justify-content-end pr-0">
-            <h3 class="f-16   m-0"> Branch Country </h3>
-          </div>
-          <div class="col-md-5 form-group">
-            <mat-form-field appearance="standard" floatLabel="never">
-              <input class="form-control" formControlName="country" matInput maxlength="30"
-                placeholder="Enter Branch country" type="text">
-              <mat-error class="">This field is required</mat-error>
-            </mat-form-field>
-          </div>
-        </div>
-        <div class="row pt-20">
-          <div class="col-md-4 text-right pr-0">
-            <h3 class="f-16 mt-16 mb-0">Payment mode </h3>
-          </div>
-          <div class="col-md-5 ">
-            <div class="form-group helperBoxText mb-10">
-              <mat-form-field appearance="standard" floatLabel="never">
-                <mat-select class="form-control" formControlName="paymentMode">
-                  <mat-option disabled value=''>Select payment mode</mat-option>
-                  <mat-option value="01"> Cheque</mat-option>
-                  <mat-option value="02"> Direct Credit</mat-option>
-                  <mat-option value="03"> ECS</mat-option>
-                  <mat-option value="04"> NEFT</mat-option>
-                  <mat-option value="95"> RTGS</mat-option>
-                </mat-select>
-                <mat-error class="f-12">This field is required</mat-error>
-              </mat-form-field>
+                <div class="row pt-20">
+                    <div class="col-md-4  d-flex align-items-center justify-content-end pr-0">
+                        <h3 class="f-16   m-0"> Branch Country </h3>
+                    </div>
+                    <div class="col-md-5 form-group">
+                        <mat-form-field appearance="standard" floatLabel="never">
+                            <input class="form-control" formControlName="country" matInput maxlength="30" placeholder="Enter Branch country" type="text">
+                            <mat-error class="">This field is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row pt-20">
+                    <div class="col-md-4 text-right pr-0">
+                        <h3 class="f-16 mt-16 mb-0">Payment mode </h3>
+                    </div>
+                    <div class="col-md-5 ">
+                        <div class="form-group helperBoxText mb-10">
+                            <mat-form-field appearance="standard" floatLabel="never">
+                                <mat-select class="form-control" formControlName="paymentMode">
+                                    <mat-option disabled value=''>Select payment mode</mat-option>
+                                    <mat-option value="01"> Cheque</mat-option>
+                                    <mat-option value="02"> Direct Credit</mat-option>
+                                    <mat-option value="03"> ECS</mat-option>
+                                    <mat-option value="04"> NEFT</mat-option>
+                                    <mat-option value="95"> RTGS</mat-option>
+                                </mat-select>
+                                <mat-error class="f-12">This field is required</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <p class="mb-0 f-12 c-p" matTooltip="This method of payment will be used to transfer your dividend's payout to your bank.">
+                            For dividend transfer</p>
+                    </div>
+                </div>
+
+
             </div>
-            <p class="mb-0 f-12 c-p"
-              matTooltip="This method of payment will be used to transfer your dividend's payout to your bank.">
-              For dividend transfer</p>
-          </div>
+
         </div>
 
-
-      </div>
 
     </div>
-
-
-  </div>
 </div>
 
 
 <div class="bottom-fixed  pl-20 pr-20 d-flex  w-100 row">
 
-  <div class="col-md-3 p-0 d-flex align-items-center ">
-    <!-- <a href="#" class="text-white f-300" (click)="saveBankDetails('skip')"> Skip this step </a> -->
-  </div>
+    <div class="col-md-3 p-0 d-flex align-items-center ">
+        <!-- <a href="#" class="text-white f-300" (click)="saveBankDetails('skip')"> Skip this step </a> -->
+    </div>
 
-  <div class="col-md-5 center_menu">
-    <a (click)="SendToForm('first',false)" [ngClass]="{'activeLink': activeDetailsClass=='first'}" class="c-p"> Bank
+    <div class="col-md-5 center_menu">
+        <a (click)="SendToForm('first',false)" [ngClass]="{'activeLink': activeDetailsClass=='first'}" class="c-p"> Bank
       1 </a>
-    <a (click)="SendToForm('second',false)" [ngClass]="{'activeLink': activeDetailsClass=='second'}" class="c-p">
+        <a (click)="SendToForm('second',false)" [ngClass]="{'activeLink': activeDetailsClass=='second'}" class="c-p">
       Bank 2 </a>
-    <a (click)="SendToForm('third',false)" [ngClass]="{'activeLink': activeDetailsClass=='third'}" class=" c-p">
+        <a (click)="SendToForm('third',false)" [ngClass]="{'activeLink': activeDetailsClass=='third'}" class=" c-p">
       Bank 3 </a>
-  </div>
+    </div>
 
-  <div class="col-md-4 p-0 d-flex align-items-center justify-content-end">
+    <div class="col-md-4 p-0 d-flex align-items-center justify-content-end">
 
-    <button (click)="openContactDetails()" class="br-0 perviousBtn text-inherit f-14" mat-button mat-raised-button>
+        <button (click)="openContactDetails()" class="br-0 perviousBtn text-inherit f-14" mat-button mat-raised-button>
       PREVIOUS
     </button>
 
-    <button (click)="SendToForm(formId,true)" class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4" mat-button>NEXT
+        <button (click)="SendToForm(formId,true)" class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4" mat-button>NEXT
     </button>
 
 
-  </div>
+    </div>
 
 </div>

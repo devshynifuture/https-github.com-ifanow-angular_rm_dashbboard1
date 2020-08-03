@@ -25,12 +25,13 @@ export class AddQuotationSubscriptionComponent implements OnInit {
   billerInfo: any;
   organisationFlag: any;
   billerFlag: any;
+  isLoadingQuot;
 
   constructor(public subInjectService: SubscriptionInject,
-              private subService: SubscriptionService,
-              private eventService: EventService
-    ,         private router: Router,
-              private settingsService: SettingsService) { }
+    private subService: SubscriptionService,
+    private eventService: EventService
+    , private router: Router,
+    private settingsService: SettingsService) { }
 
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
@@ -65,8 +66,10 @@ export class AddQuotationSubscriptionComponent implements OnInit {
       clientId: (this.clientData.data) ? this.clientData.data.id : 0,
       flag: (this.clientData) ? 4 : 3
     };
+    this.isLoadingQuot = true;
     this.subService.getQuotationReplatedPlans(obj).subscribe(
       data => {
+        this.isLoadingQuot = false;
         if (data && data.length > 0) {
           this.noDataFoundFlag = false;
           this.planSettingData = data;
@@ -74,6 +77,8 @@ export class AddQuotationSubscriptionComponent implements OnInit {
           this.noDataFoundFlag = true;
           this.planSettingData = undefined;
         }
+      }, error => {
+        this.isLoadingQuot = false;
       }
     );
   }

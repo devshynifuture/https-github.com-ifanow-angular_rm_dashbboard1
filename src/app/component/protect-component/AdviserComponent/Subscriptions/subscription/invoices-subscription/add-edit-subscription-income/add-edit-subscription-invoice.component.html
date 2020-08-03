@@ -215,7 +215,7 @@
                     <div class="col-md-2 pl-0">
                         <mat-form-field>
                             <!--            (change)="changeTaxStatus($event.target.value)"-->
-                            <mat-select class="form-control" formControlName="taxStatus" id="serviceName">
+                            <mat-select class="form-control" #taxValue formControlName="taxStatus" id="serviceName" (selectionChange)="changeSelection(taxValue.value)">
                                 <!-- <option value="select">Select tax type</option> -->
                                 <mat-option value="IGST(18%)" [disabled]="editFlag">IGST(18%)</mat-option>
                                 <mat-option value="SGST(9%)|CGST(9%)" [disabled]="editFlag">SGST(9%) | CGST(9%)</mat-option>

@@ -78,11 +78,11 @@ export const appConfig = {
   Fileorder_Status_Report_Get: 'asset/fileorder/status/report/get',
   ///////////////////////////////BULK EMAIL///////////////////////////////
   GET_CLIENT_ADVISOR_DEATILS: '/backoffice/bulk-report/advisor-client/detail/get',
-  GET_CLIENT_COUNT:'mutual-fund/report/client-count/get',
+  GET_CLIENT_COUNT: 'mutual-fund/report/client-count/get',
   HTML_TO_PDF: 'pdfAndEmail/bulk-mail/html-to-pdf',
   GET_CLIENT_IN_LOOP: 'mutual-fund/report/bulk-order/save',
   GET_ORDER_LIST: 'mutual-fund/report/bulk-order/list/get',
-  REFRESH_COUNT:'mutual-fund/report/bulk-order/refresh',
+  REFRESH_COUNT: 'mutual-fund/report/bulk-order/refresh',
   GET_MF_CLIENTS: 'mutual-fund/report/client-setting/list/get',
   SAVE_SETTING: 'mutual-fund/report/client-setting/edit',
   /////////////////////////////Accounts///////////////////////////////////
@@ -304,14 +304,14 @@ export const appConfig = {
 
   GET_CASHFLOW_LIST: 'cashflow/monthly/list/get',
   /////////////////////////Insurance plan/////////////////////////////
-  GET_INSURANCE_LIST:'insurance/planning/list/get',
-  ADD_INSURANCE:'insurance/planning/life/insurance/add',
-  GET_FAMILYMEMBER_DETAILS:'insurance/planning/family-member/info/get',
-  GET_LIFE_NEED_ANALYSIS:'insurance/planning/life/insurance/need/analysis/get',
-  ADD_LIFE_NEED_ANALYSIS_MAP:'insurance/planning/life/insurance/need/analysis/map/to/plan',
-  REMOVE_LIFE_NEED_ANALYSIS_MAP:'insurance/planning/life/insurance/delete',
-  LIFE_ANALYSIS_ADD:'insurance/planning/life/insurance/need/analysis/save',
-  GET_DETAILED_INSURANCE:'insurance/planning/life/insurance/need/analysis/mapped/to/plan/get',
+  GET_INSURANCE_LIST: 'insurance/planning/list/get',
+  ADD_INSURANCE: 'insurance/planning/life/insurance/add',
+  GET_FAMILYMEMBER_DETAILS: 'insurance/planning/family-member/info/get',
+  GET_LIFE_NEED_ANALYSIS: 'insurance/planning/life/insurance/need/analysis/get',
+  ADD_LIFE_NEED_ANALYSIS_MAP: 'insurance/planning/life/insurance/need/analysis/map/to/plan',
+  REMOVE_LIFE_NEED_ANALYSIS_MAP: 'insurance/planning/life/insurance/delete',
+  LIFE_ANALYSIS_ADD: 'insurance/planning/life/insurance/need/analysis/save',
+  GET_DETAILED_INSURANCE: 'insurance/planning/life/insurance/need/analysis/mapped/to/plan/get',
 
   ////////////////////////////// subscription////////////////////////////////////////////
   GET_REAL_ESTATE: 'account/asset/real-estate/get',
@@ -419,6 +419,7 @@ export const appConfig = {
   EDIT_PAYMENT_RECEIVE: 'subscription/invoice/payment/received/edit',
   GET_TEMPLATE: 'subscription/emailtemplate/get',
   GET_EMAIL_TEMPLATE_FILTER: 'subscription/emailtemplate/get',
+  VERIFIED_EMAIL_TEMPLATE_WISE: 'setting/email/template/verified/email/get',
   // GET_DOCUMENT_MAPPED_PLAN: 'subscription/document/plan/map/get',
   GET_DOCUMENT_MAPPED_PLAN: 'subscription/document/plan/mapping/get',
   GET_DOCUMENT_MAPPED_SERVICE: 'subscription/document/service/map/get',

@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { HttpService } from 'src/app/http-service/http-service';
-import { apiConfig } from 'src/app/config/main-config';
-import { appConfig } from 'src/app/config/component-config';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpService} from 'src/app/http-service/http-service';
+import {apiConfig} from 'src/app/config/main-config';
+import {appConfig} from 'src/app/config/component-config';
+import {UtilService} from "../../../../services/util.service";
 
 
 class CacheItem<T> {
@@ -411,6 +412,12 @@ export class SubscriptionService {
 
   }
 
+  getVerifiedEmailData(data) {
+    // const httpParams = new HttpParams().set('advisorId', data.advisorId).set('templateType', data.templateType)
+    //   .set('clientId', data.clientId).set('id', data.id);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.VERIFIED_EMAIL_TEMPLATE_WISE, UtilService.getHttpParam(data));
+  }
+
   plansMapped(advisorId, docRepoId) {
     const httpParams = new HttpParams().set('advisorId', advisorId).set('docRepoId', docRepoId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DOCUMENT_MAPPED_PLAN, httpParams);
@@ -459,6 +466,7 @@ export class SubscriptionService {
     const httpParams = new HttpParams().set('documentRepositoryId', data.documentRepositoryId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_QUOTATION_SERVICE_DATA, httpParams);
   }
+
   getInvoiceStatus(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.GET_INVOICE_STATTUS, data);
   }

@@ -29,7 +29,10 @@
                         Account type
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{(bankAccount.accountType==1)?'Current':'Savings'}}
+                        <div *ngFor="let type of accountTypes" [ngSwitch]="bankAccount.accountType">
+                            <span *ngSwitchCase="type.id">{{type.name}}</span>
+                        </div>
+                        <!-- {{(bankAccount.accountType==1)?'Current':'Savings'}} -->
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -75,9 +78,9 @@
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Link Bank account
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" [hidden]="!bankAccount.userBankMappingId" *ngFor="let bank of bankList">
-                        <div [ngSwitch]="bankAccount.userBankMappingId">
-                            <div *ngSwitchCase="bank.id">{{bank.bankNameAndLast4Digit}}</div>
+                    <div class="col-md-4 text-right f-14 roboto p-0" [hidden]="!bankAccount.userBankMappingId" >
+                        <div *ngFor="let bank of bankList" [ngSwitch]="bankAccount.userBankMappingId">
+                            <span *ngSwitchCase="bank.id">{{bank.bankNameAndLast4Digit}}</span>
                         </div>
                     </div>
                     <div *ngIf="!bankAccount.userBankMappingId" class="col-md-4 text-right f-14 roboto p-0">

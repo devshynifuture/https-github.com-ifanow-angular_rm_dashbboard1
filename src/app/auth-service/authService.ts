@@ -215,7 +215,7 @@ export class AuthService {
   static goHome(router: Router) {
     const userInfo = AuthService.getUserInfo();
     if (userInfo.userType == 1 || userInfo.userType == 8) {
-      router.navigate(['admin', 'subscription', 'dashboard']);
+      router.navigate(['admin', 'dashboard']);
     } else if (userInfo.isRmLogin) {
       router.navigate(['support', 'dashboard']);
     } else {
