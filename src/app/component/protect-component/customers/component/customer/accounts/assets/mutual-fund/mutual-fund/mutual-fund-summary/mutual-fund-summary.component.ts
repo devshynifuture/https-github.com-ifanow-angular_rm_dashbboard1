@@ -116,7 +116,7 @@ export class MutualFundSummaryComponent implements OnInit {
         this.advisorId = parseInt(param1.advisorId)
         //this.setDefaultFilterData.toDate = param1.toDate;
         this.toDate = param1.toDate;
-        this.toDate = this.datePipe.transform(this.toDate, 'dd-MMM-yyyy');
+        this.toDate = this.datePipe.transform(this.toDate, 'yyyy-MM-dd');
         console.log('2423425', param1)
       }
       else {
@@ -411,7 +411,9 @@ export class MutualFundSummaryComponent implements OnInit {
     this.summary.data = [{}, {}, {}];
     const obj = {
       advisorId: this.advisorId,
-      clientId: this.clientId
+      clientId: this.clientId,
+      toDate : this.toDate,
+      //id: 1103107
     };
     this.customerService.getMutualFund(obj).pipe(map((data) => {
       return this.doFiltering(data);
