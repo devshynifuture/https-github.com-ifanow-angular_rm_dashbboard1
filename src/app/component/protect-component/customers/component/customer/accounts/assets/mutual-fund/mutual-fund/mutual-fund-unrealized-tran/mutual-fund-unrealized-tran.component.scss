@@ -46,8 +46,8 @@
 
 ::ng-deep .tran-height-2 {
   height: 100%;
-  max-height: 300px;
-  overflow-y: auto;
+  // max-height: 500px;
+  // overflow-y: auto;
 
   #table-low tbody td.br {
     padding: 4px 8px !important;
@@ -60,8 +60,6 @@
 
 .secoundTable {
   height: 500px;
-
-
 }
 
 .hide {
