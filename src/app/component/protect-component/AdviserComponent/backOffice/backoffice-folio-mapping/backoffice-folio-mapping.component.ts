@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { SelectFolioMapComponent } from './select-folio-map/select-folio-map.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-backoffice-folio-mapping',
@@ -9,9 +11,21 @@ export class BackofficeFolioMappingComponent implements OnInit {
   displayedColumns: string[] = ['checkBoxIcon', 'schemeName', 'number', 'investName'];
   dataSource = ELEMENT_DATA;
 
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
+  }
+
+  openFolio() {
+    const dialogRef = this.dialog.open(SelectFolioMapComponent, {
+      width: '663px',
+      //height: '679px',
+    });
+    
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
   
