@@ -1,15 +1,14 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {EventService} from 'src/app/Data-service/event.service';
 import * as Highcharts from 'highcharts';
+import {ColorString} from 'highcharts';
 import {AuthService} from 'src/app/auth-service/authService';
 import {CustomerService} from '../../customer.service';
 import {DatePipe} from '@angular/common';
-import {FormGroup, FormBuilder} from '@angular/forms';
+import {FormBuilder, FormGroup} from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {EnumServiceService} from 'src/app/services/enum-service.service';
-import {EnumDataService} from 'src/app/services/enum-data.service';
 import {UtilService} from 'src/app/services/util.service';
-import {element} from 'protractor';
 
 @Component({
   selector: 'app-portfolio-summary',
@@ -211,7 +210,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
         this.graphList = [];
         let sortedDateList = [];
         sortedDateList = data;
-        sortedDateList.sort(function(a, b) {
+        sortedDateList.sort(function (a, b) {
           return a.targetDate - b.targetDate;
         });
         this.calculate1DayAnd90Days(sortedDateList);
@@ -512,13 +511,24 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
               y1: 0,
               x2: 0,
               y2: 1
+            }, stops: [
+              [0, Highcharts.getOptions().colors[0]],
+              [1, Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba') as ColorString],
+            ]
+          },
+          /*fillColor: {
+            linearGradient: {
+              x1: 0,
+              y1: 0,
+              x2: 0,
+              y2: 1
             },
             stops: [
               [0, Highcharts.getOptions().colors[0]],
               // [1,  Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
               [1, Highcharts.getOptions().colors[0]],
             ]
-          },
+          },*/
           marker: {
             radius: 2
           },

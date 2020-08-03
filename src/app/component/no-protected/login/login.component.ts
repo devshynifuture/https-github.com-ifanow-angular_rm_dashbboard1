@@ -387,7 +387,7 @@ export class LoginComponent implements OnInit {
     });
     // this.authService.setToken(loginData.payLoad);
     this.eventService.openSnackBar('Login successFully', 'Dismiss');
-    this.router.navigate(['admin', 'subscription', 'dashboard']);
+    this.router.navigate(['admin', 'dashboard']);
   }
 
   progressButtonClick(event) {
