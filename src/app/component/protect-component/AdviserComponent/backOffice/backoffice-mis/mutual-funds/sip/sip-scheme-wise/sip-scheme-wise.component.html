@@ -21,7 +21,7 @@
             </div>
             <div class="row">
                 <div class="col-md-6 pl-0">
-                    <h3 class="pt-8 mb-0">Scheme Wise SIP
+                    <h3 class="pt-8 mb-0">Scheme wise SIP
                     </h3>
                 </div>
                 <div class="col-md-6 pr-0">
@@ -57,15 +57,15 @@
                                         <i class="material-icons ml-4 f-14 text-primitive"
                                             *ngIf="propertyName=='schemeName' && reverse">arrow_downward</i> </span>
                                 </th>
-                                <th (click)="sortBy(filteredArray,'sipAmount')" class="c-p">
-                                    <span class="d-flex align-items-center">SIP Amount
+                                <th (click)="sortBy(filteredArray,'sipAmount')" class="c-p w-14">
+                                    <span class="d-flex justify-content-end align-items-center">SIP Amount
                                         <i class="material-icons ml-4 f-14 text-primitive"
                                             *ngIf="propertyName=='sipAmount' && !reverse">
                                             arrow_upward </i>
                                         <i class="material-icons ml-4 f-14 text-primitive"
                                             *ngIf="propertyName=='sipAmount' && reverse">arrow_downward</i> </span>
                                 </th>
-                                <th (click)="sortBy(filteredArray,'sipCount')" class="c-p">
+                                <th style="padding-left: 30px !important;" (click)="sortBy(filteredArray,'sipCount')" class="c-p">
                                     <span class="d-flex align-items-center">SIP Count
                                         <i class="material-icons ml-4 f-14 text-primitive"
                                             *ngIf="propertyName=='sipCount' && !reverse">
@@ -73,7 +73,8 @@
                                         <i class="material-icons ml-4 f-14 text-primitive"
                                             *ngIf="propertyName=='sipCount' && reverse">arrow_downward</i> </span>
                                 </th>
-                                <th>% Weight</th>
+                                <th class="text-right w-14">% Weight</th>
+                                <th></th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -89,19 +90,21 @@
                                         {{isLoading ? '' :data.schemeName}}
                                     </div>
                                 </td>
-                                <td>
-                                    <div [ngClass]="{'bar': isLoading}">
+                                <td class="text-right">
+                                    <div class="bar" [ngClass]="{'floatRight': isLoading}">
                                         {{isLoading ? ' ' : '₹ '}} <span appFormatNumber *ngIf="!isLoading"
                                             [value]="data.sipAmount"></span>
                                     </div>
                                 </td>
-                                <td>
+                                <td style="padding-left: 30px !important;">
                                     <div [ngClass]="{'bar': isLoading}"> {{data.sipCount}} </div>
                                 </td>
-                                <td>
-                                    <div [ngClass]="{'bar': isLoading}">
+
+                                <td class="text-right">
+                                    <div class="bar" [ngClass]="{'floatRight': isLoading}">
                                         {{data.weightInPercentage | number:'1.2-2'}}{{(isLoading?'':'%') }}</div>
                                 </td>
+
                                 <td class="text-center" (click)="showSubTableList(catIndex,data.showCategory,data)">
                                     <div class="bar text-center">
                                         <i class="material-icons b-a f-14 mt-4 c-p"
@@ -113,25 +116,31 @@
                                         </i>
                                     </div>
                                 </td>
-                            </tr>
-                            <tr style="border: transparent !important">
-                                <td colspan="6" class="innerTd one">
+
+                                <td>
                                     <div class="d-block text-right"
-                                        *ngIf="!data.showCategory && !isLoading && data.subCatList?.length > 0">
-                                        <button (click)="exportToExcelSheet('investor-wise', catIndex, null)"
-                                            mat-icon-button>
-                                            <mat-icon>
-                                                save_alt
-                                            </mat-icon>
-                                        </button>
-                                    </div>
+                                    *ngIf="!data.showCategory && !isLoading && data.subCatList?.length > 0">
+                                    <button (click)="exportToExcelSheet('investor-wise', catIndex, null)"
+                                        mat-icon-button>
+                                        <mat-icon>
+                                            save_alt
+                                        </mat-icon>
+                                    </button>
+                                </div>
+                                </td>
+
+                            </tr>
+
+                            <tr style="border: transparent !important">
+                                <td colspan="7" class="innerTd one">
+                                    
                                     <table *ngIf="data.showCategory==false && data.subCatList?.length > 0"
-                                        class=" mb-8 mt-8 skeletonAnimation" appSkeletonLoading
+                                        class=" mb-8 mt-8 table98 skeletonAnimation" appSkeletonLoading
                                         [appSkeletonLoading]="isLoadingCategory" id="table-low">
                                         <thead class="bg-light text-dark">
                                             <tr class="h-40">
                                                 <th class="w-10">Sr No.</th>
-                                                <th class="c-p"
+                                                <th class="c-p w-40"
                                                     (click)="sortByInvestor(data.subCatList,'investorName')">
                                                     <span class="d-flex align-items-center"> Investor Name
                                                         <i class="material-icons ml-4 f-14 text-primitive"
@@ -141,8 +150,8 @@
                                                             *ngIf="propertyName2=='investorName' && reverse2">arrow_downward</i>
                                                     </span>
                                                 </th>
-                                                <th (click)="sortByInvestor(data.subCatList,'sipAmount')" class="c-p">
-                                                    <span class="d-flex align-items-center">SIP
+                                                <th (click)="sortByInvestor(data.subCatList,'sipAmount')" class="c-p w-14">
+                                                    <span class="d-flex align-items-center justify-content-end">SIP
                                                         Amount
                                                         <i class="material-icons ml-4 f-14 text-primitive"
                                                             *ngIf="propertyName2=='sipAmount' && !reverse2">
@@ -152,7 +161,7 @@
                                                     </span>
                                                 </th>
 
-                                                <th (click)="sortByInvestor(data.subCatList,'sipCount')" class="c-p">
+                                                <th style="padding-left: 30px !important;" (click)="sortByInvestor(data.subCatList,'sipCount')" class="c-p">
                                                     <span class="d-flex align-items-center"> SIP Count
                                                         <i class="material-icons ml-4 f-14 text-primitive"
                                                             *ngIf="propertyName2=='sipCount' && !reverse2">
@@ -162,7 +171,8 @@
                                                     </span>
                                                 </th>
 
-                                                <th>% Weight</th>
+                                                <th class="text-right w-14">% Weight</th>
+                                                <th></th>
                                                 <th></th>
                                             </tr>
                                         </thead>
@@ -180,7 +190,7 @@
 
                                                     </div>
                                                 </td>
-                                                <td>
+                                                <td class="text-right">
                                                     <div [ngClass]="{'bar': isLoadingCategory}">
                                                         {{isLoadingCategory ? ' ' : '₹ '}} <span appFormatNumber
                                                             *ngIf="!isLoadingCategory"
@@ -188,13 +198,13 @@
 
                                                     </div>
                                                 </td>
-                                                <td>
+                                                <td style="padding-left: 30px !important;">
                                                     <div [ngClass]="{'bar': isLoadingCategory}">
                                                         {{isLoadingCategory ? '' : subInvList.sipCount}}
 
                                                     </div>
                                                 </td>
-                                                <td>
+                                                <td class="text-right">
                                                     <div [ngClass]="{'bar': isLoadingCategory}">
                                                         {{isLoadingCategory ? '' : (subInvList.weightInPercentage | number : '1.2-2')}}{{(isLoadingCategory?'':'%') }}
 
@@ -207,19 +217,22 @@
                                                     <i *ngIf="subInvList.showSubCategory==false"
                                                         class="material-icons   b-a f-14 mt-4 c-p"> remove </i>
                                                 </td>
+                                                <td>
+                                                    <div class="d-block text-right"
+                                                    *ngIf="!subInvList.showSubCategory && !isLoadingCategory && subInvList.applicantList?.length > 0">
+                                                    <button
+                                                        (click)="exportToExcelSheet('applicant-wise', catIndex, investorIndex)"
+                                                        mat-icon-button>
+                                                        <mat-icon>
+                                                            save_alt
+                                                        </mat-icon>
+                                                    </button>
+                                                </div>
+                                                </td>
                                             </tr>
                                             <tr style="border: transparent !important">
-                                                <td colspan="6" class="innerTd two">
-                                                    <div class="d-block text-right"
-                                                        *ngIf="!subInvList.showSubCategory && !isLoadingCategory && subInvList.applicantList?.length > 0">
-                                                        <button
-                                                            (click)="exportToExcelSheet('applicant-wise', catIndex, investorIndex)"
-                                                            mat-icon-button>
-                                                            <mat-icon>
-                                                                save_alt
-                                                            </mat-icon>
-                                                        </button>
-                                                    </div>
+                                                <td colspan="7" class="innerTd two">
+                                                  
                                                     <table class="mb-8 mt-8 skeletonAnimation" appSkeletonLoading
                                                         [appSkeletonLoading]="isLoadingSubCategory" id="table-low"
                                                         *ngIf="subInvList.showSubCategory==false && subInvList.applicantList?.length > 0">

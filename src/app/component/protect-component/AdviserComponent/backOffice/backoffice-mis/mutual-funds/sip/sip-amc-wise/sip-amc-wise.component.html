@@ -60,7 +60,7 @@
                                     </span>
                                 </th>
                                 <th (click)="sortBy(filteredArray,'sipAmount')" class="c-p w-14">
-                                    <span class="d-flex align-items-center">SIP Amount
+                                    <span class="d-flex justify-content-end align-items-center">SIP Amount
                                         <i class="material-icons ml-4 f-14 text-primitive"
                                             *ngIf="propertyName=='sipAmount' && !reverse">
                                             arrow_upward </i>
@@ -68,7 +68,7 @@
                                             *ngIf="propertyName=='sipAmount' && reverse">arrow_downward</i>
                                     </span>
                                 </th>
-                                <th (click)="sortBy(filteredArray,'sipCount')" class="c-p">
+                                <th style="padding-left: 30px !important;" (click)="sortBy(filteredArray,'sipCount')" class="c-p">
                                     <span class="d-flex align-items-center">SIP Count
                                         <i class="material-icons  ml-4 f-14 text-primitive"
                                             *ngIf="propertyName=='sipCount' && !reverse">
@@ -77,7 +77,8 @@
                                             *ngIf="propertyName=='sipCount' && reverse">arrow_downward</i>
                                     </span>
                                 </th>
-                                <th>% Weight</th>
+                                <th class="w-14 text-right">% Weight</th>
+                                <th></th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -93,17 +94,17 @@
                                         {{isLoading ? '' : category.amcName}}
                                     </div>
                                 </td>
-                                <td>
-                                    <div [ngClass]="{'bar': isLoading}">
+                                <td class="text-right">
+                                    <div class="bar" [ngClass]="{'floatRight': isLoading}">
                                         {{isLoading ? ' ' : '₹ '}}<span appFormatNumber *ngIf="!isLoading"
                                             [value]="category.sipAmount"></span>
                                     </div>
                                 </td>
-                                <td>
+                                <td style="padding-left: 30px !important;">
                                     <div [ngClass]="{'bar': isLoading}"> {{isLoading ? '' : category.sipCount}} </div>
                                 </td>
-                                <td>
-                                    <div [ngClass]="{'bar': isLoading}">
+                                <td class="text-right">
+                                    <div class="bar" [ngClass]="{'floatRight': isLoading}">
                                         {{isLoading ? '' : (category.weightInPercentage | number : '1.2-2')}}{{(isLoading?'':'%') }}
                                     </div>
                                 </td>
@@ -119,9 +120,8 @@
                                             remove </i>
                                     </div>
                                 </td>
-                            </tr>
-                            <tr style="border: transparent !important">
-                                <td colspan="6" class="innerTd one">
+
+                                <td>
                                     <div class="d-block text-right"
                                         *ngIf="category.showCategory==false && category.schemeList?.length > 0">
                                         <button mat-icon-button
@@ -131,8 +131,13 @@
                                             </mat-icon>
                                         </button>
                                     </div>
+                                </td>
+                            </tr>
+                            <tr style="border: transparent !important">
+                                <td colspan="7" class="innerTd one">
+                                    
                                     <table *ngIf="category.showCategory==false && category.schemeList?.length > 0"
-                                        class="skeletonAnimation mt-8 mb-8" appSkeletonLoading
+                                        class="skeletonAnimation mt-8 mb-8 table98" appSkeletonLoading
                                         [appSkeletonLoading]="isLoadingCategory" id="table-low">
                                         <thead class="bg-light text-dark">
                                             <tr class="h-40">
@@ -149,8 +154,8 @@
                                                             *ngIf="propertyName2=='schemeName' && reverse2">arrow_downward</i>
                                                     </span>
                                                 </th>
-                                                <th class="c-p" (click)="sortByScheme(category.schemeList,'sipAmount')">
-                                                    <span class="d-flex align-items-center">SIP
+                                                <th class="c-p w-15" (click)="sortByScheme(category.schemeList,'sipAmount')">
+                                                    <span class="d-flex justify-content-end align-items-center">SIP
                                                         Amount
                                                         <i class="material-icons ml-4 f-14 text-primitive"
                                                             *ngIf="propertyName2=='sipAmount' && !reverse2">
@@ -160,7 +165,7 @@
                                                             *ngIf="propertyName2=='sipAmount' && reverse2">arrow_downward</i>
                                                     </span>
                                                 </th>
-                                                <th class="c-p" (click)="sortByScheme(category.schemeList,'sipCount')">
+                                                <th class="c-p" style="padding-left: 30px !important;" (click)="sortByScheme(category.schemeList,'sipCount')">
                                                     <span class="d-flex align-items-center"> SIP
                                                         Count
                                                         <i class="material-icons ml-4 f-14 text-primitive"
@@ -170,7 +175,8 @@
                                                             *ngIf="propertyName2=='sipCount' && reverse2">arrow_downward</i>
                                                     </span>
                                                 </th>
-                                                <th>% Weight</th>
+                                                <th class="text-right c-14">% Weight</th>
+                                                <th></th>
                                                 <th></th>
                                             </tr>
                                         </thead>
@@ -186,19 +192,19 @@
                                                         {{isLoadingCategory ? '' : subcategory.schemeName}}
                                                     </div>
                                                 </td>
-                                                <td>
+                                                <td class="text-right">
                                                     <div [ngClass]="{'bar': isLoadingCategory}">
                                                         {{isLoadingCategory ? ' ' : '₹ '}}<span appFormatNumber
                                                             *ngIf="!isLoadingCategory"
                                                             [value]='subcategory.sipAmount'></span>
                                                     </div>
                                                 </td>
-                                                <td>
+                                                <td style="padding-left: 30px !important;">
                                                     <div [ngClass]="{'bar': isLoadingCategory}">
                                                         {{isLoadingCategory ? '' : subcategory.sipCount}}
                                                     </div>
                                                 </td>
-                                                <td>
+                                                <td class="text-right">
                                                     <div [ngClass]="{'bar': isLoadingCategory}">
                                                         {{isLoadingCategory ? '' : (subcategory.weightInPercentage | number : '1.2-2')}}{{(isLoadingCategory?'':'%') }}
                                                     </div>
@@ -210,9 +216,7 @@
                                                     <i *ngIf="subcategory.showSubCategory==false"
                                                         class="material-icons b-a f-14 mt-4 c-p"> remove </i>
                                                 </td>
-                                            </tr>
-                                            <tr style="border: transparent !important">
-                                                <td colspan="6" class="innerTd two">
+                                                <td>
                                                     <div class="d-block text-right"
                                                         *ngIf="!subcategory.showSubCategory && !isLoadingCategory && subcategory.investorList?.length > 0">
                                                         <button mat-icon-button
@@ -222,7 +226,12 @@
                                                             </mat-icon>
                                                         </button>
                                                     </div>
-                                                    <table class="skeletonAnimation mt-8 mb-8" appSkeletonLoading
+                                                </td>
+                                            </tr>
+                                            <tr style="border: transparent !important">
+                                                <td colspan="7" class="innerTd two">
+                                                    
+                                                    <table class="skeletonAnimation mt-8 mb-8 table95" appSkeletonLoading
                                                         [appSkeletonLoading]="isLoadingSubCategory" id="table-low"
                                                         *ngIf="!subcategory.showSubCategory && subcategory.investorList?.length > 0">
                                                         <thead>
@@ -239,9 +248,9 @@
                                                                             *ngIf="propertyName3=='investorName' && reverse3">arrow_downward</i>
                                                                     </span>
                                                                 </th>
-                                                                <th class="c-p"
+                                                                <th class="c-p w-14 "
                                                                     (click)="sortByInvestor(subcategory.investorList,'sipAmount')">
-                                                                    <span class="d-flex align-items-center"> SIP Amount
+                                                                    <span class="d-flex justify-content-end align-items-center"> SIP Amount
                                                                         <i class="material-icons ml-4 f-14 text-primitive"
                                                                             *ngIf="propertyName3=='sipAmount' && !reverse3">
                                                                             arrow_upward </i>
@@ -249,7 +258,7 @@
                                                                             *ngIf="propertyName3=='sipAmount' && reverse3">arrow_downward</i>
                                                                     </span>
                                                                 </th>
-                                                                <th class="c-p"
+                                                                <th style="padding-left: 30px !important;" class="c-p"
                                                                     (click)="sortByInvestor(subcategory.investorList,'sipCount')">
                                                                     <span class="d-flex align-items-center"> SIP Count
                                                                         <i class="material-icons ml-4 f-14 text-primitive"
@@ -259,7 +268,8 @@
                                                                             *ngIf="propertyName3=='sipCount' && reverse3">arrow_downward</i>
                                                                     </span>
                                                                 </th>
-                                                                <th>% Weight</th>
+                                                                <th class="w-14 text-right">% Weight</th>
+                                                                <th></th>
                                                                 <th></th>
                                                             </tr>
                                                         </thead>
@@ -276,7 +286,7 @@
                                                                         {{isLoadingSubCategory ? '' : inv.investorName}}
                                                                     </div>
                                                                 </td>
-                                                                <td>
+                                                                <td class="text-right">
                                                                     <div [ngClass]="{'bar': isLoadingSubCategory}">
                                                                         {{isLoadingSubCategory ? ' ' : '₹ '}} <span
                                                                             appFormatNumber
@@ -285,12 +295,12 @@
                                                                         </span>
                                                                     </div>
                                                                 </td>
-                                                                <td>
+                                                                <td style="padding-left: 30px !important;">
                                                                     <div [ngClass]="{'bar': isLoadingSubCategory}">
                                                                         {{isLoadingSubCategory ? '' : inv.sipCount}}
                                                                     </div>
                                                                 </td>
-                                                                <td>
+                                                                <td class="text-right">
                                                                     <div [ngClass]="{'bar': isLoadingSubCategory}">
                                                                         {{isLoadingSubCategory ? '' : (inv.weightInPercentage | number : '1.2-2')}}{{(isLoadingSubCategory?'':'%') }}
                                                                     </div>
@@ -303,18 +313,21 @@
                                                                     <i class="material-icons b-a f-14 mt-4 c-p"
                                                                         *ngIf="inv.showInvestor==false"> remove </i>
                                                                 </td>
+                                                                <td>
+                                                                    <div class="d-block text-right"
+                                                                    *ngIf="subcategory.showSubCategory==false && !isLoadingSubCategory && inv.applicantList?.length > 0">
+                                                                    <button mat-icon-button
+                                                                        (click)="exportToExcelSheet('applicant-wise', catIndex, subCatIndex, investorIndex)">
+                                                                        <mat-icon>
+                                                                            save_alt
+                                                                        </mat-icon>
+                                                                    </button>
+                                                                </div>
+                                                                </td>
                                                             </tr>
                                                             <tr style="border: transparent !important">
-                                                                <td colspan="6" class="innerTd three">
-                                                                    <div class="d-block text-right"
-                                                                        *ngIf="subcategory.showSubCategory==false && !isLoadingSubCategory && inv.applicantList?.length > 0">
-                                                                        <button mat-icon-button
-                                                                            (click)="exportToExcelSheet('applicant-wise', catIndex, subCatIndex, investorIndex)">
-                                                                            <mat-icon>
-                                                                                save_alt
-                                                                            </mat-icon>
-                                                                        </button>
-                                                                    </div>
+                                                                <td colspan="7" class="innerTd three">
+                                                                   
                                                                     <table class="skeletonAnimation mt-8 mb-8"
                                                                         appSkeletonLoading
                                                                         [appSkeletonLoading]="isLoadingApplicant"
@@ -593,10 +606,10 @@
                             <tr>
                                 <td class="p-table">&nbsp;</td>
                                 <td class="p-table"><strong>Total</strong></td>
-                                <td class="p-table"><strong><span appFormatNumber>{{totalOfSipAmount}}</span></strong>
+                                <td class="p-table text-right"><strong><span appFormatNumber>{{totalOfSipAmount}}</span></strong>
                                 </td>
-                                <td class="p-table"><strong>{{totalOfSipCount}}</strong></td>
-                                <td class="p-table"><strong>{{totalWeight | number : '1.2-2'}}%</strong></td>
+                                <td class="p-table" style="padding-left: 30px !important;"><strong>{{totalOfSipCount}}</strong></td>
+                                <td class="p-table text-right"><strong>{{totalWeight | number : '1.2-2'}}%</strong></td>
                                 <td></td>
                             </tr>
                         </tbody>
