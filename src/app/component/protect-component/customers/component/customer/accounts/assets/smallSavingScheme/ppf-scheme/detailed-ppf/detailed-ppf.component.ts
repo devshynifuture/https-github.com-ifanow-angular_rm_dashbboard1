@@ -16,10 +16,13 @@ export class DetailedPpfComponent implements OnInit {
   constructor(private subInjectService: SubscriptionInject,  private enumService: EnumServiceService) {
   }
 
+  clientFamilybankList:any = [];
   ngOnInit() {
+    this.bankList = this.enumService.getBank();
+    this.clientFamilybankList = this.enumService.getclientFamilybankList();
+    console.log('bank', this.clientFamilybankList);
     console.log(this.data);
     this.nominee = this.data.nominees;
-    this.bankList = this.enumService.getBank();
 
   }
 

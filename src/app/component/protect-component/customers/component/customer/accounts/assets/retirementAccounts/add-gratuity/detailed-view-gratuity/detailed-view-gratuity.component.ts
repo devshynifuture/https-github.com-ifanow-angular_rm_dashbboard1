@@ -15,11 +15,15 @@ export class DetailedViewGratuityComponent implements OnInit {
   bankList:any = [];
   constructor(public utils: UtilService, private subInjectService: SubscriptionInject, private enumService: EnumServiceService) {
   }
+  clientFamilybankList:any = [];
   ngOnInit() {
-    this.gratuity = this.inputData
     this.bankList = this.enumService.getBank();
-
+    this.clientFamilybankList = this.enumService.getclientFamilybankList();
+    console.log('bank', this.clientFamilybankList);
+    
+    this.gratuity = this.inputData
   }
+
   @Input()
   set data(data) {
     this.inputData = data;

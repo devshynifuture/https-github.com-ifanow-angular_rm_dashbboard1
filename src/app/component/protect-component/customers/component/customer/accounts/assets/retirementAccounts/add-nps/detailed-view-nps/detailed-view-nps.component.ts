@@ -15,11 +15,13 @@ export class DetailedViewNpsComponent implements OnInit {
   constructor(private subInjectService: SubscriptionInject, private enumService: EnumServiceService) {
   }
 
+  clientFamilybankList:any = [];
   ngOnInit() {
+    this.bankList = this.enumService.getBank();
+    this.clientFamilybankList = this.enumService.getclientFamilybankList();
     this.npsData
 
     //link bank
-    this.bankList = this.enumService.getBank();
     //link bank
   }
 
