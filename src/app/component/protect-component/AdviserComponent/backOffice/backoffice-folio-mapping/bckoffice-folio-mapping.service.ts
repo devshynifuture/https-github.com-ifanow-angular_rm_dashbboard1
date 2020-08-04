@@ -12,7 +12,19 @@ export class BackofficeFolioMappingService {
   ) { }
 
   getMutualFundUnmapFolio(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_MUTUAL_FUND_UNMAP_FOLIO_LIST, data);
+  }
+
+  getMutualFundUnmapFolioSearchQuery(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_MUTUAL_FUND_UNMAP_FOLIO_SCHEME_NAME_LIST, data);
+  }
+
+  getUserDetailList(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_MUTUALFUND_UNMAP_USER_DETAIL_LIST, data);
+  }
+
+  postUserDetailList(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.GET_MUTUALFUND_UNMAP_USER_DETAIL_LIST, data);
   }
 
 }
