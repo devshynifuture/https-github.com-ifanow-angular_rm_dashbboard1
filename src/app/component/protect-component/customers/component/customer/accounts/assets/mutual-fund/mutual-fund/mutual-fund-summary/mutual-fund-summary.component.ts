@@ -83,6 +83,7 @@ export class MutualFundSummaryComponent implements OnInit {
   isAdvisorSection: boolean;
   isClient: boolean;
   toDate: any;
+  isBulkEmailing: boolean = false;
 
 
   @Input()
@@ -154,6 +155,7 @@ export class MutualFundSummaryComponent implements OnInit {
         this.advisorId = parseInt(param1.advisorId)
         this.addedData = true;
         console.log('2423425', param1)
+        this.isBulkEmailing = true
         this.getDetails()
       }
     });
@@ -412,8 +414,6 @@ export class MutualFundSummaryComponent implements OnInit {
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      toDate : this.toDate,
-      //id: 1103107
     };
     this.customerService.getMutualFund(obj).pipe(map((data) => {
       return this.doFiltering(data);
@@ -438,6 +438,9 @@ export class MutualFundSummaryComponent implements OnInit {
       if (this.addedData) {
         this.mutualFund = this.mfData
       }
+      if (this.isBulkEmailing == true) {
+        this.filterForBulkEmailing(data.mutualFundList);
+      }
       // this.mutualFund = data;
       this.mfService.changeShowMutualFundDropDown(false);
       this.calculationOninit();
@@ -445,7 +448,29 @@ export class MutualFundSummaryComponent implements OnInit {
       this.isLoading = false;
     }
   }
+  filterForBulkEmailing(data) {
+    if (data) {
+      let categoryWiseMfList = [];
+      data.forEach(element => {
+        categoryWiseMfList.push(element.id)
+      });
+      const obj = {
+        advisorId: this.advisorId,
+        clientId: this.clientId,
+        toDate: this.toDate,
+        id: categoryWiseMfList
+      };
+      this.customerService.getMutualFund(obj).subscribe(
+        data => {
+          console.log(data);
+          let response = this.mfService.doFiltering(data)
+          Object.assign(response.mutualFundList, { flag: true });
+          this.asyncFilter(response.mutualFundList);
+        }
+      );
+    }
 
+  }
   getListForPdf(columns) {
     // this.displayColumnsPDf[0].name=(columns[0] = 'schemeName')?this.displayColumnsPDf.push('Scheme name'):null;
     // this.displayColumnsPDf[1].name=(columns[1] = 'amountInvested')?'Amount invested':null;
