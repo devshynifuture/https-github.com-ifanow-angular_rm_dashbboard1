@@ -20,10 +20,14 @@ export class DatailedViewNpsHoldingsComponent implements OnInit {
   displayedColumns = ['name', 'nav', 'units', 'amount', 'value'];
   name: any;
   bankList:any =[];
+  clientFamilybankList:any = [];
   ngOnInit() {
+    this.bankList = this.enumService.getBank();
+    this.clientFamilybankList = this.enumService.getclientFamilybankList();
+    console.log( this.bankList, "bank", this.clientFamilybankList);
+    
     this.getGlobalList();
     //link bank
-    this.bankList = this.enumService.getBank();
     //link bank
   }
 

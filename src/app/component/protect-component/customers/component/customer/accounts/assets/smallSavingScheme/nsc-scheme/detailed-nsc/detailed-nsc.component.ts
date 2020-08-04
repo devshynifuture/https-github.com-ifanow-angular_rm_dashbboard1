@@ -17,9 +17,12 @@ export class DetailedNscComponent implements OnInit {
 
   data;
   matured:boolean=false;
+  clientFamilybankList:any = [];
   ngOnInit() {
-    this.nominee = this.data.nominees;
     this.bankList = this.enumService.getBank();
+    this.clientFamilybankList = this.enumService.getclientFamilybankList();
+    console.log('bank', this.clientFamilybankList);
+    this.nominee = this.data.nominees;
     console.log(this.bankList,"this.bankList");
     if(new Date(this.data.maturityDate).getTime() < new Date().getTime()){
       this.matured = true;
