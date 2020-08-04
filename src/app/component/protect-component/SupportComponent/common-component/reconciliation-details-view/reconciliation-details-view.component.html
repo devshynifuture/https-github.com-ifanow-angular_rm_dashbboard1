@@ -172,8 +172,8 @@
                         <div class="bar">
                             <!-- [matTooltipPosition]="below" -->
                             <div matTooltip="Kindly unfreeze folio, to delete transaction"
-                                [matTooltipDisabled]="!element.canDeleteTransaction">
-                                <button mat-stroked-button [disabled]="element.canDeleteTransaction"
+                                [matTooltipDisabled]="element.canDeleteTransaction">
+                                <button mat-stroked-button [disabled]="!element.canDeleteTransaction"
                                     class="bg-primary text-white mr-12 h-22 btn-xs"
                                     (click)="deleteSingleTransaction(element, i)">
                                     Delete

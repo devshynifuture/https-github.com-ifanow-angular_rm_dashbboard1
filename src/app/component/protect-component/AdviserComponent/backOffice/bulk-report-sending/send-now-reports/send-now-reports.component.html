@@ -122,8 +122,19 @@
                 </div>
             </div>
             <div class="row h-80 borderDasd" *ngIf="summary == true">
-                <div class="col-md-12 pl-0 d-flex align-items-center">
+                <div class="col-md-6 pl-0 d-flex align-items-center">
                     <h3 class="f-16 mb-0"> Summary </h3>
+                </div>
+                <div class="col-md-6 d-flex flex-column justify-content-center pl-0" *ngIf="summary == true">
+                    <h5 class="m-0">Report as on</h5>
+                    <div class="form-group m-0">
+                        <mat-form-field class="ba-date">
+                            <input class="form-control br-0 b-0" [min]="maxDate" matInput [matDatepicker]="picker3" readonly [(ngModel)]="toDate"  (dateChange)="changeFromDate($event,'reportASOn')">
+                            <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                            <mat-datepicker #picker3></mat-datepicker>
+                        </mat-form-field>
+
+                    </div>
                 </div>
             </div>
 

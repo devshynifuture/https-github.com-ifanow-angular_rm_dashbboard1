@@ -706,7 +706,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       pan: (this.invTypeCategory == '1') ? this.basicDetails.controls.pan.value : this.minorForm.value.pan,
       residentFlag: parseInt(this.invTaxStatus),
       // taxStatusId: taxStatusId,
-      relationshipId: (this.invTypeCategory == '1') ? this.basicDetails.controls.relationType.value : this.basicDetailsData.relationshipId,
+      relationshipId: (this.invTypeCategory == '1') ? this.basicDetails.controls.relationType.value : (this.minorForm.controls.gender.value == 1) ? 4 : 5,
       familyMemberType: parseInt(this.invTypeCategory),
       isKycCompliant: 1,
       aadhaarNumber: null,

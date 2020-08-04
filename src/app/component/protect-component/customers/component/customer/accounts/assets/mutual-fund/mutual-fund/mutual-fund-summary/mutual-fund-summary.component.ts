@@ -82,6 +82,9 @@ export class MutualFundSummaryComponent implements OnInit {
   noMapping: boolean;
   isAdvisorSection: boolean;
   isClient: boolean;
+  toDate: any;
+  isBulkEmailing: boolean = false;
+  pdfData: any;
 
 
   @Input()
@@ -113,6 +116,9 @@ export class MutualFundSummaryComponent implements OnInit {
         let param1 = queryParamMap['params'];
         this.clientId = parseInt(param1.clientId)
         this.advisorId = parseInt(param1.advisorId)
+        //this.setDefaultFilterData.toDate = param1.toDate;
+        this.toDate = param1.toDate;
+        this.toDate = this.datePipe.transform(this.toDate, 'yyyy-MM-dd');
         console.log('2423425', param1)
       }
       else {
@@ -150,6 +156,7 @@ export class MutualFundSummaryComponent implements OnInit {
         this.advisorId = parseInt(param1.advisorId)
         this.addedData = true;
         console.log('2423425', param1)
+        this.isBulkEmailing = true
         this.getDetails()
       }
     });
@@ -320,31 +327,64 @@ export class MutualFundSummaryComponent implements OnInit {
 
   }
   styleObject(header): Object {
-
-    if (header == 'schemeName') {
+    this.pdfData = []
+    if (header == 'schemeName') { 
       Object.assign(this.customDataSource.data, { schemeName: true });
+      this.pdfData.push({ style: 'width:26%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7' })
+      this.pdfData.push({  schemeName: true })  
+      this.pdfData.push({  name: 'Scheme name' })  
     } else if (header == 'amountInvested') {
       Object.assign(this.customDataSource.data, { amountInvested: true });
+      this.pdfData.push({ style: 'width:7%;text-align: right; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;' })
+      this.pdfData.push({  amountInvested: true })  
+      this.pdfData.push({  name: 'Amount invested' })  
     } else if (header == 'currentValue') {
       Object.assign(this.customDataSource.data, { currentValue: true });
+      this.pdfData.push({ style: 'width:6%;text-align: right; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;' })
+      this.pdfData.push({  currentValue: true })  
+      this.pdfData.push({  name: 'Current value' })  
     } else if (header == 'unrealizedProfit') {
       Object.assign(this.customDataSource.data, { unrealizedProfit: true });
+      this.pdfData.push({ style: 'width:8%;text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7;' })
+      this.pdfData.push({  unrealizedProfit: true })  
+      this.pdfData.push({  name: 'Unrealised profit' })  
     } else if (header == 'absoluteReturn') {
       Object.assign(this.customDataSource.data, { absoluteReturn: true });
+       this.pdfData.push({ style: 'width:5%;text-align: right; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;' })
+      this.pdfData.push({  absoluteReturn: true })  
+      this.pdfData.push({  name: 'Absolute return' })  
     } else if (header == 'xirr') {
       Object.assign(this.customDataSource.data, { xirr: true });
+       this.pdfData.push({ style: 'width:5%;text-align: right; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;' })
+      this.pdfData.push({  xirr: true })  
+      this.pdfData.push({  name: 'XIRR' })  
     } else if (header == 'dividendPayout') {
       Object.assign(this.customDataSource.data, { dividendPayout: true });
+       this.pdfData.push({ style: 'width:7%;text-align: right; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;' })
+      this.pdfData.push({  dividendPayout: true })  
+      this.pdfData.push({  name: 'Dividend payout' })  
     } else if (header == 'switchOut') {
       Object.assign(this.customDataSource.data, { switchOut: true });
+       this.pdfData.push({ style: 'width:9%;text-align: right; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;' })
+      this.pdfData.push({  switchOut: true })  
+      this.pdfData.push({  name: 'Switch out' })  
     } else if (header == 'balanceUnit') {
       Object.assign(this.customDataSource.data, { balanceUnit: true });
+       this.pdfData.push({ style: 'width:7%;text-align: right; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;' })
+      this.pdfData.push({  balanceUnit: true })  
+      this.pdfData.push({  name: 'Balaance unit' })  
     } else if (header == 'navDate') {
       Object.assign(this.customDataSource.data, { navDate: true });
+       this.pdfData.push({ style: 'width:9%;text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7;' })
+      this.pdfData.push({  navDate: true })  
+      this.pdfData.push({  name: 'NAV date' })  
     } else if (header == 'sipAmount') {
       Object.assign(this.customDataSource.data, { sipAmount: true });
+       this.pdfData.push({ style: 'width:5%;text-align: right; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;' })
+      this.pdfData.push({  sipAmount: true })  
+      this.pdfData.push({  name: 'Sip Amount' })  
     }
-
+    console.log('3789',this.pdfData)
     return {}
   }
   calculationOninit() {
@@ -407,7 +447,7 @@ export class MutualFundSummaryComponent implements OnInit {
     this.summary.data = [{}, {}, {}];
     const obj = {
       advisorId: this.advisorId,
-      clientId: this.clientId
+      clientId: this.clientId,
     };
     this.customerService.getMutualFund(obj).pipe(map((data) => {
       return this.doFiltering(data);
@@ -432,6 +472,9 @@ export class MutualFundSummaryComponent implements OnInit {
       if (this.addedData) {
         this.mutualFund = this.mfData
       }
+      if (this.isBulkEmailing == true) {
+        this.filterForBulkEmailing(data.mutualFundList);
+      }
       // this.mutualFund = data;
       this.mfService.changeShowMutualFundDropDown(false);
       this.calculationOninit();
@@ -439,7 +482,29 @@ export class MutualFundSummaryComponent implements OnInit {
       this.isLoading = false;
     }
   }
+  filterForBulkEmailing(data) {
+    if (data) {
+      let categoryWiseMfList = [];
+      data.forEach(element => {
+        categoryWiseMfList.push(element.id)
+      });
+      const obj = {
+        advisorId: this.advisorId,
+        clientId: this.clientId,
+        toDate: this.toDate,
+        id: categoryWiseMfList
+      };
+      this.customerService.getMutualFund(obj).subscribe(
+        data => {
+          console.log(data);
+          let response = this.mfService.doFiltering(data)
+          Object.assign(response.mutualFundList, { flag: true });
+          this.asyncFilter(response.mutualFundList);
+        }
+      );
+    }
 
+  }
   getListForPdf(columns) {
     // this.displayColumnsPDf[0].name=(columns[0] = 'schemeName')?this.displayColumnsPDf.push('Scheme name'):null;
     // this.displayColumnsPDf[1].name=(columns[1] = 'amountInvested')?'Amount invested':null;
@@ -662,7 +727,7 @@ export class MutualFundSummaryComponent implements OnInit {
       transactionPeriod: this.setDefaultFilterData.transactionPeriod,
       transactionPeriodCheck: this.setDefaultFilterData.transactionPeriodCheck,
       fromDate: this.setDefaultFilterData.fromDate,
-      toDate: this.setDefaultFilterData.toDate,
+      toDate: (this.setDefaultFilterData.toDate)?this.setDefaultFilterData.toDate:this.toDate,
       savedFilterData: this.savedFilterData,
       selectFilter: (this.saveFilterData) ? this.saveFilterData.selectFilter : null,
       // transactionTypeList:this.setDefaultFilterData.transactionTypeList

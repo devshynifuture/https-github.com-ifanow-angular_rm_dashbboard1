@@ -4,6 +4,9 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatSort} from '@angular/material';
 import { LoanAmortsComponent } from '../../customer/accounts/liabilities/loan-amorts/loan-amorts.component';
 import { UtilService } from 'src/app/services/util.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { CustomerService } from '../../customer/customer.service';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
 
 @Component({
   selector: 'app-liabilities-detail',
@@ -16,18 +19,24 @@ export class LiabilitiesDetailComponent implements OnInit {
   dataSourceDetail = ELEMENT_DATA;
   ownerName: any;
   libility: any;
+  advisorId: any;
+  clientId: any;
+  propertyList=[];
 
   // dataSource: any = new MatTableDataSource();
   // @ViewChild('epfListTable', {static: false}) holdingsTableSort: MatSort;
   // displayedColumns = ['no', 'date', 'bal', 'pay-time', 'pre-pay', 'total-pay', 'interest', 'principal', 'end-bal'];
-  constructor(private subInjectService: SubscriptionInject) {
+  constructor(private subInjectService: SubscriptionInject,private custmService:CustomerService,private enumService:EnumServiceService) {
   }
 
   @Input()
   set data(inputData) {
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId();
     this._data = inputData;
     console.log('AddLiabilitiesComponent Input data : ', this._data);
     this.libility = this._data
+    this.getRealEstate();
 
   }
 
@@ -35,11 +44,40 @@ export class LiabilitiesDetailComponent implements OnInit {
     return this._data;
   }
   ngOnInit() {
+    
     console.log('AddLiabilitiesComponent ngOnInit : ', this._data);
     // this.dataSource.data = this._data.loanAmorts;
     // this.dataSource.sort = this.holdingsTableSort;
   }
-
+  getRealEstate() {
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId
+    };
+    this.custmService.getRealEstate(obj).subscribe(
+      data => {
+        console.log(data);
+        if(data){
+          data.assetList.forEach((element,ind) => {
+            element.typeString = this.enumService.getRealEstateTypeStringFromValue(element.typeId);
+            const obj={
+              id:ind+1,
+              ownerName:element.ownerList[0].name,
+              propertyName:element.typeString
+            }
+            this.propertyList.push(obj);
+          });
+          this.propertyList.forEach(element => {
+            if(this.libility.propertyId == element.id){
+              this.libility.propertyName = element.propertyName
+            }
+          });
+        }
+      }
+      , (error) => {
+        // this.eventService.showErrorMessage(error);
+      });
+  }
   close() {
     this.subInjectService.changeNewRightSliderState({state: 'close'});
   }

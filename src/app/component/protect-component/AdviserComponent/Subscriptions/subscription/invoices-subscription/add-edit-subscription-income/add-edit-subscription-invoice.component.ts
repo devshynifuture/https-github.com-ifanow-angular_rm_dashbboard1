@@ -332,9 +332,12 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
         igst: (this.editPayment.value.taxStatus == 'IGST(18%)') ? 18 : null,
         cgst: (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? 9 : null,
         sgst: (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? 9 : null,
-        igstTaxAmount: (this.editPayment.value.taxStatus == 'IGST(18%)') ? this.finAmount : null,
-        cgstTaxAmount: (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? this.finAmountC : null,
-        sgstTaxAmount: (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? this.finAmountS : null,
+        // igstTaxAmount: (this.editPayment.value.taxStatus == 'IGST(18%)') ? this.finAmount : null,
+        // cgstTaxAmount: (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? this.finAmountC : null,
+        // sgstTaxAmount: (this.editPayment.value.taxStatus == 'SGST(9%)|CGST(9%)') ? this.finAmountS : null,
+        igstTaxAmount:this.igstTaxAmount ? this.igstTaxAmount: null,
+        cgstTaxAmount: this.cgstTaxAmount ? this.cgstTaxAmount :null,
+        sgstTaxAmount: this.sgstTaxAmount ? this.sgstTaxAmount: null,
         footnote: this.editPayment.value.footnote,
         terms: this.editPayment.value.terms
       };
@@ -381,7 +384,14 @@ export class AddEditSubscriptionInvoiceComponent implements OnInit {
       this.Close('close', true);
     }
   }
-
+  changeSelection(value){
+    if(value == "IGST(18%)"){
+      this.cgstTaxAmount=0;
+      this.sgstTaxAmount=0;
+    }else{
+      this.igstTaxAmount=0;
+    }
+  }
   getClients() {
     const obj = {
       advisorId: this.advisorId,
