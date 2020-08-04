@@ -23,9 +23,12 @@ export class DetailedViewRecuringDepositComponent implements OnInit {
     return this.inputData;
   }
   
+  clientFamilybankList:any = [];
   ngOnInit() {
-    this.recuringDeposit = this.inputData;
     this.bankList = this.enumService.getBank();
+    this.clientFamilybankList = this.enumService.getclientFamilybankList();
+    console.log(this.bankList, 'this.bankList', this.clientFamilybankList);
+    this.recuringDeposit = this.inputData;
   }
   close() {
     this.subInjectService.changeNewRightSliderState({state: 'close'});

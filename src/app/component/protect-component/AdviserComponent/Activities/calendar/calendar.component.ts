@@ -4,6 +4,7 @@ import { calendarService } from './calendar.service';
 import { AuthService } from '../../../../../auth-service/authService';
 import { EventDialog } from './event-dialog';
 import { Router } from '@angular/router';
+import { EmailServiceService } from '../../Email/email-service.service';
 
 
 export interface DialogData {
@@ -44,7 +45,7 @@ export class CalendarComponent implements OnInit {
   userInfo: any;
   currentYear: any;
   excessAllow: any;
-  constructor(public dialog: MatDialog, private calenderService: calendarService, private router: Router) {
+  constructor(public dialog: MatDialog, private calenderService: calendarService, private router: Router, private emailService: EmailServiceService) {
 
   }
 
@@ -66,6 +67,19 @@ export class CalendarComponent implements OnInit {
     //   this.mailConnect(false);
     // }
     this.excessAllow = localStorage.getItem('successStoringToken')
+    this.checkConnectGoogle();
+  }
+
+  checkConnectGoogle() {
+    
+    this.emailService.getProfile().subscribe(res => {
+      if(res){
+        this.excessAllow = true;
+      }
+      else{
+        this.excessAllow = false;
+      }
+    })
   }
 
   getEvent() {

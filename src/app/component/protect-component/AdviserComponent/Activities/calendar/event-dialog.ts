@@ -66,7 +66,7 @@ export class EventDialog implements OnInit {
       startDateTime: ["", [Validators.required]],
       endDateTime: ["", [Validators.required]],
       recurrence: [this.eventData.recurrence],
-      attendee: ["", [Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
+      attendee: [""],
       attendeesList: [this.attendeesArr],
       startTime: [this.startTime],
       endTime: [this.endTime]

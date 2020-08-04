@@ -125,9 +125,9 @@
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Linked bank account
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" [hidden]="!data.userBankMappingId" *ngFor="let bank of bankList">
-                        <div [ngSwitch]="data.userBankMappingId">
-                            <div *ngSwitchCase="bank.id">{{bank.bankNameAndLast4Digit}}</div>
+                    <div class="col-md-4 text-right f-14 roboto p-0" [hidden]="!data.userBankMappingId" >
+                        <div *ngFor="let bank of clientFamilybankList" [ngSwitch]="data.userBankMappingId">
+                            <span *ngSwitchCase="bank.id">{{bank.bankNameAndLast4Digit}}</span>
                         </div>
                     </div>
                     <div *ngIf="!data.userBankMappingId" class="col-md-4 text-right f-14 roboto p-0">

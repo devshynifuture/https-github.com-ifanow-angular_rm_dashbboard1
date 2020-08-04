@@ -22,9 +22,12 @@ export class DetailedViewBondsComponent implements OnInit {
   }
 
   matured:boolean=false;
+  clientFamilybankList:any = [];
   ngOnInit() {
-    this.bonds = this.inputData;
     this.bankList = this.enumService.getBank();
+    this.clientFamilybankList = this.enumService.getclientFamilybankList();
+    console.log(this.bankList, 'this.bankList', this.clientFamilybankList);
+    this.bonds = this.inputData;
     if(new Date(this.inputData.maturityDate).getTime() < new Date().getTime()){
       this.matured = true;
     }

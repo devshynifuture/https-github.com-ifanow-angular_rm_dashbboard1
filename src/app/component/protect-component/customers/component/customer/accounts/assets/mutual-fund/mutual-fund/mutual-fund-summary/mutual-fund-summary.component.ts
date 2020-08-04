@@ -84,6 +84,7 @@ export class MutualFundSummaryComponent implements OnInit {
   isClient: boolean;
   toDate: any;
   isBulkEmailing: boolean = false;
+  pdfData: any;
 
 
   @Input()
@@ -326,31 +327,29 @@ export class MutualFundSummaryComponent implements OnInit {
 
   }
   styleObject(header): Object {
-
-    if (header == 'schemeName') {
+    if (header == 'schemeName') { 
       Object.assign(this.customDataSource.data, { schemeName: true });
     } else if (header == 'amountInvested') {
-      Object.assign(this.customDataSource.data, { amountInvested: true });
+      Object.assign(this.customDataSource.data, { amountInvested: true }); 
     } else if (header == 'currentValue') {
       Object.assign(this.customDataSource.data, { currentValue: true });
     } else if (header == 'unrealizedProfit') {
-      Object.assign(this.customDataSource.data, { unrealizedProfit: true });
+      Object.assign(this.customDataSource.data, { unrealizedProfit: true }); 
     } else if (header == 'absoluteReturn') {
       Object.assign(this.customDataSource.data, { absoluteReturn: true });
     } else if (header == 'xirr') {
       Object.assign(this.customDataSource.data, { xirr: true });
     } else if (header == 'dividendPayout') {
-      Object.assign(this.customDataSource.data, { dividendPayout: true });
+      Object.assign(this.customDataSource.data, { dividendPayout: true }); 
     } else if (header == 'switchOut') {
-      Object.assign(this.customDataSource.data, { switchOut: true });
+      Object.assign(this.customDataSource.data, { switchOut: true });  
     } else if (header == 'balanceUnit') {
       Object.assign(this.customDataSource.data, { balanceUnit: true });
     } else if (header == 'navDate') {
       Object.assign(this.customDataSource.data, { navDate: true });
     } else if (header == 'sipAmount') {
-      Object.assign(this.customDataSource.data, { sipAmount: true });
+      Object.assign(this.customDataSource.data, { sipAmount: true });  
     }
-
     return {}
   }
   calculationOninit() {
