@@ -235,7 +235,7 @@ export class ScenariosPlanComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(AddScenariosComponent, {
       width: '670px',
-      height:'600px'
+
     });
 
     dialogRef.afterClosed().subscribe(result => {
