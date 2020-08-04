@@ -416,7 +416,11 @@ export class MutualFundOverviewComponent implements OnInit {
       this.mfData = data;
       if (this.mfData.mutualFundCategoryMastersList.length > 0) {
         if (this.mfData.mutualFundCategoryMastersList[0].currentValue == 0 || this.mfData.mutualFundCategoryMastersList[0].balanceUnits == 0 || this.mfData.mutualFundCategoryMastersList[0].balanceUnits < 0) {
-          this.cashFlowXirr = this.mfData.mutualFundCategoryMastersList[1].cashFlowxirr;
+          if(this.mfData.mutualFundCategoryMastersList.length > 1){
+            this.cashFlowXirr = this.mfData.mutualFundCategoryMastersList[1].cashFlowxirr;
+          }else{
+            this.cashFlowXirr = this.mfData.mutualFundCategoryMastersList[0].cashFlowxirr;
+          }
         } else {
           this.cashFlowXirr = this.mfData.mutualFundCategoryMastersList[0].cashFlowxirr;
         }

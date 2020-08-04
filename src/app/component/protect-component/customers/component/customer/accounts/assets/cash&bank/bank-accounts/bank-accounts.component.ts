@@ -64,6 +64,7 @@ export class BankAccountsComponent implements OnInit {
   bankList:any = [];
   accountTypes:any =[];
   callMethod: { methodName: string; ParamValue: any; };
+  userType: any;
   constructor(private fb: FormBuilder, private custumService: CustomerService, private enumDataService: EnumDataService, public subInjectService: SubscriptionInject, private datePipe: DatePipe, public utils: UtilService, public eventService: EventService, public dialog: MatDialog, private enumService: EnumServiceService) { }
 
   @Input()
@@ -105,20 +106,23 @@ export class BankAccountsComponent implements OnInit {
   }
 
   disabledMember(value, type) {
+    this.userType=type;
     this.callMethod = {
       methodName : "disabledMember",
       ParamValue : value,
     //  disControl : type
     }
+    if(this.userType != 'nominee'){
+      if(this.bankData){
+        this.bankAccounts.get("bankAcNo").setValue(this.bankData.userBankMappingId);
+        this.bankAccounts.get("accountType").setValue(this.bankData.accountType);
+      }
+      else{
+        this.bankAccounts.get("bankAcNo").setValue("");
+        this.bankAccounts.get("accountType").setValue("");
+      }
+    }
 
-    if(this.bankData){
-      this.bankAccounts.get("bankAcNo").setValue(this.bankData.userBankMappingId);
-      this.bankAccounts.get("accountType").setValue(this.bankData.accountType);
-    }
-    else{
-      this.bankAccounts.get("bankAcNo").setValue("");
-      this.bankAccounts.get("accountType").setValue("");
-    }
   }
 
   displayControler(con) {
@@ -445,12 +449,15 @@ export class BankAccountsComponent implements OnInit {
   }
 
   getBank(){
-    if(this.enumService.getBank().length > 0){
-      this.bankList = this.enumService.getBank();
+    if(this.userType != 'nominee'){
+      if(this.enumService.getBank().length > 0){
+        this.bankList = this.enumService.getBank();
+      }
+      else{
+        this.bankList = [];
+      }
     }
-    else{
-      this.bankList = [];
-    }
+
     console.log(this.bankList,"this.bankList2");
   }
    //link bank
