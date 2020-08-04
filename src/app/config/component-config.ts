@@ -86,6 +86,7 @@ export const appConfig = {
   GET_MF_CLIENTS: 'mutual-fund/report/client-setting/list/get',
   SAVE_SETTING: 'mutual-fund/report/client-setting/edit',
   GET_MUTUAL_FUND_UNMAP_FOLIO_SCHEME_NAME_LIST: 'mutual-fund/unmap/folio/scheme-name/list/get',
+  GET_MUTUAL_FUND_UNMAP_FOLIO_LIST: 'mutual-fund/unmap/folio/list/get',
 
   /////////////////////////////Accounts///////////////////////////////////
   ADD_FIXEDDEPOSIT: 'account/asset/fixed-income/fixed-deposit/add',
