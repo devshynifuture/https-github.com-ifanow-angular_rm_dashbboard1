@@ -445,6 +445,7 @@ export class UtilService {
       htmlInput: data.htmlInput,
       name: data.name,
       fromEmail: data.fromEmail,
+      landscape: data.landscape,
       toEmail: data.toEmail,
       clientId: data.clientId,
       advisorId: data.advisorId,
