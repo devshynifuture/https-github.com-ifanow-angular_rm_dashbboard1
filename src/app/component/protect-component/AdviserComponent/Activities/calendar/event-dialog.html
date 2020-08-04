@@ -154,7 +154,7 @@
 
     <ul class="blue">
         <li *ngFor="let event of eventData.events" (click)="viewEvent(event)">
-            <span *ngIf="event.startTime != null">{{event.startTime }}</span> {{event.summary}}
+            <span *ngIf="event.startTime != null" style="margin-right: 5px">{{event.startTime}}</span>{{event.summary}}
         </li>
     </ul>
 </div>

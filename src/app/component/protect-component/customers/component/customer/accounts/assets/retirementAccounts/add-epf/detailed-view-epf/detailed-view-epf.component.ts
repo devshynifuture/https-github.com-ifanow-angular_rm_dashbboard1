@@ -27,9 +27,10 @@ export class DetailedViewEPFComponent implements OnInit {
     return this.inputData;
   }
 
+  clientFamilybankList:any = [];
   ngOnInit() {
     this.bankList = this.enumService.getBank();
-
+    this.clientFamilybankList = this.enumService.getclientFamilybankList();
   }
 
   close() {

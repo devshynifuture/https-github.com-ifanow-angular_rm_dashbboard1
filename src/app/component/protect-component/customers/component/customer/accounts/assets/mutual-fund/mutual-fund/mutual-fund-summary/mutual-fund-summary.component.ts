@@ -82,6 +82,9 @@ export class MutualFundSummaryComponent implements OnInit {
   noMapping: boolean;
   isAdvisorSection: boolean;
   isClient: boolean;
+  toDate: any;
+  isBulkEmailing: boolean = false;
+  pdfData: any;
 
 
   @Input()
@@ -113,6 +116,9 @@ export class MutualFundSummaryComponent implements OnInit {
         let param1 = queryParamMap['params'];
         this.clientId = parseInt(param1.clientId)
         this.advisorId = parseInt(param1.advisorId)
+        //this.setDefaultFilterData.toDate = param1.toDate;
+        this.toDate = param1.toDate;
+        this.toDate = this.datePipe.transform(this.toDate, 'yyyy-MM-dd');
         console.log('2423425', param1)
       }
       else {
@@ -150,6 +156,7 @@ export class MutualFundSummaryComponent implements OnInit {
         this.advisorId = parseInt(param1.advisorId)
         this.addedData = true;
         console.log('2423425', param1)
+        this.isBulkEmailing = true
         this.getDetails()
       }
     });
@@ -320,31 +327,29 @@ export class MutualFundSummaryComponent implements OnInit {
 
   }
   styleObject(header): Object {
-
-    if (header == 'schemeName') {
+    if (header == 'schemeName') { 
       Object.assign(this.customDataSource.data, { schemeName: true });
     } else if (header == 'amountInvested') {
-      Object.assign(this.customDataSource.data, { amountInvested: true });
+      Object.assign(this.customDataSource.data, { amountInvested: true }); 
     } else if (header == 'currentValue') {
       Object.assign(this.customDataSource.data, { currentValue: true });
     } else if (header == 'unrealizedProfit') {
-      Object.assign(this.customDataSource.data, { unrealizedProfit: true });
+      Object.assign(this.customDataSource.data, { unrealizedProfit: true }); 
     } else if (header == 'absoluteReturn') {
       Object.assign(this.customDataSource.data, { absoluteReturn: true });
     } else if (header == 'xirr') {
       Object.assign(this.customDataSource.data, { xirr: true });
     } else if (header == 'dividendPayout') {
-      Object.assign(this.customDataSource.data, { dividendPayout: true });
+      Object.assign(this.customDataSource.data, { dividendPayout: true }); 
     } else if (header == 'switchOut') {
-      Object.assign(this.customDataSource.data, { switchOut: true });
+      Object.assign(this.customDataSource.data, { switchOut: true });  
     } else if (header == 'balanceUnit') {
       Object.assign(this.customDataSource.data, { balanceUnit: true });
     } else if (header == 'navDate') {
       Object.assign(this.customDataSource.data, { navDate: true });
     } else if (header == 'sipAmount') {
-      Object.assign(this.customDataSource.data, { sipAmount: true });
+      Object.assign(this.customDataSource.data, { sipAmount: true });  
     }
-
     return {}
   }
   calculationOninit() {
@@ -407,7 +412,7 @@ export class MutualFundSummaryComponent implements OnInit {
     this.summary.data = [{}, {}, {}];
     const obj = {
       advisorId: this.advisorId,
-      clientId: this.clientId
+      clientId: this.clientId,
     };
     this.customerService.getMutualFund(obj).pipe(map((data) => {
       return this.doFiltering(data);
@@ -432,6 +437,9 @@ export class MutualFundSummaryComponent implements OnInit {
       if (this.addedData) {
         this.mutualFund = this.mfData
       }
+      if (this.isBulkEmailing == true) {
+        this.filterForBulkEmailing(data.mutualFundList);
+      }
       // this.mutualFund = data;
       this.mfService.changeShowMutualFundDropDown(false);
       this.calculationOninit();
@@ -439,7 +447,29 @@ export class MutualFundSummaryComponent implements OnInit {
       this.isLoading = false;
     }
   }
+  filterForBulkEmailing(data) {
+    if (data) {
+      let categoryWiseMfList = [];
+      data.forEach(element => {
+        categoryWiseMfList.push(element.id)
+      });
+      const obj = {
+        advisorId: this.advisorId,
+        clientId: this.clientId,
+        toDate: this.toDate,
+        id: categoryWiseMfList
+      };
+      this.customerService.getMutualFund(obj).subscribe(
+        data => {
+          console.log(data);
+          let response = this.mfService.doFiltering(data)
+          Object.assign(response.mutualFundList, { flag: true });
+          this.asyncFilter(response.mutualFundList);
+        }
+      );
+    }
 
+  }
   getListForPdf(columns) {
     // this.displayColumnsPDf[0].name=(columns[0] = 'schemeName')?this.displayColumnsPDf.push('Scheme name'):null;
     // this.displayColumnsPDf[1].name=(columns[1] = 'amountInvested')?'Amount invested':null;
@@ -662,7 +692,7 @@ export class MutualFundSummaryComponent implements OnInit {
       transactionPeriod: this.setDefaultFilterData.transactionPeriod,
       transactionPeriodCheck: this.setDefaultFilterData.transactionPeriodCheck,
       fromDate: this.setDefaultFilterData.fromDate,
-      toDate: this.setDefaultFilterData.toDate,
+      toDate: (this.setDefaultFilterData.toDate)?this.setDefaultFilterData.toDate:this.toDate,
       savedFilterData: this.savedFilterData,
       selectFilter: (this.saveFilterData) ? this.saveFilterData.selectFilter : null,
       // transactionTypeList:this.setDefaultFilterData.transactionTypeList

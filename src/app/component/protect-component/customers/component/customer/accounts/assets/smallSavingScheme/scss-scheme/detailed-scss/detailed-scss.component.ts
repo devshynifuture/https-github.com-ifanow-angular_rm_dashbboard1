@@ -15,9 +15,11 @@ export class DetailedScssComponent implements OnInit {
   constructor(private subInjectService: SubscriptionInject,  private enumService: EnumServiceService) {
   }
 
+  clientFamilybankList:any = [];
   ngOnInit() {
     this.bankList = this.enumService.getBank();
-    console.log('DetailedNscComponent ngOnInit data : ', this.data);
+    this.clientFamilybankList = this.enumService.getclientFamilybankList();
+    console.log(this.bankList, 'this.bankList', this.clientFamilybankList);
   }
 
   close() {

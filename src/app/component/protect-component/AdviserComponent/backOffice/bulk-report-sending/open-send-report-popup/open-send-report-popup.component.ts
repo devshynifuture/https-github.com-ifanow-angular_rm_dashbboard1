@@ -58,7 +58,8 @@ export class OpenSendReportPopupComponent implements OnInit {
     } else if (this.data.reportType == 'summary') {
       this.setObj = {
         advisorId: AuthService.getAdvisorId(),
-        reportTypeId: 2
+        reportTypeId: 2,
+        toDate: this.data.selectedElement.toDate
       }
       this.reportType = 2
     } else if (this.data.reportType == 'allTransactions') {

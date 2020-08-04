@@ -298,7 +298,7 @@ export class BondsComponent implements OnInit {
       description: [(data == undefined) ? '' : data.description,],
       // bankName: [(data == undefined) ? '' : data.bankName, [Validators.required]],
       id: [(data == undefined) ? '' : data.id,],
-      bondNo: [(data == undefined) ? '' : data.bondNo,],
+      bondNo: [(data == undefined) ? '' : data.bondNumber,],
       familyMemberId: [[(data == undefined) ? '' : data.familyMemberId],],
       nominees: this.nominees,
       getNomineeName: this.fb.array([this.fb.group({
@@ -392,7 +392,7 @@ export class BondsComponent implements OnInit {
         ownerList: this.bonds.value.getCoOwnerName,
         amountInvested: parseInt(this.bonds.controls.amountInvest.value),
         bondName: this.bonds.controls.bondName.value,
-        bond_number: this.bonds.controls.bondNo.value,
+        bondNumber: this.bonds.controls.bondNo.value,
         // couponAmount: this.bonds.controls.couponAmount.value,
         couponPayoutFrequencyId: parseInt(this.bonds.controls.couponOption.value),
         couponRate: this.bonds.controls.interestRate.value,

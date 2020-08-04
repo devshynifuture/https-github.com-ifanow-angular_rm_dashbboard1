@@ -17,9 +17,12 @@ export class DetailedPoSavingsComponent implements OnInit {
 
   data;
 
+  clientFamilybankList:any = [];
   ngOnInit() {
-    this.nominee = this.data.nominees;
     this.bankList = this.enumService.getBank();
+    this.clientFamilybankList = this.enumService.getclientFamilybankList();
+    console.log(this.bankList, 'this.bankList', this.clientFamilybankList);
+    this.nominee = this.data.nominees;
 
   }
 
