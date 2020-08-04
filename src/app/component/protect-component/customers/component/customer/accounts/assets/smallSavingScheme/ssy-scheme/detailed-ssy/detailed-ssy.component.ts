@@ -17,10 +17,13 @@ export class DetailedSsyComponent implements OnInit {
 
   data;
 
+  clientFamilybankList:any = [];
   ngOnInit() {
+    this.bankList = this.enumService.getBank();
+    this.clientFamilybankList = this.enumService.getclientFamilybankList();
+    console.log(this.bankList, 'this.bankList', this.clientFamilybankList);
     console.log('DetailedSsysComponent ngOnInit data : ', this.data);
     this.nominee = this.data.nominees;
-    this.bankList = this.enumService.getBank();
   }
 
   close() {

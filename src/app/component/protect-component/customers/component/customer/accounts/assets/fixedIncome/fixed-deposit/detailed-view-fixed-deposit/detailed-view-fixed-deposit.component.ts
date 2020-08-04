@@ -33,11 +33,13 @@ export class DetailedViewFixedDepositComponent implements OnInit {
   }
 
   matured:boolean=false;
+  clientFamilybankList:any = [];
   ngOnInit() {
+    this.bankList = this.enumService.getBank();
+    this.clientFamilybankList = this.enumService.getclientFamilybankList();
+    console.log(this.bankList, 'this.bankList', this.clientFamilybankList);
     console.log('inputData', this.inputData);
     this.fixedDeposit = this.inputData;
-    this.bankList = this.enumService.getBank();
-    console.log(this.bankList, 'this.bankList');
     if(new Date(this.inputData.maturityDate).getTime() < new Date().getTime()){
       this.matured = true;
     }

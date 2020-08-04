@@ -15,9 +15,12 @@ export class DetailedKvpComponent implements OnInit {
   constructor(private subInjectService: SubscriptionInject,  private enumService: EnumServiceService) {
   }
 
+  clientFamilybankList:any = [];
   ngOnInit() {
-    console.log('DetailedKvpComponent ngOnInit data : ', this.data);
     this.bankList = this.enumService.getBank();
+    this.clientFamilybankList = this.enumService.getclientFamilybankList();
+    console.log(this.bankList, 'this.bankList', this.clientFamilybankList);
+    console.log('DetailedKvpComponent ngOnInit data : ', this.data);
 
   }
 

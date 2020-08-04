@@ -96,12 +96,13 @@ export class EnumDataService {
     return new Promise(function (resolve, reject) {
       // this.advisorId = AuthService.getAdvisorId();
       // this.clientData = AuthService.getClientData();
-
+      if(userData[0].familyMemberAge < 18){
+        // let self = this;
+      self.clientData = AuthService.getClientData();
       const obj = {
-        userId: self.userData[0].id == 0 ? self.userData[0].clientId : self.userData[0].id,
-        userType: self.userData[0].userType
+        clientId: self.clientData.clientId
       };
-      self.custumService.getBankList(obj).subscribe(
+      self.custumService.getclientFamilybankList(obj).subscribe(
         (data) => {
           self.bankList = data;
           resolve(data);
@@ -109,8 +110,24 @@ export class EnumDataService {
         },
         (err) => {
           reject('failed');
-        }
-      );
+        });
+      }
+      else{
+        const obj = {
+          userId: self.userData[0].id == 0 ? self.userData[0].clientId : self.userData[0].id,
+          userType: self.userData[0].userType
+        };
+        self.custumService.getBankList(obj).subscribe(
+          (data) => {
+            self.bankList = data;
+            resolve(data);
+            self.enumService.addBank(self.bankList);
+          },
+          (err) => {
+            reject('failed');
+          }
+        );
+      }
     });
   }
 
