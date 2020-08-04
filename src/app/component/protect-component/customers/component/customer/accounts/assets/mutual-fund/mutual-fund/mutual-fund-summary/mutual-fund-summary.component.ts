@@ -327,64 +327,29 @@ export class MutualFundSummaryComponent implements OnInit {
 
   }
   styleObject(header): Object {
-    this.pdfData = []
     if (header == 'schemeName') { 
       Object.assign(this.customDataSource.data, { schemeName: true });
-      this.pdfData.push({ style: 'width:26%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7' })
-      this.pdfData.push({  schemeName: true })  
-      this.pdfData.push({  name: 'Scheme name' })  
     } else if (header == 'amountInvested') {
-      Object.assign(this.customDataSource.data, { amountInvested: true });
-      this.pdfData.push({ style: 'width:7%;text-align: right; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;' })
-      this.pdfData.push({  amountInvested: true })  
-      this.pdfData.push({  name: 'Amount invested' })  
+      Object.assign(this.customDataSource.data, { amountInvested: true }); 
     } else if (header == 'currentValue') {
       Object.assign(this.customDataSource.data, { currentValue: true });
-      this.pdfData.push({ style: 'width:6%;text-align: right; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;' })
-      this.pdfData.push({  currentValue: true })  
-      this.pdfData.push({  name: 'Current value' })  
     } else if (header == 'unrealizedProfit') {
-      Object.assign(this.customDataSource.data, { unrealizedProfit: true });
-      this.pdfData.push({ style: 'width:8%;text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7;' })
-      this.pdfData.push({  unrealizedProfit: true })  
-      this.pdfData.push({  name: 'Unrealised profit' })  
+      Object.assign(this.customDataSource.data, { unrealizedProfit: true }); 
     } else if (header == 'absoluteReturn') {
       Object.assign(this.customDataSource.data, { absoluteReturn: true });
-       this.pdfData.push({ style: 'width:5%;text-align: right; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;' })
-      this.pdfData.push({  absoluteReturn: true })  
-      this.pdfData.push({  name: 'Absolute return' })  
     } else if (header == 'xirr') {
       Object.assign(this.customDataSource.data, { xirr: true });
-       this.pdfData.push({ style: 'width:5%;text-align: right; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;' })
-      this.pdfData.push({  xirr: true })  
-      this.pdfData.push({  name: 'XIRR' })  
     } else if (header == 'dividendPayout') {
-      Object.assign(this.customDataSource.data, { dividendPayout: true });
-       this.pdfData.push({ style: 'width:7%;text-align: right; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;' })
-      this.pdfData.push({  dividendPayout: true })  
-      this.pdfData.push({  name: 'Dividend payout' })  
+      Object.assign(this.customDataSource.data, { dividendPayout: true }); 
     } else if (header == 'switchOut') {
-      Object.assign(this.customDataSource.data, { switchOut: true });
-       this.pdfData.push({ style: 'width:9%;text-align: right; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;' })
-      this.pdfData.push({  switchOut: true })  
-      this.pdfData.push({  name: 'Switch out' })  
+      Object.assign(this.customDataSource.data, { switchOut: true });  
     } else if (header == 'balanceUnit') {
       Object.assign(this.customDataSource.data, { balanceUnit: true });
-       this.pdfData.push({ style: 'width:7%;text-align: right; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;' })
-      this.pdfData.push({  balanceUnit: true })  
-      this.pdfData.push({  name: 'Balaance unit' })  
     } else if (header == 'navDate') {
       Object.assign(this.customDataSource.data, { navDate: true });
-       this.pdfData.push({ style: 'width:9%;text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7;' })
-      this.pdfData.push({  navDate: true })  
-      this.pdfData.push({  name: 'NAV date' })  
     } else if (header == 'sipAmount') {
-      Object.assign(this.customDataSource.data, { sipAmount: true });
-       this.pdfData.push({ style: 'width:5%;text-align: right; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;' })
-      this.pdfData.push({  sipAmount: true })  
-      this.pdfData.push({  name: 'Sip Amount' })  
+      Object.assign(this.customDataSource.data, { sipAmount: true });  
     }
-    console.log('3789',this.pdfData)
     return {}
   }
   calculationOninit() {
