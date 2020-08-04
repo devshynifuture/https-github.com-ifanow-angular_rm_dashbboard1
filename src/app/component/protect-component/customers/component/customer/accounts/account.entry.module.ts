@@ -17,6 +17,7 @@ import { CustomDirectiveModule } from 'src/app/common/directives/common-directiv
 import { CustomCommonModule } from 'src/app/common/custom.common.module';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { StockDetailsViewComponent } from './assets/stock-details-view/stock-details-view.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 export const componentList = [
   UpperCustomerComponent,
   AddAssetStocksComponent,
@@ -42,10 +43,11 @@ export const componentList = [
     AccountUpperSliderModule,
     CustomCommonModule,
     MatProgressBarModule,
+    DragDropModule
   ],
   exports: [
     FormsModule,
-    ReactiveFormsModule, componentList],
+    ReactiveFormsModule, componentList,DragDropModule],
   entryComponents: [componentList]
 })
 

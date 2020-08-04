@@ -11,6 +11,7 @@ import { AccountRoutingModule } from './account-routing.module';
 import { AccountsComponent } from './accounts.component';
 import { LibilitiesRightComponent } from './liabilities/libilities-right/libilities-right.component';
 import { SatNativeDateModule, SatDatepickerModule } from 'saturn-datepicker';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 @NgModule({
   declarations: [
     SchemeLevelTransactionComponent,
@@ -28,7 +29,8 @@ import { SatNativeDateModule, SatDatepickerModule } from 'saturn-datepicker';
     FormsModule,
     ReactiveFormsModule,
     SatDatepickerModule,
-     SatNativeDateModule
+     SatNativeDateModule,
+     DragDropModule
     // CustomDirectiveModule
   ],
   exports: [],

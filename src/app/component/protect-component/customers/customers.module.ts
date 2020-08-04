@@ -161,6 +161,7 @@ import { DetailedViewCashInHandMobComponent } from './component/customer/mobile/
 import { DetailedViewGoldMobComponent } from './component/customer/mobile/commodities-mob/add-gold-mob/detailed-view-gold-mob/detailed-view-gold-mob.component';
 import { DetailedViewOthersMobComponent } from './component/customer/mobile/commodities-mob/add-others-mob/detailed-view-others-mob/detailed-view-others-mob.component';
 import { DetailedViewRealEstateMobComponent } from './component/customer/mobile/real-estate-mob/add-real-estate-mob/detailed-view-real-estate-mob/detailed-view-real-estate-mob.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
@@ -221,11 +222,11 @@ import { DetailedViewRealEstateMobComponent } from './component/customer/mobile/
     TransactionEntryModule,
     SubscriptionEntry,
     SubscriptionUpperEntry,
-    CommonComponentModule
-
+    CommonComponentModule,
+    DragDropModule
     // PlanModule
   ],
-  exports: [],
+  exports: [DragDropModule],
   providers: [DynamicComponentService, AdvisorAndOrganizationInfoService],
   entryComponents: [EntryComponentsModule.getComponentList(),
   AccountEntryModule.getComponentList(), AdviceEntryModule.getComponentList(),

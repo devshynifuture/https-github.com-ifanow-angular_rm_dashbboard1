@@ -1,27 +1,27 @@
-import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {UtilService} from 'src/app/services/util.service';
-import {FolioMasterDetailsComponent} from 'src/app/component/protect-component/customers/component/common-component/folio-master-details/folio-master-details.component';
-import {SipDetailsComponent} from 'src/app/component/protect-component/customers/component/common-component/sip-details/sip-details.component';
-import {AddMutualFundComponent} from '../add-mutual-fund/add-mutual-fund.component';
-import {MFSchemeLevelHoldingsComponent} from '../mfscheme-level-holdings/mfscheme-level-holdings.component';
-import {MFSchemeLevelTransactionsComponent} from '../mfscheme-level-transactions/mfscheme-level-transactions.component';
-import {MfServiceService} from '../../mf-service.service';
-import {ExcelGenService} from 'src/app/services/excel-gen.service';
-import {MatDialog, MatTableDataSource} from '@angular/material';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
+import { FolioMasterDetailsComponent } from 'src/app/component/protect-component/customers/component/common-component/folio-master-details/folio-master-details.component';
+import { SipDetailsComponent } from 'src/app/component/protect-component/customers/component/common-component/sip-details/sip-details.component';
+import { AddMutualFundComponent } from '../add-mutual-fund/add-mutual-fund.component';
+import { MFSchemeLevelHoldingsComponent } from '../mfscheme-level-holdings/mfscheme-level-holdings.component';
+import { MFSchemeLevelTransactionsComponent } from '../mfscheme-level-transactions/mfscheme-level-transactions.component';
+import { MfServiceService } from '../../mf-service.service';
+import { ExcelGenService } from 'src/app/services/excel-gen.service';
+import { MatDialog, MatTableDataSource } from '@angular/material';
 // import {WebworkerService} from '../../../../../../../../../../services/web-worker.service';
-import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {UpperCustomerComponent} from 'src/app/component/protect-component/customers/component/common-component/upper-customer/upper-customer.component';
-import {EventService} from 'src/app/Data-service/event.service';
-import {CustomerService} from '../../../../../customer.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {map} from 'rxjs/operators';
-import {ActivatedRoute, Router} from '@angular/router';
-import {RightFilterDuplicateComponent} from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
-import {BackOfficeService} from 'src/app/component/protect-component/AdviserComponent/backOffice/back-office.service';
-import {DatePipe} from '@angular/common';
-import {OnlineTransactionComponent} from 'src/app/component/protect-component/AdviserComponent/transactions/overview-transactions/doTransaction/online-transaction/online-transaction.component';
-import {OnlineTransactionService} from 'src/app/component/protect-component/AdviserComponent/transactions/online-transaction.service';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { UpperCustomerComponent } from 'src/app/component/protect-component/customers/component/common-component/upper-customer/upper-customer.component';
+import { EventService } from 'src/app/Data-service/event.service';
+import { CustomerService } from '../../../../../customer.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { map } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
+import { RightFilterDuplicateComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
+import { BackOfficeService } from 'src/app/component/protect-component/AdviserComponent/backOffice/back-office.service';
+import { DatePipe } from '@angular/common';
+import { OnlineTransactionComponent } from 'src/app/component/protect-component/AdviserComponent/transactions/overview-transactions/doTransaction/online-transaction/online-transaction.component';
+import { OnlineTransactionService } from 'src/app/component/protect-component/AdviserComponent/transactions/online-transaction.service';
 
 
 @Component({
@@ -323,33 +323,57 @@ export class MutualFundSummaryComponent implements OnInit {
     );
 
   }
-  styleObject(header): Object {
-
+  styleObject(header, ind): Object {
     if (header == 'schemeName') {
-      Object.assign(this.customDataSource.data, { schemeName: true });
+      this.customDataSource.data.array.push({ 'name':'Scheme Name', 'index': ind,isCheked:true });
     } else if (header == 'amountInvested') {
-      Object.assign(this.customDataSource.data, { amountInvested: true });
+      this.customDataSource.data.array.push({ 'name':'Amount invested', 'index': ind,isCheked:true });
     } else if (header == 'currentValue') {
-      Object.assign(this.customDataSource.data, { currentValue: true });
+      this.customDataSource.data.array.push({ 'name':'Current value', 'index': ind,isCheked:true });
     } else if (header == 'unrealizedProfit') {
-      Object.assign(this.customDataSource.data, { unrealizedProfit: true });
+      this.customDataSource.data.array.push({ 'name':'Unrealized profit', 'index': ind ,isCheked:true});
     } else if (header == 'absoluteReturn') {
-      Object.assign(this.customDataSource.data, { absoluteReturn: true });
+      this.customDataSource.data.array.push({ 'name':'Abs Ret', 'index': ind,isCheked:true });
     } else if (header == 'xirr') {
-      Object.assign(this.customDataSource.data, { xirr: true });
-    } else if (header == 'dividendPayout') {
-      Object.assign(this.customDataSource.data, { dividendPayout: true });
-    } else if (header == 'switchOut') {
-      Object.assign(this.customDataSource.data, { switchOut: true });
-    } else if (header == 'balanceUnit') {
-      Object.assign(this.customDataSource.data, { balanceUnit: true });
-    } else if (header == 'navDate') {
-      Object.assign(this.customDataSource.data, { navDate: true });
-    } else if (header == 'sipAmount') {
-      Object.assign(this.customDataSource.data, { sipAmount: true });
-    }
+      this.customDataSource.data.array.push({ 'name':'Xirr', 'index': ind,isCheked:true });
 
-    return {}
+    } else if (header == 'dividendPayout') {
+      this.customDataSource.data.array.push({ 'name':'Dividend payout', 'index': ind ,isCheked:true});
+    } else if (header == 'switchOut') {
+      this.customDataSource.data.array.push({ 'name':'Withdrawal/Switch outs', 'index': ind,isCheked:true });
+    } else if (header == 'balanceUnit') {
+      this.customDataSource.data.array.push({ 'name':'Balance unit', 'index': ind ,isCheked:true});
+    } else if (header == 'navDate') {
+      this.customDataSource.data.array.push({ 'name':'Nav date', 'index': ind,isCheked:true });
+    } else if (header == 'sipAmount') {
+      this.customDataSource.data.array.push({ 'name':'Sip amount', 'index': ind,isCheked:true });
+    }
+    // if (header == 'schemeName') {
+    //   Object.assign(this.customDataSource.data, { schemeName: true ,index : ind});
+    // } else if (header == 'amountInvested') {
+    //   Object.assign(this.customDataSource.data, { amountInvested: true ,index : ind});
+    // } else if (header == 'currentValue') {
+    //   Object.assign(this.customDataSource.data, { currentValue: true,index : ind });
+    // } else if (header == 'unrealizedProfit') {
+    //   Object.assign(this.customDataSource.data, { unrealizedProfit: true,index : ind });
+    // } else if (header == 'absoluteReturn') {
+    //   Object.assign(this.customDataSource.data, { absoluteReturn: true,index : ind });
+    // } else if (header == 'xirr') {
+    //   Object.assign(this.customDataSource.data, { xirr: true,index : ind });
+    // } else if (header == 'dividendPayout') {
+    //   Object.assign(this.customDataSource.data, { dividendPayout: true,index : ind });
+    // } else if (header == 'switchOut') {
+    //   Object.assign(this.customDataSource.data, { switchOut: true,index : ind });
+    // } else if (header == 'balanceUnit') {
+    //   Object.assign(this.customDataSource.data, { balanceUnit: true,index : ind });
+    // } else if (header == 'navDate') {
+    //   Object.assign(this.customDataSource.data, { navDate: true,index : ind });
+    // } else if (header == 'sipAmount') {
+    //   Object.assign(this.customDataSource.data, { sipAmount: true,index : ind });
+    // }
+
+    // return {}
+    return
   }
   calculationOninit() {
     if (this.mutualFund.mutualFundList.length > 0) {
@@ -412,7 +436,7 @@ export class MutualFundSummaryComponent implements OnInit {
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
-      toDate : this.toDate,
+      toDate: this.toDate,
       //id: 1103107
     };
     this.customerService.getMutualFund(obj).pipe(map((data) => {
@@ -480,8 +504,9 @@ export class MutualFundSummaryComponent implements OnInit {
       filterArray.push(obj)
     });
     this.displayColumnsPDf = filterArray;
-    this.displayedColumns.forEach(element => {
-      this.styleObject(element)
+    this.customDataSource.data.array=[];
+    this.displayedColumns.forEach((element, ind) => {
+      this.styleObject(element, ind)
     });
   }
   asyncFilter(mutualFund) {
@@ -545,8 +570,9 @@ export class MutualFundSummaryComponent implements OnInit {
         this.summary.data = data.customDataSourceData;
         console.log("this is summary Data:::", data.customDataSourceData)
         this.customDataSource.data = data.customDataSourceData;
-        this.displayedColumns.forEach(element => {
-          this.styleObject(element)
+        this.customDataSource.data.array=[];
+        this.displayedColumns.forEach((element, ind) => {
+          this.styleObject(element, ind)
         });
         console.log('header data', this.customDataSource)
         console.log(`MUTUALFUNDSummary COMPONENT page got message:`, data);
@@ -668,7 +694,7 @@ export class MutualFundSummaryComponent implements OnInit {
       transactionPeriod: this.setDefaultFilterData.transactionPeriod,
       transactionPeriodCheck: this.setDefaultFilterData.transactionPeriodCheck,
       fromDate: this.setDefaultFilterData.fromDate,
-      toDate: (this.setDefaultFilterData.toDate)?this.setDefaultFilterData.toDate:this.toDate,
+      toDate: (this.setDefaultFilterData.toDate) ? this.setDefaultFilterData.toDate : this.toDate,
       savedFilterData: this.savedFilterData,
       selectFilter: (this.saveFilterData) ? this.saveFilterData.selectFilter : null,
       // transactionTypeList:this.setDefaultFilterData.transactionTypeList
@@ -816,8 +842,9 @@ export class MutualFundSummaryComponent implements OnInit {
   }
 
   generatePdf() {
-    this.displayedColumns.forEach(element => {
-      this.styleObject(element)
+    this.customDataSource.data.array=[]
+    this.displayedColumns.forEach((element, ind) => {
+      this.styleObject(element, ind)
     });
     this.showDownload = true
     this.fragmentData.isSpinner = true;
