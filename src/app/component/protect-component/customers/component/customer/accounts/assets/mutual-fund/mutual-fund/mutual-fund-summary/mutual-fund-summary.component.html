@@ -481,132 +481,130 @@
             </td>
         </tr>
         <tbody *ngFor="let item of customDataSource.data ;index as i">
-            <tr>
-                <td colspan="12">
-
-            <tr *ngIf="item.groupName">
-                <td colspan="12"
-                    style="text-align: center;color: #008FFF; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
-                    {{item.groupName}}</td>
-            </tr>
-            <tr *ngIf="item.id">
-
-                <td valign="top" [ngStyle]="customDataSource.data?.array1[0].style">
-                    <!-- {{item.schemeName+' | '+item.folioNumber+' | '+item.ownerName}} -->
-                    {{getValues(item[firstArray],firstArray,'')}}
-                </td>
-
-                <td valign="top" [ngStyle]="customDataSource.data?.array1[1].style" appFormatNumber>
-                    <!-- {{item.amountInvested}} -->
-                    {{getValues(item[secondArray],secondArray,'')}}
-                </td>
-
-                <td valign="top" [ngStyle]="customDataSource.data?.array1[2].style" appFormatNumber>
-                    <!-- {{item.currentValue }} -->
-                    {{getValues(item[thirdArray],thirdArray,'')}}
-                </td>
-
-                <td valign="top" [ngStyle]="customDataSource.data?.array1[3].style" appFormatNumber>
-                    <!-- {{item.unrealizedGain }} -->
-                    {{getValues(item[fourthArray],fourthArray,'')}}
-                </td>
-
-                <td valign="top" [ngStyle]="customDataSource.data?.array1[4].style">
-                    <!-- {{(item.absoluteReturn==0 || item.absoluteReturn =='Infinity' || item.absoluteReturn =='-Infinity' || item.absoluteReturn == 'NaN') ? 0 : (item.absoluteReturn) ? (item.absoluteReturn | number:'1.2-2') : 0}} -->
-                    {{getValues(item[fifthArray],fifthArray,'')}}
-                </td>
-
-                <td valign="top" [ngStyle]="customDataSource.data?.array1[5].style">
-                    <!-- {{item.xirr | number:'1.2-2'}} -->
-                    {{getValues(item[SixthArray],SixthArray,'')}}
-                </td>
-
-                <td valign="top" [ngStyle]="customDataSource.data?.array1[6].style" appFormatNumber>
-                    <!-- {{item.dividendPayout}} -->
-                    {{getValues(item[seventhArray],seventhArray,'')}}
-                </td>
-                <td valign="top" [ngStyle]="customDataSource.data?.array1[7].style" appFormatNumber>
-                    <!-- {{item.switchOut }} -->
-                    {{getValues(item[eighthArray],eighthArray,'')}}
-                </td>
-
-                <td valign="top" [ngStyle]="customDataSource.data?.array1[8].style">
-                    <!-- {{item.balanceUnit | number:'1.2-3'}} -->
-                    {{getValues(item[ninethArray],ninethArray,'')}}
-                </td>
-
-                <td valign="top" [ngStyle]="customDataSource.data?.array1[9].style">
-                    <!-- {{item.navDate | date:'dd/MM/yyyy'}} -->
-                    {{getValues(item[tenthArray],tenthArray,'')}}
-                </td>
-
-                <td valign="top" [ngStyle]="customDataSource.data?.array1[10].style" appFormatNumber>
-                    <!-- {{item.sipAmount}} -->
-                    {{getValues(item[eleventhArray],eleventhArray,'')}}
-                </td>
-            </tr>
-            <tr *ngIf="item.schemeName=='Total'">
-                <td valign="top" [ngStyle]="customDataSource.data?.array2[0].style">
-                    <!-- {{item.schemeName}} -->
-                    {{getValues(item[firstArrayTotal],firstArrayTotal,'')}}
-                </td>
-                <td valign="top" [ngStyle]="customDataSource.data?.array2[1].style" appFormatNumber>
-                    <!-- {{item.totalAmountInvested }} -->
-                    {{getValues(item[secondArrayTotal],secondArrayTotal,'')}}
-
-                </td>
-                <td valign="top" [ngStyle]="customDataSource.data?.array2[2].style" appFormatNumber>
-                    <!-- {{item.totalCurrentValue}} -->
-                    {{getValues(item[thirdArrayTotal],thirdArrayTotal,'')}}
-
-                </td>
-                <td valign="top" [ngStyle]="customDataSource.data?.array2[3].style" appFormatNumber>
-                    <!-- {{item.totalUnrealizedGain }} -->
-                    {{getValues(item[fourthArrayTotal],fourthArrayTotal,'')}}
-
-                </td>
-                <td valign="top" [ngStyle]="customDataSource.data?.array2[4].style">
-                    <!-- {{item.totalAbsoluteReturn | number:'1.2-2'}} -->
-                    {{getValues(item[fifthArrayTotal],fifthArrayTotal,'')}}
-
-                </td>
-                <td valign="top" [ngStyle]="customDataSource.data?.array2[5].style">
-                    <!-- {{item.totalXirr | number:'1.2-2'}} -->
-                    {{getValues(item[SixthArrayTotal],SixthArrayTotal,'')}}
-
-                </td>
-                <td valign="top" [ngStyle]="customDataSource.data?.array2[6].style" appFormatNumber>
-                    <!-- {{item.totalDividendPayout}} -->
-                    {{getValues(item[seventhArrayTotal],seventhArrayTotal,'')}}
-
-                </td>
-                <td valign="top" [ngStyle]="customDataSource.data?.array2[7].style" appFormatNumber>
-                    <!-- {{item.totalSwitchOut}} -->
-                    {{getValues(item[eighthArrayTotal],eighthArrayTotal,'')}}
-
-                </td>
-                <td valign="top" [ngStyle]="customDataSource.data?.array2[8].style">
-                    <!-- {{item.totalBalanceUnit | number:'1.2-3'}} -->
-                    {{getValues(item[ninethArrayTotal],ninethArrayTotal,'')}}
-
-                </td>
-                <td valign="top" [ngStyle]="customDataSource.data?.array2[9].style">
-                    <!-- {{item.totalNavDate}} -->
-                    {{getValues(item[tenthArrayTotal],tenthArrayTotal,'')}}
-
-                </td>
-                <td valign="top" [ngStyle]="customDataSource.data?.array2[10].style" appFormatNumber>
-                    <!-- {{item.totalSipAmount}} -->
-                    {{getValues(item[eleventhArrayTotal],eleventhArrayTotal,'')}}
-
-                </td>
-            </tr>
-            </td>
-            </tr>
-
-
-        </tbody>
         <tr>
+            <td colspan="12">
+
+        <tr *ngIf="item.groupName">
+            <td colspan="12"
+                style="text-align: center;color: #008FFF; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">
+                {{item.groupName}}</td>
+        </tr>
+        <tr *ngIf="item.id">
+
+            <td valign="top" [ngStyle]="customDataSource.data?.array1[0].style">
+                <!-- {{item.schemeName+' | '+item.folioNumber+' | '+item.ownerName}} -->
+                {{getValues(item[firstArray],firstArray,'')}}
+            </td>
+
+            <td valign="top" [ngStyle]="customDataSource.data?.array1[1].style" appFormatNumber>
+                <!-- {{item.amountInvested}} -->
+                {{getValues(item[secondArray],secondArray,'')}}
+            </td>
+
+            <td valign="top" [ngStyle]="customDataSource.data?.array1[2].style" appFormatNumber>
+                <!-- {{item.currentValue }} -->
+                {{getValues(item[thirdArray],thirdArray,'')}}
+            </td>
+
+            <td valign="top" [ngStyle]="customDataSource.data?.array1[3].style" appFormatNumber>
+                <!-- {{item.unrealizedGain }} -->
+                {{getValues(item[fourthArray],fourthArray,'')}}
+            </td>
+
+            <td valign="top" [ngStyle]="customDataSource.data?.array1[4].style">
+                <!-- {{(item.absoluteReturn==0 || item.absoluteReturn =='Infinity' || item.absoluteReturn =='-Infinity' || item.absoluteReturn == 'NaN') ? 0 : (item.absoluteReturn) ? (item.absoluteReturn | number:'1.2-2') : 0}} -->
+                {{getValues(item[fifthArray],fifthArray,'')}}
+            </td>
+
+            <td valign="top" [ngStyle]="customDataSource.data?.array1[5].style">
+                <!-- {{item.xirr | number:'1.2-2'}} -->
+                {{getValues(item[SixthArray],SixthArray,'')}}
+            </td>
+
+            <td valign="top" [ngStyle]="customDataSource.data?.array1[6].style" appFormatNumber>
+                <!-- {{item.dividendPayout}} -->
+                {{getValues(item[seventhArray],seventhArray,'')}}
+            </td>
+            <td valign="top" [ngStyle]="customDataSource.data?.array1[7].style" appFormatNumber>
+                <!-- {{item.switchOut }} -->
+                {{getValues(item[eighthArray],eighthArray,'')}}
+            </td>
+
+            <td valign="top" [ngStyle]="customDataSource.data?.array1[8].style">
+                <!-- {{item.balanceUnit | number:'1.2-3'}} -->
+                {{getValues(item[ninethArray],ninethArray,'')}}
+            </td>
+
+            <td valign="top" [ngStyle]="customDataSource.data?.array1[9].style">
+                <!-- {{item.navDate | date:'dd/MM/yyyy'}} -->
+                {{getValues(item[tenthArray],tenthArray,'')}}
+            </td>
+
+            <td valign="top" [ngStyle]="customDataSource.data?.array1[10].style" appFormatNumber>
+                <!-- {{item.sipAmount}} -->
+                {{getValues(item[eleventhArray],eleventhArray,'')}}
+            </td>
+        </tr>
+        <tr *ngIf="item.schemeName=='Total'">
+            <td valign="top" [ngStyle]="customDataSource.data?.array2[0].style">
+                <!-- {{item.schemeName}} -->
+                {{getValues(item[firstArrayTotal],firstArrayTotal,'')}}
+            </td>
+            <td valign="top" [ngStyle]="customDataSource.data?.array2[1].style" appFormatNumber>
+                <!-- {{item.totalAmountInvested }} -->
+                {{getValues(item[secondArrayTotal],secondArrayTotal,'')}}
+
+            </td>
+            <td valign="top" [ngStyle]="customDataSource.data?.array2[2].style" appFormatNumber>
+                <!-- {{item.totalCurrentValue}} -->
+                {{getValues(item[thirdArrayTotal],thirdArrayTotal,'')}}
+
+            </td>
+            <td valign="top" [ngStyle]="customDataSource.data?.array2[3].style" appFormatNumber>
+                <!-- {{item.totalUnrealizedGain }} -->
+                {{getValues(item[fourthArrayTotal],fourthArrayTotal,'')}}
+
+            </td>
+            <td valign="top" [ngStyle]="customDataSource.data?.array2[4].style">
+                <!-- {{item.totalAbsoluteReturn | number:'1.2-2'}} -->
+                {{getValues(item[fifthArrayTotal],fifthArrayTotal,'')}}
+
+            </td>
+            <td valign="top" [ngStyle]="customDataSource.data?.array2[5].style">
+                <!-- {{item.totalXirr | number:'1.2-2'}} -->
+                {{getValues(item[SixthArrayTotal],SixthArrayTotal,'')}}
+
+            </td>
+            <td valign="top" [ngStyle]="customDataSource.data?.array2[6].style" appFormatNumber>
+                <!-- {{item.totalDividendPayout}} -->
+                {{getValues(item[seventhArrayTotal],seventhArrayTotal,'')}}
+
+            </td>
+            <td valign="top" [ngStyle]="customDataSource.data?.array2[7].style" appFormatNumber>
+                <!-- {{item.totalSwitchOut}} -->
+                {{getValues(item[eighthArrayTotal],eighthArrayTotal,'')}}
+
+            </td>
+            <td valign="top" [ngStyle]="customDataSource.data?.array2[8].style">
+                <!-- {{item.totalBalanceUnit | number:'1.2-3'}} -->
+                {{getValues(item[ninethArrayTotal],ninethArrayTotal,'')}}
+
+            </td>
+            <td valign="top" [ngStyle]="customDataSource.data?.array2[9].style">
+                <!-- {{item.totalNavDate}} -->
+                {{getValues(item[tenthArrayTotal],tenthArrayTotal,'')}}
+
+            </td>
+            <td valign="top" [ngStyle]="customDataSource.data?.array2[10].style" appFormatNumber>
+                <!-- {{item.totalSipAmount}} -->
+                {{getValues(item[eleventhArrayTotal],eleventhArrayTotal,'')}}
+
+            </td>
+        </tr>
+        </td>
+        </tr>
+
+        <tr *ngIf="item.total">
             <td valign="top" [ngStyle]="customDataSource.data?.array3[0].style">
                 {{getValues(mfData[firstArrayGTotal],firstArrayGTotal,'GT')}}
 
@@ -650,6 +648,8 @@
                 {{getValues(mfData[eleventhArrayGTotal],eleventhArrayGTotal,'GT')}}
             </td>
         </tr>
+</tbody>
+
 
     </table>
 </div>
