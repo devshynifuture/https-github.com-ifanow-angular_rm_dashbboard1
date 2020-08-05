@@ -12,11 +12,11 @@ const componentList = [SelectFolioMapComponent]
   imports: [
     CommonModule, MaterialModule, FormsModule, ReactiveFormsModule
   ],
-  entryComponents: componentList,  
+  entryComponents: componentList,
 })
 export class BackofficeFolioMappingEntryModule {
   static getComponentList() {
     return componentList;
-    
+
   }
 }
