@@ -99,7 +99,7 @@ export class CustomerOverviewComponent implements OnInit {
   goToAdvisorHome() {
     this.showRouter = false;
     setTimeout(() => {
-      this.routingStateService.goToSpecificRoute('/admin/subscription/dashboard');
+      this.routingStateService.goToSpecificRoute('/admin/dashboard');
     }, 200);
   }
 
