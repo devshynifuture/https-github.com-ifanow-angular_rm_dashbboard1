@@ -28,6 +28,7 @@ export class SelectFolioMapComponent implements OnInit {
   selectedClientGrpHeadEmail: any = '';
   selectedClient: any;
   searchKeyword: any;
+  selectedFolioInvestorName;
   constructor(
     public dialogRef: MatDialogRef<SelectFolioMapComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -42,6 +43,10 @@ export class SelectFolioMapComponent implements OnInit {
   }
 
   initPoint() {
+    if (this.data) {
+      this.selectedFolioInvestorName = this.data.selectedFolio.ownerName;
+    }
+
     this.parentId = AuthService.getParentId();
     this.formInit();
   }

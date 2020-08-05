@@ -228,10 +228,14 @@ export class BackofficeFolioMappingComponent implements OnInit {
     return this.selection.isSelected(row);
   }
 
-  openFolio() {
+  selectedFolioToMapOpenDialog() {
+
+  }
+
+  openFolio(data) {
     const dialogRef = this.dialog.open(SelectFolioMapComponent, {
       width: '663px',
-      //height: '679px',
+      data: { selectedFolio: data }
     });
 
 
