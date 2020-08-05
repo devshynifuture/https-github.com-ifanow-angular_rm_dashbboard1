@@ -1397,7 +1397,9 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     let number;
     if (value == 'transactionDate') {
       number = this.datePipe.transform(data, 'dd/MM/yyyy')
-    } 
+    } else{
+      number = this.mfService.mutualFundRoundAndFormat(data, 0);
+    }
     // if (value == 'amountInvested' || value == 'currentValue' || value == 'unrealizedGain' || value == 'dividendPayout' || value == 'switchOut' || value == 'sipAmount' || value == 'totalAmountInvested' || value == 'totalCurrentValue' || value == 'totalUnrealizedGain' || value == 'totalDividendPayout' || value == 'totalSwitchOut' || value == 'totalSipAmount' || value == 'sip' || value == 'total_amount_invested' || value == 'total_current_value' || value == "total_unrealized_gain" || value == "total_dividend_payout" || value === 'withdrawals') {
     //   number = this.mfService.mutualFundRoundAndFormat(data, 0);
     // } else if (value == 'transactionDate') {
@@ -1412,7 +1414,9 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     let number;
     if (value == 'transactionDate') {
         number = this.datePipe.transform(data, 'dd/MM/yyyy')
-      } 
+      } else{
+        number = this.mfService.mutualFundRoundAndFormat(data, 0);
+      }
     // if (value == 'amount' || value == 'currentValue' || value == 'unrealizedGain' || value == 'dividendPayout' || value == 'switchOut' || value == 'sipAmount' || value == 'totalAmountInvested' || value == 'totalCurrentValue' || value == 'totalUnrealizedGain' || value == 'totalDividendPayout' || value == 'totalSwitchOut' || value == 'totalSipAmount' || value == 'sip' || value == 'total_amount_invested' || value == 'total_current_value' || value == "total_unrealized_gain" || value == "total_dividend_payout" || value === 'withdrawals') {
     //   number = this.mfService.mutualFundRoundAndFormat(data, 0);
     // } else if (value == 'transactionDate') {
