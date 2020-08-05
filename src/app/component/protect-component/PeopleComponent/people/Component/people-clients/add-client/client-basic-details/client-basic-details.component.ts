@@ -130,7 +130,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       }
       else {
         this.relationList = relationListFilterOnID(AuthService.getClientData().clientType);
-        if (this.basicDetailsData.age > 18) {
+        if (this.basicDetailsData.age > 18 || this.basicDetailsData.familyMemberType == 1) {
           this.familyMemberType = { name: 'Individual', value: '1' };
           this.invTypeCategory = '1';
           this.hideDematTab.emit(true);
