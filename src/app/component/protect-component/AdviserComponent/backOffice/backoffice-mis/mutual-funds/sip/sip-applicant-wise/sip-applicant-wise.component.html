@@ -74,8 +74,9 @@
                                     </div>
                                 </td>
                                 <td class="text-right">
-                                    <div class="bar" [ngClass]="{'floatRight': isLoading}">{{isLoading ? ' ' : '₹ '}}<span appFormatNumber
-                                            *ngIf="!isLoading" [value]="data.totalAum"></span></div>
+                                    <div class="bar" [ngClass]="{'floatRight': isLoading}">
+                                        {{isLoading ? ' ' : '₹ '}}<span appFormatNumber *ngIf="!isLoading"
+                                            [value]="data.totalAum"></span></div>
                                 </td>
                                 <td class="text-right">
                                     <div class="bar" [ngClass]="{'floatRight': isLoading}">
@@ -104,7 +105,7 @@
                             </tr>
                             <tr style="border: transparent !important">
                                 <td colspan="5" class="innerTd one">
-                                    
+
                                     <table *ngIf="data.showScheme == false && data.schemeList?.length > 0"
                                         class="skeletonAnimation mt-8 mb-8" appSkeletonLoading
                                         [appSkeletonLoading]="isLoadingApplicant" id="table-low">
@@ -257,34 +258,8 @@
                                                     <!-- {{(isLoadingApplicant?'':'add cease date') }} -->
                                                     <div [ngClass]="{'bar': isLoadingApplicant }">
                                                         <div *ngIf="!isLoadingApplicant">
-                                                            <button (click)="scheme.isEdit=true"
-                                                                *ngIf="!scheme.isEdit">Add Cease Date</button>
-                                                            <div [formGroup]="caesedForm" *ngIf="scheme.isEdit">
-                                                                <div class="">
-                                                                    <div class="form-group mb-0">
-                                                                        <mat-form-field class="ba-date">
-                                                                            <input matInput
-                                                                                class="form-control br-0 b-0"
-                                                                                #ceaseddate [max]="maxDate"
-                                                                                (input)="preventDefault($event)"
-                                                                                matInput [matDatepicker]="picker"
-                                                                                formControlName="ceaseddate" readonly>
-                                                                            <mat-datepicker-toggle matSuffix
-                                                                                [for]="picker">
-                                                                            </mat-datepicker-toggle>
-                                                                            <mat-datepicker #picker>
-                                                                            </mat-datepicker>
-                                                                        </mat-form-field>
-                                                                    </div>
-                                                                </div>
-                                                                <span class="d-flex justify-content-center mt-4">
-                                                                    <button class="h-24 btn-sm lh-18 btn-primary mr-4"
-                                                                        [disabled]="ceaseddate.value == ''"
-                                                                        (click)="addCeasesdDate(scheme,data,ceaseddate.value)">Save</button>
-                                                                    <button class="h-24 btn-sm lh-18"
-                                                                        (click)="scheme.isEdit=false">Cancel</button>
-                                                                </span>
-                                                            </div>
+                                                            <button (click)="changeCeasedDateDialog(scheme, data)">Add
+                                                                Cease Date</button>
                                                         </div>
                                                         <span *ngIf="isLoadingApplicant">{{''}}</span>
                                                     </div>
