@@ -31,44 +31,44 @@
 
             <!-- <mat-menu #menu1="matMenu" class="add-new"> -->
             <!-- <button (click)="openMutualFund('addPortfolio',null)" mat-menu-item class="b-b">
-                    <div class="row">
-                        <div class="col-md-2 pr-8 text-right">
-                            <img src="assets/images/svg/dark-three-dot.svg">
-                        </div>
-                        <div class="col-md-10">
-                            <p class="m-0 text-black">Portfolio summary</p>
-                            <p class="m-0 f-13 pt-4 text-custom">Add just the overall portfolio
-                                <br> summary. Time saver!
-                            </p>
-                        </div>
-                    </div>
-                </button> -->
+    <div class="row">
+    <div class="col-md-2 pr-8 text-right">
+    <img src="assets/images/svg/dark-three-dot.svg">
+    </div>
+    <div class="col-md-10">
+    <p class="m-0 text-black">Portfolio summary</p>
+    <p class="m-0 f-13 pt-4 text-custom">Add just the overall portfolio
+    <br> summary. Time saver!
+    </p>
+    </div>
+    </div>
+    </button> -->
             <!-- <button (click)="openMutualFund('addMutualFund',null)" mat-menu-item class="b-b">
-                    <div class="row">
-                        <div class="col-md-2 pr-8 text-right">
-                            <img src="assets/images/svg/scheme-icon.svg">
-                        </div>
-                        <div class="col-md-10">
-                            <p class="m-0 text-black">Add Mutual Fund and Scheme level transactions</p>
-                            <p class="m-0 pt-4 f-13 text-custom">Add Mutual Fund and transaction data at
-                                <br> scheme level for better reporting
-                            </p>
-                        </div>
-                    </div>
-                </button> -->
+    <div class="row">
+    <div class="col-md-2 pr-8 text-right">
+    <img src="assets/images/svg/scheme-icon.svg">
+    </div>
+    <div class="col-md-10">
+    <p class="m-0 text-black">Add Mutual Fund and Scheme level transactions</p>
+    <p class="m-0 pt-4 f-13 text-custom">Add Mutual Fund and transaction data at
+    <br> scheme level for better reporting
+    </p>
+    </div>
+    </div>
+    </button> -->
             <!-- <button (click)="openMutualFund('transaction',null)" mat-menu-item>
-                    <div class="row">
-                        <div class="col-md-2 pr-8 text-right">
-                            <img src="assets/images/svg/dark-download.svg">
-                        </div>
-                        <div class="col-md-10">
-                            <p class="m-0 text-black">Import data</p>
-                            <p class="m-0 pt-4 f-13 text-custom">Add transaction data at
-                                <br> scheme level for better reporting
-                            </p>
-                        </div>
-                    </div>
-                </button> -->
+    <div class="row">
+    <div class="col-md-2 pr-8 text-right">
+    <img src="assets/images/svg/dark-download.svg">
+    </div>
+    <div class="col-md-10">
+    <p class="m-0 text-black">Import data</p>
+    <p class="m-0 pt-4 f-13 text-custom">Add transaction data at
+    <br> scheme level for better reporting
+    </p>
+    </div>
+    </div>
+    </button> -->
             <!-- </mat-menu> -->
         </div>
     </div>
@@ -98,7 +98,7 @@
                         Amount invested</th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
                         <div class="bar"> <span appFormatNumber class="text-right"
-                                *ngIf="element.amountInvested || element.amountInvested ==0">{{(element.amountInvested) ? (element.amountInvested  ) : 0}}</span>
+                                *ngIf="element.amountInvested || element.amountInvested ==0">{{(element.amountInvested) ? (element.amountInvested ) : 0}}</span>
                             <span appFormatNumber class="f-700"
                                 *ngIf="element.totalAmountInvested || element.totalAmountInvested == 0">{{(element.totalAmountInvested) ? (element.totalAmountInvested ) : 0}}</span>
                         </div>
@@ -140,7 +140,7 @@
 
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right">
                         <div class="bar">
-                            <span appFormatNumber [value]="mfData ? mfData.total_unrealized_gain  : '0'"></span>
+                            <span appFormatNumber [value]="mfData ? mfData.total_unrealized_gain : '0'"></span>
                         </div>
                     </td>
                 </ng-container>
@@ -150,9 +150,9 @@
                     <td class="br text-right" mat-cell *matCellDef="let element">
                         <div class="bar">
                             <span
-                                *ngIf="element.absoluteReturn || element.absoluteReturn == 0">{{(isLoading) ? '' : ((element.absoluteReturn == 0 || element.absoluteReturn  == 'Infinity' || element.absoluteReturn  == '-Infinity' || element.absoluteReturn  == 'NaN') ? 0 : (element.absoluteReturn) ? (element.absoluteReturn | number:'1.2-2') : 0)}}</span>
+                                *ngIf="element.absoluteReturn || element.absoluteReturn == 0">{{(isLoading) ? '' : ((element.absoluteReturn == 0 || element.absoluteReturn == 'Infinity' || element.absoluteReturn == '-Infinity' || element.absoluteReturn == 'NaN') ? 0 : (element.absoluteReturn) ? (element.absoluteReturn | number:'1.2-2') : 0)}}</span>
                             <span class="f-700"
-                                *ngIf="element.totalAbsoluteReturn || element.totalAbsoluteReturn ==0">{{(element.totalAbsoluteReturn == 0 || element.totalAbsoluteReturn  == 'Infinity' || element.totalAbsoluteReturn  == '-Infinity' || element.totalAbsoluteReturn  == 'NaN') ? 0 : (element.totalAbsoluteReturn) ? (element.totalAbsoluteReturn | number:'1.2-2') : 0}}</span>
+                                *ngIf="element.totalAbsoluteReturn || element.totalAbsoluteReturn ==0">{{(element.totalAbsoluteReturn == 0 || element.totalAbsoluteReturn == 'Infinity' || element.totalAbsoluteReturn == '-Infinity' || element.totalAbsoluteReturn == 'NaN') ? 0 : (element.totalAbsoluteReturn) ? (element.totalAbsoluteReturn | number:'1.2-2') : 0}}</span>
                         </div>
                     </td>
 
@@ -169,7 +169,7 @@
                         <div class="bar"> <span
                                 *ngIf="element.xirr || element.xirr == 0">{{(element.xirr) ? (element.xirr | number:'1.2-2') : 0}}</span>
                             <span class="f-700"
-                                *ngIf="element.totalXirr || element.totalXirr == 0">{{(element.totalXirr  == 0) ? 0 : (element.totalXirr) ? (element.totalXirr | number:'1.2-2') : 0}}</span>
+                                *ngIf="element.totalXirr || element.totalXirr == 0">{{(element.totalXirr == 0) ? 0 : (element.totalXirr) ? (element.totalXirr | number:'1.2-2') : 0}}</span>
                         </div>
                     </td>
 
@@ -216,16 +216,19 @@
                         Balance Unit </th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
                         <div class="bar"><span
-                                *ngIf="element.balanceUnit || element.balanceUnit == 0">{{(element.balanceUnit == 0 ) ? '0' :  (element.balanceUnit  | number:'1.2-3')}}</span>
-                            <span class="f-700"
-                                *ngIf="element.totalBalanceUnit || element.totalBalanceUnit==0">{{(element.totalBalanceUnit == 0 ) ? '0' : (element.totalBalanceUnit | number:'1.2-3')}}</span>
+                                *ngIf="element.balanceUnit || element.balanceUnit == 0">{{(element.balanceUnit == 0 ) ? '0' : (element.balanceUnit | number:'1.2-3')}}</span>
+                            <span class="f-700" *ngIf="element.totalBalanceUnit || element.totalBalanceUnit==0">
+                                {{mfService.mutualFundRoundAndFormat(element.totalBalanceUnit,3)}}
+                            </span>
                         </div>
                     </td>
 
                     <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
 
                         <div class="bar">
-                            {{(grandTotal.totalBalanceUnit) ? (grandTotal.totalBalanceUnit | number:'1.2-3') : 0}}</div>
+                            {{mfService.mutualFundRoundAndFormat(grandTotal.totalBalanceUnit,3)}}
+                            <!-- {{(grandTotal.totalBalanceUnit) ? (grandTotal.totalBalanceUnit | number:'1.2-3') : 0}} -->
+                        </div>
                     </td>
                 </ng-container>
 
@@ -236,7 +239,7 @@
                         <div class="bar">
                             <span *ngIf="!isLoading" class="lh-18">{{(element.nav) ? element.nav : ''}}</span><br>
                             <span
-                                *ngIf="!isLoading">{{((element.navDate) ? (element.navDate  | date:'dd/MM/yyyy') : '-')}}
+                                *ngIf="!isLoading">{{((element.navDate) ? (element.navDate | date:'dd/MM/yyyy') : '-')}}
                             </span>
                             <span *ngIf="isLoading">{{''}}</span>
                         </div>
@@ -250,19 +253,19 @@
                     <th class="br text-right" mat-header-cell *matHeaderCellDef> SIP
                     </th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
-                        <div class="bar"><span *ngIf="element.sipAmount  || element.sipAmount == 0"
+                        <div class="bar"><span *ngIf="element.sipAmount || element.sipAmount == 0"
                                 appFormatNumber>{{element.sipAmount }}</span>
                             <span class="f-700" *ngIf="element.totalSipAmount || element.totalSipAmount == 0"
                                 appFormatNumber>{{element.totalSipAmount}}</span>
                         </div>
                     </td>
                     <!-- <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-                        <div class="bar"> {{(mutualFund || mutualFund.totalSipAmount)?mutualFund.totalSipAmount:'0'}}
-                        </div>
-                    </td> -->
+    <div class="bar"> {{(mutualFund || mutualFund.totalSipAmount)?mutualFund.totalSipAmount:'0'}}
+    </div>
+    </td> -->
                     <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
                         <span appFormatNumber [value]="grandTotal ? grandTotal.sip : '0'"></span>
-                        <!--                  <div> {{ grandTotal.dividendPayout }}</div>-->
+                        <!-- <div> {{ grandTotal.dividendPayout }}</div>-->
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="groupHeader">
@@ -281,7 +284,7 @@
                                 *ngIf="!isLoading && element.schemeName!='Total' ">
                             <mat-menu #menu25="matMenu">
                                 <!-- <button mat-menu-item (click)="openUpperFragment('mutualFunds', element)">View
-                                    factsheet</button> -->
+    factsheet</button> -->
 
                                 <button mat-menu-item (click)="openFolioMaster(element)">Folio master details</button>
                                 <button mat-menu-item (click)="openSipDetails(element)">SIP details</button>
@@ -296,13 +299,13 @@
                                     (click)="openUpperFragment('addTransaction', element)">View
                                     transactions</button>
                                 <!-- <div [matTooltip]="'To Add Transaction, Mutual Fund need to be of type Manual'" [matTooltipDisabled]="element.rtMasterId === 14" matTooltipPosition="below">
-                                    <button mat-menu-item [disabled]="element.rtMasterId !== 14" (click)="openUpperFragment('addTransaction', element)">Add
-                                        transaction</button>
-                                </div> -->
+    <button mat-menu-item [disabled]="element.rtMasterId !== 14" (click)="openUpperFragment('addTransaction', element)">Add
+    transaction</button>
+    </div> -->
                                 <!-- <div [matTooltip]="'To Edit Transaction, Mutual Fund need to be of type Manual'" [matTooltipDisabled]="element.rtMasterId === 14" matTooltipPosition="below">
-                                    <button mat-menu-item [disabled]="element.rtMasterId !== 14" (click)="openMutualEditFund('editTransaction',element)">Edit
-                                        Transaction</button>
-                                </div> -->
+    <button mat-menu-item [disabled]="element.rtMasterId !== 14" (click)="openMutualEditFund('editTransaction',element)">Edit
+    Transaction</button>
+    </div> -->
                                 <div [matTooltip]="'To Edit Mutual Fund It needs to be of type Manual'"
                                     [matTooltipDisabled]="element.rtMasterId === 14" matTooltipPosition="below">
 
@@ -336,50 +339,50 @@
                 <img class="width300" src="assets/images/svg/noDataFound.svg">
                 <h4 class="text-center pt-12"> No data found</h4>
                 <!-- <button mat-stroked-button class="btn-primary addon v-middle" [matMenuTriggerFor]="menu1">
-                    ADD NEW</button> -->
+    ADD NEW</button> -->
                 <button mat-stroked-button (click)="openMutualFund('addMutualFund',null)"
                     class="btn-primary addon v-middle">
                     ADD NEW</button>
                 <!-- <mat-menu #menu1="matMenu" class="add-new"> -->
                 <!-- <button (click)="openMutualFund('addPortfolio',null)" mat-menu-item class="b-b">
-                        <div class="row">
-                            <div class="col-md-2 pr-8 text-right">
-                                <img src="assets/images/svg/dark-three-dot.svg">
-                            </div>
-                            <div class="col-md-10">
-                                <p class="m-0 text-black">Portfolio summary</p>
-                                <p class="m-0 f-13 pt-4 text-custom">Add just the overall portfolio
-                                    <br> summary. Time saver!
-                                </p>
-                            </div>
-                        </div>
-                    </button> -->
-                <!-- <button  (click)="openMutualFund('addMutualFund',null)" mat-menu-item class="b-b">
-                        <div class="row">
-                            <div class="col-md-2 pr-8 text-right">
-                                <img src="assets/images/svg/scheme-icon.svg">
-                            </div>
-                            <div class="col-md-10">
-                                <p class="m-0 text-black">Scheme level transactions</p>
-                                <p class="m-0 pt-4 f-13 text-custom">Add transaction data at
-                                    <br> scheme level for better reporting
-                                </p>
-                            </div>
-                        </div>
-                    </button> -->
+    <div class="row">
+    <div class="col-md-2 pr-8 text-right">
+    <img src="assets/images/svg/dark-three-dot.svg">
+    </div>
+    <div class="col-md-10">
+    <p class="m-0 text-black">Portfolio summary</p>
+    <p class="m-0 f-13 pt-4 text-custom">Add just the overall portfolio
+    <br> summary. Time saver!
+    </p>
+    </div>
+    </div>
+    </button> -->
+                <!-- <button (click)="openMutualFund('addMutualFund',null)" mat-menu-item class="b-b">
+    <div class="row">
+    <div class="col-md-2 pr-8 text-right">
+    <img src="assets/images/svg/scheme-icon.svg">
+    </div>
+    <div class="col-md-10">
+    <p class="m-0 text-black">Scheme level transactions</p>
+    <p class="m-0 pt-4 f-13 text-custom">Add transaction data at
+    <br> scheme level for better reporting
+    </p>
+    </div>
+    </div>
+    </button> -->
                 <!-- <button (click)="openMutualFund('transaction',null)" mat-menu-item>
-                        <div class="row">
-                            <div class="col-md-2 pr-8 text-right">
-                                <img src="assets/images/svg/dark-download.svg">
-                            </div>
-                            <div class="col-md-10">
-                                <p class="m-0 text-black">Import data</p>
-                                <p class="m-0 pt-4 f-13 text-custom">Add transaction data at
-                                    <br> scheme level for better reporting
-                                </p>
-                            </div>
-                        </div>
-                    </button> -->
+    <div class="row">
+    <div class="col-md-2 pr-8 text-right">
+    <img src="assets/images/svg/dark-download.svg">
+    </div>
+    <div class="col-md-10">
+    <p class="m-0 text-black">Import data</p>
+    <p class="m-0 pt-4 f-13 text-custom">Add transaction data at
+    <br> scheme level for better reporting
+    </p>
+    </div>
+    </div>
+    </button> -->
                 <!-- </mat-menu> -->
             </div>
         </div>
@@ -396,13 +399,13 @@
 
         <tr>
             <!-- <td style="text-align: left;">
-                <p style="margin: 0px; font-weight: 800;font-size: 20px;">
-                    Mutual fund summary</p>
-            </td> -->
+    <p style="margin: 0px; font-weight: 800;font-size: 20px;">
+    Mutual fund summary</p>
+    </td> -->
             <!-- <td style="text-align: left;" colspan="3"
-                *ngIf="getOrgData && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
-                <img width="250px" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
-            </td> -->
+    *ngIf="getOrgData && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
+    <img width="250px" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
+    </td> -->
             <td style="text-align: left;" colspan="3" *ngIf="getOrgData">
                 <div
                     *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
@@ -481,14 +484,14 @@
             <td colspan="12">
                 <table cellpadding="0" cellspacing="0" border="0" width="100%" bordercolor="#DADCE0">
                     <!-- <tr *ngIf="item.groupName && item.schemeName!='Total' ">
-                                    <td style="color: #008FFF; text-align: center; padding: 8px; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-left: 1px solid #dee5e7; " colspan="11">
-                                        {{item.groupName}}
-                                    </td>
-                                </tr> -->
+    <td style="color: #008FFF; text-align: center; padding: 8px; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-left: 1px solid #dee5e7; " colspan="11">
+    {{item.groupName}}
+    </td>
+    </tr> -->
                     <!-- <div style="width: 99.85%;text-align: center;color: #008FFF;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;"
-                                    *ngIf="item.groupName">
-                                    {{item.groupName}}
-                                </div> -->
+    *ngIf="item.groupName">
+    {{item.groupName}}
+    </div> -->
                     <tr *ngIf="item.groupName">
                         <td colspan="12"
                             style="text-align: center;color: #008FFF; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; border-bottom: 1px solid #DADCE0;font-family: Roboto,sans-serif;">

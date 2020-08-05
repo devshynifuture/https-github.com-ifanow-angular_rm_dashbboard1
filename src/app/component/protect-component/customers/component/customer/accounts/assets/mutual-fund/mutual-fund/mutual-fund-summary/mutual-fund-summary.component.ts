@@ -26,9 +26,9 @@ import { numberFormat } from 'highcharts';
 
 
 @Component({
-  selector: 'app-mutual-fund-summary',
-  templateUrl: './mutual-fund-summary.component.html',
-  styleUrls: ['./mutual-fund-summary.component.scss']
+ selector: 'app-mutual-fund-summary',
+ templateUrl: './mutual-fund-summary.component.html',
+ styleUrls: ['./mutual-fund-summary.component.scss']
 })
 export class MutualFundSummaryComponent implements OnInit {
 
