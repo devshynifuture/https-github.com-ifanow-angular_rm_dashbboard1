@@ -84,6 +84,48 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   reportName: any;
   fragmentData = { isSpinner: false };
   mfBulkEmailRequestId: number;
+  firstArrayTran: any;
+  firstArrayTotalTran: any;
+  secondArrayTran: any;
+  secondArrayTotalTran: any;
+  thirdArrayTran: any;
+  thirdArrayTotalTran: any;
+  fourthArrayTotalTran: any;
+  fourthArrayTran: any;
+  fifthArrayTran: any;
+  fifthArrayTotalTran: any;
+  SixthArrayTran: any;
+  SixthArrayTotalTran: any;
+  seventhArrayTran: any;
+  seventhArrayTotalTran: any;
+  eighthArrayTran: any;
+  eighthArrayTotalTran: any;
+  firstArray: any;
+  firstArrayTotal: any;
+  secondArray: any;
+  secondArrayTotal: any;
+  thirdArray: any;
+  thirdArrayTotal: any;
+  fourthArray: any;
+  fourthArrayTotal: any;
+  fifthArray: any;
+  fifthArrayTotal: any;
+  SixthArray: any;
+  SixthArrayTotal: any;
+  seventhArray: any;
+  seventhArrayTotal: any;
+  eighthArray: any;
+  eighthArrayTotal: any;
+  ninethArray: any;
+  ninethArrayTotal: any;
+  tenthArray: any;
+  tenthArrayTotal: any;
+  eleventhArray: any;
+  eleventhArrayTotal: any;
+  twelwthArray: any;
+  twelwthArrayTotal: any;
+  thirteenthArrayTotal: any;
+  thirteenthArray: any;
 
   constructor(public dialog: MatDialog, private datePipe: DatePipe,
     private subInjectService: SubscriptionInject, private utilService: UtilService,
@@ -1068,6 +1110,128 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       const para = document.getElementById('template');
       this.returnValue = this.utilService.htmlToPdf(para.innerHTML, this.reportName, 'true', this.fragmentData, '', '');
     }, 200);
+    this.customDataSource.data.arrayTran.forEach(element => {
+      switch (element.index) {
+        case 0:
+          this.firstArrayTran = this.filterHedaerWiseTran(element);
+          this.firstArrayTotalTran = this.filterHedaerWiseTotalTran(element);
+
+          break;
+        case 1:
+          this.secondArrayTran = this.filterHedaerWiseTran(element);
+          this.secondArrayTotalTran = this.filterHedaerWiseTotalTran(element);
+
+          break;
+        case 2:
+          this.thirdArrayTran = this.filterHedaerWiseTran(element);
+          this.thirdArrayTotalTran = this.filterHedaerWiseTotalTran(element);
+
+          break;
+        case 3:
+          this.fourthArrayTran = this.filterHedaerWiseTran(element);
+          this.fourthArrayTotalTran = this.filterHedaerWiseTotalTran(element);
+
+          break;
+        case 4:
+          this.fifthArrayTran = this.filterHedaerWiseTran(element);
+          this.fifthArrayTotalTran = this.filterHedaerWiseTotalTran(element);
+
+          break;
+        case 5:
+          this.SixthArrayTran = this.filterHedaerWiseTran(element);
+          this.SixthArrayTotalTran = this.filterHedaerWiseTotalTran(element);
+
+          break;
+        case 6:
+          this.seventhArrayTran = this.filterHedaerWiseTran(element);
+          this.seventhArrayTotalTran = this.filterHedaerWiseTotalTran(element);
+
+          break;
+        case 7:
+          this.eighthArrayTran = this.filterHedaerWiseTran(element);
+          this.eighthArrayTotalTran = this.filterHedaerWiseTotalTran(element);
+
+
+          break;
+      
+      }
+    });
+    this.customDataSource.data.arrayUnrealised.forEach(element => {
+      switch (element.index) {
+        case 0:
+          this.firstArray = this.filterHedaerWise(element);
+          this.firstArrayTotal = this.filterHedaerWiseTotal(element);
+
+          break;
+        case 1:
+          this.secondArray = this.filterHedaerWise(element);
+          this.secondArrayTotal = this.filterHedaerWiseTotal(element);
+
+          break;
+        case 2:
+          this.thirdArray = this.filterHedaerWise(element);
+          this.thirdArrayTotal = this.filterHedaerWiseTotal(element);
+
+          break;
+        case 3:
+          this.fourthArray = this.filterHedaerWise(element);
+          this.fourthArrayTotal = this.filterHedaerWiseTotal(element);
+
+          break;
+        case 4:
+          this.fifthArray = this.filterHedaerWise(element);
+          this.fifthArrayTotal = this.filterHedaerWiseTotal(element);
+
+          break;
+        case 5:
+          this.SixthArray = this.filterHedaerWise(element);
+          this.SixthArrayTotal = this.filterHedaerWiseTotal(element);
+
+          break;
+        case 6:
+          this.seventhArray = this.filterHedaerWise(element);
+          this.seventhArrayTotal = this.filterHedaerWiseTotal(element);
+
+          break;
+        case 7:
+          this.eighthArray = this.filterHedaerWise(element);
+          this.eighthArrayTotal = this.filterHedaerWiseTotal(element);
+
+
+          break;
+        case 8:
+          this.ninethArray = this.filterHedaerWise(element);
+          this.ninethArrayTotal = this.filterHedaerWiseTotal(element);
+
+
+          break;
+        case 9:
+          this.tenthArray = this.filterHedaerWise(element);
+          this.tenthArrayTotal = this.filterHedaerWiseTotal(element);
+
+
+          break;
+        case 10:
+          this.eleventhArray = this.filterHedaerWise(element);
+          this.eleventhArrayTotal = this.filterHedaerWiseTotal(element);
+
+
+          break;
+          case 11:
+          this.twelwthArray = this.filterHedaerWise(element);
+          this.twelwthArrayTotal = this.filterHedaerWiseTotal(element);
+
+
+          break;
+          case 12:
+            this.thirteenthArray = this.filterHedaerWise(element);
+            this.thirteenthArrayTotal = this.filterHedaerWiseTotal(element);
+  
+  
+            break;
+
+      }
+    });
   
     // if(data){
     //   this.isSpinner = false;
@@ -1076,39 +1240,45 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   filterHedaerWise(data) {
     let obj;
     switch (data.name) {
-      case 'Scheme Name':
-        obj = 'schemeName';
+      case 'Sr no.':
+        obj = 'indexId';
         break;
-      case 'Amount invested':
-        obj = 'amountInvested';
+      case 'Transaction type':
+        obj = 'fwTransactionType';
+        break;
+      case 'Transaction date':
+        obj = 'transactionDate';
+        break;
+      case 'Transaction amount':
+        obj = 'amount';
+        break;
+      case 'Transaction NAV':
+        obj = 'purchasePrice';
+        break;
+      case 'Units':
+        obj = 'unit';
         break;
       case 'Current value':
-        obj = 'currentValue';
-        break;
-      case 'Unrealized profit':
-        obj = 'unrealizedGain';
-        break;
-      case 'Abs Ret':
-        obj = 'absoluteReturn';
-        break;
-      case 'Xirr':
-        obj = 'xirr';
+        obj = 'currentAmount';
         break;
       case 'Dividend payout':
         obj = 'dividendPayout';
         break;
-      case 'Withdrawal/Switch outs':
-        obj = 'switchOut';
+      case 'Dividend reinvestment':
+        obj = 'dividendReinvest';
         break;
-      case 'Balance unit':
-        obj = 'balanceUnit';
+      case 'Total amount':
+        obj = 'currentAmount';
         break;
-      case 'Nav date':
-        obj = 'navDate';
+      case 'Gain':
+        obj = 'gain';
         break;
-      case 'Sip amount':
-        obj = 'sipAmount';
-        break;
+        case 'Absolute return':
+          obj = 'absoluteReturn';
+          break;
+          case 'XIRR':
+            obj = 'cagr';
+            break;
     }
 
     return obj;
@@ -1116,82 +1286,142 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   filterHedaerWiseTotal(data) {
     let obj;
     switch (data.name) {
-      case 'Scheme Name':
-        obj = 'schemeName';
+      case 'Sr no.':
+        obj = '';
         break;
-      case 'Amount invested':
-        obj = 'totalAmountInvested';
+      case 'Transaction type':
+        obj = 'Total';
+        break;
+      case 'Transaction date':
+        obj = '';
+        break;
+      case 'Transaction amount':
+        obj = 'totalTransactionAmt';
+        break;
+      case 'Transaction NAV':
+        obj = '';
+        break;
+      case 'Units':
+        obj = 'totalUnit';
         break;
       case 'Current value':
         obj = 'totalCurrentValue';
         break;
-      case 'Unrealized profit':
-        obj = 'totalUnrealizedGain';
-        break;
-      case 'Abs Ret':
-        obj = 'totalAbsoluteReturn';
-        break;
-      case 'Xirr':
-        obj = 'totalDividendPayout';
-        break;
       case 'Dividend payout':
-        obj = 'totalDividendPayout';
+        obj = 'dividendPayout';
         break;
-      case 'Withdrawal/Switch outs':
-        obj = 'totalSwitchOut';
+      case 'Dividend reinvestment':
+        obj = 'dividendReinvest';
         break;
-      case 'Balance unit':
-        obj = 'totalBalanceUnit';
+      case 'Total amount':
+        obj = 'totalCurrentValue';
         break;
-      case 'Nav date':
-        obj = 'totalNavDate';
+      case 'Gain':
+        obj = 'netGain';
         break;
-      case 'Sip amount':
-        obj = 'totalSipAmount';
-        break;
+        case 'Absolute return':
+          obj = 'trnAbsoluteReturn';
+          break;
+          case 'XIRR':
+            obj = 'totalCagr';
+            break;
     }
 
     return obj;
   }
-  filterHedaerWiseGTotal(data) {
+  filterHedaerWiseTran(data) {
     let obj;
     switch (data.name) {
-      case 'Scheme Name':
-        obj = 'schemeName';
+      case 'Sr no.':
+        obj = 'indexId';
         break;
-      case 'Amount invested':
-        obj = 'total_amount_invested';
+      case 'Transaction type':
+        obj = 'fwTransactionType';
         break;
-      case 'Current value':
-        obj = 'total_current_value';
+      case 'Transaction date':
+        obj = 'transactionDate';
         break;
-      case 'Unrealized profit':
-        obj = 'total_unrealized_gain';
+      case 'Transaction amount':
+        obj = 'amount';
         break;
-      case 'Abs Ret':
-        obj = 'total_absolute_return';
+      case 'Transaction NAV':
+        obj = 'purchasePrice';
         break;
-      case 'Xirr':
-        obj = 'total_xirr';
+      case 'Units':
+        obj = 'unit';
         break;
-      case 'Dividend payout':
-        obj = 'total_dividend_payout';
+      case 'Balance units':
+        obj = 'balanceUnits';
         break;
-      case 'Withdrawal/Switch outs':
-        obj = 'withdrawals';
+      case 'Days':
+        obj = 'days';
         break;
-      case 'Balance unit':
-        obj = 'totalBalanceUnit';
-        break;
-      case 'Nav date':
-        obj = '';
-        break;
-      case 'Sip amount':
-        obj = 'sip';
-        break;
+     
     }
 
     return obj;
+  }
+  filterHedaerWiseTotalTran(data) {
+    let obj;
+    switch (data.name) {
+      case 'Sr no.':
+        obj = '';
+        break;
+      case 'Transaction type':
+        obj = 'Total';
+        break;
+      case 'Transaction date':
+        obj = '';
+        break;
+      case 'Transaction amount':
+        obj = 'totalTransactionAmt';
+        break;
+      case 'Transaction NAV':
+        obj = '';
+        break;
+      case 'Units':
+        obj = 'totalUnit';
+        break;
+      case 'Balance units':
+        obj = 'totalBalanceUnit';
+        break;
+      case 'Days':
+        obj = '';
+        break;
+     
+    }
+
+    return obj;
+  }
+  getValuesTran(data, value, isGT) {
+    let number;
+    if (value == 'transactionDate') {
+      number = this.datePipe.transform(data, 'dd/MM/yyyy')
+    } 
+    // if (value == 'amountInvested' || value == 'currentValue' || value == 'unrealizedGain' || value == 'dividendPayout' || value == 'switchOut' || value == 'sipAmount' || value == 'totalAmountInvested' || value == 'totalCurrentValue' || value == 'totalUnrealizedGain' || value == 'totalDividendPayout' || value == 'totalSwitchOut' || value == 'totalSipAmount' || value == 'sip' || value == 'total_amount_invested' || value == 'total_current_value' || value == "total_unrealized_gain" || value == "total_dividend_payout" || value === 'withdrawals') {
+    //   number = this.mfService.mutualFundRoundAndFormat(data, 0);
+    // } else if (value == 'transactionDate') {
+    //   number = this.datePipe.transform(data, 'dd/MM/yyyy')
+    // } else {
+    //   number = this.mfService.mutualFundRoundAndFormat(data, 3);
+    // }
+
+    return number;
+  }
+  getValues(data, value, isGT) {
+    let number;
+    if (value == 'transactionDate') {
+        number = this.datePipe.transform(data, 'dd/MM/yyyy')
+      } 
+    // if (value == 'amount' || value == 'currentValue' || value == 'unrealizedGain' || value == 'dividendPayout' || value == 'switchOut' || value == 'sipAmount' || value == 'totalAmountInvested' || value == 'totalCurrentValue' || value == 'totalUnrealizedGain' || value == 'totalDividendPayout' || value == 'totalSwitchOut' || value == 'totalSipAmount' || value == 'sip' || value == 'total_amount_invested' || value == 'total_current_value' || value == "total_unrealized_gain" || value == "total_dividend_payout" || value === 'withdrawals') {
+    //   number = this.mfService.mutualFundRoundAndFormat(data, 0);
+    // } else if (value == 'transactionDate') {
+    //   number = this.datePipe.transform(data, 'dd/MM/yyyy')
+    // } else {
+    //   number = this.mfService.mutualFundRoundAndFormat(data, 3);
+    // }
+
+    return number;
   }
   generatePdfBulk() {
     setTimeout(() => {
