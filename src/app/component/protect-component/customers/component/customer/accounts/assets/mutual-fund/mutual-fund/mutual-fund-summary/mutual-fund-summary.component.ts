@@ -897,10 +897,10 @@ export class MutualFundSummaryComponent implements OnInit {
           'text- align': 'right',
           'font- size': '13px',
           'padding': '8px',
-          'border - bottom': '1px solid #dee5e7',
-          'border - top': '1px solid #dee5e7',
-          'border - right': '1px solid #dee5e7',
-          'border - left': '1px solid #dee5e7'
+          'border-bottom': '1px solid #dee5e7',
+          'border-top': '1px solid #dee5e7',
+          'border-right': '1px solid #dee5e7',
+          'border-left': '1px solid #dee5e7'
         }
       });
       this.customDataSource.data.array1.push({
