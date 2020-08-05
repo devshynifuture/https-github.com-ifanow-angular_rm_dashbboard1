@@ -136,9 +136,14 @@ export class AssetStocksComponent implements OnInit {
             if (s.stockListForEditView) {
               s.stockList[index]['stockListForEditView'] = s.stockListForEditView;
             }
+            s.stockList[index]['nomineeList']= p.nomineeList;
+            s.stockList[index]['linkedBankAccount']= p.linkedBankAccount;
+            s.stockList[index]['linkedDematAccount']= p.linkedDematAccount;
+            s.stockList[index]['description']= p.description;
             this.stockListGroup.push(s.stockList[index]);
           }
         });
+        
         p['stockListGroup'] = this.stockListGroup;
         this.stockListGroup = [];
       });
