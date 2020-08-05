@@ -1451,6 +1451,11 @@ export class MutualFundSummaryComponent implements OnInit {
     this.customDataSource.data.array1 = []
     this.customDataSource.data.array2 = []
     this.customDataSource.data.array3 = []
+    this.customDataSource.data.forEach(element => {
+      if (element.schemeName) {
+        element.schemeName = element.schemeName + ' | ' + element.folioNumber + ' | ' + element.ownerName
+      }
+    });
     this.displayedColumns.forEach((element, ind) => {
       this.styleObject(element, ind)
     });
