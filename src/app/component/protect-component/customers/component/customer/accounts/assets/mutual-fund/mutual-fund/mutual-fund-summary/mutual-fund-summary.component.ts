@@ -387,7 +387,30 @@ export class MutualFundSummaryComponent implements OnInit {
           'border-bottom': '1px solid #dee5e7',
         }
       });
-
+      this.customDataSource.data.array2.push({
+        'index': ind,
+        style: {
+          'width': '26%',
+          'font-size': '13px',
+          'padding': '8px',
+          'font-weight': '600',
+          'border-left': '1px solid #dee5e7',
+          'border-right': '1px solid #dee5e7',
+          'border-bottom': '1px solid #dee5e7',
+        }
+      });
+      this.customDataSource.data.array3.push({
+        'index': ind,
+        style: {
+          'border-left': '1px solid #dee5e7',
+          'width': '26%',
+          'font-size': '13px',
+          'padding': '8px',
+          'font-weight': '600',
+          'border-bottom': '1px solid #dee5e7',
+          'border-right': '1px solid #dee5e7',
+        }
+      });
     } else if (header == 'amountInvested') {
       this.customDataSource.data.array.push({
         'name': 'Amount invested', 'index': ind, isCheked: true,
@@ -411,6 +434,30 @@ export class MutualFundSummaryComponent implements OnInit {
           'border-bottom': '1px solid #dee5e7',
           'border-left': '1px solid #dee5e7',
           'text-align': 'right',
+        }
+      });
+      this.customDataSource.data.array2.push({
+        'index': ind,
+        style: {
+          'width': '7%',
+          'font-size': '13px',
+          'padding': '8px',
+          'font-weight': '600',
+          'border-right': '1px solid #dee5e7',
+          'border-bottom': '1px solid #dee5e7',
+          'text-align': 'right',
+        }
+      });
+      this.customDataSource.data.array3.push({
+        'index': ind,
+        style: {
+          'text-align': 'right',
+          'width': '7%',
+          'font-size': '13px',
+          'padding': '8px',
+          'font-weight': '600',
+          'border-right': '1px solid #dee5e7',
+          'border-bottom': '1px solid #dee5e7',
         }
       });
     } else if (header == 'currentValue') {
@@ -440,6 +487,30 @@ export class MutualFundSummaryComponent implements OnInit {
 
         }
       });
+      this.customDataSource.data.array2.push({
+        'index': ind,
+        style: {
+          'text-align': 'right',
+          'width': '6%',
+          'font-size': '13px',
+          'padding': '8px',
+          'font-weight': '600',
+          'border-right': '1px solid #dee5e7',
+          'border-bottom': '1px solid #dee5e7',
+        }
+      });
+      this.customDataSource.data.array3.push({
+        'index': ind,
+        style: {
+          'text-align': 'right',
+          'width': '6%',
+          'font-size': '13px',
+          'padding': '8px',
+          'font-weight': '600',
+          'border-right': '1px solid #dee5e7',
+          'border-bottom': '1px solid #dee5e7',
+        }
+      });
     } else if (header == 'unrealizedProfit') {
       this.customDataSource.data.array.push({
         'name': 'Unrealized profit', 'index': ind, isCheked: true,
@@ -463,6 +534,30 @@ export class MutualFundSummaryComponent implements OnInit {
           'border-bottom': '1px solid #dee5e7',
           'text-align': 'right',
 
+        }
+      });
+      this.customDataSource.data.array2.push({
+        'index': ind,
+        style: {
+          'text-align': 'right',
+          'width': '8%',
+          'font-size': '13px',
+          'padding': '8px',
+          'font-weight': '600',
+          'border-right': '1px solid #dee5e7',
+          'border-bottom': '1px solid #dee5e7',
+        }
+      });
+      this.customDataSource.data.array3.push({
+        'index': ind,
+        style: {
+          'text-align': 'right',
+          'width': '8%',
+          'font-size': '13px',
+          'padding': '8px',
+          'font-weight': '600',
+          'border-right': '1px solid #dee5e7',
+          'border-bottom': '1px solid #dee5e7',
         }
       });
     } else if (header == 'absoluteReturn') {
@@ -492,6 +587,30 @@ export class MutualFundSummaryComponent implements OnInit {
 
         }
       });
+      this.customDataSource.data.array2.push({
+        'index': ind,
+        style: {
+          'text-align': 'right',
+          'width': '5%',
+          'font-size': '13px',
+          'padding': '8px',
+          'font-weight': '600',
+          'border-right': '1px solid #dee5e7',
+          'border-bottom': '1px solid #dee5e7',
+        }
+      });
+      this.customDataSource.data.array3.push({
+        'index': ind,
+        style: {
+          'text-align': 'right',
+          'width': '5%',
+          'font-size': '13px',
+          'padding': '8px',
+          'font-weight': '600',
+          'border-right': '1px solid #dee5e7',
+          'border-bottom': '1px solid #dee5e7',
+        }
+      });
     } else if (header == 'xirr') {
       this.customDataSource.data.array.push({
         'name': 'Xirr', 'index': ind, isCheked: true,
@@ -518,7 +637,30 @@ export class MutualFundSummaryComponent implements OnInit {
 
         }
       });
-
+      this.customDataSource.data.array2.push({
+        'index': ind,
+        style: {
+          'text-align': 'right',
+          'width': '5%',
+          'font-size': '13px',
+          'padding': '8px',
+          'font-weight': '600',
+          'border-right': '1px solid #dee5e7',
+          'border-bottom': '1px solid #dee5e7',
+        }
+      });
+      this.customDataSource.data.array3.push({
+        'index': ind,
+        style: {
+          'text-align': 'right',
+          'width': '5%',
+          'font-size': '13px',
+          'padding': '8px',
+          'font-weight': '600',
+          'border-right': '1px solid #dee5e7',
+          'border-bottom': '1px solid #dee5e7',
+        }
+      });
     } else if (header == 'dividendPayout') {
       this.customDataSource.data.array.push({
         'name': 'Dividend payout', 'index': ind, isCheked: true,
@@ -546,6 +688,30 @@ export class MutualFundSummaryComponent implements OnInit {
 
         }
       });
+      this.customDataSource.data.array2.push({
+        'index': ind,
+        style: {
+          'text-align': 'right',
+          'width': '7%',
+          'font-size': '13px',
+          'padding': '8px',
+          'font-weight': '600',
+          'border-right': '1px solid #dee5e7',
+          'border-bottom': '1px solid #dee5e7',
+        }
+      });
+      this.customDataSource.data.array3.push({
+        'index': ind,
+        style: {
+          'text-align': 'right',
+          'width': '7%',
+          'font-size': '13px',
+          'padding': '8px',
+          'font-weight': '600',
+          'border-right': '1px solid #dee5e7',
+          'border-bottom': '1px solid #dee5e7',
+        }
+      });
     } else if (header == 'switchOut') {
       this.customDataSource.data.array.push({
         'name': 'Withdrawal/Switch outs', 'index': ind, isCheked: true,
@@ -570,6 +736,30 @@ export class MutualFundSummaryComponent implements OnInit {
           'border-left': '1px solid #dee5e7',
           'text-align': 'right',
 
+        }
+      });
+      this.customDataSource.data.array2.push({
+        'index': ind,
+        style: {
+          'text-align': 'right',
+          'width': '9%',
+          'font-size': '13px',
+          'padding': '8px',
+          'font-weight': '600',
+          'border-right': '1px solid #dee5e7',
+          'border-bottom': '1px solid #dee5e7',
+        }
+      });
+      this.customDataSource.data.array3.push({
+        'index': ind,
+        style: {
+          'text-align': 'right',
+          'width': '9%',
+          'font-size': '13px',
+          'padding': '8px',
+          'font-weight': '600',
+          'border-right': '1px solid #dee5e7',
+          'border-bottom': '1px solid #dee5e7',
         }
       });
     } else if (header == 'balanceUnit') {
@@ -599,6 +789,30 @@ export class MutualFundSummaryComponent implements OnInit {
 
         }
       });
+      this.customDataSource.data.array2.push({
+        'index': ind,
+        style: {
+          'text-align': 'right',
+          'width': '7%',
+          'font-size': '13px',
+          'padding': '8px',
+          'font-weight': '600',
+          'border-right': '1px solid #dee5e7',
+          'border-bottom': '1px solid #dee5e7',
+        }
+      });
+      this.customDataSource.data.array3.push({
+        'index': ind,
+        style: {
+          'text-align': 'right',
+          'width': '7%',
+          'font-size': '13px',
+          'padding': '8px',
+          'font-weight': '600',
+          'border-right': '1px solid #dee5e7',
+          'border-bottom': '1px solid #dee5e7',
+        }
+      });
     } else if (header == 'navDate') {
       this.customDataSource.data.array.push({
         'name': 'Nav date', 'index': ind, isCheked: true,
@@ -623,6 +837,30 @@ export class MutualFundSummaryComponent implements OnInit {
           'border-bottom': '1px solid #dee5e7',
           'text-align': 'right',
 
+        }
+      });
+      this.customDataSource.data.array2.push({
+        'index': ind,
+        style: {
+          'text-align': 'right',
+          'width': '9%',
+          'font-size': '13px',
+          'padding': '8px',
+          'font-weight': '600',
+          'border-right': '1px solid #dee5e7',
+          'border-bottom': '1px solid #dee5e7',
+        }
+      });
+      this.customDataSource.data.array3.push({
+        'index': ind,
+        style: {
+          'text-align': 'right',
+          'width': '9%',
+          'font-size': '13px',
+          'padding': '8px',
+          'font-weight': '600',
+          'border-right': '1px solid #dee5e7',
+          'border-bottom': '1px solid #dee5e7',
         }
       });
     } else if (header == 'sipAmount') {
@@ -650,6 +888,30 @@ export class MutualFundSummaryComponent implements OnInit {
           'border-bottom': '1px solid #dee5e7',
           'text-align': 'right',
 
+        }
+      });
+      this.customDataSource.data.array2.push({
+        'index': ind,
+        style: {
+          'text-align': 'right',
+          'width': '5%',
+          'font-size': '13px',
+          'padding': '8px',
+          'font-weight': '600',
+          'border-right': '1px solid #dee5e7',
+          'border-bottom': '1px solid #dee5e7',
+        }
+      });
+      this.customDataSource.data.array3.push({
+        'index': ind,
+        style: {
+          'text-align': 'right',
+          'width': '5%',
+          'font-size': '13px',
+          'padding': '8px',
+          'font-weight': '600',
+          'border-right': '1px solid #dee5e7',
+          'border-bottom': '1px solid #dee5e7',
         }
       });
     }
@@ -816,6 +1078,7 @@ export class MutualFundSummaryComponent implements OnInit {
     this.customDataSource.data.array = [];
     this.customDataSource.data.array1 = []
     this.customDataSource.data.array2 = []
+    this.customDataSource.data.array3 = []
     this.displayedColumns.forEach((element, ind) => {
       this.styleObject(element, ind)
     });
@@ -884,6 +1147,7 @@ export class MutualFundSummaryComponent implements OnInit {
         this.customDataSource.data.array = [];
         this.customDataSource.data.array1 = []
         this.customDataSource.data.array2 = []
+        this.customDataSource.data.array3 = []
         this.displayedColumns.forEach((element, ind) => {
           this.styleObject(element, ind)
         });
@@ -1158,6 +1422,7 @@ export class MutualFundSummaryComponent implements OnInit {
     this.customDataSource.data.array = []
     this.customDataSource.data.array1 = []
     this.customDataSource.data.array2 = []
+    this.customDataSource.data.array3 = []
     this.displayedColumns.forEach((element, ind) => {
       this.styleObject(element, ind)
     });
@@ -1377,9 +1642,9 @@ export class MutualFundSummaryComponent implements OnInit {
 
     if (value == 'amountInvested' || value == 'currentValue' || value == 'unrealizedGain' || value == 'dividendPayout' || value == 'switchOut' || value == 'sipAmount' || value == 'totalAmountInvested' || value == 'totalCurrentValue' || value == 'totalUnrealizedGain' || value == 'totalDividendPayout' || value == 'totalSwitchOut' || value == 'totalSipAmount' || value == 'sip' || value == 'total_amount_invested' || value == 'total_current_value' || value == "total_unrealized_gain" || value == "total_dividend_payout" || value === 'withdrawals') {
       number = this.mfService.mutualFundRoundAndFormat(data, 0);
-    } else if(value == 'navDate'){
+    } else if (value == 'navDate') {
       number = this.datePipe.transform(data, 'dd/MM/yyyy')
-    }else{
+    } else {
       number = this.mfService.mutualFundRoundAndFormat(data, 3);
     }
 
