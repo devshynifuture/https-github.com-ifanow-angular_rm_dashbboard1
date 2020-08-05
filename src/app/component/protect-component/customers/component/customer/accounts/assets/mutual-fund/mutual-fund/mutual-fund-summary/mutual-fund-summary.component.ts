@@ -841,7 +841,7 @@ export class MutualFundSummaryComponent implements OnInit {
       this.customDataSource.data.array.push({
         'name': 'Nav date', 'index': ind, isCheked: true,
         style: {
-          'width': '7%',
+          'width': '9%',
           'text-align': 'right',
           'font-size': ' 13px',
           'padding': '8px',
@@ -853,7 +853,7 @@ export class MutualFundSummaryComponent implements OnInit {
       this.customDataSource.data.array1.push({
         'index': ind,
         style: {
-          'width': '7%',
+          'width': '9%',
           'font-size': '13px',
           'padding': '8px',
           'border-right': '1px solid #dee5e7',
@@ -867,7 +867,7 @@ export class MutualFundSummaryComponent implements OnInit {
         'index': ind,
         style: {
           'text-align': 'right',
-          'width': '7%',
+          'width': '9%',
           'font-size': '13px',
           'padding': '8px',
           'font-weight': '600',
@@ -880,7 +880,7 @@ export class MutualFundSummaryComponent implements OnInit {
         'index': ind,
         style: {
           'text-align': 'right',
-          'width': '7%',
+          'width': '9%',
           'font-size': '13px',
           'padding': '8px',
           'font-weight': '600',
@@ -1451,6 +1451,11 @@ export class MutualFundSummaryComponent implements OnInit {
     this.customDataSource.data.array1 = []
     this.customDataSource.data.array2 = []
     this.customDataSource.data.array3 = []
+    this.customDataSource.data.forEach(element => {
+      if (element.schemeName) {
+        element.schemeName = element.schemeName + ' | ' + element.folioNumber + ' | ' + element.ownerName
+      }
+    });
     this.displayedColumns.forEach((element, ind) => {
       this.styleObject(element, ind)
     });
