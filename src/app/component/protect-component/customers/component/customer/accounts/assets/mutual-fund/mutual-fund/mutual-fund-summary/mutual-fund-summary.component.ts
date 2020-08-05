@@ -424,7 +424,8 @@ export class MutualFundSummaryComponent implements OnInit {
           'padding': '8px',
           'border-bottom': '1px solid #dee5e7',
           'border-top': '1px solid #dee5e7',
-          'border-right': '1px solid #dee5e7'
+          'border-right': '1px solid #dee5e7',
+          'border-left': '1px solid #dee5e7',
         }
       });
       this.customDataSource.data.array1.push({
@@ -448,6 +449,7 @@ export class MutualFundSummaryComponent implements OnInit {
           'font-weight': '600',
           'border-right': '1px solid #dee5e7',
           'border-bottom': '1px solid #dee5e7',
+          'border-left': '1px solid #dee5e7',
           'text-align': 'right',
         }
       });
@@ -461,6 +463,7 @@ export class MutualFundSummaryComponent implements OnInit {
           'font-weight': '600',
           'border-right': '1px solid #dee5e7',
           'border-bottom': '1px solid #dee5e7',
+          'border-left': '1px solid #dee5e7',
         }
       });
     } else if (header == 'currentValue') {
@@ -500,6 +503,7 @@ export class MutualFundSummaryComponent implements OnInit {
           'font-weight': '600',
           'border-right': '1px solid #dee5e7',
           'border-bottom': '1px solid #dee5e7',
+          'border-left': '1px solid #dee5e7',
         }
       });
       this.customDataSource.data.array3.push({
@@ -512,6 +516,7 @@ export class MutualFundSummaryComponent implements OnInit {
           'font-weight': '600',
           'border-right': '1px solid #dee5e7',
           'border-bottom': '1px solid #dee5e7',
+          'border-left': '1px solid #dee5e7',
         }
       });
     } else if (header == 'unrealizedProfit') {
@@ -523,6 +528,7 @@ export class MutualFundSummaryComponent implements OnInit {
           'font-size': '13px',
           'padding': '8px',
           'border-right': '1px solid #dee5e7',
+          'border-left': '1px solid #dee5e7',
           'border-bottom': '1px solid #dee5e7',
           'border-top': '1px solid #dee5e7',
         }
@@ -535,6 +541,7 @@ export class MutualFundSummaryComponent implements OnInit {
           'padding': '8px',
           'border-right': '1px solid #dee5e7',
           'border-bottom': '1px solid #dee5e7',
+          'border-left': '1px solid #dee5e7',
           'text-align': 'right',
 
         }
@@ -549,6 +556,7 @@ export class MutualFundSummaryComponent implements OnInit {
           'font-weight': '600',
           'border-right': '1px solid #dee5e7',
           'border-bottom': '1px solid #dee5e7',
+          'border-left': '1px solid #dee5e7',
         }
       });
       this.customDataSource.data.array3.push({
@@ -560,6 +568,7 @@ export class MutualFundSummaryComponent implements OnInit {
           'padding': '8px',
           'font-weight': '600',
           'border-right': '1px solid #dee5e7',
+          'border-left': '1px solid #dee5e7',
           'border-bottom': '1px solid #dee5e7',
         }
       });
@@ -599,6 +608,7 @@ export class MutualFundSummaryComponent implements OnInit {
           'padding': '8px',
           'font-weight': '600',
           'border-right': '1px solid #dee5e7',
+          'border-left': '1px solid #dee5e7',
           'border-bottom': '1px solid #dee5e7',
         }
       });
@@ -611,6 +621,7 @@ export class MutualFundSummaryComponent implements OnInit {
           'padding': '8px',
           'font-weight': '600',
           'border-right': '1px solid #dee5e7',
+          'border-left': '1px solid #dee5e7',
           'border-bottom': '1px solid #dee5e7',
         }
       });
@@ -624,7 +635,8 @@ export class MutualFundSummaryComponent implements OnInit {
           'padding': '8px',
           'border-bottom': '1px solid #dee5e7',
           'border-top': '1px solid #dee5e7',
-          'border-right': '1px solid #dee5e7'
+          'border-right': '1px solid #dee5e7',
+          'border-left': '1px solid #dee5e7',
         }
       });
       this.customDataSource.data.array1.push({
@@ -650,6 +662,7 @@ export class MutualFundSummaryComponent implements OnInit {
           'font-weight': '600',
           'border-right': '1px solid #dee5e7',
           'border-bottom': '1px solid #dee5e7',
+          'border-left': '1px solid #dee5e7',
         }
       });
       this.customDataSource.data.array3.push({
@@ -662,6 +675,7 @@ export class MutualFundSummaryComponent implements OnInit {
           'font-weight': '600',
           'border-right': '1px solid #dee5e7',
           'border-bottom': '1px solid #dee5e7',
+          'border-left': '1px solid #dee5e7',
         }
       });
     } else if (header == 'dividendPayout') {
@@ -700,6 +714,7 @@ export class MutualFundSummaryComponent implements OnInit {
           'padding': '8px',
           'font-weight': '600',
           'border-right': '1px solid #dee5e7',
+          'border-left': '1px solid #dee5e7',
           'border-bottom': '1px solid #dee5e7',
         }
       });
@@ -712,6 +727,7 @@ export class MutualFundSummaryComponent implements OnInit {
           'padding': '8px',
           'font-weight': '600',
           'border-right': '1px solid #dee5e7',
+          'border-left': '1px solid #dee5e7',
           'border-bottom': '1px solid #dee5e7',
         }
       });
@@ -725,6 +741,7 @@ export class MutualFundSummaryComponent implements OnInit {
           'padding': '8px',
           'border-bottom': '1px solid #dee5e7',
           'border-top': '1px solid #dee5e7',
+          'border-left': '1px solid #dee5e7',
           'border-right': '1px solid #dee5e7',
         }
       });
@@ -750,6 +767,7 @@ export class MutualFundSummaryComponent implements OnInit {
           'padding': '8px',
           'font-weight': '600',
           'border-right': '1px solid #dee5e7',
+          'border-left': '1px solid #dee5e7',
           'border-bottom': '1px solid #dee5e7',
         }
       });
@@ -762,6 +780,7 @@ export class MutualFundSummaryComponent implements OnInit {
           'padding': '8px',
           'font-weight': '600',
           'border-right': '1px solid #dee5e7',
+          'border-left': '1px solid #dee5e7',
           'border-bottom': '1px solid #dee5e7',
         }
       });
@@ -801,6 +820,7 @@ export class MutualFundSummaryComponent implements OnInit {
           'padding': '8px',
           'font-weight': '600',
           'border-right': '1px solid #dee5e7',
+          'border-left': '1px solid #dee5e7',
           'border-bottom': '1px solid #dee5e7',
         }
       });
@@ -814,6 +834,7 @@ export class MutualFundSummaryComponent implements OnInit {
           'font-weight': '600',
           'border-right': '1px solid #dee5e7',
           'border-bottom': '1px solid #dee5e7',
+          'border-left': '1px solid #dee5e7',
         }
       });
     } else if (header == 'navDate') {
@@ -851,6 +872,7 @@ export class MutualFundSummaryComponent implements OnInit {
           'padding': '8px',
           'font-weight': '600',
           'border-right': '1px solid #dee5e7',
+          'border-left': '1px solid #dee5e7',
           'border-bottom': '1px solid #dee5e7',
         }
       });
@@ -864,6 +886,7 @@ export class MutualFundSummaryComponent implements OnInit {
           'font-weight': '600',
           'border-right': '1px solid #dee5e7',
           'border-bottom': '1px solid #dee5e7',
+          'border-left': '1px solid #dee5e7',
         }
       });
     } else if (header == 'sipAmount') {
@@ -902,6 +925,7 @@ export class MutualFundSummaryComponent implements OnInit {
           'padding': '8px',
           'font-weight': '600',
           'border-right': '1px solid #dee5e7',
+          'border-left': '1px solid #dee5e7',
           'border-bottom': '1px solid #dee5e7',
         }
       });
@@ -915,6 +939,7 @@ export class MutualFundSummaryComponent implements OnInit {
           'font-weight': '600',
           'border-right': '1px solid #dee5e7',
           'border-bottom': '1px solid #dee5e7',
+          'border-left': '1px solid #dee5e7',
         }
       });
     }
