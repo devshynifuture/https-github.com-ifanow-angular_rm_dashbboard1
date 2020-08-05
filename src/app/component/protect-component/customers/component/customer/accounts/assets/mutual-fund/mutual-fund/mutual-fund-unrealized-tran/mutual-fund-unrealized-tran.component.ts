@@ -291,15 +291,15 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
               }
             });
             if (this.viewMode == 'Unrealized Transactions' || this.viewMode == 'unrealized transactions') {
-              this.displayedColumns.forEach(element => {
+              this.displayedColumns.forEach((element,ind) => {
                 if (this.customDataSource.length > 0) {
-                  this.styleObjectUnrealised(element)
+                  this.styleObjectUnrealised(element,ind)
                 }
               });
             } else {
-              this.displayedColumns.forEach(element => {
+              this.displayedColumns.forEach((element,ind) => {
                 if (this.customDataSource.length > 0) {
-                  this.styleObjectTransaction(element)
+                  this.styleObjectTransaction(element,ind)
                 }
               });
             }
@@ -381,54 +381,117 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     );
 
   }
-  styleObjectTransaction(header) {
+  styleObjectTransaction(header,ind) {
 
     if (header == 'no') {
-      Object.assign(this.customDataSource.data, { no: true });
+      this.customDataSource.data.arrayTran.push({
+        'name': 'Sr no.', 'index': ind, isCheked: true, 
+      });
+      // Object.assign(this.customDataSource.data, { no: true });
     } else if (header == 'transactionType') {
-      Object.assign(this.customDataSource.data, { transactionType: true });
+      this.customDataSource.data.arrayTran.push({
+        'name': 'Transaction type', 'index': ind, isCheked: true, 
+      });
+      // Object.assign(this.customDataSource.data, { transactionType: true });
     } else if (header == 'transactionDate') {
-      Object.assign(this.customDataSource.data, { transactionDate: true });
+      this.customDataSource.data.arrayTran.push({
+        'name': 'Transaction date', 'index': ind, isCheked: true, 
+      });
+      // Object.assign(this.customDataSource.data, { transactionDate: true });
     } else if (header == 'transactionAmount') {
-      Object.assign(this.customDataSource.data, { transactionAmount: true });
+      this.customDataSource.data.arrayTran.push({
+        'name': 'Transaction amount', 'index': ind, isCheked: true, 
+      });
+      // Object.assign(this.customDataSource.data, { transactionAmount: true });
     } else if (header == 'transactionNav') {
-      Object.assign(this.customDataSource.data, { transactionNav: true });
+      this.customDataSource.data.arrayTran.push({
+        'name': 'Transaction NAV', 'index': ind, isCheked: true, 
+      });
+      // Object.assign(this.customDataSource.data, { transactionNav: true });
     } else if (header == 'units') {
-      Object.assign(this.customDataSource.data, { units: true });
+      this.customDataSource.data.arrayTran.push({
+        'name': 'Units', 'index': ind, isCheked: true, 
+      });
+      // Object.assign(this.customDataSource.data, { units: true });
     } else if (header == 'balanceUnits') {
-      Object.assign(this.customDataSource.data, { balanceUnits: true });
+      this.customDataSource.data.arrayTran.push({
+        'name': 'Balance units', 'index': ind, isCheked: true, 
+      });
+      // Object.assign(this.customDataSource.data, { balanceUnits: true });
     } else if (header == 'days') {
-      Object.assign(this.customDataSource.data, { days: true });
+      this.customDataSource.data.arrayTran.push({
+        'name': 'Days', 'index': ind, isCheked: true, 
+      });
+      // Object.assign(this.customDataSource.data, { days: true });
     }
 
   }
-  styleObjectUnrealised(header) {
+  styleObjectUnrealised(header,ind) {
     if (header == 'no') {
-      Object.assign(this.customDataSource.data, { no: true });
+      this.customDataSource.data.arrayUnrealised.push({
+        'name': 'Sr no.', 'index': ind, isCheked: true, 
+      });
+      // Object.assign(this.customDataSource.data, { no: true });
     } else if (header == 'transactionType') {
-      Object.assign(this.customDataSource.data, { transactionType: true });
+      this.customDataSource.data.arrayUnrealised.push({
+        'name': 'Transaction type', 'index': ind, isCheked: true, 
+      });
+      // Object.assign(this.customDataSource.data, { transactionType: true });
     } else if (header == 'transactionDate') {
-      Object.assign(this.customDataSource.data, { transactionDate: true });
+      this.customDataSource.data.arrayUnrealised.push({
+        'name': 'Transaction date', 'index': ind, isCheked: true, 
+      });
+      // Object.assign(this.customDataSource.data, { transactionDate: true });
     } else if (header == 'transactionAmount') {
-      Object.assign(this.customDataSource.data, { transactionAmount: true });
+      this.customDataSource.data.arrayUnrealised.push({
+        'name': 'Transaction amount', 'index': ind, isCheked: true, 
+      });
+      // Object.assign(this.customDataSource.data, { transactionAmount: true });
     } else if (header == 'transactionNav') {
-      Object.assign(this.customDataSource.data, { transactionNav: true });
+      this.customDataSource.data.arrayUnrealised.push({
+        'name': 'Transaction NAV', 'index': ind, isCheked: true, 
+      });
+      // Object.assign(this.customDataSource.data, { transactionNav: true });
     } else if (header == 'currentValue') {
-      Object.assign(this.customDataSource.data, { currentValue: true });
+      this.customDataSource.data.arrayUnrealised.push({
+        'name': 'Units', 'index': ind, isCheked: true, 
+      });
+      // Object.assign(this.customDataSource.data, { currentValue: true });
     } else if (header == 'dividendPayout') {
-      Object.assign(this.customDataSource.data, { dividendPayout: true });
+      this.customDataSource.data.arrayUnrealised.push({
+        'name': 'Current value', 'index': ind, isCheked: true, 
+      });
+      // Object.assign(this.customDataSource.data, { dividendPayout: true });
     } else if (header == 'dividendReinvest') {
-      Object.assign(this.customDataSource.data, { dividendReinvest: true });
+      this.customDataSource.data.arrayUnrealised.push({
+        'name': 'Dividend payout', 'index': ind, isCheked: true, 
+      });
+      // Object.assign(this.customDataSource.data, { dividendReinvest: true });
     } else if (header == 'totalAmount') {
-      Object.assign(this.customDataSource.data, { totalAmount: true });
+      this.customDataSource.data.arrayUnrealised.push({
+        'name': 'Dividend reinvestment', 'index': ind, isCheked: true, 
+      });
+      // Object.assign(this.customDataSource.data, { totalAmount: true });
     } else if (header == 'units') {
-      Object.assign(this.customDataSource.data, { units: true });
+      this.customDataSource.data.arrayUnrealised.push({
+        'name': 'Total amount', 'index': ind, isCheked: true, 
+      });
+      // Object.assign(this.customDataSource.data, { units: true });
     } else if (header == 'gain') {
-      Object.assign(this.customDataSource.data, { gain: true });
+      this.customDataSource.data.arrayUnrealised.push({
+        'name': 'Gain', 'index': ind, isCheked: true, 
+      });
+      // Object.assign(this.customDataSource.data, { gain: true });
     } else if (header == 'absReturn') {
-      Object.assign(this.customDataSource.data, { absReturn: true });
+      this.customDataSource.data.arrayUnrealised.push({
+        'name': 'Absolute return', 'index': ind, isCheked: true, 
+      });
+      // Object.assign(this.customDataSource.data, { absReturn: true });
     } else if (header == 'xirr') {
-      Object.assign(this.customDataSource.data, { xirr: true });
+      this.customDataSource.data.arrayUnrealised.push({
+        'name': 'XIRR', 'index': ind, isCheked: true, 
+      });
+      // Object.assign(this.customDataSource.data, { xirr: true });
     }
   }
   initValueOnInit() {
@@ -672,7 +735,9 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         this.customDataSource = []
         this.customDataSource.data = []
         this.unrealisedData = new TableVirtualScrollDataSource(data.customDataSourceData);
-        this.customDataSource.data = (data.customDataSourceData)
+        this.customDataSource.data = (data.customDataSourceData);
+        this.customDataSource.data.arrayTran=[];
+        this.customDataSource.data.arrayUnrealised=[];
         this.pdfDataFornTRansaction = this.customDataSource.data;
         this.customDataHolder = data.customDataHolder;
         this.dataTransaction.grandTotal = this.grandTotal
@@ -683,12 +748,12 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         this.mfService.setTransactionData(this.dataTransaction)
 
         if (this.viewMode == 'All Transactions' || this.viewMode == 'all transactions') {
-          this.displayedColumns.forEach(element => {
-            this.styleObjectTransaction(element)
+          this.displayedColumns.forEach((element,ind) => {
+            this.styleObjectTransaction(element,ind)
           });
         } else {
-          this.displayedColumns.forEach(element => {
-            this.styleObjectUnrealised(element)
+          this.displayedColumns.forEach((element,ind) => {
+            this.styleObjectUnrealised(element,ind)
           });
         }
         // console.log(`MUTUALFUND COMPONENT page got message:`, data);
@@ -1003,10 +1068,130 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       const para = document.getElementById('template');
       this.returnValue = this.utilService.htmlToPdf(para.innerHTML, this.reportName, 'true', this.fragmentData, '', '');
     }, 200);
-
+  
     // if(data){
     //   this.isSpinner = false;
     // }
+  }
+  filterHedaerWise(data) {
+    let obj;
+    switch (data.name) {
+      case 'Scheme Name':
+        obj = 'schemeName';
+        break;
+      case 'Amount invested':
+        obj = 'amountInvested';
+        break;
+      case 'Current value':
+        obj = 'currentValue';
+        break;
+      case 'Unrealized profit':
+        obj = 'unrealizedGain';
+        break;
+      case 'Abs Ret':
+        obj = 'absoluteReturn';
+        break;
+      case 'Xirr':
+        obj = 'xirr';
+        break;
+      case 'Dividend payout':
+        obj = 'dividendPayout';
+        break;
+      case 'Withdrawal/Switch outs':
+        obj = 'switchOut';
+        break;
+      case 'Balance unit':
+        obj = 'balanceUnit';
+        break;
+      case 'Nav date':
+        obj = 'navDate';
+        break;
+      case 'Sip amount':
+        obj = 'sipAmount';
+        break;
+    }
+
+    return obj;
+  }
+  filterHedaerWiseTotal(data) {
+    let obj;
+    switch (data.name) {
+      case 'Scheme Name':
+        obj = 'schemeName';
+        break;
+      case 'Amount invested':
+        obj = 'totalAmountInvested';
+        break;
+      case 'Current value':
+        obj = 'totalCurrentValue';
+        break;
+      case 'Unrealized profit':
+        obj = 'totalUnrealizedGain';
+        break;
+      case 'Abs Ret':
+        obj = 'totalAbsoluteReturn';
+        break;
+      case 'Xirr':
+        obj = 'totalDividendPayout';
+        break;
+      case 'Dividend payout':
+        obj = 'totalDividendPayout';
+        break;
+      case 'Withdrawal/Switch outs':
+        obj = 'totalSwitchOut';
+        break;
+      case 'Balance unit':
+        obj = 'totalBalanceUnit';
+        break;
+      case 'Nav date':
+        obj = 'totalNavDate';
+        break;
+      case 'Sip amount':
+        obj = 'totalSipAmount';
+        break;
+    }
+
+    return obj;
+  }
+  filterHedaerWiseGTotal(data) {
+    let obj;
+    switch (data.name) {
+      case 'Scheme Name':
+        obj = 'schemeName';
+        break;
+      case 'Amount invested':
+        obj = 'total_amount_invested';
+        break;
+      case 'Current value':
+        obj = 'total_current_value';
+        break;
+      case 'Unrealized profit':
+        obj = 'total_unrealized_gain';
+        break;
+      case 'Abs Ret':
+        obj = 'total_absolute_return';
+        break;
+      case 'Xirr':
+        obj = 'total_xirr';
+        break;
+      case 'Dividend payout':
+        obj = 'total_dividend_payout';
+        break;
+      case 'Withdrawal/Switch outs':
+        obj = 'withdrawals';
+        break;
+      case 'Balance unit':
+        obj = 'totalBalanceUnit';
+        break;
+      case 'Nav date':
+        obj = '';
+        break;
+      case 'Sip amount':
+        obj = 'sip';
+        break;
+    }
+
+    return obj;
   }
   generatePdfBulk() {
     setTimeout(() => {
