@@ -162,6 +162,7 @@ export const appConfig = {
   ADD_POTD_SCHEME: 'account/asset/saving-scheme/potd/add',
   EDIT_POTD_SCHEME: 'account/asset/saving-scheme/potd/edit',
   GET_ASSET_COUNT_GLOBAL_DATA: 'account/asset/count/list',
+  GET_AUM_GRAPH_DATA: 'account/asset/client/aum/graph-data/get',
   DELETE_PPF_SCHEME: 'account/asset/saving-scheme/ppf/delete',
   DELETE_NSC_SCHEME: 'account/asset/saving-scheme/nsc/delete',
   DELETE_SSY_SCHEME: 'account/asset/saving-scheme/ssy/delete',
