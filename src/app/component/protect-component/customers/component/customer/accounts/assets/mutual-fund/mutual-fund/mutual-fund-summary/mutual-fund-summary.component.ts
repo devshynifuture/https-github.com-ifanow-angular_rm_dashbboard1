@@ -377,6 +377,7 @@ export class MutualFundSummaryComponent implements OnInit {
         }
       });
       this.customDataSource.data.array1.push({
+        'index': ind,
         style: {
           'width': '26%',
           'font-size': ' 13px',
@@ -401,13 +402,14 @@ export class MutualFundSummaryComponent implements OnInit {
         }
       });
       this.customDataSource.data.array1.push({
+        'index': ind,
         style: {
           'width': '7%',
           'font-size': '13px',
           'padding': '8px',
           'border-right': '1px solid #dee5e7',
           'border-bottom': '1px solid #dee5e7',
-           'border-left': '1px solid #dee5e7',
+          'border-left': '1px solid #dee5e7',
           'text-align': 'right',
         }
       });
@@ -426,13 +428,14 @@ export class MutualFundSummaryComponent implements OnInit {
         }
       });
       this.customDataSource.data.array1.push({
+        'index': ind,
         style: {
           'width': '6%',
           'font-size': '13px',
           'padding': '8px',
           'border-right': '1px solid #dee5e7',
           'border-bottom': '1px solid #dee5e7',
-           'border-left': '1px solid #dee5e7',
+          'border-left': '1px solid #dee5e7',
           'text-align': 'right',
 
         }
@@ -451,6 +454,7 @@ export class MutualFundSummaryComponent implements OnInit {
         }
       });
       this.customDataSource.data.array1.push({
+        'index': ind,
         style: {
           'width': '8%',
           'font-size': '13px',
@@ -476,13 +480,14 @@ export class MutualFundSummaryComponent implements OnInit {
         }
       });
       this.customDataSource.data.array1.push({
+        'index': ind,
         style: {
           'width': '5%',
           'font-size': '13px',
           'padding': '8px',
           'border-right': '1px solid #dee5e7',
           'border-bottom': '1px solid #dee5e7',
-           'border-left': '1px solid #dee5e7',
+          'border-left': '1px solid #dee5e7',
           'text-align': 'right',
 
         }
@@ -501,13 +506,14 @@ export class MutualFundSummaryComponent implements OnInit {
         }
       });
       this.customDataSource.data.array1.push({
+        'index': ind,
         style: {
           'width': '5%',
           'font-size': '13px',
           'padding': '8px',
           'border-right': '1px solid #dee5e7',
           'border-bottom': '1px solid #dee5e7',
-           'border-left': '1px solid #dee5e7',
+          'border-left': '1px solid #dee5e7',
           'text-align': 'right',
 
         }
@@ -528,13 +534,14 @@ export class MutualFundSummaryComponent implements OnInit {
         }
       });
       this.customDataSource.data.array1.push({
+        'index': ind,
         style: {
           'width': '7%',
           'font-size': '13px',
           'padding': '8px',
           'border-right': '1px solid #dee5e7',
           'border-bottom': '1px solid #dee5e7',
-           'border-left': '1px solid #dee5e7',
+          'border-left': '1px solid #dee5e7',
           'text-align': 'right',
 
         }
@@ -553,13 +560,14 @@ export class MutualFundSummaryComponent implements OnInit {
         }
       });
       this.customDataSource.data.array1.push({
+        'index': ind,
         style: {
           'width': '9%',
           'font-size': '13px',
           'padding': '8px',
           'border-right': '1px solid #dee5e7',
           'border-bottom': '1px solid #dee5e7',
-           'border-left': '1px solid #dee5e7',
+          'border-left': '1px solid #dee5e7',
           'text-align': 'right',
 
         }
@@ -579,13 +587,14 @@ export class MutualFundSummaryComponent implements OnInit {
         }
       });
       this.customDataSource.data.array1.push({
+        'index': ind,
         style: {
           'width': '7%',
           'font-size': '13px',
           'padding': '8px',
           'border-right': '1px solid #dee5e7',
           'border-bottom': '1px solid #dee5e7',
-           'border-left': '1px solid #dee5e7',
+          'border-left': '1px solid #dee5e7',
           'text-align': 'right',
 
         }
@@ -604,12 +613,13 @@ export class MutualFundSummaryComponent implements OnInit {
         }
       });
       this.customDataSource.data.array1.push({
+        'index': ind,
         style: {
           'width': '9%',
           'font-size': '13px',
           'padding': '8px',
           'border-right': '1px solid #dee5e7',
-           'border-left': '1px solid #dee5e7',
+          'border-left': '1px solid #dee5e7',
           'border-bottom': '1px solid #dee5e7',
           'text-align': 'right',
 
@@ -630,12 +640,13 @@ export class MutualFundSummaryComponent implements OnInit {
         }
       });
       this.customDataSource.data.array1.push({
+        'index': ind,
         style: {
           'width': '5%',
           'font-size': '13px',
           'padding': '8px',
           'border-right': '1px solid #dee5e7',
-           'border-left': '1px solid #dee5e7',
+          'border-left': '1px solid #dee5e7',
           'border-bottom': '1px solid #dee5e7',
           'text-align': 'right',
 
@@ -872,7 +883,7 @@ export class MutualFundSummaryComponent implements OnInit {
         this.customDataSource.data = data.customDataSourceData;
         this.customDataSource.data.array = [];
         this.customDataSource.data.array1 = []
-    this.customDataSource.data.array2 = []
+        this.customDataSource.data.array2 = []
         this.displayedColumns.forEach((element, ind) => {
           this.styleObject(element, ind)
         });
