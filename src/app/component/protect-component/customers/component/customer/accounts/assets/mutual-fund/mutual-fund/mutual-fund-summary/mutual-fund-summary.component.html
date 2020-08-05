@@ -218,14 +218,14 @@
                         <div class="bar"><span
                                 *ngIf="element.balanceUnit || element.balanceUnit == 0">{{(element.balanceUnit == 0 ) ? '0' :  (element.balanceUnit  | number:'1.2-3')}}</span>
                             <span class="f-700"
-                                *ngIf="element.totalBalanceUnit || element.totalBalanceUnit==0">{{(element.totalBalanceUnit == 0 ) ? '0' : (element.totalBalanceUnit | number:'1.2-3')}}</span>
+                                *ngIf="element.totalBalanceUnit || element.totalBalanceUnit==0">{{mfService.mutualFundRoundAndFormat(element.totalBalanceUnit,2)}}</span>
                         </div>
                     </td>
 
                     <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
 
                         <div class="bar">
-                            {{(grandTotal.totalBalanceUnit) ? (grandTotal.totalBalanceUnit | number:'1.2-3') : 0}}</div>
+                            {{mfService.mutualFundRoundAndFormat(grandTotal.totalBalanceUnit,2)}}</div>
                     </td>
                 </ng-container>
 

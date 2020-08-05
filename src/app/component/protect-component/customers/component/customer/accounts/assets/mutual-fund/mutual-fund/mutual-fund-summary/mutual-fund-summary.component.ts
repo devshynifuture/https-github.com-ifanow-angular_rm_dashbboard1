@@ -1220,11 +1220,11 @@ export class MutualFundSummaryComponent implements OnInit {
     let number;
     if (isGT == 'GT') {
       if (value == 'withdrawals') {
-        value = this.grandTotal.withdrawals
+        data = this.grandTotal.withdrawals
       } else if (value == 'totalBalanceUnit') {
-        value = this.grandTotal.totalBalanceUnit
+        data = this.grandTotal.totalBalanceUnit
       } else if (value == 'sip') {
-        value = this.grandTotal.sip
+        data = this.grandTotal.sip
       }
     }
 
