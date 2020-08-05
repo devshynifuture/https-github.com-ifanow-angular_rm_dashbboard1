@@ -218,7 +218,7 @@
                         <div class="bar"><span
                                 *ngIf="element.balanceUnit || element.balanceUnit == 0">{{(element.balanceUnit == 0 ) ? '0' : (element.balanceUnit | number:'1.2-3')}}</span>
                             <span class="f-700" *ngIf="element.totalBalanceUnit || element.totalBalanceUnit==0">
-                                {{mfService.mutualFundRoundAndFormat(element.totalBalanceUnit ? element.totalBalanceUnit  :0),3)}}
+                                {{mfService.mutualFundRoundAndFormat(element.totalBalanceUnit,3)}}
                             </span>
                         </div>
                     </td>
@@ -226,7 +226,7 @@
                     <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
 
                         <div class="bar">
-                            {{mfService.mutualFundRoundAndFormat(grandTotal.totalBalanceUnit ? grandTotal.totalBalanceUnit : 0,3)}}
+                            {{mfService.mutualFundRoundAndFormat(grandTotal.totalBalanceUnit,3)}}
                             <!-- {{(grandTotal.totalBalanceUnit) ? (grandTotal.totalBalanceUnit | number:'1.2-3') : 0}} -->
                         </div>
                     </td>
