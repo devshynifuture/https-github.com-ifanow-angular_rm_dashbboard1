@@ -3,7 +3,7 @@ import { HttpService } from 'src/app/http-service/http-service';
 import { apiConfig } from 'src/app/config/main-config';
 import { appConfig } from 'src/app/config/component-config';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import {UtilService} from "../../../../../services/util.service";
+import { UtilService } from "../../../../../services/util.service";
 
 @Injectable({
   providedIn: 'root'
@@ -1006,5 +1006,9 @@ export class CustomerService {
   orderSoaMutualFund(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.ORDER_SOA_MUTUAL_FUND, data)
   }
+  unmapFamilyMembers(data) {
+    return this.http.postEncoded(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_EDIT, data);
+  }
+
 }
 
