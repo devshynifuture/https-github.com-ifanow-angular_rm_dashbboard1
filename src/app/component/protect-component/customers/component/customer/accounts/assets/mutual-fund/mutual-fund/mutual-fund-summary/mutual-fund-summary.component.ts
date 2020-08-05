@@ -119,6 +119,7 @@ export class MutualFundSummaryComponent implements OnInit {
   ninethArrayGTotal: any;
   tenthArrayGTotal: any;
   eleventhArrayGTotal: any;
+  mfBulkEmailRequestId: number;
 
 
   @Input()
@@ -153,6 +154,7 @@ export class MutualFundSummaryComponent implements OnInit {
         //this.setDefaultFilterData.toDate = param1.toDate;
         this.toDate = param1.toDate;
         this.toDate = this.datePipe.transform(this.toDate, 'yyyy-MM-dd');
+        this.mfBulkEmailRequestId = parseInt(param1.mfBulkEmailRequestId)
         console.log('2423425', param1)
       }
       else {
@@ -1383,7 +1385,8 @@ export class MutualFundSummaryComponent implements OnInit {
         clientId: this.clientId,
         advisorId: this.advisorId,
         fromEmail: this.clientDetails.advisorData.email,
-        toEmail: this.clientData.email
+        toEmail: this.clientData.email,
+        mfBulkEmailRequestId: this.mfBulkEmailRequestId,
       }
       let response = this.utilService.bulkHtmlToPdf(obj)
       console.log('********', response)

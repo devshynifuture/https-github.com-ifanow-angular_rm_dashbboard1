@@ -83,6 +83,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   clientDetails: any;
   reportName: any;
   fragmentData = { isSpinner: false };
+  mfBulkEmailRequestId: number;
 
   constructor(public dialog: MatDialog, private datePipe: DatePipe,
     private subInjectService: SubscriptionInject, private utilService: UtilService,
@@ -97,6 +98,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         let param1 = queryParamMap['params'];
         this.clientId = parseInt(param1.clientId)
         this.advisorId = parseInt(param1.advisorId)
+        this.mfBulkEmailRequestId = parseInt(param1.mfBulkEmailRequestId)
         this.toDate = param1.toDate;
         this.addedData = true;
         console.log('2423425', param1)

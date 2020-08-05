@@ -400,12 +400,12 @@ export class UtilService {
 
   htmlToPdf(inputData, pdfName, landscape, fragData: any = {}, key = null, svg = null) {
     this.client = AuthService.getClientData();
-    if(fragData.isSubscription){
-      this.client={
-        name : fragData.clientName
+    if (fragData.isSubscription) {
+      this.client = {
+        name: fragData.clientName
       }
-      
-    } 
+
+    }
     inputData = inputData.split(AppConstants.RUPEE_LETTER).join('&#8377;');
     const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
     const obj = {
@@ -449,7 +449,8 @@ export class UtilService {
       toEmail: data.toEmail,
       clientId: data.clientId,
       advisorId: data.advisorId,
-      svg: data.svg
+      svg: data.svg,
+      mfBulkEmailRequestId: data.mfBulkEmailRequestId
     };
 
     return this.http.post(
