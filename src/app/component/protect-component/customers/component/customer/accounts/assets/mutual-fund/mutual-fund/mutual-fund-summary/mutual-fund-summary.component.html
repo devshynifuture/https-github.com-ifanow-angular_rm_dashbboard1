@@ -509,115 +509,146 @@
 
                         <td valign="top" 
                             style="width:26%;font-size: 13px; padding: 8px;  border-left: 1px solid #dee5e7; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
-                            {{item.schemeName+' | '+item.folioNumber+' | '+item.ownerName}}
+                            <!-- {{item.schemeName+' | '+item.folioNumber+' | '+item.ownerName}} -->
+                            {{getValues(item[firstArray],firstArray,'')}}
                         </td>
-
+                        
                         <td valign="top" 
                             style="width:7%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;"
                             appFormatNumber>
-                            {{item.amountInvested}}
+                            <!-- {{item.amountInvested}} -->
+                            {{getValues(item[secondArray],secondArray,'')}}
                         </td>
-
+                        
                         <td valign="top"
                             style="width:6%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;"
                             appFormatNumber>
-                            {{item.currentValue }}
+                            <!-- {{item.currentValue }} -->
+                            {{getValues(item[thirdArray],thirdArray,'')}}
                         </td>
-
+                        
                         <td valign="top" 
                             style="width:8%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;"
                             appFormatNumber>
-                            {{item.unrealizedGain }}
+                            <!-- {{item.unrealizedGain }} -->
+                            {{getValues(item[fourthArray],fourthArray,'')}}
                         </td>
-
+                        
                         <td valign="top"
                             style="width:5%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;">
-                            {{(item.absoluteReturn==0 || item.absoluteReturn =='Infinity' || item.absoluteReturn =='-Infinity' || item.absoluteReturn == 'NaN') ? 0 : (item.absoluteReturn) ? (item.absoluteReturn | number:'1.2-2') : 0}}
+                            <!-- {{(item.absoluteReturn==0 || item.absoluteReturn =='Infinity' || item.absoluteReturn =='-Infinity' || item.absoluteReturn == 'NaN') ? 0 : (item.absoluteReturn) ? (item.absoluteReturn | number:'1.2-2') : 0}} -->
+                            {{getValues(item[fifthArray],fifthArray,'')}}
                         </td>
-
+                        
                         <td valign="top" 
                             style="width:5%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;">
-                            {{item.xirr | number:'1.2-2'}}
+                            <!-- {{item.xirr | number:'1.2-2'}} -->
+                            {{getValues(item[SixthArray],SixthArray,'')}}
                         </td>
-
+                        
                         <td valign="top" 
                             style="width:7%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;"
                             appFormatNumber>
-                            {{item.dividendPayout}}
+                            <!-- {{item.dividendPayout}} -->
+                            {{getValues(item[seventhArray],seventhArray,'')}}
                         </td>
                         <td valign="top" 
                             style="width:9%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;"
                             appFormatNumber>
-                            {{item.switchOut }}
+                            <!-- {{item.switchOut }} -->
+                            {{getValues(item[eighthArray],eighthArray,'')}}
                         </td>
-
+                        
                         <td valign="top"
                             style="width:7%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;">
-                            {{item.balanceUnit | number:'1.2-3'}}
+                            <!-- {{item.balanceUnit | number:'1.2-3'}} -->
+                            {{getValues(item[ninethArray],ninethArray,'')}}
                         </td>
-
+                        
                         <td valign="top" 
                             style="width:9%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;">
-                            {{item.navDate | date:'dd/MM/yyyy'}}
+                            <!-- {{item.navDate | date:'dd/MM/yyyy'}} -->
+                            {{getValues(item[tenthArray],tenthArray,'')}}
                         </td>
-
+                        
                         <td valign="top" 
                             style="width:5%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;"
                             appFormatNumber>
-                            {{item.sipAmount}}
+                            <!-- {{item.sipAmount}} -->
+                            {{getValues(item[eleventhArray],eleventhArray,'')}}
                         </td>
-                    </tr>
-
+                        </tr>
                     <tr *ngIf="item.schemeName=='Total'">
                         <td valign="top"
                             style="width:26%;font-size: 13px; padding: 8px;font-weight: 600; border-left: 1px solid #dee5e7; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
-                            {{item.schemeName}}
+                            <!-- {{item.schemeName}} -->
+                            {{getValues(item[firstArrayTotal],firstArrayTotal,'')}}
                         </td>
                         <td valign="top" 
                             style="width:7%;font-size: 13px; padding: 8px;font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;"
                             appFormatNumber>
-                            {{item.totalAmountInvested }}
+                            <!-- {{item.totalAmountInvested }} -->
+                            {{getValues(item[secondArrayTotal],secondArrayTotal,'')}}
+
                         </td>
                         <td valign="top" 
                             style="text-align: right;width:6%;font-size: 13px; padding: 8px;font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
                             appFormatNumber>
-                            {{item.totalCurrentValue}}
+                            <!-- {{item.totalCurrentValue}} -->
+                            {{getValues(item[thirdArrayTotal],thirdArrayTotal,'')}}
+
                         </td>
                         <td valign="top" 
                             style="text-align: right;width:8%;font-size: 13px; padding: 8px;font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
                             appFormatNumber>
-                            {{item.totalUnrealizedGain }}
+                            <!-- {{item.totalUnrealizedGain }} -->
+                            {{getValues(item[fourthArrayTotal],fourthArrayTotal,'')}}
+
                         </td>
                         <td valign="top"
                             style="text-align: right;width:5%;font-size: 13px; padding: 8px;font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
-                            {{item.totalAbsoluteReturn | number:'1.2-2'}}
+                            <!-- {{item.totalAbsoluteReturn | number:'1.2-2'}} -->
+                            {{getValues(item[fifthArrayTotal],fifthArrayTotal,'')}}
+
                         </td>
                         <td valign="top" 
                             style="text-align: right;width:5%;font-size: 13px; padding: 8px;font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
-                            {{item.totalXirr | number:'1.2-2'}}
+                            <!-- {{item.totalXirr | number:'1.2-2'}} -->
+                            {{getValues(item[SixthArrayTotal],SixthArrayTotal,'')}}
+
                         </td>
                         <td valign="top" 
                             style="text-align: right;width:7%;font-size: 13px; padding: 8px;font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
                             appFormatNumber>
-                            {{item.totalDividendPayout}}
+                            <!-- {{item.totalDividendPayout}} -->
+                            {{getValues(item[seventhArrayTotal],seventhArrayTotal,'')}}
+
                         </td>
                         <td valign="top" 
                             style="text-align: right;width:9%;font-size: 13px; padding: 8px;font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
                             appFormatNumber>
-                            {{item.totalSwitchOut}}
+                            <!-- {{item.totalSwitchOut}} -->
+                            {{getValues(item[eighthArrayTotal],eighthArrayTotal,'')}}
+
                         </td>
                         <td valign="top"
                             style="text-align: right;width:7%;font-size: 13px; padding: 8px;font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
-                            {{item.totalBalanceUnit | number:'1.2-3'}}
+                            <!-- {{item.totalBalanceUnit | number:'1.2-3'}} -->
+                            {{getValues(item[ninethArrayTotal],ninethArrayTotal,'')}}
+
                         </td>
                         <td valign="top" 
                             style="text-align: right;width:9%;font-size: 13px; padding: 8px;font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
-                            {{item.totalNavDate}}
+                            <!-- {{item.totalNavDate}} -->
+                            {{getValues(item[tenthArrayTotal],tenthArrayTotal,'')}}
+
                         </td>
                         <td valign="top"
                             style="text-align: right;width:5%;font-size: 13px; padding: 8px;font-weight: 600; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
                             appFormatNumber>
-                            {{item.totalSipAmount}}
+                            <!-- {{item.totalSipAmount}} -->
+                            {{getValues(item[eleventhArrayTotal],eleventhArrayTotal,'')}}
+
                         </td>
                     </tr>
                 </table>
@@ -627,38 +658,53 @@
         <tr>
             <td valign="top" 
                 style="border-left: 1px solid #dee5e7;width:26%;font-size: 13px; padding: 8px; font-weight: 600;  border-bottom: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
-                Grand Total</td>
+                {{getValues(mfData[firstArrayGTotal],firstArrayGTotal,'GT')}}
+
+            </td>
             <td valign="top"
                 style="text-align: right;width:7%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
                 appFormatNumber>
-                {{(mfData) ? (mfData.total_amount_invested ) : 0}}</td>
+                <!-- {{(mfData) ? (mfData.total_amount_invested ) : 0}} -->
+            {{getValues(mfData[secondArrayGTotal],secondArrayGTotal,'GT')}}
+                </td>
             <td valign="top"
                 style=" text-align: right;width:6%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
                 appFormatNumber>
-                {{(mfData) ? (mfData.total_current_value ) : 0}}</td>
+                <!-- {{(mfData) ? (mfData.total_current_value ) : 0}} -->
+                {{getValues(mfData[thirdArrayGTotal],thirdArrayGTotal,'GT')}}
+            </td>
             <td valign="top" 
                 style="text-align: right;width:8%; font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
                 appFormatNumber>
-                {{(mfData) ? (mfData.total_unrealized_gain) : 0}}</td>
+                <!-- {{(mfData) ? (mfData.total_unrealized_gain) : 0}} -->
+                {{getValues(mfData[fourthArrayGTotal],fourthArrayGTotal,'GT')}}
+            </td>
             <td valign="top" 
                 style="text-align: right;width:5%;;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
-                {{(mfData) ? (mfData.total_absolute_return | number:'1.2-2') : '0'}}
+                <!-- {{(mfData) ? (mfData.total_absolute_return | number:'1.2-2') : '0'}} -->
+                {{getValues(mfData[fifthArrayGTotal],fifthArrayGTotal,'GT')}}
             </td>
             <td valign="top"
                 style="text-align: right;width:5%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
-                {{(mfData) ? (mfData.total_xirr | number:'1.2-2') : '0'}}
+                <!-- {{(mfData) ? (mfData.total_xirr | number:'1.2-2') : '0'}} -->
+                {{getValues(mfData[SixthArrayGTotal],SixthArrayGTotal,'GT')}}
             </td>
             <td valign="top" 
                 style="text-align: right;width:7%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
                 appFormatNumber>
-                {{mfData ? mfData.total_dividend_payout : 0}}</td>
+                <!-- {{mfData ? mfData.total_dividend_payout : 0}} -->
+                {{getValues(mfData[seventhArrayGTotal],seventhArrayGTotal,'GT')}}
+            </td>
             <td valign="top" 
                 style="text-align: right;width:9%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
                 appFormatNumber>
-                {{(grandTotal) ? grandTotal.withdrawals : 0 }}</td>
+                <!-- {{(grandTotal) ? grandTotal.withdrawals : 0 }} -->
+                {{getValues(mfData[eighthArrayGTotal],eighthArrayGTotal,'GT')}}
+            </td>
             <td valign="top" 
                 style="text-align: right;width:7%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
-                {{(grandTotal.totalBalanceUnit) ? (grandTotal.totalBalanceUnit | number:'1.2-3') : '0'}}
+                <!-- {{(grandTotal.totalBalanceUnit) ? (grandTotal.totalBalanceUnit | number:'1.2-3') : '0'}} -->
+                {{getValues(mfData[ninethArrayGTotal],ninethArrayGTotal,'GT')}}
             </td>
             <td valign="top"
                 style="text-align: right;width:9%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
@@ -666,7 +712,9 @@
             <td valign="top" 
                 style="text-align: right;width:5%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
                 appFormatNumber>
-                {{grandTotal.sip}}</td>
+                <!-- {{grandTotal.sip}} -->
+                {{getValues(mfData[eleventhArrayGTotal],eleventhArrayGTotal,'GT')}}
+            </td>
         </tr>
 
 

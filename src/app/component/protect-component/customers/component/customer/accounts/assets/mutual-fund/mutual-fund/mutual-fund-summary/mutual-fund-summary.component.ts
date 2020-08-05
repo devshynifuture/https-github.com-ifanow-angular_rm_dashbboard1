@@ -22,6 +22,7 @@ import { BackOfficeService } from 'src/app/component/protect-component/AdviserCo
 import { DatePipe } from '@angular/common';
 import { OnlineTransactionComponent } from 'src/app/component/protect-component/AdviserComponent/transactions/overview-transactions/doTransaction/online-transaction/online-transaction.component';
 import { OnlineTransactionService } from 'src/app/component/protect-component/AdviserComponent/transactions/online-transaction.service';
+import { numberFormat } from 'highcharts';
 
 
 @Component({
@@ -85,6 +86,39 @@ export class MutualFundSummaryComponent implements OnInit {
   toDate: any;
   isBulkEmailing: boolean = false;
   pdfData: any;
+  firstArray: any;
+  secondArray: any;
+  thirdArray: any;
+  fourthArray: any;
+  fifthArray: any;
+  SixthArray: any;
+  seventhArray: any;
+  eighthArray: any;
+  ninethArray: any;
+  tenthArray: any;
+  eleventhArray: any;
+  eleventhArrayTotal: any;
+  tenthArrayTotal: any;
+  ninethArrayTotal: any;
+  eighthArrayTotal: any;
+  seventhArrayTotal: any;
+  SixthArrayTotal: any;
+  fifthArrayTotal: any;
+  fourthArrayTotal: any;
+  thirdArrayTotal: any;
+  secondArrayTotal: any;
+  firstArrayTotal: any;
+  firstArrayGTotal: any;
+  secondArrayGTotal: any;
+  thirdArrayGTotal: any;
+  fourthArrayGTotal: any;
+  fifthArrayGTotal: any;
+  SixthArrayGTotal: any;
+  seventhArrayGTotal: any;
+  eighthArrayGTotal: any;
+  ninethArrayGTotal: any;
+  tenthArrayGTotal: any;
+  eleventhArrayGTotal: any;
 
 
   @Input()
@@ -328,28 +362,28 @@ export class MutualFundSummaryComponent implements OnInit {
   }
   styleObject(header, ind): Object {
     if (header == 'schemeName') {
-      this.customDataSource.data.array.push({ 'name':'Scheme Name', 'index': ind,isCheked:true });
+      this.customDataSource.data.array.push({ 'name': 'Scheme Name', 'index': ind, isCheked: true });
     } else if (header == 'amountInvested') {
-      this.customDataSource.data.array.push({ 'name':'Amount invested', 'index': ind,isCheked:true });
+      this.customDataSource.data.array.push({ 'name': 'Amount invested', 'index': ind, isCheked: true });
     } else if (header == 'currentValue') {
-      this.customDataSource.data.array.push({ 'name':'Current value', 'index': ind,isCheked:true });
+      this.customDataSource.data.array.push({ 'name': 'Current value', 'index': ind, isCheked: true });
     } else if (header == 'unrealizedProfit') {
-      this.customDataSource.data.array.push({ 'name':'Unrealized profit', 'index': ind ,isCheked:true});
+      this.customDataSource.data.array.push({ 'name': 'Unrealized profit', 'index': ind, isCheked: true });
     } else if (header == 'absoluteReturn') {
-      this.customDataSource.data.array.push({ 'name':'Abs Ret', 'index': ind,isCheked:true });
+      this.customDataSource.data.array.push({ 'name': 'Abs Ret', 'index': ind, isCheked: true });
     } else if (header == 'xirr') {
-      this.customDataSource.data.array.push({ 'name':'Xirr', 'index': ind,isCheked:true });
+      this.customDataSource.data.array.push({ 'name': 'Xirr', 'index': ind, isCheked: true });
 
     } else if (header == 'dividendPayout') {
-      this.customDataSource.data.array.push({ 'name':'Dividend payout', 'index': ind ,isCheked:true});
+      this.customDataSource.data.array.push({ 'name': 'Dividend payout', 'index': ind, isCheked: true });
     } else if (header == 'switchOut') {
-      this.customDataSource.data.array.push({ 'name':'Withdrawal/Switch outs', 'index': ind,isCheked:true });
+      this.customDataSource.data.array.push({ 'name': 'Withdrawal/Switch outs', 'index': ind, isCheked: true });
     } else if (header == 'balanceUnit') {
-      this.customDataSource.data.array.push({ 'name':'Balance unit', 'index': ind ,isCheked:true});
+      this.customDataSource.data.array.push({ 'name': 'Balance unit', 'index': ind, isCheked: true });
     } else if (header == 'navDate') {
-      this.customDataSource.data.array.push({ 'name':'Nav date', 'index': ind,isCheked:true });
+      this.customDataSource.data.array.push({ 'name': 'Nav date', 'index': ind, isCheked: true });
     } else if (header == 'sipAmount') {
-      this.customDataSource.data.array.push({ 'name':'Sip amount', 'index': ind,isCheked:true });
+      this.customDataSource.data.array.push({ 'name': 'Sip amount', 'index': ind, isCheked: true });
     }
     // if (header == 'schemeName') {
     //   Object.assign(this.customDataSource.data, { schemeName: true ,index : ind});
@@ -460,6 +494,7 @@ export class MutualFundSummaryComponent implements OnInit {
     if (data) {
       this.getCountData.emit("call");
       this.mfData = data;
+      this.mfData.schemeName = 'Grand Total'
       if (this.addedData) {
         this.mutualFund = this.mfData
       }
@@ -530,7 +565,7 @@ export class MutualFundSummaryComponent implements OnInit {
       filterArray.push(obj)
     });
     this.displayColumnsPDf = filterArray;
-    this.customDataSource.data.array=[];
+    this.customDataSource.data.array = [];
     this.displayedColumns.forEach((element, ind) => {
       this.styleObject(element, ind)
     });
@@ -596,7 +631,7 @@ export class MutualFundSummaryComponent implements OnInit {
         this.summary.data = data.customDataSourceData;
         console.log("this is summary Data:::", data.customDataSourceData)
         this.customDataSource.data = data.customDataSourceData;
-        this.customDataSource.data.array=[];
+        this.customDataSource.data.array = [];
         this.displayedColumns.forEach((element, ind) => {
           this.styleObject(element, ind)
         });
@@ -868,9 +903,83 @@ export class MutualFundSummaryComponent implements OnInit {
   }
 
   generatePdf() {
-    this.customDataSource.data.array=[]
+    this.customDataSource.data.array = []
     this.displayedColumns.forEach((element, ind) => {
       this.styleObject(element, ind)
+    });
+    this.customDataSource.data.array.forEach(element => {
+      switch (element.index) {
+        case 0:
+          this.firstArray = this.filterHedaerWise(element);
+          this.firstArrayTotal = this.filterHedaerWiseTotal(element);
+          this.firstArrayGTotal = this.filterHedaerWiseGTotal(element);
+
+          break;
+        case 1:
+          this.secondArray = this.filterHedaerWise(element);
+          this.secondArrayTotal = this.filterHedaerWiseTotal(element);
+          this.secondArrayGTotal = this.filterHedaerWiseGTotal(element);
+
+          break;
+        case 2:
+          this.thirdArray = this.filterHedaerWise(element);
+          this.thirdArrayTotal = this.filterHedaerWiseTotal(element);
+          this.thirdArrayGTotal = this.filterHedaerWiseGTotal(element);
+
+          break;
+        case 3:
+          this.fourthArray = this.filterHedaerWise(element);
+          this.fourthArrayTotal = this.filterHedaerWiseTotal(element);
+          this.fourthArrayGTotal = this.filterHedaerWiseGTotal(element);
+
+          break;
+        case 4:
+          this.fifthArray = this.filterHedaerWise(element);
+          this.fifthArrayTotal = this.filterHedaerWiseTotal(element);
+          this.fifthArrayGTotal = this.filterHedaerWiseGTotal(element);
+
+          break;
+        case 5:
+          this.SixthArray = this.filterHedaerWise(element);
+          this.SixthArrayTotal = this.filterHedaerWiseTotal(element);
+          this.SixthArrayGTotal = this.filterHedaerWiseGTotal(element);
+
+          break;
+        case 6:
+          this.seventhArray = this.filterHedaerWise(element);
+          this.seventhArrayTotal = this.filterHedaerWiseTotal(element);
+          this.seventhArrayGTotal = this.filterHedaerWiseGTotal(element);
+
+          break;
+        case 7:
+          this.eighthArray = this.filterHedaerWise(element);
+          this.eighthArrayTotal = this.filterHedaerWiseTotal(element);
+          this.eighthArrayGTotal = this.filterHedaerWiseGTotal(element);
+
+
+          break;
+        case 8:
+          this.ninethArray = this.filterHedaerWise(element);
+          this.ninethArrayTotal = this.filterHedaerWiseTotal(element);
+          this.ninethArrayGTotal = this.filterHedaerWiseGTotal(element);
+
+
+          break;
+        case 9:
+          this.tenthArray = this.filterHedaerWise(element);
+          this.tenthArrayTotal = this.filterHedaerWiseTotal(element);
+          this.tenthArrayGTotal = this.filterHedaerWiseGTotal(element);
+
+
+          break;
+        case 10:
+          this.eleventhArray = this.filterHedaerWise(element);
+          this.eleventhArrayTotal = this.filterHedaerWiseTotal(element);
+          this.eleventhArrayGTotal = this.filterHedaerWiseGTotal(element);
+
+
+          break;
+      }
     });
     this.showDownload = true
     this.fragmentData.isSpinner = true;
@@ -880,233 +989,371 @@ export class MutualFundSummaryComponent implements OnInit {
     });
 
   }
+  filterHedaerWise(data) {
+    let obj;
+    switch (data.name) {
+      case 'Scheme Name':
+        obj = 'schemeName';
+        break;
+      case 'Amount invested':
+        obj = 'amountInvested';
+        break;
+      case 'Current value':
+        obj = 'currentValue';
+        break;
+      case 'Unrealized profit':
+        obj = 'unrealizedGain';
+        break;
+      case 'Abs Ret':
+        obj = 'absoluteReturn';
+        break;
+      case 'Xirr':
+        obj = 'xirr';
+        break;
+      case 'Dividend payout':
+        obj = 'dividendPayout';
+        break;
+      case 'Withdrawal/Switch outs':
+        obj = 'switchOut';
+        break;
+      case 'Balance unit':
+        obj = 'balanceUnit';
+        break;
+      case 'Nav date':
+        obj = 'navDate';
+        break;
+      case 'Sip amount':
+        obj = 'sipAmount';
+        break;
+    }
 
-  deleteModal(value, element) {
-    const dialogData = {
-      data: value,
-      header: 'DELETE',
-      body: 'Are you sure you want to delete?',
-      body2: 'This cannot be undone.',
-      btnYes: 'CANCEL',
-      btnNo: 'DELETE',
-      positiveMethod: () => {
-        // this.subService.deleteInvoices(this.list).subscribe(
-        //   data => {
-        //     this.dataCount = 0;
-        //     this.eventService.openSnackBar('invoice deleted successfully.', 'Dismiss');
-        //     dialogRef.close(this.list);
-
-        //   },
-        //   error => this.eventService.showErrorMessage(error)
-        // );
-        // dialogRef.close(listIndex);
-        if (value === 'mutualFund') {
-          const obj = { id: element.id }
-          this.customerService.postMutualFundDelete(obj)
-            .subscribe(res => {
-              if (res) {
-                this.eventService.openSnackBar('Deleted Successfully', "Dismiss");
-                dialogRef.close();
-                this.addedData = true;
-                this.mfService.setDataForMfGet('');
-                this.mfService.setMfData('');
-                // this.ngOnInit();
-                this.initPoint();
-
-                // this.getMutualFund();
-              }
-            })
-        }
-
-      },
-      negativeMethod: () => {
-        console.log('2222222222222222222222222222222222222');
-      }
-    };
-    console.log(dialogData + '11111111111111');
-
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '400px',
-      data: dialogData,
-      autoFocus: false,
-
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-
-    });
+    return obj;
   }
+  filterHedaerWiseTotal(data) {
+    let obj;
+    switch (data.name) {
+      case 'Scheme Name':
+        obj = 'schemeName';
+        break;
+      case 'Amount invested':
+        obj = 'totalAmountInvested';
+        break;
+      case 'Current value':
+        obj = 'totalCurrentValue';
+        break;
+      case 'Unrealized profit':
+        obj = 'totalUnrealizedGain';
+        break;
+      case 'Abs Ret':
+        obj = 'totalAbsoluteReturn';
+        break;
+      case 'Xirr':
+        obj = 'totalDividendPayout';
+        break;
+      case 'Dividend payout':
+        obj = 'totalDividendPayout';
+        break;
+      case 'Withdrawal/Switch outs':
+        obj = 'totalSwitchOut';
+        break;
+      case 'Balance unit':
+        obj = 'totalBalanceUnit';
+        break;
+      case 'Nav date':
+        obj = 'totalNavDate';
+        break;
+      case 'Sip amount':
+        obj = 'totalSipAmount';
+        break;
+    }
 
-  openMutualEditFund(flag, element) {
-    // this.mutualFundList.forEach(ele => {
-    //   ele.mutualFundTransactions.forEach(tran => {
-    //     if (tran.id == element.id) {
-    //       this.selectedDataLoad = ele;
-    //     }
-    //   });
-    // });
-    // if(!this.selectedDataLoad){
-    //   this.selectedDataLoad= element
-    // }
-    const fragmentData = {
-      flag: 'editTransaction',
-      data: { family_member_list: ['family_member_list'], flag, ...element, ...this.selectedDataLoad },
-      id: 1,
-      state: 'open',
-      componentName: MFSchemeLevelHoldingsComponent
-    };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        console.log('this is sidebardata in subs subs : ', sideBarData);
-        if (UtilService.isDialogClose(sideBarData)) {
-          if (UtilService.isRefreshRequired(sideBarData)) {
-            this.addedData = true;
-            this.mfService.setDataForMfGet('');
-            this.mfService.setMfData('');
-            // this.ngOnInit();
-            this.initPoint();
-            // this.getMutualFund();
-          }
-          console.log('this is sidebardata in subs subs 2: ', sideBarData);
-          rightSideDataSub.unsubscribe();
-        }
-      }
-    );
+    return obj;
   }
+  filterHedaerWiseGTotal(data) {
+    let obj;
+    switch (data.name) {
+      case 'Scheme Name':
+        obj = 'schemeName';
+        break;
+      case 'Amount invested':
+        obj = 'total_amount_invested';
+        break;
+      case 'Current value':
+        obj = 'total_current_value';
+        break;
+      case 'Unrealized profit':
+        obj = 'total_unrealized_gain';
+        break;
+      case 'Abs Ret':
+        obj = 'total_absolute_return';
+        break;
+      case 'Xirr':
+        obj = 'total_xirr';
+        break;
+      case 'Dividend payout':
+        obj = 'total_dividend_payout';
+        break;
+      case 'Withdrawal/Switch outs':
+        obj = 'withdrawals';
+        break;
+      case 'Balance unit':
+        obj = 'totalBalanceUnit';
+        break;
+      case 'Nav date':
+        obj = '';
+        break;
+      case 'Sip amount':
+        obj = 'sip';
+        break;
+    }
 
-  openUpperFragment(flag, element) {
-    console.log("this is what element is:::", element);
-    if (flag == 'addTransaction') {
-      const fragmentData = {
-        flag: 'app-upper-customer',
-        id: 1,
-        data: { family_member_list: ['family_member_list'], flag: 'addTransaction', ...element },
-        direction: 'top',
-        componentName: UpperCustomerComponent,
-        state: 'open'
-      };
-      const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
-        upperSliderData => {
-          if (UtilService.isDialogClose(upperSliderData)) {
-            if (UtilService.isRefreshRequired(upperSliderData)) {
+    return obj;
+  }
+  getValues(data, value, isGT) {
+    let number;
+    if (isGT == 'GT') {
+      if (value == 'withdrawals') {
+        value = this.grandTotal.withdrawals
+      } else if (value == 'totalBalanceUnit') {
+        value = this.grandTotal.totalBalanceUnit
+      } else if (value == 'sip') {
+        value = this.grandTotal.sip
+      }
+    }
+  
+  if(value == 'amountInvested' || value == 'currentValue' || value == 'unrealizedGain' || value == 'dividendPayout' || value == 'switchOut' || value == 'sipAmount' || value == 'totalAmountInvested' || value == 'totalCurrentValue' || value == 'totalUnrealizedGain' || value == 'totalDividendPayout' || value == 'totalSwitchOut' || value == 'totalSipAmount' || value == 'sip' || value == 'total_amount_invested' || value=='total_current_value' || value =="total_unrealized_gain" || value=="total_dividend_payout" || value==='withdrawals') {
+  number = this.mfService.mutualFundRoundAndFormat(data, 0);
+}else {
+  number = this.mfService.mutualFundRoundAndFormat(data, 3);
+}
+return number;
+  }
+deleteModal(value, element) {
+  const dialogData = {
+    data: value,
+    header: 'DELETE',
+    body: 'Are you sure you want to delete?',
+    body2: 'This cannot be undone.',
+    btnYes: 'CANCEL',
+    btnNo: 'DELETE',
+    positiveMethod: () => {
+      // this.subService.deleteInvoices(this.list).subscribe(
+      //   data => {
+      //     this.dataCount = 0;
+      //     this.eventService.openSnackBar('invoice deleted successfully.', 'Dismiss');
+      //     dialogRef.close(this.list);
+
+      //   },
+      //   error => this.eventService.showErrorMessage(error)
+      // );
+      // dialogRef.close(listIndex);
+      if (value === 'mutualFund') {
+        const obj = { id: element.id }
+        this.customerService.postMutualFundDelete(obj)
+          .subscribe(res => {
+            if (res) {
+              this.eventService.openSnackBar('Deleted Successfully', "Dismiss");
+              dialogRef.close();
+              this.addedData = true;
+              this.mfService.setDataForMfGet('');
+              this.mfService.setMfData('');
               // this.ngOnInit();
-              this.initPoint()
-              // code to refresh ...
+              this.initPoint();
+
               // this.getMutualFund();
-              // this.getMutualFundResponse(upperSliderData);
-              //   this.customDataSource = new MatTableDataSource([{}, {}, {}]);
-              //   this.mfService.getDataForMfGet()
-              // .subscribe(res => {
-              //   this.mfGetData = res;
-              // })
-              // if(this.mfGetData){
-              //   this.isLoading = true;
-              //   this.changeInput.emit(true);
-              //   this.getMutualFundResponse(this.mfGetData)
-              // }
-
             }
+          })
+      }
 
-            // this.getClientSubscriptionList();
-            subscription.unsubscribe();
-          }
+    },
+    negativeMethod: () => {
+      console.log('2222222222222222222222222222222222222');
+    }
+  };
+  console.log(dialogData + '11111111111111');
+
+  const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+    width: '400px',
+    data: dialogData,
+    autoFocus: false,
+
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+
+  });
+}
+
+openMutualEditFund(flag, element) {
+  // this.mutualFundList.forEach(ele => {
+  //   ele.mutualFundTransactions.forEach(tran => {
+  //     if (tran.id == element.id) {
+  //       this.selectedDataLoad = ele;
+  //     }
+  //   });
+  // });
+  // if(!this.selectedDataLoad){
+  //   this.selectedDataLoad= element
+  // }
+  const fragmentData = {
+    flag: 'editTransaction',
+    data: { family_member_list: ['family_member_list'], flag, ...element, ...this.selectedDataLoad },
+    id: 1,
+    state: 'open',
+    componentName: MFSchemeLevelHoldingsComponent
+  };
+  const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+    sideBarData => {
+      console.log('this is sidebardata in subs subs : ', sideBarData);
+      if (UtilService.isDialogClose(sideBarData)) {
+        if (UtilService.isRefreshRequired(sideBarData)) {
+          this.addedData = true;
+          this.mfService.setDataForMfGet('');
+          this.mfService.setMfData('');
+          // this.ngOnInit();
+          this.initPoint();
+          // this.getMutualFund();
         }
-      );
-    }
-
-  }
-  generatePdfBulk() {
-    const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
-
-    this.showDownload = true
-    setTimeout(() => {
-      let para = this.summaryTemplate.nativeElement.innerHTML
-      let obj = {
-        htmlInput: para,
-        name: (this.clientData.name) ? this.clientData.name : '' + 's' + 'Summary' + date,
-        landscape: true,
-        key: 'showPieChart',
-        clientId: this.clientId,
-        advisorId: this.advisorId,
-        fromEmail: this.clientDetails.advisorData.email,
-        toEmail: this.clientData.email
-      }
-      let response = this.utilService.bulkHtmlToPdf(obj)
-      console.log('********', response)
-      //this.utilService.htmlToPdf(para, 'Summary', true, this.fragmentData, '', '')
-    }, 400);
-  }
-  getDetails() {
-    const obj = {
-      clientId: this.clientId,
-      advisorId: this.advisorId,
-    };
-    this.backOfficeService.getDetailsClientAdvisor(obj).subscribe(
-      data => this.getDetailsClientAdvisorRes(data)
-    );
-  }
-  getDetailsClientAdvisorRes(data) {
-    console.log('data', data)
-    this.clientDetails = data
-    this.clientData = data.clientData
-    this.getOrgData = data.advisorData
-    this.userInfo = data.advisorData
-  }
-  getDefaultDetails(platform) {
-    const obj = {
-      advisorId: this.advisorId,
-      familyMemberId: 0,
-      clientId: this.clientId,
-      // aggregatorType: platform
-    };
-
-    this.onlineTransact.getDefaultDetails(obj).subscribe(
-      data => {
-        this.getDefaultDetailsRes(data);
-      }, error => {
-        this.eventService.openSnackBar(error, 'Dismiss');
-      }
-    );
-  }
-
-  getDefaultDetailsRes(data) {
-    if (data == undefined) {
-      return;
-    } else {
-      if (data.defaultCredential != undefined) {
-        this.noSubBroker = false;
-        if (data.defaultClient == undefined) {
-          this.noMapping = true;
-        } else {
-          this.noMapping = false;
-        }
-      } else {
-        this.noSubBroker = true;
+        console.log('this is sidebardata in subs subs 2: ', sideBarData);
+        rightSideDataSub.unsubscribe();
       }
     }
-  }
-  openTransaction(data) {
-    const routeName = this.router.url.split('/')[1];
-    if (routeName == 'customer') {
-      this.isAdvisorSection = false;
-    }
+  );
+}
+
+openUpperFragment(flag, element) {
+  console.log("this is what element is:::", element);
+  if (flag == 'addTransaction') {
     const fragmentData = {
-      flag: 'addNewTransaction',
-      data: { isAdvisorSection: this.isAdvisorSection, flag: 'addNewTransaction', data: data },
+      flag: 'app-upper-customer',
       id: 1,
-      state: 'open65',
-      componentName: OnlineTransactionComponent,
+      data: { family_member_list: ['family_member_list'], flag: 'addTransaction', ...element },
+      direction: 'top',
+      componentName: UpperCustomerComponent,
+      state: 'open'
     };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
-        if (UtilService.isDialogClose(sideBarData)) {
-          if (UtilService.isRefreshRequired(sideBarData)) {
-            //this.refresh(true);
-          }
-          rightSideDataSub.unsubscribe();
+    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+      upperSliderData => {
+        if (UtilService.isDialogClose(upperSliderData)) {
+          if (UtilService.isRefreshRequired(upperSliderData)) {
+            // this.ngOnInit();
+            this.initPoint()
+            // code to refresh ...
+            // this.getMutualFund();
+            // this.getMutualFundResponse(upperSliderData);
+            //   this.customDataSource = new MatTableDataSource([{}, {}, {}]);
+            //   this.mfService.getDataForMfGet()
+            // .subscribe(res => {
+            //   this.mfGetData = res;
+            // })
+            // if(this.mfGetData){
+            //   this.isLoading = true;
+            //   this.changeInput.emit(true);
+            //   this.getMutualFundResponse(this.mfGetData)
+            // }
 
+          }
+
+          // this.getClientSubscriptionList();
+          subscription.unsubscribe();
         }
       }
     );
   }
+
+}
+generatePdfBulk() {
+  const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
+
+  this.showDownload = true
+  setTimeout(() => {
+    let para = this.summaryTemplate.nativeElement.innerHTML
+    let obj = {
+      htmlInput: para,
+      name: (this.clientData.name) ? this.clientData.name : '' + 's' + 'Summary' + date,
+      landscape: true,
+      key: 'showPieChart',
+      clientId: this.clientId,
+      advisorId: this.advisorId,
+      fromEmail: this.clientDetails.advisorData.email,
+      toEmail: this.clientData.email
+    }
+    let response = this.utilService.bulkHtmlToPdf(obj)
+    console.log('********', response)
+    //this.utilService.htmlToPdf(para, 'Summary', true, this.fragmentData, '', '')
+  }, 400);
+}
+getDetails() {
+  const obj = {
+    clientId: this.clientId,
+    advisorId: this.advisorId,
+  };
+  this.backOfficeService.getDetailsClientAdvisor(obj).subscribe(
+    data => this.getDetailsClientAdvisorRes(data)
+  );
+}
+getDetailsClientAdvisorRes(data) {
+  console.log('data', data)
+  this.clientDetails = data
+  this.clientData = data.clientData
+  this.getOrgData = data.advisorData
+  this.userInfo = data.advisorData
+}
+getDefaultDetails(platform) {
+  const obj = {
+    advisorId: this.advisorId,
+    familyMemberId: 0,
+    clientId: this.clientId,
+    // aggregatorType: platform
+  };
+
+  this.onlineTransact.getDefaultDetails(obj).subscribe(
+    data => {
+      this.getDefaultDetailsRes(data);
+    }, error => {
+      this.eventService.openSnackBar(error, 'Dismiss');
+    }
+  );
+}
+
+getDefaultDetailsRes(data) {
+  if (data == undefined) {
+    return;
+  } else {
+    if (data.defaultCredential != undefined) {
+      this.noSubBroker = false;
+      if (data.defaultClient == undefined) {
+        this.noMapping = true;
+      } else {
+        this.noMapping = false;
+      }
+    } else {
+      this.noSubBroker = true;
+    }
+  }
+}
+openTransaction(data) {
+  const routeName = this.router.url.split('/')[1];
+  if (routeName == 'customer') {
+    this.isAdvisorSection = false;
+  }
+  const fragmentData = {
+    flag: 'addNewTransaction',
+    data: { isAdvisorSection: this.isAdvisorSection, flag: 'addNewTransaction', data: data },
+    id: 1,
+    state: 'open65',
+    componentName: OnlineTransactionComponent,
+  };
+  const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+    sideBarData => {
+      if (UtilService.isDialogClose(sideBarData)) {
+        if (UtilService.isRefreshRequired(sideBarData)) {
+          //this.refresh(true);
+        }
+        rightSideDataSub.unsubscribe();
+
+      }
+    }
+  );
+}
 }
