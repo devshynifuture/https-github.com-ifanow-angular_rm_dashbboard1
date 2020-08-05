@@ -24,9 +24,11 @@
     <div class="row pt-28">
         <div class="col-md-4 d-flex align-items-center justify-content-end ">
             <h5 class="m-0  ">Authorized person name</h5>
-            <p class="m-0 f-12 text-custom" *ngIf="companyIndividualData.clientType==4">Proprietorship name</p>
+            <p class="m-0 f-12 text-custom"
+                *ngIf="companyIndividualData.clientType==4 || companyIndividualData.familyMemberType==4">Proprietorship
+                name</p>
         </div>
-        <div class="col-md-6 p-0">
+        <div class=" col-md-6 p-0">
             <div class="form-group">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input (input)="capitalise($event)" placeholder="Enter name" autocomplete="off"
@@ -54,12 +56,12 @@
             </div>
         </div>
     </div>
-    
+
     <app-add-number [flag]="mobileNumberFlag" [isResidential]="companyIndividualData"
         [numberList]="moreInfoData.mobileList" (numberArray)="getNumberDetails($event)"></app-add-number>
-   
-   
-        <div class="row pt-28">
+
+
+    <div class="row pt-28">
         <div class="col-md-4 text-right">
             <h5 class="m-0 pt-20">PAN</h5>
         </div>

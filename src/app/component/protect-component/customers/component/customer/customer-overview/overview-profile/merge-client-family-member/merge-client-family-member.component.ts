@@ -232,6 +232,9 @@ export class MergeClientFamilyMemberComponent implements OnInit {
       this.eventService.openSnackBar('Please select the client to merge', 'Dismiss');
       return;
     }
+    if (this.selectedClient.clientType == 3 || this.selectedClient.clientType == 4) {
+      this.selectedClientFormGroup.get('gender').setValidators(null);
+    }
     if (this.selectedClientFormGroup.invalid) {
       this.selectedClientFormGroup.markAllAsTouched();
       return;
@@ -259,6 +262,9 @@ export class MergeClientFamilyMemberComponent implements OnInit {
   }
 
   saveSuggestedFamilyMember(index, clientData) {
+    if (clientData.clientType == 3 || clientData.clientType == 4) {
+      this.rows.controls[index].get('gender').setValidators(null);
+    }
     if (this.rows.controls[index].invalid) {
       this.rows.controls[index].markAllAsTouched();
       return;

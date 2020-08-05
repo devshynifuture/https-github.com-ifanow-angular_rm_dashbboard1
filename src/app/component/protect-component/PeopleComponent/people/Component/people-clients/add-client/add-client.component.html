@@ -13,39 +13,62 @@
 <div class="pt-90  pb-100 ">
     <div class="row">
         <div class="col-md-12 p-0">
-            <div class="right-cross-icons">
-                <span *ngIf="headingData.fieldFlag=='familyMember'" class="material-icons familyDelete c-p" (click)="deleteModal('FAMILY MEMBER')">
+            <div *ngIf="headingData.fieldFlag=='familyMember'" class="right-cross-icons">
+                <span *ngIf="(!tabData.mobileNo || !tabData.email) || !tabData.mobileNo && !tabData.email"
+                    class="material-icons familyDelete c-p" (click)="deleteModal('FAMILY MEMBER')">
                     delete
                 </span>
+                <img *ngIf="tabData.mobileNo && tabData.email" [matMenuTriggerFor]="menu" class="c-p"
+                    src="/assets/images/svg/dot-menu.svg">
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item>
+                        <span>Unmap</span>
+                    </button>
+                    <button (click)="deleteModal('FAMILY MEMBER')" mat-menu-item>
+                        <span>Delete</span>
+                    </button>
+                </mat-menu>
             </div>
-            <mat-tab-group [(selectedIndex)]="selected" animationDuration="0ms" class="tabHeaderPadding" id="ui-add-client">
+            <mat-tab-group [(selectedIndex)]="selected" animationDuration="0ms" class="tabHeaderPadding"
+                id="ui-add-client">
                 <mat-tab label="Basic details">
-                    <app-client-basic-details (hideDematTab)="hideDematTab($event)" (clientData)="getTabData($event)" (saveNextData)="refreshFlagData($event)" (cancelTab)="close($event)" (tabChange)="changeTab($event)" [data]="headingData" [fieldFlag]="headingData.fieldFlag">
+                    <app-client-basic-details (hideDematTab)="hideDematTab($event)" (clientData)="getTabData($event)"
+                        (saveNextData)="refreshFlagData($event)" (cancelTab)="close($event)"
+                        (tabChange)="changeTab($event)" [data]="headingData" [fieldFlag]="headingData.fieldFlag">
                     </app-client-basic-details>
                 </mat-tab>
                 <!-- [disabled]="tabData.id==undefined" -->
                 <mat-tab [disabled]="tabData.clientId==undefined&&tabData.familyMemberId==undefined" label=" More info">
-                    <app-client-more-info (clientData)="getTabData($event)" (saveNextData)="refreshFlagData($event)" (cancelTab)="close($event)" (tabChange)="changeTab($event)" *ngIf="(headingData.fieldFlag=='client' && (tabData.clientType=='1' || tabData.clientType=='2')) || (headingData.fieldFlag=='lead' && tabData.clientType=='1') || !tabData.clientType"
+                    <app-client-more-info (clientData)="getTabData($event)" (saveNextData)="refreshFlagData($event)"
+                        (cancelTab)="close($event)" (tabChange)="changeTab($event)"
+                        *ngIf="(headingData.fieldFlag=='client' && (tabData.clientType=='1' || tabData.clientType=='2')) || (headingData.fieldFlag=='lead' && tabData.clientType=='1') || (tabData.familyMemberType && (tabData.familyMemberType=='1'|| tabData.familyMemberType=='2'))"
                         [data]="tabData" [fieldFlag]="headingData.fieldFlag">
                     </app-client-more-info>
-                    <app-company-more-info (saveNextData)="refreshFlagData($event)" (tabChange)="changeTab($event)" *ngIf="tabData.clientType && (tabData.clientType=='3'|| tabData.clientType=='4')" [data]="tabData" [fieldFlag]="headingData.fieldFlag">
+                    <app-company-more-info (saveNextData)="refreshFlagData($event)" (tabChange)="changeTab($event)"
+                        *ngIf="(tabData.clientType && (tabData.clientType=='3'|| tabData.clientType=='4')) || (tabData.familyMemberType && (tabData.familyMemberType=='3'|| tabData.familyMemberType=='4'))"
+                        [data]="tabData" [fieldFlag]="headingData.fieldFlag">
                     </app-company-more-info>
                 </mat-tab>
                 <mat-tab [disabled]="tabData.userId==undefined" label=" Address">
-                    <app-client-address (cancelTab)="close($event)" (tabChange)="changeTab($event)" (saveNextData)="refreshFlagData($event)" [data]="tabData" [fieldFlag]="headingData.fieldFlag">
+                    <app-client-address (cancelTab)="close($event)" (tabChange)="changeTab($event)"
+                        (saveNextData)="refreshFlagData($event)" [data]="tabData" [fieldFlag]="headingData.fieldFlag">
                     </app-client-address>
                 </mat-tab>
                 <mat-tab [disabled]="tabData.userId==undefined" label=" Bank">
-                    <app-client-bank (cancelTab)="close($event)" (refreshClientUploadBankDetails)="refreshBankUpload($event)" (tabChange)="changeTab($event)" (saveNextData)="refreshFlagData($event)" [data]="tabData" [fieldFlag]="headingData.fieldFlag">
+                    <app-client-bank (cancelTab)="close($event)"
+                        (refreshClientUploadBankDetails)="refreshBankUpload($event)" (tabChange)="changeTab($event)"
+                        (saveNextData)="refreshFlagData($event)" [data]="tabData" [fieldFlag]="headingData.fieldFlag">
                     </app-client-bank>
                 </mat-tab>
                 <mat-tab *ngIf="hideDematFlag" [disabled]="tabData.userId==undefined" label=" Demat">
-                    <app-client-demat (cancelTab)="close($event)" (tabChange)="changeTab($event)" (saveNextData)="refreshFlagData($event)" [data]="tabData" [fieldFlag]="headingData.fieldFlag">
+                    <app-client-demat (cancelTab)="close($event)" (tabChange)="changeTab($event)"
+                        (saveNextData)="refreshFlagData($event)" [data]="tabData" [fieldFlag]="headingData.fieldFlag">
                     </app-client-demat>
                 </mat-tab>
                 <!-- [disabled]="tabData.userId==undefined" -->
                 <mat-tab [disabled]="tabData.userId==undefined" label=" Upload">
-                    <app-client-upload [isRefreshBank]="refreshBankFlag" (tabChange)="changeTab($event)" [data]="tabData" [fieldFlag]="headingData.fieldFlag"></app-client-upload>
+                    <app-client-upload [isRefreshBank]="refreshBankFlag" (tabChange)="changeTab($event)"
+                        [data]="tabData" [fieldFlag]="headingData.fieldFlag"></app-client-upload>
                 </mat-tab>
 
 
