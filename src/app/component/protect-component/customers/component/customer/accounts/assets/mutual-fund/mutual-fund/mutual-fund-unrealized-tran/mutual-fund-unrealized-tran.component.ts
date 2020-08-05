@@ -1428,6 +1428,128 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     return number;
   }
   generatePdfBulk() {
+    this.customDataSource.data.arrayTran.forEach(element => {
+      switch (element.index) {
+        case 0:
+          this.firstArrayTran = this.filterHedaerWiseTran(element);
+          this.firstArrayTotalTran = this.filterHedaerWiseTotalTran(element);
+
+          break;
+        case 1:
+          this.secondArrayTran = this.filterHedaerWiseTran(element);
+          this.secondArrayTotalTran = this.filterHedaerWiseTotalTran(element);
+
+          break;
+        case 2:
+          this.thirdArrayTran = this.filterHedaerWiseTran(element);
+          this.thirdArrayTotalTran = this.filterHedaerWiseTotalTran(element);
+
+          break;
+        case 3:
+          this.fourthArrayTran = this.filterHedaerWiseTran(element);
+          this.fourthArrayTotalTran = this.filterHedaerWiseTotalTran(element);
+
+          break;
+        case 4:
+          this.fifthArrayTran = this.filterHedaerWiseTran(element);
+          this.fifthArrayTotalTran = this.filterHedaerWiseTotalTran(element);
+
+          break;
+        case 5:
+          this.SixthArrayTran = this.filterHedaerWiseTran(element);
+          this.SixthArrayTotalTran = this.filterHedaerWiseTotalTran(element);
+
+          break;
+        case 6:
+          this.seventhArrayTran = this.filterHedaerWiseTran(element);
+          this.seventhArrayTotalTran = this.filterHedaerWiseTotalTran(element);
+
+          break;
+        case 7:
+          this.eighthArrayTran = this.filterHedaerWiseTran(element);
+          this.eighthArrayTotalTran = this.filterHedaerWiseTotalTran(element);
+
+
+          break;
+      
+      }
+    });
+    this.customDataSource.data.arrayUnrealised.forEach(element => {
+      switch (element.index) {
+        case 0:
+          this.firstArray = this.filterHedaerWise(element);
+          this.firstArrayTotal = this.filterHedaerWiseTotal(element);
+
+          break;
+        case 1:
+          this.secondArray = this.filterHedaerWise(element);
+          this.secondArrayTotal = this.filterHedaerWiseTotal(element);
+
+          break;
+        case 2:
+          this.thirdArray = this.filterHedaerWise(element);
+          this.thirdArrayTotal = this.filterHedaerWiseTotal(element);
+
+          break;
+        case 3:
+          this.fourthArray = this.filterHedaerWise(element);
+          this.fourthArrayTotal = this.filterHedaerWiseTotal(element);
+
+          break;
+        case 4:
+          this.fifthArray = this.filterHedaerWise(element);
+          this.fifthArrayTotal = this.filterHedaerWiseTotal(element);
+
+          break;
+        case 5:
+          this.SixthArray = this.filterHedaerWise(element);
+          this.SixthArrayTotal = this.filterHedaerWiseTotal(element);
+
+          break;
+        case 6:
+          this.seventhArray = this.filterHedaerWise(element);
+          this.seventhArrayTotal = this.filterHedaerWiseTotal(element);
+
+          break;
+        case 7:
+          this.eighthArray = this.filterHedaerWise(element);
+          this.eighthArrayTotal = this.filterHedaerWiseTotal(element);
+
+
+          break;
+        case 8:
+          this.ninethArray = this.filterHedaerWise(element);
+          this.ninethArrayTotal = this.filterHedaerWiseTotal(element);
+
+
+          break;
+        case 9:
+          this.tenthArray = this.filterHedaerWise(element);
+          this.tenthArrayTotal = this.filterHedaerWiseTotal(element);
+
+
+          break;
+        case 10:
+          this.eleventhArray = this.filterHedaerWise(element);
+          this.eleventhArrayTotal = this.filterHedaerWiseTotal(element);
+
+
+          break;
+          case 11:
+          this.twelwthArray = this.filterHedaerWise(element);
+          this.twelwthArrayTotal = this.filterHedaerWiseTotal(element);
+
+
+          break;
+          case 12:
+            this.thirteenthArray = this.filterHedaerWise(element);
+            this.thirteenthArrayTotal = this.filterHedaerWiseTotal(element);
+  
+  
+            break;
+
+      }
+    });
     setTimeout(() => {
       const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
       let para = this.unrealizedTranTemplate.nativeElement.innerHTML

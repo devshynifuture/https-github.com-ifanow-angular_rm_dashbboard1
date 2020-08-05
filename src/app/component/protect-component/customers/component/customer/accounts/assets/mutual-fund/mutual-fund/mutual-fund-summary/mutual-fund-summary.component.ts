@@ -1818,6 +1818,92 @@ export class MutualFundSummaryComponent implements OnInit {
 
   }
   generatePdfBulk() {
+    this.customDataSource.data.array = []
+    this.customDataSource.data.array1 = []
+    this.customDataSource.data.array2 = []
+    this.customDataSource.data.array3 = []
+    this.customDataSource.data.forEach(element => {
+      if (element.schemeName) {
+        element.schemeName = element.schemeName + ' | ' + element.folioNumber + ' | ' + element.ownerName
+      }
+    });
+    this.displayedColumns.forEach((element, ind) => {
+      this.styleObject(element, ind)
+    });
+    this.customDataSource.data.array.forEach(element => {
+      switch (element.index) {
+        case 0:
+          this.firstArray = this.filterHedaerWise(element);
+          this.firstArrayTotal = this.filterHedaerWiseTotal(element);
+          this.firstArrayGTotal = this.filterHedaerWiseGTotal(element);
+
+          break;
+        case 1:
+          this.secondArray = this.filterHedaerWise(element);
+          this.secondArrayTotal = this.filterHedaerWiseTotal(element);
+          this.secondArrayGTotal = this.filterHedaerWiseGTotal(element);
+
+          break;
+        case 2:
+          this.thirdArray = this.filterHedaerWise(element);
+          this.thirdArrayTotal = this.filterHedaerWiseTotal(element);
+          this.thirdArrayGTotal = this.filterHedaerWiseGTotal(element);
+
+          break;
+        case 3:
+          this.fourthArray = this.filterHedaerWise(element);
+          this.fourthArrayTotal = this.filterHedaerWiseTotal(element);
+          this.fourthArrayGTotal = this.filterHedaerWiseGTotal(element);
+
+          break;
+        case 4:
+          this.fifthArray = this.filterHedaerWise(element);
+          this.fifthArrayTotal = this.filterHedaerWiseTotal(element);
+          this.fifthArrayGTotal = this.filterHedaerWiseGTotal(element);
+
+          break;
+        case 5:
+          this.SixthArray = this.filterHedaerWise(element);
+          this.SixthArrayTotal = this.filterHedaerWiseTotal(element);
+          this.SixthArrayGTotal = this.filterHedaerWiseGTotal(element);
+
+          break;
+        case 6:
+          this.seventhArray = this.filterHedaerWise(element);
+          this.seventhArrayTotal = this.filterHedaerWiseTotal(element);
+          this.seventhArrayGTotal = this.filterHedaerWiseGTotal(element);
+
+          break;
+        case 7:
+          this.eighthArray = this.filterHedaerWise(element);
+          this.eighthArrayTotal = this.filterHedaerWiseTotal(element);
+          this.eighthArrayGTotal = this.filterHedaerWiseGTotal(element);
+
+
+          break;
+        case 8:
+          this.ninethArray = this.filterHedaerWise(element);
+          this.ninethArrayTotal = this.filterHedaerWiseTotal(element);
+          this.ninethArrayGTotal = this.filterHedaerWiseGTotal(element);
+
+
+          break;
+        case 9:
+          this.tenthArray = this.filterHedaerWise(element);
+          this.tenthArrayTotal = this.filterHedaerWiseTotal(element);
+          this.tenthArrayGTotal = this.filterHedaerWiseGTotal(element);
+
+
+          break;
+        case 10:
+          this.eleventhArray = this.filterHedaerWise(element);
+          this.eleventhArrayTotal = this.filterHedaerWiseTotal(element);
+          this.eleventhArrayGTotal = this.filterHedaerWiseGTotal(element);
+
+
+          break;
+      }
+    });
     const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
 
     this.showDownload = true
