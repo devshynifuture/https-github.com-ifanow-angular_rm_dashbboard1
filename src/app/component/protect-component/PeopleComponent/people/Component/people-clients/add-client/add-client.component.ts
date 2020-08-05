@@ -93,46 +93,4 @@ export class AddClientComponent implements OnInit {
     });
   }
 
-  unmapFamilyMember(value) {
-    const dialogData = {
-      data: value,
-      header: 'DELETE',
-      body: 'Are you sure you want to unmap?',
-      body2: 'This cannot be undone.',
-      btnYes: 'CANCEL',
-      btnNo: 'UNMAP',
-      positiveMethod: () => {
-        let obj =
-        {
-          "ownerClientId": this.tabData.clientId,
-          "splitFamilyMemberId": this.tabData.familyMemberId
-        }
-        this.cusService.unmapFamilyMembers(obj).subscribe(
-          data => {
-            this.eventService.openSnackBar('unmapped successfully!', 'Dismiss');
-            dialogRef.close();
-            this.isRefreshFlag = true;
-            this.close('close')
-          },
-          error => this.eventService.showErrorMessage(error)
-        );
-      },
-      negativeMethod: () => {
-        console.log('2222222222222222222222222222222222222');
-      }
-    };
-    console.log(dialogData + '11111111111111');
-
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '400px',
-      data: dialogData,
-      autoFocus: false,
-
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-
-    });
-  }
-
 }

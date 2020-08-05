@@ -1007,7 +1007,7 @@ export class CustomerService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.ORDER_SOA_MUTUAL_FUND, data)
   }
   unmapFamilyMembers(data) {
-    return this.http.postEncoded(apiConfig.MAIN_URL + appConfig.MUTUAL_FUND_EDIT, data);
+    return this.http.postEncoded(apiConfig.USER + appConfig.UNMAP_FAMILY_MEMBER, data);
   }
 
 }

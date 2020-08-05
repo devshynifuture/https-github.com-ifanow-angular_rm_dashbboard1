@@ -741,7 +741,7 @@ export const appConfig = {
   SEND_EMAIL: 'gmail/email/send',
   GET_ATTACHMENTS: 'gmail/attachment/get',
   //////////////////////////people/////////////////////////////////////
-  UNMAP_FAMILY_MEMBER: '/user/family-member/split',
+  UNMAP_FAMILY_MEMBER: 'user/family-member/split',
   GET_PEOPLE_CLIENT_LIST: 'user/client/all/get',
   ADD_CLIENT: 'user/client/add',
   EDIT_CLIENT: 'user/client/edit',

@@ -11,6 +11,9 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
 import { EnumDataService } from 'src/app/services/enum-data.service';
 import { individualJson, minorJson, nonIndividualJson } from './client&leadJson';
 import { relationListFilterOnID } from './relationypeMethods';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { MatDialog } from '@angular/material';
 
 const moment = require('moment');
 
@@ -79,7 +82,8 @@ export class ClientBasicDetailsComponent implements OnInit {
   constructor(private fb: FormBuilder, private enumService: EnumServiceService,
     private subInjectService: SubscriptionInject, private peopleService: PeopleService,
     private eventService: EventService, private datePipe: DatePipe,
-    private utilService: UtilService, private enumDataService: EnumDataService) {
+    private utilService: UtilService, private enumDataService: EnumDataService,
+    private cusService: CustomerService, private dialog: MatDialog) {
   }
 
   @Input() set data(data) {
@@ -775,6 +779,88 @@ export class ClientBasicDetailsComponent implements OnInit {
     (data == 'close') ? this.cancelTab.emit('close') : this.subInjectService.changeNewRightSliderState({
       state: 'close',
       refreshRequired: true
+    });
+  }
+
+  deleteModal(value) {
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        let obj =
+        {
+          "familyMemberId": this.basicDetailsData.familyMemberId,
+          "userId": this.basicDetailsData.familyMemberId
+        }
+        this.cusService.deleteFamilyMember(obj).subscribe(
+          data => {
+            this.eventService.openSnackBar('Deleted successfully!', 'Dismiss');
+            dialogRef.close();
+            this.close(data)
+          },
+          error => this.eventService.showErrorMessage(error)
+        );
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
+
+  unmapFamilyMember(value) {
+    const dialogData = {
+      data: value,
+      header: 'UNMAP',
+      body: 'Are you sure you want to unmap?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'UNMAP',
+      positiveMethod: () => {
+        let obj =
+        {
+          "ownerClientId": this.basicDetailsData.clientId,
+          "splitFamilyMemberId": this.basicDetailsData.familyMemberId
+        }
+        this.cusService.unmapFamilyMembers(obj).subscribe(
+          data => {
+            this.eventService.openSnackBar('unmapped successfully!', 'Dismiss');
+            dialogRef.close();
+            this.close(data)
+          },
+          error => this.eventService.showErrorMessage(error)
+        );
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
     });
   }
 
