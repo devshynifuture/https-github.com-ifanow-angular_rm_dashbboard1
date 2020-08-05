@@ -53,15 +53,16 @@
                                         <i class="material-icons ml-4 f-14 text-primitive"
                                             *ngIf="propertyName=='name' && reverse">arrow_downward</i> </span>
                                 </th>
-                                <th (click)="sortBy(filteredArray,'totalAum')" class="c-p">
-                                    <span class="d-flex align-items-center">SIP Amount
+                                <th (click)="sortBy(filteredArray,'totalAum')" class="c-p w-14">
+                                    <span class="d-flex align-items-center justify-content-end">SIP Amount
                                         <i class="material-icons ml-4 f-14 text-primitive"
                                             *ngIf="propertyName=='totalAum' && !reverse">
                                             arrow_upward </i>
                                         <i class="material-icons ml-4 f-14 text-primitive"
                                             *ngIf="propertyName=='totalAum' && reverse">arrow_downward</i></span>
                                 </th>
-                                <th>% Weight</th>
+                                <th class="text-right w-14">% Weight</th>
+                                <th></th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -72,12 +73,12 @@
                                         {{isLoading ? '' : data.name}}
                                     </div>
                                 </td>
-                                <td>
-                                    <div [ngClass]="{'bar': isLoading}">{{isLoading ? ' ' : '₹ '}}<span appFormatNumber
+                                <td class="text-right">
+                                    <div class="bar" [ngClass]="{'floatRight': isLoading}">{{isLoading ? ' ' : '₹ '}}<span appFormatNumber
                                             *ngIf="!isLoading" [value]="data.totalAum"></span></div>
                                 </td>
-                                <td>
-                                    <div [ngClass]="{'bar': isLoading}">
+                                <td class="text-right">
+                                    <div class="bar" [ngClass]="{'floatRight': isLoading}">
                                         {{isLoading ? '' : data.weightInPercentage | number : '1.2-2'}}{{(isLoading?'':'%') }}
                                     </div>
                                 </td>
@@ -90,9 +91,7 @@
                                         </i>
                                     </div>
                                 </td>
-                            </tr>
-                            <tr style="border: transparent !important">
-                                <td colspan="4" class="innerTd one">
+                                <td>
                                     <div class="d-block text-right"
                                         *ngIf="!data.showScheme && !isLoading && data.schemeList?.length > 0">
                                         <button (click)="exportToExcelSheet('investor-wise', i)" mat-icon-button>
@@ -101,6 +100,11 @@
                                             </mat-icon>
                                         </button>
                                     </div>
+                                </td>
+                            </tr>
+                            <tr style="border: transparent !important">
+                                <td colspan="5" class="innerTd one">
+                                    
                                     <table *ngIf="data.showScheme == false && data.schemeList?.length > 0"
                                         class="skeletonAnimation mt-8 mb-8" appSkeletonLoading
                                         [appSkeletonLoading]="isLoadingApplicant" id="table-low">
@@ -302,10 +306,11 @@
                         <tbody *ngIf="!isLoading && filteredArray.length>0">
                             <tr>
                                 <td class="p-table"><strong>Total</strong></td>
-                                <td class="p-table"><strong>{{'₹ '}}<span appFormatNumber
+                                <td class="p-table text-right"><strong>{{'₹ '}}<span appFormatNumber
                                             [value]="totalOfSipAmount"></span></strong>
                                 </td>
-                                <td class="p-table"><strong>{{totalWeight | number:'1.2-2'}}%</strong></td>
+                                <td class="p-table text-right"><strong>{{totalWeight | number:'1.2-2'}}%</strong></td>
+                                <td></td>
                                 <td></td>
                             </tr>
                         </tbody>
