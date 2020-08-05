@@ -407,6 +407,7 @@ export class MutualFundSummaryComponent implements OnInit {
           'padding': '8px',
           'border-right': '1px solid #dee5e7',
           'border-bottom': '1px solid #dee5e7',
+           'border-left': '1px solid #dee5e7',
           'text-align': 'right',
         }
       });
@@ -431,6 +432,7 @@ export class MutualFundSummaryComponent implements OnInit {
           'padding': '8px',
           'border-right': '1px solid #dee5e7',
           'border-bottom': '1px solid #dee5e7',
+           'border-left': '1px solid #dee5e7',
           'text-align': 'right',
 
         }
@@ -480,6 +482,7 @@ export class MutualFundSummaryComponent implements OnInit {
           'padding': '8px',
           'border-right': '1px solid #dee5e7',
           'border-bottom': '1px solid #dee5e7',
+           'border-left': '1px solid #dee5e7',
           'text-align': 'right',
 
         }
@@ -504,6 +507,7 @@ export class MutualFundSummaryComponent implements OnInit {
           'padding': '8px',
           'border-right': '1px solid #dee5e7',
           'border-bottom': '1px solid #dee5e7',
+           'border-left': '1px solid #dee5e7',
           'text-align': 'right',
 
         }
@@ -530,6 +534,7 @@ export class MutualFundSummaryComponent implements OnInit {
           'padding': '8px',
           'border-right': '1px solid #dee5e7',
           'border-bottom': '1px solid #dee5e7',
+           'border-left': '1px solid #dee5e7',
           'text-align': 'right',
 
         }
@@ -554,6 +559,7 @@ export class MutualFundSummaryComponent implements OnInit {
           'padding': '8px',
           'border-right': '1px solid #dee5e7',
           'border-bottom': '1px solid #dee5e7',
+           'border-left': '1px solid #dee5e7',
           'text-align': 'right',
 
         }
@@ -579,6 +585,7 @@ export class MutualFundSummaryComponent implements OnInit {
           'padding': '8px',
           'border-right': '1px solid #dee5e7',
           'border-bottom': '1px solid #dee5e7',
+           'border-left': '1px solid #dee5e7',
           'text-align': 'right',
 
         }
@@ -602,6 +609,7 @@ export class MutualFundSummaryComponent implements OnInit {
           'font-size': '13px',
           'padding': '8px',
           'border-right': '1px solid #dee5e7',
+           'border-left': '1px solid #dee5e7',
           'border-bottom': '1px solid #dee5e7',
           'text-align': 'right',
 
@@ -627,6 +635,7 @@ export class MutualFundSummaryComponent implements OnInit {
           'font-size': '13px',
           'padding': '8px',
           'border-right': '1px solid #dee5e7',
+           'border-left': '1px solid #dee5e7',
           'border-bottom': '1px solid #dee5e7',
           'text-align': 'right',
 
