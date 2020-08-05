@@ -28,7 +28,7 @@ export class SelectFolioMapComponent implements OnInit {
   selectedClientGrpHeadEmail: any = '';
   selectedClient: any;
   searchKeyword: any;
-  selectedFolioInvestorName;
+  selectedFolioInvestorName = '';
   advisorId
   constructor(
     public dialogRef: MatDialogRef<SelectFolioMapComponent>,
@@ -45,8 +45,10 @@ export class SelectFolioMapComponent implements OnInit {
 
   initPoint() {
     this.advisorId = AuthService.getAdvisorId();
-    if (this.data) {
-      this.selectedFolioInvestorName = this.data.ownerName;
+    if (this.data && this.data.selectedFolios.length !== 0) {
+      this.data.selectedFolios.forEach(element => {
+        this.selectedFolioInvestorName += element.ownerName + ' &';
+      });
     }
 
     this.parentId = AuthService.getParentId();
@@ -120,28 +122,37 @@ export class SelectFolioMapComponent implements OnInit {
   }
 
   mapFolio() {
-    const data = {
-      advisorId: this.advisorId,
-      clientId: this.selectedClient.groupHeadId,
-      familyMemberId: this.data.familyId,
-      folioNumber: this.data.folioNumber,
-      parentId: this.data.parentId == 0 ? this.data.adminAdvisorId : 0,
+    let data = [];
+    let obj;
+    if (this.data.selectedFolios.length !== 0) {
+      this.data.selectedFolios.forEach(element => {
+        obj = {
+          advisorId: this.advisorId,
+          clientId: this.selectedClient.groupHeadId,
+          familyMemberId: this.selectedClient.familyId,
+          folioNumber: element.folioNumber,
+          parentId: this.parentId === 0 ? this.advisorId : this.selectedClient.adminAdvisorId,
+        }
+        data.push(obj);
+      });
     }
+
     this.backOfcFolioMappingService.putMutualFundInvestorDetail(data)
       .subscribe(res => {
         if (res) {
           console.log(res);
           this.eventService.openSnackBar("Mapped Successfully !", "DISMISS");
+          this.dialogClose(true)
         } else {
           this.eventService.openSnackBar("Something went wrong!", "DISMISS");
         }
       }, err => {
+        this.eventService.openSnackBar("Something went wrong!", "DISMISS");
         console.error(err);
       })
   }
 
-  dialogClose() {
-    this.dialogRef.close();
+  dialogClose(refresh) {
+    this.dialogRef.close({ refresh });
   }
-
 }

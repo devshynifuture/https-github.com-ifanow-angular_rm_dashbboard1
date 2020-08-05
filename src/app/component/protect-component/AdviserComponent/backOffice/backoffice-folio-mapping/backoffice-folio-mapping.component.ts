@@ -2,7 +2,7 @@ import { FormControl } from '@angular/forms';
 import { EventService } from './../../../../../Data-service/event.service';
 import { BackofficeFolioMappingService } from './bckoffice-folio-mapping.service';
 import { AuthService } from './../../../../../auth-service/authService';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { SelectFolioMapComponent } from './select-folio-map/select-folio-map.component';
 import { MatDialog, MatTableDataSource, MatSort } from '@angular/material'
 import { SelectionModel } from '@angular/cdk/collections';
@@ -13,7 +13,7 @@ import { debounceTime, switchMap } from 'rxjs/operators';
   templateUrl: './backoffice-folio-mapping.component.html',
   styleUrls: ['./backoffice-folio-mapping.component.scss']
 })
-export class BackofficeFolioMappingComponent implements OnInit {
+export class BackofficeFolioMappingComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['position', 'schemeName', 'number', 'investName'];
   dataSource;
   hasEndReached: boolean;
@@ -37,6 +37,9 @@ export class BackofficeFolioMappingComponent implements OnInit {
   searchErrorMessage: string = '';
   finalUnmappedListSearch: any = [];
   hasEndReachedSearch: boolean = false;
+  advisorId;
+  searchFormSubscription: any = null;
+  isInfiniteScrollLoading = false;
 
   constructor(
     private backOfcFolioMapService: BackofficeFolioMappingService,
@@ -50,14 +53,15 @@ export class BackofficeFolioMappingComponent implements OnInit {
 
   initPoint(): void {
     this.searchForm = new FormControl();
-    this.parentId = AuthService.getParentId();
+    this.advisorId = AuthService.getAdvisorId();
+    this.parentId = AuthService.getParentId() === 0 ? this.advisorId : 0;
     this.unmappedDataSource = new MatTableDataSource([]);
     this.getMutualFundFolioList(0);
     this.setValueChangesForSearch();
   }
 
   setValueChangesForSearch(): void {
-    this.searchForm.valueChanges
+    this.searchFormSubscription = this.searchForm.valueChanges
       .pipe(
         debounceTime(1000),
         switchMap(value => this.getBackofficeFolioUnmapSearchQuery(value))
@@ -81,11 +85,15 @@ export class BackofficeFolioMappingComponent implements OnInit {
         searchQuery: value
       }
       this.isFromSearch = true;
+      this.isLoading = true;
+      this.unmappedDataSource.data = ELEMENT_DATA;
       this.searchFormValue = value;
       return this.backOfcFolioMapService.getMutualFundUnmapFolioSearchQuery(data)
     } else {
       this.isFromSearch = false;
       this.finalUnmappedList = [];
+      this.isLoading = true;
+      this.unmappedDataSource.data = ELEMENT_DATA;
       this.finalUnmappedListSearch = [];
       return this.backOfcFolioMapService.getMutualFundUnmapFolio({
         parentId: this.parentId,
@@ -98,12 +106,18 @@ export class BackofficeFolioMappingComponent implements OnInit {
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     let numRows;
-    if (this.unmappedDataSource) {
+    if (this.unmappedDataSource && this.unmappedDataSource.data) {
       numRows = this.unmappedDataSource.data.length;
     } else {
       numRows = 0;
     }
     return numSelected === numRows;
+  }
+
+  ngOnDestroy(): void {
+    if (this.searchFormSubscription) {
+      this.searchFormSubscription.unsubscribe()
+    }
   }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
@@ -115,10 +129,16 @@ export class BackofficeFolioMappingComponent implements OnInit {
     } else {
       this.showMappingBtn = true;
       this.selectedFolioCount = 0;
-      this.unmappedDataSource.data.forEach((row, index) => {
-        this.selectedFolioCount++;
-        this.selection.select(row)
-      });
+      if (this.unmappedDataSource.data) {
+        this.unmappedDataSource.data.forEach((row, index) => {
+          this.selectedFolioCount++;
+          this.selection.select(row)
+        });
+      } else {
+        this.selection.clear();
+        this.selectedFolioCount = 0;
+        this.showMappingBtn = false;
+      }
     }
   }
 
@@ -169,33 +189,36 @@ export class BackofficeFolioMappingComponent implements OnInit {
       offset,
       limit: 300
     }
-    this.isLoading = true;
+    this.isInfiniteScrollLoading = true;
     this.backOfcFolioMapService.getMutualFundUnmapFolio(data)
       .subscribe(res => this.changeDataTableAfterApi(res),
         err => {
           console.error(err);
-          this.isLoading = false;
+          this.isInfiniteScrollLoading = false;
           this.unmappedDataSource.data = null;
         })
   }
 
   changeDataTableAfterApi(res) {
+    this.isInfiniteScrollLoading = false;
     this.isLoading = false;
     console.log(res);
     if (res && res.length > 0) {
       if (this.isFromSearch) {
         this.finalUnmappedListSearch = this.finalUnmappedListSearch.concat(res);
         this.unmappedDataSource.data = this.finalUnmappedListSearch;
-        this.offsetList = this.finalUnmappedListSearch.length;
+        this.offsetList = this.unmappedDataSource.data.length;
         this.hasEndReachedSearch = false;
       } else {
         this.finalUnmappedList = this.finalUnmappedList.concat(res);
         this.unmappedDataSource.data = this.finalUnmappedList;
+        this.offset = this.unmappedDataSource.data.length;
         this.hasEndReached = false;
       }
       this.unmappedDataSource.sort = this.unmappedTableSort;
 
     } else {
+      this.isInfiniteScrollLoading = false;
       this.isLoading = false;
       if (this.isFromSearch) {
         this.unmappedDataSource.data = (this.finalUnmappedListSearch.length > 0) ? this.finalUnmappedListSearch : null;
@@ -204,7 +227,6 @@ export class BackofficeFolioMappingComponent implements OnInit {
       }
     }
     this.infiniteScrollingFlag = false;
-    this.offset = this.unmappedDataSource.data.length;
   }
 
   toggleSelectionOfRow(event, row) {
@@ -228,18 +250,21 @@ export class BackofficeFolioMappingComponent implements OnInit {
   }
 
   selectedFolioToMapOpenDialog() {
-
+    this.openFolio(this.selection.selected);
   }
 
   openFolio(data) {
     const dialogRef = this.dialog.open(SelectFolioMapComponent, {
       width: '663px',
-      data
+      data: { selectedFolios: data }
     });
 
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
+      if (result) {
+        this.initPoint();
+      }
     });
   }
 
@@ -254,6 +279,38 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
+  { position: '', schemeName: '', number: '', investName: '' },
+  { position: '', schemeName: '', number: '', investName: '' },
+  { position: '', schemeName: '', number: '', investName: '' },
+  { position: '', schemeName: '', number: '', investName: '' },
+  { position: '', schemeName: '', number: '', investName: '' },
+  { position: '', schemeName: '', number: '', investName: '' },
+  { position: '', schemeName: '', number: '', investName: '' },
+  { position: '', schemeName: '', number: '', investName: '' },
+  { position: '', schemeName: '', number: '', investName: '' },
+  { position: '', schemeName: '', number: '', investName: '' },
+  { position: '', schemeName: '', number: '', investName: '' },
+  { position: '', schemeName: '', number: '', investName: '' },
+  { position: '', schemeName: '', number: '', investName: '' },
+  { position: '', schemeName: '', number: '', investName: '' },
+  { position: '', schemeName: '', number: '', investName: '' },
+  { position: '', schemeName: '', number: '', investName: '' },
+  { position: '', schemeName: '', number: '', investName: '' },
+  { position: '', schemeName: '', number: '', investName: '' },
+  { position: '', schemeName: '', number: '', investName: '' },
+  { position: '', schemeName: '', number: '', investName: '' },
+  { position: '', schemeName: '', number: '', investName: '' },
+  { position: '', schemeName: '', number: '', investName: '' },
+  { position: '', schemeName: '', number: '', investName: '' },
+  { position: '', schemeName: '', number: '', investName: '' },
+  { position: '', schemeName: '', number: '', investName: '' },
+  { position: '', schemeName: '', number: '', investName: '' },
+  { position: '', schemeName: '', number: '', investName: '' },
+  { position: '', schemeName: '', number: '', investName: '' },
+  { position: '', schemeName: '', number: '', investName: '' },
+  { position: '', schemeName: '', number: '', investName: '' },
+  { position: '', schemeName: '', number: '', investName: '' },
+  { position: '', schemeName: '', number: '', investName: '' },
   { position: '', schemeName: '', number: '', investName: '' },
   { position: '', schemeName: '', number: '', investName: '' },
   { position: '', schemeName: '', number: '', investName: '' },
