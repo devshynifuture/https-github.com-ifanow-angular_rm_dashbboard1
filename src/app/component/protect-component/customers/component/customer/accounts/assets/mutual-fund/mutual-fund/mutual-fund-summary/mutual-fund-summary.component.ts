@@ -362,55 +362,162 @@ export class MutualFundSummaryComponent implements OnInit {
   }
   styleObject(header, ind): Object {
     if (header == 'schemeName') {
-      this.customDataSource.data.array.push({ 'name': 'Scheme Name', 'index': ind, isCheked: true });
+      this.customDataSource.data.array.push({
+        'name': 'Scheme Name', 'index': ind, isCheked: true, style: {
+          'width': '26%',
+          'text-align': 'left',
+          'font-size': '13px',
+          'padding': '8px',
+          'border-left': '1px solid #dee5e7',
+          'border-bottom': '1px solid #dee5e7',
+          'border-top': '1px solid #dee5e7',
+          'border-right': '1px solid #dee5e7',
+        }
+      });
+
     } else if (header == 'amountInvested') {
-      this.customDataSource.data.array.push({ 'name': 'Amount invested', 'index': ind, isCheked: true });
+      this.customDataSource.data.array.push({
+        'name': 'Amount invested', 'index': ind, isCheked: true,
+        style: {
+          'width': '7%',
+          'text-align': 'right',
+          'font-size': '13px',
+          'padding': '8px',
+          'border-bottom': '1px solid #dee5e7',
+          'border-top': '1px solid #dee5e7',
+          'border-right': '1px solid #dee5e7'
+        }
+      });
     } else if (header == 'currentValue') {
-      this.customDataSource.data.array.push({ 'name': 'Current value', 'index': ind, isCheked: true });
+      this.customDataSource.data.array.push({
+        'name': 'Current value', 'index': ind, isCheked: true,
+        style: {
+          'width': '6%',
+          'text-align': 'right',
+          'font-size': '13px',
+          'padding': '8px',
+          'border-bottom': '1px solid #dee5e7',
+          'border-top': '1px solid #dee5e7',
+          'border-right': '1px solid #dee5e7',
+          'border-left': '1px solid #dee5e7',
+        }
+      });
     } else if (header == 'unrealizedProfit') {
-      this.customDataSource.data.array.push({ 'name': 'Unrealized profit', 'index': ind, isCheked: true });
+      this.customDataSource.data.array.push({
+        'name': 'Unrealized profit', 'index': ind, isCheked: true,
+        style: {
+          'width': '8%',
+          'text-align': 'right',
+          'font-size': '13px',
+          'padding': '8px',
+          'border-right': '1px solid #dee5e7',
+          'border-bottom': '1px solid #dee5e7',
+          'border-top': '1px solid #dee5e7',
+        }
+      });
     } else if (header == 'absoluteReturn') {
-      this.customDataSource.data.array.push({ 'name': 'Abs Ret', 'index': ind, isCheked: true });
+      this.customDataSource.data.array.push({
+        'name': 'Abs Ret', 'index': ind, isCheked: true,
+        style: {
+          'width': '5%',
+          'text-align': 'right',
+          'font-size': '13px',
+          'padding': '8px',
+          'border-bottom': '1px solid #dee5e7',
+          'border-top': '1px solid #dee5e7',
+          'border-right': '1px solid #dee5e7',
+          'border-left': '1px solid #dee5e7',
+        }
+      });
     } else if (header == 'xirr') {
-      this.customDataSource.data.array.push({ 'name': 'Xirr', 'index': ind, isCheked: true });
+      this.customDataSource.data.array.push({
+        'name': 'Xirr', 'index': ind, isCheked: true,
+        style: {
+          'width': '5%',
+          'text-align': 'right',
+          'font-size': '13px',
+          'padding': '8px',
+          'border-bottom': '1px solid #dee5e7',
+          'border-top': '1px solid #dee5e7',
+          'border-right': '1px solid #dee5e7'
+        }
+      });
 
     } else if (header == 'dividendPayout') {
-      this.customDataSource.data.array.push({ 'name': 'Dividend payout', 'index': ind, isCheked: true });
+      this.customDataSource.data.array.push({
+        'name': 'Dividend payout', 'index': ind, isCheked: true,
+        style: {
+          'width': '7%',
+          'text-align': 'right',
+          'font-size': ' 13px',
+          'padding': '8px',
+          'border-bottom': '1px solid #dee5e7',
+          'border-top': '1px solid #dee5e7',
+          'border-right': '1px solid #dee5e7',
+          'border-left': '1px solid #dee5e7',
+        }
+      });
     } else if (header == 'switchOut') {
-      this.customDataSource.data.array.push({ 'name': 'Withdrawal/Switch outs', 'index': ind, isCheked: true });
+      this.customDataSource.data.array.push({
+        'name': 'Withdrawal/Switch outs', 'index': ind, isCheked: true,
+        style: {
+          'width': '9%',
+          'text-align': 'right',
+          'font-size': '13px',
+          'padding': '8px',
+          'border-bottom': '1px solid #dee5e7',
+          'border-top': '1px solid #dee5e7',
+          'border-right': '1px solid #dee5e7',
+        }
+      });
     } else if (header == 'balanceUnit') {
-      this.customDataSource.data.array.push({ 'name': 'Balance unit', 'index': ind, isCheked: true });
+      this.customDataSource.data.array.push({
+        'name': 'Balance unit', 'index': ind, isCheked: true,
+        style: {
+          'width': '7%',
+          'text-align': 'right',
+          'font-size': ' 13px',
+          'padding': '8px',
+          'border-bottom': '1px solid #dee5e7',
+          'border-top': '1px solid #dee5e7',
+          'border-right': '1px solid #dee5e7',
+          'border-left': '1px solid #dee5e7',
+        }
+      });
     } else if (header == 'navDate') {
-      this.customDataSource.data.array.push({ 'name': 'Nav date', 'index': ind, isCheked: true });
+      this.customDataSource.data.array.push({
+        'name': 'Nav date', 'index': ind, isCheked: true,
+        style: {
+          'width': '9%',
+          'text-align': 'right',
+          'font-size': ' 13px',
+          'padding': '8px',
+          'border-right': '1px solid #dee5e7',
+          'border-bottom': '1px solid #dee5e7',
+          'border-top': '1px solid #dee5e7'
+        }
+      });
     } else if (header == 'sipAmount') {
-      this.customDataSource.data.array.push({ 'name': 'Sip amount', 'index': ind, isCheked: true });
+      this.customDataSource.data.array.push({
+        'name': 'Sip amount', 'index': ind, isCheked: true,
+        style: {
+          'width': '5%',
+          'text- align': 'right',
+          'font- size': '13px',
+          'padding': '8px',
+          'border - bottom': '1px solid #dee5e7',
+          'border - top': '1px solid #dee5e7',
+          'border - right': '1px solid #dee5e7',
+          'border - left': '1px solid #dee5e7'
+        }
+      });
     }
-    // if (header == 'schemeName') {
-    //   Object.assign(this.customDataSource.data, { schemeName: true ,index : ind});
-    // } else if (header == 'amountInvested') {
-    //   Object.assign(this.customDataSource.data, { amountInvested: true ,index : ind});
-    // } else if (header == 'currentValue') {
-    //   Object.assign(this.customDataSource.data, { currentValue: true,index : ind });
-    // } else if (header == 'unrealizedProfit') {
-    //   Object.assign(this.customDataSource.data, { unrealizedProfit: true,index : ind });
-    // } else if (header == 'absoluteReturn') {
-    //   Object.assign(this.customDataSource.data, { absoluteReturn: true,index : ind });
-    // } else if (header == 'xirr') {
-    //   Object.assign(this.customDataSource.data, { xirr: true,index : ind });
-    // } else if (header == 'dividendPayout') {
-    //   Object.assign(this.customDataSource.data, { dividendPayout: true,index : ind });
-    // } else if (header == 'switchOut') {
-    //   Object.assign(this.customDataSource.data, { switchOut: true,index : ind });
-    // } else if (header == 'balanceUnit') {
-    //   Object.assign(this.customDataSource.data, { balanceUnit: true,index : ind });
-    // } else if (header == 'navDate') {
-    //   Object.assign(this.customDataSource.data, { navDate: true,index : ind });
-    // } else if (header == 'sipAmount') {
-    //   Object.assign(this.customDataSource.data, { sipAmount: true,index : ind });
-    // }
-
-    // return {}
     return
+  }
+  get myStyles(): any {
+    return {
+
+    };
   }
   calculationOninit() {
     if (this.mutualFund.mutualFundList.length > 0) {
@@ -1120,240 +1227,240 @@ export class MutualFundSummaryComponent implements OnInit {
         value = this.grandTotal.sip
       }
     }
-  
-  if(value == 'amountInvested' || value == 'currentValue' || value == 'unrealizedGain' || value == 'dividendPayout' || value == 'switchOut' || value == 'sipAmount' || value == 'totalAmountInvested' || value == 'totalCurrentValue' || value == 'totalUnrealizedGain' || value == 'totalDividendPayout' || value == 'totalSwitchOut' || value == 'totalSipAmount' || value == 'sip' || value == 'total_amount_invested' || value=='total_current_value' || value =="total_unrealized_gain" || value=="total_dividend_payout" || value==='withdrawals') {
-  number = this.mfService.mutualFundRoundAndFormat(data, 0);
-}else {
-  number = this.mfService.mutualFundRoundAndFormat(data, 3);
-}
-return number;
+
+    if (value == 'amountInvested' || value == 'currentValue' || value == 'unrealizedGain' || value == 'dividendPayout' || value == 'switchOut' || value == 'sipAmount' || value == 'totalAmountInvested' || value == 'totalCurrentValue' || value == 'totalUnrealizedGain' || value == 'totalDividendPayout' || value == 'totalSwitchOut' || value == 'totalSipAmount' || value == 'sip' || value == 'total_amount_invested' || value == 'total_current_value' || value == "total_unrealized_gain" || value == "total_dividend_payout" || value === 'withdrawals') {
+      number = this.mfService.mutualFundRoundAndFormat(data, 0);
+    } else {
+      number = this.mfService.mutualFundRoundAndFormat(data, 3);
+    }
+    return number;
   }
-deleteModal(value, element) {
-  const dialogData = {
-    data: value,
-    header: 'DELETE',
-    body: 'Are you sure you want to delete?',
-    body2: 'This cannot be undone.',
-    btnYes: 'CANCEL',
-    btnNo: 'DELETE',
-    positiveMethod: () => {
-      // this.subService.deleteInvoices(this.list).subscribe(
-      //   data => {
-      //     this.dataCount = 0;
-      //     this.eventService.openSnackBar('invoice deleted successfully.', 'Dismiss');
-      //     dialogRef.close(this.list);
+  deleteModal(value, element) {
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        // this.subService.deleteInvoices(this.list).subscribe(
+        //   data => {
+        //     this.dataCount = 0;
+        //     this.eventService.openSnackBar('invoice deleted successfully.', 'Dismiss');
+        //     dialogRef.close(this.list);
 
-      //   },
-      //   error => this.eventService.showErrorMessage(error)
-      // );
-      // dialogRef.close(listIndex);
-      if (value === 'mutualFund') {
-        const obj = { id: element.id }
-        this.customerService.postMutualFundDelete(obj)
-          .subscribe(res => {
-            if (res) {
-              this.eventService.openSnackBar('Deleted Successfully', "Dismiss");
-              dialogRef.close();
-              this.addedData = true;
-              this.mfService.setDataForMfGet('');
-              this.mfService.setMfData('');
-              // this.ngOnInit();
-              this.initPoint();
+        //   },
+        //   error => this.eventService.showErrorMessage(error)
+        // );
+        // dialogRef.close(listIndex);
+        if (value === 'mutualFund') {
+          const obj = { id: element.id }
+          this.customerService.postMutualFundDelete(obj)
+            .subscribe(res => {
+              if (res) {
+                this.eventService.openSnackBar('Deleted Successfully', "Dismiss");
+                dialogRef.close();
+                this.addedData = true;
+                this.mfService.setDataForMfGet('');
+                this.mfService.setMfData('');
+                // this.ngOnInit();
+                this.initPoint();
 
-              // this.getMutualFund();
-            }
-          })
-      }
-
-    },
-    negativeMethod: () => {
-      console.log('2222222222222222222222222222222222222');
-    }
-  };
-  console.log(dialogData + '11111111111111');
-
-  const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-    width: '400px',
-    data: dialogData,
-    autoFocus: false,
-
-  });
-
-  dialogRef.afterClosed().subscribe(result => {
-
-  });
-}
-
-openMutualEditFund(flag, element) {
-  // this.mutualFundList.forEach(ele => {
-  //   ele.mutualFundTransactions.forEach(tran => {
-  //     if (tran.id == element.id) {
-  //       this.selectedDataLoad = ele;
-  //     }
-  //   });
-  // });
-  // if(!this.selectedDataLoad){
-  //   this.selectedDataLoad= element
-  // }
-  const fragmentData = {
-    flag: 'editTransaction',
-    data: { family_member_list: ['family_member_list'], flag, ...element, ...this.selectedDataLoad },
-    id: 1,
-    state: 'open',
-    componentName: MFSchemeLevelHoldingsComponent
-  };
-  const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-    sideBarData => {
-      console.log('this is sidebardata in subs subs : ', sideBarData);
-      if (UtilService.isDialogClose(sideBarData)) {
-        if (UtilService.isRefreshRequired(sideBarData)) {
-          this.addedData = true;
-          this.mfService.setDataForMfGet('');
-          this.mfService.setMfData('');
-          // this.ngOnInit();
-          this.initPoint();
-          // this.getMutualFund();
+                // this.getMutualFund();
+              }
+            })
         }
-        console.log('this is sidebardata in subs subs 2: ', sideBarData);
-        rightSideDataSub.unsubscribe();
+
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
       }
-    }
-  );
-}
-
-openUpperFragment(flag, element) {
-  console.log("this is what element is:::", element);
-  if (flag == 'addTransaction') {
-    const fragmentData = {
-      flag: 'app-upper-customer',
-      id: 1,
-      data: { family_member_list: ['family_member_list'], flag: 'addTransaction', ...element },
-      direction: 'top',
-      componentName: UpperCustomerComponent,
-      state: 'open'
     };
-    const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
-      upperSliderData => {
-        if (UtilService.isDialogClose(upperSliderData)) {
-          if (UtilService.isRefreshRequired(upperSliderData)) {
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
+
+  openMutualEditFund(flag, element) {
+    // this.mutualFundList.forEach(ele => {
+    //   ele.mutualFundTransactions.forEach(tran => {
+    //     if (tran.id == element.id) {
+    //       this.selectedDataLoad = ele;
+    //     }
+    //   });
+    // });
+    // if(!this.selectedDataLoad){
+    //   this.selectedDataLoad= element
+    // }
+    const fragmentData = {
+      flag: 'editTransaction',
+      data: { family_member_list: ['family_member_list'], flag, ...element, ...this.selectedDataLoad },
+      id: 1,
+      state: 'open',
+      componentName: MFSchemeLevelHoldingsComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            this.addedData = true;
+            this.mfService.setDataForMfGet('');
+            this.mfService.setMfData('');
             // this.ngOnInit();
-            this.initPoint()
-            // code to refresh ...
+            this.initPoint();
             // this.getMutualFund();
-            // this.getMutualFundResponse(upperSliderData);
-            //   this.customDataSource = new MatTableDataSource([{}, {}, {}]);
-            //   this.mfService.getDataForMfGet()
-            // .subscribe(res => {
-            //   this.mfGetData = res;
-            // })
-            // if(this.mfGetData){
-            //   this.isLoading = true;
-            //   this.changeInput.emit(true);
-            //   this.getMutualFundResponse(this.mfGetData)
-            // }
-
           }
-
-          // this.getClientSubscriptionList();
-          subscription.unsubscribe();
+          console.log('this is sidebardata in subs subs 2: ', sideBarData);
+          rightSideDataSub.unsubscribe();
         }
       }
     );
   }
 
-}
-generatePdfBulk() {
-  const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
+  openUpperFragment(flag, element) {
+    console.log("this is what element is:::", element);
+    if (flag == 'addTransaction') {
+      const fragmentData = {
+        flag: 'app-upper-customer',
+        id: 1,
+        data: { family_member_list: ['family_member_list'], flag: 'addTransaction', ...element },
+        direction: 'top',
+        componentName: UpperCustomerComponent,
+        state: 'open'
+      };
+      const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+        upperSliderData => {
+          if (UtilService.isDialogClose(upperSliderData)) {
+            if (UtilService.isRefreshRequired(upperSliderData)) {
+              // this.ngOnInit();
+              this.initPoint()
+              // code to refresh ...
+              // this.getMutualFund();
+              // this.getMutualFundResponse(upperSliderData);
+              //   this.customDataSource = new MatTableDataSource([{}, {}, {}]);
+              //   this.mfService.getDataForMfGet()
+              // .subscribe(res => {
+              //   this.mfGetData = res;
+              // })
+              // if(this.mfGetData){
+              //   this.isLoading = true;
+              //   this.changeInput.emit(true);
+              //   this.getMutualFundResponse(this.mfGetData)
+              // }
 
-  this.showDownload = true
-  setTimeout(() => {
-    let para = this.summaryTemplate.nativeElement.innerHTML
-    let obj = {
-      htmlInput: para,
-      name: (this.clientData.name) ? this.clientData.name : '' + 's' + 'Summary' + date,
-      landscape: true,
-      key: 'showPieChart',
+            }
+
+            // this.getClientSubscriptionList();
+            subscription.unsubscribe();
+          }
+        }
+      );
+    }
+
+  }
+  generatePdfBulk() {
+    const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
+
+    this.showDownload = true
+    setTimeout(() => {
+      let para = this.summaryTemplate.nativeElement.innerHTML
+      let obj = {
+        htmlInput: para,
+        name: (this.clientData.name) ? this.clientData.name : '' + 's' + 'Summary' + date,
+        landscape: true,
+        key: 'showPieChart',
+        clientId: this.clientId,
+        advisorId: this.advisorId,
+        fromEmail: this.clientDetails.advisorData.email,
+        toEmail: this.clientData.email
+      }
+      let response = this.utilService.bulkHtmlToPdf(obj)
+      console.log('********', response)
+      //this.utilService.htmlToPdf(para, 'Summary', true, this.fragmentData, '', '')
+    }, 400);
+  }
+  getDetails() {
+    const obj = {
       clientId: this.clientId,
       advisorId: this.advisorId,
-      fromEmail: this.clientDetails.advisorData.email,
-      toEmail: this.clientData.email
-    }
-    let response = this.utilService.bulkHtmlToPdf(obj)
-    console.log('********', response)
-    //this.utilService.htmlToPdf(para, 'Summary', true, this.fragmentData, '', '')
-  }, 400);
-}
-getDetails() {
-  const obj = {
-    clientId: this.clientId,
-    advisorId: this.advisorId,
-  };
-  this.backOfficeService.getDetailsClientAdvisor(obj).subscribe(
-    data => this.getDetailsClientAdvisorRes(data)
-  );
-}
-getDetailsClientAdvisorRes(data) {
-  console.log('data', data)
-  this.clientDetails = data
-  this.clientData = data.clientData
-  this.getOrgData = data.advisorData
-  this.userInfo = data.advisorData
-}
-getDefaultDetails(platform) {
-  const obj = {
-    advisorId: this.advisorId,
-    familyMemberId: 0,
-    clientId: this.clientId,
-    // aggregatorType: platform
-  };
+    };
+    this.backOfficeService.getDetailsClientAdvisor(obj).subscribe(
+      data => this.getDetailsClientAdvisorRes(data)
+    );
+  }
+  getDetailsClientAdvisorRes(data) {
+    console.log('data', data)
+    this.clientDetails = data
+    this.clientData = data.clientData
+    this.getOrgData = data.advisorData
+    this.userInfo = data.advisorData
+  }
+  getDefaultDetails(platform) {
+    const obj = {
+      advisorId: this.advisorId,
+      familyMemberId: 0,
+      clientId: this.clientId,
+      // aggregatorType: platform
+    };
 
-  this.onlineTransact.getDefaultDetails(obj).subscribe(
-    data => {
-      this.getDefaultDetailsRes(data);
-    }, error => {
-      this.eventService.openSnackBar(error, 'Dismiss');
-    }
-  );
-}
-
-getDefaultDetailsRes(data) {
-  if (data == undefined) {
-    return;
-  } else {
-    if (data.defaultCredential != undefined) {
-      this.noSubBroker = false;
-      if (data.defaultClient == undefined) {
-        this.noMapping = true;
-      } else {
-        this.noMapping = false;
+    this.onlineTransact.getDefaultDetails(obj).subscribe(
+      data => {
+        this.getDefaultDetailsRes(data);
+      }, error => {
+        this.eventService.openSnackBar(error, 'Dismiss');
       }
+    );
+  }
+
+  getDefaultDetailsRes(data) {
+    if (data == undefined) {
+      return;
     } else {
-      this.noSubBroker = true;
-    }
-  }
-}
-openTransaction(data) {
-  const routeName = this.router.url.split('/')[1];
-  if (routeName == 'customer') {
-    this.isAdvisorSection = false;
-  }
-  const fragmentData = {
-    flag: 'addNewTransaction',
-    data: { isAdvisorSection: this.isAdvisorSection, flag: 'addNewTransaction', data: data },
-    id: 1,
-    state: 'open65',
-    componentName: OnlineTransactionComponent,
-  };
-  const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-    sideBarData => {
-      if (UtilService.isDialogClose(sideBarData)) {
-        if (UtilService.isRefreshRequired(sideBarData)) {
-          //this.refresh(true);
+      if (data.defaultCredential != undefined) {
+        this.noSubBroker = false;
+        if (data.defaultClient == undefined) {
+          this.noMapping = true;
+        } else {
+          this.noMapping = false;
         }
-        rightSideDataSub.unsubscribe();
-
+      } else {
+        this.noSubBroker = true;
       }
     }
-  );
-}
+  }
+  openTransaction(data) {
+    const routeName = this.router.url.split('/')[1];
+    if (routeName == 'customer') {
+      this.isAdvisorSection = false;
+    }
+    const fragmentData = {
+      flag: 'addNewTransaction',
+      data: { isAdvisorSection: this.isAdvisorSection, flag: 'addNewTransaction', data: data },
+      id: 1,
+      state: 'open65',
+      componentName: OnlineTransactionComponent,
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            //this.refresh(true);
+          }
+          rightSideDataSub.unsubscribe();
+
+        }
+      }
+    );
+  }
 }

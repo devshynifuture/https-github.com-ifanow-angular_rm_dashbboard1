@@ -441,50 +441,39 @@
                 {{(clientData.name) ? clientData.name : '-'}}</td>
 
         </tr>
-        <tr style="background: #f5f7f7;" >
-            <td *ngIf="customDataSource.data?.array[0]?.isCheked"
-                style="width:26%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+        <tr style="background: #f5f7f7;">
+            <td *ngIf="customDataSource.data?.array[0]?.isCheked" [ngStyle]="customDataSource.data?.array[0].style">
                 <b>{{customDataSource.data?.array[0].name}}</b>
             </td>
 
-           <td *ngIf="customDataSource.data?.array[1]?.isCheked"
-                style="width:7%;text-align: right; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+            <td *ngIf="customDataSource.data?.array[1]?.isCheked" [ngStyle]="customDataSource.data?.array[1].style">
                 <b>{{customDataSource.data?.array[1]?.name}}</b>
             </td>
-            <td *ngIf="customDataSource.data?.array[2]?.isCheked"
-                style="width:6%;text-align: right; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;">
+            <td *ngIf="customDataSource.data?.array[2]?.isCheked" [ngStyle]="customDataSource.data?.array[2].style">
                 <b>{{customDataSource.data?.array[2]?.name}}</b>
             </td>
-            <td *ngIf="customDataSource.data?.array[3]?.isCheked"
-                style="width:8%;text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7;">
+            <td *ngIf="customDataSource.data?.array[3]?.isCheked" [ngStyle]="customDataSource.data?.array[3].style">
                 <b>{{customDataSource.data?.array[3]?.name}}</b>
             </td>
-            <td *ngIf="customDataSource.data?.array[4]?.isCheked"
-                style="width:5%;text-align: right; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;">
+            <td *ngIf="customDataSource.data?.array[4]?.isCheked" [ngStyle]="customDataSource.data?.array[4].style">
                 <b>{{customDataSource.data?.array[4]?.name}} % </b>
             </td>
-            <td *ngIf="customDataSource.data?.array[5]?.isCheked"
-                style="width:5%;text-align: right; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+            <td *ngIf="customDataSource.data?.array[5]?.isCheked" [ngStyle]="customDataSource.data?.array[5].style">
                 <b>{{customDataSource.data?.array[5]?.name}} %</b>
             </td>
-            <td *ngIf="customDataSource.data?.array[6]?.isCheked"
-                style="width:7%;text-align: right; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;">
+            <td *ngIf="customDataSource.data?.array[6]?.isCheked" [ngStyle]="customDataSource.data?.array[6].style">
                 <b>{{customDataSource.data?.array[6]?.name}}</b>
             </td>
-            <td *ngIf="customDataSource.data?.array[7]?.isCheked"
-                style="width:9%;text-align: right; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+            <td *ngIf="customDataSource.data?.array[7]?.isCheked" [ngStyle]="customDataSource.data?.array[7].style">
                 <b>{{customDataSource.data?.array[7]?.name}}</b>
             </td>
-            <td *ngIf="customDataSource.data?.array[8]?.isCheked"
-                style="width:7%;text-align: right; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;">
+            <td *ngIf="customDataSource.data?.array[8]?.isCheked" [ngStyle]="customDataSource.data?.array[8].style">
                 <b>{{customDataSource.data?.array[8]?.name}}</b>
             </td>
-            <td *ngIf="customDataSource.data?.array[9]?.isCheked"
-                style="width:9%;text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7;">
+            <td *ngIf="customDataSource.data?.array[9]?.isCheked" [ngStyle]="customDataSource.data?.array[9].style">
                 <b>{{customDataSource.data?.array[9]?.name}}</b>
             </td>
-            <td *ngIf="customDataSource.data?.array[10]?.isCheked"
-                style="width:5%;text-align: right; font-size: 13px; padding: 8px;border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;">
+            <td *ngIf="customDataSource.data?.array[10]?.isCheked" [ngStyle]="customDataSource.data?.array[10].style">
                 <b>{{customDataSource.data?.array[10]?.name}}</b>
             </td>
         </tr>
@@ -507,98 +496,98 @@
                     </tr>
                     <tr *ngIf="item.id">
 
-                        <td valign="top" 
+                        <td valign="top"
                             style="width:26%;font-size: 13px; padding: 8px;  border-left: 1px solid #dee5e7; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
                             <!-- {{item.schemeName+' | '+item.folioNumber+' | '+item.ownerName}} -->
                             {{getValues(item[firstArray],firstArray,'')}}
                         </td>
-                        
-                        <td valign="top" 
+
+                        <td valign="top"
                             style="width:7%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;"
                             appFormatNumber>
                             <!-- {{item.amountInvested}} -->
                             {{getValues(item[secondArray],secondArray,'')}}
                         </td>
-                        
+
                         <td valign="top"
                             style="width:6%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;"
                             appFormatNumber>
                             <!-- {{item.currentValue }} -->
                             {{getValues(item[thirdArray],thirdArray,'')}}
                         </td>
-                        
-                        <td valign="top" 
+
+                        <td valign="top"
                             style="width:8%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;"
                             appFormatNumber>
                             <!-- {{item.unrealizedGain }} -->
                             {{getValues(item[fourthArray],fourthArray,'')}}
                         </td>
-                        
+
                         <td valign="top"
                             style="width:5%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;">
                             <!-- {{(item.absoluteReturn==0 || item.absoluteReturn =='Infinity' || item.absoluteReturn =='-Infinity' || item.absoluteReturn == 'NaN') ? 0 : (item.absoluteReturn) ? (item.absoluteReturn | number:'1.2-2') : 0}} -->
                             {{getValues(item[fifthArray],fifthArray,'')}}
                         </td>
-                        
-                        <td valign="top" 
+
+                        <td valign="top"
                             style="width:5%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;">
                             <!-- {{item.xirr | number:'1.2-2'}} -->
                             {{getValues(item[SixthArray],SixthArray,'')}}
                         </td>
-                        
-                        <td valign="top" 
+
+                        <td valign="top"
                             style="width:7%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;"
                             appFormatNumber>
                             <!-- {{item.dividendPayout}} -->
                             {{getValues(item[seventhArray],seventhArray,'')}}
                         </td>
-                        <td valign="top" 
+                        <td valign="top"
                             style="width:9%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;"
                             appFormatNumber>
                             <!-- {{item.switchOut }} -->
                             {{getValues(item[eighthArray],eighthArray,'')}}
                         </td>
-                        
+
                         <td valign="top"
                             style="width:7%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;">
                             <!-- {{item.balanceUnit | number:'1.2-3'}} -->
                             {{getValues(item[ninethArray],ninethArray,'')}}
                         </td>
-                        
-                        <td valign="top" 
+
+                        <td valign="top"
                             style="width:9%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;">
                             <!-- {{item.navDate | date:'dd/MM/yyyy'}} -->
                             {{getValues(item[tenthArray],tenthArray,'')}}
                         </td>
-                        
-                        <td valign="top" 
+
+                        <td valign="top"
                             style="width:5%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;"
                             appFormatNumber>
                             <!-- {{item.sipAmount}} -->
                             {{getValues(item[eleventhArray],eleventhArray,'')}}
                         </td>
-                        </tr>
+                    </tr>
                     <tr *ngIf="item.schemeName=='Total'">
                         <td valign="top"
                             style="width:26%;font-size: 13px; padding: 8px;font-weight: 600; border-left: 1px solid #dee5e7; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
                             <!-- {{item.schemeName}} -->
                             {{getValues(item[firstArrayTotal],firstArrayTotal,'')}}
                         </td>
-                        <td valign="top" 
+                        <td valign="top"
                             style="width:7%;font-size: 13px; padding: 8px;font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;"
                             appFormatNumber>
                             <!-- {{item.totalAmountInvested }} -->
                             {{getValues(item[secondArrayTotal],secondArrayTotal,'')}}
 
                         </td>
-                        <td valign="top" 
+                        <td valign="top"
                             style="text-align: right;width:6%;font-size: 13px; padding: 8px;font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
                             appFormatNumber>
                             <!-- {{item.totalCurrentValue}} -->
                             {{getValues(item[thirdArrayTotal],thirdArrayTotal,'')}}
 
                         </td>
-                        <td valign="top" 
+                        <td valign="top"
                             style="text-align: right;width:8%;font-size: 13px; padding: 8px;font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
                             appFormatNumber>
                             <!-- {{item.totalUnrealizedGain }} -->
@@ -611,20 +600,20 @@
                             {{getValues(item[fifthArrayTotal],fifthArrayTotal,'')}}
 
                         </td>
-                        <td valign="top" 
+                        <td valign="top"
                             style="text-align: right;width:5%;font-size: 13px; padding: 8px;font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
                             <!-- {{item.totalXirr | number:'1.2-2'}} -->
                             {{getValues(item[SixthArrayTotal],SixthArrayTotal,'')}}
 
                         </td>
-                        <td valign="top" 
+                        <td valign="top"
                             style="text-align: right;width:7%;font-size: 13px; padding: 8px;font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
                             appFormatNumber>
                             <!-- {{item.totalDividendPayout}} -->
                             {{getValues(item[seventhArrayTotal],seventhArrayTotal,'')}}
 
                         </td>
-                        <td valign="top" 
+                        <td valign="top"
                             style="text-align: right;width:9%;font-size: 13px; padding: 8px;font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
                             appFormatNumber>
                             <!-- {{item.totalSwitchOut}} -->
@@ -637,7 +626,7 @@
                             {{getValues(item[ninethArrayTotal],ninethArrayTotal,'')}}
 
                         </td>
-                        <td valign="top" 
+                        <td valign="top"
                             style="text-align: right;width:9%;font-size: 13px; padding: 8px;font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
                             <!-- {{item.totalNavDate}} -->
                             {{getValues(item[tenthArrayTotal],tenthArrayTotal,'')}}
@@ -656,7 +645,7 @@
         </tr>
 
         <tr>
-            <td valign="top" 
+            <td valign="top"
                 style="border-left: 1px solid #dee5e7;width:26%;font-size: 13px; padding: 8px; font-weight: 600;  border-bottom: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                 {{getValues(mfData[firstArrayGTotal],firstArrayGTotal,'GT')}}
 
@@ -665,21 +654,21 @@
                 style="text-align: right;width:7%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
                 appFormatNumber>
                 <!-- {{(mfData) ? (mfData.total_amount_invested ) : 0}} -->
-            {{getValues(mfData[secondArrayGTotal],secondArrayGTotal,'GT')}}
-                </td>
+                {{getValues(mfData[secondArrayGTotal],secondArrayGTotal,'GT')}}
+            </td>
             <td valign="top"
                 style=" text-align: right;width:6%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
                 appFormatNumber>
                 <!-- {{(mfData) ? (mfData.total_current_value ) : 0}} -->
                 {{getValues(mfData[thirdArrayGTotal],thirdArrayGTotal,'GT')}}
             </td>
-            <td valign="top" 
+            <td valign="top"
                 style="text-align: right;width:8%; font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
                 appFormatNumber>
                 <!-- {{(mfData) ? (mfData.total_unrealized_gain) : 0}} -->
                 {{getValues(mfData[fourthArrayGTotal],fourthArrayGTotal,'GT')}}
             </td>
-            <td valign="top" 
+            <td valign="top"
                 style="text-align: right;width:5%;;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
                 <!-- {{(mfData) ? (mfData.total_absolute_return | number:'1.2-2') : '0'}} -->
                 {{getValues(mfData[fifthArrayGTotal],fifthArrayGTotal,'GT')}}
@@ -689,19 +678,19 @@
                 <!-- {{(mfData) ? (mfData.total_xirr | number:'1.2-2') : '0'}} -->
                 {{getValues(mfData[SixthArrayGTotal],SixthArrayGTotal,'GT')}}
             </td>
-            <td valign="top" 
+            <td valign="top"
                 style="text-align: right;width:7%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
                 appFormatNumber>
                 <!-- {{mfData ? mfData.total_dividend_payout : 0}} -->
                 {{getValues(mfData[seventhArrayGTotal],seventhArrayGTotal,'GT')}}
             </td>
-            <td valign="top" 
+            <td valign="top"
                 style="text-align: right;width:9%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
                 appFormatNumber>
                 <!-- {{(grandTotal) ? grandTotal.withdrawals : 0 }} -->
                 {{getValues(mfData[eighthArrayGTotal],eighthArrayGTotal,'GT')}}
             </td>
-            <td valign="top" 
+            <td valign="top"
                 style="text-align: right;width:7%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
                 <!-- {{(grandTotal.totalBalanceUnit) ? (grandTotal.totalBalanceUnit | number:'1.2-3') : '0'}} -->
                 {{getValues(mfData[ninethArrayGTotal],ninethArrayGTotal,'GT')}}
@@ -709,7 +698,7 @@
             <td valign="top"
                 style="text-align: right;width:9%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
             </td>
-            <td valign="top" 
+            <td valign="top"
                 style="text-align: right;width:5%;font-size: 13px; padding: 8px; font-weight: 600;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;"
                 appFormatNumber>
                 <!-- {{grandTotal.sip}} -->
