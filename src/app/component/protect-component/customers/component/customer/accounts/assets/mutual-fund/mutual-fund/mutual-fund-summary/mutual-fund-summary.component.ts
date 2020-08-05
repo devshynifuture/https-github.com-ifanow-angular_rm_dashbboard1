@@ -26,9 +26,9 @@ import { numberFormat } from 'highcharts';
 
 
 @Component({
- selector: 'app-mutual-fund-summary',
- templateUrl: './mutual-fund-summary.component.html',
- styleUrls: ['./mutual-fund-summary.component.scss']
+  selector: 'app-mutual-fund-summary',
+  templateUrl: './mutual-fund-summary.component.html',
+  styleUrls: ['./mutual-fund-summary.component.scss']
 })
 export class MutualFundSummaryComponent implements OnInit {
 
@@ -278,7 +278,7 @@ export class MutualFundSummaryComponent implements OnInit {
               }
               allClient.push(obj);
               // if(element.selected == true){
-              //   this.displayedColumns.push(element.columnName)
+              // this.displayedColumns.push(element.columnName)
               // }
             } else {
               const obj = {
@@ -288,7 +288,7 @@ export class MutualFundSummaryComponent implements OnInit {
               getList.push(element);
               currentClient.push(obj);
               // if(element.selected == true){
-              //   this.displayedColumns.push(element.columnName)
+              // this.displayedColumns.push(element.columnName)
               // }
             }
           });
@@ -544,8 +544,8 @@ export class MutualFundSummaryComponent implements OnInit {
       // this.customDataSource.data = this.subCatArrayForSummary(this.mutualFund.mutualFundList, '', this.mfService);
       // this.getDataForRightFilter();
       // const input = {
-      //   mutualFundList: this.mutualFundList,
-      //   type: '',
+      // mutualFundList: this.mutualFundList,
+      // type: '',
       // mfService: this.mfService
       // };
       this.asyncFilter(this.mutualFundList);
@@ -702,8 +702,8 @@ export class MutualFundSummaryComponent implements OnInit {
       console.log('do nothing')
       // this.rightFilterData.reportType = []
       // this.rightFilterData.reportType[0] = {
-      //   name : 'Sub Category wise',
-      //   selected : true
+      // name : 'Sub Category wise',
+      // selected : true
       // }
     }
     if (typeof Worker !== 'undefined') {
@@ -781,7 +781,7 @@ export class MutualFundSummaryComponent implements OnInit {
       saveAs(blob, tableTitle + ".xls");
     }, 200);
     // if (data) {
-    //   this.fragmentData.isSpinner = false;
+    // this.fragmentData.isSpinner = false;
     // }
   }
 
@@ -810,34 +810,34 @@ export class MutualFundSummaryComponent implements OnInit {
 
 
   // getSubCategoryWise(data) {
-  //   this.subCategoryData = this.mfService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
+  // this.subCategoryData = this.mfService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
   // }
   //
   // getSchemeWise() {
-  //   this.schemeWise = this.mfService.filter(this.subCategoryData, 'mutualFundSchemeMaster');
+  // this.schemeWise = this.mfService.filter(this.subCategoryData, 'mutualFundSchemeMaster');
   // }
   //
   // mfSchemes() {
-  //   this.mutualFundList = this.mfService.filter(this.schemeWise, 'mutualFund');
+  // this.mutualFundList = this.mfService.filter(this.schemeWise, 'mutualFund');
   // }
   // getDataForRightFilter() {// for rightSidefilter data this does not change after generating report
-  //   let subCatData = this.mfService.filter(this.mutualFund.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
-  //   this.schemeWiseForFilter = this.mfService.filter(subCatData, 'mutualFundSchemeMaster');
-  //   this.mutualFundListFilter = this.mfService.filter(this.schemeWiseForFilter, 'mutualFund');
+  // let subCatData = this.mfService.filter(this.mutualFund.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
+  // this.schemeWiseForFilter = this.mfService.filter(subCatData, 'mutualFundSchemeMaster');
+  // this.mutualFundListFilter = this.mfService.filter(this.schemeWiseForFilter, 'mutualFund');
   // }
 
   openFilter() {
     // if(!this.resData){
-    //   this.displayColArray = this.displayedColumns;
-    //   let data =[];
-    //   this.displayColArray.forEach(element => {
-    //     const obj = {
-    //       displayName: element,
-    //       selected:true
-    //     };
-    //     data.push(obj);
-    //   });
-    //   this.displayColArray = data;
+    // this.displayColArray = this.displayedColumns;
+    // let data =[];
+    // this.displayColArray.forEach(element => {
+    // const obj = {
+    // displayName: element,
+    // selected:true
+    // };
+    // data.push(obj);
+    // });
+    // this.displayColArray = data;
     // }
 
     const fragmentData = {
@@ -1247,13 +1247,13 @@ export class MutualFundSummaryComponent implements OnInit {
       btnNo: 'DELETE',
       positiveMethod: () => {
         // this.subService.deleteInvoices(this.list).subscribe(
-        //   data => {
-        //     this.dataCount = 0;
-        //     this.eventService.openSnackBar('invoice deleted successfully.', 'Dismiss');
-        //     dialogRef.close(this.list);
+        // data => {
+        // this.dataCount = 0;
+        // this.eventService.openSnackBar('invoice deleted successfully.', 'Dismiss');
+        // dialogRef.close(this.list);
 
-        //   },
-        //   error => this.eventService.showErrorMessage(error)
+        // },
+        // error => this.eventService.showErrorMessage(error)
         // );
         // dialogRef.close(listIndex);
         if (value === 'mutualFund') {
@@ -1295,14 +1295,14 @@ export class MutualFundSummaryComponent implements OnInit {
 
   openMutualEditFund(flag, element) {
     // this.mutualFundList.forEach(ele => {
-    //   ele.mutualFundTransactions.forEach(tran => {
-    //     if (tran.id == element.id) {
-    //       this.selectedDataLoad = ele;
-    //     }
-    //   });
+    // ele.mutualFundTransactions.forEach(tran => {
+    // if (tran.id == element.id) {
+    // this.selectedDataLoad = ele;
+    // }
+    // });
     // });
     // if(!this.selectedDataLoad){
-    //   this.selectedDataLoad= element
+    // this.selectedDataLoad= element
     // }
     const fragmentData = {
       flag: 'editTransaction',
@@ -1350,15 +1350,15 @@ export class MutualFundSummaryComponent implements OnInit {
               // code to refresh ...
               // this.getMutualFund();
               // this.getMutualFundResponse(upperSliderData);
-              //   this.customDataSource = new MatTableDataSource([{}, {}, {}]);
-              //   this.mfService.getDataForMfGet()
+              // this.customDataSource = new MatTableDataSource([{}, {}, {}]);
+              // this.mfService.getDataForMfGet()
               // .subscribe(res => {
-              //   this.mfGetData = res;
+              // this.mfGetData = res;
               // })
               // if(this.mfGetData){
-              //   this.isLoading = true;
-              //   this.changeInput.emit(true);
-              //   this.getMutualFundResponse(this.mfGetData)
+              // this.isLoading = true;
+              // this.changeInput.emit(true);
+              // this.getMutualFundResponse(this.mfGetData)
               // }
 
             }
