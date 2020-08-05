@@ -212,14 +212,14 @@
                   </th>
                   <td *matCellDef="let element" class="br text-left zIndex" mat-cell>
                      <div class="bar">
-                        {{element.transactionDate | date:'dd/MM/yyyy'}}
+                        {{element.transactionDate}}
                      </div>
                   </td>
                </ng-container>
                <ng-container matColumnDef="transactionDateTotal">
                   <td *matCellDef="let element" class="br text-left zIndex" mat-cell>
                      <div class="bar">
-                        {{element.transactionDate | date:'dd/MM/yyyy'}}
+                        {{element.transactionDate}}
                      </div>
                   </td>
                </ng-container>
@@ -714,7 +714,7 @@
          </td>
          <td *ngIf="customDataSource.data?.arrayUnrealised[11].isCheked == true"
             style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-            <b>{{customDataSource.data?.arrayUnrealised[10].name}}</b>
+            <b>{{customDataSource.data?.arrayUnrealised[11].name}}</b>
          </td>
          <td *ngIf="customDataSource.data?.arrayUnrealised[12].isCheked == true"
             style="padding: 7px 8px;font-weight: 600; text-align: right; font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
@@ -747,30 +747,30 @@
          </tr>
          <tr *ngIf="item.fwTransactionType || item.category"
             style=" border-bottom:1px solid #DADCE0; page-break-inside: avoid ">
-            <td *ngIf="customDataSource.data.no == true"
+            <td 
                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left;border-left: 1px solid #DADCE0;">
                <!-- {{item.indexId}} -->
-               {{getValues(item[firstArray],firstArray,'')}}
+               {{item[firstArray]}}
             </td>
             <td 
                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left;">
                <span *ngIf="item.fwTransactionType">
                    <!-- {{(item.fwTransactionType) ? item.fwTransactionType : '-'}} -->
-                   {{getValues(item[secondArray],secondArray,'')}}
+                   {{item[secondArray]}}
 
                </span>
             </td>
             <td 
                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                <!-- {{item.transactionDate | date:'dd/MM/yyyy'}} -->
-               {{getValues(item[thirdArray],thirdArray,'')}}
+               {{item[thirdArray]}}
 
             </td>
             <td 
                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                <span>
                   <!-- {{item.amount}} -->
-                  {{getValues(item[fourthArray],fourthArray,'')}}
+                  {{item[fourthArray]}}
 
 
                </span>
@@ -779,123 +779,123 @@
                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                <span>
                   <!-- {{item.purchasePrice}} -->
-                  {{getValues(item[fifthArray],fifthArray,'')}}
+                  {{item[fifthArray]}}
 
                </span>
             </td>
-            <td *ngIf="customDataSource.data.units == true"
+            <td 
                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                <span>
                   <!-- {{item.unit}} -->
-                  {{getValues(item[SixthArray],SixthArray,'')}}
+                  {{item[SixthArray]}}
 
                </span>
                
             </td>
-            <td *ngIf="customDataSource.data.currentValue == true" appFormatNumber
+            <td  
                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                <!-- {{item.currentAmount}} -->
-               {{getValues(item[seventhArray],seventhArray,'')}}
+               {{item[seventhArray]}}
 
             </td>
-            <td *ngIf="customDataSource.data.dividendPayout == true" appFormatNumber
+            <td
                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                <!-- {{(item.dividendPayout) ? item.dividendPayout : 0}} -->
-               {{getValues(item[eighthArray],eighthArray,'')}}
+               {{item[eighthArray]}}
 
             </td>
-            <td *ngIf="customDataSource.data.dividendReinvest == true" appFormatNumber
+            <td  appFormatNumber
                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                <!-- {{(item.dividendReinvest) ? item.dividendReinvest : 0}} -->
-               {{getValues(item[ninethArray],ninethArray,'')}}
+               {{item[ninethArray]}}
 
             </td>
-            <td *ngIf="customDataSource.data.totalAmount == true" appFormatNumber
+            <td 
                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                <!-- {{item.currentAmount}} -->
-               {{getValues(item[tenthArray],tenthArray,'')}}
+               {{item[tenthArray]}}
 
             </td>
-            <td *ngIf="customDataSource.data.gain == true"
+            <td 
                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                <!-- {{item.gain}} -->
-               {{getValues(item[eleventhArray],eleventhArray,'')}}
+               {{item[eleventhArray]}}
 
             </td>
-            <td *ngIf="customDataSource.data.absoluteReturn == true"
+            <td 
                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                <!-- {{item.absoluteReturn}} -->
-               {{getValues(item[twelwthArray],twelwthArray,'')}}
+               {{item[twelwthArray]}}
 
             </td>
-            <td *ngIf="customDataSource.data.xirr == true" style=" padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color:
+            <td style=" padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color:
                 #202020;border-right: 1px solid #DADCE0;text-align: right;border-right: 1px solid #DADCE0;">
                <!-- {{item.cagr}} -->
-               {{getValues(item[thirteenthArray],thirteenthArray,'')}}
+               {{item[thirteenthArray]}}
 
             </td>
          </tr>
          <tr *ngIf="item.total" style="border-bottom:1px solid #DADCE0;page-break-inside: avoid">
             <td class="f-700" 
                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-left: 1px solid #DADCE0;">
-               {{getValues(item[firstArrayTotal],firstArrayTotal,'')}}
+               {{item[firstArrayTotal]}}
             </td>
             <td class="f-700" 
                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-left: 1px solid #DADCE0;">
-               {{getValues(item[secondArrayTotal],secondArrayTotal,'')}}
+               {{item[secondArrayTotal]}}
             </td>
             <td class="f-700" 
                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-right: 1px solid #DADCE0;">
-               {{getValues(item[thirdArrayTotal],thirdArrayTotal,'')}}
+               {{item[thirdArrayTotal]}}
             </td>
             <td class="f-700" 
                style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                <!-- {{item.totalTransactionAmt}} -->
-               {{getValues(item[fourthArrayTotal],fourthArrayTotal,'')}}
+               {{item[fourthArrayTotal]}}
             </td>
             <td class="f-700" 
                style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-left: 1px solid #DADCE0;">
-               {{getValues(item[fifthArrayTotal],fifthArrayTotal,'')}}
+               {{item[fifthArrayTotal]}}
             </td>
             <td class="f-700"
                style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right">
                <!-- {{item.totalUnit}} -->
-               {{getValues(item[SixthArrayTotal],SixthArrayTotal,'')}}
+               {{item[SixthArrayTotal]}}
             </td>
             <td  class="f-700"
                style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                <!-- {{item.totalCurrentValue}} -->
-               {{getValues(item[seventhArrayTotal],seventhArrayTotal,'')}}
+               {{item[seventhArrayTotal]}}
             </td>
             <td  class="f-700"
                style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                <!-- {{item.dividendPayout}} -->
-               {{getValues(item[eighthArrayTotal],eighthArrayTotal,'')}}
+               {{item[eighthArrayTotal]}}
             </td>
             <td  class="f-700"
                style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                <!-- {{item.dividendReinvest}} -->
-               {{getValues(item[ninethArrayTotal],ninethArrayTotal,'')}}
+               {{item[ninethArrayTotal]}}
             </td>
             <td  class="f-700"
                style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                <!-- {{item.totalCurrentValue}} -->
-               {{getValues(item[tenthArrayTotal],tenthArrayTotal,'')}}
+               {{item[tenthArrayTotal]}}
             </td>
             <td  class="f-700"
                style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                <!-- {{item.netGain}} -->
-               {{getValues(item[eleventhArrayTotal],eleventhArrayTotal,'')}}
+               {{item[eleventhArrayTotal]}}
             </td>
             <td  class="f-700"
                style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                <!-- {{item.trnAbsoluteReturn}} -->
-               {{getValues(item[twelwthArrayTotal],twelwthArrayTotal,'')}}
+               {{item[twelwthArrayTotal]}}
             </td>
             <td  class="f-700"
                style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-right: 1px solid #DADCE0;">
                <!-- {{item.totalCagr}} -->
-               {{getValues(item[thirteenthArrayTotal],thirteenthArrayTotal,'')}}
+               {{item[thirteenthArrayTotal]}}
             </td>
          </tr>
       </tbody>
@@ -969,28 +969,28 @@
             <td 
                style=" border-top: 1px solid #DADCE0; width:9%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;border-left: 1px solid #DADCE0;text-align: left;">
                <!-- {{item.indexId}} -->
-               {{getValuesTran(item[firstArrayTran],firstArrayTran,'')}}
+               {{item[firstArrayTran]}}
 
             </td>
             <td 
                style=" border-top: 1px solid #DADCE0; width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left;">
                <span *ngIf="item.fwTransactionType"> 
                   <!-- {{(item.fwTransactionType) ? item.fwTransactionType : '-'}} -->
-                  {{getValuesTran(item[secondArrayTran],secondArrayTran,'')}}
+                  {{item[secondArrayTran]}}
 
                </span>
             </td>
             <td 
                style=" border-top: 1px solid #DADCE0; width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                <!-- {{item.transactionDate | date:'dd/MM/yyyy'}} -->
-               {{getValuesTran(item[thirdArrayTran],thirdArrayTran,'')}}
+               {{item[thirdArrayTran]}}
 
             </td>
             <td 
                style=" border-top: 1px solid #DADCE0; width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                <span>
                   <!-- {{item.amount}} -->
-                  {{getValuesTran(item[fourthArrayTran],fourthArrayTran,'')}}
+                  {{item[fourthArrayTran]}}
 
                </span>
             </td>
@@ -998,7 +998,7 @@
                style="width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;border-top: 1px solid #DADCE0;text-align: right;">
                <span>
                   <!-- {{item.purchasePrice}} -->
-                  {{getValuesTran(item[fifthArrayTran],fifthArrayTran,'')}}
+                  {{item[fifthArrayTran]}}
 
                </span>
             </td>
@@ -1006,65 +1006,65 @@
                style=" border-top: 1px solid #DADCE0; width:8%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                <span>
                   <!-- {{item.unit}} -->
-                  {{getValuesTran(item[fifthArrayTran],fifthArrayTran,'')}}
+                  {{item[fifthArrayTran]}}
 
                </span>
             </td>
             <td 
                style=" border-top: 1px solid #DADCE0; width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                <!-- {{item.balanceUnits}} -->
-               {{getValuesTran(item[seventhArrayTran],seventhArrayTran,'')}}
+               {{item[seventhArrayTran]}}
 
             </td>
             <td 
                style=" border-top: 1px solid #DADCE0; text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-right: 1px solid #DADCE0;">
                <!-- {{item.days}} -->
-               {{getValuesTran(item[eighthArrayTran],eighthArrayTran,'')}}
+               {{item[eighthArrayTran]}}
 
             </td>
          </tr>
          <tr *ngIf="item.total" style=" border-bottom:1px solid #DADCE0;page-break-inside: avoid">
             <td class="f-700" 
                style=" border-bottom:1px solid #DADCE0;  width:9%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-left: 1px solid #DADCE0;border-top: 1px solid #DADCE0;">
-               {{getValuesTran(item[firstArrayTotalTran],firstArrayTotalTran,'')}}
+               {{item[firstArrayTotalTran]}}
             </td>
             <td class="f-700" 
                style=" border-bottom:1px solid #DADCE0;  width:15%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left;border-left: 1px solid #DADCE0;border-top: 1px solid #DADCE0;">
                <!-- Total -->
-               {{getValuesTran(item[secondArrayTotalTran],secondArrayTotalTran,'')}}
+               {{item[secondArrayTotalTran]}}
 
             </td>
             <td class="f-700" 
                style=" border-bottom:1px solid #DADCE0;  width:15%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-top: 1px solid #DADCE0;">
-               {{getValuesTran(item[thirdArrayTotalTran],thirdArrayTotalTran,'')}}
+               {{item[thirdArrayTotalTran]}}
 
             </td>
             <td class="f-700"
                style=" border-bottom:1px solid #DADCE0;  width:15%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-top: 1px solid #DADCE0;">
                <!-- {{item.totalTransactionAmt}} -->
-               {{getValuesTran(item[fourthArrayTotalTran],fourthArrayTotalTran,'')}}
+               {{item[fourthArrayTotalTran]}}
 
             </td>
             <td class="f-700" 
                style=" border-bottom:1px solid #DADCE0;  width:15%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-top: 1px solid #DADCE0;">
-               {{getValuesTran(item[fifthArrayTotalTran],fifthArrayTotalTran,'')}}
+               {{item[fifthArrayTotalTran]}}
 
             </td>
             <td class="f-700" 
                style=" border-bottom:1px solid #DADCE0;  width:8%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-top: 1px solid #DADCE0;">
                <!-- {{item.totalUnit}} -->
-               {{getValuesTran(item[SixthArrayTotalTran],SixthArrayTotalTran,'')}}
+               {{item[SixthArrayTotalTran]}}
 
             </td>
             <td class="f-700" 
                style=" border-bottom:1px solid #DADCE0;  width:15%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-top: 1px solid #DADCE0;">
                <!-- {{item.totalBalanceUnit}} -->
-               {{getValuesTran(item[seventhArrayTotalTran],seventhArrayTotalTran,'')}}
+               {{item[seventhArrayTotalTran]}}
 
             </td>
             <td class="f-700" 
                style=" border-bottom:1px solid #DADCE0;  text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-top: 1px solid #DADCE0;text-align: right;border-right: 1px solid #DADCE0;">
-               {{getValuesTran(item[eighthArrayTotalTran],eighthArrayTotalTran,'')}}
+               {{item[eighthArrayTotalTran]}}
 
             </td>
          </tr>

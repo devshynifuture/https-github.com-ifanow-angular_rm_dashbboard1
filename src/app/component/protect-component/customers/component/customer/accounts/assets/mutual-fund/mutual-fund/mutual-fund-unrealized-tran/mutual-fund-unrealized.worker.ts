@@ -11,6 +11,7 @@ addEventListener('message', ({data}) => {
   const response = `worker response to ${data}`;
   // console.log(`addEventListener got message: ${data}`);
   const mfService = new TempserviceService();
+
   const mutualFundList = data.mutualFundList;
   const dataSourceData = mfService.getCategoryForTransaction(mutualFundList, data.type, data.mutualFund, data.showFolio);
   const totalValue = mfService.getFinalTotalValue(mutualFundList);
@@ -57,6 +58,8 @@ addEventListener('message', ({data}) => {
     element.trnAbsoluteReturn = mfService.mutualFundRoundAndFormat(element.trnAbsoluteReturn, 2);
     element.cagr = mfService.mutualFundRoundAndFormat(element.cagr, 2);
     element.totalCagr = mfService.mutualFundRoundAndFormat(element.totalCagr, 2);
+    element.transactionDate =  element.transactionDate ? new Date(element.transactionDate).toISOString().replace(/T.*/,'').split('-').reverse().join('-') : ''; 
+    
   });
 
   const output = {dataSourceData, customDataSourceData, totalValue, customDataHolder};
