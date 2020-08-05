@@ -1,3 +1,4 @@
+import { DateChangeDialogComponent } from './../../date-change-dialog/date-change-dialog.component';
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { BackOfficeService } from '../../../../back-office.service';
 import { SipComponent } from '../sip.component';
@@ -7,6 +8,7 @@ import { FormBuilder } from '@angular/forms';
 import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { DatePipe } from '@angular/common';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-sip-applicant-wise',
@@ -87,8 +89,15 @@ export class SipApplicantWiseComponent implements OnInit {
   arnRiaValue: any;
   viewMode: any;
 
-  constructor(private datePipe: DatePipe, private backoffice: BackOfficeService, public sip: SipComponent, private fb: FormBuilder, private mfService: MfServiceService, private eventService: EventService) {
-  }
+  constructor(
+    private datePipe: DatePipe,
+    private backoffice: BackOfficeService,
+    public sip: SipComponent,
+    private fb: FormBuilder,
+    private mfService: MfServiceService,
+    private eventService: EventService,
+    private dialog: MatDialog
+  ) { }
 
   ngOnInit() {
     this.caesedForm = this.fb.group({
@@ -276,7 +285,7 @@ export class SipApplicantWiseComponent implements OnInit {
       id: sip.id,
       mutualFundId: sip.mutualFundId,
       amount: sip.amount,
-      ceaseDate: this.datePipe.transform(this.caesedForm.controls.ceaseddate.value, 'yyyy/MM/dd'),
+      ceaseDate: this.datePipe.transform(date, 'yyyy/MM/dd'),
     };
     this.backoffice.addCeasedDate(obj).subscribe(
       data => {
@@ -289,6 +298,21 @@ export class SipApplicantWiseComponent implements OnInit {
       }
     );
 
+  }
+
+  changeCeasedDateDialog(data, parentObj) {
+    const dialogRef = this.dialog.open(DateChangeDialogComponent, {
+      width: '663px',
+      data
+    });
+
+
+    dialogRef.afterClosed()
+      .subscribe(result => {
+        if (result) {
+          this.addCeasesdDate(data, parentObj, result)
+        }
+      });
   }
 
   exportToExcelSheet(choice, index) {

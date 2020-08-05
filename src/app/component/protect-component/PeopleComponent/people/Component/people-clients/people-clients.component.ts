@@ -94,7 +94,7 @@ export class PeopleClientsComponent implements OnInit {
         } else {
           this.isLoading = false;
           this.infiniteScrollingFlag = false;
-          (this.finalClientList.length > 0) ? this.clientDatasource.data = this.finalClientList : this.clientDatasource.data = [];
+          this.clientDatasource.data = (this.finalClientList.length > 0) ? this.finalClientList : [];
         }
       },
       err => {
