@@ -65,7 +65,8 @@
                                         <i class="material-icons ml-4 f-14 text-primitive"
                                             *ngIf="propertyName=='sipAmount' && reverse">arrow_downward</i> </span>
                                 </th>
-                                <th style="padding-left: 30px !important;" (click)="sortBy(filteredArray,'sipCount')" class="c-p">
+                                <th style="padding-left: 30px !important;" (click)="sortBy(filteredArray,'sipCount')"
+                                    class="c-p">
                                     <span class="d-flex align-items-center">SIP Count
                                         <i class="material-icons ml-4 f-14 text-primitive"
                                             *ngIf="propertyName=='sipCount' && !reverse">
@@ -119,21 +120,21 @@
 
                                 <td>
                                     <div class="d-block text-right"
-                                    *ngIf="!data.showCategory && !isLoading && data.subCatList?.length > 0">
-                                    <button (click)="exportToExcelSheet('investor-wise', catIndex, null)"
-                                        mat-icon-button>
-                                        <mat-icon>
-                                            save_alt
-                                        </mat-icon>
-                                    </button>
-                                </div>
+                                        *ngIf="!data.showCategory && !isLoading && data.subCatList?.length > 0">
+                                        <button (click)="exportToExcelSheet('investor-wise', catIndex, null)"
+                                            mat-icon-button>
+                                            <mat-icon>
+                                                save_alt
+                                            </mat-icon>
+                                        </button>
+                                    </div>
                                 </td>
 
                             </tr>
 
                             <tr style="border: transparent !important">
                                 <td colspan="7" class="innerTd one">
-                                    
+
                                     <table *ngIf="data.showCategory==false && data.subCatList?.length > 0"
                                         class=" mb-8 mt-8 table98 skeletonAnimation" appSkeletonLoading
                                         [appSkeletonLoading]="isLoadingCategory" id="table-low">
@@ -150,7 +151,8 @@
                                                             *ngIf="propertyName2=='investorName' && reverse2">arrow_downward</i>
                                                     </span>
                                                 </th>
-                                                <th (click)="sortByInvestor(data.subCatList,'sipAmount')" class="c-p w-14">
+                                                <th (click)="sortByInvestor(data.subCatList,'sipAmount')"
+                                                    class="c-p w-14">
                                                     <span class="d-flex align-items-center justify-content-end">SIP
                                                         Amount
                                                         <i class="material-icons ml-4 f-14 text-primitive"
@@ -161,7 +163,8 @@
                                                     </span>
                                                 </th>
 
-                                                <th style="padding-left: 30px !important;" (click)="sortByInvestor(data.subCatList,'sipCount')" class="c-p">
+                                                <th style="padding-left: 30px !important;"
+                                                    (click)="sortByInvestor(data.subCatList,'sipCount')" class="c-p">
                                                     <span class="d-flex align-items-center"> SIP Count
                                                         <i class="material-icons ml-4 f-14 text-primitive"
                                                             *ngIf="propertyName2=='sipCount' && !reverse2">
@@ -219,20 +222,20 @@
                                                 </td>
                                                 <td>
                                                     <div class="d-block text-right"
-                                                    *ngIf="!subInvList.showSubCategory && !isLoadingCategory && subInvList.applicantList?.length > 0">
-                                                    <button
-                                                        (click)="exportToExcelSheet('applicant-wise', catIndex, investorIndex)"
-                                                        mat-icon-button>
-                                                        <mat-icon>
-                                                            save_alt
-                                                        </mat-icon>
-                                                    </button>
-                                                </div>
+                                                        *ngIf="!subInvList.showSubCategory && !isLoadingCategory && subInvList.applicantList?.length > 0">
+                                                        <button
+                                                            (click)="exportToExcelSheet('applicant-wise', catIndex, investorIndex)"
+                                                            mat-icon-button>
+                                                            <mat-icon>
+                                                                save_alt
+                                                            </mat-icon>
+                                                        </button>
+                                                    </div>
                                                 </td>
                                             </tr>
                                             <tr style="border: transparent !important">
                                                 <td colspan="7" class="innerTd two">
-                                                  
+
                                                     <table class="mb-8 mt-8 skeletonAnimation" appSkeletonLoading
                                                         [appSkeletonLoading]="isLoadingSubCategory" id="table-low"
                                                         *ngIf="subInvList.showSubCategory==false && subInvList.applicantList?.length > 0">
@@ -399,42 +402,13 @@
                                                                     <!-- {{(isLoadingSubCategory?'':'Add Ceased') }} -->
                                                                     <div [ngClass]="{'bar': isLoadingSubCategory}">
                                                                         <div *ngIf="!isLoadingSubCategory">
-                                                                            <button (click)="scheme.isEdit=true"
+                                                                            <button
+                                                                                (click)="changeCeasedDateDialog(scheme, subInvList)"
                                                                                 *ngIf="!scheme.isEdit">Add Cease
                                                                                 Date</button>
-                                                                            <div [formGroup]="caesedForm"
-                                                                                *ngIf="scheme.isEdit">
-                                                                                <div class="">
-                                                                                    <div class="form-group mb-0">
-                                                                                        <mat-form-field class="ba-date">
-                                                                                            <input matInput
-                                                                                                class="form-control br-0 b-0"
-                                                                                                #ceaseddate
-                                                                                                [max]="maxDate"
-                                                                                                (input)="preventDefault($event)"
-                                                                                                matInput
-                                                                                                [matDatepicker]="picker"
-                                                                                                formControlName="ceaseddate"
-                                                                                                readonly>
-                                                                                            <mat-datepicker-toggle
-                                                                                                matSuffix
-                                                                                                [for]="picker">
-                                                                                            </mat-datepicker-toggle>
-                                                                                            <mat-datepicker #picker>
-                                                                                            </mat-datepicker>
-                                                                                        </mat-form-field>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <span
-                                                                                    class="d-flex justify-content-center mt-4">
-                                                                                    <button
-                                                                                        class="h-24 btn-sm lh-18 btn-primary mr-4"
-                                                                                        [disabled]="ceaseddate.value == ''"
-                                                                                        (click)="addCeasesdDate(scheme,subInvList,ceaseddate.value)">Save</button>
-                                                                                    <button class="h-24 btn-sm lh-18"
-                                                                                        (click)="scheme.isEdit=false">Cancel</button>
-                                                                                </span>
-                                                                            </div>
+                                                                            <span *ngIf="scheme.isEdit">
+                                                                                {{ ceasedDate | date:'mediumDate'}}
+                                                                            </span>
                                                                         </div>
                                                                         <span *ngIf="isLoadingSubCategory">{{''}}</span>
                                                                     </div>
