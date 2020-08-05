@@ -7,7 +7,6 @@ import { SelectFolioMapComponent } from './select-folio-map/select-folio-map.com
 import { MatDialog, MatTableDataSource, MatSort } from '@angular/material'
 import { SelectionModel } from '@angular/cdk/collections';
 import { debounceTime, switchMap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-backoffice-folio-mapping',
@@ -235,7 +234,7 @@ export class BackofficeFolioMappingComponent implements OnInit {
   openFolio(data) {
     const dialogRef = this.dialog.open(SelectFolioMapComponent, {
       width: '663px',
-      data: { selectedFolio: data }
+      data
     });
 
 

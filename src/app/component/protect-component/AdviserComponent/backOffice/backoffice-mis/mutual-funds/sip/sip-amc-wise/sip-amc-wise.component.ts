@@ -1,3 +1,4 @@
+import { DateChangeDialogComponent } from './../../date-change-dialog/date-change-dialog.component';
 import { Component, OnInit, ViewChildren, Output, EventEmitter, Input } from '@angular/core';
 import { BackOfficeService } from '../../../../back-office.service';
 import { SipComponent } from '../sip.component';
@@ -8,6 +9,7 @@ import { MfServiceService } from 'src/app/component/protect-component/customers/
 import { FormBuilder } from '@angular/forms';
 import { EventService } from 'src/app/Data-service/event.service';
 import { DatePipe } from '@angular/common';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-sip-amc-wise',
@@ -51,8 +53,15 @@ export class SipAmcWiseComponent implements OnInit {
   arnRiaValue: any;
   viewMode: any;
 
-  constructor(private datePipe: DatePipe, private eventService: EventService, private backoffice: BackOfficeService, public sip: SipComponent, private fb: FormBuilder, private mfService: MfServiceService) {
-  }
+  constructor(
+    private datePipe: DatePipe,
+    private eventService: EventService,
+    private backoffice: BackOfficeService,
+    public sip: SipComponent,
+    private fb: FormBuilder,
+    private mfService: MfServiceService,
+    public dialog: MatDialog
+  ) { }
 
   teamMemberId = 2929;
   @Output() changedValue = new EventEmitter();
@@ -280,6 +289,22 @@ export class SipAmcWiseComponent implements OnInit {
     //  this.sip.sipComponent=true;
   }
 
+
+  changeCeasedDateDialog(data, parentObj) {
+    const dialogRef = this.dialog.open(DateChangeDialogComponent, {
+      width: '663px',
+      data
+    });
+
+
+    dialogRef.afterClosed()
+      .subscribe(result => {
+        if (result) {
+          this.addCeasesdDate(data, parentObj, result)
+        }
+      });
+  }
+
   amcGet() {
     this.arrayOfExcelData = [];
     this.isLoading = true;
@@ -392,7 +417,7 @@ export class SipAmcWiseComponent implements OnInit {
       id: sip.id,
       mutualFundId: sip.mutualFundId,
       amount: sip.amount,
-      ceaseDate: this.datePipe.transform(this.caesedForm.controls.ceaseddate.value, 'yyyy/MM/dd'),
+      ceaseDate: this.datePipe.transform(date, 'yyyy/MM/dd'),
     };
     this.backoffice.addCeasedDate(obj).subscribe(
       data => {

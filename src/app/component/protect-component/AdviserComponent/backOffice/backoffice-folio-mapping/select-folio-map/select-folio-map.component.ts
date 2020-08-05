@@ -29,6 +29,7 @@ export class SelectFolioMapComponent implements OnInit {
   selectedClient: any;
   searchKeyword: any;
   selectedFolioInvestorName;
+  advisorId
   constructor(
     public dialogRef: MatDialogRef<SelectFolioMapComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -43,8 +44,9 @@ export class SelectFolioMapComponent implements OnInit {
   }
 
   initPoint() {
+    this.advisorId = AuthService.getAdvisorId();
     if (this.data) {
-      this.selectedFolioInvestorName = this.data.selectedFolio.ownerName;
+      this.selectedFolioInvestorName = this.data.ownerName;
     }
 
     this.parentId = AuthService.getParentId();
@@ -119,10 +121,13 @@ export class SelectFolioMapComponent implements OnInit {
 
   mapFolio() {
     const data = {
-      parentId: this.selectedClient.parentId === 0 ? this.selectedClient.adminAdvisorId : 0,
-      searchQuery: this.searchKeyword
+      advisorId: this.advisorId,
+      clientId: this.selectedClient.groupHeadId,
+      familyMemberId: this.data.familyId,
+      folioNumber: this.data.folioNumber,
+      parentId: this.data.parentId == 0 ? this.data.adminAdvisorId : 0,
     }
-    this.backOfcFolioMappingService.postUserDetailList(data)
+    this.backOfcFolioMappingService.putMutualFundInvestorDetail(data)
       .subscribe(res => {
         if (res) {
           console.log(res);
