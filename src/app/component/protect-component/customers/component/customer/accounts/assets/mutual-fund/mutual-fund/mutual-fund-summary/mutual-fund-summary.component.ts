@@ -573,7 +573,7 @@ export class MutualFundSummaryComponent implements OnInit {
         }
       });
     } else if (header == 'balanceUnit') {
-      this.customDataSource.data.array1.push({
+      this.customDataSource.data.array.push({
         'name': 'Balance unit', 'index': ind, isCheked: true,
         style: {
           'width': '7%',
