@@ -499,72 +499,64 @@
                     </tr>
                     <tr *ngIf="item.id">
 
-                        <td valign="top"
-                            style="width:26%;font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
+                        <td valign="top" [ngStyle]="customDataSource.data?.array1[0].style">
                             <!-- {{item.schemeName+' | '+item.folioNumber+' | '+item.ownerName}} -->
                             {{getValues(item[firstArray],firstArray,'')}}
                         </td>
 
-                        <td valign="top"
-                            style="width:7%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;"
-                            appFormatNumber>
+                        <td valign="top" [ngStyle]="customDataSource.data?.array1[1].style" appFormatNumber>
                             <!-- {{item.amountInvested}} -->
                             {{getValues(item[secondArray],secondArray,'')}}
                         </td>
 
-                        <td valign="top"
-                            style="width:6%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;"
-                            appFormatNumber>
+                        <td valign="top" [ngStyle]="customDataSource.data?.array1[2].style" appFormatNumber>
                             <!-- {{item.currentValue }} -->
                             {{getValues(item[thirdArray],thirdArray,'')}}
                         </td>
 
-                        <td valign="top"
-                            style="width:8%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;"
-                            appFormatNumber>
+                        <td valign="top" [ngStyle]="customDataSource.data?.array1[3].style" appFormatNumber>
                             <!-- {{item.unrealizedGain }} -->
                             {{getValues(item[fourthArray],fourthArray,'')}}
                         </td>
 
-                        <td valign="top"
-                            style="width:5%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;">
+                        <td valign="top" [ngStyle]="customDataSource.data?.array1[4].style">
                             <!-- {{(item.absoluteReturn==0 || item.absoluteReturn =='Infinity' || item.absoluteReturn =='-Infinity' || item.absoluteReturn == 'NaN') ? 0 : (item.absoluteReturn) ? (item.absoluteReturn | number:'1.2-2') : 0}} -->
                             {{getValues(item[fifthArray],fifthArray,'')}}
                         </td>
 
                         <td valign="top"
-                            style="width:5%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;">
+                        [ngStyle]="customDataSource.data?.array1[5].style">
                             <!-- {{item.xirr | number:'1.2-2'}} -->
                             {{getValues(item[SixthArray],SixthArray,'')}}
                         </td>
 
                         <td valign="top"
-                            style="width:7%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;"
+                        [ngStyle]="customDataSource.data?.array1[6].style"
                             appFormatNumber>
                             <!-- {{item.dividendPayout}} -->
                             {{getValues(item[seventhArray],seventhArray,'')}}
                         </td>
                         <td valign="top"
-                            style="width:9%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;"
+                        [ngStyle]="customDataSource.data?.array1[7].style"
                             appFormatNumber>
                             <!-- {{item.switchOut }} -->
                             {{getValues(item[eighthArray],eighthArray,'')}}
                         </td>
 
                         <td valign="top"
-                            style="width:7%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;">
+                        [ngStyle]="customDataSource.data?.array1[8].style">
                             <!-- {{item.balanceUnit | number:'1.2-3'}} -->
                             {{getValues(item[ninethArray],ninethArray,'')}}
                         </td>
 
                         <td valign="top"
-                            style="width:9%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;">
+                        [ngStyle]="customDataSource.data?.array1[9].style">
                             <!-- {{item.navDate | date:'dd/MM/yyyy'}} -->
                             {{getValues(item[tenthArray],tenthArray,'')}}
                         </td>
 
                         <td valign="top"
-                            style="width:5%;font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;text-align: right;"
+                        [ngStyle]="customDataSource.data?.array1[10].style"
                             appFormatNumber>
                             <!-- {{item.sipAmount}} -->
                             {{getValues(item[eleventhArray],eleventhArray,'')}}
