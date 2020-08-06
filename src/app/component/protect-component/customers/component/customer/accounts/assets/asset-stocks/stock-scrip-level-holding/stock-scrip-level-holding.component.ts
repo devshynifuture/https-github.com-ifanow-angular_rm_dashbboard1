@@ -8,6 +8,8 @@ import {AuthService} from 'src/app/auth-service/authService';
 import { objectEach } from 'highcharts';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { DatePipe } from '@angular/common';
+import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
 
 @Component({
   selector: 'app-stock-scrip-level-holding',
@@ -51,7 +53,7 @@ export class StockScripLevelHoldingComponent implements OnInit {
   checkValid:boolean= false;
   callMethod: { methodName: string; ParamValue: any; };
 
-  constructor(public dialog: MatDialog,  private datePipe: DatePipe, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
+  constructor(public dialog: MatDialog, private enumService: EnumServiceService,  private datePipe: DatePipe, private eventService: EventService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -165,13 +167,13 @@ removeCoOwner(item) {
 /***nominee***/ 
 
 get getNominee() {
-  return this.scipLevelHoldingForm.get('getNomineeName') as FormArray;
+  return this.holdingListForm.get('getNomineeName') as FormArray;
 }
 
 removeNewNominee(item) {
 this.disabledMember(null, null);
   this.getNominee.removeAt(item);
-  if (this.scipLevelHoldingForm.value.getNomineeName.length == 1) {
+  if (this.holdingListForm.value.getNomineeName.length == 1) {
     this.getNominee.controls['0'].get('sharePercentage').setValue('100');
   } else {
     let share = 100/this.getNominee.value.length;
@@ -237,13 +239,7 @@ addNewNominee(data) {
         id: 0,
         isClient:0
       })]),
-      getNomineeName: this.fb.array([this.fb.group({
-        name: [''],
-        sharePercentage: [0],
-        familyMemberId: [0],
-        id: [0]
-      })]),
-      portfolioName: [data.portfolioName, [Validators.required]]
+      portfolioName: ['', [Validators.required]]
     })
 
   this.holdingData=this.scipLevelHoldingForm.value
@@ -290,13 +286,24 @@ addNewNominee(data) {
       });
     }
     /***nominee***/
-
+    this.holdingListForm.get('linkedBankAccount').setValue(data.linkedBankAccount);
+    this.holdingListForm.get('linkedDematAccount').setValue(data.linkedDematAccount);
+    this.holdingListForm.get('description').setValue(data.description);
     this.ownerData = { Fmember: this.nomineesListFM, controleData: this.scipLevelHoldingForm }
     // ==============owner-nominee Data ========================\\
     // this.ownerData = this.scipLevelHoldingForm.controls;
   }
   holdingListForm = this.fb.group({
-    holdingListArray: new FormArray([])
+    holdingListArray: new FormArray([]),
+    getNomineeName: this.fb.array([this.fb.group({
+      name: [''],
+      sharePercentage: [0],
+      familyMemberId: [0],
+      id: [0]
+    })]),
+    linkedBankAccount: [''],
+    linkedDematAccount: [''],
+    description: ['']
   })
   get HoldingList() { return this.holdingListForm.controls };
   get HoldingArray() { return this.HoldingList.holdingListArray as FormArray };
@@ -327,7 +334,7 @@ addNewNominee(data) {
     // if (this.ownerData == undefined) {
     //   return;
     // }
-    if (this.scipLevelHoldingForm.invalid || this.HoldingArray.invalid) {
+    if (this.scipLevelHoldingForm.invalid || this.holdingListForm.invalid) {
       this.checkValid = true;
       this.scipLevelHoldingForm.markAllAsTouched();
       // this.scipLevelHoldingForm.get('ownerName').markAsTouched();
@@ -455,6 +462,10 @@ addNewNominee(data) {
           "ownerList": this.editApiData?this.editApiData.portfolioOwner:this.scipLevelHoldingForm.value.getCoOwnerName,
           "portfolioName": this.scipLevelHoldingForm.value.portfolioName,
           "stockList": finalStocks,
+          "nomineeList": this.holdingListForm.value.getNomineeName,
+          "linkedBankAccount": this.holdingListForm.value.linkedBankAccount,
+          "linkedDematAccount": this.holdingListForm.value.linkedDematAccount,
+          "description": this.holdingListForm.value.description,
         }
 
         if (this.editApiData) {
@@ -501,4 +512,33 @@ addNewNominee(data) {
   Close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
+
+
+  bankList = [];
+  getBank(){
+    if(this.enumService.getBank().length > 0){
+      this.bankList = this.enumService.getBank();
+    }
+    else{
+      this.bankList = [];
+    }
+    console.log(this.bankList,"this.bankList2");
+  }
+
+  //link bank
+  openDialog(eventData): void {
+    const dialogRef = this.dialog.open(LinkBankComponent, {
+      width: '50%',
+      data:{bankList: this.bankList, userInfo: true} 
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      setTimeout(() => {
+        this.bankList = this.enumService.getBank();
+      }, 5000);
+    });
+
+  }
+
+//link bank
 }
