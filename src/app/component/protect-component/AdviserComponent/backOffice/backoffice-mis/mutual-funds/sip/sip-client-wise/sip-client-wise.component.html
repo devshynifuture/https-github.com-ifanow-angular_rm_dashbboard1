@@ -21,7 +21,7 @@
             </div>
             <div class="row">
                 <div class="col-md-6 pl-0">
-                    <h3 class="pt-8 mb-0">Client Wise SIP
+                    <h3 class="pt-8 mb-0">Client wise SIP
                     </h3>
                 </div>
                 <div class="col-md-6 text-right pr-0">
@@ -48,7 +48,7 @@
                         id="table-low" *ngIf="filteredArray.length>0">
                         <thead class="text-dark">
                             <tr class="h-40">
-                                <th (click)="sortBy(filteredArray,'investorName')" class="c-p">
+                                <th (click)="sortBy(filteredArray,'investorName')" class="c-p w-40">
                                     <span class="d-flex align-items-center"> Client Name
                                         <i class="material-icons ml-4 f-14 text-primitive"
                                             *ngIf="propertyName=='investorName' && !reverse">
@@ -57,8 +57,8 @@
                                             *ngIf="propertyName=='investorName' && reverse">arrow_downward</i>
                                     </span>
                                 </th>
-                                <th (click)="sortBy(filteredArray,'sipAmount')" class="c-p">
-                                    <span class="d-flex align-items-center"> SIP Amount
+                                <th (click)="sortBy(filteredArray,'sipAmount')" class="c-p w-14">
+                                    <span class="d-flex align-items-center justify-content-end"> SIP Amount
                                         <i class="material-icons ml-4 f-14 text-primitive"
                                             *ngIf="propertyName=='sipAmount' && !reverse">
                                             arrow_upward </i>
@@ -66,7 +66,8 @@
                                             *ngIf="propertyName=='sipAmount' && reverse">arrow_downward</i>
                                     </span>
                                 </th>
-                                <th>% Weight</th>
+                                <th class="text-right w-14">% Weight</th>
+                                <th></th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -77,12 +78,13 @@
                                         {{isLoading? '' : category.investorName}}
                                     </div>
                                 </td>
-                                <td>
-                                    <div [ngClass]="{'bar': isLoading}">{{isLoading ? ' ' : '₹ '}}<span appFormatNumber
-                                            *ngIf="!isLoading" [value]="category.sipAmount"></span></div>
+                                <td class="text-right">
+                                    <div class="bar" [ngClass]="{'floatRight': isLoading}">
+                                        {{isLoading ? ' ' : '₹ '}}<span appFormatNumber *ngIf="!isLoading"
+                                            [value]="category.sipAmount"></span></div>
                                 </td>
-                                <td>
-                                    <div [ngClass]="{'bar': isLoading}">
+                                <td class="text-right">
+                                    <div class="bar" [ngClass]="{'floatRight': isLoading}">
                                         {{isLoading ? '' : category.weightInPercentage | number:'1.2-2'}}{{(isLoading?'':'%') }}
                                     </div>
                                 </td>
@@ -97,10 +99,7 @@
                                             remove </i>
                                     </div>
                                 </td>
-
-                            </tr>
-                            <tr style="border: transparent !important">
-                                <td colspan="4" class="innerTd one">
+                                <td>
                                     <div class="d-block text-right"
                                         *ngIf="!category.showCategory && !isLoading && category.applicantList?.length > 0">
                                         <button (click)="exportToExcelSheet('investor-wise', catIndex)" mat-icon-button>
@@ -109,8 +108,14 @@
                                             </mat-icon>
                                         </button>
                                     </div>
+                                </td>
+
+                            </tr>
+                            <tr style="border: transparent !important">
+                                <td colspan="5" class="innerTd one">
+
                                     <table *ngIf="category.showCategory==false && category.applicantList?.length > 0"
-                                        class="skeletonAnimation mt-8 mb-8" appSkeletonLoading
+                                        class="skeletonAnimation table98 mt-8 mb-8" appSkeletonLoading
                                         [appSkeletonLoading]="isLoadingApplicant" id="table-low">
                                         <thead class="bg-light text-dark">
                                             <tr class="h-40">
@@ -265,34 +270,11 @@
                                                     <!-- {{(isLoadingApplicant?'':' Add cease date') }} -->
                                                     <div [ngClass]="{'bar': isLoadingApplicant}">
                                                         <div *ngIf="!isLoadingApplicant">
-                                                            <button (click)="subcategory.isEdit=true"
+                                                            <button
+                                                                (click)="changeCeasedDateDialog(subcategory, category)"
                                                                 *ngIf="!subcategory.isEdit">Add Cease Date</button>
-                                                            <div [formGroup]="caesedForm" *ngIf="subcategory.isEdit">
-                                                                <div class="">
-                                                                    <div class="form-group mb-0">
-                                                                        <mat-form-field class="ba-date">
-                                                                            <input matInput
-                                                                                class="form-control br-0 b-0"
-                                                                                #ceaseddate [max]="maxDate"
-                                                                                (input)="preventDefault($event)"
-                                                                                matInput [matDatepicker]="picker"
-                                                                                formControlName="ceaseddate" readonly>
-                                                                            <mat-datepicker-toggle matSuffix
-                                                                                [for]="picker">
-                                                                            </mat-datepicker-toggle>
-                                                                            <mat-datepicker #picker>
-                                                                            </mat-datepicker>
-                                                                        </mat-form-field>
-                                                                    </div>
-                                                                </div>
-                                                                <span class="d-flex justify-content-center mt-4">
-                                                                    <button class="h-24 btn-sm lh-18 btn-primary mr-4"
-                                                                        [disabled]="ceaseddate.value == ''"
-                                                                        (click)="addCeasesdDate(subcategory,category,ceaseddate.value)">Save</button>
-                                                                    <button class="h-24 btn-sm lh-18"
-                                                                        (click)="subcategory.isEdit=false">Cancel</button>
-                                                                </span>
-                                                            </div>
+                                                            <span *ngIf="subcategory.isEdit">
+                                                                {{ ceasedDate | date:'mediumDate' }}</span>
                                                         </div>
                                                         <span *ngIf="isLoadingApplicant">{{''}}</span>
                                                     </div>
@@ -313,10 +295,11 @@
                         <tbody *ngIf="!isLoading && filteredArray.length>0">
                             <tr>
                                 <td class="p-table"><strong>Total</strong></td>
-                                <td class="p-table"><strong>{{'₹ '}}<span appFormatNumber
+                                <td class="p-table text-right"><strong>{{'₹ '}}<span appFormatNumber
                                             [value]="totalOfSipAmount"></span></strong>
                                 </td>
-                                <td class="p-table "><strong>{{totalWeight | number:'1.2-2'}}%</strong></td>
+                                <td class="p-table text-right"><strong>{{totalWeight | number:'1.2-2'}}%</strong></td>
+                                <td></td>
                                 <td></td>
                             </tr>
                         </tbody>

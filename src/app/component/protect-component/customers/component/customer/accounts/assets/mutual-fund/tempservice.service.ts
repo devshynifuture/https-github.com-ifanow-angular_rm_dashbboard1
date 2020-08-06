@@ -30,9 +30,9 @@ export class TempserviceService {
           } else {
             if (filteredArray.length > 0 && array.length == 0) {
                 if (filteredArray[filteredArray.length - 1].groupName) {
-                  if(catObj[key].length <= 1){
+                  // if(catObj[key].length <= 1){
                     filteredArray.pop();
-                  }
+                  // }
                 }
               
             }
@@ -357,7 +357,7 @@ export class TempserviceService {
     let totalCurrentValue = 0;
     if (!isSummaryTabValues) {
       data.mutualFundTransactions.forEach(ele => {
-        totalTransactionAmt += (ele.amount) ? ele.amount : 0;
+        totalTransactionAmt += (ele.amount) ? (ele.amount * (ele.effect)) : 0;
         totalUnit += (ele.unit) ? ele.unit : 0;
         totalNav += (ele.transactionNav) ? ele.transactionNav : 0;
         balanceUnit = (ele.balanceUnits) ? ele.balanceUnits : 0;

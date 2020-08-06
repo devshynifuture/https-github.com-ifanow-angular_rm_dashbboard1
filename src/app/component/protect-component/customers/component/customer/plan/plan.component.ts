@@ -45,7 +45,7 @@ export class PlanComponent implements OnInit {
   }
 
   goToAdvisorHome() {
-    this.routingStateService.goToSpecificRoute('/admin/subscription/dashboard');
+    this.routingStateService.goToSpecificRoute('/admin/dashboard');
 
   }
 }

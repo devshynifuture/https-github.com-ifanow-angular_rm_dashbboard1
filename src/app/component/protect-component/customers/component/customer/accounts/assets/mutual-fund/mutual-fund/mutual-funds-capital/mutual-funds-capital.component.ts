@@ -87,6 +87,7 @@ export class MutualFundsCapitalComponent implements OnInit {
   getOrgData: any;
   familyMemberId: number;
   familyList =[];
+  mfBulkEmailRequestId: number;
   // capitalGainData: any;
   constructor(private pdfGen: PdfGenService,
               public routerActive: ActivatedRoute,
@@ -137,7 +138,8 @@ export class MutualFundsCapitalComponent implements OnInit {
         let param1 = queryParamMap['params'];
         this.clientId = parseInt(param1.clientId) 
         this.advisorId = parseInt(param1.advisorId)
-        this.familyMemberId = parseInt(param1.familyMemberId)
+        this.familyMemberId = parseInt(param1.familyMemberId);
+        this.mfBulkEmailRequestId = parseInt(param1.mfBulkEmailRequestId)
         this.familyList = []
         const obj={
         id:this.familyMemberId
@@ -263,7 +265,7 @@ export class MutualFundsCapitalComponent implements OnInit {
     const obj = {
       advisorIds: [this.advisorId],
       clientId: this.clientId,
-      parentId: 0
+      parentId: this.advisorId
 
     };
     this.custumService.capitalGainGet(obj).subscribe(

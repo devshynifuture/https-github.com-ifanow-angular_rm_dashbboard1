@@ -157,12 +157,27 @@
           <div [formGroup]="selectedClientFormGroup" class="row pt-20">
             <div class="col-md-6 pl-0">
               <div class="form-group">
-                <p class="m-0 roboto f-400 pb-10">Relation</p>
+                <p class="m-0 roboto f-400 pb-10">Relation/Type</p>
                 <mat-form-field>
-                  <mat-select (selectionChange)="changeGender($event,'NonsuggestionList', null)"
-                    formControlName="relation" class="form-control">
+                  <mat-select *ngIf="selectedClientData.clientType == 1 || selectedClientData.clientType == 2"
+                    (selectionChange)="changeGender($event,'NonsuggestionList',null)" formControlName="relation"
+                    class="form-control h-32 p-4">
                     <mat-option value='' disabled>Select option</mat-option>
                     <mat-option *ngFor="let relation of relationTypeList" value={{relation.value}}>{{relation.name}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-select *ngIf="selectedClientData.clientType == 3"
+                    (selectionChange)="changeGender($event,'NonsuggestionList',null)" formControlName="relation"
+                    class="form-control h-32 p-4">
+                    <mat-option value='' disabled>Select option</mat-option>
+                    <mat-option value='18'>HUF</mat-option>
+                    <mat-option value='19'>Private Limited</mat-option>
+                  </mat-select>
+                  <mat-select *ngIf="selectedClientData.clientType == 4"
+                    (selectionChange)="changeGender($event,'NonsuggestionList',null)" formControlName="relation"
+                    class="form-control h-32 p-4">
+                    <mat-option value='' disabled>Select option</mat-option>
+                    <mat-option value='17'>Sole proprietorship
                     </mat-option>
                   </mat-select>
                   <mat-error>This field is required</mat-error>
@@ -170,7 +185,7 @@
               </div>
             </div>
             <div class="col-md-6 pr-0">
-              <div class="form-group">
+              <div *ngIf="selectedClientData.clientType == 1 || selectedClientData.clientType == 2" class="form-group">
                 <p class="m-0 roboto f-400 pb-10">Gender</p>
                 <mat-form-field>
                   <mat-select formControlName="gender" class="form-control">
@@ -205,7 +220,8 @@
             <ng-container matColumnDef="status">
               <th *matHeaderCellDef class="br" mat-header-cell> Tax status</th>
               <td *matCellDef="let element" class="br" mat-cell>
-                {{(element.clientType==1)?'Individual':(element.clientType)==2?'Minor':'Non-individual'}} </td>
+                {{(element.clientType==1)?'Individual':(element.clientType)==2?'Minor':(element.clientType)==3?'Non-individual':'Sole proprietorship'}}
+              </td>
             </ng-container>
 
 
@@ -216,14 +232,29 @@
 
 
             <ng-container matColumnDef="relation">
-              <th *matHeaderCellDef class="br w-16" mat-header-cell> Relation</th>
+              <th *matHeaderCellDef class="br w-16" mat-header-cell> Relation/Type</th>
               <td *matCellDef="let element;index as i" class="br w-16" mat-cell [formGroupName]="i">
                 <div class="form-group mb-0 pt-8">
                   <mat-form-field>
-                    <mat-select (selectionChange)="changeGender($event,'suggestionList',i)" formControlName="relation"
+                    <mat-select *ngIf="element.clientType == 1 || element.clientType == 2"
+                      (selectionChange)="changeGender($event,'suggestionList',i)" formControlName="relation"
                       class="form-control h-32 p-4">
                       <mat-option value='' disabled>Select option</mat-option>
                       <mat-option *ngFor="let relation of relationTypeList" value={{relation.value}}>{{relation.name}}
+                      </mat-option>
+                    </mat-select>
+                    <mat-select *ngIf="element.clientType == 3"
+                      (selectionChange)="changeGender($event,'suggestionList',i)" formControlName="relation"
+                      class="form-control h-32 p-4">
+                      <mat-option value='' disabled>Select option</mat-option>
+                      <mat-option value='18'>HUF</mat-option>
+                      <mat-option value='19'>Private Limited</mat-option>
+                    </mat-select>
+                    <mat-select *ngIf="element.clientType == 4"
+                      (selectionChange)="changeGender($event,'suggestionList',i)" formControlName="relation"
+                      class="form-control h-32 p-4">
+                      <mat-option value='' disabled>Select option</mat-option>
+                      <mat-option value='17'>Sole proprietorship
                       </mat-option>
                     </mat-select>
                     <mat-error>This field is required</mat-error>
@@ -236,7 +267,7 @@
               <th *matHeaderCellDef class="br w-16" mat-header-cell> Gender</th>
               <td *matCellDef="let element;index as i" class="br w-16" mat-cell [formGroupName]="i">
                 <div class="form-group mb-0 pt-8">
-                  <mat-form-field>
+                  <mat-form-field *ngIf="element.clientType == 1 || element.clientType == 2">
                     <mat-select formControlName="gender" class="form-control h-32 p-4">
                       <mat-option value='' disabled>Select option</mat-option>
                       <mat-option value="1">Male</mat-option>
@@ -245,6 +276,7 @@
                     </mat-select>
                     <mat-error class="">This field is required</mat-error>
                   </mat-form-field>
+                  <h5 *ngIf="element.clientType == 3 || element.clientType == 4">N/A</h5>
                 </div>
               </td>
             </ng-container>

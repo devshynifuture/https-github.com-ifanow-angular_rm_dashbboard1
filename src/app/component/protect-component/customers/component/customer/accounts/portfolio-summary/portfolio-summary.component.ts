@@ -203,9 +203,9 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
 
   getSummaryList(obj) {
     this.summaryFlag = true;
-    this.cusService.getSUmmaryList(obj).subscribe(
+    this.cusService.getAumGraphData(obj).subscribe(
       data => {
-        console.log(data);
+        console.log('getSummaryList getAumGraphData data', data);
         this.summaryFlag = false;
         this.graphList = [];
         let sortedDateList = [];
@@ -215,15 +215,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
         });
         this.calculate1DayAnd90Days(sortedDateList);
         for (const singleData of sortedDateList) {
-          let sumOf10Days = 0;
-          singleData.summaryData.forEach(element => {
-            if (element.assetType == 2) {
-              sumOf10Days = sumOf10Days - element.currentValue;
-            } else {
-              sumOf10Days += element.currentValue;
-            }
-          });
-          this.graphList.push([singleData.targetDate, Math.round(sumOf10Days)]);
+          this.graphList.push([singleData.targetDate, Math.round(singleData.currentValue)]);
         }
         this.lineChart('container');
       },
@@ -370,27 +362,9 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     console.log(data);
     let firstIndexTotalCurrentValue = 0, lastIndexTotalCurrentValue = 0, secondLastIndexTotalCurrentValue = 0;
     if (data.length > 0) {
-      data[0].summaryData.forEach(element => {                /////// first index total current value
-        if (element.assetType != 2) {
-          firstIndexTotalCurrentValue += element.currentValue;
-        } else {
-          firstIndexTotalCurrentValue -= element.currentValue;
-        }
-      });
-      data[data.length - 1].summaryData.forEach(element => {   /////// last index total current value
-        if (element.assetType != 2) {
-          lastIndexTotalCurrentValue += element.currentValue;
-        } else {
-          lastIndexTotalCurrentValue -= element.currentValue;
-        }
-      });
-      data[data.length - 2].summaryData.forEach(element => {       /////// second last index total current value
-        if (element.assetType != 2) {
-          secondLastIndexTotalCurrentValue += element.currentValue;
-        } else {
-          secondLastIndexTotalCurrentValue -= element.currentValue;
-        }
-      });
+      firstIndexTotalCurrentValue = data[0].currentValue;
+      lastIndexTotalCurrentValue = data[data.length - 1].currentValue;
+      secondLastIndexTotalCurrentValue = data[data.length - 2].currentValue;
       this.nightyDayData = {
         value: lastIndexTotalCurrentValue - firstIndexTotalCurrentValue,
         flag: (Math.sign(lastIndexTotalCurrentValue - firstIndexTotalCurrentValue) == -1) ? false : true

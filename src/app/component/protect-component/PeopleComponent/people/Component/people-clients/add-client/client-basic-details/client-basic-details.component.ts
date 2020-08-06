@@ -11,6 +11,9 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
 import { EnumDataService } from 'src/app/services/enum-data.service';
 import { individualJson, minorJson, nonIndividualJson } from './client&leadJson';
 import { relationListFilterOnID } from './relationypeMethods';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { MatDialog } from '@angular/material';
 
 const moment = require('moment');
 
@@ -79,13 +82,23 @@ export class ClientBasicDetailsComponent implements OnInit {
   constructor(private fb: FormBuilder, private enumService: EnumServiceService,
     private subInjectService: SubscriptionInject, private peopleService: PeopleService,
     private eventService: EventService, private datePipe: DatePipe,
-    private utilService: UtilService, private enumDataService: EnumDataService) {
+    private utilService: UtilService, private enumDataService: EnumDataService,
+    private cusService: CustomerService, private dialog: MatDialog) {
   }
 
   @Input() set data(data) {
     this.advisorId = AuthService.getAdvisorId();
     this.advisorData = AuthService.getUserInfo();
+    this.basicDetailsData = data;
     if (data.fieldFlag == 'familyMember') {
+      if (data.familyMemberType == 3 || data.familyMemberType == 4) {
+        this.invTypeCategory = String(data.familyMemberType);
+        this.invTaxStatus = String(data.residentFlag);
+        this.familyMemberType = data.familyMemberType == 4 ? { name: 'Sole proprietorship', value: '4' } : { name: 'Non individual', value: '3' };
+        this.hideDematTab.emit(true);
+        this.createNonIndividualForm(data);
+        return;
+      }
       (data.relationshipId == 7) ? this.maxDateForAdultDob = new Date() : '';
       this.basicDetailsData = data;
       if (this.basicDetailsData.relationshipId == 2 || this.basicDetailsData.relationshipId == 3 || this.basicDetailsData.relationshipId == 6 || this.basicDetailsData.relationshipId == 7) {
@@ -117,7 +130,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       }
       else {
         this.relationList = relationListFilterOnID(AuthService.getClientData().clientType);
-        if (this.basicDetailsData.age > 18) {
+        if (this.basicDetailsData.age > 18 || this.basicDetailsData.familyMemberType == 1) {
           this.familyMemberType = { name: 'Individual', value: '1' };
           this.invTypeCategory = '1';
           this.hideDematTab.emit(true);
@@ -334,12 +347,16 @@ export class ClientBasicDetailsComponent implements OnInit {
       leadStatus: [(data.leadStatus) ? String(data.leadStatus) : ''],
       leadRating: [(data.leadRating) ? String(data.leadRating) : ''],
       leadOwner: [this.selectedClientOwner, (this.fieldFlag == 'lead') ? [Validators.required] : null],
-      clientOwner: [this.selectedClientOwner, (this.fieldFlag == 'client') ? [Validators.required] : null],
-      role: [(data.roleId) ? data.roleId : '', Validators.required]
+      clientOwner: [this.selectedClientOwner],
+      role: [(data.roleId) ? data.roleId : '']
     });
     if (this.invTypeCategory == 4) {
       this.nonIndividualForm.controls.comStatus.setValidators(null);
       this.nonIndividualForm.controls.comStatus.updateValueAndValidity();
+    }
+    if (this.fieldFlag == 'client') {
+      this.nonIndividualForm.controls.clientOwner.setValidators([Validators.required]);
+      this.nonIndividualForm.controls.role.setValidators([Validators.required]);
     }
   }
 
@@ -685,6 +702,10 @@ export class ClientBasicDetailsComponent implements OnInit {
       this.minorForm.markAllAsTouched();
       return;
     }
+    if ((this.invTypeCategory == '3' || this.invTypeCategory == '4') && this.nonIndividualForm.invalid) {
+      this.nonIndividualForm.markAllAsTouched();
+      return;
+    }
     // if (this.taxStatusFormControl.invalid) {
     //   this.taxStatusFormControl.markAllAsTouched();
     //   return;
@@ -697,16 +718,16 @@ export class ClientBasicDetailsComponent implements OnInit {
       advisorId: AuthService.getClientData().advisorId,
       familyMemberId: this.basicDetailsData.familyMemberId,
       clientId: this.basicDetailsData.clientId,
-      name: (this.invTypeCategory == '1') ? this.basicDetails.controls.fullName.value : this.minorForm.value.minorFullName,
+      name: (this.invTypeCategory == '1') ? this.basicDetails.controls.fullName.value : (this.invTypeCategory == '2') ? this.minorForm.value.minorFullName : this.nonIndividualForm.controls.comName.value,
       displayName: null,
-      dateOfBirth: this.datePipe.transform((this.invTypeCategory == '1') ? this.basicDetails.controls.dobAsPerRecord.value : this.minorForm.value.dobAsPerRecord, 'dd/MM/yyyy'),
+      dateOfBirth: this.datePipe.transform((this.invTypeCategory == '1') ? this.basicDetails.controls.dobAsPerRecord.value : (this.invTypeCategory == '2') ? this.minorForm.value.dobAsPerRecord : this.nonIndividualForm.controls.dateOfIncorporation.value, 'dd/MM/yyyy'),
       martialStatusId: null,
-      genderId: (this.invTypeCategory == '1') ? this.basicDetails.controls.gender.value : this.minorForm.value.gender,
+      genderId: (this.invTypeCategory == '1') ? this.basicDetails.controls.gender.value : (this.invTypeCategory == '2') ? this.minorForm.value.gender : null,
       occupationId: 1,
-      pan: (this.invTypeCategory == '1') ? this.basicDetails.controls.pan.value : this.minorForm.value.pan,
+      pan: (this.invTypeCategory == '1') ? this.basicDetails.controls.pan.value : (this.invTypeCategory == '2') ? this.minorForm.value.pan : this.nonIndividualForm.controls.comPan.value,
       residentFlag: parseInt(this.invTaxStatus),
       // taxStatusId: taxStatusId,
-      relationshipId: (this.invTypeCategory == '1') ? this.basicDetails.controls.relationType.value : (this.minorForm.controls.gender.value == 1) ? 4 : 5,
+      relationshipId: (this.invTypeCategory == '1') ? this.basicDetails.controls.relationType.value : (this.invTypeCategory == '2') ? (this.minorForm.controls.gender.value == 1) ? 4 : 5 : this.basicDetailsData.relationshipId,
       familyMemberType: parseInt(this.invTypeCategory),
       isKycCompliant: 1,
       aadhaarNumber: null,
@@ -715,20 +736,22 @@ export class ClientBasicDetailsComponent implements OnInit {
       remarks: null,
       emailList: [
         {
-          email: (this.invTypeCategory == '1') ? this.basicDetails.controls.email.value : this.minorForm.value.gEmail,
+          email: (this.invTypeCategory == '1') ? this.basicDetails.controls.email.value : (this.invTypeCategory == '2') ? this.minorForm.value.gEmail : this.nonIndividualForm.controls.comEmail.value,
           verificationStatus: 0
         }
       ],
       guardianData: gardianObj,
       invTypeCategory: 0,
       categoryTypeflag: null,
-      anniversaryDate: null
+      anniversaryDate: null,
+      gstin: (this.invTypeCategory == '3' || this.invTypeCategory == '4') ? this.nonIndividualForm.controls.gstinNum.value : null,
+      companyStatus: ((this.invTypeCategory == '3' || this.invTypeCategory == '4') && this.nonIndividualForm.controls.comStatus.value != '') ? this.nonIndividualForm.controls.comStatus.value : null
     };
     obj.bio = this.basicDetailsData.bio;
     obj.remarks = this.basicDetailsData.remarks;
     obj.aadhaarNumber = this.basicDetailsData.aadhaarNumber;
     obj.martialStatusId = this.basicDetailsData.martialStatusId;
-    obj.occupationId = this.basicDetailsData.occupationId;
+    obj.occupationId = (this.invTypeCategory == '3' || this.invTypeCategory == '4' && this.nonIndividualForm.controls.comOccupation.value != '') ? this.nonIndividualForm.controls.comOccupation.value : this.basicDetailsData.occupationId;
     obj.displayName = this.basicDetailsData.displayName;
     obj.anniversaryDate = this.datePipe.transform(this.basicDetailsData.anniversaryDate, 'dd/MM/yyyy');
     this.peopleService.editFamilyMemberDetails(obj).subscribe(
@@ -756,6 +779,88 @@ export class ClientBasicDetailsComponent implements OnInit {
     (data == 'close') ? this.cancelTab.emit('close') : this.subInjectService.changeNewRightSliderState({
       state: 'close',
       refreshRequired: true
+    });
+  }
+
+  deleteModal(value) {
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        let obj =
+        {
+          "familyMemberId": this.basicDetailsData.familyMemberId,
+          "userId": this.basicDetailsData.familyMemberId
+        }
+        this.cusService.deleteFamilyMember(obj).subscribe(
+          data => {
+            this.eventService.openSnackBar('Deleted successfully!', 'Dismiss');
+            dialogRef.close();
+            this.close(data)
+          },
+          error => this.eventService.showErrorMessage(error)
+        );
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
+
+  unmapFamilyMember(value) {
+    const dialogData = {
+      data: value,
+      header: 'UNMAP',
+      body: 'Are you sure you want to unmap?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'UNMAP',
+      positiveMethod: () => {
+        let obj =
+        {
+          "ownerClientId": this.basicDetailsData.clientId,
+          "splitFamilyMemberId": this.basicDetailsData.familyMemberId
+        }
+        this.cusService.unmapFamilyMembers(obj).subscribe(
+          data => {
+            this.eventService.openSnackBar('unmapped successfully!', 'Dismiss');
+            dialogRef.close();
+            this.close(data)
+          },
+          error => this.eventService.showErrorMessage(error)
+        );
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
     });
   }
 

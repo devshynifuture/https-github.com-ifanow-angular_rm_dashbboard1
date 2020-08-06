@@ -1,13 +1,15 @@
-import {Component, OnInit, ViewChildren, EventEmitter, Output, Input} from '@angular/core';
-import {SipComponent} from '../sip.component';
-import {BackOfficeService} from '../../../../back-office.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {FormatNumberDirective} from 'src/app/format-number.directive';
-import {ExcelMisSipService} from '../../aum/excel-mis-sip.service';
-import {MfServiceService} from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
-import {FormBuilder} from '@angular/forms';
-import {EventService} from 'src/app/Data-service/event.service';
-import {DatePipe} from '@angular/common';
+import { DateChangeDialogComponent } from './../../date-change-dialog/date-change-dialog.component';
+import { Component, OnInit, ViewChildren, EventEmitter, Output, Input } from '@angular/core';
+import { SipComponent } from '../sip.component';
+import { BackOfficeService } from '../../../../back-office.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { FormatNumberDirective } from 'src/app/format-number.directive';
+import { ExcelMisSipService } from '../../aum/excel-mis-sip.service';
+import { MfServiceService } from 'src/app/component/protect-component/customers/component/customer/accounts/assets/mutual-fund/mf-service.service';
+import { FormBuilder } from '@angular/forms';
+import { EventService } from 'src/app/Data-service/event.service';
+import { DatePipe } from '@angular/common';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-sip-scheme-wise',
@@ -84,38 +86,38 @@ export class SipSchemeWiseComponent implements OnInit {
 
   arrayOfHeaderStyles: { width: number; key: string; }[][] = [
     [
-      {width: 10, key: 'Sr. No.'},
-      {width: 50, key: 'AMC Name'},
-      {width: 30, key: 'SIP Amount'},
-      {width: 30, key: 'SIP Count'},
-      {width: 10, key: '% Weight'}
+      { width: 10, key: 'Sr. No.' },
+      { width: 50, key: 'AMC Name' },
+      { width: 30, key: 'SIP Amount' },
+      { width: 30, key: 'SIP Count' },
+      { width: 10, key: '% Weight' }
     ],
     [
-      {width: 10, key: 'Sr. No.'},
-      {width: 50, key: 'Investor Name'},
-      {width: 30, key: 'SIP Amount'},
-      {width: 30, key: 'SIP Count'},
-      {width: 10, key: '% Weight'}
+      { width: 10, key: 'Sr. No.' },
+      { width: 50, key: 'Investor Name' },
+      { width: 30, key: 'SIP Amount' },
+      { width: 30, key: 'SIP Count' },
+      { width: 10, key: '% Weight' }
     ],
     [
-      {width: 10, key: 'Sr. No.'},
-      {width: 40, key: 'Applicant Name'},
-      {width: 50, key: 'Scheme Name'},
-      {width: 40, key: 'Folio Number'},
-      {width: 40, key: 'Registered Date'},
-      {width: 40, key: 'From Date'},
-      {width: 40, key: 'To Date'},
-      {width: 30, key: 'Trigger Day'},
-      {width: 30, key: 'Frequency'},
-      {width: 30, key: 'Amount'},
-      {width: 10, key: '% Weight'},
+      { width: 10, key: 'Sr. No.' },
+      { width: 40, key: 'Applicant Name' },
+      { width: 50, key: 'Scheme Name' },
+      { width: 40, key: 'Folio Number' },
+      { width: 40, key: 'Registered Date' },
+      { width: 40, key: 'From Date' },
+      { width: 40, key: 'To Date' },
+      { width: 30, key: 'Trigger Day' },
+      { width: 30, key: 'Frequency' },
+      { width: 30, key: 'Amount' },
+      { width: 10, key: '% Weight' },
     ],
     [
-      {width: 50, key: 'Applicant Name'},
-      {width: 30, key: 'Balance Unit'},
-      {width: 30, key: 'Folio'},
-      {width: 30, key: 'Current Amount'},
-      {width: 10, key: '% Weight'},
+      { width: 50, key: 'Applicant Name' },
+      { width: 30, key: 'Balance Unit' },
+      { width: 30, key: 'Folio' },
+      { width: 30, key: 'Current Amount' },
+      { width: 10, key: '% Weight' },
     ]
   ];
   arrayOfExcelData: any[] = [];
@@ -130,8 +132,9 @@ export class SipSchemeWiseComponent implements OnInit {
   viewMode;
   arnRiaList;
   arnRiaValue;
+  ceasedDate: any;
 
-  constructor(private datePipe: DatePipe, private eventService: EventService, private backoffice: BackOfficeService, private fb: FormBuilder, public sip: SipComponent, private mfService: MfServiceService) {
+  constructor(private datePipe: DatePipe, private eventService: EventService, private backoffice: BackOfficeService, private fb: FormBuilder, public sip: SipComponent, private mfService: MfServiceService, private dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -255,6 +258,25 @@ export class SipSchemeWiseComponent implements OnInit {
       }
     );
   }
+
+  changeCeasedDateDialog(data, parentObj) {
+    const dialogRef = this.dialog.open(DateChangeDialogComponent, {
+      width: '663px',
+      data
+    });
+
+    dialogRef.afterClosed()
+      .subscribe(result => {
+        if (result) {
+          this.addCeasesdDate(data, parentObj, result);
+          this.ceasedDate = result;
+          data.isEdit = true;
+        } else {
+          data.isEdit = false;
+        }
+      });
+  }
+
 
   addCeasesdDate(sip, investor, date) {
     const obj = {

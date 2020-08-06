@@ -38,8 +38,12 @@
 ::ng-deep .fliterBoxMutual .mat-expansion-panel-body {
     padding: 0 0px 16px;
     .mat-checkbox label {
-        margin-top: 18px !important;
-        white-space: normal !important;
+        margin-top: 0px !important;
+        padding: 12px 0px;
+        white-space: normal;
+        min-height: 48px;
+        display: flex;
+        align-items: center;
     }
     .mat-checkbox-layout .mat-checkbox-label {
         padding-left: 15px !important;
@@ -47,7 +51,7 @@
     }
     .mat-checkbox-inner-container {
         margin: 0 !important;
-        top: 3px !important;
+        //top: 3px !important;
     }
 }
 
@@ -63,3 +67,97 @@
     font-size: 12px;
     margin-top: 10px;
 }
+.example-list {
+    width: 500px;
+    max-width: 100%;
+    border: solid 1px #ccc;
+    min-height: 60px;
+    display: block;
+    background: white;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  
+  .example-box {
+    padding: 20px 10px;
+    border-bottom: solid 1px #ccc;
+    color: rgba(0, 0, 0, 0.87);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    cursor: move;
+    background: white;
+    font-size: 14px;
+  }
+  
+   
+  
+  .cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+  
+  .example-box:last-child {
+    border: none;
+  }
+  
+  .example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+  
+  .example-custom-placeholder {
+    // background: #ccc;
+    // border: dotted 3px #999;
+    // min-height: 20px;
+    // transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+  
+
+   .example-box-pannel {
+    padding-left: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    background: white;
+     
+     
+  }
+
+   .cursorMove {
+    cursor: move;
+    font-size: 14px;
+    color: #000;
+    display: flex;
+    padding-left: 0;
+    align-items: center;
+   }
+
+   .cursorMove:hover {
+       color: #000;
+   }
+
+   .cdk-drag-preview {
+    box-sizing: border-box;
+    border-radius: 4px;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+                0 8px 10px 1px rgba(0, 0, 0, 0.14),
+                0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  }
+
+  
+  
+  .cdk-drag-placeholder {
+    opacity: 0;
+  }
+
+  .cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+ 
+
+  .cdk-drop-list-dragging .example-box-pannel:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }

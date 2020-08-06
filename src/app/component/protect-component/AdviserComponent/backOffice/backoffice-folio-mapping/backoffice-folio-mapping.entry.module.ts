@@ -10,13 +10,16 @@ const componentList = [SelectFolioMapComponent]
 @NgModule({
   declarations: componentList,
   imports: [
-    CommonModule, MaterialModule, FormsModule, ReactiveFormsModule
+    CommonModule,
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
-  entryComponents: componentList,  
+  entryComponents: componentList,
 })
 export class BackofficeFolioMappingEntryModule {
   static getComponentList() {
     return componentList;
-    
+
   }
 }

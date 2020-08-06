@@ -1,3 +1,4 @@
+import { DateChangeDialogComponent } from './../../date-change-dialog/date-change-dialog.component';
 import { Component, OnInit, ViewChildren, Output, EventEmitter, Input } from '@angular/core';
 import { BackOfficeService } from '../../../../back-office.service';
 import { SipComponent } from '../sip.component';
@@ -8,6 +9,7 @@ import { MfServiceService } from 'src/app/component/protect-component/customers/
 import { FormBuilder } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { EventService } from 'src/app/Data-service/event.service';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-sip-client-wise',
@@ -88,8 +90,16 @@ export class SipClientWiseComponent implements OnInit {
   arnRiaList = [];
   arnRiaValue: any;
   viewMode: any;
+  ceasedDate: any = new Date();
 
-  constructor(private datePipe: DatePipe, private eventService: EventService, private backoffice: BackOfficeService, public sip: SipComponent, private fb: FormBuilder, private mfService: MfServiceService) {
+  constructor(
+    private datePipe: DatePipe,
+    private eventService: EventService,
+    private backoffice: BackOfficeService,
+    public sip: SipComponent,
+    private fb: FormBuilder,
+    private mfService: MfServiceService,
+    private dialog: MatDialog) {
   }
 
 
@@ -177,6 +187,25 @@ export class SipClientWiseComponent implements OnInit {
     this.filteredArray.forEach(element => {
       element.showCategory = true;
     });
+  }
+
+  changeCeasedDateDialog(data, parentObj) {
+    const dialogRef = this.dialog.open(DateChangeDialogComponent, {
+      width: '663px',
+      data
+    });
+
+
+    dialogRef.afterClosed()
+      .subscribe(result => {
+        if (result) {
+          this.addCeasesdDate(data, parentObj, result);
+          this.ceasedDate = result;
+          data.isEdit = true;
+        } else {
+          data.isEdit = false;
+        }
+      });
   }
 
   exportToExcelSheet(choice, catIndex) {

@@ -5,6 +5,7 @@ import { BackofficeAumReconciliationRoutingModule } from './backoffice-aum-recon
 import { BackofficeAumReconciliationComponent } from './backoffice-aum-reconciliation.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/app/material/material';
+import { SipCleanupComponent } from './sip-cleanup/sip-cleanup.component';
 
 
 @NgModule({

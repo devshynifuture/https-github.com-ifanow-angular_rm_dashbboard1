@@ -1,3 +1,4 @@
+import { BackofficeMisEntryModule } from './../../protect-component/AdviserComponent/backOffice/backoffice-mis/backoffice-mis.entry.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
@@ -45,6 +46,7 @@ import { DashboardEntryModule } from '../../protect-component/AdviserComponent/d
     ActivitesEntryModule,
     BackofficeAumReconciliationEntryModule,
     BackofficeFolioMappingEntryModule,
+    BackofficeMisEntryModule,
     MarketPlaceEntryModule,
     CustomDirectiveModule,
     DashboardEntryModule

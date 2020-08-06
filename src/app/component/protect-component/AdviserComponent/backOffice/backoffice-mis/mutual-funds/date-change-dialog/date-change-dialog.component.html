@@ -1,0 +1,26 @@
+<div class="row p-20">
+  <div class="col-md-12 p-0">
+    <h4>
+      Select Ceased Date
+    </h4>
+  </div>
+  <div class="col-md-12 p-0">
+    <div [formGroup]="ceasedForm">
+      <div class="">
+        <div class="form-group mb-0">
+          <mat-form-field class="ba-date">
+            <input matInput class="form-control br-0 b-0" #ceaseddate [max]="maxDate" (input)="preventDefault($event)"
+              matInput [matDatepicker]="picker" formControlName="ceasedDate" readonly>
+            <mat-datepicker-toggle matSuffix [for]="picker">
+            </mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+      <span class="d-flex justify-content-end mt-10">
+        <button mat-button (click)="dialogClose(false)" class="   lh-18 text-primary mr-4">Save</button>
+        <button mat-button (click)="dialogClose(true)" class="    lh-18">Cancel</button>
+      </span>
+    </div>
+  </div>
+</div>

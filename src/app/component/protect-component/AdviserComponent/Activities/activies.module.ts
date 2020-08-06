@@ -11,6 +11,7 @@ import { CrmActionPlansComponent } from './crm-action-plans/crm-action-plans.com
 import { CrmTasksComponent } from './crm-tasks/crm-tasks.component';
 import { CrmOpportunitiesComponent } from './crm-opportunities/crm-opportunities.component';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,8 @@ import { CustomDirectiveModule } from 'src/app/common/directives/common-directiv
   imports: [
     CommonModule,
     MaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
     CalendarModule,
     CustomDirectiveModule,
     ActiviesRoutingModule
