@@ -270,7 +270,7 @@
         <h5 class="m-0 text-black f-16 roboto pb-16 f-500"> Asset classses</h5>
         <div class="bg-white br-10">
 
-          <div class="row pt-20 pb-20">
+          <div class="row b-a pt-20 pb-20 br-4">
             <div class="col-7">
               <!-- <div class="highcharts-figure" id="piechartMutualFund"></div> -->
               <div class="h-200" [chart]="assetAllocationPieConfig">
@@ -295,7 +295,9 @@
 
           </div>
 
-
+          
+            
+       
 
 
         </div>
@@ -1958,7 +1960,7 @@
                     </div>
                     <div class="col-md-7 pl-0">
                       <span *ngIf="singleNote.update==false" (dblclick)="doubleClick(singleNote)"
-                        class="c-p">{{singleNote.activityName}}</span>
+                        class="c-p f-14">{{singleNote.activityName}}</span>
                       <div class="pb-8 pt-8">
                         <input *ngIf="singleNote.update" matInput class="form-control" [formControl]="updateNote"
                           autofocus={{singleNote.update}} (focusout)="focusOutFunction(singleNote)"
@@ -1967,11 +1969,11 @@
                     </div>
                     <div class="col-md-3 pl-0 d-flex">
                       <span *ngIf="selectedItem.value==singleNote.id && singleNote.update==false"
-                        (click)="deleteTodoList(singleNote,i)" class="material-icons c-p">
+                        (click)="deleteTodoList(singleNote,i)" class="material-icons f-20 c-p">
                         done
                       </span>
                       <span *ngIf="selectedItem.value==singleNote.id && singleNote.update==false"
-                        class="material-icons c-p pl-8" (click)="deleteTodoList(singleNote,i)">
+                        class="material-icons f-20 c-p pl-8" (click)="deleteTodoList(singleNote,i)">
                         delete
                       </span>
                     </div>
