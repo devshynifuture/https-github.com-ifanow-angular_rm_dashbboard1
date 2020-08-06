@@ -18,6 +18,7 @@ import { EmailSettingsComponent } from './email-component/email-settings/email-s
 import { HttpCancelService } from '../../../../services/http-cancel.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ManageHttpInterceptor } from '../../../../Interceptor/manage-http.interceptor';
+import {GmailDatePipe} from './email-component/email-list/email-listing/gmail-date.pipe';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { ManageHttpInterceptor } from '../../../../Interceptor/manage-http.inter
     EmailComponent,
     LeftSidebarComponent,
     EmailSettingsComponent,
+    GmailDatePipe
     // EmailSentComponent,
     // EmailDraftComponent,
     // EmailArchiveComponent,
