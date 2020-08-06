@@ -173,7 +173,7 @@ export class EmailOnlyComponent implements OnInit {
   getAllEmails() {
     const obj = {
       advisorId: this.advisorId,
-      templateType: this._inputData.templateType,
+      templateType: (this._inputData.templateType) ? this._inputData.templateType : this._inputData.emailTemplateTypeId,
 
       // advisorId: this.advisorId
     };
@@ -181,9 +181,9 @@ export class EmailOnlyComponent implements OnInit {
       data => {
         if (data) {
           this.verifiedEmailsList = [data.listItems];
-          if (!this._inputData.fromEmail) {
-            this._inputData.fromEmail = (this.verifiedEmailsList && this.verifiedEmailsList.length == 1) ? this.verifiedEmailsList[0].emailAddress : '';
-          }
+          // if (!this._inputData.fromEmail) {
+          this._inputData.fromEmail = (this.verifiedEmailsList && this.verifiedEmailsList.length == 1) ? this.verifiedEmailsList[0].emailAddress : '';
+          // }
         }
       },
       err => this.eventService.openSnackBar(err, 'Dismiss')
