@@ -9,6 +9,8 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { EventService } from 'src/app/Data-service/event.service';
 import { CustomerService } from '../../customer/customer.service';
 import { MfServiceService } from '../../customer/accounts/assets/mutual-fund/mf-service.service';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+
 
 @Component({
   selector: 'app-right-filter-duplicate',
@@ -950,6 +952,21 @@ export class RightFilterDuplicateComponent implements OnInit {
     this.folio = folioFilteredArray;
     this.category = categoryFilteredArray;
     this.changeSelect('', '');
+  }
+  movies = [
+    'Episode I - The Phantom Menace',
+    'Episode II - Attack of the Clones',
+    'Episode III - Revenge of the Sith',
+    'Episode IV - A New Hope',
+    'Episode V - The Empire Strikes Back',
+    'Episode VI - Return of the Jedi',
+    'Episode VII - The Force Awakens',
+    'Episode VIII - The Last Jedi',
+    'Episode IX – The Rise of Skywalker'
+  ];
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.transactionView, event.previousIndex, event.currentIndex);
   }
   changeFilterFolio() {
     (this.folioObj.length == 0) ? this.showError = null : (this.folioObj.length == 1 && !this.folioObj[0].selected) ? this.showError = 'folio' : this.showError = null;

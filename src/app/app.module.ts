@@ -14,7 +14,7 @@ import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
 import { CustomFormInputComponent } from './common/custom-form-input/custom-form-input.component';
 import { DialogComponent } from './component/dialog/dialog.component';
 
-import { DragDropModule } from '@angular/cdk/drag-drop';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 import { BaseComponent } from './component/protect-component/AdviserComponent/Subscriptions/subscription/common-subscription-component/base/base.component';
 import { MomentDateModule } from '@angular/material-moment-adapter';
 import { CustomCommonModule } from './common/custom.common.module';

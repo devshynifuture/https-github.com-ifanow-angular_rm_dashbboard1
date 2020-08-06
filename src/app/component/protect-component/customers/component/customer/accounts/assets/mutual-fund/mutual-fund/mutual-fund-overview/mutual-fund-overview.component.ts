@@ -105,6 +105,7 @@ export class MutualFundOverviewComponent implements OnInit {
 
   displayedColumns = ['name', 'amt', 'value', 'abs', 'xirr', 'alloc'];
   displayedColumns1 = ['data', 'amts'];
+  mfBulkEmailRequestId: number;
 
   constructor(private datePipe: DatePipe, public subInjectService: SubscriptionInject, public UtilService: UtilService,
     private mfService: MfServiceService,
@@ -153,6 +154,7 @@ export class MutualFundOverviewComponent implements OnInit {
         const param1 = queryParamMap['params'];
         this.clientId = parseInt(param1.clientId);
         this.advisorId = parseInt(param1.advisorId);
+        this.mfBulkEmailRequestId = parseInt(param1.mfBulkEmailRequestId);
         console.log('2423425', param1);
         this.getDetails();
       }

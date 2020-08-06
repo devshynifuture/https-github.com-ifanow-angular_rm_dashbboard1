@@ -8,10 +8,16 @@
 // #ui-settingsHeaders .mat-tab-group {
 //     padding-top: 60px !important;
 // }
-#ui-settingsHeaders .mat-tab-labels {
-  display: flex;
-  justify-content: flex-end;
-  padding-right: 2px;
+#ui-settingsHeaders {
+  .mat-tab-labels {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 2px;
+  }
+
+  .mat-tab-body-content {
+    overflow: hidden !important;
+  }
 }
 
 #mistabs1,
