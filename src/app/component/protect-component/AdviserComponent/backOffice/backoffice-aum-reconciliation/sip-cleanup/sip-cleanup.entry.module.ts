@@ -2,9 +2,11 @@ import { MaterialModule } from './../../../../../../material/material';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RecordDetailsComponent } from './record-details/record-details.component';
 
 const componentList = [
-    
+    RecordDetailsComponent
+
 ]
 
 @NgModule({
@@ -14,6 +16,7 @@ const componentList = [
         MaterialModule,
         FormsModule,
         ReactiveFormsModule,
+
     ],
     entryComponents: componentList
 })

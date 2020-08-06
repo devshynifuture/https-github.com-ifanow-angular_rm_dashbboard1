@@ -18,8 +18,6 @@ export class SipCleanupComponent implements OnInit {
   openrecordDeatils() {
 
     const fragmentData = {
-      flag: 'investorDetail',
-
       id: 1,
       state: 'open35',
       componentName: RecordDetailsComponent
