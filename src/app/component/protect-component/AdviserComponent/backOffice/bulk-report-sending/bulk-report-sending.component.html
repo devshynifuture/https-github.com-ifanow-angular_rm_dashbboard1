@@ -68,7 +68,7 @@
                     <th mat-header-cell class="br" *matHeaderCellDef> Report type </th>
                     <td mat-cell class="br" *matCellDef="let element" (click)="openStatusReport(element)">
                         <div class="bar c-p">
-                            {{isLoading ? '' :(element.reportTypeId == 1)? 'MF Overview':(element.reportTypeId == 2)? 'MF Summary':(element.reportTypeId == 3)? 'MF All Transactions':(element.reportTypeId == 4)? 'MF Overview':(element.reportTypeId == 1)? 'MF Unrealised Transactions':(element.reportTypeId
+                            {{isLoading ? '' :(element.reportTypeId == 1)? 'MF Overview':(element.reportTypeId == 2)? 'MF Summary':(element.reportTypeId == 3)? 'MF All Transactions':(element.reportTypeId == 4)? 'MF Unrealised Transactions':(element.reportTypeId == 1)? 'MF Overview':(element.reportTypeId
                             == 5)? 'MF Capital gains - Summary':(element.reportTypeId == 6)? 'MF Capital gains - Detailed':''}}
                         </div>
                     </td>
