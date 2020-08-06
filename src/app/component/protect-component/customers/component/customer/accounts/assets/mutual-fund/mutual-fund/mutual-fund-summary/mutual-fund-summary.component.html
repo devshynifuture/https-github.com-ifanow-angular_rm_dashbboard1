@@ -503,7 +503,7 @@
         </tr>
         <tr style="background: #f5f7f7;">
             <td *ngIf="customDataSource.data?.array[0]?.isCheked"
-                style="width:26%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+            [ngStyle]="customDataSource.data?.array[0].style">
                 <b>{{customDataSource.data?.array[0].name}}</b>
             </td>
 
@@ -548,7 +548,7 @@
             <tr *ngIf="item.id">
 
                 <td valign="top"
-                    style="width:26%;font-size: 13px; padding: 8px;  border-left: 1px solid #dee5e7; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
+                [ngStyle]="customDataSource.data?.array1[0].style">
                     <!-- {{item.schemeName+' | '+item.folioNumber+' | '+item.ownerName}} -->
                     {{item[firstArray]}}
                 </td>
@@ -604,7 +604,7 @@
             </tr>
             <tr *ngIf="item.schemeName=='Total'">
                 <td valign="top"
-                    style="width:26%;font-size: 13px; padding: 8px;font-weight: 600; border-left: 1px solid #dee5e7; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;">
+                [ngStyle]="customDataSource.data?.array2[0].style">
                     <!-- {{item.schemeName}} -->
                     {{item[firstArrayTotal]}}
                 </td>
@@ -662,7 +662,7 @@
 
             <tr *ngIf="item.total">
                 <td valign="top"
-                    style="border-left: 1px solid #dee5e7;width:26%;font-size: 13px; padding: 8px; font-weight: 600;  border-bottom: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                [ngStyle]="customDataSource.data?.array3[0].style">
                     {{mfData[firstArrayGTotal]}}
 
                 </td>
