@@ -5,33 +5,25 @@
         </div>
     </div>
     <div class="row pt-100 pr-8">
-        <div class="col-md-12  d-flex align-items-center justify-content-end mt-8">
-            <a href="" class="c-p downloadPdfIcon">
-                <img class="c-p" src="assets/images/svg/download-bordered.svg">
-            </a>
+        <div class="col-md-6">
 
-            <a href="" class="downloadPdfIcon iconBorderNone">
-                <img class="" src="assets/images/svg/up-down.svg">
-            </a>
-            <!-- 
-            <img class="c-p mr-12" src="assets/images/svg/three-dot-bordered.svg">
-            <button class="mr-12 br-0 pl-8 text-primitive" mat-stroked-button [matMenuTriggerFor]="menu1">
-                <img class="pr-12" src="/assets/images/svg/addon-three.svg">FILTERS
-            </button>
-            <mat-menu #menu1="matMenu">
-                <button mat-menu-item *ngFor="let item of dateFilterList" (click)="setFilterValue(item)">
-                    {{ item.name }}</button>
-            </mat-menu> -->
-
-            <mat-form-field float="never" appearance="standard" class="form-group">
+        </div>
+        <div class="col-md-6  d-flex align-items-center justify-content-end mt-8 crm-task-selects">
+            <mat-form-field float="never" appearance="standard" class="form-group w-40 mb-0">
                 <mat-select class="form-control" [formControl]="filterFormControl">
                     <mat-option *ngFor="let item of dateFilterList" [value]="item.id">
                         {{ item.name }}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
+            <a href="" class="c-p downloadPdfIcon ml-12">
+                <img class="c-p" src="assets/images/svg/download-bordered.svg">
+            </a>
 
-            <button (click)="openAddTask(null)" class="btn-primary br-0 pl-8" mat-stroked-button>
+            <a href="" class="downloadPdfIcon">
+                <img class="" src="assets/images/svg/up-down.svg">
+            </a>
+            <button (click)="openAddTask(null)" class="btn-primary br-0 ml-12" mat-stroked-button>
                 ADD NEW
             </button>
         </div>
