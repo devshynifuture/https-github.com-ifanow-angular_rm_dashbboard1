@@ -179,7 +179,7 @@ export class MfCapitalDetailedComponent implements OnInit {
     const obj = {
       advisorIds: [this.advisorId],
       clientId: this.clientId,
-      parentId: 0
+      parentId: this.advisorId
 
     };
     this.custumService.capitalGainGet(obj).subscribe(
