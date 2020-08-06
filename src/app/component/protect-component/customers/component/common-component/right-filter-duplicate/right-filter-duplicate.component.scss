@@ -120,18 +120,15 @@
   }
   
 
-  .fliterBoxMutual .mat-expansion-panel-body .example-box-pannel {
-    padding: 10px 10px;
+   .example-box-pannel {
+    padding-left: 10px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     box-sizing: border-box;
     background: white;
-    .mat-checkbox label {
-        margin-top: 0px !important;
-        white-space: normal !important;
-    }
+     
      
   }
 
