@@ -851,7 +851,7 @@ export class MutualFundSummaryComponent implements OnInit {
       this.customDataSource.data.array.push({
         'name': 'NAV date', 'index': ind, isCheked: true,
         style: {
-          'width': '9%',
+          'width': '6%',
           'text-align': 'right',
           'font-size': ' 13px',
           'padding': '8px',
@@ -863,7 +863,7 @@ export class MutualFundSummaryComponent implements OnInit {
       this.customDataSource.data.array1.push({
         'index': ind,
         style: {
-          'width': '9%',
+          'width': '6%',
           'font-size': '13px',
           'padding': '8px',
           'border-right': '1px solid #dee5e7',
@@ -877,7 +877,7 @@ export class MutualFundSummaryComponent implements OnInit {
         'index': ind,
         style: {
           'text-align': 'right',
-          'width': '9%',
+          'width': '6%',
           'font-size': '13px',
           'padding': '8px',
           'font-weight': '600',
@@ -890,7 +890,7 @@ export class MutualFundSummaryComponent implements OnInit {
         'index': ind,
         style: {
           'text-align': 'right',
-          'width': '9%',
+          'width': '6%',
           'font-size': '13px',
           'padding': '8px',
           'font-weight': '600',
@@ -1551,7 +1551,7 @@ export class MutualFundSummaryComponent implements OnInit {
         var type = typeof element.navDate == "boolean" ? element.navDate : false;
         console.log('type', type)
         if(type == false){
-          element.navDate = element.nav + ' | '+element.navDate
+          element.navDate = element.nav +  +'\xa0\xa0\xa0\xa0\xa0\xa0\xa0'+' | '+''+element.navDate
         }
       }
     });
@@ -1854,14 +1854,13 @@ export class MutualFundSummaryComponent implements OnInit {
         var type = typeof element.navDate == "boolean" ? element.navDate : false;
         console.log('type', type)
         if(type == false){
-          element.navDate = element.nav + ' | '+element.navDate
+          element.navDate = element.nav +  +'\xa0\xa0\xa0\xa0\xa0\xa0\xa0'+' | '+''+element.navDate
         }
       }
     });
     this.displayedColumns.forEach((element, ind) => {
       this.styleObject(element, ind)
     });
-
     this.showDownload = true
     this.fragmentData.isSpinner = true;
     const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
