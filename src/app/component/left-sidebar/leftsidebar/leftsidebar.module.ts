@@ -1,3 +1,4 @@
+import { SipCleanupEntryModule } from './../../protect-component/AdviserComponent/backOffice/backoffice-aum-reconciliation/sip-cleanup/sip-cleanup.entry.module';
 import { BackofficeMisEntryModule } from './../../protect-component/AdviserComponent/backOffice/backoffice-mis/backoffice-mis.entry.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -45,6 +46,7 @@ import { DashboardEntryModule } from '../../protect-component/AdviserComponent/d
     PeopleEntryModule,
     ActivitesEntryModule,
     BackofficeAumReconciliationEntryModule,
+    SipCleanupEntryModule,
     BackofficeFolioMappingEntryModule,
     BackofficeMisEntryModule,
     MarketPlaceEntryModule,
