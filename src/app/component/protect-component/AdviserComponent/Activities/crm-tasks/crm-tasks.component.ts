@@ -44,9 +44,9 @@ export class CrmTasksComponent implements OnInit {
   }
 
   initPoint() {
-    this.dataSource.data = ELEMENT_DATA;
     this.isLoading = true;
     this.infiniteScrollingFlag = true;
+    this.dataSource.data = ELEMENT_DATA;
     console.log("iniitialized");
     this.getTaskStatus();
   }
@@ -161,6 +161,7 @@ export class CrmTasksComponent implements OnInit {
           if (this.finalTaskList.length > 0) {
             this.eventService.openSnackBar("No more Task Found", "DISMISS");
           } else {
+            this.dataSource.data = null;
             this.eventService.openSnackBar('No Task Found', "DISMISS");
           }
         }
@@ -211,9 +212,6 @@ export class CrmTasksComponent implements OnInit {
       }
     );
   }
-
-
-
 }
 export interface PeriodicElement {
   client: string;
