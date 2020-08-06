@@ -130,7 +130,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       }
       else {
         this.relationList = relationListFilterOnID(AuthService.getClientData().clientType);
-        if (this.basicDetailsData.age > 18 || this.basicDetailsData.familyMemberType == 1) {
+        if (this.basicDetailsData.age > 18) {
           this.familyMemberType = { name: 'Individual', value: '1' };
           this.invTypeCategory = '1';
           this.hideDematTab.emit(true);
@@ -206,32 +206,24 @@ export class ClientBasicDetailsComponent implements OnInit {
   }
 
   relationshipTypeMethod(gender, age) {
-    if (gender == 1 && age > 18) {
+    if (gender == 1) {
       this.relationList = [
         { name: 'Son', value: 4 },
         { name: 'Husband', value: 2 },
         { name: 'Father', value: 6 },
-        { name: 'Other', value: 10 },
+        // { name: 'Other', value: 10 },
+        // { name: 'Son', value: 4 },
+        // { name: 'Other', value: 10 },
       ]
     }
-    if (gender == 1 && age <= 18) {
-      this.relationList = [
-        { name: 'Son', value: 4 },
-        { name: 'Other', value: 10 },
-      ]
-    }
-    if (gender == 2 && age > 18) {
+    if (gender == 2) {
       this.relationList = [
         { name: 'Daughter', value: 5 },
         { name: 'Wife', value: 3 },
         { name: 'Mother', value: 7 },
-        { name: 'Other', value: 20 },
-      ]
-    }
-    if (gender == 2 && age <= 18) {
-      this.relationList = [
-        { name: 'Daughter', value: 5 },
-        { name: 'Other', value: 10 },
+        // { name: 'Other', value: 20 },
+        // { name: 'Daughter', value: 5 },
+        // { name: 'Other', value: 10 },
       ]
     }
     if (gender == 3) {

@@ -5,6 +5,24 @@
   z-index: 0;
 }
 
+.remove-sip-clenup,
+.keep-sip-clenup {
+  padding: 0 5px !important;
+  min-width: 0px !important;
+}
+
+.sip-cleanup {
+  #table-low {
+    tr.mat-header-row {
+      height: 40px !important;
+    }
+
+    tr.mat-row {
+      height: 38px !important;
+    }
+  }
+}
+
 // #ui-settingsHeaders .mat-tab-group {
 //     padding-top: 60px !important;
 // }

@@ -42,11 +42,14 @@
 .max-scroll::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
+#piechartMutualFund {
+    height: 100px;
+    width: 100px;
+  }
 
-.addTo-DO {
-     .form-control {
-         border: transparent !important;
-         border-bottom: 1px solid #2680EB !important;
-     }
+  .addTo-DO {
+    .form-control {
+        border: transparent !important;
+        border-bottom: 1px solid #2680EB !important;
+    }
 }
- 
