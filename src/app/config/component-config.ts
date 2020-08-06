@@ -88,6 +88,7 @@ export const appConfig = {
   GET_MUTUAL_FUND_UNMAP_FOLIO_SCHEME_NAME_LIST: 'mutual-fund/unmap/folio/scheme-name/list/get',
   GET_MUTUAL_FUND_UNMAP_FOLIO_LIST: 'mutual-fund/unmap/folio/list/get',
   GET_MUTUALFUND_UNMAP_USER_DETAIL_LIST: 'mutual-fund/unmap/folio/user-detail/list/get',
+  PUT_MUTUALFUND_UNMAP_INVESTOR_DETAIL_UPDATE: 'mutual-fund/unmap/investor-detail/update',
 
   /////////////////////////////Accounts///////////////////////////////////
   ADD_FIXEDDEPOSIT: 'account/asset/fixed-income/fixed-deposit/add',
@@ -161,6 +162,7 @@ export const appConfig = {
   ADD_POTD_SCHEME: 'account/asset/saving-scheme/potd/add',
   EDIT_POTD_SCHEME: 'account/asset/saving-scheme/potd/edit',
   GET_ASSET_COUNT_GLOBAL_DATA: 'account/asset/count/list',
+  GET_AUM_GRAPH_DATA: 'account/asset/client/aum/graph-data/get',
   DELETE_PPF_SCHEME: 'account/asset/saving-scheme/ppf/delete',
   DELETE_NSC_SCHEME: 'account/asset/saving-scheme/nsc/delete',
   DELETE_SSY_SCHEME: 'account/asset/saving-scheme/ssy/delete',
@@ -740,6 +742,7 @@ export const appConfig = {
   SEND_EMAIL: 'gmail/email/send',
   GET_ATTACHMENTS: 'gmail/attachment/get',
   //////////////////////////people/////////////////////////////////////
+  UNMAP_FAMILY_MEMBER: 'user/family-member/split',
   GET_PEOPLE_CLIENT_LIST: 'user/client/all/get',
   ADD_CLIENT: 'user/client/add',
   EDIT_CLIENT: 'user/client/edit',

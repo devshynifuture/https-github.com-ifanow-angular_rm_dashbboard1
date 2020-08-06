@@ -31,7 +31,8 @@ import { CustomDirectiveModule } from 'src/app/common/directives/common-directiv
     SipApplicantWiseComponent,
     AllSipComponent,
     MisMfTransactionsComponent,
-    MisMfSchemesComponent,],
+    MisMfSchemesComponent
+  ],
   imports: [
     CommonModule,
     MutualFundsRoutingModule,

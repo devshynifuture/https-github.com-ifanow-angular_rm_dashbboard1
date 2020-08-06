@@ -3,7 +3,7 @@ import { HttpService } from 'src/app/http-service/http-service';
 import { apiConfig } from 'src/app/config/main-config';
 import { appConfig } from 'src/app/config/component-config';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import {UtilService} from "../../../../../services/util.service";
+import { UtilService } from "../../../../../services/util.service";
 
 @Injectable({
   providedIn: 'root'
@@ -391,6 +391,11 @@ export class CustomerService {
 
   editPOTD(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_POTD_SCHEME, data);
+  }
+
+  getAumGraphData(data) {
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('clientId', data.clientId);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_AUM_GRAPH_DATA, httpParams);
   }
 
   getAssetCountGlobalData(data) {
@@ -1006,5 +1011,9 @@ export class CustomerService {
   orderSoaMutualFund(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.ORDER_SOA_MUTUAL_FUND, data)
   }
+  unmapFamilyMembers(data) {
+    return this.http.postEncoded(apiConfig.USER + appConfig.UNMAP_FAMILY_MEMBER, data);
+  }
+
 }
 

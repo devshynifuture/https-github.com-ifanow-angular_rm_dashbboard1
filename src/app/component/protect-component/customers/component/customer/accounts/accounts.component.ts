@@ -93,7 +93,7 @@ export class AccountsComponent implements OnInit {
      });*/
     this.showRouter = false;
     setTimeout(() => {
-      this.routingStateService.goToSpecificRoute('/admin/subscription/dashboard');
+      this.routingStateService.goToSpecificRoute('/admin/dashboard');
     }, 200);
   }
 

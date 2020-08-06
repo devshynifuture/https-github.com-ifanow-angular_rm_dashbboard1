@@ -146,7 +146,7 @@ export class AddFamilyMemberComponent implements OnInit {
           taxStatusId: 1,
           residentFlag: element.get('resident').value,
           displayName: element.get('name').value,
-          familyMemberType: (element.get('relationTypeId').value == 4 || element.get('relationTypeId').value == 5) ? 2 : 1,// Minor : Major
+          familyMemberType: (element.get('relationTypeId').value == 4 || element.get('relationTypeId').value == 5) ? 2 : (element.get('relationTypeId').value == 17) ? 4 : (element.get('relationTypeId').value == 18 || element.get('relationTypeId').value == 19) ? 3 : 1,// Minor : Major
           clientId: AuthService.getClientData().clientId,
           genderId: element.get('genderId').value,
           dateOfBirth: this.datePipe.transform(element.get('date').value._d, 'dd/MM/yyyy'),

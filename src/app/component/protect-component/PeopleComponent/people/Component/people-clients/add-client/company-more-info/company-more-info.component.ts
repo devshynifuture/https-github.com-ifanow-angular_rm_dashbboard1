@@ -24,7 +24,7 @@ export class CompanyMoreInfoComponent implements OnInit {
   prevData;
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
-    text: 'SAVE & NEXT',
+    text: 'SAVE & CLOSE',
     buttonColor: 'accent',
     barColor: 'accent',
     raised: true,
@@ -64,7 +64,7 @@ export class CompanyMoreInfoComponent implements OnInit {
     (data == undefined) ? data = {} : data;
     this.moreInfoForm = this.fb.group({
       displayName: [(data.displayName) ? data.displayName : (this.companyIndividualData) ? this.companyIndividualData.name : ''],
-      adhaarNo: [data.aadhaarNumber, [Validators.pattern(this.validatorType.ADHAAR)]],
+      adhaarNo: [(data.aadhaarNumber != 0) ? data.aadhaarNumber : null, [Validators.pattern(this.validatorType.ADHAAR)]],
       maritalStatus: [(data.martialStatusId) ? String(data.martialStatusId) : '1'],
       dateOfBirth: [data.dateOfBirth ? new Date(data.dateOfBirth) : ''],
       bio: [data.bio],
@@ -94,8 +94,8 @@ export class CompanyMoreInfoComponent implements OnInit {
 
   getCompanyDetails(data) {
     const obj = {
-      userId: data.clientId,
-      userType: data.userType
+      clientId: data.clientId,
+      familyMemberId: data.familyMemberId
     };
     this.peopleService.getCompanyPersonDetail(obj).subscribe(
       responseData => {
@@ -121,6 +121,7 @@ export class CompanyMoreInfoComponent implements OnInit {
     const mobileList = [];
     if (this.mobileData.invalid) {
       this.mobileData.markAllAsTouched();
+      return;
     }
     if (this.mobileData) {
       this.mobileData.controls.forEach(element => {
@@ -155,12 +156,14 @@ export class CompanyMoreInfoComponent implements OnInit {
       genderId: this.moreInfoForm.value.gender,
       aadhaarNumber: this.moreInfoForm.controls.adhaarNo.value,
       dateOfBirth: this.datePipe.transform((this.moreInfoForm.value.dateOfBirth._d) ? this.moreInfoForm.value.dateOfBirth._d : this.moreInfoForm.value.dateOfBirth, 'dd/MM/yyyy'),
-      userId: (this.moreInfoData && this.moreInfoData.length > 0) ? this.moreInfoData.clientId : this.companyIndividualData.clientId,
+      // userId: (this.moreInfoData && this.moreInfoData.length > 0) ? this.moreInfoData.clientId : this.companyIndividualData.clientId,
+      familyMemberId: (this.moreInfoData && this.moreInfoData.length > 0) ? this.moreInfoData.familyMemberId : this.companyIndividualData.familyMemberId,
       mobileList,
       name: this.moreInfoForm.value.name,
       bioRemarkId: this.moreInfoData.bioRemarkId,
       remarks: this.moreInfoForm.controls.myNotes.value,
-      anniversaryDate: this.datePipe.transform((this.moreInfoForm.value.anniversaryDate._d) ? this.moreInfoForm.value.anniversaryDate._d : this.moreInfoForm.value.anniversaryDate, 'dd/MM/yyyy')
+      anniversaryDate: this.datePipe.transform((this.moreInfoForm.value.anniversaryDate._d) ? this.moreInfoForm.value.anniversaryDate._d : this.moreInfoForm.value.anniversaryDate, 'dd/MM/yyyy'),
+      gstin: this.moreInfoData.gstin
     };
     if (this.moreInfoData.companyPersonDetailId) {
       this.peopleService.updateCompanyPersonDetail(obj).subscribe(

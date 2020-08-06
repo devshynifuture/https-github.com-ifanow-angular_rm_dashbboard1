@@ -156,6 +156,12 @@ export class OverviewProfileComponent implements OnInit {
             return
           })
           data.forEach(element => {
+            if (element.mobileList && element.mobileList.length > 0 && element.mobileList[0].mobileNo !== 0) {
+              element['mobileNo'] = element.mobileList[0].mobileNo;
+            }
+            if (element.emailList && element.emailList.length > 0) {
+              element['email'] = element.emailList[0].email;
+            }
             if (element.name.length > 22) {
               element.shortName = element.name.substr(0, element.name.indexOf(' '));
             }

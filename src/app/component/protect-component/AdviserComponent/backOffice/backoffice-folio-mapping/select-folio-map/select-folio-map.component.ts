@@ -28,6 +28,8 @@ export class SelectFolioMapComponent implements OnInit {
   selectedClientGrpHeadEmail: any = '';
   selectedClient: any;
   searchKeyword: any;
+  selectedFolioInvestorName = '';
+  advisorId
   constructor(
     public dialogRef: MatDialogRef<SelectFolioMapComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -42,6 +44,13 @@ export class SelectFolioMapComponent implements OnInit {
   }
 
   initPoint() {
+    this.advisorId = AuthService.getAdvisorId();
+    if (this.data && this.data.selectedFolios.length !== 0) {
+      this.data.selectedFolios.forEach(element => {
+        this.selectedFolioInvestorName += element.ownerName + ' &';
+      });
+    }
+
     this.parentId = AuthService.getParentId();
     this.formInit();
   }
@@ -113,25 +122,37 @@ export class SelectFolioMapComponent implements OnInit {
   }
 
   mapFolio() {
-    const data = {
-      parentId: this.selectedClient.parentId === 0 ? this.selectedClient.adminAdvisorId : 0,
-      searchQuery: this.searchKeyword
+    let data = [];
+    let obj;
+    if (this.data.selectedFolios.length !== 0) {
+      this.data.selectedFolios.forEach(element => {
+        obj = {
+          advisorId: this.advisorId,
+          clientId: this.selectedClient.groupHeadId,
+          familyMemberId: this.selectedClient.familyId,
+          folioNumber: element.folioNumber,
+          parentId: this.parentId === 0 ? this.advisorId : this.selectedClient.adminAdvisorId,
+        }
+        data.push(obj);
+      });
     }
-    this.backOfcFolioMappingService.postUserDetailList(data)
+
+    this.backOfcFolioMappingService.putMutualFundInvestorDetail(data)
       .subscribe(res => {
         if (res) {
           console.log(res);
           this.eventService.openSnackBar("Mapped Successfully !", "DISMISS");
+          this.dialogClose(true)
         } else {
           this.eventService.openSnackBar("Something went wrong!", "DISMISS");
         }
       }, err => {
+        this.eventService.openSnackBar("Something went wrong!", "DISMISS");
         console.error(err);
       })
   }
 
-  dialogClose() {
-    this.dialogRef.close();
+  dialogClose(refresh) {
+    this.dialogRef.close({ refresh });
   }
-
 }
