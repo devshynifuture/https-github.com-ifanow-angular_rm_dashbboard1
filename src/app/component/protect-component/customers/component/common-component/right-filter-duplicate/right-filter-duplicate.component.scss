@@ -38,8 +38,12 @@
 ::ng-deep .fliterBoxMutual .mat-expansion-panel-body {
     padding: 0 0px 16px;
     .mat-checkbox label {
-        margin-top: 18px !important;
-        white-space: normal !important;
+        margin-top: 0px !important;
+        padding: 12px 0px;
+        white-space: normal;
+        min-height: 48px;
+        display: flex;
+        align-items: center;
     }
     .mat-checkbox-layout .mat-checkbox-label {
         padding-left: 15px !important;
@@ -47,7 +51,7 @@
     }
     .mat-checkbox-inner-container {
         margin: 0 !important;
-        top: 3px !important;
+        //top: 3px !important;
     }
 }
 
@@ -109,9 +113,34 @@
   }
   
   .example-custom-placeholder {
-    background: #ccc;
-    border: dotted 3px #999;
-    min-height: 20px;
-    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+    // background: #ccc;
+    // border: dotted 3px #999;
+    // min-height: 20px;
+    // transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
   }
   
+
+   .example-box-pannel {
+    padding-left: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    background: white;
+     
+     
+  }
+
+   .cursorMove {
+    cursor: move;
+    font-size: 14px;
+    color: #000;
+    display: flex;
+    padding-left: 0;
+    align-items: center;
+   }
+
+   .cursorMove:hover {
+       color: #000;
+   }
