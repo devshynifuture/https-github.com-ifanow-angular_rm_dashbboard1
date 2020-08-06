@@ -1,3 +1,13 @@
+<img *ngIf="fieldFlag=='familyMember' && basicDetailsData.mobileNo && basicDetailsData.email"
+    [matMenuTriggerFor]="menu " class="c-p unmap-option" src="/assets/images/svg/dot-menu.svg">
+<mat-menu #menu="matMenu">
+    <button (click)="unmapFamilyMember('FAMILY MEMBER')" mat-menu-item>
+        <span>Unmap</span>
+    </button>
+    <button (click)="deleteModal('FAMILY MEMBER')" mat-menu-item>
+        <span>Delete</span>
+    </button>
+</mat-menu>
 <div class="pb-12">
     <div class="row pt-28">
         <div class="col-md-4 d-flex align-items-center justify-content-end mob align-items-normal mob-pl-10">
