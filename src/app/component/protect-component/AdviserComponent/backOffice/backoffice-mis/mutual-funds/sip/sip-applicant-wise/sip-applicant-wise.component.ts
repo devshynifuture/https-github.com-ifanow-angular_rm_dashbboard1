@@ -88,6 +88,7 @@ export class SipApplicantWiseComponent implements OnInit {
   arnRiaList: any = [];
   arnRiaValue: any;
   viewMode: any;
+  ceasedDate: any = new Date();
 
   constructor(
     private datePipe: DatePipe,
@@ -310,7 +311,11 @@ export class SipApplicantWiseComponent implements OnInit {
     dialogRef.afterClosed()
       .subscribe(result => {
         if (result) {
-          this.addCeasesdDate(data, parentObj, result)
+          this.addCeasesdDate(data, parentObj, result);
+          this.ceasedDate = result;
+          data.isEdit = true;
+        } else {
+          data.isEdit = false;
         }
       });
   }

@@ -525,8 +525,13 @@
                                                                                         <div
                                                                                             *ngIf="!isLoadingApplicant">
                                                                                             <button
-                                                                                                (click)="changeCeasedDateDialog(applicant, inv)">Add
+                                                                                                (click)="changeCeasedDateDialog(applicant, inv)"
+                                                                                                *ngIf="!applicant.isEdit">Add
                                                                                                 Cease Date</button>
+                                                                                            <span
+                                                                                                *ngIf="applicant.isEdit">
+                                                                                                {{ceasedDate |date:'mediumDate'}}
+                                                                                            </span>
                                                                                         </div>
                                                                                         <span
                                                                                             *ngIf="isLoadingApplicant">{{''}}</span>

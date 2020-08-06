@@ -258,8 +258,12 @@
                                                     <!-- {{(isLoadingApplicant?'':'add cease date') }} -->
                                                     <div [ngClass]="{'bar': isLoadingApplicant }">
                                                         <div *ngIf="!isLoadingApplicant">
-                                                            <button (click)="changeCeasedDateDialog(scheme, data)">Add
-                                                                Cease Date</button>
+                                                            <button (click)="changeCeasedDateDialog(scheme, data)"
+                                                                *ngIf="!scheme.isEdit">Add Cease Date</button>
+                                                            <span *ngIf="scheme.isEdit">
+                                                                {{ ceasedDate | date:'mediumDate' }}
+                                                            </span>
+
                                                         </div>
                                                         <span *ngIf="isLoadingApplicant">{{''}}</span>
                                                     </div>

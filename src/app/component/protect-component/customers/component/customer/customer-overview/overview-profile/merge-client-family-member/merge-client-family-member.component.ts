@@ -82,7 +82,7 @@ export class MergeClientFamilyMemberComponent implements OnInit {
       this.relationTypeList = [
         { name: 'Father', value: 6 },
         { name: 'Mother', value: 7 },
-        { name: 'Other', value: 10 }
+        // { name: 'Other', value: 10 }
       ]
     }
     else {
@@ -91,9 +91,15 @@ export class MergeClientFamilyMemberComponent implements OnInit {
           // { name: 'Mother', value:  },
           { name: 'Father', value: 6 },
           { name: 'Mother', value: 7 },
-          { name: 'Other', value: 10 },
+          // { name: 'Other', value: 10 },
           { name: 'Son', value: 4 },
-          { name: 'Daughter', value: 5 }
+          { name: 'Daughter', value: 5 },
+          { name: 'Brother', value: 8 },
+          { name: 'Sister', value: 9 },
+          { name: 'Daughter_In_Law', value: 11 },
+          { name: 'Sister_In_Law', value: 12 },
+          { name: 'Niece', value: 15 },
+          { name: 'Nephew', value: 16 }
         ]
       }
       else {
@@ -103,9 +109,15 @@ export class MergeClientFamilyMemberComponent implements OnInit {
           // { name: 'Mother', value:  },
           { name: 'Father', value: 6 },
           { name: 'Mother', value: 7 },
-          { name: 'Other', value: 10 },
+          // { name: 'Other', value: 10 },
           { name: 'Son', value: 4 },
-          { name: 'Daughter', value: 5 }
+          { name: 'Daughter', value: 5 },
+          { name: 'Brother', value: 8 },
+          { name: 'Sister', value: 9 },
+          { name: 'Daughter_In_Law', value: 11 },
+          { name: 'Sister_In_Law', value: 12 },
+          { name: 'Niece', value: 15 },
+          { name: 'Nephew', value: 16 },
         ]
       }
     }
