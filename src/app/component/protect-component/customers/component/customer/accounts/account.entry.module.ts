@@ -17,6 +17,8 @@ import { CustomDirectiveModule } from 'src/app/common/directives/common-directiv
 import { CustomCommonModule } from 'src/app/common/custom.common.module';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { StockDetailsViewComponent } from './assets/stock-details-view/stock-details-view.component';
+import { StockHoldingDetailsComponent } from './assets/asset-stocks/stock-holding-details/stock-holding-details.component';
+import { StockTransactionDetailsComponent } from './assets/asset-stocks/stock-transaction-details/stock-transaction-details.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 export const componentList = [
   UpperCustomerComponent,
@@ -27,7 +29,9 @@ export const componentList = [
   StockScripLevelTransactionComponent,
   PortfolioFieldComponent,
   ScripFieldComponent,
-  StockDetailsViewComponent
+  StockDetailsViewComponent,
+  StockHoldingDetailsComponent,
+  StockTransactionDetailsComponent
 ];
 
 @NgModule({

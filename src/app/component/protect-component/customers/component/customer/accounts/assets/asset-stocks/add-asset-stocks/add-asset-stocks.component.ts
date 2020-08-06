@@ -6,6 +6,9 @@ import { CustomerService } from '../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { DatePipe } from '@angular/common';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-add-asset-stocks',
@@ -42,7 +45,7 @@ export class AddAssetStocksComponent implements OnInit {
   adviceShowHeaderFooter: boolean = true;
   callMethod: { methodName: string; ParamValue: any; };
 
-  constructor(private subInjectService: SubscriptionInject, private datePipe: DatePipe, private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService) { }
+  constructor(private subInjectService: SubscriptionInject,private enumService: EnumServiceService, public dialog: MatDialog, private datePipe: DatePipe, private fb: FormBuilder, private cusService: CustomerService, private eventService: EventService) { }
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -262,6 +265,9 @@ addNewNominee(data) {
       valueAsOn: [!data ? '' : new Date(data.valueAsOn), [Validators.required]],
       amtInvested: [!data ? '' : data.amountInvested, [Validators.required]],
       portfolioName: [data.portfolioName, [Validators.required]],
+      linkedBankAccount: [!data ? '' :data.linkedBankAccount],
+      linkedDematAccount: [!data ? '' :data.linkedDematAccount],
+      description: [!data ? '' :data.description],
       getNomineeName: this.fb.array([this.fb.group({
         name: [''],
         sharePercentage: [0],
@@ -323,6 +329,10 @@ addNewNominee(data) {
           "portfolioName": this.assetForm.get('portfolioName').value,
           "id": this.editApiData.portfolioId,
           "ownerList": this.editApiData.portfolioOwner,
+          "nomineeList": this.assetForm.value.getNomineeName,
+          "linkedBankAccount": this.assetForm.value.linkedBankAccount,
+          "linkedDematAccount": this.assetForm.value.linkedDematAccount,
+          "description": this.assetForm.value.description,
           "stockList": [
             {
               "ownerList": this.assetForm.value.getCoOwnerName,
@@ -359,6 +369,10 @@ addNewNominee(data) {
           "familyMemberId": this.familyMemberId,
           "ownerList": this.assetForm.value.getCoOwnerName,
           "portfolioName": this.assetForm.get("portfolioName").value,
+          "nomineeList": this.assetForm.value.getNomineeName,
+          "linkedBankAccount": this.assetForm.value.linkedBankAccount,
+          "linkedDematAccount": this.assetForm.value.linkedDematAccount,
+          "description": this.assetForm.value.description,
           "stockList": [
             {
               "ownerList": this.assetForm.value.getCoOwnerName,
@@ -397,4 +411,32 @@ addNewNominee(data) {
   close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
+
+  bankList = [];
+  getBank(){
+    if(this.enumService.getBank().length > 0){
+      this.bankList = this.enumService.getBank();
+    }
+    else{
+      this.bankList = [];
+    }
+    console.log(this.bankList,"this.bankList2");
+  }
+
+  //link bank
+  openDialog(eventData): void {
+    const dialogRef = this.dialog.open(LinkBankComponent, {
+      width: '50%',
+      data:{bankList: this.bankList, userInfo: true} 
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      setTimeout(() => {
+        this.bankList = this.enumService.getBank();
+      }, 5000);
+    });
+
+  }
+
+//link bank
 }

@@ -136,7 +136,7 @@ export class MutualFundSummaryComponent implements OnInit {
   constructor(
     private subInjectService: SubscriptionInject,
     private utilService: UtilService,
-    private mfService: MfServiceService,
+    public mfService: MfServiceService,
     private excel: ExcelGenService,
     private backOfficeService: BackOfficeService,
     // private workerService: WebworkerService,

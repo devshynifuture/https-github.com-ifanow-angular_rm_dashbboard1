@@ -3,13 +3,14 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 
 @Component({
-  selector: 'app-stock-details-view',
-  templateUrl: './stock-details-view.component.html',
-  styleUrls: ['./stock-details-view.component.scss']
+  selector: 'app-stock-holding-details',
+  templateUrl: './stock-holding-details.component.html',
+  styleUrls: ['./stock-holding-details.component.scss']
 })
-export class StockDetailsViewComponent implements OnInit {
-  
+export class StockHoldingDetailsComponent implements OnInit {
+
   data;
+
   constructor(private subInjectService: SubscriptionInject,private enumService: EnumServiceService) { }
 
   clientFamilybankList:any = [];
@@ -19,8 +20,9 @@ export class StockDetailsViewComponent implements OnInit {
     console.log(this.data, "data 123 test");
     
   }
+
   close() {
     this.subInjectService.changeNewRightSliderState({state: 'close'});
   }
-}
 
+}
