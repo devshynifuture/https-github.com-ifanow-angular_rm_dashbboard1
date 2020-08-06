@@ -10,8 +10,8 @@
         </div>
         <div class="col-md-6  d-flex align-items-center justify-content-end mt-8 crm-task-selects">
             <mat-form-field float="never" appearance="standard" class="form-group w-40 mb-0">
-                <mat-select class="form-control" [formControl]="filterFormControl">
-                    <mat-option *ngFor="let item of dateFilterList" [value]="item.id">
+                <mat-select class="form-control" [formControl]="filterFormControl" >
+                    <mat-option *ngFor="let item of dateFilterList" [value]="item.id" (click)="setFilterValue()">
                         {{ item.name }}
                     </mat-option>
                 </mat-select>
@@ -104,7 +104,7 @@
                 </h5>
             </div>
             <div class="row">
-                <div class="col-md-12" *ngIf="infiniteScrollingFlag">
+                <div class="col-md-12 p-0" *ngIf="infiniteScrollingFlag">
                     <div class="b-a p-44">
                         <mat-spinner [diameter]="30" class="pos-rel-left40"></mat-spinner>
                     </div>

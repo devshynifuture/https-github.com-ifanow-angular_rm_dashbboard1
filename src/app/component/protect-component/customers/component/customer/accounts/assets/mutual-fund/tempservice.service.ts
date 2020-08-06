@@ -357,7 +357,7 @@ export class TempserviceService {
     let totalCurrentValue = 0;
     if (!isSummaryTabValues) {
       data.mutualFundTransactions.forEach(ele => {
-        totalTransactionAmt += (ele.amount) ? ele.amount : 0;
+        totalTransactionAmt += (ele.amount) ? (ele.amount * (ele.effect)) : 0;
         totalUnit += (ele.unit) ? ele.unit : 0;
         totalNav += (ele.transactionNav) ? ele.transactionNav : 0;
         balanceUnit = (ele.balanceUnits) ? ele.balanceUnits : 0;

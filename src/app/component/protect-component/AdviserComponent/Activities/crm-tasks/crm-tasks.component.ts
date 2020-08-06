@@ -1,4 +1,5 @@
-import { MatTableDataSource } from '@angular/material';
+import { CustomFilterDatepickerDialogComponent } from './../../../SupportComponent/file-ordering-upload/custom-filter-datepicker-dialog.component';
+import { MatTableDataSource, MatDialog } from '@angular/material';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { SubscriptionInject } from '../../Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
@@ -20,7 +21,6 @@ export class CrmTasksComponent implements OnInit {
   advisorId = AuthService.getAdvisorId();
   taskStatus: any;
   dateFilterList: any;
-  filterValueObj: any;
   isFilterSet: boolean;
   finalTaskList = [];
   hasEndReached = false;
@@ -28,11 +28,15 @@ export class CrmTasksComponent implements OnInit {
   filterFormControl = new FormControl();
 
   @ViewChild('tableEl', { static: false }) tableEl;
+  filterValueId: any;
+  customDateFilter: boolean = false;
+  customFromToDate: any;
 
   constructor(
     private subInjectService: SubscriptionInject,
     private crmTaskService: CrmTaskService,
-    private eventService: EventService
+    private eventService: EventService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -40,17 +44,38 @@ export class CrmTasksComponent implements OnInit {
   }
 
   initPoint() {
-    this.dataSource.data = ELEMENT_DATA;
     this.isLoading = true;
+    this.infiniteScrollingFlag = true;
+    this.dataSource.data = ELEMENT_DATA;
     console.log("iniitialized");
     this.getTaskStatus();
   }
 
   setFilterValue() {
     this.isFilterSet = true;
-    this.filterValueObj = this.filterFormControl.value;
-    this.finalTaskList = [];
-    this.initPoint();
+    this.filterValueId = this.filterFormControl.value;
+    if(this.filterValueId === 5){
+      this.customDateFilter = true;
+      this.openDateDialog('');
+    } else {
+      this.finalTaskList = [];
+      this.initPoint();
+    }
+  }
+
+  openDateDialog(data){
+    const dialogRef = this.dialog.open(CustomFilterDatepickerDialogComponent,{
+        width: '663px',
+        data
+    })
+
+    dialogRef.afterClosed()
+      .subscribe(res=>{
+        if(res){
+          this.customFromToDate = res;
+          this.initPoint();
+        }
+      })
   }
 
   getTaskStatus() {
@@ -65,8 +90,6 @@ export class CrmTasksComponent implements OnInit {
       })
   }
 
-
-
   getTaskNameFromTaskStatusList(taskStatus) {
     return this.taskStatus.find(item => item.id === taskStatus).name;
   }
@@ -78,8 +101,13 @@ export class CrmTasksComponent implements OnInit {
       limit: 5
     }
     if (this.isFilterSet) {
-      data['dateFilter'] = this.filterValueObj.id
+      data['dateFilter'] = this.filterValueId
+      if(this.customDateFilter){
+        data['fromDate'] = this.customFromToDate.fromDate;
+        data['toDate'] = this.customFromToDate.toDate; 
+      }
     }
+    
     this.crmTaskService.getAllTaskListValues(data)
       .subscribe(res => {
         this.isLoading = false;
@@ -133,6 +161,7 @@ export class CrmTasksComponent implements OnInit {
           if (this.finalTaskList.length > 0) {
             this.eventService.openSnackBar("No more Task Found", "DISMISS");
           } else {
+            this.dataSource.data = null;
             this.eventService.openSnackBar('No Task Found', "DISMISS");
           }
         }
@@ -183,9 +212,6 @@ export class CrmTasksComponent implements OnInit {
       }
     );
   }
-
-
-
 }
 export interface PeriodicElement {
   client: string;
@@ -198,7 +224,5 @@ export interface PeriodicElement {
   menuList: string;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  { client: '', member: '', des: '', cat: '', assigned: '', dueDate: '', status: '', menuList: '' },
-];
+const ELEMENT_DATA: PeriodicElement[] = [];
 
