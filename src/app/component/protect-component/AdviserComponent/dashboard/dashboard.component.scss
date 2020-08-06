@@ -27,7 +27,7 @@
 }
 
 .max-scroll {
-    height: 550px;
+    height: 590px;
     overflow-y: auto;
 }
 
@@ -42,3 +42,11 @@
 .max-scroll::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
+
+.addTo-DO {
+     .form-control {
+         border: transparent !important;
+         border-bottom: 1px solid #2680EB !important;
+     }
+}
+ 
