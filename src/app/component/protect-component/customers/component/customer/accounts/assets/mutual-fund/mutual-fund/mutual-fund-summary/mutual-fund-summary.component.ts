@@ -122,6 +122,7 @@ export class MutualFundSummaryComponent implements OnInit {
   tenthArrayGTotal: any;
   eleventhArrayGTotal: any;
   mfBulkEmailRequestId: number;
+  isRouterLink = false;
 
 
   @Input()
@@ -157,6 +158,7 @@ export class MutualFundSummaryComponent implements OnInit {
         this.toDate = param1.toDate;
         this.toDate = this.datePipe.transform(this.toDate, 'yyyy-MM-dd');
         this.mfBulkEmailRequestId = parseInt(param1.mfBulkEmailRequestId)
+        this.isRouterLink =true;
         console.log('2423425', param1)
       }
       else {
@@ -1160,6 +1162,9 @@ export class MutualFundSummaryComponent implements OnInit {
           name: (this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType,
           selected: true
         }
+      }
+      if(this.isRouterLink){
+        this.setDefaultFilterData.showFolio ="2"
       }
       console.log(`13091830918239182390183091830912830918310938109381093809328`);
       const input = {
