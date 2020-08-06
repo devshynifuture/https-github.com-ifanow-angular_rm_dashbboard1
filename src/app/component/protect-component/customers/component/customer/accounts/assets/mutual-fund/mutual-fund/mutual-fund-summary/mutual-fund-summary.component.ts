@@ -122,6 +122,7 @@ export class MutualFundSummaryComponent implements OnInit {
   tenthArrayGTotal: any;
   eleventhArrayGTotal: any;
   mfBulkEmailRequestId: number;
+  isRouterLink = false;
 
 
   @Input()
@@ -157,6 +158,7 @@ export class MutualFundSummaryComponent implements OnInit {
         this.toDate = param1.toDate;
         this.toDate = this.datePipe.transform(this.toDate, 'yyyy-MM-dd');
         this.mfBulkEmailRequestId = parseInt(param1.mfBulkEmailRequestId)
+        this.isRouterLink =true;
         console.log('2423425', param1)
       }
       else {
@@ -849,7 +851,7 @@ export class MutualFundSummaryComponent implements OnInit {
       this.customDataSource.data.array.push({
         'name': 'NAV date', 'index': ind, isCheked: true,
         style: {
-          'width': '9%',
+          'width': '6%',
           'text-align': 'right',
           'font-size': ' 13px',
           'padding': '8px',
@@ -861,7 +863,7 @@ export class MutualFundSummaryComponent implements OnInit {
       this.customDataSource.data.array1.push({
         'index': ind,
         style: {
-          'width': '9%',
+          'width': '6%',
           'font-size': '13px',
           'padding': '8px',
           'border-right': '1px solid #dee5e7',
@@ -875,7 +877,7 @@ export class MutualFundSummaryComponent implements OnInit {
         'index': ind,
         style: {
           'text-align': 'right',
-          'width': '9%',
+          'width': '6%',
           'font-size': '13px',
           'padding': '8px',
           'font-weight': '600',
@@ -888,7 +890,7 @@ export class MutualFundSummaryComponent implements OnInit {
         'index': ind,
         style: {
           'text-align': 'right',
-          'width': '9%',
+          'width': '6%',
           'font-size': '13px',
           'padding': '8px',
           'font-weight': '600',
@@ -1160,6 +1162,9 @@ export class MutualFundSummaryComponent implements OnInit {
           name: (this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType,
           selected: true
         }
+      }
+      if(this.isRouterLink){
+        this.setDefaultFilterData.showFolio ="2"
       }
       console.log(`13091830918239182390183091830912830918310938109381093809328`);
       const input = {
@@ -1546,7 +1551,7 @@ export class MutualFundSummaryComponent implements OnInit {
         var type = typeof element.navDate == "boolean" ? element.navDate : false;
         console.log('type', type)
         if(type == false){
-          element.navDate = element.nav + ' | '+element.navDate
+          element.navDate = element.nav +  +'\xa0\xa0\xa0\xa0\xa0\xa0\xa0'+' | '+''+element.navDate
         }
       }
     });
@@ -1849,14 +1854,13 @@ export class MutualFundSummaryComponent implements OnInit {
         var type = typeof element.navDate == "boolean" ? element.navDate : false;
         console.log('type', type)
         if(type == false){
-          element.navDate = element.nav + ' | '+element.navDate
+          element.navDate = element.nav +  +'\xa0\xa0\xa0\xa0\xa0\xa0\xa0'+' | '+''+element.navDate
         }
       }
     });
     this.displayedColumns.forEach((element, ind) => {
       this.styleObject(element, ind)
     });
-
     this.showDownload = true
     this.fragmentData.isSpinner = true;
     const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');

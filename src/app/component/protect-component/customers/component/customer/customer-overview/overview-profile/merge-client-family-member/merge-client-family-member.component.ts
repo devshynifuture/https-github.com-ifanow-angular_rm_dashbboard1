@@ -302,7 +302,7 @@ export class MergeClientFamilyMemberComponent implements OnInit {
       },
       err => {
         clientData.addedFlag = false;
-        clientData.isLoading = true;
+        clientData.isLoading = false;
         this.eventService.openSnackBar(err, 'Dismiss');
       }
     )

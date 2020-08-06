@@ -9,6 +9,7 @@ import { DashboardGuideDialogComponent } from './dashboard-guide-dialog/dashboar
 import { DashboardService } from './dashboard.service';
 import { CustomCommonModule } from 'src/app/common/custom.common.module';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
+import { ChartModule } from 'angular-highcharts';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
     CustomDirectiveModule,
     DashboardRoutingModule,
     CustomCommonModule,
-    SlickCarouselModule
+    SlickCarouselModule,
+    ChartModule
   ],
   exports: [],
   providers: [DashboardService]
