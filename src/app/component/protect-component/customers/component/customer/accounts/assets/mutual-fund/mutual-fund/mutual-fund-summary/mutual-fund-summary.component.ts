@@ -1179,7 +1179,7 @@ export class MutualFundSummaryComponent implements OnInit {
         this.summary.data = [{}, {}, {}];
         this.summary.data = data.customDataSourceData;
         this.mfData.withdrawals = this.grandTotal.withdrawals
-        this.mfData.totalBalanceUnit = this.grandTotal.totalBalanceUnit
+        this.mfData.totalBalanceUnit = this.mfService.mutualFundRoundAndFormat(this.grandTotal.totalBalanceUnit,3)
         this.mfData.sip = this.grandTotal.sip
         this.mfData.total_absolute_return=this.mfService.mutualFundRoundAndFormat(this.mfData.total_absolute_return,2);
         this.mfData.total_xirr=this.mfService.mutualFundRoundAndFormat(this.mfData.total_xirr,2)
