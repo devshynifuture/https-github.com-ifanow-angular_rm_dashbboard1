@@ -20,85 +20,16 @@
         </div>
       </div>
 
-      <!-- <div class="eventList">
-        <div class="eventListIcon">
-          <span> </span>
-        </div>
-        <div class="eventListTime">
-          6:30PM – 7.00PM
-        </div>
-        <div class="eventListText">
-          Subscriptions evening stand up
-        </div>
-      </div>
-
-      <div class="eventList">
-        <div class="eventListIcon">
-          <span> </span>
-        </div>
-        <div class="eventListTime">
-          6:30PM – 7.00PM
-        </div>
-        <div class="eventListText">
-          Subscriptions evening stand up
-        </div>
-      </div> -->
+       
     </div>
 
   </div>
 
-  <!-- <div class="row b-b pb-10 pt-10">
-    <div class="col-md-2">
-      <div class="d-flex align-items-center">
-        <div class="numberDate">2</div>
-        <div class="f-12 ml-8">JUL, WED</div>
-      </div>
-    </div>
-    <div class="col-md-10">
-
-      <div class="eventList">
-        <div class="eventListIcon">
-          <span> </span>
-        </div>
-        <div class="eventListTime">
-          6:30PM – 7.00PM
-        </div>
-        <div class="eventListText">
-          Subscriptions evening stand up
-        </div>
-      </div>
-
-      <div class="eventList">
-        <div class="eventListIcon">
-          <span> </span>
-        </div>
-        <div class="eventListTime">
-          6:30PM – 7.00PM
-        </div>
-        <div class="eventListText">
-          Subscriptions evening stand up
-        </div>
-      </div>
-
-      <div class="eventList">
-        <div class="eventListIcon">
-          <span> </span>
-        </div>
-        <div class="eventListTime">
-          6:30PM – 7.00PM
-        </div>
-        <div class="eventListText">
-          Subscriptions evening stand up
-        </div>
-      </div>
-    </div>
-
-  </div> -->
 </div>
 <div class="scheduleBox dashBox" *ngIf="dashEvents">
   <div class="row bb-1 mt-8  mb-8">
     <div class="col-md-8 p-0 pt-8 pl-28 pr-0 ">
-      <h3>{{viewDate|date:'MMMM yyyy'}}</h3>
+      <h3 class="f-14">{{viewDate|date:'MMMM yyyy'}}</h3>
     </div>
     <div class="col-md-2 p-0 pt-8 pl-28 pr-0">
       <img src="/assets/images/svg/arrowright-black.svg" [hidden]=" formateYear(viewDate) <= formateYear(current_day) && formateMonth(viewDate) <= formateMonth(current_day)" (click)="lastMonth()" class="mr-24 c-p">
@@ -128,8 +59,8 @@
     </div>
   </div>
 </div>
-<div *ngIf="currentMonthEvents.length <= 0 && !isLoading" class="mt-20 text-center">
-    <h2>Schedule not found {{isLoading}}</h2>
+<div *ngIf="currentMonthEvents.length <= 0 && !isLoading" class="mt-40 text-center">
+    <h2 class="f-16">Schedule not found {{isLoading}}</h2>
 </div>
 <div *ngIf="isLoading">
   <mat-spinner [diameter]="30" style="margin: 0px auto; margin-top: 100px;"></mat-spinner>
