@@ -314,7 +314,9 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     }
     this.isLoading = true;
     this.orgSetting.getEmailVerification(obj).subscribe(
-      data => this.getEmailVerificationRes(data),
+      data => { this.getEmailVerificationRes(data); 
+        this.isLoading = false;
+      },
       err => {
         this.eventService.openSnackBar(err, "Dismiss")
         this.hasError = true;
