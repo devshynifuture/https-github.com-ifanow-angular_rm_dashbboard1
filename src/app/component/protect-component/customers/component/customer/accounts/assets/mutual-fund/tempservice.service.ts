@@ -165,6 +165,7 @@ export class TempserviceService {
               }
             }
           }
+          totalObj = {};
           if (singleData.mutualFundTransactions.length > 0) {
 
             if (nav) {
@@ -204,6 +205,7 @@ export class TempserviceService {
             const data = this.getAbsAndxirrCategoryWise(singleData, allData, reportType);
             totalObj.totalCagr = data.xirr;
             totalObj.trnAbsoluteReturn = data.absoluteReturn;
+            totalObj.totalBalanceUnit = singleData.mutualFundTransactions[singleData.mutualFundTransactions.length-1].balanceUnits
             filteredData.push(totalObj);
           } else {
             if (filteredData.length > 0) {
@@ -358,7 +360,7 @@ export class TempserviceService {
     if (!isSummaryTabValues) {
       data.mutualFundTransactions.forEach(ele => {
         totalTransactionAmt += (ele.amount) ? (ele.amount * (ele.effect)) : 0;
-        totalUnit += (ele.unit) ? ele.unit : 0;
+        totalUnit += (ele.unit) ? (ele.unit * (ele.effect)) : 0;
         totalNav += (ele.transactionNav) ? ele.transactionNav : 0;
         balanceUnit = (ele.balanceUnits) ? ele.balanceUnits : 0;
         currentValue += (ele.currentValue) ? ele.currentValue : 0;

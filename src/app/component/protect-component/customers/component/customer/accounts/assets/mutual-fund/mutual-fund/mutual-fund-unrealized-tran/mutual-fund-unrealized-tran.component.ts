@@ -126,6 +126,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   twelwthArrayTotal: any;
   thirteenthArrayTotal: any;
   thirteenthArray: any;
+  isRouterLink = false;
 
   constructor(public dialog: MatDialog, private datePipe: DatePipe,
     private subInjectService: SubscriptionInject, private utilService: UtilService,
@@ -143,6 +144,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         this.mfBulkEmailRequestId = parseInt(param1.mfBulkEmailRequestId)
         this.toDate = param1.toDate;
         this.addedData = true;
+        this.isRouterLink =true;
         console.log('2423425', param1)
       }
       else {
@@ -755,6 +757,9 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         name: (this.reponseData) ? this.setDefaultFilterData.reportType : ((this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType),
         selected: true,
       };
+      if(this.isRouterLink){
+        this.setDefaultFilterData.showFolio ="2"
+      }
       const input = {
         mutualFundList: mutualFund,
         type: (this.rightFilterData.reportType) ? this.rightFilterData.reportType : '',
