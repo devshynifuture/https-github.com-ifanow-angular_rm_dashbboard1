@@ -12,6 +12,8 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 import { MatDialog } from '@angular/material';
 import { pieChart } from './highChart-pichart';
 import { StockDetailsViewComponent } from '../stock-details-view/stock-details-view.component';
+import { StockTransactionDetailsComponent } from './stock-transaction-details/stock-transaction-details.component';
+import { StockHoldingDetailsComponent} from './stock-holding-details/stock-holding-details.component';
 
 @Component({
   selector: 'app-asset-stocks',
@@ -319,13 +321,33 @@ export class AssetStocksComponent implements OnInit {
       }
     );
   }
-  opendetailviews() {
+  opendetailviews(data , portfolioData) {
     // console.log('clicked');
+
+    let component;
+    console.log(data.stockType);
+    switch (true) {
+      case (data.stockType == 1):
+        component = StockDetailsViewComponent;
+        data = data;
+        break;
+      case (data.stockType == 2):
+        component = StockHoldingDetailsComponent;
+        break;
+      default:
+        component = StockTransactionDetailsComponent;
+    }
+    data.portfolioName = portfolioData.portfolioName;
+    data.portfolioId = portfolioData.id;
+    data.portfolioOwner = portfolioData.ownerList;
     const fragmentData = {
+      flag: 'viewStock',
+      data,
       id: 1,
       state: 'open35',
-      componentName: StockDetailsViewComponent
+      componentName: component
     };
+    
 
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
