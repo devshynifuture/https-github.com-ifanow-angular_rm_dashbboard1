@@ -29,7 +29,9 @@ export class SelectFolioMapComponent implements OnInit {
   selectedClient: any;
   searchKeyword: any;
   selectedFolioInvestorName = '';
-  advisorId
+  advisorId;
+  doShowDetails = false;
+
   constructor(
     public dialogRef: MatDialogRef<SelectFolioMapComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -56,6 +58,7 @@ export class SelectFolioMapComponent implements OnInit {
   }
 
   setUserDetail(value, typedValue) {
+    this.doShowDetails = true;
     this.searchKeyword = typedValue;
     this.selectedClient = value;
     this.userNameInput = value.clientName;

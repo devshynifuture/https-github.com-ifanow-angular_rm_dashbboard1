@@ -1,3 +1,4 @@
+import { MaterialModule } from './../../../../../../material/material';
 import { SipCleanupComponent } from './sip-cleanup.component';
 import { CustomDirectiveModule } from "./../../../../../../common/directives/common-directive.module";
 import { CommonModule } from "@angular/common";
@@ -12,6 +13,7 @@ import { SipCleanupRoutingModule } from './sip-cleanup-routing.module';
   imports: [
     CommonModule,
     FormsModule,
+    MaterialModule,
     ReactiveFormsModule,
     CustomDirectiveModule,
     SipCleanupRoutingModule
