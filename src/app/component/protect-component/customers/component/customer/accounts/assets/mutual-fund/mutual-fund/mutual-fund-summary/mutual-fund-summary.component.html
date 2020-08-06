@@ -661,7 +661,7 @@
                 </td>
             </tr>
 
-            <tr *ngIf="item.total">
+            <tr>
                 <td valign="top"*ngIf="customDataSource.data?.array[0]?.isCheked"
                 [ngStyle]="customDataSource.data?.array3[0].style">
                     {{mfData[firstArrayGTotal]}}
@@ -700,6 +700,7 @@
                     {{mfData[ninethArrayGTotal]}}
                 </td>
                 <td valign="top" *ngIf="customDataSource.data?.array[9]?.isCheked" [ngStyle]="customDataSource.data?.array3[9].style">
+                        {{mfData[tenthArrayGTotal]}}
                 </td>
                 <td valign="top" *ngIf="customDataSource.data?.array[10]?.isCheked" [ngStyle]="customDataSource.data?.array3[10].style" appFormatNumber>
                     <!-- {{grandTotal.sip}} -->
