@@ -43,9 +43,20 @@ export class CustomFilterDatepickerDialogComponent {
 
 	setDateValue() {
 		let fromDate = this.customDateForm.get('fromDate').value;
-		let fromDateFormatted = fromDate.getFullYear() + '-' + this.utilService.addZeroBeforeNumber((fromDate.getMonth() + 1), 2) + '-' + this.utilService.addZeroBeforeNumber(fromDate.getDate(), 2)
+		let fromDateFormatted;
+		if(moment.isDate(fromDate)){
+			fromDateFormatted = fromDate.getFullYear() + '-' + this.utilService.addZeroBeforeNumber((fromDate.getMonth() + 1), 2) + '-' + this.utilService.addZeroBeforeNumber(fromDate.getDate(), 2)
+		} else {
+			fromDateFormatted = fromDate.format('YYYY-MM-DD');
+		}
+
 		let toDate = this.customDateForm.get('toDate').value;
-		let toDateFormatted = toDate.getFullYear() + '-' + this.utilService.addZeroBeforeNumber((toDate.getMonth() + 1), 2) + '-' + this.utilService.addZeroBeforeNumber(toDate.getDate(), 2)
+		let toDateFormatted;
+		if(moment.isDate(toDate)){
+			toDateFormatted = toDate.getFullYear() + '-' + this.utilService.addZeroBeforeNumber((toDate.getMonth() + 1), 2) + '-' + this.utilService.addZeroBeforeNumber(toDate.getDate(), 2)
+		} else {
+			toDateFormatted = toDate.format('YYYY-MM-DD');
+		}
 
 		let dateValues = {
 			fromDate: fromDateFormatted,

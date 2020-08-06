@@ -56,23 +56,24 @@ export class CrmTasksComponent implements OnInit {
     this.filterValueId = this.filterFormControl.value;
     if(this.filterValueId === 5){
       this.customDateFilter = true;
-      this.openDateDialog('');
+      this.openDateDialog();
     } else {
       this.finalTaskList = [];
       this.initPoint();
     }
   }
 
-  openDateDialog(data){
+  openDateDialog(){
     const dialogRef = this.dialog.open(CustomFilterDatepickerDialogComponent,{
         width: '663px',
-        data
+        data: ''
     })
 
     dialogRef.afterClosed()
       .subscribe(res=>{
         if(res){
           this.customFromToDate = res;
+          this.finalTaskList = [];
           this.initPoint();
         }
       })
@@ -224,5 +225,45 @@ export interface PeriodicElement {
   menuList: string;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [];
+const ELEMENT_DATA: PeriodicElement[] = [
+  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
+  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
+  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
+  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
+  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
+  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
+  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
+  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
+  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
+  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
+  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
+  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
+  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
+  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
+  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
+  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
+  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
+  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
+  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
+  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
+  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
+  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
+  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
+  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
+  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
+  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
+  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
+  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
+  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
+  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
+  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
+  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
+  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
+  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
+  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
+  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
+  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
+  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } ,
+  { client: '', member: '' , des: '' ,cat: '', assigned: '', dueDate: '',  status: '', menuList: '' } 
+];
 
