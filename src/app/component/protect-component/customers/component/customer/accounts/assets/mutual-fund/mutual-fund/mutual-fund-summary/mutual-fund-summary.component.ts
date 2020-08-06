@@ -34,7 +34,7 @@ export class MutualFundSummaryComponent implements OnInit {
 
   displayedColumns = ['schemeName', 'amountInvested', 'currentValue', 'unrealizedProfit', 'absoluteReturn',
     'xirr', 'dividendPayout', 'switchOut', 'balanceUnit', 'navDate', 'sipAmount', 'icons'];
-    displayedColumnsTotal: string[] = ['schemeNameTotal', 'amountInvestedTotal', 'currentValueTotal', 'unrealizedProfitTotal', 'absoluteReturnTotal',
+  displayedColumnsTotal: string[] = ['schemeNameTotal', 'amountInvestedTotal', 'currentValueTotal', 'unrealizedProfitTotal', 'absoluteReturnTotal',
     'xirrTotal', 'dividendPayoutTotal', 'switchOutTotal', 'balanceUnitTotal', 'navDateTotal', 'sipAmountTotal', 'iconsTotal'];
   mfData: any;
   grandTotal: any = {};
@@ -1178,9 +1178,9 @@ export class MutualFundSummaryComponent implements OnInit {
         this.customDataSource.data = []
         this.summary.data = [{}, {}, {}];
         this.summary.data = data.customDataSourceData;
-          this.mfData.withdrawals = this.grandTotal.withdrawals
-          this.mfData.totalBalanceUnit = this.grandTotal.totalBalanceUnit
-          this.mfData.sip = this.grandTotal.sip
+        this.mfData.withdrawals = this.grandTotal.withdrawals
+        this.mfData.totalBalanceUnit = this.grandTotal.totalBalanceUnit
+        this.mfData.sip = this.grandTotal.sip
         console.log("this is summary Data:::", data.customDataSourceData)
         this.customDataSource.data = data.customDataSourceData;
         this.customDataSource.data.array = [];
@@ -1207,80 +1207,80 @@ export class MutualFundSummaryComponent implements OnInit {
               }
             }
           })
-          this.customDataSource.data.array.forEach(element => {
-            switch (element.index) {
-              case 0:
-                this.firstArray = this.filterHedaerWise(element);
-                this.firstArrayTotal = this.filterHedaerWiseTotal(element);
-                this.firstArrayGTotal = this.filterHedaerWiseGTotal(element);
-      
-                break;
-              case 1:
-                this.secondArray = this.filterHedaerWise(element);
-                this.secondArrayTotal = this.filterHedaerWiseTotal(element);
-                this.secondArrayGTotal = this.filterHedaerWiseGTotal(element);
-      
-                break;
-              case 2:
-                this.thirdArray = this.filterHedaerWise(element);
-                this.thirdArrayTotal = this.filterHedaerWiseTotal(element);
-                this.thirdArrayGTotal = this.filterHedaerWiseGTotal(element);
-      
-                break;
-              case 3:
-                this.fourthArray = this.filterHedaerWise(element);
-                this.fourthArrayTotal = this.filterHedaerWiseTotal(element);
-                this.fourthArrayGTotal = this.filterHedaerWiseGTotal(element);
-      
-                break;
-              case 4:
-                this.fifthArray = this.filterHedaerWise(element);
-                this.fifthArrayTotal = this.filterHedaerWiseTotal(element);
-                this.fifthArrayGTotal = this.filterHedaerWiseGTotal(element);
-      
-                break;
-              case 5:
-                this.SixthArray = this.filterHedaerWise(element);
-                this.SixthArrayTotal = this.filterHedaerWiseTotal(element);
-                this.SixthArrayGTotal = this.filterHedaerWiseGTotal(element);
-      
-                break;
-              case 6:
-                this.seventhArray = this.filterHedaerWise(element);
-                this.seventhArrayTotal = this.filterHedaerWiseTotal(element);
-                this.seventhArrayGTotal = this.filterHedaerWiseGTotal(element);
-      
-                break;
-              case 7:
-                this.eighthArray = this.filterHedaerWise(element);
-                this.eighthArrayTotal = this.filterHedaerWiseTotal(element);
-                this.eighthArrayGTotal = this.filterHedaerWiseGTotal(element);
-      
-      
-                break;
-              case 8:
-                this.ninethArray = this.filterHedaerWise(element);
-                this.ninethArrayTotal = this.filterHedaerWiseTotal(element);
-                this.ninethArrayGTotal = this.filterHedaerWiseGTotal(element);
-      
-      
-                break;
-              case 9:
-                this.tenthArray = this.filterHedaerWise(element);
-                this.tenthArrayTotal = this.filterHedaerWiseTotal(element);
-                this.tenthArrayGTotal = this.filterHedaerWiseGTotal(element);
-      
-      
-                break;
-              case 10:
-                this.eleventhArray = this.filterHedaerWise(element);
-                this.eleventhArrayTotal = this.filterHedaerWiseTotal(element);
-                this.eleventhArrayGTotal = this.filterHedaerWiseGTotal(element);
-      
-      
-                break;
-            }
-          });
+        this.customDataSource.data.array.forEach(element => {
+          switch (element.index) {
+            case 0:
+              this.firstArray = this.filterHedaerWise(element);
+              this.firstArrayTotal = this.filterHedaerWiseTotal(element);
+              this.firstArrayGTotal = this.filterHedaerWiseGTotal(element);
+
+              break;
+            case 1:
+              this.secondArray = this.filterHedaerWise(element);
+              this.secondArrayTotal = this.filterHedaerWiseTotal(element);
+              this.secondArrayGTotal = this.filterHedaerWiseGTotal(element);
+
+              break;
+            case 2:
+              this.thirdArray = this.filterHedaerWise(element);
+              this.thirdArrayTotal = this.filterHedaerWiseTotal(element);
+              this.thirdArrayGTotal = this.filterHedaerWiseGTotal(element);
+
+              break;
+            case 3:
+              this.fourthArray = this.filterHedaerWise(element);
+              this.fourthArrayTotal = this.filterHedaerWiseTotal(element);
+              this.fourthArrayGTotal = this.filterHedaerWiseGTotal(element);
+
+              break;
+            case 4:
+              this.fifthArray = this.filterHedaerWise(element);
+              this.fifthArrayTotal = this.filterHedaerWiseTotal(element);
+              this.fifthArrayGTotal = this.filterHedaerWiseGTotal(element);
+
+              break;
+            case 5:
+              this.SixthArray = this.filterHedaerWise(element);
+              this.SixthArrayTotal = this.filterHedaerWiseTotal(element);
+              this.SixthArrayGTotal = this.filterHedaerWiseGTotal(element);
+
+              break;
+            case 6:
+              this.seventhArray = this.filterHedaerWise(element);
+              this.seventhArrayTotal = this.filterHedaerWiseTotal(element);
+              this.seventhArrayGTotal = this.filterHedaerWiseGTotal(element);
+
+              break;
+            case 7:
+              this.eighthArray = this.filterHedaerWise(element);
+              this.eighthArrayTotal = this.filterHedaerWiseTotal(element);
+              this.eighthArrayGTotal = this.filterHedaerWiseGTotal(element);
+
+
+              break;
+            case 8:
+              this.ninethArray = this.filterHedaerWise(element);
+              this.ninethArrayTotal = this.filterHedaerWiseTotal(element);
+              this.ninethArrayGTotal = this.filterHedaerWiseGTotal(element);
+
+
+              break;
+            case 9:
+              this.tenthArray = this.filterHedaerWise(element);
+              this.tenthArrayTotal = this.filterHedaerWiseTotal(element);
+              this.tenthArrayGTotal = this.filterHedaerWiseGTotal(element);
+
+
+              break;
+            case 10:
+              this.eleventhArray = this.filterHedaerWise(element);
+              this.eleventhArrayTotal = this.filterHedaerWiseTotal(element);
+              this.eleventhArrayGTotal = this.filterHedaerWiseGTotal(element);
+
+
+              break;
+          }
+        });
         this.isLoading = false;
         this.changeInput.emit(false);
       };
@@ -1541,12 +1541,17 @@ export class MutualFundSummaryComponent implements OnInit {
     this.customDataSource.data.forEach(element => {
       if (element.folioNumber) {
         element.schemeName = element.schemeName + ' | ' + element.folioNumber + ' | ' + element.ownerName
+        var type = typeof element.navDate == "boolean" ? element.navDate : false;
+        console.log('type', type)
+        if(type == false){
+          element.navDate = element.nav + ' | '+element.navDate
+        }
       }
     });
     this.displayedColumns.forEach((element, ind) => {
       this.styleObject(element, ind)
     });
- 
+
     this.showDownload = true
     this.fragmentData.isSpinner = true;
     setTimeout(() => {
