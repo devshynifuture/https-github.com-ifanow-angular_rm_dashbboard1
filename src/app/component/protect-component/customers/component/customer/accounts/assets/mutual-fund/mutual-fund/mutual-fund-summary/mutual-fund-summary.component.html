@@ -534,6 +534,9 @@
             <td *ngIf="customDataSource.data?.array[9]?.isCheked" [ngStyle]="customDataSource.data?.array[9].style">
                 <b>{{customDataSource.data?.array[9]?.name}}</b>
             </td>
+            <td *ngIf="customDataSource.data?.array[10]?.isCheked" [ngStyle]="customDataSource.data?.array[10].style">
+                <b>{{customDataSource.data?.array[10]?.name}}</b>
+            </td>
            
         </tr>
         <tbody *ngFor="let item of customDataSource.data;index as i">
