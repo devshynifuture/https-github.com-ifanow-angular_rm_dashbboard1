@@ -135,7 +135,7 @@
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="borderTopbox" *ngIf="panelOpenState == true">
-                <div cdkDropList (cdkDropListDropped)="drop($event)">
+                <div  cdkDropList (cdkDropListDropped)="drop($event)">
                     <p class="f-12 text-primitive mb-0 mt-10 lh-16">Customize this report futher by rearranging columns below and managing their visibility. </p>
                     <mat-list-item class="example-box-pannel" role="listitem"  *ngFor="let item of transactionView let i = index;" cdkDrag>
                             <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
