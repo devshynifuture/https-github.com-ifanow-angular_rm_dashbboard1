@@ -155,7 +155,7 @@ export class OwnerNomineeDirective {
             if (e.type == 'owner') {
               if(e.index == "0"){
                 setTimeout(() => {
-                  this.userForBank = this.sendData.filter(x => x.id == this.getCoOwner.controls[e.index].get('familyMemberId').value);
+                  this.userForBank = this.sendData.filter(x => x.id == this.getCoOwner.controls[e.index].get('familyMemberId').value || x.clientId == this.getCoOwner.controls[e.index].get('familyMemberId').value && x.relationshipId == 1);
                   console.log(this.userForBank);
                   if(this.userForBank){
                     this.enumDataService.getAccountList(this.userForBank).then((data)=>{
@@ -164,8 +164,8 @@ export class OwnerNomineeDirective {
                   }
                 }, 500);
               }
-              this.getCoOwner.controls[e.index].get('familyMemberId').setValue(element.id);
-              this.getCoOwner.controls[e.index].get('isClient').setValue(element.relationshipId == 0 ? 1 : 0);
+              this.getCoOwner.controls[e.index].get('familyMemberId').setValue(element.id == 0?element.clientId:element.familyMemberId);
+              this.getCoOwner.controls[e.index].get('isClient').setValue(element.relationshipId == 1 ? 1 : 0);
               if (this.getCoOwner.controls[e.index].get('relationshipId')) {
                 this.getCoOwner.controls[e.index].get('relationshipId').setValue(element.relationshipId);
               }

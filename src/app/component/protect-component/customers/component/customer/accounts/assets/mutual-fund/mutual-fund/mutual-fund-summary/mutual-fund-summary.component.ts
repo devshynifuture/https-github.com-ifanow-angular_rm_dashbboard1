@@ -136,7 +136,7 @@ export class MutualFundSummaryComponent implements OnInit {
   constructor(
     private subInjectService: SubscriptionInject,
     private utilService: UtilService,
-    private mfService: MfServiceService,
+    public mfService: MfServiceService,
     private excel: ExcelGenService,
     private backOfficeService: BackOfficeService,
     // private workerService: WebworkerService,
@@ -635,7 +635,7 @@ export class MutualFundSummaryComponent implements OnInit {
       });
     } else if (header == 'xirr') {
       this.customDataSource.data.array.push({
-        'name': 'Xirr', 'index': ind, isCheked: true,
+        'name': 'XIRR', 'index': ind, isCheked: true,
         style: {
           'width': '5%',
           'text-align': 'right',
@@ -847,7 +847,7 @@ export class MutualFundSummaryComponent implements OnInit {
       });
     } else if (header == 'navDate') {
       this.customDataSource.data.array.push({
-        'name': 'Nav date', 'index': ind, isCheked: true,
+        'name': 'NAV date', 'index': ind, isCheked: true,
         style: {
           'width': '9%',
           'text-align': 'right',
@@ -899,7 +899,7 @@ export class MutualFundSummaryComponent implements OnInit {
       });
     } else if (header == 'sipAmount') {
       this.customDataSource.data.array.push({
-        'name': 'Sip amount', 'index': ind, isCheked: true,
+        'name': 'SIP amount', 'index': ind, isCheked: true,
         style: {
           'width': '5%',
           'font-size': '13px',
@@ -1179,8 +1179,10 @@ export class MutualFundSummaryComponent implements OnInit {
         this.summary.data = [{}, {}, {}];
         this.summary.data = data.customDataSourceData;
         this.mfData.withdrawals = this.grandTotal.withdrawals
-        this.mfData.totalBalanceUnit = this.grandTotal.totalBalanceUnit
+        this.mfData.totalBalanceUnit = this.mfService.mutualFundRoundAndFormat(this.grandTotal.totalBalanceUnit,3)
         this.mfData.sip = this.grandTotal.sip
+        this.mfData.total_absolute_return=this.mfService.mutualFundRoundAndFormat(this.mfData.total_absolute_return,2);
+        this.mfData.total_xirr=this.mfService.mutualFundRoundAndFormat(this.mfData.total_xirr,2)
         console.log("this is summary Data:::", data.customDataSourceData)
         this.customDataSource.data = data.customDataSourceData;
         this.customDataSource.data.array = [];
@@ -1578,7 +1580,7 @@ export class MutualFundSummaryComponent implements OnInit {
       case 'Abs Ret':
         obj = 'absoluteReturn';
         break;
-      case 'Xirr':
+      case 'XIRR':
         obj = 'xirr';
         break;
       case 'Dividend payout':
@@ -1590,10 +1592,10 @@ export class MutualFundSummaryComponent implements OnInit {
       case 'Balance unit':
         obj = 'balanceUnit';
         break;
-      case 'Nav date':
+      case 'NAV date':
         obj = 'navDate';
         break;
-      case 'Sip amount':
+      case 'SIP amount':
         obj = 'sipAmount';
         break;
     }
@@ -1618,7 +1620,7 @@ export class MutualFundSummaryComponent implements OnInit {
       case 'Abs Ret':
         obj = 'totalAbsoluteReturn';
         break;
-      case 'Xirr':
+      case 'XIRR':
         obj = 'totalDividendPayout';
         break;
       case 'Dividend payout':
@@ -1630,10 +1632,10 @@ export class MutualFundSummaryComponent implements OnInit {
       case 'Balance unit':
         obj = 'totalBalanceUnit';
         break;
-      case 'Nav date':
+      case 'NAV date':
         obj = 'totalNavDate';
         break;
-      case 'Sip amount':
+      case 'SIP amount':
         obj = 'totalSipAmount';
         break;
     }
@@ -1658,7 +1660,7 @@ export class MutualFundSummaryComponent implements OnInit {
       case 'Abs Ret':
         obj = 'total_absolute_return';
         break;
-      case 'Xirr':
+      case 'XIRR':
         obj = 'total_xirr';
         break;
       case 'Dividend payout':
@@ -1670,10 +1672,10 @@ export class MutualFundSummaryComponent implements OnInit {
       case 'Balance unit':
         obj = 'totalBalanceUnit';
         break;
-      case 'Nav date':
+      case 'NAV date':
         obj = '';
         break;
-      case 'Sip amount':
+      case 'SIP amount':
         obj = 'sip';
         break;
     }

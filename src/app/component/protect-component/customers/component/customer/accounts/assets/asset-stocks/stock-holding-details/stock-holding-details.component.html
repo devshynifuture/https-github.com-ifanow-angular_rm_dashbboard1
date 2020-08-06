@@ -1,15 +1,15 @@
 <div class="row popup-header-fix-35 bb-1 pt-16 pb-16">
-    <div class="col-md-10">
-        <h3 class="m-0 roboto f-400">Stocks - Detailed view</h3>
-    </div>
-    <div class="col-md-2 pr-24 text-right" (click)="close()">
-        <span class="material-icons c-p">
-            clear
-            </span>
-    </div>
+  <div class="col-md-10">
+      <h3 class="m-0 roboto f-400">Stocks - Detailed view</h3>
+  </div>
+  <div class="col-md-2 pr-24 text-right" >
+      <span class="material-icons c-p" (click)="close()">
+          clear
+          </span>
+  </div>
 </div>
+<!-- Portfolio scrip level holding details view -->
 
-<!-- Portfolio summary details view -->
 <div class="row pt-90">
     <div class="col-md-12">
         <h5 class="m-0 f-500 roboto pb-10">Basic details</h5>
@@ -110,7 +110,7 @@
     </div>
    
 </div>
-<div class="row pt-20 pb-90">
+<div class="row pt-20">
     <div class="col-md-12">
         <h5 class="m-0 f-500 roboto pb-10">Nominee details</h5>
    
@@ -131,6 +131,72 @@
             Daughter with 50% share
         </div>
     </div>
+    <div class="col-md-12 text-right pt-4">
+        <p class="m-0 text-custom f-12 lh-14">Updated: 04/09/2019</p>
+    </div>
+    </div>
+</div>
+<div class="row pt-20 pb-90">
+    <div class="col-md-12">
+        <h5 class="m-0 f-500 roboto pb-10">Holdings</h5>
+   
+    <div class="row bb p-8 b-l br w-100 bt-1">
+        <div class="col-md-7 text-left f-14 roboto p-0">
+            Scrip name
+        </div>
+        <div class="col-md-5 text-right f-14 roboto p-0">
+            TCS ltd.
+        </div>
+    </div>
+
+    <div class="row bb p-8 b-l br w-100">
+        <div class="col-md-7 text-left f-14 roboto p-0">
+            Current value
+        </div>
+        <div class="col-md-5 text-right f-14 roboto p-0">
+            ₹ 19,50,444
+        </div>
+    </div>
+    <div class="row bb p-8 b-l br w-100">
+        <div class="col-md-7 text-left f-14 roboto p-0">
+            Amount invested
+        </div>
+        <div class="col-md-5 text-right f-14 roboto p-0">
+            ₹ 23,35,444
+        </div>
+    </div>
+    <div class="row bb p-8 b-l br w-100">
+        <div class="col-md-7 text-left f-14 roboto p-0">
+            Quantity
+        </div>
+        <div class="col-md-5 text-right f-14 roboto p-0">
+            1500
+        </div>
+    </div>
+    <div class="row bb p-8 b-l br w-100">
+        <div class="col-md-7 text-left f-14 roboto p-0">
+            Quantity as on
+        </div>
+        <div class="col-md-5 text-right f-14 roboto p-0">
+            ₹ 23,35,444
+        </div>
+    </div>
+    <div class="row bb p-8 b-l br w-100">
+        <div class="col-md-7 text-left f-14 roboto p-0">
+            Unrealized gain/loss
+        </div>
+        <div class="col-md-5 text-right f-14 roboto p-0">
+            ₹ 23,35,444
+        </div>
+    </div>
+    <div class="row bb p-8 b-l br w-100">
+        <div class="col-md-7 text-left f-14 roboto p-0">
+            Absolute returns
+        </div>
+        <div class="col-md-5 text-right f-14 roboto p-0">
+            3%
+        </div>
+    </div>
     <div class="col-md-12 text-right pt-4 pr-0">
         <p class="m-0 text-custom f-12 lh-14">Updated: 04/09/2019</p>
     </div>
@@ -138,16 +204,10 @@
 </div>
 <div class="bottom-fixed wrapper-12 pt-16 w-35">
     <div class="row">
-        <div class="col-md-4 pt-8" (click)="close()">
-            <h5 class="mb-0  text-white c-p">Close</h5>
+        <div class="col-md-4 pt-8">
+            <h5 class="mb-0  text-white c-p" (click)="close()">Close</h5>
         </div>
 
        
     </div>
 </div>
-
-
-
-
-
-
