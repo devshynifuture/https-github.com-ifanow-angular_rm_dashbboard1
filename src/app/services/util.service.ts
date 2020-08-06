@@ -205,22 +205,23 @@ export class UtilService {
     return mobileNo.substr(0, 2) + 'XXXXX' + mobileNo.substr(7, 9);
   }
 
-  public static getNumberToWord(number) {
-//        System.out.println("inside the get numbers");
-//     let strNumber = '';
-//     if (number > 10000000) {
-// //                System.out.println("number 1 ");
-//       strNumber = String.format('%.2f Crores', number / 10000000.0);
-//     } else if (number > 100000) {
-// //                System.out.println("number 2");
-//       strNumber = String.format('%.2f Lacs', number / 100000.0);
-//     } else if (number > 1000) {
-// //                System.out.println("number 3 ");
-//       strNumber = String.format('%.2f k', number / 1000.0);
-//     } else {
-//       strNumber = number.toString();
-//     }
-//     return strNumber;
+  public static getNumberToWord(numberValue) {
+    let strNumber = '';
+    if (!numberValue) {
+      if (isNaN(numberValue)) {
+        return numberValue;
+      }
+    }
+    if (numberValue > 10000000) {
+      strNumber = this.mutualFundRoundAndFormat(numberValue / 10000000.0, 2) + ' Crores';
+    } else if (numberValue > 100000) {
+      strNumber = this.mutualFundRoundAndFormat(numberValue / 100000.0, 2) + ' Lacs';
+    } else if (numberValue > 1000) {
+      strNumber = this.mutualFundRoundAndFormat(numberValue / 1000.0, 2) + ' K';
+    } else {
+      strNumber = numberValue.toString();
+    }
+    return strNumber;
 
   }
 
