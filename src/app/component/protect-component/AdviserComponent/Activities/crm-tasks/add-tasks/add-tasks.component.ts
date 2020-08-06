@@ -703,11 +703,11 @@ export class AddTasksComponent implements OnInit {
   formValidationOfTaskForm() {
     if (this.addTaskForm.valid) {
       if (!this.isRecurringTaskForm) {
-        if (this.addTaskForm.get('dueDate').value == null) {
-          this.addTaskForm.get('dueDate').setValidators([Validators.required]);
-          this.addTaskForm.get('dueDate').markAsTouched();
+        if (this.addTaskForm.get('taskDueDate').value == null) {
+          this.addTaskForm.get('taskDueDate').setValidators([Validators.required]);
+          this.addTaskForm.get('taskDueDate').markAsTouched();
         } else {
-          this.addTaskForm.get('dueDate').setErrors(null);
+          this.addTaskForm.get('taskDueDate').setErrors(null);
         }
       }
       this.onCreateTask();

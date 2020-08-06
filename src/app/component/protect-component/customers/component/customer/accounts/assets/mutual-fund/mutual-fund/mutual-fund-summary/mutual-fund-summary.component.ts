@@ -136,7 +136,7 @@ export class MutualFundSummaryComponent implements OnInit {
   constructor(
     private subInjectService: SubscriptionInject,
     private utilService: UtilService,
-    private mfService: MfServiceService,
+    public mfService: MfServiceService,
     private excel: ExcelGenService,
     private backOfficeService: BackOfficeService,
     // private workerService: WebworkerService,
@@ -635,7 +635,7 @@ export class MutualFundSummaryComponent implements OnInit {
       });
     } else if (header == 'xirr') {
       this.customDataSource.data.array.push({
-        'name': 'Xirr', 'index': ind, isCheked: true,
+        'name': 'XIRR', 'index': ind, isCheked: true,
         style: {
           'width': '5%',
           'text-align': 'right',
@@ -847,7 +847,7 @@ export class MutualFundSummaryComponent implements OnInit {
       });
     } else if (header == 'navDate') {
       this.customDataSource.data.array.push({
-        'name': 'Nav date', 'index': ind, isCheked: true,
+        'name': 'NAV date', 'index': ind, isCheked: true,
         style: {
           'width': '9%',
           'text-align': 'right',
@@ -899,7 +899,7 @@ export class MutualFundSummaryComponent implements OnInit {
       });
     } else if (header == 'sipAmount') {
       this.customDataSource.data.array.push({
-        'name': 'Sip amount', 'index': ind, isCheked: true,
+        'name': 'SIP amount', 'index': ind, isCheked: true,
         style: {
           'width': '5%',
           'font-size': '13px',
@@ -1179,8 +1179,10 @@ export class MutualFundSummaryComponent implements OnInit {
         this.summary.data = [{}, {}, {}];
         this.summary.data = data.customDataSourceData;
         this.mfData.withdrawals = this.grandTotal.withdrawals
-        this.mfData.totalBalanceUnit = this.grandTotal.totalBalanceUnit
+        this.mfData.totalBalanceUnit = this.mfService.mutualFundRoundAndFormat(this.grandTotal.totalBalanceUnit,3)
         this.mfData.sip = this.grandTotal.sip
+        this.mfData.total_absolute_return=this.mfService.mutualFundRoundAndFormat(this.mfData.total_absolute_return,2);
+        this.mfData.total_xirr=this.mfService.mutualFundRoundAndFormat(this.mfData.total_xirr,2)
         console.log("this is summary Data:::", data.customDataSourceData)
         this.customDataSource.data = data.customDataSourceData;
         this.customDataSource.data.array = [];
@@ -1578,7 +1580,7 @@ export class MutualFundSummaryComponent implements OnInit {
       case 'Abs Ret':
         obj = 'absoluteReturn';
         break;
-      case 'Xirr':
+      case 'XIRR':
         obj = 'xirr';
         break;
       case 'Dividend payout':
@@ -1590,10 +1592,10 @@ export class MutualFundSummaryComponent implements OnInit {
       case 'Balance unit':
         obj = 'balanceUnit';
         break;
-      case 'Nav date':
+      case 'NAV date':
         obj = 'navDate';
         break;
-      case 'Sip amount':
+      case 'SIP amount':
         obj = 'sipAmount';
         break;
     }
@@ -1618,7 +1620,7 @@ export class MutualFundSummaryComponent implements OnInit {
       case 'Abs Ret':
         obj = 'totalAbsoluteReturn';
         break;
-      case 'Xirr':
+      case 'XIRR':
         obj = 'totalDividendPayout';
         break;
       case 'Dividend payout':
@@ -1630,10 +1632,10 @@ export class MutualFundSummaryComponent implements OnInit {
       case 'Balance unit':
         obj = 'totalBalanceUnit';
         break;
-      case 'Nav date':
+      case 'NAV date':
         obj = 'totalNavDate';
         break;
-      case 'Sip amount':
+      case 'SIP amount':
         obj = 'totalSipAmount';
         break;
     }
@@ -1658,7 +1660,7 @@ export class MutualFundSummaryComponent implements OnInit {
       case 'Abs Ret':
         obj = 'total_absolute_return';
         break;
-      case 'Xirr':
+      case 'XIRR':
         obj = 'total_xirr';
         break;
       case 'Dividend payout':
@@ -1670,10 +1672,10 @@ export class MutualFundSummaryComponent implements OnInit {
       case 'Balance unit':
         obj = 'totalBalanceUnit';
         break;
-      case 'Nav date':
+      case 'NAV date':
         obj = '';
         break;
-      case 'Sip amount':
+      case 'SIP amount':
         obj = 'sip';
         break;
     }
@@ -1842,87 +1844,21 @@ export class MutualFundSummaryComponent implements OnInit {
     this.customDataSource.data.array2 = []
     this.customDataSource.data.array3 = []
     this.customDataSource.data.forEach(element => {
-      if (element.schemeName) {
+      if (element.folioNumber) {
         element.schemeName = element.schemeName + ' | ' + element.folioNumber + ' | ' + element.ownerName
+        var type = typeof element.navDate == "boolean" ? element.navDate : false;
+        console.log('type', type)
+        if(type == false){
+          element.navDate = element.nav + ' | '+element.navDate
+        }
       }
     });
     this.displayedColumns.forEach((element, ind) => {
       this.styleObject(element, ind)
     });
-    this.customDataSource.data.array.forEach(element => {
-      switch (element.index) {
-        case 0:
-          this.firstArray = this.filterHedaerWise(element);
-          this.firstArrayTotal = this.filterHedaerWiseTotal(element);
-          this.firstArrayGTotal = this.filterHedaerWiseGTotal(element);
 
-          break;
-        case 1:
-          this.secondArray = this.filterHedaerWise(element);
-          this.secondArrayTotal = this.filterHedaerWiseTotal(element);
-          this.secondArrayGTotal = this.filterHedaerWiseGTotal(element);
-
-          break;
-        case 2:
-          this.thirdArray = this.filterHedaerWise(element);
-          this.thirdArrayTotal = this.filterHedaerWiseTotal(element);
-          this.thirdArrayGTotal = this.filterHedaerWiseGTotal(element);
-
-          break;
-        case 3:
-          this.fourthArray = this.filterHedaerWise(element);
-          this.fourthArrayTotal = this.filterHedaerWiseTotal(element);
-          this.fourthArrayGTotal = this.filterHedaerWiseGTotal(element);
-
-          break;
-        case 4:
-          this.fifthArray = this.filterHedaerWise(element);
-          this.fifthArrayTotal = this.filterHedaerWiseTotal(element);
-          this.fifthArrayGTotal = this.filterHedaerWiseGTotal(element);
-
-          break;
-        case 5:
-          this.SixthArray = this.filterHedaerWise(element);
-          this.SixthArrayTotal = this.filterHedaerWiseTotal(element);
-          this.SixthArrayGTotal = this.filterHedaerWiseGTotal(element);
-
-          break;
-        case 6:
-          this.seventhArray = this.filterHedaerWise(element);
-          this.seventhArrayTotal = this.filterHedaerWiseTotal(element);
-          this.seventhArrayGTotal = this.filterHedaerWiseGTotal(element);
-
-          break;
-        case 7:
-          this.eighthArray = this.filterHedaerWise(element);
-          this.eighthArrayTotal = this.filterHedaerWiseTotal(element);
-          this.eighthArrayGTotal = this.filterHedaerWiseGTotal(element);
-
-
-          break;
-        case 8:
-          this.ninethArray = this.filterHedaerWise(element);
-          this.ninethArrayTotal = this.filterHedaerWiseTotal(element);
-          this.ninethArrayGTotal = this.filterHedaerWiseGTotal(element);
-
-
-          break;
-        case 9:
-          this.tenthArray = this.filterHedaerWise(element);
-          this.tenthArrayTotal = this.filterHedaerWiseTotal(element);
-          this.tenthArrayGTotal = this.filterHedaerWiseGTotal(element);
-
-
-          break;
-        case 10:
-          this.eleventhArray = this.filterHedaerWise(element);
-          this.eleventhArrayTotal = this.filterHedaerWiseTotal(element);
-          this.eleventhArrayGTotal = this.filterHedaerWiseGTotal(element);
-
-
-          break;
-      }
-    });
+    this.showDownload = true
+    this.fragmentData.isSpinner = true;
     const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
 
     this.showDownload = true

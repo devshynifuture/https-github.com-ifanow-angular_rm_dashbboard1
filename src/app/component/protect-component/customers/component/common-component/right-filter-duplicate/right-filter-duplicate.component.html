@@ -98,62 +98,7 @@
             </div>
         </mat-expansion-panel>
 
-        <!-- <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (click)="panelOpenState = true" [expanded]="false"
-            *ngIf="_data.name != 'Overview Report' && _data.name!='CAPITAL GAIN REPORT'">
-            <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
-                [expandedHeight]="customExpandedHeight">
-                <mat-panel-title>
-                    <h5 class="m-0">Transaction view <span class="text-right f-14 pl-12 text-custom">{{countTranView}}
-                            of
-                            {{transactionView.length}} selected</span></h5>
-                </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div class="borderTopbox" *ngIf="panelOpenState == true">
-                <mat-list-item role="listitem" *ngFor="let item of transactionView let i = index;">
-                    <mat-checkbox [(ngModel)]="item.selected" (change)="changeSelect(item,i)">
-                        {{(item.displayName == 'transactionType')? 'Transaction type':(item.displayName == 'transactionDate')?'Transaction date':(item.displayName == 'transactionAmount')?'Transaction amount':(item.displayName == 'transactionNav')?'Transaction nav':(item.displayName == 'balanceUnits')?'Balance units':(item.displayName == 'no')?'No.':(item.displayName == 'units')?'Units':(item.displayName == 'dividendReinvest')?'Dividend reinvest':(item.displayName == 'dividendPayout')? 'Dividend payout':(item.displayName == 'currentValue')?'Current value':(item.displayName == 'totalAmount')?'Total amount':(item.displayName == 'absReturn')?'Absolute return':(item.displayName == 'xirr')?'XIIR':(item.displayName == 'gain')?'Gain':(item.displayName == 'days')?'Days':(item.displayName == 'schemeName')?'Scheme name':(item.displayName == 'amountInvested')?'Amount invested':(item.displayName == 'unrealizedProfit')?'Unrealized profit':(item.displayName == 'absoluteReturn')?'Absolute return':(item.displayName == 'switchOut')?'Switch out':(item.displayName == 'navDate')?'Nav date':(item.displayName == 'sipAmount')?'Sip Amount':(item.displayName == 'balanceUnit')?'Balance units':(item.displayName == 'icons')?'Icons':item.displayName}}
-                    </mat-checkbox>
-                </mat-list-item>
-            </div>
-        </mat-expansion-panel> -->
-        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (click)="panelOpenState = true" [expanded]="false"
-            *ngIf="_data.name != 'Overview Report' && _data.name!='CAPITAL GAIN REPORT'">
-            <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
-                [expandedHeight]="customExpandedHeight">
-                <mat-panel-title>
-                    <h5 class="m-0">Transaction view <span class="text-right f-14 pl-12 text-custom">{{countTranView}}
-                            of
-                            {{transactionView.length}} selected</span></h5>
-                </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div class="borderTopbox" *ngIf="panelOpenState == true">
-                <div cdkDropList (cdkDropListDropped)="drop($event)">
-                    <mat-list-item role="listitem"  *ngFor="let item of transactionView let i = index;" cdkDrag>
-                            <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
-                            <mat-checkbox [(ngModel)]="item.selected" (change)="changeSelect(item,i)">
-                                {{(item.displayName == 'transactionType')? 'Transaction type':(item.displayName == 'transactionDate')?'Transaction date':(item.displayName == 'transactionAmount')?'Transaction amount':(item.displayName == 'transactionNav')?'Transaction nav':(item.displayName == 'balanceUnits')?'Balance units':(item.displayName == 'no')?'No.':(item.displayName == 'units')?'Units':(item.displayName == 'dividendReinvest')?'Dividend reinvest':(item.displayName == 'dividendPayout')? 'Dividend payout':(item.displayName == 'currentValue')?'Current value':(item.displayName == 'totalAmount')?'Total amount':(item.displayName == 'absReturn')?'Absolute return':(item.displayName == 'xirr')?'XIIR':(item.displayName == 'gain')?'Gain':(item.displayName == 'days')?'Days':(item.displayName == 'schemeName')?'Scheme name':(item.displayName == 'amountInvested')?'Amount invested':(item.displayName == 'unrealizedProfit')?'Unrealized profit':(item.displayName == 'absoluteReturn')?'Absolute return':(item.displayName == 'switchOut')?'Switch out':(item.displayName == 'navDate')?'Nav date':(item.displayName == 'sipAmount')?'Sip Amount':(item.displayName == 'balanceUnit')?'Balance units':(item.displayName == 'icons')?'Icons':item.displayName}}
-                            </mat-checkbox>
-                    </mat-list-item>
-                </div>
-
-            </div>
-        </mat-expansion-panel>
-
-        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (click)="panelOpenState = true" [expanded]="false"
-            *ngIf="_data.name != 'Overview Report' && _data.name!='CAPITAL GAIN REPORT'">
-            <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
-                [expandedHeight]="customExpandedHeight">
-                <mat-panel-title>
-                    <h5 class="m-0">Report type <span class="text-right f-14 pl-12 text-custom"></span></h5>
-                </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div class="borderTopbox" *ngIf="panelOpenState == true">
-                <mat-list-item role="listitem" *ngFor="let item of reportType">
-                    <mat-checkbox [(ngModel)]="item.selected" (change)="changeReportFilter(item)">{{item.name}}
-                    </mat-checkbox>
-                </mat-list-item>
-            </div>
-        </mat-expansion-panel>
+        <!-- ------- cat ------ -->
 
         <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (click)="panelOpenState = true" [expanded]="false"
             *ngIf="_data.name!='CAPITAL GAIN REPORT'">
@@ -177,6 +122,79 @@
                 </mat-list-item>
             </div>
         </mat-expansion-panel>
+
+        
+        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (click)="panelOpenState = true" [expanded]="false"
+            *ngIf="_data.name != 'Overview Report' && _data.name!='CAPITAL GAIN REPORT'">
+            <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                [expandedHeight]="customExpandedHeight">
+                <mat-panel-title>
+                    <h5 class="m-0">Column view<span class="text-right f-14 pl-12 text-custom">{{countTranView}}
+                            of
+                            {{transactionView.length}} selected</span></h5>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="borderTopbox" *ngIf="panelOpenState == true">
+                <div  cdkDropList (cdkDropListDropped)="drop($event)">
+                    <p class="f-12 text-primitive mb-0 mt-10 lh-16">Customize this report futher by rearranging columns below and managing their visibility. </p>
+                    <mat-list-item class="example-box-pannel" role="listitem"  *ngFor="let item of transactionView let i = index;" cdkDrag>
+                            <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+                           <div class="d-flex align-items-center"> 
+                            <mat-checkbox [(ngModel)]="item.selected" (change)="changeSelect(item,i)">
+                             </mat-checkbox> 
+                             <a class="cursorMove">
+                                <span class="material-icons f-20 mr-8">
+                                    menu
+                                    </span>
+                                    {{(item.displayName == 'transactionType')? 'Transaction type':(item.displayName == 'transactionDate')?'Transaction date':(item.displayName == 'transactionAmount')?'Transaction amount':(item.displayName == 'transactionNav')?'Transaction nav':(item.displayName == 'balanceUnits')?'Balance units':(item.displayName == 'no')?'No.':(item.displayName == 'units')?'Units':(item.displayName == 'dividendReinvest')?'Dividend reinvest':(item.displayName == 'dividendPayout')? 'Dividend payout':(item.displayName == 'currentValue')?'Current value':(item.displayName == 'totalAmount')?'Total amount':(item.displayName == 'absReturn')?'Absolute return':(item.displayName == 'xirr')?'XIIR':(item.displayName == 'gain')?'Gain':(item.displayName == 'days')?'Days':(item.displayName == 'schemeName')?'Scheme name':(item.displayName == 'amountInvested')?'Amount invested':(item.displayName == 'unrealizedProfit')?'Unrealized profit':(item.displayName == 'absoluteReturn')?'Absolute return':(item.displayName == 'switchOut')?'Switch out':(item.displayName == 'navDate')?'Nav date':(item.displayName == 'sipAmount')?'Sip Amount':(item.displayName == 'balanceUnit')?'Balance units':(item.displayName == 'icons')?'Icons':item.displayName}}
+                             </a>
+                             
+                            
+                           </div>
+                    </mat-list-item>
+                </div>
+
+            </div>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (click)="panelOpenState = true" [expanded]="false"
+            *ngIf="_data.name != 'Overview Report' && _data.name!='CAPITAL GAIN REPORT'">
+            <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                [expandedHeight]="customExpandedHeight">
+                <mat-panel-title>
+                    <h5 class="m-0">Report type <span class="text-right f-14 pl-12 text-custom"></span></h5>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="borderTopbox" *ngIf="panelOpenState == true">
+                <mat-list-item role="listitem" *ngFor="let item of reportType">
+                    <mat-checkbox [(ngModel)]="item.selected" (change)="changeReportFilter(item)">{{item.name}}
+                    </mat-checkbox>
+                </mat-list-item>
+            </div>
+        </mat-expansion-panel>
+
+        <!-- <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (click)="panelOpenState = true" [expanded]="false"
+            *ngIf="_data.name!='CAPITAL GAIN REPORT'">
+            <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
+                [expandedHeight]="customExpandedHeight">
+                <mat-panel-title>
+                    <h5 class="m-0">Categories<span class="text-right f-14 pl-12 text-custom">{{countCategory}} of
+                            {{category.length}}
+                            selected</span></h5>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="borderTopbox" *ngIf="panelOpenState == true">
+                <mat-checkbox (change)="selectAll($event,'category')" [(ngModel)]="selectUnselctAllFlagCategory"
+                    name="selectAll"><span
+                        [ngClass]="{'text-custom': selectUnselctAllFlagCategory}">{{(selectUnselctAllFlagCategory) ? 'Uncheck all' : 'Check all' }}</span>
+                </mat-checkbox>
+                <mat-list-item role="listitem" *ngFor="let item of category">
+                    <mat-checkbox [(ngModel)]="item.selected" (change)="changeFilterCategory(this.category)">
+                        {{item.category |titlecase}}
+                    </mat-checkbox>
+                </mat-list-item>
+            </div>
+        </mat-expansion-panel> -->
 
         <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (click)="panelOpenState = true" [expanded]="false"
             *ngIf="_data.name!='SUMMARY REPORT' && _data.name != 'Overview Report' && _data.name!='CAPITAL GAIN REPORT'">
@@ -213,6 +231,7 @@
                 </mat-list-item>
             </div>
         </mat-expansion-panel>
+
         <mat-expansion-panel
             *ngIf="_data.name!='SUMMARY REPORT'  && _data.name!='CAPITAL GAIN REPORT' && _data.name != 'Overview Report' &&  _data.name!='UNREALIZED TRANSACTION REPORT'"
             class="mb-20 borderLine boxShadowNone" (click)="panelOpenState = true" [expanded]="false">
@@ -229,6 +248,7 @@
                 </mat-list-item>
             </div>
         </mat-expansion-panel>
+
         <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (click)="panelOpenState = true" [expanded]="false"
             *ngIf="_data.name!='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
@@ -238,12 +258,14 @@
                 </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="borderTopbox" *ngIf="panelOpenState == true">
+                <p class="f-12 text-primitive mb-0 mt-10 lh-16">Save filters option is applicable for Column View and Report type filters only.</p>
                 <mat-list-item role="listitem" *ngFor="let item of saveFilters">
                     <mat-checkbox [(ngModel)]="item.selected" (change)="changeSaveFilterSelection(item)">{{item.value}}
                     </mat-checkbox>
                 </mat-list-item>
             </div>
         </mat-expansion-panel>
+
         <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (click)="panelOpenState = true" [expanded]="false"
             *ngIf="_data.name=='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"
@@ -263,6 +285,7 @@
                 </mat-list-item>
             </div>
         </mat-expansion-panel>
+
         <mat-expansion-panel class="mb-20 borderLine boxShadowNone" (click)="panelOpenState = true" [expanded]="false"
             *ngIf="_data.name=='CAPITAL GAIN REPORT'">
             <mat-expansion-panel-header [collapsedHeight]="customCollapsedHeight"

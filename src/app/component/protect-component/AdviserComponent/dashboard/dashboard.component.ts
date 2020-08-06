@@ -1,5 +1,7 @@
+import { AddTasksComponent } from './../Activities/crm-tasks/add-tasks/add-tasks.component';
+import { CrmTaskService } from './../Activities/crm-tasks/crm-task.service';
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatTableDataSource } from '@angular/material';
 import { DashboardGuideDialogComponent } from './dashboard-guide-dialog/dashboard-guide-dialog.component';
 import { AuthService } from 'src/app/auth-service/authService';
 import { SubscriptionService } from '../Subscriptions/subscription.service';
@@ -145,6 +147,31 @@ const ELEMENT_DATA7: PeriodicElement7[] = [
 })
 
 export class DashboardComponent implements OnInit {
+  constructor(
+    public dialog: MatDialog, private subService: SubscriptionService,
+    private eventService: EventService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private subInjectService: SubscriptionInject,
+    private backoffice: BackOfficeService,
+    private transactionService: OnlineTransactionService,
+    private dashboardService: DashboardService,
+    private calenderService: calendarService,
+    private emailService: EmailServiceService,
+    private utils: UtilService,
+    private datePipe: DatePipe,
+    private crmTaskService: CrmTaskService
+  ) {
+    const date = new Date();
+    const hourOfDay = date.getHours();
+    if (hourOfDay < 12) {
+      this.greeting = 'Good morning';
+    } else if (hourOfDay < 16) {
+      this.greeting = 'Good afternoon';
+    } else {
+      this.greeting = 'Good evening';
+    }
+  }
   documentSizeData: any = {};
   aumReconList: any;
   aumFlag: boolean;
@@ -158,30 +185,7 @@ export class DashboardComponent implements OnInit {
   investmentAccountFlag: boolean;
   transactionFlag: boolean;
   showSummaryBar;
-  constructor(
-    public dialog: MatDialog, private subService: SubscriptionService,
-    private eventService: EventService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private subInjectService: SubscriptionInject,
-    private backoffice: BackOfficeService,
-    private transactionService: OnlineTransactionService,
-    private dashboardService: DashboardService,
-    private calenderService: calendarService,
-    private emailService: EmailServiceService,
-    private utils: UtilService,
-    private datePipe: DatePipe
-  ) {
-    const date = new Date();
-    const hourOfDay = date.getHours();
-    if (hourOfDay < 12) {
-      this.greeting = 'Good morning';
-    } else if (hourOfDay < 16) {
-      this.greeting = 'Good afternoon';
-    } else {
-      this.greeting = 'Good evening';
-    }
-  }
+  taskStatusList: any;
 
   advisorId: any;
   dashBoardSummary: {}[];
@@ -222,7 +226,7 @@ export class DashboardComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'apr', 'may'];
   dataSource = ELEMENT_DATA;
   displayedColumns2: string[] = ['position', 'name', 'weight'];
-  dataSource2 = ELEMENT_DATA2;
+  dataSource2 = new MatTableDataSource(ELEMENT_DATA2);
   displayedColumns3: string[] = ['position', 'name', 'weight', 'symbol'];
   dataSource3 = ELEMENT_DATA3;
   displayedColumns4: string[] = ['position', 'name', 'weight', 'symbol'];
@@ -233,6 +237,21 @@ export class DashboardComponent implements OnInit {
   dataSource6 = ELEMENT_DATA6;
   displayedColumns7: string[] = ['position', 'name', 'weight', 'symbol', 'match', 'report'];
   dataSource7 = ELEMENT_DATA7;
+
+  sliderConfig = {
+    slidesToShow: 1,
+    infinite: true,
+    variableWidth: true,
+    outerEdgeLimit: true,
+    nextArrow: '<div style=\'position: absolute; top: 35%; right: 0; cursor: pointer;\' class=\'nav-btn classNextArrow next-slide\'><img src=\'/assets/images/svg/next-arrow.svg\'></div>',
+    prevArrow: '<div style=\'position: absolute; top: 35%; left: -5px; z-index: 1; cursor: pointer;\' class=\'nav-btn classNextArrow next-slide\'><img src=\'/assets/images/svg/pre-arrow.svg\'></div>',
+  };
+
+  LastSevenDaysInvestmentAccounts: any;
+
+  LastSevenDaysTransactions: any;
+  rejectedFAILURE: any = [];
+  lastSevenDays: any = new Date().setDate(new Date().getDate() - 7);
 
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
@@ -257,30 +276,120 @@ export class DashboardComponent implements OnInit {
     this.getLatesAumReconciliationData();
     this.getLastSevenDaysInvestmentAccounts();
     this.getGoalSummaryData();
+    // this.initPointForTask()
   }
 
-  sliderConfig = {
-    slidesToShow: 1,
-    infinite: true,
-    variableWidth: true,
-    outerEdgeLimit: true,
-    "nextArrow": "<div style='position: absolute; top: 35%; right: 0; cursor: pointer;' class='nav-btn classNextArrow next-slide'><img src='/assets/images/svg/next-arrow.svg'></div>",
-    "prevArrow": "<div style='position: absolute; top: 35%; left: -5px; z-index: 1; cursor: pointer;' class='nav-btn classNextArrow next-slide'><img src='/assets/images/svg/pre-arrow.svg'></div>",
+  initPointForTask() {
+    this.getTodaysTaskList();
+  }
+
+  getTodaysTaskList() {
+    this.isLoading = true;
+    this.crmTaskService.getTaskStatusValues({})
+      .subscribe(res => {
+        if (res) {
+          this.taskStatusList = res.taskStatus;
+
+          this.getAllTaskList();
+        }
+      });
+  }
+
+  getTaskNameFromTaskStatusList(taskStatus) {
+    return this.taskStatusList.find(item => item.id === taskStatus).name;
+  }
+
+  openAddTask(data) {
+    // let popupHeaderText = !!data ? 'Edit Recurring deposit' : 'Add Recurring deposit';
+    const fragmentData = {
+      flag: 'addActivityTask',
+      data,
+      id: 1,
+      state: 'open50',
+      componentName: AddTasksComponent,
+      // popupHeaderText: popupHeaderText,
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        console.log('this is sidebardata in subs subs : ', sideBarData);
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            this.initPointForTask();
+          }
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
+  }
+
+  getAllTaskList() {
+    const data = {
+      advisorId: this.advisorId,
+      offset: 0,
+      limit: -1,
+      dateFilter: 1
+    };
+    this.crmTaskService.getAllTaskListValues(data)
+      .subscribe(res => {
+        this.isLoading = false;
+        if (res) {
+          console.log('this is some task values:::', res);
+          const dataArray = [];
+          res.forEach((element, index) => {
+            const dateFormat = new Date(element.dueDate);
+            const dueDate = dateFormat.getDate() + '/' + (dateFormat.getMonth() + 1) + '/' + dateFormat.getFullYear();
+            dataArray.push({
+              client: element.clientName,
+              member: element.familyMemberName,
+              des: element.description,
+              cat: element.description,
+              assigned: element.assignedToName,
+              dueDate,
+              dueDateTimeStamp: element.dueDate,
+              taskStatus: this.getTaskNameFromTaskStatusList(element.status),
+              id: element.id,
+              advisorId: element.advisorId,
+              clientId: element.clientId,
+              familyMemberId: element.familyMemberId,
+              assignedTo: element.assignedTo,
+              taskTemplateId: element.taskTemplateId,
+              categoryId: element.categoryId,
+              subCategoryId: element.subCategoryId,
+              subSubCategoryId: element.subSubCategoryId,
+              adviceId: element.adviceId,
+              adviceTypeId: element.adviceTypeId,
+              linkedItemId: element.linkedItemId,
+              status: element.status,
+              completionDate: element.completionDate,
+              commentsCount: element.commentsCount,
+              totalSubTasks: element.totalSubTasks,
+              subTaskCompleted: element.subTaskCompleted,
+              subTasks: element.subTasks,
+              collaborators: element.collaborators,
+              attachments: element.attachments,
+              comments: element.comments,
+              menuList: '',
+            });
+          });
+          this.dataSource2.data = dataArray;
+        } else {
+          this.dataSource2.data = null;
+          this.eventService.openSnackBar('No Task Found', 'DISMISS');
+        }
+      });
   }
 
 
   mailConnect(done) {
     this.excessAllow = done;
   }
-
-  LastSevenDaysInvestmentAccounts: any;
   getLastSevenDaysInvestmentAccounts() {
     this.investmentAccountFlag = true;
     const obj = {
-      "advisorId": this.advisorId,
-      "startDate": new Date().getTime(),
-      "endDate": new Date(this.lastSevenDays).getTime()
-    }
+      advisorId: this.advisorId,
+      startDate: new Date().getTime(),
+      endDate: new Date(this.lastSevenDays).getTime()
+    };
 
     //       const obj = {
     //     "advisorId":5430,
@@ -292,8 +401,7 @@ export class DashboardComponent implements OnInit {
         if (data) {
           this.investmentAccountFlag = false;
           this.LastSevenDaysInvestmentAccounts = data;
-        }
-        else {
+        } else {
           this.investmentAccountFlag = false;
           this.LastSevenDaysInvestmentAccounts = [];
         }
@@ -302,18 +410,14 @@ export class DashboardComponent implements OnInit {
 
       });
   }
-
-  LastSevenDaysTransactions: any;
-  rejectedFAILURE: any = [];
-  lastSevenDays: any = new Date().setDate(new Date().getDate() - 7);
   getLastSevenDaysTransactions() {
     this.transactionFlag = true;
     const obj = {
-      "advisorId": this.advisorId,
-      "tpUserCredentialId": null,
-      "startDate": new Date().getTime(),
-      "endDate": new Date(this.lastSevenDays).getTime()
-    }
+      advisorId: this.advisorId,
+      tpUserCredentialId: null,
+      startDate: new Date().getTime(),
+      endDate: new Date(this.lastSevenDays).getTime()
+    };
 
     //    const obj = {
     //     "advisorId":5430,
@@ -321,18 +425,17 @@ export class DashboardComponent implements OnInit {
     //     "startDate":1593369000000,
     //     "endDate":1594060199999
     //  }
-    console.log(new Date(obj.startDate), new Date(obj.endDate), "date 123");
+    console.log(new Date(obj.startDate), new Date(obj.endDate), 'date 123');
     this.dashboardService.getLastSevenDaysTransactions(obj).subscribe(
       (data) => {
-        console.log(data, "LastSevenDaysTransactions 123");
+        console.log(data, 'LastSevenDaysTransactions 123');
         if (data) {
           this.transactionFlag = false;
           this.LastSevenDaysTransactions = data;
           this.dataSource5 = this.LastSevenDaysTransactions.filter((x) => {
             x.status == 1 || x.status == 7;
-          })
-        }
-        else {
+          });
+        } else {
           this.transactionFlag = false;
           this.LastSevenDaysTransactions = [];
           this.dataSource5 = [];
@@ -473,7 +576,7 @@ export class DashboardComponent implements OnInit {
           this.isBirhtdayLoader = false;
           data.forEach(element => {
             if (element.displayName.length > 15) {
-              element['shortName'] = element.displayName.substr(0, element.name.indexOf(' '));
+              element.shortName = element.displayName.substr(0, element.name.indexOf(' '));
             }
             if (element.dateOfBirth && element.dateOfBirth != 0) {
               element.daysToGo = this.calculateBirthdayOrAnniversary(element.dateOfBirth);
@@ -484,8 +587,7 @@ export class DashboardComponent implements OnInit {
           this.utils.calculateAgeFromCurrentDate(data);
           this.birthdayAnniList = data;
           console.log(this.birthdayAnniList);
-        }
-        else {
+        } else {
           this.birthdayAnniList = [];
           this.isBirhtdayLoader = false;
         }
@@ -526,8 +628,7 @@ export class DashboardComponent implements OnInit {
           this.last7DaysFlag = false;
           this.nscData = data.nse;
           this.bseData = data.bse;
-        }
-        else {
+        } else {
           this.last7DaysFlag = false;
           this.nscData = [{}, {}];
           this.bseData = [{}, {}];
@@ -545,7 +646,7 @@ export class DashboardComponent implements OnInit {
     const obj = {
       advisorId: this.advisorId,
       // clientId
-    }
+    };
     this.dashboardService.getDocumentTotalSize(obj).subscribe(
       data => {
         if (data) {
@@ -553,38 +654,36 @@ export class DashboardComponent implements OnInit {
           this.documentSizeData = data;
         }
       }
-    )
+    );
   }
 
   getLatesAumReconciliationData() {
     this.aumReconList = [{}, {}, {}];
     this.aumFlag = true;
-    const obj =
-    {
+    const obj = {
       id: this.advisorId
-    }
+    };
     this.dashboardService.getLatestAumReconciliation(obj).subscribe(
       data => {
         if (data) {
           this.aumFlag = false;
           this.aumReconList = data;
-        }
-        else {
+        } else {
           this.aumFlag = false;
-          this.aumReconList = []
+          this.aumReconList = [];
         }
       }, err => {
         this.aumFlag = false;
-        this.aumReconList = []
+        this.aumReconList = [];
       }
-    )
+    );
   }
 
   getGoalSummaryData() {
     this.isGoalSummaryLoaderFlag = true;
     const obj = {
       advisorId: this.advisorId
-    }
+    };
     this.dashboardService.getGoalSummarydata(obj).subscribe(
       data => {
         if (data) {
@@ -596,7 +695,7 @@ export class DashboardComponent implements OnInit {
       }, err => {
 
       }
-    )
+    );
   }
 
   connectAccountWithGoogle() {
@@ -869,8 +968,9 @@ export class DashboardComponent implements OnInit {
     };
     this.dashboardService.getKeyMetrics(obj).subscribe(
       data => {
-        this.isKeyMatrix = false
+        this.isKeyMatrix = false;
         this.keyMetricJson = data;
+        this.keyMetricJson.mfAum = UtilService.getNumberToWord(this.keyMetricJson.mfAum)
       },
       err => {
         this.keyMetricJson = '';
