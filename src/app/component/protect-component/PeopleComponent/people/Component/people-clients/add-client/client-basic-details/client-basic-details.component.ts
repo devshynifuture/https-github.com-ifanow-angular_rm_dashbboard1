@@ -211,7 +211,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         { name: 'Son', value: 4 },
         { name: 'Husband', value: 2 },
         { name: 'Father', value: 6 },
-        { name: 'Other', value: 10 },
+        // { name: 'Other', value: 10 },
         // { name: 'Son', value: 4 },
         // { name: 'Other', value: 10 },
       ]
@@ -221,7 +221,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         { name: 'Daughter', value: 5 },
         { name: 'Wife', value: 3 },
         { name: 'Mother', value: 7 },
-        { name: 'Other', value: 20 },
+        // { name: 'Other', value: 20 },
         // { name: 'Daughter', value: 5 },
         // { name: 'Other', value: 10 },
       ]
