@@ -68,6 +68,7 @@ export class MfCapitalDetailedComponent implements OnInit {
   getOrgData: any;
   familyMemberId: number;
   familyList = [];
+  mfBulkEmailRequestId: number;
   constructor(private MfServiceService: MfServiceService,
     public routerActive: ActivatedRoute,
     private backOfficeService : BackOfficeService,
@@ -132,6 +133,7 @@ export class MfCapitalDetailedComponent implements OnInit {
         let param1 = queryParamMap['params'];
         this.clientId = parseInt(param1.clientId)
         this.advisorId = parseInt(param1.advisorId)
+        this.mfBulkEmailRequestId = parseInt(param1.mfBulkEmailRequestId);
         this.fromDateYear = param1.from,
           this.toDateYear = param1.to,
           this.fromDate = new Date(this.fromDateYear, 3, 1);
@@ -177,7 +179,7 @@ export class MfCapitalDetailedComponent implements OnInit {
     const obj = {
       advisorIds: [this.advisorId],
       clientId: this.clientId,
-      parentId: 0
+      parentId: this.advisorId
 
     };
     this.custumService.capitalGainGet(obj).subscribe(

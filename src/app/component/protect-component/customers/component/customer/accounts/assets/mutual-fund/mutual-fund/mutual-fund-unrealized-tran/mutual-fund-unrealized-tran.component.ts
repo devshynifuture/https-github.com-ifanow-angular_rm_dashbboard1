@@ -83,6 +83,49 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   clientDetails: any;
   reportName: any;
   fragmentData = { isSpinner: false };
+  mfBulkEmailRequestId: number;
+  firstArrayTran: any;
+  firstArrayTotalTran: any;
+  secondArrayTran: any;
+  secondArrayTotalTran: any;
+  thirdArrayTran: any;
+  thirdArrayTotalTran: any;
+  fourthArrayTotalTran: any;
+  fourthArrayTran: any;
+  fifthArrayTran: any;
+  fifthArrayTotalTran: any;
+  SixthArrayTran: any;
+  SixthArrayTotalTran: any;
+  seventhArrayTran: any;
+  seventhArrayTotalTran: any;
+  eighthArrayTran: any;
+  eighthArrayTotalTran: any;
+  firstArray: any;
+  firstArrayTotal: any;
+  secondArray: any;
+  secondArrayTotal: any;
+  thirdArray: any;
+  thirdArrayTotal: any;
+  fourthArray: any;
+  fourthArrayTotal: any;
+  fifthArray: any;
+  fifthArrayTotal: any;
+  SixthArray: any;
+  SixthArrayTotal: any;
+  seventhArray: any;
+  seventhArrayTotal: any;
+  eighthArray: any;
+  eighthArrayTotal: any;
+  ninethArray: any;
+  ninethArrayTotal: any;
+  tenthArray: any;
+  tenthArrayTotal: any;
+  eleventhArray: any;
+  eleventhArrayTotal: any;
+  twelwthArray: any;
+  twelwthArrayTotal: any;
+  thirteenthArrayTotal: any;
+  thirteenthArray: any;
 
   constructor(public dialog: MatDialog, private datePipe: DatePipe,
     private subInjectService: SubscriptionInject, private utilService: UtilService,
@@ -97,6 +140,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         let param1 = queryParamMap['params'];
         this.clientId = parseInt(param1.clientId)
         this.advisorId = parseInt(param1.advisorId)
+        this.mfBulkEmailRequestId = parseInt(param1.mfBulkEmailRequestId)
         this.toDate = param1.toDate;
         this.addedData = true;
         console.log('2423425', param1)
@@ -289,15 +333,15 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
               }
             });
             if (this.viewMode == 'Unrealized Transactions' || this.viewMode == 'unrealized transactions') {
-              this.displayedColumns.forEach(element => {
+              this.displayedColumns.forEach((element,ind) => {
                 if (this.customDataSource.length > 0) {
-                  this.styleObjectUnrealised(element)
+                  this.styleObjectUnrealised(element,ind)
                 }
               });
             } else {
-              this.displayedColumns.forEach(element => {
+              this.displayedColumns.forEach((element,ind) => {
                 if (this.customDataSource.length > 0) {
-                  this.styleObjectTransaction(element)
+                  this.styleObjectTransaction(element,ind)
                 }
               });
             }
@@ -379,54 +423,118 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     );
 
   }
-  styleObjectTransaction(header) {
+  styleObjectTransaction(header,ind) {
 
     if (header == 'no') {
-      Object.assign(this.customDataSource.data, { no: true });
+      this.customDataSource.data.arrayTran.push({
+        'name': 'Sr no.', 'index': ind, isCheked: true, 
+      });
+      // Object.assign(this.customDataSource.data, { no: true });
     } else if (header == 'transactionType') {
-      Object.assign(this.customDataSource.data, { transactionType: true });
+      this.customDataSource.data.arrayTran.push({
+        'name': 'Transaction type', 'index': ind, isCheked: true, 
+      });
+      // Object.assign(this.customDataSource.data, { transactionType: true });
     } else if (header == 'transactionDate') {
-      Object.assign(this.customDataSource.data, { transactionDate: true });
+      this.customDataSource.data.arrayTran.push({
+        'name': 'Transaction date', 'index': ind, isCheked: true, 
+      });
+      // Object.assign(this.customDataSource.data, { transactionDate: true });
     } else if (header == 'transactionAmount') {
-      Object.assign(this.customDataSource.data, { transactionAmount: true });
+      this.customDataSource.data.arrayTran.push({
+        'name': 'Transaction amount', 'index': ind, isCheked: true, 
+      });
+      // Object.assign(this.customDataSource.data, { transactionAmount: true });
     } else if (header == 'transactionNav') {
-      Object.assign(this.customDataSource.data, { transactionNav: true });
+      this.customDataSource.data.arrayTran.push({
+        'name': 'Transaction NAV', 'index': ind, isCheked: true, 
+      });
+      // Object.assign(this.customDataSource.data, { transactionNav: true });
     } else if (header == 'units') {
-      Object.assign(this.customDataSource.data, { units: true });
+      this.customDataSource.data.arrayTran.push({
+        'name': 'Units', 'index': ind, isCheked: true, 
+      });
+      // Object.assign(this.customDataSource.data, { units: true });
     } else if (header == 'balanceUnits') {
-      Object.assign(this.customDataSource.data, { balanceUnits: true });
+      this.customDataSource.data.arrayTran.push({
+        'name': 'Balance units', 'index': ind, isCheked: true, 
+      });
+      // Object.assign(this.customDataSource.data, { balanceUnits: true });
     } else if (header == 'days') {
-      Object.assign(this.customDataSource.data, { days: true });
+      this.customDataSource.data.arrayTran.push({
+        'name': 'Days', 'index': ind, isCheked: true, 
+      });
+      // Object.assign(this.customDataSource.data, { days: true });
     }
 
+
   }
-  styleObjectUnrealised(header) {
+  styleObjectUnrealised(header,ind) {
     if (header == 'no') {
-      Object.assign(this.customDataSource.data, { no: true });
+      this.customDataSource.data.arrayUnrealised.push({
+        'name': 'Sr no.', 'index': ind, isCheked: true, 
+      });
+      // Object.assign(this.customDataSource.data, { no: true });
     } else if (header == 'transactionType') {
-      Object.assign(this.customDataSource.data, { transactionType: true });
+      this.customDataSource.data.arrayUnrealised.push({
+        'name': 'Transaction type', 'index': ind, isCheked: true, 
+      });
+      // Object.assign(this.customDataSource.data, { transactionType: true });
     } else if (header == 'transactionDate') {
-      Object.assign(this.customDataSource.data, { transactionDate: true });
+      this.customDataSource.data.arrayUnrealised.push({
+        'name': 'Transaction date', 'index': ind, isCheked: true, 
+      });
+      // Object.assign(this.customDataSource.data, { transactionDate: true });
     } else if (header == 'transactionAmount') {
-      Object.assign(this.customDataSource.data, { transactionAmount: true });
+      this.customDataSource.data.arrayUnrealised.push({
+        'name': 'Transaction amount', 'index': ind, isCheked: true, 
+      });
+      // Object.assign(this.customDataSource.data, { transactionAmount: true });
     } else if (header == 'transactionNav') {
-      Object.assign(this.customDataSource.data, { transactionNav: true });
+      this.customDataSource.data.arrayUnrealised.push({
+        'name': 'Transaction NAV', 'index': ind, isCheked: true, 
+      });
+      // Object.assign(this.customDataSource.data, { transactionNav: true });
     } else if (header == 'currentValue') {
-      Object.assign(this.customDataSource.data, { currentValue: true });
+      this.customDataSource.data.arrayUnrealised.push({
+        'name': 'Units', 'index': ind, isCheked: true, 
+      });
+      // Object.assign(this.customDataSource.data, { currentValue: true });
     } else if (header == 'dividendPayout') {
-      Object.assign(this.customDataSource.data, { dividendPayout: true });
+      this.customDataSource.data.arrayUnrealised.push({
+        'name': 'Current value', 'index': ind, isCheked: true, 
+      });
+      // Object.assign(this.customDataSource.data, { dividendPayout: true });
     } else if (header == 'dividendReinvest') {
-      Object.assign(this.customDataSource.data, { dividendReinvest: true });
+      this.customDataSource.data.arrayUnrealised.push({
+        'name': 'Dividend payout', 'index': ind, isCheked: true, 
+      });
+      // Object.assign(this.customDataSource.data, { dividendReinvest: true });
     } else if (header == 'totalAmount') {
-      Object.assign(this.customDataSource.data, { totalAmount: true });
+      this.customDataSource.data.arrayUnrealised.push({
+        'name': 'Dividend reinvestment', 'index': ind, isCheked: true, 
+      });
+      // Object.assign(this.customDataSource.data, { totalAmount: true });
     } else if (header == 'units') {
-      Object.assign(this.customDataSource.data, { units: true });
+      this.customDataSource.data.arrayUnrealised.push({
+        'name': 'Total amount', 'index': ind, isCheked: true, 
+      });
+      // Object.assign(this.customDataSource.data, { units: true });
     } else if (header == 'gain') {
-      Object.assign(this.customDataSource.data, { gain: true });
+      this.customDataSource.data.arrayUnrealised.push({
+        'name': 'Gain', 'index': ind, isCheked: true, 
+      });
+      // Object.assign(this.customDataSource.data, { gain: true });
     } else if (header == 'absReturn') {
-      Object.assign(this.customDataSource.data, { absReturn: true });
+      this.customDataSource.data.arrayUnrealised.push({
+        'name': 'Absolute return', 'index': ind, isCheked: true, 
+      });
+      // Object.assign(this.customDataSource.data, { absReturn: true });
     } else if (header == 'xirr') {
-      Object.assign(this.customDataSource.data, { xirr: true });
+      this.customDataSource.data.arrayUnrealised.push({
+        'name': 'XIRR', 'index': ind, isCheked: true, 
+      });
+      // Object.assign(this.customDataSource.data, { xirr: true });
     }
   }
   initValueOnInit() {
@@ -670,7 +778,9 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         this.customDataSource = []
         this.customDataSource.data = []
         this.unrealisedData = new TableVirtualScrollDataSource(data.customDataSourceData);
-        this.customDataSource.data = (data.customDataSourceData)
+        this.customDataSource.data = (data.customDataSourceData);
+        this.customDataSource.data.arrayTran=[];
+        this.customDataSource.data.arrayUnrealised=[];
         this.pdfDataFornTRansaction = this.customDataSource.data;
         this.customDataHolder = data.customDataHolder;
         this.dataTransaction.grandTotal = this.grandTotal
@@ -681,14 +791,136 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         this.mfService.setTransactionData(this.dataTransaction)
 
         if (this.viewMode == 'All Transactions' || this.viewMode == 'all transactions') {
-          this.displayedColumns.forEach(element => {
-            this.styleObjectTransaction(element)
+          this.displayedColumns.forEach((element,ind) => {
+            this.styleObjectTransaction(element,ind)
           });
         } else {
-          this.displayedColumns.forEach(element => {
-            this.styleObjectUnrealised(element)
+          this.displayedColumns.forEach((element,ind) => {
+            this.styleObjectUnrealised(element,ind)
           });
         }
+        this.customDataSource.data.arrayTran.forEach(element => {
+          switch (element.index) {
+            case 0:
+              this.firstArrayTran = this.filterHedaerWiseTran(element);
+              this.firstArrayTotalTran = this.filterHedaerWiseTotalTran(element);
+    
+              break;
+            case 1:
+              this.secondArrayTran = this.filterHedaerWiseTran(element);
+              this.secondArrayTotalTran = this.filterHedaerWiseTotalTran(element);
+    
+              break;
+            case 2:
+              this.thirdArrayTran = this.filterHedaerWiseTran(element);
+              this.thirdArrayTotalTran = this.filterHedaerWiseTotalTran(element);
+    
+              break;
+            case 3:
+              this.fourthArrayTran = this.filterHedaerWiseTran(element);
+              this.fourthArrayTotalTran = this.filterHedaerWiseTotalTran(element);
+    
+              break;
+            case 4:
+              this.fifthArrayTran = this.filterHedaerWiseTran(element);
+              this.fifthArrayTotalTran = this.filterHedaerWiseTotalTran(element);
+    
+              break;
+            case 5:
+              this.SixthArrayTran = this.filterHedaerWiseTran(element);
+              this.SixthArrayTotalTran = this.filterHedaerWiseTotalTran(element);
+    
+              break;
+            case 6:
+              this.seventhArrayTran = this.filterHedaerWiseTran(element);
+              this.seventhArrayTotalTran = this.filterHedaerWiseTotalTran(element);
+    
+              break;
+            case 7:
+              this.eighthArrayTran = this.filterHedaerWiseTran(element);
+              this.eighthArrayTotalTran = this.filterHedaerWiseTotalTran(element);
+    
+    
+              break;
+          
+          }
+        });
+        this.customDataSource.data.arrayUnrealised.forEach(element => {
+          switch (element.index) {
+            case 0:
+              this.firstArray = this.filterHedaerWise(element);
+              this.firstArrayTotal = this.filterHedaerWiseTotal(element);
+    
+              break;
+            case 1:
+              this.secondArray = this.filterHedaerWise(element);
+              this.secondArrayTotal = this.filterHedaerWiseTotal(element);
+    
+              break;
+            case 2:
+              this.thirdArray = this.filterHedaerWise(element);
+              this.thirdArrayTotal = this.filterHedaerWiseTotal(element);
+    
+              break;
+            case 3:
+              this.fourthArray = this.filterHedaerWise(element);
+              this.fourthArrayTotal = this.filterHedaerWiseTotal(element);
+    
+              break;
+            case 4:
+              this.fifthArray = this.filterHedaerWise(element);
+              this.fifthArrayTotal = this.filterHedaerWiseTotal(element);
+    
+              break;
+            case 5:
+              this.SixthArray = this.filterHedaerWise(element);
+              this.SixthArrayTotal = this.filterHedaerWiseTotal(element);
+    
+              break;
+            case 6:
+              this.seventhArray = this.filterHedaerWise(element);
+              this.seventhArrayTotal = this.filterHedaerWiseTotal(element);
+    
+              break;
+            case 7:
+              this.eighthArray = this.filterHedaerWise(element);
+              this.eighthArrayTotal = this.filterHedaerWiseTotal(element);
+    
+    
+              break;
+            case 8:
+              this.ninethArray = this.filterHedaerWise(element);
+              this.ninethArrayTotal = this.filterHedaerWiseTotal(element);
+    
+    
+              break;
+            case 9:
+              this.tenthArray = this.filterHedaerWise(element);
+              this.tenthArrayTotal = this.filterHedaerWiseTotal(element);
+    
+    
+              break;
+            case 10:
+              this.eleventhArray = this.filterHedaerWise(element);
+              this.eleventhArrayTotal = this.filterHedaerWiseTotal(element);
+    
+    
+              break;
+              case 11:
+              this.twelwthArray = this.filterHedaerWise(element);
+              this.twelwthArrayTotal = this.filterHedaerWiseTotal(element);
+    
+    
+              break;
+              case 12:
+                this.thirteenthArray = this.filterHedaerWise(element);
+                this.thirteenthArrayTotal = this.filterHedaerWiseTotal(element);
+      
+      
+                break;
+    
+          }
+        });
         // console.log(`MUTUALFUND COMPONENT page got message:`, data);
         this.isLoading = false;
         if (mutualFund.flag == true) {
@@ -1001,10 +1233,211 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       const para = document.getElementById('template');
       this.returnValue = this.utilService.htmlToPdf(para.innerHTML, this.reportName, 'true', this.fragmentData, '', '');
     }, 200);
-
+  
+  
     // if(data){
     //   this.isSpinner = false;
     // }
+  }
+  filterHedaerWise(data) {
+    let obj;
+    switch (data.name) {
+      case 'Sr no.':
+        obj = 'indexId';
+        break;
+      case 'Transaction type':
+        obj = 'fwTransactionType';
+        break;
+      case 'Transaction date':
+        obj = 'transactionDate';
+        break;
+      case 'Transaction amount':
+        obj = 'amount';
+        break;
+      case 'Transaction NAV':
+        obj = 'purchasePrice';
+        break;
+      case 'Units':
+        obj = 'unit';
+        break;
+      case 'Current value':
+        obj = 'currentAmount';
+        break;
+      case 'Dividend payout':
+        obj = 'dividendPayout';
+        break;
+      case 'Dividend reinvestment':
+        obj = 'dividendReinvest';
+        break;
+      case 'Total amount':
+        obj = 'currentAmount';
+        break;
+      case 'Gain':
+        obj = 'gain';
+        break;
+        case 'Absolute return':
+          obj = 'absoluteReturn';
+          break;
+          case 'XIRR':
+            obj = 'cagr';
+            break;
+    }
+
+    return obj;
+  }
+  filterHedaerWiseTotal(data) {
+    let obj;
+    switch (data.name) {
+      case 'Sr no.':
+        obj = '';
+        break;
+      case 'Transaction type':
+        obj = 'Total';
+        break;
+      case 'Transaction date':
+        obj = '';
+        break;
+      case 'Transaction amount':
+        obj = 'totalTransactionAmt';
+        break;
+      case 'Transaction NAV':
+        obj = '';
+        break;
+      case 'Units':
+        obj = 'totalUnit';
+        break;
+      case 'Current value':
+        obj = 'totalCurrentValue';
+        break;
+      case 'Dividend payout':
+        obj = 'dividendPayout';
+        break;
+      case 'Dividend reinvestment':
+        obj = 'dividendReinvest';
+        break;
+      case 'Total amount':
+        obj = 'totalCurrentValue';
+        break;
+      case 'Gain':
+        obj = 'netGain';
+        break;
+        case 'Absolute return':
+          obj = 'trnAbsoluteReturn';
+          break;
+          case 'XIRR':
+            obj = 'totalCagr';
+            break;
+    }
+
+    return obj;
+  }
+  filterHedaerWiseTran(data) {
+    let obj;
+    switch (data.name) {
+      case 'Sr no.':
+        obj = 'indexId';
+        break;
+      case 'Transaction type':
+        obj = 'fwTransactionType';
+        break;
+      case 'Transaction date':
+        obj = 'transactionDate';
+        break;
+      case 'Transaction amount':
+        obj = 'amount';
+        break;
+      case 'Transaction NAV':
+        obj = 'purchasePrice';
+        break;
+      case 'Units':
+        obj = 'unit';
+        break;
+      case 'Balance units':
+        obj = 'balanceUnits';
+        break;
+      case 'Days':
+        obj = 'days';
+        break;
+     
+    }
+
+    return obj;
+  }
+  filterHedaerWiseTotalTran(data) {
+    let obj;
+    switch (data.name) {
+      case 'Sr no.':
+        obj = '';
+        break;
+      case 'Transaction type':
+        obj = 'total';
+        break;
+      case 'Transaction date':
+        obj = '';
+        break;
+      case 'Transaction amount':
+        obj = 'totalTransactionAmt';
+        break;
+      case 'Transaction NAV':
+        obj = '';
+        break;
+      case 'Units':
+        obj = 'totalUnit';
+        break;
+      case 'Balance units':
+        obj = 'totalBalanceUnit';
+        break;
+      case 'Days':
+        obj = '';
+        break;
+     
+    }
+
+    return obj;
+  }
+  getValuesTran(data, value, isGT) {
+    let number;
+    if (value == 'transactionDate') {
+      number = this.datePipe.transform(data, 'dd/MM/yyyy')
+    } else{
+      number = this.mfService.mutualFundRoundAndFormat(data, 0);
+    }
+    if(value == ''){
+      number = ''
+    }else if(value == 'Total'){
+       number = 'Total'
+    }
+    // if (value == 'amountInvested' || value == 'currentValue' || value == 'unrealizedGain' || value == 'dividendPayout' || value == 'switchOut' || value == 'sipAmount' || value == 'totalAmountInvested' || value == 'totalCurrentValue' || value == 'totalUnrealizedGain' || value == 'totalDividendPayout' || value == 'totalSwitchOut' || value == 'totalSipAmount' || value == 'sip' || value == 'total_amount_invested' || value == 'total_current_value' || value == "total_unrealized_gain" || value == "total_dividend_payout" || value === 'withdrawals') {
+    //   number = this.mfService.mutualFundRoundAndFormat(data, 0);
+    // } else if (value == 'transactionDate') {
+    //   number = this.datePipe.transform(data, 'dd/MM/yyyy')
+    // } else {
+    //   number = this.mfService.mutualFundRoundAndFormat(data, 3);
+    // }
+
+    return number;
+  }
+  getValues(data, value, isGT) {
+    let number;
+    if (value == 'transactionDate') {
+        number = this.datePipe.transform(data, 'dd/MM/yyyy')
+      } else{
+        number = this.mfService.mutualFundRoundAndFormat(data, 0);
+      }
+      if(value == ''){
+        number = ''
+      }else if(value == 'Total'){
+         number = 'Total'
+      }
+    // if (value == 'amount' || value == 'currentValue' || value == 'unrealizedGain' || value == 'dividendPayout' || value == 'switchOut' || value == 'sipAmount' || value == 'totalAmountInvested' || value == 'totalCurrentValue' || value == 'totalUnrealizedGain' || value == 'totalDividendPayout' || value == 'totalSwitchOut' || value == 'totalSipAmount' || value == 'sip' || value == 'total_amount_invested' || value == 'total_current_value' || value == "total_unrealized_gain" || value == "total_dividend_payout" || value === 'withdrawals') {
+    //   number = this.mfService.mutualFundRoundAndFormat(data, 0);
+    // } else if (value == 'transactionDate') {
+    //   number = this.datePipe.transform(data, 'dd/MM/yyyy')
+    // } else {
+    //   number = this.mfService.mutualFundRoundAndFormat(data, 3);
+    // }
+
+    return number;
   }
   generatePdfBulk() {
     setTimeout(() => {

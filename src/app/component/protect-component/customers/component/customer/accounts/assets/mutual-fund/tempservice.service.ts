@@ -30,9 +30,9 @@ export class TempserviceService {
           } else {
             if (filteredArray.length > 0 && array.length == 0) {
                 if (filteredArray[filteredArray.length - 1].groupName) {
-                  if(catObj[key].length <= 1){
+                  // if(catObj[key].length <= 1){
                     filteredArray.pop();
-                  }
+                  // }
                 }
               
             }

@@ -449,7 +449,8 @@ export class UtilService {
       toEmail: data.toEmail,
       clientId: data.clientId,
       advisorId: data.advisorId,
-      svg: data.svg
+      svg: data.svg,
+      mfBulkEmailRequestId: data.mfBulkEmailRequestId
     };
 
     return this.http.post(
