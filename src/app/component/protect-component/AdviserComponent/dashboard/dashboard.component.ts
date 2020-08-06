@@ -24,6 +24,10 @@ import { FormControl } from '@angular/forms';
 import { calendarService } from '../Activities/calendar/calendar.service';
 import { EmailServiceService } from '../Email/email-service.service';
 import { DatePipe } from '@angular/common';
+import { AppConstants } from 'src/app/services/app-constants';
+import { CustomerService } from '../../customers/component/customer/customer.service';
+import { Chart } from 'angular-highcharts';
+import * as Highcharts from 'highcharts';
 
 export interface PeriodicElement {
   name: string;
@@ -147,6 +151,51 @@ const ELEMENT_DATA7: PeriodicElement7[] = [
 })
 
 export class DashboardComponent implements OnInit {
+  clientData: any;
+  chartTotal: number;
+  hasError: boolean;
+  assetAllocationPieConfig: Chart;
+  mfSubCategoryPieConfig: Chart;
+  mfAllocationPieConfig: Chart;
+  chart: Highcharts.Chart;
+  chartData: any[] = [
+    {
+      name: 'Equity',
+      y: 20,
+      color: AppConstants.DONUT_CHART_COLORS[0],
+      dataLabels: {
+        enabled: false
+      }
+    }, {
+      name: 'Fixed income',
+      y: 20,
+      color: AppConstants.DONUT_CHART_COLORS[1],
+      dataLabels: {
+        enabled: false
+      }
+    }, {
+      name: 'Commodities',
+      y: 20,
+      color: AppConstants.DONUT_CHART_COLORS[2],
+      dataLabels: {
+        enabled: false
+      }
+    }, {
+      name: 'Real estate',
+      y: 20,
+      color: AppConstants.DONUT_CHART_COLORS[3],
+      dataLabels: {
+        enabled: false
+      }
+    }, {
+      name: 'Others',
+      y: 20,
+      color: AppConstants.DONUT_CHART_COLORS[4],
+      dataLabels: {
+        enabled: false
+      }
+    }
+  ]
   constructor(
     public dialog: MatDialog, private subService: SubscriptionService,
     private eventService: EventService,
@@ -160,7 +209,8 @@ export class DashboardComponent implements OnInit {
     private emailService: EmailServiceService,
     private utils: UtilService,
     private datePipe: DatePipe,
-    private crmTaskService: CrmTaskService
+    private crmTaskService: CrmTaskService,
+    private customerService:CustomerService
   ) {
     const date = new Date();
     const hourOfDay = date.getHours();
@@ -209,6 +259,7 @@ export class DashboardComponent implements OnInit {
   isRecentTransactionFlag: boolean;
   todoListData = [];
   eventData: any;
+  portFolioData=[];
   formatedEvent: any[];
   calenderLoader: boolean;
   birthdayAnniList: any;
@@ -252,13 +303,117 @@ export class DashboardComponent implements OnInit {
   LastSevenDaysTransactions: any;
   rejectedFAILURE: any = [];
   lastSevenDays: any = new Date().setDate(new Date().getDate() - 7);
+  mfAllocationData: any[] = [
+    {
+      name: 'EQUITY',
+      y: 0,
+      color: AppConstants.DONUT_CHART_COLORS[0],
+      dataLabels: {
+        enabled: false
+      }
+    }, {
+      name: 'DEBT',
+      y: 0,
+      color: AppConstants.DONUT_CHART_COLORS[1],
+      dataLabels: {
+        enabled: false
+      }
+    }, {
+      name: 'HYBRID',
+      y: 0,
+      color: AppConstants.DONUT_CHART_COLORS[2],
+      dataLabels: {
+        enabled: false
+      }
+    }, {
+      name: 'SOLUTION ORIENTED',
+      y: 0,
+      color: AppConstants.DONUT_CHART_COLORS[4],
+      dataLabels: {
+        enabled: false
+      }
+    }, {
+      name: 'OTHERS',
+      y: 0,
+      color: AppConstants.DONUT_CHART_COLORS[3],
+      dataLabels: {
+        enabled: false
+      }
+    }
+  ]
 
+  tabsLoaded = {
+    portfolioData: {
+      dataLoaded: false,
+      hasData: false,
+      isLoading: true,
+    },
+    rtaFeeds: {
+      dataLoaded: false,
+      hasData: false,
+      isLoading: true,
+    },
+    recentTransactions: {
+      dataLoaded: false,
+      hasData: false,
+      isLoading: true,
+    },
+    documentsVault: {
+      dataLoaded: false,
+      hasData: false,
+      isLoading: true,
+    },
+    riskProfile: {
+      dataLoaded: false,
+      hasData: false,
+      isLoading: true,
+    },
+    globalRiskProfile: {
+      dataLoaded: false,
+      hasData: false,
+      isLoading: true,
+    },
+    goalsData: {
+      dataLoaded: false,
+      hasData: false,
+      isLoading: true,
+      displaySection: false,
+    },
+    cashflowData: {
+      dataLoaded: false,
+      hasData: false,
+      isLoading: true,
+    },
+    customerProfile: {
+      dataLoaded: false,
+      hasData: false,
+      isLoading: true,
+    },
+    mfPortfolioSummaryData: {
+      dataLoaded: false,
+      hasData: false,
+      isLoading: true,
+      displaySection: false,
+    },
+    mfSubCategorySummaryData: {
+      dataLoaded: false,
+      hasData: false,
+      isLoading: true,
+      displaySection: false,
+    },
+    familyMembers: {
+      dataLoaded: false,
+      hasData: false,
+      isLoading: true,
+    }
+  };
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.parentId = AuthService.getAdminAdvisorId();
+    this.clientData = AuthService.getClientData()
     this.advisorName = AuthService.getUserInfo().name;
     this.excessAllow = localStorage.getItem('successStoringToken');
-
+    this.getAssetAllocationData()
     this.getTotalRecivedByDash();
     this.clientWithSubscription();
     this.getSummaryDataDashboard(); // summry dashbord
@@ -268,6 +423,7 @@ export class DashboardComponent implements OnInit {
     this.finalEndDate = UtilService.getEndOfDay(new Date()).getTime();
     this.getTodoListData();
     this.getRecentTransactionData();
+    this.initializePieChart()
     // this.connectAccountWithGoogle();
     this.getBirthdayOrAnniversary();
     this.getLast7DaysTransactionStatus();
@@ -282,7 +438,149 @@ export class DashboardComponent implements OnInit {
   initPointForTask() {
     this.getTodaysTaskList();
   }
+  getAssetAllocationData() {
+    const obj = {
+      clientId: this.clientData.clientId,
+      advisorId: this.advisorId,
+      targetDate: new Date().getTime()
+    }
+    this.tabsLoaded.portfolioData.isLoading = true;
 
+    // this.loaderFn.increaseCounter();
+    this.customerService.getAllFeedsPortFolio(obj).subscribe(res => {
+      if (res == null) {
+        this.portFolioData = [];
+        this.tabsLoaded.portfolioData.hasData = false;
+      } else {
+        this.tabsLoaded.portfolioData.hasData = true;
+        let stock = res.find(d => d.assetType == 6);
+        this.portFolioData = res;
+        if (stock) {
+          this.portFolioData = this.portFolioData.filter(d => d.assetType != 6);
+          this.portFolioData.unshift(stock);
+        }
+
+        let chartData = [];
+        let counter = 0;
+        let othersData = {
+          y: 0,
+          name: 'Others',
+          color: AppConstants.DONUT_CHART_COLORS[4],
+          dataLabels: {
+            enabled: false
+          }
+        }
+        let chartTotal = 1;
+        let hasNoDataCounter = res.length;
+        let pieChartData = res.filter(element => element.assetType != 2 && element.currentValue != 0);
+        pieChartData.forEach(element => {
+          if (element.investedAmount > 0) {
+            chartTotal += element.investedAmount;
+            if (counter < 4) {
+              chartData.push({
+                y: element.investedAmount,
+                name: element.assetTypeString,
+                color: AppConstants.DONUT_CHART_COLORS[counter],
+                dataLabels: {
+                  enabled: false
+                }
+              })
+            } else {
+              othersData.y += element.investedAmount;
+            }
+            counter++;
+          } else {
+            hasNoDataCounter--;
+          }
+        });
+        chartTotal -= 1;
+        if (chartTotal === 0) {
+          this.tabsLoaded.portfolioData.hasData = false
+        }
+        if (counter > 4) {
+          chartData.push(othersData);
+        }
+        if (counter > 0) {
+          this.chartTotal = chartTotal;
+          this.chartData = chartData;
+          this.assetAllocationPieChartDataMgnt(this.chartData);
+        }
+      }
+      this.tabsLoaded.portfolioData.isLoading = false;
+      this.tabsLoaded.portfolioData.dataLoaded = true;
+      // this.loaderFn.decreaseCounter();
+    }, err => {
+      this.hasError = true;
+      this.tabsLoaded.portfolioData.isLoading = false;
+      this.eventService.openSnackBar(err, "Dismiss")
+      // this.loaderFn.decreaseCounter();
+    })
+  }
+  assetAllocationPieChartDataMgnt(data) {
+    this.assetAllocationPieConfig.removeSeries(0);
+    this.assetAllocationPieConfig.addSeries({
+      type: 'pie',
+      name: 'Asset allocation',
+      animation: false,
+      innerSize: '60%',
+      data: data,
+    }, true, true);
+  }
+  initializePieChart() {
+    let chartConfig: any = {
+      chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: 0,
+        plotShadow: false,
+        animation: false
+      },
+      title: {
+        text: '',
+        align: 'center',
+        verticalAlign: 'middle',
+        y: 60
+      },
+      tooltip: {
+        pointFormat: ' <b>{point.percentage:.1f}%</b>'
+      },
+      plotOptions: {
+        pie: {
+          dataLabels: {
+            enabled: true,
+            distance: -50,
+            style: {
+              fontWeight: 'bold',
+              color: 'white'
+            }
+          },
+          startAngle: 0,
+          endAngle: 360,
+          center: ['50%', '50%'],
+          size: '100%'
+        }
+      },
+      exporting: {
+        enabled: false
+      },
+      series: [{
+        type: 'pie',
+        name: 'Asset allocation',
+        animation: false,
+        innerSize: '60%',
+        data: this.chartData
+      }]
+    }
+    this.assetAllocationPieConfig = new Chart(chartConfig);
+    this.mfAllocationPieConfig = new Chart(chartConfig);
+    this.mfSubCategoryPieConfig = new Chart(chartConfig);
+    chartConfig.series = [{
+      type: 'pie',
+      animation: false,
+      name: 'MF Asset allocation',
+      innerSize: '60%',
+      data: this.mfAllocationData
+    }]
+  }
   getTodaysTaskList() {
     this.isLoading = true;
     this.crmTaskService.getTaskStatusValues({})

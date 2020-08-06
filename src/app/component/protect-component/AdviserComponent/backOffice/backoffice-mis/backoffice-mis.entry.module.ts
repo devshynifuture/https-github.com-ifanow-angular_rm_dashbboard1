@@ -5,12 +5,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DateChangeDialogComponent } from './mutual-funds/date-change-dialog/date-change-dialog.component';
 
 
+
 const componentList = [DateChangeDialogComponent]
 
 @NgModule({
   declarations: componentList,
   imports: [
-    CommonModule, MaterialModule, FormsModule, ReactiveFormsModule
+    CommonModule, MaterialModule, FormsModule, ReactiveFormsModule,
   ],
   entryComponents: componentList,
 })

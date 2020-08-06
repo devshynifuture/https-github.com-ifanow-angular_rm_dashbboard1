@@ -6,9 +6,12 @@ import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { SipCleanupRoutingModule } from './sip-cleanup-routing.module';
 
+// import { RecordDetailsComponent } from './record-details/record-details.component';
+
 @NgModule({
   declarations: [
-    SipCleanupComponent
+    SipCleanupComponent,
+
   ],
   imports: [
     CommonModule,
@@ -16,8 +19,9 @@ import { SipCleanupRoutingModule } from './sip-cleanup-routing.module';
     MaterialModule,
     ReactiveFormsModule,
     CustomDirectiveModule,
-    SipCleanupRoutingModule
+    SipCleanupRoutingModule,
+
   ],
   exports: [],
 })
-export class SipCleanupModule {}
+export class SipCleanupModule { }
