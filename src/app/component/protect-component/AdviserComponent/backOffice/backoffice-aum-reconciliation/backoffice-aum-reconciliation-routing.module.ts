@@ -21,6 +21,10 @@ const routes: Routes = [
         loadChildren: () => import('./folio-query/folio-query.module').then(m => m.FolioQueryModule)
       },
       {
+        path: 'sip-cleanup',
+        loadChildren: () => import('./sip-cleanup/sip-cleanup.module').then(m => m.SipCleanupModule)
+      },
+      {
         path: '',
         redirectTo: 'reconciliation',
         pathMatch: 'full'
