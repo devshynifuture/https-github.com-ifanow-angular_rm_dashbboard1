@@ -677,63 +677,62 @@
                 </td>
             </tr>
 
-            <tr *ngIf="item.schemeName == 'Total'">
-                <td valign="top" *ngIf="customDataSource.data?.array[0]?.isCheked"
-                    [ngStyle]="customDataSource.data?.array3[0].style">
-                    {{mfData[firstArrayGTotal]}}
-
-                </td>
-                <td valign="top" *ngIf="customDataSource.data?.array[1]?.isCheked"
-                    [ngStyle]="customDataSource.data?.array3[1].style" appFormatNumber>
-                    <!-- {{(mfData) ? (mfData.total_amount_invested ) : 0}} -->
-                    {{mfData[secondArrayGTotal]}}
-                </td>
-                <td valign="top" *ngIf="customDataSource.data?.array[2]?.isCheked"
-                    [ngStyle]="customDataSource.data?.array3[2].style" appFormatNumber>
-                    <!-- {{(mfData) ? (mfData.total_current_value ) : 0}} -->
-                    {{mfData[thirdArrayGTotal]}}
-                </td>
-                <td valign="top" *ngIf="customDataSource.data?.array[3]?.isCheked"
-                    [ngStyle]="customDataSource.data?.array3[3].style" appFormatNumber>
-                    <!-- {{(mfData) ? (mfData.total_unrealized_gain) : 0}} -->
-                    {{mfData[fourthArrayGTotal]}}
-                </td>
-                <td valign="top" *ngIf="customDataSource.data?.array[4]?.isCheked"
-                    [ngStyle]="customDataSource.data?.array3[4].style">
-                    <!-- {{(mfData) ? (mfData.total_absolute_return | number:'1.2-2') : '0'}} -->
-                    {{mfData[fifthArrayGTotal]}}
-                </td>
-                <td valign="top" *ngIf="customDataSource.data?.array[5]?.isCheked"
-                    [ngStyle]="customDataSource.data?.array3[5].style">
-                    <!-- {{(mfData) ? (mfData.total_xirr | number:'1.2-2') : '0'}} -->
-                    {{mfData[SixthArrayGTotal]}}
-                </td>
-                <td valign="top" *ngIf="customDataSource.data?.array[6]?.isCheked"
-                    [ngStyle]="customDataSource.data?.array3[6].style" appFormatNumber>
-                    <!-- {{mfData ? mfData.total_dividend_payout : 0}} -->
-                    {{mfData[seventhArrayGTotal]}}
-                </td>
-                <td valign="top" *ngIf="customDataSource.data?.array[7]?.isCheked"
-                    [ngStyle]="customDataSource.data?.array3[7].style" appFormatNumber>
-                    <!-- {{(grandTotal) ? grandTotal.withdrawals : 0 }} -->
-                    {{mfData[eighthArrayGTotal]}}
-                </td>
-                <td valign="top" *ngIf="customDataSource.data?.array[8]?.isCheked"
-                    [ngStyle]="customDataSource.data?.array3[8].style">
-                    <!-- {{(grandTotal.totalBalanceUnit) ? (grandTotal.totalBalanceUnit | number:'1.2-3') : '0'}} -->
-                    {{mfData[ninethArrayGTotal]}}
-                </td>
-                <td valign="top" *ngIf="customDataSource.data?.array[9]?.isCheked"
-                    [ngStyle]="customDataSource.data?.array3[9].style">
-                </td>
-                <td valign="top" *ngIf="customDataSource.data?.array[10]?.isCheked"
-                    [ngStyle]="customDataSource.data?.array3[10].style" appFormatNumber>
-                    <!-- {{grandTotal.sip}} -->
-                    {{mfData[eleventhArrayGTotal]}}
-                </td>
-            </tr>
         </tbody>
 
+        <tr>
+            <td valign="top" *ngIf="customDataSource.data?.array[0]?.isCheked"
+                [ngStyle]="customDataSource.data?.array3[0].style">
+                {{mfData[firstArrayGTotal]}}
 
+            </td>
+            <td valign="top" *ngIf="customDataSource.data?.array[1]?.isCheked"
+                [ngStyle]="customDataSource.data?.array3[1].style" appFormatNumber>
+                <!-- {{(mfData) ? (mfData.total_amount_invested ) : 0}} -->
+                {{mfData[secondArrayGTotal]}}
+            </td>
+            <td valign="top" *ngIf="customDataSource.data?.array[2]?.isCheked"
+                [ngStyle]="customDataSource.data?.array3[2].style" appFormatNumber>
+                <!-- {{(mfData) ? (mfData.total_current_value ) : 0}} -->
+                {{mfData[thirdArrayGTotal]}}
+            </td>
+            <td valign="top" *ngIf="customDataSource.data?.array[3]?.isCheked"
+                [ngStyle]="customDataSource.data?.array3[3].style" appFormatNumber>
+                <!-- {{(mfData) ? (mfData.total_unrealized_gain) : 0}} -->
+                {{mfData[fourthArrayGTotal]}}
+            </td>
+            <td valign="top" *ngIf="customDataSource.data?.array[4]?.isCheked"
+                [ngStyle]="customDataSource.data?.array3[4].style">
+                <!-- {{(mfData) ? (mfData.total_absolute_return | number:'1.2-2') : '0'}} -->
+                {{mfData[fifthArrayGTotal]}}
+            </td>
+            <td valign="top" *ngIf="customDataSource.data?.array[5]?.isCheked"
+                [ngStyle]="customDataSource.data?.array3[5].style">
+                <!-- {{(mfData) ? (mfData.total_xirr | number:'1.2-2') : '0'}} -->
+                {{mfData[SixthArrayGTotal]}}
+            </td>
+            <td valign="top" *ngIf="customDataSource.data?.array[6]?.isCheked"
+                [ngStyle]="customDataSource.data?.array3[6].style" appFormatNumber>
+                <!-- {{mfData ? mfData.total_dividend_payout : 0}} -->
+                {{mfData[seventhArrayGTotal]}}
+            </td>
+            <td valign="top" *ngIf="customDataSource.data?.array[7]?.isCheked"
+                [ngStyle]="customDataSource.data?.array3[7].style" appFormatNumber>
+                <!-- {{(grandTotal) ? grandTotal.withdrawals : 0 }} -->
+                {{mfData[eighthArrayGTotal]}}
+            </td>
+            <td valign="top" *ngIf="customDataSource.data?.array[8]?.isCheked"
+                [ngStyle]="customDataSource.data?.array3[8].style">
+                <!-- {{(grandTotal.totalBalanceUnit) ? (grandTotal.totalBalanceUnit | number:'1.2-3') : '0'}} -->
+                {{mfData[ninethArrayGTotal]}}
+            </td>
+            <td valign="top" *ngIf="customDataSource.data?.array[9]?.isCheked"
+                [ngStyle]="customDataSource.data?.array3[9].style">
+            </td>
+            <td valign="top" *ngIf="customDataSource.data?.array[10]?.isCheked"
+                [ngStyle]="customDataSource.data?.array3[10].style" appFormatNumber>
+                <!-- {{grandTotal.sip}} -->
+                {{mfData[eleventhArrayGTotal]}}
+            </td>
+        </tr>
     </table>
 </div>
