@@ -7,6 +7,8 @@ import { CustomerService } from '../../../../customer.service';
 import { MatDialog } from '@angular/material';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { DatePipe } from '@angular/common';
+import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
 
 
 @Component({
@@ -51,7 +53,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
   callMethod: { methodName: string; ParamValue: any; };
   nomineesList: any[] = [];
 
-  constructor(public dialog: MatDialog, private fb: FormBuilder, private datePipe: DatePipe, private eventService: EventService, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
+  constructor(public dialog: MatDialog, private enumService: EnumServiceService, private fb: FormBuilder, private datePipe: DatePipe, private eventService: EventService, private subInjectService: SubscriptionInject, private cusService: CustomerService) { }
   @Input() set data(data) {
     this.clientId = AuthService.getClientId();
     this.advisorId = AuthService.getAdvisorId();
@@ -290,12 +292,23 @@ export class StockScripLevelTransactionComponent implements OnInit {
       });
     }
     /***nominee***/
-
+    this.transactionListForm.get('linkedBankAccount').setValue(data.linkedBankAccount);
+    this.transactionListForm.get('linkedDematAccount').setValue(data.linkedDematAccount);
+    this.transactionListForm.get('description').setValue(data.description);
     this.ownerData = { Fmember: this.nomineesListFM, controleData: this.scipLevelTransactionForm }
     // ==============owner-nominee Data ========================\\
   }
   transactionListForm = this.fb.group({
-    transactionListArray: new FormArray([])
+    transactionListArray: new FormArray([]),
+    getNomineeName: this.fb.array([this.fb.group({
+      name: [''],
+      sharePercentage: [0],
+      familyMemberId: [0],
+      id: [0]
+    })]),
+    linkedBankAccount: [''],
+    linkedDematAccount: [''],
+    description: ['']
   })
   get transactionList() { return this.transactionListForm.controls };
   get transactionArray() { return this.transactionList.transactionListArray as FormArray };
@@ -444,6 +457,10 @@ export class StockScripLevelTransactionComponent implements OnInit {
         "familyMemberId": this.scipLevelTransactionForm.value.getCoOwnerName[0].familyMemberId,
         "ownerList": this.editApiData?this.editApiData.portfolioOwner:this.scipLevelTransactionForm.value.getCoOwnerName,
         "portfolioName": this.portfolioData ? this.portfolioData.portfolioName : this.scipLevelTransactionForm.value.portfolioName,
+        "nomineeList": this.transactionListForm.value.getNomineeName,
+        "linkedBankAccount": this.transactionListForm.value.linkedBankAccount,
+        "linkedDematAccount": this.transactionListForm.value.linkedDematAccount,
+        "description": this.transactionListForm.value.description,
         "stockList": finalStocks
       }
       console.log(obj)
@@ -483,4 +500,32 @@ export class StockScripLevelTransactionComponent implements OnInit {
   Close() {
     this.subInjectService.changeNewRightSliderState({ state: 'close' });
   }
+
+  bankList = [];
+  getBank(){
+    if(this.enumService.getBank().length > 0){
+      this.bankList = this.enumService.getBank();
+    }
+    else{
+      this.bankList = [];
+    }
+    console.log(this.bankList,"this.bankList2");
+  }
+
+  //link bank
+  openDialog(eventData): void {
+    const dialogRef = this.dialog.open(LinkBankComponent, {
+      width: '50%',
+      data:{bankList: this.bankList, userInfo: true} 
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      setTimeout(() => {
+        this.bankList = this.enumService.getBank();
+      }, 5000);
+    });
+
+  }
+
+//link bank
 }
