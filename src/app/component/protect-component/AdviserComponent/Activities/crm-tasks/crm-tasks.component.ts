@@ -1,11 +1,12 @@
 import { MatTableDataSource } from '@angular/material';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SubscriptionInject } from '../../Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
 import { AddTasksComponent } from './add-tasks/add-tasks.component';
 import { CrmTaskService } from './crm-task.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-crm-tasks',
@@ -18,6 +19,15 @@ export class CrmTasksComponent implements OnInit {
   isLoading: boolean;
   advisorId = AuthService.getAdvisorId();
   taskStatus: any;
+  dateFilterList: any;
+  filterValueObj: any;
+  isFilterSet: boolean;
+  finalTaskList = [];
+  hasEndReached = false;
+  infiniteScrollingFlag = false;
+  filterFormControl = new FormControl();
+
+  @ViewChild('tableEl', { static: false }) tableEl;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -33,7 +43,14 @@ export class CrmTasksComponent implements OnInit {
     this.dataSource.data = ELEMENT_DATA;
     this.isLoading = true;
     console.log("iniitialized");
-    this.getTaskStatus()
+    this.getTaskStatus();
+  }
+
+  setFilterValue() {
+    this.isFilterSet = true;
+    this.filterValueObj = this.filterFormControl.value;
+    this.finalTaskList = [];
+    this.initPoint();
   }
 
   getTaskStatus() {
@@ -42,20 +59,26 @@ export class CrmTasksComponent implements OnInit {
         if (res) {
           console.log(res);
           this.taskStatus = res.taskStatus;
-          this.getAllTaskList();
+          this.dateFilterList = res.taskDaysFilter
+          this.getAllTaskList(0);
         }
       })
   }
+
+
 
   getTaskNameFromTaskStatusList(taskStatus) {
     return this.taskStatus.find(item => item.id === taskStatus).name;
   }
 
-  getAllTaskList() {
+  getAllTaskList(offset) {
     const data = {
       advisorId: this.advisorId,
-      offset: 0,
+      offset,
       limit: 5
+    }
+    if (this.isFilterSet) {
+      data['dateFilter'] = this.filterValueObj.id
     }
     this.crmTaskService.getAllTaskListValues(data)
       .subscribe(res => {
@@ -99,12 +122,33 @@ export class CrmTasksComponent implements OnInit {
               menuList: '',
             });
           });
-          this.dataSource.data = dataArray;
+          this.finalTaskList = this.finalTaskList.concat(dataArray);
+          this.dataSource.data = this.finalTaskList;
+          this.hasEndReached = false;
+          this.infiniteScrollingFlag = false;
         } else {
-          this.dataSource.data = null;
-          this.eventService.openSnackBar('No Task Found', "DISMISS");
+          this.dataSource.data = (this.finalTaskList.length > 0) ? this.finalTaskList : null;
+          this.isLoading = false;
+          this.infiniteScrollingFlag = false;
+          if (this.finalTaskList.length > 0) {
+            this.eventService.openSnackBar("No more Task Found", "DISMISS");
+          } else {
+            this.eventService.openSnackBar('No Task Found', "DISMISS");
+          }
         }
       })
+  }
+
+  onTableScroll(e: any) {
+    if (this.tableEl._elementRef.nativeElement.querySelector('tbody').querySelector('tr:last-child').offsetTop <= (e.target.scrollTop + e.target.offsetHeight + 200)) {
+      if (!this.hasEndReached) {
+        this.infiniteScrollingFlag = true;
+        this.hasEndReached = true;
+        this.getAllTaskList(this.finalTaskList.length);
+        // this.getClientList(this.finalClientList[this.finalClientList.length - 1].clientId)
+      }
+
+    }
   }
 
   deleteTask(id) {
