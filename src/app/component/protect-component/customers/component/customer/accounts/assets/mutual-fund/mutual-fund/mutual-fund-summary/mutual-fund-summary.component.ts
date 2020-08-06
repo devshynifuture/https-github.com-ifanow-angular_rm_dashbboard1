@@ -34,6 +34,8 @@ export class MutualFundSummaryComponent implements OnInit {
 
   displayedColumns = ['schemeName', 'amountInvested', 'currentValue', 'unrealizedProfit', 'absoluteReturn',
     'xirr', 'dividendPayout', 'switchOut', 'balanceUnit', 'navDate', 'sipAmount', 'icons'];
+    displayedColumnsTotal: string[] = ['schemeNameTotal', 'amountInvestedTotal', 'currentValueTotal', 'unrealizedProfitTotal', 'absoluteReturnTotal',
+    'xirrTotal', 'dividendPayoutTotal', 'switchOutTotal', 'balanceUnitTotal', 'navDateTotal', 'sipAmountTotal', 'iconsTotal'];
   mfData: any;
   grandTotal: any = {};
   // subCategoryData: any[];
@@ -270,6 +272,7 @@ export class MutualFundSummaryComponent implements OnInit {
           let getList = [];
           // let displaycopy =[];
           this.displayedColumns = [];
+          this.displayedColumnsTotal = [];
           data.forEach(element => {
             if (element.clientId == 0) {
               const obj = {
@@ -300,13 +303,17 @@ export class MutualFundSummaryComponent implements OnInit {
           if (this.reponseData) {
             this.setDefaultFilterData.transactionView.forEach(element => {
               if (element.selected == true) {
-                this.displayedColumns.push(element.displayName)
+                this.displayedColumns.push(element.displayName);
+                this.displayedColumnsTotal.push(element.displayName + 'Total');
+
               }
             });
           } else {
             transactionView.forEach(element => {
               if (element.selected == true) {
-                this.displayedColumns.push(element.displayName)
+                this.displayedColumns.push(element.displayName);
+                this.displayedColumnsTotal.push(element.displayName + 'Total');
+
               }
             });
           }
@@ -334,7 +341,8 @@ export class MutualFundSummaryComponent implements OnInit {
           this.displayedColumns = [];
           this.setDefaultFilterData.transactionView.forEach(element => {
             if (element.selected == true) {
-              this.displayedColumns.push(element.displayName)
+              this.displayedColumns.push(element.displayName);
+              this.displayedColumnsTotal.push(element.displayName + 'Total');
             }
           });
         } else {
@@ -1502,6 +1510,7 @@ export class MutualFundSummaryComponent implements OnInit {
       }
     );
   }
+  isTotal = (index, item) => item.schemeName == 'Total';
 
   isGroup(index, item): boolean {// for display name as per category
     return item.groupName;

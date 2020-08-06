@@ -58,7 +58,7 @@ addEventListener('message', ({data}) => {
     element.trnAbsoluteReturn = mfService.mutualFundRoundAndFormat(element.trnAbsoluteReturn, 2);
     element.cagr = mfService.mutualFundRoundAndFormat(element.cagr, 2);
     element.totalCagr = mfService.mutualFundRoundAndFormat(element.totalCagr, 2);
-    element.transactionDate =  element.transactionDate ? new Date(element.transactionDate).toISOString().replace(/T.*/,'').split('-').reverse().join('-') : ''; 
+    element.transactionDate =  element.transactionDate ? new Date(element.transactionDate).toISOString().replace(/T.*/,'').split('/').reverse().join('/') : ''; 
     
   });
 
