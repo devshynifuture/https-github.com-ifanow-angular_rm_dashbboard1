@@ -1178,6 +1178,9 @@ export class MutualFundSummaryComponent implements OnInit {
         this.customDataSource.data = []
         this.summary.data = [{}, {}, {}];
         this.summary.data = data.customDataSourceData;
+          this.mfData.withdrawals = this.grandTotal.withdrawals
+          this.mfData.totalBalanceUnit = this.grandTotal.totalBalanceUnit
+          this.mfData.sip = this.grandTotal.sip
         console.log("this is summary Data:::", data.customDataSourceData)
         this.customDataSource.data = data.customDataSourceData;
         this.customDataSource.data.array = [];

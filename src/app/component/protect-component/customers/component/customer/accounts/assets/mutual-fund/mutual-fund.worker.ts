@@ -35,7 +35,7 @@ addEventListener('message', ({data}) => {
     element.sipAmount = mfService.mutualFundRoundAndFormat(element.sipAmount, 0);
     element.totalSipAmount = mfService.mutualFundRoundAndFormat(element.totalSipAmount, 0);
 
-    element.navDate =  element.navDate ? new Date(element.navDate).toISOString().replace(/T.*/,'').split('/').reverse().join('/') : ''; 
+    element.navDate =  element.navDate ? new Date(element.navDate).toISOString().replace(/T.*/,'').split('-').reverse().join('-') : ''; 
     
   });
 
