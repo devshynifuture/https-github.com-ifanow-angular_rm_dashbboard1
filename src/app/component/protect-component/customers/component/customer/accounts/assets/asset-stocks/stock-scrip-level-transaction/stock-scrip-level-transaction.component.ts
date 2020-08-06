@@ -32,6 +32,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
+  optionForm;
   ownerData: any;
   portfolioList: any;
   familyWisePortfolio = [];
@@ -172,7 +173,7 @@ export class StockScripLevelTransactionComponent implements OnInit {
   /***nominee***/
 
   get getNominee() {
-    return this.scipLevelTransactionForm.get('getNomineeName') as FormArray;
+    return this.optionForm.get('getNomineeName') as FormArray;
   }
 
   removeNewNominee(item) {
@@ -252,6 +253,19 @@ export class StockScripLevelTransactionComponent implements OnInit {
         id: [0]
       })]),
     })
+
+    this.optionForm = this.fb.group({
+      getNomineeName: this.fb.array([this.fb.group({
+        name: [''],
+        sharePercentage: [0],
+        familyMemberId: [0],
+        id: [0]
+      })]),
+      linkedBankAccount: [''],
+      linkedDematAccount: [''],
+      description: ['']
+  })
+
     if (data.transactionOrHoldingSummaryList) {
       data.transactionOrHoldingSummaryList.forEach(element => {
         this.transactionArray.push(this.fb.group({
@@ -292,23 +306,14 @@ export class StockScripLevelTransactionComponent implements OnInit {
       });
     }
     /***nominee***/
-    this.transactionListForm.get('linkedBankAccount').setValue(data.linkedBankAccount);
-    this.transactionListForm.get('linkedDematAccount').setValue(data.linkedDematAccount);
-    this.transactionListForm.get('description').setValue(data.description);
+    this.optionForm.get('linkedBankAccount').setValue(data.linkedBankAccount);
+    this.optionForm.get('linkedDematAccount').setValue(data.linkedDematAccount);
+    this.optionForm.get('description').setValue(data.description);
     this.ownerData = { Fmember: this.nomineesListFM, controleData: this.scipLevelTransactionForm }
     // ==============owner-nominee Data ========================\\
   }
   transactionListForm = this.fb.group({
     transactionListArray: new FormArray([]),
-    getNomineeName: this.fb.array([this.fb.group({
-      name: [''],
-      sharePercentage: [0],
-      familyMemberId: [0],
-      id: [0]
-    })]),
-    linkedBankAccount: [''],
-    linkedDematAccount: [''],
-    description: ['']
   })
   get transactionList() { return this.transactionListForm.controls };
   get transactionArray() { return this.transactionList.transactionListArray as FormArray };
@@ -457,10 +462,10 @@ export class StockScripLevelTransactionComponent implements OnInit {
         "familyMemberId": this.scipLevelTransactionForm.value.getCoOwnerName[0].familyMemberId,
         "ownerList": this.editApiData?this.editApiData.portfolioOwner:this.scipLevelTransactionForm.value.getCoOwnerName,
         "portfolioName": this.portfolioData ? this.portfolioData.portfolioName : this.scipLevelTransactionForm.value.portfolioName,
-        "nomineeList": this.transactionListForm.value.getNomineeName,
-        "linkedBankAccount": this.transactionListForm.value.linkedBankAccount,
-        "linkedDematAccount": this.transactionListForm.value.linkedDematAccount,
-        "description": this.transactionListForm.value.description,
+        "nomineeList": this.optionForm.value.getNomineeName,
+        "linkedBankAccount": this.optionForm.value.linkedBankAccount,
+        "linkedDematAccount": this.optionForm.value.linkedDematAccount,
+        "description": this.optionForm.value.description,
         "stockList": finalStocks
       }
       console.log(obj)
