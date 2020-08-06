@@ -147,20 +147,6 @@ const ELEMENT_DATA7: PeriodicElement7[] = [
 })
 
 export class DashboardComponent implements OnInit {
-  documentSizeData: any = {};
-  aumReconList: any;
-  aumFlag: boolean;
-  goalSummaryData: any;
-  isKeyMatrix: boolean;
-  subOverviewFlag: boolean;
-  docOverviewFlag: boolean;
-  isBirhtdayLoader: boolean;
-  isLoading;
-  isGoalSummaryLoaderFlag: boolean;
-  investmentAccountFlag: boolean;
-  transactionFlag: boolean;
-  showSummaryBar;
-  taskStatusList: any;
   constructor(
     public dialog: MatDialog, private subService: SubscriptionService,
     private eventService: EventService,
@@ -186,6 +172,20 @@ export class DashboardComponent implements OnInit {
       this.greeting = 'Good evening';
     }
   }
+  documentSizeData: any = {};
+  aumReconList: any;
+  aumFlag: boolean;
+  goalSummaryData: any;
+  isKeyMatrix: boolean;
+  subOverviewFlag: boolean;
+  docOverviewFlag: boolean;
+  isBirhtdayLoader: boolean;
+  isLoading;
+  isGoalSummaryLoaderFlag: boolean;
+  investmentAccountFlag: boolean;
+  transactionFlag: boolean;
+  showSummaryBar;
+  taskStatusList: any;
 
   advisorId: any;
   dashBoardSummary: {}[];
@@ -238,6 +238,21 @@ export class DashboardComponent implements OnInit {
   displayedColumns7: string[] = ['position', 'name', 'weight', 'symbol', 'match', 'report'];
   dataSource7 = ELEMENT_DATA7;
 
+  sliderConfig = {
+    slidesToShow: 1,
+    infinite: true,
+    variableWidth: true,
+    outerEdgeLimit: true,
+    nextArrow: '<div style=\'position: absolute; top: 35%; right: 0; cursor: pointer;\' class=\'nav-btn classNextArrow next-slide\'><img src=\'/assets/images/svg/next-arrow.svg\'></div>',
+    prevArrow: '<div style=\'position: absolute; top: 35%; left: -5px; z-index: 1; cursor: pointer;\' class=\'nav-btn classNextArrow next-slide\'><img src=\'/assets/images/svg/pre-arrow.svg\'></div>',
+  };
+
+  LastSevenDaysInvestmentAccounts: any;
+
+  LastSevenDaysTransactions: any;
+  rejectedFAILURE: any = [];
+  lastSevenDays: any = new Date().setDate(new Date().getDate() - 7);
+
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.parentId = AuthService.getAdminAdvisorId();
@@ -261,7 +276,7 @@ export class DashboardComponent implements OnInit {
     this.getLatesAumReconciliationData();
     this.getLastSevenDaysInvestmentAccounts();
     this.getGoalSummaryData();
-    this.initPointForTask()
+    // this.initPointForTask()
   }
 
   initPointForTask() {
@@ -273,11 +288,11 @@ export class DashboardComponent implements OnInit {
     this.crmTaskService.getTaskStatusValues({})
       .subscribe(res => {
         if (res) {
-          this.taskStatusList = res.taskStatus
+          this.taskStatusList = res.taskStatus;
 
           this.getAllTaskList();
         }
-      })
+      });
   }
 
   getTaskNameFromTaskStatusList(taskStatus) {
@@ -313,16 +328,16 @@ export class DashboardComponent implements OnInit {
       offset: 0,
       limit: -1,
       dateFilter: 1
-    }
+    };
     this.crmTaskService.getAllTaskListValues(data)
       .subscribe(res => {
         this.isLoading = false;
         if (res) {
-          console.log("this is some task values:::", res);
-          let dataArray = [];
+          console.log('this is some task values:::', res);
+          const dataArray = [];
           res.forEach((element, index) => {
-            let dateFormat = new Date(element.dueDate)
-            let dueDate = dateFormat.getDate() + '/' + (dateFormat.getMonth() + 1) + '/' + dateFormat.getFullYear();
+            const dateFormat = new Date(element.dueDate);
+            const dueDate = dateFormat.getDate() + '/' + (dateFormat.getMonth() + 1) + '/' + dateFormat.getFullYear();
             dataArray.push({
               client: element.clientName,
               member: element.familyMemberName,
@@ -359,33 +374,22 @@ export class DashboardComponent implements OnInit {
           this.dataSource2.data = dataArray;
         } else {
           this.dataSource2.data = null;
-          this.eventService.openSnackBar('No Task Found', "DISMISS");
+          this.eventService.openSnackBar('No Task Found', 'DISMISS');
         }
       });
-  }
-
-  sliderConfig = {
-    slidesToShow: 1,
-    infinite: true,
-    variableWidth: true,
-    outerEdgeLimit: true,
-    "nextArrow": "<div style='position: absolute; top: 35%; right: 0; cursor: pointer;' class='nav-btn classNextArrow next-slide'><img src='/assets/images/svg/next-arrow.svg'></div>",
-    "prevArrow": "<div style='position: absolute; top: 35%; left: -5px; z-index: 1; cursor: pointer;' class='nav-btn classNextArrow next-slide'><img src='/assets/images/svg/pre-arrow.svg'></div>",
   }
 
 
   mailConnect(done) {
     this.excessAllow = done;
   }
-
-  LastSevenDaysInvestmentAccounts: any;
   getLastSevenDaysInvestmentAccounts() {
     this.investmentAccountFlag = true;
     const obj = {
-      "advisorId": this.advisorId,
-      "startDate": new Date().getTime(),
-      "endDate": new Date(this.lastSevenDays).getTime()
-    }
+      advisorId: this.advisorId,
+      startDate: new Date().getTime(),
+      endDate: new Date(this.lastSevenDays).getTime()
+    };
 
     //       const obj = {
     //     "advisorId":5430,
@@ -397,8 +401,7 @@ export class DashboardComponent implements OnInit {
         if (data) {
           this.investmentAccountFlag = false;
           this.LastSevenDaysInvestmentAccounts = data;
-        }
-        else {
+        } else {
           this.investmentAccountFlag = false;
           this.LastSevenDaysInvestmentAccounts = [];
         }
@@ -407,18 +410,14 @@ export class DashboardComponent implements OnInit {
 
       });
   }
-
-  LastSevenDaysTransactions: any;
-  rejectedFAILURE: any = [];
-  lastSevenDays: any = new Date().setDate(new Date().getDate() - 7);
   getLastSevenDaysTransactions() {
     this.transactionFlag = true;
     const obj = {
-      "advisorId": this.advisorId,
-      "tpUserCredentialId": null,
-      "startDate": new Date().getTime(),
-      "endDate": new Date(this.lastSevenDays).getTime()
-    }
+      advisorId: this.advisorId,
+      tpUserCredentialId: null,
+      startDate: new Date().getTime(),
+      endDate: new Date(this.lastSevenDays).getTime()
+    };
 
     //    const obj = {
     //     "advisorId":5430,
@@ -426,18 +425,17 @@ export class DashboardComponent implements OnInit {
     //     "startDate":1593369000000,
     //     "endDate":1594060199999
     //  }
-    console.log(new Date(obj.startDate), new Date(obj.endDate), "date 123");
+    console.log(new Date(obj.startDate), new Date(obj.endDate), 'date 123');
     this.dashboardService.getLastSevenDaysTransactions(obj).subscribe(
       (data) => {
-        console.log(data, "LastSevenDaysTransactions 123");
+        console.log(data, 'LastSevenDaysTransactions 123');
         if (data) {
           this.transactionFlag = false;
           this.LastSevenDaysTransactions = data;
           this.dataSource5 = this.LastSevenDaysTransactions.filter((x) => {
             x.status == 1 || x.status == 7;
-          })
-        }
-        else {
+          });
+        } else {
           this.transactionFlag = false;
           this.LastSevenDaysTransactions = [];
           this.dataSource5 = [];
@@ -578,7 +576,7 @@ export class DashboardComponent implements OnInit {
           this.isBirhtdayLoader = false;
           data.forEach(element => {
             if (element.displayName.length > 15) {
-              element['shortName'] = element.displayName.substr(0, element.name.indexOf(' '));
+              element.shortName = element.displayName.substr(0, element.name.indexOf(' '));
             }
             if (element.dateOfBirth && element.dateOfBirth != 0) {
               element.daysToGo = this.calculateBirthdayOrAnniversary(element.dateOfBirth);
@@ -589,8 +587,7 @@ export class DashboardComponent implements OnInit {
           this.utils.calculateAgeFromCurrentDate(data);
           this.birthdayAnniList = data;
           console.log(this.birthdayAnniList);
-        }
-        else {
+        } else {
           this.birthdayAnniList = [];
           this.isBirhtdayLoader = false;
         }
@@ -631,8 +628,7 @@ export class DashboardComponent implements OnInit {
           this.last7DaysFlag = false;
           this.nscData = data.nse;
           this.bseData = data.bse;
-        }
-        else {
+        } else {
           this.last7DaysFlag = false;
           this.nscData = [{}, {}];
           this.bseData = [{}, {}];
@@ -650,7 +646,7 @@ export class DashboardComponent implements OnInit {
     const obj = {
       advisorId: this.advisorId,
       // clientId
-    }
+    };
     this.dashboardService.getDocumentTotalSize(obj).subscribe(
       data => {
         if (data) {
@@ -658,38 +654,36 @@ export class DashboardComponent implements OnInit {
           this.documentSizeData = data;
         }
       }
-    )
+    );
   }
 
   getLatesAumReconciliationData() {
     this.aumReconList = [{}, {}, {}];
     this.aumFlag = true;
-    const obj =
-    {
+    const obj = {
       id: this.advisorId
-    }
+    };
     this.dashboardService.getLatestAumReconciliation(obj).subscribe(
       data => {
         if (data) {
           this.aumFlag = false;
           this.aumReconList = data;
-        }
-        else {
+        } else {
           this.aumFlag = false;
-          this.aumReconList = []
+          this.aumReconList = [];
         }
       }, err => {
         this.aumFlag = false;
-        this.aumReconList = []
+        this.aumReconList = [];
       }
-    )
+    );
   }
 
   getGoalSummaryData() {
     this.isGoalSummaryLoaderFlag = true;
     const obj = {
       advisorId: this.advisorId
-    }
+    };
     this.dashboardService.getGoalSummarydata(obj).subscribe(
       data => {
         if (data) {
@@ -701,7 +695,7 @@ export class DashboardComponent implements OnInit {
       }, err => {
 
       }
-    )
+    );
   }
 
   connectAccountWithGoogle() {
@@ -974,8 +968,9 @@ export class DashboardComponent implements OnInit {
     };
     this.dashboardService.getKeyMetrics(obj).subscribe(
       data => {
-        this.isKeyMatrix = false
+        this.isKeyMatrix = false;
         this.keyMetricJson = data;
+        this.keyMetricJson.mfAum = UtilService.getNumberToWord(this.keyMetricJson.mfAum)
       },
       err => {
         this.keyMetricJson = '';
