@@ -210,7 +210,7 @@ export class DashboardComponent implements OnInit {
     private utils: UtilService,
     private datePipe: DatePipe,
     private crmTaskService: CrmTaskService,
-    private customerService:CustomerService
+    private customerService: CustomerService
   ) {
     const date = new Date();
     const hourOfDay = date.getHours();
@@ -259,7 +259,7 @@ export class DashboardComponent implements OnInit {
   isRecentTransactionFlag: boolean;
   todoListData = [];
   eventData: any;
-  portFolioData=[];
+  portFolioData = [];
   formatedEvent: any[];
   calenderLoader: boolean;
   birthdayAnniList: any;
@@ -413,7 +413,7 @@ export class DashboardComponent implements OnInit {
     this.clientData = AuthService.getClientData()
     this.advisorName = AuthService.getUserInfo().name;
     this.excessAllow = localStorage.getItem('successStoringToken');
-    this.getAssetAllocationData()
+    // this.getAssetAllocationData()
     this.getTotalRecivedByDash();
     this.clientWithSubscription();
     this.getSummaryDataDashboard(); // summry dashbord
@@ -440,7 +440,7 @@ export class DashboardComponent implements OnInit {
   }
   getAssetAllocationData() {
     const obj = {
-      clientId: 124842,
+      clientId: 122326,
       advisorId: this.advisorId,
       targetDate: new Date().getTime()
     }
