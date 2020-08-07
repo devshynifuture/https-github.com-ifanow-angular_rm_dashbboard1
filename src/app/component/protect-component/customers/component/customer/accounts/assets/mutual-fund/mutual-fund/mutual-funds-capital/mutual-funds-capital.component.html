@@ -421,7 +421,46 @@
 
 <!-- inner html design -->
 
+<div #mfCapitalTemplateHeader id="templateHeader" class="hide" style="display: none;">
+    <tr *ngIf="dataSource.data.length > 0">
+        <td
+            style="width:26%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+            <b>Scheme name </b> </td>
 
+        <td
+            style="width:8%;text-align: right; font-size: 12px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+            <b> Folio number </b> </td>
+
+        <td
+            style="width:12%;text-align: left; font-size: 12px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+            <b> Investor name </b> </td>
+
+        <td
+            style="width:5%;text-align: right; font-size: 12px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+            <b> ST gain </b> </td>
+
+        <td
+            style="width:8%;text-align: right; font-size: 12px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+            <b> ST loss </b> </td>
+
+        <td
+            style="width:8%;text-align: right; font-size: 12px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+            <b> LT gain </b> </td>
+
+        <td
+            style="width:8%;text-align: right; font-size: 12px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+            <b> Indexed gain </b> </td>
+
+        <td
+            style="width:8%;text-align: right; font-size: 12px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+            <b> LT loss </b> </td>
+
+        <td
+            style="width:12%;text-align: right; font-size: 12px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+            <b> Indexed loss </b> </td>
+
+    </tr>
+</div>
 <div #mfCapitalTemplate id="template" class="hide
 " style="display: none;">
     <table cellpadding="0" width="100%" cellspacing="0" border="0"

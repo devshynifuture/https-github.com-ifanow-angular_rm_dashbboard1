@@ -10,7 +10,7 @@ import {FormGroup} from '@angular/forms';
 import {BehaviorSubject, Subject} from 'rxjs';
 import {AuthService} from '../auth-service/authService';
 import {quotationTemplate} from './quotationTemplate';
-import {debounce, debounceTime} from 'rxjs/operators';
+import {debounceTime} from 'rxjs/operators';
 import {AppConstants} from './app-constants';
 
 
@@ -162,6 +162,10 @@ export class UtilService {
     // console.log(' roundedOffString', this.decimalPipe.transform(data, '9.0-2', null).replace(/,/g, ''));
 
     return parseFloat(this.decimalPipe.transform(data, '9.0-' + noOfPlaces, null).replace(/,/g, ''));
+  }
+
+  static roundOffString(data: number, minNoOfPlaces = 0, maxNoOfPlaces: number = 0) {
+    return this.decimalPipe.transform(data, '9.' + minNoOfPlaces + '-' + maxNoOfPlaces, null).replace(/,/g, '');
   }
 
   static roundOffToNearest1(data: number) {
