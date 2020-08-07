@@ -433,7 +433,7 @@ export class DashboardComponent implements OnInit {
     this.getLatesAumReconciliationData();
     this.getLastSevenDaysInvestmentAccounts();
     this.getGoalSummaryData();
-    // this.initPointForTask()
+    this.initPointForTask()
   }
 
   initPointForTask() {

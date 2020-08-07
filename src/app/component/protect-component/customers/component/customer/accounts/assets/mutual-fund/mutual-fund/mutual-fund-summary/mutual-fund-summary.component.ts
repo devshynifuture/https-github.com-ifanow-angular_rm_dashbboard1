@@ -196,6 +196,8 @@ export class MutualFundSummaryComponent implements OnInit {
         let param1 = queryParamMap['params'];
         this.clientId = parseInt(param1.clientId)
         this.advisorId = parseInt(param1.advisorId)
+        this.reportDate = this.datePipe.transform(new Date(param1.toDate), 'dd-MMM-yyyy')
+
         this.addedData = true;
         console.log('2423425', param1)
         this.isBulkEmailing = true
@@ -858,7 +860,8 @@ export class MutualFundSummaryComponent implements OnInit {
           'padding': '8px',
           'border-right': '1px solid #dee5e7',
           'border-bottom': '1px solid #dee5e7',
-          'border-top': '1px solid #dee5e7'
+          'border-top': '1px solid #dee5e7',
+          'border-left': '1px solid #dee5e7',
         }
       });
       this.customDataSource.data.array1.push({
@@ -1192,8 +1195,12 @@ export class MutualFundSummaryComponent implements OnInit {
         this.mfData.totalBalanceUnit = this.mfService.mutualFundRoundAndFormat(this.grandTotal.totalBalanceUnit,3)
         this.mfData.total_unrealized_gain=this.mfService.mutualFundRoundAndFormat(this.mfData.total_unrealized_gain,0);
         this.mfData.sip = this.grandTotal.sip
+        this.mfData.sip=this.mfService.mutualFundRoundAndFormat(this.mfData.sip,2);
         this.mfData.total_absolute_return=this.mfService.mutualFundRoundAndFormat(this.mfData.total_absolute_return,2);
         this.mfData.total_xirr=this.mfService.mutualFundRoundAndFormat(this.mfData.total_xirr,2)
+        this.mfData.total_current_value=this.mfService.mutualFundRoundAndFormat(this.mfData.total_current_value,2)
+        this.mfData.total_amount_invested=this.mfService.mutualFundRoundAndFormat(this.mfData.total_amount_invested,0)
+        
         console.log("this is summary Data:::", data.customDataSourceData)
         this.customDataSource.data = data.customDataSourceData;
         this.customDataSource.data.array = [];
@@ -1637,7 +1644,7 @@ export class MutualFundSummaryComponent implements OnInit {
         obj = 'totalAbsoluteReturn';
         break;
       case 'XIRR':
-        obj = 'totalDividendPayout';
+        obj = 'totalXirr';
         break;
       case 'Dividend payout':
         obj = 'totalDividendPayout';
@@ -1910,6 +1917,7 @@ export class MutualFundSummaryComponent implements OnInit {
     this.clientData = data.clientData
     this.getOrgData = data.advisorData
     this.userInfo = data.advisorData
+    this.details.emailId = data.advisorData.email;
   }
   getDefaultDetails(platform) {
     const obj = {

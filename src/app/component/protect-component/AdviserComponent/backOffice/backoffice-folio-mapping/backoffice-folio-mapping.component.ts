@@ -69,9 +69,14 @@ export class BackofficeFolioMappingComponent implements OnInit, OnDestroy {
         if (res) {
           this.changeDataTableAfterApi(res)
         } else {
+          this.isLoading = false;
           this.searchError = true;
           this.searchErrorMessage = 'No results';
         }
+      }, err => {
+        this.isLoading = false;
+        this.searchError = true;
+        this.searchErrorMessage = 'No results';
       });
 
   }
