@@ -691,6 +691,7 @@ export const appConfig = {
   RESET_ORG_REPORT_LOGO: 'setting/organisation/report-logo/delete',
   GET_EMAIL_VERIFICATION: 'setting/preference/email/get',
   GET_EMAIL_TEMPLATES: 'setting/preference/email/template/get',
+  GET_EMAIL_LIST:'setting/preference/verified/email-list/get',
   EDIT_PREF_EMAIL_TEMPLATE: 'setting/preference/email/template/update',
   DELETE_PREF_EMAIL_TEMPLATE: 'setting/preference/email/delete',
   DELETE_EMAIL_VERIFY: 'setting/preference/email/delete',
@@ -880,7 +881,8 @@ export const appConfig = {
   GET_CALL_DETAILS: 'marketplace/call/settings/get',
   ADD_CALL_DETAILS: 'marketplace/call/settings/edit',
   ADD_CALL_AVAILABLE: 'marketplace/call/settings/non-working/days/edit',
-  GET_WEBPUSH_PUBLIC_KEY: 'notification/public-signing-key/get'
+  GET_WEBPUSH_PUBLIC_KEY: 'notification/public-signing-key/get',
+  PUT_WEBPUSH_REGISTER_JSON: 'notification/register/advisor',
 
 };
 

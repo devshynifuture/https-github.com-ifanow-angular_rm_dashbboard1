@@ -1,0 +1,144 @@
+<div class="row pt-28">
+    <div class="col-md-4 d-flex align-items-center justify-content-end mob align-items-normal mob-pl-10">
+        <h5 class="m-0 mob-pb-10">Investor type</h5>
+    </div>
+    <div class="col-md-6 p-0">
+        <div class="row">
+            <div class="col-md-6 col-6 pl-0 pr-8 mob-pl-10">
+                <p class="m-0 roboto mob-pb-5">Category</p>
+                <div class="form-group">
+                    <mat-form-field>
+                        <mat-select [formControl]='invCategory' class="form-control">
+                            <mat-option [value]=2>Minor</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-6 col-6 pr-0 pl-8 mob-pr-10">
+                <p class="m-0 roboto mob-pb-5">Resident status</p>
+                <div class="form-group">
+                    <mat-form-field>
+                        <mat-select [formControl]='taxStatus' class="form-control">
+                            <mat-option [value]=1>Resident</mat-option>
+                            <mat-option [value]=0>Non-resident</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="pb-12">
+    <div *ngIf="minorData" [formGroup]="minorForm" class="minorBox">
+        <div class=" row pt-20">
+            <div class="col-md-4 text-right mob-pl-10 full-end">
+                <h5 class="m-0">Minor’s full name</h5>
+            </div>
+            <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
+                <div class="form-group">
+                    <mat-form-field appearance="standard" floatLabel="never">
+                        <input #mFullName (input)="capitalise($event)" [inputValidator]="validatorType.PERSON_NAME"
+                            [maxLength]="50" appInputValueValidation class="form-control"
+                            formControlName="minorFullName" matInput placeholder="Enter name">
+                        <mat-hint align="end" class="f-12">{{mFullName.value.length}}/50</mat-hint>
+                        <mat-error>This field is required</mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+        <div class="row pt-32">
+            <div class="col-md-4 text-right full-end">
+                <h5 class="m-0">Minor’s date of birth</h5>
+            </div>
+            <div class="col-md-3 p-0">
+                <p class="m-0 roboto">As per records</p>
+                <div class="form-group">
+                    <mat-form-field class="ba-date">
+                        <input (click)="dobAsPerRecord.open()" [matDatepicker]="dobAsPerRecord" [max]="maxDate"
+                            [min]="maxDateForAdultDob" class="form-control br-0 b-0" formControlName="dobAsPerRecord"
+                            matInput readonly>
+                        <mat-datepicker-toggle [for]="dobAsPerRecord" matSuffix></mat-datepicker-toggle>
+                        <mat-datepicker #dobAsPerRecord></mat-datepicker>
+                        <mat-hint>Optional</mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+        <div class="row pt-32">
+            <div class="col-md-4 text-right full-end">
+                <h5 class="m-0">Gender</h5>
+            </div>
+            <div class="col-md-7 p-0">
+                <mat-radio-group aria-label="Select an option" class="d-block" formControlName="gender">
+                    <mat-radio-button
+                        [ngClass]="{'bu-primary':minorForm.get('gender').value=='1','borderRadio':minorForm.get('gender').value!='1','text-primary': minorForm.get('gender').value=='1','text-custom': minorForm.get('gender').value!='1'}"
+                        value="1">
+                        Male
+                    </mat-radio-button>
+                    <mat-radio-button
+                        [ngClass]="{'bu-primary':minorForm.get('gender').value=='2','borderRadio':minorForm.get('gender').value!='2','text-primary': minorForm.get('gender').value=='2','text-custom': minorForm.get('gender').value!='2'}"
+                        value="2">
+                        Female
+                    </mat-radio-button>
+                    <mat-radio-button
+                        [ngClass]="{'bu-primary':minorForm.get('gender').value=='3','borderRadio':minorForm.get('gender').value!='3','text-primary': minorForm.get('gender').value=='3','text-custom': minorForm.get('gender').value!='3'}"
+                        value="3">
+                        Other
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
+        </div>
+
+        <div formArrayName="getNomineeName">
+            <div class="row pt-28" *ngFor="let obj of getNominee.controls; let pointIndex=index"
+                [formGroupName]="pointIndex">
+                <div class="col-md-4  text-right mob-pl-10 mob-text-left">
+                    <h5 class="m-0 pt-12">Guardian {{pointIndex + 1}}</h5>
+                </div>
+                <div class="p-0 mob-pl-10 col-10 col-md-6">
+                    <div class="form-group">
+                        <mat-form-field>
+                            <mat-select appDematOwnerNominee matInput formControlName="name" [userTypeFlag]="fieldFlag"
+                                [clientIdData]="idData" [data]='ownerData'
+                                (selectionChange)="disabledMember($event.value,'nominee')"
+                                (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
+                                <mat-option value='' disabled>Select family member</mat-option>
+                                <mat-option *ngIf="nomineesListFM==undefined" value='clientData.name'>
+                                    {{clientData.name}}
+                                </mat-option>
+                                <mat-option *ngFor="let f of nomineesListFM" [disabled]="f.disable"
+                                    [value]="f.userName">
+                                    <span>{{f.userName}}</span>
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="col-md-2 col-2 pr-0 pt-12">
+                    <i *ngIf="getNominee.controls.length == pointIndex+1" class="material-icons f-20 c-p pr-16"
+                        (click)="addNewNominee(undefined)">add</i>
+                    <i *ngIf="pointIndex < getNominee.controls.length-1" class="material-icons f-20 c-p ml-10"
+                        (click)="removeNewNominee(pointIndex)">remove</i>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="bottom-fixed wrapper-12 w-50 ">
+    <div class="row">
+        <div class="col-md-4 col-4">
+            <h5 (click)="close('close')" class="mb-0 pt-8 text-white c-p">Cancel</h5>
+        </div>
+        <div class="col-md-8 col-8 d-flex align-items-end justify-content-end">
+            <button class=" br-0 bg-white text-inherit" mat-stroked-button>SAVE &
+                NEXT
+            </button>
+            <app-progress-button [options]="barButtonOptions" class="br-0 text-inherit ml-12">
+            </app-progress-button>
+        </div>
+    </div>
+</div>

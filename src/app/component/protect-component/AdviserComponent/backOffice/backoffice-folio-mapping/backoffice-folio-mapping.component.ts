@@ -7,6 +7,7 @@ import { SelectFolioMapComponent } from './select-folio-map/select-folio-map.com
 import { MatDialog, MatTableDataSource, MatSort } from '@angular/material'
 import { SelectionModel } from '@angular/cdk/collections';
 import { debounceTime, switchMap } from 'rxjs/operators';
+import { SwPush } from '@angular/service-worker';
 
 @Component({
   selector: 'app-backoffice-folio-mapping',
@@ -44,7 +45,7 @@ export class BackofficeFolioMappingComponent implements OnInit, OnDestroy {
   constructor(
     private backOfcFolioMapService: BackofficeFolioMappingService,
     private eventService: EventService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -69,9 +70,18 @@ export class BackofficeFolioMappingComponent implements OnInit, OnDestroy {
         if (res) {
           this.changeDataTableAfterApi(res)
         } else {
+          this.isLoading = false;
+          this.unmappedDataSource.data = [];
+          this.finalUnmappedListSearch = [];
           this.searchError = true;
           this.searchErrorMessage = 'No results';
         }
+      }, err => {
+        this.isLoading = false;
+        this.unmappedDataSource.data = [];
+        this.finalUnmappedListSearch = [];
+        this.searchError = true;
+        this.searchErrorMessage = 'Something went wrong';
       });
 
   }
@@ -195,7 +205,7 @@ export class BackofficeFolioMappingComponent implements OnInit, OnDestroy {
         err => {
           console.error(err);
           this.isInfiniteScrollLoading = false;
-          this.unmappedDataSource.data = null;
+          this.unmappedDataSource.data = [];
         })
   }
 
@@ -279,16 +289,6 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  { position: '', schemeName: '', number: '', investName: '' },
-  { position: '', schemeName: '', number: '', investName: '' },
-  { position: '', schemeName: '', number: '', investName: '' },
-  { position: '', schemeName: '', number: '', investName: '' },
-  { position: '', schemeName: '', number: '', investName: '' },
-  { position: '', schemeName: '', number: '', investName: '' },
-  { position: '', schemeName: '', number: '', investName: '' },
-  { position: '', schemeName: '', number: '', investName: '' },
-  { position: '', schemeName: '', number: '', investName: '' },
-  { position: '', schemeName: '', number: '', investName: '' },
   { position: '', schemeName: '', number: '', investName: '' },
   { position: '', schemeName: '', number: '', investName: '' },
   { position: '', schemeName: '', number: '', investName: '' },
