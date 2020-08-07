@@ -1552,7 +1552,7 @@ export class MutualFundSummaryComponent implements OnInit {
         var type = typeof element.navDate == "boolean" ? element.navDate : false;
         console.log('type', type)
         if(type == false){
-          element.navDate = element.nav +  +'\xa0\xa0\xa0\xa0\xa0\xa0\xa0'+' | '+''+element.navDate
+         // element.navDate = element.nav +'\xa0\xa0\xa0\xa0\xa0\xa0\xa0'+' | ' +'\xa0\xa0\xa0\xa0\xa0\xa0\xa0'+''+element.navDate
         }
       }
     });
@@ -1855,7 +1855,7 @@ export class MutualFundSummaryComponent implements OnInit {
         var type = typeof element.navDate == "boolean" ? element.navDate : false;
         console.log('type', type)
         if(type == false){
-          element.navDate = element.nav +  +'\xa0\xa0\xa0\xa0\xa0\xa0\xa0'+' | '+''+element.navDate
+          //element.navDate = element.nav +  +'\xa0\xa0\xa0\xa0\xa0\xa0\xa0'+' | '+''+element.navDate
         }
       }
     });
