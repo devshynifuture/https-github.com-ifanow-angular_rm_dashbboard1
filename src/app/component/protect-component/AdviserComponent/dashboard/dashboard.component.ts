@@ -433,6 +433,7 @@ export class DashboardComponent implements OnInit {
     this.getLastSevenDaysInvestmentAccounts();
     this.getGoalSummaryData();
     this.initPointForTask()
+    
   }
 
   initPointForTask() {
@@ -683,7 +684,7 @@ export class DashboardComponent implements OnInit {
     this.excessAllow = done;
   }
   getLastSevenDaysInvestmentAccounts() {
-    this.investmentAccountFlag = true;
+   
     const obj = {
       advisorId: this.advisorId,
       startDate: new Date().getTime(),
@@ -695,13 +696,14 @@ export class DashboardComponent implements OnInit {
     //     "startDate":1593369000000,
     //     "endDate":1594060199999
     //  }
+    this.investmentAccountFlag = true;
     this.dashboardService.getLastSevenDaysInvestmentAccounts(obj).subscribe(
       (data) => {
         if (data) {
           this.investmentAccountFlag = false;
           this.LastSevenDaysInvestmentAccounts = data;
         } else {
-          this.investmentAccountFlag = false;
+           this.investmentAccountFlag = false;
           this.LastSevenDaysInvestmentAccounts = [];
         }
       },
@@ -859,6 +861,11 @@ export class DashboardComponent implements OnInit {
         this.eventService.openSnackBar(err, 'Dismiss');
       };
   }
+
+ 
+
+
+
 
   getBirthdayOrAnniversary() {
     this.isBirhtdayLoader = true;
@@ -1289,4 +1296,9 @@ export class DashboardComponent implements OnInit {
       console.log('The dialog was closed');
     });
   }
+
+
+ 
+
+
 }
