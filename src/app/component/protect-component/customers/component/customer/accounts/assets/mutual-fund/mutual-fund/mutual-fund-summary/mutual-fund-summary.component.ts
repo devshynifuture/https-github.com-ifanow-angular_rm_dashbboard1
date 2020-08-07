@@ -850,7 +850,7 @@ export class MutualFundSummaryComponent implements OnInit {
       });
     } else if (header == 'navDate') {
       this.customDataSource.data.array.push({
-        'name': 'NAV date', 'index': ind, isCheked: true,
+        'name': 'NAV', 'index': ind, isCheked: true,
         style: {
           'width': '6%',
           'text-align': 'right',
@@ -1109,7 +1109,7 @@ export class MutualFundSummaryComponent implements OnInit {
       if (element == 'dividendPayout') { name = 'Dividend payout' };
       if (element == 'switchOut') { name = 'Withdrawals Switch outs' };
       if (element == 'balanceUnit') { name = 'Balance Unit' };
-      if (element == 'navDate') { name = 'NAV Date' };
+      if (element == 'navDate') { name = 'NAV' };
       if (element == 'sipAmount') { name = 'SIP' };
 
       const obj = {
@@ -1608,8 +1608,8 @@ export class MutualFundSummaryComponent implements OnInit {
       case 'Balance unit':
         obj = 'balanceUnit';
         break;
-      case 'NAV date':
-        obj = 'navDate';
+      case 'NAV':
+        obj = 'nav';
         break;
       case 'SIP amount':
         obj = 'sipAmount';
@@ -1648,7 +1648,7 @@ export class MutualFundSummaryComponent implements OnInit {
       case 'Balance unit':
         obj = 'totalBalanceUnit';
         break;
-      case 'NAV date':
+      case 'NAV':
         obj = 'totalNavDate';
         break;
       case 'SIP amount':
@@ -1688,8 +1688,8 @@ export class MutualFundSummaryComponent implements OnInit {
       case 'Balance unit':
         obj = 'totalBalanceUnit';
         break;
-      case 'NAV date':
-        obj = '';
+      case 'NAV':
+        obj = '0';
         break;
       case 'SIP amount':
         obj = 'sip';
