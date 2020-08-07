@@ -32,7 +32,6 @@
         <div [ngClass]="{'table-scroll':isLoading==false }" (scroll)="onTableScroll($event)" class="example-container"
             *ngIf="dataSource.data && dataSource.data.length>0">
             <table [dataSource]="dataSource" #tableEl class="mt-8" id="table-low" mat-table [appSkeletonLoading]="isLoading">
-
                 <ng-container matColumnDef="client">
                     <th *matHeaderCellDef class="" mat-header-cell> Client</th>
                     <td *matCellDef="let element" mat-cell (click)="openAddTask(element)" class="c-p">
@@ -43,13 +42,13 @@
                 </ng-container>
                 <ng-container matColumnDef="member">
                     <th *matHeaderCellDef class="" mat-header-cell> Family member</th>
-                    <td *matCellDef="let element" mat-cell (click)="openAddTask(element)" class="c-p">
+                    <td *matCellDef="let element" mat-cell (click)="isLoading ? $event.preventDefault() : openAddTask(element)" class="c-p">
                         <div class="bar">{{element.member}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="des">
                     <th *matHeaderCellDef class="" mat-header-cell> Description</th>
-                    <td *matCellDef="let element" mat-cell (click)="openAddTask(element)">
+                    <td *matCellDef="let element" mat-cell (click)="isLoading ? $event.preventDefault() : openAddTask(element)">
                         <div class="bar">
                             {{element.des}}
                             <span *ngIf="!isLoading" class="f-14 pl-12 text-primitive">
@@ -62,19 +61,19 @@
                 </ng-container>
                 <ng-container matColumnDef="cat">
                     <th *matHeaderCellDef mat-header-cell> Category</th>
-                    <td *matCellDef="let element" mat-cell (click)="openAddTask(element)" class="c-p">
+                    <td *matCellDef="let element" mat-cell (click)="isLoading ? $event.preventDefault() : openAddTask(element)" class="c-p">
                         <div class="bar"> {{element.cat}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="assigned">
                     <th *matHeaderCellDef mat-header-cell> Assigned to</th>
-                    <td *matCellDef="let element" mat-cell (click)="openAddTask(element)" class="c-p">
+                    <td *matCellDef="let element" mat-cell (click)="isLoading ? $event.preventDefault() : openAddTask(element)" class="c-p">
                         <div class="bar"> {{element.assigned}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="dueDate">
                     <th *matHeaderCellDef mat-header-cell> Due date</th>
-                    <td *matCellDef="let element" mat-cell (click)="openAddTask(element)" class="c-p">
+                    <td *matCellDef="let element" mat-cell (click)="isLoading ? $event.preventDefault() : openAddTask(element)" class="c-p">
                         <div class="bar">{{element.dueDate}} </div>
                     </td>
                 </ng-container>
@@ -87,7 +86,7 @@
                 <ng-container matColumnDef="menuList">
                     <th *matHeaderCellDef mat-header-cell></th>
                     <td *matCellDef="let element" [matMenuTriggerFor]="menu" class="c-p" mat-cell>
-                        <div class="bar">
+                        <div class="bar" *ngIf="!isLoading">
                             <img src="/assets/images/svg/dot-menu.svg" class="">
                             <mat-menu #menu="matMenu">
                                 <button mat-menu-item (click)="deleteTask(element.id)">Delete</button>
@@ -98,16 +97,16 @@
                 <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
                 <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
             </table>
-            <div class="b-a text-center p-44" *ngIf="dataSource.data === null">
-                <h5>
-                    No Data Found
-                </h5>
-            </div>
-            <div class="row">
-                <div class="col-md-12 p-0" *ngIf="infiniteScrollingFlag">
-                    <div class="b-a p-44">
-                        <mat-spinner [diameter]="30" class="pos-rel-left40"></mat-spinner>
-                    </div>
+        </div>
+        <div class="b-a text-center p-44 mt-20" *ngIf="dataSource.data === null">
+            <h5>
+                No Data Found
+            </h5>
+        </div>
+        <div class="row">
+            <div class="col-md-12 p-0" *ngIf="infiniteScrollingFlag">
+                <div class="b-a p-44">
+                    <mat-spinner [diameter]="30" class="pos-rel-left40"></mat-spinner>
                 </div>
             </div>
         </div>

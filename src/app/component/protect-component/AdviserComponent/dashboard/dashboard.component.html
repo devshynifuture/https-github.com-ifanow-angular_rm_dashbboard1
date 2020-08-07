@@ -1765,7 +1765,7 @@
           </mat-button-toggle-group>
         </div>
         <div class="col-md-12 p-0 pt-8">
-          <table mat-table [appSkeletonLoading]="isLoadingSubSummary" *ngIf="dashBoardSummary.length > 0"
+          <table mat-table [appSkeletonLoading]="isLoadingSubSummary" *ngIf="dashBoardSummary && dashBoardSummary.length > 0"
             appSkeletonLoading class=" skeletonAnimation" [dataSource]="dashBoardSummary" id="table-low">
 
             <tbody>
