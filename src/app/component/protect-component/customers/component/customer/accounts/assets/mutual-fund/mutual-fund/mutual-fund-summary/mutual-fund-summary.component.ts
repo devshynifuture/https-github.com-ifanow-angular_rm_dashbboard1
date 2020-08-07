@@ -72,7 +72,7 @@ export class MutualFundSummaryComponent implements OnInit {
   returnValue: any;
   selectedDataLoad: any;
   showDownload: boolean = false;
-  reportDate: Date;
+  reportDate:any;
   customDataSource: any;
 
   addedData: boolean;
@@ -188,6 +188,7 @@ export class MutualFundSummaryComponent implements OnInit {
     if (localStorage.getItem('token') != 'authTokenInLoginComponnennt') {
       localStorage.setItem('token', 'authTokenInLoginComponnennt')
     }
+    this.reportDate = this.datePipe.transform(new Date(), 'dd-MMM-yyyy')
 
     this.routerActive.queryParamMap.subscribe((queryParamMap) => {
       if (queryParamMap.has('clientId')) {
@@ -203,7 +204,6 @@ export class MutualFundSummaryComponent implements OnInit {
     this.dataSummary = {}
     this.dataSummary.grandTotal = {}
     this.dataSummary.customDataSourceData = {}
-    this.reportDate = new Date()
     console.log('displayedColumns', this.displayedColumns)
     this.mfService.getViewMode()
       .subscribe(res => {
@@ -1427,6 +1427,7 @@ export class MutualFundSummaryComponent implements OnInit {
             });
             this.reponseData = this.doFiltering(this.rightFilterData.mfData)
             this.mfData = this.reponseData;
+            this.reportDate=this.datePipe.transform(new Date(this.rightFilterData.reportAsOn), 'dd-MMM-yyyy');
             this.setDefaultFilterData = this.mfService.setFilterData(this.mutualFund, this.rightFilterData, this.displayColArray);
             // this.asyncFilter(this.reponseData.mutualFundList);
             this.mfService.setFilterValues(this.setDefaultFilterData);
