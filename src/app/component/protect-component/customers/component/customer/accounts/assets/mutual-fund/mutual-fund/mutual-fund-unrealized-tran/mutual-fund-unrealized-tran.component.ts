@@ -130,6 +130,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   thirteenthArray: any;
   isRouterLink = false;
   header: any;
+  headerHtml: HTMLElement;
 
   constructor(public dialog: MatDialog, private datePipe: DatePipe,
     private subInjectService: SubscriptionInject, private utilService: UtilService,
@@ -1242,11 +1243,11 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     setTimeout(() => {
       const para = document.getElementById('template');
       if(this.viewMode == 'Unrealized Transactions'){
-        const header = document.getElementById('templateHeader');
+        this.headerHtml = document.getElementById('templateHeader');
       }else{
-        const header = document.getElementById('alltemplateHeader');
+        this.headerHtml = document.getElementById('alltemplateHeader');
       }
-      this.returnValue = this.utilService.htmlToPdf(para.innerHTML, this.reportName, 'true', this.fragmentData, '', '');
+      this.returnValue = this.utilService.htmlToPdf(this.headerHtml.innerHTML,para.innerHTML, this.reportName, 'true', this.fragmentData, '', '');
     }, 200);
   
   

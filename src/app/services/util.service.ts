@@ -422,7 +422,7 @@ export class UtilService {
     }
   }
 
-  htmlToPdf(inputData, pdfName, landscape, fragData: any = {}, key = null, svg = null) {
+  htmlToPdf(header,inputData, pdfName, landscape, fragData: any = {}, key = null, svg = null) {
     this.client = AuthService.getClientData();
     if (fragData.isSubscription) {
       this.client = {
@@ -435,6 +435,7 @@ export class UtilService {
     const obj = {
       htmlInput: inputData,
       name: pdfName,
+      header:header,
       landscape,
       key,
       svg
