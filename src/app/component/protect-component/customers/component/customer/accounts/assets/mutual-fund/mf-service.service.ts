@@ -489,8 +489,6 @@ export class MfServiceService {
         return data;
       } else {
         // console.log(' original ', data);
-        data=data.toFixed(Math.max(((data+'').split(".")[1]||"").length, noOfPlaces));
-        data = parseFloat(data);
         const formattedValue = this.roundOff(parseFloat(data), noOfPlaces).toLocaleString('en-IN');
         // console.log(' original / roundedValue ', data, ' / ', formattedValue);
         return formattedValue;

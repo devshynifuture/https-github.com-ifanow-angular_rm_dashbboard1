@@ -10,7 +10,7 @@
         </div>
         <div class="col-md-6  d-flex align-items-center justify-content-end mt-8 crm-task-selects">
             <mat-form-field float="never" appearance="standard" class="form-group w-40 mb-0">
-                <mat-select class="form-control" [formControl]="filterFormControl" >
+                <mat-select class="form-control" [formControl]="filterFormControl">
                     <mat-option *ngFor="let item of dateFilterList" [value]="item.id" (click)="setFilterValue()">
                         {{ item.name }}
                     </mat-option>
@@ -31,7 +31,8 @@
     <div class="wrapper-20 pt-0 crm-task">
         <div [ngClass]="{'table-scroll':isLoading==false }" (scroll)="onTableScroll($event)" class="example-container"
             *ngIf="dataSource.data && dataSource.data.length>0">
-            <table [dataSource]="dataSource" #tableEl class="mt-8" id="table-low" mat-table [appSkeletonLoading]="isLoading">
+            <table [dataSource]="dataSource" #tableEl class="mt-8" id="table-low" mat-table
+                [appSkeletonLoading]="isLoading">
                 <ng-container matColumnDef="client">
                     <th *matHeaderCellDef class="" mat-header-cell> Client</th>
                     <td *matCellDef="let element" mat-cell (click)="openAddTask(element)" class="c-p">
@@ -42,13 +43,15 @@
                 </ng-container>
                 <ng-container matColumnDef="member">
                     <th *matHeaderCellDef class="" mat-header-cell> Family member</th>
-                    <td *matCellDef="let element" mat-cell (click)="isLoading ? $event.preventDefault() : openAddTask(element)" class="c-p">
+                    <td *matCellDef="let element" mat-cell
+                        (click)="isLoading ? $event.preventDefault() : openAddTask(element)" class="c-p">
                         <div class="bar">{{element.member}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="des">
                     <th *matHeaderCellDef class="" mat-header-cell> Description</th>
-                    <td *matCellDef="let element" mat-cell (click)="isLoading ? $event.preventDefault() : openAddTask(element)">
+                    <td *matCellDef="let element" mat-cell
+                        (click)="isLoading ? $event.preventDefault() : openAddTask(element)">
                         <div class="bar">
                             {{element.des}}
                             <span *ngIf="!isLoading" class="f-14 pl-12 text-primitive">
@@ -61,19 +64,22 @@
                 </ng-container>
                 <ng-container matColumnDef="cat">
                     <th *matHeaderCellDef mat-header-cell> Category</th>
-                    <td *matCellDef="let element" mat-cell (click)="isLoading ? $event.preventDefault() : openAddTask(element)" class="c-p">
+                    <td *matCellDef="let element" mat-cell
+                        (click)="isLoading ? $event.preventDefault() : openAddTask(element)" class="c-p">
                         <div class="bar"> {{element.cat}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="assigned">
                     <th *matHeaderCellDef mat-header-cell> Assigned to</th>
-                    <td *matCellDef="let element" mat-cell (click)="isLoading ? $event.preventDefault() : openAddTask(element)" class="c-p">
+                    <td *matCellDef="let element" mat-cell
+                        (click)="isLoading ? $event.preventDefault() : openAddTask(element)" class="c-p">
                         <div class="bar"> {{element.assigned}} </div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="dueDate">
                     <th *matHeaderCellDef mat-header-cell> Due date</th>
-                    <td *matCellDef="let element" mat-cell (click)="isLoading ? $event.preventDefault() : openAddTask(element)" class="c-p">
+                    <td *matCellDef="let element" mat-cell
+                        (click)="isLoading ? $event.preventDefault() : openAddTask(element)" class="c-p">
                         <div class="bar">{{element.dueDate}} </div>
                     </td>
                 </ng-container>
@@ -85,9 +91,9 @@
                 </ng-container>
                 <ng-container matColumnDef="menuList">
                     <th *matHeaderCellDef mat-header-cell></th>
-                    <td *matCellDef="let element" [matMenuTriggerFor]="menu" class="c-p" mat-cell>
+                    <td *matCellDef="let element" class="c-p" mat-cell>
                         <div class="bar" *ngIf="!isLoading">
-                            <img src="/assets/images/svg/dot-menu.svg" class="">
+                            <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="">
                             <mat-menu #menu="matMenu">
                                 <button mat-menu-item (click)="deleteTask(element.id)">Delete</button>
                             </mat-menu>
