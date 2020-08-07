@@ -196,6 +196,8 @@ export class MutualFundSummaryComponent implements OnInit {
         let param1 = queryParamMap['params'];
         this.clientId = parseInt(param1.clientId)
         this.advisorId = parseInt(param1.advisorId)
+        this.reportDate = this.datePipe.transform(new Date(param1.toDate), 'dd-MMM-yyyy')
+
         this.addedData = true;
         console.log('2423425', param1)
         this.isBulkEmailing = true

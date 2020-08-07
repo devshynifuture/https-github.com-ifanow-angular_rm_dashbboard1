@@ -143,6 +143,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         this.advisorId = parseInt(param1.advisorId)
         this.mfBulkEmailRequestId = parseInt(param1.mfBulkEmailRequestId)
         this.toDate = param1.toDate;
+        this.reportDate = this.datePipe.transform(new Date(param1.toDate), 'dd-MMM-yyyy')
         this.addedData = true;
         this.isRouterLink =true;
         console.log('2423425', param1)
