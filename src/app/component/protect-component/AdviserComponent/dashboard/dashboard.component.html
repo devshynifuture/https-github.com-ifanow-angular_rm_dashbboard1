@@ -265,26 +265,26 @@
       <!--          <img src="/assets/images/sports.png">-->
       <!--        </div>-->
       <!--      </div>-->
-      <div class="col-12 p-0 pt-40" *ngIf="tabsLoaded.portfolioData.isLoading">
-        <h5 class="roboto mb-0">Asset allocation</h5>
+      <div class="col-12 " *ngIf="tabsLoaded.portfolioData.isLoading">
+        <h5 class="roboto mb-0">Asset classes</h5>
         <div class="borderChatBox bg-white ">
-            <div class="row skeletonAnimation" [appSkeletonLoading]="true" appSkeletonLoading>
+            <div class="row skeletonAnimation" [appSkeletonLoading]="tabsLoaded.portfolioData.isLoading" appSkeletonLoading>
                 <div class="col-md-6 pr-0 heightBox">
                     <div class="relClass">
-                        <div class="bar220" [ngClass]="{'height220': isLoading}">
+                        <div class="bar220" [ngClass]="{'height220': tabsLoaded.portfolioData.isLoading}">
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6  ">
                     <div class="mt-40 mr-20">
                         <div class="relClass">
-                            <div class="bar" [ngClass]="{'height24': isLoading}"></div>
+                            <div class="bar" [ngClass]="{'height24': tabsLoaded.portfolioData.isLoading}"></div>
                         </div>
                         <div class="relClass">
-                            <div class="bar" [ngClass]="{'height24': isLoading}"></div>
+                            <div class="bar" [ngClass]="{'height24': tabsLoaded.portfolioData.isLoading}"></div>
                         </div>
                         <div class="relClass">
-                            <div class="bar" [ngClass]="{'height24': isLoading}"></div>
+                            <div class="bar" [ngClass]="{'height24': tabsLoaded.portfolioData.isLoading}"></div>
                         </div>
                     </div>
                 </div>
