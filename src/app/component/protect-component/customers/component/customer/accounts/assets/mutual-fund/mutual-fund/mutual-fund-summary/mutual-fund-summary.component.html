@@ -460,13 +460,13 @@
     *ngIf="getOrgData && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
     <img width="250px" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
     </td> -->
-            <td style="text-align: left;" colspan="3" *ngIf="getOrgData">
+            <td style="text-align: left; vertical-align: top;" colspan="3" *ngIf="getOrgData">
                 <div
                     *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
-                    <img width="250px" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
+                    <img width="120px" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
                 </div>
                 <div *ngIf="getOrgData && getOrgData.reportLogoUrl == null">
-                    <img width="250px" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
+                    <img width="120px" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
                 </div>
             </td>
             <td style=" text-align: right;" colspan="8">
