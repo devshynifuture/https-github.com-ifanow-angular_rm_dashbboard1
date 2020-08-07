@@ -48,6 +48,8 @@ export class PeopleClientsComponent implements OnInit {
     this.getClientList(0);
   }
 
+  
+
   // @HostListener('window:scroll', [])
   onWindowScroll(e: any) {
     if (this.tableEl._elementRef.nativeElement.querySelector('tbody').querySelector('tr:last-child').offsetTop <= (e.target.scrollTop + e.target.offsetHeight + 200)) {
