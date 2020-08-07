@@ -21,6 +21,16 @@ export class MinorFormComponent implements OnInit {
   nomineesListFM: any = [];
   idData: any;
   fieldFlag: string = 'familyMember';
+  // prod issues 
+  maxDateForAdultDob = new Date();
+  maxDate = new Date();
+  capitalise(event){
+    console.log(event);
+  }
+  close(value){
+    console.log(value);
+  }
+  // 
   @Output() clientData = new EventEmitter();
   @Output() tabChange = new EventEmitter();
 
