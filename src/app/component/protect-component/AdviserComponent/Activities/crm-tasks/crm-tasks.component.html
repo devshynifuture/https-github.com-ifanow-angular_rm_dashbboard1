@@ -85,8 +85,8 @@
                 </ng-container>
                 <ng-container matColumnDef="menuList">
                     <th *matHeaderCellDef mat-header-cell></th>
-                    <td *matCellDef="let element" [matMenuTriggerFor]="menu" class="c-p" mat-cell>
-                        <div class="bar" *ngIf="!isLoading">
+                    <td *matCellDef="let element"  class="c-p" mat-cell>
+                        <div class="bar" [matMenuTriggerFor]="menu" *ngIf="!isLoading">
                             <img src="/assets/images/svg/dot-menu.svg" class="">
                             <mat-menu #menu="matMenu">
                                 <button mat-menu-item (click)="deleteTask(element.id)">Delete</button>
