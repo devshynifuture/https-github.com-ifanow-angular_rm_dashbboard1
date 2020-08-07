@@ -489,7 +489,7 @@ export class MfServiceService {
         return data;
       } else {
         // console.log(' original ', data);
-        const formattedValue = this.roundOff(parseFloat(data), noOfPlaces).toLocaleString('en-IN');
+        const formattedValue = data.toFixed(noOfPlaces).toLocaleString('en-IN');
         // console.log(' original / roundedValue ', data, ' / ', formattedValue);
         return formattedValue;
       }
