@@ -9,7 +9,7 @@
     </div>
 </div>
 <div class="row pt-20 pl-16">
-    <div *ngFor="let user of userList" class="col-md-3 mb-12 pl-0 ">
+    <div *ngFor="let user of userList" class="col-xl-3 col-lg-4 col-md-6 mb-12 pl-0 ">
         <mat-card
             [ngClass]="{'active-class-name': user.isSuspended == 0, 'suspended-class-name': user.isSuspended == 1}"
             class="b-a p-8 pr-0 br-4">
