@@ -691,6 +691,7 @@ export const appConfig = {
   RESET_ORG_REPORT_LOGO: 'setting/organisation/report-logo/delete',
   GET_EMAIL_VERIFICATION: 'setting/preference/email/get',
   GET_EMAIL_TEMPLATES: 'setting/preference/email/template/get',
+  GET_EMAIL_LIST:'setting/preference/verified/email-list/get',
   EDIT_PREF_EMAIL_TEMPLATE: 'setting/preference/email/template/update',
   DELETE_PREF_EMAIL_TEMPLATE: 'setting/preference/email/delete',
   DELETE_EMAIL_VERIFY: 'setting/preference/email/delete',
