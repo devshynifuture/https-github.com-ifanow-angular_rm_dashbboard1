@@ -52,7 +52,7 @@ export class OrgSettingServiceService {
   getEmailTempalate(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_EMAIL_TEMPLATES, data);
   }
-
+  
   editPreEmailTemplate(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_PREF_EMAIL_TEMPLATE, data);
   }
