@@ -81,6 +81,10 @@ export class PeopleService {
   getClientOrLeadData(data) {
     return this.http.getEncoded(apiConfig.USER + appConfig.GET_CLIENT_OR_lEAD_DATA, data, 1);
   }
+  
+  getEmailList(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.GET_EMAIL_LIST, data);
+  }
 
   loginWithPassword(data) {
     return this.http.postEncoded(apiConfig.USER + appConfig.LOGIN_WITH_PASSWORD, data);

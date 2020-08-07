@@ -67,6 +67,7 @@ export class EmailOnlyComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
+  emailLists: any;
 
   @Input() set data(inputData) {
     this.emailTemplateGroup = this.fb.group({
@@ -153,9 +154,24 @@ export class EmailOnlyComponent implements OnInit {
 
   ngOnInit() {
     // this.getEmailTemplate();
-    this.getAllEmails();
+    //this.getAllEmails();
+    this.getEmailList()
   }
-
+  getEmailList(){
+    let obj = {
+      advisorId: this.advisorId
+    }
+    this.peopleService.getEmailList(obj).subscribe(
+      data => this.getEmailListRes(data),
+      err => {
+        this.eventService.openSnackBar(err, "Dismiss")
+      }
+    );
+  }
+  getEmailListRes(data){
+    this.emailLists = data
+    console.log('getEmailList',data)
+  }
   getClientData(data) {
     const obj = {
       clientId: data.clientId
@@ -181,6 +197,7 @@ export class EmailOnlyComponent implements OnInit {
       data => {
         if (data) {
           this.verifiedEmailsList = [data.listItems];
+          console.log('getVerifiedEmailData',data)
           // if (!this._inputData.fromEmail) {
           this._inputData.fromEmail = (this.verifiedEmailsList && this.verifiedEmailsList.length == 1) ? this.verifiedEmailsList[0].emailAddress : '';
           // }
