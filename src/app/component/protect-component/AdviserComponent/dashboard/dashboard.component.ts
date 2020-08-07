@@ -413,7 +413,7 @@ export class DashboardComponent implements OnInit {
     this.clientData = AuthService.getClientData()
     this.advisorName = AuthService.getUserInfo().name;
     this.excessAllow = localStorage.getItem('successStoringToken');
-    this.getAssetAllocationData()
+    this.getAssetAllocationData();
     this.getTotalRecivedByDash();
     this.clientWithSubscription();
     this.getSummaryDataDashboard(); // summry dashbord
