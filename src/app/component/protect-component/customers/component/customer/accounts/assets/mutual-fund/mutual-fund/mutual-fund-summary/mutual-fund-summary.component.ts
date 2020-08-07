@@ -72,7 +72,7 @@ export class MutualFundSummaryComponent implements OnInit {
   returnValue: any;
   selectedDataLoad: any;
   showDownload: boolean = false;
-  reportDate: Date;
+  reportDate:any;
   customDataSource: any;
 
   addedData: boolean;
@@ -123,6 +123,7 @@ export class MutualFundSummaryComponent implements OnInit {
   eleventhArrayGTotal: any;
   mfBulkEmailRequestId: number;
   isRouterLink = false;
+  isBulkDataResponse = false;;
 
 
   @Input()
@@ -188,6 +189,7 @@ export class MutualFundSummaryComponent implements OnInit {
     if (localStorage.getItem('token') != 'authTokenInLoginComponnennt') {
       localStorage.setItem('token', 'authTokenInLoginComponnennt')
     }
+    this.reportDate = this.datePipe.transform(new Date(), 'dd-MMM-yyyy')
 
     this.routerActive.queryParamMap.subscribe((queryParamMap) => {
       if (queryParamMap.has('clientId')) {
@@ -203,7 +205,6 @@ export class MutualFundSummaryComponent implements OnInit {
     this.dataSummary = {}
     this.dataSummary.grandTotal = {}
     this.dataSummary.customDataSourceData = {}
-    this.reportDate = new Date()
     console.log('displayedColumns', this.displayedColumns)
     this.mfService.getViewMode()
       .subscribe(res => {
@@ -212,14 +213,14 @@ export class MutualFundSummaryComponent implements OnInit {
     this.getFilterData(2);
     // this.getDefaultDetails(null)
   }
-  ngAfterViewInit() {
-    //this.showDownload == true
-    let para = document.getElementById('template');
-    if (para.innerHTML) {
-      this.generatePdfBulk()
+  // ngAfterViewInit() {
+  //   //this.showDownload == true
+  //   let para = document.getElementById('template');
+  //   if (para.innerHTML) {
+  //     this.generatePdfBulk()
 
-    }
-  }
+  //   }
+  // }
 
   orderSOA(element) {
     const data = {
@@ -1071,9 +1072,13 @@ export class MutualFundSummaryComponent implements OnInit {
       this.customerService.getMutualFund(obj).subscribe(
         data => {
           console.log(data);
+          this.isBulkDataResponse =true;
           let response = this.mfService.doFiltering(data)
           Object.assign(response.mutualFundList, { flag: true });
           this.asyncFilter(response.mutualFundList);
+        },err=>{
+          this.isBulkDataResponse =true;
+
         }
       );
     }
@@ -1201,20 +1206,7 @@ export class MutualFundSummaryComponent implements OnInit {
         console.log('header data', this.customDataSource)
         console.log(`MUTUALFUNDSummary COMPONENT page got message:`, data);
         this.dataSummary.customDataSourceData = data
-        this.mfService.getSummaryData()
-          .subscribe(res => {
-            this.getObj = res; //used for getting mutual fund data coming from main gain call
-            console.log('yeeeeeeeee', res)
-            if (this.getObj.customDataSourceData) {
-
-            } else {
-              this.mfService.setSummaryData(this.dataSummary)
-              if (this.router.url.split('?')[0] == '/pdf/summary') {
-                this.showDownload = true
-                this.generatePdfBulk()
-              }
-            }
-          })
+       
         this.customDataSource.data.array.forEach(element => {
           switch (element.index) {
             case 0:
@@ -1290,6 +1282,23 @@ export class MutualFundSummaryComponent implements OnInit {
           }
         });
         this.isLoading = false;
+        if(this.isBulkDataResponse){
+          this.mfService.getSummaryData()
+          .subscribe(res => {
+            this.getObj = res; //used for getting mutual fund data coming from main gain call
+            console.log('yeeeeeeeee', res)
+            if (this.getObj.customDataSourceData) {
+  
+            } else {
+              this.mfService.setSummaryData(this.dataSummary)
+              if (this.router.url.split('?')[0] == '/pdf/summary') {
+                this.showDownload = true
+                this.generatePdfBulk()
+              }
+            }
+          })
+        }
+
         this.changeInput.emit(false);
       };
       worker.postMessage(input);
@@ -1427,6 +1436,7 @@ export class MutualFundSummaryComponent implements OnInit {
             });
             this.reponseData = this.doFiltering(this.rightFilterData.mfData)
             this.mfData = this.reponseData;
+            this.reportDate=this.datePipe.transform(new Date(this.rightFilterData.reportAsOn), 'dd-MMM-yyyy');
             this.setDefaultFilterData = this.mfService.setFilterData(this.mutualFund, this.rightFilterData, this.displayColArray);
             // this.asyncFilter(this.reponseData.mutualFundList);
             this.mfService.setFilterValues(this.setDefaultFilterData);

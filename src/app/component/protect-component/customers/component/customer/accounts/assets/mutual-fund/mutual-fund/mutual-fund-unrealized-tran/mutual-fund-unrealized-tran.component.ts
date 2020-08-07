@@ -67,7 +67,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   columnHeader: any;
   pdfDataFornTRansaction: any;
   addedData: boolean;
-  reportDate: Date;
+  reportDate:any;
   customDataSource: any;
   unrealisedData: TableVirtualScrollDataSource<any>;
   dataTransaction: any;
@@ -176,6 +176,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       this.addedData = true;
       this.isBulkEmailing = true;
       this.toDate = data.toDate;
+      this.reportDate = this.datePipe.transform(new Date(), 'dd-MMM-yyyy')
       if (data.mode == 'unrealisedTransactions') {
         this.viewMode = 'Unrealized Transactions'
         this.mode = 'Unrealized Transactions'
@@ -194,7 +195,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     if (localStorage.getItem('token') != 'authTokenInLoginComponnennt') {
       localStorage.setItem('token', 'authTokenInLoginComponnennt')
     }
-
+    this.reportDate = this.datePipe.transform(new Date(), 'dd-MMM-yyyy')
     this.routerActive.queryParamMap.subscribe((queryParamMap) => {
       if (queryParamMap.has('clientId')) {
         let param1 = queryParamMap['params'];
@@ -202,7 +203,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         this.advisorId = parseInt(param1.advisorId)
         this.toDate = (param1.toDate)
         this.isBulkEmailing = true;
-
+        this.reportDate = this.datePipe.transform(new Date(this.toDate), 'dd-MMM-yyyy')
         if (this.route.url.split('?')[0] == '/pdf/allTransactions') {
           this.viewMode = 'All Transactions'
           this.mode = 'All Transactions'
@@ -230,7 +231,6 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     this.setDefaultFilterData = {}
     this.dataTransaction.flag = false
     this.setDefaultFilterData.transactionView = []
-    this.reportDate = new Date()
     this.unrealisedData = new TableVirtualScrollDataSource([]);
     this.mfService.getViewMode()
       .subscribe(res => {
@@ -1186,6 +1186,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
             // this.asyncFilter(this.reponseData.mutualFundList);
             this.mfService.setFilterValues(this.setDefaultFilterData);
             this.mfService.setDataForMfGet(this.rightFilterData.mfData);
+            this.reportDate=this.datePipe.transform(new Date(this.rightFilterData.toDate), 'dd-MMM-yyyy');
             this.dataTransaction.setDefaultFilterData = this.setDefaultFilterData
             this.dataTransaction.rightFilterData = this.rightFilterData.mfData
             this.getFilterData((this.viewMode == 'Unrealized Transactions') ? 4 : 3);
