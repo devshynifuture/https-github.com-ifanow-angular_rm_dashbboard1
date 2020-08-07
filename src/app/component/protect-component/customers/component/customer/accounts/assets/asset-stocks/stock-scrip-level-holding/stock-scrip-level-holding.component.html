@@ -124,7 +124,8 @@
                 </i>
             </div>
         </div>
-        
+    </div>
+    <div [formGroup]="optionForm">
         <!-- optional start -->
         <hr class="ml-16 mr-16">
         <div class="row pt-16">
@@ -197,7 +198,7 @@
         </div>
         <div formArrayName="getNomineeName">
             <div class="row pt-40"
-                *ngFor="let obj of holdingListForm.controls['getNomineeName'].controls; let pointIndex=index"
+                *ngFor="let obj of optionForm.controls['getNomineeName'].controls; let pointIndex=index"
                 [formGroupName]="pointIndex">
                 <div class="col-md-5 pr-0 text-right">
                     <h5 class="m-0 pt-8 ">Nominee {{pointIndex + 1}}</h5>
@@ -236,10 +237,10 @@
                     </div>
                 </div>
                 <div class="col-md-2 p-0 d-flex align-items-center">
-                    <i *ngIf="holdingListForm.value.getNomineeName.length < 3"
+                    <i *ngIf="optionForm.value.getNomineeName.length < 3"
                         class="material-icons text-primitive f-20 c-p float-left"
                         (click)="addNewNominee(undefined)">add</i>
-                    <i *ngIf="holdingListForm.value.getNomineeName.length > 1"
+                    <i *ngIf="optionForm.value.getNomineeName.length > 1"
                         class="material-icons text-primitive f-20 c-p pl-10"
                         (click)="removeNewNominee(pointIndex)">remove</i>
                 </div>

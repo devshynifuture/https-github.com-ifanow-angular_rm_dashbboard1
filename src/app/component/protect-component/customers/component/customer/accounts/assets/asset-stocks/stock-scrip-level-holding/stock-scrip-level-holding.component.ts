@@ -49,7 +49,7 @@ export class StockScripLevelHoldingComponent implements OnInit {
   portfolioFieldData: { familyMemberId: any; };
     nomineesListFM: any = [];
   nomineesList: any[] = [];
-
+  optionForm;
   checkValid:boolean= false;
   callMethod: { methodName: string; ParamValue: any; };
 
@@ -104,7 +104,7 @@ displayControler(con) {
     this.scipLevelHoldingForm.controls.getCoOwnerName = con.owner;
   }
   if(con.nominee != null && con.nominee){
-    this.scipLevelHoldingForm.controls.getNomineeName = con.nominee;
+    this.optionForm.controls.getNomineeName = con.nominee;
   }
 }
 
@@ -167,13 +167,13 @@ removeCoOwner(item) {
 /***nominee***/ 
 
 get getNominee() {
-  return this.holdingListForm.get('getNomineeName') as FormArray;
+  return this.optionForm.get('getNomineeName') as FormArray;
 }
 
 removeNewNominee(item) {
 this.disabledMember(null, null);
   this.getNominee.removeAt(item);
-  if (this.holdingListForm.value.getNomineeName.length == 1) {
+  if (this.optionForm.value.getNomineeName.length == 1) {
     this.getNominee.controls['0'].get('sharePercentage').setValue('100');
   } else {
     let share = 100/this.getNominee.value.length;
@@ -242,6 +242,18 @@ addNewNominee(data) {
       portfolioName: ['', [Validators.required]]
     })
 
+    this.optionForm = this.fb.group({
+      getNomineeName: this.fb.array([this.fb.group({
+        name: [''],
+        sharePercentage: [0],
+        familyMemberId: [0],
+        id: [0]
+      })]),
+      linkedBankAccount: [''],
+      linkedDematAccount: [''],
+      description: ['']
+  })
+
   this.holdingData=this.scipLevelHoldingForm.value
 
     if (data.transactionOrHoldingSummaryList) {
@@ -286,24 +298,15 @@ addNewNominee(data) {
       });
     }
     /***nominee***/
-    this.holdingListForm.get('linkedBankAccount').setValue(data.linkedBankAccount);
-    this.holdingListForm.get('linkedDematAccount').setValue(data.linkedDematAccount);
-    this.holdingListForm.get('description').setValue(data.description);
+    this.optionForm.get('linkedBankAccount').setValue(data.linkedBankAccount);
+    this.optionForm.get('linkedDematAccount').setValue(data.linkedDematAccount);
+    this.optionForm.get('description').setValue(data.description);
     this.ownerData = { Fmember: this.nomineesListFM, controleData: this.scipLevelHoldingForm }
     // ==============owner-nominee Data ========================\\
     // this.ownerData = this.scipLevelHoldingForm.controls;
   }
   holdingListForm = this.fb.group({
     holdingListArray: new FormArray([]),
-    getNomineeName: this.fb.array([this.fb.group({
-      name: [''],
-      sharePercentage: [0],
-      familyMemberId: [0],
-      id: [0]
-    })]),
-    linkedBankAccount: [''],
-    linkedDematAccount: [''],
-    description: ['']
   })
   get HoldingList() { return this.holdingListForm.controls };
   get HoldingArray() { return this.HoldingList.holdingListArray as FormArray };
@@ -462,10 +465,10 @@ addNewNominee(data) {
           "ownerList": this.editApiData?this.editApiData.portfolioOwner:this.scipLevelHoldingForm.value.getCoOwnerName,
           "portfolioName": this.scipLevelHoldingForm.value.portfolioName,
           "stockList": finalStocks,
-          "nomineeList": this.holdingListForm.value.getNomineeName,
-          "linkedBankAccount": this.holdingListForm.value.linkedBankAccount,
-          "linkedDematAccount": this.holdingListForm.value.linkedDematAccount,
-          "description": this.holdingListForm.value.description,
+          "nomineeList": this.optionForm.value.getNomineeName,
+          "linkedBankAccount": this.optionForm.value.linkedBankAccount,
+          "linkedDematAccount": this.optionForm.value.linkedDematAccount,
+          "description": this.optionForm.value.description,
         }
 
         if (this.editApiData) {
