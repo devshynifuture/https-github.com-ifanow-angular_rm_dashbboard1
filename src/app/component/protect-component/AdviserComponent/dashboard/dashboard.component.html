@@ -292,18 +292,10 @@
 
               </div>
             </div>
-
           </div>
-
-          
-            
-       
-
-
         </div>
       </div>
-      <div class="col-12 p-0 pt-40"
-        *ngIf="(!tabsLoaded.portfolioData.dataLoaded || !tabsLoaded.portfolioData.hasData) && !tabsLoaded.portfolioData.isLoading">
+      <div class="col-12 p-0 pt-40" *ngIf="(!tabsLoaded.portfolioData.dataLoaded || !tabsLoaded.portfolioData.hasData) && !tabsLoaded.portfolioData.isLoading">
         <h5 class="m-0 text-black f-16 roboto pb-16 f-500"> Asset allocation</h5>
         <div class="bg-white br-10">
 
@@ -639,67 +631,67 @@
         </div>
 
       </div>
-           <div class="row pt-40 today-task">
-             <div class="col-md-12 p-0">
-               <h5 class="f-500 roboto text-black m-0 pb-10">Today’s tasks</h5>
-               <table mat-table [dataSource]="dataSource2" [appSkeletonLoading]="isLoading" appSkeletonLoading
-                  class="skeletonAnimation" id="table-low">
+      <!--      <div class="row pt-40 today-task">-->
+      <!--        <div class="col-md-12 p-0">-->
+      <!--          <h5 class="f-500 roboto text-black m-0 pb-10">Today’s tasks</h5>-->
+      <!--          <table mat-table [dataSource]="dataSource2" [appSkeletonLoading]="isLoading" appSkeletonLoading-->
+      <!--            class="skeletonAnimation" id="table-low">-->
 
-                 <ng-container matColumnDef="position">
-                   <th mat-header-cell *matHeaderCellDef class="br"> Client</th>
-                   <td mat-cell *matCellDef="let element" class="br" (click)="openAddTask(element)">
-                     <div class="bar w-100"> {{element.clientName}} </div>
-                   </td>
-                 </ng-container>
+      <!--            <ng-container matColumnDef="position">-->
+      <!--              <th mat-header-cell *matHeaderCellDef class="br"> Client</th>-->
+      <!--              <td mat-cell *matCellDef="let element" class="br" (click)="openAddTask(element)">-->
+      <!--                <div class="bar w-100"> {{element.clientName}} </div>-->
+      <!--              </td>-->
+      <!--            </ng-container>-->
 
-                 <!-- &lt;!&ndash; Name Column &ndash;&gt; -->
-                 <ng-container matColumnDef="name">
-                   <th mat-header-cell *matHeaderCellDef class="br"> Task</th>
-                   <td mat-cell *matCellDef="let element" class="br" (click)="openAddTask(element)">
-                     <div class="bar w-100">
-                       <div class="row">
-                         <div class="col-md-9 p-0">
-                           {{element.des}}
-                         </div>
-                         <div class="col-md-3 p-0">
-                           <div class="text-right" *ngIf="!isLoading">
-                             <span class="text-custom">
-                               {{ element.subTaskCompleted }}/{{ element.totalSubTasks }}
-                             </span>
-                             <span class="text-custom">
-                               {{ element.commentsCount }}
-                               <img src="/assets/images/svg/task-msg.svg" alt="">
-                             </span>
-                           </div>
-                         </div>
-                       </div>
-                     </div>
+      <!--            &lt;!&ndash; Name Column &ndash;&gt;-->
+      <!--            <ng-container matColumnDef="name">-->
+      <!--              <th mat-header-cell *matHeaderCellDef class="br"> Task</th>-->
+      <!--              <td mat-cell *matCellDef="let element" class="br" (click)="openAddTask(element)">-->
+      <!--                <div class="bar w-100">-->
+      <!--                  <div class="row">-->
+      <!--                    <div class="col-md-9 p-0">-->
+      <!--                      {{element.des}}-->
+      <!--                    </div>-->
+      <!--                    <div class="col-md-3 p-0">-->
+      <!--                      <div class="text-right" *ngIf="!isLoading">-->
+      <!--                        <span class="text-custom">-->
+      <!--                          {{ element.subTaskCompleted }}/{{ element.totalSubTasks }}-->
+      <!--                        </span>-->
+      <!--                        <span class="text-custom">-->
+      <!--                          {{ element.commentsCount }}-->
+      <!--                          <img src="/assets/images/svg/task-msg.svg" alt="">-->
+      <!--                        </span>-->
+      <!--                      </div>-->
+      <!--                    </div>-->
+      <!--                  </div>-->
+      <!--                </div>-->
 
-                   </td>
-                 </ng-container>
+      <!--              </td>-->
+      <!--            </ng-container>-->
 
       <!--            &lt;!&ndash; Weight Column &ndash;&gt;-->
-                 <ng-container matColumnDef="weight">
-                   <th mat-header-cell *matHeaderCellDef class="br"> Assigned to</th>
-                   <td mat-cell *matCellDef="let element" class="br">
-                     <div class="bar w-100"> {{element.weight}} </div>
-                   </td>
-                 </ng-container>
+      <!--            <ng-container matColumnDef="weight">-->
+      <!--              <th mat-header-cell *matHeaderCellDef class="br"> Assigned to</th>-->
+      <!--              <td mat-cell *matCellDef="let element" class="br">-->
+      <!--                <div class="bar w-100"> {{element.weight}} </div>-->
+      <!--              </td>-->
+      <!--            </ng-container>-->
 
 
-                 <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
-                 <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
-               </table>
-               <div class="row">
-                 <div class="col-md-12 p-0 text-center" *ngIf="dataSource2.data == null">
-                   <h4 class="p-44 b-a">
-                     No Data Found
-                   </h4>
-                 </div>
-               </div>
+      <!--            <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>-->
+      <!--            <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>-->
+      <!--          </table>-->
+      <!--          <div class="row">-->
+      <!--            <div class="col-md-12 p-0 text-center" *ngIf="dataSource2.data == null">-->
+      <!--              <h4 class="p-44 b-a">-->
+      <!--                No Data Found-->
+      <!--              </h4>-->
+      <!--            </div>-->
+      <!--          </div>-->
 
-             </div>
-      <!--      </div> -->
+      <!--        </div>-->
+      <!--      </div>-->
       <!--      <div class="row pt-40 pb-8">-->
       <!--        <div class="col-md-8 p-0">-->
       <!--          <h5 class="f-500 roboto text-black m-0 pt-2">Goal summary</h5>-->
@@ -1504,30 +1496,10 @@
       </div>
 
       <div class="emptyScreen">
-        <div class="row">
-          <div class="col-md-8 p-0">
-            <h5 class="m-0 f-500 roboto text-black">Recent investment accounts</h5>
-          </div>
-          <div class="col-md-4 p-0 text-right">
-            <button mat-stroked-button class="advisor-view-all">View All</button>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-12">
-            <div class="row">
-              <div class="col-md-7"></div>
-              <div class="col-md-5"></div>
-            </div>
-          </div>
-        </div>
 
       </div>
+
       
-
-
-
-
       <div class="row pt-40">
         <div class="col-md-8 p-0">
           <h5 class="m-0 f-500 roboto text-black">Recent online transactions (MF)</h5>
@@ -2042,4 +2014,5 @@
       </mat-tab-group>
     </div>
   </div>
+
 </div>
