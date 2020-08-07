@@ -577,6 +577,8 @@ export class TempserviceService {
   }
 
   roundOff(data: number, noOfPlaces: number = 0): number {
+    // const roundedValue = parseFloat(String(data)).toFixed(noOfPlaces)
+    // const val=Number(roundedValue)
     const roundedValue = parseFloat(data.toFixed(noOfPlaces));
     // console.log(' original / roundedValue ', data, ' / ', roundedValue);
 

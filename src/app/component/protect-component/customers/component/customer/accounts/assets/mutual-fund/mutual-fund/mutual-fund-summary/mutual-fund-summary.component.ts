@@ -310,7 +310,7 @@ export class MutualFundSummaryComponent implements OnInit {
             this.setDefaultFilterData.transactionView.forEach(element => {
               if (element.selected == true) {
                 this.displayedColumns.push(element.displayName);
-                // this.displayedColumnsTotal.push(element.displayName + 'Total');
+                 this.displayedColumnsTotal.push(element.displayName + 'Total');
 
               }
             });
@@ -318,7 +318,7 @@ export class MutualFundSummaryComponent implements OnInit {
             transactionView.forEach(element => {
               if (element.selected == true) {
                 this.displayedColumns.push(element.displayName);
-                // this.displayedColumnsTotal.push(element.displayName + 'Total');
+                 this.displayedColumnsTotal.push(element.displayName + 'Total');
 
               }
             });
@@ -348,7 +348,7 @@ export class MutualFundSummaryComponent implements OnInit {
           this.setDefaultFilterData.transactionView.forEach(element => {
             if (element.selected == true) {
               this.displayedColumns.push(element.displayName);
-              // this.displayedColumnsTotal.push(element.displayName + 'Total');
+               this.displayedColumnsTotal.push(element.displayName + 'Total');
             }
           });
         } else {
@@ -1426,10 +1426,11 @@ export class MutualFundSummaryComponent implements OnInit {
             this.resData = sideBarData.data;
             this.rightFilterData = sideBarData.data;
             this.columns = [];
+            this.displayedColumnsTotal=[];
             this.rightFilterData.transactionView.forEach(element => {
               if (element.selected == true) {
                 this.columns.push(element.displayName);
-                // this.displayedColumnsTotal.push(element.displayName + 'Total');
+               this.displayedColumnsTotal.push(element.displayName + 'Total');
               }
             });
             this.displayedColumns = [];

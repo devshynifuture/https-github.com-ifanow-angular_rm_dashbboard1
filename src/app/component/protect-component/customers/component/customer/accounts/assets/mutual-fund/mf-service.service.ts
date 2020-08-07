@@ -477,7 +477,10 @@ export class MfServiceService {
     return obj;
   }
   roundOff(data: number, noOfPlaces: number = 0): number {
-    const roundedValue = parseFloat(data.toFixed(noOfPlaces));
+  //  const val=String(data);
+  //  const roundedValue = parseFloat(String(data)).toFixed(noOfPlaces)
+  //  const val=parseFloat(roundedValue)
+     const roundedValue = parseFloat(data.toFixed(noOfPlaces));
     // console.log(' original / roundedValue ', data, ' / ', roundedValue);
 
     return roundedValue;
