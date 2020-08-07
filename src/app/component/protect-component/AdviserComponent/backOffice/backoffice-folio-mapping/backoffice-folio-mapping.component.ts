@@ -70,13 +70,15 @@ export class BackofficeFolioMappingComponent implements OnInit, OnDestroy {
           this.changeDataTableAfterApi(res)
         } else {
           this.isLoading = false;
+          this.unmappedDataSource.data = [];
           this.searchError = true;
           this.searchErrorMessage = 'No results';
         }
       }, err => {
         this.isLoading = false;
+        this.unmappedDataSource.data = [];
         this.searchError = true;
-        this.searchErrorMessage = 'No results';
+        this.searchErrorMessage = 'Something went wrong';
       });
 
   }
@@ -200,7 +202,7 @@ export class BackofficeFolioMappingComponent implements OnInit, OnDestroy {
         err => {
           console.error(err);
           this.isInfiniteScrollLoading = false;
-          this.unmappedDataSource.data = null;
+          this.unmappedDataSource.data = [];
         })
   }
 
@@ -284,16 +286,6 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  { position: '', schemeName: '', number: '', investName: '' },
-  { position: '', schemeName: '', number: '', investName: '' },
-  { position: '', schemeName: '', number: '', investName: '' },
-  { position: '', schemeName: '', number: '', investName: '' },
-  { position: '', schemeName: '', number: '', investName: '' },
-  { position: '', schemeName: '', number: '', investName: '' },
-  { position: '', schemeName: '', number: '', investName: '' },
-  { position: '', schemeName: '', number: '', investName: '' },
-  { position: '', schemeName: '', number: '', investName: '' },
-  { position: '', schemeName: '', number: '', investName: '' },
   { position: '', schemeName: '', number: '', investName: '' },
   { position: '', schemeName: '', number: '', investName: '' },
   { position: '', schemeName: '', number: '', investName: '' },

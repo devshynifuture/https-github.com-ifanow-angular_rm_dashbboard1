@@ -99,7 +99,7 @@
 
       </div>
     </div>
-    <div class="col-md-12 text-center" *ngIf="unmappedDataSource.data === null">
+    <div class="col-md-12 text-center" *ngIf="unmappedDataSource && unmappedDataSource.data && unmappedDataSource.data.length === 0 && !isInfiniteScrollLoading && !isLoading">
       <h4 class="p-44 b-a">
         No Data Found
       </h4>
