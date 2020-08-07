@@ -278,7 +278,7 @@ export class MutualFundSummaryComponent implements OnInit {
           let getList = [];
           // let displaycopy =[];
           this.displayedColumns = [];
-          // this.displayedColumnsTotal = [];
+         this.displayedColumnsTotal = [];
           data.forEach(element => {
             if (element.clientId == 0) {
               const obj = {
