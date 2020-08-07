@@ -440,7 +440,7 @@ export class DashboardComponent implements OnInit {
   }
   getAssetAllocationData() {
     const obj = {
-      clientId: 124842,
+      clientId: 122326,
       advisorId: this.advisorId,
       targetDate: new Date().getTime()
     }
