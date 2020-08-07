@@ -1917,6 +1917,7 @@ export class MutualFundSummaryComponent implements OnInit {
     this.clientData = data.clientData
     this.getOrgData = data.advisorData
     this.userInfo = data.advisorData
+    this.details.emailId = data.advisorData.email;
   }
   getDefaultDetails(platform) {
     const obj = {
