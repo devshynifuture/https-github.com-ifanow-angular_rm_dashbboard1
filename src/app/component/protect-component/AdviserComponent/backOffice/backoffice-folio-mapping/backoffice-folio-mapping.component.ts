@@ -71,12 +71,14 @@ export class BackofficeFolioMappingComponent implements OnInit, OnDestroy {
         } else {
           this.isLoading = false;
           this.unmappedDataSource.data = [];
+          this.finalUnmappedListSearch = [];
           this.searchError = true;
           this.searchErrorMessage = 'No results';
         }
       }, err => {
         this.isLoading = false;
         this.unmappedDataSource.data = [];
+        this.finalUnmappedListSearch = [];
         this.searchError = true;
         this.searchErrorMessage = 'Something went wrong';
       });
