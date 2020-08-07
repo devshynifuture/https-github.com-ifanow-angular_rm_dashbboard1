@@ -1,3 +1,4 @@
+import { WebPushNotifyService } from './../../../../../services/webpush-notify.service';
 import { CustomFilterDatepickerDialogComponent } from './../../../SupportComponent/file-ordering-upload/custom-filter-datepicker-dialog.component';
 import { MatTableDataSource, MatDialog } from '@angular/material';
 import { Component, OnInit, ViewChild } from '@angular/core';
@@ -36,11 +37,12 @@ export class CrmTasksComponent implements OnInit {
     private subInjectService: SubscriptionInject,
     private crmTaskService: CrmTaskService,
     private eventService: EventService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private webPushNotify: WebPushNotifyService,
   ) { }
 
   ngOnInit() {
-    this.initPoint()
+    this.initPoint();
   }
 
   initPoint() {
@@ -49,6 +51,10 @@ export class CrmTasksComponent implements OnInit {
     this.dataSource.data = ELEMENT_DATA;
     console.log("iniitialized");
     this.getTaskStatus();
+  }
+
+  registerForPushNotification(){
+    this.webPushNotify.enableWebPushNotification();
   }
 
   setFilterValue() {

@@ -12,6 +12,7 @@ import { CrmTasksComponent } from './crm-tasks/crm-tasks.component';
 import { CrmOpportunitiesComponent } from './crm-opportunities/crm-opportunities.component';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     CalendarModule,
     CustomDirectiveModule,
-    ActiviesRoutingModule
+    ActiviesRoutingModule,
   ],
   entryComponents: []
 })
