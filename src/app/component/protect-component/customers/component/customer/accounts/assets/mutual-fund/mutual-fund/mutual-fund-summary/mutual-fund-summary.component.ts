@@ -1584,7 +1584,7 @@ export class MutualFundSummaryComponent implements OnInit {
     this.fragmentData.isSpinner = true;
     setTimeout(() => {
       const para = document.getElementById('template');
-      const header = document.getElementById('templateheader');
+    //  const header = document.getElementById('templateheader');
       this.returnValue = this.utilService.htmlToPdf(para.innerHTML, 'MF summary', 'true', this.fragmentData, '', '');
     });
 
