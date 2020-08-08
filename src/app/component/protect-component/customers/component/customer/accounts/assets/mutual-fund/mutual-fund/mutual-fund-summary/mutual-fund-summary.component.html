@@ -212,7 +212,8 @@
                     <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
 
                         <div class="bar">
-                            {{mfService.mutualFundRoundAndFormat(grandTotal.totalBalanceUnit,3)}}
+                            <!-- {{mfService.mutualFundRoundAndFormat(grandTotal.totalBalanceUnit,3)}} -->
+                            {{''}}
                             <!-- {{(grandTotal.totalBalanceUnit) ? (grandTotal.totalBalanceUnit | number:'1.2-3') : 0}} -->
                         </div>
                     </td>
@@ -221,7 +222,8 @@
                     <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
                         <div class="bar">
                             <span class="f-700">
-                                {{element.totalBalanceUnit}}
+                                <!-- {{element.totalBalanceUnit}} -->
+                                {{''}}
                             </span>
                         </div>
                     </td>
