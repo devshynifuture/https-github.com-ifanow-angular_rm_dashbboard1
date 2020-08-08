@@ -591,7 +591,7 @@ export class TempserviceService {
         return data;
       } else {
         // console.log(' original ', data);
-        const formattedValue = ((data).toFixed(noOfPlaces)).toLocaleString('en-IN');
+        const formattedValue = parseFloat((data).toFixed(noOfPlaces)).toLocaleString('en-IN', {'minimumFractionDigits':noOfPlaces,'maximumFractionDigits':noOfPlaces});
 
         // console.log(' original / roundedValue ', data, ' / ', formattedValue);
         return formattedValue;
