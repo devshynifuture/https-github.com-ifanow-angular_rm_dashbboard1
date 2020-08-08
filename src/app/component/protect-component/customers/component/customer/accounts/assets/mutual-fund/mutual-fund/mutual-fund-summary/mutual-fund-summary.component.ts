@@ -1207,7 +1207,7 @@ export class MutualFundSummaryComponent implements OnInit {
         this.mfData.sip = this.mfService.mutualFundRoundAndFormat(this.mfData.sip, 2);
         this.mfData.total_absolute_return = this.mfService.mutualFundRoundAndFormat(this.mfData.total_absolute_return, 2);
         this.mfData.total_xirr = this.mfService.mutualFundRoundAndFormat(this.mfData.total_xirr, 2)
-        this.mfData.total_current_value = this.mfService.mutualFundRoundAndFormat(this.mfData.total_current_value, 2)
+        this.mfData.total_current_value = this.mfService.mutualFundRoundAndFormat(this.mfData.total_current_value, 0)
         this.mfData.total_amount_invested = this.mfService.mutualFundRoundAndFormat(this.mfData.total_amount_invested, 0)
 
         console.log("this is summary Data:::", data.customDataSourceData)
