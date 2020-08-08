@@ -1192,7 +1192,12 @@ export class MutualFundSummaryComponent implements OnInit {
         this.dataSummary.grandTotal = this.grandTotal
         this.customDataSource.data = []
         this.summary.data = [{}, {}, {}];
-        this.summary.data = data.customDataSourceData;
+        // this.summary.data = data.customDataSourceData;
+
+        const myArray = data.customDataSourceData;
+        let list =[];
+        myArray.forEach(val => list.push(Object.assign({}, val)));
+        this.summary.data = list;
         this.mfData.withdrawals = this.grandTotal.withdrawals
         this.mfData.totalBalanceUnit = this.mfService.mutualFundRoundAndFormat(this.grandTotal.totalBalanceUnit, 3)
         this.mfData.total_unrealized_gain = this.mfService.mutualFundRoundAndFormat(this.mfData.total_unrealized_gain, 0);
