@@ -16,7 +16,12 @@ export class MinorFormComponent implements OnInit {
   taxStatus = new FormControl();
   callMethod: { methodName: string; ParamValue: any; disControl: any; };
   ownerName: any;
+  maxDateForAdultDob:any;
   familyMemberId: any;
+  maxDate:any;
+  name : any;
+  capitalise:any;
+  close:any;
   ownerData: any;
   nomineesListFM: any = [];
   idData: any;
