@@ -231,9 +231,9 @@ export class BackofficeFolioMappingComponent implements OnInit, OnDestroy {
       this.isInfiniteScrollLoading = false;
       this.isLoading = false;
       if (this.isFromSearch) {
-        this.unmappedDataSource.data = (this.finalUnmappedListSearch.length > 0) ? this.finalUnmappedListSearch : null;
+        this.unmappedDataSource.data = (this.finalUnmappedListSearch.length > 0) ? this.finalUnmappedListSearch : [];
       } else {
-        this.unmappedDataSource.data = (this.finalUnmappedList.length > 0) ? this.finalUnmappedList : null;
+        this.unmappedDataSource.data = (this.finalUnmappedList.length > 0) ? this.finalUnmappedList : [];
       }
     }
     this.infiniteScrollingFlag = false;
