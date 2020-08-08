@@ -1199,6 +1199,8 @@ export class MutualFundSummaryComponent implements OnInit {
         myArray.forEach(val => list.push(Object.assign({}, val)));
         this.summary.data = list;
         this.mfData.withdrawals = this.grandTotal.withdrawals
+        this.mfData.withdrawals =  this.mfService.mutualFundRoundAndFormat(this.mfData.withdrawals, 0);
+        this.mfData.total_dividend_payout =  this.mfService.mutualFundRoundAndFormat(this.mfData.total_dividend_payout, 0);
         this.mfData.totalBalanceUnit = this.mfService.mutualFundRoundAndFormat(this.grandTotal.totalBalanceUnit, 3)
         this.mfData.total_unrealized_gain = this.mfService.mutualFundRoundAndFormat(this.mfData.total_unrealized_gain, 0);
         this.mfData.sip = this.grandTotal.sip
