@@ -435,7 +435,6 @@ export class UtilService {
     const obj = {
       htmlInput: inputData,
       name: pdfName,
-      header:header,
       landscape,
       key,
       svg
