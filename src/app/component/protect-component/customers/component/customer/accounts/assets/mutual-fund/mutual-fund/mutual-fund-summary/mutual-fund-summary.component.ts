@@ -1897,7 +1897,6 @@ export class MutualFundSummaryComponent implements OnInit {
         name: (this.clientData.name) ? this.clientData.name : '' + 's' + 'Summary' + date,
         landscape: true,
         key: 'showPieChart',
-        header: header,
         clientId: this.clientId,
         advisorId: this.advisorId,
         fromEmail: this.clientDetails.advisorData.email,
