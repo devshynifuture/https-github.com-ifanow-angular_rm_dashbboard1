@@ -360,6 +360,7 @@ export class MutualFundOverviewComponent implements OnInit {
       // advisorId: 2753,
       advisorId: this.advisorId,
       clientId: this.clientId,
+      showFolio:(this.reponseData) ? (this.setDefaultFilterData.showFolio == '2' ? false :true ): (this.saveFilterData) ? (this.saveFilterData.showFolio == '2' ? false : true) : false
       // clientId: this.clientId
     };
     this.custumService.getMutualFund(obj).subscribe(

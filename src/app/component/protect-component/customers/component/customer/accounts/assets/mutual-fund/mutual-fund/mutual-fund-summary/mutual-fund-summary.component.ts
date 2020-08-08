@@ -1027,6 +1027,7 @@ export class MutualFundSummaryComponent implements OnInit {
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
+      showFolio:(this.reponseData) ? (this.setDefaultFilterData.showFolio == '2' ? false :true ): (this.saveFilterData) ? (this.saveFilterData.showFolio == '2' ? false : true) : false
     };
     this.customerService.getMutualFund(obj).pipe(map((data) => {
       return this.doFiltering(data);
@@ -1072,7 +1073,8 @@ export class MutualFundSummaryComponent implements OnInit {
         advisorId: this.advisorId,
         clientId: this.clientId,
         toDate: this.toDate,
-        id: categoryWiseMfList
+        id: categoryWiseMfList,
+        showFolio:(this.reponseData) ? (this.setDefaultFilterData.showFolio == '2' ? false :true ): (this.saveFilterData) ? (this.saveFilterData.showFolio == '2' ? false : true) : false
       };
       this.customerService.getMutualFund(obj).subscribe(
         data => {
