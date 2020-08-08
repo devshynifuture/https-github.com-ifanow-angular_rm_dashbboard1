@@ -345,6 +345,7 @@ export class MutualFundSummaryComponent implements OnInit {
 
         if (this.reponseData) {
           this.displayedColumns = [];
+          this.displayedColumnsTotal =[];
           this.setDefaultFilterData.transactionView.forEach(element => {
             if (element.selected == true) {
               this.displayedColumns.push(element.displayName);
