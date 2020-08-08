@@ -619,13 +619,12 @@ export class MfCapitalDetailedComponent implements OnInit {
     const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
     setTimeout(() => {
       let para = this.mfCapitalTemplate.nativeElement.innerHTML
-      let header = this.mfCapitalTemplateHeader.nativeElement.innerHTML
+     // let header = this.mfCapitalTemplateHeader.nativeElement.innerHTML
       let obj = {
         htmlInput: para,
         name: (this.clientData.name)?this.clientData.name:''+'s'+'MF capital gain detailed'+date,
         landscape: true,
         key: 'showPieChart',
-        header:header,
         clientId: this.clientId,
         advisorId: this.advisorId,
         fromEmail: this.clientDetails.advisorData.email,

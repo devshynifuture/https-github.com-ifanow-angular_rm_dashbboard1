@@ -571,13 +571,12 @@ export class MutualFundsCapitalComponent implements OnInit {
     setTimeout(() => {
 
       let para = this.mfCapitalTemplate.nativeElement.innerHTML
-      const header = this.mfCapitalTemplateHeader.nativeElement.innerHTML
+     // const header = this.mfCapitalTemplateHeader.nativeElement.innerHTML
       let obj = {
         htmlInput: para,
         name: (this.clientData.name)?this.clientData.name:''+'s'+'MF capital gain summary'+date,
         landscape: true,
         key: 'showPieChart',
-        header:header,
         clientId : this.clientId,
         advisorId : this.advisorId,
         fromEmail: this.clientDetails.advisorData.email,
