@@ -1242,12 +1242,12 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     this.fragmentData.isSpinner = true;
     setTimeout(() => {
       const para = document.getElementById('template');
-      if(this.viewMode == 'Unrealized Transactions'){
-        this.headerHtml = document.getElementById('templateHeader');
-      }else{
-        this.headerHtml = document.getElementById('alltemplateHeader');
-      }
-      this.returnValue = this.utilService.htmlToPdf(this.headerHtml.innerHTML,para.innerHTML, this.reportName, 'true', this.fragmentData, '', '');
+      // if(this.viewMode == 'Unrealized Transactions'){
+      //   this.headerHtml = document.getElementById('templateHeader');
+      // }else{
+      //   this.headerHtml = document.getElementById('alltemplateHeader');
+      // }
+      this.returnValue = this.utilService.htmlToPdf(para.innerHTML, this.reportName, 'true', this.fragmentData, '', '');
     }, 200);
   
   
