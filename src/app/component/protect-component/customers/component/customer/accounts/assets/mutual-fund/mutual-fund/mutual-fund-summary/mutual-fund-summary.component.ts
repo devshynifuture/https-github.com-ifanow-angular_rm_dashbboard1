@@ -1928,6 +1928,8 @@ export class MutualFundSummaryComponent implements OnInit {
     );
   }
   getDetailsClientAdvisorRes(data) {
+    this.details ={}
+    this.details.emailId = {}
     console.log('data', data)
     this.clientDetails = data
     this.clientData = data.clientData
