@@ -488,7 +488,7 @@ export class MfServiceService {
 
   mutualFundRoundAndFormat(data, noOfPlaces: number = 0) {
     if (data) {
-     data = parseInt(data)
+     data = parseFloat(data)
       if (isNaN(data)) {
         return data;
       } else {

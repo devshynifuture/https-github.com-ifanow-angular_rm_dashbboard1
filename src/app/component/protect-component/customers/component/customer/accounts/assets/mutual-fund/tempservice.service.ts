@@ -588,6 +588,7 @@ export class TempserviceService {
 
   mutualFundRoundAndFormat(data, noOfPlaces: number = 0) {
     if (data) {
+      data = parseInt(data)
       if (isNaN(data)) {
         return data;
       } else {
