@@ -1664,7 +1664,7 @@ export class MutualFundSummaryComponent implements OnInit {
         obj = 'totalSwitchOut';
         break;
       case 'Balance unit':
-        obj = 'totalBalanceUnit';
+        obj = '';
         break;
       case 'NAV':
         obj = 'totalNavDate';
@@ -1704,7 +1704,7 @@ export class MutualFundSummaryComponent implements OnInit {
         obj = 'withdrawals';
         break;
       case 'Balance unit':
-        obj = 'totalBalanceUnit';
+        obj = '';
         break;
       case 'NAV':
         obj = '0';

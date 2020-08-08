@@ -27,6 +27,7 @@ export class TempserviceService {
             const obj = this.getAbsAndxirrCategoryWise(singleData, allData, reportType);
             totalObj.totalXirr = obj.xirr;
             totalObj.totalAbsoluteReturn = obj.absoluteReturn;
+            totalObj.totalBalanceUnit = catObj[key][catObj[key].length -1].balanceUnit;
           } else {
             if (filteredArray.length > 0 && array.length == 0) {
                 if (filteredArray[filteredArray.length - 1].groupName) {
