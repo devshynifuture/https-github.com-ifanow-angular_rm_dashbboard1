@@ -1891,7 +1891,7 @@ export class MutualFundSummaryComponent implements OnInit {
     this.showDownload = true
     setTimeout(() => {
       let para = this.summaryTemplate.nativeElement.innerHTML
-      const header = this.summaryHeader.nativeElement.innerHTML
+    // const header = this.summaryHeader.nativeElement.innerHTML
       let obj = {
         htmlInput: para,
         name: (this.clientData.name) ? this.clientData.name : '' + 's' + 'Summary' + date,

@@ -1459,11 +1459,11 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     setTimeout(() => {
       const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
       let para = this.unrealizedTranTemplate.nativeElement.innerHTML
-      if(this.viewMode=='Unrealized Transactions'){
-         this.header = this.unrealizedTranTemplateHeader.nativeElement.innerHTML
-      }else{
-         this.header = this.allTranTemplateHeader.nativeElement.innerHTML
-      }
+      // if(this.viewMode=='Unrealized Transactions'){
+      //    this.header = this.unrealizedTranTemplateHeader.nativeElement.innerHTML
+      // }else{
+      //    this.header = this.allTranTemplateHeader.nativeElement.innerHTML
+      // }
       let obj = {
         htmlInput: para,
         name: (this.clientData.name) ? this.clientData.name : '' + 's' + this.mode + date,
