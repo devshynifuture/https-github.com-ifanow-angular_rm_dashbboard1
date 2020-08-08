@@ -44,6 +44,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   customDataHolder = [];
   @ViewChild('tableEl', { static: false }) tableEl;
   @ViewChild('unrealizedTranTemplate', { static: false }) unrealizedTranTemplate;
+  @ViewChild('unrealizedTranTemplateHeader', { static: false }) unrealizedTranTemplateHeader;
+  @ViewChild('allTranTemplateHeader', { static: false }) allTranTemplateHeader;
   rightFilterData: any = { reportType: '' };
   adviorData: any;
   @Output() changeInput = new EventEmitter();
@@ -67,7 +69,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   columnHeader: any;
   pdfDataFornTRansaction: any;
   addedData: boolean;
-  reportDate: Date;
+  reportDate:any;
   customDataSource: any;
   unrealisedData: TableVirtualScrollDataSource<any>;
   dataTransaction: any;
@@ -127,6 +129,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   thirteenthArrayTotal: any;
   thirteenthArray: any;
   isRouterLink = false;
+  header: any;
+  headerHtml: HTMLElement;
 
   constructor(public dialog: MatDialog, private datePipe: DatePipe,
     private subInjectService: SubscriptionInject, private utilService: UtilService,
@@ -143,6 +147,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         this.advisorId = parseInt(param1.advisorId)
         this.mfBulkEmailRequestId = parseInt(param1.mfBulkEmailRequestId)
         this.toDate = param1.toDate;
+        this.reportDate = this.datePipe.transform(new Date(param1.toDate), 'dd-MMM-yyyy')
         this.addedData = true;
         this.isRouterLink =true;
         console.log('2423425', param1)
@@ -176,6 +181,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       this.addedData = true;
       this.isBulkEmailing = true;
       this.toDate = data.toDate;
+      this.reportDate = this.datePipe.transform(new Date(), 'dd-MMM-yyyy')
       if (data.mode == 'unrealisedTransactions') {
         this.viewMode = 'Unrealized Transactions'
         this.mode = 'Unrealized Transactions'
@@ -194,7 +200,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     if (localStorage.getItem('token') != 'authTokenInLoginComponnennt') {
       localStorage.setItem('token', 'authTokenInLoginComponnennt')
     }
-
+    this.reportDate = this.datePipe.transform(new Date(), 'dd-MMM-yyyy')
     this.routerActive.queryParamMap.subscribe((queryParamMap) => {
       if (queryParamMap.has('clientId')) {
         let param1 = queryParamMap['params'];
@@ -202,7 +208,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         this.advisorId = parseInt(param1.advisorId)
         this.toDate = (param1.toDate)
         this.isBulkEmailing = true;
-
+        this.reportDate = this.datePipe.transform(new Date(this.toDate), 'dd-MMM-yyyy')
         if (this.route.url.split('?')[0] == '/pdf/allTransactions') {
           this.viewMode = 'All Transactions'
           this.mode = 'All Transactions'
@@ -230,7 +236,6 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     this.setDefaultFilterData = {}
     this.dataTransaction.flag = false
     this.setDefaultFilterData.transactionView = []
-    this.reportDate = new Date()
     this.unrealisedData = new TableVirtualScrollDataSource([]);
     this.mfService.getViewMode()
       .subscribe(res => {
@@ -573,7 +578,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
 
     const obj = {
       advisorId: this.advisorId,
-      clientId: this.clientId
+      clientId: this.clientId,
+      showFolio:(this.reponseData) ? (this.setDefaultFilterData.showFolio == '2' ? false :true ): (this.saveFilterData) ? (this.saveFilterData.showFolio == '2' ? false : true) : false
     };
     this.custumService.getMutualFund(obj).pipe(map((data) => {
       return this.doFiltering(data);
@@ -648,7 +654,9 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         advisorId: this.advisorId,
         clientId: this.clientId,
         toDate: this.toDate,
-        id: categoryWiseMfList
+        id: categoryWiseMfList,
+        showFolio:(this.reponseData) ? (this.setDefaultFilterData.showFolio == '2' ? false :true ): (this.saveFilterData) ? (this.saveFilterData.showFolio == '2' ? false : true) : false
+
       };
       this.custumService.getMutualFund(obj).subscribe(
         data => {
@@ -1186,6 +1194,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
             // this.asyncFilter(this.reponseData.mutualFundList);
             this.mfService.setFilterValues(this.setDefaultFilterData);
             this.mfService.setDataForMfGet(this.rightFilterData.mfData);
+            this.reportDate=this.datePipe.transform(new Date(this.rightFilterData.toDate), 'dd-MMM-yyyy');
             this.dataTransaction.setDefaultFilterData = this.setDefaultFilterData
             this.dataTransaction.rightFilterData = this.rightFilterData.mfData
             this.getFilterData((this.viewMode == 'Unrealized Transactions') ? 4 : 3);
@@ -1236,6 +1245,11 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     this.fragmentData.isSpinner = true;
     setTimeout(() => {
       const para = document.getElementById('template');
+      // if(this.viewMode == 'Unrealized Transactions'){
+      //   this.headerHtml = document.getElementById('templateHeader');
+      // }else{
+      //   this.headerHtml = document.getElementById('alltemplateHeader');
+      // }
       this.returnValue = this.utilService.htmlToPdf(para.innerHTML, this.reportName, 'true', this.fragmentData, '', '');
     }, 200);
   
@@ -1448,10 +1462,16 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     setTimeout(() => {
       const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
       let para = this.unrealizedTranTemplate.nativeElement.innerHTML
+      // if(this.viewMode=='Unrealized Transactions'){
+      //    this.header = this.unrealizedTranTemplateHeader.nativeElement.innerHTML
+      // }else{
+      //    this.header = this.allTranTemplateHeader.nativeElement.innerHTML
+      // }
       let obj = {
         htmlInput: para,
         name: (this.clientData.name) ? this.clientData.name : '' + 's' + this.mode + date,
         landscape: true,
+        header: this.header,
         key: 'showPieChart',
         clientId: this.clientId,
         advisorId: this.advisorId,

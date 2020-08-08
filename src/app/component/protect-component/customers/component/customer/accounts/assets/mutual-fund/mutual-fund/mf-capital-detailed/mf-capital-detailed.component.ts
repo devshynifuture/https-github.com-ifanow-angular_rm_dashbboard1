@@ -107,7 +107,7 @@ export class MfCapitalDetailedComponent implements OnInit {
   @Input() changedData;
   @Input() mutualFund;
   @ViewChild('mfCapitalTemplate', { static: false }) mfCapitalTemplate;
-
+  @ViewChild('mfCapitalTemplateHeader', { static: false }) mfCapitalTemplateHeader;
   uploadData(data) {
     if (data.clientId) {
       this.clientId = data.clientId
@@ -599,6 +599,8 @@ export class MfCapitalDetailedComponent implements OnInit {
   generatePdf() {
     this.fragmentData.isSpinner = true
     const para = document.getElementById('template');
+    const header = document.getElementById('templateHeader');
+    
     this.UtilService.htmlToPdf(para.innerHTML, 'MF capital gain detailed', 'true', this.fragmentData, '', '');
   }
   Excel(tableTitle) {
@@ -617,6 +619,7 @@ export class MfCapitalDetailedComponent implements OnInit {
     const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
     setTimeout(() => {
       let para = this.mfCapitalTemplate.nativeElement.innerHTML
+     // let header = this.mfCapitalTemplateHeader.nativeElement.innerHTML
       let obj = {
         htmlInput: para,
         name: (this.clientData.name)?this.clientData.name:''+'s'+'MF capital gain detailed'+date,

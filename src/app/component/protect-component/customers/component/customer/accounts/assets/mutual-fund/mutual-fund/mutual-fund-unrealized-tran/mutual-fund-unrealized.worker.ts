@@ -41,14 +41,14 @@ addEventListener('message', ({data}) => {
     element.amount = mfService.mutualFundRoundAndFormat(element.amount, 2);
     element.totalTransactionAmt = mfService.mutualFundRoundAndFormat(element.totalTransactionAmt, 2);
     if (element.transactionNav && element.transactionNav > 0) {
-      element.transactionNav = mfService.mutualFundRoundAndFormat(element.transactionNav, 4);
+      element.transactionNav = mfService.mutualFundRoundAndFormat(element.transactionNav, 3);
     } else {
       element.transactionNav = '';
     }
     element.totalNav = mfService.mutualFundRoundAndFormat(element.totalNav, 3);
     element.unit = mfService.mutualFundRoundAndFormat(element.unit, 3);
     element.totalUnit = mfService.mutualFundRoundAndFormat(element.totalUnit, 3);
-    element.balanceUnits = mfService.mutualFundRoundAndFormat(element.balanceUnits, 3);
+    element.balanceUnits = mfService.mutualFundRoundAndFormat(element.balanceUnits, 2);
     element.totalBalanceUnit = mfService.mutualFundRoundAndFormat(element.totalBalanceUnit, 2);
     element.currentAmount = mfService.mutualFundRoundAndFormat(element.currentAmount, 2);
     element.totalCurrentValue = mfService.mutualFundRoundAndFormat(element.totalCurrentValue, 2);

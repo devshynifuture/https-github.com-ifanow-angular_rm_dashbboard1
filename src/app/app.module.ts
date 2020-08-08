@@ -30,6 +30,7 @@ import { BackofficeDashboardComponent } from './component/protect-component/Advi
 import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 // import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 // import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 
@@ -79,6 +80,7 @@ import { environment } from '../environments/environment';
     EmailEntryModule,
     AppRoutingModule,
     CustomDirectiveModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     // AssetsModule,
 

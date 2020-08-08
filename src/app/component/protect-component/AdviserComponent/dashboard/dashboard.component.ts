@@ -28,6 +28,7 @@ import { AppConstants } from 'src/app/services/app-constants';
 import { CustomerService } from '../../customers/component/customer/customer.service';
 import { Chart } from 'angular-highcharts';
 import * as Highcharts from 'highcharts';
+import { element } from 'protractor';
 
 export interface PeriodicElement {
   name: string;
@@ -210,7 +211,7 @@ export class DashboardComponent implements OnInit {
     private utils: UtilService,
     private datePipe: DatePipe,
     private crmTaskService: CrmTaskService,
-    private customerService:CustomerService
+    private customerService: CustomerService
   ) {
     const date = new Date();
     const hourOfDay = date.getHours();
@@ -259,7 +260,7 @@ export class DashboardComponent implements OnInit {
   isRecentTransactionFlag: boolean;
   todoListData = [];
   eventData: any;
-  portFolioData=[];
+  portFolioData = [];
   formatedEvent: any[];
   calenderLoader: boolean;
   birthdayAnniList: any;
@@ -413,7 +414,7 @@ export class DashboardComponent implements OnInit {
     this.clientData = AuthService.getClientData()
     this.advisorName = AuthService.getUserInfo().name;
     this.excessAllow = localStorage.getItem('successStoringToken');
-    this.getAssetAllocationData()
+    this.getAssetAllocationData();
     this.getTotalRecivedByDash();
     this.clientWithSubscription();
     this.getSummaryDataDashboard(); // summry dashbord
@@ -432,7 +433,7 @@ export class DashboardComponent implements OnInit {
     this.getLatesAumReconciliationData();
     this.getLastSevenDaysInvestmentAccounts();
     this.getGoalSummaryData();
-    // this.initPointForTask()
+    this.initPointForTask()
   }
 
   initPointForTask() {
@@ -440,7 +441,7 @@ export class DashboardComponent implements OnInit {
   }
   getAssetAllocationData() {
     const obj = {
-      clientId: this.clientData.clientId,
+      clientId: 122326,
       advisorId: this.advisorId,
       targetDate: new Date().getTime()
     }
@@ -448,6 +449,7 @@ export class DashboardComponent implements OnInit {
 
     // this.loaderFn.increaseCounter();
     this.customerService.getAllFeedsPortFolio(obj).subscribe(res => {
+      this.tabsLoaded.portfolioData.isLoading = false;
       if (res == null) {
         this.portFolioData = [];
         this.tabsLoaded.portfolioData.hasData = false;
@@ -872,14 +874,14 @@ export class DashboardComponent implements OnInit {
       data => {
         if (data) {
           this.isBirhtdayLoader = false;
+          data = data.filter(element => element.dateOfBirth && element.dateOfBirth != 0);
+          data = this.sortDateWise(data)
           data.forEach(element => {
             if (element.displayName.length > 15) {
-              element.shortName = element.displayName.substr(0, element.name.indexOf(' '));
+              element.shortName = element.displayName.substr(0, this.getPosition(element.displayName, ' ', 2));
             }
             if (element.dateOfBirth && element.dateOfBirth != 0) {
               element.daysToGo = this.calculateBirthdayOrAnniversary(element.dateOfBirth);
-            } else {
-              element.daysToGo = 'N/A';
             }
           });
           this.utils.calculateAgeFromCurrentDate(data);
@@ -895,6 +897,14 @@ export class DashboardComponent implements OnInit {
         this.isBirhtdayLoader = false;
       }
     );
+  }
+  sortDateWise(data) {
+    return data.sort((a, b) => {
+      return <any>new Date(a.dateOfBirth) - <any>new Date(b.dateOfBirth);
+    });
+  }
+  getPosition(string, subString, index) {
+    return string.split(subString, index).join(subString).length;
   }
 
   calculateBirthdayOrAnniversary(date) {

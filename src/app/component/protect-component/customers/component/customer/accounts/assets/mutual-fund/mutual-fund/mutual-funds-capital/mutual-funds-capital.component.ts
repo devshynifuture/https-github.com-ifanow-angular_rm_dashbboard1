@@ -118,7 +118,7 @@ export class MutualFundsCapitalComponent implements OnInit {
   @ViewChild('tableEl2', { static: false }) tableEl2;
   @ViewChild('tableEl3', { static: false }) tableEl3;
   @ViewChild('mfCapitalTemplate', { static: false }) mfCapitalTemplate;
-
+  @ViewChild('mfCapitalTemplateHeader', { static: false }) mfCapitalTemplateHeader;
   uploadData(data) {
     if (data) {
       this.bulkData = data
@@ -294,6 +294,7 @@ export class MutualFundsCapitalComponent implements OnInit {
   generatePdf() {
     this.fragmentData.isSpinner = true
     const para = document.getElementById('template');
+    const header = document.getElementById('templateHeader');
     this.UtilService.htmlToPdf(para.innerHTML, 'capitalGain', 'true', this.fragmentData, '', '');
   }
   calculateCapitalGain(data) {
@@ -570,6 +571,7 @@ export class MutualFundsCapitalComponent implements OnInit {
     setTimeout(() => {
 
       let para = this.mfCapitalTemplate.nativeElement.innerHTML
+     // const header = this.mfCapitalTemplateHeader.nativeElement.innerHTML
       let obj = {
         htmlInput: para,
         name: (this.clientData.name)?this.clientData.name:''+'s'+'MF capital gain summary'+date,
