@@ -635,6 +635,9 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       this.mutualFundList = this.mutualFund.mutualFundList;
       // this.asyncFilter(this.mutualFundList);
       if(!this.isBulkEmailing){
+        this.mfData.mutualFundList.forEach(element => {
+          element.ownerName = this.mfService.convertInTitleCase(element.ownerName);
+        });
         this.asyncFilter(this.mfData.mutualFundList);
       }
    
@@ -663,6 +666,9 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
           console.log(data);
           let response = this.mfService.doFiltering(data)
           Object.assign(response.mutualFundList, { flag: true });
+          response.mutualFundList.forEach(element => {
+            element.ownerName = this.mfService.convertInTitleCase(element.ownerName);
+          });
           this.asyncFilter(response.mutualFundList);
         }
       );
@@ -1498,6 +1504,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     this.clientDetails = data
     this.clientData = data.clientData
     this.getOrgData = data.advisorData
-    this.userInfo = data.advisorData
+    this.userInfo = data.advisorData;
+    this.details.emailId = data.advisorData.email;
   }
 }

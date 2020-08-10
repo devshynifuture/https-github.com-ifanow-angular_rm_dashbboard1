@@ -21,6 +21,7 @@ addEventListener('message', ({data}) => {
   
   customDataSourceData.forEach(element => {
     customDataHolder.push({...element});
+    element.ownerName = mfService.convertInTitleCase(element.ownerName);
     if (element.currentAmount && element.amount && !element.gain) {
       element.gain = element.currentAmount - element.amount;
       element.gain = mfService.mutualFundRoundAndFormat(element.gain, 2);
