@@ -994,6 +994,9 @@ export class MutualFundSummaryComponent implements OnInit {
       // mfService: this.mfService
       // };
       if(!this.isBulkEmailing){
+        this.mutualFundList.forEach(element => {
+          element.ownerName = this.mfService.convertInTitleCase(element.ownerName);
+        });
         this.asyncFilter(this.mutualFundList);
       }
     } else {
@@ -1084,6 +1087,9 @@ export class MutualFundSummaryComponent implements OnInit {
           this.isBulkDataResponse = true;
           let response = this.mfService.doFiltering(data)
           Object.assign(response.mutualFundList, { flag: true });
+          response.mutualFundList.forEach(element => {
+            element.ownerName = this.mfService.convertInTitleCase(element.ownerName);
+          });
           this.asyncFilter(response.mutualFundList);
         }, err => {
           this.isBulkDataResponse = true;
