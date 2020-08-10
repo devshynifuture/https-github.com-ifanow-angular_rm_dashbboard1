@@ -13,6 +13,7 @@ import {CalendarScheduleComponent} from '../component/protect-component/AdviserC
 import {DashEvent} from '../component/protect-component/AdviserComponent/Activities/calendar/dash-event';
 import {RealEstatePropertyComponent } from './real-estate-property/real-estate-property.component';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { DeleteProgressButtonComponent } from './delete-progress-button/delete-progress-button.component';
 
 // import {CommonComponentModule} from '../component/protect-component/common-component/common-component.module'
 // import {FroalaComponent} from '../component/protect-component/common-component/froala/froala.component';
@@ -26,7 +27,8 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
     EmailDomainAutoSuggestComponent,
     GoogleConnectComponent,
     CalendarScheduleComponent,
-    DashEvent
+    DashEvent,
+    DeleteProgressButtonComponent
   ],
   imports: [
     MaterialModule,
