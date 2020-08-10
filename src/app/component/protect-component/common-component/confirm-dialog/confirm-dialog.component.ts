@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { SubscriptionService } from '../../AdviserComponent/Subscriptions/subscription.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { MatProgressButtonOptions } from 'src/app/common/delete-progress-button/delete-progress-button.component';
 
 @Component({
   selector: 'app-confirm-dialog',
@@ -23,6 +24,22 @@ export class ConfirmDialogComponent implements OnInit {
   dataToshow: any;
   advisorId;
 
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'DELETE',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
+
   constructor(public dialogRef: MatDialogRef<ConfirmDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: any, private subscription: SubscriptionService,
     public eventService: EventService) {
@@ -41,6 +58,7 @@ export class ConfirmDialogComponent implements OnInit {
   }
 
   clickButton2() {
+    this.barButtonOptions.active = true;
 
     if (this.dialogData.dataToShow != undefined) {
       let list = [this.dialogData.dataToShow];
