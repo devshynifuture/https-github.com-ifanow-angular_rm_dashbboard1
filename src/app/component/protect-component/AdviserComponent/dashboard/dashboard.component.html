@@ -239,9 +239,9 @@
         <p class="m-0 roboto f-400 pt-4 lh-20 text-black pb-12">Your business dashboard is ready!</p>
       </div>
       
-      <div *ngIf="tabsLoaded.portfolioData.isLoading"> 
+      <div class="mt-40" *ngIf="tabsLoaded.portfolioData.isLoading"> 
       <div class="row">
-        <h5 class="roboto mb-0">Asset classes</h5>
+        <h5 class="roboto mb-10">Asset classes</h5>
         <div class="borderChatBox col-md-12 p-0  b-a bg-white ">
             <div class=" skeletonAnimation" [appSkeletonLoading]="tabsLoaded.portfolioData.isLoading" appSkeletonLoading>
               <div class="row"> 
@@ -251,8 +251,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6  ">
-                    <div class="mt-40 mr-20">
+                <div class="col-md-6 pl-0 ">
+                    <div class="mt-60">
                         <div class="relClass">
                             <div class="bar" [ngClass]="{'height24': tabsLoaded.portfolioData.isLoading}"></div>
                         </div>
@@ -271,7 +271,7 @@
       </div>
 
       <div class="mt-40" *ngIf="(tabsLoaded.portfolioData.dataLoaded && tabsLoaded.portfolioData.hasData) && !tabsLoaded.portfolioData.isLoading">
-        <h5 class="m-0 text-black f-16 roboto pb-16 f-500"> Asset classses</h5>
+        <h5 class="text-black f-16 roboto mb-10 f-500"> Asset classses</h5>
         <div class="bg-white br-10">
           <div class="row b-a pt-20 pb-20 br-4">
             <div class="col-7">
@@ -745,62 +745,62 @@
     </ngx-slick-carousel>
          </div> 
          
-         
-         <div *ngIf="LastSevenDaysInvestmentAccounts==undefined && investmentAccountFlag" class="row"> 
-        <ngx-slick-carousel class="carousel p-0 col-md-12 skeletonAnimation" [appSkeletonLoading]="investmentAccountFlag" appSkeletonLoading [config]="sliderConfig_investment" #slickModal="slick-carousel">
-          <div class="fundBox bg-white slide" *ngFor="let singleAccount of LastSevenDaysInvestmentAccounts" ngxSlickItem>
-              <div class="row">
-                  <div class="col-md-9   pr-0">
+          
+            <div *ngIf="LastSevenDaysInvestmentAccounts==undefined" class="row">  
+            <div class="skeletonAnimation  " appSkeletonLoading [appSkeletonLoading]="investmentAccountFlag">
+              <div class="pr-5 d-flex pl-5">
+                <div class="investmentBox b-a br-10">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="relClass">
+                        <div class="bar height24" [ngClass]="{'height24': investmentAccountFlag}"></div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="relClass">
+                        <div class="bar height24" [ngClass]="{'height24': investmentAccountFlag}"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-8">
                       <div class="relClass">
                         <div class="bar height24"></div>
                       </div>
-                  </div>
-                  <div class="col-md-3 pl-0 d-flex justify-content-end">
-                    <div class="relClass">
-                      <div class="bar height24"></div>
                     </div>
                   </div>
-              </div>
-  
-              <div class="row">
-                  <div class="col-md-6">
-                    <div class="relClass">
-                      <div class="bar height24"></div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="relClass">
-                      <div class="bar height24"></div>
-                    </div>
-                  </div>
-              </div>
-  
-              <div class="row">
-                  <div class="col-md-12">
-                    <div class="relClass">
-                      <div class="bar height24"></div>
-                    </div>
-                  </div>
-                  
-              </div>
-  
-          </div>
-      </ngx-slick-carousel>
-           </div> 
 
-        
-           <!-- <div *ngIf="LastSevenDaysInvestmentAccounts==undefined" class="row">  
-            <div class="skeletonAnimation  " appSkeletonLoading [appSkeletonLoading]="investmentAccountFlag">
-              <div class="pr-5 d-flex pl-5">
-                <div class="w-180 b-a br-10">
-                  <div class="relClass pl-10 pr-10 pt-10">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="relClass">
+                        <div class="bar height24"></div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="relClass">
+                        <div class="bar height24"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="relClass">
+                        <div class="bar height24"></div>
+                      </div>
+                    </div>
+                     
+                  </div>
+
+                  <!-- <div class="relClass pl-10 pr-10 pt-10">
                     <div class="bar h-24" [ngClass]="{'height24': investmentAccountFlag}">
                       <p class="m-0 pl-10 pt-10 roboto f-400">
                       </p>
                     </div>
-                  </div>
+                  </div> -->
   
-                  <div class="relClass pl-10 pr-10 pt-10">
+                  <!-- <div class="relClass pl-10 pr-10 pt-10">
                     <div [ngClass]="{'height24': investmentAccountFlag}" class="bar ">
                       <div class="row pt-6 pb-10">
                         <div class="col-md-5 pl-10 pr-10">
@@ -815,50 +815,63 @@
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
   
                 </div>
-                <div class="w-180 b-a br-10">
-                  <div class="relClass pl-10 pr-10 pt-10">
-                    <div class="bar h-24">
-                      <p *ngIf="!investmentAccountFlag" class="m-0 pl-10 pt-10 roboto f-400">
-  
-                        Ameen Sahani</p>
-                      <p class="m-0 pl-10 roboto f-400 f-12 text-custom" *ngIf="!investmentAccountFlag">Mohit Sahani
-                        (Father)</p>
+
+
+                <div class="investmentBox b-a br-10">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="relClass">
+                        <div class="bar height24"></div>
+                      </div>
                     </div>
-                  </div>
-  
-                  <div class="relClass pl-10 pr-10 pt-10">
-                    <div [ngClass]="{'height24': investmentAccountFlag}" class="bar ">
-                      <div class="row pt-6 pb-10">
-                        <div class="col-md-5 pl-10 pr-10">
-  
-                          <img *ngIf="!investmentAccountFlag" src="/assets/images/people.png">
-                        </div>
-                        <div class="col-md-7 pl-0 pt-8">
-                          <p *ngIf="!investmentAccountFlag" class="m-0 f-12 lh-16 roboto f-400 f-12">In 4 days</p>
-                          <p *ngIf="!investmentAccountFlag" class="m-0 f-12 lh-16 roboto text-custom f-400 f-12">46
-                            years
-                          </p>
-                        </div>
+                    <div class="col-md-6">
+                      <div class="relClass">
+                        <div class="bar height24"></div>
                       </div>
                     </div>
                   </div>
-  
-                </div>
-                <div class="w-180 b-a br-10">
-                  <div class="relClass pl-10 pr-10 pt-10">
+
+                  <div class="row">
+                    <div class="col-md-8">
+                      <div class="relClass">
+                        <div class="bar height24"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="relClass">
+                        <div class="bar height24"></div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="relClass">
+                        <div class="bar height24"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="relClass">
+                        <div class="bar height24"></div>
+                      </div>
+                    </div>
+                     
+                  </div>
+
+                  <!-- <div class="relClass pl-10 pr-10 pt-10">
                     <div class="bar h-24" [ngClass]="{'height24': investmentAccountFlag}">
-                      <p *ngIf="!investmentAccountFlag" class="m-0 pl-10 pt-10 roboto f-400">
-  
-                        Ameen Sahani</p>
-                      <p *ngIf="!investmentAccountFlag" class="m-0 pl-10 roboto f-400 f-12 text-custom">Mohit Sahani
-                        (Father)</p>
+                      <p class="m-0 pl-10 pt-10 roboto f-400">
+                      </p>
                     </div>
-                  </div>
+                  </div> -->
   
-                  <div class="relClass pl-10 pr-10 pt-10">
+                  <!-- <div class="relClass pl-10 pr-10 pt-10">
                     <div [ngClass]="{'height24': investmentAccountFlag}" class="bar ">
                       <div class="row pt-6 pb-10">
                         <div class="col-md-5 pl-10 pr-10">
@@ -873,13 +886,15 @@
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
   
                 </div>
+
+                
   
               </div>
             </div>
-          </div>  -->
+          </div>   
          
 
     <div *ngIf="LastSevenDaysInvestmentAccounts && LastSevenDaysInvestmentAccounts.length == 0" class="ba-primitive br-4 p-18"> 
