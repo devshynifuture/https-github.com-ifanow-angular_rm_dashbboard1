@@ -1,18 +1,19 @@
-import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
-import { NG_VALUE_ACCESSOR, FormGroup, FormBuilder } from '@angular/forms';
-import { EventService } from 'src/app/Data-service/event.service';
-import { SubscriptionInject } from '../../../subscription-inject.service';
-import { SubscriptionService } from '../../../subscription.service';
-import { AuthService } from '../../../../../../../auth-service/authService';
-import { ValidatorType, UtilService } from '../../../../../../../services/util.service';
-import { MatChipInputEvent, MatDialog } from '@angular/material';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { OrgSettingServiceService } from '../../../../setting/org-setting-service.service';
-import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
-import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
-import { element } from 'protractor';
-import { DatePipe } from '@angular/common';
-import { DocumentPreviewComponent } from '../document-preview/document-preview.component';
+import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
+import {NG_VALUE_ACCESSOR, FormGroup, FormBuilder} from '@angular/forms';
+import {EventService} from 'src/app/Data-service/event.service';
+import {SubscriptionInject} from '../../../subscription-inject.service';
+import {SubscriptionService} from '../../../subscription.service';
+import {AuthService} from '../../../../../../../auth-service/authService';
+import {ValidatorType, UtilService} from '../../../../../../../services/util.service';
+import {MatChipInputEvent, MatDialog} from '@angular/material';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import {OrgSettingServiceService} from '../../../../setting/org-setting-service.service';
+import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
+import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
+import {element} from 'protractor';
+import {DatePipe} from '@angular/common';
+import {DocumentPreviewComponent} from '../document-preview/document-preview.component';
+import {apiConfig} from 'src/app/config/main-config';
 
 @Component({
   selector: 'app-email-only',
@@ -145,8 +146,8 @@ export class EmailOnlyComponent implements OnInit {
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
   constructor(public eventService: EventService, public subInjectService: SubscriptionInject,
-    public subscription: SubscriptionService, private orgSetting: OrgSettingServiceService,
-    private fb: FormBuilder, private peopleService: PeopleService, private datePipe: DatePipe
+              public subscription: SubscriptionService, private orgSetting: OrgSettingServiceService,
+              private fb: FormBuilder, private peopleService: PeopleService, private datePipe: DatePipe
     , public dialog: MatDialog, private utilservice: UtilService) {
     this.advisorId = AuthService.getAdvisorId();
     this.userId = AuthService.getUserId();
@@ -157,7 +158,8 @@ export class EmailOnlyComponent implements OnInit {
     //this.getAllEmails();
     this.getEmailList()
   }
-  getEmailList(){
+
+  getEmailList() {
     let obj = {
       advisorId: this.advisorId
     }
@@ -168,10 +170,12 @@ export class EmailOnlyComponent implements OnInit {
       }
     );
   }
-  getEmailListRes(data){
+
+  getEmailListRes(data) {
     this.emailLists = data
-    console.log('getEmailList',data)
+    console.log('getEmailList', data)
   }
+
   getClientData(data) {
     const obj = {
       clientId: data.clientId
@@ -180,7 +184,7 @@ export class EmailOnlyComponent implements OnInit {
       data => {
         if (data) {
           if (data.emailList && data.emailList.length > 0) {
-            this.emailIdList.push({ emailAddress: data.emailList[0].email });
+            this.emailIdList.push({emailAddress: data.emailList[0].email});
           }
         }
       });
@@ -197,7 +201,7 @@ export class EmailOnlyComponent implements OnInit {
       data => {
         if (data) {
           this.verifiedEmailsList = [data.listItems];
-          console.log('getVerifiedEmailData',data)
+          console.log('getVerifiedEmailData', data)
           // if (!this._inputData.fromEmail) {
           this._inputData.fromEmail = (this.verifiedEmailsList && this.verifiedEmailsList.length == 1) ? this.verifiedEmailsList[0].emailAddress : '';
           // }
@@ -267,8 +271,8 @@ export class EmailOnlyComponent implements OnInit {
   }
 
   close(flag) {
-    this.subInjectService.changeUpperRightSliderState({ state: 'close', refreshRequired: flag });
-    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
+    this.subInjectService.changeUpperRightSliderState({state: 'close', refreshRequired: flag});
+    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: flag});
   }
 
   getEmailTemplate() {
@@ -343,8 +347,8 @@ export class EmailOnlyComponent implements OnInit {
           name: this._inputData.clientName ? this._inputData.clientName : singleEmail.emailAddress,
           email: singleEmail.emailAddress,
           webhook: {
-            success: 'http://dev.ifanow.in:8080/futurewise/api/v1/1/subscription/invoice/esignSuccessResponse/post',
-            failure: 'http://dev.ifanow.in:8080/futurewise/api/v1/1/subscription/invoice/esignSuccessResponse/post1',
+            success: apiConfig.MAIN_URL + 'subscription/invoice/esignSuccessResponse/post',
+            failure: apiConfig.MAIN_URL + 'subscription/invoice/esignSuccessResponse/post1',
             version: 2.1
           },
         });
@@ -438,8 +442,8 @@ export class EmailOnlyComponent implements OnInit {
         name: this._inputData.clientName ? this._inputData.clientName : singleEmail.emailAddress,
         email: singleEmail.emailAddress,
         webhook: {
-          success: 'http://dev.ifanow.in:8080/futurewise/api/v1/1/subscription/invoice/esignSuccessResponse/post',
-          failure: 'http://dev.ifanow.in:8080/futurewise/api/v1/1/subscription/invoice/esignSuccessResponse/post1',
+          success: apiConfig.MAIN_URL + 'subscription/invoice/esignSuccessResponse/post',
+          failure: apiConfig.MAIN_URL + 'subscription/invoice/esignSuccessResponse/post1',
           version: 2.1
         },
       });
@@ -476,7 +480,7 @@ export class EmailOnlyComponent implements OnInit {
     if (inputChar == ',') {
       event.preventDefault();
       const emailId = this._inputData.clientData.userEmailId;
-      this.emailIdList.push({ emailAddress: emailId });
+      this.emailIdList.push({emailAddress: emailId});
       this._inputData.clientData.userEmailId = '';
     }
   }
@@ -486,7 +490,7 @@ export class EmailOnlyComponent implements OnInit {
     const value = event.value.trim();
     if (value && value.length > 0) {
       if (this.validatorType.EMAIL.test(value)) {
-        this.emailIdList.push({ emailAddress: value });
+        this.emailIdList.push({emailAddress: value});
       } else {
         this.eventService.openSnackBar('Enter valid email address', 'Dismiss');
       }
