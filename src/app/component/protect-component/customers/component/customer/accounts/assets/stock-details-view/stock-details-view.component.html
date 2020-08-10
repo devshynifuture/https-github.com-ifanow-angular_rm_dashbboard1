@@ -20,122 +20,133 @@
                 Owner
             </div>
             <div class="col-md-4 text-right f-14 roboto p-0">
-                Rahul Jain
+                {{data.ownerList[0].name}}
             </div>
         </div>
         <div class="row bb p-8 b-l br">
             <div class="col-md-8 text-left f-14 roboto p-0">
                 Portfolio name            </div>
             <div class="col-md-4 text-right f-14 roboto p-0">
-                Sharekhan
+                {{data.portfolioName}}
             </div>
         </div>
-
+  
         <div class="row bb p-8 b-l br">
             <div class="col-md-8 text-left f-14 roboto p-0">
                 Current market value
             </div>
             <div class="col-md-4 text-right f-14 roboto p-0">
-                ₹ 23,35,444
+                {{data.currentMarketValue? "₹" : ""}}<span appFormatNumber>{{data.currentMarketValue}}</span>
             </div>
         </div>
-
+  
         <div class="row bb p-8 b-l br">
             <div class="col-md-8 text-left f-14 roboto p-0">
                 Value as on
             </div>
             <div class="col-md-4 text-right f-14 roboto p-0">
-                22/06/2020
+                {{data.valueAsOn|date : 'dd/MM/yyyy'}}
             </div>
         </div>
-
+  
         <div class="row bb p-8 b-l br">
             <div class="col-md-8 text-left f-14 roboto p-0">
                 Amount invested
             </div>
             <div class="col-md-4 text-right f-14 roboto p-0">
-                ₹ 23,35,444
+              {{data.amountInvested? "₹" : ""}}<span appFormatNumber>{{data.amountInvested}}</span>
             </div>
         </div>
-
+  
         <div class="row bb p-8 b-l br">
             <div class="col-md-8 text-left f-14 roboto p-0">
                 Unrealized gain/loss
             </div>
             <div class="col-md-4 text-right f-14 roboto p-0">
-                ₹ 23,35,444
+              {{data.unrealizedGainLoss? "₹" : ""}}<span appFormatNumber>{{data.unrealizedGainLoss}}</span>
             </div>
         </div>
-
+  
         <div class="row bb p-8 b-l br">
             <div class="col-md-8 text-left f-14 roboto p-0">
                 Absolute return
             </div>
             <div class="col-md-4 text-right f-14 roboto p-0">
-                3%
+              {{data.absoluteReturn}}%
             </div>
         </div>
-
+  
         <div class="row bb p-8 b-l br">
             <div class="col-md-8 text-left f-14 roboto p-0">
                 Linked demat account
             </div>
-            <div class="col-md-4 text-right f-14 roboto p-0">
-                HDFC - 87392873
-            </div>
+            <div class="col-md-4 text-right f-14 roboto p-0" [hidden]="!data.linkedDematAccount" >
+              <div *ngFor="let bank of clientFamilybankList" [ngSwitch]="data.linkedDematAccount">
+                  <span *ngSwitchCase="bank.id">{{bank.bankNameAndLast4Digit}}</span>
+              </div>
+          </div>
+          <div *ngIf="!data.linkedDematAccount" class="col-md-4 text-right f-14 roboto p-0">
+              {{'-'}}
+          </div>
         </div>
-
+  
         <div class="row bb p-8 b-l br">
             <div class="col-md-8 text-left f-14 roboto p-0">
                 Linked bank account
             </div>
-            <div class="col-md-4 text-right f-14 roboto p-0">
-                HDFC - 837823828
-            </div>
+            <div class="col-md-4 text-right f-14 roboto p-0" [hidden]="!data.linkedBankAccount" >
+              <div *ngFor="let bank of clientFamilybankList" [ngSwitch]="data.linkedBankAccount">
+                  <span *ngSwitchCase="bank.id">{{bank.bankNameAndLast4Digit}}</span>
+              </div>
+          </div>
+          <div *ngIf="!data.linkedBankAccount" class="col-md-4 text-right f-14 roboto p-0">
+              {{'-'}}
+          </div>
         </div>
         <div class="row bb p-8 b-l br">
             <div class="col-md-8 text-left f-14 roboto p-0">
                 Description
             </div>
             <div class="col-md-4 text-right f-14 roboto p-0">
-                HDFC bank
+                {{data.description}}
             </div>
         </div>
      
-
-
+  
+  
     </div>
     <div class="col-md-12 text-right pt-4">
         <p class="m-0 text-custom f-12 lh-14">Updated: 04/09/2019</p>
     </div>
    
-</div>
-<div class="row pt-20 pb-90">
+  </div>
+  <div class="row pt-20">
     <div class="col-md-12">
         <h5 class="m-0 f-500 roboto pb-10">Nominee details</h5>
    
-    <div class="row bb p-8 b-l br w-100 bt-1">
+    <!-- <div class="row bb p-8 b-l br w-100 bt-1">
         <div class="col-md-7 text-left f-14 roboto p-0">
             Shilpa Jain
         </div>
         <div class="col-md-5 text-right f-14 roboto p-0">
             Wife with 50% share
         </div>
-    </div>
-
-    <div class="row bb p-8 b-l br w-100">
+    </div> -->
+  
+    <div class="row bb p-8 b-l br w-100" *ngFor="let obj of data.nomineeList;">
         <div class="col-md-7 text-left f-14 roboto p-0">
-            Shreya Jain
+          {{obj.name}}
         </div>
         <div class="col-md-5 text-right f-14 roboto p-0">
-            Daughter with 50% share
+            <!-- Daughter with 50% share -->
+          with {{obj.sharePercentage}}% share
         </div>
     </div>
-    <div class="col-md-12 text-right pt-4 pr-0">
+    <div class="col-md-12 text-right pt-4">
         <p class="m-0 text-custom f-12 lh-14">Updated: 04/09/2019</p>
     </div>
     </div>
-</div>
+  </div>
 <div class="bottom-fixed wrapper-12 pt-16 w-35">
     <div class="row">
         <div class="col-md-4 pt-8" (click)="close()">

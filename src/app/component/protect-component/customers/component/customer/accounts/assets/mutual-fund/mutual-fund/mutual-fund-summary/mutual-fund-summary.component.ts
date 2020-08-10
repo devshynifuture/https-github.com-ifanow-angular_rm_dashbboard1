@@ -345,6 +345,7 @@ export class MutualFundSummaryComponent implements OnInit {
 
         if (this.reponseData) {
           this.displayedColumns = [];
+          this.displayedColumnsTotal =[];
           this.setDefaultFilterData.transactionView.forEach(element => {
             if (element.selected == true) {
               this.displayedColumns.push(element.displayName);
@@ -992,7 +993,9 @@ export class MutualFundSummaryComponent implements OnInit {
       // type: '',
       // mfService: this.mfService
       // };
-      this.asyncFilter(this.mutualFundList);
+      if(!this.isBulkEmailing){
+        this.asyncFilter(this.mutualFundList);
+      }
     } else {
       this.isLoading = false;
       this.changeInput.emit(false);
@@ -1026,6 +1029,7 @@ export class MutualFundSummaryComponent implements OnInit {
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
+      showFolio:(this.reponseData) ? (this.setDefaultFilterData.showFolio == '2' ? false :true ): (this.saveFilterData) ? (this.saveFilterData.showFolio == '2' ? false : true) : false
     };
     this.customerService.getMutualFund(obj).pipe(map((data) => {
       return this.doFiltering(data);
@@ -1071,7 +1075,8 @@ export class MutualFundSummaryComponent implements OnInit {
         advisorId: this.advisorId,
         clientId: this.clientId,
         toDate: this.toDate,
-        id: categoryWiseMfList
+        id: categoryWiseMfList,
+        showFolio:(this.reponseData) ? (this.setDefaultFilterData.showFolio == '2' ? false :true ): (this.saveFilterData) ? (this.saveFilterData.showFolio == '2' ? false : true) : false
       };
       this.customerService.getMutualFund(obj).subscribe(
         data => {
@@ -1191,15 +1196,22 @@ export class MutualFundSummaryComponent implements OnInit {
         this.dataSummary.grandTotal = this.grandTotal
         this.customDataSource.data = []
         this.summary.data = [{}, {}, {}];
-        this.summary.data = data.customDataSourceData;
+        // this.summary.data = data.customDataSourceData;
+
+        const myArray = data.customDataSourceData;
+        let list =[];
+        myArray.forEach(val => list.push(Object.assign({}, val)));
+        this.summary.data = list;
         this.mfData.withdrawals = this.grandTotal.withdrawals
+        this.mfData.withdrawals =  this.mfService.mutualFundRoundAndFormat(this.mfData.withdrawals, 0);
+        this.mfData.total_dividend_payout =  this.mfService.mutualFundRoundAndFormat(this.mfData.total_dividend_payout, 0);
         this.mfData.totalBalanceUnit = this.mfService.mutualFundRoundAndFormat(this.grandTotal.totalBalanceUnit, 3)
         this.mfData.total_unrealized_gain = this.mfService.mutualFundRoundAndFormat(this.mfData.total_unrealized_gain, 0);
         this.mfData.sip = this.grandTotal.sip
         this.mfData.sip = this.mfService.mutualFundRoundAndFormat(this.mfData.sip, 2);
         this.mfData.total_absolute_return = this.mfService.mutualFundRoundAndFormat(this.mfData.total_absolute_return, 2);
         this.mfData.total_xirr = this.mfService.mutualFundRoundAndFormat(this.mfData.total_xirr, 2)
-        this.mfData.total_current_value = this.mfService.mutualFundRoundAndFormat(this.mfData.total_current_value, 2)
+        this.mfData.total_current_value = this.mfService.mutualFundRoundAndFormat(this.mfData.total_current_value, 0)
         this.mfData.total_amount_invested = this.mfService.mutualFundRoundAndFormat(this.mfData.total_amount_invested, 0)
 
         console.log("this is summary Data:::", data.customDataSourceData)
@@ -1583,7 +1595,7 @@ export class MutualFundSummaryComponent implements OnInit {
     this.fragmentData.isSpinner = true;
     setTimeout(() => {
       const para = document.getElementById('template');
-      const header = document.getElementById('templateheader');
+    //  const header = document.getElementById('templateheader');
       this.returnValue = this.utilService.htmlToPdf(para.innerHTML, 'MF summary', 'true', this.fragmentData, '', '');
     });
 
@@ -1656,7 +1668,7 @@ export class MutualFundSummaryComponent implements OnInit {
         obj = 'totalSwitchOut';
         break;
       case 'Balance unit':
-        obj = 'totalBalanceUnit';
+        obj = '';
         break;
       case 'NAV':
         obj = 'totalNavDate';
@@ -1696,7 +1708,7 @@ export class MutualFundSummaryComponent implements OnInit {
         obj = 'withdrawals';
         break;
       case 'Balance unit':
-        obj = 'totalBalanceUnit';
+        obj = '';
         break;
       case 'NAV':
         obj = '0';
@@ -1891,13 +1903,12 @@ export class MutualFundSummaryComponent implements OnInit {
     this.showDownload = true
     setTimeout(() => {
       let para = this.summaryTemplate.nativeElement.innerHTML
-      const header = this.summaryHeader.nativeElement.innerHTML
+    // const header = this.summaryHeader.nativeElement.innerHTML
       let obj = {
         htmlInput: para,
         name: (this.clientData.name) ? this.clientData.name : '' + 's' + 'Summary' + date,
         landscape: true,
         key: 'showPieChart',
-        header: header,
         clientId: this.clientId,
         advisorId: this.advisorId,
         fromEmail: this.clientDetails.advisorData.email,
@@ -1919,6 +1930,8 @@ export class MutualFundSummaryComponent implements OnInit {
     );
   }
   getDetailsClientAdvisorRes(data) {
+    this.details ={}
+    this.details.emailId = {}
     console.log('data', data)
     this.clientDetails = data
     this.clientData = data.clientData

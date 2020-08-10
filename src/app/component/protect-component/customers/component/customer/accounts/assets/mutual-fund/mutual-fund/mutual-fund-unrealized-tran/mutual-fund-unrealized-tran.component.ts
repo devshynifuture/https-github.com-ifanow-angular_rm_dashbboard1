@@ -578,7 +578,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
 
     const obj = {
       advisorId: this.advisorId,
-      clientId: this.clientId
+      clientId: this.clientId,
+      showFolio:(this.reponseData) ? (this.setDefaultFilterData.showFolio == '2' ? false :true ): (this.saveFilterData) ? (this.saveFilterData.showFolio == '2' ? false : true) : false
     };
     this.custumService.getMutualFund(obj).pipe(map((data) => {
       return this.doFiltering(data);
@@ -653,7 +654,9 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         advisorId: this.advisorId,
         clientId: this.clientId,
         toDate: this.toDate,
-        id: categoryWiseMfList
+        id: categoryWiseMfList,
+        showFolio:(this.reponseData) ? (this.setDefaultFilterData.showFolio == '2' ? false :true ): (this.saveFilterData) ? (this.saveFilterData.showFolio == '2' ? false : true) : false
+
       };
       this.custumService.getMutualFund(obj).subscribe(
         data => {
@@ -1242,12 +1245,12 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     this.fragmentData.isSpinner = true;
     setTimeout(() => {
       const para = document.getElementById('template');
-      if(this.viewMode == 'Unrealized Transactions'){
-        this.headerHtml = document.getElementById('templateHeader');
-      }else{
-        this.headerHtml = document.getElementById('alltemplateHeader');
-      }
-      this.returnValue = this.utilService.htmlToPdf(this.headerHtml.innerHTML,para.innerHTML, this.reportName, 'true', this.fragmentData, '', '');
+      // if(this.viewMode == 'Unrealized Transactions'){
+      //   this.headerHtml = document.getElementById('templateHeader');
+      // }else{
+      //   this.headerHtml = document.getElementById('alltemplateHeader');
+      // }
+      this.returnValue = this.utilService.htmlToPdf(para.innerHTML, this.reportName, 'true', this.fragmentData, '', '');
     }, 200);
   
   
@@ -1459,11 +1462,11 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     setTimeout(() => {
       const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
       let para = this.unrealizedTranTemplate.nativeElement.innerHTML
-      if(this.viewMode=='Unrealized Transactions'){
-         this.header = this.unrealizedTranTemplateHeader.nativeElement.innerHTML
-      }else{
-         this.header = this.allTranTemplateHeader.nativeElement.innerHTML
-      }
+      // if(this.viewMode=='Unrealized Transactions'){
+      //    this.header = this.unrealizedTranTemplateHeader.nativeElement.innerHTML
+      // }else{
+      //    this.header = this.allTranTemplateHeader.nativeElement.innerHTML
+      // }
       let obj = {
         htmlInput: para,
         name: (this.clientData.name) ? this.clientData.name : '' + 's' + this.mode + date,

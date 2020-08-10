@@ -488,11 +488,12 @@ export class MfServiceService {
 
   mutualFundRoundAndFormat(data, noOfPlaces: number = 0) {
     if (data) {
+     data = parseFloat(data)
       if (isNaN(data)) {
         return data;
       } else {
         // console.log(' original ', data);
-        const formattedValue = this.roundOff(parseFloat(data), noOfPlaces).toLocaleString('en-IN');
+        const formattedValue = parseFloat((data).toFixed(noOfPlaces)).toLocaleString('en-IN', {'minimumFractionDigits':noOfPlaces,'maximumFractionDigits':noOfPlaces});
         // console.log(' original / roundedValue ', data, ' / ', formattedValue);
         return formattedValue;
       }
