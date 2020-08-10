@@ -31,204 +31,204 @@
 <div class="row pt-135 pb-28" id="ui-dashboard-advisor">
 
   <div class="col-md-3 pl-20 pr-20 mt-44">
-        <h5 class="m-0 roboto f-500 pb-16">Key metrics</h5>
-        <div appSkeletonLoading [appSkeletonLoading]="isKeyMatrix"
-          class="row bg-grey lter text-center ba-primitive br-4 p-8 skeletonAnimation">
-          <div class="col-md-6 overflow-hidden pt-24 pb-24 bb-half pl-8">
-            <p class="m-0 text-primitive roboto f-400 lh-16">MF AUM</p>
-            <h3 class="m-0 roboto f-400 text-black pt-8">
-              <div class="relClass">
-                <div class="bar" [ngClass]="{'heightNew24': isKeyMatrix}">
-                  <span>{{(keyMetricJson.mfAum) ? keyMetricJson.mfAum : '0'}}</span>
-                </div>
-              </div>
-            </h3>
+    <h5 class="m-0 roboto f-500 pb-16">Key metrics</h5>
+    <div appSkeletonLoading [appSkeletonLoading]="isKeyMatrix"
+      class="row bg-grey lter text-center ba-primitive br-4 p-8 skeletonAnimation">
+      <div class="col-md-6 overflow-hidden pt-24 pb-24 bb-half pl-8">
+        <p class="m-0 text-primitive roboto f-400 lh-16">MF AUM</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': isKeyMatrix}">
+              <span>{{(keyMetricJson.mfAum) ? keyMetricJson.mfAum : '0'}}</span>
+            </div>
+          </div>
+        </h3>
+      </div>
+
+      <div class="col-md-6 overflow-hidden pt-24 pb-24 bl-half bb-half">
+        <p class="m-0 text-primitive roboto f-400 lh-16">SIP book</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': isKeyMatrix}">
+              {{(keyMetricJson.sipBook) ? keyMetricJson.sipBook : '0'}}
+            </div>
+          </div>
+        </h3>
+      </div>
+
+      <div class="col-md-6 overflow-hidden pt-24 pb-24 pl-8">
+        <p class="m-0 text-primitive roboto f-400 lh-16">Clients</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': isKeyMatrix}">
+              {{(keyMetricJson.clientCount) ? keyMetricJson.clientCount : '0'}}
+            </div>
+          </div>
+        </h3>
+      </div>
+
+      <div class="col-md-6 overflow-hidden pt-24 pb-24 bl-half">
+        <p class="m-0 text-primitive roboto f-400 lh-16">Investors</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': isKeyMatrix}">
+              {{(keyMetricJson.InvestorCount) ? keyMetricJson.InvestorCount : '0'}}
+            </div>
           </div>
 
-          <div class="col-md-6 overflow-hidden pt-24 pb-24 bl-half bb-half">
-            <p class="m-0 text-primitive roboto f-400 lh-16">SIP book</p>
-            <h3 class="m-0 roboto f-400 text-black pt-8">
-              <div class="relClass">
-                <div class="bar" [ngClass]="{'heightNew24': isKeyMatrix}">
-                  {{(keyMetricJson.sipBook) ? keyMetricJson.sipBook : '0'}}
-                </div>
-              </div>
-            </h3>
-          </div>
+        </h3>
+      </div>
 
-          <div class="col-md-6 overflow-hidden pt-24 pb-24 pl-8">
-            <p class="m-0 text-primitive roboto f-400 lh-16">Clients</p>
-            <h3 class="m-0 roboto f-400 text-black pt-8">
-              <div class="relClass">
-                <div class="bar" [ngClass]="{'heightNew24': isKeyMatrix}">
-                  {{(keyMetricJson.clientCount) ? keyMetricJson.clientCount : '0'}}
-                </div>
-              </div>
-            </h3>
-          </div>
+    </div>
 
-          <div class="col-md-6 overflow-hidden pt-24 pb-24 bl-half">
-            <p class="m-0 text-primitive roboto f-400 lh-16">Investors</p>
-            <h3 class="m-0 roboto f-400 text-black pt-8">
-              <div class="relClass">
-                <div class="bar" [ngClass]="{'heightNew24': isKeyMatrix}">
-                  {{(keyMetricJson.InvestorCount) ? keyMetricJson.InvestorCount : '0'}}
-                </div>
-              </div>
+    <h5 class="m-0 roboto f-500 pb-16 pt-28" *ngIf="false">Activity overview</h5>
+    <div *ngIf="false" class="row bg-grey lter text-center ba-primitive br-4 p-8">
+      <div class="col-md-6 pt-24 pb-24 bb-half pl-8">
+        <p class="m-0 text-primitive roboto f-400 lh-16">Awaiting
+          consent</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': isLoading}">
+              78
+            </div>
+          </div>
+        </h3>
+      </div>
+      <div class="col-md-6 pt-24 pb-24 bl-half bb-half">
+        <p class="m-0 text-primitive roboto f-400 lh-16">Advice to be
+          reviewed</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': isLoading}">
+              41
+            </div>
+          </div>
+        </h3>
+      </div>
+      <div class="col-md-6 pt-24 pb-24 pl-8">
+        <p class="m-0 text-primitive roboto f-400 lh-16">Money to
+          be deployed</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': isLoading}">
 
-            </h3>
+              712.35 L
+            </div>
           </div>
+        </h3>
+      </div>
+      <div class="col-md-6 pt-24 pb-24 bl-half">
+        <p class="m-0 text-primitive roboto f-400 lh-16">Action plans
+          in process</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': isLoading}">
+              4
+            </div>
+          </div>
+        </h3>
+      </div>
+    </div>
 
-        </div>
+    <h5 class="m-0 roboto f-500 pb-16 pt-28">Subscription overview</h5>
+    <div appSkeletonLoading [appSkeletonLoading]="subOverviewFlag"
+      class="row bg-grey lter text-center ba-primitive br-4 p-8 skeletonAnimation">
+      <div class="col-md-6 pt-24 pb-24 bb-half pl-8">
+        <p class="m-0 text-primitive roboto f-400 lh-16">Clients with
+          subscription</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">
 
-        <h5 class="m-0 roboto f-500 pb-16 pt-28" *ngIf="false">Activity overview</h5>
-        <div *ngIf="false" class="row bg-grey lter text-center ba-primitive br-4 p-8">
-          <div class="col-md-6 pt-24 pb-24 bb-half pl-8">
-            <p class="m-0 text-primitive roboto f-400 lh-16">Awaiting
-              consent</p>
-            <h3 class="m-0 roboto f-400 text-black pt-8">
-              <div class="relClass">
-                <div class="bar" [ngClass]="{'heightNew24': isLoading}">
-                  78
-                </div>
-              </div>
-            </h3>
-          </div>
-          <div class="col-md-6 pt-24 pb-24 bl-half bb-half">
-            <p class="m-0 text-primitive roboto f-400 lh-16">Advice to be
-              reviewed</p>
-            <h3 class="m-0 roboto f-400 text-black pt-8">
-              <div class="relClass">
-                <div class="bar" [ngClass]="{'heightNew24': isLoading}">
-                  41
-                </div>
-              </div>
-            </h3>
-          </div>
-          <div class="col-md-6 pt-24 pb-24 pl-8">
-            <p class="m-0 text-primitive roboto f-400 lh-16">Money to
-              be deployed</p>
-            <h3 class="m-0 roboto f-400 text-black pt-8">
-              <div class="relClass">
-                <div class="bar" [ngClass]="{'heightNew24': isLoading}">
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': subOverviewFlag}">
+              {{ (dataSourceClientWithSub && dataSourceClientWithSub.hasOwnProperty('activeClientPer')) ? dataSourceClientWithSub.activeClientPer : 0}}
+              %
 
-                  712.35 L
-                </div>
-              </div>
-            </h3>
+            </div>
           </div>
-          <div class="col-md-6 pt-24 pb-24 bl-half">
-            <p class="m-0 text-primitive roboto f-400 lh-16">Action plans
-              in process</p>
-            <h3 class="m-0 roboto f-400 text-black pt-8">
-              <div class="relClass">
-                <div class="bar" [ngClass]="{'heightNew24': isLoading}">
-                  4
-                </div>
-              </div>
-            </h3>
+        </h3>
+      </div>
+      <div class="col-md-6 pt-24 pb-24 bl-half bb-half">
+        <p class="m-0 text-primitive roboto f-400 lh-16">Subscriptions
+          cancelled</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': subOverviewFlag}">
+              41
+            </div>
           </div>
-        </div>
+        </h3>
+      </div>
+      <div class="col-md-6 pt-24 pb-24 pl-8">
+        <p class="m-0 text-primitive roboto f-400 lh-16">Total fees
+          charged</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': subOverviewFlag}">
 
-        <h5 class="m-0 roboto f-500 pb-16 pt-28">Subscription overview</h5>
-        <div appSkeletonLoading [appSkeletonLoading]="subOverviewFlag"
-          class="row bg-grey lter text-center ba-primitive br-4 p-8 skeletonAnimation">
-          <div class="col-md-6 pt-24 pb-24 bb-half pl-8">
-            <p class="m-0 text-primitive roboto f-400 lh-16">Clients with
-              subscription</p>
-            <h3 class="m-0 roboto f-400 text-black pt-8">
+              <span appFormatNumber [value]="totalSales">{{totalSales}}</span>
 
-              <div class="relClass">
-                <div class="bar" [ngClass]="{'heightNew24': subOverviewFlag}">
-                  {{ (dataSourceClientWithSub && dataSourceClientWithSub.hasOwnProperty('activeClientPer')) ? dataSourceClientWithSub.activeClientPer : 0}}
-                  %
+            </div>
+          </div>
+        </h3>
+      </div>
+      <div class="col-md-6 pt-24 pb-24 bl-half">
+        <p class="m-0 text-primitive roboto f-400 lh-16">Fees received</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': subOverviewFlag}">
+              {{feeRecieved}}
+            </div>
+          </div>
+        </h3>
+      </div>
+    </div>
 
-                </div>
-              </div>
-            </h3>
-          </div>
-          <div class="col-md-6 pt-24 pb-24 bl-half bb-half">
-            <p class="m-0 text-primitive roboto f-400 lh-16">Subscriptions
-              cancelled</p>
-            <h3 class="m-0 roboto f-400 text-black pt-8">
-              <div class="relClass">
-                <div class="bar" [ngClass]="{'heightNew24': subOverviewFlag}">
-                  41
-                </div>
-              </div>
-            </h3>
-          </div>
-          <div class="col-md-6 pt-24 pb-24 pl-8">
-            <p class="m-0 text-primitive roboto f-400 lh-16">Total fees
-              charged</p>
-            <h3 class="m-0 roboto f-400 text-black pt-8">
-              <div class="relClass">
-                <div class="bar" [ngClass]="{'heightNew24': subOverviewFlag}">
+    <h5 class="m-0 roboto f-500 pb-16 pt-28">Document overview</h5>
+    <div appSkeletonLoading [appSkeletonLoading]="docOverviewFlag"
+      class="row bg-grey lter text-center ba-primitive br-4 p-8 skeletonAnimation">
+      <div class="col-md-6 pt-24 pb-24 bb-half pl-8">
+        <p class="m-0 text-primitive roboto f-400 lh-16 ws-nowrap">Family member<br> count</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': docOverviewFlag}">
+              {{documentSizeData.familyMemberCount}}
 
-                  <span appFormatNumber [value]="totalSales">{{totalSales}}</span>
+            </div>
+          </div>
+        </h3>
+      </div>
+      <div class="col-md-6 pt-24 pb-24 bl-half bb-half">
+        <p class="m-0 text-primitive roboto f-400 lh-16">Total <br>clients</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': docOverviewFlag}">
+              {{documentSizeData.totalClients}}
 
-                </div>
-              </div>
-            </h3>
+            </div>
           </div>
-          <div class="col-md-6 pt-24 pb-24 bl-half">
-            <p class="m-0 text-primitive roboto f-400 lh-16">Fees received</p>
-            <h3 class="m-0 roboto f-400 text-black pt-8">
-              <div class="relClass">
-                <div class="bar" [ngClass]="{'heightNew24': subOverviewFlag}">
-                  {{feeRecieved}}
-                </div>
-              </div>
-            </h3>
+        </h3>
+      </div>
+      <div class="col-md-6 pt-24 pb-24 pl-8">
+        <p class="m-0 text-primitive roboto f-400 lh-16">Total <br>size</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': docOverviewFlag}">
+              {{documentSizeData.totalMbs}}<span *ngIf="!docOverviewFlag">MB</span>
+            </div>
           </div>
-        </div>
-
-        <h5 class="m-0 roboto f-500 pb-16 pt-28">Document overview</h5>
-        <div appSkeletonLoading [appSkeletonLoading]="docOverviewFlag"
-          class="row bg-grey lter text-center ba-primitive br-4 p-8 skeletonAnimation">
-          <div class="col-md-6 pt-24 pb-24 bb-half pl-8">
-            <p class="m-0 text-primitive roboto f-400 lh-16 ws-nowrap">Family member<br> count</p>
-            <h3 class="m-0 roboto f-400 text-black pt-8">
-              <div class="relClass">
-                <div class="bar" [ngClass]="{'heightNew24': docOverviewFlag}">
-                  {{documentSizeData.familyMemberCount}}
-
-                </div>
-              </div>
-            </h3>
+        </h3>
+      </div>
+      <div class="col-md-6 pt-24 pb-24 bl-half">
+        <p class="m-0 text-primitive roboto f-400 lh-16">Total documents</p>
+        <h3 class="m-0 roboto f-400 text-black pt-8">
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'heightNew24': docOverviewFlag}">
+              {{documentSizeData.totalDocs}}
+            </div>
           </div>
-          <div class="col-md-6 pt-24 pb-24 bl-half bb-half">
-            <p class="m-0 text-primitive roboto f-400 lh-16">Total <br>clients</p>
-            <h3 class="m-0 roboto f-400 text-black pt-8">
-              <div class="relClass">
-                <div class="bar" [ngClass]="{'heightNew24': docOverviewFlag}">
-                  {{documentSizeData.totalClients}}
-
-                </div>
-              </div>
-            </h3>
-          </div>
-          <div class="col-md-6 pt-24 pb-24 pl-8">
-            <p class="m-0 text-primitive roboto f-400 lh-16">Total <br>size</p>
-            <h3 class="m-0 roboto f-400 text-black pt-8">
-              <div class="relClass">
-                <div class="bar" [ngClass]="{'heightNew24': docOverviewFlag}">
-                  {{documentSizeData.totalMbs}}<span *ngIf="!docOverviewFlag">MB</span>
-                </div>
-              </div>
-            </h3>
-          </div>
-          <div class="col-md-6 pt-24 pb-24 bl-half">
-            <p class="m-0 text-primitive roboto f-400 lh-16">Total documents</p>
-            <h3 class="m-0 roboto f-400 text-black pt-8">
-              <div class="relClass">
-                <div class="bar" [ngClass]="{'heightNew24': docOverviewFlag}">
-                  {{documentSizeData.totalDocs}}
-                </div>
-              </div>
-            </h3>
-          </div>
-        </div>
+        </h3>
+      </div>
+    </div>
   </div>
 
 
@@ -239,39 +239,41 @@
         <h3 class="m-0 roboto f-500 roboto text-black pt-20">{{greeting}} {{advisorName}}</h3>
         <p class="m-0 roboto f-400 pt-4 lh-20 text-black pb-12">Your business dashboard is ready!</p>
       </div>
-      
-      <div class="mt-40" *ngIf="tabsLoaded.portfolioData.isLoading"> 
-      <div class="row">
-        <h5 class="roboto mb-10">Asset classes</h5>
-        <div class="borderChatBox col-md-12 p-0  b-a bg-white ">
-            <div class=" skeletonAnimation" [appSkeletonLoading]="tabsLoaded.portfolioData.isLoading" appSkeletonLoading>
-              <div class="row"> 
-              <div class="col-md-6 pl-0 text-center">
-                    <div class="relClass">
-                        <div class="bar180 height180">
-                        </div>
+
+      <div class="mt-40" *ngIf="tabsLoaded.portfolioData.isLoading">
+        <div class="row">
+          <h5 class="roboto mb-10">Asset classes</h5>
+          <div class="borderChatBox col-md-12 p-0  b-a bg-white ">
+            <div class=" skeletonAnimation" [appSkeletonLoading]="tabsLoaded.portfolioData.isLoading"
+              appSkeletonLoading>
+              <div class="row">
+                <div class="col-md-6 pl-0 text-center">
+                  <div class="relClass">
+                    <div class="bar180 height180">
                     </div>
+                  </div>
                 </div>
                 <div class="col-md-6 pl-0 ">
-                    <div class="mt-60">
-                        <div class="relClass">
-                            <div class="bar" [ngClass]="{'height24': tabsLoaded.portfolioData.isLoading}"></div>
-                        </div>
-                        <div class="relClass">
-                            <div class="bar" [ngClass]="{'height24': tabsLoaded.portfolioData.isLoading}"></div>
-                        </div>
-                        <div class="relClass">
-                            <div class="bar" [ngClass]="{'height24': tabsLoaded.portfolioData.isLoading}"></div>
-                        </div>
+                  <div class="mt-60">
+                    <div class="relClass">
+                      <div class="bar" [ngClass]="{'height24': tabsLoaded.portfolioData.isLoading}"></div>
                     </div>
+                    <div class="relClass">
+                      <div class="bar" [ngClass]="{'height24': tabsLoaded.portfolioData.isLoading}"></div>
+                    </div>
+                    <div class="relClass">
+                      <div class="bar" [ngClass]="{'height24': tabsLoaded.portfolioData.isLoading}"></div>
+                    </div>
+                  </div>
                 </div>
-                </div>
+              </div>
             </div>
+          </div>
         </div>
-    </div>
       </div>
 
-      <div class="mt-40" *ngIf="(tabsLoaded.portfolioData.dataLoaded && tabsLoaded.portfolioData.hasData) && !tabsLoaded.portfolioData.isLoading">
+      <div class="mt-40"
+        *ngIf="(tabsLoaded.portfolioData.dataLoaded && tabsLoaded.portfolioData.hasData) && !tabsLoaded.portfolioData.isLoading">
         <h5 class="text-black f-16 roboto mb-10 f-500"> Asset classses</h5>
         <div class="bg-white br-10">
           <div class="row b-a pt-20 pb-20 br-4">
@@ -327,154 +329,156 @@
 
 
       <!-- Birthdays & Anniversaries section start -->
-       
+
       <div class="row pt-40">
         <div class="col-md-12 p-0">
-          <h5 *ngIf="birthdayAnniList && birthdayAnniList.length>0" class="f-500 roboto text-black m-0 pb-10">Birthdays & Anniversaries</h5>
-          
-          <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="sliderConfig" #slickModal="slick-carousel">
-            <div *ngFor="let singleMember of birthdayAnniList" class="fundBoxDashboard bg-white slide  " ngxSlickItem> 
-                <div class="row">
-                  <div class="col-md-9 p-0">
-                    <h5 *ngIf="!singleMember.shortName" class="m-0 ellipsisClass roboto f-400">
-                          {{singleMember.displayName}}
-                    </h5>
-                    <h5 *ngIf="singleMember.shortName" matTooltip="{{singleMember.displayName}}"
-                      class="m-0 ellipsisClass roboto f-400 c-p">
-                           {{singleMember.shortName}}
-                    </h5>
-                    <h5 *ngIf="singleMember.userType==2" class="mb-4  roboto f-400 f-12 text-custom">
-                          Group head
-                    </h5>
-                    <h5 *ngIf="singleMember.userType==3" class="mb-4 roboto f-400 f-12 text-custom">
-                          {{singleMember.displayName}}
-                    </h5>
-                  </div>
-                  <div class="col-md-3 p-0">
-                    <button *ngIf="singleMember.anniversaryDate" mat-stroked-button
-                      class="btn-primary-outline mw-40 p-0 h-20 lh-20 br-2 f-12 rigtht">Anniv
-                    </button>
-                  </div>
-                </div>
+          <h5 *ngIf="birthdayAnniList && birthdayAnniList.length>0" class="f-500 roboto text-black m-0 pb-10">Birthdays
+            & Anniversaries</h5>
 
-                <div class="row">
-                  <div class="col-md-4 p-0 ">
-                       <img src="/assets/images/people.png">
-                   </div>  
-                   <div class="col-md-8 p-0  d-flex justify-content-center flex-column ">                    
-                    <h5 class="m-0 f-12 lh-16 roboto f-400 f-12">
-                      <span class="f-14" *ngIf="singleMember.daysToGo==0">Today</span>
-                      <span class="f-14" *ngIf="singleMember.daysToGo==1">Tommorrow</span>
-                      <span *ngIf="singleMember.daysToGo!=0 && singleMember.daysToGo!=1 && singleMember.daysToGo!='N/A'">
-                          In {{singleMember.daysToGo}} days
-                      </span>
-                      <span *ngIf="singleMember.daysToGo=='N/A'">
-                            {{singleMember.daysToGo}}
-                      </span>
-                    </h5>                    
-                    <p *ngIf="singleMember.daysToGo!='N/A'" class="m-0 f-12 lh-16 roboto text-custom f-400 f-12">
-                          {{singleMember.age}} years
-                     </p>
-                  </div>
+          <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="sliderConfig" #slickModal="slick-carousel">
+            <div *ngFor="let singleMember of birthdayAnniList" class="fundBoxDashboard bg-white slide  " ngxSlickItem>
+              <div class="row">
+                <div class="col-md-9 p-0">
+                  <h5 *ngIf="!singleMember.shortName" class="m-0 ellipsisClass roboto f-400">
+                    {{singleMember.displayName}}
+                  </h5>
+                  <h5 *ngIf="singleMember.shortName" matTooltip="{{singleMember.displayName}}"
+                    class="m-0 ellipsisClass roboto f-400 c-p">
+                    {{singleMember.shortName}}
+                  </h5>
+                  <h5 *ngIf="singleMember.userType==2" class="mb-4  roboto f-400 f-12 text-custom">
+                    Group head
+                  </h5>
+                  <h5 *ngIf="singleMember.userType==3" class="mb-4 roboto f-400 f-12 text-custom">
+                    {{singleMember.displayName}}
+                  </h5>
                 </div>
+                <div class="col-md-3 p-0">
+                  <button *ngIf="singleMember.anniversaryDate" mat-stroked-button
+                    class="btn-primary-outline mw-40 p-0 h-20 lh-20 br-2 f-12 rigtht">Anniv
+                  </button>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-4 p-0 ">
+                  <img src="/assets/images/people.png">
+                </div>
+                <div class="col-md-8 p-0  d-flex justify-content-center flex-column ">
+                  <h5 class="m-0 f-12 lh-16 roboto f-400 f-12">
+                    <span class="f-14" *ngIf="singleMember.daysToGo==0">Today</span>
+                    <span class="f-14" *ngIf="singleMember.daysToGo==1">Tommorrow</span>
+                    <span *ngIf="singleMember.daysToGo!=0 && singleMember.daysToGo!=1 && singleMember.daysToGo!='N/A'">
+                      In {{singleMember.daysToGo}} days
+                    </span>
+                    <span *ngIf="singleMember.daysToGo=='N/A'">
+                      {{singleMember.daysToGo}}
+                    </span>
+                  </h5>
+                  <p *ngIf="singleMember.daysToGo!='N/A'" class="m-0 f-12 lh-16 roboto text-custom f-400 f-12">
+                    {{singleMember.age}} years
+                  </p>
+                </div>
+              </div>
 
             </div>
-            
+
           </ngx-slick-carousel>
 
           <!--- Loader Birthdays & Anniversaries-->
-           
-            <div *ngIf="isBirhtdayLoader" class="bg-white d-flex skeletonAnimation "  appSkeletonLoading [appSkeletonLoading]="isBirhtdayLoader"  > 
-             <div class="fundBoxDashboard_loader"> 
+
+          <div *ngIf="isBirhtdayLoader" class="bg-white d-flex skeletonAnimation " appSkeletonLoading
+            [appSkeletonLoading]="isBirhtdayLoader">
+            <div class="fundBoxDashboard_loader">
               <div class="row">
-                  <div class="col-md-12 p-0">
-                     <div class="relClass">
-                       <div class="bar height24" > </div>
-                     </div>
-                  </div>
-                   
-                </div>
-
-                <div class="row">
-                  <div class="col-md-4 p-0 ">
-                    <div class="relClass">
-                      <div class="bar40 height40"> </div>
-                    </div>
-                   </div>  
-                   <div class="col-md-8 pr-0 pl-4 d-flex justify-content-center flex-column ">                    
-                    <div class="relClass">
-                      <div class="bar height24"> </div>
-                    </div>                  
-                    <div class="relClass">
-                      <div class="bar height24"> </div>
-                    </div>
+                <div class="col-md-12 p-0">
+                  <div class="relClass">
+                    <div class="bar height24"> </div>
                   </div>
                 </div>
+
+              </div>
+
+              <div class="row">
+                <div class="col-md-4 p-0 ">
+                  <div class="relClass">
+                    <div class="bar40 height40"> </div>
+                  </div>
                 </div>
-
-                <div class="fundBoxDashboard_loader"> 
-                  <div class="row">
-                      <div class="col-md-12 p-0">
-                         <div class="relClass">
-                           <div class="bar height24" > </div>
-                         </div>
-                      </div>
-                       
-                    </div>
-    
-                    <div class="row">
-                      <div class="col-md-4 p-0 ">
-                        <div class="relClass">
-                          <div class="bar40 height40"> </div>
-                        </div>
-                       </div>  
-                       <div class="col-md-8 pr-0 pl-4 d-flex justify-content-center flex-column ">                    
-                        <div class="relClass">
-                          <div class="bar height24"> </div>
-                        </div>                  
-                        <div class="relClass">
-                          <div class="bar height24"> </div>
-                        </div>
-                      </div>
-                    </div>
-                    </div>
-
-                    <div class="fundBoxDashboard_loader"> 
-                      <div class="row">
-                          <div class="col-md-12 p-0">
-                             <div class="relClass">
-                               <div class="bar height24" > </div>
-                             </div>
-                          </div>
-                           
-                        </div>
-        
-                        <div class="row">
-                          <div class="col-md-4 p-0 ">
-                            <div class="relClass">
-                              <div class="bar40 height40"> </div>
-                            </div>
-                           </div>  
-                           <div class="col-md-8 pr-0 pl-4 d-flex justify-content-center flex-column ">                    
-                            <div class="relClass">
-                              <div class="bar height24"> </div>
-                            </div>                  
-                            <div class="relClass">
-                              <div class="bar height24"> </div>
-                            </div>
-                          </div>
-                        </div>
-                        </div>
-
-               
-
-                    
+                <div class="col-md-8 pr-0 pl-4 d-flex justify-content-center flex-column ">
+                  <div class="relClass">
+                    <div class="bar height24"> </div>
+                  </div>
+                  <div class="relClass">
+                    <div class="bar height24"> </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            
+
+            <div class="fundBoxDashboard_loader">
+              <div class="row">
+                <div class="col-md-12 p-0">
+                  <div class="relClass">
+                    <div class="bar height24"> </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="row">
+                <div class="col-md-4 p-0 ">
+                  <div class="relClass">
+                    <div class="bar40 height40"> </div>
+                  </div>
+                </div>
+                <div class="col-md-8 pr-0 pl-4 d-flex justify-content-center flex-column ">
+                  <div class="relClass">
+                    <div class="bar height24"> </div>
+                  </div>
+                  <div class="relClass">
+                    <div class="bar height24"> </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="fundBoxDashboard_loader">
+              <div class="row">
+                <div class="col-md-12 p-0">
+                  <div class="relClass">
+                    <div class="bar height24"> </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="row">
+                <div class="col-md-4 p-0 ">
+                  <div class="relClass">
+                    <div class="bar40 height40"> </div>
+                  </div>
+                </div>
+                <div class="col-md-8 pr-0 pl-4 d-flex justify-content-center flex-column ">
+                  <div class="relClass">
+                    <div class="bar height24"> </div>
+                  </div>
+                  <div class="relClass">
+                    <div class="bar height24"> </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+
+          </div>
+
         </div>
       </div>
 
-       
+
 
 
       <!-- Task summary start -->
@@ -486,113 +490,115 @@
             <h5 class="m-0 f-500 roboto text-black"> Task summary </h5>
           </div>
           <div class="col-md-4 p-0 text-right">
-            <button mat-stroked-button class="advisor-view-all">View All </button>
+            <button [routerLink]="['/admin/activies/tasks']" routerLinkActive="router-link-active" mat-stroked-button
+              class="advisor-view-all">View All </button>
           </div>
         </div>
-        <div class=" ba-primitive br-4 pt-14 pb-14 ">  
-        <div class="row">
-          <div class="col-md-4 rightBorder d-flex align-items-center justify-content-center flex-column">
-            <p class="f-14 mb-5 l-16 text-primitive text-center">This week’s <br> tasks</p>
-             <h4 class="mb-0 f-20">0</h4>
+        <div class=" ba-primitive br-4 pt-14 pb-14 ">
+          <div class="row">
+            <div class="col-md-4 rightBorder d-flex align-items-center justify-content-center flex-column">
+              <p class="f-14 mb-5 l-16 text-primitive text-center">This week’s <br> tasks</p>
+              <h4 class="mb-0 f-20">0</h4>
+            </div>
+
+            <div class="col-md-4 rightBorder d-flex align-items-center justify-content-center flex-column">
+              <p class="f-14 mb-5 l-16 text-primitive text-center">This month’s <br> tasks</p>
+              <h4 class="mb-0 f-20">0</h4>
+            </div>
+
+            <div class="col-md-4 d-flex align-items-center justify-content-center flex-column">
+              <p class="f-14 mb-5 l-16 text-danger text-center">Overdue <br> tasks</p>
+              <h4 class="mb-0 f-20 text-danger">0</h4>
+            </div>
+
           </div>
-
-          <div class="col-md-4 rightBorder d-flex align-items-center justify-content-center flex-column">
-           <p class="f-14 mb-5 l-16 text-primitive text-center">This month’s <br> tasks</p>
-            <h4 class="mb-0 f-20">0</h4>
-         </div>
-
-         <div class="col-md-4 d-flex align-items-center justify-content-center flex-column">
-           <p class="f-14 mb-5 l-16 text-danger text-center">Overdue <br> tasks</p>
-            <h4 class="mb-0 f-20 text-danger">0</h4>
-         </div>
-          
-        </div>
         </div>
       </div>
 
 
-       
+
       <!-- Today’s tasks start -->
 
 
-           <div class="row pt-40 today-task">
-             <div class="col-md-12 p-0">
-               <h5 class="f-500 roboto text-black m-0 pb-10">Today’s tasks</h5>
-               
-               <div *ngIf="dataSource2.data">
-              <table mat-table [dataSource]="dataSource2" [appSkeletonLoading]="isLoading" appSkeletonLoading
-                  class="skeletonAnimation" id="table-low">
+      <div class="row pt-40 today-task">
+        <div class="col-md-12 p-0">
+          <h5 class="f-500 roboto text-black m-0 pb-10">Today’s tasks</h5>
 
-                 <ng-container matColumnDef="position">
-                   <th mat-header-cell *matHeaderCellDef class="br"> Client</th>
-                   <td mat-cell *matCellDef="let element" class="br" (click)="openAddTask(element)">
-                     <div class="bar w-100"> {{element.clientName}} </div>
-                   </td>
-                 </ng-container>
+          <div *ngIf="dataSource2.data">
+            <table mat-table [dataSource]="dataSource2" [appSkeletonLoading]="isLoading" appSkeletonLoading
+              class="skeletonAnimation" id="table-low">
 
-               
-                 <ng-container matColumnDef="name">
-                   <th mat-header-cell *matHeaderCellDef class="br"> Task</th>
-                   <td mat-cell *matCellDef="let element" class="br" (click)="openAddTask(element)">
-                     <div class="bar w-100">
-                       <div class="row">
-                         <div class="col-md-9 p-0">
-                           {{element.des}}
-                         </div>
-                         <div class="col-md-3 p-0">
-                           <div class="text-right" *ngIf="!isLoading">
-                             <span class="text-custom">
-                               {{ element.subTaskCompleted }}/{{ element.totalSubTasks }}
-                             </span>
-                             <span class="text-custom">
-                               {{ element.commentsCount }}
-                               <img src="/assets/images/svg/task-msg.svg" alt="">
-                             </span>
-                           </div>
-                         </div>
-                       </div>
-                     </div>
-
-                   </td>
-                 </ng-container>
-
-      
-                 <ng-container matColumnDef="weight">
-                   <th mat-header-cell *matHeaderCellDef class="br"> Assigned to</th>
-                   <td mat-cell *matCellDef="let element" class="br">
-                     <div  class="bar w-100"> 
-                       {{element.weight}}
-                       </div>
-                   </td>
-                 </ng-container>
-
-                 <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
-                 <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
-               </table>  
-               </div>
+              <ng-container matColumnDef="position">
+                <th mat-header-cell *matHeaderCellDef class="br"> Client</th>
+                <td mat-cell *matCellDef="let element" class="br" (click)="openAddTask(element)">
+                  <div class="bar w-100"> {{element.clientName}} </div>
+                </td>
+              </ng-container>
 
 
-               <div *ngIf="dataSource2.data == null" class="ba-primitive br-4 p-18"> 
-                <div class="row">
-                  <div class="col-md-7 p-0">
-                    <h3 class="f-16 roboto f-600"> No tasks added yet </h3>
-                    <p class="f-14"> In order to collaborate with your team in an efficient way, you can create tasks and track them here.                    </p>
-                    <button class="btn-primary btn40" mat-button> 
-                      Go to task section
-                    </button>
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef class="br"> Task</th>
+                <td mat-cell *matCellDef="let element" class="br" (click)="openAddTask(element)">
+                  <div class="bar w-100">
+                    <div class="row">
+                      <div class="col-md-9 p-0">
+                        {{element.des}}
+                      </div>
+                      <div class="col-md-3 p-0">
+                        <div class="text-right" *ngIf="!isLoading">
+                          <span class="text-custom">
+                            {{ element.subTaskCompleted }}/{{ element.totalSubTasks }}
+                          </span>
+                          <span class="text-custom">
+                            {{ element.commentsCount }}
+                            <img src="/assets/images/svg/task-msg.svg" alt="">
+                          </span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div class="col-md-5 text-center pr-0">
-                    <img src="assets/images/svg/today -tasks.svg">
+
+                </td>
+              </ng-container>
+
+
+              <ng-container matColumnDef="weight">
+                <th mat-header-cell *matHeaderCellDef class="br"> Assigned to</th>
+                <td mat-cell *matCellDef="let element" class="br">
+                  <div class="bar w-100">
+                    {{element.weight}}
                   </div>
-                </div>
-                </div>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+            </table>
+          </div>
 
 
+          <div *ngIf="dataSource2.data == null" class="ba-primitive br-4 p-18">
+            <div class="row">
+              <div class="col-md-7 p-0">
+                <h3 class="f-16 roboto f-600"> No tasks added yet </h3>
+                <p class="f-14"> In order to collaborate with your team in an efficient way, you can create tasks and
+                  track them here. </p>
+                <button [routerLink]="['/admin/activies/tasks']" class="btn-primary btn40" mat-button>
+                  Go to task section
+                </button>
               </div>
-           </div>
+              <div class="col-md-5 text-center pr-0">
+                <img src="assets/images/svg/today -tasks.svg">
+              </div>
+            </div>
+          </div>
 
-             
-      
+
+        </div>
+      </div>
+
+
+
       <div class="row pt-60 transctions-status-advisor">
         <div class="col-md-8 p-0">
           <h5 class="m-0 f-500 roboto text-black">Transaction - Pending & Rejections</h5>
@@ -606,14 +612,15 @@
 
             <ng-container matColumnDef="position">
               <th mat-header-cell *matHeaderCellDef class="br"> BSE Star MF</th>
-              <td   [ngClass]="i == 0 ? 'pendingClass' : (i == 1 ? 'rejectionsClass' : '') "  mat-cell *matCellDef="let element;index as i" class="br">
-                
-               <span class="text-white" *ngIf="i==0" > Pending </span>
-                <span class="text-white" *ngIf="i==1">Rejection</span> 
-                
+              <td [ngClass]="i == 0 ? 'pendingClass' : (i == 1 ? 'rejectionsClass' : '') " mat-cell
+                *matCellDef="let element;index as i" class="br">
+
+                <span class="text-white" *ngIf="i==0"> Pending </span>
+                <span class="text-white" *ngIf="i==1">Rejection</span>
+
               </td>
 
-               
+
             </ng-container>
 
             <!-- Name Column -->
@@ -652,9 +659,10 @@
 
             <ng-container matColumnDef="position">
               <th mat-header-cell *matHeaderCellDef class="br"> NSE NMF II</th>
-              <td [ngClass]="i == 0 ? 'pendingClass' : (i == 1 ? 'rejectionsClass' : '') " mat-cell *matCellDef="let element;index as i" class="br">
-                  <span class="text-white" *ngIf="i==0" > Pending </span>
-                <span class="text-white" *ngIf="i==1">Rejection</span> 
+              <td [ngClass]="i == 0 ? 'pendingClass' : (i == 1 ? 'rejectionsClass' : '') " mat-cell
+                *matCellDef="let element;index as i" class="br">
+                <span class="text-white" *ngIf="i==0"> Pending </span>
+                <span class="text-white" *ngIf="i==1">Rejection</span>
               </td>
             </ng-container>
 
@@ -700,162 +708,167 @@
             <h5 class="m-0 f-500 roboto text-black">Recent investment accounts</h5>
           </div>
           <div class="col-md-4 p-0 text-right">
-            <button mat-stroked-button class="advisor-view-all">View All</button>
+            <button [routerLink]="['/admin/transactions/overview']" mat-stroked-button class="advisor-view-all">View
+              All</button>
           </div>
         </div>
 
-        
 
-         <div *ngIf="LastSevenDaysInvestmentAccounts && LastSevenDaysInvestmentAccounts.length >=0"> 
-        <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="sliderConfig_investment" #slickModal="slick-carousel">
-        <div class="fundBox bg-white slide" *ngFor="let singleAccount of LastSevenDaysInvestmentAccounts" ngxSlickItem>
-            <div class="row">
+
+        <div *ngIf="LastSevenDaysInvestmentAccounts && LastSevenDaysInvestmentAccounts.length >=0">
+          <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="sliderConfig_investment"
+            #slickModal="slick-carousel">
+            <div class="fundBox bg-white slide" *ngFor="let singleAccount of LastSevenDaysInvestmentAccounts"
+              ngxSlickItem>
+              <div class="row">
                 <div class="col-md-9   pr-0">
                   <h5 class="m-0 f-400 roboto text-black f-14 pl-10 lh-16">
                     UCC
-               </h5>
-             <h5 class="m-0 f-400 f-14 roboto text-black pt-10 pl-10 lh-16">
-                   {{singleAccount.clientName}}
-             </h5>
+                  </h5>
+                  <h5 class="m-0 f-400 f-14 roboto text-black pt-10 pl-10 lh-16">
+                    {{singleAccount.clientName}}
+                  </h5>
                 </div>
                 <div class="col-md-3 pl-0 d-flex justify-content-end">
                   BSE
                 </div>
-            </div>
+              </div>
 
-            <div class="row">
+              <div class="row">
                 <div class="col-md-6">
-                    <p class="m-0 text-primitive f-12"> Individual</p>
+                  <p class="m-0 text-primitive f-12"> Individual</p>
                 </div>
                 <div class="col-md-6">
                   <p class="m-0 text-primitive f-12">
                     Anyone or survivor
                   </p>
                 </div>
-            </div>
+              </div>
 
-            <div class="row">
+              <div class="row">
                 <div class="col-md-12">
                   <button mat-stroked-button class="btn-success-outline h-20 lh-20 br-2 pr-5 pl-5 f-12">INVESTMENT
                     READY
                   </button>
                 </div>
-                
-            </div>
 
-        </div>
-    </ngx-slick-carousel>
-         </div> 
-         
-          
-            <div *ngIf="investmentAccountFlag" class="row">  
-            <div class="skeletonAnimation  " appSkeletonLoading [appSkeletonLoading]="investmentAccountFlag">
-              <div class="d-flex">
-                <div class="investmentBox b-a br-10">
-                  <div class="row">
-                    <div class="col-md-6 pr-0">
-                      <div class="relClass">
-                        <div class="bar height24 mb-10"></div>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="relClass">
-                        <div class="bar height24 mb-10"></div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="relClass">
-                        <div class="bar mb-10 height24"></div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-md-6 pr-0">
-                      <div class="relClass">
-                        <div class="bar height24 mb-10"></div>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="relClass">
-                        <div class="bar height24 mb-10"></div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-md-7">
-                      <div class="relClass">
-                        <div class="bar height24"></div>
-                      </div>
-                    </div>
-                     
-                  </div>
-
-                   
-                </div>
-
-                <div class="investmentBox b-a br-10">
-                  <div class="row">
-                    <div class="col-md-6 pr-0">
-                      <div class="relClass">
-                        <div class="bar height24 mb-10"></div>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="relClass">
-                        <div class="bar height24 mb-10"></div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="relClass">
-                        <div class="bar mb-10 height24"></div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-md-6 pr-0">
-                      <div class="relClass">
-                        <div class="bar height24 mb-10"></div>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="relClass">
-                        <div class="bar height24 mb-10"></div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-md-7">
-                      <div class="relClass">
-                        <div class="bar height24"></div>
-                      </div>
-                    </div>
-                     
-                  </div>
-
-                   
-                </div>
- 
               </div>
-            </div>
-          </div>   
-         
 
-    <div *ngIf="LastSevenDaysInvestmentAccounts && LastSevenDaysInvestmentAccounts.length == 0" class="ba-primitive br-4 p-18"> 
+            </div>
+          </ngx-slick-carousel>
+        </div>
+
+
+        <div *ngIf="investmentAccountFlag" class="row">
+          <div class="skeletonAnimation  " appSkeletonLoading [appSkeletonLoading]="investmentAccountFlag">
+            <div class="d-flex">
+              <div class="investmentBox b-a br-10">
+                <div class="row">
+                  <div class="col-md-6 pr-0">
+                    <div class="relClass">
+                      <div class="bar height24 mb-10"></div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="relClass">
+                      <div class="bar height24 mb-10"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="relClass">
+                      <div class="bar mb-10 height24"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 pr-0">
+                    <div class="relClass">
+                      <div class="bar height24 mb-10"></div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="relClass">
+                      <div class="bar height24 mb-10"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-7">
+                    <div class="relClass">
+                      <div class="bar height24"></div>
+                    </div>
+                  </div>
+
+                </div>
+
+
+              </div>
+
+              <div class="investmentBox b-a br-10">
+                <div class="row">
+                  <div class="col-md-6 pr-0">
+                    <div class="relClass">
+                      <div class="bar height24 mb-10"></div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="relClass">
+                      <div class="bar height24 mb-10"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="relClass">
+                      <div class="bar mb-10 height24"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 pr-0">
+                    <div class="relClass">
+                      <div class="bar height24 mb-10"></div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="relClass">
+                      <div class="bar height24 mb-10"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-7">
+                    <div class="relClass">
+                      <div class="bar height24"></div>
+                    </div>
+                  </div>
+
+                </div>
+
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+
+        <div *ngIf="LastSevenDaysInvestmentAccounts && LastSevenDaysInvestmentAccounts.length == 0"
+          class="ba-primitive br-4 p-18">
           <div class="row">
             <div class="col-md-7 p-0">
               <h3 class="f-16 roboto f-600">Not enough data to display</h3>
-              <p class="f-14">If you have registered with NSE NMF or BSE Star MF then you can open client’s investmetn accounts from here and track their real time status.</p>
-              <button class="btn-primary btn40" mat-button> 
+              <p class="f-14">If you have registered with NSE NMF or BSE Star MF then you can open client’s investmetn
+                accounts from here and track their real time status.</p>
+              <button [routerLink]="['/admin/transactions/overview']" class="btn-primary btn40" mat-button>
                 Add NSE/BSE credentials
               </button>
               <div class="d-block">
@@ -866,7 +879,7 @@
               <img src="assets/images/svg/recent-investment-accounts.svg">
             </div>
           </div>
-         </div>  
+        </div>
 
       </div>
 
@@ -883,42 +896,44 @@
           </div>
         </div>
 
-        <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="sliderConfig_transactions" #slickModal="slick-carousel">
-          <div *ngFor="let singleTransaction of LastSevenDaysTransactions" class="fundBox bg-white slide  " ngxSlickItem> 
-              <div class="row">
-                <div class="col-md-9 p-0">
-                  <p class="mb-0 f-400 roboto text-black ml-10 lh-16">
-                    {{singleTransaction.transactionTypeString}}</p>
-                </div>
-                <div class="col-md-3 p-0">
-                  <p class="m-0 f-400 roboto text-custom lh-16">{{singleTransaction.platformName}}</p>
-                </div>
+        <ngx-slick-carousel class="carousel p-0 col-md-12" [config]="sliderConfig_transactions"
+          #slickModal="slick-carousel">
+          <div *ngFor="let singleTransaction of LastSevenDaysTransactions" class="fundBox bg-white slide  "
+            ngxSlickItem>
+            <div class="row">
+              <div class="col-md-9 p-0">
+                <p class="mb-0 f-400 roboto text-black ml-10 lh-16">
+                  {{singleTransaction.transactionTypeString}}</p>
               </div>
-
-              <div class="row">
-                <div class="col-md-6 p-0 ">
-                  <p class="ml-10 f-400 roboto text-black  f-20 lh-16">
-                    {{(singleTransaction.amtUnitType == 'Amount') ? '₹' : 'Units'}} {{singleTransaction.amount}}</p>
-                 </div>  
-                 <div class="col-md-6 p-0 ">                    
-                  <p class="m-0 f-400 roboto text-custom lh-16">{{singleTransaction.orderDate | date:'dd/MM/yyyy'}}
-                  </p>
-                </div>
+              <div class="col-md-3 p-0">
+                <p class="m-0 f-400 roboto text-custom lh-16">{{singleTransaction.platformName}}</p>
               </div>
+            </div>
 
-                <div class="row">
+            <div class="row">
+              <div class="col-md-6 p-0 ">
+                <p class="ml-10 f-400 roboto text-black  f-20 lh-16">
+                  {{(singleTransaction.amtUnitType == 'Amount') ? '₹' : 'Units'}} {{singleTransaction.amount}}</p>
+              </div>
+              <div class="col-md-6 p-0 ">
+                <p class="m-0 f-400 roboto text-custom lh-16">{{singleTransaction.orderDate | date:'dd/MM/yyyy'}}
+                </p>
+              </div>
+            </div>
+
+            <div class="row">
               <div class="col-md-12">
                 <p class="m-0 f-400 roboto text-custom lh-16 f-12">{{singleTransaction.schemeName}}</p>
-              </div> 
+              </div>
             </div>
 
 
-              <div class="row">
-                <div class="col-md-12">
-                  <p class="m-0 text-black f-400 roboto pl-10 lh-16">{{singleTransaction.clientName}}</p>
-                </div>
-                <div class="col-md-12">
-                  <button *ngIf="singleTransaction.statusDesc!='PENDING AUTHORIZATION'" mat-stroked-button
+            <div class="row">
+              <div class="col-md-12">
+                <p class="m-0 text-black f-400 roboto pl-10 lh-16">{{singleTransaction.clientName}}</p>
+              </div>
+              <div class="col-md-12">
+                <button *ngIf="singleTransaction.statusDesc!='PENDING AUTHORIZATION'" mat-stroked-button
                   class="btn-primary-outline h-20 lh-20 br-2 pr-5 pl-5 f-12">UNITS ALLOTTED
                   READY
                 </button>
@@ -926,135 +941,136 @@
                   class="btn-danger-outline h-20 lh-20 br-2 pr-5 pl-5 f-12">PENDING
                   AUTHORISATION
                 </button>
-                </div>
-              </div>
-              
-          </div>
-          
-        </ngx-slick-carousel>
-
-        
-  
-         <div *ngIf="LastSevenDaysTransactions && LastSevenDaysTransactions.length <= 0" class="ba-primitive br-4 p-18"> 
-            <div class="row">
-              <div class="col-md-7 p-0">
-                <h3 class="f-16 roboto f-600">Not enough data to display</h3>
-                <p class="f-14">If you have registered with NSE NMF or BSE Star MF then you can initiate online transactions from here and track their real time status.</p>
-                <button class="btn-primary btn40" mat-button> 
-                  Add NSE/BSE credentials
-                </button>
-                <div class="d-block mt-8">
-                  <mat-checkbox></mat-checkbox> <span class="text-primitive pl-4 f-12">Do not show this again</span>
-                </div>
-              </div>
-              <div class="col-md-5 text-center pr-0">
-                <img src="assets/images/svg/recent-online-transactions(MF).svg">
               </div>
             </div>
-            </div>  
 
-              <div *ngIf="LastSevenDaysTransactions==undefined" class="row no-wrap">
-              <div class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="transactionFlag">
-                <div class="d-flex">
-                  <div class="investmentBox b-a br-10">
-                    <div class="row">
-                      <div class="col-md-6 pr-0">
-                        <div class="relClass">
-                          <div class="bar height24 mb-10"></div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="relClass">
-                          <div class="bar height24 mb-10"></div>
-                        </div>
-                      </div>
-                    </div>
-  
-                    <div class="row">
-                      <div class="col-md-6 pr-0">
-                        <div class="relClass">
-                          <div class="bar height24 mb-10"></div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="relClass">
-                          <div class="bar height24 mb-10"></div>
-                        </div>
-                      </div>
-                    </div>
+          </div>
 
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="relClass">
-                          <div class="bar mb-10 height24"></div>
-                        </div>
-                      </div>
-                    </div>
-  
-                    <div class="row">
-                      <div class="col-md-7">
-                        <div class="relClass">
-                          <div class="bar height24"></div>
-                        </div>
-                      </div>
-                       
-                    </div>
-                       
-                  </div>
-  
-                  <div class="investmentBox b-a br-10">
-                    <div class="row">
-                      <div class="col-md-6 pr-0">
-                        <div class="relClass">
-                          <div class="bar height24 mb-10"></div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="relClass">
-                          <div class="bar height24 mb-10"></div>
-                        </div>
-                      </div>
-                    </div>
-  
-                    <div class="row">
-                      <div class="col-md-6 pr-0">
-                        <div class="relClass">
-                          <div class="bar height24 mb-10"></div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="relClass">
-                          <div class="bar height24 mb-10"></div>
-                        </div>
-                      </div>
-                    </div>
+        </ngx-slick-carousel>
 
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="relClass">
-                          <div class="bar mb-10 height24"></div>
-                        </div>
-                      </div>
-                    </div>
-  
-                    <div class="row">
-                      <div class="col-md-7">
-                        <div class="relClass">
-                          <div class="bar height24"></div>
-                        </div>
-                      </div>
-                       
-                    </div>
-                       
-                  </div>
-   
-                </div>
+
+
+        <div *ngIf="LastSevenDaysTransactions && LastSevenDaysTransactions.length <= 0" class="ba-primitive br-4 p-18">
+          <div class="row">
+            <div class="col-md-7 p-0">
+              <h3 class="f-16 roboto f-600">Not enough data to display</h3>
+              <p class="f-14">If you have registered with NSE NMF or BSE Star MF then you can initiate online
+                transactions from here and track their real time status.</p>
+              <button [routerLink]="['/admin/transactions/overview']" class="btn-primary btn40" mat-button>
+                Add NSE/BSE credentials
+              </button>
+              <div class="d-block mt-8">
+                <mat-checkbox></mat-checkbox> <span class="text-primitive pl-4 f-12">Do not show this again</span>
               </div>
-            </div>  
-            
+            </div>
+            <div class="col-md-5 text-center pr-0">
+              <img src="assets/images/svg/recent-online-transactions(MF).svg">
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="LastSevenDaysTransactions==undefined" class="row no-wrap">
+          <div class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="transactionFlag">
+            <div class="d-flex">
+              <div class="investmentBox b-a br-10">
+                <div class="row">
+                  <div class="col-md-6 pr-0">
+                    <div class="relClass">
+                      <div class="bar height24 mb-10"></div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="relClass">
+                      <div class="bar height24 mb-10"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 pr-0">
+                    <div class="relClass">
+                      <div class="bar height24 mb-10"></div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="relClass">
+                      <div class="bar height24 mb-10"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="relClass">
+                      <div class="bar mb-10 height24"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-7">
+                    <div class="relClass">
+                      <div class="bar height24"></div>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+
+              <div class="investmentBox b-a br-10">
+                <div class="row">
+                  <div class="col-md-6 pr-0">
+                    <div class="relClass">
+                      <div class="bar height24 mb-10"></div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="relClass">
+                      <div class="bar height24 mb-10"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 pr-0">
+                    <div class="relClass">
+                      <div class="bar height24 mb-10"></div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="relClass">
+                      <div class="bar height24 mb-10"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="relClass">
+                      <div class="bar mb-10 height24"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-7">
+                    <div class="relClass">
+                      <div class="bar height24"></div>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
       </div>
- 
- 
+
+
       <div class="row pt-40 rejections-advisor">
         <div class="col-md-8 p-0">
           <h5 class="m-0 f-500 roboto text-black pt-2">Rejections and Reversals</h5>
@@ -1085,11 +1101,11 @@
                     <div *ngSwitchCase="7">Transaction rejected</div>
                   </div>
                 </div>
-             
+
               </td>
             </ng-container>
 
-            
+
             <ng-container matColumnDef="weight">
               <th mat-header-cell *matHeaderCellDef class="br"> Details</th>
               <td mat-cell *matCellDef="let element" class="br">
@@ -1115,100 +1131,103 @@
         </div>
       </div>
 
-      <div class="dasBoradBox mt-40"> 
-      <div class="row">
-        <div class="col-md-6 p-0">
-          <h5 class="m-0 f-500 text-black roboto pt-8">Subscription summary</h5>
-        </div>
-        <div class="col-md-6 p-0 text-right">
-          <!-- <button mat-stroked-button class="text-primary">Not started</button>
+      <div class="dasBoradBox mt-40">
+        <div class="row">
+          <div class="col-md-6 p-0">
+            <h5 class="m-0 f-500 text-black roboto pt-8">Subscription summary</h5>
+          </div>
+          <div class="col-md-6 p-0 text-right">
+            <!-- <button mat-stroked-button class="text-primary">Not started</button>
           <button mat-button>Upcoming</button> -->
-          <mat-button-toggle-group (change)="getSummaryDataDashboard()" [(ngModel)]="subscriptionSummaryStatusFilter"
-            class="subscription-summary" id="custom-toggle" multiple=false>
-            <mat-button-toggle class="f-14" value=1>NOT STARTED</mat-button-toggle>
-            <mat-button-toggle class="f-14" value=3>UPCOMING</mat-button-toggle>
-          </mat-button-toggle-group>
+            <mat-button-toggle-group (change)="getSummaryDataDashboard()" [(ngModel)]="subscriptionSummaryStatusFilter"
+              class="subscription-summary" id="custom-toggle" multiple=false>
+              <mat-button-toggle class="f-14" value=1>NOT STARTED</mat-button-toggle>
+              <mat-button-toggle class="f-14" value=3>UPCOMING</mat-button-toggle>
+            </mat-button-toggle-group>
+          </div>
         </div>
-      </div>
 
-      <div class="row" *ngIf="dashBoardSummary.length > 0">
-        <div class="col-md-12 p-0 pt-8">
-          <table mat-table [appSkeletonLoading]="isLoadingSubSummary" appSkeletonLoading class=" skeletonAnimation" [dataSource]="dashBoardSummary" id="table-low">
+        <div class="row" *ngIf="dashBoardSummary.length > 0">
+          <div class="col-md-12 p-0 pt-8">
+            <table mat-table [appSkeletonLoading]="isLoadingSubSummary" appSkeletonLoading class=" skeletonAnimation"
+              [dataSource]="dashBoardSummary" id="table-low">
 
-            <tbody>
-              <ng-container matColumnDef="name">
-                <th *matHeaderCellDef mat-header-cell class="br"> Client name</th>
-                <td (click)="openPlanSlider('SUBSCRIPTIONS','open',element)" *matCellDef="let element" class="c-p br"
-                  mat-cell>
-                  <div class="bar"> {{element.clientName}} </div>
-                </td>
-              </ng-container>
-              <ng-container matColumnDef="service">
-                <th *matHeaderCellDef mat-header-cell class="br w-25"> Service name</th>
-                <td *matCellDef="let element" class="c-p br" mat-cell>
-                  <div class="bar"> {{element.serviceName}} </div>
-                </td>
-              </ng-container>
-              <ng-container matColumnDef="amt">
-                <th *matHeaderCellDef class="br w-20" mat-header-cell> Fees </th>
-                <td (click)="Open(element)" *matCellDef="let element" class="c-p br" mat-cell>
-                  <div class="bar text-primary text-underline">
-                    {{isLoadingSubSummary ? ' ' : 'View details'}}
-                  </div>
-                </td>
-              </ng-container>
-              <ng-container matColumnDef="billing">
-                <th *matHeaderCellDef mat-header-cell class="br"> Next billing date</th>
-                <td *matCellDef="let element" mat-cell class="br">
-                  <div *ngIf="element.nextBillingDate" class="bar">
-                    {{ element.nextBillingDate | date: 'dd/MM/yyyy' }}
-                  </div>
-                  <div *ngIf="!element.nextBillingDate" class="bar">
-                    {{ isLoadingSubSummary ? '' : 'Not Started' }}
-                  </div>
-                </td>
-              </ng-container>
-              <ng-container matColumnDef="icons">
-                <th *matHeaderCellDef class="f-18" mat-header-cell >
-                </th>
-                <td *matCellDef="let element"  [matMenuTriggerFor]="menu" class="c-p" mat-cell>
-                  <div class="bar">
-                    <img *ngIf="!isLoadingSubSummary" class="c-p" src="/assets/images/svg/dot-menu.svg">
-                  </div>
-                  <mat-menu #menu="matMenu">
-                    <a (click)="Open(element)" mat-menu-item>View fee
-                      structure</a>
-                    <a (click)="openPlanSlider('billerSettings','open',element)" class="bt-1" mat-menu-item>Change
-                      biller</a>
-                    <a (click)="openPlanSlider('changePayee','open',element)" mat-menu-item>Change
-                      payee</a>
-                    <a (click)="delete('cancelSubscription')" class="bt-1" mat-menu-item>Cancel
-                      subscription</a>
-                    <a (click)="deleteModal('SUBSCRIPTION')" mat-menu-item>Delete
-                      subscription</a>
-                  </mat-menu>
-                </td>
-              </ng-container>
-              <tr *matHeaderRowDef="displayedDashboardSummary" mat-header-row></tr>
-              <tr *matRowDef="let row; columns: displayedDashboardSummary;" mat-row></tr>
-            </tbody>
-          </table>
-           
+              <tbody>
+                <ng-container matColumnDef="name">
+                  <th *matHeaderCellDef mat-header-cell class="br"> Client name</th>
+                  <td (click)="openPlanSlider('SUBSCRIPTIONS','open',element)" *matCellDef="let element" class="c-p br"
+                    mat-cell>
+                    <div class="bar"> {{element.clientName}} </div>
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="service">
+                  <th *matHeaderCellDef mat-header-cell class="br w-25"> Service name</th>
+                  <td *matCellDef="let element" class="c-p br" mat-cell>
+                    <div class="bar"> {{element.serviceName}} </div>
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="amt">
+                  <th *matHeaderCellDef class="br w-20" mat-header-cell> Fees </th>
+                  <td (click)="Open(element)" *matCellDef="let element" class="c-p br" mat-cell>
+                    <div class="bar text-primary text-underline">
+                      {{isLoadingSubSummary ? ' ' : 'View details'}}
+                    </div>
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="billing">
+                  <th *matHeaderCellDef mat-header-cell class="br"> Next billing date</th>
+                  <td *matCellDef="let element" mat-cell class="br">
+                    <div *ngIf="element.nextBillingDate" class="bar">
+                      {{ element.nextBillingDate | date: 'dd/MM/yyyy' }}
+                    </div>
+                    <div *ngIf="!element.nextBillingDate" class="bar">
+                      {{ isLoadingSubSummary ? '' : 'Not Started' }}
+                    </div>
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="icons">
+                  <th *matHeaderCellDef class="f-18" mat-header-cell>
+                  </th>
+                  <td *matCellDef="let element" [matMenuTriggerFor]="menu" class="c-p" mat-cell>
+                    <div class="bar">
+                      <img *ngIf="!isLoadingSubSummary" class="c-p" src="/assets/images/svg/dot-menu.svg">
+                    </div>
+                    <mat-menu #menu="matMenu">
+                      <a (click)="Open(element)" mat-menu-item>View fee
+                        structure</a>
+                      <a (click)="openPlanSlider('billerSettings','open',element)" class="bt-1" mat-menu-item>Change
+                        biller</a>
+                      <a (click)="openPlanSlider('changePayee','open',element)" mat-menu-item>Change
+                        payee</a>
+                      <a (click)="delete('cancelSubscription')" class="bt-1" mat-menu-item>Cancel
+                        subscription</a>
+                      <a (click)="deleteModal('SUBSCRIPTION')" mat-menu-item>Delete
+                        subscription</a>
+                    </mat-menu>
+                  </td>
+                </ng-container>
+                <tr *matHeaderRowDef="displayedDashboardSummary" mat-header-row></tr>
+                <tr *matRowDef="let row; columns: displayedDashboardSummary;" mat-row></tr>
+              </tbody>
+            </table>
+
+          </div>
         </div>
-      </div>
 
         <div *ngIf="dashBoardSummary" class="col-md-12 text-right pt-8">
           <div (click)="changeParentsTab(3)" class="c-p">View all</div>
         </div>
 
-        <div *ngIf="dashBoardSummary.length ==0" class="ba-primitive br-4 p-18"> 
+        <div *ngIf="dashBoardSummary.length ==0" class="ba-primitive br-4 p-18">
           <div class="row">
             <div class="col-md-7 p-0">
               <h3 class="f-16 roboto f-600">No subscriptions added yet</h3>
-              <p class="f-14">  
-                Subscriptions is carefully designed for RIAs. You can define your core offerings, fee structure, deliverables, agreements and automate the whole process around it. This  will act as a foundation for your RIA practice.
+              <p class="f-14">
+                Subscriptions is carefully designed for RIAs. You can define your core offerings, fee structure,
+                deliverables, agreements and automate the whole process around it. This will act as a foundation for
+                your RIA practice.
               </p>
-              <button class="btn-primary btn40" mat-button> 
+              <button [routerLink]="['/admin/subscription/subscriptions']" class="btn-primary btn40" mat-button>
                 Explore subscriptions
               </button>
               <div class="d-block">
@@ -1219,90 +1238,93 @@
               <img src="assets/images/svg/Subscription-empty-img.svg">
             </div>
           </div>
-         </div>  
+        </div>
 
       </div>
 
       <div class=" dasBoradBox mt-40">
-        <div class="row"> 
+        <div class="row">
           <div class="col-md-7 p-0">
             <h5 class="m-0 f-500 text-black roboto pt-8">Latest AUM Reconciliation report</h5>
           </div>
-          
+
           <div class="col-md-5 p-0 text-right">
-            <button mat-stroked-button class="advisor-view-all">View All</button>
+            <button [routerLink]="['/admin/backoffice-aum-reconciliation/reconciliation']" mat-stroked-button
+              class="advisor-view-all">View All</button>
           </div>
         </div>
 
-        <div *ngIf="aumReconList.length>0" class="row"> 
-              <div class="col-md-12 p-0 pt-10">
-              <table  mat-table [appSkeletonLoading]="aumFlag" appSkeletonLoading
-                class="skeletonAnimation" [dataSource]="aumReconList" id="table-low">
+        <div *ngIf="aumReconList.length>0" class="row">
+          <div class="col-md-12 p-0 pt-10">
+            <table mat-table [appSkeletonLoading]="aumFlag" appSkeletonLoading class="skeletonAnimation"
+              [dataSource]="aumReconList" id="table-low">
 
-                <ng-container matColumnDef="position">
-                  <th mat-header-cell *matHeaderCellDef class="br"> RTA</th>
-                  <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">
-                      {{element.rtName}}
-                    </div>
-                  </td>
-                </ng-container>
+              <ng-container matColumnDef="position">
+                <th mat-header-cell *matHeaderCellDef class="br"> RTA</th>
+                <td mat-cell *matCellDef="let element" class="br">
+                  <div class="bar">
+                    {{element.rtName}}
+                  </div>
+                </td>
+              </ng-container>
 
-                <!-- Name Column -->
-                <ng-container matColumnDef="name">
-                  <th mat-header-cell *matHeaderCellDef class="br"> ARN/RIA</th>
-                  <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">
-                      {{element.arnRiaNumber}}
-                    </div>
-                  </td>
-                </ng-container>
+              <!-- Name Column -->
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef class="br"> ARN/RIA</th>
+                <td mat-cell *matCellDef="let element" class="br">
+                  <div class="bar">
+                    {{element.arnRiaNumber}}
+                  </div>
+                </td>
+              </ng-container>
 
-                <!-- Weight Column -->
-                <ng-container matColumnDef="weight">
-                  <th mat-header-cell *matHeaderCellDef class="br"> Done on</th>
-                  <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">
-                      {{element.doneOn | date:'dd/MM/yyyy'}} </div>
-                  </td>
-                </ng-container>
+              <!-- Weight Column -->
+              <ng-container matColumnDef="weight">
+                <th mat-header-cell *matHeaderCellDef class="br"> Done on</th>
+                <td mat-cell *matCellDef="let element" class="br">
+                  <div class="bar">
+                    {{element.doneOn | date:'dd/MM/yyyy'}} </div>
+                </td>
+              </ng-container>
 
-                <!-- Symbol Column -->
-                <ng-container matColumnDef="symbol">
-                  <th mat-header-cell *matHeaderCellDef class="br"> Done by</th>
-                  <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">{{element.doneBy}}</div>
-                  </td>
-                </ng-container>
-                <ng-container matColumnDef="match">
-                  <th mat-header-cell *matHeaderCellDef class="br"> Unmatch</th>
-                  <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar">{{element.unMatched}} </div>
-                  </td>
-                </ng-container>
-                <ng-container matColumnDef="report">
-                  <th mat-header-cell *matHeaderCellDef> Report</th>
-                  <td mat-cell *matCellDef="let element" class="text-primary">
-                    <div class="bar">
-                      <span *ngIf="!aumFlag">Report</span></div>
-                  </td>
-                </ng-container>
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="symbol">
+                <th mat-header-cell *matHeaderCellDef class="br"> Done by</th>
+                <td mat-cell *matCellDef="let element" class="br">
+                  <div class="bar">{{element.doneBy}}</div>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="match">
+                <th mat-header-cell *matHeaderCellDef class="br"> Unmatch</th>
+                <td mat-cell *matCellDef="let element" class="br">
+                  <div class="bar">{{element.unMatched}} </div>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="report">
+                <th mat-header-cell *matHeaderCellDef> Report</th>
+                <td mat-cell *matCellDef="let element" class="text-primary">
+                  <div class="bar">
+                    <span *ngIf="!aumFlag">Report</span></div>
+                </td>
+              </ng-container>
 
-                <tr mat-header-row *matHeaderRowDef="displayedColumns7"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns7;"></tr>
-              </table>
-            </div>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns7"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns7;"></tr>
+            </table>
+          </div>
         </div>
 
 
-        <div *ngIf="aumReconList.length==0" class="ba-primitive br-4 p-18"> 
+        <div *ngIf="aumReconList.length==0" class="ba-primitive br-4 p-18">
           <div class="row">
             <div class="col-md-7 p-0">
               <h3 class="f-16 roboto f-600">Not enough data to display</h3>
-              <p class="f-14">  
-                Once, you add your RTA details and get your feeds uploaded, you will be able to see status of the AUM reconciliation for your ARN/RIA code.
+              <p class="f-14">
+                Once, you add your RTA details and get your feeds uploaded, you will be able to see status of the AUM
+                reconciliation for your ARN/RIA code.
               </p>
-              <button class="btn-primary btn40" mat-button> 
+              <button [routerLink]="['/admin/backoffice-aum-reconciliation/reconciliation']" class="btn-primary btn40"
+                mat-button>
                 Add ARN/RIA details
               </button>
               <div class="d-block">
@@ -1313,7 +1335,7 @@
               <img src="assets/images/svg/reconciliation-img.svg">
             </div>
           </div>
-         </div>  
+        </div>
 
       </div>
 
@@ -1321,7 +1343,7 @@
 
 
   </div>
-  
+
 
   <div class="col-md-3 mt-44">
     <div class="sticky-top z-0">
@@ -1365,7 +1387,8 @@
                 <div *ngFor="let singleNote of todoListData;index as i" class="pt-12">
                   <span class="f-14" *ngIf="singleNote.createdDate==0">Today</span>
                   <span class="f-14" *ngIf="singleNote.createdDate==1">Yesterday</span>
-                  <span class="f-14" *ngIf="singleNote.createdDate!=1 && singleNote.createdDate!=0">{{singleNote.createdDate}}</span>
+                  <span class="f-14"
+                    *ngIf="singleNote.createdDate!=1 && singleNote.createdDate!=0">{{singleNote.createdDate}}</span>
                   <div class="row align-items-baseline">
                     <div *ngIf="singleNote.update==false" class="col-md-2 pl-0">
                       <mat-radio-button value={{singleNote.id}}>
@@ -1432,5 +1455,3 @@
     </div>
   </div>
 </div>
-
-
