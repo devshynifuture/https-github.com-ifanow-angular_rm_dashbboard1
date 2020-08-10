@@ -839,7 +839,7 @@
                     {{(getOrgData.companyName) ? getOrgData.companyName : '-'}}</p>
                 <!-- <p style="margin: 0px; font-size: 14px;" *ngIf="clientData">Himachal Pradesh</p> -->
                 <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;" *ngIf="userInfo"> <strong> Number:</strong> {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}</p>
-                <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;" *ngIf="userInfo"> <strong> Email:</strong> {{(details) ? details.emailId : userInfo.email}}</p>
+                <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;" *ngIf="userInfo"> <strong> Email:</strong> {{getOrgData.email ? getOrgData.email  : userInfo.email}}</p>
 
                 <p style="margin: 0px; font-size: 14px; margin-bottom: 5px;"> <strong>
                         {{'MF Overview'}}</strong>

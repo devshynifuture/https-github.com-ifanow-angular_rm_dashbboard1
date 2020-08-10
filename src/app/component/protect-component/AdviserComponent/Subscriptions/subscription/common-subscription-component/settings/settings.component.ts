@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { UtilService } from 'src/app/services/util.service';
 import { PayeeSettingsComponent } from '../payee-settings/payee-settings.component';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-settings',
@@ -85,6 +86,7 @@ export class SettingsComponent implements OnInit {
   openPayeeSettings(profileData, value) {
     profileData['clientData'] = this.upperData;
     profileData['flag'] = value;
+    profileData['payeesList'] = this.SettingProfileData ? this.SettingProfileData : [];
     const fragmentData = {
       flag: value,
       data: profileData,

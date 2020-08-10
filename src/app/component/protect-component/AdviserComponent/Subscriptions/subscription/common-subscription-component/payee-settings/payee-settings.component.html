@@ -15,7 +15,8 @@
             <mat-form-field class="w-100">
                 <mat-select formControlName="customerName" class="form-control br-0">
                     <mat-option disabled value=''>Search family members</mat-option>
-                    <mat-option *ngFor="let f of family" [value]="f.name" (click)="getOwnerName(f)">
+                    <mat-option [disabled]="f.disableFlag" *ngFor="let f of family" [value]="f.name"
+                        (click)="getOwnerName(f)">
                         <span>{{f.name}}</span>
                     </mat-option>
                     <!-- <mat-option [value]="!clientData.name?clientData.clientName:clientData.name" >{{!clientData.name?clientData.clientName:clientData.name}}</mat-option> -->
