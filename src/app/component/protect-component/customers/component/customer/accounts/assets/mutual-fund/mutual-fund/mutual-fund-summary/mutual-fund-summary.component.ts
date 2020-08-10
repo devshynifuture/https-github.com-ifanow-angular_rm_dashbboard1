@@ -72,7 +72,7 @@ export class MutualFundSummaryComponent implements OnInit {
   returnValue: any;
   selectedDataLoad: any;
   showDownload: boolean = false;
-  reportDate:any;
+  reportDate: any;
   customDataSource: any;
 
   addedData: boolean;
@@ -159,7 +159,7 @@ export class MutualFundSummaryComponent implements OnInit {
         this.toDate = param1.toDate;
         this.toDate = this.datePipe.transform(this.toDate, 'yyyy-MM-dd');
         this.mfBulkEmailRequestId = parseInt(param1.mfBulkEmailRequestId)
-        this.isRouterLink =true;
+        this.isRouterLink = true;
         console.log('2423425', param1)
       }
       else {
@@ -172,6 +172,7 @@ export class MutualFundSummaryComponent implements OnInit {
 
   mutualFund;
   @ViewChild('summaryTemplate', { static: false }) summaryTemplate: ElementRef;
+  @ViewChild('summaryHeader', { static: false }) summaryHeader: ElementRef;
   uploadData(data) {
     if (data) {
       this.clientId = data.clientId
@@ -309,7 +310,7 @@ export class MutualFundSummaryComponent implements OnInit {
             this.setDefaultFilterData.transactionView.forEach(element => {
               if (element.selected == true) {
                 this.displayedColumns.push(element.displayName);
-                // this.displayedColumnsTotal.push(element.displayName + 'Total');
+                 this.displayedColumnsTotal.push(element.displayName + 'Total');
 
               }
             });
@@ -317,7 +318,7 @@ export class MutualFundSummaryComponent implements OnInit {
             transactionView.forEach(element => {
               if (element.selected == true) {
                 this.displayedColumns.push(element.displayName);
-                // this.displayedColumnsTotal.push(element.displayName + 'Total');
+                 this.displayedColumnsTotal.push(element.displayName + 'Total');
 
               }
             });
@@ -344,10 +345,11 @@ export class MutualFundSummaryComponent implements OnInit {
 
         if (this.reponseData) {
           this.displayedColumns = [];
+          this.displayedColumnsTotal =[];
           this.setDefaultFilterData.transactionView.forEach(element => {
             if (element.selected == true) {
               this.displayedColumns.push(element.displayName);
-              // this.displayedColumnsTotal.push(element.displayName + 'Total');
+               this.displayedColumnsTotal.push(element.displayName + 'Total');
             }
           });
         } else {
@@ -860,7 +862,8 @@ export class MutualFundSummaryComponent implements OnInit {
           'padding': '8px',
           'border-right': '1px solid #dee5e7',
           'border-bottom': '1px solid #dee5e7',
-          'border-top': '1px solid #dee5e7'
+          'border-top': '1px solid #dee5e7',
+          'border-left': '1px solid #dee5e7',
         }
       });
       this.customDataSource.data.array1.push({
@@ -990,7 +993,9 @@ export class MutualFundSummaryComponent implements OnInit {
       // type: '',
       // mfService: this.mfService
       // };
-      this.asyncFilter(this.mutualFundList);
+      if(!this.isBulkEmailing){
+        this.asyncFilter(this.mutualFundList);
+      }
     } else {
       this.isLoading = false;
       this.changeInput.emit(false);
@@ -1024,6 +1029,7 @@ export class MutualFundSummaryComponent implements OnInit {
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
+      showFolio:(this.reponseData) ? (this.setDefaultFilterData.showFolio == '2' ? false :true ): (this.saveFilterData) ? (this.saveFilterData.showFolio == '2' ? false : true) : false
     };
     this.customerService.getMutualFund(obj).pipe(map((data) => {
       return this.doFiltering(data);
@@ -1069,17 +1075,18 @@ export class MutualFundSummaryComponent implements OnInit {
         advisorId: this.advisorId,
         clientId: this.clientId,
         toDate: this.toDate,
-        id: categoryWiseMfList
+        id: categoryWiseMfList,
+        showFolio:(this.reponseData) ? (this.setDefaultFilterData.showFolio == '2' ? false :true ): (this.saveFilterData) ? (this.saveFilterData.showFolio == '2' ? false : true) : false
       };
       this.customerService.getMutualFund(obj).subscribe(
         data => {
           console.log(data);
-          this.isBulkDataResponse =true;
+          this.isBulkDataResponse = true;
           let response = this.mfService.doFiltering(data)
           Object.assign(response.mutualFundList, { flag: true });
           this.asyncFilter(response.mutualFundList);
-        },err=>{
-          this.isBulkDataResponse =true;
+        }, err => {
+          this.isBulkDataResponse = true;
 
         }
       );
@@ -1170,8 +1177,8 @@ export class MutualFundSummaryComponent implements OnInit {
           selected: true
         }
       }
-      if(this.isRouterLink){
-        this.setDefaultFilterData.showFolio ="2"
+      if (this.isRouterLink) {
+        this.setDefaultFilterData.showFolio = "2"
       }
       console.log(`13091830918239182390183091830912830918310938109381093809328`);
       const input = {
@@ -1189,13 +1196,24 @@ export class MutualFundSummaryComponent implements OnInit {
         this.dataSummary.grandTotal = this.grandTotal
         this.customDataSource.data = []
         this.summary.data = [{}, {}, {}];
-        this.summary.data = data.customDataSourceData;
+        // this.summary.data = data.customDataSourceData;
+
+        const myArray = data.customDataSourceData;
+        let list =[];
+        myArray.forEach(val => list.push(Object.assign({}, val)));
+        this.summary.data = list;
         this.mfData.withdrawals = this.grandTotal.withdrawals
-        this.mfData.totalBalanceUnit = this.mfService.mutualFundRoundAndFormat(this.grandTotal.totalBalanceUnit,3)
-        this.mfData.total_unrealized_gain=this.mfService.mutualFundRoundAndFormat(this.mfData.total_unrealized_gain,0);
+        this.mfData.withdrawals =  this.mfService.mutualFundRoundAndFormat(this.mfData.withdrawals, 0);
+        this.mfData.total_dividend_payout =  this.mfService.mutualFundRoundAndFormat(this.mfData.total_dividend_payout, 0);
+        this.mfData.totalBalanceUnit = this.mfService.mutualFundRoundAndFormat(this.grandTotal.totalBalanceUnit, 3)
+        this.mfData.total_unrealized_gain = this.mfService.mutualFundRoundAndFormat(this.mfData.total_unrealized_gain, 0);
         this.mfData.sip = this.grandTotal.sip
-        this.mfData.total_absolute_return=this.mfService.mutualFundRoundAndFormat(this.mfData.total_absolute_return,2);
-        this.mfData.total_xirr=this.mfService.mutualFundRoundAndFormat(this.mfData.total_xirr,2)
+        this.mfData.sip = this.mfService.mutualFundRoundAndFormat(this.mfData.sip, 2);
+        this.mfData.total_absolute_return = this.mfService.mutualFundRoundAndFormat(this.mfData.total_absolute_return, 2);
+        this.mfData.total_xirr = this.mfService.mutualFundRoundAndFormat(this.mfData.total_xirr, 2)
+        this.mfData.total_current_value = this.mfService.mutualFundRoundAndFormat(this.mfData.total_current_value, 0)
+        this.mfData.total_amount_invested = this.mfService.mutualFundRoundAndFormat(this.mfData.total_amount_invested, 0)
+
         console.log("this is summary Data:::", data.customDataSourceData)
         this.customDataSource.data = data.customDataSourceData;
         this.customDataSource.data.array = [];
@@ -1208,7 +1226,7 @@ export class MutualFundSummaryComponent implements OnInit {
         console.log('header data', this.customDataSource)
         console.log(`MUTUALFUNDSummary COMPONENT page got message:`, data);
         this.dataSummary.customDataSourceData = data
-       
+
         this.customDataSource.data.array.forEach(element => {
           switch (element.index) {
             case 0:
@@ -1284,21 +1302,21 @@ export class MutualFundSummaryComponent implements OnInit {
           }
         });
         this.isLoading = false;
-        if(this.isBulkDataResponse){
+        if (this.isBulkDataResponse) {
           this.mfService.getSummaryData()
-          .subscribe(res => {
-            this.getObj = res; //used for getting mutual fund data coming from main gain call
-            console.log('yeeeeeeeee', res)
-            if (this.getObj.customDataSourceData) {
-  
-            } else {
-              this.mfService.setSummaryData(this.dataSummary)
-              if (this.router.url.split('?')[0] == '/pdf/summary') {
-                this.showDownload = true
-                this.generatePdfBulk()
+            .subscribe(res => {
+              this.getObj = res; //used for getting mutual fund data coming from main gain call
+              console.log('yeeeeeeeee', res)
+              if (this.getObj.customDataSourceData) {
+
+              } else {
+                this.mfService.setSummaryData(this.dataSummary)
+                if (this.router.url.split('?')[0] == '/pdf/summary') {
+                  this.showDownload = true
+                  this.generatePdfBulk()
+                }
               }
-            }
-          })
+            })
         }
 
         this.changeInput.emit(false);
@@ -1420,10 +1438,11 @@ export class MutualFundSummaryComponent implements OnInit {
             this.resData = sideBarData.data;
             this.rightFilterData = sideBarData.data;
             this.columns = [];
+            this.displayedColumnsTotal=[];
             this.rightFilterData.transactionView.forEach(element => {
               if (element.selected == true) {
                 this.columns.push(element.displayName);
-                // this.displayedColumnsTotal.push(element.displayName + 'Total');
+               this.displayedColumnsTotal.push(element.displayName + 'Total');
               }
             });
             this.displayedColumns = [];
@@ -1438,7 +1457,7 @@ export class MutualFundSummaryComponent implements OnInit {
             });
             this.reponseData = this.doFiltering(this.rightFilterData.mfData)
             this.mfData = this.reponseData;
-            this.reportDate=this.datePipe.transform(new Date(this.rightFilterData.reportAsOn), 'dd-MMM-yyyy');
+            this.reportDate = this.datePipe.transform(new Date(this.rightFilterData.reportAsOn), 'dd-MMM-yyyy');
             this.setDefaultFilterData = this.mfService.setFilterData(this.mutualFund, this.rightFilterData, this.displayColArray);
             // this.asyncFilter(this.reponseData.mutualFundList);
             this.mfService.setFilterValues(this.setDefaultFilterData);
@@ -1563,8 +1582,8 @@ export class MutualFundSummaryComponent implements OnInit {
         element.schemeName = element.schemeName + ' | ' + element.folioNumber + ' | ' + element.ownerName
         var type = typeof element.navDate == "boolean" ? element.navDate : false;
         console.log('type', type)
-        if(type == false){
-         // element.navDate = element.nav +'\xa0\xa0\xa0\xa0\xa0\xa0\xa0'+' | ' +'\xa0\xa0\xa0\xa0\xa0\xa0\xa0'+''+element.navDate
+        if (type == false) {
+          // element.navDate = element.nav +'\xa0\xa0\xa0\xa0\xa0\xa0\xa0'+' | ' +'\xa0\xa0\xa0\xa0\xa0\xa0\xa0'+''+element.navDate
         }
       }
     });
@@ -1576,6 +1595,7 @@ export class MutualFundSummaryComponent implements OnInit {
     this.fragmentData.isSpinner = true;
     setTimeout(() => {
       const para = document.getElementById('template');
+    //  const header = document.getElementById('templateheader');
       this.returnValue = this.utilService.htmlToPdf(para.innerHTML, 'MF summary', 'true', this.fragmentData, '', '');
     });
 
@@ -1639,7 +1659,7 @@ export class MutualFundSummaryComponent implements OnInit {
         obj = 'totalAbsoluteReturn';
         break;
       case 'XIRR':
-        obj = 'totalDividendPayout';
+        obj = 'totalXirr';
         break;
       case 'Dividend payout':
         obj = 'totalDividendPayout';
@@ -1648,7 +1668,7 @@ export class MutualFundSummaryComponent implements OnInit {
         obj = 'totalSwitchOut';
         break;
       case 'Balance unit':
-        obj = 'totalBalanceUnit';
+        obj = '';
         break;
       case 'NAV':
         obj = 'totalNavDate';
@@ -1688,7 +1708,7 @@ export class MutualFundSummaryComponent implements OnInit {
         obj = 'withdrawals';
         break;
       case 'Balance unit':
-        obj = 'totalBalanceUnit';
+        obj = '';
         break;
       case 'NAV':
         obj = '0';
@@ -1716,6 +1736,8 @@ export class MutualFundSummaryComponent implements OnInit {
       number = this.mfService.mutualFundRoundAndFormat(data, 0);
     } else if (value == 'navDate') {
       number = this.datePipe.transform(data, 'dd/MM/yyyy')
+    } else if (value == 'nav'|| value == 'XIRR' || value == 'xirr') {
+      number = this.mfService.mutualFundRoundAndFormat(data, 2);
     } else {
       number = this.mfService.mutualFundRoundAndFormat(data, 3);
     }
@@ -1866,7 +1888,7 @@ export class MutualFundSummaryComponent implements OnInit {
         element.schemeName = element.schemeName + ' | ' + element.folioNumber + ' | ' + element.ownerName
         var type = typeof element.navDate == "boolean" ? element.navDate : false;
         console.log('type', type)
-        if(type == false){
+        if (type == false) {
           //element.navDate = element.nav +  +'\xa0\xa0\xa0\xa0\xa0\xa0\xa0'+' | '+''+element.navDate
         }
       }
@@ -1881,6 +1903,7 @@ export class MutualFundSummaryComponent implements OnInit {
     this.showDownload = true
     setTimeout(() => {
       let para = this.summaryTemplate.nativeElement.innerHTML
+    // const header = this.summaryHeader.nativeElement.innerHTML
       let obj = {
         htmlInput: para,
         name: (this.clientData.name) ? this.clientData.name : '' + 's' + 'Summary' + date,
@@ -1907,11 +1930,14 @@ export class MutualFundSummaryComponent implements OnInit {
     );
   }
   getDetailsClientAdvisorRes(data) {
+    this.details ={}
+    this.details.emailId = {}
     console.log('data', data)
     this.clientDetails = data
     this.clientData = data.clientData
     this.getOrgData = data.advisorData
     this.userInfo = data.advisorData
+    this.details.emailId = data.advisorData.email;
   }
   getDefaultDetails(platform) {
     const obj = {

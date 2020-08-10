@@ -360,6 +360,7 @@ export class MutualFundOverviewComponent implements OnInit {
       // advisorId: 2753,
       advisorId: this.advisorId,
       clientId: this.clientId,
+      showFolio:(this.reponseData) ? (this.setDefaultFilterData.showFolio == '2' ? false :true ): (this.saveFilterData) ? (this.saveFilterData.showFolio == '2' ? false : true) : false
       // clientId: this.clientId
     };
     this.custumService.getMutualFund(obj).subscribe(
@@ -596,9 +597,10 @@ export class MutualFundOverviewComponent implements OnInit {
         const catObj = this.MfServiceService.categoryFilter(element.mutualFund, 'schemeCode');
         Object.keys(catObj).map(key => {
           catObj[key].forEach((singleData) => {
-            singleData.navDate = this.datePipe.transform(singleData.navDate, 'yyyy-MM-dd');
+            singleData.navDate =  new Date(singleData.navDate);
+            singleData.toDate = new Date(singleData.toDate);
             singleData.mutualFundTransactions.forEach(element => {
-              element.transactionDate = this.datePipe.transform(element.transactionDate, 'yyyy-MM-dd');
+              element.transactionDate = new Date(element.transactionDate);
             });
           });
         });

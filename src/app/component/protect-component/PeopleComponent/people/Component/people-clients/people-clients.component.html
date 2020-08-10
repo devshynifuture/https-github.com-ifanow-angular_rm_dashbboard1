@@ -3,7 +3,8 @@
         <!-- <h4 class="m-0">Clients</h4> -->
     </div>
 
-    <div *ngIf="clientDatasource.data.length>0 && isLoading==false" class="col-md-8 d-flex align-items-center justify-content-end pb-10">
+    <div *ngIf="clientDatasource.data.length>0 && isLoading==false"
+        class="col-md-8 d-flex align-items-center justify-content-end pb-10">
 
         <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
             <img src="assets/images/svg/download-bordered.svg">
@@ -30,11 +31,14 @@
 </div>
 <div [ngClass]="{'pe-none': isLoading}" class="row">
     <div class="col-md-12 people-clients pb-16">
-        <div [ngClass]="{'table-scroll':isLoading==false }" (scroll)="onWindowScroll($event)" class="ox-hide people-clients-scroll" *ngIf="clientDatasource.data.length>0">
+        <div [ngClass]="{'table-scroll':isLoading==false }" (scroll)="onWindowScroll($event)"
+            class="ox-hide people-clients-scroll testing-mob" *ngIf="clientDatasource.data.length>0">
             <!--  -->
-            <table #tableEl matSort #clientTableSort="matSort" mat-table [dataSource]="clientDatasource" id="tbs" appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation">
-                <ng-container matColumnDef="position">
-                    <th mat-sort-header="name" mat-header-cell *matHeaderCellDef class="br  w-20" sticky> Group head name
+            <table #tableEl matSort #clientTableSort="matSort" mat-table [dataSource]="clientDatasource" id="tbs"
+                appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation">
+                <ng-container matColumnDef="position" sticky>
+                    <th mat-sort-header="name" mat-header-cell *matHeaderCellDef class="br  w-20"> Group head
+                        name
                     </th>
                     <td (click)="selectClient(element)" mat-cell *matCellDef="let element" class="br c-p">
                         <div class="bar"> {{element.name}}</div>
@@ -43,7 +47,8 @@
 
                 <!-- Name Column -->
                 <ng-container matColumnDef="name">
-                    <th mat-header-cell mat-sort-header="mobileNo" *matHeaderCellDef class="br" sticky> Registered mobile </th>
+                    <th mat-header-cell mat-sort-header="mobileNo" *matHeaderCellDef class="br" sticky> Registered
+                        mobile </th>
                     <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br c-p">
                         <div class="bar"> {{(element.mobileNo!=0)?element.mobileNo:'N/A'}}</div>
                     </td>
@@ -81,7 +86,8 @@
                 <ng-container matColumnDef="login">
                     <th mat-sort-header="login" mat-header-cell *matHeaderCellDef class="br" sticky> Last login </th>
                     <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br c-p">
-                        <div class="bar"> {{element.lastLoginString}} <span *ngIf="!isLoading && element.lastLoginString!='Pending'">ago</span></div>
+                        <div class="bar"> {{element.lastLoginString}} <span
+                                *ngIf="!isLoading && element.lastLoginString!='Pending'">ago</span></div>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="status">
@@ -113,7 +119,7 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky: true"></tr>
                 <tr mat-row *matRowDef=" let row; columns: displayedColumns;"></tr>
             </table>
-            <div class="col-md-12 mt-8 d-flex justify-content-center align-items-center">
+            <div class="col-md-12 d-flex justify-content-center align-items-center">
                 <mat-spinner *ngIf="infiniteScrollingFlag" [diameter]="30"></mat-spinner>
             </div>
         </div>
@@ -129,8 +135,10 @@
 
 
                 <div class="dashedClass">
-                    <p>Tip: If you already have access to your mutual fund RTA feeds then simply upload your folio master files. Once you do, all the clients will automatically reflect here.</p>
-                    <p> How to do it: You can manually upload your folio master file from here. Or share your RTA details with us here, we will upload them for you quickly.</p>
+                    <p>Tip: If you already have access to your mutual fund RTA feeds then simply upload your folio
+                        master files. Once you do, all the clients will automatically reflect here.</p>
+                    <p> How to do it: You can manually upload your folio master file from here. Or share your RTA
+                        details with us here, we will upload them for you quickly.</p>
                     <p class="mb-0">Still have questions? Watch this video:</p>
                 </div>
             </div>

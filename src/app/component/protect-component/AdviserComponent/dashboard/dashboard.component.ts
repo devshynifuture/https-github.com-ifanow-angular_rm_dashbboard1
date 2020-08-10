@@ -28,6 +28,7 @@ import { AppConstants } from 'src/app/services/app-constants';
 import { CustomerService } from '../../customers/component/customer/customer.service';
 import { Chart } from 'angular-highcharts';
 import * as Highcharts from 'highcharts';
+import { element } from 'protractor';
 
 export interface PeriodicElement {
   name: string;
@@ -880,14 +881,14 @@ export class DashboardComponent implements OnInit {
       data => {
         if (data) {
           this.isBirhtdayLoader = false;
+          data = data.filter(element => element.dateOfBirth && element.dateOfBirth != 0);
+          data = this.sortDateWise(data)
           data.forEach(element => {
             if (element.displayName.length > 15) {
-              element.shortName = element.displayName.substr(0, element.name.indexOf(' '));
+              element.shortName = element.displayName.substr(0, this.getPosition(element.displayName, ' ', 2));
             }
             if (element.dateOfBirth && element.dateOfBirth != 0) {
               element.daysToGo = this.calculateBirthdayOrAnniversary(element.dateOfBirth);
-            } else {
-              element.daysToGo = 'N/A';
             }
           });
           this.utils.calculateAgeFromCurrentDate(data);
@@ -903,6 +904,14 @@ export class DashboardComponent implements OnInit {
         this.isBirhtdayLoader = false;
       }
     );
+  }
+  sortDateWise(data) {
+    return data.sort((a, b) => {
+      return <any>new Date(a.dateOfBirth) - <any>new Date(b.dateOfBirth);
+    });
+  }
+  getPosition(string, subString, index) {
+    return string.split(subString, index).join(subString).length;
   }
 
   calculateBirthdayOrAnniversary(date) {

@@ -44,6 +44,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   customDataHolder = [];
   @ViewChild('tableEl', { static: false }) tableEl;
   @ViewChild('unrealizedTranTemplate', { static: false }) unrealizedTranTemplate;
+  @ViewChild('unrealizedTranTemplateHeader', { static: false }) unrealizedTranTemplateHeader;
+  @ViewChild('allTranTemplateHeader', { static: false }) allTranTemplateHeader;
   rightFilterData: any = { reportType: '' };
   adviorData: any;
   @Output() changeInput = new EventEmitter();
@@ -127,6 +129,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   thirteenthArrayTotal: any;
   thirteenthArray: any;
   isRouterLink = false;
+  header: any;
+  headerHtml: HTMLElement;
 
   constructor(public dialog: MatDialog, private datePipe: DatePipe,
     private subInjectService: SubscriptionInject, private utilService: UtilService,
@@ -574,7 +578,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
 
     const obj = {
       advisorId: this.advisorId,
-      clientId: this.clientId
+      clientId: this.clientId,
+      showFolio:(this.reponseData) ? (this.setDefaultFilterData.showFolio == '2' ? false :true ): (this.saveFilterData) ? (this.saveFilterData.showFolio == '2' ? false : true) : false
     };
     this.custumService.getMutualFund(obj).pipe(map((data) => {
       return this.doFiltering(data);
@@ -649,7 +654,9 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         advisorId: this.advisorId,
         clientId: this.clientId,
         toDate: this.toDate,
-        id: categoryWiseMfList
+        id: categoryWiseMfList,
+        showFolio:(this.reponseData) ? (this.setDefaultFilterData.showFolio == '2' ? false :true ): (this.saveFilterData) ? (this.saveFilterData.showFolio == '2' ? false : true) : false
+
       };
       this.custumService.getMutualFund(obj).subscribe(
         data => {
@@ -1238,6 +1245,11 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     this.fragmentData.isSpinner = true;
     setTimeout(() => {
       const para = document.getElementById('template');
+      // if(this.viewMode == 'Unrealized Transactions'){
+      //   this.headerHtml = document.getElementById('templateHeader');
+      // }else{
+      //   this.headerHtml = document.getElementById('alltemplateHeader');
+      // }
       this.returnValue = this.utilService.htmlToPdf(para.innerHTML, this.reportName, 'true', this.fragmentData, '', '');
     }, 200);
   
@@ -1450,10 +1462,16 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     setTimeout(() => {
       const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
       let para = this.unrealizedTranTemplate.nativeElement.innerHTML
+      // if(this.viewMode=='Unrealized Transactions'){
+      //    this.header = this.unrealizedTranTemplateHeader.nativeElement.innerHTML
+      // }else{
+      //    this.header = this.allTranTemplateHeader.nativeElement.innerHTML
+      // }
       let obj = {
         htmlInput: para,
         name: (this.clientData.name) ? this.clientData.name : '' + 's' + this.mode + date,
         landscape: true,
+        header: this.header,
         key: 'showPieChart',
         clientId: this.clientId,
         advisorId: this.advisorId,

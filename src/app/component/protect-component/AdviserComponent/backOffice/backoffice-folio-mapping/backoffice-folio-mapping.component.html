@@ -39,10 +39,12 @@
 
           <ng-container matColumnDef="position">
             <th mat-header-cell *matHeaderCellDef>
-              <mat-checkbox (change)="$event ? masterToggle() : null" *ngIf="!isLoading"
+              <div *ngIf="!isLoading">
+                <mat-checkbox (change)="$event ? masterToggle() : null"
                 [checked]="selection.hasValue() && isAllSelected()"
                 [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
               </mat-checkbox>
+              </div>
             </th>
             <td mat-cell *matCellDef="let row">
               <div class="bar">
@@ -99,7 +101,7 @@
 
       </div>
     </div>
-    <div class="col-md-12 text-center" *ngIf="unmappedDataSource.data === null">
+    <div class="col-md-12 text-center" *ngIf="unmappedDataSource && unmappedDataSource.data && unmappedDataSource.data.length === 0 && !isInfiniteScrollLoading && !isLoading">
       <h4 class="p-44 b-a">
         No Data Found
       </h4>

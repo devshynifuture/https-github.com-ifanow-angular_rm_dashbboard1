@@ -11,196 +11,199 @@
 <!-- Portfolio scrip level holding details view -->
 
 <div class="row pt-90">
-    <div class="col-md-12">
-        <h5 class="m-0 f-500 roboto pb-10">Basic details</h5>
-    </div>
-    <div class="col-md-12 ">
-        <div class="row bb p-8 b-l br bt-1">
-            <div class="col-md-8 text-left f-14 roboto p-0">
-                Owner
-            </div>
-            <div class="col-md-4 text-right f-14 roboto p-0">
-                Rahul Jain
-            </div>
-        </div>
-        <div class="row bb p-8 b-l br">
-            <div class="col-md-8 text-left f-14 roboto p-0">
-                Portfolio name            </div>
-            <div class="col-md-4 text-right f-14 roboto p-0">
-                Sharekhan
-            </div>
-        </div>
+  <div class="col-md-12">
+      <h5 class="m-0 f-500 roboto pb-10">Basic details</h5>
+  </div>
+  <div class="col-md-12 ">
+      <div class="row bb p-8 b-l br bt-1">
+          <div class="col-md-8 text-left f-14 roboto p-0">
+              Owner
+          </div>
+          <div class="col-md-4 text-right f-14 roboto p-0">
+              {{data.ownerList[0].name}}
+          </div>
+      </div>
+      <div class="row bb p-8 b-l br">
+          <div class="col-md-8 text-left f-14 roboto p-0">
+              Portfolio name            </div>
+          <div class="col-md-4 text-right f-14 roboto p-0">
+              {{data.portfolioName}}
+          </div>
+      </div>
 
-        <div class="row bb p-8 b-l br">
-            <div class="col-md-8 text-left f-14 roboto p-0">
-                Current market value
-            </div>
-            <div class="col-md-4 text-right f-14 roboto p-0">
-                ₹ 23,35,444
+      <div class="row bb p-8 b-l br">
+          <div class="col-md-8 text-left f-14 roboto p-0">
+              Current market value
+          </div>
+          <div class="col-md-4 text-right f-14 roboto p-0">
+              {{data.currentMarketValue? "₹" : ""}}<span appFormatNumber>{{data.currentMarketValue}}</span>
+          </div>
+      </div>
+
+      <div class="row bb p-8 b-l br">
+          <div class="col-md-8 text-left f-14 roboto p-0">
+              Amount invested
+          </div>
+          <div class="col-md-4 text-right f-14 roboto p-0">
+            {{data.amountInvested? "₹" : ""}}<span appFormatNumber>{{data.amountInvested}}</span>
+          </div>
+      </div>
+
+      <div class="row bb p-8 b-l br">
+          <div class="col-md-8 text-left f-14 roboto p-0">
+              Unrealized gain/loss
+          </div>
+          <div class="col-md-4 text-right f-14 roboto p-0">
+            {{data.unrealizedGainLoss? "₹" : ""}}<span appFormatNumber>{{data.unrealizedGainLoss}}</span>
+          </div>
+      </div>
+
+      <div class="row bb p-8 b-l br">
+          <div class="col-md-8 text-left f-14 roboto p-0">
+              Absolute return
+          </div>
+          <div class="col-md-4 text-right f-14 roboto p-0">
+            {{data.absoluteReturn}}%
+          </div>
+      </div>
+
+      <div class="row bb p-8 b-l br">
+          <div class="col-md-8 text-left f-14 roboto p-0">
+              Linked demat account
+          </div>
+          <div class="col-md-4 text-right f-14 roboto p-0" [hidden]="!data.linkedDematAccount" >
+            <div *ngFor="let bank of clientFamilybankList" [ngSwitch]="data.linkedDematAccount">
+                <span *ngSwitchCase="bank.id">{{bank.bankNameAndLast4Digit}}</span>
             </div>
         </div>
+        <div *ngIf="!data.linkedDematAccount" class="col-md-4 text-right f-14 roboto p-0">
+            {{'-'}}
+        </div>
+      </div>
 
-        <div class="row bb p-8 b-l br">
-            <div class="col-md-8 text-left f-14 roboto p-0">
-                Value as on
-            </div>
-            <div class="col-md-4 text-right f-14 roboto p-0">
-                22/06/2020
+      <div class="row bb p-8 b-l br">
+          <div class="col-md-8 text-left f-14 roboto p-0">
+              Linked bank account
+          </div>
+          <div class="col-md-4 text-right f-14 roboto p-0" [hidden]="!data.linkedBankAccount" >
+            <div *ngFor="let bank of clientFamilybankList" [ngSwitch]="data.linkedBankAccount">
+                <span *ngSwitchCase="bank.id">{{bank.bankNameAndLast4Digit}}</span>
             </div>
         </div>
-
-        <div class="row bb p-8 b-l br">
-            <div class="col-md-8 text-left f-14 roboto p-0">
-                Amount invested
-            </div>
-            <div class="col-md-4 text-right f-14 roboto p-0">
-                ₹ 23,35,444
-            </div>
+        <div *ngIf="!data.linkedBankAccount" class="col-md-4 text-right f-14 roboto p-0">
+            {{'-'}}
         </div>
-
-        <div class="row bb p-8 b-l br">
-            <div class="col-md-8 text-left f-14 roboto p-0">
-                Unrealized gain/loss
-            </div>
-            <div class="col-md-4 text-right f-14 roboto p-0">
-                ₹ 23,35,444
-            </div>
-        </div>
-
-        <div class="row bb p-8 b-l br">
-            <div class="col-md-8 text-left f-14 roboto p-0">
-                Absolute return
-            </div>
-            <div class="col-md-4 text-right f-14 roboto p-0">
-                3%
-            </div>
-        </div>
-
-        <div class="row bb p-8 b-l br">
-            <div class="col-md-8 text-left f-14 roboto p-0">
-                Linked demat account
-            </div>
-            <div class="col-md-4 text-right f-14 roboto p-0">
-                HDFC - 87392873
-            </div>
-        </div>
-
-        <div class="row bb p-8 b-l br">
-            <div class="col-md-8 text-left f-14 roboto p-0">
-                Linked bank account
-            </div>
-            <div class="col-md-4 text-right f-14 roboto p-0">
-                HDFC - 837823828
-            </div>
-        </div>
-        <div class="row bb p-8 b-l br">
-            <div class="col-md-8 text-left f-14 roboto p-0">
-                Description
-            </div>
-            <div class="col-md-4 text-right f-14 roboto p-0">
-                HDFC bank
-            </div>
-        </div>
-     
-
-
-    </div>
-    <div class="col-md-12 text-right pt-4">
-        <p class="m-0 text-custom f-12 lh-14">Updated: 04/09/2019</p>
-    </div>
+      </div>
+      <div class="row bb p-8 b-l br">
+          <div class="col-md-8 text-left f-14 roboto p-0">
+              Description
+          </div>
+          <div class="col-md-4 text-right f-14 roboto p-0">
+              {{data.description}}
+          </div>
+      </div>
    
+
+
+  </div>
+  <div class="col-md-12 text-right pt-4">
+      <p class="m-0 text-custom f-12 lh-14">Updated: 04/09/2019</p>
+  </div>
+ 
 </div>
 <div class="row pt-20">
-    <div class="col-md-12">
-        <h5 class="m-0 f-500 roboto pb-10">Nominee details</h5>
-   
-    <div class="row bb p-8 b-l br w-100 bt-1">
-        <div class="col-md-7 text-left f-14 roboto p-0">
-            Shilpa Jain
-        </div>
-        <div class="col-md-5 text-right f-14 roboto p-0">
-            Wife with 50% share
-        </div>
-    </div>
+  <div class="col-md-12">
+      <h5 class="m-0 f-500 roboto pb-10">Nominee details</h5>
+ 
+  <!-- <div class="row bb p-8 b-l br w-100 bt-1">
+      <div class="col-md-7 text-left f-14 roboto p-0">
+          Shilpa Jain
+      </div>
+      <div class="col-md-5 text-right f-14 roboto p-0">
+          Wife with 50% share
+      </div>
+  </div> -->
 
-    <div class="row bb p-8 b-l br w-100">
-        <div class="col-md-7 text-left f-14 roboto p-0">
-            Shreya Jain
-        </div>
-        <div class="col-md-5 text-right f-14 roboto p-0">
-            Daughter with 50% share
-        </div>
-    </div>
-    <div class="col-md-12 text-right pt-4">
-        <p class="m-0 text-custom f-12 lh-14">Updated: 04/09/2019</p>
-    </div>
-    </div>
+  <div class="row bb p-8 b-l br w-100" *ngFor="let obj of data.nomineeList;">
+      <div class="col-md-7 text-left f-14 roboto p-0">
+        {{obj.name}}
+      </div>
+      <div class="col-md-5 text-right f-14 roboto p-0">
+          <!-- Daughter with 50% share -->
+        with {{obj.sharePercentage}}% share
+      </div>
+  </div>
+  <div class="col-md-12 text-right pt-4">
+      <p class="m-0 text-custom f-12 lh-14">Updated: 04/09/2019</p>
+  </div>
+  </div>
 </div>
-<div class="row pt-20 pb-90">
-    <div class="col-md-12">
-        <h5 class="m-0 f-500 roboto pb-10">Holdings</h5>
-   
-    <div class="row bb p-8 b-l br w-100 bt-1">
-        <div class="col-md-7 text-left f-14 roboto p-0">
-            Scrip name
-        </div>
-        <div class="col-md-5 text-right f-14 roboto p-0">
-            TCS ltd.
-        </div>
-    </div>
+<div class="row pt-20">
+  <div class="col-md-12">
+      <h5 class="m-0 f-500 roboto pb-10">Holdings</h5>
+ 
+  <div class="row bb p-8 b-l br w-100 bt-1">
+      <div class="col-md-7 text-left f-14 roboto p-0">
+          Scrip name
+      </div>
+      <div class="col-md-5 text-right f-14 roboto p-0">
+          {{data.scripName}}
+      </div>
+  </div>
 
-    <div class="row bb p-8 b-l br w-100">
-        <div class="col-md-7 text-left f-14 roboto p-0">
-            Current value
-        </div>
-        <div class="col-md-5 text-right f-14 roboto p-0">
-            ₹ 19,50,444
-        </div>
-    </div>
-    <div class="row bb p-8 b-l br w-100">
-        <div class="col-md-7 text-left f-14 roboto p-0">
-            Amount invested
-        </div>
-        <div class="col-md-5 text-right f-14 roboto p-0">
-            ₹ 23,35,444
-        </div>
-    </div>
-    <div class="row bb p-8 b-l br w-100">
-        <div class="col-md-7 text-left f-14 roboto p-0">
-            Quantity
-        </div>
-        <div class="col-md-5 text-right f-14 roboto p-0">
-            1500
-        </div>
-    </div>
-    <div class="row bb p-8 b-l br w-100">
-        <div class="col-md-7 text-left f-14 roboto p-0">
-            Quantity as on
-        </div>
-        <div class="col-md-5 text-right f-14 roboto p-0">
-            ₹ 23,35,444
-        </div>
-    </div>
-    <div class="row bb p-8 b-l br w-100">
-        <div class="col-md-7 text-left f-14 roboto p-0">
-            Unrealized gain/loss
-        </div>
-        <div class="col-md-5 text-right f-14 roboto p-0">
-            ₹ 23,35,444
-        </div>
-    </div>
-    <div class="row bb p-8 b-l br w-100">
-        <div class="col-md-7 text-left f-14 roboto p-0">
-            Absolute returns
-        </div>
-        <div class="col-md-5 text-right f-14 roboto p-0">
-            3%
-        </div>
-    </div>
-    <div class="col-md-12 text-right pt-4 pr-0">
-        <p class="m-0 text-custom f-12 lh-14">Updated: 04/09/2019</p>
-    </div>
-    </div>
+  <div class="row bb p-8 b-l br w-100">
+      <div class="col-md-7 text-left f-14 roboto p-0">
+          Current value
+      </div>
+      <div class="col-md-5 text-right f-14 roboto p-0">
+        {{data.currentMarketValue? "₹" : ""}}<span appFormatNumber>{{data.currentMarketValue}}</span>
+      </div>
+  </div>
+  <div class="row bb p-8 b-l br w-100">
+      <div class="col-md-7 text-left f-14 roboto p-0">
+          Amount invested
+      </div>
+      <div class="col-md-5 text-right f-14 roboto p-0">
+        {{data.amountInvested? "₹" : ""}}<span appFormatNumber>{{data.amountInvested}}</span>
+      </div>
+  </div>
+  <div class="row bb p-8 b-l br w-100">
+      <div class="col-md-7 text-left f-14 roboto p-0">
+          Balance shares
+      </div>
+      <div class="col-md-5 text-right f-14 roboto p-0">
+          {{data.balanceShares}}
+      </div>
+  </div>
+  <div class="row bb p-8 b-l br w-100">
+      <div class="col-md-7 text-left f-14 roboto p-0">
+          Average price
+      </div>
+      <div class="col-md-5 text-right f-14 roboto p-0">
+        {{data.averagePrice? "₹" : ""}}<span appFormatNumber>{{data.averagePrice}}</span>
+      </div>
+  </div>
+  <div class="row bb p-8 b-l br w-100">
+      <div class="col-md-7 text-left f-14 roboto p-0">
+          Unrealized gain/loss
+      </div>
+      <div class="col-md-5 text-right f-14 roboto p-0">
+        {{data.unrealizedGainLoss? "₹" : ""}}<span appFormatNumber>{{data.unrealizedGainLoss}}</span>
+      </div>
+  </div>
+  <div class="row bb p-8 b-l br w-100">
+      <div class="col-md-7 text-left f-14 roboto p-0">
+          Absolute returns
+      </div>
+      <div class="col-md-5 text-right f-14 roboto p-0">
+        {{data.absoluteReturn}}%
+      </div>
+  </div>
+  <div class="col-md-12 text-right pt-4 pr-0">
+      <p class="m-0 text-custom f-12 lh-14">Updated: 04/09/2019</p>
+  </div>
+  </div>
+  
 </div>
 <div class="bottom-fixed wrapper-12 pt-16 w-35">
     <div class="row">
