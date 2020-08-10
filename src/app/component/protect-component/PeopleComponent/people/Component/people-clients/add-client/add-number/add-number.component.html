@@ -6,7 +6,7 @@
         </div>
 
         <div [ngClass]="classObj.code">
-            <div [ngClass]="{'event-none': taxstatusId==1}" class="form-group">
+            <div [ngClass]="{'event-none': taxstatusId==1}" class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <mat-select placeholder="Select country code" formControlName="code" class="form-control">
                         <mat-option>
@@ -22,7 +22,7 @@
         </div>
 
         <div class="" [ngClass]="classObj.mobile">
-            <div class="form-group">
+            <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input #num (keyup)="checkUniqueNumber()" placeholder={{placeHolderObj[i]}} formControlName="number"
                         appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" autocomplete="off"

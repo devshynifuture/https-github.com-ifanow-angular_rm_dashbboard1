@@ -71,6 +71,22 @@ export class ExpensesComponent implements OnInit {
   filterDate =[];
   startDateDisp: string;
   endDateDisp: string;
+  budgetAmount = 0;
+  basicAmount: any;
+  basicAmountPercent: any;
+  rdAmount: any;
+  rdAmountPercent: any;
+  lifeInsurance: any;
+  lifeInsurancePercent: any;
+  generalInsurance: any;
+  generalInsurancePercent: any;
+  liabilities: any;
+  liabilitiesPercent: any;
+  miscellaneousAmount: any;
+  entertainmentAmount: any;
+  educationAmount: any;
+  transportAmount: any;
+  housingAmount: any;
   // periodSelection: any;
 
   constructor(private fb: FormBuilder,private datePipe: DatePipe,private subInjectService: SubscriptionInject, private planService: PlanService,
@@ -88,9 +104,11 @@ export class ExpensesComponent implements OnInit {
     this.clientData = AuthService.getClientData();
     this.details = AuthService.getProfileDetails();
     this.getOrgData = AuthService.getOrgDetails();
+    this.getStartAndEndDate('1');
+    this.getExpenseGraphValue();
+    this.getBudgetGraphValues();
     // this.timePeriodSelection.setValue('1');
     // this.getTimePeriod();
-    this.getStartAndEndDate('1');
     this.getTransaction();
     this.getRecuringTransactions();
     this.filterDate = [{name:'period'}]
@@ -107,6 +125,55 @@ export class ExpensesComponent implements OnInit {
 
   //   });
   // }
+  getExpenseGraphValue(){
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      startDate : this.startDate, 
+      endDate: this.endDate
+     
+    };
+    this.planService.getExpenseGraph(obj).subscribe(
+      data => {
+        if(data){
+          this.basicAmountPercent = data.Basic.categoryWisePercentage
+          this.rdAmountPercent = data.RECURRING_DEPOSIT.categoryWisePercentage
+          this.lifeInsurancePercent = data.LIFE_INSURANCE.expenseAmount
+          this.generalInsurancePercent = data.GENERAL_INSURANCE.expenseAmount
+          this.liabilitiesPercent = data.LIABILITIES.expenseAmount
+          this.miscellaneousAmount = data.Miscellaneous;
+          this.entertainmentAmount = data.Entertainment;
+          this.educationAmount = data.Education;
+          // this.miscellaneousAmount = data.Billes_&_Utilies;
+          this.transportAmount = data.Transport;
+          this.housingAmount = data.Housing;
+          this.cashFlow('piechartExpense')
+        }
+        console.log(data);
+      }, (error) => {
+        this.eventService.showErrorMessage(error);
+        
+      }
+    );
+  }
+  getBudgetGraphValues(){
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      startDate:this.startDate, 
+      endDate:this.endDate
+    };
+    this.dataSource4.data = [{}, {}, {}];
+    this.planService.getBudgetGraph(obj).subscribe(
+      data => {
+        this.budgetAmount = data.budgetAmount
+        this.budgetChart('bugetChart')
+        console.log(data)
+      }, (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+    );
+  }
   getStartAndEndDate(val){
     var date = new Date();
     if(val == '1'){
@@ -177,7 +244,7 @@ export class ExpensesComponent implements OnInit {
         colorByPoint: true,
         color: "#5cc644",
         data: [{
-          y: 60000,
+          y: this.budgetAmount,
           color: "#5cc644"
         }, {
           y: 30000,
@@ -192,6 +259,7 @@ export class ExpensesComponent implements OnInit {
     if (tab == 'Budget') {
       this.getBudgetList();
       this.getBugetRecurring();
+      this.getBudgetGraphValues();
       setTimeout(() => {
         this.budgetChart('bugetChart')
 
@@ -199,6 +267,7 @@ export class ExpensesComponent implements OnInit {
     } else {
       this.getTransaction();
       this.getRecuringTransactions();
+      this.getExpenseGraphValue();
       setTimeout(() => {
         this.cashFlow('piechartExpense')
 
@@ -250,7 +319,7 @@ export class ExpensesComponent implements OnInit {
         data: [
           {
             name: 'Basic',
-            y: 23,
+            y: this.basicAmountPercent,
             color: "#A6CEE3",
             dataLabels: {
               enabled: false
@@ -264,40 +333,73 @@ export class ExpensesComponent implements OnInit {
             }
           }, {
             name: 'Transport',
-            y: 25.42,
+            y: this.transportAmount,
             color: "#B2DF8A",
             dataLabels: {
               enabled: false
             }
           }, {
             name: 'Education',
-            y: 12.61,
+            y: this.educationAmount,
             color: "#33A02C",
             dataLabels: {
               enabled: false
             }
           }, {
             name: 'Housing',
-            y: 23.42,
+            y: this.housingAmount,
             color: "#FB9A99",
             dataLabels: {
               enabled: false
             }
           }, {
             name: 'Entertainment',
-            y: 23.42,
+            y: this.entertainmentAmount,
             color: "#E31A1C",
             dataLabels: {
               enabled: false
             }
           }, {
             name: 'Miscellaneous',
-            y: 23.42,
+            y: this.miscellaneousAmount,
             color: "#FDBF6F",
             dataLabels: {
               enabled: false
             }
           },
+          {
+            name: 'Recurring depoite',
+            y: this.rdAmountPercent,
+            color: "#3371FF",
+            dataLabels: {
+              enabled: false
+            }
+          },
+          {
+            name: 'Life insurance',
+            y: this.lifeInsurancePercent,
+            color: "#FDBF6F",
+            dataLabels: {
+              enabled: false
+            }
+          },
+          {
+            name: 'General insurance',
+            y: this.generalInsurancePercent,
+            color: "#FF5733",
+            dataLabels: {
+              enabled: false
+            }
+          },
+          {
+            name: 'Liabilities',
+            y: this.liabilitiesPercent,
+            color: "#ECFF33",
+            dataLabels: {
+              enabled: false
+            }
+          },
+          
         ]
       }]
     });
@@ -325,6 +427,7 @@ export class ExpensesComponent implements OnInit {
     );
   }
   getBudgetRes(data) {
+    this.budgetChart('bugetChart');
     if (data == undefined) {
       this.noData = 'No data found';
       this.dataSource4.data = [];
@@ -436,6 +539,7 @@ export class ExpensesComponent implements OnInit {
       this.noData = 'No data found';
       this.dataSource1.data = [];
     }
+    this.cashFlow('piechartExpense')
   }
   getTransaction() {
     const obj = {
@@ -460,6 +564,7 @@ export class ExpensesComponent implements OnInit {
     );
   }
   getTransactionExpenseRes(data) {
+    this.cashFlow('piechartExpense')
     if (data == undefined) {
       this.noData = 'No data found';
       this.dataSource.data = [];
@@ -480,6 +585,8 @@ export class ExpensesComponent implements OnInit {
       this.noData = 'No data found';
       this.dataSource.data = [];
     }
+    this.cashFlow('piechartExpense')
+
   }
   deleteModal(value, data) {
     const dialogData = {
