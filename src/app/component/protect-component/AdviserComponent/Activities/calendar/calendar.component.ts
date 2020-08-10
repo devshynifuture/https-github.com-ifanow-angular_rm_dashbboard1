@@ -46,7 +46,7 @@ export class CalendarComponent implements OnInit {
   currentYear: any;
   excessAllow: any;
   constructor(public dialog: MatDialog, private calenderService: calendarService, private router: Router, private emailService: EmailServiceService) {
-
+    
   }
 
   ngOnInit() {
@@ -67,7 +67,9 @@ export class CalendarComponent implements OnInit {
     //   this.mailConnect(false);
     // }
     this.excessAllow = localStorage.getItem('successStoringToken')
-    this.checkConnectGoogle();
+    if(this.excessAllow){
+      this.checkConnectGoogle();
+    }
   }
 
   checkConnectGoogle() {
@@ -76,26 +78,31 @@ export class CalendarComponent implements OnInit {
       if(res){
         this.excessAllow = true;
       }
-      else{
-        this.excessAllow = false;
-      }
+    },
+    err=>{
+      this.excessAllow = false;
+      localStorage.removeItem('googleOAuthToken');
+      localStorage.removeItem('successStoringToken');
+      localStorage.removeItem('associatedGoogleEmailId');
+      console.log("error call");
+      
     })
   }
 
-  getEvent() {
-    let eventData = {
-      "calendarId": AuthService.getUserInfo().userName,
-      "userId": AuthService.getUserInfo().advisorId
-    }
-    this.calenderService.getEvent(eventData).subscribe((data) => {
-      if(data){
-        this.mailConnect(true);
-      }
-      else{
-        this.mailConnect(false);
-      }
-    })
-  }
+  // getEvent() {
+  //   let eventData = {
+  //     "calendarId": AuthService.getUserInfo().userName,
+  //     "userId": AuthService.getUserInfo().advisorId
+  //   }
+  //   this.calenderService.getEvent(eventData).subscribe((data) => {
+  //     if(data){
+  //       this.mailConnect(true);
+  //     }
+  //     else{
+  //       this.mailConnect(false);
+  //     }
+  //   })
+  // }
 
   mailConnect(done){
     this.excessAllow = done;
