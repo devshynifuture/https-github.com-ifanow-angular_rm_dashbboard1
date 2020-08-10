@@ -54,9 +54,10 @@
     }
 }
 
-.height220 {
-    height: 220px;
-    margin: 20px;
+.height180 {
+    height: 180px;
+    margin: 20px auto;
+    
 }
 
 .skeletonAnimation .relClass {
@@ -80,9 +81,9 @@
             animation: loading 1s infinite;
         }
     }
-    .bar220 {
+    .bar180 {
         background-color: #E7E7E7;
-        width: 220px;
+        width: 180px;
         border-radius: 50%;
         &:after {
             position: absolute;
@@ -92,9 +93,9 @@
             content: "";
             display: block;
             width: 100%;
-            height: 220px;
+            height: 180px;
             background-image: linear-gradient(100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0) 80%);
-            background-size: 100px 220px;
+            background-size: 100px 180px;
             background-position: -10px 0;
             background-repeat: no-repeat;
             animation: loading 1s infinite;
@@ -124,5 +125,59 @@
 
 .height24 {
     height: 24px;
-    margin-bottom: 10px;
+    margin-bottom: 6px;
+}
+
+.btn40 {
+    height: 40px;
+}
+
+.dasBoradBox {
+    width: 100%;
+}
+
+
+.fundBoxDashboard {
+    min-width: 180px;
+    height: 102px;
+    border-radius: 10px;
+    padding: 10px;
+    border: 1px solid #D9DEE1;
+    margin-right: 10px;
+}
+
+.rightBorder {  border-right: 0.5px dashed #83959D; }
+.ellipsisClass {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.pendingClass {
+    background: #FDAF40;
+}
+.rejectionsClass {
+    background: #FF7272;
+}
+
+
+.fundBoxDashboard_loader {
+    min-width: 155px;
+    height: 102px;
+    border-radius: 10px;
+    padding: 10px;
+    border: 1px solid #D9DEE1;
+    margin-right: 10px;
+}
+
+.height40{
+    height: 40px;
+    width: 100% !important;
+    border-radius: 50%;
+}
+
+.investmentBox {
+    width: 230px !important;
+    margin-right: 15px;
 }

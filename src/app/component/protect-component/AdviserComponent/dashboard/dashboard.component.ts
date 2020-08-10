@@ -232,6 +232,7 @@ export class DashboardComponent implements OnInit {
   docOverviewFlag: boolean;
   isBirhtdayLoader: boolean;
   isLoading;
+  isLoadingBirthdays;
   isGoalSummaryLoaderFlag: boolean;
   investmentAccountFlag: boolean;
   transactionFlag: boolean;
@@ -291,6 +292,16 @@ export class DashboardComponent implements OnInit {
   dataSource7 = ELEMENT_DATA7;
 
   sliderConfig = {
+    slidesToShow: 1,
+    infinite: true,
+    variableWidth: true,
+    outerEdgeLimit: true,
+    nextArrow: '<div style=\'position: absolute; top: 35%; right: 0; cursor: pointer;\' class=\'nav-btn classNextArrow next-slide\'><img src=\'/assets/images/svg/next-arrow.svg\'></div>',
+    prevArrow: '<div style=\'position: absolute; top: 35%; left: -5px; z-index: 1; cursor: pointer;\' class=\'nav-btn classNextArrow next-slide\'><img src=\'/assets/images/svg/pre-arrow.svg\'></div>',
+  };
+
+
+  sliderConfig_investment = {
     slidesToShow: 1,
     infinite: true,
     variableWidth: true,
@@ -434,6 +445,8 @@ export class DashboardComponent implements OnInit {
     this.getLastSevenDaysInvestmentAccounts();
     this.getGoalSummaryData();
     this.initPointForTask()
+    this.isLoadingBirthdays = true;
+    
   }
 
   initPointForTask() {
@@ -697,6 +710,7 @@ export class DashboardComponent implements OnInit {
     //     "startDate":1593369000000,
     //     "endDate":1594060199999
     //  }
+    this.investmentAccountFlag = true;
     this.dashboardService.getLastSevenDaysInvestmentAccounts(obj).subscribe(
       (data) => {
         if (data) {
@@ -863,6 +877,11 @@ export class DashboardComponent implements OnInit {
         this.eventService.openSnackBar(err, 'Dismiss');
       };
   }
+
+ 
+
+
+
 
   getBirthdayOrAnniversary() {
     this.isBirhtdayLoader = true;
@@ -1301,4 +1320,9 @@ export class DashboardComponent implements OnInit {
       console.log('The dialog was closed');
     });
   }
+
+
+ 
+
+
 }
