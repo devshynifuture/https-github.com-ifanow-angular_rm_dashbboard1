@@ -993,7 +993,9 @@ export class MutualFundSummaryComponent implements OnInit {
       // type: '',
       // mfService: this.mfService
       // };
-      this.asyncFilter(this.mutualFundList);
+      if(!this.isBulkEmailing){
+        this.asyncFilter(this.mutualFundList);
+      }
     } else {
       this.isLoading = false;
       this.changeInput.emit(false);

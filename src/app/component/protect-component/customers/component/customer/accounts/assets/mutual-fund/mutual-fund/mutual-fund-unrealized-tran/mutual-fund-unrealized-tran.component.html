@@ -610,10 +610,10 @@
          <td style="text-align: left; vertical-align: top;" colspan="3" *ngIf="getOrgData">
             <div
                *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
-               <img width="120px" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
+               <img width="140px" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
             </div>
-            <div *ngIf="getOrgData && getOrgData.reportLogoUrl == null">
-               <img width="120px" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
+            <div *ngIf="getOrgData && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
+               <img width="200px" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
             </div>
          </td>
          <td style="text-align: right;" colspan="6">
