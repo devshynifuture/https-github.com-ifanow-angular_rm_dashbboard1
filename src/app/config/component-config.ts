@@ -285,6 +285,8 @@ export const appConfig = {
   DELETE_RECURRING_EXPENSE: 'account/expense/recurring/expense/delete',
   DELETE_BUDGET: 'account/expense/budget/delete',
   DELETE_RECURING_BUDGET: 'account/expense/othercommitments/delete',
+  BUDGET_GRAPH:'account/expense/graph/detail/of/budget/get',
+  EXPENSE_GRAPH:'account/expense/graph/detail/of/expense/get',
   ADD_MANAGE_EXCLUSIVE: 'activity/deployment/exclusion/edit',
   DELETE_DEPLOYMENT: 'activity/deployment/archive-record/put',
   ADD_FILTER_SCHEME_LIST: 'activity/deployment/add/filter/goal/scheme',

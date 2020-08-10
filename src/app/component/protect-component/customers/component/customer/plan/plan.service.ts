@@ -184,6 +184,12 @@ export class PlanService {
   getInsurancePlaningList(data){
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_INSURANCE_LIST, data);
   }
+  getBudgetGraph(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.BUDGET_GRAPH, data);
+  }
+  getExpenseGraph(data){
+    return this.http.get(apiConfig.MAIN_URL + appConfig.EXPENSE_GRAPH, data);
+  }
   addInsurance(data){
     return this.http.post(apiConfig.MAIN_URL + appConfig.ADD_INSURANCE, data);
   }

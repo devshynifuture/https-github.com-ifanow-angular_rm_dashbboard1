@@ -88,6 +88,8 @@ export class ExpensesComponent implements OnInit {
     this.clientData = AuthService.getClientData();
     this.details = AuthService.getProfileDetails();
     this.getOrgData = AuthService.getOrgDetails();
+    this.getExpenseGraphValue();
+    this.getBudgetGraphValues();
     // this.timePeriodSelection.setValue('1');
     // this.getTimePeriod();
     this.getStartAndEndDate('1');
@@ -107,6 +109,35 @@ export class ExpensesComponent implements OnInit {
 
   //   });
   // }
+  getExpenseGraphValue(){
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+     
+    };
+    this.planService.getExpenseGraph(obj).subscribe(
+      data => {
+        console.log(data);
+      }, (error) => {
+        this.eventService.showErrorMessage(error);
+        
+      }
+    );
+  }
+  getBudgetGraphValues(){
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+    };
+    this.dataSource4.data = [{}, {}, {}];
+    this.planService.getBudgetGraph(obj).subscribe(
+      data => {
+        console.log(data)
+      }, (error) => {
+        this.eventService.showErrorMessage(error);
+      }
+    );
+  }
   getStartAndEndDate(val){
     var date = new Date();
     if(val == '1'){
@@ -436,6 +467,7 @@ export class ExpensesComponent implements OnInit {
       this.noData = 'No data found';
       this.dataSource1.data = [];
     }
+    this.cashFlow('piechartExpense')
   }
   getTransaction() {
     const obj = {
@@ -460,6 +492,7 @@ export class ExpensesComponent implements OnInit {
     );
   }
   getTransactionExpenseRes(data) {
+    
     if (data == undefined) {
       this.noData = 'No data found';
       this.dataSource.data = [];
@@ -480,6 +513,8 @@ export class ExpensesComponent implements OnInit {
       this.noData = 'No data found';
       this.dataSource.data = [];
     }
+    this.cashFlow('piechartExpense')
+
   }
   deleteModal(value, data) {
     const dialogData = {
