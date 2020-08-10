@@ -96,12 +96,12 @@
                     <th mat-header-cell *matHeaderCellDef>
                     </th>
                     <td mat-cell *matCellDef="let row">
-                        <mat-checkbox [checked]="true">
+                        <mat-checkbox [checked]="row.starred" for="star">
                         </mat-checkbox>
-                        <span class="material-icons">
+                        <span class="material-icons" (click)="row.starred = false" id="star" *ngIf="!row.starred">
                             star_outline
                         </span>
-                        <span class="material-icons">
+                        <span class="material-icons" (click)="row.starred = true" id="star" *ngIf="row.starred">
                             star
                         </span>
                     </td>

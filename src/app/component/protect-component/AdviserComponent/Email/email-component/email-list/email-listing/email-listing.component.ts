@@ -68,7 +68,13 @@ export class EmailListingComponent implements OnInit {
   currentPage: number = 1;
   toShowMaxThreadsLength;
 
-  displayedColumns: string[] = ["select",'star', "emailers", "subjectMessage", "date"];
+  displayedColumns: string[] = [
+    "select",
+    "star",
+    "emailers",
+    "subjectMessage",
+    "date",
+  ];
 
   selection = new SelectionModel<MessageListArray>(true, []);
   location = "";
@@ -498,6 +504,7 @@ export class EmailListingComponent implements OnInit {
             let attachmentArrayObjects = [];
             let messageCountInAThread: number;
             let messageDates: number[] = [];
+            let isStarred = false;
 
             parsedData = EmailUtilService.decodeGmailThreadExtractMessage(
               thread
@@ -506,6 +513,9 @@ export class EmailListingComponent implements OnInit {
               thread
             );
             idsOfThread = EmailUtilService.getIdsOfGmailThreads(thread);
+            if (idsOfThread.includes("STARRED")) {
+              isStarred = true;
+            }
             idsOfMessages = EmailUtilService.getIdsOfGmailMessages(thread);
             dateIdsSnippetsOfMessages = EmailUtilService.getIdAndDateAndSnippetOfGmailThreadMessages(
               thread
@@ -548,7 +558,7 @@ export class EmailListingComponent implements OnInit {
               position: index + 1,
               idsOfThread,
               idsOfMessages,
-              star: "",
+              starred: isStarred,
               parsedData,
               attachmentFiles,
               messageHeaders: extractSubjectFromHeaders["headerFromArray"],
