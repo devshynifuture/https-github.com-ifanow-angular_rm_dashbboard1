@@ -952,7 +952,7 @@
                         *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
                         <img width="250px" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
                     </div>
-                    <div *ngIf="getOrgData && getOrgData.reportLogoUrl == null">
+                    <div *ngIf="getOrgData && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
                         <img width="250px" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
                     </div>
                 </td>
