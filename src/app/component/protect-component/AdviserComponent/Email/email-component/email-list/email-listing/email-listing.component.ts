@@ -1,23 +1,27 @@
-import { AuthService } from 'src/app/auth-service/authService';
-import { EventService } from './../../../../../../../Data-service/event.service';
-import { ComposeEmailComponent } from './../../compose-email/compose-email.component';
-import { ConfirmDialogComponent } from './../../../../../common-component/confirm-dialog/confirm-dialog.component';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { SelectionModel } from '@angular/cdk/collections';
-import { MatPaginator, MatDialog } from '@angular/material';
-import { MatTableDataSource } from '@angular/material/table';
+import { AuthService } from "src/app/auth-service/authService";
+import { EventService } from "./../../../../../../../Data-service/event.service";
+import { ComposeEmailComponent } from "./../../compose-email/compose-email.component";
+import { ConfirmDialogComponent } from "./../../../../../common-component/confirm-dialog/confirm-dialog.component";
+import { Router, ActivatedRoute } from "@angular/router";
+import { Component, OnInit, ViewChild, OnDestroy } from "@angular/core";
+import { SelectionModel } from "@angular/cdk/collections";
+import { MatPaginator, MatDialog } from "@angular/material";
+import { MatTableDataSource } from "@angular/material/table";
 
-import { EmailServiceService } from './../../../email-service.service';
-import { ExtractedGmailDataI, MessageListArray, GmailInboxResponseI } from '../../email.interface';
-import { EmailUtilService } from 'src/app/services/email-util.service';
-import { UtilService } from '../../../../../../../services/util.service';
-import { SubscriptionInject } from '../../../../Subscriptions/subscription-inject.service';
+import { EmailServiceService } from "./../../../email-service.service";
+import {
+  ExtractedGmailDataI,
+  MessageListArray,
+  GmailInboxResponseI,
+} from "../../email.interface";
+import { EmailUtilService } from "src/app/services/email-util.service";
+import { UtilService } from "../../../../../../../services/util.service";
+import { SubscriptionInject } from "../../../../Subscriptions/subscription-inject.service";
 
 @Component({
-  selector: 'app-email-listing',
-  templateUrl: './email-listing.component.html',
-  styleUrls: ['./email-listing.component.scss']
+  selector: "app-email-listing",
+  templateUrl: "./email-listing.component.html",
+  styleUrls: ["./email-listing.component.scss"],
 })
 export class EmailListingComponent implements OnInit {
   isLoading: boolean = false;
@@ -38,7 +42,6 @@ export class EmailListingComponent implements OnInit {
   isCustomerEmail: boolean;
   unreadCount: any;
 
-
   constructor(
     private emailService: EmailServiceService,
     private router: Router,
@@ -47,7 +50,8 @@ export class EmailListingComponent implements OnInit {
     private eventService: EventService,
     private authService: AuthService,
     private emailUtilService: EmailUtilService,
-    private subInjectService: SubscriptionInject) { }
+    private subInjectService: SubscriptionInject
+  ) {}
 
   paginatorLength;
   paginatorSubscription;
@@ -64,10 +68,10 @@ export class EmailListingComponent implements OnInit {
   currentPage: number = 1;
   toShowMaxThreadsLength;
 
-  displayedColumns: string[] = ['select', 'emailers', 'subjectMessage', 'date'];
+  displayedColumns: string[] = ["select",'star', "emailers", "subjectMessage", "date"];
 
   selection = new SelectionModel<MessageListArray>(true, []);
-  location = '';
+  location = "";
   secondInit = false;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -80,20 +84,26 @@ export class EmailListingComponent implements OnInit {
   initPoint() {
     this.isLoading = true;
     let location;
-    location = this.router.url.split('/')[this.router.url.split('/').length - 1];
+    location = this.router.url.split("/")[
+      this.router.url.split("/").length - 1
+    ];
 
     console.log("this is router url:", this.router.url);
-    if (this.router.url.split('/').includes('admin')) {
-      if (this.router.url === '/') {
-        location = 'inbox';
+    if (this.router.url.split("/").includes("admin")) {
+      if (this.router.url === "/") {
+        location = "inbox";
       }
       this.isCustomerEmail = false;
-    } else if (this.router.url.split('/').includes('customer')) {
+    } else if (this.router.url.split("/").includes("customer")) {
       this.isCustomerEmail = true;
     }
 
-    (location === 'trash') ? this.trashAction = true : this.trashAction = false;
-    (location === 'draft') ? this.showDraftView = true : this.showDraftView = false;
+    location === "trash"
+      ? (this.trashAction = true)
+      : (this.trashAction = false);
+    location === "draft"
+      ? (this.showDraftView = true)
+      : (this.showDraftView = false);
     this.location = location;
     this.totalListSize = 0;
     this.currentList = 0;
@@ -113,17 +123,21 @@ export class EmailListingComponent implements OnInit {
     this.getPaginatorLengthRes(location);
   }
 
-
   redirectMessages(element, index) {
     let gmailThread;
     gmailThread = this.gmailThreads[index];
     console.log("this is some listing ::element;::::", element);
-    if (element.labelIdsfromMessages[0].includes('DRAFT') && this.location === 'draft') {
+    if (
+      element.labelIdsfromMessages[0].includes("DRAFT") &&
+      this.location === "draft"
+    ) {
       this.showDraftView = true;
     } else {
       this.showDraftView = false;
     }
-    this.showDraftView ? this.openDraftView(element, gmailThread) : this.gotoEmailView(element);
+    this.showDraftView
+      ? this.openDraftView(element, gmailThread)
+      : this.gotoEmailView(element);
   }
 
   ngOnDestroy() {
@@ -134,71 +148,90 @@ export class EmailListingComponent implements OnInit {
   }
 
   getPaginatorLengthRes(location) {
-    if (localStorage.getItem('associatedGoogleEmailId')) {
+    if (localStorage.getItem("associatedGoogleEmailId")) {
       const userInfo = AuthService.getUserInfo();
-      userInfo['email'] = localStorage.getItem('associatedGoogleEmailId');
+      userInfo["email"] = localStorage.getItem("associatedGoogleEmailId");
       this.authService.setUserInfo(userInfo);
     }
 
-    this.paginatorSubscription = this.emailService.getProfile()
-      .subscribe(response => {
+    this.paginatorSubscription = this.emailService.getProfile().subscribe(
+      (response) => {
         if (!response) {
-          this.eventService.openSnackBar("You must connect your gmail account", "Dismiss");
-          if (localStorage.getItem('successStoringToken')) {
-            localStorage.removeItem('successStoringToken');
+          this.eventService.openSnackBar(
+            "You must connect your gmail account",
+            "Dismiss"
+          );
+          if (localStorage.getItem("successStoringToken")) {
+            localStorage.removeItem("successStoringToken");
           }
           this.isLoading = false;
-          this.router.navigate(['google-connect'], { relativeTo: this.activatedRoute });
+          this.router.navigate(["google-connect"], {
+            relativeTo: this.activatedRoute,
+          });
         } else {
           // this.paginatorLength = response.threadsTotal;
           this.getRightSideNavListCount(location);
         }
-      }, err => {
-        this.eventService.openSnackBar("You must connect your gmail account", "Dismiss");
-        if (localStorage.getItem('successStoringToken')) {
-          localStorage.removeItem('successStoringToken');
+      },
+      (err) => {
+        this.eventService.openSnackBar(
+          "You must connect your gmail account",
+          "Dismiss"
+        );
+        if (localStorage.getItem("successStoringToken")) {
+          localStorage.removeItem("successStoringToken");
         }
-        this.router.navigate(['google-connect'], { relativeTo: this.activatedRoute });
-      });
+        this.router.navigate(["google-connect"], {
+          relativeTo: this.activatedRoute,
+        });
+      }
+    );
   }
 
   getRightSideNavListCount(location) {
     this.isLoading = true;
-    this.emailService.getRightSideNavList().subscribe(responseData => {
+    this.emailService.getRightSideNavList().subscribe((responseData) => {
       this.navList = responseData;
       console.log("check navlist :::", this.navList);
       if (this.navList.length !== 0) {
-        this.navList.forEach(element => {
+        this.navList.forEach((element) => {
           switch (element.labelId) {
-            case 'IMPORTANT':
+            case "IMPORTANT":
               this.importantCount = element.threadsTotal;
               break;
-            case 'SENT':
+            case "SENT":
               this.sentCount = element.threadsTotal;
               break;
-            case 'DRAFT':
+            case "DRAFT":
               this.draftCount = element.threadsTotal;
               break;
-            case 'TRASH':
+            case "TRASH":
               this.trashCount = element.threadsTotal;
               break;
           }
-          if ((this.location.toUpperCase() === 'INBOX' ? 'IMPORTANT' : '') === element.labelId) {
+          if (
+            (this.location.toUpperCase() === "INBOX" ? "IMPORTANT" : "") ===
+            element.labelId
+          ) {
             this.unreadCount = parseInt(element.threadsUnread);
           }
         });
 
         switch (location) {
-          case 'inbox':
+          case "inbox":
             this.paginatorLength = this.importantCount;
             break;
-          case 'sent': this.paginatorLength = this.sentCount;
+          case "sent":
+            this.paginatorLength = this.sentCount;
             break;
-          case 'draft': this.paginatorLength = this.draftCount;
+          case "draft":
+            this.paginatorLength = this.draftCount;
             break;
-          case 'trash': this.paginatorLength = this.trashCount;
+          case "trash":
+            this.paginatorLength = this.trashCount;
             break;
-          case 'starred': this.paginatorLength = this.starredCount;
+          case "starred":
+            this.paginatorLength = this.starredCount;
             break;
         }
 
@@ -222,8 +255,7 @@ export class EmailListingComponent implements OnInit {
           }
         }
 
-        this.getGmailList(location.toUpperCase(), '');
-
+        this.getGmailList(location.toUpperCase(), "");
       }
     });
   }
@@ -233,103 +265,99 @@ export class EmailListingComponent implements OnInit {
     const ids: string[] = [];
     if (this.selectedThreadsArray.length !== 0) {
       this.selectedThreadsArray.forEach((selectedThread) => {
-        const { idsOfThread: { id } } = selectedThread;
+        const {
+          idsOfThread: { id },
+        } = selectedThread;
         ids.push(id);
       });
 
       const dialogData = {
-        header: 'DELETE',
-        body: 'Are you sure you want to delete the selected mails?',
-        body2: 'This cannot be undone.',
-        btnNo: 'DELETE',
-        btnYes: 'CANCEL',
+        header: "DELETE",
+        body: "Are you sure you want to delete the selected mails?",
+        body2: "This cannot be undone.",
+        btnNo: "DELETE",
+        btnYes: "CANCEL",
         positiveMethod: () => {
-          this.emailService.deleteThreadsFromTrashForever(ids)
-            .subscribe(response => {
+          this.emailService.deleteThreadsFromTrashForever(ids).subscribe(
+            (response) => {
               this.selection.clear();
               dialogRef.close();
               this.initPoint();
-            }, error => console.error(error));
-
+            },
+            (error) => console.error(error)
+          );
         },
         negativeMethod: () => {
           dialogRef.close();
-        }
-
-      }
+        },
+      };
       const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-        width: '400px',
+        width: "400px",
         data: dialogData,
         autoFocus: false,
       });
 
-      dialogRef.afterClosed().subscribe(result => {
-
-      });
-
+      dialogRef.afterClosed().subscribe((result) => {});
     } else {
       const dialogData = {
-        header: 'Warning',
-        body: 'No Mails selected. Cannot delete',
-        body2: 'Please Select atleast one mail before Deleting!',
+        header: "Warning",
+        body: "No Mails selected. Cannot delete",
+        body2: "Please Select atleast one mail before Deleting!",
         // btnYes: '',
-        btnNo: 'CANCEL',
+        btnNo: "CANCEL",
         positiveMethod: () => {
-          dialogRef.close()
+          dialogRef.close();
         },
-        negativeMethod: () => {
-        }
-
-      }
+        negativeMethod: () => {},
+      };
       const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-        width: '400px',
+        width: "400px",
         data: dialogData,
         autoFocus: false,
       });
 
-      dialogRef.afterClosed().subscribe(result => {
-
-      });
+      dialogRef.afterClosed().subscribe((result) => {});
     }
-
   }
 
   openDraftView(dataObj, gmailThread) {
-
     const threadIdsArray = [];
     this.messageListArray.forEach((item) => {
       threadIdsArray.push(item["idsOfThread"]["id"]);
     });
 
     const fragmentData = {
-      flag: 'composeEmail',
-      data: { dataToSend: dataObj, choice: 'draft' },
+      flag: "composeEmail",
+      data: { dataToSend: dataObj, choice: "draft" },
       id: 1,
-      state: 'open35',
-      componentName: ComposeEmailComponent
+      state: "open35",
+      componentName: ComposeEmailComponent,
     };
-    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
-      sideBarData => {
+    const rightSideDataSub = this.subInjectService
+      .changeNewRightSliderState(fragmentData)
+      .subscribe((sideBarData) => {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.initPoint();
           }
           rightSideDataSub.unsubscribe();
-
         }
-      }
-    );
-
-
+      });
 
     this.emailService.sendNextData({ dataObj, threadIdsArray, gmailThread });
-    this.emailService.openComposeEmail({ dataObj, threadIdsArray, gmailThread }, ComposeEmailComponent, 'draft');
+    this.emailService.openComposeEmail(
+      { dataObj, threadIdsArray, gmailThread },
+      ComposeEmailComponent,
+      "draft"
+    );
     this.showDraftView = false;
   }
 
   // move single thread to trash
   moveThreadToTrash(element) {
-    const { idsOfThread: { id } } = element;
+    const {
+      idsOfThread: { id },
+    } = element;
     const ids: string[] = [];
     ids.push(id);
     // {"ids":["abc","xyz"],"userId":2727,"emailId":"gaurav@futurewise.co.in"}
@@ -340,22 +368,33 @@ export class EmailListingComponent implements OnInit {
   moveThreadsFromTrash() {
     const ids: string[] = [];
     this.selectedThreadsArray.forEach((selectedThread) => {
-      const { idsOfThread: { id } } = selectedThread;
+      const {
+        idsOfThread: { id },
+      } = selectedThread;
       ids.push(id);
     });
-    const untrashSubscription = this.emailService.moveThreadsFromTrashToList(ids).subscribe(response => {
-      untrashSubscription.unsubscribe();
-      this.ngOnInit();
-    }, error => console.error(error));
+    const untrashSubscription = this.emailService
+      .moveThreadsFromTrashToList(ids)
+      .subscribe(
+        (response) => {
+          untrashSubscription.unsubscribe();
+          this.ngOnInit();
+        },
+        (error) => console.error(error)
+      );
   }
 
   threadsToTrashService(ids) {
     this.isLoading = true;
-    const threadsToTrashSubscription = this.emailService.moveThreadsToTrashFromList(ids)
-      .subscribe(response => {
+    const threadsToTrashSubscription = this.emailService
+      .moveThreadsToTrashFromList(ids)
+      .subscribe((response) => {
         this.isLoading = false;
         if (response) {
-          this.eventService.openSnackBar('Deleted Successfully!! Updating list', "DISMISS");
+          this.eventService.openSnackBar(
+            "Deleted Successfully!! Updating list",
+            "DISMISS"
+          );
           this.selection.clear();
           threadsToTrashSubscription.unsubscribe();
           this.ngOnInit();
@@ -363,63 +402,63 @@ export class EmailListingComponent implements OnInit {
       });
   }
 
-
-
   // get List view
   getGmailList(data, page) {
     this.showNextPaginationBtn = false;
     this.showPrevPaginationBtn = false;
 
-    if (data === 'INBOX') {
-      data = 'INBOX';
+    if (data === "INBOX") {
+      data = "INBOX";
     }
 
     let clientData;
     let receiverEmail;
     if (this.isCustomerEmail) {
-      clientData = JSON.parse(sessionStorage.getItem('clientData'));
+      clientData = JSON.parse(sessionStorage.getItem("clientData"));
       receiverEmail = clientData.emailList[0].email;
       // receiverEmail = 'abhishek@futurewise.co.in';
     }
 
     if (this.isCustomerEmail) {
-      let queryParams = '';
-      if (this.location === 'inbox') {
+      let queryParams = "";
+      if (this.location === "inbox") {
         queryParams = `{ from: ${receiverEmail} }`;
-      } else if (this.location === 'sent') {
+      } else if (this.location === "sent") {
         queryParams = `{ to: ${receiverEmail} }`;
-      } else if (this.location === 'draft') {
-        queryParams = `{ in:draft } { (from to): ${receiverEmail} }`
-      } else if (this.location === 'trash') {
-        queryParams = `{ in:trash } { (from to): ${receiverEmail} }`
-      } else if (this.location === 'inbox') {
-        queryParams = `[ in:inbox -category:{social promotions updates forums} ]`
+      } else if (this.location === "draft") {
+        queryParams = `{ in:draft } { (from to): ${receiverEmail} }`;
+      } else if (this.location === "trash") {
+        queryParams = `{ in:trash } { (from to): ${receiverEmail} }`;
+      } else if (this.location === "inbox") {
+        queryParams = `[ in:inbox -category:{social promotions updates forums} ]`;
       } else {
         queryParams = `{ (from to): ${receiverEmail} }`;
       }
 
       data = {
         labelIds: data,
-        pageToken: (page == 'next') ? (this.nextPageToken ? this.nextPageToken : '') : '',
+        pageToken:
+          page == "next" ? (this.nextPageToken ? this.nextPageToken : "") : "",
         maxResults: 50,
-        q: queryParams
-      }
+        q: queryParams,
+      };
     } else {
       let queryParams;
       data = {
         labelIds: data,
-        pageToken: (page == 'next') ? (this.nextPageToken ? this.nextPageToken : '') : '',
-        maxResults: 50
-      }
-      if (this.location === 'inbox') {
-        queryParams = `[ in:inbox -category:{social promotions forums} ]`
-        data.q = queryParams
+        pageToken:
+          page == "next" ? (this.nextPageToken ? this.nextPageToken : "") : "",
+        maxResults: 50,
+      };
+      if (this.location === "inbox") {
+        queryParams = `[ in:inbox -category:{social promotions forums} ]`;
+        data.q = queryParams;
       }
     }
     // console.log("this is query parameters: ", encodeURIComponent(queryParams));
     console.log("this is some data that im sending", data);
-    this.listSubscription = this.emailService.getMailInboxList(data)
-      .subscribe(responseData => {
+    this.listSubscription = this.emailService.getMailInboxList(data).subscribe(
+      (responseData) => {
         if (responseData) {
           if (responseData.nextPageToken) {
             this.nextPageToken = responseData.nextPageToken;
@@ -460,29 +499,47 @@ export class EmailListingComponent implements OnInit {
             let messageCountInAThread: number;
             let messageDates: number[] = [];
 
-            parsedData = EmailUtilService.decodeGmailThreadExtractMessage(thread);
-            attachmentArrayObjects = EmailUtilService.getAttachmentObjectFromGmailThread(thread);
+            parsedData = EmailUtilService.decodeGmailThreadExtractMessage(
+              thread
+            );
+            attachmentArrayObjects = EmailUtilService.getAttachmentObjectFromGmailThread(
+              thread
+            );
             idsOfThread = EmailUtilService.getIdsOfGmailThreads(thread);
             idsOfMessages = EmailUtilService.getIdsOfGmailMessages(thread);
-            dateIdsSnippetsOfMessages = EmailUtilService.getIdAndDateAndSnippetOfGmailThreadMessages(thread);
-            labelIdsfromMessages = EmailUtilService.getGmailLabelIdsFromMessages(thread);
-            extractSubjectFromHeaders = EmailUtilService.getSubjectAndFromOfGmailHeaders(thread);
-            messageCountInAThread = Math.ceil(parsedData.decodedPart.length / 2);
+            dateIdsSnippetsOfMessages = EmailUtilService.getIdAndDateAndSnippetOfGmailThreadMessages(
+              thread
+            );
+            labelIdsfromMessages = EmailUtilService.getGmailLabelIdsFromMessages(
+              thread
+            );
+            extractSubjectFromHeaders = EmailUtilService.getSubjectAndFromOfGmailHeaders(
+              thread
+            );
+            messageCountInAThread = Math.ceil(
+              parsedData.decodedPart.length / 2
+            );
 
             dateIdsSnippetsOfMessages.forEach((element, index) => {
               const { internalDate } = element;
               messageDates.push(internalDate);
             });
 
-            extractAttachmentFiles = EmailUtilService.getAttachmentFileData(thread);
+            extractAttachmentFiles = EmailUtilService.getAttachmentFileData(
+              thread
+            );
 
             if (extractAttachmentFiles !== null) {
               attachmentFiles = extractAttachmentFiles;
             } else {
-              attachmentFiles = '';
+              attachmentFiles = "";
             }
             let isRead;
-            if (labelIdsfromMessages.some(labelItem => labelItem.some(item => item === 'UNREAD'))) {
+            if (
+              labelIdsfromMessages.some((labelItem) =>
+                labelItem.some((item) => item === "UNREAD")
+              )
+            ) {
               isRead = false;
             } else {
               isRead = true;
@@ -491,28 +548,39 @@ export class EmailListingComponent implements OnInit {
               position: index + 1,
               idsOfThread,
               idsOfMessages,
+              star: "",
               parsedData,
               attachmentFiles,
-              messageHeaders: extractSubjectFromHeaders['headerFromArray'],
+              messageHeaders: extractSubjectFromHeaders["headerFromArray"],
               messageDates,
               messageCount: messageCountInAThread,
               labelIdsfromMessages,
-              emailers: `${typeof (extractSubjectFromHeaders['headerFromArray'][0]) === 'string' ? extractSubjectFromHeaders['headerFromArray'][0].split('<')[0].trim() : ''}`,
+              emailers: `${
+                typeof extractSubjectFromHeaders["headerFromArray"][0] ===
+                "string"
+                  ? extractSubjectFromHeaders["headerFromArray"][0]
+                      .split("<")[0]
+                      .trim()
+                  : ""
+              }`,
               subjectMessage: {
-                subject: extractSubjectFromHeaders['headerSubjectArray'][0],
-                message: dateIdsSnippetsOfMessages[0]['snippet']
+                subject: extractSubjectFromHeaders["headerSubjectArray"][0],
+                message: dateIdsSnippetsOfMessages[0]["snippet"],
               },
-              date: `${dateIdsSnippetsOfMessages[0]['internalDate']}`,
+              date: `${dateIdsSnippetsOfMessages[0]["internalDate"]}`,
               attachmentArrayObjects,
               isRead,
-              hasAttachment: attachmentArrayObjects.length !== 0 ? (attachmentArrayObjects[0].filename !== '' ? true : false) : false
-            }
-
+              hasAttachment:
+                attachmentArrayObjects.length !== 0
+                  ? attachmentArrayObjects[0].filename !== ""
+                    ? true
+                    : false
+                  : false,
+            };
 
             // tempArray.push(Obj);
             tempArray1.push(Obj1);
           });
-
 
           this.messageListArray = tempArray1;
           // this.messageDetailArray = tempArray;
@@ -526,12 +594,16 @@ export class EmailListingComponent implements OnInit {
               this.showPrevPaginationBtn = true;
             }
           }
-          this.dataSource = new MatTableDataSource<MessageListArray>(this.messageListArray);
+          this.dataSource = new MatTableDataSource<MessageListArray>(
+            this.messageListArray
+          );
           this.dataSource.paginator = this.paginator;
         } else {
           this.isLoading = false;
         }
-      }, error => console.error(error));
+      },
+      (error) => console.error(error)
+    );
   }
 
   getUnreadCountValue(index) {
@@ -540,7 +612,10 @@ export class EmailListingComponent implements OnInit {
 
   nextPagesList() {
     let aheadPaginatorVal = this.maxListRes + 50;
-    if (aheadPaginatorVal <= this.paginatorLength || this.maxListRes <= this.paginatorLength) {
+    if (
+      aheadPaginatorVal <= this.paginatorLength ||
+      this.maxListRes <= this.paginatorLength
+    ) {
       this.totalListSize = this.totalListSize - 50;
       this.currentList = this.maxListRes + 1;
       this.maxListRes = this.maxListRes + 50;
@@ -553,23 +628,20 @@ export class EmailListingComponent implements OnInit {
         }
       }
       this.isLoading = true;
-      this.getGmailList(this.location.toUpperCase(), 'next');
+      this.getGmailList(this.location.toUpperCase(), "next");
     } else {
       this.showNextPaginationBtn = false;
     }
-
   }
 
   previousPagesList() {
-
     this.totalListSize = 0 + 50;
     this.maxListRes = 50;
     this.currentList = 1;
 
     this.isLoading = true;
 
-    this.getGmailList(this.router.url.split('/')[3].toUpperCase(), 'prev');
-
+    this.getGmailList(this.router.url.split("/")[3].toUpperCase(), "prev");
   }
 
   // getFileDetails(e): void {
@@ -624,7 +696,7 @@ export class EmailListingComponent implements OnInit {
       this.showOptions = false;
     } else {
       this.showOptions = true;
-      this.dataSource.data.forEach(row => {
+      this.dataSource.data.forEach((row) => {
         this.selection.select(row);
         this.selectedThreadsArray.push(row);
       });
@@ -634,23 +706,22 @@ export class EmailListingComponent implements OnInit {
   /** The label for the checkbox on the passed row */
   checkboxLabel(row?: MessageListArray): string {
     if (!row) {
-      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+      return `${this.isAllSelected() ? "select" : "deselect"} all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`; //
+    return `${this.selection.isSelected(row) ? "deselect" : "select"} row ${
+      row.position + 1
+    }`; //
   }
 
   // routing to view pageF`
   gotoEmailView(dataObj: Object): void {
-
-
     this.emailService.sendNextData(dataObj);
-    this.router.navigate(['view'], { relativeTo: this.activatedRoute });
+    this.router.navigate(["view"], { relativeTo: this.activatedRoute });
   }
 
   // ui select highlight
   highlightSelectedRow(row: ExtractedGmailDataI): void {
     if (this.selectedThreadsArray.includes(row)) {
-
       let index = this.selectedThreadsArray.indexOf(row);
       this.selectedThreadsArray.splice(index, 1);
       if (this.selectedThreadsArray.length == 0) {
@@ -667,16 +738,19 @@ export class EmailListingComponent implements OnInit {
     // const { idsOfThread: { id } } =
     let ids = [];
     selectedArray.forEach((item) => {
-      const { idsOfThread: { id } } = item;
+      const {
+        idsOfThread: { id },
+      } = item;
       ids.push(id);
     });
 
     if (ids.length === 0) {
-      this.eventService.openSnackBar("Please select email or emails to delete!", "Dismiss");
+      this.eventService.openSnackBar(
+        "Please select email or emails to delete!",
+        "Dismiss"
+      );
     } else {
       this.threadsToTrashService(ids);
     }
-
   }
-
 }

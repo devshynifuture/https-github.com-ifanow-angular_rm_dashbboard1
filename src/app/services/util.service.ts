@@ -1,24 +1,23 @@
 // tslint:disable:radix
 // tslint:disable:triple-equals
 
-import { ElementRef, Injectable, Input, OnDestroy } from "@angular/core";
-import { DatePipe, DecimalPipe } from "@angular/common";
-import { EventService } from "../Data-service/event.service";
-import { HttpClient, HttpParams } from "@angular/common/http";
-import { SubscriptionService } from "../component/protect-component/AdviserComponent/Subscriptions/subscription.service";
-import { FormGroup } from "@angular/forms";
-import { BehaviorSubject, Subject } from "rxjs";
-import { AuthService } from "../auth-service/authService";
-import { quotationTemplate } from "./quotationTemplate";
-import { debounceTime } from "rxjs/operators";
-import { AppConstants } from "./app-constants";
+import {ElementRef, Injectable, Input, OnDestroy} from '@angular/core';
+import {DatePipe, DecimalPipe} from '@angular/common';
+import {EventService} from '../Data-service/event.service';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {SubscriptionService} from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
+import {FormGroup} from '@angular/forms';
+import {BehaviorSubject, Subject} from 'rxjs';
+import {AuthService} from '../auth-service/authService';
+import {quotationTemplate} from './quotationTemplate';
+import {debounceTime} from 'rxjs/operators';
+import {AppConstants} from './app-constants';
+import {apiConfig} from '../config/main-config';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class UtilService {
-  responseData: any;
-  client: any;
 
   constructor(
     private eventService: EventService,
@@ -29,7 +28,9 @@ export class UtilService {
     this.client = AuthService.getClientData();
   }
 
-  private static decimalPipe = new DecimalPipe("en-US");
+  private static decimalPipe = new DecimalPipe('en-US');
+  responseData: any;
+  client: any;
 
   @Input()
   public positiveMethod: Function;
@@ -45,35 +46,35 @@ export class UtilService {
 
   static getGenderStringFromGenderId(genderId) {
     if (genderId == 1) {
-      return "Male";
+      return 'Male';
     } else if (genderId == 2) {
-      return "Female";
+      return 'Female';
     } else {
-      return "Other";
+      return 'Other';
     }
   }
 
   static getTransactionStatusFromStatusId(statusId) {
     if (statusId == 0) {
-      return "Unknown";
+      return 'Unknown';
     } else if (statusId == 1) {
-      return "Failure";
+      return 'Failure';
     } else if (statusId == 2) {
-      return "Pending Authorization";
+      return 'Pending Authorization';
     } else if (statusId == 3) {
-      return "Otp authorized";
+      return 'Otp authorized';
     } else if (statusId == 4) {
-      return "Pending submission to AMC";
+      return 'Pending submission to AMC';
     } else if (statusId == 5) {
-      return "Order submitted to AMC";
+      return 'Order submitted to AMC';
     } else if (statusId == 6) {
-      return "Order processed";
+      return 'Order processed';
     } else if (statusId == 7) {
-      return "Transaction rejected";
+      return 'Transaction rejected';
     } else if (statusId == 8) {
-      return "Success";
+      return 'Success';
     } else {
-      return "Other";
+      return 'Other';
     }
   }
 
@@ -97,7 +98,7 @@ export class UtilService {
   ): object[] {
     const outputArray = [];
     Object.keys(inputObject).map((key) => {
-      const object = { selected: false };
+      const object = {selected: false};
       object[keyNameForOutput] = inputObject[key];
       object[keyValueForOutput] = key;
 
@@ -108,7 +109,7 @@ export class UtilService {
   }
 
   static isDialogClose(data) {
-    return data && data.state && data.state === "close";
+    return data && data.state && data.state === 'close';
   }
 
   static isRefreshRequired(data) {
@@ -116,7 +117,7 @@ export class UtilService {
     //   "state": data.state,
     //   "refreshRequired": data.refreshRequired
     // }
-    return data && data.state && data.state === "close" && data.refreshRequired;
+    return data && data.state && data.state === 'close' && data.refreshRequired;
   }
 
   static deleteRow(element, list: any[]) {
@@ -143,18 +144,18 @@ export class UtilService {
   }
 
   static convertDateObjectToDateString(datePipe: DatePipe, date: any) {
-    return datePipe.transform(date, "yyyy-MM-dd");
+    return datePipe.transform(date, 'yyyy-MM-dd');
   }
 
   static checkStatusId(element) {
     element.forEach((obj) => {
       if (obj.maturityDate < new Date()) {
-        obj.statusId = "MATURED";
+        obj.statusId = 'MATURED';
       } else {
-        obj.statusId = "LIVE";
+        obj.statusId = 'LIVE';
       }
     });
-    console.log("Status >>>>>>", element);
+    console.log('Status >>>>>>', element);
   }
 
   static roundOff(data: number, noOfPlaces: number = 0) {
@@ -163,8 +164,8 @@ export class UtilService {
 
     return parseFloat(
       this.decimalPipe
-        .transform(data, "9.0-" + noOfPlaces, null)
-        .replace(/,/g, "")
+        .transform(data, '9.0-' + noOfPlaces, null)
+        .replace(/,/g, '')
     );
   }
 
@@ -174,8 +175,8 @@ export class UtilService {
     maxNoOfPlaces: number = 0
   ) {
     return this.decimalPipe
-      .transform(data, "9." + minNoOfPlaces + "-" + maxNoOfPlaces, null)
-      .replace(/,/g, "");
+      .transform(data, '9.' + minNoOfPlaces + '-' + maxNoOfPlaces, null)
+      .replace(/,/g, '');
   }
 
   static roundOffToNearest1(data: number) {
@@ -183,7 +184,7 @@ export class UtilService {
   }
 
   static escapeRegExp(s) {
-    return s.replace(/([.*+?^=!:${}()|[\]\/\\])/g, "\\$1");
+    return s.replace(/([.*+?^=!:${}()|[\]\/\\])/g, '\\$1');
   }
 
   static mutualFundRoundAndFormat(data, noOfPlaces: number = 0) {
@@ -191,39 +192,39 @@ export class UtilService {
       if (isNaN(data)) {
         return data;
       } else {
-        return this.roundOff(data, noOfPlaces).toLocaleString("en-IN");
+        return this.roundOff(data, noOfPlaces).toLocaleString('en-IN');
       }
     } else {
-      return "0";
+      return '0';
     }
   }
 
   static obfuscateEmail(email: string) {
     let tempMail: string;
-    let arr = email.split("@");
-    email = email.replace(/\./g, "");
-    return this.nameMasking(arr[0]) + "@" + this.domainMasking(arr[1]);
+    const arr = email.split('@');
+    email = email.replace(/\./g, '');
+    return this.nameMasking(arr[0]) + '@' + this.domainMasking(arr[1]);
   }
 
   static nameMasking(str) {
     const midLength = Math.floor(str.length / 2);
     const firstName = str.substr(0, midLength);
-    return firstName + "X".repeat(midLength + 1);
+    return firstName + 'X'.repeat(midLength + 1);
   }
 
   static domainMasking(str) {
     return (
-      "x".repeat(str.indexOf(".")) +
-      str.substr(str.indexOf("."), str.length - 1)
+      'x'.repeat(str.indexOf('.')) +
+      str.substr(str.indexOf('.'), str.length - 1)
     );
   }
 
   static obfuscateMobile(mobileNo: string) {
-    return mobileNo.substr(0, 2) + "XXXXX" + mobileNo.substr(7, 9);
+    return mobileNo.substr(0, 2) + 'XXXXX' + mobileNo.substr(7, 9);
   }
 
   public static getNumberToWord(numberValue) {
-    let strNumber = "";
+    let strNumber = '';
     if (!numberValue) {
       if (isNaN(numberValue)) {
         return numberValue;
@@ -231,12 +232,12 @@ export class UtilService {
     }
     if (numberValue > 10000000) {
       strNumber =
-        this.mutualFundRoundAndFormat(numberValue / 10000000.0, 2) + " Crores";
+        this.mutualFundRoundAndFormat(numberValue / 10000000.0, 2) + ' Crores';
     } else if (numberValue > 100000) {
       strNumber =
-        this.mutualFundRoundAndFormat(numberValue / 100000.0, 2) + " Lacs";
+        this.mutualFundRoundAndFormat(numberValue / 100000.0, 2) + ' Lacs';
     } else if (numberValue > 1000) {
-      strNumber = this.mutualFundRoundAndFormat(numberValue / 1000.0, 2) + " K";
+      strNumber = this.mutualFundRoundAndFormat(numberValue / 1000.0, 2) + ' K';
     } else {
       strNumber = numberValue.toString();
     }
@@ -251,12 +252,43 @@ export class UtilService {
     return httpParams;
   }
 
+  static getDocumentTemplates(documentType) {
+    let froalaTemplate;
+    if (documentType == 1) {
+    } else if (documentType == 2) {
+    } else if (documentType == 7) {
+    } else if (documentType == 7) {
+      return quotationTemplate;
+    } else {
+      return 'docText';
+    }
+  }
+
+  /**
+   * Compares and returns int value based on date comparision
+   * @param date1 date object or date string
+   * @param date2 date object or date string
+   * @returns 0 if dates are equal, 1 if second is greater than first, -1 otherwise
+   */
+  public static compareDates(date1, date2) {
+    const firstD = new Date(date1).getTime();
+    const secondD = new Date(date2).getTime();
+
+    if (firstD === secondD) {
+      return 0;
+    } else if (firstD > secondD) {
+      return -1;
+    } else {
+      return 1;
+    }
+  }
+
   setSubscriptionStepData(data) {
     this.subscriptionStepData = data;
   }
 
   addZeroBeforeNumber(num, padlen, padchar?) {
-    const pad_char = typeof padchar !== "undefined" ? padchar : "0";
+    const pad_char = typeof padchar !== 'undefined' ? padchar : '0';
     const pad = new Array(1 + padlen).join(pad_char);
     return (pad + num).slice(-pad.length);
   }
@@ -278,7 +310,7 @@ export class UtilService {
   }
 
   formatNumbers(data) {
-    return parseInt(data).toLocaleString("en-IN");
+    return parseInt(data).toLocaleString('en-IN');
   }
 
   formatter(data) {
@@ -320,24 +352,24 @@ export class UtilService {
     if (!!inputValue) {
       // let regex = $client_name\)/gi;
       inputValue = inputValue.replace(
-        new RegExp(escapeRegExp("$client_name"), "g"),
+        new RegExp(escapeRegExp('$client_name'), 'g'),
         placeHolder.clientName
       );
       // regex = /\$\(client_address\)/gi;
       inputValue = inputValue.replace(
-        new RegExp(escapeRegExp("$client_address"), "g"),
+        new RegExp(escapeRegExp('$client_address'), 'g'),
         placeHolder.clientAddress
       );
       // inputValue = inputValue.replace(regex, placeHolder.clientAddress);
       // regex = /\$\(advisor_name\)/gi;
       inputValue = inputValue.replace(
-        new RegExp(escapeRegExp("$advisor_name"), "g"),
+        new RegExp(escapeRegExp('$advisor_name'), 'g'),
         placeHolder.advisorName
       );
       // inputValue = inputValue.replace(regex, placeHolder.advisorName);
       // regex = /\$\(advisor_address\)/gi;
       inputValue = inputValue.replace(
-        new RegExp(escapeRegExp("$advisor_address"), "g"),
+        new RegExp(escapeRegExp('$advisor_address'), 'g'),
         placeHolder.advisorAddress
       );
       // inputValue = inputValue.replace(regex, placeHolder.advisorAddress);
@@ -389,7 +421,7 @@ export class UtilService {
         if (event.target.value.length && event.target.value.length !== null) {
           // console.log(event.target.value);
           if (event.target.value.length === 2 || event.target.value === 4) {
-            res += "/";
+            res += '/';
             return res;
           }
         }
@@ -397,7 +429,7 @@ export class UtilService {
         return res;
       }
     } else {
-      return "";
+      return '';
     }
   }
 
@@ -427,7 +459,7 @@ export class UtilService {
   }
 
   capitalise(event) {
-    if (event.target.value != "") {
+    if (event.target.value != '') {
       event.target.value = event.target.value.replace(/\b\w/g, (l) =>
         l.toUpperCase()
       );
@@ -437,20 +469,20 @@ export class UtilService {
   getBrowserName() {
     const agent = window.navigator.userAgent.toLowerCase();
     switch (true) {
-      case agent.indexOf("edge") > -1:
-        return "edge";
-      case agent.indexOf("opr") > -1 && !!(window as any).opr:
-        return "opera";
-      case agent.indexOf("chrome") > -1 && !!(window as any).chrome:
-        return "chrome";
-      case agent.indexOf("trident") > -1:
-        return "ie";
-      case agent.indexOf("firefox") > -1:
-        return "firefox";
-      case agent.indexOf("safari") > -1:
-        return "safari";
+      case agent.indexOf('edge') > -1:
+        return 'edge';
+      case agent.indexOf('opr') > -1 && !!(window as any).opr:
+        return 'opera';
+      case agent.indexOf('chrome') > -1 && !!(window as any).chrome:
+        return 'chrome';
+      case agent.indexOf('trident') > -1:
+        return 'ie';
+      case agent.indexOf('firefox') > -1:
+        return 'firefox';
+      case agent.indexOf('safari') > -1:
+        return 'safari';
       default:
-        return "other";
+        return 'other';
     }
   }
 
@@ -468,8 +500,8 @@ export class UtilService {
         name: fragData.clientName,
       };
     }
-    inputData = inputData.split(AppConstants.RUPEE_LETTER).join("&#8377;");
-    const date = this.datePipe.transform(new Date(), "dd-MMM-yyyy");
+    inputData = inputData.split(AppConstants.RUPEE_LETTER).join('&#8377;');
+    const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
     const obj = {
       htmlInput: inputData,
       name: pdfName,
@@ -481,22 +513,22 @@ export class UtilService {
     console.log(browser);
     if (!this.client) {
       this.client = {};
-      this.client.name = "";
+      this.client.name = '';
     }
     return this.http
       .post(
-        "http://dev.ifanow.in:8080/futurewise/api/v1/web//subscription/html-to-pdf",
+        apiConfig.MAIN_URL + 'subscription/html-to-pdf',
         obj,
-        { responseType: "blob" }
+        {responseType: 'blob'}
       )
       .subscribe((data) => {
-        const file = new Blob([data], { type: "application/pdf" });
+        const file = new Blob([data], {type: 'application/pdf'});
         fragData.isSpinner = false;
         // window.open(fileURL,"hello");
-        const namePdf = this.client.name + "'s " + pdfName + " as on " + date;
-        const a = document.createElement("a");
+        const namePdf = this.client.name + '\'s ' + pdfName + ' as on ' + date;
+        const a = document.createElement('a');
         a.href = window.URL.createObjectURL(file);
-        a.download = namePdf + ".pdf";
+        a.download = namePdf + '.pdf';
         a.click();
         // a.download = fileURL;
         return this.fileURL ? this.fileURL : null;
@@ -519,11 +551,11 @@ export class UtilService {
 
     return this.http
       .post(
-        "http://dev.ifanow.in:8080/futurewise/api/v1/web/pdfAndEmail/bulk-mail/html-to-pdf",
+        apiConfig.MAIN_URL + 'pdfAndEmail/bulk-mail/html-to-pdf',
         obj
       )
       .subscribe((data) => {
-        console.log("done email", data);
+        console.log('done email', data);
         this.responseData = data;
         alert(this.responseData.status);
       });
@@ -537,35 +569,35 @@ export class UtilService {
   convertB64toImageFile(dataURI) {
     // Naming the image
     const date = new Date().valueOf();
-    let text = "";
+    let text = '';
     const possibleText =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     for (let i = 0; i < 5; i++) {
       text += possibleText.charAt(
         Math.floor(Math.random() * possibleText.length)
       );
     }
     // Replace extension according to your media type
-    const imageName = date + "." + text + ".png";
+    const imageName = date + '.' + text + '.png';
 
     // convert base64/URLEncoded data component to raw binary data held in a string
     let byteString;
-    if (dataURI.split(",")[0].indexOf("base64") >= 0) {
-      byteString = atob(dataURI.split(",")[1]);
+    if (dataURI.split(',')[0].indexOf('base64') >= 0) {
+      byteString = atob(dataURI.split(',')[1]);
     } else {
-      byteString = unescape(dataURI.split(",")[1]);
+      byteString = unescape(dataURI.split(',')[1]);
     }
 
     // separate out the mime component
-    const mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0];
+    const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
 
     // write the bytes of the string to a typed array
     const ia = new Uint8Array(byteString.length);
     for (let i = 0; i < byteString.length; i++) {
       ia[i] = byteString.charCodeAt(i);
     }
-    const imageBlob = new Blob([ia], { type: mimeString });
-    return new File([imageBlob], imageName, { type: "image/png" });
+    const imageBlob = new Blob([ia], {type: mimeString});
+    return new File([imageBlob], imageName, {type: 'image/png'});
   }
 
   /**
@@ -633,43 +665,12 @@ export class UtilService {
   // dirty fix to shift the view to top for right slider
   // TODO:- need to find a better solution and fix this mess as js code is not recommended by angular
   scrollToTopForRightSlider() {
-    document.querySelector(".right_sidenav").scrollTop = 0;
+    document.querySelector('.right_sidenav').scrollTop = 0;
   }
 
   scrollToBottomForRightSlider() {
-    const height = document.querySelector(".right_sidenav").scrollHeight;
-    document.querySelector(".right_sidenav").scrollTop = height;
-  }
-
-  static getDocumentTemplates(documentType) {
-    let froalaTemplate;
-    if (documentType == 1) {
-    } else if (documentType == 2) {
-    } else if (documentType == 7) {
-    } else if (documentType == 7) {
-      return quotationTemplate;
-    } else {
-      return "docText";
-    }
-  }
-
-  /**
-   * Compares and returns int value based on date comparision
-   * @param date1 date object or date string
-   * @param date2 date object or date string
-   * @returns 0 if dates are equal, 1 if second is greater than first, -1 otherwise
-   */
-  public static compareDates(date1, date2) {
-    const firstD = new Date(date1).getTime();
-    const secondD = new Date(date2).getTime();
-
-    if (firstD === secondD) {
-      return 0;
-    } else if (firstD > secondD) {
-      return -1;
-    } else {
-      return 1;
-    }
+    const height = document.querySelector('.right_sidenav').scrollHeight;
+    document.querySelector('.right_sidenav').scrollTop = height;
   }
 }
 
@@ -714,7 +715,7 @@ export class ValidatorType {
 
 // Escape characters that have a special meaning in Regular Expressions
 export function escapeRegExp(s: string): string {
-  return s.replace(/([.*+?^=!:${}()|[\]\/\\])/g, "\\$1");
+  return s.replace(/([.*+?^=!:${}()|[\]\/\\])/g, '\\$1');
 }
 
 /**
