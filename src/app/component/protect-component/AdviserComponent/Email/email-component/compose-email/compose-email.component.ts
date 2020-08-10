@@ -1,48 +1,63 @@
-import { AuthService } from './../../../../../../auth-service/authService';
-import { EmailUtilService } from './../../../../../../services/email-util.service';
-import { FormBuilder, FormGroup, Form } from '@angular/forms';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { calendarService } from "./../../../Activities/calendar/calendar.service";
+import { AuthService } from "./../../../../../../auth-service/authService";
+import { EmailUtilService } from "./../../../../../../services/email-util.service";
+import { FormBuilder, FormGroup, Form, FormControl } from "@angular/forms";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 
-import { SubscriptionService } from './../../../Subscriptions/subscription.service';
-import { SubscriptionInject } from './../../../Subscriptions/subscription-inject.service';
-import { EmailServiceService } from './../../email-service.service';
-import { EventService } from './../../../../../../Data-service/event.service';
-import { Validators } from '@angular/forms';
-import { Subscription, from, of, BehaviorSubject } from 'rxjs';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { MatChipInputEvent } from '@angular/material';
-import { EmailAttachmentI } from '../email.interface';
-import { tap, debounceTime, switchMap } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { SubscriptionService } from "./../../../Subscriptions/subscription.service";
+import { SubscriptionInject } from "./../../../Subscriptions/subscription-inject.service";
+import { EmailServiceService } from "./../../email-service.service";
+import { EventService } from "./../../../../../../Data-service/event.service";
+import { Validators } from "@angular/forms";
+import { Subscription, from, of, BehaviorSubject } from "rxjs";
+import { COMMA, ENTER } from "@angular/cdk/keycodes";
+import { MatChipInputEvent } from "@angular/material";
+import { EmailAttachmentI } from "../email.interface";
+import { tap, debounceTime, switchMap } from "rxjs/operators";
+import { Router } from "@angular/router";
 
 @Component({
-  selector: 'app-compose-email',
-  templateUrl: './compose-email.component.html',
-  styleUrls: ['./compose-email.component.scss']
+  selector: "app-compose-email",
+  templateUrl: "./compose-email.component.html",
+  styleUrls: ["./compose-email.component.scss"],
 })
 export class ComposeEmailComponent implements OnInit, OnDestroy {
-  attachmentsIdArray: { filename: string, mimeType: string, attachmentId: string }[] = [];
-  attachmentsBase64Data: { filename: string, size: number, attachmentBase64Data: string, mimeType: string }[] = [];
+  attachmentsIdArray: {
+    filename: string;
+    mimeType: string;
+    attachmentId: string;
+  }[] = [];
+  attachmentsBase64Data: {
+    filename: string;
+    size: number;
+    attachmentBase64Data: string;
+    mimeType: string;
+  }[] = [];
   attachmentArrayDetail: Array<any> = [];
-  advisorId: any = AuthService.getAdvisorId()
-  currentDraftGmailThread: any = '';
+  advisorId: any = AuthService.getAdvisorId();
+  currentDraftGmailThread: any = "";
   isLoadingForAttachment: boolean;
   refreshRequired: boolean = false;
   showSaving = false;
   saveDraftComplete: boolean;
   isCustomerEmail: any;
   editRecepient: boolean;
+  contactList: any = [];
+  manualContactAdd: boolean = false;
 
-  constructor(private subInjectService: SubscriptionInject,
+  constructor(
+    private subInjectService: SubscriptionInject,
     public subscription: SubscriptionService,
     public eventService: EventService,
     private emailService: EmailServiceService,
+    private calendarService: calendarService,
     private fb: FormBuilder,
-    private router: Router) { }
+    private router: Router
+  ) {}
 
   receipentEmail: string;
-  subject: string = '';
-  emailBody: string = '';
+  subject: string = "";
+  emailBody: string = "";
   from: string = AuthService.getUserInfo().email;
   to: string = "";
   idOfMessage = null;
@@ -57,7 +72,7 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
   idArray: [] = [];
   prevStateOfForm;
   currentStateOfForm: Form;
-  toCreateOrUpdate: string = '';
+  toCreateOrUpdate: string = "";
   emailFormChangeSubscription: Subscription;
   didFormChanged: boolean = false;
   emailForm: FormGroup;
@@ -75,7 +90,7 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
   interval;
-  emailFormValueChange = {}
+  emailFormValueChange = {};
   emailAttachments: EmailAttachmentI[] = [];
   currentDraftIds = [];
   gmailDraftThread;
@@ -85,7 +100,7 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
     console.log("compose getting value data:::::", this.data);
     this.choice = this.data.choice;
 
-    if (this.router.url.split('/').includes('customer')) {
+    if (this.router.url.split("/").includes("customer")) {
       this.isCustomerEmail = true;
     } else {
       this.isCustomerEmail = false;
@@ -97,138 +112,173 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
     this.prevStateOfForm = this.emailForm.value;
 
     let attachmentIds = [];
-    if (this.data.choice === 'draft') {
-      this.data.dataToSend.dataObj.attachmentArrayObjects.forEach(element => {
+    if (this.data.choice === "draft") {
+      this.data.dataToSend.dataObj.attachmentArrayObjects.forEach((element) => {
         attachmentIds.push(element.id);
       });
     }
+
+    this.calendarService
+      .getAttendyList({ userId: this.advisorId })
+      .subscribe((res) => {
+        if (res) {
+          this.contactList = res;
+          console.log("this is contact email address ", res);
+        } else {
+          this.contactList = [];
+          this.manualContactAdd = true;
+        }
+      });
+
     // for updation draft
-    this.emailForm.valueChanges.pipe(
-      debounceTime(5000),
-      switchMap(value => this.createDraft(value))
-    ).subscribe(res => {
-      if (res) {
-        this.refreshRequired = true;
-        console.log(res);
-        this.currentDraftIds.push(res.message.id);
-        if (this.currentDraftIds.length == 2) {
-          this.deleteDraft();
+    this.emailForm.valueChanges
+      .pipe(
+        debounceTime(5000),
+        switchMap((value) => this.createDraft(value))
+      )
+      .subscribe((res) => {
+        if (res) {
+          this.refreshRequired = true;
+          console.log(res);
+          this.currentDraftIds.push(res.message.id);
+          if (this.currentDraftIds.length == 2) {
+            this.deleteDraft();
+          }
+          if (this.choice == "email") {
+            this.saveDraftComplete = true;
+            setTimeout(() => (this.showSaving = false), 2000);
+          }
+          console.log(this.currentDraftIds, "draft ids:::");
+          this.refreshRequired = true;
         }
-        if (this.choice == 'email') {
-          this.saveDraftComplete = true;
-          setTimeout(() => this.showSaving = false, 2000);
-        }
-        console.log(this.currentDraftIds, 'draft ids:::');
-        this.refreshRequired = true;
-      }
-    });
+      });
   }
 
   createDraft(value) {
-    if (!(this.areTwoObjectsEquivalent(this.prevStateOfForm, value))) {
+    if (!this.areTwoObjectsEquivalent(this.prevStateOfForm, value)) {
       this.saveDraftComplete = false;
       this.showSaving = true;
 
-      console.log("this is csoem value i need to see::::", this.prevStateOfForm, value);
+      console.log(
+        "this is csoem value i need to see::::",
+        this.prevStateOfForm,
+        value
+      );
       let createRequestJson;
       let attachmentIds = [];
-      if (this.data.choice === 'draft') {
-        this.data.dataToSend.dataObj.attachmentArrayObjects.forEach(element => {
-          attachmentIds.push(element.id);
-        });
+      if (this.data.choice === "draft") {
+        this.data.dataToSend.dataObj.attachmentArrayObjects.forEach(
+          (element) => {
+            attachmentIds.push(element.id);
+          }
+        );
       }
       // create draft
       createRequestJson = {
-        toAddress: this.emailForm.get('receiver').value ? this.emailForm.get('receiver').value : [''],
-        subject: this.emailForm.get('subject').value ? this.emailForm.get('subject').value : '',
-        message: this.emailForm.get('messageBody').value ? this.emailForm.get('messageBody').value.replace(/(<([^>]+)>)/ig, "") : '',
-        fileData: (this.emailAttachments && this.emailAttachments.length !== 0) ? this.emailAttachments : [],
+        toAddress: this.emailForm.get("receiver").value
+          ? this.emailForm.get("receiver").value
+          : [""],
+        subject: this.emailForm.get("subject").value
+          ? this.emailForm.get("subject").value
+          : "",
+        message: this.emailForm.get("messageBody").value
+          ? this.emailForm.get("messageBody").value.replace(/(<([^>]+)>)/gi, "")
+          : "",
+        fileData:
+          this.emailAttachments && this.emailAttachments.length !== 0
+            ? this.emailAttachments
+            : [],
         attachmentIds,
         attachments: this.emailAttachments,
         bccs: this.bccArray,
         ccs: this.ccArray,
-      }
+      };
 
       console.log(createRequestJson);
       this.prevStateOfForm = value;
-      return this.emailService.createDraft(createRequestJson)
+      return this.emailService.createDraft(createRequestJson);
     } else {
       return this.nullObs.asObservable();
     }
-
   }
 
   deleteDraft() {
     let attachmentIds = [];
-    if (this.data.choice === 'draft') {
-      this.data.dataToSend.dataObj.attachmentArrayObjects.forEach(element => {
+    if (this.data.choice === "draft") {
+      this.data.dataToSend.dataObj.attachmentArrayObjects.forEach((element) => {
         attachmentIds.push(element.id);
       });
     }
-    this.emailService.deleteThreadsFromTrashForever([this.currentDraftIds[0]])
-      .subscribe(res => {
+    this.emailService
+      .deleteThreadsFromTrashForever([this.currentDraftIds[0]])
+      .subscribe((res) => {
         if (res) {
-          console.log('this is deleted', res);
+          console.log("this is deleted", res);
           this.currentDraftIds.shift();
-          console.log(this.currentDraftIds, 'draft ids::: after deletion');
+          console.log(this.currentDraftIds, "draft ids::: after deletion");
           this.saveDraftComplete = true;
-          setTimeout(() => this.showSaving = false, 2000);
+          setTimeout(() => (this.showSaving = false), 2000);
         }
       });
   }
 
   messageDetailApi(id) {
     this.isLoadingForAttachment = true;
-    this.emailService.gmailMessageDetail(id).subscribe(res => {
-
+    this.emailService.gmailMessageDetail(id).subscribe((res) => {
       // based on gmail api explorer response
 
-      const { payload: { parts } } = res;
+      const {
+        payload: { parts },
+      } = res;
       if (parts && parts.length !== 0) {
-        parts.forEach(part => {
-          if (part.mimeType === 'multipart/alternative') {
+        parts.forEach((part) => {
+          if (part.mimeType === "multipart/alternative") {
             // const { parts } = part;
             // parts.forEach(part => {
-            if (part.filename !== '') {
+            if (part.filename !== "") {
               this.attachmentsIdArray.push({
                 filename: part.filename,
                 mimeType: part.mimeType,
-                attachmentId: part.body.atatchmentId
+                attachmentId: part.body.atatchmentId,
               });
             }
             // });
           }
         });
       }
-    })
+    });
 
     // get attachment files...
-    this.attachmentsIdArray.forEach(attachment => {
+    this.attachmentsIdArray.forEach((attachment) => {
       const obj = {
         userId: AuthService.getUserInfo().advisorId,
         email: AuthService.getUserInfo().userName,
         attachmentId: attachment.attachmentId,
-        messageId: this.idOfMessage
-      }
+        messageId: this.idOfMessage,
+      };
       let attachmentBase64Array = [];
-      this.emailService.getAttachmentFiles(obj)
-        .subscribe(res => {
-          // according to gmail attachment get 
-          const obj = {
-            filename: attachment.filename,
-            mimeType: attachment.mimeType,
-            size: res.size,
-            attachmentBase64Data: res.body.replace(/\-/g, '+').replace(/_/g, '/')
-          }
-          attachmentBase64Array.push(obj);
-        })
+      this.emailService.getAttachmentFiles(obj).subscribe((res) => {
+        // according to gmail attachment get
+        const obj = {
+          filename: attachment.filename,
+          mimeType: attachment.mimeType,
+          size: res.size,
+          attachmentBase64Data: res.body.replace(/\-/g, "+").replace(/_/g, "/"),
+        };
+        attachmentBase64Array.push(obj);
+      });
 
-      attachmentBase64Array.forEach(attachment => {
-        let blobData = EmailUtilService.convertBase64ToBlobData(attachment.attachmentBase64Data, attachment.mimeType);
+      attachmentBase64Array.forEach((attachment) => {
+        let blobData = EmailUtilService.convertBase64ToBlobData(
+          attachment.attachmentBase64Data,
+          attachment.mimeType
+        );
 
-        if (window.navigator && window.navigator.msSaveOrOpenBlob) { //IE
+        if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+          //IE
           window.navigator.msSaveOrOpenBlob(blobData, attachment.filename);
-        } else { // chrome
+        } else {
+          // chrome
           const blob = new Blob([blobData], { type: attachment.mimeType });
           const url = window.URL.createObjectURL(blob);
           // window.open(url);
@@ -238,7 +288,7 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
             size: attachment.size,
             mimeType: attachment.mimeType,
             data: attachment.attachmentBase64Data,
-            downloadUrl: url
+            downloadUrl: url,
           });
         }
       });
@@ -246,7 +296,7 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
   }
 
   attachmentDownload(element: any) {
-    const link = document.createElement('a');
+    const link = document.createElement("a");
     link.href = element.downloadUrl;
     link.download = element.filename;
     link.click();
@@ -254,7 +304,7 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
 
   removeFileFromCollections(attachment) {
     this.emailAttachments = this.emailAttachments.filter((item) => {
-      return item !== attachment
+      return item !== attachment;
     });
   }
 
@@ -272,66 +322,70 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
     }
 
     this.emailForm = this.fb.group({
-      sender: ['', Validators.email],
+      sender: ["", Validators.email],
       receiver: [[], Validators.email],
       carbonCopy: [[], Validators.email],
       blindCarbonCopy: [[], Validators.email],
-      subject: [''],
-      messageBody: [''],
-      attachments: [''],
+      subject: [""],
+      messageBody: [""],
+      attachments: [""],
     });
 
     if (this.data && this.data.dataToSend !== null) {
       let data = this.data.dataToSend;
       const { dataObj, threadIdsArray } = data;
-      const { idsOfThread: { id } } = dataObj;
+      const {
+        idsOfThread: { id },
+      } = dataObj;
       this.idOfMessage = id;
-      if (this.data.choice === 'draft') {
+      if (this.data.choice === "draft") {
         this.currentDraftIds.push(this.idOfMessage);
       }
 
       this.idArray = threadIdsArray;
-      const { subjectMessage: { subject, message } } = dataObj;
+      const {
+        subjectMessage: { subject, message },
+      } = dataObj;
       const { date } = dataObj;
       this.date = date;
       this.subject = subject;
       this.emailBody = message;
-      const { parsedData: { headers } } = dataObj;
+      const {
+        parsedData: { headers },
+      } = dataObj;
 
-      headers.forEach(element => {
+      headers.forEach((element) => {
         if (element.name === "From") {
-          if (element.value.includes('<')) {
-            this.from = element.value.split('<')[1].split('>')[0];
+          if (element.value.includes("<")) {
+            this.from = element.value.split("<")[1].split(">")[0];
           } else {
             this.from = element.value;
           }
         }
-        if (element.name === "To" && element.value.includes('<')) {
-          this.receipients = [
-            element.value.split('<')[1].split('>')[0]
-          ]
-        } else if (element.name === "To" && element.value.includes(',')) {
+        if (element.name === "To" && element.value.includes("<")) {
+          this.receipients = [element.value.split("<")[1].split(">")[0]];
+        } else if (element.name === "To" && element.value.includes(",")) {
           let toArray = [];
-          toArray = element.value.split(',');
+          toArray = element.value.split(",");
           this.receipients = toArray;
         }
 
-        if (element.name === "Cc" && element.name.includes('<')) {
-          this.ccArray = [element.value.split('<')[1].split('>')[0]]
+        if (element.name === "Cc" && element.name.includes("<")) {
+          this.ccArray = [element.value.split("<")[1].split(">")[0]];
 
           this.isCcSelected = true;
-        } else if (element.name === 'Cc' && element.name.includes(',')) {
+        } else if (element.name === "Cc" && element.name.includes(",")) {
           let ccArray = [];
-          ccArray = element.value.split(',');
+          ccArray = element.value.split(",");
           this.ccArray = ccArray;
           this.isCcSelected = true;
         }
-        if (element.name === "Bcc" && element.name.includes('<')) {
-          this.bccArray = [element.value.split('<')[1].split('>')[0]]
+        if (element.name === "Bcc" && element.name.includes("<")) {
+          this.bccArray = [element.value.split("<")[1].split(">")[0]];
           this.isBccSelected = true;
-        } else if (element.name === 'Bcc' && element.name.includes(',')) {
+        } else if (element.name === "Bcc" && element.name.includes(",")) {
           let bccArray = [];
-          bccArray = element.value.split(',');
+          bccArray = element.value.split(",");
           this.bccArray = bccArray;
           this.isBccSelected = true;
         }
@@ -347,28 +401,34 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
         this.editRecepient = false;
         this.removable = false;
 
-        this.emailForm.setValue({
-          sender: this.from ? this.from : '',
-          receiver: this.receipients ? this.receipients : [],
-          carbonCopy: this.ccArray ? this.ccArray : [],
-          blindCarbonCopy: this.bccArray ? this.bccArray : [],
-          subject: this.subject ? this.subject : '',
-          messageBody: this.emailBody ? this.emailBody : '',
-          attachments: []
-        }, { emitEvent: false });
+        this.emailForm.setValue(
+          {
+            sender: this.from ? this.from : "",
+            receiver: this.receipients ? this.receipients : [],
+            carbonCopy: this.ccArray ? this.ccArray : [],
+            blindCarbonCopy: this.bccArray ? this.bccArray : [],
+            subject: this.subject ? this.subject : "",
+            messageBody: this.emailBody ? this.emailBody : "",
+            attachments: [],
+          },
+          { emitEvent: false }
+        );
       } else {
         this.editRecepient = true;
         this.removable = true;
 
-        this.emailForm.setValue({
-          sender: this.from ? this.from : '',
-          receiver: this.receipients ? this.receipients : [],
-          carbonCopy: this.ccArray ? this.ccArray : [],
-          blindCarbonCopy: this.bccArray ? this.bccArray : [],
-          subject: this.subject ? this.subject : '',
-          messageBody: this.emailBody ? this.emailBody : '',
-          attachments: []
-        }, { emitEvent: false });
+        this.emailForm.setValue(
+          {
+            sender: this.from ? this.from : "",
+            receiver: this.receipients ? this.receipients : [],
+            carbonCopy: this.ccArray ? this.ccArray : [],
+            blindCarbonCopy: this.bccArray ? this.bccArray : [],
+            subject: this.subject ? this.subject : "",
+            messageBody: this.emailBody ? this.emailBody : "",
+            attachments: [],
+          },
+          { emitEvent: false }
+        );
       }
 
       // this.emailForm.setValue({
@@ -385,7 +445,6 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
   }
 
   areTwoObjectsEquivalent(a: {}, b: {}): boolean {
-
     let aProps = Object.getOwnPropertyNames(a);
     let bProps = Object.getOwnPropertyNames(b);
 
@@ -405,12 +464,12 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
 
   toggleCC(): void {
     this.isCcSelected = !this.isCcSelected;
-    this.emailForm.get('carbonCopy').setValue("");
+    this.emailForm.get("carbonCopy").setValue("");
   }
 
   toggleBCC(): void {
     this.isBccSelected = !this.isBccSelected;
-    this.emailForm.get('blindCarbonCopy').setValue("");
+    this.emailForm.get("blindCarbonCopy").setValue("");
   }
 
   // sendEmail() {
@@ -428,45 +487,44 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
     const value = event.value;
 
     // Add our fruit
-    if ((value || '').trim()) {
-      if (whichArray == 'receipients') {
-        let arr = this.emailForm.get('receiver').value;
-        if (arr == '') {
+    if ((value || "").trim()) {
+      if (whichArray == "receipients") {
+        let arr = this.emailForm.get("receiver").value;
+        if (arr == "") {
           arr = [];
         }
         arr.push(value.trim());
         this.emailForm.patchValue({
-          receiver: arr
+          receiver: arr,
         });
         // this.emailForm.get('receiver').value.push({ email: value.trim() });
-      } else if (whichArray == 'ccArray') {
-        let arr = this.emailForm.get('carbonCopy').value;
-        if (arr == '') {
+      } else if (whichArray == "ccArray") {
+        let arr = this.emailForm.get("carbonCopy").value;
+        if (arr == "") {
           arr = [];
         }
         arr.push(value.trim());
         this.emailForm.patchValue({
-          carbonCopy: arr
-        })
-      } else if (whichArray == 'bccArray') {
-
-        let arr = this.emailForm.get('blindCarbonCopy').value;
-        if (arr == '') {
+          carbonCopy: arr,
+        });
+      } else if (whichArray == "bccArray") {
+        let arr = this.emailForm.get("blindCarbonCopy").value;
+        if (arr == "") {
           arr = [];
         }
         arr.push(value.trim());
         this.emailForm.patchValue({
-          blindCarbonCopy: arr
+          blindCarbonCopy: arr,
         });
       }
       switch (whichArray) {
-        case 'receipients':
+        case "receipients":
           this.receipients.push(value.trim());
           break;
-        case 'ccArray':
+        case "ccArray":
           this.ccArray.push(value.trim());
           break;
-        case 'bccArray':
+        case "bccArray":
           this.bccArray.push(value.trim());
           break;
       }
@@ -474,7 +532,7 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
 
     // Reset the input value
     if (input) {
-      input.value = '';
+      input.value = "";
     }
   }
   // sendEmail() {
@@ -485,34 +543,31 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
 
     if (index >= 0) {
       whichArray.splice(index, 1);
-      if (whichArray == 'receipients') {
-        let arr = this.emailForm.get('receiver').value;
+      if (whichArray == "receipients") {
+        let arr = this.emailForm.get("receiver").value;
         // arr.splice(index, 1);
         this.emailForm.patchValue({
-          receiver: arr
+          receiver: arr,
         });
-      } else if (whichArray == 'ccArray') {
-        let arr = this.emailForm.get('carbonCopy').value;
+      } else if (whichArray == "ccArray") {
+        let arr = this.emailForm.get("carbonCopy").value;
         arr.splice(index, 1);
         this.emailForm.patchValue({
-          carbonCopy: arr
+          carbonCopy: arr,
         });
-      } else if (whichArray == 'bccArray') {
-        let arr = this.emailForm.get('blindCarbonCopy').value;
+      } else if (whichArray == "bccArray") {
+        let arr = this.emailForm.get("blindCarbonCopy").value;
         arr.splice(index, 1);
         this.emailForm.patchValue({
-          blindCarbonCopy: arr
+          blindCarbonCopy: arr,
         });
       }
-
     }
   }
 
-  downloadAttachment(attachment) {
-  }
+  downloadAttachment(attachment) {}
 
   getAttachmentDetails(data) {
-
     if (data !== null) {
       this.isLoadingForAttachment = true;
       // this.emailService.
@@ -521,14 +576,14 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
           attachmentId: attachmentObj.id,
           email: AuthService.getUserInfo().userName,
           messageId: data.dataObj.idsOfMessages[0],
-          userId: AuthService.getUserInfo().advisorId
-        }
-        this.emailService.getAttachmentFiles(obj).subscribe(res => {
-          if (index === (data.dataObj.attachmentArrayObjects.length - 1)) {
+          userId: AuthService.getUserInfo().advisorId,
+        };
+        this.emailService.getAttachmentFiles(obj).subscribe((res) => {
+          if (index === data.dataObj.attachmentArrayObjects.length - 1) {
             this.isLoadingForAttachment = false;
           }
           console.log("attachment details:::", res);
-          const resBase64 = res.data.replace(/\-/g, '+').replace(/_/g, '/');
+          const resBase64 = res.data.replace(/\-/g, "+").replace(/_/g, "/");
           this.creationOfUrlAndBase64File(resBase64, attachmentObj);
         });
       });
@@ -536,11 +591,16 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
   }
 
   creationOfUrlAndBase64File(resBase64, attachmentObj) {
-    let blobData = EmailUtilService.convertBase64ToBlobData(resBase64, attachmentObj.mimeType);
+    let blobData = EmailUtilService.convertBase64ToBlobData(
+      resBase64,
+      attachmentObj.mimeType
+    );
 
-    if (window.navigator && window.navigator.msSaveOrOpenBlob) { //IE
+    if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+      //IE
       window.navigator.msSaveOrOpenBlob(blobData, attachmentObj.filename);
-    } else { // chrome
+    } else {
+      // chrome
       const blob = new Blob([blobData], { type: attachmentObj.mimeType });
       const url = window.URL.createObjectURL(blob);
       // window.open(url);
@@ -550,13 +610,16 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
         size: resBase64.size,
         mimeType: attachmentObj.filename,
         data: resBase64,
-        downloadUrl: url
+        downloadUrl: url,
       });
     }
   }
 
   close() {
-    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: this.refreshRequired });
+    this.subInjectService.changeNewRightSliderState({
+      state: "close",
+      refreshRequired: this.refreshRequired,
+    });
   }
 
   closeWithDraftCreateOrUpdate(): void {
@@ -602,10 +665,16 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
   // }
 
   saveData(event): void {
-    this.emailForm.get('messageBody').setValue(event);
+    this.emailForm.get("messageBody").setValue(event);
   }
-  // made by gaurav 
-  createUpdateDraft(id: string, toAddress: Array<any>, subject: string, bodyMessage: string, fileData: Array<any>) {
+  // made by gaurav
+  createUpdateDraft(
+    id: string,
+    toAddress: Array<any>,
+    subject: string,
+    bodyMessage: string,
+    fileData: Array<any>
+  ) {
     // let encodedSubject = EmailUtilService.changeStringToBase64(subject);
     // let encodedMessage = EmailUtilService.changeStringToBase64(bodyMessage);
     const requestJson = {
@@ -613,22 +682,27 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
       toAddress,
       subject: subject,
       message: bodyMessage,
-      fileData
+      fileData,
     };
 
-    this.emailService.createUpdateDraft(requestJson, null)
-      .subscribe((responseJson) => {
-      }, (error) => {
+    this.emailService.createUpdateDraft(requestJson, null).subscribe(
+      (responseJson) => {},
+      (error) => {
         console.error(error);
-      });
+      }
+    );
   }
 
   getFileDetails(e) {
     const singleFile = e.target.files[0];
 
     EmailUtilService.getBase64FromFile(singleFile, (successData) => {
-      let blobData = EmailUtilService.convertBase64ToBlobData(successData.split(',')[1], singleFile.type);
-      if (window.navigator && window.navigator.msSaveOrOpenBlob) { //IE
+      let blobData = EmailUtilService.convertBase64ToBlobData(
+        successData.split(",")[1],
+        singleFile.type
+      );
+      if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+        //IE
         window.navigator.msSaveOrOpenBlob(blobData, singleFile.filename);
       } else {
         // chrome
@@ -640,7 +714,7 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
           size: singleFile.size,
           mimeType: singleFile.type,
           data: successData,
-          downloadUrl: url
+          downloadUrl: url,
         });
       }
 
@@ -657,20 +731,20 @@ export class ComposeEmailComponent implements OnInit, OnDestroy {
     const body = {
       userId: AuthService.getUserInfo().advisorId,
       email: AuthService.getUserInfo().userName,
-      toAddress: this.emailForm.get('receiver').value,
-      ccs: this.emailForm.get('carbonCopy').value,
-      bccs: this.emailForm.get('blindCarbonCopy').value,
-      subject: this.emailForm.get('subject').value,
-      message: this.emailForm.get('messageBody').value.replace(/(<([^>]+)>)/ig, ""),
-      attachments: this.emailAttachments
-    }
+      toAddress: this.emailForm.get("receiver").value,
+      ccs: this.emailForm.get("carbonCopy").value,
+      bccs: this.emailForm.get("blindCarbonCopy").value,
+      subject: this.emailForm.get("subject").value,
+      message: this.emailForm
+        .get("messageBody")
+        .value.replace(/(<([^>]+)>)/gi, ""),
+      attachments: this.emailAttachments,
+    };
 
-
-    this.emailService.sendEmail(body).subscribe(res => {
+    this.emailService.sendEmail(body).subscribe((res) => {
       this.refreshRequired = true;
       this.close();
     });
-
   }
 
   ngOnDestroy(): void {
