@@ -516,7 +516,7 @@ export class CalendarWeekComponent implements OnInit {
           dayArr.events.push(this.formatedEvent[e])
         }
         // }
-        console.log(this.currentMonthEvents, "this.currentMonthEvents");
+        // console.log(this.currentMonthEvents, "this.currentMonthEvents");
       }
 
       this.currentMonthEvents.unshift(dayArr)

@@ -109,7 +109,7 @@ export class CalendarMonthComponent implements OnInit {
           dayArr.events.push(this.formatedEvent[e])
         }
         // }
-        console.log(this.currentMonthEvents, "this.currentMonthEvents");
+        // console.log(this.currentMonthEvents, "this.currentMonthEvents");
       }
 
       if (dayArr.date != null) {
