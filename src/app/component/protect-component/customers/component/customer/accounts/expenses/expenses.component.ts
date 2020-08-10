@@ -147,7 +147,7 @@ export class ExpensesComponent implements OnInit {
           // this.miscellaneousAmount = data.Billes_&_Utilies;
           this.transportAmount = data.Transport;
           this.housingAmount = data.Housing;
-
+          this.cashFlow('piechartExpense')
         }
         console.log(data);
       }, (error) => {
