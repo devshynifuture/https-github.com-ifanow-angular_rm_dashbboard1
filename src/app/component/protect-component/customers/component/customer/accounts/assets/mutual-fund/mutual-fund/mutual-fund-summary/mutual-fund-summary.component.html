@@ -460,10 +460,10 @@
             <td style="text-align: left; vertical-align: top;" colspan="3" *ngIf="getOrgData">
                 <div
                     *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
-                    <img width="120px" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
+                    <img width="140px" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
                 </div>
                 <div *ngIf="getOrgData && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
-                    <img width="120px" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
+                    <img width="200px" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
                 </div>
             </td>
             <td style=" text-align: right;" colspan="8">
@@ -473,7 +473,7 @@
                 <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Number: </strong>
                     {{(userInfo.mobileList?.length > 0) ? userInfo.mobileList[0].mobileNo : userInfo.mobile}}</p>
                 <p style="margin: 0px; font-size: 14px;padding-top: 12px;" *ngIf="userInfo"> <strong> Email: </strong>
-                    {{(userInfo.emailList?.length > 0) ? userInfo.emailList[0].email  : userInfo.email}}</p>
+                    {{getOrgData.email ? getOrgData.email  : userInfo.email}}</p>
                 <p style="margin: 0px; font-size: 14px;padding-top: 12px;"> <strong> MF Summary Report -
                         {{(this.inputData) ? this.rightFilterData.reportType[0].name : (this.reponseData) ? this.setDefaultFilterData.reportType : ((this.saveFilterData) ? this.saveFilterData.reportType : this.setDefaultFilterData.reportType)}}</strong>
                 </p>

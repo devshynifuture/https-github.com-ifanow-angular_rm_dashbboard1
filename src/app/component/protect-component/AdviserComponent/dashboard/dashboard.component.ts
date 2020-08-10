@@ -697,7 +697,8 @@ export class DashboardComponent implements OnInit {
     this.excessAllow = done;
   }
   getLastSevenDaysInvestmentAccounts() {
-   
+    this.LastSevenDaysInvestmentAccounts = [{}, {}, {}]
+    this.investmentAccountFlag = true;
     const obj = {
       advisorId: this.advisorId,
       startDate: new Date().getTime(),
@@ -716,11 +717,13 @@ export class DashboardComponent implements OnInit {
           this.investmentAccountFlag = false;
           this.LastSevenDaysInvestmentAccounts = data;
         } else {
-           this.investmentAccountFlag = false;
+          // this.investmentAccountFlag = false;
           this.LastSevenDaysInvestmentAccounts = [];
         }
       },
       (err) => {
+        this.investmentAccountFlag = false;
+        this.LastSevenDaysInvestmentAccounts = [];
 
       });
   }

@@ -2,28 +2,22 @@
     <div class="col-md-4 d-flex align-items-center">
         <!-- <h4 class="m-0">Clients</h4> -->
     </div>
-
     <div *ngIf="clientDatasource.data.length>0 && isLoading==false"
         class="col-md-8 d-flex align-items-center justify-content-end pb-10">
-
         <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
             <img src="assets/images/svg/download-bordered.svg">
         </a>
-
         <!-- <img src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu5" class="c-p"> -->
         <mat-menu #menu5="matMenu">
             <button (click)="pdf('Client')" mat-menu-item>PDF</button>
             <button (click)="Excel('Client')" mat-menu-item>XLS</button>
         </mat-menu>
-
         <!-- <a class="c-p downloadPdfIcon iconBorderNone">
-            <img src="assets/images/svg/up-down.svg">
+        <img src="assets/images/svg/up-down.svg">
         </a> -->
-
         <!-- <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-8"> -->
-
         <!-- <button mat-stroked-button class="btn-default addon mr-8 v-middle">
-            <i class="material-icons">filter_list</i>FILTERS</button> -->
+        <i class="material-icons">filter_list</i>FILTERS</button> -->
         <button (click)="addClient(null)" class="btn-primary ml-8" mat-stroked-button>
             ADD NEW
         </button>
@@ -44,16 +38,15 @@
                         <div class="bar"> {{element.name}}</div>
                     </td>
                 </ng-container>
-
                 <!-- Name Column -->
                 <ng-container matColumnDef="name">
                     <th mat-header-cell mat-sort-header="mobileNo" *matHeaderCellDef class="br" sticky> Registered
-                        mobile </th>
+                        mobile
+                    </th>
                     <td mat-cell (click)="selectClient(element)" *matCellDef="let element" class="br c-p">
                         <div class="bar"> {{(element.mobileNo!=0)?element.mobileNo:'N/A'}}</div>
                     </td>
                 </ng-container>
-
                 <!-- Weight Column -->
                 <ng-container matColumnDef="weight">
                     <th mat-sort-header="email" mat-header-cell *matHeaderCellDef class="br" sticky> Registered email
@@ -62,7 +55,6 @@
                         <div class="bar"> {{element.email}}</div>
                     </td>
                 </ng-container>
-
                 <!-- Symbol Column -->
                 <ng-container matColumnDef="symbol">
                     <th mat-sort-header="pan" mat-header-cell *matHeaderCellDef class="br" sticky> PAN </th>
@@ -132,13 +124,13 @@
                         ADD NEW
                     </button>
                 </div>
-
-
                 <div class="dashedClass">
                     <p>Tip: If you already have access to your mutual fund RTA feeds then simply upload your folio
-                        master files. Once you do, all the clients will automatically reflect here.</p>
+                        master files. Once you do, all the clients will automatically reflect here.
+                    </p>
                     <p> How to do it: You can manually upload your folio master file from here. Or share your RTA
-                        details with us here, we will upload them for you quickly.</p>
+                        details with us here, we will upload them for you quickly.
+                    </p>
                     <p class="mb-0">Still have questions? Watch this video:</p>
                 </div>
             </div>

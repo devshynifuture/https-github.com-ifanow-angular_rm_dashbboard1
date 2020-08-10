@@ -585,7 +585,13 @@ export class TempserviceService {
 
     return roundedValue;
   }
-
+  convertInTitleCase(input) {
+    if (!input) {
+      return '';
+    } else {
+      return input.replace(/\w\S*/g, (txt => txt[0].toUpperCase() + txt.substr(1).toLowerCase()));
+    }
+  }
   mutualFundRoundAndFormat(data, noOfPlaces: number = 0) {
     if (data) {
       data = parseFloat(data)

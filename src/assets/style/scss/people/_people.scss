@@ -12,13 +12,10 @@
     height: 31px !important;
   }
 
-
   #tbs {
     tr.mat-row {
       height: 34px !important;
     }
-
-
 
     tbody td {
       padding: 4px 8px !important;
@@ -34,7 +31,6 @@
 
   tr.mat-row {
     height: 36px;
-
   }
 
   #table-low th {
@@ -108,7 +104,6 @@
   .mat-radio-label {
     height: 40px;
     padding-left: 6px !important;
-
   }
 
   .marital-status {
@@ -149,7 +144,6 @@
     .mat-radio-button:nth-child(2) {
       min-width: 129px;
     }
-
   }
 
   .account-type {
@@ -186,7 +180,6 @@
   border: 1px dashed #83959D;
   box-sizing: border-box;
   border-radius: 5px;
-
 }
 
 .upload-actions {
@@ -213,8 +206,6 @@
   .mat-raised-button:nth-child(3) {
     min-width: 58px;
   }
-
-
 }
 
 @media(max-width: 767px) {
@@ -256,7 +247,6 @@
 //     height: auto !important;
 //   }
 // }
-
 @media(max-width:1224px) {
   // .people-clients-scroll {
   //   #tbs .mat-table-sticky:first-child {
@@ -267,7 +257,6 @@
 
 @media(max-width:1142px) {
   .mainNav .testing-mob {
-
     height: auto !important;
   }
 

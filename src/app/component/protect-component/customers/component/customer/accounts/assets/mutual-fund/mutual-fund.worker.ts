@@ -15,7 +15,7 @@ addEventListener('message', ({data}) => {
   const customDataHolder=[];
   customDataSourceData.forEach(element => {
     customDataHolder.push({...element});
-   
+    element.ownerName = mfService.convertInTitleCase(element.ownerName);
     element.amountInvested = mfService.mutualFundRoundAndFormat(element.amountInvested, 0);
     element.totalAmountInvested = mfService.mutualFundRoundAndFormat(element.totalAmountInvested, 0);
     element.currentValue = mfService.mutualFundRoundAndFormat(element.currentValue, 0);

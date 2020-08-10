@@ -10,6 +10,7 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
 import { MatInput } from '@angular/material';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-payee-settings',
@@ -91,6 +92,7 @@ export class PayeeSettingsComponent implements OnInit {
   addressList: any;
   selectedCustomerData: any;
   customerDataFlag: any;
+  payeeList: any;
 
   constructor(public utils: UtilService, public subInjectService: SubscriptionInject, private eventService: EventService,
     private subService: SubscriptionService, private fb: FormBuilder, private postalService: PostalService, private peopleService: PeopleService, private custumService: CustomerService) {
@@ -102,6 +104,7 @@ export class PayeeSettingsComponent implements OnInit {
 
   @Input()
   set data(data) {
+    this.payeeList = data.payeesList
     this.inputData = data;
     if (!this.inputData.flag) {
       delete data.id;
@@ -270,6 +273,14 @@ export class PayeeSettingsComponent implements OnInit {
 
   getListOfFamilyByClientRes(data) {
     if (data != undefined) {
+      data.forEach(element => {
+        if (this.payeeList.some(payee => payee.companyDisplayName == element.name)) {
+          element['disableFlag'] = true;
+        }
+        else {
+          element['disableFlag'] = false;
+        }
+      });
       this.family = data
     }
   }
@@ -314,7 +325,7 @@ export class PayeeSettingsComponent implements OnInit {
     this.getFormControl().gstIn.maxLength = 16;
     this.getFormControl().billingAddress.maxLength = 150;
     this.getFormControl().pincode.maxLength = 6;
-
+    data.id ? this.payeeSettingsForm.controls.customerName.disable() : '';
     this.familyMemberId = data.familyMemberId;
   }
 
@@ -325,6 +336,7 @@ export class PayeeSettingsComponent implements OnInit {
   getRightSliderData(data) {
     this.settingsModal = data;
   }
+
 
   ngOnInit() {
     this.getChangePayeeSetting();
