@@ -39,7 +39,8 @@
         <h3 class="m-0 roboto f-400 text-black pt-8">
           <div class="relClass">
             <div class="bar" [ngClass]="{'heightNew24': isKeyMatrix}">
-              <span>{{(keyMetricJson.mfAum) ? keyMetricJson.mfAum : '0'}}</span>
+              <span *ngIf="!isKeyMatrix" appFormatNumber
+                [value]="keyMetricJson.mfAum">{{(keyMetricJson.mfAum) ? keyMetricJson.mfAum : '0'}}</span>
             </div>
           </div>
         </h3>
@@ -50,7 +51,7 @@
         <h3 class="m-0 roboto f-400 text-black pt-8">
           <div class="relClass">
             <div class="bar" [ngClass]="{'heightNew24': isKeyMatrix}">
-              {{(keyMetricJson.sipBook) ? keyMetricJson.sipBook : '0'}}
+              <span *ngIf="!isKeyMatrix">{{(keyMetricJson.sipBook) ? keyMetricJson.sipBook : '0'}}</span>
             </div>
           </div>
         </h3>
@@ -61,7 +62,7 @@
         <h3 class="m-0 roboto f-400 text-black pt-8">
           <div class="relClass">
             <div class="bar" [ngClass]="{'heightNew24': isKeyMatrix}">
-              {{(keyMetricJson.clientCount) ? keyMetricJson.clientCount : '0'}}
+              <span *ngIf="!isKeyMatrix">{{(keyMetricJson.clientCount) ? keyMetricJson.clientCount : '0'}}</span>
             </div>
           </div>
         </h3>
@@ -72,7 +73,7 @@
         <h3 class="m-0 roboto f-400 text-black pt-8">
           <div class="relClass">
             <div class="bar" [ngClass]="{'heightNew24': isKeyMatrix}">
-              {{(keyMetricJson.InvestorCount) ? keyMetricJson.InvestorCount : '0'}}
+              <span *ngIf="!isKeyMatrix">{{(keyMetricJson.InvestorCount) ? keyMetricJson.InvestorCount : '0'}}</span>
             </div>
           </div>
 
@@ -140,9 +141,9 @@
 
           <div class="relClass">
             <div class="bar" [ngClass]="{'heightNew24': subOverviewFlag}">
-              {{ (dataSourceClientWithSub && dataSourceClientWithSub.hasOwnProperty('activeClientPer')) ? dataSourceClientWithSub.activeClientPer : 0}}
-              %
-
+              <span
+                *ngIf="!subOverviewFlag">{{ (dataSourceClientWithSub && dataSourceClientWithSub.hasOwnProperty('activeClientPer')) ? dataSourceClientWithSub.activeClientPer : 0}}
+                %</span>
             </div>
           </div>
         </h3>
@@ -153,7 +154,7 @@
         <h3 class="m-0 roboto f-400 text-black pt-8">
           <div class="relClass">
             <div class="bar" [ngClass]="{'heightNew24': subOverviewFlag}">
-              41
+              <span *ngIf="!subOverviewFlag">41</span>
             </div>
           </div>
         </h3>
@@ -164,9 +165,8 @@
         <h3 class="m-0 roboto f-400 text-black pt-8">
           <div class="relClass">
             <div class="bar" [ngClass]="{'heightNew24': subOverviewFlag}">
-
-              <span appFormatNumber [value]="totalSales">{{totalSales}}</span>
-
+              <span *ngIf="!subOverviewFlag && totalSales!=0">₹</span>
+              <span *ngIf="!subOverviewFlag" appFormatNumber [value]="totalSales">{{totalSales}}</span>
             </div>
           </div>
         </h3>
@@ -176,7 +176,8 @@
         <h3 class="m-0 roboto f-400 text-black pt-8">
           <div class="relClass">
             <div class="bar" [ngClass]="{'heightNew24': subOverviewFlag}">
-              {{feeRecieved}}
+              <span *ngIf="!subOverviewFlag && totalSales!=0">₹</span>
+              <span appFormatNumber [value]="feeRecieved" *ngIf="!subOverviewFlag">{{feeRecieved}}</span>
             </div>
           </div>
         </h3>
@@ -191,8 +192,7 @@
         <h3 class="m-0 roboto f-400 text-black pt-8">
           <div class="relClass">
             <div class="bar" [ngClass]="{'heightNew24': docOverviewFlag}">
-              {{documentSizeData.familyMemberCount}}
-
+              <span *ngIf="!docOverviewFlag">{{documentSizeData.familyMemberCount}}</span>
             </div>
           </div>
         </h3>
@@ -202,8 +202,7 @@
         <h3 class="m-0 roboto f-400 text-black pt-8">
           <div class="relClass">
             <div class="bar" [ngClass]="{'heightNew24': docOverviewFlag}">
-              {{documentSizeData.totalClients}}
-
+              <span *ngIf="!docOverviewFlag">{{documentSizeData.totalClients}}</span>
             </div>
           </div>
         </h3>
@@ -213,7 +212,7 @@
         <h3 class="m-0 roboto f-400 text-black pt-8">
           <div class="relClass">
             <div class="bar" [ngClass]="{'heightNew24': docOverviewFlag}">
-              {{documentSizeData.totalMbs}}<span *ngIf="!docOverviewFlag">MB</span>
+              <span *ngIf="!docOverviewFlag">{{documentSizeData.totalMbs}}MB</span>
             </div>
           </div>
         </h3>
@@ -223,7 +222,7 @@
         <h3 class="m-0 roboto f-400 text-black pt-8">
           <div class="relClass">
             <div class="bar" [ngClass]="{'heightNew24': docOverviewFlag}">
-              {{documentSizeData.totalDocs}}
+              <span *ngIf="!docOverviewFlag"> {{documentSizeData.totalDocs}}</span>
             </div>
           </div>
         </h3>
@@ -273,7 +272,7 @@
       </div>
 
       <div class="mt-40"
-        *ngIf="(tabsLoaded.portfolioData.dataLoaded && tabsLoaded.portfolioData.hasData) && !tabsLoaded.portfolioData.isLoading">
+        *ngIf="(tabsLoaded.portfolioData.dataLoaded && tabsLoaded.portfolioData.hasData) && !tabsLoaded.portfolioData.isLoading && chartTotal > 0">
         <h5 class="text-black f-16 roboto mb-10 f-500"> Asset classses</h5>
         <div class="bg-white br-10">
           <div class="row b-a pt-20 pb-20 br-4">
@@ -301,7 +300,7 @@
       </div>
 
       <div class="col-12 p-0 pt-40"
-        *ngIf="(!tabsLoaded.portfolioData.dataLoaded || !tabsLoaded.portfolioData.hasData) && !tabsLoaded.portfolioData.isLoading">
+        *ngIf="(!tabsLoaded.portfolioData.dataLoaded || !tabsLoaded.portfolioData.hasData) && !tabsLoaded.portfolioData.isLoading && chartTotal == 0">
         <h5 class="m-0 text-black f-16 roboto pb-16 f-500"> Asset allocation</h5>
         <div class="bg-white br-10 ba-primitive">
 
@@ -1349,7 +1348,7 @@
     <div class="sticky-top z-0">
       <mat-tab-group animationDuration="0ms" id="advisor-radio">
         <mat-tab label="To-do">
-          <div class="max-scroll ">
+          <div class="max-scroll " *ngIf="todoListData">
             <div class="pt-12">
               <div class="row">
                 <div class="col-md-12 pl-0 addTo-DO">
@@ -1361,25 +1360,6 @@
                     #inputValue (keyup.enter)="addTodoList(inputValue.value)" placeholder="Enter note">
                 </div>
 
-                <!-- <div class="col-md-6 p-0 text-right">
-              <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-                <mat-icon>more_vert</mat-icon>
-              </button>
-              <mat-menu #menu="matMenu">
-                <button mat-menu-item>
-                  <mat-icon>dialpad</mat-icon>
-                  <span>Redial</span>
-                </button>
-                <button mat-menu-item disabled>
-                  <mat-icon>voicemail</mat-icon>
-                  <span>Check voice mail</span>
-                </button>
-                <button mat-menu-item>
-                  <mat-icon>notifications_off</mat-icon>
-                  <span>Disable alerts</span>
-                </button>
-              </mat-menu>
-            </div> -->
               </div>
             </div>
             <div class="radio-buttons-advisor">
@@ -1416,28 +1396,30 @@
                   </div>
                   <hr class="ad">
                 </div>
-                <!-- </div>
-            </div> -->
-                <!-- <mat-radio-button value="2">Call Nita tomorrow at 9PM</mat-radio-button>
-            <hr class="ad"> -->
-                <!-- <mat-radio-button value="3">Create financial plan for Rahul Jain. Before that, check if the insurance
-              policies are added.</mat-radio-button>
-            <hr class="ad">
-            <mat-radio-button value="4">Con call with fund manager for market outlook</mat-radio-button>
-            <hr class="ad">
-            <mat-radio-button value="5">Talk to Ashish</mat-radio-button>
-            <hr class="ad">
-            <mat-radio-button value="6">Follow up with deepak roy</mat-radio-button>
-            <hr class="ad">
-            <mat-radio-button value="7">Training topics for each team</mat-radio-button>
-            <hr class="ad">
-            <mat-radio-button value="8">Aniket to send me email about asset allocation best practices, amit to send me
-
-              email about when she will finish her task of learning insurance planning</mat-radio-button> -->
-
               </mat-radio-group>
 
             </div>
+          </div>
+
+          <div *ngIf="todoListData==undefined" class="emptyTo-Do mt-40 text-center">
+            <p>No To-do’s exist
+              <br><br>
+              This is the perfect place to add
+              some quick tasks, thoughts, notes etc.
+              <br><br>
+              Go ahead, add something.</p>
+
+            <div class="col-md-12 mt-8 mb-8 pl-0 addTo-DO">
+              <div (click)="showInput=true" class="d-flex justify-content-center align-items-center mt-10 mb-8 c-p">
+                <img *ngIf="showInput==false" src="/assets/images/svg/add-blue.svg" class="c-p ml-4">
+                <p *ngIf="showInput==false" class="m-0 text-black pl-12 lh-20">Add a to-do</p>
+              </div>
+              <input *ngIf="showInput" class="form-control" matInput (focusout)="showInput=false" autofocus #inputValue
+                (keyup.enter)="addTodoList(inputValue.value)" placeholder="Enter note">
+            </div>
+
+            <img src="assets/images/svg/to-do-emptyimg.svg">
+
           </div>
 
 

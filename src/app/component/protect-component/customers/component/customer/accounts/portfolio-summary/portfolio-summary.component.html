@@ -374,7 +374,7 @@
         <div [hidden]="letsideBarLoader" class="col-md-5 pl-0">
           <div class="b-a mt-20 shadowBox bg-white">
             <h4 class="m-0 wrapper-20 pb-0">Asset allocation</h4>
-            <div *ngIf="finalTotal==0" class="row">
+            <div *ngIf="!assetAllocationRes" class="row">
               <div class="col-md-12 p-0">
                 <div
                   class=" d-flex align-items-center justify-content-center flex-column text-center mt-30 h-300 ">
@@ -382,13 +382,14 @@
                   <h4 class="f-14 mb-0 mt-20">Not enough data to display</h4>
                   <p class="f-12 text-primitive"> Before we can create any charts, <br> we’ll
                     first need to get some data in here </p>
-                  <a class="text-primary c-p dataBtnAdd">Add data</a>
+                  <!-- <a class="text-primary c-p dataBtnAdd">Add data</a> -->
                 </div>
               </div>
             </div>
-            <div [hidden]="!finalTotal">
-              <div class="highcharts-figure" id="piechartMutualFund"></div>
-            </div>
+            <div *ngIf="assetAllocationRes">
+                <div class="highcharts-figure" id="piechartMutualFund"></div>
+              </div>
+           
           </div>
         </div>
       </div>

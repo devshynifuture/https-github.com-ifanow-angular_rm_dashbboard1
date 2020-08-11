@@ -28,4 +28,12 @@ export class ArnRiaSelectionService {
             },
         )
     }
+    sorting(data, filterId) {
+        if (data) {
+          data.sort((a, b) =>
+            a[filterId] > b[filterId] ? 1 : (a[filterId] === b[filterId] ? 0 : -1)
+          );
+        }
+        return data;
+      }
 }

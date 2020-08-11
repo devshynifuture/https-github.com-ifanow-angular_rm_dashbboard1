@@ -64,6 +64,9 @@ export class BackofficeFileUploadSipStpComponent implements OnInit {
     }
     this.reconService.getBackOfficeSipStp(obj).subscribe((data) => {
       if (data) {
+        data.forEach(element => {
+          element.rt = this.getRtNameFromRtId(parseInt(element.rt));
+        });
         this.listData = data;
         this.dataSource.data = this.listData;
         if (this.sortList) {
@@ -75,6 +78,11 @@ export class BackofficeFileUploadSipStpComponent implements OnInit {
         this.isLoading = false;
       }
     })
+  }
+  getRtNameFromRtId(id) {
+    if (typeof id === 'number') {
+      return this.rtList.find(c => c.id === id).name;
+    }
   }
 
   ngOnDestroy() {
