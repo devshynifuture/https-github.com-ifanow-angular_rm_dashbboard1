@@ -50,12 +50,13 @@
   <app-add-holder-names *ngIf="dematList" [clientName]="clientName" [holderListInput]="dematList.holderNameList"
     (holderList)="getHolderList($event)">
   </app-add-holder-names>
-  <div class="row pt-28">
-    <div class="col-md-4 text-right pl-0 mob-text-left mob-pl-10 full-end">
+
+  <div class="row pt-44">
+    <div class="col-md-4 text-right pl-0 mob-text-left mob-pl-10 d-flex align-items-center justify-content-end ">
       <h5 class="m-0">Depository participant name</h5>
     </div>
     <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
-      <div class="form-group">
+      <div class="form-group mb-0">
         <mat-form-field floatLabel="never" appearance="standard">
           <input placeholder="Enter depository participant name" autocomplete="off" formControlName="depositoryPartName"
             #nadNameme appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPEC_CHAR"
@@ -66,12 +67,13 @@
       </div>
     </div>
   </div>
-  <div class="row pt-28">
-    <div class="col-md-4 text-right pl-0 mob-pl-10 mob-text-left full-end">
+
+  <div class="row pt-44">
+    <div class="col-md-4 text-right pl-0 mob-pl-10 mob-text-left d-flex align-items-center justify-content-end">
       <h5 class="m-0">Depository participant ID</h5>
     </div>
     <div class="col-md-3 p-0 mob-pl-10 mob-pr-10">
-      <div class="form-group">
+      <div class="form-group mb-0">
         <mat-form-field floatLabel="never" appearance="standard">
           <input placeholder="Enter depository id" autocomplete="off" appInputValueValidation
             [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="depositoryPartId" matInput
@@ -81,12 +83,13 @@
       </div>
     </div>
   </div>
-  <div class="row pt-28">
-    <div class="col-md-4 text-right mob-text-left mob-pl-10">
-      <h5 class="m-0 pt-20">Demat client ID</h5>
+
+  <div class="row pt-44">
+    <div class="col-md-4 d-flex align-items-center justify-content-end text-right mob-text-left mob-pl-10">
+      <h5 class="m-0 ">Demat client ID</h5>
     </div>
     <div class="col-md-3 p-0 mob-pl-10 mob-pr-10">
-      <div class="form-group">
+      <div class="form-group mb-0">
         <mat-form-field floatLabel="never" appearance="standard">
           <input placeholder="Enter demat client id" autocomplete="off" appInputValueValidation
             [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="dematClientId" matInput
@@ -96,12 +99,13 @@
       </div>
     </div>
   </div>
-  <div class="row pt-28">
-    <div class="col-md-4 text-right mob-text-left mob-pl-10">
-      <h5 class="m-0 pt-20">Broker name</h5>
+
+  <div class="row pt-44">
+    <div class="col-md-4 text-right mob-text-left d-flex align-items-center justify-content-end mob-pl-10">
+      <h5 class="m-0">Broker name</h5>
     </div>
     <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
-      <div class="form-group">
+      <div class="form-group mb-0">
         <mat-form-field floatLabel="never" appearance="standard">
           <input autocomplete="off" placeholder="Enter broker name " #brokerName appInputValueValidation
             [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPEC_CHAR" formControlName="brekerName" matInput
@@ -112,12 +116,13 @@
       </div>
     </div>
   </div>
-  <div class="row pt-28">
-    <div class="col-md-4 text-right mob-text-left mob-pl-10">
-      <h5 class="m-0 pt-20">Broker address</h5>
+
+  <div class="row pt-44 pb-16">
+    <div class="col-md-4 text-right mob-text-left d-flex align-items-center justify-content-end mob-pl-10">
+      <h5 class="m-0  ">Broker address</h5>
     </div>
     <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
-      <div class="form-group">
+      <div class="form-group mb-0">
         <mat-form-field floatLabel="never" appearance="standard">
           <input placeholder="Enter broker address" autocomplete="off" #bAddres formControlName="brokerAddress" matInput
             maxlength="200" class="form-control">
@@ -127,40 +132,17 @@
       </div>
     </div>
   </div>
+
   <app-add-number *ngIf="dematList" [isResidential]="userData" [numberList]="dematList.mobileDataList"
     [flag]="mobileNumberFlag" (numberArray)="getNumberDetails($event)"></app-add-number>
-  <!-- <div class="row pt-44">
-      <div class="col-md-4 text-right">
-          <h5 class="m-0 pt-8">Nominee</h5>
-      </div>
-      <div class="col-md-3 p-0">
-          <div class="form-group">
-              <mat-form-field>
-                  <mat-select class="form-control">
-                      <mat-option value="+91">+91</mat-option>
-                  </mat-select>
-                  <mat-hint>Optional</mat-hint>
-              </mat-form-field>
-          </div>
-      </div>
-      <div class="col-md-3 pr-0">
-          <div class="form-group">
-              <mat-form-field>
-                  <input matInput class="form-control">
-              </mat-form-field>
-          </div>
-      </div>
-      <div class="col-md-2 pr-0">
-          <p class="m-0 roboto text-custom pt-8 ws-pre">+ Add nominee</p>
-      </div>
-  </div> -->
+   
   <div *ngIf="checkNomineeFlag && (userData.userId || userData.familyMemberId)" formArrayName="getNomineeName">
-    <div class="row pt-28" *ngFor="let obj of getNominee.controls; let pointIndex=index" [formGroupName]="pointIndex">
-      <div class="col-md-4  text-right mob-pl-10 mob-text-left">
+    <div class="row pt-44" *ngFor="let obj of getNominee.controls; let pointIndex=index" [formGroupName]="pointIndex">
+      <div class="col-md-4  text-right d-flex align-items-center justify-content-end mob-pl-10 mob-text-left">
         <h5 class="m-0 pt-12">Nominee {{pointIndex + 1}}</h5>
       </div>
       <div class="p-0 mob-pl-10 col-10" [ngClass]="getNominee.length > 1?'col-md-4' : 'col-md-6'">
-        <div class="form-group">
+        <div class="form-group mb-0">
           <mat-form-field>
             <mat-select appDematOwnerNominee matInput formControlName="name" [userTypeFlag]="fieldFlag"
               [clientIdData]="idData" [data]='ownerData' (selectionChange)="disabledMember($event.value,'nominee')"
@@ -199,12 +181,12 @@
 
     </div>
   </div>
-  <div class="row pt-28">
-    <div class="col-md-4 text-right mob-text-left mob-pl-10 full-end">
+  <div class="row pt-44">
+    <div class="col-md-4 text-right mob-text-left mob-pl-10 d-flex align-items-center justify-content-end">
       <h5 class="m-0">Linked bank account</h5>
     </div>
     <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
-      <div class="form-group">
+      <div class="form-group mb-0">
         <mat-form-field floatLabel="never" appearance="standard">
           <input placeholder="Enter linked bank account" autocomplete="off" #linkedAccNum [maxLength]="16"
             appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" formControlName="linkedBankAccount"
@@ -215,12 +197,12 @@
       </div>
     </div>
   </div>
-  <div class="row pt-28">
-    <div class="col-md-4 text-right mob-text-left mob-pl-10 full-end">
+  <div class="row pt-44">
+    <div class="col-md-4 text-right mob-text-left mob-pl-10 d-flex align-items-center justify-content-end">
       <h5 class="m-0">Power of attorney name</h5>
     </div>
     <div class="col-md-6 p-0 mob-pl-10 mob-pr-10">
-      <div class="form-group">
+      <div class="form-group mb-0">
         <mat-form-field floatLabel="never" appearance="standard">
           <input placeholder="Enter power of attorney name" autocomplete="off" #paName appInputValueValidation
             [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPEC_CHAR" [maxLength]="50"
@@ -231,12 +213,12 @@
       </div>
     </div>
   </div>
-  <div class="row pt-28 pb-48">
-    <div class="col-md-4 text-right pl-0 mob-text-left mob-pl-10 full-end">
+  <div class="row pt-44 pb-48">
+    <div class="col-md-4 text-right pl-0 mob-text-left mob-pl-10 d-flex align-items-center justify-content-end">
       <h5 class="m-0">Power of attorney master ID</h5>
     </div>
     <div class="col-md-3 p-0 mob-pl-10 mob-pr-10">
-      <div class="form-group">
+      <div class="form-group mb-0">
         <mat-form-field floatLabel="never" appearance="standard">
           <input autocomplete="off" placeholder="Enter power of attorney master ID" #powerOfAttMasId
             formControlName="powerOfAttMasId" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"

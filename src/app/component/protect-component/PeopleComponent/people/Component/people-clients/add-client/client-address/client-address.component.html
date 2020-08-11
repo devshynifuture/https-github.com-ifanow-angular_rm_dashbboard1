@@ -14,30 +14,10 @@
 </div>
 <div class="pb-12" [ngClass]="{'pb-90': fieldFlag==undefined,'pt-90': fieldFlag==undefined}" [formGroup]="addressForm">
     <h4 class="f-500 text-black pt-20 pl-20 m-0">Permanent address</h4>
-    <!-- <div *ngIf="permanentAddFlag" class="row pt-24">
-        <div class="col-md-4 text-right">
-            <h5 class="m-0 pt-8">Permanent address</h5>
-        </div>
-        <div class="col-md-6 p-0">
-            <div class="form-group m-0 p-address">
-                <mat-radio-group [(ngModel)]="proofType" aria-label="Select an option" formControlName="addressType">
-                    <mat-radio-button [checked]="proofType=='1'" value="1"
-                        [ngClass]="{'bu-primary':proofType=='1','text-primary':proofType=='1','borderRadio':proofType=='2','text-custom':proofType=='2' }"
-                        class="borderRadio text-custom">
-                        Residential
-                    </mat-radio-button>
-                    <mat-radio-button value="2" [checked]="proofType=='2'"
-                        [ngClass]="{'bu-primary':proofType=='2','text-primary':proofType=='2','borderRadio':proofType=='1','text-custom':proofType=='1'}"
-                        class="borderRadio text-custom">
-                        Business
-                    </mat-radio-button>
-                </mat-radio-group>
-            </div>
-        </div>
-    </div> -->
+     
     <div class="row pt-44">
-        <div class="col-md-4 text-right mob-text-left mob-pl-10">
-            <h5 class="m-0 pt-8 mob-pb-5">Address proof type</h5>
+        <div class="col-md-4 d-flex align-items-center justify-content-end text-right mob-text-left mob-pl-10">
+            <h5 class="m-0   mob-pb-5">Address proof type</h5>
         </div>
         <div class="col-md-5 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group mb-0">
@@ -58,9 +38,9 @@
             </div>
         </div>
     </div>
-    <div class="row pt-28">
-        <div class="col-md-4 text-right mob-pl-10 mob-text-left">
-            <h5 class="m-0 pt-20">Proof ID number</h5>
+    <div class="row pt-44">
+        <div class="col-md-4 d-flex align-items-center justify-content-end text-right mob-pl-10 mob-text-left">
+            <h5 class="mb-0 ">Proof ID number</h5>
         </div>
         <div class="col-md-4 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group mb-0">
@@ -78,8 +58,8 @@
         </div>
     </div>
     <div class="row pt-44">
-        <div class="col-md-4 text-right mob-pl-10 mob-text-left">
-            <h5 class="m-0 pt-20">Address line 1</h5>
+        <div class="col-md-4 d-flex align-items-center justify-content-end text-right mob-pl-10 mob-text-left">
+            <h5 class="m-0  ">Address line 1</h5>
         </div>
         <div class="col-md-5 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group mb-0">
@@ -93,8 +73,8 @@
         </div>
     </div>
     <div class="row pt-44">
-        <div class="col-md-4 text-right mob-pl-10 mob-text-left">
-            <h5 class="m-0 pt-20">Address line 2</h5>
+        <div class="col-md-4 d-flex align-items-center justify-content-end text-right mob-pl-10 mob-text-left">
+            <h5 class="m-0  ">Address line 2</h5>
         </div>
         <div class="col-md-5 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group mb-0">
@@ -108,7 +88,7 @@
         </div>
     </div>
     <div class="row pt-58">
-        <div class="col-md-4 text-right mob-pl-10 mob-text-left full-end">
+        <div class="col-md-4 d-flex align-items-center justify-content-end text-right mob-pl-10 mob-text-left full-end">
             <h5 class="m-0">Pin code</h5>
         </div>
         <div class="col-md-2 p-0 mob-pl-10 mob-pr-10">
@@ -128,8 +108,8 @@
         </div>
     </div>
     <div class="row pt-44">
-        <div class="col-md-4 text-right mob-pl-10 mob-text-left">
-            <h5 class="m-0 pt-20">City</h5>
+        <div class="col-md-4 d-flex align-items-center justify-content-end text-right mob-pl-10 mob-text-left">
+            <h5 class="m-0  ">City</h5>
         </div>
         <div class="col-md-5 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group mb-0">
@@ -144,8 +124,8 @@
         </div>
     </div>
     <div class="row pt-44">
-        <div class="col-md-4 text-right mob-pl-10 mob-text-left">
-            <h5 class="m-0 pt-20">State</h5>
+        <div class="col-md-4 d-flex align-items-center justify-content-end text-right mob-pl-10 mob-text-left">
+            <h5 class="m-0  ">State</h5>
         </div>
         <div class="col-md-5 p-0 mob-pl-10 mob-pr-10">
             <div class="form-group mb-0">
@@ -160,11 +140,11 @@
         </div>
     </div>
     <div class="row pt-44 pb-28">
-        <div class="col-md-4 text-right mob-pl-10 mob-text-left">
-            <h5 class="m-0 pt-20">Country</h5>
+        <div class="col-md-4 d-flex align-items-center justify-content-end text-right mob-pl-10 mob-text-left">
+            <h5 class="m-0 ">Country</h5>
         </div>
         <div class="col-md-5 p-0 mob-pl-10 mob-pr-10">
-            <div class="form-group">
+            <div class="form-group mb-0">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input autocomplete="off" placeholder="Enter your country" #country matInput
                         formControlName="country" appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY"
