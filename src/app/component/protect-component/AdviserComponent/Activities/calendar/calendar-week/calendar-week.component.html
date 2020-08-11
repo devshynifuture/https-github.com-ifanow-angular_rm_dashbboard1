@@ -40,13 +40,22 @@
         </div>
         <div class="custom-grid  all-schedule" *ngFor='let time of timeArry; let i = index'>
           <div class="column" *ngFor='let day of week; let di = index' style="position: relative;">
-            <div *ngFor='let event of formatedEvent; let ei = index' (click)="editEvent(event)"
+            <div *ngFor='let event of currentMonthEvents; let ei = index' (click)="editEvent(event)"
               style="position: relative; z-index: 1;">
-              <div class="week-clicks pl-4"
+              <!-- <div class="week-clicks pl-4"
                 *ngIf="event.day == formateDate(day) && event.month == formateMonth(day) && event.year == formateYear(day) && returnNumber(event.startTime)  == time ">
                 <p class="m-0 f-12 roboto f-400 text-white">{{event.summary}}</p>
                 <p class="m-0 f-12 roboto f-400 text-white">{{event.startTime}}
                   {{event.startTime != event.endTime?' - '+ event.endTime:''}}</p>
+              </div> -->
+
+              <div  
+                *ngIf="formateDate(event.date) == formateDate(day) && formateMonth(event.date) == formateMonth(day) && formateYear(event.date) == formateYear(day)">
+                <div *ngFor="let dayEvent of event.events" class="week-clicks pl-4" [hidden]="returnNumber(dayEvent.startTime) != time">
+                  <p class="m-0 f-12 roboto f-400 text-white">{{dayEvent.summary}}</p>
+                  <p class="m-0 f-12 roboto f-400 text-white">{{dayEvent.startTime}}
+                    {{dayEvent.startTime != dayEvent.endTime?' - '+ dayEvent.endTime:''}}</p>
+                </div>
               </div>
             </div>
             <div (click)="addEvent(formateDate(day),formateMonth(day),formateYear(day), time)"

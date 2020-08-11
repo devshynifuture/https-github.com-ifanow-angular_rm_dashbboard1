@@ -232,6 +232,7 @@ export class DashboardComponent implements OnInit {
   docOverviewFlag: boolean;
   isBirhtdayLoader: boolean;
   isLoading;
+  isLoadingBirthdays;
   isGoalSummaryLoaderFlag: boolean;
   investmentAccountFlag: boolean;
   transactionFlag: boolean;
@@ -298,6 +299,27 @@ export class DashboardComponent implements OnInit {
     nextArrow: '<div style=\'position: absolute; top: 35%; right: 0; cursor: pointer;\' class=\'nav-btn classNextArrow next-slide\'><img src=\'/assets/images/svg/next-arrow.svg\'></div>',
     prevArrow: '<div style=\'position: absolute; top: 35%; left: -5px; z-index: 1; cursor: pointer;\' class=\'nav-btn classNextArrow next-slide\'><img src=\'/assets/images/svg/pre-arrow.svg\'></div>',
   };
+
+
+  sliderConfig_investment = {
+    slidesToShow: 1,
+    infinite: true,
+    variableWidth: true,
+    outerEdgeLimit: true,
+    nextArrow: '<div style=\'position: absolute; top: 35%; right: 0; cursor: pointer;\' class=\'nav-btn classNextArrow next-slide\'><img src=\'/assets/images/svg/next-arrow.svg\'></div>',
+    prevArrow: '<div style=\'position: absolute; top: 35%; left: -5px; z-index: 1; cursor: pointer;\' class=\'nav-btn classNextArrow next-slide\'><img src=\'/assets/images/svg/pre-arrow.svg\'></div>',
+  };
+
+
+  sliderConfig_transactions = {  
+    slidesToShow: 1,
+    infinite: true,
+    variableWidth: true,
+    outerEdgeLimit: true,
+    nextArrow: '<div style=\'position: absolute; top: 35%; right: 0; cursor: pointer;\' class=\'nav-btn classNextArrow next-slide\'><img src=\'/assets/images/svg/next-arrow.svg\'></div>',
+    prevArrow: '<div style=\'position: absolute; top: 35%; left: -5px; z-index: 1; cursor: pointer;\' class=\'nav-btn classNextArrow next-slide\'><img src=\'/assets/images/svg/pre-arrow.svg\'></div>',
+  };
+
 
   LastSevenDaysInvestmentAccounts: any;
 
@@ -434,6 +456,8 @@ export class DashboardComponent implements OnInit {
     this.getLastSevenDaysInvestmentAccounts();
     this.getGoalSummaryData();
     this.initPointForTask()
+    
+    
   }
 
   initPointForTask() {
@@ -684,7 +708,8 @@ export class DashboardComponent implements OnInit {
     this.excessAllow = done;
   }
   getLastSevenDaysInvestmentAccounts() {
-    this.investmentAccountFlag = true;
+  //  this.LastSevenDaysInvestmentAccounts = [{}, {}, {}]
+   // this.investmentAccountFlag = true;
     const obj = {
       advisorId: this.advisorId,
       startDate: new Date().getTime(),
@@ -696,22 +721,25 @@ export class DashboardComponent implements OnInit {
     //     "startDate":1593369000000,
     //     "endDate":1594060199999
     //  }
+    this.investmentAccountFlag = true;
     this.dashboardService.getLastSevenDaysInvestmentAccounts(obj).subscribe(
       (data) => {
         if (data) {
           this.investmentAccountFlag = false;
           this.LastSevenDaysInvestmentAccounts = data;
         } else {
-          this.investmentAccountFlag = false;
+           this.investmentAccountFlag = false;
           this.LastSevenDaysInvestmentAccounts = [];
         }
       },
       (err) => {
+        this.investmentAccountFlag = false;
+        this.LastSevenDaysInvestmentAccounts = [];
 
       });
   }
   getLastSevenDaysTransactions() {
-    this.transactionFlag = true;
+   
     const obj = {
       advisorId: this.advisorId,
       tpUserCredentialId: null,
@@ -725,6 +753,7 @@ export class DashboardComponent implements OnInit {
     //     "startDate":1593369000000,
     //     "endDate":1594060199999
     //  }
+    this.transactionFlag = true;
     console.log(new Date(obj.startDate), new Date(obj.endDate), 'date 123');
     this.dashboardService.getLastSevenDaysTransactions(obj).subscribe(
       (data) => {
@@ -861,8 +890,13 @@ export class DashboardComponent implements OnInit {
       };
   }
 
+ 
+
+
+
+
   getBirthdayOrAnniversary() {
-    this.isBirhtdayLoader = true;
+   
     const toDate = new Date();
     toDate.setDate(new Date().getDate() + 7);
     const obj = {
@@ -870,6 +904,7 @@ export class DashboardComponent implements OnInit {
       fromDate: new Date().getTime(),
       toDate: toDate.getTime()
     };
+    this.isBirhtdayLoader = true;
     this.dashboardService.getBirthdayOrAnniversary(obj).subscribe(
       data => {
         if (data) {
@@ -1298,4 +1333,9 @@ export class DashboardComponent implements OnInit {
       console.log('The dialog was closed');
     });
   }
+
+
+ 
+
+
 }

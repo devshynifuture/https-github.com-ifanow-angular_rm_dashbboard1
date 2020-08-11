@@ -20,9 +20,10 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { CustomCommonModule } from 'src/app/common/custom.common.module';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import { MobileViewAddNumberComponent } from './mobile-view-add-number/mobile-view-add-number.component';
+import { DeleteProgressButtonComponent } from 'src/app/common/delete-progress-button/delete-progress-button.component';
 
 @NgModule({
-  declarations: [
+  declarations: [DeleteProgressButtonComponent,
     FroalaComponent, ConfirmDialogComponent, ErrorPageComponent, DataNotFoundComponent, ImageCropperComponent, WelcomePageComponent, ReplaceUserComponent, AddNumberComponent, ResetPasswordComponent, MobileViewAddNumberComponent],
   exports: [FroalaComponent, ConfirmDialogComponent, ImageCropperComponent, ReplaceUserComponent, AddNumberComponent, ResetPasswordComponent, MobileViewAddNumberComponent],
   imports: [
@@ -40,7 +41,7 @@ import { MobileViewAddNumberComponent } from './mobile-view-add-number/mobile-vi
 
     // AppModule
   ],
-  entryComponents: [ConfirmDialogComponent, ImageCropperComponent, ReplaceUserComponent, AddNumberComponent, ResetPasswordComponent]
+  entryComponents: [DeleteProgressButtonComponent, ConfirmDialogComponent, ImageCropperComponent, ReplaceUserComponent, AddNumberComponent, ResetPasswordComponent]
 })
 export class CommonComponentModule {
 }

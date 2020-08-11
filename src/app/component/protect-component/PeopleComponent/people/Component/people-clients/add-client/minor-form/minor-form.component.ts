@@ -8,6 +8,7 @@ import {
 } from "@angular/forms";
 import { ValidatorType } from "src/app/services/util.service";
 import { MatProgressButtonOptions } from "src/app/common/progress-button/progress-button.component";
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
 @Component({
   selector: "app-minor-form",
@@ -38,12 +39,10 @@ export class MinorFormComponent implements OnInit {
   capitalise(event) {
     console.log(event);
   }
-  close(value) {
-    console.log(value);
-  }
-  //
-  @Output() clientData = new EventEmitter();
+
   @Output() tabChange = new EventEmitter();
+  @Output() cancelTab = new EventEmitter();
+  @Output() saveNextData = new EventEmitter();
 
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
@@ -60,8 +59,8 @@ export class MinorFormComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
-  constructor(private fb: FormBuilder) {}
-  ngOnInit() {}
+  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject) { }
+  ngOnInit() { }
 
   @Input() set data(data) {
     this.minorData = data;
@@ -167,4 +166,9 @@ export class MinorFormComponent implements OnInit {
       })
     );
   }
+
+  close(data) {
+    (data == 'close') ? this.cancelTab.emit('close') : this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });
+  }
+
 }

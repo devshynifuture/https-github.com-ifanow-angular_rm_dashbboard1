@@ -477,10 +477,10 @@ export class MfServiceService {
     return obj;
   }
   roundOff(data: number, noOfPlaces: number = 0): number {
-  //  const val=String(data);
-  //  const roundedValue = parseFloat(String(data)).toFixed(noOfPlaces)
-  //  const val=parseFloat(roundedValue)
-     const roundedValue = parseFloat(data.toFixed(noOfPlaces));
+    //  const val=String(data);
+    //  const roundedValue = parseFloat(String(data)).toFixed(noOfPlaces)
+    //  const val=parseFloat(roundedValue)
+    const roundedValue = parseFloat(data.toFixed(noOfPlaces));
     // console.log(' original / roundedValue ', data, ' / ', roundedValue);
 
     return roundedValue;
@@ -488,12 +488,12 @@ export class MfServiceService {
 
   mutualFundRoundAndFormat(data, noOfPlaces: number = 0) {
     if (data) {
-     data = parseFloat(data)
+      data = parseFloat(data)
       if (isNaN(data)) {
         return data;
       } else {
         // console.log(' original ', data);
-        const formattedValue = parseFloat((data).toFixed(noOfPlaces)).toLocaleString('en-IN', {'minimumFractionDigits':noOfPlaces,'maximumFractionDigits':noOfPlaces});
+        const formattedValue = parseFloat((data).toFixed(noOfPlaces)).toLocaleString('en-IN', { 'minimumFractionDigits': noOfPlaces, 'maximumFractionDigits': noOfPlaces });
         // console.log(' original / roundedValue ', data, ' / ', formattedValue);
         return formattedValue;
       }
@@ -526,6 +526,14 @@ export class MfServiceService {
 
     return data;
   }
+  convertInTitleCase(input) {
+    if (!input) {
+      return '';
+    } else {
+      return input.replace(/\w\S*/g, (txt => txt[0].toUpperCase() + txt.substr(1).toLowerCase()));
+    }
+  }
+
   getOtherFilter(orgData, filterData, orgId, FilterId, name) {
     if (filterData) {
       // orgData.forEach(item => item.selected = '');
