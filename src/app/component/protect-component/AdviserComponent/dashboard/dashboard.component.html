@@ -1348,7 +1348,7 @@
     <div class="sticky-top z-0">
       <mat-tab-group animationDuration="0ms" id="advisor-radio">
         <mat-tab label="To-do">
-          <!-- <div class="max-scroll ">
+          <div class="max-scroll " *ngIf="todoListData">
             <div class="pt-12">
               <div class="row">
                 <div class="col-md-12 pl-0 addTo-DO">
@@ -1359,7 +1359,7 @@
                   <input *ngIf="showInput" class="form-control" matInput (focusout)="showInput=false" autofocus
                     #inputValue (keyup.enter)="addTodoList(inputValue.value)" placeholder="Enter note">
                 </div>
- 
+
               </div>
             </div>
             <div class="radio-buttons-advisor">
@@ -1399,26 +1399,26 @@
               </mat-radio-group>
 
             </div>
-          </div> -->
+          </div>
 
-          <div class="emptyTo-Do mt-40 text-center">
-            <p>No To-do’s exist 
-             <br><br>
-                This is the perfect place to add
-              some quick tasks, thoughts, notes etc. 
+          <div *ngIf="todoListData==undefined" class="emptyTo-Do mt-40 text-center">
+            <p>No To-do’s exist
+              <br><br>
+              This is the perfect place to add
+              some quick tasks, thoughts, notes etc.
               <br><br>
               Go ahead, add something.</p>
 
-              <div class="col-md-12 mt-8 mb-8 pl-0 addTo-DO">
-                <div (click)="showInput=true" class="d-flex justify-content-center align-items-center mt-10 mb-8 c-p">
-                  <img *ngIf="showInput==false" src="/assets/images/svg/add-blue.svg" class="c-p ml-4">
-                  <p *ngIf="showInput==false" class="m-0 text-black pl-12 lh-20">Add a to-do</p>
-                </div>
-                <input *ngIf="showInput" class="form-control" matInput (focusout)="showInput=false" autofocus
-                  #inputValue (keyup.enter)="addTodoList(inputValue.value)" placeholder="Enter note">
+            <div class="col-md-12 mt-8 mb-8 pl-0 addTo-DO">
+              <div (click)="showInput=true" class="d-flex justify-content-center align-items-center mt-10 mb-8 c-p">
+                <img *ngIf="showInput==false" src="/assets/images/svg/add-blue.svg" class="c-p ml-4">
+                <p *ngIf="showInput==false" class="m-0 text-black pl-12 lh-20">Add a to-do</p>
               </div>
- 
-              <img src="assets/images/svg/to-do-emptyimg.svg">
+              <input *ngIf="showInput" class="form-control" matInput (focusout)="showInput=false" autofocus #inputValue
+                (keyup.enter)="addTodoList(inputValue.value)" placeholder="Enter note">
+            </div>
+
+            <img src="assets/images/svg/to-do-emptyimg.svg">
 
           </div>
 
