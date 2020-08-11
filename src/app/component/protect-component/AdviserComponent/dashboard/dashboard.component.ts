@@ -486,7 +486,6 @@ export class DashboardComponent implements OnInit {
           this.portFolioData = this.portFolioData.filter(d => d.assetType != 6);
           this.portFolioData.unshift(stock);
         }
-
         let chartData = [];
         let counter = 0;
         let othersData = {
@@ -522,6 +521,7 @@ export class DashboardComponent implements OnInit {
         });
         chartTotal -= 1;
         if (chartTotal === 0) {
+          this.chartTotal = 0;
           this.tabsLoaded.portfolioData.hasData = false
         }
         if (counter > 4) {
@@ -1294,9 +1294,9 @@ export class DashboardComponent implements OnInit {
           this.dataSourceClientWithSub = {};
         }
       }, err => {
-      this.subOverviewFlag = false;
-      this.dataSourceClientWithSub = {};
-    }
+        this.subOverviewFlag = false;
+        this.dataSourceClientWithSub = {};
+      }
     );
   }
 
