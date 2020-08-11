@@ -106,6 +106,9 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   }
 
   selectClient(singleClientData) {
+    if (singleClientData.userType == 3) {
+      return;
+    }
     this.auth.setClientData(singleClientData);
     this.myControl.setValue(singleClientData.displayName)
     this.ngZone.run(() => {
@@ -134,32 +137,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
     this.enumDataService.getDataForTaxMasterService();
     this.getOrgProfiles();
     this.getPersonalProfiles();
-    this.clientList = this.myControl.valueChanges
-      .pipe(
-        startWith(''),
-        map(state => {
-          if (state) {
-            let list = this.enumDataService.getClientSearchData(state);
-            if (list == undefined) {
-              this.showDefaultDropDownOnSearch = true;
-              this.isLoding = true;
-              return;
-            }
-            if (list && list.length == 0) {
-              this.isLoding = false;
-              this.showDefaultDropDownOnSearch = true;
-              return;
-            }
-            this.isLoding = false;
-            this.showDefaultDropDownOnSearch = false;
-            return this.enumDataService.getClientSearchData(state)
-          } else {
-            this.isLoding = false;
-            this.showDefaultDropDownOnSearch = false;
-            return this.enumDataService.getEmptySearchStateData();
-          }
-        }),
-      )
+
   }
 
   getOrgProfiles() {
@@ -177,6 +155,38 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
         // this.utilService.loader(-1);
       }
     );
+  }
+
+  searchClientFamilyMember(value) {
+    if (!this.clientList) {
+      this.showDefaultDropDownOnSearch = true;
+      this.isLoding = true;
+    }
+    const obj = {
+      advisorId: AuthService.getAdvisorId(),
+      displayName: value
+    };
+    this.peopleService.getClientFamilyMemberList(obj).subscribe(responseArray => {
+      if (responseArray) {
+        if (value.length >= 0) {
+          this.clientList = responseArray;
+          this.showDefaultDropDownOnSearch = false;
+          this.isLoding = false;
+        } else {
+          this.showDefaultDropDownOnSearch = undefined;
+          this.isLoding = undefined;
+          this.clientList = undefined;
+        }
+      }
+      else {
+        this.showDefaultDropDownOnSearch = true;
+        this.isLoding = false;
+        this.clientList = undefined;
+      }
+    }, error => {
+      this.clientList = undefined;
+      console.log('getFamilyMemberListRes error : ', error);
+    });
   }
 
   getPersonalProfiles() {
