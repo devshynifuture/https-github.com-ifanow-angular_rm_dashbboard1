@@ -699,7 +699,7 @@ export class DashboardComponent implements OnInit {
           this.dataSource2.data = dataArray;
         } else {
           this.dataSource2.data = null;
-          this.eventService.openSnackBar('No Task Found', 'DISMISS');
+          // this.eventService.openSnackBar('No Task Found', 'DISMISS');
         }
       });
   }
