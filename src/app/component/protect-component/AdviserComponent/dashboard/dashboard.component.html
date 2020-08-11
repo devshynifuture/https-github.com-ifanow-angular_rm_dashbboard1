@@ -165,7 +165,7 @@
         <h3 class="m-0 roboto f-400 text-black pt-8">
           <div class="relClass">
             <div class="bar" [ngClass]="{'heightNew24': subOverviewFlag}">
-              <span *ngIf="!subOverviewFlag">₹</span>
+              <span *ngIf="!subOverviewFlag && totalSales!=0">₹</span>
               <span *ngIf="!subOverviewFlag" appFormatNumber [value]="totalSales">{{totalSales}}</span>
             </div>
           </div>
@@ -176,7 +176,7 @@
         <h3 class="m-0 roboto f-400 text-black pt-8">
           <div class="relClass">
             <div class="bar" [ngClass]="{'heightNew24': subOverviewFlag}">
-              <span *ngIf="!subOverviewFlag">₹</span>
+              <span *ngIf="!subOverviewFlag && totalSales!=0">₹</span>
               <span appFormatNumber [value]="feeRecieved" *ngIf="!subOverviewFlag">{{feeRecieved}}</span>
             </div>
           </div>
@@ -272,7 +272,7 @@
       </div>
 
       <div class="mt-40"
-        *ngIf="(tabsLoaded.portfolioData.dataLoaded && tabsLoaded.portfolioData.hasData) && !tabsLoaded.portfolioData.isLoading">
+        *ngIf="(tabsLoaded.portfolioData.dataLoaded && tabsLoaded.portfolioData.hasData) && !tabsLoaded.portfolioData.isLoading && chartTotal > 0">
         <h5 class="text-black f-16 roboto mb-10 f-500"> Asset classses</h5>
         <div class="bg-white br-10">
           <div class="row b-a pt-20 pb-20 br-4">
@@ -300,7 +300,7 @@
       </div>
 
       <div class="col-12 p-0 pt-40"
-        *ngIf="(!tabsLoaded.portfolioData.dataLoaded || !tabsLoaded.portfolioData.hasData) && !tabsLoaded.portfolioData.isLoading">
+        *ngIf="(!tabsLoaded.portfolioData.dataLoaded || !tabsLoaded.portfolioData.hasData) && !tabsLoaded.portfolioData.isLoading && chartTotal == 0">
         <h5 class="m-0 text-black f-16 roboto pb-16 f-500"> Asset allocation</h5>
         <div class="bg-white br-10 ba-primitive">
 

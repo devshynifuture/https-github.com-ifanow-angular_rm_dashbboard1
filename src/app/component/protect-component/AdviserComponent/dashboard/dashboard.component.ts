@@ -1290,9 +1290,13 @@ export class DashboardComponent implements OnInit {
           this.subOverviewFlag = false;
           this.dataSourceClientWithSub = data;
         } else {
+          this.subOverviewFlag = false;
           this.dataSourceClientWithSub = {};
         }
-      }
+      }, err => {
+      this.subOverviewFlag = false;
+      this.dataSourceClientWithSub = {};
+    }
     );
   }
 
