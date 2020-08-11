@@ -475,7 +475,7 @@ export class CalendarWeekComponent implements OnInit {
           dayArr.events.push(this.formatedEvent[e])
         }
         // }
-        console.log(this.currentMonthEvents, "this.currentMonthEvents");
+        // console.log(this.currentMonthEvents, "this.currentMonthEvents");
       }
 
       if (dayArr.date != null) {
@@ -538,7 +538,7 @@ export class CalendarWeekComponent implements OnInit {
       }
 
       for (let e = 0; e < this.formatedEvent.length; e++) {
-        let calMonth = new Date(this.year, this.month+1, this.formateDate(this.current_day));
+        let calMonth = new Date(this.year, this.month, this.formateDate(this.current_day));
         // console.log(this.formateMonth(calMonth),this.formatedEvent[e].month, this.formateYear(calMonth));
 
         // if(this.formatedEvent[e].month == this.formateMonth(calMonth) && this.formatedEvent[e].year ==  this.formateYear(calMonth)){
