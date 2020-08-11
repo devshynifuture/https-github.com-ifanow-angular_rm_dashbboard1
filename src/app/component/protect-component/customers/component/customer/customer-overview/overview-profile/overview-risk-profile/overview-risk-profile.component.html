@@ -90,7 +90,7 @@
 
 
             <!-- questionnaire -->
-            <div class="wrapper-28" *ngIf="showQuestionnaire && !loaderFn.loading">
+            <div class="wrapper-28" *ngIf="showQuestionnaire && !loaderFn.loading" id="question-risk-profile">
                 <div class="row">
                     <h3 class="m-0 f-500">Your risk profile helps us understand how much investment risk you can take.
                     </h3>
@@ -153,12 +153,12 @@
         <div class="col-md-3 p-0" *ngIf="!isEmpty && !loaderFn.loading">
 
 
-            <div class="p-20 b-primitive mt-12 sticky-risk-pofile" *ngIf="showQuestionnaire">
+            <div class="p-20 b-primitive mt-12 sticky-risk-pofile p-12-1262" *ngIf="showQuestionnaire">
 
                 <div class="row">
                     <div class="col-md-12 p-0">
                         <mat-progress-bar mode="determinate" [value]="(statusArray.length/15) * 100"></mat-progress-bar>
-                        <h5 class="pt-8 m-0 pt-12 text-center">{{statusArray.length}} of 15 completed</h5>
+                        <h5 class="pt-8 m-0 pt-12 text-center f-14-954">{{statusArray.length}} of 15 completed</h5>
                     </div>
                 </div>
 
