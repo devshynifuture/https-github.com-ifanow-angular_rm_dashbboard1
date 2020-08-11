@@ -59,8 +59,8 @@
                                             </div>
                                             <div class="col-md-7 p-0 text-right">
                                                 <h1 class="text-diff f-24 mb-0 pb-8">
-                                                    <span *ngIf="!isLoading && sipCount" appFormatNumber>
-                                                        {{(sipCount.avgSipAmount) ? sipCount.avgSipAmount : 0}}</span>
+                                                    <span *ngIf="!isLoading" appFormatNumber>
+                                                        {{(sipCount &&  sipCount.hasOwnProperty('avgSipAmount')) ? sipCount.avgSipAmount : 0}}</span>
                                                     <span *ngIf="isLoading">{{''}}</span>
                                                 </h1>
                                                 <p class="f-12 mb-0 text-diff" *ngIf="!isLoading">Average SIP</p>
@@ -90,12 +90,12 @@
                                             <div class="col-md-12 p-0">
                                                 <div class="text-center">
                                                     <h1 class="text-diff f-300 f-40 mb-4 pt-8">
-                                                        {{ sipCount.sipLinkedToGoalPercent }}%</h1>
+                                                        {{sipCount ?  sipCount.sipLinkedToGoalPercent : 0}}%</h1>
 
                                                     <p class="text-diff f-14 mb-0 pt-12 l-21">
-                                                        Out of {{ sipCount.totalCount }} SIP,
-                                                        {{ sipCount.sipLinkedToGoalPercent }}%
-                                                        ({{ sipCount.sipLinkedToGoalCount }} SIP) are currently
+                                                        Out of {{sipCount ?  sipCount.totalCount:0}} SIP,
+                                                        {{sipCount ?  sipCount.sipLinkedToGoalPercent:0}}%
+                                                        ({{sipCount ?  sipCount.sipLinkedToGoalCount : '' }} SIP) are currently
                                                         linked to
                                                         financial goals of your
                                                         clients
@@ -188,7 +188,7 @@
                                         </p>
 
                                         <!-- *ngIf="clientTotalAum" prod build -->
-                                        <div class="b-white h-424">
+                                        <div class="b-white h-424" *ngIf="rejectionSip?.length > 0">
                                             <div *ngFor="let item of rejectionSip" class="row bb">
                                                 <div class=" col-md-12 p-0 relClass">
                                                     <div [ngClass]="{'height23': isLoading,'bar':isLoading}">

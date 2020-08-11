@@ -123,6 +123,9 @@ import { BulkCapitalGainDetailedComponent } from './component/protect-component/
 import { RightFilterDuplicateComponent } from './component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
 import { CustomiseSettingComponent } from './component/protect-component/AdviserComponent/backOffice/bulk-report-sending/customise-setting/customise-setting.component';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { VerifiedMailsComponent } from './component/protect-component/AdviserComponent/backOffice/bulk-report-sending/verified-mails/verified-mails.component';
+import { VerifyAddEmailComponent } from './component/protect-component/AdviserComponent/backOffice/bulk-report-sending/verify-add-email/verify-add-email.component';
+import { AlertTitleComponent } from './component/protect-component/AdviserComponent/backOffice/bulk-report-sending/alert-title/alert-title.component';
 // tslint:disable-next-line:max-line-length
 // import { TransactionAddComponent } from './component/protect-component/AdviserComponent/transactions/transaction-add/transaction-add.component';
 
@@ -261,6 +264,9 @@ export const componentList = [
   RightFilterComponent,
   BulkEmailTestComponent,
   SendNowReportsComponent,
+  VerifiedMailsComponent,
+  AlertTitleComponent,
+  VerifyAddEmailComponent,
   StatusReportComponent,
   FolioMasterDetailsComponent,
   SipDetailsComponent,

@@ -84,6 +84,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
   allBanks: any[] = [];
   families: any[] = [];
   cashFlowDescNaming: any[] = [];
+  assetAllocationRes: boolean;
 
   constructor(
     public eventService: EventService,
@@ -192,10 +193,17 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     };
     this.cusService.getAssetAllocationSummary(obj).subscribe(
       data => {
-        console.log('getAssetAllocationSummary data: ', data);
-        this.pieChart('piechartMutualFund', data);
+        if(data){
+          this.assetAllocationRes = true;
+          console.log('getAssetAllocationSummary data: ', data);
+          this.pieChart('piechartMutualFund', data);
+        }else{
+          this.assetAllocationRes = false;
+        }
+
       },
       err => {
+        this.assetAllocationRes=false;
         this.finalTotal = 0;
       }
     );
