@@ -4,6 +4,8 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { OpenEmailVerificationComponent } from '../../../setting/setting-preference/open-email-verification/open-email-verification.component';
 import { MatDialog } from '@angular/material';
+import { VerifyAddEmailComponent } from '../verify-add-email/verify-add-email.component';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-verified-mails',
@@ -91,8 +93,57 @@ export class VerifiedMailsComponent implements OnInit {
   addEmailVerfifyRes(data) {
     this.eventService.openSnackBar("An email has been sent to your registered email address", "Dismiss");
     this.getEmailVerification()
+    const dialogRef = this.dialog.open(VerifyAddEmailComponent, {
+      width: '400px',
+      data: { bank: '', animal: this.element }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == undefined) {
+        return
+      }
+      this.element = result;
+      let obj = {
+        id: this.element.id,
+        emailAddress: this.element.emailAddress,
+        userId: this.advisorId
+      }
+      //  this.bankDetailsSend.emit(result);
+    });
   }
   selectedEmail(email){
     
+  }
+  deleteEmailModal(value, data) {
+    if(data.defaultFlag == 1) {
+      this.eventService.openSnackBar("Email dependency found!", "Dismiss");
+      return;
+    }
+    const dialogData = {
+      data: value,
+      header: 'DELETE',
+      body: 'Are you sure you want to delete?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        this.orgSetting.deleteEmailVerify(data.id).subscribe(
+          data => {
+            dialogRef.close();
+            this.getEmailVerification();
+            this.eventService.openSnackBar("Deleted successfully!", "Dismiss");
+          },
+          error => this.eventService.showErrorMessage(error)
+        );
+      },
+      negativeMethod: () => {
+      }
+    };
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
   }
 }
