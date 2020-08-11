@@ -197,6 +197,7 @@ export class DashboardComponent implements OnInit {
       }
     }
   ]
+  todoListFlag: boolean;
   constructor(
     public dialog: MatDialog, private subService: SubscriptionService,
     private eventService: EventService,
@@ -311,7 +312,7 @@ export class DashboardComponent implements OnInit {
   };
 
 
-  sliderConfig_transactions = {  
+  sliderConfig_transactions = {
     slidesToShow: 1,
     infinite: true,
     variableWidth: true,
@@ -456,8 +457,8 @@ export class DashboardComponent implements OnInit {
     this.getLastSevenDaysInvestmentAccounts();
     this.getGoalSummaryData();
     this.initPointForTask()
-    
-    
+
+
   }
 
   initPointForTask() {
@@ -708,8 +709,8 @@ export class DashboardComponent implements OnInit {
     this.excessAllow = done;
   }
   getLastSevenDaysInvestmentAccounts() {
-  //  this.LastSevenDaysInvestmentAccounts = [{}, {}, {}]
-   // this.investmentAccountFlag = true;
+    //  this.LastSevenDaysInvestmentAccounts = [{}, {}, {}]
+    // this.investmentAccountFlag = true;
     const obj = {
       advisorId: this.advisorId,
       startDate: new Date().getTime(),
@@ -728,7 +729,7 @@ export class DashboardComponent implements OnInit {
           this.investmentAccountFlag = false;
           this.LastSevenDaysInvestmentAccounts = data;
         } else {
-           this.investmentAccountFlag = false;
+          this.investmentAccountFlag = false;
           this.LastSevenDaysInvestmentAccounts = [];
         }
       },
@@ -739,7 +740,7 @@ export class DashboardComponent implements OnInit {
       });
   }
   getLastSevenDaysTransactions() {
-   
+
     const obj = {
       advisorId: this.advisorId,
       tpUserCredentialId: null,
@@ -795,11 +796,13 @@ export class DashboardComponent implements OnInit {
   }
 
   getTodoListData() {
+    this.todoListFlag = true;
     const obj = {
       advisorId: this.advisorId
     };
     this.dashboardService.getNotes(obj).subscribe(
       data => {
+        this.todoListFlag = false;
         if (data && data.length > 0) {
           data.forEach(element => {
             element.update = false;
@@ -814,6 +817,11 @@ export class DashboardComponent implements OnInit {
           this.todoListData = data;
           // this.todoListData=this.todoListData.sort((a,b)=>a.due - b.due);
         }
+        else {
+          this.todoListFlag = false;
+        }
+      }, err => {
+        this.todoListFlag = false;
       }
     );
   }
@@ -890,13 +898,13 @@ export class DashboardComponent implements OnInit {
       };
   }
 
- 
+
 
 
 
 
   getBirthdayOrAnniversary() {
-   
+
     const toDate = new Date();
     toDate.setDate(new Date().getDate() + 7);
     const obj = {
@@ -1335,7 +1343,7 @@ export class DashboardComponent implements OnInit {
   }
 
 
- 
+
 
 
 }
