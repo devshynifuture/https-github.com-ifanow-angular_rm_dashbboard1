@@ -202,7 +202,7 @@ export class FolioQueryComponent implements OnInit {
           let arrValue = [];
           res.forEach(element => {
             arrValue.push({
-              arnRiaCode: element.brokerCode ? element.brokerCode : '-',
+              arnRiaCode: element.broker_id ? element.broker_id : '-',
               schemeName: element.shemeName,
               investorName: element.investorName,
               folioNumber: element.folioNumber,
