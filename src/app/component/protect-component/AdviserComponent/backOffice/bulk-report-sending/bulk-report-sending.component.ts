@@ -10,6 +10,7 @@ import { CustomiseSettingComponent } from './customise-setting/customise-setting
 import { EventService } from 'src/app/Data-service/event.service';
 import { EmailOnlyComponent } from '../../Subscriptions/subscription/common-subscription-component/email-only/email-only.component';
 import { OrgSettingServiceService } from '../../setting/org-setting-service.service';
+import { VerifiedMailsComponent } from './verified-mails/verified-mails.component';
 
 @Component({
   selector: 'app-bulk-report-sending',
@@ -93,33 +94,19 @@ export class BulkReportSendingComponent implements OnInit {
     if (this.isLoading) {
       return;
     }
-    let obj = {
-      clientData: {documentText: data.body},
-      showfromEmail: true,
-      openedFrom: 'settings',
-      fromEmail: data.fromEmail || '',
-      documentList: [],
-      id: data.id,
-      subject: data.subject,
-      emailTemplateTypeId: data.emailTemplateTypeId,
-      subjectChange: !data.subjectEditable,
-      bodyChange: !data.bodyEditable,
-      component_type: 'email_template',
-      email_header: data.title,
-    }
     const fragmentData = {
       flag: value,
-      data: obj,
+      data: data,
       id: 1,
       state: 'open',
-      componentName: EmailOnlyComponent
+      componentName: VerifiedMailsComponent
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getEmailTemplate();
-            this.openSendNow('')
+           // this.getEmailTemplate();
+            //this.openSendNow('')
           }
           rightSideDataSub.unsubscribe();
         }
