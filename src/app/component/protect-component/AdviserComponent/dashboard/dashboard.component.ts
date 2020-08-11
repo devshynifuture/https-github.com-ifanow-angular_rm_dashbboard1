@@ -260,7 +260,7 @@ export class DashboardComponent implements OnInit {
   finalEndDate: number;
   transactionList: any;
   isRecentTransactionFlag: boolean;
-  todoListData = [];
+  todoListData;
   eventData: any;
   portFolioData = [];
   formatedEvent: any[];
@@ -846,6 +846,7 @@ export class DashboardComponent implements OnInit {
               element.createdDate = this.datePipe.transform(element.createdOn, 'MMMM d, y');
             }
           });
+          this.getTodoListData()
           this.todoListData = data;
           // this.todoListData.unshift(data);
         }
@@ -882,6 +883,7 @@ export class DashboardComponent implements OnInit {
               element.createdDate = this.datePipe.transform(element.createdOn, 'MMMM d, y');
             }
           });
+          this.getTodoListData()
           this.todoListData = data;
         }
       }), err => this.eventService.openSnackBar(err, 'Dismiss');
@@ -891,7 +893,8 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.deleteNotes(value.id).subscribe(
       data => {
         // if (data) {
-        this.todoListData.splice(index, 1);
+        // this.todoListData.splice(index, 1);
+        this.getTodoListData()
         // }
       }), err => {
         this.eventService.openSnackBar(err, 'Dismiss');
