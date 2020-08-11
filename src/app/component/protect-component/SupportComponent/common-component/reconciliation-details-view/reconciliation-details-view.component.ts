@@ -95,9 +95,9 @@ export class ReconciliationDetailsViewComponent implements OnInit {
     this.arnRiaCode = this.data.arnRiaCode;
 
     const tableArr: PeriodicElement[] = [{
-      unitsRta: this.data.unitsRta ? this.data.unitsRta : '',
-      unitOne: this.data.unitsIfanow ? this.data.unitsIfanow : '',
-      difference: this.data.difference ? this.data.difference : ''
+      unitsRta: this.data.unitsRta ? this.data.unitsRta : (typeof this.data.unitsRta === 'number' ? this.data.unitsRta : ''),
+      unitOne: this.data.unitsIfanow ? this.data.unitsIfanow : (typeof this.data.unitsIfanow === 'number' ? this.data.unitsIfanow : ''),
+      difference: this.data.difference ? this.data.difference : (typeof this.data.difference === 'number' ? this.data.difference : ''),
     }];
 
     this.dataSource.data = tableArr;

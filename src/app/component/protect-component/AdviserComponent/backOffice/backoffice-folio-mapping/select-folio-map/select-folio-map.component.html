@@ -28,11 +28,11 @@
                         </mat-option>
                         <ng-container *ngIf="!isLoadingForDropDown">
                             <mat-option (onSelectionChange)="setUserDetail(item, searchFamilyClientRef.value)"
-                                *ngFor="let item of arrayOfFamilyMemberOrClient" [value]="item.clientName"
-                                [matTooltip]="item.clientName" matTooltipPosition="after">
+                                *ngFor="let item of arrayOfFamilyMemberOrClient" [value]="item.showName"
+                                [matTooltip]="item.showName" matTooltipPosition="after">
                                 <span>
                                     <b>
-                                        {{item.clientName}}
+                                        {{item.showName}}
                                     </b>
                                 </span>
                             </mat-option>

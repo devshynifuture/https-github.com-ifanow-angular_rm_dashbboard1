@@ -31,7 +31,7 @@ export class BackofficeFileUploadSipStpComponent implements OnInit {
   constructor(private reconService: ReconciliationService, private BackOffice: BackofficeFileUploadService) { }
   filter: any = {
     rt: 0,
-    status: 0
+    status: 2
   };
   private unSubcrip: Subscription;
   ngOnInit() {
