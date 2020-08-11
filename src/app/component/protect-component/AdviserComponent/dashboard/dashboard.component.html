@@ -1348,7 +1348,7 @@
     <div class="sticky-top z-0">
       <mat-tab-group animationDuration="0ms" id="advisor-radio">
         <mat-tab label="To-do">
-          <div class="max-scroll ">
+          <!-- <div class="max-scroll ">
             <div class="pt-12">
               <div class="row">
                 <div class="col-md-12 pl-0 addTo-DO">
@@ -1359,26 +1359,7 @@
                   <input *ngIf="showInput" class="form-control" matInput (focusout)="showInput=false" autofocus
                     #inputValue (keyup.enter)="addTodoList(inputValue.value)" placeholder="Enter note">
                 </div>
-
-                <!-- <div class="col-md-6 p-0 text-right">
-              <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-                <mat-icon>more_vert</mat-icon>
-              </button>
-              <mat-menu #menu="matMenu">
-                <button mat-menu-item>
-                  <mat-icon>dialpad</mat-icon>
-                  <span>Redial</span>
-                </button>
-                <button mat-menu-item disabled>
-                  <mat-icon>voicemail</mat-icon>
-                  <span>Check voice mail</span>
-                </button>
-                <button mat-menu-item>
-                  <mat-icon>notifications_off</mat-icon>
-                  <span>Disable alerts</span>
-                </button>
-              </mat-menu>
-            </div> -->
+ 
               </div>
             </div>
             <div class="radio-buttons-advisor">
@@ -1415,28 +1396,30 @@
                   </div>
                   <hr class="ad">
                 </div>
-                <!-- </div>
-            </div> -->
-                <!-- <mat-radio-button value="2">Call Nita tomorrow at 9PM</mat-radio-button>
-            <hr class="ad"> -->
-                <!-- <mat-radio-button value="3">Create financial plan for Rahul Jain. Before that, check if the insurance
-              policies are added.</mat-radio-button>
-            <hr class="ad">
-            <mat-radio-button value="4">Con call with fund manager for market outlook</mat-radio-button>
-            <hr class="ad">
-            <mat-radio-button value="5">Talk to Ashish</mat-radio-button>
-            <hr class="ad">
-            <mat-radio-button value="6">Follow up with deepak roy</mat-radio-button>
-            <hr class="ad">
-            <mat-radio-button value="7">Training topics for each team</mat-radio-button>
-            <hr class="ad">
-            <mat-radio-button value="8">Aniket to send me email about asset allocation best practices, amit to send me
-
-              email about when she will finish her task of learning insurance planning</mat-radio-button> -->
-
               </mat-radio-group>
 
             </div>
+          </div> -->
+
+          <div class="emptyTo-Do mt-40 text-center">
+            <p>No To-do’s exist 
+             <br><br>
+                This is the perfect place to add
+              some quick tasks, thoughts, notes etc. 
+              <br><br>
+              Go ahead, add something.</p>
+
+              <div class="col-md-12 mt-8 mb-8 pl-0 addTo-DO">
+                <div (click)="showInput=true" class="d-flex justify-content-center align-items-center mt-10 mb-8 c-p">
+                  <img *ngIf="showInput==false" src="/assets/images/svg/add-blue.svg" class="c-p ml-4">
+                  <p *ngIf="showInput==false" class="m-0 text-black pl-12 lh-20">Add a to-do</p>
+                </div>
+                <input *ngIf="showInput" class="form-control" matInput (focusout)="showInput=false" autofocus
+                  #inputValue (keyup.enter)="addTodoList(inputValue.value)" placeholder="Enter note">
+              </div>
+ 
+              <img src="assets/images/svg/to-do-emptyimg.svg">
+
           </div>
 
 
