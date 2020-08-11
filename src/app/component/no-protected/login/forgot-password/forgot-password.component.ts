@@ -239,7 +239,6 @@ export class ForgotPasswordComponent implements OnInit {
       this.intervallTimer.unsubscribe();
       this.verifyFlag = 'Mobile';
     } else if (flag == 'Mobile' && this.otpData.length == 4) {
-      this.signUpBarList[2].flag = true;
       const obj = {
         userId: this.saveVerifyData.userData.userId,
         userType: this.saveVerifyData.userData.userType,
@@ -248,6 +247,7 @@ export class ForgotPasswordComponent implements OnInit {
       };
       this.loginService.saveAfterVerification(obj).subscribe(
         data => {
+          this.signUpBarList[2].flag = true;
           this.eventService.openSnackBar('OTP matches sucessfully', 'Dismiss');
           this.router.navigate(['/login/setpassword'], { state: { userData: this.saveVerifyData.userData } });
         },
