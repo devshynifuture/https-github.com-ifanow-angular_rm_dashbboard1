@@ -119,7 +119,7 @@ export class BulkReportSendingComponent implements OnInit {
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             this.getEmailTemplate();
-            this.openSendNow()
+            this.openSendNow('')
           }
           rightSideDataSub.unsubscribe();
         }
