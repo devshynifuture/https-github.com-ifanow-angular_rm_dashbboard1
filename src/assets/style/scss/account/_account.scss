@@ -4,16 +4,22 @@
     height: 40px !important;
   }
 }
-.stock-transactions-details-view{
-  #table-low th{
+
+.stock-transactions-details-view {
+  #table-low th {
     padding: 6px !important;
   }
-  tr.mat-header-row{
+
+  tr.mat-header-row {
 
     height: 40px !important;
   }
-  tr.mat-row{height: 36px !important;}
+
+  tr.mat-row {
+    height: 36px !important;
+  }
 }
+
 #ui-plan-summary .light-blue {
   .mat-progress-bar-buffer {
     background: #626262 !important;
@@ -198,6 +204,18 @@
 
   .mat-progress-bar-buffer {
     background: #D9DEE1;
+  }
+}
+
+
+// overview 
+.myfeedWrapper {
+  margin: 42px auto 0;
+  width: 78%;
+
+  .row {
+    margin-right: -15px !important;
+    margin-left: -15px !important;
   }
 }
 
@@ -420,6 +438,15 @@
       }
     }
   }
+
+  .myfeedWrapper {
+    width: 88%;
+    margin: 40px;
+
+    .md-myfeed-ml-0 {
+      margin-left: 0px !important;
+    }
+  }
 }
 
 @media(max-width:1092px) {
@@ -450,6 +477,20 @@
   .superannuation {
     #tbs .mat-sort-header-button {
       white-space: nowrap !important;
+    }
+  }
+
+  .myfeedWrapper {
+    .pl-30 {
+      padding-left: 20px !important;
+    }
+
+    .md-pl-0 {
+      padding-left: 0px !important;
+    }
+
+    .md-pr-12 {
+      padding-right: 12px !important;
     }
   }
 }
@@ -510,6 +551,60 @@
       font-size: 14px !important;
     }
   }
+
+  .myfeedWrapper {
+    margin: 42px;
+
+    .pl-40 {
+      padding-left: 20px !important;
+    }
+
+    .pt-40 {
+      padding-top: 20px !important;
+    }
+
+
+  }
+
+  .borderChatBoxMutual,
+  .borderChatBoxEmpty {
+    height: auto !important;
+    padding: 16px !important;
+  }
+
+  .pt-0-1024 {
+    padding-top: 0px !important;
+  }
+
+  .boxTable,
+  .feedInformation .vaultbBox {
+    padding: 12px !important;
+  }
+}
+
+@media(max-width:992px) {
+  .myfeedWrapper {
+    margin: 30px;
+    margin-top: 40px;
+
+    .md-pr-12 {
+      padding-right: 0px !important;
+    }
+  }
+
+  .md-text-center {
+    text-align: center !important;
+  }
+
+  .borderChatBoxEmpty {
+    .row {
+      flex-direction: column-reverse;
+    }
+  }
+
+  .md-pt-16 {
+    padding-top: 16px !important;
+  }
 }
 
 @media(max-width:954px) {
@@ -548,6 +643,12 @@
 
   .responsive-right-side-top {
     max-width: 80vw !important;
+  }
+
+  .myfeedWrapper {
+    margin: 20px;
+    margin-top: 40px;
+
   }
 }
 
