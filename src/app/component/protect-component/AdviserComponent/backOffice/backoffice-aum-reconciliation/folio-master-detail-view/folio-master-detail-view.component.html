@@ -12,7 +12,7 @@
 </div>
 
 <div class="pl-20 pr-20 pb-48" *ngIf="canShowData">
-    <div class="row pt-40">
+    <div class="row pt-40" *ngIf="folioDetailData">
         <div class="col-md-12 p-0 mat-tab-class">
             <mat-tab-group anmimationDuration="0ms" id="ui-add-client">
                 <mat-tab label="Scheme Details">
@@ -346,4 +346,8 @@
             </mat-tab-group>
         </div>
     </div>
+    <div *ngIf="!folioDetailData" class="d-flex flex-column align-items-center pt-48">
+        <img class="width300" src="assets/images/svg/noDataFound.svg">
+        <h4 class="text-center pt-12"> No data found</h4>
+    </div> 
 </div>

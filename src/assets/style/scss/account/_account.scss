@@ -4,16 +4,28 @@
     height: 40px !important;
   }
 }
-.stock-transactions-details-view{
-  #table-low th{
+
+#ui-overview-profile {
+  .mat-progress-bar-fill::after {
+    background-color: #008FFF !important;
+  }
+}
+
+.stock-transactions-details-view {
+  #table-low th {
     padding: 6px !important;
   }
-  tr.mat-header-row{
+
+  tr.mat-header-row {
 
     height: 40px !important;
   }
-  tr.mat-row{height: 36px !important;}
+
+  tr.mat-row {
+    height: 36px !important;
+  }
 }
+
 #ui-plan-summary .light-blue {
   .mat-progress-bar-buffer {
     background: #626262 !important;
@@ -201,6 +213,18 @@
   }
 }
 
+
+// overview 
+.myfeedWrapper {
+  margin: 42px auto 0;
+  width: 78%;
+
+  .row {
+    margin-right: -15px !important;
+    margin-left: -15px !important;
+  }
+}
+
 @media(max-width:1292px) {
   .btn140 {
     width: 135px !important;
@@ -210,9 +234,24 @@
   .btn140 {
     font-size: 13px;
   }
+
 }
 
-@media(max-width:1224px) {}
+@media(max-width:1262px) {
+  .pl-32-1262 {
+    padding-left: 32px !important;
+  }
+
+  #question-risk-profile {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+
+  }
+
+  .p-12-1262 {
+    padding: 12px !important;
+  }
+}
 
 @media(max-width:1200px) {
 
@@ -420,6 +459,15 @@
       }
     }
   }
+
+  .myfeedWrapper {
+    width: 88%;
+    margin: 40px;
+
+    .md-myfeed-ml-0 {
+      margin-left: 0px !important;
+    }
+  }
 }
 
 @media(max-width:1092px) {
@@ -450,6 +498,20 @@
   .superannuation {
     #tbs .mat-sort-header-button {
       white-space: nowrap !important;
+    }
+  }
+
+  .myfeedWrapper {
+    .pl-30 {
+      padding-left: 20px !important;
+    }
+
+    .md-pl-0 {
+      padding-left: 0px !important;
+    }
+
+    .md-pr-12 {
+      padding-right: 12px !important;
     }
   }
 }
@@ -510,6 +572,123 @@
       font-size: 14px !important;
     }
   }
+
+  .myfeedWrapper {
+    margin: 42px;
+
+    .pl-40 {
+      padding-left: 20px !important;
+    }
+
+    .pt-40 {
+      padding-top: 20px !important;
+    }
+
+
+  }
+
+  .borderChatBoxMutual,
+  .borderChatBoxEmpty,
+  .borderChatBox {
+    height: auto !important;
+    padding: 16px !important;
+  }
+
+  .pt-0-1024 {
+    padding-top: 0px !important;
+  }
+
+  .boxTable,
+  .feedInformation .vaultbBox {
+    padding: 12px !important;
+  }
+}
+
+@media(max-width:992px) {
+  .myfeedWrapper {
+    margin: 30px auto;
+    margin-top: 40px;
+
+    .md-pr-12 {
+      padding-right: 0px !important;
+    }
+  }
+
+  .ml-33-992 {
+    margin-left: 33.333% !important;
+  }
+
+  .d-none-992 {
+    display: none !important;
+  }
+
+  .pl-0-992 {
+    padding-left: 0px !important;
+  }
+
+  .pr-0-992 {
+    padding-right: 0px !important;
+  }
+
+  .pr-15-992 {
+    padding-right: 15px !important;
+  }
+
+  .pl-15-992 {
+    padding-left: 15px !important;
+  }
+
+  .md-text-center {
+    text-align: center !important;
+  }
+
+  .w-auto-992 {
+    width: auto !important;
+  }
+
+  .borderChatBoxEmpty,
+  .fd-col-reverse-992 {
+    .row {
+      flex-direction: column-reverse;
+    }
+  }
+
+  .md-pt-16 {
+    padding-top: 16px !important;
+  }
+
+  .borderChatBox {
+    .mr-20 {
+      margin-right: 0px !important;
+    }
+
+    .height220 {
+      margin: 0 auto !important;
+    }
+  }
+
+
+}
+
+@media(max-width:991px) {
+  #ui-overview-profile {
+    // .rs-pl-50 {
+    //   padding-left: 25px !important;
+    // }
+
+    .detailContainer {
+      .br-primitive:nth-child(1) {
+        border-right: 0px !important;
+
+      }
+
+      .bb-primitive-992 {
+
+        border-bottom: 1px solid #83959D !important;
+      }
+    }
+  }
+
 }
 
 @media(max-width:954px) {
@@ -537,6 +716,13 @@
     width: 18vw !important;
   }
 
+  .flex-auto-954 {
+    flex: auto !important;
+  }
+
+  .f-14-954 {
+    font-size: 14px !important;
+  }
 
   .responsive-left-side-top {
     max-width: 20vw !important;
@@ -548,6 +734,25 @@
 
   .responsive-right-side-top {
     max-width: 80vw !important;
+  }
+
+  .myfeedWrapper {
+    margin: 20px auto;
+    margin-top: 40px;
+
+  }
+
+  #ui-overview-profile {
+    .p-20 {
+      // padding-left: 12px !important;
+      padding-right: 12px !important;
+    }
+  }
+
+  #question-risk-profile {
+    h3 {
+      font-size: 18px;
+    }
   }
 }
 
@@ -587,6 +792,21 @@
 
   .responsive-right-side-top {
     max-width: 78vw !important;
+  }
+
+  #overview-secondhead {
+    .advisorHomeBtn {
+      font-size: 13px;
+
+      .material-icons {
+        line-height: .9;
+      }
+    }
+
+    .mat-tab-link {
+      padding: 0px 15px !important;
+      font-size: 13px;
+    }
   }
 }
 

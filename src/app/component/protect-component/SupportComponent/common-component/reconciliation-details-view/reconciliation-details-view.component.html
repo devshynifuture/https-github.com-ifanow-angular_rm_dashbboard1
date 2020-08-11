@@ -15,7 +15,7 @@
 <div class="row pt-90">
     <div class="col-lg-6">
         <p class="m-0 f-12 text-primitive roboto">SCHEME NAME</p>
-        <h4 class="f-14 mb-24">{{ data.name }}</h4>
+        <h4 class="f-14 mb-24">{{ data.schemeName }}</h4>
 
         <p class="m-0 f-12 text-primitive roboto">FOLIO NUMBER</p>
         <h4 class="f-14 mb-24">{{ data.folioNumber }}</h4>
@@ -36,7 +36,7 @@
                 <ng-container matColumnDef="unitOne">
                     <th class="br" mat-header-cell *matHeaderCellDef> Units (IFANOW) </th>
                     <td class="br" mat-cell *matCellDef="let element">
-                        <div class="bar"> {{element.unitOne}} </div>
+                        <div class="bar"> {{element.unitOne ? element.unitOne : '-'}} </div>
                     </td>
                 </ng-container>
 
@@ -44,14 +44,14 @@
                 <ng-container matColumnDef="unitsRta">
                     <th class="br" mat-header-cell *matHeaderCellDef> units (RTA) </th>
                     <td class="br" mat-cell *matCellDef="let element">
-                        <div class="bar"> {{element.unitsRta}} </div>
+                        <div class="bar"> {{element.unitsRta ? element.unitsRta : '-'}} </div>
                     </td>
                 </ng-container>
 
                 <ng-container matColumnDef="difference">
                     <th class="br" mat-header-cell *matHeaderCellDef> Difference </th>
                     <td class="br" mat-cell *matCellDef="let element">
-                        <div class="bar"> {{element.difference}} </div>
+                        <div class="bar"> {{element.difference ? element.difference : '-'}} </div>
                     </td>
                 </ng-container>
 

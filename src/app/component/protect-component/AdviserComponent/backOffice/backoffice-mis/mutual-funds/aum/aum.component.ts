@@ -271,6 +271,8 @@ export class AumComponent implements OnInit {
     this.isLoading = false;
     if (data) {
       this.MiscData1 = data;
+    }else{
+      this.MiscData1='';
     }
   }
 

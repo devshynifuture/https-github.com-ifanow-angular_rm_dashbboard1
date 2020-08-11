@@ -101,10 +101,10 @@
                                             <div class="col-md-12 p-0">
                                                 <div class="text-center">
                                                     <h1 class="text-diff f-300 f-40 mb-4 pt-8">
-                                                        {{MiscData1.foliosLinkedToGoal}}%</h1>
+                                                        {{(MiscData1) ? MiscData1.foliosLinkedToGoal : 0}}%</h1>
 
                                                     <p class="text-diff f-14 mb-0 pt-12 l-21">
-                                                        Out of {{ MiscData1.totalFolioCount }} folios, {{ MiscData1.foliosLinkedToGoal }}% ({{MiscData1.foliosLinkedToGoalCount}} folios) are currently linked to financial goals of your clients
+                                                        Out of {{MiscData1 ?  MiscData1.totalFolioCount : 0}} folios, {{ MiscData1 ? MiscData1.foliosLinkedToGoal :0  }}% ({{MiscData1 ? MiscData1.foliosLinkedToGoalCount : 0}} folios) are currently linked to financial goals of your clients
                                                     </p>
                                                 </div>
                                             </div>

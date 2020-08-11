@@ -1,18 +1,18 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
-import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import {FormBuilder, FormControl, Validators} from '@angular/forms';
-import {CustomerService} from 'src/app/component/protect-component/customers/component/customer/customer.service';
-import {DatePipe} from '@angular/common';
-import {UtilService} from 'src/app/services/util.service';
-import {EventService} from 'src/app/Data-service/event.service';
-import {OnlineTransactionService} from '../../../../online-transaction.service';
-import {ProcessTransactionService} from '../../../doTransaction/process-transaction.service';
-import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {map, startWith} from 'rxjs/operators';
-import {EnumDataService} from 'src/app/services/enum-data.service';
-import {EnumServiceService} from '../../../../../../../../services/enum-service.service';
-import {Observable} from 'rxjs';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
+import { DatePipe } from '@angular/common';
+import { UtilService } from 'src/app/services/util.service';
+import { EventService } from 'src/app/Data-service/event.service';
+import { OnlineTransactionService } from '../../../../online-transaction.service';
+import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { map, startWith } from 'rxjs/operators';
+import { EnumDataService } from 'src/app/services/enum-data.service';
+import { EnumServiceService } from '../../../../../../../../services/enum-service.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-iin-ucc-creation',
@@ -35,11 +35,11 @@ export class IinUccCreationComponent implements OnInit, AfterViewInit {
   greeting;
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
-              public processTransaction: ProcessTransactionService,
-              private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
-              private peopleService: PeopleService,
-              private onlineTransact: OnlineTransactionService, public eventService: EventService,
-              private enumDataService: EnumDataService, private enumService: EnumServiceService) {
+    public processTransaction: ProcessTransactionService,
+    private custumService: CustomerService, private datePipe: DatePipe, public utils: UtilService,
+    private peopleService: PeopleService,
+    private onlineTransact: OnlineTransactionService, public eventService: EventService,
+    private enumDataService: EnumDataService, private enumService: EnumServiceService) {
     this.advisorId = AuthService.getAdvisorId();
     const date = new Date();
     const hourOfDay = date.getHours();
@@ -76,7 +76,7 @@ export class IinUccCreationComponent implements OnInit, AfterViewInit {
   }
 
   closeRightSlider(flag) {
-    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: flag});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
 
   close() {
@@ -94,25 +94,48 @@ export class IinUccCreationComponent implements OnInit, AfterViewInit {
     this.generalDetails = this.fb.group({
       ownerName: [(!data) ? '' : data.ownerName, [Validators.required]],
       holdingType: [(!data) ? '' : data.holdingType, [Validators.required]],
-      taxMaster: [(!data) ? {taxMasterId: 1, description: 'Individual'} : data.taxMaster, [Validators.required]],
+      taxMaster: [(!data) ? { taxMasterId: 1, description: 'Individual' } : data.taxMaster, [Validators.required]],
     });
-    this.generalDetails.controls.ownerName.valueChanges
-      .subscribe(newValue => {
-        this.filteredStates = new Observable(this.clientData).pipe(startWith(''),
-          map(value => {
-            if (newValue) {
-              return this.enumDataService.getClientAndFamilyData(newValue);
-            } else {
-              return this.enumDataService.getClientAndFamilyData('');
-            }
-          }));
-      });
+    // this.generalDetails.controls.ownerName.valueChanges
+    //   .subscribe(newValue => {
+    //     this.filteredStates = new Observable(this.clientData).pipe(startWith(''),
+    //       map(value => {
+    //         if (newValue) {
+    //           return this.enumDataService.getClientAndFamilyData(newValue);
+    //         } else {
+    //           return this.enumDataService.getClientAndFamilyData('');
+    //         }
+    //       }));
+    //   });
     this.generalDetails.controls.ownerName.setValue('');
     this.generalDetails.controls.holdingType.valueChanges.subscribe((newValue) => {
       // if (newValue != 'SI') {
       //   this.generalDetails.controls.taxMaster.setValue({taxMasterId: 1, description: 'Individual'});
       // } else {
       // }
+    });
+  }
+
+  searchClientFamilyMember(value) {
+    const obj = {
+      advisorId: AuthService.getAdvisorId(),
+      displayName: value
+    };
+    this.peopleService.getClientFamilyMemberList(obj).subscribe(responseArray => {
+      if (responseArray) {
+        if (value.length >= 0) {
+          this.filteredStates = responseArray;
+        } else {
+          this.filteredStates = undefined
+        }
+      }
+      else {
+        this.filteredStates = undefined
+        this.generalDetails.controls.ownerName.setErrors({ invalid: true })
+      }
+    }, error => {
+      this.filteredStates = undefined
+      console.log('getFamilyMemberListRes error : ', error);
     });
   }
 
