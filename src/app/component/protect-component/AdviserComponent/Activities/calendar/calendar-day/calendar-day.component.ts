@@ -357,9 +357,7 @@ export class CalendarDayComponent implements OnInit {
             "dateTime": "",
             "timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
           },
-          "recurrence": [
-            "RRULE:FREQ=DAILY;COUNT=2"
-          ],
+          "recurrence": [],
           "attendees": result.attendeesList
         }
 

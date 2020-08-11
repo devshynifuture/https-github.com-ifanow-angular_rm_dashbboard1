@@ -89,7 +89,7 @@ export class CalendarWeekComponent implements OnInit {
       this.addLastMonthDays = data[1].addLastMonthDays;
 
       // let selectedDate = this.year + "," + this.month+ "," +this.day
-      console.log(this.daysArr, this.day, "this.daysArr....", this.week);
+      // console.log(this.daysArr, this.day, "this.daysArr....", this.week);
     });
 
   }
@@ -181,7 +181,7 @@ export class CalendarWeekComponent implements OnInit {
             e["startTime"] = this.formateTime(e.start.dateTime == null ? new Date(e.start.date) : new Date(e.start.dateTime));
             e["endTime"] = this.formateTime(e.start.dateTime == null ? new Date(e.start.date) : new Date(e.end.dateTime));
             this.formatedEvent.push(e);
-            console.log(this.formatedEvent, "formatedEvent calender1");
+            // console.log(this.formatedEvent, "formatedEvent calender1");
           }
         }
         this.createDayJson();
@@ -386,9 +386,7 @@ export class CalendarWeekComponent implements OnInit {
             "dateTime": "",
             "timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
           },
-          "recurrence": [
-            "RRULE:FREQ=DAILY;COUNT=2"
-          ],
+          "recurrence": [],
           "attendees": result.attendeesList
         }
 
@@ -512,7 +510,7 @@ export class CalendarWeekComponent implements OnInit {
 
         // if(this.formatedEvent[e].month == this.formateMonth(calMonth) && this.formatedEvent[e].year ==  this.formateYear(calMonth)){
         dayArr.date = new Date(this.year, this.month - 1, this.lastMonthDays);
-        if (this.formatedEvent[e].day == this.lastMonthDays && this.formatedEvent[e].month == this.formateMonth(calMonth) && this.formatedEvent[e].year == this.formateYear(calMonth) || (this.formatedEvent[e].isRe && this.dateTimeEvent(this.year, this.month, this.lastMonthDays) > this.dateTimeEvent(null, null, this.formatedEvent[e].reStart) && this.dateTimeEvent(this.year, this.month, this.lastMonthDays) < this.dateTimeEvent(null, null, this.formatedEvent[e].reUntil)) && (this.formatedEvent[e].isRe == 'DAILY' || (this.formatedEvent[e].isRe == 'WEEKLY' && !this.validateWeekDays(this.formatedEvent[e].rrule.BYDAY, this.getDay(this.year, this.month, this.lastMonthDays), this.formatedEvent[e].rrule.INTERVAL)) || (this.formatedEvent[e].isRe == 'MONTHLY' && !this.validateMonthDays(this.formatedEvent[e].rrule.BYDAY, this.dateTimeEvent(this.year, this.month, this.lastMonthDays), this.formatedEvent[e].start.date, this.formatedEvent[e].rrule.INTERVAL)) || (this.formatedEvent[e].isRe == 'YEARLY' && !this.validateYearly(this.formatedEvent[e].start.date, this.lastMonthDays, this.month)))) {
+        if (this.formatedEvent[e].day == this.lastMonthDays && this.formatedEvent[e].month == this.formateMonth(calMonth) && this.formatedEvent[e].year == this.formateYear(calMonth) || (this.formatedEvent[e].isRe && this.dateTimeEvent(this.year, this.month-1, this.lastMonthDays) > this.dateTimeEvent(null, null, this.formatedEvent[e].reStart) && this.dateTimeEvent(this.year, this.month-1, this.lastMonthDays) < this.dateTimeEvent(null, null, this.formatedEvent[e].reUntil)) && (this.formatedEvent[e].isRe == 'DAILY' || (this.formatedEvent[e].isRe == 'WEEKLY' && !this.validateWeekDays(this.formatedEvent[e].rrule.BYDAY, this.getDay(this.year, this.month-1, this.lastMonthDays), this.formatedEvent[e].rrule.INTERVAL)) || (this.formatedEvent[e].isRe == 'MONTHLY' && !this.validateMonthDays(this.formatedEvent[e].rrule.BYDAY, this.dateTimeEvent(this.year, this.month-1, this.lastMonthDays), this.formatedEvent[e].start.date, this.formatedEvent[e].rrule.INTERVAL)) || (this.formatedEvent[e].isRe == 'YEARLY' && !this.validateYearly(this.formatedEvent[e].start.date, this.lastMonthDays, this.month-1)))) {
           dayArr.events.push(this.formatedEvent[e])
         }
         // }
@@ -538,16 +536,16 @@ export class CalendarWeekComponent implements OnInit {
       }
 
       for (let e = 0; e < this.formatedEvent.length; e++) {
-        let calMonth = new Date(this.year, this.month, this.formateDate(this.current_day));
+        let calMonth = new Date(this.year, this.month + 1, this.formateDate(this.current_day));
         // console.log(this.formateMonth(calMonth),this.formatedEvent[e].month, this.formateYear(calMonth));
 
         // if(this.formatedEvent[e].month == this.formateMonth(calMonth) && this.formatedEvent[e].year ==  this.formateYear(calMonth)){
         dayArr.date = new Date(this.year, this.month + 1, fd);
-        if (this.formatedEvent[e].day == fd && this.formatedEvent[e].month == this.formateMonth(calMonth) && this.formatedEvent[e].year == this.formateYear(calMonth) || (this.formatedEvent[e].isRe && this.dateTimeEvent(this.year, this.month, fd) > this.dateTimeEvent(null, null, this.formatedEvent[e].reStart) && this.dateTimeEvent(this.year, this.month, fd) < this.dateTimeEvent(null, null, this.formatedEvent[e].reUntil)) && (this.formatedEvent[e].isRe == 'DAILY' || (this.formatedEvent[e].isRe == 'WEEKLY' && !this.validateWeekDays(this.formatedEvent[e].rrule.BYDAY, this.getDay(this.year, this.month, fd), this.formatedEvent[e].rrule.INTERVAL)) || (this.formatedEvent[e].isRe == 'MONTHLY' && !this.validateMonthDays(this.formatedEvent[e].rrule.BYDAY, this.dateTimeEvent(this.year, this.month, fd), this.formatedEvent[e].start.date, this.formatedEvent[e].rrule.INTERVAL)) || (this.formatedEvent[e].isRe == 'YEARLY' && !this.validateYearly(this.formatedEvent[e].start.date, fd, this.month)))) {
+        if (this.formatedEvent[e].day == fd && this.formatedEvent[e].month == this.formateMonth(calMonth) && this.formatedEvent[e].year == this.formateYear(calMonth) || (this.formatedEvent[e].isRe && this.dateTimeEvent(this.year, this.month+1, fd) > this.dateTimeEvent(null, null, this.formatedEvent[e].reStart) && this.dateTimeEvent(this.year, this.month+1, fd) < this.dateTimeEvent(null, null, this.formatedEvent[e].reUntil)) && (this.formatedEvent[e].isRe == 'DAILY' || (this.formatedEvent[e].isRe == 'WEEKLY' && !this.validateWeekDays(this.formatedEvent[e].rrule.BYDAY, this.getDay(this.year, this.month+1, fd), this.formatedEvent[e].rrule.INTERVAL)) || (this.formatedEvent[e].isRe == 'MONTHLY' && !this.validateMonthDays(this.formatedEvent[e].rrule.BYDAY, this.dateTimeEvent(this.year, this.month+1, fd), this.formatedEvent[e].start.date, this.formatedEvent[e].rrule.INTERVAL)) || (this.formatedEvent[e].isRe == 'YEARLY' && !this.validateYearly(this.formatedEvent[e].start.date, fd, this.month+1)))) {
           dayArr.events.push(this.formatedEvent[e])
         }
         // }
-        console.log(this.currentMonthEvents, "this.currentMonthEvents");
+        // console.log(this.currentMonthEvents, "this.currentMonthEvents");
       }
 
       // this.currentMonthEvents.push(
