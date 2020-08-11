@@ -352,6 +352,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   getEmailTempalatRes(data) {
     if (data) {
       this.emailTemplateList = data
+      console.log(this.emailTemplateList)
     } else {
       this.emailTemplateList = []
     }
