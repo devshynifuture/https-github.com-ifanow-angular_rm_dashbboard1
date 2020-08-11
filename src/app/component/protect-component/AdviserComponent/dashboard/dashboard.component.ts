@@ -818,9 +818,11 @@ export class DashboardComponent implements OnInit {
           // this.todoListData=this.todoListData.sort((a,b)=>a.due - b.due);
         }
         else {
+          this.todoListData = undefined
           this.todoListFlag = false;
         }
       }, err => {
+        this.todoListData = undefined
         this.todoListFlag = false;
       }
     );
