@@ -123,19 +123,7 @@ export class OnlineTransactionComponent implements OnInit {
   }
 
   setClientFilterList() {
-    if (this.isAdvisorSection) {
-      this.stateCtrl.valueChanges
-        .subscribe(newValue => {
-          this.filteredStates = of(this.familyMemberList).pipe(startWith(''),
-            map(value => {
-              if (newValue) {
-                return this.enumDataService.getClientAndFamilyData(newValue);
-              } else {
-                return this.enumDataService.getEmptySearchStateData();
-              }
-            }));
-        });
-    } else {
+    if (!this.isAdvisorSection) {
       const obj = {
         clientId: AuthService.getClientId(),
       };
@@ -166,8 +154,32 @@ export class OnlineTransactionComponent implements OnInit {
     this.stateCtrl.setValue('');
   }
 
-  checkOwnerList(event) {
+  checkOwnerList(value) {
+    if (!this.isAdvisorSection) {
+      return;
+    }
+    const obj = {
+      advisorId: AuthService.getAdvisorId(),
+      displayName: value
+    };
+    this.peopleService.getClientFamilyMemberList(obj).subscribe(responseArray => {
+      if (responseArray) {
+        if (value.length >= 0) {
+          this.filteredStates = responseArray;
+        } else {
+          this.filteredStates = undefined
+        }
+      }
+      else {
+        this.filteredStates = undefined
+        this.stateCtrl.setErrors({ invalid: true })
+      }
+    }, error => {
+      this.filteredStates = undefined
+      console.log('getFamilyMemberListRes error : ', error);
+    });
   }
+
 
   getDefaultDetails(platform) {
     this.selectedClientOrFamily = platform.name;
