@@ -8,6 +8,8 @@ import { MatTableDataSource } from '@angular/material';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomiseSettingComponent } from './customise-setting/customise-setting.component';
 import { EventService } from 'src/app/Data-service/event.service';
+import { EmailOnlyComponent } from '../../Subscriptions/subscription/common-subscription-component/email-only/email-only.component';
+import { OrgSettingServiceService } from '../../setting/org-setting-service.service';
 
 @Component({
   selector: 'app-bulk-report-sending',
@@ -20,12 +22,15 @@ export class BulkReportSendingComponent implements OnInit {
   dataSource = new MatTableDataSource(this.data);
   isLoading
   advisorId: any;
+  emailTemplateList: any;
+  emailData: any;
 
 
   constructor(
     private subInjectService: SubscriptionInject,
     private backOfficeService: BackOfficeService,
     private eventService : EventService,
+    private orgSetting : OrgSettingServiceService
   ) {
     this.advisorId = AuthService.getAdvisorId();
   }
@@ -34,6 +39,7 @@ export class BulkReportSendingComponent implements OnInit {
     this.isLoading = false
     this.dataSource.data = [{}, {}, {}];
     this.getlistOrder()
+    this.getEmailTemplate()
   }
   getlistOrder() {
     this.dataSource.data = [{}, {}, {}];
@@ -56,6 +62,69 @@ export class BulkReportSendingComponent implements OnInit {
   }
   refresh(flag) {
     this.getlistOrder()
+  }
+  getEmailTemplate() {
+    this.emailTemplateList = [{},{},{}];
+    let obj = {
+      advisorId: this.advisorId
+    }
+    this.orgSetting.getEmailTempalate(obj).subscribe(
+      data => this.getEmailTempalatRes(data),
+      err => {
+        this.eventService.openSnackBar(err, "Dismiss")
+      }
+    );
+  }
+  getEmailTempalatRes(data) {
+    if (data) {
+      this.emailTemplateList = data
+      console.log('emailTemplateList',this.emailTemplateList)
+      this.emailTemplateList.forEach(element => {
+        if(element.title == 'Sending reports'){
+          this.emailData = element
+          //this.OpenEmail('emailTemp',this.emailData)
+        }
+      });
+    } else {
+      this.emailTemplateList = []
+    }
+  }
+  OpenEmail(value, data) {
+    if (this.isLoading) {
+      return;
+    }
+    let obj = {
+      clientData: {documentText: data.body},
+      showfromEmail: true,
+      openedFrom: 'settings',
+      fromEmail: data.fromEmail || '',
+      documentList: [],
+      id: data.id,
+      subject: data.subject,
+      emailTemplateTypeId: data.emailTemplateTypeId,
+      subjectChange: !data.subjectEditable,
+      bodyChange: !data.bodyEditable,
+      component_type: 'email_template',
+      email_header: data.title,
+    }
+    const fragmentData = {
+      flag: value,
+      data: obj,
+      id: 1,
+      state: 'open',
+      componentName: EmailOnlyComponent
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        if (UtilService.isDialogClose(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData)) {
+            this.getEmailTemplate();
+            this.openSendNow()
+          }
+          rightSideDataSub.unsubscribe();
+        }
+      }
+    );
   }
   openSendNow(data) {
     const fragmentData = {
