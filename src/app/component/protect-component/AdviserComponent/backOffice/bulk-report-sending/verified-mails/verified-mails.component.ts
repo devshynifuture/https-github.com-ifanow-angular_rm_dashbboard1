@@ -6,6 +6,9 @@ import { OpenEmailVerificationComponent } from '../../../setting/setting-prefere
 import { MatDialog } from '@angular/material';
 import { VerifyAddEmailComponent } from '../verify-add-email/verify-add-email.component';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { SendNowReportsComponent } from '../send-now-reports/send-now-reports.component';
+import { SubscriptionInject } from '../../../Subscriptions/subscription-inject.service';
+import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-verified-mails',
@@ -21,6 +24,7 @@ export class VerifiedMailsComponent implements OnInit {
   emailDetails: any;
   element: any;
   constructor(private orgSetting: OrgSettingServiceService,
+    private subInjectService : SubscriptionInject,
     public dialog: MatDialog,
     private eventService: EventService) {
       this.advisorId = AuthService.getAdvisorId()
@@ -146,4 +150,26 @@ export class VerifiedMailsComponent implements OnInit {
 
     });
   }
+  openSendNow(data) {
+    const fragmentData = {
+      flag: 'openSendNow',
+      data,
+      id: 1,
+      state: 'open65',
+      componentName: SendNowReportsComponent,
+    };
+    const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
+      sideBarData => {
+        if (UtilService.isDialogClose(sideBarData)) {
+         // this.getlistOrder()
+          if (UtilService.isRefreshRequired(sideBarData)) {
+          }
+          rightSideDataSub.unsubscribe();
+
+        }
+      }
+    );
+
+  }
+  
 }
