@@ -9,6 +9,8 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {Subscription} from 'rxjs';
 import {EnumServiceService} from 'src/app/services/enum-service.service';
 import {UtilService} from 'src/app/services/util.service';
+import { Chart } from 'angular-highcharts';
+import { AppConstants } from 'src/app/services/app-constants';
 
 @Component({
   selector: 'app-portfolio-summary',
@@ -37,7 +39,19 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
   filterCashFlow = {income: [], expense: []};
   inflowFlag;
   yearArr = Array(12).fill('').map((v, i) => this.datePipe.transform(new Date().setMonth(new Date().getMonth() + i), 'MMM'));
-
+  tabsLoaded = {
+    portfolioData: {
+      dataLoaded: false,
+      hasData: false,
+      isLoading: true,
+    }
+  };
+  assetAllocationPieConfig: Chart;
+  chartTotal = 100;
+  chartData: any[];
+  portFolioData: any[] = [];
+  hasError: boolean = false;
+  clientData = AuthService.getClientData();
   outflowFlag;
   mutualFundValue: any = {
     currentValue: 0,
@@ -106,6 +120,7 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
     this.asOnDate = new Date().getTime();
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
+    this.initializePieChart();
     this.calculateTotalSummaryValues();
     this.getAssetAllocationSummary();
     this.subscribeToCashflowChanges();
@@ -117,7 +132,52 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
       this.filterCashflowData();
     });
   }
-
+  initializePieChart() {
+    let chartConfig: any = {
+      chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: 0,
+        plotShadow: false,
+        animation: false
+      },
+      title: {
+        text: '',
+        align: 'center',
+        verticalAlign: 'middle',
+        y: 60
+      },
+      tooltip: {
+        pointFormat: ' <b>{point.percentage:.1f}%</b>'
+      },
+      plotOptions: {
+        pie: {
+          dataLabels: {
+            enabled: true,
+            distance: -50,
+            style: {
+              fontWeight: 'bold',
+              color: 'white'
+            }
+          },
+          startAngle: 0,
+          endAngle: 360,
+          center: ['50%', '50%'],
+          size: '100%'
+        }
+      },
+      exporting: {
+        enabled: false
+      },
+      series: [{
+        type: 'pie',
+        name: 'Asset allocation',
+        animation: false,
+        innerSize: '60%',
+        data: this.chartData
+      }]
+    }
+    this.assetAllocationPieConfig = new Chart(chartConfig);
+  }
   calculateTotalSummaryValues() {
     this.letsideBarLoader = true;
     console.log(new Date(this.asOnDate).getTime());
@@ -191,24 +251,95 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
       clientId: this.clientId,
       targetDate: this.asOnDate
     };
+    this.tabsLoaded.portfolioData.isLoading = true;
     this.cusService.getAssetAllocationSummary(obj).subscribe(
-      data => {
-        if(data){
-          this.assetAllocationRes = true;
-          console.log('getAssetAllocationSummary data: ', data);
-          this.pieChart('piechartMutualFund', data);
-        }else{
+      res => {
+        if (res == null) {
           this.assetAllocationRes = false;
+          this.portFolioData = [];
+          this.tabsLoaded.portfolioData.hasData = false;
+        } else {
+          this.assetAllocationRes = true;
+          this.tabsLoaded.portfolioData.hasData = true;
+          // let stock = res.find(d => d.assetType == 6);
+          // this.portFolioData = res;
+          // if (stock) {
+          //   this.portFolioData = this.portFolioData.filter(d => d.assetType != 6);
+          //   this.portFolioData.unshift(stock);
+          // }
+  
+          let chartData = [];
+          let counter = 0;
+          let othersData = {
+            y: 0,
+            name: 'Others',
+            color: AppConstants.DONUT_CHART_COLORS[4],
+            dataLabels: {
+              enabled: false
+            }
+          }
+          let chartTotal = 1;
+          let hasNoDataCounter = res.length;
+          let pieChartData = res;
+          // let pieChartData =  res.filter(element => element.assetType != 2 && element.currentValue != 0);
+          pieChartData.forEach(element => {
+            if (element.currentValue > 0) {
+              chartTotal += element.currentValue;
+              if (counter < 6) {
+                chartData.push({
+                  y: element.currentValue,
+                  name: element.assetTypeString,
+                  color: AppConstants.DONUT_CHART_COLORS[counter],
+                  dataLabels: {
+                    enabled: false
+                  }
+                })
+              } else {
+                othersData.y += element.currentValue;
+              }
+              counter++;
+            } else {
+              hasNoDataCounter--;
+            }
+          });
+          if(chartData){
+            chartData = this.sorting(chartData,'name')
+          }
+          chartTotal -= 1;
+          if (chartTotal === 0) {
+            this.assetAllocationRes = false;
+          }
+          // if (counter > 4) {
+          //   chartData.push(othersData);
+          // }
+          if (counter > 0) {
+            this.chartTotal = chartTotal;
+            this.chartData = chartData;
+            this.assetAllocationPieChartDataMgnt(this.chartData);
+          }
         }
+        this.tabsLoaded.portfolioData.isLoading = false;
+        this.tabsLoaded.portfolioData.dataLoaded = true;
 
       },
       err => {
-        this.assetAllocationRes=false;
-        this.finalTotal = 0;
+        this.hasError = true;
+        this.assetAllocationRes = false;
+        this.tabsLoaded.portfolioData.isLoading = false;
+        this.eventService.openSnackBar(err, "Dismiss")
       }
     );
   }
+  sorting(data, filterId) {
+    if (data) {
+      data.sort((a, b) =>
+        a[filterId] > b[filterId] ? 1 : (a[filterId] === b[filterId] ? 0 : -1)
+      );
+    }
 
+
+    return data
+  }
   getSummaryList(obj) {
     this.summaryFlag = true;
     this.cusService.getAumGraphData(obj).subscribe(
@@ -232,7 +363,16 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
       }
     );
   }
-
+  assetAllocationPieChartDataMgnt(data) {
+    this.assetAllocationPieConfig.removeSeries(0);
+    this.assetAllocationPieConfig.addSeries({
+      type: 'pie',
+      name: 'Asset allocation',
+      animation: false,
+      innerSize: '60%',
+      data: data,
+    }, true, true);
+  }
   getCashFlowList(obj) {
     this.cashflowFlag = true;
     this.cashFlowViewDataSource = [{}, {}, {}];

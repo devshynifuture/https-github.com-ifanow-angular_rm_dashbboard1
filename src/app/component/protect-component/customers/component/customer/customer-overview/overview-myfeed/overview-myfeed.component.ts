@@ -47,31 +47,40 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       dataLabels: {
         enabled: false
       }
-    }, {
-      name: 'Fixed income',
+    },
+    {
+      name: 'Debt',
       y: 20,
       color: AppConstants.DONUT_CHART_COLORS[1],
       dataLabels: {
         enabled: false
       }
-    }, {
-      name: 'Commodities',
+    },
+     {
+      name: 'Fixed income',
       y: 20,
       color: AppConstants.DONUT_CHART_COLORS[2],
       dataLabels: {
         enabled: false
       }
     }, {
-      name: 'Real estate',
+      name: 'Commodities',
       y: 20,
       color: AppConstants.DONUT_CHART_COLORS[3],
       dataLabels: {
         enabled: false
       }
     }, {
-      name: 'Others',
+      name: 'Real estate',
       y: 20,
       color: AppConstants.DONUT_CHART_COLORS[4],
+      dataLabels: {
+        enabled: false
+      }
+    }, {
+      name: 'Others',
+      y: 20,
+      color: AppConstants.DONUT_CHART_COLORS[5],
       dataLabels: {
         enabled: false
       }
@@ -140,6 +149,8 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
   greeterFnID: any;
   mutualFund: any;
   userInfo: any;
+  isLoadingAssetAllocation=false;
+  isAssetAllocationDataLoaded=false;
 
   constructor(
     private customerService: CustomerService,
@@ -278,6 +289,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     this.loadCustomerProfile();
     this.getAppearanceSettings();
     this.initializePieChart();
+    this.getAssetAllocationValues();
     this.loadAssetAlocationData();
     this.loadRTAFeedsTransactions();
     this.loadRecentTransactions();
@@ -476,7 +488,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     this.tabsLoaded.portfolioData.isLoading = true;
 
     this.loaderFn.increaseCounter();
-    this.customerService.getAllFeedsPortFolio(obj).subscribe(res => {
+    this.customerService.getAssetAllocationSummary(obj).subscribe(res => {
       if (res == null) {
         this.portFolioData = [];
         this.tabsLoaded.portfolioData.hasData = false;
@@ -488,6 +500,37 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
           this.portFolioData = this.portFolioData.filter(d => d.assetType != 6);
           this.portFolioData.unshift(stock);
         }
+      }
+      this.tabsLoaded.portfolioData.isLoading = false;
+      this.tabsLoaded.portfolioData.dataLoaded = true;
+      this.loaderFn.decreaseCounter();
+    }, err => {
+      this.hasError = true;
+      this.tabsLoaded.portfolioData.isLoading = false;
+      this.eventService.openSnackBar(err, "Dismiss")
+      this.loaderFn.decreaseCounter();
+    })
+  }
+  getAssetAllocationValues(){
+    this.isLoadingAssetAllocation=true
+    const obj = {
+      clientId: this.clientData.clientId,
+      advisorId: this.advisorId,
+      targetDate: new Date().getTime()
+    }
+
+    this.customerService.getAssetAllocationSummary(obj).subscribe(res => {
+      this.isLoadingAssetAllocation=false
+      if (res == null) {
+        this.isAssetAllocationDataLoaded= false;
+      } else {
+        this.isAssetAllocationDataLoaded= true;
+        // let stock = res.find(d => d.assetType == 6);
+        // this.portFolioData = res;
+        // if (stock) {
+        //   this.portFolioData = this.portFolioData.filter(d => d.assetType != 6);
+        //   this.portFolioData.unshift(stock);
+        // }
 
         let chartData = [];
         let counter = 0;
@@ -501,13 +544,14 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
         }
         let chartTotal = 1;
         let hasNoDataCounter = res.length;
-        let pieChartData = res.filter(element => element.assetType != 2 && element.currentValue != 0);
+        let pieChartData = res;
+        // let pieChartData =  res.filter(element => element.assetType != 2 && element.currentValue != 0);
         pieChartData.forEach(element => {
-          if (element.investedAmount > 0) {
-            chartTotal += element.investedAmount;
-            if (counter < 4) {
+          if (element.currentValue > 0) {
+            chartTotal += element.currentValue;
+            if (counter < 6) {
               chartData.push({
-                y: element.investedAmount,
+                y: element.currentValue,
                 name: element.assetTypeString,
                 color: AppConstants.DONUT_CHART_COLORS[counter],
                 dataLabels: {
@@ -515,37 +559,47 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
                 }
               })
             } else {
-              othersData.y += element.investedAmount;
+              othersData.y += element.currentValue;
             }
             counter++;
           } else {
             hasNoDataCounter--;
           }
         });
+        if(chartData){
+          chartData = this.sorting(chartData,'name')
+        }
         chartTotal -= 1;
         if (chartTotal === 0) {
-          this.tabsLoaded.portfolioData.hasData = false
+          this.isAssetAllocationDataLoaded= false;
+
         }
-        if (counter > 4) {
-          chartData.push(othersData);
-        }
+        // if (counter > 4) {
+        //   chartData.push(othersData);
+        // }
         if (counter > 0) {
           this.chartTotal = chartTotal;
           this.chartData = chartData;
           this.assetAllocationPieChartDataMgnt(this.chartData);
         }
       }
-      this.tabsLoaded.portfolioData.isLoading = false;
-      this.tabsLoaded.portfolioData.dataLoaded = true;
-      this.loaderFn.decreaseCounter();
     }, err => {
       this.hasError = true;
-      this.tabsLoaded.portfolioData.isLoading = false;
+      this.isLoadingAssetAllocation=false
+      this.isAssetAllocationDataLoaded= false;
       this.eventService.openSnackBar(err, "Dismiss")
-      this.loaderFn.decreaseCounter();
     })
   }
+  sorting(data, filterId) {
+    if (data) {
+      data.sort((a, b) =>
+        a[filterId] > b[filterId] ? 1 : (a[filterId] === b[filterId] ? 0 : -1)
+      );
+    }
 
+
+    return data
+  }
   loadRTAFeedsTransactions() {
     const obj = {
       clientId: this.clientData.clientId,

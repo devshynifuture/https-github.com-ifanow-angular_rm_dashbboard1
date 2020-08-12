@@ -84,7 +84,7 @@
                         <div class="row" #portFolioSection>
 
                             <!-- loader start -->
-                            <div class="col-md-12 " *ngIf="tabsLoaded.portfolioData.isLoading">
+                            <div class="col-md-12 " *ngIf="isLoadingAssetAllocation">
                                 <h5 class="roboto mb-0">Asset allocation</h5>
                                 <div class="borderChatBox bg-white ">
                                     <div class="row skeletonAnimation" [appSkeletonLoading]="true" appSkeletonLoading>
@@ -115,12 +115,12 @@
 
 
                             <div class="col-md-12"
-                                *ngIf="(tabsLoaded.portfolioData.dataLoaded && tabsLoaded.portfolioData.hasData) && !tabsLoaded.portfolioData.isLoading">
+                                *ngIf="!isLoadingAssetAllocation && isAssetAllocationDataLoaded ">
                                 <h5 class="roboto mb-0">Asset allocation</h5>
                                 <div class="borderChatBox bg-white">
                                     <div class="row">
                                         <div class="col-lg-6 col-md-12 pr-0 heightBox md-text-center">
-                                            <div class="piechartMutualFund" *ngIf="!tabsLoaded.portfolioData.isLoading"
+                                            <div class="piechartMutualFund" *ngIf="!isLoadingAssetAllocation"
                                                 [chart]="assetAllocationPieConfig">
                                             </div>
 
@@ -141,7 +141,7 @@
                             </div>
 
                             <div class="col-md-12"
-                                *ngIf="(!tabsLoaded.portfolioData.dataLoaded || !tabsLoaded.portfolioData.hasData) && !tabsLoaded.portfolioData.isLoading">
+                                *ngIf="!isAssetAllocationDataLoaded && !isLoadingAssetAllocation">
                                 <h5 class="roboto mb-0">Asset allocation</h5>
 
                                 <div class="borderChatBoxEmpty bg-white">

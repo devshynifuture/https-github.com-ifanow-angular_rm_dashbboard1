@@ -1,0 +1,87 @@
+<div class="wrapperBox">
+    <div class="row" #portFolioSection>
+
+        <!-- loader start -->
+        <div class="col-md-12 " *ngIf="tabsLoaded.portfolioData.isLoading">
+            <h5 class="roboto mb-0">Asset allocation</h5>
+            <div class="borderChatBox bg-white ">
+                <div class="row skeletonAnimation" [appSkeletonLoading]="true" appSkeletonLoading>
+                    <div class="col-lg-6 col-md-12 pr-0 heightBox md-text-center">
+                        <div class="relClass">
+                            <div class="bar220" [ngClass]="{'height220': isLoading}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12 md-text-center md-pt-16">
+                        <div class="mt-40 mr-20">
+                            <div class="relClass">
+                                <div class="bar" [ngClass]="{'height24': isLoading}"></div>
+                            </div>
+                            <div class="relClass">
+                                <div class="bar" [ngClass]="{'height24': isLoading}"></div>
+                            </div>
+                            <div class="relClass">
+                                <div class="bar" [ngClass]="{'height24': isLoading}"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- loader end -->
+
+
+
+        <div class="col-md-12"
+            *ngIf="(tabsLoaded.portfolioData.dataLoaded && tabsLoaded.portfolioData.hasData) && !tabsLoaded.portfolioData.isLoading">
+            <h5 class="roboto mb-0">Asset allocation</h5>
+            <div class="borderChatBox bg-white">
+                <div class="row">
+                    <div class="col-lg-6 col-md-12 pr-0 heightBox md-text-center">
+                        <div class="piechartMutualFund" *ngIf="!tabsLoaded.portfolioData.isLoading"
+                            [chart]="assetAllocationPieConfig">
+                        </div>
+
+                    </div>
+                    <div class="col-lg-6 col-md-12 d-flex align-items-center md-pt-16">
+                        <ul class="pointUl">
+                            <li *ngFor="let data of chartData">
+                                <span class="pointNumber" [style.background-color]="data.color">
+                                </span>
+                                <span class="f-14 width55"
+                                    appFormatNumber>{{(data.y/chartTotal*100) | number : '0.2-2'}}%</span>
+                                <p class="f-500 f-14 mr-8 text-black mb-0">{{data.name}}</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12"
+            *ngIf="(!tabsLoaded.portfolioData.dataLoaded || !tabsLoaded.portfolioData.hasData) && !tabsLoaded.portfolioData.isLoading">
+            <h5 class="roboto mb-0">Asset allocation</h5>
+
+            <div class="borderChatBoxEmpty bg-white">
+                <div class="row">
+                    <div class="col-lg-6 col-md-12 md-text-center md-pt-16">
+                        <p>Once your data is uploaded, this chart will come to life
+                        </p>
+                        <p>Let’s get some data in here. There are lot’s of things
+                            you can add to
+                            your portfolio. Let’s get going.</p>
+                        <button [routerLink]="['/customer/detail/account/summary']"
+                            class="vaultBtn mb-4 bg-primary f-16 text-white" mat-flat-button>
+                            Add data
+                        </button>
+                    </div>
+                    <div class="col-lg-6 col-md-12 text-center">
+                        <img class="w-180" src="assets/images/svg/asset-allocation-empty-state.svg">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
