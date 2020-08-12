@@ -480,7 +480,7 @@
                </ng-container>
                <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>
                <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
-               <tr *matRowDef="let row; columns: displayedColumnsTotal; when: isTotal" mat-row></tr>
+               <tr *matRowDef="let row; columns: displayedColumnsTotal; when: isTotal" mat-row [hidden]="viewMode == 'All Transactions'"></tr>
                <tr *matRowDef="let row; columns: ['groupHeader']; when: isGroup" mat-row></tr>
                <tr *matRowDef="let row; columns: ['groupHeader2']; when: isGroup2" mat-row></tr>
                <tr *matRowDef="let row; columns: ['groupHeader3']; when: isGroup3" mat-row></tr>
@@ -1119,13 +1119,13 @@
 
             </td>
             <td *ngIf="customDataSource.data?.arrayTran[7]?.isCheked == true"
-               style=" border-top: 1px solid #DADCE0; text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-right: 1px solid #DADCE0;">
+               style=" border-top: 1px solid #DADCE0; text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-right: 1px solid #DADCE0;">
                <!-- {{item.days}} -->
                {{item[eighthArrayTran]}}
 
             </td>
          </tr>
-         <tr *ngIf="item.total" style=" border-bottom:1px solid #DADCE0;page-break-inside: avoid">
+         <tr *ngIf="item.total && viewMode != 'All Transactions'" style=" border-bottom:1px solid #DADCE0;page-break-inside: avoid">
             <td class="f-700" *ngIf="customDataSource.data?.arrayTran[0]?.isCheked == true"
                style=" border-bottom:1px solid #DADCE0;  width:9%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-left: 1px solid #DADCE0;border-top: 1px solid #DADCE0;">
                {{item[firstArrayTotalTran]}}
