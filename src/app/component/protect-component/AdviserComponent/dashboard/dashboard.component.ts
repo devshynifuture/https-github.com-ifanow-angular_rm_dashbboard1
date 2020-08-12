@@ -1029,6 +1029,7 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getLatestAumReconciliation(obj).subscribe(
       data => {
         if (data) {
+          console.log("this is aum recon list::", data);
           this.aumFlag = false;
           this.aumReconList = data;
         } else {
