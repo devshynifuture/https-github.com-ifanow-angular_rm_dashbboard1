@@ -41,6 +41,11 @@ export class EmailListingComponent implements OnInit {
   advisorEmail;
   isCustomerEmail: boolean;
   unreadCount: any;
+  prevImpCount: any;
+  prevSentCount: any;
+  prevDraftCount: any;
+  prevTrashCount: any;
+  prevStarredCount: any;
 
   constructor(
     private emailService: EmailServiceService,
@@ -163,27 +168,19 @@ export class EmailListingComponent implements OnInit {
     this.paginatorSubscription = this.emailService.getProfile().subscribe(
       (response) => {
         if (!response) {
-          this.eventService.openSnackBar(
-            "You must connect your gmail account",
-            "Dismiss"
-          );
+          this.eventService.openSnackBar("You must connect your gmail account","Dismiss");
           if (localStorage.getItem("successStoringToken")) {
             localStorage.removeItem("successStoringToken");
           }
           this.isLoading = false;
-          this.router.navigate(["google-connect"], {
-            relativeTo: this.activatedRoute,
-          });
+          this.router.navigate(["google-connect"], { relativeTo: this.activatedRoute,});
         } else {
           // this.paginatorLength = response.threadsTotal;
           this.getRightSideNavListCount(location);
         }
       },
       (err) => {
-        this.eventService.openSnackBar(
-          "You must connect your gmail account",
-          "Dismiss"
-        );
+        this.eventService.openSnackBar("You must connect your gmail account","Dismiss");
         if (localStorage.getItem("successStoringToken")) {
           localStorage.removeItem("successStoringToken");
         }
@@ -203,22 +200,42 @@ export class EmailListingComponent implements OnInit {
         this.navList.forEach((element) => {
           switch (element.labelId) {
             case "IMPORTANT":
-              this.importantCount = element.threadsTotal;
+              if(this.importantCount === 0){
+                this.importantCount = element.threadsTotal;
+              } else {
+                this.prevImpCount = this.importantCount;
+              }
               break;
             case "SENT":
-              this.sentCount = element.threadsTotal;
+              if(this.sentCount === 0){
+                this.sentCount = element.threadsTotal;
+              } else {
+                this.prevSentCount = this.sentCount;
+              }
               break;
             case "DRAFT":
-              this.draftCount = element.threadsTotal;
+              if(this.draftCount === 0){
+                this.draftCount = element.threadsTotal;
+              } else {
+                this.prevDraftCount = this.draftCount;
+              }
               break;
             case "TRASH":
-              this.trashCount = element.threadsTotal;
+              if(this.trashCount === 0){
+                this.trashCount = element.threadsTotal;
+              } else {
+                this.prevTrashCount = this.trashCount;
+              }
+              break;
+            case "STARRED":
+              if(this.starredCount === 0){
+                this.starredCount = element.threadsTotal;
+              } else {
+                this.prevStarredCount = this.starredCount;
+              }
               break;
           }
-          if (
-            (this.location.toUpperCase() === "INBOX" ? "IMPORTANT" : "") ===
-            element.labelId
-          ) {
+          if ((this.location.toUpperCase() === "INBOX" ? "IMPORTANT" : "") ===element.labelId) {
             this.unreadCount = parseInt(element.threadsUnread);
           }
         });
@@ -260,8 +277,51 @@ export class EmailListingComponent implements OnInit {
             this.showNextPaginationBtn = true;
           }
         }
-
-        this.getGmailList(location.toUpperCase(), "");
+        let bringNewThreads = false;
+        // check for increment of count
+        switch(location){
+          case 'inbox': 
+            if(this.importantCount === this.prevImpCount){
+              bringNewThreads = false;
+            } else if(this.importantCount > this.prevImpCount){
+              bringNewThreads = true;
+            }
+            break;
+          case 'sent':
+            if(this.sentCount === this.prevSentCount){
+              bringNewThreads = false;
+            } else if(this.sentCount > this.prevSentCount){
+              bringNewThreads = true;
+            }
+            break;
+          case 'draft':
+            if(this.draftCount === this.prevDraftCount){
+              bringNewThreads = false;
+            } else if(this.draftCount > this.prevDraftCount){
+              bringNewThreads = true;
+            }
+            break;
+          case 'trash':
+            if(this.trashCount === this.prevTrashCount){
+              bringNewThreads = false;
+            }else if (this.trashCount > this.prevTrashCount){
+              bringNewThreads = true;
+            }
+            break;
+          case 'starred':
+            if(this.starredCount === this.prevStarredCount){
+              bringNewThreads = false;
+            }
+            break;
+          default: bringNewThreads = false;
+        }
+        if(bringNewThreads){
+          this.getGmailList(location.toUpperCase(), "");
+        } else {
+          if(this.messageListArray.length!==0){
+            this.dataSource.data = this.messageListArray
+          }
+        }
       }
     });
   }
@@ -437,6 +497,8 @@ export class EmailListingComponent implements OnInit {
         queryParams = `{ in:trash } { (from to): ${receiverEmail} }`;
       } else if (this.location === "inbox") {
         queryParams = `[ in:inbox -category:{social promotions updates forums} ]`;
+      } else if (this.location === "starred") {
+        queryParams = `[ in:starred -category:{social promotions updates forums} ]`;
       } else {
         queryParams = `{ (from to): ${receiverEmail} }`;
       }
@@ -513,9 +575,7 @@ export class EmailListingComponent implements OnInit {
               thread
             );
             idsOfThread = EmailUtilService.getIdsOfGmailThreads(thread);
-            if (idsOfThread.includes("STARRED")) {
-              isStarred = true;
-            }
+
             idsOfMessages = EmailUtilService.getIdsOfGmailMessages(thread);
             dateIdsSnippetsOfMessages = EmailUtilService.getIdAndDateAndSnippetOfGmailThreadMessages(
               thread
@@ -523,6 +583,14 @@ export class EmailListingComponent implements OnInit {
             labelIdsfromMessages = EmailUtilService.getGmailLabelIdsFromMessages(
               thread
             );
+
+            if (labelIdsfromMessages.length > 0) {
+              labelIdsfromMessages.forEach((element) => {
+                if (element.includes("STARRED")) {
+                  isStarred = true;
+                }
+              });
+            }
             extractSubjectFromHeaders = EmailUtilService.getSubjectAndFromOfGmailHeaders(
               thread
             );
@@ -622,10 +690,7 @@ export class EmailListingComponent implements OnInit {
 
   nextPagesList() {
     let aheadPaginatorVal = this.maxListRes + 50;
-    if (
-      aheadPaginatorVal <= this.paginatorLength ||
-      this.maxListRes <= this.paginatorLength
-    ) {
+    if (aheadPaginatorVal <= this.paginatorLength || this.maxListRes <= this.paginatorLength) {
       this.totalListSize = this.totalListSize - 50;
       this.currentList = this.maxListRes + 1;
       this.maxListRes = this.maxListRes + 50;
@@ -641,6 +706,22 @@ export class EmailListingComponent implements OnInit {
       this.getGmailList(this.location.toUpperCase(), "next");
     } else {
       this.showNextPaginationBtn = false;
+    }
+  }
+
+  changeStarTick(row) {
+    if (this.dataSource.data) {
+      let starValue = this.dataSource.data.find((item) => item.position == row.position).starred;
+      this.dataSource.data.find((item) => item.position == row.position).starred = !starValue;
+      const data = {
+
+      }
+      // this.emailService.modifyThreadIds(data)
+      //   .subscribe(res=>{
+      //     if(res){
+      //       console.log("modified ",res);
+      //     } 
+      //   }, err=> console.error(err));
     }
   }
 

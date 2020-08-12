@@ -107,6 +107,7 @@ export class BackofficeFileUploadComponent implements OnInit {
       advisorId: this.advisorId,
       arnRiaDetailId: this.arnRiaId,
     };
+
     this.reconService.getBackOfficeFileToUpload(obj).subscribe((data) => {
       // this.fileType = data;
       if (data) {
@@ -191,6 +192,32 @@ export class BackofficeFileUploadComponent implements OnInit {
       this.addbarWidth(100);
       this.eventService.openSnackBar('File uploaded successfully', 'Dismiss');
       // reload
+      var { value } = this.fileType[0];
+      let transactionFileTypeArr = value;
+  
+      var { value} = this.fileType[1];
+      let stpSipFileTypeArr = value;
+    
+      var { value } = this.fileType[2];
+      let aumFileTypeArr = value;
+  
+      var { value } = this.fileType[3];
+      let folioMasterFileTypeArr = value;
+
+      if(transactionFileTypeArr.some(item=> item.id === this.selectedFileType)){
+        this.router.navigate(['transaction'], { relativeTo: this.activatedRoute })
+      }
+      if(stpSipFileTypeArr.some(item=> item.id === this.selectedFileType)){
+        this.router.navigate(['sip-stp'], { relativeTo: this.activatedRoute })
+      }
+
+      if(aumFileTypeArr.some(item=> item.id === this.selectedFileType)){
+        this.router.navigate(['aum'], { relativeTo: this.activatedRoute });
+      }
+      if(folioMasterFileTypeArr.some(item=> item.id === this.selectedFileType)){
+        this.router.navigate(['folio'], { relativeTo: this.activatedRoute });
+      }
+
       this.setFilter();
     });
   }

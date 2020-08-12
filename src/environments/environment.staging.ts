@@ -1,5 +1,5 @@
 export const environment = {
-  production: false,
+  production: true,
   APIEndpoint: 'https://futurewise.my-planner.in/futurewise/api/v1/web/',
   GmailAPIEndpoint: 'https://emailserver.my-planner.in/email-server/api/v1/web/',
   TransactionPlatform: 'https://transactplatform.my-planner.in/transaction-platform/api/v1/web/',

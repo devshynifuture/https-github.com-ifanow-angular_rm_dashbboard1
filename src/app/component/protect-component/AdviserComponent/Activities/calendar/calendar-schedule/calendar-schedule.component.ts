@@ -163,6 +163,7 @@ export class CalendarScheduleComponent implements OnInit {
           }
         }
         // console.log("events recurring", this.formatedEvent);
+        this.addDaysOfMomth();
         this.createDayJson();
       }
     });

@@ -51,6 +51,31 @@
                 </div>
             </mat-list-item>
 
+            <mat-list-item routerLink="starred" #rlaStarred="routerLinkActive" routerLinkActive="text-primary"
+                class="row c-p">
+                <div class="col-md-12">
+                    <div class="row align-items-center">
+                        <div class="col-md-2 pl-0">
+                            <span class="material-icons">
+                                star_outline
+                            </span>
+                            <!-- <img
+                                [src]="rlaStarred.isActive ? '/assets/images/svg/crm-drafts-icon-active.svg': '/assets/images/svg/crm-drafts-icon.svg'"> -->
+                        </div>
+                        <div class="col-md-7 pl-0 pr-8">
+                            <h5 mat-line class="mb-0 ml-28 f-14 ">Starred</h5>
+                        </div>
+                        <div class="col-md-3 p-0 text-right">
+                            <span class="f-14" *ngIf="!isCustomerEmail"
+                                [ngClass]="rlaStarred.isActive ? 'text-primary':'text-primitive'">
+                                {{ starredCount }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+            </mat-list-item>
+
             <mat-list-item routerLink="draft" #rlaDraft="routerLinkActive" routerLinkActive="text-primary"
                 class="row c-p">
                 <div class="col-md-12">
