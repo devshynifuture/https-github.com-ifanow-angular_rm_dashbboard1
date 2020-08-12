@@ -1,0 +1,44 @@
+#ui-setting-supports .mat-tab-link {
+  min-width: 95px !important;
+}
+
+#ui-setting-pricing-bills,
+.refer-users {
+  #table-low {
+    tr.mat-header-row {
+      height: 44px !important;
+    }
+
+    tr.mat-row {
+      height: 36px !important;
+    }
+  }
+}
+
+.heterogenous-red-btn-setup {
+  border-radius: 2px !important;
+  border: 1px solid #FF7272 !important;
+  font-size: 12px !important;
+  line-height: 16px !important;
+  color: #FF7272 !important;
+  height: 20px !important;
+  padding: 0 4px !important;
+}
+
+.add-money {
+  display: flex;
+
+  .mat-form-field-flex {
+    padding-top: 0px !important;
+  }
+
+  .form-control {
+    border-top-right-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+  }
+
+  button {
+    border-top-right-radius: 2px !important;
+    border-bottom-right-radius: 2px !important;
+  }
+}
