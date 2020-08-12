@@ -48,8 +48,12 @@ export class SelectFolioMapComponent implements OnInit {
   initPoint() {
     this.advisorId = AuthService.getAdvisorId();
     if (this.data && this.data.selectedFolios.length !== 0) {
-      this.data.selectedFolios.forEach(element => {
-        this.selectedFolioInvestorName += element.ownerName + ' &';
+      this.data.selectedFolios.forEach((element, index) => {
+        if(index === this.data.selectedFolios.length - 1){
+          this.selectedFolioInvestorName += element.ownerName;
+        } else {
+          this.selectedFolioInvestorName += element.ownerName + ' &';
+        }
       });
     }
 
@@ -61,9 +65,9 @@ export class SelectFolioMapComponent implements OnInit {
     this.doShowDetails = true;
     this.searchKeyword = typedValue;
     this.selectedClient = value;
-    this.userNameInput = value.clientName;
-    this.selectedClientFullName = value.clientName;
-    this.selectedClientGrpHeadName = value.clientName;
+    this.userNameInput = value.showName;
+    this.selectedClientFullName = value.showName;
+    this.selectedClientGrpHeadName = value.showName;
     this.selectedClientPan = value.pan;
     this.selectedClientDob = value.birthDate;
     this.selectedClientGrpHeadMobNum = value.mobileNo;
@@ -101,6 +105,16 @@ export class SelectFolioMapComponent implements OnInit {
       )
       .subscribe(data => {
         this.arrayOfFamilyMemberOrClient = data;
+        this.arrayOfFamilyMemberOrClient.map(element => {
+          element.showName = ''
+        });
+        this.arrayOfFamilyMemberOrClient.map(item=>{
+          if(item.familyId > 0){
+            item.showName = item.familyMemberName
+          } else {
+            item.showName = item.clientName
+          }
+        })
         console.log("this is advisor name::::::::", data);
         if (data && data['length'] > 0) {
           this.arrayOfFamilyMemberOrClientError = false;
@@ -118,7 +132,7 @@ export class SelectFolioMapComponent implements OnInit {
 
   getFamilyOrClientList(value) {
     const data = {
-      parentId: this.parentId,
+      parentId: this.parentId === 0 ? this.advisorId : this.parentId,
       searchQuery: value,
     }
     return this.backOfcFolioMappingService.getUserDetailList(data)
@@ -130,11 +144,11 @@ export class SelectFolioMapComponent implements OnInit {
     if (this.data.selectedFolios.length !== 0) {
       this.data.selectedFolios.forEach(element => {
         obj = {
-          advisorId: this.advisorId,
+          advisorId: this.selectedClient.adminAdvisorId,
           clientId: this.selectedClient.groupHeadId,
           familyMemberId: this.selectedClient.familyId,
           folioNumber: element.folioNumber,
-          parentId: this.parentId === 0 ? this.advisorId : this.selectedClient.adminAdvisorId,
+          parentId: this.parentId === 0 ? this.advisorId : this.parentId,
         }
         data.push(obj);
       });

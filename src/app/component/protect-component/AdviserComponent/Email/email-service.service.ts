@@ -42,6 +42,10 @@ export class EmailServiceService {
     });
   }
 
+  modifyThreadIds(data){
+    return this.http.post(apiConfig.GMAIL_URL + appConfig.MODIFY_MULTIPLE_THREADS, data);
+  }
+
   // needs to work on ids 
   deleteMessageFromView(ids?: string) {
     const userInfo = AuthService.getUserInfo();

@@ -96,18 +96,16 @@
                     <th mat-header-cell *matHeaderCellDef>
                     </th>
                     <td mat-cell *matCellDef="let row">
-                        <mat-checkbox [checked]="row.starred" for="star">
+                        <mat-checkbox [checked]="row.starred" for="star" class="d-none">
                         </mat-checkbox>
-                        <span class="material-icons" (click)="row.starred = false" id="star" *ngIf="!row.starred">
+                        <span class="material-icons" (click)="changeStarTick(row)" id="star" *ngIf="!row.starred">
                             star_outline
                         </span>
-                        <span class="material-icons" (click)="row.starred = true" id="star" *ngIf="row.starred">
+                        <span class="material-icons" (click)="changeStarTick(row)" id="star" *ngIf="row.starred">
                             star
                         </span>
                     </td>
                 </ng-container>
-
-
 
                 <!-- emailer name column -->
                 <ng-container matColumnDef="emailers">

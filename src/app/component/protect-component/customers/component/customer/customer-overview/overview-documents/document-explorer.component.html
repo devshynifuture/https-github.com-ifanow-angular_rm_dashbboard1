@@ -3,7 +3,8 @@
 </div> -->
 <div class="document-side-menu " id="ui-documents-overview">
     <div class="row no-wrap">
-        <div class="col-md-2 pt-8 pb-20 pl-0 pr-0 documentSideBox  responsive-left-side-top responsive-flex-auto">
+        <div
+            class="col-md-2 pt-8 pb-20 pl-0 pr-0 documentSideBox  responsive-left-side-top responsive-flex-auto flex-auto-954">
             <ul class="vertical-menu bg-grey lter responsive-left-side">
                 <li (click)="viewMode ='tab1'" [ngClass]="{'activeColor':viewMode =='tab1'}" class="activeColor c-p">
                     <div (click)="tabValue = 'Documents';getAllFileList(tabValue,'refresh')" class="row">
@@ -119,7 +120,7 @@
 
                 <div class="row">
                     <div *ngIf="showMsg == false && noResult == false && commonFileFolders.data.length > 0"
-                        class="col-md-9 p-0 documentsTable">
+                        class="col-lg-9 col-md-10 p-0 documentsTable">
                         <div *ngSwitchCase="viewMode">
                             <table [appSkeletonLoading]="isLoading" [dataSource]="commonFileFolders" appSkeletonLoading
                                 class="skeletonAnimation" id="table-low" mat-table matSort>
@@ -222,8 +223,9 @@
                                                     class="f-14" mat-menu-item><img class="mr-20"
                                                         src="assets/images/svg/edit-name.svg">Rename
                                                 </button>
-                                                <button (click)="viewActivities(element)" *ngIf="valueTab != 4 && element.fileName == undefined"
-                                                    class="f-14" mat-menu-item><img class="mr-20"
+                                                <button (click)="viewActivities(element)"
+                                                    *ngIf="valueTab != 4 && element.fileName == undefined" class="f-14"
+                                                    mat-menu-item><img class="mr-20"
                                                         src="assets/images/svg/info-icon.svg">View
                                                     activity
                                                 </button>
@@ -272,7 +274,7 @@
                     </div>
 
 
-                    <div class="col-md-3 pr-0 " *ngIf="showMsg == false && noResult == false">
+                    <div class="col-lg-3 col-md-2 pr-0 " *ngIf="showMsg == false && noResult == false">
                         <div class="bg-grey sticky-top lter mb-16 boxGrey f-14" *ngIf="urlData">
 
                             <p class="selectMoreDetails" *ngIf="urlData != '' && urlData == undefined">

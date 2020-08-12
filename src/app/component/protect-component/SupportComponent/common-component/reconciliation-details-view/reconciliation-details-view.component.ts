@@ -1,9 +1,10 @@
+import { FormControl } from '@angular/forms';
 import { style } from '@angular/animations';
 import { AuthService } from './../../../../../auth-service/authService';
 import { EventService } from './../../../../../Data-service/event.service';
 import { SupportService } from './../../support.service';
 import { SubscriptionInject } from './../../../AdviserComponent/Subscriptions/subscription-inject.service';
-import { Component, OnInit, HostListener, ElementRef, Renderer2 } from '@angular/core';
+import { Component, OnInit, HostListener, ElementRef, Renderer2, OnDestroy } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { ReconciliationService } from '../../../AdviserComponent/backOffice/backoffice-aum-reconciliation/reconciliation/reconciliation.service';
@@ -13,7 +14,7 @@ import { ReconciliationService } from '../../../AdviserComponent/backOffice/back
   templateUrl: './reconciliation-details-view.component.html',
   styleUrls: ['./reconciliation-details-view.component.scss']
 })
-export class ReconciliationDetailsViewComponent implements OnInit {
+export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
 
   data;
   displayedColumns: string[] = ['unitOne', 'unitsRta', 'difference'];
@@ -37,7 +38,8 @@ export class ReconciliationDetailsViewComponent implements OnInit {
   filteredValues: any[];
   arnRiaCode: any = '';
   mainLoader: boolean = false;
-
+  filterTransactionListTab1 = new FormControl();
+  filterTransactionListTab2 = new FormControl();
   filterList = [];
   deletedTransactions = [];
   tableData2: any = [];
@@ -55,18 +57,9 @@ export class ReconciliationDetailsViewComponent implements OnInit {
   outsideClickCount = 0;
   filterBasedOn: any = null;
   filterOnWhichTable: any = null;
-
-  // @HostListener('document:mouseover', ['$event']) hoverOut(event) {
-  //   if (!(this.eRef.nativeElement.contains(event.target))) {
-  //     event.preventDefault();
-  //   }
-  // }
-
-  @HostListener('document:click', ['$event']) clickOutDisable(event) {
-    if (!(this.eRef.nativeElement.contains(event.target))) {
-      event.preventDefault();
-    }
-  }
+  filterSub: any;
+  filterBasedOnArr: any = [];
+  filterSubTab1: any;
 
   constructor(
     private eRef: ElementRef,
@@ -95,9 +88,9 @@ export class ReconciliationDetailsViewComponent implements OnInit {
     this.arnRiaCode = this.data.arnRiaCode;
 
     const tableArr: PeriodicElement[] = [{
-      unitsRta: this.data.unitsRta ? this.data.unitsRta : '',
-      unitOne: this.data.unitsIfanow ? this.data.unitsIfanow : '',
-      difference: this.data.difference ? this.data.difference : ''
+      unitsRta: this.data.unitsRta ? this.data.unitsRta : (typeof this.data.unitsRta === 'number' ? this.data.unitsRta : ''),
+      unitOne: this.data.unitsIfanow ? this.data.unitsIfanow : (typeof this.data.unitsIfanow === 'number' ? this.data.unitsIfanow : ''),
+      difference: this.data.difference ? this.data.difference : (typeof this.data.difference === 'number' ? this.data.difference : ''),
     }];
 
     this.dataSource.data = tableArr;
@@ -121,6 +114,18 @@ export class ReconciliationDetailsViewComponent implements OnInit {
     if (this.isFreezeClicked) {
       this.disableFreezeBtn = true;
     }
+
+    this.filterSubTab1 = this.filterTransactionListTab1.valueChanges
+      .subscribe(res=>{
+        this.filterBasedOn = res;
+        this.filterTableValues(res, 1);
+      })
+
+    this.filterSub = this.filterTransactionListTab2.valueChanges 
+    .subscribe(res=>{
+      this.filterBasedOn = res;
+      this.filterTableValues(res, 2)
+    })
 
     // if (this.data && this.data.difference === '0.000') {
     //   this.disableFreezeBtn = false;
@@ -195,6 +200,16 @@ export class ReconciliationDetailsViewComponent implements OnInit {
       ////
     }
     console.log(this.deleteMultipleTransactionArray);
+  }
+
+  ngOnDestroy():void{
+    if(this.filterSub){
+      this.filterSub.unsubscribe();
+    }
+
+    if(this.filterSubTab1){
+      this.filterSubTab1.unsubscribe()
+    }
   }
 
   validationForCanDeleteCheck(event, elRef) {
@@ -364,15 +379,22 @@ export class ReconciliationDetailsViewComponent implements OnInit {
   calculateBalanceUnitOnMultipleDelete() {
     // balance units of previous record +(units of current record* effect)
     this.changedBalanceUnits = [];
-    this.dataSource1.data.map((item, index) => {
+    this.tableData1.map((item, index) => {
       if (index === 0) {
         item.balanceUnits = String((parseFloat(item.units) * item.effect).toFixed(3));
       } else {
-        let prevBalUnit = this.dataSource1.data[index - 1].balanceUnits;
+        let prevBalUnit = this.tableData1[index - 1].balanceUnits;
         item.balanceUnits = String((parseFloat(prevBalUnit) + (parseFloat(item.units) * item.effect)).toFixed(3));
       }
     });
-    this.dataSource1.data.forEach(item => {
+
+    if(this.filterBasedOnArr.length === 0){
+      this.dataSource1.data = this.tableData1;
+    } else if(this.filterBasedOnArr.length > 0 && this.filterOnWhichTable) {
+      this.filterTableValues(this.filterBasedOnArr, this.filterOnWhichTable)
+    }
+    
+    this.tableData1.forEach(item => {
       this.changedBalanceUnits.push(item.balanceUnits);
     })
   }
@@ -398,26 +420,26 @@ export class ReconciliationDetailsViewComponent implements OnInit {
 
   filterTableValues(filterBasedOn, whichTable) {
     // this.filteredValues = [];
-    this.filterBasedOn = filterBasedOn;
-    this.filterOnWhichTable = whichTable
+    // this.filterBasedOn = filterBasedOn;
+    this.filterOnWhichTable = whichTable;
     if (whichTable === 1) {
-      if (filterBasedOn === 'all') {
+      if (filterBasedOn.length<=0) {
         this.dataSource1.data = this.tableData1;
       } else {
         let filteredArray = [];
         filteredArray = this.tableData1.filter(item => {
-          return item.transactionType === filterBasedOn ? item : null;
+          return filterBasedOn.includes(item.transactionType)
         });
         this.dataSource1.data = filteredArray;
       }
     }
     if (whichTable === 2) {
-      if (filterBasedOn === 'all') {
+      if (filterBasedOn.length <=0) {
         this.dataSource2.data = this.tableData1;
       } else {
         let filteredArray = [];
         filteredArray = this.tableData1.filter(item => {
-          return item.transactionType === filterBasedOn ? item : null;
+          return filterBasedOn.includes(item.transactionType);
         });
         this.dataSource2.data = filteredArray;
       }
