@@ -15,7 +15,7 @@
         <div class="col-md-8 p-0">
             <h5 class="mb-8 text-black">Email verification</h5>
             <p class="m-0 text-custom l-18 roboto">When you verify your email, you can send various mails to your
-                clients through the verified email. To verify an emaiil, click the Add now button and follow the
+                clients through the verified email. To verify an email, click the Add now button and follow the
                 procedure explained therein.</p>
             <p class="mb-0 text-custom l-18 roboto mt-12">Tip: You can have different email for different purpose. E.g.
                 for welcome email, for sending reports, taking cosent on advice, transaction confirmation etc.</p>
@@ -24,9 +24,7 @@
                     ADD NEW
                 </button>
                 <div *ngIf="emailList.length > 0">
-                
-                </div>
-                <table mat-table [dataSource]="emailList" id="table-low" class="skeletonAnimation mt-8" appSkeletonLoading
+                    <table mat-table [dataSource]="emailList" id="table-low" class="skeletonAnimation mt-8" appSkeletonLoading
                     [appSkeletonLoading]="isLoading">
                     <ng-container matColumnDef="select">
                         <th mat-header-cell *matHeaderCellDef class="br w-4 f-18">
@@ -82,6 +80,10 @@
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
+                </div>
+                <div *ngIf="emailList.length == 0">
+
+                </div>
             </div>
 
 
@@ -92,6 +94,9 @@
     <div class="row">
         <div class="col-md-4 pt-8">
             <h5 (click)="close()" class="mb-0  text-white c-p">Cancel</h5>
+        </div>
+        <div class="col-md-7 text-right">
+            <button class="btn-primary f-14 ml-12" (click)="openSendNow('')"  mat-stroked-button cdkFocusInitial>NEXT</button>
         </div>
     </div>
 </div>
