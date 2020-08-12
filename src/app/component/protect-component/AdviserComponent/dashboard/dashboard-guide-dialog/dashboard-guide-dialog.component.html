@@ -57,7 +57,13 @@
             only the ones
             that
             apply. </h3>
-          <h3 *ngIf="step==4" class=" m-0 f-500 pb-20 text-diff">What best describes your mutual fund practice? </h3>
+          <h3 *ngIf="step==4" class=" m-0 f-500 pb-20 text-diff">Can you tell us about what kind of clients you mostly
+            work with?Select only ones that apply.</h3>
+          <h3 *ngIf="step==5" class=" m-0 f-500 pb-20 text-diff">What kind of products do you primarily advise on?Select
+            only the ones that apply</h3>
+          <h3 *ngIf="step==6" class=" m-0 f-500 pb-20 text-diff">What best describes your mutual fund practice? </h3>
+          <h3 *ngIf="step==7" class=" m-0 f-500 pb-20 text-diff">{{data.name}}, how are you managing your practice?Like,
+            are you managing it alone or you have a team?</h3>
         </div>
       </div>
     </div>
@@ -127,7 +133,7 @@
           <div class="col-md-6 ">
             <button (click)="step=4" mat-stroked-button class="btn-primary h-48 lh-48 f-18 br-4">Next question
               <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
-          </div> 
+          </div>
 
           <div class="col-md-6 d-flex align-items-center justify-content-end">
             <p class="mb-0 c-p text-primitive">Skip this exercise</p>
@@ -136,8 +142,78 @@
       </div>
 
 
-      
-     
+
+
+    </div>
+  </div>
+
+  <div *ngIf="step==4" class="bg-modal-height">
+
+    <div class="contentGuideBox mt-40">
+      <div class="row">
+        <div (click)="clientWork.selected ? clientWork.selected = false : clientWork.selected = true
+          " *ngFor="let clientWork of clientsWorkWithList" class="col-md-3 mb-20 c-p">
+          <div class="advisor-cards">
+            <p class="m-0 roboto f-400 lh-16"> {{clientWork.name}}</p>
+            <i *ngIf="clientWork.selected" class="material-icons c-p text-primitive">
+              check
+            </i>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="bottomFooterDasb">
+        <div class="row">
+          <div class="col-md-6 ">
+            <button (click)="step=5" mat-stroked-button class="btn-primary h-48 lh-48 f-18 br-4">Next question
+              <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
+          </div>
+
+          <div class="col-md-6 d-flex align-items-center justify-content-end">
+            <p class="mb-0 c-p text-primitive">Skip this exercise</p>
+          </div>
+        </div>
+      </div>
+
+
+
+
+    </div>
+  </div>
+
+  <div *ngIf="step==5" class="bg-modal-height">
+
+    <div class="contentGuideBox mt-40">
+      <div class="row">
+        <div (click)="singleProduct.selected ? singleProduct.selected = false : singleProduct.selected = true
+          " *ngFor="let singleProduct of productList" class="col-md-3 mb-20 c-p">
+          <div class="advisor-cards">
+            <p class="m-0 roboto f-400 lh-16"> {{singleProduct.name}}</p>
+            <i *ngIf="singleProduct.selected" class="material-icons c-p text-primitive">
+              check
+            </i>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="bottomFooterDasb">
+        <div class="row">
+          <div class="col-md-6 ">
+            <button (click)="step=6" mat-stroked-button class="btn-primary h-48 lh-48 f-18 br-4">Next question
+              <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
+          </div>
+
+          <div class="col-md-6 d-flex align-items-center justify-content-end">
+            <p class="mb-0 c-p text-primitive">Skip this exercise</p>
+          </div>
+        </div>
+      </div>
+
+
+
+
     </div>
   </div>
 
@@ -166,62 +242,36 @@
       </div>
     </div> -->
 
-  <div *ngIf="step==4" class="bg-modal-height">
+  <div *ngIf="step==6" class="bg-modal-height">
 
-    <div class="contentGuideBox mt-40"> 
-    <div class="row"> 
-       <div class="col-md-12 d-flex">
-          <div class="box-1 boxDescribes p-20 mr-20">
-            <h5 class="m-0 roboto f-400 lh-19 pb-24">I offer mutual funds under my ARN/RIA code
+    <div class="contentGuideBox mt-40">
+      <div class="row">
+        <div class="col-md-12 d-flex">
+          <div (click)="selectPractice(singleMfPractice)" *ngFor="let singleMfPractice of mutualFundPractices"
+            class="box-1 boxDescribes p-20 mr-20">
+            <h5 class="m-0 roboto f-400 lh-19 pb-24">{{singleMfPractice.name}}
             </h5>
             <div class="hw-40 bg-grey lt br-2 mt-16">
-              <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">A</h3>
+              <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">{{singleMfPractice.option}}</h3>
             </div>
-            <div class="ribbon ribbon-bottom-right">
+            <div *ngIf="singleMfPractice.selected" class="ribbon ribbon-bottom-right">
               <span><img src="/assets/images/svg/right-white.svg"></span>
             </div>
           </div>
-
-          <div class="box-1 boxDescribes p-20 mr-20">
-            <h5 class="m-0 roboto f-400 lh-19 pb-24">I work with a national distributor as a sub-broker
-            </h5>
-            <div class="hw-40 bg-grey lt br-2 mt-16">
-              <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">B</h3>
-            </div>
+        </div>
+      </div>
+      <div class="bottomFooterDasb">
+        <div class="row">
+          <div class="col-md-12">
+            <button (click)="step=7" mat-stroked-button class="btn-primary h-48 lh-48 f-18 br-4">Next question<img
+                src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
           </div>
-        
-          <div class="box-1 boxDescribes p-20 mr-20">
-            <h5 class="m-0 roboto f-400 lh-19 pb-24">I only give advice. I do not distribute or offer
-              implementation
-              services.
-            </h5>
-            <div class="hw-40 bg-grey lt br-2 mt-0">
-              <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">C</h3>
-            </div>
-          </div>
-        
-          <div class="box-1 boxDescribes p-20 mr-20">
-            <h5 class="m-0 roboto f-400 lh-19 pb-24">Option a and b both applies to me
-            </h5>
-            <div class="hw-40 bg-grey lt br-2 mt-18">
-              <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">D</h3>
-            </div>
-            
-          </div>
-       </div>
-    </div>
-    <div class="bottomFooterDasb">
-      <div class="row">
-        <div class="col-md-12">
-          <button (click)="step=4" mat-stroked-button class="btn-primary h-48 lh-48 f-18 br-4">Next question<img
-            src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
         </div>
       </div>
     </div>
-    </div>
 
-    
-    
+
+
   </div>
 
   <!-- end  four slider -->
@@ -233,8 +283,8 @@
       <h3 class="m-0 f-500 pb-20">{{data.name}}, how are you managing your practice? Like, are you managing it alone or
         you have a team? </h3>
     </div>
-  </div>
-  <div class="row pt-40">
+  </div> -->
+  <div *ngIf="step==7" class="row pt-40">
 
     <div class="col-md-12 p-0 pl-150">
       <div class="d-flex">
@@ -257,10 +307,17 @@
             </div>
           </div>
         </div>
-
+      </div>
+      <div class="bottomFooterDasb">
+        <div class="row">
+          <div class="col-md-12">
+            <button (click)="step=8" mat-stroked-button class="btn-primary h-48 lh-48 f-18 br-4">Next question<img
+                src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
+          </div>
+        </div>
       </div>
     </div>
-  </div> -->
+  </div>
 
   <!-- end five slider -->
 

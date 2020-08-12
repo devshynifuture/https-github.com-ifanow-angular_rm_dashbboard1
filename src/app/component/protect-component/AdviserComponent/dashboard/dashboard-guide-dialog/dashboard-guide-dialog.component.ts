@@ -77,6 +77,13 @@ export class DashboardGuideDialogComponent implements OnInit {
     { name: 'Commodities', selected: false },
     { name: 'Real estate', selected: false },
   ]
+
+  mutualFundPractices = [
+    { name: 'I offer mutual funds under my ARN/RIA code', selected: false, option: 'A' },
+    { name: 'I work with a national distributor as a sub-broker', selected: false, option: 'B' },
+    { name: 'I only give advice. I do not distribute or offer implementation services.', selected: false, option: 'C' },
+    { name: 'Option a and b both applies to me', selected: false, option: 'D' },
+  ]
   ArnRiaForm: FormGroup;
   credentialsForm: FormGroup;
   advisorId: any;
@@ -132,6 +139,12 @@ export class DashboardGuideDialogComponent implements OnInit {
 
   backStep() {
     this.step--;
+  }
+
+  selectPractice(selectedPractise) {
+    this.mutualFundPractices.map(element => {
+      (selectedPractise.name == element.name) ? element.selected = true : element.selected = false
+    })
   }
 
   selectDes(selectDescription) {
