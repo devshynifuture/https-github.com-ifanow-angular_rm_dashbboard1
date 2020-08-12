@@ -1,7 +1,7 @@
 <mat-sidenav-container (window:resize)="onResize()" class="sidenav-container">
   <mat-sidenav class="mobileMargin" #sidenav mode="side" opened role="navigation">
     <mat-nav-list class="pt-0" id="d" [ngStyle]="{'width':showTabs?'220px':''}">
-      <mat-toolbar *ngIf="showTabs && userInfo" class="bg-white p-0  c-p" (click)="goHome()">
+      <mat-toolbar *ngIf="showTabs && userInfo" class="bg-white p-0 c-p" (click)="goHome()">
         <div class="logoWrap">
           <img *ngIf="authService.appPic" [src]="authService.appPic" class="logo">
           <h5 *ngIf="!authService.appPic">{{logoText | uppercase}}</h5>
@@ -9,11 +9,11 @@
 
         <!-- <div>
   <img class="logo" src="{{userInfo.profilePic}}">
-</div> -->
+ </div> -->
       </mat-toolbar>
       <!-- <div *ngIf="showTabs" class="pt-16">
-    <img class="header-img pt-0 pb-0" src="assets/images/img1.jpg">
-</div> -->
+  <img class="header-img pt-0 pb-0" src="assets/images/img1.jpg">
+ </div> -->
       <div *ngIf="showTabs" class="main-details min-height">
         <p class="f-16 f-600 mb-0">{{advisorName}}</p>
 
@@ -40,16 +40,16 @@
             <span *ngIf="showTabs" class="title" mat-line>People</span>
           </a>
           <!-- <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/customer/detail/account/summary">
-              <img routerLink="/customer/detail/overview" src="assets/images/svg/people.svg">
-              <span *ngIf="showTabs" class="title" mat-line>People</span>
-          </a> -->
+  <img routerLink="/customer/detail/overview" src="assets/images/svg/people.svg">
+  <span *ngIf="showTabs" class="title" mat-line>People</span>
+  </a> -->
           <!-- <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/calendar">
-              <img src="assets/images/svg/file-lines.svg">
-              <span *ngIf="showTabs" class="title" mat-line>Activities</span>
-              <mat-icon aria-hidden="false" aria-label="Example home icon" class="text-custom">
-                  keyboard_arrow_right
-              </mat-icon>
-          </a> -->
+  <img src="assets/images/svg/file-lines.svg">
+  <span *ngIf="showTabs" class="title" mat-line>Activities</span>
+  <mat-icon aria-hidden="false" aria-label="Example home icon" class="text-custom">
+  keyboard_arrow_right
+  </mat-icon>
+  </a> -->
           <mat-accordion class="menuAccordion" *ngIf="!enumDataService.PRODUCTION">
             <mat-expansion-panel hideToggle={{arrow}}>
               <mat-expansion-panel-header>
@@ -62,13 +62,13 @@
 
               </mat-expansion-panel-header>
               <!-- <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
-                  routerLink="/admin/activies/advice">
-                  <span *ngIf="showTabs" class="title" mat-line>Advice</span>
-              </a> -->
+  routerLink="/admin/activies/advice">
+  <span *ngIf="showTabs" class="title" mat-line>Advice</span>
+  </a> -->
               <!-- <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
-                  routerLink="/admin/activies/plans">
-                  <span *ngIf="showTabs" class="title" mat-line>Action plans</span>
-              </a> -->
+  routerLink="/admin/activies/plans">
+  <span *ngIf="showTabs" class="title" mat-line>Action plans</span>
+  </a> -->
               <!-- <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
                   routerLink="/admin/activies/notes">
                   <span *ngIf="showTabs" class="title" mat-line>Notes</span>
@@ -83,9 +83,9 @@
                 <span *ngIf="showTabs" class="title" mat-line>Email</span>
               </a>
               <!-- <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
-                  routerLink="/admin/activies/opportunities">
-                  <span *ngIf="showTabs" class="title" mat-line>Opportunities</span>
-              </a> -->
+  routerLink="/admin/activies/opportunities">
+  <span *ngIf="showTabs" class="title" mat-line>Opportunities</span>
+  </a> -->
               <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
                 routerLink="/admin/activies/calendar/month">
                 <span *ngIf="showTabs" class="title" mat-line>Calendar</span>
@@ -106,18 +106,18 @@
           </a>
 
           <!-- <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/calendar">
-              <img src="assets/images/svg/file-lines.svg">
-              <span *ngIf="showTabs" class="title" mat-line>Documents</span>
-          </a> -->
+  <img src="assets/images/svg/file-lines.svg">
+  <span *ngIf="showTabs" class="title" mat-line>Documents</span>
+  </a> -->
           <!-- <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
-             routerLink="./advisor-marketplace">
-             <img src="assets/images/svg/file-lines.svg">
-             <span *ngIf="showTabs" class="title" mat-line>Marketplace</span>
-         </a> -->
+  routerLink="./advisor-marketplace">
+  <img src="assets/images/svg/file-lines.svg">
+  <span *ngIf="showTabs" class="title" mat-line>Marketplace</span>
+  </a> -->
           <!-- <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item>
-              <img src="assets/images/svg/secure.svg">
-              <span *ngIf="showTabs" class="title" mat-line>Compliance</span>
-          </a> -->
+  <img src="assets/images/svg/secure.svg">
+  <span *ngIf="showTabs" class="title" mat-line>Compliance</span>
+  </a> -->
           <mat-accordion class="menuAccordion">
             <mat-expansion-panel hideToggle={{arrow}}>
               <mat-expansion-panel-header>
@@ -126,8 +126,8 @@
                     <img src="assets/images/svg/file-lines.svg">
                     <span *ngIf="showTabs" class="title" mat-line>Back Office</span>
                     <!-- <mat-icon aria-hidden="false" aria-label="Example home icon" class="text-custom">
-                    keyboard_arrow_right
-                </mat-icon> -->
+  keyboard_arrow_right
+  </mat-icon> -->
                   </a>
                 </mat-panel-title>
 
@@ -155,35 +155,35 @@
               </a>
 
               <!--<a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/activies/tasks">
-                  <span *ngIf="showTabs" class="title" mat-line>Tasks</span>
-              </a>
-              <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/activies/opportunities">
-                  <span *ngIf="showTabs" class="title" mat-line>Opportunities</span>
-              </a> -->
+  <span *ngIf="showTabs" class="title" mat-line>Tasks</span>
+  </a>
+  <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/activies/opportunities">
+  <span *ngIf="showTabs" class="title" mat-line>Opportunities</span>
+  </a> -->
               <!-- <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
-                  routerLink="/admin/activies/month">
-                  <span *ngIf="showTabs" class="title" mat-line>Calendar</span>
-              </a> -->
+  routerLink="/admin/activies/month">
+  <span *ngIf="showTabs" class="title" mat-line>Calendar</span>
+  </a> -->
             </mat-expansion-panel>
           </mat-accordion>
           <!-- <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item>
-              <img src="assets/images/svg/folder-light.svg">
-              <span *ngIf="showTabs" class="title" mat-line>Back Office</span>
-          </a>
-          <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item>
-              <span *ngIf="showTabs" class="title" routerLink="/admin/backoffice-aum-reconciliation"
-                  mat-line>AUM
-                  Reconciliation</span>
-          </a>
-          <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item>
-              <span *ngIf="showTabs" class="title" routerLink="/admin/backoffice-mis" mat-line>MIS</span>
-          </a> -->
+  <img src="assets/images/svg/folder-light.svg">
+  <span *ngIf="showTabs" class="title" mat-line>Back Office</span>
+  </a>
+  <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item>
+  <span *ngIf="showTabs" class="title" routerLink="/admin/backoffice-aum-reconciliation"
+  mat-line>AUM
+  Reconciliation</span>
+  </a>
+  <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item>
+  <span *ngIf="showTabs" class="title" routerLink="/admin/backoffice-mis" mat-line>MIS</span>
+  </a> -->
         </div>
       </div>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content id="left" class="mainNav" [ngClass]="showTabs?'mainNav':'smallNav'">
-    <mat-toolbar class="bg-white fix-top pl-0  ">
+    <mat-toolbar class="bg-white fix-top pl-0 ">
       <button class="mobileBTN" (click)="showMainNavWrapper()" *ngIf="showTabs==false" aria-label="Toggle sidenav"
         mat-icon-button type="button">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
@@ -333,7 +333,7 @@
                   <div class="col-md-2 p-0">
                     <img src="/assets/images/svg/bulb-blue-btn.svg" class="v-super">
                   </div>
-                  <div class="col-md-10 p-0">
+                  <div class="col-md-10 p-0" [routerLink]="['/admin/setting-support/knowledge-base']">
                     <p class="m-0 text-black roboto">Knowledge base</p>
                     <p class="text-custom m-0 roboto">Find answers to key questions here</p>
                   </div>
@@ -344,7 +344,7 @@
                   <div class="col-md-2 p-0">
                     <img src="/assets/images/svg/new.svg" class="v-super">
                   </div>
-                  <div class="col-md-10 p-0">
+                  <div class="col-md-10 p-0" [routerLink]="['/admin/setting-support/new-release-note']">
                     <p class="m-0 text-black roboto">New release notes</p>
                     <p class="text-custom m-0 roboto">All the latest developments in one place</p>
                   </div>
@@ -355,7 +355,7 @@
                   <div class="col-md-2 p-0">
                     <img src="/assets/images/svg/cash-flow-surplus-icon.svg" class="v-super">
                   </div>
-                  <div class="col-md-10 p-0">
+                  <div class="col-md-10 p-0" [routerLink]="['/admin/setting-support/blog']">
                     <p class="m-0 text-black roboto">Blog</p>
                     <p class="text-custom m-0 roboto">Get industry & IFANOW insights. Stay up to
                       date
@@ -368,7 +368,7 @@
                   <div class="col-md-2 p-0">
                     <img src="/assets/images/svg/tip.svg" class="v-super">
                   </div>
-                  <div class="col-md-10 p-0">
+                  <div class="col-md-10 p-0" [routerLink]="['/admin/setting-support/tips-and-tricks']">
                     <p class="m-0 text-black roboto">Tips & tricks</p>
                     <p class="text-custom m-0 roboto">Useful tips & tricks you should know </p>
                   </div>
@@ -379,7 +379,7 @@
                   <div class="col-md-2 p-0">
                     <img src="/assets/images/svg/ruppess.svg" class="v-super">
                   </div>
-                  <div class="col-md-10 p-0">
+                  <div class="col-md-10 p-0" [routerLink]="['/admin/setting-support/pricing']">
                     <p class="m-0 text-black roboto">Pricing</p>
                     <p class="text-custom m-0 roboto">Compare pricing options & select what works
                     </p>
@@ -391,7 +391,7 @@
                   <div class="col-md-2 p-0">
                     <img src="/assets/images/svg/raise.svg">
                   </div>
-                  <div class="col-md-10 p-0">
+                  <div class="col-md-10 p-0" [routerLink]="['/admin/setting-support/raise-support-ticket']">
                     <p class="m-0 text-black roboto">Raise a support ticket</p>
                     <p class="text-custom m-0 roboto">Can’t find an answer? Our RMs are here to help
                     </p>
@@ -787,7 +787,7 @@
                 <li class="text-left pt-20 f-14 c-p" *ngIf="userInfo.userType==8">Change password</li>
               </ul>
               <p (click)="logout()" class="c-p mb-0 f-400
-                             pt-20 pb-20">Logout</p>
+  pt-20 pb-20">Logout</p>
             </div>
           </mat-menu>
         </a>
@@ -816,9 +816,9 @@
       </div>
     </div>
     <div>
-      <!--          <div [@routeAnimations]="prepareRoute(outlet)" >-->
-      <!--            <router-outlet #outlet="outlet"></router-outlet>-->
-      <!--          </div>-->
+      <!-- <div [@routeAnimations]="prepareRoute(outlet)" >-->
+      <!-- <router-outlet #outlet="outlet"></router-outlet>-->
+      <!-- </div>-->
       <router-outlet id="left1">
       </router-outlet>
 
