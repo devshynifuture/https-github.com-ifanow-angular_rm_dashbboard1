@@ -38,10 +38,10 @@
 <div class="row pt-16 pb-16" *ngIf="emailDetails.emailVerificationStatus != 1">
     <div class="col-md-12 text-right">
         <button class="br-0 text-inherit f-14" mat-button [mat-dialog-close]="data.investor">
-            Verify Emai now
+            Verify now
         </button>
         <button class="btn-primary f-14 ml-12" (click)="onNoClick()" mat-button mat-raised-button
-            cdkFocusInitial>Continue with email sending</button>
+            cdkFocusInitial>Continue to email sending</button>
     </div>
 </div>
 <div class="row pt-16 pb-16" *ngIf="emailDetails.emailVerificationStatus == 1">
