@@ -38,6 +38,7 @@ export class FolioQueryComponent implements OnInit {
   viewMode: string;
   arnRiaList: any;
   arnRiaValue = -1;
+  isMainLoading: boolean;
 
   constructor(
     private reconService: ReconciliationService,
@@ -187,7 +188,7 @@ export class FolioQueryComponent implements OnInit {
   search(flag, value, searchFrom) {
     // search query logic
     // on hold
-
+    this.isMainLoading = true;
     const data = {
       flag_search: flag,
       advisorId: (this.parentId) ? -1 : (this.arnRiaValue != -1) ? [this.adminAdvisorIds] : [this.adminAdvisorIds],
@@ -198,15 +199,17 @@ export class FolioQueryComponent implements OnInit {
 
     this.reconService.getFolioQueryDataListValues(data)
       .subscribe(res => {
+        this.isMainLoading = false;
+        console.log("response:::",res);
         if (res && res.length !== 0) {
           let arrValue = [];
           res.forEach(element => {
             arrValue.push({
               arnRiaCode: element.arnRiaCode ? element.arnRiaCode : '-',
-              schemeName: element.shemeName,
+              name: element.shemeName,
               investorName: element.investorName,
               folioNumber: element.folioNumber,
-              reconStatus: element.isMapped === -1 ? 'unmapped' : 'mapped',
+              reconStatus: element.isMapped === -1 ? 'unmatched' : 'matched',
               mutualFundTransaction: element.mutualFundTransaction,
               mutualFundId: element.mutualFundId,
               unitsRta: element.aumUnits,
@@ -218,6 +221,7 @@ export class FolioQueryComponent implements OnInit {
             })
           });
           this.dataSource.data = arrValue;
+          console.log("this is what we are having",arrValue);
         }
         else {
           this.dataSource.data = null;

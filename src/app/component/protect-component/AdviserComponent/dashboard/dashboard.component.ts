@@ -1031,6 +1031,7 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getLatestAumReconciliation(obj).subscribe(
       data => {
         if (data) {
+          console.log("this is aum recon list::", data);
           this.aumFlag = false;
           this.aumReconList = data;
         } else {
@@ -1351,7 +1352,7 @@ export class DashboardComponent implements OnInit {
     const dialogRef = this.dialog.open(DashboardGuideDialogComponent, {
       maxWidth: '100vw',
       width: '90vw',
-      height: '90vh',
+      //height: '90vh',
       data: this.userData
     });
 

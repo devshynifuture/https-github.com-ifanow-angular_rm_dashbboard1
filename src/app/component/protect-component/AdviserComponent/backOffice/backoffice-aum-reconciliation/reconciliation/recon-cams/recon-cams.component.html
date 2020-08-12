@@ -2,8 +2,18 @@
     <div class="col-md-12 pr-0">
         <div class="row justify-content-right" [formGroup]="selectBrokerForm">
             <div class="col-md-6"></div>
-            
-            <div class="col-md-6 d-flex justify-content-end align-items-center">
+
+            <div class="col-md-4">
+                <div matTooltip="Kindly, Select the broker code" [matTooltipDisabled]="isBrokerSelected"
+                    matTooltipPosition="below">
+                    <button [disabled]="!isBrokerSelected" class="btn-primary h-40" mat-stroked-button color="primary"
+                        (click)="openAumReconciliation('startReconciliation','')">
+                        START RECONCILIATION
+                    </button>
+                </div>
+
+            </div>
+            <div class="col-md-2">
                 <mat-select class="b-a w-200 mr-10 text-left form-control" formControlName="selectBrokerId"
                     placeholder="Select broker">
                     <mat-option>
@@ -14,17 +24,7 @@
                         {{ broker.brokerCode }}
                     </mat-option>
                 </mat-select>
-
-                <div matTooltip="Kindly, Select the broker code" [matTooltipDisabled]="isBrokerSelected"
-                    matTooltipPosition="below">
-                    <button [disabled]="!isBrokerSelected" class="btn-primary h-40" mat-stroked-button color="primary"
-                        (click)="openAumReconciliation('startReconciliation','')">
-                        START RECONCILIATION
-                    </button>
-
-                </div>  
             </div>
-           
         </div>
     </div>
 </div>
