@@ -14,10 +14,10 @@
 </div>
 
 <div>
-    <div *ngIf="selectedElement.fileType == 'jpg' || selectedElement.fileType == 'png'">
+    <div *ngIf="selectedElement.fileType == 'jpg' || selectedElement.fileType == 'png' || selectedElement.fileType == 'jpeg'">
         <img [src]="link" height="200"> <br />
     </div>
-    <div *ngIf="selectedElement.fileType != 'jpg' && selectedElement.fileType != 'png'">
+    <div *ngIf="selectedElement.fileType != 'jpg' && selectedElement.fileType != 'png' && selectedElement.fileType != 'jpeg'">
         <ngx-doc-viewer [url]="link" viewer="google" style="width:100%;height:75vh;">
         </ngx-doc-viewer>
     </div>

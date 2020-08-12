@@ -10,6 +10,7 @@ import { PeopleService } from '../component/protect-component/PeopleComponent/pe
 import { SubscriptionInject } from '../component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { rejects } from 'assert';
 import { element } from 'protractor';
+import {apiConfig} from '../config/main-config';
 
 @Injectable({
   providedIn: 'root'
@@ -17,12 +18,13 @@ import { element } from 'protractor';
 export class EnumDataService {
 
   constructor(private enumService: EnumServiceService, private subService: SubscriptionService,
-    private onlineTransactionService: OnlineTransactionService, private custumService: CustomerService,
-    private orgSettingService: OrgSettingServiceService, private peopleService: PeopleService,
-    private subInject: SubscriptionInject) {
+              private onlineTransactionService: OnlineTransactionService, private custumService: CustomerService,
+              private orgSettingService: OrgSettingServiceService, private peopleService: PeopleService,
+              private subInject: SubscriptionInject) {
     this.enumService.setAssetShortForms(this.cashflowAssetNaming);
   }
 
+  PRODUCTION = apiConfig.PRODUCTION;
   searchData: any;
   clientAndFamilyData: any = [];
   proofType = [
@@ -93,10 +95,10 @@ export class EnumDataService {
     if (userData != null) {
       self.userData = userData;
     }
-    return new Promise(function (resolve, reject) {
+    return new Promise(function(resolve, reject) {
       // this.advisorId = AuthService.getAdvisorId();
       // this.clientData = AuthService.getClientData();
-      if(userData[0].familyMemberAge < 18){
+      if (userData[0].familyMemberAge < 18) {
         // let self = this;
       self.clientData = AuthService.getClientData();
       const obj = {
@@ -111,8 +113,7 @@ export class EnumDataService {
         (err) => {
           reject('failed');
         });
-      }
-      else{
+      } else {
         const obj = {
           userId: self.userData[0].id == 0 ? self.userData[0].clientId : self.userData[0].id,
           userType: self.userData[0].userType
@@ -194,9 +195,10 @@ export class EnumDataService {
       data => {
         if (data) {
           data.forEach(element => {
-            if (element.id == 1 || element.id == 2 || element.id == 5)
+            if (element.id == 1 || element.id == 2 || element.id == 5) {
               element.name = this.toCamelCase(element.name);
-          })
+            }
+          });
           this.accountTypes = data;
         }
       }
@@ -204,9 +206,9 @@ export class EnumDataService {
   }
 
   toCamelCase(str) {
-    return str.toLowerCase().replace(/(?:(^.)|(\s+.))/g, function (match) {
+    return str.toLowerCase().replace(/(?:(^.)|(\s+.))/g, function(match) {
       return match.charAt(match.length - 1).toUpperCase();
-    })
+    });
   }
 
   setRelationShipStatus() {

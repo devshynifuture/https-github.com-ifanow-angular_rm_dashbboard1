@@ -162,6 +162,7 @@ import { DetailedViewGoldMobComponent } from './component/customer/mobile/commod
 import { DetailedViewOthersMobComponent } from './component/customer/mobile/commodities-mob/add-others-mob/detailed-view-others-mob/detailed-view-others-mob.component';
 import { DetailedViewRealEstateMobComponent } from './component/customer/mobile/real-estate-mob/add-real-estate-mob/detailed-view-real-estate-mob/detailed-view-real-estate-mob.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import { AssetAllocationPieChartComponent } from './component/customer/asset-allocation-pie-chart/asset-allocation-pie-chart.component';
 
 
 // import { RightFilterComponent } from './component/common-component/right-filter/right-filter.component';
@@ -197,7 +198,7 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     AddCashInHandMobComponent, AddRealEstateMobComponent, AddLiabilitiesMobComponent, AddOtherPayablesMobComponent,
     AddInsuranceMobComponent, AddHealthMobComponent, AddPersonalAccidentMobComponent, CriticalIllnesMobComponent,
     MotorInsuranceMobComponent, TravelInsuranceMobComponent, HomeInsuranceMobComponent, FireInsuranceMobComponent,
-    DetailedViewLifeInsuranceMobComponent, DetailedViewGeneralInsuranceMobComponent, DetailedEpfMobComponent, DetailedGrauityMobComponent, DetailedNpsMobComponent, DetailedKvpMobComponent, DetailedNscMobComponent, DetailedPoMisMobComponent, DetailedPoRdMobComponent, DetailedPoSavingsComponent, DetailedPoTdMobComponent, DetailedPpfComponent, DetailedScssMobComponent, DetailedSsyMobComponent, DetailedViewBankAccMobComponent, DetailedViewCashInHandMobComponent, DetailedViewGoldMobComponent, DetailedViewOthersMobComponent, DetailedViewRealEstateMobComponent],
+    DetailedViewLifeInsuranceMobComponent, DetailedViewGeneralInsuranceMobComponent, DetailedEpfMobComponent, DetailedGrauityMobComponent, DetailedNpsMobComponent, DetailedKvpMobComponent, DetailedNscMobComponent, DetailedPoMisMobComponent, DetailedPoRdMobComponent, DetailedPoSavingsComponent, DetailedPoTdMobComponent, DetailedPpfComponent, DetailedScssMobComponent, DetailedSsyMobComponent, DetailedViewBankAccMobComponent, DetailedViewCashInHandMobComponent, DetailedViewGoldMobComponent, DetailedViewOthersMobComponent, DetailedViewRealEstateMobComponent,AssetAllocationPieChartComponent],
   imports: [
     // BrowserModule,
     CommonModule,

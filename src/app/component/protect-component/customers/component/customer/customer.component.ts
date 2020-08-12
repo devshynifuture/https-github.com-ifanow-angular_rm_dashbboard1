@@ -49,7 +49,7 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
     public authService: AuthService,
     private peopleService: PeopleService,
     private _formBuilder: FormBuilder,
-    private enumDataService: EnumDataService,
+    public enumDataService: EnumDataService,
   ) {
     super(eventService, subinject, dynamicComponentService);
     this.user = AuthService.getUserInfo();
