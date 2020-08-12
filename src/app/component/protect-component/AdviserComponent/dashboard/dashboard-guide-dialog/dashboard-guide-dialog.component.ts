@@ -22,6 +22,25 @@ export class DashboardGuideDialogComponent implements OnInit {
   page = 1;
   step: number;
 
+  serviceList = [
+    { name: 'Portfolio review', selected: false },
+    { name: 'Financial planning', selected: false },
+    { name: 'Emergency planning', selected: false },
+    { name: 'Insurance planning', selected: false },
+    { name: 'Investment management', selected: false },
+    { name: 'Investment consulting', selected: false },
+    { name: 'Reitrement planning', selected: false },
+    { name: 'Asset allocation', selected: false },
+    { name: 'Tax planning', selected: false },
+    { name: 'Cash flow planning', selected: false },
+    { name: 'Real estate advisory', selected: false },
+    { name: 'Will writing', selected: false },
+    { name: 'Estate planning', selected: false },
+    { name: 'Raising capital or Dept', selected: false },
+    { name: 'Personal leading', selected: false },
+
+  ]
+
   constructor(
     public dialogRef: MatDialogRef<DashboardGuideDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
@@ -30,7 +49,6 @@ export class DashboardGuideDialogComponent implements OnInit {
   onNoClick(): void {
     this.dialogRef.close();
   }
-
 
   ngOnInit() {
     this.step = 1;
