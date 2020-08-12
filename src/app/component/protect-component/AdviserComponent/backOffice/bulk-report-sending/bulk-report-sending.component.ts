@@ -25,6 +25,7 @@ export class BulkReportSendingComponent implements OnInit {
   advisorId: any;
   emailTemplateList: any;
   emailData: any;
+  showOpenEmailSetting: boolean;
 
 
   constructor(
@@ -83,6 +84,9 @@ export class BulkReportSendingComponent implements OnInit {
       this.emailTemplateList.forEach(element => {
         if(element.title == 'Sending reports'){
           this.emailData = element
+          if(element.fromEmail == 'N/A'){
+            this.showOpenEmailSetting = true
+          }
           //this.OpenEmail('emailTemp',this.emailData)
         }
       });

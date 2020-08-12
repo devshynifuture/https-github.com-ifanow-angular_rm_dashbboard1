@@ -14,6 +14,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { PeopleService } from '../../protect-component/PeopleComponent/people.service';
 import { map, startWith, debounceTime } from 'rxjs/operators';
 import { Subscription, Observable } from 'rxjs';
+import {apiConfig} from "../../../config/main-config";
 
 @Component({
   selector: 'app-leftsidebar',
@@ -54,7 +55,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
     protected eventService: EventService, protected subinject: SubscriptionInject,
     private subService: SubscriptionService, private router: Router, private ngZone: NgZone,
     protected dynamicComponentService: DynamicComponentService,
-    private enumDataService: EnumDataService,
+    public enumDataService: EnumDataService,
     private settingsService: SettingsService,
     private auth: AuthService,
     private utilService: UtilService, private peopleService: PeopleService) {
