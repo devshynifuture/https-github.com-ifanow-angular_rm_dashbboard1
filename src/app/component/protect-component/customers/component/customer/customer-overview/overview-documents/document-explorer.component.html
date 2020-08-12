@@ -281,7 +281,7 @@
                             <div *ngIf="selectedElement.fileType == 'jpg' || selectedElement.fileType == 'png' || selectedElement.fileType == 'jpeg'">
                                 <img [src]="urlData" height="200"> <br />
                             </div>
-                            <div *ngIf="selectedElement.fileType != 'jpg' && selectedElement.fileType != 'png'">
+                            <div *ngIf="selectedElement.fileType != 'jpg' && selectedElement.fileType != 'png' && selectedElement.fileType != 'jpeg'">
                                 <ngx-doc-viewer [url]="urlData" viewer="google" style="width:275px;height:350px;">
                                 </ngx-doc-viewer>
                             </div>
