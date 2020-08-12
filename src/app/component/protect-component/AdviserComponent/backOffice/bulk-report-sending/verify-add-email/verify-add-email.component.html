@@ -37,7 +37,7 @@
 </div>
 <div class="row pt-16 pb-16" *ngIf="emailDetails.emailVerificationStatus != 1">
     <div class="col-md-12 text-right">
-        <button class="br-0 text-inherit f-14" mat-button [mat-dialog-close]="data.investor">
+        <button class="br-0 btn-primary f-14" mat-button [mat-dialog-close]="data.investor">
             Verify now
         </button>
         <button class="btn-primary f-14 ml-12" (click)="onNoClick()" mat-button mat-raised-button
@@ -46,7 +46,7 @@
 </div>
 <div class="row pt-16 pb-16" *ngIf="emailDetails.emailVerificationStatus == 1">
     <div class="col-md-12 text-right">
-        <button class="br-0 text-inherit f-14" mat-button [mat-dialog-close]="data.investor">
+        <button class="br-0 btn-primary f-14" mat-button [mat-dialog-close]="data.investor">
            Go back
         </button>
         <button class="btn-primary f-14 ml-12" (click)="close()" mat-button mat-raised-button
