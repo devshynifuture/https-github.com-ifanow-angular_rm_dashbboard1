@@ -15,7 +15,7 @@ export class AppConstants {
   }
 
 
-  public static DONUT_CHART_COLORS = ['#008FFF', '#5DC644', '#FFC100', '#A0AEB4', '#FF7272'];
+  public static DONUT_CHART_COLORS = ['#008FFF', '#5DC644', '#FFC100', '#A0AEB4', '#FF7272','#FF7A33'];
 
   public static formPlaceHolders = {
     ENTER_MOBILE_NUMBER: 'Enter mobile number',

@@ -22,12 +22,12 @@ export class VerifyAddEmailComponent implements OnInit {
   emailDetails: any;
   element: any;
   advisorId: any;
-  constructor(public dialogRef: MatDialogRef<VerifyAddEmailComponent>, 
+  constructor(public dialogRef: MatDialogRef<VerifyAddEmailComponent>,
     private fb: FormBuilder,
     public dialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) { 
-      this.advisorId = AuthService.getAdvisorId()
-    }
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+    this.advisorId = AuthService.getAdvisorId()
+  }
 
 
   isLoading = false
@@ -35,7 +35,7 @@ export class VerifyAddEmailComponent implements OnInit {
   ngOnInit() {
     this.getdataForm('')
     const ELEMENT_DATA = this.dataS;
-    this.emailDetails = this.data.bank;
+    this.emailDetails = this.data.verification;
     this.emailVierify.controls.emailId.setValue(this.emailDetails.emailAddress)
     ELEMENT_DATA.forEach(item => item.selected = false);
   }
@@ -70,5 +70,7 @@ export class VerifyAddEmailComponent implements OnInit {
       //  this.bankDetailsSend.emit(result);
     });
   }
-
+  close() {
+    this.dialogRef.close();
+  }
 }

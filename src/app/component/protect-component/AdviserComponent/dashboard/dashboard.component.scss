@@ -190,4 +190,28 @@
     border-radius: 4px;
     padding: 10px;
     border: 1px solid #D9DEE1;
-    margin-right: 20px; }
+    margin-right: 20px; 
+}
+
+.shadowBox {
+    background-color: #fff;
+    box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+}
+
+.openGuideBox {
+    border: 1px solid #FF9F00;
+border-radius: 4px;
+.orangeBox {
+    background: linear-gradient(180deg, rgba(253, 175, 64, 0.79) 12.92%, #FDAF40 99.1%, rgba(253, 175, 64, 0.890604) 99.11%);
+    padding: 20px;
+    .openGuideBtn {
+        width: 164px;
+        height: 34px;
+        padding: 0px !important;
+        color: #FF9F00;
+        font-size: 14px;
+        background: #fff;
+        border-radius: 4px !important;
+    }
+    }
+}

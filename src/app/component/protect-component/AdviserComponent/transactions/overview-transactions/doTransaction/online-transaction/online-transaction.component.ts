@@ -9,9 +9,9 @@ import { ProcessTransactionService } from '../process-transaction.service';
 import { Router } from '@angular/router';
 import { IinUccCreationComponent } from '../../IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component';
 import { EnumDataService } from 'src/app/services/enum-data.service';
-import { map, startWith } from 'rxjs/operators';
+import { map, startWith, debounceTime } from 'rxjs/operators';
 import { PeopleService } from '../../../../../PeopleComponent/people.service';
-import { of } from 'rxjs';
+import { of, Subscription, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-online-trasaction',
@@ -24,7 +24,8 @@ export class OnlineTransactionComponent implements OnInit {
   mutualFundData: any;
   defaultData: any;
   valid: boolean;
-
+  familyOutputSubscription: Subscription;
+  familyOutputObservable: Observable<any> = new Observable<any>();
   constructor(private subInjectService: SubscriptionInject, private onlineTransact: OnlineTransactionService,
     private eventService: EventService, private fb: FormBuilder,
     public processTransaction: ProcessTransactionService, private router: Router,
@@ -162,22 +163,30 @@ export class OnlineTransactionComponent implements OnInit {
       advisorId: AuthService.getAdvisorId(),
       displayName: value
     };
-    this.peopleService.getClientFamilyMemberList(obj).subscribe(responseArray => {
-      if (responseArray) {
-        if (value.length >= 0) {
-          this.filteredStates = responseArray;
-        } else {
-          this.filteredStates = undefined
+    if (this.familyOutputSubscription && !this.familyOutputSubscription.closed) {
+      this.familyOutputSubscription.unsubscribe();
+    }
+    this.familyOutputSubscription = this.familyOutputObservable.pipe(startWith(''),
+      debounceTime(1000)).subscribe(
+        data => {
+          this.peopleService.getClientFamilyMemberList(obj).subscribe(responseArray => {
+            if (responseArray) {
+              if (value.length >= 0) {
+                this.filteredStates = responseArray;
+              } else {
+                this.filteredStates = undefined
+              }
+            }
+            else {
+              this.filteredStates = undefined
+              this.stateCtrl.setErrors({ invalid: true })
+            }
+          }, error => {
+            this.filteredStates = undefined
+            console.log('getFamilyMemberListRes error : ', error);
+          });
         }
-      }
-      else {
-        this.filteredStates = undefined
-        this.stateCtrl.setErrors({ invalid: true })
-      }
-    }, error => {
-      this.filteredStates = undefined
-      console.log('getFamilyMemberListRes error : ', error);
-    });
+      );
   }
 
 
