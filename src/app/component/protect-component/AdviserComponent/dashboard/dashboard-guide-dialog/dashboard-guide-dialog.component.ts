@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/auth-service/authService';
 import { SettingsService } from '../../setting/settings.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { element } from 'protractor';
 export interface PeriodicElement {
   name: string;
   position: string;
@@ -46,8 +47,8 @@ export class DashboardGuideDialogComponent implements OnInit {
   ]
 
   descriptionArray = [
-    { name: 'I’ve been running a financial advisory practice for few years now.', selected: false },
-    { name: 'I am new to this industry and just getting started.', selected: false }
+    { name: 'I’ve been running a financial advisory practice for few years now.', selected: false, id: 1 },
+    { name: 'I am new to this industry and just getting started.', selected: false, id: 2 }
   ]
 
   clientsWorkWithList = [
@@ -127,6 +128,12 @@ export class DashboardGuideDialogComponent implements OnInit {
 
   showPageByIndex(index) {
     this.page = index;
+  }
+
+  selectDes(selectDescription) {
+    this.descriptionArray.map(element => {
+      (selectDescription.id == element.id) ? element.selected = true : element.selected = false
+    })
   }
 
   saveArnRiaForm(flag, index) {
