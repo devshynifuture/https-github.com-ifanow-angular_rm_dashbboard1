@@ -64,7 +64,7 @@
   </div>
 
   <div *ngIf="step==2" class="bg-modal-height">
-    <div class="contentGuideBox mt-20">
+    <div class="contentGuideBox mt-40">
       <div class="row ">
         <div class="col-md-12 d-flex">
           <div (click)="selectDes(singleDescription)" *ngFor="let singleDescription of descriptionArray;index as i"
@@ -106,28 +106,38 @@
   <!-- end second slider -->
 
   <!-- third slider -->
-  <div *ngIf="step==3" class="row pt-40">
+  <div *ngIf="step==3" class="bg-modal-height">
 
-    <div class="col-md-12 p-0 pl-150 pr-150">
+    <div class="contentGuideBox mt-40">
       <div class="row">
-        <div (click)="    singleService.selected ? singleService.selected = false : singleService.selected = true
-          " *ngFor="let singleService of serviceList" class="col-md-3 pb-20 c-p">
-          <div class="row pt-12 pb-16 advisor-cards">
-            <div class="col-md-10 p-0">
-              <p class="m-0 roboto f-400 lh-16 pl-20 pt-4"> {{singleService.name}}</p>
-            </div>
-            <div class="col-md-2 p-0">
-              <span *ngIf="singleService.selected" class="material-icons c-p text-primitive">
-                check
-              </span>
-            </div>
+        <div (click)="singleService.selected ? singleService.selected = false : singleService.selected = true
+          " *ngFor="let singleService of serviceList" class="col-md-3 mb-20 c-p">
+          <div class="advisor-cards">
+            <p class="m-0 roboto f-400 lh-16"> {{singleService.name}}</p>
+            <i *ngIf="singleService.selected" class="material-icons c-p text-primitive">
+              check
+            </i>
           </div>
         </div>
-        <div class="col-md-12 p-0 pt-40">
-          <button (click)="step=4" mat-stroked-button class="btn-primary h-48 lh-48 f-18 mt-40 br-4">Next question
-            <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
+      </div>
+
+
+      <div class="bottomFooterDasb">
+        <div class="row">
+          <div class="col-md-6 ">
+            <button (click)="step=4" mat-stroked-button class="btn-primary h-48 lh-48 f-18 br-4">Next question
+              <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
+          </div> 
+
+          <div class="col-md-6 d-flex align-items-center justify-content-end">
+            <p class="mb-0 c-p text-primitive">Skip this exercise</p>
+          </div>
         </div>
       </div>
+
+
+      
+     
     </div>
   </div>
 
@@ -155,32 +165,32 @@
 
       </div>
     </div> -->
-  <div *ngIf="step==4" class="row pt-40">
 
-    <div class="col-md-12 p-0 pl-150">
-      <div class="d-flex">
-        <div class="pr-20">
-          <div class="box-1 p-20">
+  <div *ngIf="step==4" class="bg-modal-height">
+
+    <div class="contentGuideBox mt-40"> 
+    <div class="row"> 
+       <div class="col-md-12 d-flex">
+          <div class="box-1 boxDescribes p-20 mr-20">
             <h5 class="m-0 roboto f-400 lh-19 pb-24">I offer mutual funds under my ARN/RIA code
             </h5>
             <div class="hw-40 bg-grey lt br-2 mt-16">
               <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">A</h3>
             </div>
-            <div class="ribbon ribbon-bottom-right"><span><img src="/assets/images/svg/right-white.svg"></span>
+            <div class="ribbon ribbon-bottom-right">
+              <span><img src="/assets/images/svg/right-white.svg"></span>
             </div>
           </div>
-        </div>
-        <div class="pl-20">
-          <div class="box-1 p-20">
+
+          <div class="box-1 boxDescribes p-20 mr-20">
             <h5 class="m-0 roboto f-400 lh-19 pb-24">I work with a national distributor as a sub-broker
             </h5>
             <div class="hw-40 bg-grey lt br-2 mt-16">
               <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">B</h3>
             </div>
           </div>
-        </div>
-        <div class="pl-20">
-          <div class="box-1 p-20">
+        
+          <div class="box-1 boxDescribes p-20 mr-20">
             <h5 class="m-0 roboto f-400 lh-19 pb-24">I only give advice. I do not distribute or offer
               implementation
               services.
@@ -189,18 +199,17 @@
               <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">C</h3>
             </div>
           </div>
-        </div>
-        <div class="pl-20">
-          <div class="box-1 p-20">
+        
+          <div class="box-1 boxDescribes p-20 mr-20">
             <h5 class="m-0 roboto f-400 lh-19 pb-24">Option a and b both applies to me
             </h5>
             <div class="hw-40 bg-grey lt br-2 mt-18">
               <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">D</h3>
             </div>
             
-      </div>
+          </div>
+       </div>
     </div>
-
     <div class="bottomFooterDasb">
       <div class="row">
         <div class="col-md-12">
@@ -209,8 +218,10 @@
         </div>
       </div>
     </div>
-    <button (click)="step=4" mat-stroked-button class="btn-primary h-48 lh-48 f-18 mt-40 br-4">Next question<img
-        src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
+    </div>
+
+    
+    
   </div>
 
   <!-- end  four slider -->
