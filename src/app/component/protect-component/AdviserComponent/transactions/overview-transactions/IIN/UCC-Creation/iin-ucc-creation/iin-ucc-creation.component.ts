@@ -9,10 +9,10 @@ import { OnlineTransactionService } from '../../../../online-transaction.service
 import { ProcessTransactionService } from '../../../doTransaction/process-transaction.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { AuthService } from 'src/app/auth-service/authService';
-import { map, startWith } from 'rxjs/operators';
+import { map, startWith, debounceTime } from 'rxjs/operators';
 import { EnumDataService } from 'src/app/services/enum-data.service';
 import { EnumServiceService } from '../../../../../../../../services/enum-service.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-iin-ucc-creation',
@@ -33,6 +33,8 @@ export class IinUccCreationComponent implements OnInit, AfterViewInit {
   isLoading = false;
   taxStatusList = [];
   greeting;
+  familyOutputSubscription: Subscription;
+  familyOutputObservable: Observable<any> = new Observable<any>();
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
     public processTransaction: ProcessTransactionService,
@@ -121,22 +123,30 @@ export class IinUccCreationComponent implements OnInit, AfterViewInit {
       advisorId: AuthService.getAdvisorId(),
       displayName: value
     };
-    this.peopleService.getClientFamilyMemberList(obj).subscribe(responseArray => {
-      if (responseArray) {
-        if (value.length >= 0) {
-          this.filteredStates = responseArray;
-        } else {
-          this.filteredStates = undefined
+    if (this.familyOutputSubscription && !this.familyOutputSubscription.closed) {
+      this.familyOutputSubscription.unsubscribe();
+    }
+    this.familyOutputSubscription = this.familyOutputObservable.pipe(startWith(''),
+      debounceTime(1000)).subscribe(
+        data => {
+          this.peopleService.getClientFamilyMemberList(obj).subscribe(responseArray => {
+            if (responseArray) {
+              if (value.length >= 0) {
+                this.filteredStates = responseArray;
+              } else {
+                this.filteredStates = undefined
+              }
+            }
+            else {
+              this.filteredStates = undefined
+              this.generalDetails.controls.ownerName.setErrors({ invalid: true })
+            }
+          }, error => {
+            this.filteredStates = undefined
+            console.log('getFamilyMemberListRes error : ', error);
+          });
         }
-      }
-      else {
-        this.filteredStates = undefined
-        this.generalDetails.controls.ownerName.setErrors({ invalid: true })
-      }
-    }, error => {
-      this.filteredStates = undefined
-      console.log('getFamilyMemberListRes error : ', error);
-    });
+      );
   }
 
   getFormControl(): any {
