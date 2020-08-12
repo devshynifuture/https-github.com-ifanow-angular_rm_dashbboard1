@@ -488,7 +488,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     this.tabsLoaded.portfolioData.isLoading = true;
 
     this.loaderFn.increaseCounter();
-    this.customerService.getAssetAllocationSummary(obj).subscribe(res => {
+    this.customerService.calculateTotalValues(obj).subscribe(res => {
       if (res == null) {
         this.portFolioData = [];
         this.tabsLoaded.portfolioData.hasData = false;
