@@ -25,17 +25,23 @@ export class FolioMasterDetailViewComponent implements OnInit {
   }
 
   isFolioNomineesPresent() {
-    this.folioNomineesPresent = this.folioDetailData && this.folioDetailData.nominees.length !== 0
+    return this.folioDetailData && this.folioDetailData.hasOwnProperty('nominees') && this.folioDetailData.nominees.length !== 0
   }
 
   getFolioMasterDetailList() {
     const data = {
-      mutualFundId: this.data.mutualFundId
+      mfId: this.data.mutualFundId
     };
     this.reconService.getMutualFundFolioMasterValues(data)
       .subscribe(res => {
-        this.folioDetailData = res;
-        this.canShowData = true;
+        if(res){
+          console.log("detail view folio master",res)
+          this.folioDetailData = res[0];
+          this.canShowData = true;
+        } else {
+          this.folioDetailData = null;
+          this.canShowData = false
+        }
       }, err => {
         console.error(err);
       })
