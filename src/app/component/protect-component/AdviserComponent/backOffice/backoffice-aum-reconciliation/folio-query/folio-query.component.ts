@@ -200,6 +200,7 @@ export class FolioQueryComponent implements OnInit {
     this.reconService.getFolioQueryDataListValues(data)
       .subscribe(res => {
         this.isMainLoading = false;
+        console.log("response:::",res);
         if (res && res.length !== 0) {
           let arrValue = [];
           res.forEach(element => {
@@ -208,7 +209,7 @@ export class FolioQueryComponent implements OnInit {
               name: element.shemeName,
               investorName: element.investorName,
               folioNumber: element.folioNumber,
-              reconStatus: element.isMapped === -1 ? 'unmapped' : 'mapped',
+              reconStatus: element.isMapped === -1 ? 'unmatched' : 'matched',
               mutualFundTransaction: element.mutualFundTransaction,
               mutualFundId: element.mutualFundId,
               unitsRta: element.aumUnits,
