@@ -20,6 +20,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class DashboardGuideDialogComponent implements OnInit {
 
   page = 1;
+  step: number;
 
   constructor(
     public dialogRef: MatDialogRef<DashboardGuideDialogComponent>,
@@ -32,6 +33,7 @@ export class DashboardGuideDialogComponent implements OnInit {
 
 
   ngOnInit() {
+    this.step = 1;
   }
   displayedColumns: string[] = ['position', 'name', 'weight'];
   dataSource = ELEMENT_DATA;
