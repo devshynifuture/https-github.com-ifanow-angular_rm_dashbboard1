@@ -130,6 +130,10 @@ export class DashboardGuideDialogComponent implements OnInit {
     this.page = index;
   }
 
+  backStep() {
+    this.step--;
+  }
+
   selectDes(selectDescription) {
     this.descriptionArray.map(element => {
       (selectDescription.id == element.id) ? element.selected = true : element.selected = false
