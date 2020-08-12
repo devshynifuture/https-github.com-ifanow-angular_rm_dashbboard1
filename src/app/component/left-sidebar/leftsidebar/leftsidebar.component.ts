@@ -12,7 +12,9 @@ import { EnumDataService } from '../../../services/enum-data.service';
 import { SettingsService } from '../../protect-component/AdviserComponent/setting/settings.service';
 import { UtilService } from 'src/app/services/util.service';
 import { PeopleService } from '../../protect-component/PeopleComponent/people.service';
-import { map, startWith } from 'rxjs/operators';
+import { map, startWith, debounceTime } from 'rxjs/operators';
+import { Subscription, Observable } from 'rxjs';
+import {apiConfig} from "../../../config/main-config";
 
 @Component({
   selector: 'app-leftsidebar',
@@ -46,12 +48,14 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   logoText = 'Your Logo here';
   role: any;
   isLoding: boolean;
+  familyOutputSubscription: Subscription;
+  familyOutputObservable: Observable<any> = new Observable<any>();
 
   constructor(public authService: AuthService, private _eref: ElementRef,
     protected eventService: EventService, protected subinject: SubscriptionInject,
     private subService: SubscriptionService, private router: Router, private ngZone: NgZone,
     protected dynamicComponentService: DynamicComponentService,
-    private enumDataService: EnumDataService,
+    public enumDataService: EnumDataService,
     private settingsService: SettingsService,
     private auth: AuthService,
     private utilService: UtilService, private peopleService: PeopleService) {
@@ -107,13 +111,33 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
 
   selectClient(singleClientData) {
     if (singleClientData.userType == 3) {
-      return;
+      const obj = {
+        clientId: singleClientData.clientId
+      };
+      this.peopleService.getClientOrLeadData(obj).subscribe(
+        data => {
+          if (data == undefined) {
+            return;
+          } else {
+            this.auth.setClientData(data);
+            this.myControl.setValue(singleClientData.displayName)
+            this.ngZone.run(() => {
+              this.router.navigate(['customer', 'detail', 'overview', 'myfeed'], { state: { ...data } });
+            });
+          }
+        },
+        err => {
+          console.error(err);
+        }
+      );
     }
-    this.auth.setClientData(singleClientData);
-    this.myControl.setValue(singleClientData.displayName)
-    this.ngZone.run(() => {
-      this.router.navigate(['customer', 'detail', 'overview', 'myfeed'], { state: { ...singleClientData } });
-    });
+    else {
+      this.auth.setClientData(singleClientData);
+      this.myControl.setValue(singleClientData.displayName)
+      this.ngZone.run(() => {
+        this.router.navigate(['customer', 'detail', 'overview', 'myfeed'], { state: { ...singleClientData } });
+      });
+    }
   }
 
   ngOnInit() {
@@ -158,6 +182,12 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   }
 
   searchClientFamilyMember(value) {
+    if (value.length <= 2) {
+      this.showDefaultDropDownOnSearch = false;
+      this.isLoding = false;
+      this.clientList = undefined
+      return;
+    }
     if (!this.clientList) {
       this.showDefaultDropDownOnSearch = true;
       this.isLoding = true;
@@ -166,27 +196,35 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
       advisorId: AuthService.getAdvisorId(),
       displayName: value
     };
-    this.peopleService.getClientFamilyMemberList(obj).subscribe(responseArray => {
-      if (responseArray) {
-        if (value.length >= 0) {
-          this.clientList = responseArray;
-          this.showDefaultDropDownOnSearch = false;
-          this.isLoding = false;
-        } else {
-          this.showDefaultDropDownOnSearch = undefined;
-          this.isLoding = undefined;
-          this.clientList = undefined;
+    if (this.familyOutputSubscription && !this.familyOutputSubscription.closed) {
+      this.familyOutputSubscription.unsubscribe();
+    }
+    this.familyOutputSubscription = this.familyOutputObservable.pipe(startWith(''),
+      debounceTime(1000)).subscribe(
+        data => {
+          this.peopleService.getClientFamilyMemberList(obj).subscribe(responseArray => {
+            if (responseArray) {
+              if (value.length >= 0) {
+                this.clientList = responseArray;
+                this.showDefaultDropDownOnSearch = false;
+                this.isLoding = false;
+              } else {
+                this.showDefaultDropDownOnSearch = undefined;
+                this.isLoding = undefined;
+                this.clientList = undefined;
+              }
+            }
+            else {
+              this.showDefaultDropDownOnSearch = true;
+              this.isLoding = false;
+              this.clientList = undefined;
+            }
+          }, error => {
+            this.clientList = undefined;
+            console.log('getFamilyMemberListRes error : ', error);
+          });
         }
-      }
-      else {
-        this.showDefaultDropDownOnSearch = true;
-        this.isLoding = false;
-        this.clientList = undefined;
-      }
-    }, error => {
-      this.clientList = undefined;
-      console.log('getFamilyMemberListRes error : ', error);
-    });
+      );
   }
 
   getPersonalProfiles() {

@@ -1,7 +1,10 @@
 <div class="popup-header-fix-30">
     <div class="row bb-1">
-        <div class="col-md-8 d-flex align-items-center">
-            <h4 class="mb-0">Add Email</h4>
+        <div class="col-md-8 d-flex align-items-center" *ngIf="emailDetails.emailVerificationStatus != 1">
+            <h4 class="mb-0">Verification</h4>
+        </div>
+        <div class="col-md-8 d-flex align-items-center" *ngIf="emailDetails.emailVerificationStatus == 1">
+            <h4 class="mb-0">Thank You!</h4>
         </div>
         <div class="col-md-4 text-right">
             <div class="wrapper-16 pr-0" [mat-dialog-close]="">
@@ -10,7 +13,7 @@
         </div>
     </div>
 </div>
-<div [formGroup]="emailVierify">
+<div [formGroup]="emailVierify" *ngIf="emailDetails.emailVerificationStatus != 1">
     <div class="row pt-12">
         <div class="col-md-12 iconPetage">
             <h5 class="mb-8 ">
@@ -22,12 +25,31 @@
         </div>
     </div>
 </div>
-<div class="row pt-16 pb-16">
+<div [formGroup]="emailVierify" *ngIf="emailDetails.emailVerificationStatus == 1">
+    <div class="row pt-12">
+        <div class="col-md-12 iconPetage">
+            <h5 class="mb-8 ">
+                We've selected {{emailDetails.emailAddress}} for all the bulk
+                reporting emails you send
+            </h5>
+        </div>
+    </div>
+</div>
+<div class="row pt-16 pb-16" *ngIf="emailDetails.emailVerificationStatus != 1">
     <div class="col-md-12 text-right">
-        <button class="br-0 text-inherit f-14" mat-button [mat-dialog-close]="data.investor">
-            Verify Emai now
+        <button class="br-0 btn-primary f-14" mat-button [mat-dialog-close]="data.investor">
+            Verify now
         </button>
         <button class="btn-primary f-14 ml-12" (click)="onNoClick()" mat-button mat-raised-button
-            cdkFocusInitial>Continue with email sending</button>
+            cdkFocusInitial>Continue to email sending</button>
+    </div>
+</div>
+<div class="row pt-16 pb-16" *ngIf="emailDetails.emailVerificationStatus == 1">
+    <div class="col-md-12 text-right">
+        <button class="br-0 btn-primary f-14" mat-button [mat-dialog-close]="data.investor">
+           Go back
+        </button>
+        <button class="btn-primary f-14 ml-12" (click)="close()" mat-button mat-raised-button
+            cdkFocusInitial>Ok</button>
     </div>
 </div>

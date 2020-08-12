@@ -16,7 +16,7 @@ import { UtilService } from 'src/app/services/util.service';
   styleUrls: ['./verified-mails.component.scss']
 })
 export class VerifiedMailsComponent implements OnInit {
-  displayedColumns: string[] = ['select','position', 'name', 'weight'];
+  displayedColumns: string[] = ['select', 'position', 'name', 'weight'];
   counter: any;
   isLoading: boolean;
   advisorId: any;
@@ -24,11 +24,11 @@ export class VerifiedMailsComponent implements OnInit {
   emailDetails: any;
   element: any;
   constructor(private orgSetting: OrgSettingServiceService,
-    private subInjectService : SubscriptionInject,
+    private subInjectService: SubscriptionInject,
     public dialog: MatDialog,
     private eventService: EventService) {
-      this.advisorId = AuthService.getAdvisorId()
-     }
+    this.advisorId = AuthService.getAdvisorId()
+  }
 
   ngOnInit() {
     this.getEmailVerification()
@@ -37,11 +37,10 @@ export class VerifiedMailsComponent implements OnInit {
     this.loader(1);
     this.emailList = [{}, {}, {}];
     let obj = {
-      userId: this.advisorId,
-      // advisorId: this.advisorId
+      advisorId: this.advisorId,
     }
     this.isLoading = true;
-    this.orgSetting.getEmailVerification(obj).subscribe(
+    this.orgSetting.getEmailVerificationReports(obj).subscribe(
       data => {
         this.getEmailVerificationRes(data);
         this.isLoading = false;
@@ -58,7 +57,8 @@ export class VerifiedMailsComponent implements OnInit {
     if (data) {
       this.emailDetails = data
       this.emailList = data.listItems
-      console.log('tlist',this.emailList)
+      this.emailList = this.emailList.filter(element => element.emailVerificationStatus != 3);
+      console.log('tlist', this.emailList)
     } else {
       this.emailList = []
     }
@@ -97,9 +97,43 @@ export class VerifiedMailsComponent implements OnInit {
   addEmailVerfifyRes(data) {
     this.eventService.openSnackBar("An email has been sent to your registered email address", "Dismiss");
     this.getEmailVerification()
+  }
+  selectedEmail(email) {
+    let obj = {
+      emailAddress: email.emailAddress,
+      advisorId: this.advisorId
+    }
+    this.orgSetting.editPreEmailTemplate(obj).subscribe(
+      data => {
+        this.editPreEmailTemplateRes(data, email);
+        this.isLoading = false;
+      },
+      err => {
+        this.eventService.openSnackBar(err, "Dismiss")
+        //this.hasError = true;
+        this.isLoading = false;
+        this.loader(-1);
+      }
+    );
+
+  }
+  editPreEmailTemplateRes(data, email) {
+    console.log('editPreEmailTemplateRes', data)
+
+    if (data == 'not verified') {
+      if (email.emailVerificationStatus != 1) {
+        this.openAlrt(email)
+      } else {
+        this.openAlrt(email)
+      }
+    } else {
+      this.openAlrt(email)
+    }
+  }
+  openAlrt(status) {
     const dialogRef = this.dialog.open(VerifyAddEmailComponent, {
       width: '400px',
-      data: { bank: '', animal: this.element }
+      data: { verification: status, animal: this.element }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result == undefined) {
@@ -114,11 +148,8 @@ export class VerifiedMailsComponent implements OnInit {
       //  this.bankDetailsSend.emit(result);
     });
   }
-  selectedEmail(email){
-    
-  }
   deleteEmailModal(value, data) {
-    if(data.defaultFlag == 1) {
+    if (data.defaultFlag == 1) {
       this.eventService.openSnackBar("Email dependency found!", "Dismiss");
       return;
     }
@@ -161,7 +192,7 @@ export class VerifiedMailsComponent implements OnInit {
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         if (UtilService.isDialogClose(sideBarData)) {
-         // this.getlistOrder()
+          // this.getlistOrder()
           if (UtilService.isRefreshRequired(sideBarData)) {
           }
           rightSideDataSub.unsubscribe();
@@ -171,5 +202,9 @@ export class VerifiedMailsComponent implements OnInit {
     );
 
   }
-  
+  close() {
+    this.subInjectService.changeNewRightSliderState({
+      state: 'close',
+    });
+  }
 }

@@ -7,6 +7,7 @@ import { MaterialModule } from 'src/app/material/material';
 import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MarketSummaryComponent } from './market-summary/market-summary.component';
+import { ChartModule } from 'angular-highcharts';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { MarketSummaryComponent } from './market-summary/market-summary.componen
     CommonModule,
     SummaryRoutingModule,
     MaterialModule,
-    CustomDirectiveModule
+    CustomDirectiveModule,
+    ChartModule
   ],
   exports: [MarketSummaryComponent]
 })
