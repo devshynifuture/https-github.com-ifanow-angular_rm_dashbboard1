@@ -1,7 +1,7 @@
 <mat-sidenav-container (window:resize)="onResize()" class="sidenav-container">
   <mat-sidenav class="mobileMargin" #sidenav mode="side" opened role="navigation">
     <mat-nav-list class="pt-0" id="d" [ngStyle]="{'width':showTabs?'220px':''}">
-      <mat-toolbar *ngIf="showTabs && userInfo" class="bg-white p-0  c-p" (click)="goHome()">
+      <mat-toolbar *ngIf="showTabs && userInfo" class="bg-white p-0 c-p" (click)="goHome()">
         <div class="logoWrap">
           <img *ngIf="authService.appPic" [src]="authService.appPic" class="logo">
           <h5 *ngIf="!authService.appPic">{{logoText | uppercase}}</h5>
@@ -9,16 +9,16 @@
 
         <!-- <div>
   <img class="logo" src="{{userInfo.profilePic}}">
-</div> -->
+ </div> -->
       </mat-toolbar>
       <!-- <div *ngIf="showTabs" class="pt-16">
-    <img class="header-img pt-0 pb-0" src="assets/images/img1.jpg">
-</div> -->
+  <img class="header-img pt-0 pb-0" src="assets/images/img1.jpg">
+ </div> -->
       <div *ngIf="showTabs" class="main-details min-height">
         <p class="f-16 f-600 mb-0">{{advisorName}}</p>
 
-        <button (click)="showsmallNavWrapper()" *ngIf="showTabs" aria-label="Toggle sidenav"
-                class="btn_nav desKBTN" mat-icon-button type="button">
+        <button (click)="showsmallNavWrapper()" *ngIf="showTabs" aria-label="Toggle sidenav" class="btn_nav desKBTN"
+          mat-icon-button type="button">
           <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
         </button>
       </div>
@@ -27,7 +27,7 @@
       <div class="pt-12 scorllable row">
         <div class="col-md-12 p-0">
           <button class="ml-8 desKBTN" (click)="showMainNavWrapper()" *ngIf="showTabs==false"
-                  aria-label="Toggle sidenav" mat-icon-button type="button">
+            aria-label="Toggle sidenav" mat-icon-button type="button">
             <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
           </button>
 
@@ -40,16 +40,16 @@
             <span *ngIf="showTabs" class="title" mat-line>People</span>
           </a>
           <!-- <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/customer/detail/account/summary">
-              <img routerLink="/customer/detail/overview" src="assets/images/svg/people.svg">
-              <span *ngIf="showTabs" class="title" mat-line>People</span>
-          </a> -->
+  <img routerLink="/customer/detail/overview" src="assets/images/svg/people.svg">
+  <span *ngIf="showTabs" class="title" mat-line>People</span>
+  </a> -->
           <!-- <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/calendar">
-              <img src="assets/images/svg/file-lines.svg">
-              <span *ngIf="showTabs" class="title" mat-line>Activities</span>
-              <mat-icon aria-hidden="false" aria-label="Example home icon" class="text-custom">
-                  keyboard_arrow_right
-              </mat-icon>
-          </a> -->
+  <img src="assets/images/svg/file-lines.svg">
+  <span *ngIf="showTabs" class="title" mat-line>Activities</span>
+  <mat-icon aria-hidden="false" aria-label="Example home icon" class="text-custom">
+  keyboard_arrow_right
+  </mat-icon>
+  </a> -->
           <mat-accordion class="menuAccordion" *ngIf="!enumDataService.PRODUCTION">
             <mat-expansion-panel hideToggle={{arrow}}>
               <mat-expansion-panel-header>
@@ -62,33 +62,32 @@
 
               </mat-expansion-panel-header>
               <!-- <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
-                  routerLink="/admin/activies/advice">
-                  <span *ngIf="showTabs" class="title" mat-line>Advice</span>
-              </a> -->
+  routerLink="/admin/activies/advice">
+  <span *ngIf="showTabs" class="title" mat-line>Advice</span>
+  </a> -->
               <!-- <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
-                  routerLink="/admin/activies/plans">
-                  <span *ngIf="showTabs" class="title" mat-line>Action plans</span>
-              </a> -->
+  routerLink="/admin/activies/plans">
+  <span *ngIf="showTabs" class="title" mat-line>Action plans</span>
+  </a> -->
               <!-- <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
-                  routerLink="/admin/activies/notes">
-                  <span *ngIf="showTabs" class="title" mat-line>Notes</span>
-              </a> -->
-              <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
-                 routerLink="/admin/activies/tasks">
+  routerLink="/admin/activies/notes">
+  <span *ngIf="showTabs" class="title" mat-line>Notes</span>
+  </a> -->
+              <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/activies/tasks">
                 <span *ngIf="showTabs" class="title" mat-line>Tasks</span>
               </a>
 
-              <a class="sidenav-link" [ngClass]="getActiveLink('emails') ? 'bg-grey lter': ''"
-                 mat-list-item routerLink="./emails/inbox/google-connect">
+              <a class="sidenav-link" [ngClass]="getActiveLink('emails') ? 'bg-grey lter': ''" mat-list-item
+                routerLink="./emails/inbox/google-connect">
                 <!-- <img src="assets/images/svg/mail.svg"> -->
                 <span *ngIf="showTabs" class="title" mat-line>Email</span>
               </a>
               <!-- <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
-                  routerLink="/admin/activies/opportunities">
-                  <span *ngIf="showTabs" class="title" mat-line>Opportunities</span>
-              </a> -->
+  routerLink="/admin/activies/opportunities">
+  <span *ngIf="showTabs" class="title" mat-line>Opportunities</span>
+  </a> -->
               <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
-                 routerLink="/admin/activies/calendar/month">
+                routerLink="/admin/activies/calendar/month">
                 <span *ngIf="showTabs" class="title" mat-line>Calendar</span>
               </a>
 
@@ -96,29 +95,29 @@
           </mat-accordion>
 
           <a class="sidenav-link" [ngClass]="getActiveLink('transactions') ? 'bg-grey lter': ''" mat-list-item
-             routerLink="./transactions/overview">
+            routerLink="./transactions/overview">
             <img src="assets/images/svg/cart.svg">
             <span *ngIf="showTabs" class="title" mat-line>Transactions</span>
           </a>
           <a class="sidenav-link" [ngClass]="getActiveLink('subscription') ? 'bg-grey lter': ''" mat-list-item
-             routerLink="./subscription/dashboard">
+            routerLink="./subscription/dashboard">
             <img src="assets/images/svg/ruppes.svg">
             <span *ngIf="showTabs" class="title" mat-line>Subscription</span>
           </a>
 
           <!-- <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/calendar">
-              <img src="assets/images/svg/file-lines.svg">
-              <span *ngIf="showTabs" class="title" mat-line>Documents</span>
-          </a> -->
+  <img src="assets/images/svg/file-lines.svg">
+  <span *ngIf="showTabs" class="title" mat-line>Documents</span>
+  </a> -->
           <!-- <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
-             routerLink="./advisor-marketplace">
-             <img src="assets/images/svg/file-lines.svg">
-             <span *ngIf="showTabs" class="title" mat-line>Marketplace</span>
-         </a> -->
+  routerLink="./advisor-marketplace">
+  <img src="assets/images/svg/file-lines.svg">
+  <span *ngIf="showTabs" class="title" mat-line>Marketplace</span>
+  </a> -->
           <!-- <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item>
-              <img src="assets/images/svg/secure.svg">
-              <span *ngIf="showTabs" class="title" mat-line>Compliance</span>
-          </a> -->
+  <img src="assets/images/svg/secure.svg">
+  <span *ngIf="showTabs" class="title" mat-line>Compliance</span>
+  </a> -->
           <mat-accordion class="menuAccordion">
             <mat-expansion-panel hideToggle={{arrow}}>
               <mat-expansion-panel-header>
@@ -127,82 +126,81 @@
                     <img src="assets/images/svg/file-lines.svg">
                     <span *ngIf="showTabs" class="title" mat-line>Back Office</span>
                     <!-- <mat-icon aria-hidden="false" aria-label="Example home icon" class="text-custom">
-                    keyboard_arrow_right
-                </mat-icon> -->
+  keyboard_arrow_right
+  </mat-icon> -->
                   </a>
                 </mat-panel-title>
 
               </mat-expansion-panel-header>
               <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
-                 routerLink="/admin/backoffice-aum-reconciliation">
+                routerLink="/admin/backoffice-aum-reconciliation">
                 <span *ngIf="showTabs" class="title" mat-line>AUM Reconciliation</span>
               </a>
               <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
-                 routerLink="/admin/backoffice-mis/mutual-funds">
+                routerLink="/admin/backoffice-mis/mutual-funds">
                 <span *ngIf="showTabs" class="title" mat-line>MIS</span>
               </a>
               <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
-                 routerLink="/admin/backoffice-file-upload/transaction">
+                routerLink="/admin/backoffice-file-upload/transaction">
                 <span *ngIf="showTabs" class="title" mat-line>File uploads</span>
               </a>
 
               <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
-                 routerLink="/admin/bulk-report-sending">
+                routerLink="/admin/bulk-report-sending">
                 <span *ngIf="showTabs" class="title" mat-line>Bulk report sending</span>
               </a>
 
-              <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
-                 routerLink="/admin/folio-mapping">
+              <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/folio-mapping">
                 <span *ngIf="showTabs" class="title" mat-line>Folio Mapping</span>
               </a>
 
               <!--<a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/activies/tasks">
-                  <span *ngIf="showTabs" class="title" mat-line>Tasks</span>
-              </a>
-              <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/activies/opportunities">
-                  <span *ngIf="showTabs" class="title" mat-line>Opportunities</span>
-              </a> -->
+  <span *ngIf="showTabs" class="title" mat-line>Tasks</span>
+  </a>
+  <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item routerLink="/admin/activies/opportunities">
+  <span *ngIf="showTabs" class="title" mat-line>Opportunities</span>
+  </a> -->
               <!-- <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item
-                  routerLink="/admin/activies/month">
-                  <span *ngIf="showTabs" class="title" mat-line>Calendar</span>
-              </a> -->
+  routerLink="/admin/activies/month">
+  <span *ngIf="showTabs" class="title" mat-line>Calendar</span>
+  </a> -->
             </mat-expansion-panel>
           </mat-accordion>
           <!-- <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item>
-              <img src="assets/images/svg/folder-light.svg">
-              <span *ngIf="showTabs" class="title" mat-line>Back Office</span>
-          </a>
-          <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item>
-              <span *ngIf="showTabs" class="title" routerLink="/admin/backoffice-aum-reconciliation"
-                  mat-line>AUM
-                  Reconciliation</span>
-          </a>
-          <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item>
-              <span *ngIf="showTabs" class="title" routerLink="/admin/backoffice-mis" mat-line>MIS</span>
-          </a> -->
+  <img src="assets/images/svg/folder-light.svg">
+  <span *ngIf="showTabs" class="title" mat-line>Back Office</span>
+  </a>
+  <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item>
+  <span *ngIf="showTabs" class="title" routerLink="/admin/backoffice-aum-reconciliation"
+  mat-line>AUM
+  Reconciliation</span>
+  </a>
+  <a class="sidenav-link" routerLinkActive="bg-grey lter" mat-list-item>
+  <span *ngIf="showTabs" class="title" routerLink="/admin/backoffice-mis" mat-line>MIS</span>
+  </a> -->
         </div>
       </div>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content id="left" class="mainNav" [ngClass]="showTabs?'mainNav':'smallNav'">
-    <mat-toolbar class="bg-white fix-top pl-0  ">
+    <mat-toolbar class="bg-white fix-top pl-0 ">
       <button class="mobileBTN" (click)="showMainNavWrapper()" *ngIf="showTabs==false" aria-label="Toggle sidenav"
-              mat-icon-button type="button">
+        mat-icon-button type="button">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <button (click)="showsmallNavWrapper()" *ngIf="showTabs" aria-label="Toggle sidenav"
-              class="btn_nav mobileBTN" mat-icon-button type="button">
+      <button (click)="showsmallNavWrapper()" *ngIf="showTabs" aria-label="Toggle sidenav" class="btn_nav mobileBTN"
+        mat-icon-button type="button">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
 
       <mat-form-field class="widthSerachBox serachbox ml-16">
         <div class="form-group searchBoxHeader">
           <input #inputSearch (input)="searchClientFamilyMember(inputSearch.value)" [formControl]="myControl"
-                 [matAutocomplete]="auto" class="form-control pl-40" matInput type="text">
+            [matAutocomplete]="auto" class="form-control pl-40" matInput type="text">
           <i class="material-icons searchIcon"> search </i>
           <mat-autocomplete #auto="matAutocomplete">
-            <mat-option (onSelectionChange)="selectClient(singleClient)"
-                        *ngFor="let singleClient of clientList " [value]="singleClient.displayName">
+            <mat-option (onSelectionChange)="selectClient(singleClient)" *ngFor="let singleClient of clientList "
+              [value]="singleClient.displayName">
               <div class="row">
                 <div class="col-md-1 d-flex align-items-center">
                   <i class="material-icons"> person </i>
@@ -213,11 +211,9 @@
                 </div>
                 <div class="col-md-4 text-right">
 
-                  <button class="small-primitive" *ngIf="singleClient.userType==3"
-                          mat-stroked-button>FAMILY MEMBER
+                  <button class="small-primitive" *ngIf="singleClient.userType==3" mat-stroked-button>FAMILY MEMBER
                   </button>
-                  <button class="small-primitive" *ngIf="singleClient.userType==2"
-                          mat-stroked-button>Group head
+                  <button class="small-primitive" *ngIf="singleClient.userType==2" mat-stroked-button>Group head
                   </button>
 
                 </div>
@@ -313,7 +309,7 @@
 
 
       <div class="hide-on-800 d-flex align-items-center justify-content-center right-fixed tablate-none"
-           id="right-sidemenu">
+        id="right-sidemenu">
         <a class="sidenav-link" mat-list-item>
           <img class="t-12" src="assets/images/svg/bell.svg">
         </a>
@@ -337,7 +333,7 @@
                   <div class="col-md-2 p-0">
                     <img src="/assets/images/svg/bulb-blue-btn.svg" class="v-super">
                   </div>
-                  <div class="col-md-10 p-0">
+                  <div class="col-md-10 p-0" [routerLink]="['/admin/setting-support/knowledge-base']">
                     <p class="m-0 text-black roboto">Knowledge base</p>
                     <p class="text-custom m-0 roboto">Find answers to key questions here</p>
                   </div>
@@ -348,7 +344,7 @@
                   <div class="col-md-2 p-0">
                     <img src="/assets/images/svg/new.svg" class="v-super">
                   </div>
-                  <div class="col-md-10 p-0">
+                  <div class="col-md-10 p-0" [routerLink]="['/admin/setting-support/new-release-note']">
                     <p class="m-0 text-black roboto">New release notes</p>
                     <p class="text-custom m-0 roboto">All the latest developments in one place</p>
                   </div>
@@ -359,7 +355,7 @@
                   <div class="col-md-2 p-0">
                     <img src="/assets/images/svg/cash-flow-surplus-icon.svg" class="v-super">
                   </div>
-                  <div class="col-md-10 p-0">
+                  <div class="col-md-10 p-0" [routerLink]="['/admin/setting-support/blog']">
                     <p class="m-0 text-black roboto">Blog</p>
                     <p class="text-custom m-0 roboto">Get industry & IFANOW insights. Stay up to
                       date
@@ -372,7 +368,7 @@
                   <div class="col-md-2 p-0">
                     <img src="/assets/images/svg/tip.svg" class="v-super">
                   </div>
-                  <div class="col-md-10 p-0">
+                  <div class="col-md-10 p-0" [routerLink]="['/admin/setting-support/tips-and-tricks']">
                     <p class="m-0 text-black roboto">Tips & tricks</p>
                     <p class="text-custom m-0 roboto">Useful tips & tricks you should know </p>
                   </div>
@@ -383,7 +379,7 @@
                   <div class="col-md-2 p-0">
                     <img src="/assets/images/svg/ruppess.svg" class="v-super">
                   </div>
-                  <div class="col-md-10 p-0">
+                  <div class="col-md-10 p-0" [routerLink]="['/admin/setting-support/pricing']">
                     <p class="m-0 text-black roboto">Pricing</p>
                     <p class="text-custom m-0 roboto">Compare pricing options & select what works
                     </p>
@@ -395,7 +391,7 @@
                   <div class="col-md-2 p-0">
                     <img src="/assets/images/svg/raise.svg">
                   </div>
-                  <div class="col-md-10 p-0">
+                  <div class="col-md-10 p-0" [routerLink]="['/admin/setting-support/raise-support-ticket']">
                     <p class="m-0 text-black roboto">Raise a support ticket</p>
                     <p class="text-custom m-0 roboto">Can’t find an answer? Our RMs are here to help
                     </p>
@@ -447,7 +443,7 @@
                 </div>
               </div>
               <div class="row c-p" [routerLink]="['/admin/setting/preference']"
-                   *ngIf="roleObj.advisorOrClientRole == 1">
+                *ngIf="roleObj.advisorOrClientRole == 1">
                 <div class="col-md-2">
                   <img src="/assets/images/svg/settings-gear-menu/preferences.svg" class="v-super">
                 </div>
@@ -458,8 +454,7 @@
                 </div>
               </div>
 
-              <div [routerLink]="['/admin/setting/activity']" class="row c-p"
-                   *ngIf="roleObj.advisorOrClientRole == 1">
+              <div [routerLink]="['/admin/setting/activity']" class="row c-p" *ngIf="roleObj.advisorOrClientRole == 1">
                 <div class="col-md-2">
                   <img src="/assets/images/svg/settings-gear-menu/activity.svg" class="v-super">
                 </div>
@@ -471,8 +466,7 @@
               </div>
 
 
-              <div [routerLink]="['/admin/setting/plan']" class="row c-p"
-                   *ngIf="roleObj.advisorOrClientRole == 1">
+              <div [routerLink]="['/admin/setting/plan']" class="row c-p" *ngIf="roleObj.advisorOrClientRole == 1">
                 <div class="col-md-2">
                   <img src="/assets/images/svg/settings-gear-menu/plan.svg" class="v-super">
                 </div>
@@ -484,7 +478,7 @@
               </div>
 
               <div [routerLink]="['/admin/setting/users&roles']" class="row c-p"
-                   *ngIf="roleObj.advisorOrClientRole == 1">
+                *ngIf="roleObj.advisorOrClientRole == 1">
                 <div class="col-md-2">
                   <img src="/assets/images/svg/settings-gear-menu/user-and-roles.svg" class="v-super">
                 </div>
@@ -497,7 +491,7 @@
               </div>
 
               <div [routerLink]="['/admin/setting/backoffice']" class="row c-p"
-                   *ngIf="roleObj.advisorOrClientRole == 1">
+                *ngIf="roleObj.advisorOrClientRole == 1">
                 <div class="col-md-2">
                   <img src="/assets/images/svg/settings-gear-menu/backoffice.svg" class="v-super">
                 </div>
@@ -510,262 +504,16 @@
               </div>
 
               <!-- <div class="row c-p" [routerLink]="['/admin/setting/backup']" *ngIf="roleObj.advisorOrClientRole == 1">
-                  <div class="col-md-2">
-                      <img src="/assets/images/svg/settings-gear-menu/backup.svg" class="v-super">
-                  </div>
-                  <div class="col-md-10 pl-0">
-                      <p class="m-0 roboto">Backup</p>
-                      <p class="text-regular ws-normal">Securely backup your data in excel</p>
-                  </div>
-              </div> -->
+  <div class="col-md-2">
+  <img src="/assets/images/svg/settings-gear-menu/backup.svg" class="v-super">
+  </div>
+  <div class="col-md-10 pl-0">
+  <p class="m-0 roboto">Backup</p>
+  <p class="text-regular ws-normal">Securely backup your data in excel</p>
+  </div>
+  </div> -->
 
 
-            <div class="hide-on-800 d-flex align-items-center justify-content-center right-fixed tablate-none"
-                id="right-sidemenu">
-                <a class="sidenav-link" mat-list-item>
-                    <img class="t-12" src="assets/images/svg/bell.svg">
-                </a>
-                <a class="sidenav-link" mat-list-item>
-                    <img src="assets/images/svg/earphone.svg" class="c-p" [matMenuTriggerFor]="menu1">
-                    <mat-menu #menu1="matMenu" class="minwidth-400">
-
-                        <button mat-menu-item class="bb-1 event-none h-60">
-                            <div class="row">
-                                <div class="col-md-12 p-0">
-                                    <h3 class="m-0">Support</h3>
-                                </div>
-                            </div>
-                        </button>
-
-
-                        <div id="earphones-menu">
-
-                            <button mat-menu-item class="mt-24">
-                                <div class="row">
-                                    <div class="col-md-2 p-0">
-                                        <img src="/assets/images/svg/bulb-blue-btn.svg" class="v-super">
-                                    </div>
-                                    <div class="col-md-10 p-0" [routerLink]="['admin/setting-support/knowledge-base']">
-                                        <p class="m-0 text-black roboto">Knowledge base</p>
-                                        <p class="text-custom m-0 roboto">Find answers to key questions here</p>
-                                    </div>
-                                </div>
-                            </button>
-                            <button mat-menu-item>
-                                <div class="row">
-                                    <div class="col-md-2 p-0">
-                                        <img src="/assets/images/svg/new.svg" class="v-super">
-                                    </div>
-                                    <div class="col-md-10 p-0"
-                                        [routerLink]="['/admin/setting-support/new-release-note']">
-                                        <p class="m-0 text-black roboto">New release notes</p>
-                                        <p class="text-custom m-0 roboto">All the latest developments in one place</p>
-                                    </div>
-                                </div>
-                            </button>
-                            <button mat-menu-item>
-                                <div class="row">
-                                    <div class="col-md-2 p-0">
-                                        <img src="/assets/images/svg/cash-flow-surplus-icon.svg" class="v-super">
-                                    </div>
-                                    <div class="col-md-10 p-0" [routerLink]="['/admin/setting-support/blog']">
-                                        <p class="m-0 text-black roboto">Blog</p>
-                                        <p class="text-custom m-0 roboto">Get industry & IFANOW insights. Stay up to
-                                            date
-                                        </p>
-                                    </div>
-                                </div>
-                            </button>
-                            <button mat-menu-item>
-                                <div class="row">
-                                    <div class="col-md-2 p-0">
-                                        <img src="/assets/images/svg/tip.svg" class="v-super">
-                                    </div>
-                                    <div class="col-md-10 p-0"
-                                        [routerLink]="['/admin/setting-support/tips-and-tricks']">
-                                        <p class="m-0 text-black roboto">Tips & tricks</p>
-                                        <p class="text-custom m-0 roboto">Useful tips & tricks you should know </p>
-                                    </div>
-                                </div>
-                            </button>
-                            <button mat-menu-item>
-                                <div class="row">
-                                    <div class="col-md-2 p-0">
-                                        <img src="/assets/images/svg/ruppess.svg" class="v-super">
-                                    </div>
-                                    <div class="col-md-10 p-0" [routerLink]="['/admin/setting-support/pricing']">
-                                        <p class="m-0 text-black roboto">Pricing</p>
-                                        <p class="text-custom m-0 roboto">Compare pricing options & select what works
-                                        </p>
-                                    </div>
-                                </div>
-                            </button>
-                            <button mat-menu-item>
-                                <div class="row">
-                                    <div class="col-md-2 p-0">
-                                        <img src="/assets/images/svg/raise.svg">
-                                    </div>
-                                    <div class="col-md-10 p-0"
-                                        [routerLink]="['/admin/setting-support/raise-support-ticket']">
-                                        <p class="m-0 text-black roboto">Raise a support ticket</p>
-                                        <p class="text-custom m-0 roboto">Can’t find an answer? Our RMs are here to help
-                                        </p>
-                                    </div>
-                                </div>
-                            </button>
-                        </div>
-                        <p class="m-0 roboto text-primitive text-center pt-40 pb-28">Office hours: 10.00AM - 6.30PM
-                            (Monday to Friday)
-                        </p>
-                        <div class="p-20 bg-grey lter">
-                            <div class="row">
-                                <div class="col-md-4 pl-0">
-                                    <img src="https://ifanow.com/images/team/avinash.jpeg" class="w-70">
-                                </div>
-                                <div class="col-md-8">
-                                    <h3 class="m-0 f-500 text-black">Need help?</h3>
-                                    <p class="m-0 text-black roboto pt-4">I am your relationship manager</p>
-                                    <h5 class="m-0 text-black pt-4"></h5>
-                                    <button mat-stroked-button class="btn-primary mt-12">Contact me</button>
-                                </div>
-                            </div>
-                        </div>
-                    </mat-menu>
-                </a>
-
-
-                <a class="sidenav-link pr-28" mat-list-item>
-                    <img class="c-p header-img" [matMenuTriggerFor]="appMenu" src="/assets/images/svg/setting.svg">
-
-                    <mat-menu #appMenu="matMenu" class="minwidth-400">
-                        <button mat-menu-item class="bb-1 event-none h-60">
-                            <div class="row">
-                                <div class="col-md-12 p-0">
-                                    <h3 class="m-0">Settings</h3>
-                                </div>
-                            </div>
-                        </button>
-                        <div id="setting-menu">
-                            <div class="row c-p" [routerLink]="['/admin/setting/orgprofile']">
-                                <div class="col-md-2">
-                                    <img src="/assets/images/svg/settings-gear-menu/profile.svg" class="v-super">
-                                </div>
-                                <div class="col-md-10 pl-0">
-                                    <p class="m-0 roboto">Profile</p>
-                                    <p class="text-regular ws-normal">Add key details about you and your organisation
-                                        that will reflect across the system
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="row c-p" [routerLink]="['/admin/setting/preference']"
-                                *ngIf="roleObj.advisorOrClientRole == 1">
-                                <div class="col-md-2">
-                                    <img src="/assets/images/svg/settings-gear-menu/preferences.svg" class="v-super">
-                                </div>
-                                <div class="col-md-10 pl-0">
-                                    <p class="m-0 roboto">Preferences</p>
-                                    <p class="text-regular ws-normal">Manage settings that will take the customization
-                                        possibilities to the next level</p>
-                                </div>
-                            </div>
-
-                            <div [routerLink]="['/admin/setting/activity']" class="row c-p"
-                                *ngIf="roleObj.advisorOrClientRole == 1">
-                                <div class="col-md-2">
-                                    <img src="/assets/images/svg/settings-gear-menu/activity.svg" class="v-super">
-                                </div>
-                                <div class="col-md-10 pl-0">
-                                    <p class="m-0 roboto">Activity</p>
-                                    <p class="text-regular ws-normal">Manage settings related to tasks, email,
-                                        calendars, notifications, reminders etc.</p>
-                                </div>
-                            </div>
-
-
-                            <div [routerLink]="['/admin/setting/plan']" class="row c-p"
-                                *ngIf="roleObj.advisorOrClientRole == 1">
-                                <div class="col-md-2">
-                                    <img src="/assets/images/svg/settings-gear-menu/plan.svg" class="v-super">
-                                </div>
-                                <div class="col-md-10 pl-0">
-                                    <p class="m-0 roboto">Plan</p>
-                                    <p class="text-regular ws-normal">Manage settings related to key financial planning
-                                        assumptions, asset allocation etc.</p>
-                                </div>
-                            </div>
-
-                            <div [routerLink]="['/admin/setting/users&roles']" class="row c-p"
-                                *ngIf="roleObj.advisorOrClientRole == 1">
-                                <div class="col-md-2">
-                                    <img src="/assets/images/svg/settings-gear-menu/user-and-roles.svg" class="v-super">
-                                </div>
-                                <div class="col-md-10 pl-0">
-                                    <p class="m-0 roboto">Users & roles</p>
-                                    <p class="text-regular ws-normal">Define roles and assign it to your team members
-                                        and clients. Manage hierarchy to control client viewing rights between the team
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div [routerLink]="['/admin/setting/backoffice']" class="row c-p"
-                                *ngIf="roleObj.advisorOrClientRole == 1">
-                                <div class="col-md-2">
-                                    <img src="/assets/images/svg/settings-gear-menu/backoffice.svg" class="v-super">
-                                </div>
-                                <div class="col-md-10 pl-0">
-                                    <p class="m-0 roboto">Back office</p>
-                                    <p class="text-regular ws-normal">Add your ARN/RIA details, Manage RTA credentials,
-                                        SOA settings etc.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <!-- <div class="row c-p" [routerLink]="['/admin/setting/backup']" *ngIf="roleObj.advisorOrClientRole == 1">
-                                <div class="col-md-2">
-                                    <img src="/assets/images/svg/settings-gear-menu/backup.svg" class="v-super">
-                                </div>
-                                <div class="col-md-10 pl-0">
-                                    <p class="m-0 roboto">Backup</p>
-                                    <p class="text-regular ws-normal">Securely backup your data in excel</p>
-                                </div>
-                            </div> -->
-
-
-                        </div>
-
-
-                    </mat-menu>
-                </a>
-                <a class="sidenav-link" mat-list-item>
-                    <img [src]="authService.profilePic" [matMenuTriggerFor]="menu" class="c-p header-img">
-                    <mat-menu #menu="matMenu" class="log-out maxw-320"
-                        style="width: 320px !important;max-width: 320px !important;">
-                        <div class="pl-20 maxw-320" style="width: 320px !important;max-width: 320px !important;">
-                            <div class="row bb-1 pt-20 pb-20">
-                                <div class="col-md-3 p-0 full-center">
-                                    <img [src]="authService.profilePic" class="w-100 br-10">
-                                </div>
-                                <div class="col-md-9 d-flex justify-content-center flex-column pt-32">
-                                    <p class="m-0 text-diff roboto f-400 f-16">{{advisorName}}</p>
-                                    <p class="text-custom m-0 roboto f-400">{{role}}</p>
-                                </div>
-                            </div>
-
-                            <ul class="d-block bb-1 pb-20">
-                                <li class="text-left pt-20 f-14 c-p"
-                                    *ngIf="userInfo.userType==1 || userInfo.userType==8"
-                                    [routerLink]="['/admin/setting/orgprofile']">
-                                    Profile</li>
-                                <li class="text-left pt-20 f-14 c-p" *ngIf="userInfo.userType==1">Account & Billing</li>
-                                <li class="text-left pt-20 f-14 c-p" *ngIf="userInfo.userType==1">Refer & Earn
-                                </li>
-                                <li class="text-left pt-20 f-14 c-p" *ngIf="userInfo.userType==8">Change password</li>
-                            </ul>
-                            <p (click)="logout()" class="c-p mb-0 f-400
-                             pt-20 pb-20">Logout</p>
-                        </div>
-                    </mat-menu>
-                </a>
             </div>
 
 
@@ -774,7 +522,7 @@
         <a class="sidenav-link" mat-list-item>
           <img [src]="authService.profilePic" [matMenuTriggerFor]="menu" class="c-p header-img">
           <mat-menu #menu="matMenu" class="log-out maxw-320"
-                    style="width: 320px !important;max-width: 320px !important;">
+            style="width: 320px !important;max-width: 320px !important;">
             <div class="pl-20 maxw-320" style="width: 320px !important;max-width: 320px !important;">
               <div class="row bb-1 pt-20 pb-20">
                 <div class="col-md-3 p-0 full-center">
@@ -787,9 +535,8 @@
               </div>
 
               <ul class="d-block bb-1 pb-20">
-                <li class="text-left pt-20 f-14 c-p"
-                    *ngIf="userInfo.userType==1 || userInfo.userType==8"
-                    [routerLink]="['/admin/setting/orgprofile']">
+                <li class="text-left pt-20 f-14 c-p" *ngIf="userInfo.userType==1 || userInfo.userType==8"
+                  [routerLink]="['/admin/setting/orgprofile']">
                   Profile
                 </li>
                 <li class="text-left pt-20 f-14 c-p" *ngIf="userInfo.userType==1">Account & Billing</li>
@@ -798,7 +545,7 @@
                 <li class="text-left pt-20 f-14 c-p" *ngIf="userInfo.userType==8">Change password</li>
               </ul>
               <p (click)="logout()" class="c-p mb-0 f-400
-                             pt-20 pb-20">Logout</p>
+  pt-20 pb-20">Logout</p>
             </div>
           </mat-menu>
         </a>
@@ -827,9 +574,9 @@
       </div>
     </div>
     <div>
-      <!--          <div [@routeAnimations]="prepareRoute(outlet)" >-->
-      <!--            <router-outlet #outlet="outlet"></router-outlet>-->
-      <!--          </div>-->
+      <!-- <div [@routeAnimations]="prepareRoute(outlet)" >-->
+      <!-- <router-outlet #outlet="outlet"></router-outlet>-->
+      <!-- </div>-->
       <router-outlet id="left1">
       </router-outlet>
 
