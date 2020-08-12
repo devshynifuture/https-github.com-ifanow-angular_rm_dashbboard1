@@ -198,6 +198,7 @@ export class DashboardComponent implements OnInit {
     }
   ]
   todoListFlag: boolean;
+  userData: any;
   constructor(
     public dialog: MatDialog, private subService: SubscriptionService,
     private eventService: EventService,
@@ -436,6 +437,7 @@ export class DashboardComponent implements OnInit {
     this.parentId = AuthService.getAdminAdvisorId();
     this.clientData = AuthService.getClientData()
     this.advisorName = AuthService.getUserInfo().name;
+    this.userData = AuthService.getUserInfo();
     this.excessAllow = localStorage.getItem('successStoringToken');
     this.getAssetAllocationData();
     this.getTotalRecivedByDash();
@@ -1343,7 +1345,7 @@ export class DashboardComponent implements OnInit {
       maxWidth: '100vw',
       width: '90vw',
       height: '90vh',
-      data: ''
+      data: this.userData
     });
 
     dialogRef.afterClosed().subscribe(result => {
