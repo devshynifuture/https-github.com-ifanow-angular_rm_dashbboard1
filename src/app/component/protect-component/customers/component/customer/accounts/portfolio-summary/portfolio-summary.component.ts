@@ -303,7 +303,19 @@ export class PortfolioSummaryComponent implements OnInit, OnDestroy {
             }
           });
           if(chartData){
-            chartData = this.sorting(chartData,'name')
+            let index;
+            let obj={};
+            chartData = this.sorting(chartData,'name');
+            chartData.forEach((element,ind) => {
+                if(element.name == 'Others'){
+                  index = ind
+                }
+            });
+            if(index){
+               obj = chartData.splice(index, 1);
+              let outputObj=obj[0]
+              chartData.push(outputObj)
+            }
           }
           chartTotal -= 1;
           if (chartTotal === 0) {
