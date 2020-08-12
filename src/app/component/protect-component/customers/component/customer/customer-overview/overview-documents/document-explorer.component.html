@@ -280,9 +280,8 @@
                             <p class="selectMoreDetails" *ngIf="urlData != '' && urlData == undefined">
                                 Select a file to see more details
                             </p>
-                            <div
-                                *ngIf="selectedElement.fileType == 'jpg' || selectedElement.fileType == 'png' || selectedElement.fileType == 'jpeg'">
-                                <img [src]="urlData" height="200"> <br />
+                            <div *ngIf="selectedElement.fileType == 'jpg' || selectedElement.fileType == 'png' || selectedElement.fileType == 'jpeg'">
+                                <img [src]="urlData" height="200" width="250"> <br />
                             </div>
                             <div *ngIf="selectedElement.fileType != 'jpg' && selectedElement.fileType != 'png' && selectedElement.fileType != 'jpeg'">
                                 <ngx-doc-viewer [url]="urlData" viewer="google" style="width:275px;height:350px;">
