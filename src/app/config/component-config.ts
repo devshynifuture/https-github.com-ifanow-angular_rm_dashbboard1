@@ -692,6 +692,8 @@ export const appConfig = {
   RESET_ORG_PROFILE_LOGO: 'setting/organisation/logo/delete',
   RESET_ORG_REPORT_LOGO: 'setting/organisation/report-logo/delete',
   GET_EMAIL_VERIFICATION: 'setting/preference/email/get',
+  GET_EMAIL_VERIFICATION_REPORT:'mutual-fund/report/email-list/get',
+  SAVE_EMAIL_ID_REPORT:'mutual-fund/report/from-email/save',
   GET_EMAIL_TEMPLATES: 'setting/preference/email/template/get',
   GET_EMAIL_LIST:'setting/preference/verified/email-list/get',
   EDIT_PREF_EMAIL_TEMPLATE: 'setting/preference/email/template/update',
