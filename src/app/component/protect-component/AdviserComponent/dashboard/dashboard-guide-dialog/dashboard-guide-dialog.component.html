@@ -51,18 +51,19 @@
 
       <div class="col-md-12 p-0 pl-150">
         <div class="d-flex">
-          <div class="pr-20">
+          <div (click)="singleDescription.selected?singleDescription.selected=false:singleDescription.selected=true"
+            *ngFor="let singleDescription of descriptionArray;index as i" class="pr-20">
             <div class="box-1 p-20">
-              <h5 class="m-0 roboto f-400 lh-19 pb-24">I’ve been running a financial advisory practice for few years
-                now.
+              <h5 class="m-0 roboto f-400 lh-19 pb-24">{{singleDescription.name}}
               </h5>
               <div class="hw-40 bg-grey lt br-2">
-                <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">A</h3>
+                <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">{{i==0?'A':'B'}}</h3>
               </div>
-              <div class="ribbon ribbon-bottom-right"><span><img src="/assets/images/svg/right-white.svg"></span>
+              <div *ngIf="singleDescription.selected" class="ribbon ribbon-bottom-right"><span><img
+                    src="/assets/images/svg/right-white.svg"></span>
               </div>
             </div>
-            <div class="pl-20">
+            <!-- <div class="pl-20">
               <div class="box-1 p-20">
                 <h5 class="m-0 roboto f-400 lh-19 pb-24">I am new to this industry and just getting started.
                 </h5>
@@ -72,7 +73,7 @@
                 <div class="ribbon ribbon-bottom-right"><span><img src="/assets/images/svg/right-white.svg"></span>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
           <button (click)="step=3" mat-stroked-button class="btn-primary h-48 lh-48 f-18 mt-40 br-4">Next question<img
               src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>

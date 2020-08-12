@@ -41,6 +41,11 @@ export class DashboardGuideDialogComponent implements OnInit {
 
   ]
 
+  descriptionArray = [
+    { name: 'I’ve been running a financial advisory practice for few years now.', selected: false },
+    { name: 'I am new to this industry and just getting started.', selected: false }
+  ]
+
   constructor(
     public dialogRef: MatDialogRef<DashboardGuideDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
