@@ -1349,7 +1349,7 @@ export class DashboardComponent implements OnInit {
     const dialogRef = this.dialog.open(DashboardGuideDialogComponent, {
       maxWidth: '100vw',
       width: '90vw',
-      height: '90vh',
+      //height: '90vh',
       data: this.userData
     });
 

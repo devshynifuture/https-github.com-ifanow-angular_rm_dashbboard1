@@ -29,3 +29,58 @@
     margin: 20px auto 0px;
 }
 
+.headerGuide {
+    width: calc(100% - 150px);
+    margin: 0px auto;
+    
+}
+.contentGuideBox {
+    width: calc(100% - 150px);
+    margin: 0px auto;
+}
+
+#advisor-dashboard-popup {
+    .row{
+        margin-right: -15px !important;
+    margin-left: -15px !important;
+    }
+
+    .posRelative {
+        position: relative;
+    }
+    .headerRow {
+        position: absolute;
+        bottom: 24px;
+    }
+
+
+.bg-advisor-modal {
+    background: url('/assets/images/bg-advsior-modal.png') no-repeat center;
+    background-repeat: no-repeat;
+    background-position: bottom;
+     height: 402px;
+  
+  }
+
+  .bg-modal-height{
+    height: 402px; 
+    position: relative;
+    .bottomFooterDasb {
+        position: absolute;
+        bottom: 30px;
+        width: calc(100% - 150px);
+    }
+  }
+
+  .boxDescribes {
+    position: relative;
+    .bottomPost {
+        position: absolute;
+        bottom: 20px;
+    }
+
+    
+  }
+
+}
+
