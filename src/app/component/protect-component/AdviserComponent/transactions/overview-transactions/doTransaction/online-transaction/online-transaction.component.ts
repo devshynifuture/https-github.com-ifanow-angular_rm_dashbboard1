@@ -159,6 +159,10 @@ export class OnlineTransactionComponent implements OnInit {
     if (!this.isAdvisorSection) {
       return;
     }
+    if (value.length <= 2) {
+      this.filteredStates = undefined
+      return;
+    }
     const obj = {
       advisorId: AuthService.getAdvisorId(),
       displayName: value

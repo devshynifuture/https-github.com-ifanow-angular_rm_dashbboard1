@@ -1,26 +1,33 @@
 <div id="advisor-dashboard-popup">
   <!-- first slider -->
   <div *ngIf="step==1">
-    <div class="row bg-grey lter">
-
-      <div class="col-md-12 pl-150 h-200 p-0 d-flex align-items-end">
-        <h3 class="m-0 f-500 pb-28 text-diff">Hey {{data.name}}. </h3>
+    <div class="h-200 bg-grey lter posRelative"> 
+    <div class="headerGuide">
+      <div class="row headerRow">
+        <div class="col-md-12">
+          <h3 class="mb-0 f-500  text-diff">Hey {{data.name}}. </h3>
+        </div>
+      </div>
       </div>
     </div>
-    <div class="row pt-20 bg-advisor-modal">
-
-      <div class="col-md-12  p-0 pl-150">
-        <h5 class="m-0 roboto f-400 text-diff">Good to see you!</h5>
-
-        <h5 class="m-0 roboto f-400 pt-28 text-diff">I am here to help you get started with IFANOW. By the end of this
-          short
-          exercise,
-          you’ll be at ease with IFANOW.</h5>
-
-        <h5 class="m-0 roboto f-400 pt-28 text-diff">Remember, we’re in this together!</h5>
-        <button (click)="step=2" mat-stroked-button class="btn-primary h-48 lh-48 f-18 mt-40 br-4">Let’s begin <img
-            src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
+    
+    <div class="bg-advisor-modal">
+      <div class="contentGuideBox mt-20">
+        <div class="row">
+          <div class="col-md-12">
+            <h5 class="m-0 roboto f-400 text-diff">Good to see you!</h5>
+            <h5 class="m-0 roboto f-400 pt-28 text-diff">I am here to help you get started with IFANOW. By the end of this
+              short
+              exercise,
+              you’ll be at ease with IFANOW.</h5>
+    
+            <h5 class="m-0 roboto f-400 pt-28 text-diff">Remember, we’re in this together!</h5>
+            <button (click)="step=2" mat-stroked-button class="btn-primary h-48 lh-48 f-18 mt-40 br-4">Let’s begin <img
+                src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
+          </div>
+        </div>
       </div>
+      
     </div>
   </div>
   <!-- end first slider -->
@@ -28,11 +35,13 @@
 
   <!-- second slider -->
   <div *ngIf="step==2">
-    <div class="row bg-grey lter pl-150">
-      <div class="col-md-12">
-        <div class="row pt-40">
+
+    <div class="h-200 bg-grey lter posRelative"> 
+      <div class="headerGuide">
+
+        <div class="row pt-30">
           <div class="col-md-10 pl-0">
-            <span class="material-icons c-p text-primitive">
+            <span (click)="step=1" class="material-icons c-p text-primitive">
               arrow_back
             </span>
           </div>
@@ -40,11 +49,106 @@
             <mat-progress-bar value="{{step}}" mode="determinate"></mat-progress-bar>
           </div>
         </div>
-      </div>
-      <div class="col-md-12 ">
-        <div class="h-130 p-0 d-flex align-items-end">
-          <h3 class="m-0 f-500 pb-20 text-diff">So {{data.name}}, what best describes you? </h3>
+
+        <div class="row headerRow">
+          <div class="col-md-12">
+            <h3 class="mb-0 f-500  text-diff">So {{data.name}}, what best describes you?</h3>
+          </div>
         </div>
+        </div>
+      </div>
+
+      <div class="bg-modal-height">
+      <div class="contentGuideBox mt-20"> 
+        <div class="row ">
+          <div class="col-md-12 d-flex">
+              <div (click)="singleDescription.selected?singleDescription.selected=false:singleDescription.selected=true"
+                *ngFor="let singleDescription of descriptionArray;index as i" class="mr-20">
+                <div class="box-1 boxDescribes p-20">
+                  <h5 class="mb-0 roboto f-400 lh-19 ">{{singleDescription.name}}
+                  </h5>
+                  
+                  <div class="hw-40 bg-grey lt bottomPost br-2">
+                    <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">{{i==0?'A':'B'}}</h3>
+                  </div>
+
+                  <div *ngIf="singleDescription.selected" class="ribbon ribbon-bottom-right"><span>
+                    <img src="/assets/images/svg/right-white.svg"></span>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+
+        <div class="bottomFooterDasb">
+          <div class="row">
+            <div class="col-md-6">
+              <button (click)="step=3" mat-stroked-button class="btn-primary h-48 lh-48 f-18 br-4">Next question<img
+                src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
+            </div>
+  
+            <div class="col-md-6 d-flex align-items-center justify-content-end">
+              <p class="mb-0 c-p text-primitive">Skip this exercise</p>
+            </div>
+          </div>
+        </div>
+        
+
+      </div>
+      </div>
+    
+
+
+
+   
+  </div>
+  <!-- end second slider -->
+
+  <!-- third slider -->
+  <div *ngIf="step==3">
+    <div class="row bg-grey lter">
+
+      <div class="col-md-12 h-200 p-0 d-flex align-items-end pl-150">
+        <h3 class="m-0 f-500 pb-20 text-diff">Can you tell us about what services you offer? Select only the ones
+          that
+          apply. </h3>
+      </div>
+    </div>
+    <div class="row pt-40">
+
+      <div class="col-md-12 p-0 pl-150 pr-150">
+        <div class="row">
+          <div (click)="    singleService.selected ? singleService.selected = false : singleService.selected = true
+          " *ngFor="let singleService of serviceList" class="col-md-3 pb-20 c-p">
+            <div class="row pt-12 pb-16 advisor-cards">
+              <div class="col-md-10 p-0">
+                <p class="m-0 roboto f-400 lh-16 pl-20 pt-4"> {{singleService.name}}</p>
+              </div>
+              <div class="col-md-2 p-0">
+                <span *ngIf="singleService.selected" class="material-icons c-p text-primitive">
+                  check
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 p-0 pt-40">
+            <button (click)="step=4" mat-stroked-button class="btn-primary h-48 lh-48 f-18 mt-40 br-4">Next question
+              <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--end third slider -->
+
+
+  <!-- four slider -->
+  <div *ngIf="step==4">
+    <div class="row bg-grey lter">
+
+      <div class="col-md-12 h-200 p-0 d-flex align-items-end pl-150">
+        <h3 class="m-0 f-500 pb-20 text-diff">What best describes your mutual fund practice? </h3>
       </div>
     </div>
     <div class="row pt-40">
@@ -53,246 +157,55 @@
         <div class="d-flex">
           <div class="pr-20">
             <div class="box-1 p-20">
-              <h5 class="m-0 roboto f-400 lh-19 pb-24">I’ve been running a financial advisory practice for few years
-                now.
+              <h5 class="m-0 roboto f-400 lh-19 pb-24">I offer mutual funds under my ARN/RIA code
               </h5>
-              <div class="hw-40 bg-grey lt br-2">
+              <div class="hw-40 bg-grey lt br-2 mt-16">
                 <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">A</h3>
               </div>
               <div class="ribbon ribbon-bottom-right"><span><img src="/assets/images/svg/right-white.svg"></span>
               </div>
             </div>
-            <div class="pl-20">
-              <div class="box-1 p-20">
-                <h5 class="m-0 roboto f-400 lh-19 pb-24">I am new to this industry and just getting started.
-                </h5>
-                <div class="hw-40 bg-grey lt br-2 mt-20">
-                  <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">B</h3>
-                </div>
-                <div class="ribbon ribbon-bottom-right"><span><img src="/assets/images/svg/right-white.svg"></span>
-                </div>
+          </div>
+          <div class="pl-20">
+            <div class="box-1 p-20">
+              <h5 class="m-0 roboto f-400 lh-19 pb-24">I work with a national distributor as a sub-broker
+              </h5>
+              <div class="hw-40 bg-grey lt br-2 mt-16">
+                <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">B</h3>
               </div>
             </div>
           </div>
-          <button (click)="step=3" mat-stroked-button class="btn-primary h-48 lh-48 f-18 mt-40 br-4">Next question<img
-              src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
-        </div>
-      </div>
-      <!-- end second slider -->
-
-      <!-- third slider -->
-      <div *ngIf="step==3">
-        <div class="row bg-grey lter">
-
-          <div class="col-md-12 h-200 p-0 d-flex align-items-end pl-150">
-            <h3 class="m-0 f-500 pb-20 text-diff">Can you tell us about what services you offer? Select only the ones
-              that
-              apply. </h3>
+          <div class="pl-20">
+            <div class="box-1 p-20">
+              <h5 class="m-0 roboto f-400 lh-19 pb-24">I only give advice. I do not distribute or offer
+                implementation
+                services.
+              </h5>
+              <div class="hw-40 bg-grey lt br-2 mt-0">
+                <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">C</h3>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="row pt-40">
-
-          <div class="col-md-12 p-0 pl-150 pr-150">
-            <div class="row">
-              <div class="col-md-3 pb-20">
-                <div class="row pt-12 pb-16 advisor-cards">
-                  <div class="col-md-10 p-0">
-                    <p class="m-0 roboto f-400 lh-16 pl-20 pt-4"> Portfolio review</p>
-                  </div>
-                  <div class="col-md-2 p-0">
-                    <span class="material-icons c-p text-primitive">
-                      check
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-3 pb-20">
-                <div class="row pt-12 pb-16 advisor-cards">
-                  <div class="col-md-10 p-0">
-                    <p class="m-0 roboto f-400 lh-16 pl-20 pt-4"> Financial planning</p>
-                  </div>
-
-                </div>
-              </div>
-              <div class="col-md-3 pb-20">
-                <div class="row pt-12 pb-16 advisor-cards">
-                  <div class="col-md-10 p-0">
-                    <p class="m-0 roboto f-400 lh-16 pl-20 pt-4"> Emergency planning</p>
-                  </div>
-
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="row pt-12 pb-16 advisor-cards">
-                  <div class="col-md-10 p-0">
-                    <p class="m-0 roboto f-400 lh-16 pl-20 pt-4"> Insurance planning</p>
-                  </div>
-
-                </div>
-              </div>
-              <div class="col-md-3 pb-20">
-                <div class="row pt-12 pb-16 advisor-cards">
-                  <div class="col-md-9 p-0">
-                    <p class="m-0 roboto f-400 lh-16 pl-20 pt-4 ws-nowrap"> Investment management</p>
-                  </div>
-
-                </div>
-              </div>
-              <div class="col-md-3 pb-20">
-                <div class="row pt-12 pb-16 advisor-cards">
-                  <div class="col-md-10 p-0">
-                    <p class="m-0 roboto f-400 lh-16 pl-20 pt-4 "> Investment consulting</p>
-                  </div>
-
-                </div>
-              </div>
-              <div class="col-md-3 pb-20">
-                <div class="row pt-12 pb-16 advisor-cards">
-                  <div class="col-md-10 p-0">
-                    <p class="m-0 roboto f-400 lh-16 pl-20 pt-4"> Retirement planning</p>
-                  </div>
-
-                </div>
-              </div>
-              <div class="col-md-3 pb-20">
-                <div class="row pt-12 pb-16 advisor-cards">
-                  <div class="col-md-10 p-0">
-                    <p class="m-0 roboto f-400 lh-16 pl-20 pt-4"> Asset allocation</p>
-                  </div>
-
-                </div>
-              </div>
-              <div class="col-md-3 pb-20">
-                <div class="row pt-12 pb-16 advisor-cards">
-                  <div class="col-md-10 p-0">
-                    <p class="m-0 roboto f-400 lh-16 pl-20 pt-4"> Tax planning</p>
-                  </div>
-
-                </div>
-              </div>
-              <div class="col-md-3 pb-20">
-                <div class="row pt-12 pb-16 advisor-cards">
-                  <div class="col-md-10 p-0">
-                    <p class="m-0 roboto f-400 lh-16 pl-20 pt-4"> Cash flow planning</p>
-                  </div>
-
-                </div>
-              </div>
-              <div class="col-md-3 pb-20">
-                <div class="row pt-12 pb-16 advisor-cards">
-                  <div class="col-md-10 p-0">
-                    <p class="m-0 roboto f-400 lh-16 pl-20 pt-4"> AReal estate advisory</p>
-                  </div>
-
-                </div>
-              </div>
-              <div class="col-md-3 pb-20">
-                <div class="row pt-12 pb-16 advisor-cards">
-                  <div class="col-md-10 p-0">
-                    <p class="m-0 roboto f-400 lh-16 pl-20 pt-4"> Will writing</p>
-                  </div>
-
-                </div>
-              </div>
-              <div class="col-md-3 pb-20">
-                <div class="row pt-12 pb-16 advisor-cards">
-                  <div class="col-md-10 p-0">
-                    <p class="m-0 roboto f-400 lh-16 pl-20 pt-4"> Estate planning</p>
-                  </div>
-
-                </div>
-              </div>
-              <div class="col-md-3 pb-20">
-                <div class="row pt-12 pb-16 advisor-cards">
-                  <div class="col-md-10 p-0">
-                    <p class="m-0 roboto f-400 lh-16 pl-20 pt-4"> Raising capital or Debt</p>
-                  </div>
-
-                </div>
-              </div>
-              <div class="col-md-3 pb-20">
-                <div class="row pt-12 pb-16 advisor-cards">
-                  <div class="col-md-10 p-0">
-                    <p class="m-0 roboto f-400 lh-16 pl-20 pt-4"> Personal lending</p>
-                  </div>
-
-                </div>
-              </div>
-              <div class="col-md-12 p-0 pt-40">
-                <button (click)="step=4" mat-stroked-button class="btn-primary h-48 lh-48 f-18 mt-40 br-4">Next question
-                  <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
+          <div class="pl-20">
+            <div class="box-1 p-20">
+              <h5 class="m-0 roboto f-400 lh-19 pb-24">Option a and b both applies to me
+              </h5>
+              <div class="hw-40 bg-grey lt br-2 mt-18">
+                <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">D</h3>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <button (click)="step=4" mat-stroked-button class="btn-primary h-48 lh-48 f-18 mt-40 br-4">Next question<img
+          src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
+    </div>
+  </div>
 
-      <!--end third slider -->
+  <!-- end  four slider -->
 
-
-      <!-- four slider -->
-      <div *ngIf="step==4">
-        <div class="row bg-grey lter">
-
-          <div class="col-md-12 h-200 p-0 d-flex align-items-end pl-150">
-            <h3 class="m-0 f-500 pb-20 text-diff">What best describes your mutual fund practice? </h3>
-          </div>
-        </div>
-        <div class="row pt-40">
-
-          <div class="col-md-12 p-0 pl-150">
-            <div class="d-flex">
-              <div class="pr-20">
-                <div class="box-1 p-20">
-                  <h5 class="m-0 roboto f-400 lh-19 pb-24">I offer mutual funds under my ARN/RIA code
-                  </h5>
-                  <div class="hw-40 bg-grey lt br-2 mt-16">
-                    <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">A</h3>
-                  </div>
-                  <div class="ribbon ribbon-bottom-right"><span><img src="/assets/images/svg/right-white.svg"></span>
-                  </div>
-                </div>
-              </div>
-              <div class="pl-20">
-                <div class="box-1 p-20">
-                  <h5 class="m-0 roboto f-400 lh-19 pb-24">I work with a national distributor as a sub-broker
-                  </h5>
-                  <div class="hw-40 bg-grey lt br-2 mt-16">
-                    <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">B</h3>
-                  </div>
-                </div>
-              </div>
-              <div class="pl-20">
-                <div class="box-1 p-20">
-                  <h5 class="m-0 roboto f-400 lh-19 pb-24">I only give advice. I do not distribute or offer
-                    implementation
-                    services.
-                  </h5>
-                  <div class="hw-40 bg-grey lt br-2 mt-0">
-                    <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">C</h3>
-                  </div>
-                </div>
-              </div>
-              <div class="pl-20">
-                <div class="box-1 p-20">
-                  <h5 class="m-0 roboto f-400 lh-19 pb-24">Option a and b both applies to me
-                  </h5>
-                  <div class="hw-40 bg-grey lt br-2 mt-18">
-                    <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">D</h3>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <button (click)="step=4" mat-stroked-button class="btn-primary h-48 lh-48 f-18 mt-40 br-4">Next question<img
-              src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
-        </div>
-      </div>
-
-      <!-- end  four slider -->
-
-      <!-- five slider -->
-      <!-- <div class="row bg-grey lter">
+  <!-- five slider -->
+  <!-- <div class="row bg-grey lter">
 
     <div class="col-md-12 h-200 p-0 d-flex align-items-end pl-150">
       <h3 class="m-0 f-500 pb-20">{{data.name}}, how are you managing your practice? Like, are you managing it alone or
@@ -327,10 +240,10 @@
     </div>
   </div> -->
 
-      <!-- end five slider -->
+  <!-- end five slider -->
 
-      <!-- six slider -->
-      <!-- <div class="row bg-grey lter">
+  <!-- six slider -->
+  <!-- <div class="row bg-grey lter">
 
     <div class="col-md-12 h-200 p-0 d-flex align-items-end pl-150">
       <h3 class="m-0 f-500 pb-20">I suggest you add your team members right away. We’ll send them an invite on your
@@ -366,10 +279,10 @@
     </div>
   </div> -->
 
-      <!-- end six slider -->
+  <!-- end six slider -->
 
-      <!-- seven slider -->
-      <!-- <div class="row bg-grey lter">
+  <!-- seven slider -->
+  <!-- <div class="row bg-grey lter">
 
     <div class="col-md-12 h-200 p-0 d-flex align-items-end pl-150">
       <h3 class="m-0 f-500 pb-20">We’ve got this far and I’m yet to get a glimpse of you! Should we add a profile pic of
@@ -397,11 +310,11 @@
           src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
     </div>
   </div> -->
-      <!-- end seven slider -->
+  <!-- end seven slider -->
 
 
-      <!-- eight silder -->
-      <!-- <div class="row bg-grey lter">
+  <!-- eight silder -->
+  <!-- <div class="row bg-grey lter">
 
     <div class="col-md-12 h-200 p-0 d-flex align-items-end pl-150">
       <h3 class="m-0 f-500 pb-20">Do you have an ARN/RIA code?</h3>
@@ -446,10 +359,10 @@
       </div>
     </div>
   </div> -->
-      <!-- eight silder -->
+  <!-- eight silder -->
 
-      <!-- nine slider -->
-      <!-- <div class="row bg-grey lter">
+  <!-- nine slider -->
+  <!-- <div class="row bg-grey lter">
 
     <div class="col-md-12 h-200 p-0 d-flex align-items-end pl-150">
       <h3 class="m-0 f-500 pb-20 text-diff">Adding ARN/RIA details now.</h3>
@@ -499,10 +412,10 @@
       <button mat-stroked-button class="btn-primary-outline h-48 lh-48 f-18 mt-40 br-4 ml-20">Save & Proceed </button>
     </div>
   </div> -->
-      <!--end nine slider -->
+  <!--end nine slider -->
 
-      <!-- 10th slider -->
-      <!-- <div class="row bg-grey lter">
+  <!-- 10th slider -->
+  <!-- <div class="row bg-grey lter">
 
     <div class="col-md-12 h-200 p-0 d-flex align-items-end pl-150">
       <h3 class="m-0 f-500 pb-20 text-diff">Thank you {{data.name}}. One last step.</h3>
@@ -553,10 +466,10 @@
   </div> -->
 
 
-      <!--end 10th slider -->
+  <!--end 10th slider -->
 
-      <!-- 11th slider -->
-      <!-- <div class="row bg-grey lter">
+  <!-- 11th slider -->
+  <!-- <div class="row bg-grey lter">
 
     <div class="col-md-12 h-200 p-0 pl-150">
       <h3 class="m-0 f-500 text-diff pt-80">Adding RTA credentials now</h3><br>
@@ -671,10 +584,10 @@
       <button mat-stroked-button class="btn-primary-outline h-48 lh-48 f-18 mt-40 br-4 ml-20">Save & Proceed </button>
     </div>
   </div> -->
-      <!--end 11th slider -->
+  <!--end 11th slider -->
 
-      <!-- 12th slider 4 tabs -->
-      <!-- <div class="row bg-grey lter">
+  <!-- 12th slider 4 tabs -->
+  <!-- <div class="row bg-grey lter">
 
     <div class="col-md-12 h-200 p-0 pl-150">
       <h3 class="m-0 f-500 text-diff pt-150">Steps to set-up auto forward of your registered Gmail ID</h3>
@@ -772,7 +685,7 @@
     </div>
   </div> -->
 
-      <!-- <div class="col-md-3 pt-250">
+  <!-- <div class="col-md-3 pt-250">
       <p class="m-0 roboto f-400 text-black lh-16">Once you download the above file, go to Gmail Settings. </p>
       <p class="m-0 roboto f-400 text-black lh-16"> Click Filters and Blocked Addresses.</p>
 
@@ -781,11 +694,11 @@
 
       <p class="m-0 roboto f-400 text-black lh-16 pt-8"> Click Open file. Click Create filters. </p>
     </div> -->
-      <!--end 12th slider 4 tabs -->
+  <!--end 12th slider 4 tabs -->
 
 
-      <!-- 13th slider -->
-      <!-- <div class="row bg-grey lter">
+  <!-- 13th slider -->
+  <!-- <div class="row bg-grey lter">
 
     <div class="col-md-12 h-200 p-0 pl-150">
       <h3 class="m-0 f-500 text-diff pt-150">Congratulations! Hard part over. Now the easy part.</h3>
@@ -828,11 +741,11 @@
 
   </div> -->
 
-      <!--end 13th slider -->
+  <!--end 13th slider -->
 
 
-      <!-- 14th slider -->
-      <!-- <div class="row bg-grey lter">
+  <!-- 14th slider -->
+  <!-- <div class="row bg-grey lter">
 
     <div class="col-md-12 h-200 p-0 pl-150">
       <h3 class="m-0 f-500 text-diff pt-150">Bingo! We’ve started the process of ordering & uploading files for you!
@@ -867,10 +780,10 @@
 
     </div>
   </div> -->
-      <!-- end 14th slider -->
+  <!-- end 14th slider -->
 
-      <!-- 15th slider -->
-      <!-- <div class="row bg-grey lter">
+  <!-- 15th slider -->
+  <!-- <div class="row bg-grey lter">
 
     <div class="col-md-12 h-200 p-0 pl-150">
       <h3 class="m-0 f-500 text-diff pt-150">Thank You!
@@ -903,5 +816,5 @@
       </div>
     </div>
   </div> -->
-      <!-- end 15th slider -->
-    </div>
+  <!-- end 15th slider -->
+</div>

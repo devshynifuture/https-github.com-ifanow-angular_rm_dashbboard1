@@ -56,7 +56,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
         enabled: false
       }
     },
-     {
+    {
       name: 'Fixed income',
       y: 20,
       color: AppConstants.DONUT_CHART_COLORS[2],
@@ -85,23 +85,23 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
         enabled: false
       }
     }
-  ]
+  ];
 
   sliderConfig = {
     slidesToShow: 1,
     infinite: true,
     variableWidth: true,
     outerEdgeLimit: true,
-    "nextArrow": "<div style='position: absolute; top: 35%; right: 0; cursor: pointer;' class='nav-btn classNextArrow next-slide'><img src='/assets/images/svg/next-arrow.svg'></div>",
-    "prevArrow": "<div style='position: absolute; top: 35%; left: -5px; z-index: 1; cursor: pointer;' class='nav-btn classNextArrow next-slide'><img src='/assets/images/svg/pre-arrow.svg'></div>",
-  }
+    nextArrow: '<div style=\'position: absolute; top: 35%; right: 0; cursor: pointer;\' class=\'nav-btn classNextArrow next-slide\'><img src=\'/assets/images/svg/next-arrow.svg\'></div>',
+    prevArrow: '<div style=\'position: absolute; top: 35%; left: -5px; z-index: 1; cursor: pointer;\' class=\'nav-btn classNextArrow next-slide\'><img src=\'/assets/images/svg/pre-arrow.svg\'></div>',
+  };
 
   chartTotal = 100;
   clientId: any;
   expenseList = [];
   incomeList = [];
   advisorInfo: any;
-  advisorImg: string = '';
+  advisorImg = '';
 
   totalValue: any = {};
   filterData: any;
@@ -142,15 +142,15 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
         enabled: false
       }
     }
-  ]
+  ];
   mfSubCatAllocationData: any[] = [];
   worker: Worker;
   currentViewId = 1;
   greeterFnID: any;
   mutualFund: any;
   userInfo: any;
-  isLoadingAssetAllocation=false;
-  isAssetAllocationDataLoaded=false;
+  isLoadingAssetAllocation = false;
+  isAssetAllocationDataLoaded = false;
 
   constructor(
     private customerService: CustomerService,
@@ -251,7 +251,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       isLoading: true,
     }
   };
-  hasError: boolean = false;
+  hasError = false;
 
   portFolioData: any[] = [];
   rtaFeedsData: any[] = [];
@@ -328,7 +328,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
 
   goToSectionView(scrollOffset) {
     // offset by 60, the height of upper nav
-    window.scrollTo(0, scrollOffset)
+    window.scrollTo(0, scrollOffset);
   }
 
   // logic to decide which apis to load and not load
@@ -349,7 +349,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
         break;
       default:
         // this.tabsLoaded.mfPortfolioSummaryData.displaySection = true;
-        console.error("Unidentified role type found", this.clientData.advisorOrClientRole);
+        console.error('Unidentified role type found', this.clientData.advisorOrClientRole);
         break;
     }
   }
@@ -361,7 +361,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       // advisorId: this.advisorId,
       clientId: this.clientId,
       userId: this.clientData.userId
-    }
+    };
 
     this.loaderFn.increaseCounter();
     this.customerService.getCustomerFeedsProfile(obj).subscribe(
@@ -370,7 +370,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
           this.customerProfile = {
             familyMemberCount: 0,
             completenessStatus: 0,
-          }
+          };
         } else {
           this.customerProfile = res;
           this.tabsLoaded.customerProfile.hasData = true;
@@ -378,11 +378,11 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
         this.loaderFn.decreaseCounter();
         this.tabsLoaded.customerProfile.dataLoaded = true;
       }, err => {
-        this.eventService.openSnackBar(err, "Dismiss");
+        this.eventService.openSnackBar(err, 'Dismiss');
         this.tabsLoaded.customerProfile.dataLoaded = false;
         this.loaderFn.decreaseCounter();
       }
-    )
+    );
   }
 
   generateUpload(data) {
@@ -407,23 +407,23 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   getAppearanceSettings() {
-    this.loaderFn.increaseCounter()
-    let obj = {
+    this.loaderFn.increaseCounter();
+    const obj = {
       advisorId: this.advisorId
-    }
+    };
     this.orgSetting.getAppearancePreference(obj).subscribe(
       data => {
-        this.appearancePortfolio = data.find(data => data.appearanceOptionId == 1).advisorOrOrganisation
+        this.appearancePortfolio = data.find(data => data.appearanceOptionId == 1).advisorOrOrganisation;
       },
       err => {
-        this.eventService.openSnackBar(err, "Dismiss")
+        this.eventService.openSnackBar(err, 'Dismiss');
         this.hasError = true;
       }
     );
   }
 
   initializePieChart() {
-    let chartConfig: any = {
+    const chartConfig: any = {
       chart: {
         plotBackgroundColor: null,
         plotBorderWidth: 0,
@@ -444,6 +444,8 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
           dataLabels: {
             enabled: true,
             distance: -50,
+            // cursor: 'pointer',
+            // format: '<b>{point.name}</b>: {point.percentage:.1f} %',
             style: {
               fontWeight: 'bold',
               color: 'white'
@@ -458,6 +460,9 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       exporting: {
         enabled: false
       },
+      // tooltip : {
+      //   pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+      // },
       series: [{
         type: 'pie',
         name: 'Asset allocation',
@@ -465,7 +470,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
         innerSize: '60%',
         data: this.chartData
       }]
-    }
+    };
     this.assetAllocationPieConfig = new Chart(chartConfig);
 
     chartConfig.series = [{
@@ -474,7 +479,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       name: 'MF Asset allocation',
       innerSize: '60%',
       data: this.mfAllocationData
-    }]
+    }];
     this.mfAllocationPieConfig = new Chart(chartConfig);
     this.mfSubCategoryPieConfig = new Chart(chartConfig);
   }
@@ -484,7 +489,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       clientId: this.clientData.clientId,
       advisorId: this.advisorId,
       targetDate: new Date().getTime()
-    }
+    };
     this.tabsLoaded.portfolioData.isLoading = true;
 
     this.loaderFn.increaseCounter();
@@ -494,7 +499,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
         this.tabsLoaded.portfolioData.hasData = false;
       } else {
         this.tabsLoaded.portfolioData.hasData = true;
-        let stock = res.find(d => d.assetType == 6);
+        const stock = res.find(d => d.assetType == 6);
         this.portFolioData = res;
         if (stock) {
           this.portFolioData = this.portFolioData.filter(d => d.assetType != 6);
@@ -507,24 +512,25 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     }, err => {
       this.hasError = true;
       this.tabsLoaded.portfolioData.isLoading = false;
-      this.eventService.openSnackBar(err, "Dismiss")
+      this.eventService.openSnackBar(err, 'Dismiss');
       this.loaderFn.decreaseCounter();
-    })
+    });
   }
-  getAssetAllocationValues(){
-    this.isLoadingAssetAllocation=true
+
+  getAssetAllocationValues() {
+    this.isLoadingAssetAllocation = true;
     const obj = {
       clientId: this.clientData.clientId,
       advisorId: this.advisorId,
       targetDate: new Date().getTime()
-    }
+    };
 
     this.customerService.getAssetAllocationSummary(obj).subscribe(res => {
-      this.isLoadingAssetAllocation=false
+      this.isLoadingAssetAllocation = false;
       if (res == null) {
-        this.isAssetAllocationDataLoaded= false;
+        this.isAssetAllocationDataLoaded = false;
       } else {
-        this.isAssetAllocationDataLoaded= true;
+        this.isAssetAllocationDataLoaded = true;
         // let stock = res.find(d => d.assetType == 6);
         // this.portFolioData = res;
         // if (stock) {
@@ -534,17 +540,17 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
 
         let chartData = [];
         let counter = 0;
-        let othersData = {
+        const othersData = {
           y: 0,
           name: 'Others',
           color: AppConstants.DONUT_CHART_COLORS[4],
           dataLabels: {
             enabled: false
           }
-        }
+        };
         let chartTotal = 1;
         let hasNoDataCounter = res.length;
-        let pieChartData = res;
+        const pieChartData = res;
         // let pieChartData =  res.filter(element => element.assetType != 2 && element.currentValue != 0);
         pieChartData.forEach(element => {
           if (element.currentValue > 0) {
@@ -557,7 +563,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
                 dataLabels: {
                   enabled: false
                 }
-              })
+              });
             } else {
               othersData.y += element.currentValue;
             }
@@ -566,24 +572,24 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
             hasNoDataCounter--;
           }
         });
-        if(chartData){
+        if (chartData) {
           let index;
-          let obj={};
-          chartData = this.sorting(chartData,'name');
-          chartData.forEach((element,ind) => {
-              if(element.name == 'Others'){
-                index = ind
-              }
+          let obj = {};
+          chartData = this.sorting(chartData, 'name');
+          chartData.forEach((element, ind) => {
+            if (element.name == 'Others') {
+              index = ind;
+            }
           });
-          if(index){
-             obj = chartData.splice(index, 1);
-            let outputObj=obj[0]
-            chartData.push(outputObj)
+          if (index) {
+            obj = chartData.splice(index, 1);
+            const outputObj = obj[0];
+            chartData.push(outputObj);
           }
         }
         chartTotal -= 1;
         if (chartTotal === 0) {
-          this.isAssetAllocationDataLoaded= false;
+          this.isAssetAllocationDataLoaded = false;
 
         }
         // if (counter > 4) {
@@ -597,11 +603,12 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       }
     }, err => {
       this.hasError = true;
-      this.isLoadingAssetAllocation=false
-      this.isAssetAllocationDataLoaded= false;
-      this.eventService.openSnackBar(err, "Dismiss")
-    })
+      this.isLoadingAssetAllocation = false;
+      this.isAssetAllocationDataLoaded = false;
+      this.eventService.openSnackBar(err, 'Dismiss');
+    });
   }
+
   sorting(data, filterId) {
     if (data) {
       data.sort((a, b) =>
@@ -610,14 +617,15 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     }
 
 
-    return data
+    return data;
   }
+
   loadRTAFeedsTransactions() {
     const obj = {
       clientId: this.clientData.clientId,
       advisorId: this.advisorId,
       limit: 5
-    }
+    };
     this.tabsLoaded.rtaFeeds.isLoading = true;
     this.loaderFn.increaseCounter();
     this.customerService.getRTAFeeds(obj).subscribe(res => {
@@ -633,9 +641,9 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     }, err => {
       this.hasError = true;
       this.tabsLoaded.rtaFeeds.isLoading = false;
-      this.eventService.openSnackBar(err, "Dismiss")
+      this.eventService.openSnackBar(err, 'Dismiss');
       this.loaderFn.decreaseCounter();
-    })
+    });
   }
 
   loadDocumentValutData() {
@@ -643,7 +651,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       clientId: this.clientData.clientId,
       advisorId: this.advisorId,
       limit: 5
-    }
+    };
     this.tabsLoaded.documentsVault.isLoading = true;
     this.loaderFn.increaseCounter();
     this.customerService.getDocumentsFeed(obj).subscribe(res => {
@@ -656,7 +664,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
         this.documentVault.familyStats.unshift({
           relationshipId: (this.clientData.genderId == 1 ? 2 : 3),
           genderId: 0
-        })
+        });
       }
       this.tabsLoaded.documentsVault.isLoading = false;
       this.tabsLoaded.documentsVault.dataLoaded = true;
@@ -664,16 +672,16 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     }, err => {
       this.hasError = true;
       this.tabsLoaded.documentsVault.isLoading = false;
-      this.eventService.openSnackBar(err, "Dismiss")
+      this.eventService.openSnackBar(err, 'Dismiss');
       this.loaderFn.decreaseCounter();
-    })
+    });
   }
 
   loadRiskProfile() {
     const obj = {
       clientId: this.clientData.clientId,
       advisorId: this.advisorId
-    }
+    };
     this.tabsLoaded.riskProfile.isLoading = true;
     this.loaderFn.increaseCounter();
     this.customerService.getRiskProfile(obj).subscribe(res => {
@@ -691,9 +699,9 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       this.tabsLoaded.riskProfile.isLoading = false;
       this.tabsLoaded.riskProfile.dataLoaded = false;
       this.hasError = true;
-      this.eventService.openSnackBar(err, "Dismiss")
+      this.eventService.openSnackBar(err, 'Dismiss');
       this.loaderFn.decreaseCounter();
-    })
+    });
   }
 
   loadGlobalRiskProfile() {
@@ -711,9 +719,9 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       this.hasError = true;
       this.tabsLoaded.globalRiskProfile.isLoading = false;
       this.tabsLoaded.globalRiskProfile.dataLoaded = false;
-      this.eventService.openSnackBar(err, "Dismiss")
+      this.eventService.openSnackBar(err, 'Dismiss');
       this.loaderFn.decreaseCounter();
-    })
+    });
   }
 
   loadRecentTransactions() {
@@ -721,7 +729,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       clientId: this.clientData.clientId,
       advisorId: this.advisorId,
       familyMemberId: 0
-    }
+    };
 
     this.loaderFn.increaseCounter();
 
@@ -739,16 +747,16 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       this.hasError = true;
       this.tabsLoaded.recentTransactions.dataLoaded = false;
       this.tabsLoaded.recentTransactions.isLoading = false;
-      this.eventService.openSnackBar(err, "Dismiss")
+      this.eventService.openSnackBar(err, 'Dismiss');
       this.loaderFn.decreaseCounter();
-    })
+    });
   }
 
   loadGoalsData() {
     const obj = {
       clientId: this.clientData.clientId,
       advisorId: this.advisorId
-    }
+    };
 
     if (this.tabsLoaded.goalsData.displaySection) {
       this.loaderFn.increaseCounter();
@@ -765,10 +773,10 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
         this.tabsLoaded.goalsData.hasData = false;
         this.tabsLoaded.goalsData.dataLoaded = true;
         this.tabsLoaded.goalsData.isLoading = false;
-        this.eventService.openSnackBar(err, "Dismiss")
+        this.eventService.openSnackBar(err, 'Dismiss');
         this.loaderFn.decreaseCounter();
         this.hasError = true;
-      })
+      });
     }
   }
 
@@ -779,7 +787,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       clientId: this.clientData.clientId,
       advisorId: this.advisorId,
       targetDate: startDate.getTime()
-    }
+    };
     this.loaderFn.increaseCounter();
     this.customerService.getCashFlowList(obj).subscribe(res => {
       if (res == null) {
@@ -802,19 +810,19 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       this.tabsLoaded.cashflowData.dataLoaded = false;
       this.tabsLoaded.cashflowData.isLoading = false;
       this.hasError = true;
-      this.eventService.openSnackBar(err, "Dismiss")
+      this.eventService.openSnackBar(err, 'Dismiss');
       this.loaderFn.decreaseCounter();
-    })
+    });
   }
 
   createCashflowFamilyObj(data) {
     let tnx = [];
     // create list of all transactions
     if (data.income && data.income.length > 0) {
-      tnx.push(data.income)
+      tnx.push(data.income);
     }
     if (data.expense && data.expense.length > 0) {
-      tnx.push(data.expense)
+      tnx.push(data.expense);
     }
     tnx = tnx.flat();
 
@@ -833,22 +841,22 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     }
 
     // group by family
-    let familyMembers = [...new Set(tnx.map(obj => obj.familyMemberId))];
+    const familyMembers = [...new Set(tnx.map(obj => obj.familyMemberId))];
     let totalIncome = 0;
     let totalExpense = 0;
 
     // create view obj
-    let leddger = familyMembers.map((famId) => {
+    const leddger = familyMembers.map((famId) => {
       // get all transactions of a particular family member
-      let transactions = tnx.filter((tnx) => tnx.familyMemberId == famId);
+      const transactions = tnx.filter((tnx) => tnx.familyMemberId == famId);
 
       // get all accounts of the family member (banks and non-banks)
-      let all_accounts = [...new Set(transactions.map(obj => obj.userBankMappingId))];
+      const all_accounts = [...new Set(transactions.map(obj => obj.userBankMappingId))];
 
       // create bank wise leddger objs
-      let cashflowLedgger = all_accounts.map(bank => {
+      const cashflowLedgger = all_accounts.map(bank => {
         // filter transactions as per bank
-        let account_transactions = transactions.filter(tnx => tnx.userBankMappingId == bank);
+        const account_transactions = transactions.filter(tnx => tnx.userBankMappingId == bank);
         let account_income = 0;
         let account_expense = 0;
 
@@ -861,40 +869,40 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
             totalExpense += obj.currentValue;
             account_expense += obj.currentValue;
           }
-        })
-        let leddger = {
+        });
+        const leddger = {
           bankName: account_transactions[0].bankName,
           inflow: account_income,
           outflow: account_expense,
           netflow: account_income - account_expense
-        }
+        };
 
         // non linked bank = 0
         if (bank == 0) {
-          leddger.bankName = "Non-linked bank";
+          leddger.bankName = 'Non-linked bank';
         }
         return leddger;
-      })
+      });
 
       // create leddger table obj for each family
       return {
         familyMemberId: famId,
         familyMemberFullName: transactions[0].ownerName,
-        cashflowLedgger: cashflowLedgger
-      }
-    })
+        cashflowLedgger
+      };
+    });
 
-    let total = [{
+    const total = [{
       bankName: 'All In-flows & Out-flows',
       inflow: totalIncome.toFixed(2),
       outflow: totalExpense.toFixed(2),
       netflow: (totalIncome - totalExpense).toFixed(2),
-    }]
+    }];
 
     this.cashflowData = {
       cashflowData: leddger,
-      total: total
-    }
+      total
+    };
   }
 
   assetAllocationPieChartDataMgnt(data) {
@@ -904,7 +912,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       name: 'Asset allocation',
       animation: false,
       innerSize: '60%',
-      data: data,
+      data,
     }, true, true);
   }
 
@@ -972,14 +980,14 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     const obj = {
       clientId: this.clientData.clientId,
       advisorId: this.advisorId
-    }
+    };
 
     if (this.tabsLoaded.mfPortfolioSummaryData.displaySection) {
       this.loaderFn.increaseCounter();
 
       this.customerService.getMutualFund(obj).subscribe(
         data => this.getMutualFundResponse(data), (error) => {
-          this.eventService.openSnackBar(error, "DISMISS");
+          this.eventService.openSnackBar(error, 'DISMISS');
           this.tabsLoaded.mfPortfolioSummaryData.dataLoaded = false;
           this.tabsLoaded.mfPortfolioSummaryData.isLoading = false;
         }
@@ -1002,7 +1010,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       err => {
         this.tabsLoaded.familyMembers.dataLoaded = false;
         this.tabsLoaded.familyMembers.isLoading = false;
-        this.eventService.openSnackBar(err, "Dismiss");
+        this.eventService.openSnackBar(err, 'Dismiss');
         console.error(err);
       }
     );
@@ -1046,7 +1054,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     if (data) {
       this.filterData = this.mfServiceService.doFiltering(data);
       this.mutualFund = this.filterData;
-      this.asyncFilter(this.filterData.mutualFundList, this.filterData.mutualFundCategoryMastersList)
+      this.asyncFilter(this.filterData.mutualFundList, this.filterData.mutualFundCategoryMastersList);
 
       this.getFamilyMemberWiseAllocation(data); // for FamilyMemberWiseAllocation
     }
@@ -1066,7 +1074,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
             dataLabels: {
               enabled: false
             }
-          })
+          });
           counter++;
           break;
 
@@ -1078,7 +1086,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
             dataLabels: {
               enabled: false
             }
-          })
+          });
           counter++;
           break;
         case 'HYBRID':
@@ -1089,7 +1097,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
             dataLabels: {
               enabled: false
             }
-          })
+          });
           counter++;
           break;
         case 'SOLUTION ORIENTED':
@@ -1100,7 +1108,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
             dataLabels: {
               enabled: false
             }
-          })
+          });
           counter++;
           break;
         default:
@@ -1111,7 +1119,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
             dataLabels: {
               enabled: false
             }
-          })
+          });
           counter++;
           break;
       }
@@ -1119,7 +1127,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     this.mfAllocationData = [...new Map(this.mfAllocationData.map(item => [item.name, item])).values()];
     this.mfAllocationData.forEach(e => {
       e.name = e.name[0].toUpperCase() + e.name.slice(1).toLowerCase();
-    })
+    });
   }
 
 
@@ -1130,7 +1138,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       name: 'Browser share',
       innerSize: '60%',
       data: this.mfAllocationData,
-    }, true, false)
+    }, true, false);
   }
 
 
@@ -1142,13 +1150,13 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     console.log(data);
     let counter = 0;
     this.mfSubCatAllocationData = [];
-    let othersData = {
+    const othersData = {
       name: 'Others',
       y: 0,
       percentage: 0,
       color: AppConstants.DONUT_CHART_COLORS[4],
       dataLabels: {enabled: false}
-    }
+    };
     data.forEach((data, ind) => {
       if (ind < 4) {
         this.mfSubCatAllocationData.push({
@@ -1159,14 +1167,14 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
           dataLabels: {
             enabled: false
           }
-        })
+        });
         counter++;
       } else {
-        othersData.y += data.currentValue
-        othersData.percentage += data.allocatedPercentage
+        othersData.y += data.currentValue;
+        othersData.percentage += data.allocatedPercentage;
 
       }
-    })
+    });
     this.mfSubCatAllocationData.push(othersData);
 
     this.mfSubCategoryPieConfig.removeSeries[0];
@@ -1176,7 +1184,7 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
       innerSize: '60%',
       animation: false,
       data: this.mfSubCatAllocationData,
-    }, true, false)
+    }, true, false);
 
   }
 
@@ -1185,19 +1193,21 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   ngOnDestroy() {
-    if (this.worker) this.worker.terminate();
+    if (this.worker) {
+      this.worker.terminate();
+    }
     clearInterval(this.greeterFnID);
   }
 
   greeter() {
-    var date = new Date();
-    var hour = date.getHours();
+    const date = new Date();
+    const hour = date.getHours();
     if (hour < 12) {
-      this.welcomeMessage = "Good morning";
+      this.welcomeMessage = 'Good morning';
     } else if (hour < 17) {
-      this.welcomeMessage = "Good afternoon";
+      this.welcomeMessage = 'Good afternoon';
     } else {
-      this.welcomeMessage = "Good evening";
+      this.welcomeMessage = 'Good evening';
     }
   }
 

@@ -237,12 +237,12 @@
             </div>
             <div class="col-md-4 p-0 right">
                 <mat-button-toggle-group name="fontStyle" aria-label="Font Style" class="right">
-                    <mat-button-toggle value="bold" routerLink="/admin/activies/calendar/day" routerLinkActive="btn-primary">Day
+                    <mat-button-toggle value="bold" routerLink="/admin/activies/calendar/day" routerLinkActive="btn-primary" (click)="checkConnectGoogle()">Day
                     </mat-button-toggle>
-                    <mat-button-toggle value="italic" routerLink="/admin/activies/calendar/week" routerLinkActive="btn-primary">
+                    <mat-button-toggle value="italic" routerLink="/admin/activies/calendar/week" routerLinkActive="btn-primary" (click)="checkConnectGoogle()">
                         Week
                     </mat-button-toggle>
-                    <mat-button-toggle value="underline" routerLink="/admin/activies/calendar/month"
+                    <mat-button-toggle value="underline" routerLink="/admin/activies/calendar/month" (click)="checkConnectGoogle()"
                         routerLinkActive="btn-primary">
                         Month</mat-button-toggle>
                 </mat-button-toggle-group>

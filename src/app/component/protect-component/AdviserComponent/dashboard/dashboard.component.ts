@@ -29,6 +29,7 @@ import { CustomerService } from '../../customers/component/customer/customer.ser
 import { Chart } from 'angular-highcharts';
 import * as Highcharts from 'highcharts';
 import { element } from 'protractor';
+import {EnumDataService} from "../../../../services/enum-data.service";
 
 export interface PeriodicElement {
   name: string;
@@ -213,7 +214,8 @@ export class DashboardComponent implements OnInit {
     private utils: UtilService,
     private datePipe: DatePipe,
     private crmTaskService: CrmTaskService,
-    private customerService: CustomerService
+    private customerService: CustomerService,
+    public enumDataService: EnumDataService
   ) {
     const date = new Date();
     const hourOfDay = date.getHours();
@@ -1350,7 +1352,7 @@ export class DashboardComponent implements OnInit {
     const dialogRef = this.dialog.open(DashboardGuideDialogComponent, {
       maxWidth: '100vw',
       width: '90vw',
-      height: '90vh',
+      //height: '90vh',
       data: this.userData
     });
 

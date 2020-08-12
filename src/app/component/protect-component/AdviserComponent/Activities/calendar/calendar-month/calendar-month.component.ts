@@ -46,7 +46,6 @@ export class CalendarMonthComponent implements OnInit {
     this.curruntDayIndex = this.daysArr.indexOf(this.todayDate);
     this.getEvent();
     this.userInfo = AuthService.getUserInfo()
-
     this.currentMonth = new Date().getMonth();
     this.currentYear = new Date().getFullYear();
     if(!this.calenderService.dayArrey){
@@ -226,6 +225,7 @@ export class CalendarMonthComponent implements OnInit {
             console.log(this.formatedEvent, "formatedEvent calender1");
           }
         }
+        this.addDaysOfMomth();
         this.createDayJson();
         // console.log("events recurring", this.formatedEvent);
       }
