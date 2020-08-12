@@ -57,6 +57,7 @@ export class VerifiedMailsComponent implements OnInit {
     if (data) {
       this.emailDetails = data
       this.emailList = data.listItems
+      this.emailList = this.emailList.filter(element => element.emailVerificationStatus != 3);
       console.log('tlist', this.emailList)
     } else {
       this.emailList = []
@@ -201,5 +202,9 @@ export class VerifiedMailsComponent implements OnInit {
     );
 
   }
-
+  close() {
+    this.subInjectService.changeNewRightSliderState({
+      state: 'close',
+    });
+  }
 }
