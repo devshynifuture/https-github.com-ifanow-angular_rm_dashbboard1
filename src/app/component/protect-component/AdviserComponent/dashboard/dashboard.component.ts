@@ -1,5 +1,5 @@
-import { AddTasksComponent } from './../Activities/crm-tasks/add-tasks/add-tasks.component';
-import { CrmTaskService } from './../Activities/crm-tasks/crm-task.service';
+import { AddTasksComponent } from '../Activities/crm-tasks/add-tasks/add-tasks.component';
+import { CrmTaskService } from '../Activities/crm-tasks/crm-task.service';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatTableDataSource } from '@angular/material';
 import { DashboardGuideDialogComponent } from './dashboard-guide-dialog/dashboard-guide-dialog.component';
@@ -196,7 +196,7 @@ export class DashboardComponent implements OnInit {
         enabled: false
       }
     }
-  ]
+  ];
   todoListFlag: boolean;
   userData: any;
   constructor(
@@ -225,6 +225,7 @@ export class DashboardComponent implements OnInit {
       this.greeting = 'Good evening';
     }
   }
+
   documentSizeData: any = {};
   aumReconList: any;
   aumFlag: boolean;
@@ -365,7 +366,7 @@ export class DashboardComponent implements OnInit {
         enabled: false
       }
     }
-  ]
+  ];
 
   tabsLoaded = {
     portfolioData: {
@@ -432,10 +433,11 @@ export class DashboardComponent implements OnInit {
       isLoading: true,
     }
   };
+
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     this.parentId = AuthService.getAdminAdvisorId();
-    this.clientData = AuthService.getClientData()
+    this.clientData = AuthService.getClientData();
     this.advisorName = AuthService.getUserInfo().name;
     this.userData = AuthService.getUserInfo();
     this.excessAllow = localStorage.getItem('successStoringToken');
@@ -449,7 +451,7 @@ export class DashboardComponent implements OnInit {
     this.finalEndDate = UtilService.getEndOfDay(new Date()).getTime();
     this.getTodoListData();
     this.getRecentTransactionData();
-    this.initializePieChart()
+    this.initializePieChart();
     // this.connectAccountWithGoogle();
     this.getBirthdayOrAnniversary();
     this.getLast7DaysTransactionStatus();
@@ -458,20 +460,21 @@ export class DashboardComponent implements OnInit {
     this.getLatesAumReconciliationData();
     this.getLastSevenDaysInvestmentAccounts();
     this.getGoalSummaryData();
-    this.initPointForTask()
-
+    this.initPointForTask();
+    this.getMisData();
 
   }
 
   initPointForTask() {
     this.getTodaysTaskList();
   }
+
   getAssetAllocationData() {
     const obj = {
       clientId: 122326,
       advisorId: this.advisorId,
       targetDate: new Date().getTime()
-    }
+    };
     this.tabsLoaded.portfolioData.isLoading = true;
 
     // this.loaderFn.increaseCounter();
@@ -482,25 +485,25 @@ export class DashboardComponent implements OnInit {
         this.tabsLoaded.portfolioData.hasData = false;
       } else {
         this.tabsLoaded.portfolioData.hasData = true;
-        let stock = res.find(d => d.assetType == 6);
+        const stock = res.find(d => d.assetType == 6);
         this.portFolioData = res;
         if (stock) {
           this.portFolioData = this.portFolioData.filter(d => d.assetType != 6);
           this.portFolioData.unshift(stock);
         }
-        let chartData = [];
+        const chartData = [];
         let counter = 0;
-        let othersData = {
+        const othersData = {
           y: 0,
           name: 'Others',
           color: AppConstants.DONUT_CHART_COLORS[4],
           dataLabels: {
             enabled: false
           }
-        }
+        };
         let chartTotal = 1;
         let hasNoDataCounter = res.length;
-        let pieChartData = res.filter(element => element.assetType != 2 && element.currentValue != 0);
+        const pieChartData = res.filter(element => element.assetType != 2 && element.currentValue != 0);
         pieChartData.forEach(element => {
           if (element.investedAmount > 0) {
             chartTotal += element.investedAmount;
@@ -512,7 +515,7 @@ export class DashboardComponent implements OnInit {
                 dataLabels: {
                   enabled: false
                 }
-              })
+              });
             } else {
               othersData.y += element.investedAmount;
             }
@@ -524,7 +527,7 @@ export class DashboardComponent implements OnInit {
         chartTotal -= 1;
         if (chartTotal === 0) {
           this.chartTotal = 0;
-          this.tabsLoaded.portfolioData.hasData = false
+          this.tabsLoaded.portfolioData.hasData = false;
         }
         if (counter > 4) {
           chartData.push(othersData);
@@ -541,10 +544,11 @@ export class DashboardComponent implements OnInit {
     }, err => {
       this.hasError = true;
       this.tabsLoaded.portfolioData.isLoading = false;
-      this.eventService.openSnackBar(err, "Dismiss")
+      this.eventService.openSnackBar(err, 'Dismiss');
       // this.loaderFn.decreaseCounter();
-    })
+    });
   }
+
   assetAllocationPieChartDataMgnt(data) {
     this.assetAllocationPieConfig.removeSeries(0);
     this.assetAllocationPieConfig.addSeries({
@@ -552,11 +556,12 @@ export class DashboardComponent implements OnInit {
       name: 'Asset allocation',
       animation: false,
       innerSize: '60%',
-      data: data,
+      data,
     }, true, true);
   }
+
   initializePieChart() {
-    let chartConfig: any = {
+    const chartConfig: any = {
       chart: {
         plotBackgroundColor: null,
         plotBorderWidth: 0,
@@ -598,7 +603,7 @@ export class DashboardComponent implements OnInit {
         innerSize: '60%',
         data: this.chartData
       }]
-    }
+    };
     this.assetAllocationPieConfig = new Chart(chartConfig);
     this.mfAllocationPieConfig = new Chart(chartConfig);
     this.mfSubCategoryPieConfig = new Chart(chartConfig);
@@ -608,8 +613,9 @@ export class DashboardComponent implements OnInit {
       name: 'MF Asset allocation',
       innerSize: '60%',
       data: this.mfAllocationData
-    }]
+    }];
   }
+
   getTodaysTaskList() {
     this.isLoading = true;
     this.crmTaskService.getTaskStatusValues({})
@@ -710,6 +716,7 @@ export class DashboardComponent implements OnInit {
   mailConnect(done) {
     this.excessAllow = done;
   }
+
   getLastSevenDaysInvestmentAccounts() {
     //  this.LastSevenDaysInvestmentAccounts = [{}, {}, {}]
     // this.investmentAccountFlag = true;
@@ -741,6 +748,7 @@ export class DashboardComponent implements OnInit {
 
       });
   }
+
   getLastSevenDaysTransactions() {
 
     const obj = {
@@ -818,13 +826,12 @@ export class DashboardComponent implements OnInit {
           // });
           this.todoListData = data;
           // this.todoListData=this.todoListData.sort((a,b)=>a.due - b.due);
-        }
-        else {
-          this.todoListData = undefined
+        } else {
+          this.todoListData = undefined;
           this.todoListFlag = false;
         }
       }, err => {
-        this.todoListData = undefined
+        this.todoListData = undefined;
         this.todoListFlag = false;
       }
     );
@@ -850,7 +857,7 @@ export class DashboardComponent implements OnInit {
               element.createdDate = this.datePipe.transform(element.createdOn, 'MMMM d, y');
             }
           });
-          this.getTodoListData()
+          this.getTodoListData();
           this.todoListData = data;
           // this.todoListData.unshift(data);
         }
@@ -887,7 +894,7 @@ export class DashboardComponent implements OnInit {
               element.createdDate = this.datePipe.transform(element.createdOn, 'MMMM d, y');
             }
           });
-          this.getTodoListData()
+          this.getTodoListData();
           this.todoListData = data;
         }
       }), err => this.eventService.openSnackBar(err, 'Dismiss');
@@ -898,16 +905,12 @@ export class DashboardComponent implements OnInit {
       data => {
         // if (data) {
         // this.todoListData.splice(index, 1);
-        this.getTodoListData()
+        this.getTodoListData();
         // }
       }), err => {
         this.eventService.openSnackBar(err, 'Dismiss');
       };
   }
-
-
-
-
 
 
   getBirthdayOrAnniversary() {
@@ -925,7 +928,7 @@ export class DashboardComponent implements OnInit {
         if (data) {
           this.isBirhtdayLoader = false;
           data = data.filter(element => element.dateOfBirth && element.dateOfBirth != 0);
-          data = this.sortDateWise(data)
+          data = this.sortDateWise(data);
           data.forEach(element => {
             if (element.displayName.length > 15) {
               element.shortName = element.displayName.substr(0, this.getPosition(element.displayName, ' ', 2));
@@ -948,11 +951,13 @@ export class DashboardComponent implements OnInit {
       }
     );
   }
+
   sortDateWise(data) {
-    return data.sort((a, b) => {
-      return <any>new Date(a.dateOfBirth) - <any>new Date(b.dateOfBirth);
+    return data.sort((a: any, b: any) => {
+      return new Date(a.dateOfBirth).getTime() - new Date(b.dateOfBirth).getTime();
     });
   }
+
   getPosition(string, subString, index) {
     return string.split(subString, index).join(subString).length;
   }
@@ -1332,7 +1337,7 @@ export class DashboardComponent implements OnInit {
       data => {
         this.isKeyMatrix = false;
         this.keyMetricJson = data;
-        this.keyMetricJson.mfAum = UtilService.getNumberToWord(this.keyMetricJson.mfAum)
+        this.keyMetricJson.mfAum = '';
       },
       err => {
         this.keyMetricJson = '';
@@ -1353,8 +1358,25 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-
-
+  getMisData() {
+    const obj = {
+      advisorId: (this.parentId == this.advisorId) ? 0 : this.advisorId,
+      arnRiaDetailsId: -1,
+      parentId: this.parentId
+    };
+    this.backoffice.getMisData(obj).subscribe(
+      data => {
+        if (data) {
+          this.keyMetricJson.mfAum = data.totalAumRupees;
+        }
+        // UtilService.getNumberToWord(this.keyMetricJson.mfAum)
+        // this.getFileResponseDataForMis(data)
+      },
+      err => {
+        console.log('dashboard getMisData err : ', err);
+      }
+    );
+  }
 
 
 }
