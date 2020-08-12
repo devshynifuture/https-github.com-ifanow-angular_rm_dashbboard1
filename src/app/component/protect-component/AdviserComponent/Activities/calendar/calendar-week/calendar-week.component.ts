@@ -63,6 +63,7 @@ export class CalendarWeekComponent implements OnInit {
     this.getEvent();
     this.curruntDayIndex = this.daysArr.indexOf(this.selectedDate);
     // this.excessAllow = localStorage.getItem('successStoringToken')
+    // this.addDaysOfMomth();
 
     if(!this.calenderService.dayArrey){
       this.getWeek(this.viewDate);
@@ -81,6 +82,15 @@ export class CalendarWeekComponent implements OnInit {
       this.day = data[1].selectedDate;
       this.month = data[1].month;
       this.year = data[1].year;
+      this.sun = [];
+      this.mon = [];
+      this.tue = [];
+      this.wed = [];
+      this.thu = [];
+      this.fri = [];
+      this.sat = [];
+      this.addDaysOfMomth();
+
       this.numbersOfDays = data[1].numbersOfDays;
       this.lastMonthDays = data[1].lastMonthDays;
       this.nextMonthDays = data[1].nextMonthDays;
@@ -184,6 +194,7 @@ export class CalendarWeekComponent implements OnInit {
             // console.log(this.formatedEvent, "formatedEvent calender1");
           }
         }
+        this.addDaysOfMomth();
         this.createDayJson();
         // console.log("events recurring", this.formatedEvent);
       }
@@ -640,6 +651,7 @@ export class CalendarWeekComponent implements OnInit {
   thu: any = [];
   fri: any = [];
   sat: any = [];
+
   validateMonthDays(eDays, cDate, startDate, interval) {
     if (eDays) {
       let d = new Date(cDate);
@@ -681,6 +693,46 @@ export class CalendarWeekComponent implements OnInit {
     }
     else {
       return true;
+    }
+  }
+
+  addDaysOfMomth() {
+    let d: any;
+    let m;
+    if(!this.numbersOfDays){
+      this.numbersOfDays = this.getDaysCount(this.month, this.year, "currentMonthDays");
+    }
+    for (let i = 1; i < this.numbersOfDays; i++) {
+      // if(this.back){
+      //   m = this.month == 0?11:this.month-1;
+      // }
+      // else{
+      //   m = this.month == 0?1:this.month;
+      // }
+      d = new Date(this.year, this.month, i);
+      switch (d.getDay()) {
+        case 0:
+          this.sun.push(d);
+          break;
+        case 1:
+          this.mon.push(d);
+          break;
+        case 2:
+          this.tue.push(d);
+          break;
+        case 3:
+          this.wed.push(d);
+          break;
+        case 4:
+          this.thu.push(d);
+          break;
+        case 5:
+          this.fri.push(d);
+          break;
+        case 6:
+          this.sat.push(d);
+          break;
+      }
     }
   }
   ngOnDestroy() {
