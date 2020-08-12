@@ -171,7 +171,7 @@
 
    <div class="row secoundTable">
       <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 p-0 mb-8">
-         <cdk-virtual-scroll-viewport *ngIf="unrealisedData.data.length>0" class="tran-height-2 " tvsItemSize>
+         <cdk-virtual-scroll-viewport *ngIf="unrealisedData.data.length>0" class="tran-height-2"  tvsItemSize="40">
             <!-- <div *ngIf="customDataSource.data.length>0" class="wrapper">-->
             <table #tableEl [appSkeletonLoading]="isLoading" [dataSource]="unrealisedData" appSkeletonLoading
                class="mutualfunds-capital-equity skeletonAnimation" id="table-low" mat-table matSort>
