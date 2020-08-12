@@ -13,10 +13,11 @@ import { apiConfig } from 'src/app/config/main-config';
 import { appConfig } from 'src/app/config/component-config';
 import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 import { IinUccCreationComponent } from '../../IIN/UCC-Creation/iin-ucc-creation/iin-ucc-creation.component';
-import { map, startWith } from 'rxjs/operators';
+import { map, startWith, debounceTime } from 'rxjs/operators';
 import { EnumDataService } from 'src/app/services/enum-data.service';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { Subscription, Observable } from 'rxjs';
 
 const moment = require('moment');
 
@@ -55,6 +56,8 @@ export class AddMandateComponent implements OnInit {
   currentDate = new Date();
   imageUploaded: any = undefined;
   imageLoader: boolean = false;
+  familyOutputSubscription: Subscription;
+  familyOutputObservable: Observable<any> = new Observable<any>();
 
   constructor(public subInjectService: SubscriptionInject, private fb: FormBuilder,
     private processTrasaction: ProcessTransactionService,
@@ -87,26 +90,39 @@ export class AddMandateComponent implements OnInit {
   }
 
   searchClientFamilyMember(value) {
+    if (value.length <= 2) {
+      this.nomineesListFM = undefined
+      return;
+    }
     const obj = {
       advisorId: AuthService.getAdvisorId(),
       displayName: value
     };
-    this.peopleService.getClientFamilyMemberList(obj).subscribe(responseArray => {
-      if (responseArray) {
-        if (value.length >= 0) {
-          this.nomineesListFM = responseArray;
-        } else {
-          this.nomineesListFM = undefined
+    if (this.familyOutputSubscription && !this.familyOutputSubscription.closed) {
+      this.familyOutputSubscription.unsubscribe();
+    }
+    this.familyOutputSubscription = this.familyOutputObservable.pipe(startWith(''),
+      debounceTime(1000)).subscribe(
+        data => {
+          this.peopleService.getClientFamilyMemberList(obj).subscribe(responseArray => {
+            if (responseArray) {
+              if (value.length >= 0) {
+                this.nomineesListFM = responseArray;
+              } else {
+                this.nomineesListFM = undefined
+              }
+            }
+            else {
+              this.nomineesListFM = undefined
+              this.generalDetails.controls.ownerName.setErrors({ invalid: true })
+            }
+          }, error => {
+            this.nomineesListFM = undefined
+            console.log('getFamilyMemberListRes error : ', error);
+          });
         }
-      }
-      else {
-        this.nomineesListFM = undefined
-        this.generalDetails.controls.ownerName.setErrors({ invalid: true })
-      }
-    }, error => {
-      this.nomineesListFM = undefined
-      console.log('getFamilyMemberListRes error : ', error);
-    });
+      );
+
   }
 
   closeRightSlider(flag) {
