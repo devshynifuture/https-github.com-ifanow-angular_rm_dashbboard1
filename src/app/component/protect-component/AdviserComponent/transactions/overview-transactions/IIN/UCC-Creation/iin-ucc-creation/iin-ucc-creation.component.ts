@@ -119,6 +119,10 @@ export class IinUccCreationComponent implements OnInit, AfterViewInit {
   }
 
   searchClientFamilyMember(value) {
+    if (value.length <= 2) {
+      this.filteredStates = undefined
+      return;
+    }
     const obj = {
       advisorId: AuthService.getAdvisorId(),
       displayName: value

@@ -90,6 +90,10 @@ export class AddMandateComponent implements OnInit {
   }
 
   searchClientFamilyMember(value) {
+    if (value.length <= 2) {
+      this.nomineesListFM = undefined
+      return;
+    }
     const obj = {
       advisorId: AuthService.getAdvisorId(),
       displayName: value

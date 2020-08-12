@@ -181,6 +181,12 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
   }
 
   searchClientFamilyMember(value) {
+    if (value.length <= 2) {
+      this.showDefaultDropDownOnSearch = false;
+      this.isLoding = false;
+      this.clientList = undefined
+      return;
+    }
     if (!this.clientList) {
       this.showDefaultDropDownOnSearch = true;
       this.isLoding = true;
