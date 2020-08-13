@@ -361,25 +361,39 @@
   <!-- end six slider -->
 
   <!-- seven slider -->
-  <div *ngIf="step==9" class="row pt-40">
-    <div class="col-md-12 p-0 pl-150 pb-20">
-      <p class="text-diff m-0 roboto f-400 lh-16">This pic will be visible when your clients login to the portal.</p>
-      <p class="text-diff m-0 roboto f-400 lh-16"> It will show up at a few more places like task comments, activity
-        etc.</p>
-    </div>
-    <div class="col-md-12 p-0 pl-150">
-      <img src="/assets/images/advisor-user.png">
-      <div class="avisor-caption">
-        <p class="text-white m-0 roboto f-400 lh-16">Edit picture</p>
+  <div *ngIf="step==9" class="bg-modal-height">
+    <div class="contentGuideBox mt-40"> 
+      <div class="row"> 
+        <div class="col-md-12">
+          <p class="text-diff m-0 roboto f-400 lh-16">This pic will be visible when your clients login to the portal.</p>
+          <p class="text-diff m-0 roboto f-400 lh-16"> It will show up at a few more places like task comments, activity
+            etc.</p>
+        </div>
+      </div>
+      <div class="row pt-20"> 
+        <div class="col-md-12">
+          <img src="/assets/images/advisor-user.png">
+          <div class="avisor-caption">
+            <p class="text-white m-0 roboto f-400 lh-16">Edit picture</p>
+          </div>
+
+        </div>
+      </div>
+      <div class="row pt-10"> 
+        <div class="col-md-12">
+          <mat-checkbox class="text-diff">I will do this later</mat-checkbox>
+        </div>
       </div>
 
-    </div>
-    <div class="col-md-12 p-0 pl-150 pt-8">
-      <mat-checkbox class="text-diff">I will do this later</mat-checkbox>
-    </div>
-    <div class="col-md-12 p-0 pt-40 pl-150">
-      <button (click)="step=10" mat-stroked-button class="btn-primary h-48 lh-48 f-18 mt-40 br-4 mb-28">Next question
+      <div class="bottomFooterDasb"> 
+        <div class="row"> 
+    <div class="col-md-12 ">
+      <button (click)="step=10" mat-stroked-button class="btn-primary h-48 lh-48 f-18  br-4 ">Next question
         <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
+    </div>
+    </div>
+    </div>
+
     </div>
   </div>
   <!-- end seven slider -->
@@ -388,91 +402,101 @@
   <!-- eight silder -->
 
 
-  <div *ngIf="step==10" class="row pt-40">
+  <div *ngIf="step==10" class="bg-modal-height">
 
-    <div class="col-md-12 p-0 pl-150">
-      <div class="d-flex">
-        <div class="pr-20">
-          <div class="box-1 p-20">
+    <div class="contentGuideBox mt-40">
+      <div class="row">
+        <div class="col-md-12 d-flex">
+          <div class="box-1 boxDescribes mr-20 p-20">
             <h5 class="m-0 roboto f-400 lh-19 pb-24">Yes
             </h5>
-            <div class="hw-40 bg-grey lt br-2 mt-36">
+            <div class="hw-40 bg-grey lt br-2 bottomPost">
               <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">A</h3>
             </div>
           </div>
-        </div>
-        <div class="pl-20 pr-20">
-          <div class="box-1 p-20">
+          <div class="box-1 mr-20 boxDescribes p-20">
             <h5 class="m-0 roboto f-400 lh-19 pb-24">No
             </h5>
-            <div class="hw-40 bg-grey lt br-2 mt-36">
+            <div class="hw-40 bg-grey lt br-2 bottomPost">
               <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">B</h3>
             </div>
-            <div class="ribbon ribbon-bottom-right"><span><img src="/assets/images/svg/right-white.svg"></span>
+            <div class=" ribbon-bottom-right">
+              <span><img src="/assets/images/svg/right-white.svg"></span>
             </div>
           </div>
-        </div>
-        <div class="pr-20 pl-20">
-          <div class="box-1 p-20">
+
+          <div class="box-1 boxDescribes mr-20 p-20">
             <h5 class="m-0 roboto f-400 lh-19 pb-24">I have just started the process of registering
             </h5>
-            <div class="hw-40 bg-grey lt br-2 mt-16">
+            <div class="hw-40 bg-grey lt br-2 bottomPost">
               <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">C</h3>
             </div>
           </div>
         </div>
-
-
       </div>
+
+      <div class="bottomFooterDasb"> 
+        <div class="row"> 
+    <div class="col-md-12 ">
+      <button (click)="step=11" mat-stroked-button class="btn-primary h-48 lh-48 f-18   br-4  ">Proceed
+        <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
     </div>
-  </div>
+    </div>
+    </div>
+    </div>
+   </div>
   <!-- eight silder -->
 
   <!-- nine slider -->
 
-  <div *ngIf="step==11" class="row pt-40">
-
-    <div class="col-md-12 p-0 pl-150 slider-9">
-      <div class="row ">
-        <div class="col-md-3 pl-0">
-          <h5 class="m-0 f-400 roboto text-black pb-5">ARN/RIA</h5>
-          <mat-form-field>
-            <mat-select class="form-control">
-              <mat-option value="option">Select ARN/RIA</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div class="col-md-3 pl-0">
-          <h5 class="m-0 f-400 roboto text-black pb-5">ARN/RIA type</h5>
-          <mat-form-field floatLabel="never" appearance="standard">
-            <input matInput class="form-control bg-white" placeholder="Select ARN/RIA type">
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row pt-40">
-        <div class="col-md-3 pl-0">
-          <h5 class="m-0 f-400 roboto text-black pb-5">ARN/RIA number</h5>
-          <mat-form-field>
-            <mat-select class="form-control">
-              <mat-option value="option">Select ARN/RIA</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div class="col-md-3 pl-0">
-          <h5 class="m-0 f-400 roboto text-black pb-5">Name of ARN/RIA holder</h5>
-          <mat-form-field floatLabel="never" appearance="standard">
-            <div class="d-flex">
-              <button mat-stroked-button class="text-custom br-0 h-40 mw-92 pl-5 pr-5 b bg-white">ARN/RIA</button>
-              <input matInput class="form-control bl-0 bg-white" placeholder="Enter name of ARN/RIA holder">
+  <div *ngIf="step==11" class="bg-modal-height">
+    <div class="contentGuideBox mt-40">
+         <div class="row slider-9">
+            <div class="col-md-3 pl-0">
+              <h5 class="m-0 f-400 roboto text-black pb-5">ARN/RIA</h5>
+              <mat-form-field>
+                <mat-select class="form-control">
+                  <mat-option value="option">Select ARN/RIA</mat-option>
+                </mat-select>
+              </mat-form-field>
             </div>
-          </mat-form-field>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-12 p-0 pt-40 pl-150">
-      <button mat-stroked-button class="btn-primary h-48 lh-48 f-18 mt-40 br-4">Save & Add more </button>
-      <button mat-stroked-button class="btn-primary-outline h-48 lh-48 f-18 mt-40 br-4 ml-20">Save & Proceed </button>
-    </div>
+            <div class="col-md-3 pl-0">
+              <h5 class="m-0 f-400 roboto text-black pb-5">ARN/RIA type</h5>
+              <mat-form-field floatLabel="never" appearance="standard">
+                <input matInput class="form-control bg-white" placeholder="Select ARN/RIA type">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row slider-9 pt-40">
+            <div class="col-md-3 pl-0">
+              <h5 class="m-0 f-400 roboto text-black pb-5">ARN/RIA number</h5>
+              <mat-form-field>
+                <mat-select class="form-control">
+                  <mat-option value="option">Select ARN/RIA</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-3 pl-0">
+              <h5 class="m-0 f-400 roboto text-black pb-5">Name of ARN/RIA holder</h5>
+              <mat-form-field floatLabel="never" appearance="standard">
+                <div class="d-flex">
+                  <button mat-stroked-button class="text-custom br-0 h-40 mw-92 pl-5 pr-5 b bg-white">ARN/RIA</button>
+                  <input matInput class="form-control bl-0 bg-white" placeholder="Enter name of ARN/RIA holder">
+                </div>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="bottomFooterDasb">
+            <div class="row">
+              <div class="col-md-12  ">
+                <button mat-stroked-button class="btn-primary h-48 lh-48 f-18  br-4">Save & Add more </button>
+                <button mat-stroked-button class="btn-primary-outline h-48 lh-48 f-18  br-4 ml-20">Save & Proceed </button>
+              </div>
+            </div>
+          </div>
+
+     </div>
   </div>
   <!--end nine slider -->
 
