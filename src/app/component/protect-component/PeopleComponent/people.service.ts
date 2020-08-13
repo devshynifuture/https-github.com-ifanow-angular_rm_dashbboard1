@@ -81,8 +81,8 @@ export class PeopleService {
   getClientOrLeadData(data) {
     return this.http.getEncoded(apiConfig.USER + appConfig.GET_CLIENT_OR_lEAD_DATA, data, 1);
   }
-  
-  getEmailList(data){
+
+  getEmailList(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_EMAIL_LIST, data);
   }
 
@@ -162,5 +162,9 @@ export class PeopleService {
 
   getRelationShipStatusList(data) {
     return this.http.get(apiConfig.USER + appConfig.GET_RELATIONSHIP_STATUS, data);
+  }
+
+  resetClientPassword(data) {
+    return this.http.put(apiConfig.USER + appConfig.RESET_CLIENT_PASSWORD, data);
   }
 }
