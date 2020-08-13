@@ -40,7 +40,7 @@
                     <ng-container matColumnDef="position">
                         <th mat-header-cell *matHeaderCellDef class="br"> Email </th>
                         <td mat-cell *matCellDef="let element" class="br">
-                            <div class="bar"> {{isLoading ? '' :element.emailAddress}}</div>
+                            <div class="bar text-left"> {{isLoading ? '' :element.emailAddress}}</div>
                         </td>
                     </ng-container>
     
@@ -48,7 +48,7 @@
                     <ng-container matColumnDef="name">
                         <th mat-header-cell *matHeaderCellDef class="br"> Status </th>
                         <td mat-cell *matCellDef="let element" class="br" (click)="getEmailVerification()">
-                            <div class="bar d-flex align-items-center"
+                            <div class="bar d-flex align-items-center text-left"
                                 [ngClass]="{'text-danger': element.emailVerificationStatus == 3, 'text-warning': element.emailVerificationStatus == 2, 'text-success': element.emailVerificationStatus == 1}">
                                 {{isLoading ? '' : (element.emailVerificationStatus == 2)?'Verification pending':(element.emailVerificationStatus == 1)?'Verified':'Verification failed'}}
                                 <span class="c-p" *ngIf="element.emailVerificationStatus != 1 && !isLoading">
