@@ -171,7 +171,7 @@
 
    <div class="row secoundTable">
       <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 p-0 mb-8">
-         <cdk-virtual-scroll-viewport *ngIf="unrealisedData.data.length>0" class="tran-height-2 " tvsItemSize>
+         <cdk-virtual-scroll-viewport *ngIf="unrealisedData.data.length>0" class="tran-height-2"  tvsItemSize="40">
             <!-- <div *ngIf="customDataSource.data.length>0" class="wrapper">-->
             <table #tableEl [appSkeletonLoading]="isLoading" [dataSource]="unrealisedData" appSkeletonLoading
                class="mutualfunds-capital-equity skeletonAnimation" id="table-low" mat-table matSort>
@@ -334,7 +334,7 @@
                <ng-container matColumnDef="dividendPayoutTotal">
                   <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
                      <div class="bar">
-                        <span>{{(element.dividendPayout) ? element.dividendPayout : 0}}</span>
+                        <span  class="f-700">{{(element.dividendPayout) ? element.dividendPayout : 0}}</span>
                      </div>
                   </td>
                </ng-container>
@@ -351,7 +351,7 @@
                <ng-container matColumnDef="dividendReinvestTotal">
                   <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
                      <div class="bar">
-                        <span>{{(element.dividendReinvest) ? element.dividendReinvest :0}}</span>
+                        <span  class="f-700">{{(element.dividendReinvest) ? element.dividendReinvest :0}}</span>
                      </div>
                   </td>
                </ng-container>
@@ -376,14 +376,14 @@
                   </th>
                   <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
                      <div class="bar">
-                        <span>{{element.gain}}</span>
+                        <span  >{{element.gain}}</span>
                      </div>
                   </td>
                </ng-container>
                <ng-container matColumnDef="gainTotal">
                   <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
                      <div class="bar">
-                        <span>{{element.netGain}}</span>
+                        <span class="f-700">{{element.netGain}}</span>
                      </div>
                   </td>
                </ng-container>
@@ -392,13 +392,13 @@
                      Absolute return%
                   </th>
                   <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-                     <div class="bar"><span>{{element.absoluteReturn}}</span></div>
+                     <div class="bar"><span >{{element.absoluteReturn}}</span></div>
                   </td>
                </ng-container>
                <ng-container matColumnDef="absReturnTotal">
                   <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
                      <div class="bar">
-                        <span>{{element.trnAbsoluteReturn}}</span>
+                        <span  class="f-700">{{element.trnAbsoluteReturn}}</span>
                      </div>
                   </td>
                </ng-container>
@@ -415,7 +415,7 @@
                <ng-container matColumnDef="xirrTotal">
                   <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
                      <div class="bar">
-                        <span>{{element.totalCagr}}</span>
+                        <span  class="f-700">{{element.totalCagr}}</span>
                      </div>
                   </td>
                </ng-container>
@@ -480,7 +480,7 @@
                </ng-container>
                <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>
                <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
-               <tr *matRowDef="let row; columns: displayedColumnsTotal; when: isTotal" mat-row></tr>
+               <tr *matRowDef="let row; columns: displayedColumnsTotal; when: isTotal" mat-row [hidden]="viewMode == 'All Transactions'"></tr>
                <tr *matRowDef="let row; columns: ['groupHeader']; when: isGroup" mat-row></tr>
                <tr *matRowDef="let row; columns: ['groupHeader2']; when: isGroup2" mat-row></tr>
                <tr *matRowDef="let row; columns: ['groupHeader3']; when: isGroup3" mat-row></tr>
@@ -1119,13 +1119,13 @@
 
             </td>
             <td *ngIf="customDataSource.data?.arrayTran[7]?.isCheked == true"
-               style=" border-top: 1px solid #DADCE0; text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-right: 1px solid #DADCE0;">
+               style=" border-top: 1px solid #DADCE0; text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-right: 1px solid #DADCE0;">
                <!-- {{item.days}} -->
                {{item[eighthArrayTran]}}
 
             </td>
          </tr>
-         <tr *ngIf="item.total" style=" border-bottom:1px solid #DADCE0;page-break-inside: avoid">
+         <tr *ngIf="item.total && viewMode != 'All Transactions'" style=" border-bottom:1px solid #DADCE0;page-break-inside: avoid">
             <td class="f-700" *ngIf="customDataSource.data?.arrayTran[0]?.isCheked == true"
                style=" border-bottom:1px solid #DADCE0;  width:9%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-left: 1px solid #DADCE0;border-top: 1px solid #DADCE0;">
                {{item[firstArrayTotalTran]}}

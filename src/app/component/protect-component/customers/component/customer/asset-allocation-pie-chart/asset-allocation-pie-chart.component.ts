@@ -19,6 +19,7 @@ export class AssetAllocationPieChartComponent implements OnInit {
       isLoading: true,
     }
   };
+  isLoading = true;
   chartTotal = 100;
   chartData: any[] = [
     {
@@ -135,6 +136,7 @@ export class AssetAllocationPieChartComponent implements OnInit {
     this.tabsLoaded.portfolioData.isLoading = true;
 
     this.customerService.getAssetAllocationSummary(obj).subscribe(res => {
+      this.isLoading = false;
       if (res == null) {
         this.portFolioData = [];
         this.tabsLoaded.portfolioData.hasData = false;
@@ -198,6 +200,7 @@ export class AssetAllocationPieChartComponent implements OnInit {
       this.tabsLoaded.portfolioData.dataLoaded = true;
     }, err => {
       this.hasError = true;
+      this.isLoading = false;
       this.tabsLoaded.portfolioData.isLoading = false;
       this.eventService.openSnackBar(err, "Dismiss")
     })

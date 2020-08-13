@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/auth-service/authService';
 import { SettingsService } from '../../setting/settings.service';
 import { EventService } from 'src/app/Data-service/event.service';
+import { element } from 'protractor';
 export interface PeriodicElement {
   name: string;
   position: string;
@@ -46,8 +47,8 @@ export class DashboardGuideDialogComponent implements OnInit {
   ]
 
   descriptionArray = [
-    { name: 'I’ve been running a financial advisory practice for few years now.', selected: false },
-    { name: 'I am new to this industry and just getting started.', selected: false }
+    { name: 'I’ve been running a financial advisory practice for few years now.', selected: false, id: 1 },
+    { name: 'I am new to this industry and just getting started.', selected: false, id: 2 }
   ]
 
   clientsWorkWithList = [
@@ -76,9 +77,27 @@ export class DashboardGuideDialogComponent implements OnInit {
     { name: 'Commodities', selected: false },
     { name: 'Real estate', selected: false },
   ]
+
+  mutualFundPractices = [
+    { name: 'I offer mutual funds under my ARN/RIA code', selected: false, option: 'A' },
+    { name: 'I work with a national distributor as a sub-broker', selected: false, option: 'B' },
+    { name: 'I only give advice. I do not distribute or offer implementation services.', selected: false, option: 'C' },
+    { name: 'Option a and b both applies to me', selected: false, option: 'D' },
+  ]
+
+  teamAloneList = [
+    { name: 'I’m alone', selected: false, option: 'A' },
+    { name: 'I have a team', selected: false, option: 'B' },
+  ]
   ArnRiaForm: FormGroup;
   credentialsForm: FormGroup;
   advisorId: any;
+  step2Flag: boolean;
+  step3Flag
+  step4Flag
+  step5Flag
+  step6Flag
+
 
   constructor(private fb: FormBuilder,
     private settingService: SettingsService,
@@ -127,6 +146,24 @@ export class DashboardGuideDialogComponent implements OnInit {
 
   showPageByIndex(index) {
     this.page = index;
+  }
+
+  backStep() {
+    this.step--;
+  }
+
+  selectPractice(selectedPractise) {
+    this.step6Flag = true;
+    this.mutualFundPractices.map(element => {
+      (selectedPractise.name == element.name) ? element.selected = true : element.selected = false
+    })
+  }
+
+  selectDes(selectDescription) {
+    this.step2Flag = true
+    this.descriptionArray.map(element => {
+      (selectDescription.id == element.id) ? element.selected = true : element.selected = false
+    })
   }
 
   saveArnRiaForm(flag, index) {
