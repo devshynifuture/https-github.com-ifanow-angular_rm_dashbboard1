@@ -752,14 +752,14 @@
         letter-spacing: normal !important;
     }
     .mat-button-toggle {
-        width: 73px;
+        width: 65px;
     }
 }
 
-@media(max-width:1399px) {
-    .toggleBtnClass {
-        .mat-button-toggle {
-            width: 67px;
-        }
-    }
-}
+// @media(max-width:1399px) {
+//     .toggleBtnClass {
+//         .mat-button-toggle {
+//             width: 65px;
+//         }
+//     }
+// }
