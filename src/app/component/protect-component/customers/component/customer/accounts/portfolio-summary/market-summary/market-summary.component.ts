@@ -20,6 +20,7 @@ export class MarketSummaryComponent implements OnInit {
   nifty500DataFlag: boolean;
   bse: any = {};
   nifty50: any = {};
+  isLoading: boolean = true;
 
   constructor(private cusService: CustomerService) {
   }
@@ -31,17 +32,17 @@ export class MarketSummaryComponent implements OnInit {
   }
 
   getStockFeeds() {
-    this.letsideBarLoader = true;
     this.selectedVal = 'Equities';
     this.StockFeedFlag = true;
     this.cusService.getStockFeeds().subscribe(
       data => {
+        this.StockFeedFlag = false;
+        this.loaderFun()
         console.log(data);
         this.getStockFeedsResponse(data);
       }, error => {
         console.log('get stockfeed error : ', error);
         //this.StockFeedFlag = false;
-        this.letsideBarLoader = false;
       });
   }
 
@@ -50,8 +51,9 @@ export class MarketSummaryComponent implements OnInit {
     this.cusService.getDeptData().subscribe(
       data => {
         console.log(data);
+        this.deptDataFlag = false;
+        this.loaderFun()
         if (data) {
-          this.deptDataFlag = false;
           data.current_value = Math.round(data.current_value.replace(',', ''));
           this.deptData = data;
           this.deptData.change_in_percentage = parseFloat(this.deptData.change_in_percentage);
@@ -66,8 +68,7 @@ export class MarketSummaryComponent implements OnInit {
   }
 
   getStockFeedsResponse(data) {
- //   this.StockFeedFlag = false;
-    this.letsideBarLoader = false;
+    //   this.StockFeedFlag = false;
     let { bse_and_nse, carat_22, carat_24, silver } = data;
     if (bse_and_nse) {
       const regex = /\=/gi;
@@ -112,10 +113,11 @@ export class MarketSummaryComponent implements OnInit {
     this.nifty500DataFlag = true;
     this.cusService.getNiftyData().subscribe(
       data => {
+        this.nifty500DataFlag = false;
+        this.loaderFun()
         console.log(data);
         if (data) {
           data.current_value = Math.round(data.current_value.replace(',', ''));
-          this.nifty500DataFlag = false;
           data['colourFlag'] = this.checkNumberPositiveAndNegative(data.change_in_percentage.replace('%', ''));
           this.nifty500Data = data;
         }
@@ -138,6 +140,14 @@ export class MarketSummaryComponent implements OnInit {
 
   onValChange(value) {
     this.selectedVal = value;
+  }
+
+  loaderFun() {
+    if (!this.StockFeedFlag && !this.deptDataFlag && !this.nifty500DataFlag) {
+      this.isLoading = false
+    } else {
+      this.isLoading = true;
+    }
   }
 
 }
