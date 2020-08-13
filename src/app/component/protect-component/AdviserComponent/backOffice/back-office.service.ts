@@ -364,4 +364,8 @@ export class BackOfficeService {
   getSipCleanUpListData(data){
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_MUTUAL_FUND_SIP_CLEANUP_LIST, data);
   }
+
+  putSipCleanUpUpdateStatus(data){
+    return this.http.put(apiConfig.MAIN_URL + appConfig.PUT_MUTUAL_FUND_SIP_CLEANUP_REMOVE_STATUS_UPDATE, data)
+  }
 }

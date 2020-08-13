@@ -14,7 +14,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { PeopleService } from '../../protect-component/PeopleComponent/people.service';
 import { map, startWith, debounceTime } from 'rxjs/operators';
 import { Subscription, Observable } from 'rxjs';
-import {apiConfig} from "../../../config/main-config";
+import { apiConfig } from "../../../config/main-config";
 
 @Component({
   selector: 'app-leftsidebar',
@@ -200,7 +200,7 @@ export class LeftsidebarComponent extends DialogContainerComponent implements On
       this.familyOutputSubscription.unsubscribe();
     }
     this.familyOutputSubscription = this.familyOutputObservable.pipe(startWith(''),
-      debounceTime(1000)).subscribe(
+      debounceTime(700)).subscribe(
         data => {
           this.peopleService.getClientFamilyMemberList(obj).subscribe(responseArray => {
             if (responseArray) {

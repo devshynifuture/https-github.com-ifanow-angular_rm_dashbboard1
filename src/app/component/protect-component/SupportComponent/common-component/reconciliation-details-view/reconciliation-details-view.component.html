@@ -80,16 +80,16 @@
                 <mat-select [formControl]="filterTransactionListTab1" multiple class="form-control">
                   <mat-option *ngFor="let item of filterList" [value]="item">{{item}}</mat-option>
                 </mat-select>
-              </mat-form-field>
+            </mat-form-field>
         </div>
         
         <div *ngIf="tableEntriesType == 2" class="w-100">
-            <mat-form-field appearance="standard" float="never" class="form-group b-0 pr-3">
+            <mat-form-field appearance="standard" float="never" class="form-group mb-0 pr-3">
                 <mat-label>Filter</mat-label>
                 <mat-select [formControl]="filterTransactionListTab2" multiple class="form-control">
                   <mat-option *ngFor="let item of filterList" [value]="item">{{item}}</mat-option>
                 </mat-select>
-              </mat-form-field>
+            </mat-form-field>
         </div>
 
         <div matTooltip="You cannot Unfreeze Folio, Either it is unfreezed earlier or freeze Date is not applied"

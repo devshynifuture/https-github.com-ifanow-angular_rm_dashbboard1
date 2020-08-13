@@ -261,6 +261,7 @@
 #uiTransactions,
 #ui-setting,
 #ui-people,
+#ui-setting-supports,
 #ui-mareketplace-advisor,
 #ui-advisor-dashboard-header {
   position: fixed;
@@ -454,7 +455,8 @@
 #ui-transactions,
 #ui-settingsHeaders,
 #ui-settingsplan,
-#ui-people {
+#ui-people,
+#ui-setting-supports {
   @extend .mt-64;
 
   .example-card .mat-card-header-text {
@@ -577,7 +579,8 @@
 #ui-subscriptions,
 #ui-setting,
 #ui-mareketplace-advisor,
-#uiTransactions {
+#uiTransactions,
+#ui-setting-supports {
   .mat-tab-link {
     color: #595252 !important;
     border-bottom: 4px solid transparent;

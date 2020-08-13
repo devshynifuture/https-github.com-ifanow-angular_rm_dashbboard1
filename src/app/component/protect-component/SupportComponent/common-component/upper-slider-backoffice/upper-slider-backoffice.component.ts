@@ -131,7 +131,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
     if (this.data.startRecon) {
       this.startReconciliation = this.data.startRecon;
       this.rtId = this.data.rtId;
-      this.isFranklinTab = (this.getRtName(this.rtId) === 'FRANKLIN_TEMPLETON') ? true : false;
+      this.isFranklinTab = (this.getRtName(this.rtId) === 'FRANKLIN') ? true : false;
 
       console.log('start recon is true::::');
       this.isLoading = true;
@@ -142,6 +142,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
     } else if (this.data.startRecon === false) {
       this.arnRiaCode = this.data.arnRiaNumber;
       this.rtId = this.data.rtId;
+      this.isFranklinTab = (this.getRtName(this.rtId) === 'FRANKLIN') ? true : false;
       console.log('start recon is false::::');
       this.bindDataWithSummaryTable();
       this.getAumReportList();
@@ -691,7 +692,11 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
   exportToExcelSheet(value, element) {
     this.isTabDisabled = false;
-    this.isFranklinTab = this.getRtName(this.data.rtId) === 'FRANKLIN_TEMPLETON' ? true : false;
+    this.isFranklinTab = this.getRtName(this.data.rtId) === 'FRANKLIN' ? true : false;
+    
+    if(this.isFranklinTab){
+      this.isTabDisabled = true;
+    }
 
 
     // creation of excel sheet
