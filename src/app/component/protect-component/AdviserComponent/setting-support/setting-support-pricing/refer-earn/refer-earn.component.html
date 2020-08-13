@@ -1,1 +1,82 @@
-<p>refer-earn works!</p>
+<div class="row  ">
+    <div class="col-md-8 pr-20 pl-20 pt-32 pb-48">
+        <div class="text-center pl-20 pr-20">
+            <h3 class="f-500 roboto"> Refer & earn by inviting your friends & network to IFANOW</h3>
+
+            <p class="text-custom f-400 roboto">For every friend who joins IFANOW, we’ll give you ₹2,000 and your friend
+                ₹2,000 worth of credits.
+                Share the unique referral code and start earning!</p>
+        </div>
+        <div class="row pt-44  pb-48 pl-20 pr-20">
+            <div class="col-md-3 pl-10">
+                <h5 class="f-500 roboto text-dark pb-10 m-0">Your referral code</h5>
+                <div class="add-money">
+                    <mat-form-field>
+                        <input matInput class="form-control b-a-custom br-0" value="YHBQ">
+                    </mat-form-field>
+                    <button mat-stroked-button class="btn-primary w-50 h-40 br-0">Copy</button>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <h5 class="f-500 roboto text-dark pb-10 m-0">Invite your friends by email</h5>
+                <div class="add-money">
+                    <mat-form-field floatLabel="never" appearance="standard">
+                        <input matInput class="form-control b-a-custom br-0"
+                            placeholder="Enter email addresses, separated by commas">
+                    </mat-form-field>
+                    <button mat-stroked-button class="btn-primary w-15 h-40 br-0 pl-12">Email</button>
+                </div>
+            </div>
+        </div>
+        <div class="bt-1 pl-20 pr-20 refer-users pb-48">
+            <h5 class="pt-20 m-0 roboto f-400 pb-10 pl-20">Referred users</h5>
+            <table mat-table [dataSource]="dataSource" id="table-low">
+
+                <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Name </th>
+                    <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Status </th>
+                    <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="weight">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Credits earned </th>
+                    <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} </td>
+                </ng-container>
+
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-4 bg-grey lter pl-10">
+        <div class="text-center">
+            <img src="/assets/images/svg/refer-earn.svg" class="pt-44">
+        </div>
+
+        <div class="row pt-32">
+            <div class="col-md-6 pr-10">
+                <h5 class="m-0 f-500 roboto pb-10">Credits earned</h5>
+                <mat-form-field>
+                    <input matInput class="form-control b-a-custom" value="₹6,000.00">
+                </mat-form-field>
+                <p class="text-custom m-0 roboto pt-4 f-400 f-12">Lifetime summary of
+                    your total credits earned</p>
+            </div>
+            <div class="col-md-6 pl-10">
+                <h5 class="m-0 f-500 roboto pb-10">Unused credits</h5>
+                <mat-form-field>
+                    <input matInput class="form-control b-a-custom" value="₹3,890.42">
+                </mat-form-field>
+                <p class="text-custom m-0 roboto pt-4 f-400 f-12">These credits are adjusted
+                    towards future billings</p>
+            </div>
+        </div>
+    </div>
+</div>

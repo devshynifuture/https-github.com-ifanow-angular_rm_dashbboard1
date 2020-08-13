@@ -46,7 +46,7 @@
           </span>
         </div>
         <div class="col-md-2 pl-0">
-          <mat-progress-bar value="{{step}}" mode="determinate"></mat-progress-bar>
+          <mat-progress-bar value="{{step * 7}}" mode="determinate"></mat-progress-bar>
         </div>
       </div>
 
@@ -108,7 +108,7 @@
           </div>
 
           <div class="col-md-6 d-flex align-items-center justify-content-end">
-            <p class="mb-0 c-p text-primitive">Skip this exercise</p>
+            <p class="mb-0 c-p text-primitive" (click)="onNoClick()">Skip this exercise</p>
           </div>
         </div>
       </div>
@@ -125,8 +125,8 @@
 
     <div class="contentGuideBox mt-40">
       <div class="row">
-        <div (click)="singleService.selected ? singleService.selected = false : singleService.selected = true;step3Flag=true
-          " *ngFor="let singleService of serviceList" class="col-md-3 mb-20 c-p">
+        <div (click)="selectService(singleService)" *ngFor="let singleService of serviceList"
+          class="col-md-3 mb-20 c-p">
           <div class="advisor-cards">
             <p class="m-0 roboto f-400 lh-16"> {{singleService.name}}</p>
             <i *ngIf="singleService.selected" class="material-icons c-p text-primitive">
@@ -140,13 +140,14 @@
       <div class="bottomFooterDasb">
         <div class="row">
           <div class="col-md-6 ">
-            <button *ngIf="step3Flag" (click)="step=4" mat-stroked-button class="btn-primary h-48 lh-48 f-18 br-4">Next
+            <button *ngIf="step3Flag>0" (click)="step=4" mat-stroked-button
+              class="btn-primary h-48 lh-48 f-18 br-4">Next
               question
               <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
           </div>
 
           <div class="col-md-6 d-flex align-items-center justify-content-end">
-            <p class="mb-0 c-p text-primitive">Skip this exercise</p>
+            <p class="mb-0 c-p text-primitive" (click)="onNoClick()">Skip this exercise</p>
           </div>
         </div>
       </div>
@@ -161,8 +162,8 @@
 
     <div class="contentGuideBox mt-40">
       <div class="row">
-        <div (click)="clientWork.selected ? clientWork.selected = false : clientWork.selected = true;step4Flag=true
-          " *ngFor="let clientWork of clientsWorkWithList" class="col-md-3 mb-20 c-p">
+        <div (click)="selectClientWork(clientWork)" *ngFor="let clientWork of clientsWorkWithList"
+          class="col-md-3 mb-20 c-p">
           <div class="advisor-cards">
             <p class="m-0 roboto f-400 lh-16"> {{clientWork.name}}</p>
             <i *ngIf="clientWork.selected" class="material-icons c-p text-primitive">
@@ -176,13 +177,14 @@
       <div class="bottomFooterDasb">
         <div class="row">
           <div class="col-md-6 ">
-            <button *ngIf="step4Flag" (click)="step=5" mat-stroked-button class="btn-primary h-48 lh-48 f-18 br-4">Next
+            <button *ngIf="step4Flag>0" (click)="step=5" mat-stroked-button
+              class="btn-primary h-48 lh-48 f-18 br-4">Next
               question
               <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
           </div>
 
           <div class="col-md-6 d-flex align-items-center justify-content-end">
-            <p class="mb-0 c-p text-primitive">Skip this exercise</p>
+            <p class="mb-0 c-p text-primitive" (click)="onNoClick()">Skip this exercise</p>
           </div>
         </div>
       </div>
@@ -197,8 +199,8 @@
 
     <div class="contentGuideBox mt-40">
       <div class="row">
-        <div (click)="singleProduct.selected ? singleProduct.selected = false : singleProduct.selected = true;step5Flag=true
-          " *ngFor="let singleProduct of productList" class="col-md-3 mb-20 c-p">
+        <div (click)="selectProduct(singleProduct)" *ngFor="let singleProduct of productList"
+          class="col-md-3 mb-20 c-p">
           <div class="advisor-cards">
             <p class="m-0 roboto f-400 lh-16"> {{singleProduct.name}}</p>
             <i *ngIf="singleProduct.selected" class="material-icons c-p text-primitive">
@@ -218,7 +220,7 @@
           </div>
 
           <div class="col-md-6 d-flex align-items-center justify-content-end">
-            <p class="mb-0 c-p text-primitive">Skip this exercise</p>
+            <p class="mb-0 c-p text-primitive" (click)="onNoClick()">Skip this exercise</p>
           </div>
         </div>
       </div>

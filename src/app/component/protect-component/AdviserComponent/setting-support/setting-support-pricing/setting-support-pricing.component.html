@@ -1,3 +1,26 @@
-<p>setting-support-pricing works!</p>
+<div id="ui-setting-supports" class="mt-64">
+    <div class="row">
+        <div class="col-md-2">
+            <h3 class="m-0 pt-16">Billing</h3>
+        </div>
+        <div class="col-md-10 p-0">
+            <div class="subnav-fixed">
+                <nav mat-tab-nav-bar>
 
-<router-outlet></router-outlet>
+                    <a mat-tab-link [routerLink]="['home']" routerLinkActive="active">HOME</a>
+                    <a mat-tab-link [routerLink]="['bills']" routerLinkActive="active">BILLS</a>
+                    <a mat-tab-link [routerLink]="['refer-earn']" routerLinkActive="active">REFER & EARN</a>
+                    <a mat-tab-link [routerLink]="['settings']" routerLinkActive="active">SETTINGS</a>
+
+                </nav>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row pt-125">
+    <div class="col-md-12 p-0">
+        <router-outlet></router-outlet>
+    </div>
+</div>
