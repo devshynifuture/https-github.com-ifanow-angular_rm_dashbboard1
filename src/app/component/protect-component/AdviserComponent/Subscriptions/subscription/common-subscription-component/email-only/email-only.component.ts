@@ -239,7 +239,7 @@ export class EmailOnlyComponent implements OnInit {
       subject: this._inputData.subject,
       emailTemplateTypeId: this._inputData.emailTemplateTypeId
     };
-    this.orgSetting.editPreEmailTemplate(obj).subscribe(
+    this.orgSetting.saveEmailIDReports(obj).subscribe(
       data => this.editEmailTempalatRes(data),
       err => this.eventService.openSnackBar(err, 'Dismiss')
     );

@@ -1,8 +1,9 @@
 import { MaterialModule } from "./../../../../material/material";
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
+import { EditPayeeSettingPricingComponent } from './setting-support-pricing/setting-support-pricing-setting/edit-payee-setting-pricing/edit-payee-setting-pricing.component';
 
-const componentList = [];
+const componentList = [EditPayeeSettingPricingComponent];
 
 @NgModule({
   declarations: componentList,

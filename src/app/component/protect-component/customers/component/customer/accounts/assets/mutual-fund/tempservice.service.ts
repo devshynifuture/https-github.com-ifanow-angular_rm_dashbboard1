@@ -132,7 +132,7 @@ export class TempserviceService {
     return newArray;
   }
 
-  getSubCategoryArrayForTransaction(mutualFundList, type, nav, allData, trnType, viewMode, folio) {
+  getSubCategoryArrayForTransaction(mutualFundList, type, allData, trnType, viewMode, folio) {
     let reportType;
     (type == '' || type[0].name == 'Sub Category wise') ? reportType = 'subCategoryName' :
       (type[0].name == 'Category wise') ? reportType = 'categoryName' : (type[0].name == 'Scheme wise') ? reportType = 'schemeName' : reportType = 'ownerName';
@@ -169,19 +169,19 @@ export class TempserviceService {
           totalObj = {};
           if (singleData.mutualFundTransactions.length > 0) {
 
-            if (nav) {
-              nav.forEach(element => {
-                if (element.schemeCode == singleData.schemeCode) {
-                  singleData.avgCostNav = element.nav;
-                }
-              });
-            }
+            // if (nav) {
+            //   nav.forEach(element => {
+            //     if (element.schemeCode == singleData.schemeCode) {
+            //       singleData.avgCostNav = element.nav;
+            //     }
+            //   });
+            // }
 
             obj = {
               schemeName: singleData.schemeName,
-              nav: singleData.nav,
+              nav: this.mutualFundRoundAndFormat(singleData.nav, 3),
               navDate: singleData.navDate,
-              avgNav: singleData.avgCostNav,
+              avgNav: this.mutualFundRoundAndFormat(singleData.avgNav, 3),
               // pan: singleData.pan
             };
             if (reportType == 'ownerName') {
@@ -599,8 +599,7 @@ export class TempserviceService {
         return data;
       } else {
         // console.log(' original ', data);
-        const formattedValue = parseFloat((data).toFixed(noOfPlaces)).toLocaleString('en-IN', {'minimumFractionDigits':noOfPlaces,'maximumFractionDigits':noOfPlaces});
-
+        const formattedValue = parseFloat((data).toFixed(noOfPlaces)).toLocaleString('en-IN', { 'minimumFractionDigits': noOfPlaces, 'maximumFractionDigits': noOfPlaces });
         // console.log(' original / roundedValue ', data, ' / ', formattedValue);
         return formattedValue;
       }

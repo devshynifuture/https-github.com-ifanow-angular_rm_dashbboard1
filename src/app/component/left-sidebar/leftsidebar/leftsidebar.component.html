@@ -512,6 +512,255 @@
                   </p>
                 </div>
               </div>
+
+
+
+
+              <div class="hide-on-800 d-flex align-items-center justify-content-center right-fixed tablate-none"
+                id="right-sidemenu">
+                <a class="sidenav-link" mat-list-item>
+                  <img class="t-12" src="assets/images/svg/bell.svg">
+                </a>
+                <a class="sidenav-link" mat-list-item>
+                  <img src="assets/images/svg/earphone.svg" class="c-p" [matMenuTriggerFor]="menu1">
+                  <mat-menu #menu1="matMenu" class="minwidth-400">
+
+                    <button mat-menu-item class="bb-1 event-none h-60">
+                      <div class="row">
+                        <div class="col-md-12 p-0">
+                          <h3 class="m-0">Support</h3>
+                        </div>
+                      </div>
+                    </button>
+
+
+                    <div id="earphones-menu">
+
+                      <button mat-menu-item class="mt-24">
+                        <div class="row">
+                          <div class="col-md-2 p-0">
+                            <img src="/assets/images/svg/bulb-blue-btn.svg" class="v-super">
+                          </div>
+                          <div class="col-md-10 p-0" [routerLink]="['admin/setting-support/knowledge-base']">
+                            <p class="m-0 text-black roboto">Knowledge base</p>
+                            <p class="text-custom m-0 roboto">Find answers to key questions here</p>
+                          </div>
+                        </div>
+                      </button>
+                      <button mat-menu-item>
+                        <div class="row">
+                          <div class="col-md-2 p-0">
+                            <img src="/assets/images/svg/new.svg" class="v-super">
+                          </div>
+                          <div class="col-md-10 p-0" [routerLink]="['/admin/setting-support/new-release-note']">
+                            <p class="m-0 text-black roboto">New release notes</p>
+                            <p class="text-custom m-0 roboto">All the latest developments in one place</p>
+                          </div>
+                        </div>
+                      </button>
+                      <button mat-menu-item>
+                        <div class="row">
+                          <div class="col-md-2 p-0">
+                            <img src="/assets/images/svg/cash-flow-surplus-icon.svg" class="v-super">
+                          </div>
+                          <div class="col-md-10 p-0" [routerLink]="['/admin/setting-support/blog']">
+                            <p class="m-0 text-black roboto">Blog</p>
+                            <p class="text-custom m-0 roboto">Get industry & IFANOW insights. Stay up to
+                              date
+                            </p>
+                          </div>
+                        </div>
+                      </button>
+                      <button mat-menu-item>
+                        <div class="row">
+                          <div class="col-md-2 p-0">
+                            <img src="/assets/images/svg/tip.svg" class="v-super">
+                          </div>
+                          <div class="col-md-10 p-0" [routerLink]="['/admin/setting-support/tips-and-tricks']">
+                            <p class="m-0 text-black roboto">Tips & tricks</p>
+                            <p class="text-custom m-0 roboto">Useful tips & tricks you should know </p>
+                          </div>
+                        </div>
+                      </button>
+                      <button mat-menu-item>
+                        <div class="row">
+                          <div class="col-md-2 p-0">
+                            <img src="/assets/images/svg/ruppess.svg" class="v-super">
+                          </div>
+                          <div class="col-md-10 p-0" [routerLink]="['/admin/setting-support/pricing/home']">
+                            <p class="m-0 text-black roboto">Pricing</p>
+                            <p class="text-custom m-0 roboto">Compare pricing options & select what works
+                            </p>
+                          </div>
+                        </div>
+                      </button>
+                      <button mat-menu-item>
+                        <div class="row">
+                          <div class="col-md-2 p-0">
+                            <img src="/assets/images/svg/raise.svg">
+                          </div>
+                          <div class="col-md-10 p-0" [routerLink]="['/admin/setting-support/raise-support-ticket']">
+                            <p class="m-0 text-black roboto">Raise a support ticket</p>
+                            <p class="text-custom m-0 roboto">Can’t find an answer? Our RMs are here to help
+                            </p>
+                          </div>
+                        </div>
+                      </button>
+                    </div>
+                    <p class="m-0 roboto text-primitive text-center pt-40 pb-28">Office hours: 10.00AM - 6.30PM
+                      (Monday to Friday)
+                    </p>
+                    <div class="p-20 bg-grey lter">
+                      <div class="row">
+                        <div class="col-md-4 pl-0">
+                          <img src="https://ifanow.com/images/team/avinash.jpeg" class="w-70">
+                        </div>
+                        <div class="col-md-8">
+                          <h3 class="m-0 f-500 text-black">Need help?</h3>
+                          <p class="m-0 text-black roboto pt-4">I am your relationship manager</p>
+                          <h5 class="m-0 text-black pt-4"></h5>
+                          <button mat-stroked-button class="btn-primary mt-12">Contact me</button>
+                        </div>
+                      </div>
+                    </div>
+                  </mat-menu>
+                </a>
+
+
+                <a class="sidenav-link pr-28" mat-list-item>
+                  <img class="c-p header-img" [matMenuTriggerFor]="appMenu" src="/assets/images/svg/setting.svg">
+
+                  <mat-menu #appMenu="matMenu" class="minwidth-400">
+                    <button mat-menu-item class="bb-1 event-none h-60">
+                      <div class="row">
+                        <div class="col-md-12 p-0">
+                          <h3 class="m-0">Settings</h3>
+                        </div>
+                      </div>
+                    </button>
+                    <div id="setting-menu">
+                      <div class="row c-p" [routerLink]="['/admin/setting/orgprofile']">
+                        <div class="col-md-2">
+                          <img src="/assets/images/svg/settings-gear-menu/profile.svg" class="v-super">
+                        </div>
+                        <div class="col-md-10 pl-0">
+                          <p class="m-0 roboto">Profile</p>
+                          <p class="text-regular ws-normal">Add key details about you and your organisation
+                            that will reflect across the system
+                          </p>
+                        </div>
+                      </div>
+                      <div class="row c-p" [routerLink]="['/admin/setting/preference']"
+                        *ngIf="roleObj.advisorOrClientRole == 1">
+                        <div class="col-md-2">
+                          <img src="/assets/images/svg/settings-gear-menu/preferences.svg" class="v-super">
+                        </div>
+                        <div class="col-md-10 pl-0">
+                          <p class="m-0 roboto">Preferences</p>
+                          <p class="text-regular ws-normal">Manage settings that will take the customization
+                            possibilities to the next level</p>
+                        </div>
+                      </div>
+
+                      <div [routerLink]="['/admin/setting/activity']" class="row c-p"
+                        *ngIf="roleObj.advisorOrClientRole == 1">
+                        <div class="col-md-2">
+                          <img src="/assets/images/svg/settings-gear-menu/activity.svg" class="v-super">
+                        </div>
+                        <div class="col-md-10 pl-0">
+                          <p class="m-0 roboto">Activity</p>
+                          <p class="text-regular ws-normal">Manage settings related to tasks, email,
+                            calendars, notifications, reminders etc.</p>
+                        </div>
+                      </div>
+
+
+                      <div [routerLink]="['/admin/setting/plan']" class="row c-p"
+                        *ngIf="roleObj.advisorOrClientRole == 1">
+                        <div class="col-md-2">
+                          <img src="/assets/images/svg/settings-gear-menu/plan.svg" class="v-super">
+                        </div>
+                        <div class="col-md-10 pl-0">
+                          <p class="m-0 roboto">Plan</p>
+                          <p class="text-regular ws-normal">Manage settings related to key financial planning
+                            assumptions, asset allocation etc.</p>
+                        </div>
+                      </div>
+
+                      <div [routerLink]="['/admin/setting/users&roles']" class="row c-p"
+                        *ngIf="roleObj.advisorOrClientRole == 1">
+                        <div class="col-md-2">
+                          <img src="/assets/images/svg/settings-gear-menu/user-and-roles.svg" class="v-super">
+                        </div>
+                        <div class="col-md-10 pl-0">
+                          <p class="m-0 roboto">Users & roles</p>
+                          <p class="text-regular ws-normal">Define roles and assign it to your team members
+                            and clients. Manage hierarchy to control client viewing rights between the team
+                          </p>
+                        </div>
+                      </div>
+
+                      <div [routerLink]="['/admin/setting/backoffice']" class="row c-p"
+                        *ngIf="roleObj.advisorOrClientRole == 1">
+                        <div class="col-md-2">
+                          <img src="/assets/images/svg/settings-gear-menu/backoffice.svg" class="v-super">
+                        </div>
+                        <div class="col-md-10 pl-0">
+                          <p class="m-0 roboto">Back office</p>
+                          <p class="text-regular ws-normal">Add your ARN/RIA details, Manage RTA credentials,
+                            SOA settings etc.
+                          </p>
+                        </div>
+                      </div>
+
+                      <!-- <div class="row c-p" [routerLink]="['/admin/setting/backup']" *ngIf="roleObj.advisorOrClientRole == 1">
+                                <div class="col-md-2">
+                                    <img src="/assets/images/svg/settings-gear-menu/backup.svg" class="v-super">
+                                </div>
+                                <div class="col-md-10 pl-0">
+                                    <p class="m-0 roboto">Backup</p>
+                                    <p class="text-regular ws-normal">Securely backup your data in excel</p>
+                                </div>
+                            </div> -->
+
+
+                    </div>
+
+
+                  </mat-menu>
+                </a>
+
+                <a class="sidenav-link" mat-list-item>
+                  <img [src]="authService.profilePic" [matMenuTriggerFor]="menu" class="c-p header-img">
+                  <mat-menu #menu="matMenu" class="log-out maxw-320"
+                    style="width: 320px !important;max-width: 320px !important;">
+                    <div class="pl-20 maxw-320" style="width: 320px !important;max-width: 320px !important;">
+                      <div class="row bb-1 pt-20 pb-20">
+                        <div class="col-md-3 p-0 full-center">
+                          <img [src]="authService.profilePic" class="w-100 br-10">
+                        </div>
+                        <div class="col-md-9 d-flex justify-content-center flex-column pt-32">
+                          <p class="m-0 text-diff roboto f-400 f-16">{{advisorName}}</p>
+                          <p class="text-custom m-0 roboto f-400">{{role}}</p>
+                        </div>
+                      </div>
+
+                      <ul class="d-block bb-1 pb-20">
+                        <li class="text-left pt-20 f-14 c-p" *ngIf="userInfo.userType==1 || userInfo.userType==8"
+                          [routerLink]="['/admin/setting/orgprofile']">
+                          Profile</li>
+                        <li class="text-left pt-20 f-14 c-p" *ngIf="userInfo.userType==1">Account & Billing</li>
+                        <li class="text-left pt-20 f-14 c-p" *ngIf="userInfo.userType==1">Refer & Earn
+                        </li>
+                        <li class="text-left pt-20 f-14 c-p" *ngIf="userInfo.userType==8">Change password</li>
+                      </ul>
+                      <p (click)="logout()" class="c-p mb-0 f-400
+                             pt-20 pb-20">Logout</p>
+                    </div>
+                  </mat-menu>
+                </a>
+              </div>
+
             </div>
 
           </mat-menu>

@@ -51,9 +51,10 @@
                     </div>
                     <div class="relClass">
                         <div class="bar" [ngClass]="{'height_23': isLoading}">
-                            <h3 *ngIf="!isLoading" [routerLink]="['/admin/people/clients']"
+                                <!-- [routerLink]="['/admin/people/clients']"  c-p txt-underline hide routerLink-->
+                            <h3 *ngIf="!isLoading" 
                                 routerLinkActive="router-link-active"
-                                class="m-0 f-400 text-primary f-18 pt-16 c-p txt-underline">
+                                class="m-0 f-400 text-primary f-18 pt-16">
                                 {{user.clientCount}}<span *ngIf="user.clientCount==0"> client</span> <span
                                     *ngIf="user.clientCount>1"> clients</span></h3>
                         </div>

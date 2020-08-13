@@ -8,14 +8,16 @@ import { ReferEarnComponent } from "./refer-earn/refer-earn.component";
 import { SettingSupportPricingSettingComponent } from "./setting-support-pricing-setting/setting-support-pricing-setting.component";
 import { SettingSupportPricingHomeComponent } from "./setting-support-pricing-home/setting-support-pricing-home.component";
 
+
 @NgModule({
   declarations: [
     SettingSupportPricingComponent,
     ReferEarnComponent,
     SettingSupportPricingSettingComponent,
     SettingSupportPricingHomeComponent,
+
   ],
   imports: [CommonModule, MaterialModule, SettingSupportPricingRoutingModule],
   exports: [],
 })
-export class SettingSupportPricingModule {}
+export class SettingSupportPricingModule { }

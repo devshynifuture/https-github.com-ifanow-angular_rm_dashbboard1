@@ -1230,35 +1230,35 @@
             </div>
         </div>
 
-        <div class="col-md-3 pr-0 paddleft30 mt-40">
-            <div class="sticky-top z-0">
-                <div class="b-b mb-20 pb-20">
-                    <div class="row" *ngIf="appearancePortfolio.advisorOrOrganisation == 2">
-                        <div class="col-md-3">
+        <div class="col-md-3 pr-0  paddleft30 mt-40">
+            <div  class="sticky-top z-0">
+                <div class="mb-20">
+                    <div class="row b-b pb-20" *ngIf="appearancePortfolio.advisorOrOrganisation == 2">
+                        <div class="col-md-2 p-0">
                             <div class="advi_name">
                                 <img [src]="orgDetails.reportLogoUrl">
                             </div>
                         </div>
-                        <div class="col-md-9 pr-0 text-left">
+                        <div class="col-md-9 pl-10 pr-0 text-left">
                             <p class="text-black m-0">{{orgDetails.companyDisplayName}}</p>
                             <p class="text-custom m-0">Contact</p>
                         </div>
                     </div>
-                    <div class="row" *ngIf="appearancePortfolio.advisorOrOrganisation != 2">
-                        <div class="col-md-3 pl-0">
+                    <div class="row b-b pb-20" *ngIf="appearancePortfolio.advisorOrOrganisation != 2">
+                        <div class="col-md-2 p-0">
                             <div class="advi_name">
                                 <img [src]="advisorImg">
                             </div>
                         </div>
-                        <div class="col-md-9 p-0 text-left">
+                        <div class="col-md-9 pl-10 pr-0 text-left">
                             <p class="text-black m-0">{{advisorInfo.fullName}}</p>
                             <p class="text-custom m-0">Contact</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="b-b mb-20 pb-20">
-                    <div class="row">
+                <div class=" mb-20  ">
+                    <div class="row b-b pb-20">
                         <div class="col-md-12 p-0" *ngFor="let risk of riskProfile">
                             <h5 class="roboto f-500 d-flex justify-content-between">
                                 Your risk profile

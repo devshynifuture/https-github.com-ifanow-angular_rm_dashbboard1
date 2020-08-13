@@ -13,6 +13,7 @@ import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
 import { CancelFlagService } from '../people-service/cancel-flag.service';
 import { EnumDataService } from 'src/app/services/enum-data.service';
+import { ResetClientPasswordComponent } from './add-client/reset-client-password/reset-client-password.component';
 
 @Component({
   selector: 'app-people-clients',
@@ -48,7 +49,7 @@ export class PeopleClientsComponent implements OnInit {
     this.getClientList(0);
   }
 
-  
+
 
   // @HostListener('window:scroll', [])
   onWindowScroll(e: any) {
@@ -193,6 +194,45 @@ export class PeopleClientsComponent implements OnInit {
     console.log(dialogData + '11111111111111');
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
+
+  resetPassword(value, data) {
+    const dialogData = {
+      data: value,
+      header: 'RESET PASSWORD',
+      body: 'Are you sure you want to reset password?',
+      body2: 'An email will be sent to the client to reset password',
+      btnYes: 'CANCEL',
+      btnNo: 'RESET',
+      positiveMethod: () => {
+        const obj = {
+          advisorId: data.advisorId,
+          clientId: data.clientId
+        };
+        this.peopleService.resetClientPassword(obj).subscribe(
+          responseData => {
+            this.eventService.openSnackBar('Email sent successfully!', 'Dismiss');
+            dialogRef.close();
+          },
+          error => this.eventService.showErrorMessage(error)
+        );
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ResetClientPasswordComponent, {
       width: '400px',
       data: dialogData,
       autoFocus: false,
