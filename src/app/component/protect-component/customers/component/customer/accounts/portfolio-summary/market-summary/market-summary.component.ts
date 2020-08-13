@@ -40,7 +40,7 @@ export class MarketSummaryComponent implements OnInit {
         this.getStockFeedsResponse(data);
       }, error => {
         console.log('get stockfeed error : ', error);
-        this.StockFeedFlag = false;
+        //this.StockFeedFlag = false;
         this.letsideBarLoader = false;
       });
   }
@@ -66,7 +66,7 @@ export class MarketSummaryComponent implements OnInit {
   }
 
   getStockFeedsResponse(data) {
-    this.StockFeedFlag = false;
+ //   this.StockFeedFlag = false;
     this.letsideBarLoader = false;
     let { bse_and_nse, carat_22, carat_24, silver } = data;
     if (bse_and_nse) {
