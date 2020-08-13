@@ -111,8 +111,8 @@ export class CalendarScheduleComponent implements OnInit {
           this.eventData = data;
 
         // console.log(data, "events calender", this.eventData);
-        // this.formatedEvent = [];
-
+        this.formatedEvent = [];
+        this.currentMonthEvents = [];
         for (const e of this.eventData) {
           if (e.rrule != null) {
             e.isRe = e.rrule.FREQ;
@@ -446,7 +446,6 @@ export class CalendarScheduleComponent implements OnInit {
             timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
           },
           recurrence: [
-            'RRULE:FREQ=DAILY;COUNT=2'
           ],
           attendees: result.attendeesList
         };
@@ -467,7 +466,7 @@ export class CalendarScheduleComponent implements OnInit {
           });
         }
       } else {
-        if (result) {
+        if (result && result != 'delete') {
           this.openDialog(result.event, null);
         }
       }
