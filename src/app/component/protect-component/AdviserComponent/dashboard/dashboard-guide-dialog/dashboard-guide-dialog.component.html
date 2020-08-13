@@ -582,6 +582,14 @@
         <p class="m-0 roboto f-400 text-diff pt-8">These credentials are securely encrypted in our database.</p>
       </div>
     </div>
+    <div class="bottomFooterDasb">
+      <div class="row">
+        <div class="col-md-12 ">
+          <button (click)="step=14" mat-stroked-button class="btn-primary h-48 lh-48 f-18   br-4  ">Proceed
+            <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
+        </div>
+      </div>
+    </div>
   </div>
 
 
@@ -604,8 +612,8 @@
       </div>
 
     </div>
-  </div>
-  <div class="row">
+  </div> -->
+  <div *ngIf="step==14" class="row">
     <div class="col-md-12 p-0">
       <div class="pt-40">
         <div class="row cams-advsior">
@@ -700,9 +708,10 @@
     </div>
     <div class="col-md-12 p-0 pt-4 pl-150 pb-44">
       <button mat-stroked-button class="btn-primary h-48 lh-48 f-18 mt-40 br-4">Save & Add more </button>
-      <button mat-stroked-button class="btn-primary-outline h-48 lh-48 f-18 mt-40 br-4 ml-20">Save & Proceed </button>
+      <button mat-stroked-button (click)="step=15" class="btn-primary-outline h-48 lh-48 f-18 mt-40 br-4 ml-20">Save &
+        Proceed </button>
     </div>
-  </div> -->
+  </div>
   <!--end 11th slider -->
 
   <!-- 12th slider 4 tabs -->
@@ -712,99 +721,102 @@
       <h3 class="m-0 f-500 text-diff pt-150">Steps to set-up auto forward of your registered Gmail ID</h3>
 
     </div>
-  </div>
-  <div class="row pt-20">
-    <div class="col-md-9 p-0 pl-150">
-      <mat-tab-group animationDuration="0ms" id="ui-dashboard-guide">
-        <mat-tab label="Step 1">
-
-          <p class="text-danger lh-16 f-400 roboto pt-20 pb-20">Open Gmail using the account you have <b>registered with
-              the
-              RTA</b>. Emails will be auto-forwarded from this account once the setup is done.
-            Click Settings. Click the Forwarding and POP/IMAP tab. In the "Forwarding" section, click Add a forwarding
-            address.</p>
-          <img src="/assets/images/step-1.png" class="w-100">
-        </mat-tab>
-        <mat-tab label="Step 2">
-
-          <p class="text-danger lh-16 f-400 roboto pt-20 pb-20">Enter autoupload@futurewise.co.in. Click Next and then
-            Proceed and then OK.</p>
-          <div class="row">
-            <div class="col-md-6 pl-0">
-              <img src="/assets/images/step2-1.png">
-            </div>
-            <div class="col-md-6 pr-0">
-              <img src="/assets/images/step2-2.png">
-            </div>
-          </div>
-
-        </mat-tab>
-        <mat-tab label="Step 3">
-          <div class="row">
-            <div class="col-md-10 p-0">
-              <p class="text-danger lh-16 f-400 roboto pt-20 pb-10 m-0">If you’ve completed the earlier steps, please
-                check
-                the
-                status of the verification here</p>
-              <table mat-table [dataSource]="dataSource" id="table-low">
-
-                <ng-container matColumnDef="position">
-                  <th mat-header-cell *matHeaderCellDef class="br"> Email </th>
-                  <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="name">
-                  <th mat-header-cell *matHeaderCellDef class="br"> Broker code </th>
-                  <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
-                </ng-container>
-
-
-                <ng-container matColumnDef="weight">
-                  <th mat-header-cell *matHeaderCellDef class="br"> Verification status </th>
-                  <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} </td>
-                </ng-container>
-
-
-                <ng-container matColumnDef="symbol">
-                  <th mat-header-cell *matHeaderCellDef> Symbol </th>
-                  <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
-                </ng-container>
-
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-              </table>
-              <p class="m-0 roboto f-400 text-diff pt-20">If you see <span class="text-success">Verification
-                  successful</span>,
-                then go back to the settings page for the respective Gmail account, and refresh your browser.
-                Once done, proceed to Step 4</p>
-            </div>
-          </div>
-
-        </mat-tab>
-        <mat-tab label="Step 4">
-          <div class="row">
-            <div class="col-md-10 p-0">
-              <p class="text-danger lh-16 f-400 roboto pt-20 pb-8">We’re almost there. Just download this file that
-                contains Filters. This ensures that only emails from RTAs are forwarded to us.</p>
-
-              <button mat-stroked-button class="btn-danger-outline h-48 lh-48 f-18 br-4">Download Filters file <img
-                  src="/assets/images/svg/download-danger.svg" class="pl-12"></button>
-              <img src="/assets/images/step-6.png" class="pb-28 pt-20">
-            </div>
-
-          </div>
-
-          <div class="col-md-12 p-0 pt-4 pb-28">
-            <button mat-stroked-button class="btn-primary h-48 lh-48 f-18 mt-40 br-4">I’m done uploading the filters
-              <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
-
-          </div>
-        </mat-tab>
-      </mat-tab-group>
-    </div>
   </div> -->
+  <div *ngIf="step==15">
+    <div class="row pt-20">
+      <div class="col-md-9 p-0 pl-150">
+        <mat-tab-group animationDuration="0ms" id="ui-dashboard-guide">
+          <mat-tab label="Step 1">
 
-  <!-- <div class="col-md-3 pt-250">
+            <p class="text-danger lh-16 f-400 roboto pt-20 pb-20">Open Gmail using the account you have <b>registered
+                with
+                the
+                RTA</b>. Emails will be auto-forwarded from this account once the setup is done.
+              Click Settings. Click the Forwarding and POP/IMAP tab. In the "Forwarding" section, click Add a forwarding
+              address.</p>
+            <img src="/assets/images/step-1.png" class="w-100">
+          </mat-tab>
+          <mat-tab label="Step 2">
+
+            <p class="text-danger lh-16 f-400 roboto pt-20 pb-20">Enter autoupload@futurewise.co.in. Click Next and then
+              Proceed and then OK.</p>
+            <div class="row">
+              <div class="col-md-6 pl-0">
+                <img src="/assets/images/step2-1.png">
+              </div>
+              <div class="col-md-6 pr-0">
+                <img src="/assets/images/step2-2.png">
+              </div>
+            </div>
+
+          </mat-tab>
+          <mat-tab label="Step 3">
+            <div class="row">
+              <div class="col-md-10 p-0">
+                <p class="text-danger lh-16 f-400 roboto pt-20 pb-10 m-0">If you’ve completed the earlier steps, please
+                  check
+                  the
+                  status of the verification here</p>
+                <table mat-table [dataSource]="dataSource" id="table-low">
+
+                  <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Email </th>
+                    <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Broker code </th>
+                    <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
+                  </ng-container>
+
+
+                  <ng-container matColumnDef="weight">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Verification status </th>
+                    <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} </td>
+                  </ng-container>
+
+
+                  <ng-container matColumnDef="symbol">
+                    <th mat-header-cell *matHeaderCellDef> Symbol </th>
+                    <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+                <p class="m-0 roboto f-400 text-diff pt-20">If you see <span class="text-success">Verification
+                    successful</span>,
+                  then go back to the settings page for the respective Gmail account, and refresh your browser.
+                  Once done, proceed to Step 4</p>
+              </div>
+            </div>
+
+          </mat-tab>
+          <mat-tab label="Step 4">
+            <div class="row">
+              <div class="col-md-10 p-0">
+                <p class="text-danger lh-16 f-400 roboto pt-20 pb-8">We’re almost there. Just download this file that
+                  contains Filters. This ensures that only emails from RTAs are forwarded to us.</p>
+
+                <button mat-stroked-button class="btn-danger-outline h-48 lh-48 f-18 br-4">Download Filters file <img
+                    src="/assets/images/svg/download-danger.svg" class="pl-12"></button>
+                <img src="/assets/images/step-6.png" class="pb-28 pt-20">
+              </div>
+
+            </div>
+
+            <div class="col-md-12 p-0 pt-4 pb-28">
+              <button (click)="step=16" mat-stroked-button class="btn-primary h-48 lh-48 f-18 mt-40 br-4">I’m done
+                uploading the filters
+                <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
+
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+
+    <div class="col-md-3 pt-250">
       <p class="m-0 roboto f-400 text-black lh-16">Once you download the above file, go to Gmail Settings. </p>
       <p class="m-0 roboto f-400 text-black lh-16"> Click Filters and Blocked Addresses.</p>
 
@@ -812,7 +824,8 @@
       <p class="m-0 roboto f-400 text-black lh-16"> Choose the Filters file you just downloaded</p>
 
       <p class="m-0 roboto f-400 text-black lh-16 pt-8"> Click Open file. Click Create filters. </p>
-    </div> -->
+    </div>
+  </div>
   <!--end 12th slider 4 tabs -->
 
 
@@ -823,8 +836,8 @@
       <h3 class="m-0 f-500 text-diff pt-150">Congratulations! Hard part over. Now the easy part.</h3>
 
     </div>
-  </div>
-  <div class="row pt-20">
+  </div> -->
+  <div *ngIf="step==16" class="row pt-20">
     <div class="col-md-12 p-0 pl-150">
       <p class="m-0 f-400 text-black roboto">As promised, we can now order and upload your mutual fund files. </p>
       <p class="m-0 f-400 text-black roboto"> Once done, you will be able to check your client’s portfolios immediately.
@@ -857,8 +870,15 @@
         behalf.
       </p>
     </div>
-
-  </div> -->
+    <div class="bottomFooterDasb">
+      <div class="row">
+        <div class="col-md-12 ">
+          <button (click)="step=17" mat-stroked-button class="btn-primary h-48 lh-48 f-18   br-4  ">Proceed
+            <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!--end 13th slider -->
 
@@ -871,8 +891,8 @@
       </h3>
 
     </div>
-  </div>
-  <div class="row">
+  </div> -->
+  <div *ngIf="step==17" class="row">
 
     <div class="col-md-8 p-0 pl-150">
       <p class="m-0 f-500 text-diff pt-40"><b>Once done, you will be notified via Email.</b> You can always come back
@@ -894,11 +914,11 @@
         022 6820 2020.</p>
     </div>
     <div class="col-md-12 p-0 pt-60 pl-150 pb-28">
-      <button mat-stroked-button class="btn-primary h-48 lh-48 f-18 mt-40 br-4">Finish
+      <button (click)="step=18" mat-stroked-button class="btn-primary h-48 lh-48 f-18 mt-40 br-4">Finish
         <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
 
     </div>
-  </div> -->
+  </div>
   <!-- end 14th slider -->
 
   <!-- 15th slider -->
@@ -909,8 +929,8 @@
       </h3>
 
     </div>
-  </div>
-  <div class="row">
+  </div> -->
+  <div *ngIf="step==18" class="row">
 
     <div class="col-md-12 p-0 pl-150">
       <p class="m-0 f-400 text-diff pt-20">You can watch some video tutorials before moving forward.
@@ -929,11 +949,11 @@
         </div>
       </div>
       <div class="col-md-12 p-0 pt-60 pb-28">
-        <button mat-stroked-button class="btn-primary h-48 lh-48 f-18 mt-40 br-4">Close
+        <button (click)="onNoClick()" mat-stroked-button class="btn-primary h-48 lh-48 f-18 mt-40 br-4">Close
         </button>
 
       </div>
     </div>
-  </div> -->
+  </div>
   <!-- end 15th slider -->
 </div>
