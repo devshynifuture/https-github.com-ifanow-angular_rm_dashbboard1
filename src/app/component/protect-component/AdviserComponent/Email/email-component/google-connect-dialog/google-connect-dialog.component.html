@@ -18,6 +18,9 @@
             </div>
         </div>
         <div class="col-md-12 text-right p-0 pt-12">
+            
+                <mat-spinner style="margin-bottom: -30px;" *ngIf="connecting" [diameter]="30"></mat-spinner>
+
             <button mat-button class="text-custom" (click)="onNoClick()">CANCEL</button>
             <button mat-button class="text-primary" (click)="gmailRedirectUrlCreation()">PROCEED</button>
         </div>
