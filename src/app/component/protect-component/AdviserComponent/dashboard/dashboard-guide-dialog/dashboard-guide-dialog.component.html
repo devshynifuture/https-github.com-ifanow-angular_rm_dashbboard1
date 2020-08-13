@@ -45,8 +45,8 @@
             arrow_back
           </span>
         </div>
-        <div class="col-md-2 pl-0">
-          <mat-progress-bar value="{{step * 7}}" mode="determinate"></mat-progress-bar>
+        <div class="col-md-2 primaryProgress pl-0">
+          <mat-progress-bar   value="{{step * 7}}" mode="determinate"></mat-progress-bar>
         </div>
       </div>
 
@@ -138,7 +138,7 @@
       <div class="row">
         <div (click)="selectService(singleService)" *ngFor="let singleService of serviceList"
           class="col-md-3 mb-20 c-p">
-          <div class="advisor-cards">
+          <div [ngClass]="{'select-active-border': singleService.selected}" class="advisor-cards">
             <p class="m-0 roboto f-400 lh-16"> {{singleService.name}}</p>
             <i *ngIf="singleService.selected" class="material-icons c-p text-primitive">
               check
