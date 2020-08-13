@@ -1,0 +1,153 @@
+<div class="popup-header-fix w-60">
+    <div class="row bb-1">
+        <div class="col-md-8 p-0">
+            <h4 class="mb-0 wrapper-20">Edit payee settings</h4>
+        </div>
+        <div class="col-md-4 text-right">
+            <div class="wrapper-12">
+                <i class="material-icons c-p pt-8 v-middle"> clear</i>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="pt-90 pb-90">
+    <div class="row">
+        <div class="col-md-5 full-end pr-0">
+            <h5 class="m-0 roboto f-400">Customer name</h5>
+        </div>
+        <div class="col-md-5">
+            <mat-form-field>
+                <input matInput class="form-control">
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row pt-40">
+        <div class="col-md-5 pt-12 pr-0 text-right">
+            <h5 class="m-0 roboto f-400">Customer name</h5>
+            <p class="text-custom m-0 f-12 roboto f-400">This name will appear in invoices</p>
+        </div>
+        <div class="col-md-5">
+            <mat-form-field>
+                <input matInput class="form-control">
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row pt-40">
+        <div class="col-md-5 pt-12 pr-0 text-right">
+            <h5 class="m-0 roboto f-400">Email ID (primary)</h5>
+            <p class="text-custom m-0 f-12 roboto f-400">All billing related communication<br> will happen on this email
+            </p>
+        </div>
+        <div class="col-md-5">
+            <mat-form-field>
+                <input matInput class="form-control">
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row pt-28">
+        <div class="col-md-5 pt-12 pr-0 text-right">
+            <h5 class="m-0 roboto f-400">Email ID (secondary)</h5>
+            <p class="text-custom m-0 f-12 roboto f-400">Add a secondary email where you want<br> billing communication
+                to happen
+            </p>
+        </div>
+        <div class="col-md-5">
+            <mat-form-field>
+                <input matInput class="form-control">
+                <mat-hint>Optional</mat-hint>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row pt-40">
+        <div class="col-md-5 full-end pr-0">
+            <h5 class="m-0 roboto f-400">Customer name</h5>
+        </div>
+        <div class="col-md-5">
+            <mat-form-field>
+                <input matInput class="form-control">
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row pt-40">
+        <div class="col-md-5 full-end pr-0">
+            <h5 class="m-0 roboto f-400">Mobile No.</h5>
+        </div>
+        <div class="col-md-5">
+            <div class="row">
+                <div class="col-md-4 pl-0 pr-10">
+                    <mat-form-field>
+                        <mat-select class="form-control">
+                            <mat-option value="option">+91</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-7 pr-0 pl-10 mob-number-pricing-setting">
+                    <mat-form-field floatLabel="never" appearance="standard">
+                        <input matInput placeholder="Enter mobile" class="form-control">
+                        <mat-hint align="end">0 / 10</mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-40">
+        <div class="col-md-5 full-end pr-0">
+            <h5 class="m-0 roboto f-400">GST Treatment</h5>
+        </div>
+        <div class="col-md-5">
+            <mat-form-field>
+                <input matInput class="form-control">
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row pt-40">
+        <div class="col-md-5 full-end pr-0">
+            <h5 class="m-0 roboto f-400">GSTIN</h5>
+        </div>
+        <div class="col-md-5">
+            <mat-form-field>
+                <input matInput class="form-control">
+                <mat-hint align="end">0 / 15</mat-hint>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row pt-40">
+        <div class="col-md-5 full-end pr-0">
+            <h5 class="m-0 roboto f-400">PAN</h5>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field>
+                <input matInput class="form-control">
+                <mat-hint align="end">0 / 15</mat-hint>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row pt-40">
+        <div class="col-md-5 full-end pr-0">
+            <h5 class="m-0 roboto f-400">State</h5>
+        </div>
+        <div class="col-md-5">
+            <mat-form-field>
+                <input matInput class="form-control">
+            </mat-form-field>
+        </div>
+    </div>
+</div>
+<div class="bottom-fixed wrapper-12 pt-16 w-60">
+    <div class="row">
+        <div class="col-md-4">
+            <h5 class="mb-0 pt-8 text-white c-p">Cancel</h5>
+        </div>
+        <div class="col-md-8 right text-right">
+            <button mat-icon-button [matMenuTriggerFor]="menu" class="btn-bottom br-0 text-inherit w-auto pl-12 pr-12">
+                SAVE & NEXT <mat-icon>arrow_drop_up</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item>
+                    <span>text</span>
+                </button>
+
+            </mat-menu>
+        </div>
+    </div>
+</div>
