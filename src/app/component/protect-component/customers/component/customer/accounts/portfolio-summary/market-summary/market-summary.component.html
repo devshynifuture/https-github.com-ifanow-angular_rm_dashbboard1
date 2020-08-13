@@ -10,13 +10,13 @@
 <div class="pb-12">
     <div class="row">
         <div class="col-md-12 p-0 text-center toggleBtnClass">
-            <mat-button-toggle-group class="br0" [value]="selectedVal" #group="matButtonToggleGroup"
+            <mat-button-toggle-group class="br0 " style="width:21vw;" [value]="selectedVal" #group="matButtonToggleGroup"
                 (change)="onValChange(group.value)">
-                <mat-button-toggle value="Equities" class="btnMarketSummary f-14 lh-30" value="Equities">Equities
+                <mat-button-toggle value="Equities" style="width:100%" class="btnMarketSummary  f-14 lh-30" value="Equities">Equities
                 </mat-button-toggle>
-                <mat-button-toggle value="Debt" class="btnMarketSummary f-14 lh-30" value="Debt">Debt
+                <mat-button-toggle value="Debt" style="width:100%" class="btnMarketSummary  f-14 lh-30" value="Debt">Debt
                 </mat-button-toggle>
-                <mat-button-toggle value="C&M" class="btnMarketSummary f-14 lh-30" value="C&M">C&M</mat-button-toggle>
+                <mat-button-toggle value="C&M" style="width:100%" class="btnMarketSummary  f-14 lh-30" value="C&M">C&M</mat-button-toggle>
             </mat-button-toggle-group>
         </div>
     </div>
