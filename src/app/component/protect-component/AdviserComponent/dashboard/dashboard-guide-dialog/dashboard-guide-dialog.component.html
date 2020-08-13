@@ -95,7 +95,7 @@
         <div class="col-md-12 d-flex">
           <div (click)="selectDes(singleDescription)" *ngFor="let singleDescription of descriptionArray;index as i"
             class="mr-20">
-            <div class="box-1 boxDescribes p-20">
+            <div [ngClass]="{'select-active-border': singleDescription.selected}" class="box-1 boxDescribes p-20">
               <h5 class="mb-0 roboto f-400 lh-19 ">{{singleDescription.name}}
               </h5>
 

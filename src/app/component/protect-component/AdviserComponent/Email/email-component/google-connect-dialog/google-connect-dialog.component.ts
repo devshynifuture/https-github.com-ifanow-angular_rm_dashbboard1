@@ -13,6 +13,7 @@ import { EventService } from '../../../../../../Data-service/event.service';
 })
 export class GoogleConnectDialogComponent {
   connect:any;
+  connecting:boolean = false;
   constructor(
     public dialogRef: MatDialogRef<GoogleConnectDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -25,7 +26,7 @@ export class GoogleConnectDialogComponent {
   }
 
   redirectForm = this.fb.group({
-    googleConnectEmail: ['', [Validators.required, Validators.email]]
+    googleConnectEmail: [AuthService.getUserInfo().userName, [Validators.required, Validators.email]]
   });
 
   ngOnInit(): void {
@@ -55,6 +56,7 @@ export class GoogleConnectDialogComponent {
     localStorage.removeItem('associatedGoogleEmailId');
     // compare it with authEmail id
     if (AuthService.getUserInfo().userName == this.redirectForm.get('googleConnectEmail').value) {
+      this.connecting = true;
       localStorage.setItem('associatedGoogleEmailId', this.redirectForm.get('googleConnectEmail').value)
       const redirectWindow = window.open(hitGmailUrl);
       const lookForSuccessToken = setInterval(() => {
