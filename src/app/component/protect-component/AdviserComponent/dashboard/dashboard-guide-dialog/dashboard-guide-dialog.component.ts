@@ -84,9 +84,20 @@ export class DashboardGuideDialogComponent implements OnInit {
     { name: 'I only give advice. I do not distribute or offer implementation services.', selected: false, option: 'C' },
     { name: 'Option a and b both applies to me', selected: false, option: 'D' },
   ]
+
+  teamAloneList = [
+    { name: 'I’m alone', selected: false, option: 'A' },
+    { name: 'I have a team', selected: false, option: 'B' },
+  ]
   ArnRiaForm: FormGroup;
   credentialsForm: FormGroup;
   advisorId: any;
+  step2Flag: boolean;
+  step3Flag
+  step4Flag
+  step5Flag
+  step6Flag
+
 
   constructor(private fb: FormBuilder,
     private settingService: SettingsService,
@@ -142,12 +153,14 @@ export class DashboardGuideDialogComponent implements OnInit {
   }
 
   selectPractice(selectedPractise) {
+    this.step6Flag = true;
     this.mutualFundPractices.map(element => {
       (selectedPractise.name == element.name) ? element.selected = true : element.selected = false
     })
   }
 
   selectDes(selectDescription) {
+    this.step2Flag = true
     this.descriptionArray.map(element => {
       (selectDescription.id == element.id) ? element.selected = true : element.selected = false
     })

@@ -1317,7 +1317,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         obj = '';
         break;
       case 'Transaction type':
-        obj = 'Total';
+        obj = 'total';
         break;
       case 'Transaction date':
         obj = '';
