@@ -33,7 +33,7 @@ import { numberFormat } from 'highcharts';
 export class MutualFundSummaryComponent implements OnInit {
 
   displayedColumns = ['schemeName', 'amountInvested', 'currentValue', 'unrealizedProfit', 'absoluteReturn',
-    'xirr', 'dividendPayout', 'switchOut', 'balanceUnit', 'navDate', 'sipAmount', 'icons'];
+    'xirr', 'dividendPayout', 'switchOut', 'balanceUnit', 'navDate', 'sipAmount','investedDate', 'icons'];
   displayedColumnsTotal: string[] = ['schemeNameTotal', 'amountInvestedTotal', 'currentValueTotal', 'unrealizedProfitTotal', 'absoluteReturnTotal',
     'xirrTotal', 'dividendPayoutTotal', 'switchOutTotal', 'balanceUnitTotal', 'navDateTotal', 'sipAmountTotal', 'iconsTotal'];
   mfData: any;
@@ -1208,6 +1208,7 @@ export class MutualFundSummaryComponent implements OnInit {
         let list =[];
         myArray.forEach(val => list.push(Object.assign({}, val)));
         this.summary.data = list;
+        console.log('Summmary data get here ===',this.summary)
         this.mfData.withdrawals = this.grandTotal.withdrawals
         this.mfData.withdrawals =  this.mfService.mutualFundRoundAndFormat(this.mfData.withdrawals, 0);
         this.mfData.total_dividend_payout =  this.mfService.mutualFundRoundAndFormat(this.mfData.total_dividend_payout, 0);
