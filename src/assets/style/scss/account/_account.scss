@@ -407,9 +407,36 @@
   //   min-width: 135px;
   //   width: 165px;
   // }
+  .overflow-y-auto-1142 {
+    overflow: unset !important;
+    overflow-y: auto !important;
+  }
+
   #ui-insurance {
     li {
       padding: 10px !important;
+    }
+  }
+
+  .client-upper-subscription {
+    #table-low {
+      .mat-sort-header-button {
+        white-space: nowrap !important;
+      }
+
+      th {
+        z-index: 100 !important;
+      }
+
+      th.mat-header-cell:first-of-type {
+        z-index: 101 !important;
+
+      }
+
+      td.mat-cell:first-of-type,
+      th.mat-header-cell:first-of-type {
+        left: -2px !important;
+      }
     }
   }
 

@@ -55,11 +55,11 @@
             </div>
         </div>
 
-        <div class="overflow-hidden">
+        <div class="overflow-hidden overflow-y-auto-1142 client-upper-subscription">
             <table *ngIf="sub!=undefined && sub.subscriptions.length > 0" [appSkeletonLoading]="isLoading"
                 [dataSource]="checkAndGenerateTableSource(sub.subscriptions)" appSkeletonLoading
                 class="mt-8 skeletonAnimation" id="table-low" mat-table matSort>
-                <ng-container matColumnDef="service">
+                <ng-container matColumnDef="service" sticky>
                     <th *matHeaderCellDef class="f-18 w-23" mat-header-cell mat-sort-header="serviceName">
                         Service name
                     </th>
