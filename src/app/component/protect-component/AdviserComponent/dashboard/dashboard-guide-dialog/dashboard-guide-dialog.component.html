@@ -95,7 +95,7 @@
         <div class="col-md-12 d-flex">
           <div (click)="selectDes(singleDescription)" *ngFor="let singleDescription of descriptionArray;index as i"
             class="mr-20">
-            <div [ngClass]="{'select-active-border': singleDescription.selected}" class="box-1 boxDescribes p-20">
+            <div [ngClass]="{'select-active-border': singleDescription.selected}" class="box-1 c-p boxDescribes p-20">
               <h5 class="mb-0 roboto f-400 lh-19 ">{{singleDescription.name}}
               </h5>
 
@@ -113,14 +113,14 @@
 
       <div class="bottomFooterDasb">
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-6 d-flex align-items-center  ">
             <button *ngIf="step2Flag" (click)="step=3" mat-stroked-button class="btn-primary h-48 lh-48 f-18 br-4">Next
               question<img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
           </div>
 
-          <div class="col-md-6 d-flex align-items-center justify-content-end">
+           <div class="col-md-6 d-flex align-items-center justify-content-end">
             <p class="mb-0 c-p text-primitive" (click)="onNoClick()">Skip this exercise</p>
-          </div>
+          </div>  
         </div>
       </div>
 
