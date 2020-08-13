@@ -1,1 +1,79 @@
-<p>setting-support-pricing-setting works!</p>
+<div class="row pt-24">
+    <div class="col-md-12 text-right">
+        <button mat-button class="text-custom">Payee settings</button>
+    </div>
+</div>
+<div class="row pt-24">
+    <div class="col-md-12">
+        <h3 class="m-0 f-400 roboto">Payee settings</h3>
+    </div>
+</div>
+<div class="pb-44">
+    <div class="row pt-20 support-pricing-setting">
+        <div class="col-md-1"></div>
+        <div class="col-md-10">
+            <mat-card class="b-a-l p-0">
+                <mat-card-header class="bg-grey lter row">
+                    <div class="col-md-9 p-0">
+                        <h2 class="m-0 f-18 roboto">Acme Financial Advisors</h2>
+                        <!-- <h3 class="m-0 roboto f-500 f-18 ">{{arn.nameOfTheHolder}}</h3> -->
+                    </div>
+
+                    <div class="col-md-3 p-0 d-flex align-items-center justify-content-end">
+                        <!-- <span class="text-black roboto f-16 mr-12">{{arn.dataUploadTypeId == 1 ? 'AUTO UPLOAD' : 'MANUAL UPLOAD'}}
+                        </span> -->
+                        <ng-container>
+                            <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="c-p">
+
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item (click)="openeditpayeeSetting(null)">Edit payee settings</button>
+                            </mat-menu>
+                        </ng-container>
+                    </div>
+
+                </mat-card-header>
+                <mat-card-content>
+                    <div class="row pt-36 bb-1 pb-36">
+                        <div class="col-md-3">
+                            <p class="f-12 m-0 proxima text-primitive">INVOICE TO</p>
+                            <h5 class="m-0 f-14">Acme Financial Advisors</h5>
+                        </div>
+                        <div class="col-md-3 p-0">
+                            <p class="f-12 m-0 proxima text-primitive">GST TREATMENT</p>
+                            <h5 class="m-0 f-14">Regsitered Business -
+                                Regular</h5>
+                        </div>
+                        <div class="col-md-3 p-0">
+                            <p class="f-12 m-0 proxima text-primitive">GST</p>
+                            <h5 class="m-0 f-14">27AABCF7680A1Z7</h5>
+                        </div>
+                        <div class="col-md-3 p-0">
+                            <p class="f-12 m-0 proxima text-primitive">PAN</p>
+                            <h5 class="m-0 f-14">AABCF7680A</h5>
+                        </div>
+                    </div>
+                    <div class="row pt-12 pb-28">
+                        <div class="col-md-6">
+                            <p class="f-12 m-0 proxima text-primitive">BILLING ADDRESS</p>
+                            <h5 class="m-0 f-14">203-A,”A” Wing, Suashish IT Park,<br>
+                                Off. Dattapada Road,<br>
+                                Borivali East<br>
+                                Mumbai 400 066<br>
+                                Maharashtra, India</h5>
+                        </div>
+                        <div class="col-md-6 pl-0">
+                            <p class="f-12 m-0 proxima text-primitive">EMAIL</p>
+                            <h5 class="m-0 f-14">archit.gupta@acmefinancial.com</h5>
+                            <div class="pt-44">
+                                <p class="f-12 m-0 proxima text-primitive">PHONE </p>
+                                <h5 class="m-0 f-14"> +91 99874 12332</h5>
+                            </div>
+                        </div>
+
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+</div>
