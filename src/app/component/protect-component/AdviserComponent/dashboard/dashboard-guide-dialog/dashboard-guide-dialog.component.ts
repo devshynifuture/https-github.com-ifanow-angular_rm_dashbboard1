@@ -93,9 +93,9 @@ export class DashboardGuideDialogComponent implements OnInit {
   credentialsForm: FormGroup;
   advisorId: any;
   step2Flag: boolean;
-  step3Flag
-  step4Flag
-  step5Flag
+  step3Flag = 0;
+  step4Flag = 0;
+  step5Flag = 0
   step6Flag
 
 
@@ -164,6 +164,39 @@ export class DashboardGuideDialogComponent implements OnInit {
     this.descriptionArray.map(element => {
       (selectDescription.id == element.id) ? element.selected = true : element.selected = false
     })
+  }
+
+  selectService(service) {
+    if (service.selected) {
+      service.selected = false;
+      this.step3Flag--;
+    }
+    else {
+      service.selected = true;
+      this.step3Flag++;
+    }
+  }
+
+  selectClientWork(clientWork) {
+    if (clientWork.selected) {
+      clientWork.selected = false;
+      this.step4Flag--;
+    }
+    else {
+      clientWork.selected = true;
+      this.step4Flag++;
+    }
+  }
+
+  selectProduct(product) {
+    if (product.selected) {
+      product.selected = false;
+      this.step5Flag--;
+    }
+    else {
+      product.selected = true;
+      this.step5Flag++;
+    }
   }
 
   saveArnRiaForm(flag, index) {
