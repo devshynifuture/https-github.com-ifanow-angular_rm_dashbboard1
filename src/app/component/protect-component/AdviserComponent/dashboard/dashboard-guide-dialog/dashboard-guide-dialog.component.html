@@ -76,9 +76,12 @@
           <h3 *ngIf="step==12" class="m-0 f-500 pb-20">Adding ARN/RIA details now.</h3>
           <h3 *ngIf="step==13" class="m-0 f-500 pb-20 text-diff">Thank you {{data.name}}. One last step.</h3>
           <h3 *ngIf="step==14" class="m-0 f-500 pb-20 text-diff">Adding RTA credentials now</h3>
-          <h3 *ngIf="step==15" class="m-0 f-500 pb-20 text-diff">Steps to set-up auto forward of your registered Gmail ID</h3>
-          <h3 *ngIf="step==16" class="m-0 f-500 pb-20 text-diff">Congratulations! Hard part over. Now the easy part.</h3>
-          <h3 *ngIf="step==17" class="m-0 f-500 pb-20 text-diff">Bingo! We’ve started the process of ordering & uploading files for you!</h3>
+          <h3 *ngIf="step==15" class="m-0 f-500 pb-20 text-diff">Steps to set-up auto forward of your registered Gmail
+            ID</h3>
+          <h3 *ngIf="step==16" class="m-0 f-500 pb-20 text-diff">Congratulations! Hard part over. Now the easy part.
+          </h3>
+          <h3 *ngIf="step==17" class="m-0 f-500 pb-20 text-diff">Bingo! We’ve started the process of ordering &
+            uploading files for you!</h3>
           <h3 *ngIf="step==18" class="m-0 f-500 pb-20 text-diff">Thank You!</h3>
 
         </div>
@@ -485,23 +488,24 @@
           <div class="col-md-3 pl-0">
             <h5 class="m-0 f-400 roboto text-black pb-5">ARN/RIA</h5>
             <mat-form-field floatLabel="never" appearance="standard">
-              <mat-select formControlName="arnOrRia" class="form-control">
-                <mat-option disabled [value]=''>Select ARN/RIA</mat-option>
+              <mat-select (selectionChange)="changeNumberValidation($event.value)" formControlName="arnOrRia"
+                class="form-control">
+                <mat-option disabled value="">Select ARN/RIA</mat-option>
                 <mat-option *ngFor="let option of globalData.arn_type_list" [value]="option.id">
                   {{option.type}}</mat-option>
               </mat-select>
-              <mat-error>This field is required</mat-error>
+              <mat-error *ngIf="singleArnRiaForm.get('arnOrRia').errors?.required">This field is required</mat-error>
             </mat-form-field>
           </div>
           <div class="col-md-3 pl-0">
             <h5 class="m-0 f-400 roboto text-black pb-5">ARN/RIA type</h5>
             <mat-form-field floatLabel="never" appearance="standard">
               <mat-select formControlName="typeId" class="form-control">
-                <mat-option disabled [value]=''>Select ARN/RIA</mat-option>
+                <mat-option disabled value="">Select ARN/RIA</mat-option>
                 <mat-option *ngFor="let option of globalData.arn_type_master_list" [value]="option.id">
                   {{option.type}}</mat-option>
               </mat-select>
-              <mat-error>This field is required</mat-error>
+              <mat-error *ngIf="singleArnRiaForm.get('typeId').errors?.required">This field is required</mat-error>
             </mat-form-field>
           </div>
         </div>
@@ -509,8 +513,15 @@
           <div class="col-md-3 pl-0">
             <h5 class="m-0 f-400 roboto text-black pb-5">ARN/RIA number</h5>
             <mat-form-field floatLabel="never" appearance="standard">
-              <input matInput formControlName="number" class="form-control bg-white" placeholder="Enter ARN/RIA number">
-              <mat-error>This field is required</mat-error>
+              <input #number matInput appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                formControlName="number" maxlength={{arnRiaMaxlength}} class="form-control bg-white"
+                placeholder="Enter ARN/RIA number">
+              <mat-hint *ngIf="singleArnRiaForm.get('arnOrRia').value!=''" align="end">
+                {{number.value.length}}/{{arnRiaMaxlength}}</mat-hint>
+              <mat-error *ngIf="singleArnRiaForm.get('number').errors?.required">This field is required</mat-error>
+              <mat-error
+                *ngIf="singleArnRiaForm.get('number').errors?.maxlength || singleArnRiaForm.get('number').errors?.minlength">
+                Please enter valid number</mat-error>
             </mat-form-field>
           </div>
           <div class="col-md-3 pl-0">
@@ -521,7 +532,8 @@
                 <input formControlName="nameOfTheHolder" matInput class="form-control bl-0 bg-white"
                   placeholder="Enter name of ARN/RIA holder">
               </div>
-              <mat-error>This field is required</mat-error>
+              <mat-error *ngIf="singleArnRiaForm.get('nameOfTheHolder').errors?.required">This field is required
+              </mat-error>
             </mat-form-field>
           </div>
         </div>

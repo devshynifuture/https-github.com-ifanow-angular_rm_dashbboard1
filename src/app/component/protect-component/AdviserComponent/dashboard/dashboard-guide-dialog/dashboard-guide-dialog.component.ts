@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { SettingsService } from '../../setting/settings.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { element } from 'protractor';
+import { ValidatorType } from 'src/app/services/util.service';
 export interface PeriodicElement {
   name: string;
   position: string;
@@ -121,6 +122,8 @@ export class DashboardGuideDialogComponent implements OnInit {
   step9Flag: boolean;
   step10Flag: boolean;
   globalData: any;
+  validatorType;
+  arnRiaMaxlength: any;
 
 
   constructor(private fb: FormBuilder,
@@ -135,6 +138,7 @@ export class DashboardGuideDialogComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.validatorType = ValidatorType
     this.advisorId = AuthService.getAdvisorId();
     this.step = 1;
     this.ArnRiaForm = this.fb.group({
@@ -177,6 +181,15 @@ export class DashboardGuideDialogComponent implements OnInit {
 
   showPageByIndex(index) {
     this.page = index;
+  }
+
+  changeNumberValidation(value) {
+    if (value == 1) {
+      this.arnRiaMaxlength = 6;
+    } else {
+      this.arnRiaMaxlength = 9
+    }
+    this.getArnRiaFormList.controls[this.getArnRiaFormList.length - 1].get('number').setValidators([Validators.maxLength(this.arnRiaMaxlength), Validators.minLength(this.arnRiaMaxlength)])
   }
 
   backStep() {
@@ -268,6 +281,12 @@ export class DashboardGuideDialogComponent implements OnInit {
     const jsonObj = {
       ...this.getArnRiaFormList.controls[index].value
     };
+
+    if (this.getArnRiaFormList.controls[index].value.arnOrRia == 1) {
+      jsonObj.number = 'ARN-' + jsonObj.number;
+    } else {
+      jsonObj.number = 'INA' + jsonObj.number;
+    }
     this.settingService.addArn(jsonObj).subscribe((res) => {
       this.eventService.openSnackBar("ARN-RIA Added successfully");
       (flag == 'addMore') ? this.getArnRiaFormList.controls[index].reset() : this.step++;
