@@ -15,7 +15,7 @@ addEventListener('message', ({data}) => {
   const mutualFundList = data.mutualFundList;
   const dataSourceData = mfService.getCategoryForTransaction(mutualFundList, data.type, data.mutualFund, data.showFolio);
   const totalValue = mfService.getFinalTotalValue(mutualFundList);
-  const customDataSourceData = mfService.getSubCategoryArrayForTransaction(mutualFundList, data.type, data.nav, data.mutualFund, data.transactionType, data.viewMode, data.showFolio);
+  const customDataSourceData = mfService.getSubCategoryArrayForTransaction(mutualFundList, data.type, data.mutualFund, data.transactionType, data.viewMode, data.showFolio);
   const customDataHolder = [];
   totalValue.grandTotal = mfService.mutualFundRoundAndFormat(totalValue.grandTotal, 2);
   
@@ -28,7 +28,7 @@ addEventListener('message', ({data}) => {
 
     } else {
     }
-    element.purchasePrice= mfService.mutualFundRoundAndFormat(element.purchasePrice, 4)
+    element.purchasePrice= mfService.mutualFundRoundAndFormat(element.purchasePrice, 3)
     if (element.totalCurrentValue && element.totalTransactionAmt && !element.totalGain) {
       element.totalGain = element.totalCurrentValue - element.totalTransactionAmt;
       element.totalGain = mfService.mutualFundRoundAndFormat(element.totalGain, 2);

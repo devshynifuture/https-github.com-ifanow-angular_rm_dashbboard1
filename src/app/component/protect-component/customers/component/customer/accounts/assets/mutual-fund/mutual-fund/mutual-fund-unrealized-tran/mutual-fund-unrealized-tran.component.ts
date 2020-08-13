@@ -777,7 +777,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       const input = {
         mutualFundList: mutualFund,
         type: (this.rightFilterData.reportType) ? this.rightFilterData.reportType : '',
-        nav: this.mutualFund.nav,
+        // nav: this.mutualFund.nav,
         // mutualFund:this.mfData,
         mutualFund: (this.reponseData) ? this.reponseData : this.mutualFund,
         transactionType: this.rightFilterData.transactionType,

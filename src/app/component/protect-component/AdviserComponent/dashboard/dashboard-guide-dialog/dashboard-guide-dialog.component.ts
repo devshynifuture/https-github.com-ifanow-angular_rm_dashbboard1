@@ -86,9 +86,26 @@ export class DashboardGuideDialogComponent implements OnInit {
   ]
 
   teamAloneList = [
-    { name: 'I’m alone', selected: false, option: 'A' },
-    { name: 'I have a team', selected: false, option: 'B' },
+    { name: 'I’m alone', selected: false, option: 'A', id: 1 },
+    { name: 'I have a team', selected: false, option: 'B', id: 2 },
   ]
+
+  addTeamMemberChoiceList = [
+    { name: 'Sure, let’s add them', selected: false, option: 'A', id: 1 },
+    { name: 'I’ll do this later', selected: false, option: 'B', id: 2 },
+  ]
+
+  arnRiaCodeChoiceList = [
+    { name: 'Yes', selected: false, option: 'A', id: 1 },
+    { name: 'No', selected: false, option: 'B', id: 2 },
+    { name: 'I have just started the process of registering', selected: false, option: 'C', id: 3 },
+  ]
+
+  basicDetailsChoiceList = [
+    { name: 'Sure, let`s add', selected: false, option: 'A', id: 1 },
+    { name: 'I`ll do this later', selected: false, option: 'A', id: 2 },
+  ]
+
   ArnRiaForm: FormGroup;
   credentialsForm: FormGroup;
   advisorId: any;
@@ -97,6 +114,13 @@ export class DashboardGuideDialogComponent implements OnInit {
   step4Flag = 0;
   step5Flag = 0
   step6Flag
+  step7Flag;
+  editPictureFlag;
+  step8Flag: boolean;
+  doItLater
+  step9Flag: boolean;
+  step10Flag: boolean;
+  globalData: any;
 
 
   constructor(private fb: FormBuilder,
@@ -126,6 +150,13 @@ export class DashboardGuideDialogComponent implements OnInit {
       franklinEmail: [],
       franklinPassword: []
     })
+    this.settingService.getArnGlobalData().subscribe((res) => {
+      console.log(res)
+      if (res) {
+        this.globalData = res;
+        this.addArnRiaForm();
+      }
+    });
   }
 
   get getArnRiaForm() { return this.ArnRiaForm.controls; }
@@ -134,7 +165,7 @@ export class DashboardGuideDialogComponent implements OnInit {
   addArnRiaForm() {
     this.getArnRiaFormList.push(this.fb.group({
       advisorId: [this.advisorId, []],
-      arnOrRia: [, [Validators.required]],
+      arnOrRia: ['', [Validators.required]],
       typeId: ['', [Validators.required]],
       number: [, [Validators.required]],
       nameOfTheHolder: [, [Validators.required]]
@@ -163,6 +194,35 @@ export class DashboardGuideDialogComponent implements OnInit {
     this.step2Flag = true
     this.descriptionArray.map(element => {
       (selectDescription.id == element.id) ? element.selected = true : element.selected = false
+    })
+  }
+
+  selectSingleOrTeam(singOrTeam) {
+    this.step7Flag = true;
+    this.teamAloneList.map(element => {
+      (singOrTeam.id == element.id) ? element.selected = true : element.selected = false
+    });
+    (singOrTeam.id == 1) ? this.editPictureFlag = true : this.editPictureFlag = false;
+  }
+
+  selectAddTeamMemberChoice(selectChoice) {
+    this.step8Flag = true
+    this.addTeamMemberChoiceList.map(element => {
+      (selectChoice.id == element.id) ? element.selected = true : element.selected = false
+    })
+  }
+
+  selectarnRiaChoice(selectChoice) {
+    this.step9Flag = true
+    this.arnRiaCodeChoiceList.map(element => {
+      (selectChoice.id == element.id) ? element.selected = true : element.selected = false
+    })
+  }
+
+  selectbasicDetailsChoice(selectChoice) {
+    this.step10Flag = true
+    this.basicDetailsChoiceList.map(element => {
+      (selectChoice.id == element.id) ? element.selected = true : element.selected = false
     })
   }
 
@@ -200,17 +260,17 @@ export class DashboardGuideDialogComponent implements OnInit {
   }
 
   saveArnRiaForm(flag, index) {
-    if (this.ArnRiaForm.controls[index].invalid) {
-      this.ArnRiaForm.controls[index].markAllAsTouched();
+    if (this.getArnRiaFormList.controls[index].invalid) {
+      this.getArnRiaFormList.controls[index].markAllAsTouched();
       return;
     }
     // this.barButtonOptions.active = true;
     const jsonObj = {
-      ...this.ArnRiaForm.controls[index].value
+      ...this.getArnRiaFormList.controls[index].value
     };
     this.settingService.addArn(jsonObj).subscribe((res) => {
       this.eventService.openSnackBar("ARN-RIA Added successfully");
-      (flag == 'addMore') ? this.ArnRiaForm.controls[index].reset() : this.step++;
+      (flag == 'addMore') ? this.getArnRiaFormList.controls[index].reset() : this.step++;
     }, err => {
       this.eventService.openSnackBar(err, "Dismiss");
       // this.barButtonOptions.active = false;

@@ -71,8 +71,10 @@
             Should we add a profile pic of
             yours?</h3>
           <h3 *ngIf="step==10" class="m-0 f-500 pb-20">Do you have an ARN/RIA code?</h3>
-          <h3 *ngIf="step==11" class="m-0 f-500 pb-20">Adding ARN/RIA details now.</h3>
-          <h3 *ngIf="step==12" class="m-0 f-500 pb-20 text-diff">Thank you {{data.name}}. One last step.</h3>
+          <h3 *ngIf="step==11" class="m-0 f-500 pb-20">Great! Let`s add some basic details of your ARN/RIA code. With
+            that in place,you will ve able to view your client`s mututal fundholding in no time.</h3>
+          <h3 *ngIf="step==12" class="m-0 f-500 pb-20">Adding ARN/RIA details now.</h3>
+          <h3 *ngIf="step==13" class="m-0 f-500 pb-20 text-diff">Thank you {{data.name}}. One last step.</h3>
         </div>
       </div>
     </div>
@@ -265,7 +267,7 @@
             class="box-1 boxDescribes p-20 mr-20">
             <h5 class="m-0 roboto f-400 lh-19 pb-24">{{singleMfPractice.name}}
             </h5>
-            <div class="hw-40 bg-grey lt br-2 mt-16">
+            <div class="hw-40 bg-grey lt br-2 bottomPost ">
               <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">{{singleMfPractice.option}}</h3>
             </div>
             <div *ngIf="singleMfPractice.selected" class="ribbon ribbon-bottom-right">
@@ -288,45 +290,35 @@
 
   </div>
 
-  <!-- end  four slider -->
 
-  <!-- five slider -->
-  <!-- <div class="row bg-grey lter">
 
-    <div class="col-md-12 h-200 p-0 d-flex align-items-end pl-150">
-      <h3 class="m-0 f-500 pb-20">{{data.name}}, how are you managing your practice? Like, are you managing it alone or
-        you have a team? </h3>
-    </div>
-  </div> -->
-  <div *ngIf="step==7" class="row pt-40">
+  <div *ngIf="step==7" class="bg-modal-height">
 
-    <div class="col-md-12 p-0 pl-150">
-      <div class="d-flex">
-        <div *ngFor="let singleORTeam of teamAloneList" class="pr-20">
-          <div [ngClass]="{'box-2': singleORTeam.option=='A','box-2-1':singleORTeam.option=='B'}" class=" p-20">
-            <h5 class="m-0 roboto f-400 lh-19 pb-24 text-diff">{{singleORTeam.name}}
-            </h5>
-            <div class="hw-40 bg-grey lt br-2 mt-16">
-              <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">{{singleORTeam.option}}</h3>
+    <div class="contentGuideBox mt-40">
+      <div class="row">
+        <div class=" col-md-12 d-flex">
+          <div (click)="selectSingleOrTeam(singleORTeam)" *ngFor="let singleORTeam of teamAloneList">
+            <div [ngClass]="{'box-2': singleORTeam.option=='A','box-2-1':singleORTeam.option=='B'}"
+              class=" mr-20 boxDescribes p-20">
+              <h5 class="m-0 roboto f-400 lh-19 pb-24 text-diff">{{singleORTeam.name}}
+              </h5>
+              <div class="hw-40 bg-grey bottomPost lt br-2  ">
+                <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">{{singleORTeam.option}}</h3>
+              </div>
+              <div *ngIf="singleORTeam.selected" class="ribbon ribbon-bottom-right">
+                <span><img src="/assets/images/svg/right-white.svg"></span>
+              </div>
             </div>
-
           </div>
         </div>
-        <!-- <div class="pl-20">
-          <div class=" p-20">
-            <h5 class="m-0 roboto f-400 lh-19 pb-24 text-diff">I have a team
-            </h5>
-            <div class="hw-40 bg-grey lt br-2 mt-16">
-              <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">B</h3>
-            </div>
-          </div>
-        </div> -->
       </div>
+
       <div class="bottomFooterDasb">
         <div class="row">
           <div class="col-md-12">
-            <button (click)="step=8" mat-stroked-button class="btn-primary h-48 lh-48 f-18 br-4">Next question<img
-                src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
+            <button *ngIf="step7Flag" (click)="editPictureFlag?step=9:step=8" mat-stroked-button
+              class="btn-primary h-48 lh-48 f-18 br-4">Next
+              question<img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
           </div>
         </div>
       </div>
@@ -336,65 +328,76 @@
   <!-- end five slider -->
 
   <!-- six slider -->
-  <div *ngIf="step==8" class="row pt-40">
+  <div *ngIf="step==8" class="bg-modal-height">
 
-    <div class="col-md-12 p-0 pl-150">
-      <div class="d-flex">
-        <div class="pr-20">
-          <div class="box-1 p-20">
-            <h5 class="m-0 roboto f-400 lh-19 pb-24">Sure, let’s add them
-            </h5>
-            <div class="hw-40 bg-grey lt br-2 mt-36">
-              <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">A</h3>
-            </div>
-            <div class="ribbon ribbon-bottom-right"><span><img src="/assets/images/svg/right-white.svg"></span>
-            </div>
-          </div>
-        </div>
-        <div class="pl-20">
-          <div class="box-1 p-20">
-            <h5 class="m-0 roboto f-400 lh-19 pb-24">I’ll do this later
-            </h5>
-            <div class="hw-40 bg-grey lt br-2 mt-36">
-              <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">B</h3>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-    <div class="bottomFooterDasb">
+    <div class="contentGuideBox mt-40">
       <div class="row">
-        <div class="col-md-12">
-          <button (click)="step=9" mat-stroked-button class=" btn-primary h-48 lh-48 f-18 br-4">Next question<img
-              src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
+        <div class="col-md-12 d-flex">
+          <div (click)="selectAddTeamMemberChoice(choice)" *ngFor="let choice of addTeamMemberChoiceList"
+            class="box-1 boxDescribes mr-20 p-20">
+            <h5 class="m-0 roboto f-400 lh-19 pb-24">{{choice.name}}
+            </h5>
+            <div class="hw-40 bg-grey lt br-2 bottomPost">
+              <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">{{choice.option}}</h3>
+            </div>
+            <div *ngIf="choice.selected" class="ribbon ribbon-bottom-right"><span><img
+                  src="/assets/images/svg/right-white.svg"></span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="bottomFooterDasb">
+        <div class="row">
+          <div class="col-md-12">
+            <button *ngIf="step8Flag" (click)="step=9" mat-stroked-button class=" btn-primary h-48 lh-48 f-18 br-4">Next
+              question<img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
+          </div>
         </div>
       </div>
+
     </div>
   </div>
 
   <!-- end six slider -->
 
   <!-- seven slider -->
-  <div *ngIf="step==9" class="row pt-40">
-    <div class="col-md-12 p-0 pl-150 pb-20">
-      <p class="text-diff m-0 roboto f-400 lh-16">This pic will be visible when your clients login to the portal.</p>
-      <p class="text-diff m-0 roboto f-400 lh-16"> It will show up at a few more places like task comments, activity
-        etc.</p>
-    </div>
-    <div class="col-md-12 p-0 pl-150">
-      <img src="/assets/images/advisor-user.png">
-      <div class="avisor-caption">
-        <p class="text-white m-0 roboto f-400 lh-16">Edit picture</p>
+  <div *ngIf="editPictureFlag && step==9" class="bg-modal-height">
+    <div class="contentGuideBox mt-40">
+      <div class="row">
+        <div class="col-md-12">
+          <p class="text-diff m-0 roboto f-400 lh-16">This pic will be visible when your clients login to the portal.
+          </p>
+          <p class="text-diff m-0 roboto f-400 lh-16"> It will show up at a few more places like task comments, activity
+            etc.</p>
+        </div>
+      </div>
+      <div class="row pt-20">
+        <div class="col-md-12">
+          <img src="/assets/images/advisor-user.png">
+          <div class="avisor-caption">
+            <p class="text-white m-0 roboto f-400 lh-16">Edit picture</p>
+          </div>
+
+        </div>
+      </div>
+      <div class="row pt-10">
+        <div class="col-md-12">
+          <mat-checkbox [(ngModel)]="doItLater" class="text-diff">I will do this later</mat-checkbox>
+        </div>
       </div>
 
-    </div>
-    <div class="col-md-12 p-0 pl-150 pt-8">
-      <mat-checkbox class="text-diff">I will do this later</mat-checkbox>
-    </div>
-    <div class="col-md-12 p-0 pt-40 pl-150">
-      <button (click)="step=10" mat-stroked-button class="btn-primary h-48 lh-48 f-18 mt-40 br-4 mb-28">Next question
-        <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
+      <div class="bottomFooterDasb">
+        <div class="row">
+          <div class="col-md-12 ">
+            <button *ngIf="doItLater" (click)="step=10" mat-stroked-button
+              class="btn-primary h-48 lh-48 f-18  br-4 ">Next question
+              <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
   <!-- end seven slider -->
@@ -403,41 +406,64 @@
   <!-- eight silder -->
 
 
-  <div *ngIf="step==10" class="row pt-40">
+  <div *ngIf="step==10" class="bg-modal-height">
 
-    <div class="col-md-12 p-0 pl-150">
-      <div class="d-flex">
-        <div class="pr-20">
-          <div class="box-1 p-20">
-            <h5 class="m-0 roboto f-400 lh-19 pb-24">Yes
+    <div class="contentGuideBox mt-40">
+      <div class="row">
+        <div class="col-md-12 d-flex">
+          <div (click)="selectarnRiaChoice(choice)" *ngFor="let choice of arnRiaCodeChoiceList"
+            class="box-1 boxDescribes mr-20 p-20">
+            <h5 class="m-0 roboto f-400 lh-19 pb-24">{{choice.name}}
             </h5>
-            <div class="hw-40 bg-grey lt br-2 mt-36">
-              <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">A</h3>
+            <div class="hw-40 bg-grey lt br-2 bottomPost">
+              <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">{{choice.option}}</h3>
+            </div>
+            <div *ngIf="choice.selected" class="ribbon ribbon-bottom-right"><span><img
+                  src="/assets/images/svg/right-white.svg"></span>
             </div>
           </div>
         </div>
-        <div class="pl-20 pr-20">
-          <div class="box-1 p-20">
-            <h5 class="m-0 roboto f-400 lh-19 pb-24">No
+      </div>
+
+      <div class="bottomFooterDasb">
+        <div class="row">
+          <div class="col-md-12 ">
+            <button *ngIf="step9Flag" (click)="step=11" mat-stroked-button
+              class="btn-primary h-48 lh-48 f-18   br-4  ">Proceed
+              <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="step==11" class="bg-modal-height">
+
+    <div class="contentGuideBox mt-40">
+      <div class="row">
+        <div class="col-md-12 d-flex">
+          <div (click)="selectbasicDetailsChoice(choice)" *ngFor="let choice of basicDetailsChoiceList"
+            class="box-1 boxDescribes mr-20 p-20">
+            <h5 class="m-0 roboto f-400 lh-19 pb-24">{{choice.name}}
             </h5>
-            <div class="hw-40 bg-grey lt br-2 mt-36">
-              <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">B</h3>
+            <div class="hw-40 bg-grey lt br-2 bottomPost">
+              <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">{{choice.option}}</h3>
             </div>
-            <div class="ribbon ribbon-bottom-right"><span><img src="/assets/images/svg/right-white.svg"></span>
+            <div *ngIf="choice.selected" class="ribbon ribbon-bottom-right"><span><img
+                  src="/assets/images/svg/right-white.svg"></span>
             </div>
           </div>
         </div>
-        <div class="pr-20 pl-20">
-          <div class="box-1 p-20">
-            <h5 class="m-0 roboto f-400 lh-19 pb-24">I have just started the process of registering
-            </h5>
-            <div class="hw-40 bg-grey lt br-2 mt-16">
-              <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">C</h3>
-            </div>
+      </div>
+
+      <div class="bottomFooterDasb">
+        <div class="row">
+          <div class="col-md-12 ">
+            <button *ngIf="step10Flag" (click)="step=12" mat-stroked-button
+              class="btn-primary h-48 lh-48 f-18   br-4  ">Proceed
+              <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
           </div>
         </div>
-
-
       </div>
     </div>
   </div>
@@ -445,54 +471,73 @@
 
   <!-- nine slider -->
 
-  <div *ngIf="step==11" class="row pt-40">
+  <div *ngIf="step==12" class="bg-modal-height">
+    <div [formGroup]="ArnRiaForm">
+      <div [formGroup]="singleArnRiaForm" *ngFor="let singleArnRiaForm of getArnRiaFormList.controls;index as i"
+        class="contentGuideBox mt-40">
+        <div class="row slider-9">
+          <div class="col-md-3 pl-0">
+            <h5 class="m-0 f-400 roboto text-black pb-5">ARN/RIA</h5>
+            <mat-form-field floatLabel="never" appearance="standard">
+              <mat-select formControlName="arnOrRia" class="form-control">
+                <mat-option disabled [value]=''>Select ARN/RIA</mat-option>
+                <mat-option *ngFor="let option of globalData.arn_type_list" [value]="option.id">
+                  {{option.type}}</mat-option>
+              </mat-select>
+              <mat-error>This field is required</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3 pl-0">
+            <h5 class="m-0 f-400 roboto text-black pb-5">ARN/RIA type</h5>
+            <mat-form-field floatLabel="never" appearance="standard">
+              <mat-select formControlName="typeId" class="form-control">
+                <mat-option disabled [value]=''>Select ARN/RIA</mat-option>
+                <mat-option *ngFor="let option of globalData.arn_type_master_list" [value]="option.id">
+                  {{option.type}}</mat-option>
+              </mat-select>
+              <mat-error>This field is required</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row slider-9 pt-40">
+          <div class="col-md-3 pl-0">
+            <h5 class="m-0 f-400 roboto text-black pb-5">ARN/RIA number</h5>
+            <mat-form-field floatLabel="never" appearance="standard">
+              <input matInput formControlName="number" class="form-control bg-white" placeholder="Enter ARN/RIA number">
+              <mat-error>This field is required</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3 pl-0">
+            <h5 class="m-0 f-400 roboto text-black pb-5">Name of ARN/RIA holder</h5>
+            <mat-form-field floatLabel="never" appearance="standard">
+              <div class="d-flex">
+                <button mat-stroked-button class="text-custom br-0 h-40 mw-92 pl-5 pr-5 b bg-white">ARN/RIA</button>
+                <input formControlName="nameOfTheHolder" matInput class="form-control bl-0 bg-white"
+                  placeholder="Enter name of ARN/RIA holder">
+              </div>
+              <mat-error>This field is required</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
 
-    <div class="col-md-12 p-0 pl-150 slider-9">
-      <div class="row ">
-        <div class="col-md-3 pl-0">
-          <h5 class="m-0 f-400 roboto text-black pb-5">ARN/RIA</h5>
-          <mat-form-field>
-            <mat-select class="form-control">
-              <mat-option value="option">Select ARN/RIA</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div class="col-md-3 pl-0">
-          <h5 class="m-0 f-400 roboto text-black pb-5">ARN/RIA type</h5>
-          <mat-form-field floatLabel="never" appearance="standard">
-            <input matInput class="form-control bg-white" placeholder="Select ARN/RIA type">
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row pt-40">
-        <div class="col-md-3 pl-0">
-          <h5 class="m-0 f-400 roboto text-black pb-5">ARN/RIA number</h5>
-          <mat-form-field>
-            <mat-select class="form-control">
-              <mat-option value="option">Select ARN/RIA</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div class="col-md-3 pl-0">
-          <h5 class="m-0 f-400 roboto text-black pb-5">Name of ARN/RIA holder</h5>
-          <mat-form-field floatLabel="never" appearance="standard">
-            <div class="d-flex">
-              <button mat-stroked-button class="text-custom br-0 h-40 mw-92 pl-5 pr-5 b bg-white">ARN/RIA</button>
-              <input matInput class="form-control bl-0 bg-white" placeholder="Enter name of ARN/RIA holder">
+        <div class="bottomFooterDasb">
+          <div class="row">
+            <div class="col-md-12  ">
+              <button mat-stroked-button (click)="saveArnRiaForm('addMore',i)"
+                class="btn-primary h-48 lh-48 f-18  br-4">Save & Add more </button>
+              <button mat-stroked-button (click)="saveArnRiaForm('next',i)"
+                class="btn-primary-outline h-48 lh-48 f-18  br-4 ml-20">Save & Proceed </button>
             </div>
-          </mat-form-field>
+          </div>
         </div>
+
       </div>
-    </div>
-    <div class="col-md-12 p-0 pt-40 pl-150">
-      <button mat-stroked-button class="btn-primary h-48 lh-48 f-18 mt-40 br-4">Save & Add more </button>
-      <button mat-stroked-button class="btn-primary-outline h-48 lh-48 f-18 mt-40 br-4 ml-20">Save & Proceed </button>
     </div>
   </div>
   <!--end nine slider -->
 
   <!-- 10th slider -->
-  <div *ngIf="step==12">
+  <div *ngIf="step==13">
     <div class="row pt-40">
       <div class="col-md-12 p-0 pl-150 pb-20">
         <p class="text-diff m-0 roboto f-400 lh-16">With these credentials, we will now be able to order RTA files on
