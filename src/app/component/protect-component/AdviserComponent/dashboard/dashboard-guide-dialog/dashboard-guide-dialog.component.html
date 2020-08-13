@@ -263,7 +263,7 @@
             class="box-1 boxDescribes p-20 mr-20">
             <h5 class="m-0 roboto f-400 lh-19 pb-24">{{singleMfPractice.name}}
             </h5>
-            <div class="hw-40 bg-grey lt br-2 mt-16">
+            <div class="hw-40 bg-grey lt br-2 bottomPost ">
               <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">{{singleMfPractice.option}}</h3>
             </div>
             <div *ngIf="singleMfPractice.selected" class="ribbon ribbon-bottom-right">
@@ -285,41 +285,26 @@
 
 
   </div>
+ 
 
-  <!-- end  four slider -->
 
-  <!-- five slider -->
-  <!-- <div class="row bg-grey lter">
+  <div *ngIf="step==7" class="bg-modal-height">
 
-    <div class="col-md-12 h-200 p-0 d-flex align-items-end pl-150">
-      <h3 class="m-0 f-500 pb-20">{{data.name}}, how are you managing your practice? Like, are you managing it alone or
-        you have a team? </h3>
-    </div>
-  </div> -->
-  <div *ngIf="step==7" class="row pt-40">
-
-    <div class="col-md-12 p-0 pl-150">
-      <div class="d-flex">
-        <div *ngFor="let singleORTeam of teamAloneList" class="pr-20">
-          <div [ngClass]="{'box-2': singleORTeam.option=='A','box-2-1':singleORTeam.option=='B'}" class=" p-20">
+    <div class="contentGuideBox mt-40"> 
+    <div class="row">
+      <div class=" col-md-12 d-flex">
+        <div *ngFor="let singleORTeam of teamAloneList">
+          <div [ngClass]="{'box-2': singleORTeam.option=='A','box-2-1':singleORTeam.option=='B'}" class=" mr-20 p-20">
             <h5 class="m-0 roboto f-400 lh-19 pb-24 text-diff">{{singleORTeam.name}}
             </h5>
             <div class="hw-40 bg-grey lt br-2 mt-16">
               <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">{{singleORTeam.option}}</h3>
             </div>
-
           </div>
         </div>
-        <!-- <div class="pl-20">
-          <div class=" p-20">
-            <h5 class="m-0 roboto f-400 lh-19 pb-24 text-diff">I have a team
-            </h5>
-            <div class="hw-40 bg-grey lt br-2 mt-16">
-              <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">B</h3>
-            </div>
-          </div>
-        </div> -->
       </div>
+    </div>
+
       <div class="bottomFooterDasb">
         <div class="row">
           <div class="col-md-12">
