@@ -294,10 +294,10 @@
     <div class="row">
       <div class=" col-md-12 d-flex">
         <div *ngFor="let singleORTeam of teamAloneList">
-          <div [ngClass]="{'box-2': singleORTeam.option=='A','box-2-1':singleORTeam.option=='B'}" class=" mr-20 p-20">
+          <div [ngClass]="{'box-2': singleORTeam.option=='A','box-2-1':singleORTeam.option=='B'}" class=" mr-20 boxDescribes p-20">
             <h5 class="m-0 roboto f-400 lh-19 pb-24 text-diff">{{singleORTeam.name}}
             </h5>
-            <div class="hw-40 bg-grey lt br-2 mt-16">
+            <div class="hw-40 bg-grey bottomPost lt br-2  ">
               <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">{{singleORTeam.option}}</h3>
             </div>
           </div>
@@ -319,33 +319,31 @@
   <!-- end five slider -->
 
   <!-- six slider -->
-  <div *ngIf="step==8" class="row pt-40">
+  <div *ngIf="step==8" class="bg-modal-height">
 
-    <div class="col-md-12 p-0 pl-150">
-      <div class="d-flex">
-        <div class="pr-20">
-          <div class="box-1 p-20">
+    <div class="contentGuideBox mt-40"> 
+      <div class="row">
+        <div class="col-md-12 d-flex">
+          <div class="box-1 boxDescribes mr-20 p-20">
             <h5 class="m-0 roboto f-400 lh-19 pb-24">Sure, let’s add them
             </h5>
-            <div class="hw-40 bg-grey lt br-2 mt-36">
+            <div class="hw-40 bg-grey lt br-2 bottomPost">
               <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">A</h3>
             </div>
             <div class="ribbon ribbon-bottom-right"><span><img src="/assets/images/svg/right-white.svg"></span>
             </div>
           </div>
-        </div>
-        <div class="pl-20">
-          <div class="box-1 p-20">
+            <div class="box-1 boxDescribes mr-20 p-20">
             <h5 class="m-0 roboto f-400 lh-19 pb-24">I’ll do this later
             </h5>
-            <div class="hw-40 bg-grey lt br-2 mt-36">
+            <div class="hw-40 bg-grey lt br-2 bottomPost">
               <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">B</h3>
             </div>
           </div>
         </div>
 
       </div>
-    </div>
+     
     <div class="bottomFooterDasb">
       <div class="row">
         <div class="col-md-12">
@@ -353,6 +351,8 @@
               src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
         </div>
       </div>
+    </div>
+
     </div>
   </div>
 
