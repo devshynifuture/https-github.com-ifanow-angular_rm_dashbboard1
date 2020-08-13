@@ -30,7 +30,6 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
   disableFreezeBtn = true;
   disableUnfreezeBtn = false;
   selection = new SelectionModel<PeriodicElement1>(true, []);
-  shouldDeleteMultiple = false;
   deleteMultipleTransactionArray: any[] = [];
   upperTableArr: PeriodicElement[];
   advisorId = AuthService.getAdvisorId();
@@ -60,6 +59,8 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
   filterSub: any;
   filterBasedOnArr: any = [];
   filterSubTab1: any;
+  shouldShowSelectedBalanceUnit: boolean;
+  shouldShowMultipleDelete: boolean = false;
 
   constructor(
     private eRef: ElementRef,
@@ -138,9 +139,10 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
   singleSelectionSelect(element, mainIndex) {
     if (element.canDeleteTransaction === true) {
       this.selection.toggle(element);
-      const parsedValue = parseFloat((element.units).toFixed(3));
+      const parsedValue = parseFloat((element.balanceUnits).toFixed(3));
       if (this.selection.isSelected(element)) {
-        this.shouldDeleteMultiple = true;
+
+        this.shouldShowMultipleDelete = true;
         this.selectedFolioUnits = parseFloat((this.selectedFolioUnits + parsedValue).toFixed(3));
         this.deleteMultipleTransactionArray.push(element.id);
         this.deletedTransactions.push(mainIndex);
@@ -157,7 +159,7 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
           this.selectedFolioUnits = 0.000;
         }
         if (this.deleteMultipleTransactionArray.length === 0) {
-          this.shouldDeleteMultiple = false;
+          this.shouldShowMultipleDelete = false;
         }
       }
     } else {
@@ -172,12 +174,13 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
       this.selection.clear();
       this.deleteMultipleTransactionArray = [];
       this.deletedTransactions = [];
-      this.shouldDeleteMultiple = false;
+      this.shouldShowMultipleDelete = false;
       this.selectedFolioUnits = 0;
     } else {
 
       if (!(this.dataSource1.data.some(item => item.canDeleteTransaction === false))) {
-        this.shouldDeleteMultiple = true;
+        
+        this.shouldShowMultipleDelete = true;
         this.dataSource1.data.forEach((row, index) => {
           if (row.canDeleteTransaction) {
             this.selection.select(row);
@@ -346,7 +349,7 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
           this.calculateBalanceUnitOnMultipleDelete();
         }
         this.mainLoader = false;
-        this.shouldDeleteMultiple = false;
+        this.shouldShowMultipleDelete = false;
 
         this.eventService.openSnackBar("Deleted Transaction Successfully", "DISMISS");
         this.sendValueToParent();
@@ -425,22 +428,32 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
     if (whichTable === 1) {
       if (filterBasedOn.length<=0) {
         this.dataSource1.data = this.tableData1;
+        this.selectedFolioUnits = 0;
       } else {
         let filteredArray = [];
         filteredArray = this.tableData1.filter(item => {
-          return filterBasedOn.includes(item.transactionType)
+          if(filterBasedOn.includes(item.transactionType)){
+            this.selectedFolioUnits += item.balanceUnits;
+            return item;
+          }
         });
+        this.shouldShowSelectedBalanceUnit = true;
         this.dataSource1.data = filteredArray;
       }
     }
     if (whichTable === 2) {
       if (filterBasedOn.length <=0) {
         this.dataSource2.data = this.tableData1;
+        this.selectedFolioUnits = 0;
       } else {
         let filteredArray = [];
         filteredArray = this.tableData1.filter(item => {
-          return filterBasedOn.includes(item.transactionType);
+          if(filterBasedOn.includes(item.transactionType)){
+            this.selectedFolioUnits += item.balanceUnits;
+            return item;
+          }
         });
+        this.shouldShowSelectedBalanceUnit = true;
         this.dataSource2.data = filteredArray;
       }
     }
@@ -596,7 +609,7 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
         });
         this.isKeepArray = [];
         this.mainLoader = false;
-        this.shouldDeleteMultiple = false;
+        this.shouldShowMultipleDelete = false;
 
       });
   }

@@ -65,9 +65,9 @@
 
 <div class="row">
     <div class="col-lg-6" *ngIf="tableEntriesType==1">
-        <button class="ba-black" mat-stroked-button *ngIf="shouldDeleteMultiple"
+        <button class="ba-black" mat-stroked-button *ngIf="shouldShowMultipleDelete"
             (click)="deleteSingleOrMultipleTransaction()">Delete selected</button>
-        <span class="text-primitive ml-12 f-14" *ngIf="shouldDeleteMultiple"> Selected units: {{ selectedFolioUnits }}
+        <span class="text-primitive ml-12 f-14" *ngIf="shouldShowSelectedBalanceUnit"> Selected units: {{ selectedFolioUnits }}
         </span>
     </div>
     <div class="col-lg-6" *ngIf="tableEntriesType==2">

@@ -54,6 +54,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
   dataSource3 = new MatTableDataSource<PeriodicElement3>(ELEMENT_DATA3); // delete and reorder table
   isFranklinTab = false;
   isTabDisabled = true;
+  isDeleteAndReorderTabDisabled = false;
 
   data;
   brokerId;
@@ -143,6 +144,11 @@ export class UpperSliderBackofficeComponent implements OnInit {
       this.arnRiaCode = this.data.arnRiaNumber;
       this.rtId = this.data.rtId;
       this.isFranklinTab = (this.getRtName(this.rtId) === 'FRANKLIN') ? true : false;
+      if(this.isFranklinTab){
+        this.isDeleteAndReorderTabDisabled = true;
+      } else {
+        this.isDeleteAndReorderTabDisabled = false;
+      }
       console.log('start recon is false::::');
       this.bindDataWithSummaryTable();
       this.getAumReportList();
@@ -692,13 +698,11 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
   exportToExcelSheet(value, element) {
     this.isTabDisabled = false;
+
     this.isFranklinTab = this.getRtName(this.data.rtId) === 'FRANKLIN' ? true : false;
+
+    this.isDeleteAndReorderTabDisabled = this.isFranklinTab ? true: false;
     
-    if(this.isFranklinTab){
-      this.isTabDisabled = true;
-    }
-
-
     // creation of excel sheet
     const headerData = [
       { width: 40, key: 'Investor Name' },
