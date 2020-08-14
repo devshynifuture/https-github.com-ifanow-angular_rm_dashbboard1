@@ -40,6 +40,7 @@ export class OrderHistoricalFileComponent implements OnInit {
   camsAsOnDatePastMaxDate: Date = new Date("1 January, 1990");
   karvyOrFranklinPastMaxDate = new Date("1 January, 1993");
   dateToday: Date = new Date();
+  datePastFourDaysOfCurrentDate = this.dateToday.setDate(this.dateToday.getDate() - 4);
   dateYesterday: Date = new Date(new Date().setDate(new Date().getDate() - 1));
   orderingFreq: {}[] = [{ id: '1', name: 'Yearly' }, { id: '2', name: 'Monthly' }, { id: '3', name: 'All at once' }];
   arnRiaIdList: any[] = [];

@@ -14,7 +14,7 @@
                 Scheme name
             </div>
             <div class="col-md-8 text-right f-14 roboto p-0">
-                HDFC Prudence Fund - Growth
+                {{ data.schemeName }}
             </div>
         </div>
         <div class="row bb p-8 b-l br">
@@ -22,7 +22,7 @@
                 Folio number
             </div>
             <div class="col-md-4 text-right f-14 roboto p-0">
-                9878787/90
+                {{ data.folioNumber }}
             </div>
         </div>
 
@@ -31,7 +31,7 @@
                 Investor name
             </div>
             <div class="col-md-4 text-right f-14 roboto p-0">
-                Rahul Jain
+                {{ data.investorName }}
             </div>
         </div>
 
@@ -40,7 +40,7 @@
                 Type
             </div>
             <div class="col-md-4 text-right f-14 roboto p-0">
-                SIP
+                {{ data.type }}
             </div>
         </div>
 
@@ -49,7 +49,7 @@
                 Amount/Frequency
             </div>
             <div class="col-md-4 text-right f-14 roboto p-0">
-                ₹12,000 / Month
+                {{ data.amount }} / {{ data.frequency }}
             </div>
         </div>
 
@@ -58,7 +58,7 @@
                 Registered date
             </div>
             <div class="col-md-4 text-right f-14 roboto p-0">
-                23-04-2020
+                {{ data.registeredDate|date : 'yyyy-MM-dd' }}
             </div>
         </div>
 
@@ -67,7 +67,7 @@
                 From date
             </div>
             <div class="col-md-4 text-right f-14 roboto p-0">
-                23-04-2020
+                {{ data.from_date|date:'yyyy-MM-dd' }}
             </div>
         </div>
 
@@ -76,7 +76,7 @@
                 To date
             </div>
             <div class="col-md-4 text-right f-14 roboto p-0">
-                15-06-2099
+                {{ data.to_date|date:'yyyy-MM-dd' }}
             </div>
         </div>
 
@@ -85,7 +85,7 @@
                 Linked bank account
             </div>
             <div class="col-md-4 text-right f-14 roboto p-0">
-                HDFC - 837823828
+                -
             </div>
         </div>
         <div class="row bb p-8 b-l br">
@@ -93,7 +93,7 @@
                 Ceased date
             </div>
             <div class="col-md-4 text-right f-14 roboto p-0">
-                -
+                {{ data.hasOwnProperty('ceaseDate') ? (data.ceaseDate | date:'yyyy-MM-dd'):'-' }}
             </div>
         </div>
         <div class="row bb p-8 b-l br">
@@ -101,7 +101,7 @@
                 Transaction #
             </div>
             <div class="col-md-4 text-right f-14 roboto p-0">
-                5437372732
+                {{ data.transactionNumber }}
             </div>
         </div>
         <div class="row bb p-8 b-l br">
@@ -109,7 +109,7 @@
                 Status
             </div>
             <div class="col-md-4 text-right f-14 roboto p-0">
-                Unmarked
+                {{ data.markedStatus== 0 ? 'Unmarked': (data.markedStatus === -1) ? 'Marked': '-' }}
             </div>
         </div>
         <div class="row bb p-8 b-l br">
@@ -117,7 +117,7 @@
                 Broker code
             </div>
             <div class="col-md-4 text-right f-14 roboto p-0">
-                ARN-98787
+                {{ data.hasOwnProperty('arnRiaNumber') ? data.arnRiaNumber: '-' }}
             </div>
         </div>
         <div class="row bb p-8 b-l br">

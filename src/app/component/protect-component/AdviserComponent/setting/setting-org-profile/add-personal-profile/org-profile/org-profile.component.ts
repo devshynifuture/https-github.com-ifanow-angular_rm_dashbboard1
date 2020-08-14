@@ -230,7 +230,7 @@ export class OrgProfileComponent implements OnInit {
       city: this.orgProfile.controls.city.value || '',
       state:this.orgProfile.controls.state.value || '',
       zipCode:this.orgProfile.controls.pincode.value || '',
-      gstTreatmentId:this.orgProfile.controls.gstTreatment.value || '',
+      gstTreatmentId:this.orgProfile.controls.gstTreatment.value || 0,
       gstin: this.orgProfile.controls.gstNumber.value || '',
       country: this.orgProfile.controls.country.value || '',
       isdCodeId: this.orgProfile.controls.isdCodeId.value || '',
