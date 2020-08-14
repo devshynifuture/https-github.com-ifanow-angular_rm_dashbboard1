@@ -197,6 +197,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
 
   }
   ngOnInit() {
+    this.dataSource.data = ([{}, {}, {}]);
     if (localStorage.getItem('token') != 'authTokenInLoginComponnennt') {
       localStorage.setItem('token', 'authTokenInLoginComponnennt')
     }
