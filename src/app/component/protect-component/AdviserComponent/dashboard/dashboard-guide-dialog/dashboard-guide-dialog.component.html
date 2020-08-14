@@ -41,7 +41,7 @@
 
       <div class="row pt-30">
         <div class="col-md-10 pl-0">
-          <span (click)="backStep()" class="material-icons c-p text-primitive">
+          <span *ngIf="step!=18" (click)="backStep()" class="material-icons c-p text-primitive">
             arrow_back
           </span>
         </div>
@@ -175,7 +175,7 @@
       <div class="row">
         <div (click)="selectClientWork(clientWork)" *ngFor="let clientWork of clientsWorkWithList"
           class="col-md-3 mb-20 c-p">
-          <div class="advisor-cards">
+          <div [ngClass]="{'select-active-border': clientWork.selected}" class="advisor-cards">
             <p class="m-0 roboto f-400 lh-16"> {{clientWork.name}}</p>
             <i *ngIf="clientWork.selected" class="material-icons c-p text-primitive">
               check
@@ -211,7 +211,7 @@
       <div class="row">
         <div (click)="selectProduct(singleProduct)" *ngFor="let singleProduct of productList"
           class="col-md-3 mb-20 c-p">
-          <div class="advisor-cards">
+          <div [ngClass]="{'select-active-border': singleProduct.selected}" class="advisor-cards">
             <p class="m-0 roboto f-400 lh-16"> {{singleProduct.name}}</p>
             <i *ngIf="singleProduct.selected" class="material-icons c-p text-primitive">
               check
@@ -283,7 +283,8 @@
       <div class="row">
         <div class=" col-md-12 d-flex">
           <div (click)="selectSingleOrTeam(singleORTeam)" *ngFor="let singleORTeam of teamAloneList">
-            <div [ngClass]="{'box-2': singleORTeam.option=='A','box-2-1':singleORTeam.option=='B'}"
+            <div
+              [ngClass]="{'box-2': singleORTeam.option=='A','box-2-1':singleORTeam.option=='B','select-active-border':singleORTeam.selected}"
               class=" mr-20 boxDescribes p-20">
               <h5 class="m-0 roboto f-400 lh-19 pb-24 text-diff"> {{singleORTeam.name}} </h5>
               <div class="hw-40 bg-grey bottomPost lt br-2">
@@ -412,7 +413,7 @@
       <div class="bottomFooterDasb">
         <div class="row">
           <div class="col-md-12 ">
-            <button *ngIf="step9Flag" (click)="step=11" mat-stroked-button
+            <button *ngIf="step9Flag" (click)="selectedArnRIaChoice.id==1?step=11:step=18" mat-stroked-button
               class="btn-primary h-48 lh-48 f-18   br-4  ">Proceed
               <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
           </div>
@@ -443,7 +444,7 @@
       <div class="bottomFooterDasb">
         <div class="row">
           <div class="col-md-12 ">
-            <button *ngIf="step10Flag" (click)="step=12" mat-stroked-button
+            <button *ngIf="step10Flag" (click)="basicDetailsChoice.id==1?step=12:step=18" mat-stroked-button
               class="btn-primary h-48 lh-48 f-18   br-4  ">Proceed
               <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
           </div>
@@ -775,7 +776,7 @@
                 </div>
               </div>
 
-              <div class="row pt-20 pb-20" >
+              <div class="row pt-20 pb-20">
                 <div class="col-md-8 pr-0">
                   <img src="/assets/images/step-6.png" class="w-100 ">
                 </div>

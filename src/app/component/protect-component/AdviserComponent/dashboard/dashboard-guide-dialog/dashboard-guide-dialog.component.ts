@@ -130,6 +130,9 @@ export class DashboardGuideDialogComponent implements OnInit {
   validatorType;
   arnRiaMaxlength: any;
   arnRtaData: any;
+  selectedArnRIaChoice: any;
+  basicDetailsChoice: any;
+  selctedRtaDataChoice: any;
 
 
   constructor(private fb: FormBuilder,
@@ -146,7 +149,7 @@ export class DashboardGuideDialogComponent implements OnInit {
   ngOnInit() {
     this.validatorType = ValidatorType
     this.advisorId = AuthService.getAdvisorId();
-    this.step = 15;
+    this.step = 1;
     this.ArnRiaForm = this.fb.group({
       ArnRiaFormList: new FormArray([])
     })
@@ -235,6 +238,7 @@ export class DashboardGuideDialogComponent implements OnInit {
 
   selectarnRiaChoice(selectChoice) {
     this.step9Flag = true
+    this.selectedArnRIaChoice = selectChoice;
     this.arnRiaCodeChoiceList.map(element => {
       (selectChoice.id == element.id) ? element.selected = true : element.selected = false
     })
@@ -242,6 +246,7 @@ export class DashboardGuideDialogComponent implements OnInit {
 
   selectbasicDetailsChoice(selectChoice) {
     this.step10Flag = true
+    this.basicDetailsChoice = selectChoice;
     this.basicDetailsChoiceList.map(element => {
       (selectChoice.id == element.id) ? element.selected = true : element.selected = false
     })
@@ -249,6 +254,7 @@ export class DashboardGuideDialogComponent implements OnInit {
 
   selectrtaCredentialsChoice(selectChoice) {
     this.step10Flag = true
+    this.selctedRtaDataChoice = selectChoice;
     this.rtaCredentialsChoiceList.map(element => {
       (selectChoice.id == element.id) ? element.selected = true : element.selected = false
     })
