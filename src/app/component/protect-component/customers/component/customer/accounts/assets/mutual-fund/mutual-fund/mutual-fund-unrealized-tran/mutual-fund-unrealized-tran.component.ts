@@ -745,7 +745,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         // this.asyncFilter(this.mutualFund.mutualFundList);
         if (this.isBulkEmailing) {
           // this.filterForBulkEmailing(data);
-          this.asyncFilter(data);
+          this.asyncFilter(data); 
         } else {
           this.asyncFilter(data);
         }
