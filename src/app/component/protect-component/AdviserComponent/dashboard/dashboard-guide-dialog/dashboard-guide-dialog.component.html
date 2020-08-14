@@ -72,8 +72,8 @@
             Should we add a profile pic of
             yours?</h3>
           <h3 *ngIf="step==10" class="m-0 f-500 pb-20">Do you have an ARN/RIA code?</h3>
-          <h3 *ngIf="step==11" class="m-0 f-500 pb-20">Great! Let`s add some basic details of your ARN/RIA code. With
-            that in place,you will ve able to view your client`s mututal fundholding in no time.</h3>
+          <h3 *ngIf="step==11" class="m-0 f-500 pb-20">Great! Let's add some basic details of your ARN/RIA code. With
+            that in place,you will ve able to view your client's <br> mututal fundholding in no time.</h3>
           <h3 *ngIf="step==12" class="m-0 f-500 pb-20">Adding ARN/RIA details now.</h3>
           <h3 *ngIf="step==13" class="m-0 f-500 pb-20 text-diff">Thank you {{data.name}}. One last step.</h3>
           <h3 *ngIf="step==14" class="m-0 f-500 pb-20 text-diff">Adding RTA credentials now</h3>
@@ -92,9 +92,8 @@
 
       <div *ngIf="step==14" class="row">
         <div class="col-md-12">
-          <div *ngFor="let singleArnRia of arnRtaData;index as i">
-            <button (click)="selectArnRia(singleArnRia,i)" [ngClass]="{'btnRTA': singleArnRia.colorFlag}"
-              mat-stroked-button>{{singleArnRia.number}}</button>
+          <div class="btnRTA mt-10">
+            <button *ngFor="let singleArnRia of arnRtaData;index as i" class="btnHeader" (click)="selectArnRia(singleArnRia,i)" mat-stroked-button>{{singleArnRia.number}}</button>
           </div>
         </div>
       </div>
@@ -259,9 +258,6 @@
           </div>
         </div>
       </div>
-
-
-
 
     </div>
   </div>
