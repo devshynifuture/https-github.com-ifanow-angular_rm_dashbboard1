@@ -257,7 +257,7 @@
                             <h5 class="mb-4 pt-16">As On Date</h5>
                             <mat-form-field>
                                 <input class="form-control" formControlName="asOnDate" [min]="camsAsOnDatePastMaxDate"
-                                    [max]="dateToday" (click)="picker2.open()" matInput [matDatepicker]="picker2">
+                                    [max]="datePastFourDaysOfCurrentDate" (click)="picker2.open()" matInput [matDatepicker]="picker2">
                                 <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                                 <mat-datepicker #picker2></mat-datepicker>
                                 <mat-error

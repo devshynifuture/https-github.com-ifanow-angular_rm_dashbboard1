@@ -130,6 +130,17 @@ export class DashboardGuideDialogComponent implements OnInit {
   validatorType;
   arnRiaMaxlength: any;
   arnRtaData: any;
+  selectedArnRIaChoice: any;
+  basicDetailsChoice: any;
+  selctedRtaDataChoice: any;
+  selectedTeamMemberChoice: any;
+  step11Flag: boolean;
+  teamOrAloneSelectedData: any = {};
+  selctedArmOrRia: any;
+  selectedArmOrRiaIndex: any;
+  arnRiaList = [];
+  ArnRiaIndex: any;
+  selectedArnRIa: any;
 
 
   constructor(private fb: FormBuilder,
@@ -146,20 +157,13 @@ export class DashboardGuideDialogComponent implements OnInit {
   ngOnInit() {
     this.validatorType = ValidatorType
     this.advisorId = AuthService.getAdvisorId();
-    this.step = 1;
+    this.step = 14;
     this.ArnRiaForm = this.fb.group({
       ArnRiaFormList: new FormArray([])
     })
 
     this.credentialsForm = this.fb.group({
-      advisorId: [this.advisorId],
-      camsEmail: [],
-      camsPassword: [],
-      karvyID: [],
-      karvyPassword: [],
-      karvyEMail: [],
-      franklinEmail: [],
-      franklinPassword: []
+      credentialsFormList: new FormArray([])
     })
     this.settingService.getArnGlobalData().subscribe((res) => {
       console.log(res)
@@ -174,6 +178,9 @@ export class DashboardGuideDialogComponent implements OnInit {
   get getArnRiaForm() { return this.ArnRiaForm.controls; }
   get getArnRiaFormList() { return this.getArnRiaForm.ArnRiaFormList as FormArray; }
 
+  get getCredentialsForm() { return this.credentialsForm.controls; }
+  get getCredentialsFormList() { return this.getCredentialsForm.credentialsFormList as FormArray; }
+
   addArnRiaForm() {
     this.getArnRiaFormList.push(this.fb.group({
       advisorId: [this.advisorId, []],
@@ -184,11 +191,29 @@ export class DashboardGuideDialogComponent implements OnInit {
     }))
   }
 
+  addCredentialsForm() {
+    this.getArnRiaFormList.push(this.fb.group({
+      advisorId: [this.advisorId],
+      camsEmail: [],
+      camsPassword: [],
+      karvyID: [],
+      karvyPassword: [],
+      karvyEMail: [],
+      franklinEmail: [],
+      franklinPassword: []
+    }))
+  }
+
+
   displayedColumns: string[] = ['position', 'name', 'weight'];
   dataSource = ELEMENT_DATA;
 
   showPageByIndex(index) {
     this.page = index;
+  }
+
+  chooseArnRiaForm(index) {
+    this.ArnRiaIndex = index;
   }
 
   changeNumberValidation(value) {
@@ -220,6 +245,7 @@ export class DashboardGuideDialogComponent implements OnInit {
 
   selectSingleOrTeam(singOrTeam) {
     this.step7Flag = true;
+    this.teamOrAloneSelectedData = singOrTeam;
     this.teamAloneList.map(element => {
       (singOrTeam.id == element.id) ? element.selected = true : element.selected = false
     });
@@ -228,6 +254,7 @@ export class DashboardGuideDialogComponent implements OnInit {
 
   selectAddTeamMemberChoice(selectChoice) {
     this.step8Flag = true
+    this.selectedTeamMemberChoice = selectChoice
     this.addTeamMemberChoiceList.map(element => {
       (selectChoice.id == element.id) ? element.selected = true : element.selected = false
     })
@@ -235,6 +262,7 @@ export class DashboardGuideDialogComponent implements OnInit {
 
   selectarnRiaChoice(selectChoice) {
     this.step9Flag = true
+    this.selectedArnRIaChoice = selectChoice;
     this.arnRiaCodeChoiceList.map(element => {
       (selectChoice.id == element.id) ? element.selected = true : element.selected = false
     })
@@ -242,13 +270,15 @@ export class DashboardGuideDialogComponent implements OnInit {
 
   selectbasicDetailsChoice(selectChoice) {
     this.step10Flag = true
+    this.basicDetailsChoice = selectChoice;
     this.basicDetailsChoiceList.map(element => {
       (selectChoice.id == element.id) ? element.selected = true : element.selected = false
     })
   }
 
   selectrtaCredentialsChoice(selectChoice) {
-    this.step10Flag = true
+    this.step11Flag = true
+    this.selctedRtaDataChoice = selectChoice;
     this.rtaCredentialsChoiceList.map(element => {
       (selectChoice.id == element.id) ? element.selected = true : element.selected = false
     })
@@ -304,7 +334,18 @@ export class DashboardGuideDialogComponent implements OnInit {
     }
     this.settingService.addArn(jsonObj).subscribe((res) => {
       this.eventService.openSnackBar("ARN-RIA Added successfully");
-      (flag == 'addMore') ? this.getArnRiaFormList.controls[index].reset() : this.step++;
+      if (flag == 'addMore') {
+        this.arnRiaList.push(jsonObj)
+        this.addArnRiaForm();
+        this.getArnRiaFormList.controls[index + 1].get('arnOrRia').setValue('')
+        this.getArnRiaFormList.controls[index + 1].get('typeId').setValue('')
+        this.getArnRiaFormList.controls[index + 1].get('number').setValue('')
+        this.getArnRiaFormList.controls[index + 1].get('nameOfTheHolder').setValue('');
+        this.selectedArnRIa = jsonObj;
+      }
+      else {
+        this.step++;
+      }
     }, err => {
       this.eventService.openSnackBar(err, "Dismiss");
       // this.barButtonOptions.active = false;
@@ -313,9 +354,24 @@ export class DashboardGuideDialogComponent implements OnInit {
 
   getRtaDetails() {
     this.settingService.getArnlist({ advisorId: this.advisorId }).subscribe((data) => {
-      this.arnRtaData = data;
+      if (data) {
+        data.forEach((element, index) => {
+          this.addCredentialsForm();
+          (index == 0) ? element['colorFlag'] = true : element['colorFlag'] = false;
+        });
+        this.arnRtaData = data;
+      }
     });
   }
+
+  selectArnRia(data, selectedIndex) {
+    this.selectedArmOrRiaIndex = selectedIndex;
+    this.selctedArmOrRia = data;
+    this.arnRtaData.forEach((element, index) => {
+      (selectedIndex == index) ? element['colorFlag'] = true : element['colorFlag'] = false;
+    });
+  }
+
   addCredentialsJson() {
     this.credentialsForm = this.fb.group({
       camsEmail: [],
