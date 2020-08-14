@@ -17,125 +17,130 @@
 
         <div *ngFor="let profileData of SettingProfileData skeletonAnimation" class="d-flex justify-content-center"
             appSkeletonLoading [appSkeletonLoading]="isLoading">
-            <div class="row wrapper-100 pb-72 pt-8 pb-10 " [ngClass]="{'mt-60': isAdvisor}">
-                <div class="hoverable overflow-hidden">
-                    <div class="row pt-16 pb-16 b-a bb-0 bg-grey lter">
-                        <div class="col-md-8 pl-20 d-flex align-items-center relClass">
-                            <div class="bar" [ngClass]="{'height23': isLoading}">
-                                <h3 class="mb-0 fontPlayfair">{{profileData.name}}</h3>
-                            </div>
-                        </div>
-                        <div class="col-md-4" *ngIf="isAdvisor">
-                            <div *ngIf="!isLoading">
-                                <i [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu"
-                                    class="material-icons text-right right text-custom f-28 c-p">
-                                    more_vert
-                                </i>
-                                <mat-menu #menu="matMenu">
-                                    <a (click)="setPrimaryField(profileData)" mat-menu-item>Set as primary</a>
-                                    <a (click)="openPayeeSettings(profileData,'Edit')" mat-menu-item>Edit
-                                        client profile</a>
-                                    <a (click)="deleteModal('PROFILE',profileData)" class="bt-1" mat-menu-item>Delete
-                                        client
-                                        profile</a>
-                                </mat-menu>
-                                <button *ngIf="profileData.isPrimary" class="text-primary br-0 right text-right"
-                                    mat-stroked-button>
-                                    PRIMARY
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="b-a bt-none">
-                        <div class="row">
-                            <div class="col-md-12 p-0">
-                                <div class="wrapper-20">
-                                    <div class="row">
-                                        <div class="col-md-3 ">
-                                            <p>CUSTOMER TYPE</p>
-                                            <div class="relClass">
-                                                <div class="bar" [ngClass]="{'height23': isLoading}">
-                                                    <h5> {{ isLoading ? ' ' : (profileData.customerTypeId == 1) ? 'Individual' : (profileData.customerTypeId == 2)?'Corporate':(profileData.customerTypeId == 3)?'LLP':(profileData.customerTypeId == 4)?'Proprietary':(profileData.customerTypeId
-                                                        == 5)?'Partnership':'Others'}}
-                                                    </h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 relClass">
-                                            <p>PAN</p>
-                                            <div class="relClass">
-                                                <div class="bar" [ngClass]="{'height23': isLoading}">
-                                                    <h5> {{ isLoading ? ' ' : profileData.pan}} </h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 relClass">
-                                            <p>GST TREATMENT</p>
-                                            <div class="relClass">
-                                                <div class="bar" [ngClass]="{'height23': isLoading}">
-                                                    <h5>{{isLoading ? ' ' : (profileData.gstTreatmentId == 1) ? 'Consumer' : (profileData.gstTreatmentId == 2) ? 'Not registered business' : (profileData.gstTreatmentId == 3) ? 'Overseas' : (profileData.gstTreatmentId
-                                                        == 4) ? 'Registered Business' : '-'}}
-                                                    </h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <p>GST</p>
-                                            <div class="relClass">
-                                                <div class="bar" [ngClass]="{'height23': isLoading}">
-                                                    <h5> {{profileData.gstin!=0?profileData.gstin:'N/A'}} </h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+            <div class="row w-100 pb-72 pt-8 pb-10 settings-account" [ngClass]="{'mt-60': isAdvisor}">
+
+                <div class="col-md-1"></div>
+                <div class="col-md-10 p-0">
+                    <div class="hoverable overflow-hidden">
+                        <div class="row pt-16 pb-16 b-a bb-0 bg-grey lter">
+                            <div class="col-md-8 pl-20 d-flex align-items-center relClass">
+                                <div class="bar" [ngClass]="{'height23': isLoading}">
+                                    <h3 class="mb-0 fontPlayfair">{{profileData.name}}</h3>
                                 </div>
-                                <div class="wrapper-20 pl-36 bt-1">
-                                    <div class="row ">
-                                        <div class="col-md-6 pl-0 ">
-                                            <p>BILLING ADDRESS</p>
-                                            <div class="relClass">
-                                                <div class="bar" [ngClass]="{'height23': isLoading}">
-                                                    <h5> {{profileData.billerAddress}} {{isLoading ? ' ' : ','}}<br>
-                                                        {{profileData.city}} {{isLoading ? ' ' : ','}}
-                                                        <br> {{profileData.state}}
-                                                        <br> {{profileData.country}}
-                                                        <br> {{profileData.zipCode}} </h5>
+                            </div>
+                            <div class="col-md-4" *ngIf="isAdvisor">
+                                <div *ngIf="!isLoading">
+                                    <i [matMenuTriggerFor]="menu" [matMenuTriggerFor]="belowMenu"
+                                        class="material-icons text-right right text-custom f-28 c-p">
+                                        more_vert
+                                    </i>
+                                    <mat-menu #menu="matMenu">
+                                        <a (click)="setPrimaryField(profileData)" mat-menu-item>Set as primary</a>
+                                        <a (click)="openPayeeSettings(profileData,'Edit')" mat-menu-item>Edit
+                                            client profile</a>
+                                        <a (click)="deleteModal('PROFILE',profileData)" class="bt-1"
+                                            mat-menu-item>Delete
+                                            client
+                                            profile</a>
+                                    </mat-menu>
+                                    <button *ngIf="profileData.isPrimary" class="text-primary br-0 right text-right"
+                                        mat-stroked-button>
+                                        PRIMARY
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="b-a bt-none">
+                            <div class="row">
+                                <div class="col-md-12 p-0">
+                                    <div class="wrapper-20 p-0-954">
+                                        <div class="row">
+                                            <div class="col-lg-3 col-md-6 pl-0-991">
+                                                <p>CUSTOMER TYPE</p>
+                                                <div class="relClass">
+                                                    <div class="bar" [ngClass]="{'height23': isLoading}">
+                                                        <h5> {{ isLoading ? ' ' : (profileData.customerTypeId == 1) ? 'Individual' : (profileData.customerTypeId == 2)?'Corporate':(profileData.customerTypeId == 3)?'LLP':(profileData.customerTypeId == 4)?'Proprietary':(profileData.customerTypeId
+                                                            == 5)?'Partnership':'Others'}}
+                                                        </h5>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-3 pl-0 ">
-                                            <p>DISPLAY NAME</p>
-                                            <div class="relClass">
-                                                <div class="bar" [ngClass]="{'height23': isLoading}">
-                                                    <h5> {{profileData.companyDisplayName}} </h5>
+                                            <div class="col-lg-3 col-md-6 relClass">
+                                                <p>PAN</p>
+                                                <div class="relClass">
+                                                    <div class="bar" [ngClass]="{'height23': isLoading}">
+                                                        <h5> {{ isLoading ? ' ' : profileData.pan}} </h5>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-md-12 block p-0 pt-24">
-                                                    <p>MOBILE NO</p>
-                                                    <div class="relClass">
-                                                        <div class="bar" [ngClass]="{'height23': isLoading}">
-                                                            <h5> {{profileData.primaryContact}} </h5>
-                                                        </div>
+                                            <div class="col-lg-3 col-md-6 relClass pl-0-991">
+                                                <p>GST TREATMENT</p>
+                                                <div class="relClass">
+                                                    <div class="bar" [ngClass]="{'height23': isLoading}">
+                                                        <h5>{{isLoading ? ' ' : (profileData.gstTreatmentId == 1) ? 'Consumer' : (profileData.gstTreatmentId == 2) ? 'Not registered business' : (profileData.gstTreatmentId == 3) ? 'Overseas' : (profileData.gstTreatmentId
+                                                            == 4) ? 'Registered Business' : '-'}}
+                                                        </h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-md-6 ">
+                                                <p>GST</p>
+                                                <div class="relClass">
+                                                    <div class="bar" [ngClass]="{'height23': isLoading}">
+                                                        <h5> {{profileData.gstin!=0?profileData.gstin:'N/A'}} </h5>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
-                                            <p>COMPANY NAME</p>
-                                            <div class="relClass">
-                                                <div class="bar" [ngClass]="{'height23': isLoading}">
-                                                    <h5> <span
-                                                            *ngIf="!isLoading">{{profileData.companyName?profileData.companyName:'N/A'}}</span>
-                                                    </h5>
+                                    </div>
+                                    <div class="wrapper-20 pl-36 bt-1">
+                                        <div class="row ">
+                                            <div class="col-xl-6 col-lg-5 col-md-4 pl-0 ">
+                                                <p>BILLING ADDRESS</p>
+                                                <div class="relClass">
+                                                    <div class="bar" [ngClass]="{'height23': isLoading}">
+                                                        <h5> {{profileData.billerAddress}} {{isLoading ? ' ' : ','}}<br>
+                                                            {{profileData.city}} {{isLoading ? ' ' : ','}}
+                                                            <br> {{profileData.state}}
+                                                            <br> {{profileData.country}}
+                                                            <br> {{profileData.zipCode}} </h5>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-md-12 block p-0 pt-24 ">
-                                                    <p>EMAIL</p>
-                                                    <div class="relClass">
-                                                        <div class="bar" [ngClass]="{'height23': isLoading}">
-                                                            <h5> {{profileData.email}} </h5>
+                                            <div class="col-xl-3 col-lg-3 col-md-4 pl-0 ">
+                                                <p>DISPLAY NAME</p>
+                                                <div class="relClass">
+                                                    <div class="bar" [ngClass]="{'height23': isLoading}">
+                                                        <h5> {{profileData.companyDisplayName}} </h5>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12 block p-0 pt-24">
+                                                        <p>MOBILE NO</p>
+                                                        <div class="relClass">
+                                                            <div class="bar" [ngClass]="{'height23': isLoading}">
+                                                                <h5> {{profileData.primaryContact}} </h5>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-3 col-lg-4 col-md-4 pl-0-991">
+                                                <p>COMPANY NAME</p>
+                                                <div class="relClass">
+                                                    <div class="bar" [ngClass]="{'height23': isLoading}">
+                                                        <h5> <span
+                                                                *ngIf="!isLoading">{{profileData.companyName?profileData.companyName:'N/A'}}</span>
+                                                        </h5>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12 block p-0 pt-24 ">
+                                                        <p>EMAIL</p>
+                                                        <div class="relClass wb">
+                                                            <div class="bar" [ngClass]="{'height23': isLoading}">
+                                                                <h5> {{profileData.email}} </h5>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -147,6 +152,8 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-md-1"></div>
+
             </div>
 
         </div>
