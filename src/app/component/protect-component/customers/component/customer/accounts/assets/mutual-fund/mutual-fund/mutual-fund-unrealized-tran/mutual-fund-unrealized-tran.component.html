@@ -26,7 +26,7 @@
       </div>
    </div>
    <div class="row">
-      <div  class="col-md-12 p-0 mb-8">
+      <div class="col-md-12 p-0 mb-8">
          <div *ngIf="dataSource.data.length>0">
             <table #tableEl1 [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading
                class="mutualfunds-capital-equity skeletonAnimation" id="tbs" mat-table>
@@ -171,7 +171,7 @@
 
    <div class="row secoundTable">
       <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 p-0 mb-8">
-         <cdk-virtual-scroll-viewport *ngIf="unrealisedData.data.length>0" class="tran-height-2"  tvsItemSize="40">
+         <cdk-virtual-scroll-viewport *ngIf="unrealisedData.data.length>0" class="tran-height-2" tvsItemSize="40">
             <!-- <div *ngIf="customDataSource.data.length>0" class="wrapper">-->
             <table #tableEl [appSkeletonLoading]="isLoading" [dataSource]="unrealisedData" appSkeletonLoading
                class="mutualfunds-capital-equity skeletonAnimation" id="table-low" mat-table matSort>
@@ -334,7 +334,7 @@
                <ng-container matColumnDef="dividendPayoutTotal">
                   <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
                      <div class="bar">
-                        <span  class="f-700">{{(element.dividendPayout) ? element.dividendPayout : 0}}</span>
+                        <span class="f-700">{{(element.dividendPayout) ? element.dividendPayout : 0}}</span>
                      </div>
                   </td>
                </ng-container>
@@ -351,7 +351,7 @@
                <ng-container matColumnDef="dividendReinvestTotal">
                   <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
                      <div class="bar">
-                        <span  class="f-700">{{(element.dividendReinvest) ? element.dividendReinvest :0}}</span>
+                        <span class="f-700">{{(element.dividendReinvest) ? element.dividendReinvest :0}}</span>
                      </div>
                   </td>
                </ng-container>
@@ -376,7 +376,7 @@
                   </th>
                   <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
                      <div class="bar">
-                        <span  >{{element.gain}}</span>
+                        <span>{{element.gain}}</span>
                      </div>
                   </td>
                </ng-container>
@@ -392,13 +392,13 @@
                      Absolute return%
                   </th>
                   <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
-                     <div class="bar"><span >{{element.absoluteReturn}}</span></div>
+                     <div class="bar"><span>{{element.absoluteReturn}}</span></div>
                   </td>
                </ng-container>
                <ng-container matColumnDef="absReturnTotal">
                   <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
                      <div class="bar">
-                        <span  class="f-700">{{element.trnAbsoluteReturn}}</span>
+                        <span class="f-700">{{element.trnAbsoluteReturn}}</span>
                      </div>
                   </td>
                </ng-container>
@@ -415,7 +415,7 @@
                <ng-container matColumnDef="xirrTotal">
                   <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
                      <div class="bar">
-                        <span  class="f-700">{{element.totalCagr}}</span>
+                        <span class="f-700">{{element.totalCagr}}</span>
                      </div>
                   </td>
                </ng-container>
@@ -480,7 +480,8 @@
                </ng-container>
                <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>
                <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
-               <tr *matRowDef="let row; columns: displayedColumnsTotal; when: isTotal" mat-row [hidden]="viewMode == 'All Transactions'"></tr>
+               <tr *matRowDef="let row; columns: displayedColumnsTotal; when: isTotal" mat-row
+                  [hidden]="viewMode == 'All Transactions'"></tr>
                <tr *matRowDef="let row; columns: ['groupHeader']; when: isGroup" mat-row></tr>
                <tr *matRowDef="let row; columns: ['groupHeader2']; when: isGroup2" mat-row></tr>
                <tr *matRowDef="let row; columns: ['groupHeader3']; when: isGroup3" mat-row></tr>
@@ -498,107 +499,105 @@
    </div>
 </div>
 <!-- -------------------- pdf ---------------------------- -->
-<div #unrealizedTranTemplateHeader id="templateHeader" class="hide" *ngIf="showDownload == true">
-   <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif; ">
-      <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
-         <td
-            style="text-align: left;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-            <b>{{(columnHeader) ? columnHeader : 'Sub Category Name'}}</b>
-         </td>
-         <td
-            style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-            <b>Amount invested</b>
-         </td>
-         <td
-            style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-            <b>Current value</b>
-         </td>
-         <td
-            style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-            <b>Dividend payout</b>
-         </td>
-         <td
-            style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-            <b>Dividend reinvestment</b>
-         </td>
-         <td
-            style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-            <b>Gain</b>
-         </td>
-         <td
-            style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-            <b>Absolute return%</b>
-         </td>
-         <td
-            style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-            <b>XIRR%</b>
-         </td>
-         <td
-            style="padding: 7px 8px;font-weight: 600; text-align: right; font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-            <b>Allocation%</b>
-         </td>
-      </tr>
-   </table>
- 
-</div>
 <div #allTranTemplateHeader id="alltemplateHeader" class="hide" *ngIf="showDownload == true">
-   <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif; ">
+   <table id="FakeHeaders" *ngIf="viewMode == 'All Transactions' || viewMode == 'all transactions'"
+      style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
       <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
-         <td *ngIf="customDataSource.data?.arrayUnrealised[0]?.isCheked == true"
-            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-            <b>{{customDataSource.data?.arrayUnrealised[0]?.name}}</b>
+         <td *ngIf="customDataSource.data?.arrayTran[0]?.isCheked == true"
+            style="width:9%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <b>{{customDataSource.data?.arrayTran[0]?.name}}</b>
          </td>
-         <td *ngIf="customDataSource.data?.arrayUnrealised[1]?.isCheked == true"
-            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-            <b>{{customDataSource.data?.arrayUnrealised[1]?.name}}</b>
+         <td *ngIf="customDataSource.data?.arrayTran[1]?.isCheked == true"
+            style="width:15%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <b>{{customDataSource.data?.arrayTran[1]?.name}}</b>
          </td>
-         <td *ngIf="customDataSource.data?.arrayUnrealised[2]?.isCheked == true"
-            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-            <b>{{customDataSource.data?.arrayUnrealised[2]?.name}}</b>
+         <td *ngIf="customDataSource.data?.arrayTran[2]?.isCheked == true"
+            style="width:15%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <b>{{customDataSource.data?.arrayTran[2]?.name}}</b>
          </td>
-         <td *ngIf="customDataSource.data?.arrayUnrealised[3]?.isCheked == true"
-            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-            <b>{{customDataSource.data?.arrayUnrealised[3]?.name}}</b>
+         <td *ngIf="customDataSource.data?.arrayTran[3]?.isCheked == true"
+            style="width:15%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <b>{{customDataSource.data?.arrayTran[3]?.name}}</b>
          </td>
-         <td *ngIf="customDataSource.data?.arrayUnrealised[4]?.isCheked == true"
-            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-            <b>{{customDataSource.data?.arrayUnrealised[4]?.name}}</b>
+         <td *ngIf="customDataSource.data?.arrayTran[4]?.isCheked == true"
+            style="width:15%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <b>{{customDataSource.data?.arrayTran[4]?.name}}</b>
          </td>
-         <td *ngIf="customDataSource.data?.arrayUnrealised[5]?.isCheked == true"
-            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-            <b>{{customDataSource.data?.arrayUnrealised[5].name}}</b>
+         <td *ngIf="customDataSource.data?.arrayTran[5]?.isCheked == true"
+            style="width:8%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <b>{{customDataSource.data?.arrayTran[5]?.name}}</b>
          </td>
-         <td *ngIf="customDataSource.data?.arrayUnrealised[6]?.isCheked == true"
-            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-            <b>{{customDataSource.data?.arrayUnrealised[6]?.name}}</b>
+         <td *ngIf="customDataSource.data?.arrayTran[6]?.isCheked == true"
+            style="width:15%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <b>{{customDataSource.data?.arrayTran[6]?.name}}</b>
          </td>
-         <td *ngIf="customDataSource.data?.arrayUnrealised[7]?.isCheked == true"
-            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-            <b>{{customDataSource.data?.arrayUnrealised[7]?.name}}</b>
-         </td>
-         <td *ngIf="customDataSource.data?.arrayUnrealised[8]?.isCheked == true"
-            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-            <b>{{customDataSource.data?.arrayUnrealised[8]?.name}}</b>
-         </td>
-         <td *ngIf="customDataSource.data?.arrayUnrealised[9]?.isCheked == true"
-            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-            <b>{{customDataSource.data?.arrayUnrealised[9]?.name}}</b>
-         </td>
-         <td *ngIf="customDataSource.data?.arrayUnrealised[10]?.isCheked == true"
-            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-            <b>{{customDataSource.data?.arrayUnrealised[10]?.name}}</b>
-         </td>
-         <td *ngIf="customDataSource.data?.arrayUnrealised[11]?.isCheked == true"
-            style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-            <b>{{customDataSource.data?.arrayUnrealised[11]?.name}}</b>
-         </td>
-         <td *ngIf="customDataSource.data?.arrayUnrealised[12]?.isCheked == true"
+         <td *ngIf="customDataSource.data?.arrayTran[7]?.isCheked == true"
             style="padding: 7px 8px;font-weight: 600; text-align: right; font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-            <b>{{customDataSource.data?.arrayUnrealised[12]?.name}}</b>
+            <b>{{customDataSource.data?.arrayTran[7]?.name}}</b>
          </td>
       </tr>
-   </table>
-   
+</table>
+
+</div>
+
+<div #unrealizedTranTemplateHeader id="templateHeader" class="hide" *ngIf="showDownload == true">
+<table  id="FakeHeaders" style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif; ">
+   <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
+      <td *ngIf="customDataSource.data?.arrayUnrealised[0]?.isCheked == true"
+         style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+         <b>{{customDataSource.data?.arrayUnrealised[0]?.name}}</b>
+      </td>
+      <td *ngIf="customDataSource.data?.arrayUnrealised[1]?.isCheked == true"
+         style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+         <b>{{customDataSource.data?.arrayUnrealised[1]?.name}}</b>
+      </td>
+      <td *ngIf="customDataSource.data?.arrayUnrealised[2]?.isCheked == true"
+         style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+         <b>{{customDataSource.data?.arrayUnrealised[2]?.name}}</b>
+      </td>
+      <td *ngIf="customDataSource.data?.arrayUnrealised[3]?.isCheked == true"
+         style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+         <b>{{customDataSource.data?.arrayUnrealised[3]?.name}}</b>
+      </td>
+      <td *ngIf="customDataSource.data?.arrayUnrealised[4]?.isCheked == true"
+         style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+         <b>{{customDataSource.data?.arrayUnrealised[4]?.name}}</b>
+      </td>
+      <td *ngIf="customDataSource.data?.arrayUnrealised[5]?.isCheked == true"
+         style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+         <b>{{customDataSource.data?.arrayUnrealised[5].name}}</b>
+      </td>
+      <td *ngIf="customDataSource.data?.arrayUnrealised[6]?.isCheked == true"
+         style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+         <b>{{customDataSource.data?.arrayUnrealised[6]?.name}}</b>
+      </td>
+      <td *ngIf="customDataSource.data?.arrayUnrealised[7]?.isCheked == true"
+         style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+         <b>{{customDataSource.data?.arrayUnrealised[7]?.name}}</b>
+      </td>
+      <td *ngIf="customDataSource.data?.arrayUnrealised[8]?.isCheked == true"
+         style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+         <b>{{customDataSource.data?.arrayUnrealised[8]?.name}}</b>
+      </td>
+      <td *ngIf="customDataSource.data?.arrayUnrealised[9]?.isCheked == true"
+         style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+         <b>{{customDataSource.data?.arrayUnrealised[9]?.name}}</b>
+      </td>
+      <td *ngIf="customDataSource.data?.arrayUnrealised[10]?.isCheked == true"
+         style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+         <b>{{customDataSource.data?.arrayUnrealised[10]?.name}}</b>
+      </td>
+      <td *ngIf="customDataSource.data?.arrayUnrealised[11]?.isCheked == true"
+         style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+         <b>{{customDataSource.data?.arrayUnrealised[11]?.name}}</b>
+      </td>
+      <td *ngIf="customDataSource.data?.arrayUnrealised[12]?.isCheked == true"
+         style="padding: 7px 8px;font-weight: 600; text-align: right; font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+         <b>{{customDataSource.data?.arrayUnrealised[12]?.name}}</b>
+      </td>
+   </tr>
+</table>
+
 </div>
 <div #unrealizedTranTemplate id="template" class="hide" *ngIf="showDownload == true">
    <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif; ">
@@ -612,8 +611,13 @@
                *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
                <img width="140px" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
             </div>
-            <div *ngIf="getOrgData && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
+            <div
+               *ngIf="getOrgData && getOrgData.logoUrl != 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
                <img width="200px" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
+            </div>
+            <div
+               *ngIf="getOrgData.logoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
+               <span width="200px" style="font-size: 25px;">{{getOrgData.companyName}}</span>
             </div>
          </td>
          <td style="text-align: right;" colspan="6">
@@ -736,7 +740,7 @@
          </td>
          <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
             appFormatNumber>
-           {{mfData ? mfData.total_dividend_payout : '0'}}
+            {{mfData ? mfData.total_dividend_payout : '0'}}
          </td>
          <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
             appFormatNumber>
@@ -857,8 +861,8 @@
             <td *ngIf="customDataSource.data?.arrayUnrealised[1]?.isCheked == true"
                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left;">
                <span *ngIf="item.fwTransactionType">
-                   <!-- {{(item.fwTransactionType) ? item.fwTransactionType : '-'}} -->
-                   {{item[secondArray]}}
+                  <!-- {{(item.fwTransactionType) ? item.fwTransactionType : '-'}} -->
+                  {{item[secondArray]}}
 
                </span>
             </td>
@@ -892,9 +896,9 @@
                   {{item[SixthArray]}}
 
                </span>
-               
+
             </td>
-            <td  *ngIf="customDataSource.data?.arrayUnrealised[6]?.isCheked == true"
+            <td *ngIf="customDataSource.data?.arrayUnrealised[6]?.isCheked == true"
                style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                <!-- {{item.currentAmount}} -->
                {{item[seventhArray]}}
@@ -964,37 +968,37 @@
                <!-- {{item.totalUnit}} -->
                {{item[SixthArrayTotal]}}
             </td>
-            <td  class="f-700" *ngIf="customDataSource.data?.arrayUnrealised[6]?.isCheked == true"
+            <td class="f-700" *ngIf="customDataSource.data?.arrayUnrealised[6]?.isCheked == true"
                style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                <!-- {{item.totalCurrentValue}} -->
                {{item[seventhArrayTotal]}}
             </td>
-            <td  class="f-700" *ngIf="customDataSource.data?.arrayUnrealised[7]?.isCheked == true"
+            <td class="f-700" *ngIf="customDataSource.data?.arrayUnrealised[7]?.isCheked == true"
                style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                <!-- {{item.dividendPayout}} -->
                {{item[eighthArrayTotal]}}
             </td>
-            <td  class="f-700" *ngIf="customDataSource.data?.arrayUnrealised[8]?.isCheked == true"
+            <td class="f-700" *ngIf="customDataSource.data?.arrayUnrealised[8]?.isCheked == true"
                style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                <!-- {{item.dividendReinvest}} -->
                {{item[ninethArrayTotal]}}
             </td>
-            <td  class="f-700" *ngIf="customDataSource.data?.arrayUnrealised[9]?.isCheked == true"
+            <td class="f-700" *ngIf="customDataSource.data?.arrayUnrealised[9]?.isCheked == true"
                style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                <!-- {{item.totalCurrentValue}} -->
                {{item[tenthArrayTotal]}}
             </td>
-            <td  class="f-700" *ngIf="customDataSource.data?.arrayUnrealised[10]?.isCheked == true"
+            <td class="f-700" *ngIf="customDataSource.data?.arrayUnrealised[10]?.isCheked == true"
                style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
                <!-- {{item.netGain}} -->
                {{item[eleventhArrayTotal]}}
             </td>
-            <td  class="f-700" *ngIf="customDataSource.data?.arrayUnrealised[11]?.isCheked == true"
+            <td class="f-700" *ngIf="customDataSource.data?.arrayUnrealised[11]?.isCheked == true"
                style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                <!-- {{item.trnAbsoluteReturn}} -->
                {{item[twelwthArrayTotal]}}
             </td>
-            <td  class="f-700" *ngIf="customDataSource.data?.arrayUnrealised[12]?.isCheked == true"
+            <td class="f-700" *ngIf="customDataSource.data?.arrayUnrealised[12]?.isCheked == true"
                style="text-align: right;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-right: 1px solid #DADCE0;">
                <!-- {{item.totalCagr}} -->
                {{item[thirteenthArrayTotal]}}
@@ -1076,7 +1080,7 @@
             </td>
             <td *ngIf="customDataSource.data?.arrayTran[1]?.isCheked == true"
                style=" border-top: 1px solid #DADCE0; width:15%;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: left;">
-               <span *ngIf="item.fwTransactionType"> 
+               <span *ngIf="item.fwTransactionType">
                   <!-- {{(item.fwTransactionType) ? item.fwTransactionType : '-'}} -->
                   {{item[secondArrayTran]}}
 
@@ -1125,7 +1129,8 @@
 
             </td>
          </tr>
-         <tr *ngIf="item.total && viewMode != 'All Transactions'" style=" border-bottom:1px solid #DADCE0;page-break-inside: avoid">
+         <tr *ngIf="item.total && viewMode != 'All Transactions'"
+            style=" border-bottom:1px solid #DADCE0;page-break-inside: avoid">
             <td class="f-700" *ngIf="customDataSource.data?.arrayTran[0]?.isCheked == true"
                style=" border-bottom:1px solid #DADCE0;  width:9%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-left: 1px solid #DADCE0;border-top: 1px solid #DADCE0;">
                {{item[firstArrayTotalTran]}}
@@ -1136,7 +1141,7 @@
                {{item[secondArrayTotalTran]}}
 
             </td>
-            <td class="f-700" *ngIf="customDataSource.data?.arrayTran[2]?.isCheked == true" 
+            <td class="f-700" *ngIf="customDataSource.data?.arrayTran[2]?.isCheked == true"
                style=" border-bottom:1px solid #DADCE0;  width:15%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;border-top: 1px solid #DADCE0;">
                {{item[thirdArrayTotalTran]}}
 

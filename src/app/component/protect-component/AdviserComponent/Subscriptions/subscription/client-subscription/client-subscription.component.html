@@ -48,9 +48,9 @@
                 <!-- Symbol Column -->
                 <ng-container matColumnDef="balance">
                     <th *matHeaderCellDef class="f-18 bb-0 t-right" mat-header-cell mat-sort-header="balanceDue">
-                        Balance due11
+                        Balance due
                     </th>
-                    <td (click)="openFragment('clients',element)" *matCellDef="let element" class="c-p text-right amt"
+                    <td (click)="openFragment('clients',element)" *matCellDef="let element" class="c-p tdPadding-20 text-right amt"
                         mat-cell>
                         <div class="bar"  [ngClass]="{floatRightClass: isLoading}" *ngIf="element.balanceDue != undefined">₹<span
                                 appFormatNumber>{{element.balanceDue}}</span></div>
