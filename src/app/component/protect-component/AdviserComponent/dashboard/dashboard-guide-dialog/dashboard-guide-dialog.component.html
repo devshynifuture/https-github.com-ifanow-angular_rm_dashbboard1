@@ -85,6 +85,8 @@
           <h3 *ngIf="step==18" class="m-0 f-500 pb-20 text-diff">Thank You!</h3>
 
         </div>
+        <button *ngFor="let singleArnRia of arnRtaData" mat-stroked-button
+          class="btn-primary h-48 lh-48 f-18 br-4">{{singleArnRia.number}}</button>
       </div>
     </div>
   </div>
@@ -336,7 +338,8 @@
       <div class="bottomFooterDasb">
         <div class="row">
           <div class="col-md-12">
-            <button *ngIf="step8Flag" (click)="step=9" mat-stroked-button class=" btn-primary h-48 lh-48 f-18 br-4">Next
+            <button *ngIf="step8Flag" (click)="selectedTeamMemberChoice.id==1?step=9:step=18" mat-stroked-button
+              class=" btn-primary h-48 lh-48 f-18 br-4">Next
               question<img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
           </div>
         </div>
@@ -588,7 +591,7 @@
 
     <div class="contentGuideBox mt-40">
 
-      <div class="formBox14">
+      <div [formGroup]="credentialsForm" class="formBox14">
         <div class="row cams-advsior">
           <div class="col-md-4">
             <div class="row ">
@@ -598,7 +601,7 @@
               <div class="col-md-8">
                 <p class="m-0 roboto f-400">Registered email</p>
                 <mat-form-field floatLabel="never" appearance="standard">
-                  <input matInput class="form-control" placeholder="Enter registered email">
+                  <input matInput formControlName="camsEmail" class="form-control" placeholder="Enter registered email">
                 </mat-form-field>
               </div>
 
@@ -615,7 +618,7 @@
               <div class="col-md-8">
                 <p class="m-0 roboto f-400">Login ID</p>
                 <mat-form-field floatLabel="never" appearance="standard">
-                  <input matInput class="form-control" placeholder="Enter Login ID">
+                  <input matInput formControlName="karvyID" class="form-control" placeholder="Enter Login ID">
                 </mat-form-field>
               </div>
 
@@ -626,7 +629,8 @@
               <div class="col-md-12">
                 <p class="m-0 roboto f-400">Login password</p>
                 <mat-form-field floatLabel="never" appearance="standard">
-                  <input matInput class="form-control" placeholder="Enter Login password">
+                  <input matInput formControlName="karvyPassword" class="form-control"
+                    placeholder="Enter Login password">
                 </mat-form-field>
               </div>
 
@@ -637,7 +641,8 @@
               <div class="col-md-8">
                 <p class="m-0 roboto f-400">Registered email</p>
                 <mat-form-field floatLabel="never" appearance="standard">
-                  <input matInput class="form-control" placeholder="Enter registered email">
+                  <input matInput formControlName="karvyEMail" class="form-control"
+                    placeholder="Enter registered email">
                 </mat-form-field>
               </div>
 
@@ -655,7 +660,8 @@
               <div class="col-md-8">
                 <p class="m-0 roboto f-400">Registered email</p>
                 <mat-form-field floatLabel="never" appearance="standard">
-                  <input matInput class="form-control" placeholder="Enter registered email">
+                  <input matInput formControlName="franklinEmail" class="form-control"
+                    placeholder="Enter registered email">
                 </mat-form-field>
               </div>
 
@@ -667,7 +673,8 @@
               <div class="col-md-12">
                 <p class="m-0 roboto f-400">Mailback password</p>
                 <mat-form-field floatLabel="never" appearance="standard">
-                  <input matInput class="form-control" placeholder="Enter mailback password">
+                  <input matInput formControlName="franklinPassword" class="form-control"
+                    placeholder="Enter mailback password">
                 </mat-form-field>
               </div>
 
@@ -683,7 +690,7 @@
       <div class="bottomFooterDasb">
         <div class="row">
           <div class="col-md-12">
-            <button mat-stroked-button class="btn-primary h-48 lh-48 f-18  br-4">Save & Add more </button>
+            <!-- <button mat-stroked-button class="btn-primary h-48 lh-48 f-18  br-4">Save & Add more </button> -->
             <button mat-stroked-button (click)="step=15" class="btn-primary-outline h-48 lh-48 f-18 br-4 ml-20">Save &
               Proceed </button>
           </div>

@@ -133,6 +133,7 @@ export class DashboardGuideDialogComponent implements OnInit {
   selectedArnRIaChoice: any;
   basicDetailsChoice: any;
   selctedRtaDataChoice: any;
+  selectedTeamMemberChoice: any;
 
 
   constructor(private fb: FormBuilder,
@@ -171,7 +172,7 @@ export class DashboardGuideDialogComponent implements OnInit {
         this.addArnRiaForm();
       }
     });
-    this.getRtaDetails();
+    // this.getRtaDetails();
   }
 
   get getArnRiaForm() { return this.ArnRiaForm.controls; }
@@ -231,6 +232,7 @@ export class DashboardGuideDialogComponent implements OnInit {
 
   selectAddTeamMemberChoice(selectChoice) {
     this.step8Flag = true
+    this.selectedTeamMemberChoice = selectChoice
     this.addTeamMemberChoiceList.map(element => {
       (selectChoice.id == element.id) ? element.selected = true : element.selected = false
     })
@@ -310,7 +312,15 @@ export class DashboardGuideDialogComponent implements OnInit {
     }
     this.settingService.addArn(jsonObj).subscribe((res) => {
       this.eventService.openSnackBar("ARN-RIA Added successfully");
-      (flag == 'addMore') ? this.getArnRiaFormList.controls[index].reset() : this.step++;
+      if (flag == 'addMore') {
+        this.getArnRiaFormList.controls[index].get('arnOrRia').setValue('')
+        this.getArnRiaFormList.controls[index].get('typeId').setValue('')
+        this.getArnRiaFormList.controls[index].get('number').setValue('')
+        this.getArnRiaFormList.controls[index].get('nameOfTheHolder').setValue('')
+      }
+      else {
+        this.step++;
+      }
     }, err => {
       this.eventService.openSnackBar(err, "Dismiss");
       // this.barButtonOptions.active = false;
