@@ -138,6 +138,9 @@ export class DashboardGuideDialogComponent implements OnInit {
   teamOrAloneSelectedData: any = {};
   selctedArmOrRia: any;
   selectedArmOrRiaIndex: any;
+  arnRiaList = [];
+  ArnRiaIndex: any;
+  selectedArnRIa: any;
 
 
   constructor(private fb: FormBuilder,
@@ -197,6 +200,10 @@ export class DashboardGuideDialogComponent implements OnInit {
 
   showPageByIndex(index) {
     this.page = index;
+  }
+
+  chooseArnRiaForm(index) {
+    this.ArnRiaIndex = index;
   }
 
   changeNumberValidation(value) {
@@ -318,10 +325,13 @@ export class DashboardGuideDialogComponent implements OnInit {
     this.settingService.addArn(jsonObj).subscribe((res) => {
       this.eventService.openSnackBar("ARN-RIA Added successfully");
       if (flag == 'addMore') {
-        this.getArnRiaFormList.controls[index].get('arnOrRia').setValue('')
-        this.getArnRiaFormList.controls[index].get('typeId').setValue('')
-        this.getArnRiaFormList.controls[index].get('number').setValue('')
-        this.getArnRiaFormList.controls[index].get('nameOfTheHolder').setValue('')
+        this.arnRiaList.push(jsonObj)
+        this.addArnRiaForm();
+        this.getArnRiaFormList.controls[index + 1].get('arnOrRia').setValue('')
+        this.getArnRiaFormList.controls[index + 1].get('typeId').setValue('')
+        this.getArnRiaFormList.controls[index + 1].get('number').setValue('')
+        this.getArnRiaFormList.controls[index + 1].get('nameOfTheHolder').setValue('');
+        this.selectedArnRIa = jsonObj;
       }
       else {
         this.step++;

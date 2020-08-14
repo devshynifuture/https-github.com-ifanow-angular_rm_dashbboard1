@@ -99,12 +99,13 @@
         </div>
       </div>
 
-      <div *ngIf="step==12" class="row">
+      <div *ngIf="step==12  && getArnRiaFormList.length>1" class="row">
         <div class="col-md-12 d-flex align-items-center justify-content-end">
           <mat-form-field class="w-30">
-            <mat-select class="form-control ">
-              <mat-option>
-                ABCD
+            <mat-select [(ngModel)]="selectedArnRIa" class="form-control ">
+              <mat-option (onSelectionChange)="chooseArnRiaForm(i)" [value]="singleArnRia"
+                *ngFor="let singleArnRia of arnRiaList;index as i">
+                {{singleArnRia.nameOfTheHolder}}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -489,8 +490,8 @@
       <div class="bottomFooterDasb">
         <div class="row">
           <div class="col-md-12 ">
-            <button *ngIf="step10Flag" (click)="basicDetailsChoice.id==1?step=12:step=18" mat-stroked-button
-              class="btn-primary h-48 lh-48 f-18   br-4  ">Proceed
+            <button *ngIf="step10Flag" (click)="basicDetailsChoice.id==1?step=12:step=18;ArnRiaIndex=0"
+              mat-stroked-button class="btn-primary h-48 lh-48 f-18   br-4  ">Proceed
               <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
           </div>
         </div>
@@ -505,71 +506,72 @@
     <div [formGroup]="ArnRiaForm">
       <div [formGroup]="singleArnRiaForm" *ngFor="let singleArnRiaForm of getArnRiaFormList.controls;index as i"
         class="contentGuideBox mt-40">
-        <div class="row slider-9">
-          <div class="col-md-3 pl-0">
-            <h5 class="m-0 f-400 roboto text-black pb-5">ARN/RIA</h5>
-            <mat-form-field floatLabel="never" appearance="standard">
-              <mat-select (selectionChange)="changeNumberValidation($event.value)" formControlName="arnOrRia"
-                class="form-control">
-                <mat-option disabled value="">Select ARN/RIA</mat-option>
-                <mat-option *ngFor="let option of globalData.arn_type_list" [value]="option.id">
-                  {{option.type}}</mat-option>
-              </mat-select>
-              <mat-error *ngIf="singleArnRiaForm.get('arnOrRia').errors?.required">This field is required</mat-error>
-            </mat-form-field>
+        <div *ngIf="ArnRiaIndex==i">
+          <div class="row slider-9">
+            <div class="col-md-3 pl-0">
+              <h5 class="m-0 f-400 roboto text-black pb-5">ARN/RIA</h5>
+              <mat-form-field floatLabel="never" appearance="standard">
+                <mat-select (selectionChange)="changeNumberValidation($event.value)" formControlName="arnOrRia"
+                  class="form-control">
+                  <mat-option disabled value="">Select ARN/RIA</mat-option>
+                  <mat-option *ngFor="let option of globalData.arn_type_list" [value]="option.id">
+                    {{option.type}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="singleArnRiaForm.get('arnOrRia').errors?.required">This field is required</mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-md-3 pl-0">
+              <h5 class="m-0 f-400 roboto text-black pb-5">ARN/RIA type</h5>
+              <mat-form-field floatLabel="never" appearance="standard">
+                <mat-select formControlName="typeId" class="form-control">
+                  <mat-option disabled value="">Select ARN/RIA</mat-option>
+                  <mat-option *ngFor="let option of globalData.arn_type_master_list" [value]="option.id">
+                    {{option.type}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="singleArnRiaForm.get('typeId').errors?.required">This field is required</mat-error>
+              </mat-form-field>
+            </div>
           </div>
-          <div class="col-md-3 pl-0">
-            <h5 class="m-0 f-400 roboto text-black pb-5">ARN/RIA type</h5>
-            <mat-form-field floatLabel="never" appearance="standard">
-              <mat-select formControlName="typeId" class="form-control">
-                <mat-option disabled value="">Select ARN/RIA</mat-option>
-                <mat-option *ngFor="let option of globalData.arn_type_master_list" [value]="option.id">
-                  {{option.type}}</mat-option>
-              </mat-select>
-              <mat-error *ngIf="singleArnRiaForm.get('typeId').errors?.required">This field is required</mat-error>
-            </mat-form-field>
+          <div class="row slider-9 pt-40">
+            <div class="col-md-3 pl-0">
+              <h5 class="m-0 f-400 roboto text-black pb-5">ARN/RIA number</h5>
+              <mat-form-field floatLabel="never" appearance="standard">
+                <input #number matInput appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                  formControlName="number" maxlength={{arnRiaMaxlength}} class="form-control bg-white"
+                  placeholder="Enter ARN/RIA number">
+                <mat-hint *ngIf="singleArnRiaForm.get('arnOrRia').value!=''" align="end">
+                  {{number.value.length}}/{{arnRiaMaxlength}}</mat-hint>
+                <mat-error *ngIf="singleArnRiaForm.get('number').errors?.required">This field is required</mat-error>
+                <mat-error
+                  *ngIf="singleArnRiaForm.get('number').errors?.maxlength || singleArnRiaForm.get('number').errors?.minlength">
+                  Please enter valid number</mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-md-3 pl-0">
+              <h5 class="m-0 f-400 roboto text-black pb-5">Name of ARN/RIA holder</h5>
+              <mat-form-field floatLabel="never" appearance="standard">
+                <div class="d-flex">
+                  <button mat-stroked-button class="text-custom br-0 h-40 mw-92 pl-5 pr-5 b bg-white">ARN/RIA</button>
+                  <input formControlName="nameOfTheHolder" matInput class="form-control bl-0 bg-white"
+                    placeholder="Enter name of ARN/RIA holder">
+                </div>
+                <mat-error *ngIf="singleArnRiaForm.get('nameOfTheHolder').errors?.required">This field is required
+                </mat-error>
+              </mat-form-field>
+            </div>
           </div>
-        </div>
-        <div class="row slider-9 pt-40">
-          <div class="col-md-3 pl-0">
-            <h5 class="m-0 f-400 roboto text-black pb-5">ARN/RIA number</h5>
-            <mat-form-field floatLabel="never" appearance="standard">
-              <input #number matInput appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
-                formControlName="number" maxlength={{arnRiaMaxlength}} class="form-control bg-white"
-                placeholder="Enter ARN/RIA number">
-              <mat-hint *ngIf="singleArnRiaForm.get('arnOrRia').value!=''" align="end">
-                {{number.value.length}}/{{arnRiaMaxlength}}</mat-hint>
-              <mat-error *ngIf="singleArnRiaForm.get('number').errors?.required">This field is required</mat-error>
-              <mat-error
-                *ngIf="singleArnRiaForm.get('number').errors?.maxlength || singleArnRiaForm.get('number').errors?.minlength">
-                Please enter valid number</mat-error>
-            </mat-form-field>
-          </div>
-          <div class="col-md-3 pl-0">
-            <h5 class="m-0 f-400 roboto text-black pb-5">Name of ARN/RIA holder</h5>
-            <mat-form-field floatLabel="never" appearance="standard">
-              <div class="d-flex">
-                <button mat-stroked-button class="text-custom br-0 h-40 mw-92 pl-5 pr-5 b bg-white">ARN/RIA</button>
-                <input formControlName="nameOfTheHolder" matInput class="form-control bl-0 bg-white"
-                  placeholder="Enter name of ARN/RIA holder">
-              </div>
-              <mat-error *ngIf="singleArnRiaForm.get('nameOfTheHolder').errors?.required">This field is required
-              </mat-error>
-            </mat-form-field>
-          </div>
-        </div>
 
-        <div class="bottomFooterDasb">
-          <div class="row">
-            <div class="col-md-12  ">
-              <button mat-stroked-button (click)="saveArnRiaForm('addMore',i)"
-                class="btn-primary h-48 lh-48 f-18  br-4">Save & Add more </button>
-              <button mat-stroked-button (click)="saveArnRiaForm('next',i)"
-                class="btn-primary-outline h-48 lh-48 f-18  br-4 ml-20">Save & Proceed </button>
+          <div class="bottomFooterDasb">
+            <div class="row">
+              <div class="col-md-12  ">
+                <button mat-stroked-button (click)="saveArnRiaForm('addMore',i)"
+                  class="btn-primary h-48 lh-48 f-18  br-4">Save & Add more </button>
+                <button mat-stroked-button (click)="saveArnRiaForm('next',i)"
+                  class="btn-primary-outline h-48 lh-48 f-18  br-4 ml-20">Save & Proceed </button>
+              </div>
             </div>
           </div>
         </div>
-
       </div>
     </div>
   </div>
