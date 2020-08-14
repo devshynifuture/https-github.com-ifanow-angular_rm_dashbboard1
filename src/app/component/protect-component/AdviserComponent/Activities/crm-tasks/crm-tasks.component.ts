@@ -62,7 +62,6 @@ export class CrmTasksComponent implements OnInit {
     this.isFilterSet = true;
     this.filterValueId = this.filterFormControl.value;
     if(this.filterValueId === 5){
-      this.customDateFilter = true;
       this.openDateDialog();
     } else {
       this.finalTaskList = [];
@@ -79,9 +78,12 @@ export class CrmTasksComponent implements OnInit {
     dialogRef.afterClosed()
       .subscribe(res=>{
         if(res){
+          this.customDateFilter = true;
           this.customFromToDate = res;
           this.finalTaskList = [];
           this.initPoint();
+        } else {
+          this.customDateFilter = false;
         }
       })
   }
