@@ -13,7 +13,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 })
 export class ArnRiaDetailsComponent implements OnInit {
 
-  advisorId:any;
+  advisorId: any;
   arnobjs = []
   globalData: any;
   hasError = false;
@@ -32,12 +32,12 @@ export class ArnRiaDetailsComponent implements OnInit {
     this.initializeData();
   }
 
-  initializeData(){
+  initializeData() {
     this.utilService.loader(1);
-    this.settingsService.getArnGlobalData().subscribe((res)=>{
+    this.settingsService.getArnGlobalData().subscribe((res) => {
       this.utilService.loader(-1);
       this.globalData = res;
-    }, err=> {
+    }, err => {
       this.utilService.loader(-1);
       this.hasError = true;
       this.eventService.openSnackBar(err, "Dismiss");
@@ -46,8 +46,8 @@ export class ArnRiaDetailsComponent implements OnInit {
   }
 
   getArnDetails() {
-      this.utilService.loader(1);
-      this.settingsService.getArnlist({advisorId: this.advisorId}).subscribe((data)=> {
+    this.utilService.loader(1);
+    this.settingsService.getArnlist({ advisorId: this.advisorId }).subscribe((data) => {
       this.utilService.loader(-1);
       this.arnobjs = data || [];
     }, err => {
@@ -87,17 +87,20 @@ export class ArnRiaDetailsComponent implements OnInit {
   }
 
   getGstApplicale(id) {
-    if(this.globalData.gst_applicable_list)
+    if (id == 0) {
+      return
+    }
+    if (this.globalData.gst_applicable_list)
       return this.globalData.gst_applicable_list.find((data) => data.id == id).type
   }
 
   getArnType(id) {
-    if(this.globalData.arn_type_list)
+    if (this.globalData.arn_type_list)
       return this.globalData.arn_type_list.find((data) => data.id == id).type
   }
 
   getArnMasterType(id) {
-    if(this.globalData.arn_type_master_list)
+    if (this.globalData.arn_type_master_list)
       return this.globalData.arn_type_master_list.find((data) => data.id == id).type
   }
 }

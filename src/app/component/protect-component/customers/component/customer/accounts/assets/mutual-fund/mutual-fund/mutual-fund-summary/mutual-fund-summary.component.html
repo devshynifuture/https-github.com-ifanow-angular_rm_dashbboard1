@@ -261,19 +261,38 @@
 
                         </div>
                     </td>
-                    <!-- <td *matFooterCellDef appFormatNumber class="br f-600 text-right" mat-footer-cell>
-    <div class="bar"> {{(mutualFund || mutualFund.totalSipAmount)?mutualFund.totalSipAmount:'0'}}
-    </div>
-    </td> -->
                     <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
                         <span >{{mfData ? mfData.sip : '0'}}</span>
-                        <!-- <div> {{ grandTotal.dividendPayout }}</div>-->
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="sipAmountTotal">
                     <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
                         <div class="bar">
                             <span class="f-700">{{element.totalSipAmount}}</span>
+                        </div>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="investedDate">
+                    <th class="br w-9 text-right" mat-header-cell *matHeaderCellDef>Invested Date
+                    </th>
+                    <td class="br text-right" mat-cell *matCellDef="let element">
+                        <div class="bar">
+                            <span *ngIf="!isLoading">{{element.investedDate}}
+                            </span>
+                            <span *ngIf="isLoading">{{''}}</span>
+                        </div>
+                    </td>
+
+                    <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
+
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="investedDateTotal">
+                    <td *matCellDef="let element" class="br text-right zIndex" mat-cell>
+                        <div class="bar">
+                            <span class="f-700">
+                                {{''}}
+                            </span>
                         </div>
                     </td>
                 </ng-container>
@@ -439,6 +458,9 @@
         <td *ngIf="customDataSource.data?.array[10]?.isCheked" [ngStyle]="customDataSource.data?.array[10].style">
             <b>{{customDataSource.data?.array[10]?.name}}</b>
         </td>
+        <td *ngIf="customDataSource.data?.array[11]?.isCheked" [ngStyle]="customDataSource.data?.array[11].style">
+            <b>{{customDataSource.data?.array[11]?.name}}</b>
+        </td>
 
     </tr>
 </div>
@@ -528,6 +550,9 @@
             <td *ngIf="customDataSource.data?.array[10]?.isCheked" [ngStyle]="customDataSource.data?.array[10].style">
                 <b>{{customDataSource.data?.array[10]?.name}}</b>
             </td>
+            <td *ngIf="customDataSource.data?.array[11]?.isCheked" [ngStyle]="customDataSource.data?.array[11].style">
+                <b>{{customDataSource.data?.array[11]?.name}}</b>
+            </td>
 
         </tr>
         <tbody *ngFor="let item of customDataSource.data;index as i">
@@ -603,6 +628,11 @@
                     <!-- {{item.sipAmount}} -->
                     {{item[eleventhArray]}}
                 </td>
+                <td valign="top" *ngIf="customDataSource.data?.array[11]?.isCheked"
+                    [ngStyle]="customDataSource.data?.array1[11].style" >
+                    <!-- {{item.sipAmount}} -->
+                    {{item[tweleventhArray]}}
+                </td>
             </tr>
             <tr *ngIf="item.schemeName=='Total'">
                 <td valign="top" *ngIf="customDataSource.data?.array[0]?.isCheked"
@@ -670,6 +700,12 @@
                     {{item[eleventhArrayTotal]}}
 
                 </td>
+                <td valign="top" *ngIf="customDataSource.data?.array[11]?.isCheked"
+                    [ngStyle]="customDataSource.data?.array2[11].style" >
+                    <!-- {{item.totalSipAmount}} -->
+                    {{item[tweleventhArrayTotal]}}
+
+                </td>
             </tr>
 
         </tbody>
@@ -727,6 +763,11 @@
                 [ngStyle]="customDataSource.data?.array3[10].style" >
                 <!-- {{grandTotal.sip}} -->
                 {{mfData[eleventhArrayGTotal]}}
+            </td>
+            <td valign="top" *ngIf="customDataSource.data?.array[11]?.isCheked"
+                [ngStyle]="customDataSource.data?.array3[11].style" >
+                <!-- {{grandTotal.sip}} -->
+                {{mfData[tweleventhArrayGTotal]}}
             </td>
         </tr>
     </table>

@@ -45,8 +45,8 @@
             arrow_back
           </span>
         </div>
-        <div class="col-md-2 pl-0">
-          <mat-progress-bar value="{{step}}" mode="determinate"></mat-progress-bar>
+        <div class="col-md-2 primaryProgress pl-0">
+          <mat-progress-bar   value="{{step * 7}}" mode="determinate"></mat-progress-bar>
         </div>
       </div>
 
@@ -71,8 +71,19 @@
             Should we add a profile pic of
             yours?</h3>
           <h3 *ngIf="step==10" class="m-0 f-500 pb-20">Do you have an ARN/RIA code?</h3>
-          <h3 *ngIf="step==11" class="m-0 f-500 pb-20">Adding ARN/RIA details now.</h3>
-          <h3 *ngIf="step==12" class="m-0 f-500 pb-20 text-diff">Thank you {{data.name}}. One last step.</h3>
+          <h3 *ngIf="step==11" class="m-0 f-500 pb-20">Great! Let`s add some basic details of your ARN/RIA code. With
+            that in place,you will ve able to view your client`s mututal fundholding in no time.</h3>
+          <h3 *ngIf="step==12" class="m-0 f-500 pb-20">Adding ARN/RIA details now.</h3>
+          <h3 *ngIf="step==13" class="m-0 f-500 pb-20 text-diff">Thank you {{data.name}}. One last step.</h3>
+          <h3 *ngIf="step==14" class="m-0 f-500 pb-20 text-diff">Adding RTA credentials now</h3>
+          <h3 *ngIf="step==15" class="m-0 f-500 pb-20 text-diff">Steps to set-up auto forward of your registered Gmail
+            ID</h3>
+          <h3 *ngIf="step==16" class="m-0 f-500 pb-20 text-diff">Congratulations! Hard part over. Now the easy part.
+          </h3>
+          <h3 *ngIf="step==17" class="m-0 f-500 pb-20 text-diff">Bingo! We’ve started the process of ordering &
+            uploading files for you!</h3>
+          <h3 *ngIf="step==18" class="m-0 f-500 pb-20 text-diff">Thank You!</h3>
+
         </div>
       </div>
     </div>
@@ -84,7 +95,7 @@
         <div class="col-md-12 d-flex">
           <div (click)="selectDes(singleDescription)" *ngFor="let singleDescription of descriptionArray;index as i"
             class="mr-20">
-            <div class="box-1 boxDescribes p-20">
+            <div [ngClass]="{'select-active-border': singleDescription.selected}" class="box-1 boxDescribes p-20">
               <h5 class="mb-0 roboto f-400 lh-19 ">{{singleDescription.name}}
               </h5>
 
@@ -108,7 +119,7 @@
           </div>
 
           <div class="col-md-6 d-flex align-items-center justify-content-end">
-            <p class="mb-0 c-p text-primitive">Skip this exercise</p>
+            <p class="mb-0 c-p text-primitive" (click)="onNoClick()">Skip this exercise</p>
           </div>
         </div>
       </div>
@@ -125,9 +136,9 @@
 
     <div class="contentGuideBox mt-40">
       <div class="row">
-        <div (click)="singleService.selected ? singleService.selected = false : singleService.selected = true;step3Flag=true
-          " *ngFor="let singleService of serviceList" class="col-md-3 mb-20 c-p">
-          <div class="advisor-cards">
+        <div (click)="selectService(singleService)" *ngFor="let singleService of serviceList"
+          class="col-md-3 mb-20 c-p">
+          <div [ngClass]="{'select-active-border': singleService.selected}" class="advisor-cards">
             <p class="m-0 roboto f-400 lh-16"> {{singleService.name}}</p>
             <i *ngIf="singleService.selected" class="material-icons c-p text-primitive">
               check
@@ -140,13 +151,14 @@
       <div class="bottomFooterDasb">
         <div class="row">
           <div class="col-md-6 ">
-            <button *ngIf="step3Flag" (click)="step=4" mat-stroked-button class="btn-primary h-48 lh-48 f-18 br-4">Next
+            <button *ngIf="step3Flag>0" (click)="step=4" mat-stroked-button
+              class="btn-primary h-48 lh-48 f-18 br-4">Next
               question
               <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
           </div>
 
           <div class="col-md-6 d-flex align-items-center justify-content-end">
-            <p class="mb-0 c-p text-primitive">Skip this exercise</p>
+            <p class="mb-0 c-p text-primitive" (click)="onNoClick()">Skip this exercise</p>
           </div>
         </div>
       </div>
@@ -161,8 +173,8 @@
 
     <div class="contentGuideBox mt-40">
       <div class="row">
-        <div (click)="clientWork.selected ? clientWork.selected = false : clientWork.selected = true;step4Flag=true
-          " *ngFor="let clientWork of clientsWorkWithList" class="col-md-3 mb-20 c-p">
+        <div (click)="selectClientWork(clientWork)" *ngFor="let clientWork of clientsWorkWithList"
+          class="col-md-3 mb-20 c-p">
           <div class="advisor-cards">
             <p class="m-0 roboto f-400 lh-16"> {{clientWork.name}}</p>
             <i *ngIf="clientWork.selected" class="material-icons c-p text-primitive">
@@ -176,13 +188,14 @@
       <div class="bottomFooterDasb">
         <div class="row">
           <div class="col-md-6 ">
-            <button *ngIf="step4Flag" (click)="step=5" mat-stroked-button class="btn-primary h-48 lh-48 f-18 br-4">Next
+            <button *ngIf="step4Flag>0" (click)="step=5" mat-stroked-button
+              class="btn-primary h-48 lh-48 f-18 br-4">Next
               question
               <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
           </div>
 
           <div class="col-md-6 d-flex align-items-center justify-content-end">
-            <p class="mb-0 c-p text-primitive">Skip this exercise</p>
+            <p class="mb-0 c-p text-primitive" (click)="onNoClick()">Skip this exercise</p>
           </div>
         </div>
       </div>
@@ -197,8 +210,8 @@
 
     <div class="contentGuideBox mt-40">
       <div class="row">
-        <div (click)="singleProduct.selected ? singleProduct.selected = false : singleProduct.selected = true;step5Flag=true
-          " *ngFor="let singleProduct of productList" class="col-md-3 mb-20 c-p">
+        <div (click)="selectProduct(singleProduct)" *ngFor="let singleProduct of productList"
+          class="col-md-3 mb-20 c-p">
           <div class="advisor-cards">
             <p class="m-0 roboto f-400 lh-16"> {{singleProduct.name}}</p>
             <i *ngIf="singleProduct.selected" class="material-icons c-p text-primitive">
@@ -218,7 +231,7 @@
           </div>
 
           <div class="col-md-6 d-flex align-items-center justify-content-end">
-            <p class="mb-0 c-p text-primitive">Skip this exercise</p>
+            <p class="mb-0 c-p text-primitive" (click)="onNoClick()">Skip this exercise</p>
           </div>
         </div>
       </div>
@@ -263,7 +276,7 @@
             class="box-1 boxDescribes p-20 mr-20">
             <h5 class="m-0 roboto f-400 lh-19 pb-24">{{singleMfPractice.name}}
             </h5>
-            <div class="hw-40 bg-grey lt br-2 mt-16">
+            <div class="hw-40 bg-grey lt br-2 bottomPost ">
               <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">{{singleMfPractice.option}}</h3>
             </div>
             <div *ngIf="singleMfPractice.selected" class="ribbon ribbon-bottom-right">
@@ -286,45 +299,35 @@
 
   </div>
 
-  <!-- end  four slider -->
 
-  <!-- five slider -->
-  <!-- <div class="row bg-grey lter">
 
-    <div class="col-md-12 h-200 p-0 d-flex align-items-end pl-150">
-      <h3 class="m-0 f-500 pb-20">{{data.name}}, how are you managing your practice? Like, are you managing it alone or
-        you have a team? </h3>
-    </div>
-  </div> -->
-  <div *ngIf="step==7" class="row pt-40">
+  <div *ngIf="step==7" class="bg-modal-height">
 
-    <div class="col-md-12 p-0 pl-150">
-      <div class="d-flex">
-        <div *ngFor="let singleORTeam of teamAloneList" class="pr-20">
-          <div [ngClass]="{'box-2': singleORTeam.option=='A','box-2-1':singleORTeam.option=='B'}" class=" p-20">
-            <h5 class="m-0 roboto f-400 lh-19 pb-24 text-diff">{{singleORTeam.name}}
-            </h5>
-            <div class="hw-40 bg-grey lt br-2 mt-16">
-              <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">{{singleORTeam.option}}</h3>
+    <div class="contentGuideBox mt-40">
+      <div class="row">
+        <div class=" col-md-12 d-flex">
+          <div (click)="selectSingleOrTeam(singleORTeam)" *ngFor="let singleORTeam of teamAloneList">
+            <div [ngClass]="{'box-2': singleORTeam.option=='A','box-2-1':singleORTeam.option=='B'}"
+              class=" mr-20 boxDescribes p-20">
+              <h5 class="m-0 roboto f-400 lh-19 pb-24 text-diff">{{singleORTeam.name}}
+              </h5>
+              <div class="hw-40 bg-grey bottomPost lt br-2  ">
+                <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">{{singleORTeam.option}}</h3>
+              </div>
+              <div *ngIf="singleORTeam.selected" class="ribbon ribbon-bottom-right">
+                <span><img src="/assets/images/svg/right-white.svg"></span>
+              </div>
             </div>
-
           </div>
         </div>
-        <!-- <div class="pl-20">
-          <div class=" p-20">
-            <h5 class="m-0 roboto f-400 lh-19 pb-24 text-diff">I have a team
-            </h5>
-            <div class="hw-40 bg-grey lt br-2 mt-16">
-              <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">B</h3>
-            </div>
-          </div>
-        </div> -->
       </div>
+
       <div class="bottomFooterDasb">
         <div class="row">
           <div class="col-md-12">
-            <button (click)="step=8" mat-stroked-button class="btn-primary h-48 lh-48 f-18 br-4">Next question<img
-                src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
+            <button *ngIf="step7Flag" (click)="editPictureFlag?step=9:step=8" mat-stroked-button
+              class="btn-primary h-48 lh-48 f-18 br-4">Next
+              question<img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
           </div>
         </div>
       </div>
@@ -334,65 +337,76 @@
   <!-- end five slider -->
 
   <!-- six slider -->
-  <div *ngIf="step==8" class="row pt-40">
+  <div *ngIf="step==8" class="bg-modal-height">
 
-    <div class="col-md-12 p-0 pl-150">
-      <div class="d-flex">
-        <div class="pr-20">
-          <div class="box-1 p-20">
-            <h5 class="m-0 roboto f-400 lh-19 pb-24">Sure, let’s add them
-            </h5>
-            <div class="hw-40 bg-grey lt br-2 mt-36">
-              <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">A</h3>
-            </div>
-            <div class="ribbon ribbon-bottom-right"><span><img src="/assets/images/svg/right-white.svg"></span>
-            </div>
-          </div>
-        </div>
-        <div class="pl-20">
-          <div class="box-1 p-20">
-            <h5 class="m-0 roboto f-400 lh-19 pb-24">I’ll do this later
-            </h5>
-            <div class="hw-40 bg-grey lt br-2 mt-36">
-              <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">B</h3>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-    <div class="bottomFooterDasb">
+    <div class="contentGuideBox mt-40">
       <div class="row">
-        <div class="col-md-12">
-          <button (click)="step=9" mat-stroked-button class=" btn-primary h-48 lh-48 f-18 br-4">Next question<img
-              src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
+        <div class="col-md-12 d-flex">
+          <div (click)="selectAddTeamMemberChoice(choice)" *ngFor="let choice of addTeamMemberChoiceList"
+            class="box-1 boxDescribes mr-20 p-20">
+            <h5 class="m-0 roboto f-400 lh-19 pb-24">{{choice.name}}
+            </h5>
+            <div class="hw-40 bg-grey lt br-2 bottomPost">
+              <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">{{choice.option}}</h3>
+            </div>
+            <div *ngIf="choice.selected" class="ribbon ribbon-bottom-right"><span><img
+                  src="/assets/images/svg/right-white.svg"></span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="bottomFooterDasb">
+        <div class="row">
+          <div class="col-md-12">
+            <button *ngIf="step8Flag" (click)="step=9" mat-stroked-button class=" btn-primary h-48 lh-48 f-18 br-4">Next
+              question<img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
+          </div>
         </div>
       </div>
+
     </div>
   </div>
 
   <!-- end six slider -->
 
   <!-- seven slider -->
-  <div *ngIf="step==9" class="row pt-40">
-    <div class="col-md-12 p-0 pl-150 pb-20">
-      <p class="text-diff m-0 roboto f-400 lh-16">This pic will be visible when your clients login to the portal.</p>
-      <p class="text-diff m-0 roboto f-400 lh-16"> It will show up at a few more places like task comments, activity
-        etc.</p>
-    </div>
-    <div class="col-md-12 p-0 pl-150">
-      <img src="/assets/images/advisor-user.png">
-      <div class="avisor-caption">
-        <p class="text-white m-0 roboto f-400 lh-16">Edit picture</p>
+  <div *ngIf="editPictureFlag && step==9" class="bg-modal-height">
+    <div class="contentGuideBox mt-40">
+      <div class="row">
+        <div class="col-md-12">
+          <p class="text-diff m-0 roboto f-400 lh-16">This pic will be visible when your clients login to the portal.
+          </p>
+          <p class="text-diff m-0 roboto f-400 lh-16"> It will show up at a few more places like task comments, activity
+            etc.</p>
+        </div>
+      </div>
+      <div class="row pt-20">
+        <div class="col-md-12">
+          <img src="/assets/images/advisor-user.png">
+          <div class="avisor-caption">
+            <p class="text-white m-0 roboto f-400 lh-16">Edit picture</p>
+          </div>
+
+        </div>
+      </div>
+      <div class="row pt-10">
+        <div class="col-md-12">
+          <mat-checkbox [(ngModel)]="doItLater" class="text-diff">I will do this later</mat-checkbox>
+        </div>
       </div>
 
-    </div>
-    <div class="col-md-12 p-0 pl-150 pt-8">
-      <mat-checkbox class="text-diff">I will do this later</mat-checkbox>
-    </div>
-    <div class="col-md-12 p-0 pt-40 pl-150">
-      <button (click)="step=10" mat-stroked-button class="btn-primary h-48 lh-48 f-18 mt-40 br-4 mb-28">Next question
-        <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
+      <div class="bottomFooterDasb">
+        <div class="row">
+          <div class="col-md-12 ">
+            <button *ngIf="doItLater" (click)="step=10" mat-stroked-button
+              class="btn-primary h-48 lh-48 f-18  br-4 ">Next question
+              <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
   <!-- end seven slider -->
@@ -401,41 +415,64 @@
   <!-- eight silder -->
 
 
-  <div *ngIf="step==10" class="row pt-40">
+  <div *ngIf="step==10" class="bg-modal-height">
 
-    <div class="col-md-12 p-0 pl-150">
-      <div class="d-flex">
-        <div class="pr-20">
-          <div class="box-1 p-20">
-            <h5 class="m-0 roboto f-400 lh-19 pb-24">Yes
+    <div class="contentGuideBox mt-40">
+      <div class="row">
+        <div class="col-md-12 d-flex">
+          <div (click)="selectarnRiaChoice(choice)" *ngFor="let choice of arnRiaCodeChoiceList"
+            class="box-1 boxDescribes mr-20 p-20">
+            <h5 class="m-0 roboto f-400 lh-19 pb-24">{{choice.name}}
             </h5>
-            <div class="hw-40 bg-grey lt br-2 mt-36">
-              <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">A</h3>
+            <div class="hw-40 bg-grey lt br-2 bottomPost">
+              <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">{{choice.option}}</h3>
+            </div>
+            <div *ngIf="choice.selected" class="ribbon ribbon-bottom-right"><span><img
+                  src="/assets/images/svg/right-white.svg"></span>
             </div>
           </div>
         </div>
-        <div class="pl-20 pr-20">
-          <div class="box-1 p-20">
-            <h5 class="m-0 roboto f-400 lh-19 pb-24">No
+      </div>
+
+      <div class="bottomFooterDasb">
+        <div class="row">
+          <div class="col-md-12 ">
+            <button *ngIf="step9Flag" (click)="step=11" mat-stroked-button
+              class="btn-primary h-48 lh-48 f-18   br-4  ">Proceed
+              <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="step==11" class="bg-modal-height">
+
+    <div class="contentGuideBox mt-40">
+      <div class="row">
+        <div class="col-md-12 d-flex">
+          <div (click)="selectbasicDetailsChoice(choice)" *ngFor="let choice of basicDetailsChoiceList"
+            class="box-1 boxDescribes mr-20 p-20">
+            <h5 class="m-0 roboto f-400 lh-19 pb-24">{{choice.name}}
             </h5>
-            <div class="hw-40 bg-grey lt br-2 mt-36">
-              <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">B</h3>
+            <div class="hw-40 bg-grey lt br-2 bottomPost">
+              <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">{{choice.option}}</h3>
             </div>
-            <div class="ribbon ribbon-bottom-right"><span><img src="/assets/images/svg/right-white.svg"></span>
+            <div *ngIf="choice.selected" class="ribbon ribbon-bottom-right"><span><img
+                  src="/assets/images/svg/right-white.svg"></span>
             </div>
           </div>
         </div>
-        <div class="pr-20 pl-20">
-          <div class="box-1 p-20">
-            <h5 class="m-0 roboto f-400 lh-19 pb-24">I have just started the process of registering
-            </h5>
-            <div class="hw-40 bg-grey lt br-2 mt-16">
-              <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">C</h3>
-            </div>
+      </div>
+
+      <div class="bottomFooterDasb">
+        <div class="row">
+          <div class="col-md-12 ">
+            <button *ngIf="step10Flag" (click)="step=12" mat-stroked-button
+              class="btn-primary h-48 lh-48 f-18   br-4  ">Proceed
+              <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
           </div>
         </div>
-
-
       </div>
     </div>
   </div>
@@ -443,54 +480,82 @@
 
   <!-- nine slider -->
 
-  <div *ngIf="step==11" class="row pt-40">
+  <div *ngIf="step==12" class="bg-modal-height">
+    <div [formGroup]="ArnRiaForm">
+      <div [formGroup]="singleArnRiaForm" *ngFor="let singleArnRiaForm of getArnRiaFormList.controls;index as i"
+        class="contentGuideBox mt-40">
+        <div class="row slider-9">
+          <div class="col-md-3 pl-0">
+            <h5 class="m-0 f-400 roboto text-black pb-5">ARN/RIA</h5>
+            <mat-form-field floatLabel="never" appearance="standard">
+              <mat-select (selectionChange)="changeNumberValidation($event.value)" formControlName="arnOrRia"
+                class="form-control">
+                <mat-option disabled value="">Select ARN/RIA</mat-option>
+                <mat-option *ngFor="let option of globalData.arn_type_list" [value]="option.id">
+                  {{option.type}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="singleArnRiaForm.get('arnOrRia').errors?.required">This field is required</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3 pl-0">
+            <h5 class="m-0 f-400 roboto text-black pb-5">ARN/RIA type</h5>
+            <mat-form-field floatLabel="never" appearance="standard">
+              <mat-select formControlName="typeId" class="form-control">
+                <mat-option disabled value="">Select ARN/RIA</mat-option>
+                <mat-option *ngFor="let option of globalData.arn_type_master_list" [value]="option.id">
+                  {{option.type}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="singleArnRiaForm.get('typeId').errors?.required">This field is required</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row slider-9 pt-40">
+          <div class="col-md-3 pl-0">
+            <h5 class="m-0 f-400 roboto text-black pb-5">ARN/RIA number</h5>
+            <mat-form-field floatLabel="never" appearance="standard">
+              <input #number matInput appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                formControlName="number" maxlength={{arnRiaMaxlength}} class="form-control bg-white"
+                placeholder="Enter ARN/RIA number">
+              <mat-hint *ngIf="singleArnRiaForm.get('arnOrRia').value!=''" align="end">
+                {{number.value.length}}/{{arnRiaMaxlength}}</mat-hint>
+              <mat-error *ngIf="singleArnRiaForm.get('number').errors?.required">This field is required</mat-error>
+              <mat-error
+                *ngIf="singleArnRiaForm.get('number').errors?.maxlength || singleArnRiaForm.get('number').errors?.minlength">
+                Please enter valid number</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3 pl-0">
+            <h5 class="m-0 f-400 roboto text-black pb-5">Name of ARN/RIA holder</h5>
+            <mat-form-field floatLabel="never" appearance="standard">
+              <div class="d-flex">
+                <button mat-stroked-button class="text-custom br-0 h-40 mw-92 pl-5 pr-5 b bg-white">ARN/RIA</button>
+                <input formControlName="nameOfTheHolder" matInput class="form-control bl-0 bg-white"
+                  placeholder="Enter name of ARN/RIA holder">
+              </div>
+              <mat-error *ngIf="singleArnRiaForm.get('nameOfTheHolder').errors?.required">This field is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
 
-    <div class="col-md-12 p-0 pl-150 slider-9">
-      <div class="row ">
-        <div class="col-md-3 pl-0">
-          <h5 class="m-0 f-400 roboto text-black pb-5">ARN/RIA</h5>
-          <mat-form-field>
-            <mat-select class="form-control">
-              <mat-option value="option">Select ARN/RIA</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div class="col-md-3 pl-0">
-          <h5 class="m-0 f-400 roboto text-black pb-5">ARN/RIA type</h5>
-          <mat-form-field floatLabel="never" appearance="standard">
-            <input matInput class="form-control bg-white" placeholder="Select ARN/RIA type">
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="row pt-40">
-        <div class="col-md-3 pl-0">
-          <h5 class="m-0 f-400 roboto text-black pb-5">ARN/RIA number</h5>
-          <mat-form-field>
-            <mat-select class="form-control">
-              <mat-option value="option">Select ARN/RIA</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-        <div class="col-md-3 pl-0">
-          <h5 class="m-0 f-400 roboto text-black pb-5">Name of ARN/RIA holder</h5>
-          <mat-form-field floatLabel="never" appearance="standard">
-            <div class="d-flex">
-              <button mat-stroked-button class="text-custom br-0 h-40 mw-92 pl-5 pr-5 b bg-white">ARN/RIA</button>
-              <input matInput class="form-control bl-0 bg-white" placeholder="Enter name of ARN/RIA holder">
+        <div class="bottomFooterDasb">
+          <div class="row">
+            <div class="col-md-12  ">
+              <button mat-stroked-button (click)="saveArnRiaForm('addMore',i)"
+                class="btn-primary h-48 lh-48 f-18  br-4">Save & Add more </button>
+              <button mat-stroked-button (click)="saveArnRiaForm('next',i)"
+                class="btn-primary-outline h-48 lh-48 f-18  br-4 ml-20">Save & Proceed </button>
             </div>
-          </mat-form-field>
+          </div>
         </div>
+
       </div>
-    </div>
-    <div class="col-md-12 p-0 pt-40 pl-150">
-      <button mat-stroked-button class="btn-primary h-48 lh-48 f-18 mt-40 br-4">Save & Add more </button>
-      <button mat-stroked-button class="btn-primary-outline h-48 lh-48 f-18 mt-40 br-4 ml-20">Save & Proceed </button>
     </div>
   </div>
   <!--end nine slider -->
 
   <!-- 10th slider -->
-  <div *ngIf="step==12">
+  <div *ngIf="step==13">
     <div class="row pt-40">
       <div class="col-md-12 p-0 pl-150 pb-20">
         <p class="text-diff m-0 roboto f-400 lh-16">With these credentials, we will now be able to order RTA files on
@@ -535,6 +600,15 @@
         <p class="m-0 roboto f-400 text-diff pt-8">These credentials are securely encrypted in our database.</p>
       </div>
     </div>
+    <div class="bottomFooterDasb">
+      <div class="row">
+        <div class="col-md-12 ">
+          <button (click)="step=14;getRtaDetails()" mat-stroked-button
+            class="btn-primary h-48 lh-48 f-18   br-4  ">Proceed
+            <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
+        </div>
+      </div>
+    </div>
   </div>
 
 
@@ -557,8 +631,8 @@
       </div>
 
     </div>
-  </div>
-  <div class="row">
+  </div> -->
+  <div *ngIf="step==14" class="row">
     <div class="col-md-12 p-0">
       <div class="pt-40">
         <div class="row cams-advsior">
@@ -653,9 +727,10 @@
     </div>
     <div class="col-md-12 p-0 pt-4 pl-150 pb-44">
       <button mat-stroked-button class="btn-primary h-48 lh-48 f-18 mt-40 br-4">Save & Add more </button>
-      <button mat-stroked-button class="btn-primary-outline h-48 lh-48 f-18 mt-40 br-4 ml-20">Save & Proceed </button>
+      <button mat-stroked-button (click)="step=15" class="btn-primary-outline h-48 lh-48 f-18 mt-40 br-4 ml-20">Save &
+        Proceed </button>
     </div>
-  </div> -->
+  </div>
   <!--end 11th slider -->
 
   <!-- 12th slider 4 tabs -->
@@ -665,99 +740,102 @@
       <h3 class="m-0 f-500 text-diff pt-150">Steps to set-up auto forward of your registered Gmail ID</h3>
 
     </div>
-  </div>
-  <div class="row pt-20">
-    <div class="col-md-9 p-0 pl-150">
-      <mat-tab-group animationDuration="0ms" id="ui-dashboard-guide">
-        <mat-tab label="Step 1">
-
-          <p class="text-danger lh-16 f-400 roboto pt-20 pb-20">Open Gmail using the account you have <b>registered with
-              the
-              RTA</b>. Emails will be auto-forwarded from this account once the setup is done.
-            Click Settings. Click the Forwarding and POP/IMAP tab. In the "Forwarding" section, click Add a forwarding
-            address.</p>
-          <img src="/assets/images/step-1.png" class="w-100">
-        </mat-tab>
-        <mat-tab label="Step 2">
-
-          <p class="text-danger lh-16 f-400 roboto pt-20 pb-20">Enter autoupload@futurewise.co.in. Click Next and then
-            Proceed and then OK.</p>
-          <div class="row">
-            <div class="col-md-6 pl-0">
-              <img src="/assets/images/step2-1.png">
-            </div>
-            <div class="col-md-6 pr-0">
-              <img src="/assets/images/step2-2.png">
-            </div>
-          </div>
-
-        </mat-tab>
-        <mat-tab label="Step 3">
-          <div class="row">
-            <div class="col-md-10 p-0">
-              <p class="text-danger lh-16 f-400 roboto pt-20 pb-10 m-0">If you’ve completed the earlier steps, please
-                check
-                the
-                status of the verification here</p>
-              <table mat-table [dataSource]="dataSource" id="table-low">
-
-                <ng-container matColumnDef="position">
-                  <th mat-header-cell *matHeaderCellDef class="br"> Email </th>
-                  <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
-                </ng-container>
-
-                <ng-container matColumnDef="name">
-                  <th mat-header-cell *matHeaderCellDef class="br"> Broker code </th>
-                  <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
-                </ng-container>
-
-
-                <ng-container matColumnDef="weight">
-                  <th mat-header-cell *matHeaderCellDef class="br"> Verification status </th>
-                  <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} </td>
-                </ng-container>
-
-
-                <ng-container matColumnDef="symbol">
-                  <th mat-header-cell *matHeaderCellDef> Symbol </th>
-                  <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
-                </ng-container>
-
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-              </table>
-              <p class="m-0 roboto f-400 text-diff pt-20">If you see <span class="text-success">Verification
-                  successful</span>,
-                then go back to the settings page for the respective Gmail account, and refresh your browser.
-                Once done, proceed to Step 4</p>
-            </div>
-          </div>
-
-        </mat-tab>
-        <mat-tab label="Step 4">
-          <div class="row">
-            <div class="col-md-10 p-0">
-              <p class="text-danger lh-16 f-400 roboto pt-20 pb-8">We’re almost there. Just download this file that
-                contains Filters. This ensures that only emails from RTAs are forwarded to us.</p>
-
-              <button mat-stroked-button class="btn-danger-outline h-48 lh-48 f-18 br-4">Download Filters file <img
-                  src="/assets/images/svg/download-danger.svg" class="pl-12"></button>
-              <img src="/assets/images/step-6.png" class="pb-28 pt-20">
-            </div>
-
-          </div>
-
-          <div class="col-md-12 p-0 pt-4 pb-28">
-            <button mat-stroked-button class="btn-primary h-48 lh-48 f-18 mt-40 br-4">I’m done uploading the filters
-              <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
-
-          </div>
-        </mat-tab>
-      </mat-tab-group>
-    </div>
   </div> -->
+  <div *ngIf="step==15">
+    <div class="row pt-20">
+      <div class="col-md-9 p-0 pl-150">
+        <mat-tab-group animationDuration="0ms" id="ui-dashboard-guide">
+          <mat-tab label="Step 1">
 
-  <!-- <div class="col-md-3 pt-250">
+            <p class="text-danger lh-16 f-400 roboto pt-20 pb-20">Open Gmail using the account you have <b>registered
+                with
+                the
+                RTA</b>. Emails will be auto-forwarded from this account once the setup is done.
+              Click Settings. Click the Forwarding and POP/IMAP tab. In the "Forwarding" section, click Add a forwarding
+              address.</p>
+            <img src="/assets/images/step-1.png" class="w-100">
+          </mat-tab>
+          <mat-tab label="Step 2">
+
+            <p class="text-danger lh-16 f-400 roboto pt-20 pb-20">Enter autoupload@futurewise.co.in. Click Next and then
+              Proceed and then OK.</p>
+            <div class="row">
+              <div class="col-md-6 pl-0">
+                <img src="/assets/images/step2-1.png">
+              </div>
+              <div class="col-md-6 pr-0">
+                <img src="/assets/images/step2-2.png">
+              </div>
+            </div>
+
+          </mat-tab>
+          <mat-tab label="Step 3">
+            <div class="row">
+              <div class="col-md-10 p-0">
+                <p class="text-danger lh-16 f-400 roboto pt-20 pb-10 m-0">If you’ve completed the earlier steps, please
+                  check
+                  the
+                  status of the verification here</p>
+                <table mat-table [dataSource]="dataSource" id="table-low">
+
+                  <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Email </th>
+                    <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Broker code </th>
+                    <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
+                  </ng-container>
+
+
+                  <ng-container matColumnDef="weight">
+                    <th mat-header-cell *matHeaderCellDef class="br"> Verification status </th>
+                    <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} </td>
+                  </ng-container>
+
+
+                  <ng-container matColumnDef="symbol">
+                    <th mat-header-cell *matHeaderCellDef> Symbol </th>
+                    <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+                <p class="m-0 roboto f-400 text-diff pt-20">If you see <span class="text-success">Verification
+                    successful</span>,
+                  then go back to the settings page for the respective Gmail account, and refresh your browser.
+                  Once done, proceed to Step 4</p>
+              </div>
+            </div>
+
+          </mat-tab>
+          <mat-tab label="Step 4">
+            <div class="row">
+              <div class="col-md-10 p-0">
+                <p class="text-danger lh-16 f-400 roboto pt-20 pb-8">We’re almost there. Just download this file that
+                  contains Filters. This ensures that only emails from RTAs are forwarded to us.</p>
+
+                <button mat-stroked-button class="btn-danger-outline h-48 lh-48 f-18 br-4">Download Filters file <img
+                    src="/assets/images/svg/download-danger.svg" class="pl-12"></button>
+                <img src="/assets/images/step-6.png" class="pb-28 pt-20">
+              </div>
+
+            </div>
+
+            <div class="col-md-12 p-0 pt-4 pb-28">
+              <button (click)="step=16" mat-stroked-button class="btn-primary h-48 lh-48 f-18 mt-40 br-4">I’m done
+                uploading the filters
+                <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
+
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+
+    <div class="col-md-3 pt-250">
       <p class="m-0 roboto f-400 text-black lh-16">Once you download the above file, go to Gmail Settings. </p>
       <p class="m-0 roboto f-400 text-black lh-16"> Click Filters and Blocked Addresses.</p>
 
@@ -765,7 +843,8 @@
       <p class="m-0 roboto f-400 text-black lh-16"> Choose the Filters file you just downloaded</p>
 
       <p class="m-0 roboto f-400 text-black lh-16 pt-8"> Click Open file. Click Create filters. </p>
-    </div> -->
+    </div>
+  </div>
   <!--end 12th slider 4 tabs -->
 
 
@@ -776,8 +855,8 @@
       <h3 class="m-0 f-500 text-diff pt-150">Congratulations! Hard part over. Now the easy part.</h3>
 
     </div>
-  </div>
-  <div class="row pt-20">
+  </div> -->
+  <div *ngIf="step==16" class="row pt-20">
     <div class="col-md-12 p-0 pl-150">
       <p class="m-0 f-400 text-black roboto">As promised, we can now order and upload your mutual fund files. </p>
       <p class="m-0 f-400 text-black roboto"> Once done, you will be able to check your client’s portfolios immediately.
@@ -810,8 +889,15 @@
         behalf.
       </p>
     </div>
-
-  </div> -->
+    <div class="bottomFooterDasb">
+      <div class="row">
+        <div class="col-md-12 ">
+          <button (click)="step=17" mat-stroked-button class="btn-primary h-48 lh-48 f-18   br-4  ">Proceed
+            <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!--end 13th slider -->
 
@@ -824,8 +910,8 @@
       </h3>
 
     </div>
-  </div>
-  <div class="row">
+  </div> -->
+  <div *ngIf="step==17" class="row">
 
     <div class="col-md-8 p-0 pl-150">
       <p class="m-0 f-500 text-diff pt-40"><b>Once done, you will be notified via Email.</b> You can always come back
@@ -847,11 +933,11 @@
         022 6820 2020.</p>
     </div>
     <div class="col-md-12 p-0 pt-60 pl-150 pb-28">
-      <button mat-stroked-button class="btn-primary h-48 lh-48 f-18 mt-40 br-4">Finish
+      <button (click)="step=18" mat-stroked-button class="btn-primary h-48 lh-48 f-18 mt-40 br-4">Finish
         <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
 
     </div>
-  </div> -->
+  </div>
   <!-- end 14th slider -->
 
   <!-- 15th slider -->
@@ -862,8 +948,8 @@
       </h3>
 
     </div>
-  </div>
-  <div class="row">
+  </div> -->
+  <div *ngIf="step==18" class="row">
 
     <div class="col-md-12 p-0 pl-150">
       <p class="m-0 f-400 text-diff pt-20">You can watch some video tutorials before moving forward.
@@ -882,11 +968,11 @@
         </div>
       </div>
       <div class="col-md-12 p-0 pt-60 pb-28">
-        <button mat-stroked-button class="btn-primary h-48 lh-48 f-18 mt-40 br-4">Close
+        <button (click)="onNoClick()" mat-stroked-button class="btn-primary h-48 lh-48 f-18 mt-40 br-4">Close
         </button>
 
       </div>
     </div>
-  </div> -->
+  </div>
   <!-- end 15th slider -->
 </div>

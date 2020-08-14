@@ -4,6 +4,7 @@ import { CommonComponentModule } from '../../common-component/common-component.m
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MaterialModule } from '../../../../material/material';
 import { CommonModule } from '@angular/common';
+import { CustomDirectiveModule } from 'src/app/common/directives/common-directive.module';
 
 const componentList = [
   DashboardGuideDialogComponent
@@ -16,7 +17,8 @@ const componentList = [
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    CommonComponentModule
+    CommonComponentModule,
+    CustomDirectiveModule
   ],
   entryComponents: [componentList]
 })

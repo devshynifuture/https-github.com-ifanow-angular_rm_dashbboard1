@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { SettingsService } from '../../setting/settings.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { element } from 'protractor';
+import { ValidatorType } from 'src/app/services/util.service';
 export interface PeriodicElement {
   name: string;
   position: string;
@@ -86,17 +87,49 @@ export class DashboardGuideDialogComponent implements OnInit {
   ]
 
   teamAloneList = [
-    { name: 'I’m alone', selected: false, option: 'A' },
-    { name: 'I have a team', selected: false, option: 'B' },
+    { name: 'I’m alone', selected: false, option: 'A', id: 1 },
+    { name: 'I have a team', selected: false, option: 'B', id: 2 },
   ]
+
+  addTeamMemberChoiceList = [
+    { name: 'Sure, let’s add them', selected: false, option: 'A', id: 1 },
+    { name: 'I’ll do this later', selected: false, option: 'B', id: 2 },
+  ]
+
+  arnRiaCodeChoiceList = [
+    { name: 'Yes', selected: false, option: 'A', id: 1 },
+    { name: 'No', selected: false, option: 'B', id: 2 },
+    { name: 'I have just started the process of registering', selected: false, option: 'C', id: 3 },
+  ]
+
+  basicDetailsChoiceList = [
+    { name: 'Sure, let`s add', selected: false, option: 'A', id: 1 },
+    { name: 'I`ll do this later', selected: false, option: 'B', id: 2 },
+  ]
+
+  rtaCredentialsChoiceList = [
+    { name: 'Sure, let’s set-up auto forward', selected: false, option: 'A', id: 1 },
+    { name: 'I’ll do this later', selected: false, option: 'B', id: 2 },
+  ]
+
   ArnRiaForm: FormGroup;
   credentialsForm: FormGroup;
   advisorId: any;
   step2Flag: boolean;
-  step3Flag
-  step4Flag
-  step5Flag
+  step3Flag = 0;
+  step4Flag = 0;
+  step5Flag = 0
   step6Flag
+  step7Flag;
+  editPictureFlag;
+  step8Flag: boolean;
+  doItLater
+  step9Flag: boolean;
+  step10Flag: boolean;
+  globalData: any;
+  validatorType;
+  arnRiaMaxlength: any;
+  arnRtaData: any;
 
 
   constructor(private fb: FormBuilder,
@@ -111,6 +144,7 @@ export class DashboardGuideDialogComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.validatorType = ValidatorType
     this.advisorId = AuthService.getAdvisorId();
     this.step = 1;
     this.ArnRiaForm = this.fb.group({
@@ -118,6 +152,7 @@ export class DashboardGuideDialogComponent implements OnInit {
     })
 
     this.credentialsForm = this.fb.group({
+      advisorId: [this.advisorId],
       camsEmail: [],
       camsPassword: [],
       karvyID: [],
@@ -126,6 +161,14 @@ export class DashboardGuideDialogComponent implements OnInit {
       franklinEmail: [],
       franklinPassword: []
     })
+    this.settingService.getArnGlobalData().subscribe((res) => {
+      console.log(res)
+      if (res) {
+        this.globalData = res;
+        this.addArnRiaForm();
+      }
+    });
+    this.getRtaDetails();
   }
 
   get getArnRiaForm() { return this.ArnRiaForm.controls; }
@@ -134,7 +177,7 @@ export class DashboardGuideDialogComponent implements OnInit {
   addArnRiaForm() {
     this.getArnRiaFormList.push(this.fb.group({
       advisorId: [this.advisorId, []],
-      arnOrRia: [, [Validators.required]],
+      arnOrRia: ['', [Validators.required]],
       typeId: ['', [Validators.required]],
       number: [, [Validators.required]],
       nameOfTheHolder: [, [Validators.required]]
@@ -146,6 +189,15 @@ export class DashboardGuideDialogComponent implements OnInit {
 
   showPageByIndex(index) {
     this.page = index;
+  }
+
+  changeNumberValidation(value) {
+    if (value == 1) {
+      this.arnRiaMaxlength = 6;
+    } else {
+      this.arnRiaMaxlength = 9
+    }
+    this.getArnRiaFormList.controls[this.getArnRiaFormList.length - 1].get('number').setValidators([Validators.maxLength(this.arnRiaMaxlength), Validators.minLength(this.arnRiaMaxlength)])
   }
 
   backStep() {
@@ -166,21 +218,168 @@ export class DashboardGuideDialogComponent implements OnInit {
     })
   }
 
+  selectSingleOrTeam(singOrTeam) {
+    this.step7Flag = true;
+    this.teamAloneList.map(element => {
+      (singOrTeam.id == element.id) ? element.selected = true : element.selected = false
+    });
+    (singOrTeam.id == 1) ? this.editPictureFlag = true : this.editPictureFlag = false;
+  }
+
+  selectAddTeamMemberChoice(selectChoice) {
+    this.step8Flag = true
+    this.addTeamMemberChoiceList.map(element => {
+      (selectChoice.id == element.id) ? element.selected = true : element.selected = false
+    })
+  }
+
+  selectarnRiaChoice(selectChoice) {
+    this.step9Flag = true
+    this.arnRiaCodeChoiceList.map(element => {
+      (selectChoice.id == element.id) ? element.selected = true : element.selected = false
+    })
+  }
+
+  selectbasicDetailsChoice(selectChoice) {
+    this.step10Flag = true
+    this.basicDetailsChoiceList.map(element => {
+      (selectChoice.id == element.id) ? element.selected = true : element.selected = false
+    })
+  }
+
+  selectrtaCredentialsChoice(selectChoice) {
+    this.step10Flag = true
+    this.rtaCredentialsChoiceList.map(element => {
+      (selectChoice.id == element.id) ? element.selected = true : element.selected = false
+    })
+  }
+
+  selectService(service) {
+    if (service.selected) {
+      service.selected = false;
+      this.step3Flag--;
+    }
+    else {
+      service.selected = true;
+      this.step3Flag++;
+    }
+  }
+
+  selectClientWork(clientWork) {
+    if (clientWork.selected) {
+      clientWork.selected = false;
+      this.step4Flag--;
+    }
+    else {
+      clientWork.selected = true;
+      this.step4Flag++;
+    }
+  }
+
+  selectProduct(product) {
+    if (product.selected) {
+      product.selected = false;
+      this.step5Flag--;
+    }
+    else {
+      product.selected = true;
+      this.step5Flag++;
+    }
+  }
+
   saveArnRiaForm(flag, index) {
-    if (this.ArnRiaForm.controls[index].invalid) {
-      this.ArnRiaForm.controls[index].markAllAsTouched();
+    if (this.getArnRiaFormList.controls[index].invalid) {
+      this.getArnRiaFormList.controls[index].markAllAsTouched();
       return;
     }
     // this.barButtonOptions.active = true;
     const jsonObj = {
-      ...this.ArnRiaForm.controls[index].value
+      ...this.getArnRiaFormList.controls[index].value
     };
+
+    if (this.getArnRiaFormList.controls[index].value.arnOrRia == 1) {
+      jsonObj.number = 'ARN-' + jsonObj.number;
+    } else {
+      jsonObj.number = 'INA' + jsonObj.number;
+    }
     this.settingService.addArn(jsonObj).subscribe((res) => {
       this.eventService.openSnackBar("ARN-RIA Added successfully");
-      (flag == 'addMore') ? this.ArnRiaForm.controls[index].reset() : this.step++;
+      (flag == 'addMore') ? this.getArnRiaFormList.controls[index].reset() : this.step++;
     }, err => {
       this.eventService.openSnackBar(err, "Dismiss");
       // this.barButtonOptions.active = false;
+    })
+  }
+
+  getRtaDetails() {
+    this.settingService.getArnlist({ advisorId: this.advisorId }).subscribe((data) => {
+      this.arnRtaData = data;
+    });
+  }
+  addCredentialsJson() {
+    this.credentialsForm = this.fb.group({
+      camsEmail: [],
+      camsPassword: [],
+      karvyID: [],
+      karvyPassword: [],
+      karvyEMail: [],
+      franklinEmail: [],
+      franklinPassword: []
+    })
+
+    if (this.credentialsForm.controls.camsEmail.value != '') {
+      let obj =
+      {
+        advisorId: [this.advisorId],
+        rtTypeMasterid: '',
+        arnOrRia: '',
+        rtExtTypeId: [2], // dbf file extension
+        arnRiaDetailsId: '',
+        registeredEmail: '',
+        mailbackPassword: '',
+        fileOrderingUseabilityStatusId: [1]
+      }
+    }
+
+    if (this.credentialsForm.controls.karvyID.value != '') {
+
+      let obj = {
+        advisorId: this.advisorId,
+        arnRiaDetailsId: '',
+        arnOrRia: '',
+        rtTypeMasterid: '',
+        loginId: '',
+        loginPassword: '',
+        rtExtTypeId: [2], // dbf file extension
+        mailbackPassword: '',
+        registeredEmail: '',
+        fileOrderingUseabilityStatusId: '',
+      }
+    }
+
+    if (this.credentialsForm.controls.franklinEmail.value != '') {
+
+      let obj = {
+        advisorId: this.advisorId,
+        arnRiaDetailsId: '',
+        arnOrRia: '',
+        rtTypeMasterid: '',
+        rtExtTypeId: [2], // dbf file extension
+        loginId: '',
+        loginPassword: '',
+        mailbackPassword: '',
+        registeredEmail: '',
+        fileOrderingUseabilityStatusId: [1]
+      }
+    }
+
+  }
+
+  saveCredentials(obj) {
+    this.settingService.addMFRTA(obj).subscribe((res) => {
+      this.eventService.openSnackBar("CAMS Added successfully");
+    }, err => {
+      this.eventService.openSnackBar(err, "Dismiss");
     })
   }
 
