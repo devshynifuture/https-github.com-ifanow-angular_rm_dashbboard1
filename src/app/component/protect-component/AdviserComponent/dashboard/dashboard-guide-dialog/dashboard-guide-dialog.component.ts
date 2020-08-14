@@ -104,7 +104,12 @@ export class DashboardGuideDialogComponent implements OnInit {
 
   basicDetailsChoiceList = [
     { name: 'Sure, let`s add', selected: false, option: 'A', id: 1 },
-    { name: 'I`ll do this later', selected: false, option: 'A', id: 2 },
+    { name: 'I`ll do this later', selected: false, option: 'B', id: 2 },
+  ]
+
+  rtaCredentialsChoiceList = [
+    { name: 'Sure, let’s set-up auto forward', selected: false, option: 'A', id: 1 },
+    { name: 'I’ll do this later', selected: false, option: 'B', id: 2 },
   ]
 
   ArnRiaForm: FormGroup;
@@ -124,6 +129,10 @@ export class DashboardGuideDialogComponent implements OnInit {
   globalData: any;
   validatorType;
   arnRiaMaxlength: any;
+  arnRtaData: any;
+  selectedArnRIaChoice: any;
+  basicDetailsChoice: any;
+  selctedRtaDataChoice: any;
 
 
   constructor(private fb: FormBuilder,
@@ -146,6 +155,7 @@ export class DashboardGuideDialogComponent implements OnInit {
     })
 
     this.credentialsForm = this.fb.group({
+      advisorId: [this.advisorId],
       camsEmail: [],
       camsPassword: [],
       karvyID: [],
@@ -161,6 +171,7 @@ export class DashboardGuideDialogComponent implements OnInit {
         this.addArnRiaForm();
       }
     });
+    this.getRtaDetails();
   }
 
   get getArnRiaForm() { return this.ArnRiaForm.controls; }
@@ -227,6 +238,7 @@ export class DashboardGuideDialogComponent implements OnInit {
 
   selectarnRiaChoice(selectChoice) {
     this.step9Flag = true
+    this.selectedArnRIaChoice = selectChoice;
     this.arnRiaCodeChoiceList.map(element => {
       (selectChoice.id == element.id) ? element.selected = true : element.selected = false
     })
@@ -234,7 +246,16 @@ export class DashboardGuideDialogComponent implements OnInit {
 
   selectbasicDetailsChoice(selectChoice) {
     this.step10Flag = true
+    this.basicDetailsChoice = selectChoice;
     this.basicDetailsChoiceList.map(element => {
+      (selectChoice.id == element.id) ? element.selected = true : element.selected = false
+    })
+  }
+
+  selectrtaCredentialsChoice(selectChoice) {
+    this.step10Flag = true
+    this.selctedRtaDataChoice = selectChoice;
+    this.rtaCredentialsChoiceList.map(element => {
       (selectChoice.id == element.id) ? element.selected = true : element.selected = false
     })
   }
@@ -293,6 +314,78 @@ export class DashboardGuideDialogComponent implements OnInit {
     }, err => {
       this.eventService.openSnackBar(err, "Dismiss");
       // this.barButtonOptions.active = false;
+    })
+  }
+
+  getRtaDetails() {
+    this.settingService.getArnlist({ advisorId: this.advisorId }).subscribe((data) => {
+      this.arnRtaData = data;
+    });
+  }
+  addCredentialsJson() {
+    this.credentialsForm = this.fb.group({
+      camsEmail: [],
+      camsPassword: [],
+      karvyID: [],
+      karvyPassword: [],
+      karvyEMail: [],
+      franklinEmail: [],
+      franklinPassword: []
+    })
+
+    if (this.credentialsForm.controls.camsEmail.value != '') {
+      let obj =
+      {
+        advisorId: [this.advisorId],
+        rtTypeMasterid: '',
+        arnOrRia: '',
+        rtExtTypeId: [2], // dbf file extension
+        arnRiaDetailsId: '',
+        registeredEmail: '',
+        mailbackPassword: '',
+        fileOrderingUseabilityStatusId: [1]
+      }
+    }
+
+    if (this.credentialsForm.controls.karvyID.value != '') {
+
+      let obj = {
+        advisorId: this.advisorId,
+        arnRiaDetailsId: '',
+        arnOrRia: '',
+        rtTypeMasterid: '',
+        loginId: '',
+        loginPassword: '',
+        rtExtTypeId: [2], // dbf file extension
+        mailbackPassword: '',
+        registeredEmail: '',
+        fileOrderingUseabilityStatusId: '',
+      }
+    }
+
+    if (this.credentialsForm.controls.franklinEmail.value != '') {
+
+      let obj = {
+        advisorId: this.advisorId,
+        arnRiaDetailsId: '',
+        arnOrRia: '',
+        rtTypeMasterid: '',
+        rtExtTypeId: [2], // dbf file extension
+        loginId: '',
+        loginPassword: '',
+        mailbackPassword: '',
+        registeredEmail: '',
+        fileOrderingUseabilityStatusId: [1]
+      }
+    }
+
+  }
+
+  saveCredentials(obj) {
+    this.settingService.addMFRTA(obj).subscribe((res) => {
+      this.eventService.openSnackBar("CAMS Added successfully");
+    }, err => {
+      this.eventService.openSnackBar(err, "Dismiss");
     })
   }
 

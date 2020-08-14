@@ -35,7 +35,7 @@ export class MutualFundSummaryComponent implements OnInit {
   displayedColumns = ['schemeName', 'amountInvested', 'currentValue', 'unrealizedProfit', 'absoluteReturn',
     'xirr', 'dividendPayout', 'switchOut', 'balanceUnit', 'navDate', 'sipAmount', 'investedDate', 'icons'];
   displayedColumnsTotal: string[] = ['schemeNameTotal', 'amountInvestedTotal', 'currentValueTotal', 'unrealizedProfitTotal', 'absoluteReturnTotal',
-    'xirrTotal', 'dividendPayoutTotal', 'switchOutTotal', 'balanceUnitTotal', 'navDateTotal', 'sipAmountTotal', 'iconsTotal'];
+    'xirrTotal', 'dividendPayoutTotal', 'switchOutTotal', 'balanceUnitTotal', 'navDateTotal', 'sipAmountTotal','investedDateTotal', 'iconsTotal'];
   mfData: any;
   grandTotal: any = {};
   // subCategoryData: any[];
@@ -1708,7 +1708,7 @@ export class MutualFundSummaryComponent implements OnInit {
         obj = 'sipAmount';
         break;
       case 'Invested date':
-        obj = 'mutualFundTransactions[0].transactionDate';
+        obj = 'investedDate';
         break;
     }
 
@@ -1751,7 +1751,7 @@ export class MutualFundSummaryComponent implements OnInit {
         obj = 'totalSipAmount';
         break;
       case 'Invested date':
-        obj = '';
+        obj = 'investedDate';
         break;
     }
 
@@ -1794,7 +1794,7 @@ export class MutualFundSummaryComponent implements OnInit {
         obj = 'sip';
         break;
       case 'Invested date':
-        obj = '';
+        obj = 'investedDate';
         break;
     }
 

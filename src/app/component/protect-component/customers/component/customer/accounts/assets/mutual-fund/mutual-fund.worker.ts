@@ -36,7 +36,13 @@ addEventListener('message', ({data}) => {
     element.totalSipAmount = mfService.mutualFundRoundAndFormat(element.totalSipAmount, 0);
     element.nav = mfService.mutualFundRoundAndFormat(element.nav, 3);
 
-    element.navDate =  element.navDate ? new Date(element.navDate).toISOString().replace(/T.*/,'').split('-').reverse().join('-') : ''; 
+    element.navDate =  element.navDate ? new Date(element.navDate).toISOString().replace(/T.*/,'').split('-').reverse().join('-') : '';
+    if(element && element.hasOwnProperty('mutualFundTransactions') && element.mutualFundTransactions.length > 0){
+      element.investedDate =  element.mutualFundTransactions ? new Date(element.mutualFundTransactions[0].transactionDate).toISOString().replace(/T.*/,'').split('-').reverse().join('-') : ''; 
+    }else{
+      element.investedDate =  ''
+    }
+ 
     
   });
 
