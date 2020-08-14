@@ -550,16 +550,20 @@
     <div class="row pt-20 pb-8">
       <div class="col-md-12 p-0 pl-150">
         <div class="d-flex">
-          <div class="pr-20">
+          <div (click)="selectrtaCredentialsChoice(singleChoice)" *ngFor="let singleChoice of rtaCredentialsChoiceList"
+            class="pr-20">
             <div class="box-1 p-20">
-              <h5 class="m-0 roboto f-400 lh-19 pb-24 text-diff">Sure, let’s set-up auto forward
+              <h5 class="m-0 roboto f-400 lh-19 pb-24 text-diff">{{singleChoice.name}}
               </h5>
               <div class="hw-40 bg-grey lt br-2 mt-16">
-                <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">A</h3>
+                <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">{{singleChoice.option}}</h3>
+              </div>
+              <div *ngIf="singleChoice.selected" class="ribbon ribbon-bottom-right"><span><img
+                    src="/assets/images/svg/right-white.svg"></span>
               </div>
             </div>
           </div>
-          <div class="pl-20 pr-20">
+          <!-- <div class="pl-20 pr-20">
             <div class="box-1 p-20">
               <h5 class="m-0 roboto f-400 lh-19 pb-24 text-diff">I’ll do this later
               </h5>
@@ -567,7 +571,7 @@
                 <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">B</h3>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="col-md-12 pr-0 pl-150 pb-28">
@@ -577,7 +581,7 @@
     <div class="bottomFooterDasb">
       <div class="row">
         <div class="col-md-12 ">
-          <button (click)="step=14;getRtaDetails()" mat-stroked-button
+          <button *ngIf="step11Flag" (click)="step=14;getRtaDetails()" mat-stroked-button
             class="btn-primary h-48 lh-48 f-18   br-4  ">Proceed
             <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
         </div>

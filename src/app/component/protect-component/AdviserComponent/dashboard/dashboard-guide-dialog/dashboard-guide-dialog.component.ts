@@ -134,6 +134,7 @@ export class DashboardGuideDialogComponent implements OnInit {
   basicDetailsChoice: any;
   selctedRtaDataChoice: any;
   selectedTeamMemberChoice: any;
+  step11Flag: boolean;
 
 
   constructor(private fb: FormBuilder,
@@ -255,7 +256,7 @@ export class DashboardGuideDialogComponent implements OnInit {
   }
 
   selectrtaCredentialsChoice(selectChoice) {
-    this.step10Flag = true
+    this.step11Flag = true
     this.selctedRtaDataChoice = selectChoice;
     this.rtaCredentialsChoiceList.map(element => {
       (selectChoice.id == element.id) ? element.selected = true : element.selected = false
