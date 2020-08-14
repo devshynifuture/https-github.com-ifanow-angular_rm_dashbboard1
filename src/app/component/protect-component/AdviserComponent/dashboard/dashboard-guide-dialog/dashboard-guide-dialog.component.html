@@ -92,10 +92,17 @@
 
       <div *ngIf="step==14" class="row">
         <div class="col-md-12">
-          <div class="btnRTA mt-10">
-            <button *ngFor="let singleArnRia of arnRtaData;index as i" class="btnHeader"
-              (click)="selectArnRia(singleArnRia,i)" mat-stroked-button>{{singleArnRia.number}}</button>
-          </div>
+          
+
+            <a class="btnRTA" (click)="selectArnRia(singleArnRia,i)"  *ngFor="let singleArnRia of arnRtaData;index as i">
+              <span class="activeSpan"> 
+                {{singleArnRia.number}}
+              </span>
+            </a>
+
+            <!-- <button *ngFor="let singleArnRia of arnRtaData;index as i" class="btnHeader"
+              (click)="selectArnRia(singleArnRia,i)" mat-stroked-button></button> -->
+           
         </div>
       </div>
 

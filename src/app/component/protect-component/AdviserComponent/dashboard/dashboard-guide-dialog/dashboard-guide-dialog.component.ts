@@ -157,7 +157,7 @@ export class DashboardGuideDialogComponent implements OnInit {
   ngOnInit() {
     this.validatorType = ValidatorType
     this.advisorId = AuthService.getAdvisorId();
-    this.step = 14;
+    this.step = 1;
     this.ArnRiaForm = this.fb.group({
       ArnRiaFormList: new FormArray([])
     })
