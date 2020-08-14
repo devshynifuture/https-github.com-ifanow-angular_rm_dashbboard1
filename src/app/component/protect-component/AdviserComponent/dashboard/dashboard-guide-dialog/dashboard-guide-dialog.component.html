@@ -95,7 +95,7 @@
         <div class="col-md-12 d-flex">
           <div (click)="selectDes(singleDescription)" *ngFor="let singleDescription of descriptionArray;index as i"
             class="mr-20">
-            <div [ngClass]="{'select-active-border': singleDescription.selected}" class="box-1 boxDescribes p-20">
+            <div [ngClass]="{'select-active-border': singleDescription.selected}" class="box-1 c-p boxDescribes p-20">
               <h5 class="mb-0 roboto f-400 lh-19 ">{{singleDescription.name}}
               </h5>
 
@@ -113,14 +113,14 @@
 
       <div class="bottomFooterDasb">
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-6 d-flex align-items-center  ">
             <button *ngIf="step2Flag" (click)="step=3" mat-stroked-button class="btn-primary h-48 lh-48 f-18 br-4">Next
               question<img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
           </div>
 
-          <div class="col-md-6 d-flex align-items-center justify-content-end">
+           <div class="col-md-6 d-flex align-items-center justify-content-end">
             <p class="mb-0 c-p text-primitive" (click)="onNoClick()">Skip this exercise</p>
-          </div>
+          </div>  
         </div>
       </div>
 
@@ -207,7 +207,6 @@
   </div>
 
   <div *ngIf="step==5" class="bg-modal-height">
-
     <div class="contentGuideBox mt-40">
       <div class="row">
         <div (click)="selectProduct(singleProduct)" *ngFor="let singleProduct of productList"
@@ -242,30 +241,7 @@
     </div>
   </div>
 
-  <!--end third slider -->
-
-
-  <!-- four slider -->
-  <!-- <div class="row bg-grey lter">
-
-    <div class="h-200 bg-grey lter posRelative"> 
-      <div class="headerGuide">
-        <div class="row headerRow">
-          <div class="col-md-12">
-            <h3 class="mb-0 f-500  text-diff"> 
-              What best describes your mutual fund practice?   
-            </h3>
-          </div>
-        </div>
-        </div>
-      </div>
-
-
-    <div class="bg-modal-height">
-      <div class="contentGuideBox mt-20"> 
-
-      </div>
-    </div> -->
+   
 
   <div *ngIf="step==6" class="bg-modal-height">
 
@@ -307,11 +283,9 @@
       <div class="row">
         <div class=" col-md-12 d-flex">
           <div (click)="selectSingleOrTeam(singleORTeam)" *ngFor="let singleORTeam of teamAloneList">
-            <div [ngClass]="{'box-2': singleORTeam.option=='A','box-2-1':singleORTeam.option=='B'}"
-              class=" mr-20 boxDescribes p-20">
-              <h5 class="m-0 roboto f-400 lh-19 pb-24 text-diff">{{singleORTeam.name}}
-              </h5>
-              <div class="hw-40 bg-grey bottomPost lt br-2  ">
+            <div [ngClass]="{'box-2': singleORTeam.option=='A','box-2-1':singleORTeam.option=='B'}" class=" mr-20 boxDescribes p-20">
+              <h5 class="m-0 roboto f-400 lh-19 pb-24 text-diff"> {{singleORTeam.name}} </h5>
+              <div class="hw-40 bg-grey bottomPost lt br-2">
                 <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">{{singleORTeam.option}}</h3>
               </div>
               <div *ngIf="singleORTeam.selected" class="ribbon ribbon-bottom-right">
@@ -569,7 +543,6 @@
       </div>
     </div>
     <div class="row pt-20 pb-8">
-
       <div class="col-md-12 p-0 pl-150">
         <div class="d-flex">
           <div class="pr-20">
@@ -590,11 +563,7 @@
               </div>
             </div>
           </div>
-
-
-
         </div>
-
       </div>
       <div class="col-md-12 pr-0 pl-150 pb-28">
         <p class="m-0 roboto f-400 text-diff pt-8">These credentials are securely encrypted in our database.</p>
@@ -612,123 +581,119 @@
   </div>
 
 
-  <!--end 10th slider -->
+ 
+  <div *ngIf="step==14" class="bg-modal-height">
+   
+    <div class="contentGuideBox">
 
-  <!-- 11th slider -->
-  <!-- <div class="row bg-grey lter">
+      <mat-tab-group class="nagMatGroup">
+        <mat-tab label="ARN-83865">  
+           <div class="">
+             <div class="row cams-advsior">
+              <div class="col-md-4">
+                <div class="row ">
+                  <div class="col-md-4 p-0 full-end">
+                    <h5 class="m-0 f-500 roboto text-black pt-16">CAMS</h5>
+                  </div>
+                  <div class="col-md-8">
+                    <p class="m-0 roboto f-400">Registered email</p>
+                    <mat-form-field floatLabel="never" appearance="standard">
+                      <input matInput class="form-control" placeholder="Enter registered email">
+                    </mat-form-field>
+                  </div>
+    
+                </div>
+              </div>
+             </div>
 
-    <div class="col-md-12 h-200 p-0 pl-150">
-      <h3 class="m-0 f-500 text-diff pt-80">Adding RTA credentials now</h3><br>
-      <div class="row">
-        <div class="col-md-12 p-0">
-          <mat-tab-group animationDuration="0ms" class="pt-8">
-            <mat-tab label="ARN-83865">
+             <div class="row pt-32 cams-advsior">
+              <div class="col-md-4">
+                <div class="row ">
+                  <div class="col-md-4 p-0 full-end">
+                    <h5 class="m-0 f-500 roboto text-black pt-16">Karvy</h5>
+                  </div>
+                  <div class="col-md-8">
+                    <p class="m-0 roboto f-400">Login ID</p>
+                    <mat-form-field floatLabel="never" appearance="standard">
+                      <input matInput class="form-control" placeholder="Enter Login ID">
+                    </mat-form-field>
+                  </div>
+    
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="row ">
+                  <div class="col-md-12">
+                    <p class="m-0 roboto f-400">Login password</p>
+                    <mat-form-field floatLabel="never" appearance="standard">
+                      <input matInput class="form-control" placeholder="Enter Login password">
+                    </mat-form-field>
+                  </div>
+    
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="row ">
+                  <div class="col-md-8">
+                    <p class="m-0 roboto f-400">Registered email</p>
+                    <mat-form-field floatLabel="never" appearance="standard">
+                      <input matInput class="form-control" placeholder="Enter registered email">
+                    </mat-form-field>
+                  </div>
+    
+                </div>
+              </div>
+    
+            </div>
 
-            </mat-tab>
-            <mat-tab label="INA400009123"></mat-tab>
-          </mat-tab-group>
+            <div class="row pt-32 cams-advsior">
+              <div class="col-md-4">
+                <div class="row ">
+                  <div class="col-md-4 p-0 full-end">
+                    <h5 class="m-0 f-500 roboto text-black pt-16">Franklin</h5>
+                  </div>
+                  <div class="col-md-8">
+                    <p class="m-0 roboto f-400">Registered email</p>
+                    <mat-form-field floatLabel="never" appearance="standard">
+                      <input matInput class="form-control" placeholder="Enter registered email">
+                    </mat-form-field>
+                  </div>
+    
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="row ">
+    
+                  <div class="col-md-12">
+                    <p class="m-0 roboto f-400">Mailback password</p>
+                    <mat-form-field floatLabel="never" appearance="standard">
+                      <input matInput class="form-control" placeholder="Enter mailback password">
+                    </mat-form-field>
+                  </div>
+    
+                </div>
+              </div>
+    
+    
+            </div>
+
+            </div>
+           </mat-tab>
+        <mat-tab label="INA400009123"> Content 2 </mat-tab>
+      
+      </mat-tab-group>
+
+         
+
+      <div class="bottomFooterDasb">
+        <div class="row">
+          <div class="col-md-12">
+            <button mat-stroked-button class="btn-primary h-48 lh-48 f-18  br-4">Save & Add more </button>
+            <button mat-stroked-button (click)="step=15" class="btn-primary-outline h-48 lh-48 f-18 br-4 ml-20">Save &
+              Proceed </button>
+          </div>
         </div>
       </div>
-
-    </div>
-  </div> -->
-  <div *ngIf="step==14" class="row">
-    <div class="col-md-12 p-0">
-      <div class="pt-40">
-        <div class="row cams-advsior">
-
-          <div class="col-md-4 pl-0">
-            <div class="row ">
-              <div class="col-md-4 p-0 full-end">
-                <h5 class="m-0 f-500 roboto text-black pt-16">CAMS</h5>
-              </div>
-              <div class="col-md-8 pr-0">
-                <p class="m-0 roboto f-400">Registered email</p>
-                <mat-form-field floatLabel="never" appearance="standard">
-                  <input matInput class="form-control" placeholder="Enter registered email">
-                </mat-form-field>
-              </div>
-
-            </div>
-          </div>
-        </div>
-        <div class="row pt-32 cams-advsior">
-          <div class="col-md-4 pl-0">
-            <div class="row ">
-              <div class="col-md-4 p-0 full-end">
-                <h5 class="m-0 f-500 roboto text-black pt-16">Karvy</h5>
-              </div>
-              <div class="col-md-8 pr-0">
-                <p class="m-0 roboto f-400">Login ID</p>
-                <mat-form-field floatLabel="never" appearance="standard">
-                  <input matInput class="form-control" placeholder="Enter Login ID">
-                </mat-form-field>
-              </div>
-
-            </div>
-          </div>
-          <div class="col-md-3 pl-0">
-            <div class="row ">
-
-              <div class="col-md-12 pr-0">
-                <p class="m-0 roboto f-400">Login password</p>
-                <mat-form-field floatLabel="never" appearance="standard">
-                  <input matInput class="form-control" placeholder="Enter Login password">
-                </mat-form-field>
-              </div>
-
-            </div>
-          </div>
-          <div class="col-md-4 pl-0">
-            <div class="row ">
-
-              <div class="col-md-8 pr-0">
-                <p class="m-0 roboto f-400">Registered email</p>
-                <mat-form-field floatLabel="never" appearance="standard">
-                  <input matInput class="form-control" placeholder="Enter registered email">
-                </mat-form-field>
-              </div>
-
-            </div>
-          </div>
-
-        </div>
-        <div class="row pt-32 cams-advsior">
-          <div class="col-md-4 pl-0">
-            <div class="row ">
-              <div class="col-md-4 p-0 full-end">
-                <h5 class="m-0 f-500 roboto text-black pt-16">Franklin</h5>
-              </div>
-              <div class="col-md-8 pr-0">
-                <p class="m-0 roboto f-400">Registered email</p>
-                <mat-form-field floatLabel="never" appearance="standard">
-                  <input matInput class="form-control" placeholder="Enter registered email">
-                </mat-form-field>
-              </div>
-
-            </div>
-          </div>
-          <div class="col-md-3 pl-0">
-            <div class="row ">
-
-              <div class="col-md-12 pr-0">
-                <p class="m-0 roboto f-400">Mailback password</p>
-                <mat-form-field floatLabel="never" appearance="standard">
-                  <input matInput class="form-control" placeholder="Enter mailback password">
-                </mat-form-field>
-              </div>
-
-            </div>
-          </div>
-
-
-        </div>
-      </div>
-    </div>
-    <div class="col-md-12 p-0 pt-4 pl-150 pb-44">
-      <button mat-stroked-button class="btn-primary h-48 lh-48 f-18 mt-40 br-4">Save & Add more </button>
-      <button mat-stroked-button (click)="step=15" class="btn-primary-outline h-48 lh-48 f-18 mt-40 br-4 ml-20">Save &
-        Proceed </button>
     </div>
   </div>
   <!--end 11th slider -->
