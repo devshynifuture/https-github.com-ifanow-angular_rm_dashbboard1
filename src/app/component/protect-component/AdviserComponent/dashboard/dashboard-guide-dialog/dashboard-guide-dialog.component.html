@@ -50,7 +50,7 @@
         </div>
       </div>
 
-      <div  class="row headerRow">
+      <div class="row headerRow">
         <div class="col-md-12">
           <h3 *ngIf="step==2" class="mb-0 f-500  text-diff">So {{data.name}}, what best describes you?</h3>
           <h3 *ngIf="step==3" class="m-0 f-500 pb-20 text-diff">Can you tell us about what services you offer? Select
@@ -62,7 +62,8 @@
           <h3 *ngIf="step==5" class=" m-0 f-500 pb-20 text-diff">What kind of products do you primarily advise on?Select
             only the ones that apply</h3>
           <h3 *ngIf="step==6" class=" m-0 f-500 pb-20 text-diff">What best describes your mutual fund practice? </h3>
-          <h3 *ngIf="step==7" class=" m-0 f-500 pb-20 text-diff">{{data.name}}, how are you managing your practice? Like,
+          <h3 *ngIf="step==7" class=" m-0 f-500 pb-20 text-diff">{{data.name}}, how are you managing your practice?
+            Like,
             are you managing it alone or you have a team?</h3>
           <h3 *ngIf="step==8" class=" m-0 f-500 pb-20 text-diff">I suggest you add your team members right away. We’ll
             send them an invite on your
@@ -86,13 +87,15 @@
 
         </div>
 
-        
+
       </div>
 
       <div *ngIf="step==14" class="row">
         <div class="col-md-12">
-          <button *ngFor="let singleArnRia of arnRtaData" mat-stroked-button
-        class="btnRTA">{{singleArnRia.number}}</button>
+          <div *ngFor="let singleArnRia of arnRtaData;index as i">
+            <button (click)="selectArnRia(singleArnRia,i)" [ngClass]="{'btnRTA': singleArnRia.colorFlag}"
+              mat-stroked-button>{{singleArnRia.number}}</button>
+          </div>
         </div>
       </div>
 
@@ -267,15 +270,15 @@
       <div class="row">
         <div class="col-md-12 d-flex">
           <div (click)="selectPractice(singleMfPractice)" *ngFor="let singleMfPractice of mutualFundPractices">
-            <div  [ngClass]="{'select-active-border': singleMfPractice.selected}"  class="box-1 boxDescribes p-20 mr-20"> 
-            <h5 class="m-0 roboto f-400 lh-19 pb-24">{{singleMfPractice.name}}
-            </h5>
-            <div class="hw-40 bg-grey lt br-2 bottomPost ">
-              <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">{{singleMfPractice.option}}</h3>
-            </div>
-            <div *ngIf="singleMfPractice.selected" class="ribbon ribbon-bottom-right">
-              <span><img src="/assets/images/svg/right-white.svg"></span>
-            </div>
+            <div [ngClass]="{'select-active-border': singleMfPractice.selected}" class="box-1 boxDescribes p-20 mr-20">
+              <h5 class="m-0 roboto f-400 lh-19 pb-24">{{singleMfPractice.name}}
+              </h5>
+              <div class="hw-40 bg-grey lt br-2 bottomPost ">
+                <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">{{singleMfPractice.option}}</h3>
+              </div>
+              <div *ngIf="singleMfPractice.selected" class="ribbon ribbon-bottom-right">
+                <span><img src="/assets/images/svg/right-white.svg"></span>
+              </div>
             </div>
           </div>
         </div>
@@ -302,7 +305,8 @@
       <div class="row">
         <div class=" col-md-8 d-flex">
           <div (click)="selectSingleOrTeam(singleORTeam)" *ngFor="let singleORTeam of teamAloneList">
-            <div [ngClass]="{'box-2': singleORTeam.option=='A','box-2-1':singleORTeam.option=='B','select-active-border':singleORTeam.selected}"
+            <div
+              [ngClass]="{'box-2': singleORTeam.option=='A','box-2-1':singleORTeam.option=='B','select-active-border':singleORTeam.selected}"
               class=" mr-20 topClickRadius boxDescribes p-20">
               <h5 class="m-0 roboto f-400 lh-19 pb-24 text-diff"> {{singleORTeam.name}} </h5>
               <div class="hw-40 bg-grey bottomPost lt br-2">
@@ -317,10 +321,19 @@
         </div>
 
         <div class="col-md-4">
-          <p class="mb-40">Fret not. As I said, we’re in this together :) </p>
+          <p *ngIf="teamOrAloneSelectedData.id==1" class="mb-40">Fret not. As I said, we’re in this together :) </p>
 
-            <p>Shhhh… we’ll give you superpowers
+          <p *ngIf="teamOrAloneSelectedData.id==1">Shhhh… we’ll give you superpowers
             Now, let that be a secret</p>
+
+          <p *ngIf="teamOrAloneSelectedData.id==2">
+            Great. We’ve built IFANOW for teams small and big. There’s so much you can do together with your team on
+            IFANOW. For starters,
+            - You can assign specific roles to your team
+            members based on your practice
+            - You can set up hierarchies
+            - You can collaborate on tasks
+            - Assign clients and do much more</p>
         </div>
 
       </div>
@@ -424,16 +437,16 @@
       <div class="row">
         <div class="col-md-12 d-flex">
           <div (click)="selectarnRiaChoice(choice)" *ngFor="let choice of arnRiaCodeChoiceList">
-            <div [ngClass]="{'select-active-border': choice.selected}"  class="box-1 boxDescribes mr-20 p-20"> 
-            <h5 class="m-0 roboto f-400 lh-19 pb-24">{{choice.name}}
-            </h5>
-            <div class="hw-40 bg-grey lt br-2 bottomPost">
-              <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">{{choice.option}}</h3>
+            <div [ngClass]="{'select-active-border': choice.selected}" class="box-1 boxDescribes mr-20 p-20">
+              <h5 class="m-0 roboto f-400 lh-19 pb-24">{{choice.name}}
+              </h5>
+              <div class="hw-40 bg-grey lt br-2 bottomPost">
+                <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">{{choice.option}}</h3>
+              </div>
+              <div *ngIf="choice.selected" class="ribbon ribbon-bottom-right"><span><img
+                    src="/assets/images/svg/right-white.svg"></span>
+              </div>
             </div>
-            <div *ngIf="choice.selected" class="ribbon ribbon-bottom-right"><span><img
-                  src="/assets/images/svg/right-white.svg"></span>
-            </div>
-          </div>
           </div>
         </div>
       </div>
@@ -456,15 +469,15 @@
       <div class="row">
         <div class="col-md-12 d-flex">
           <div (click)="selectbasicDetailsChoice(choice)" *ngFor="let choice of basicDetailsChoiceList">
-          <div  [ngClass]="{'select-active-border': choice.selected}"  class="box-1 boxDescribes mr-20 p-20">
-            <h5 class="m-0 roboto f-400 lh-19 pb-24">{{choice.name}}
-            </h5>
-            <div class="hw-40 bg-grey lt br-2 bottomPost">
-              <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">{{choice.option}}</h3>
-            </div>
-            <div *ngIf="choice.selected" class="ribbon ribbon-bottom-right"><span><img
-                  src="/assets/images/svg/right-white.svg"></span>
-            </div>
+            <div [ngClass]="{'select-active-border': choice.selected}" class="box-1 boxDescribes mr-20 p-20">
+              <h5 class="m-0 roboto f-400 lh-19 pb-24">{{choice.name}}
+              </h5>
+              <div class="hw-40 bg-grey lt br-2 bottomPost">
+                <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">{{choice.option}}</h3>
+              </div>
+              <div *ngIf="choice.selected" class="ribbon ribbon-bottom-right"><span><img
+                    src="/assets/images/svg/right-white.svg"></span>
+              </div>
             </div>
           </div>
         </div>
@@ -561,25 +574,25 @@
 
   <!-- 10th slider -->
   <div *ngIf="step==13" class="bg-modal-height">
-      <div class="contentGuideBox mt-40">
-        <div class="row ">
-          <div class="col-md-12">
-            <p class="text-diff m-0 roboto f-400 lh-16">With these credentials, we will now be able to order RTA files on
-              your
-              behalf.
-            </p>
-            <p class="text-diff m-0 roboto f-400 lh-16"> But since they land in your Gmail inbox, you need to set-up
-              auto-forwarding of these emails.</p>
-            <p class="text-diff m-0 roboto f-400 lh-16 pt-20">You can set-up auto forward with few simple steps.</p>
-            <p class="text-danger m-0 roboto f-400 pt-10 lh-16">Time needed: Around 2 minutes</p>
-          </div>
+    <div class="contentGuideBox mt-40">
+      <div class="row ">
+        <div class="col-md-12">
+          <p class="text-diff m-0 roboto f-400 lh-16">With these credentials, we will now be able to order RTA files on
+            your
+            behalf.
+          </p>
+          <p class="text-diff m-0 roboto f-400 lh-16"> But since they land in your Gmail inbox, you need to set-up
+            auto-forwarding of these emails.</p>
+          <p class="text-diff m-0 roboto f-400 lh-16 pt-20">You can set-up auto forward with few simple steps.</p>
+          <p class="text-danger m-0 roboto f-400 pt-10 lh-16">Time needed: Around 2 minutes</p>
         </div>
-      
-    
-    <div class="row pt-20">
-      <div class="col-md-12 d-flex">
+      </div>
+
+
+      <div class="row pt-20">
+        <div class="col-md-12 d-flex">
           <div (click)="selectrtaCredentialsChoice(singleChoice)" *ngFor="let singleChoice of rtaCredentialsChoiceList">
-            <div [ngClass]="{'select-active-border': singleChoice.selected}"  class="box-1 mr-20 boxDescribes p-20">
+            <div [ngClass]="{'select-active-border': singleChoice.selected}" class="box-1 mr-20 boxDescribes p-20">
               <h5 class="m-0 roboto f-400 lh-19 pb-24 text-diff">{{singleChoice.name}}
               </h5>
               <div class="hw-40 bg-grey bottomPost lt br-2 mt-16">
@@ -590,25 +603,25 @@
               </div>
             </div>
           </div>
+        </div>
       </div>
-    </div>
 
-    <div class="row pt-10">
-      <div class="col-md-12">
-        <p class="m-0 roboto f-400 text-diff">These credentials are securely encrypted in our database.</p>
+      <div class="row pt-10">
+        <div class="col-md-12">
+          <p class="m-0 roboto f-400 text-diff">These credentials are securely encrypted in our database.</p>
+        </div>
       </div>
-    </div>
 
-    <div class="bottomFooterDasb">
-      <div class="row">
-        <div class="col-md-12 ">
-          <button *ngIf="step11Flag" (click)="step=14;getRtaDetails()" mat-stroked-button
-            class="btn-primary h-48 lh-48 f-18  br-4  ">Proceed
-            <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
+      <div class="bottomFooterDasb">
+        <div class="row">
+          <div class="col-md-12 ">
+            <button *ngIf="step11Flag" (click)="step=14;getRtaDetails()" mat-stroked-button
+              class="btn-primary h-48 lh-48 f-18  br-4  ">Proceed
+              <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
+          </div>
         </div>
       </div>
     </div>
-</div>
   </div>
 
 
@@ -850,14 +863,15 @@
     </div> -->
   </div>
 
- 
+
   <div *ngIf="step==16" class="bg-modal-height">
 
     <div class="contentGuideBox mt-40">
       <div class="row">
         <div class="col-md-12">
           <p class="m-0 f-400 text-black roboto">As promised, we can now order and upload your mutual fund files. </p>
-          <p class="m-0 f-400 text-black roboto"> Once done, you will be able to check your client’s portfolios immediately.
+          <p class="m-0 f-400 text-black roboto"> Once done, you will be able to check your client’s portfolios
+            immediately.
             What say?</p>
         </div>
       </div>
@@ -904,11 +918,11 @@
 
     </div>
 
-    
-    
-    
+
+
+
   </div>
- 
+
   <div *ngIf="step==17" class="bg-modal-height">
 
     <div class="contentGuideBox mt-40">
@@ -916,25 +930,29 @@
         <div class="col-md-8">
           <p class="m-0 f-500 text-diff"><b>Once done, you will be notified via Email.</b> You can always come back
             and checkout the People’s tab too.
-            You will see new clients getting created auto-magically. And their MF portfolios will be reflecting as well.</p>
+            You will see new clients getting created auto-magically. And their MF portfolios will be reflecting as well.
+          </p>
 
-            <p class="mb-0 f-500 f-16 text-black mt-20">FAQs at this stage</p>
-            <p class="mb-0 f-500 roboto text-diff mt-20">How long does this process normally take?</p>
+          <p class="mb-0 f-500 f-16 text-black mt-20">FAQs at this stage</p>
+          <p class="mb-0 f-500 roboto text-diff mt-20">How long does this process normally take?</p>
 
-            <p class="mb-0 mt-4 f-400 text-diff">It depends on few things. How big your data is. Secondly, the load on our
-              servers at this point and lastly
-              how the RTA sites are currently functioning. Depending on this, it may take few minutes to a few hours as well.
-            </p>
+          <p class="mb-0 mt-4 f-400 text-diff">It depends on few things. How big your data is. Secondly, the load on our
+            servers at this point and lastly
+            how the RTA sites are currently functioning. Depending on this, it may take few minutes to a few hours as
+            well.
+          </p>
 
-            <p class="mb-0 mt-20 f-500 text-diff roboto">What else can do I do in the meantime on IFANOW?</p>
-      <p class="mb-0 mt-4 f-400 text-diff ">We have some easy-to-digest video tutorials just for you. Check them out 
-        <u class="c-p">here.</u>
-        </p>
-      <p class="mb-0 f-500 text-diff roboto mt-20">I wan to reach out to the customer support team of IFANOW. How do I do
-        it?
-      </p>
-      <p class="mb-0 f-400 text-diff mt-4">Sure. You can write to us by <u class="c-p"> clicking here</u> or call us on
-        022 6820 2020.</p>
+          <p class="mb-0 mt-20 f-500 text-diff roboto">What else can do I do in the meantime on IFANOW?</p>
+          <p class="mb-0 mt-4 f-400 text-diff ">We have some easy-to-digest video tutorials just for you. Check them out
+            <u class="c-p">here.</u>
+          </p>
+          <p class="mb-0 f-500 text-diff roboto mt-20">I wan to reach out to the customer support team of IFANOW. How do
+            I do
+            it?
+          </p>
+          <p class="mb-0 f-400 text-diff mt-4">Sure. You can write to us by <u class="c-p"> clicking here</u> or call us
+            on
+            022 6820 2020.</p>
 
         </div>
       </div>
@@ -943,16 +961,16 @@
         <div class="col-md-12 pb-24">
           <button (click)="step=18" mat-stroked-button class="btn-primary h-48 lh-48 f-18 mt-40 br-4">Finish
             <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
-    
+
         </div>
       </div>
     </div>
 
-    
-    
-   
+
+
+
   </div>
-   
+
   <div *ngIf="step==18" class="bg-modal-height">
     <div class="contentGuideBox mt-40">
       <div class="row">
@@ -986,7 +1004,7 @@
       </div>
 
     </div>
-     
+
   </div>
   <!-- end 15th slider -->
 </div>
