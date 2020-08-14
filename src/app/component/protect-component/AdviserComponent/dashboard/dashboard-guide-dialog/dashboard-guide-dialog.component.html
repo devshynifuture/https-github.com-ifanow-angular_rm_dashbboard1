@@ -92,17 +92,17 @@
 
       <div *ngIf="step==14" class="row">
         <div class="col-md-12">
-          
 
-            <a class="btnRTA" (click)="selectArnRia(singleArnRia,i)"  *ngFor="let singleArnRia of arnRtaData;index as i">
-              <span class="activeSpan"> 
-                {{singleArnRia.number}}
-              </span>
-            </a>
 
-            <!-- <button *ngFor="let singleArnRia of arnRtaData;index as i" class="btnHeader"
+          <a class="btnRTA" (click)="selectArnRia(singleArnRia,i)" *ngFor="let singleArnRia of arnRtaData;index as i">
+            <span [ngClass]="{'activeSpan': singleArnRia.colorFlag}" class="">
+              {{singleArnRia.number}}
+            </span>
+          </a>
+
+          <!-- <button *ngFor="let singleArnRia of arnRtaData;index as i" class="btnHeader"
               (click)="selectArnRia(singleArnRia,i)" mat-stroked-button></button> -->
-           
+
         </div>
       </div>
 
@@ -641,7 +641,7 @@
 
       <div [formGroup]="credentialsForm" class="formBox14">
         <div [formGroup]="singleCredsForm" *ngFor="let singleCredsForm of getCredentialsFormList.controls;index as i">
-          <div *ngIf="i==0">
+          <div *ngIf="i==selectedArmOrRiaIndex">
             <div class="row cams-advsior">
               <div class="col-md-4">
                 <div class="row ">
@@ -651,8 +651,8 @@
                   <div class="col-md-8">
                     <p class="m-0 roboto f-400">Registered email</p>
                     <mat-form-field floatLabel="never" appearance="standard">
-                      <input matInput formControlName="camsEmail" class="form-control"
-                        placeholder="Enter registered email">
+                      <app-email-domain-auto-suggest formControlName="camsEmail"
+                        [placeholder]="formPlaceHolders.ENTER_REGISTERED_EMAIL"></app-email-domain-auto-suggest>
                     </mat-form-field>
                   </div>
 
@@ -694,6 +694,8 @@
                     <mat-form-field floatLabel="never" appearance="standard">
                       <input matInput formControlName="karvyEMail" class="form-control"
                         placeholder="Enter registered email">
+                      <app-email-domain-auto-suggest formControlName="karvyEMail"
+                        [placeholder]="formPlaceHolders.ENTER_REGISTERED_EMAIL"></app-email-domain-auto-suggest>
                     </mat-form-field>
                   </div>
 
@@ -711,8 +713,8 @@
                   <div class="col-md-8">
                     <p class="m-0 roboto f-400">Registered email</p>
                     <mat-form-field floatLabel="never" appearance="standard">
-                      <input matInput formControlName="franklinEmail" class="form-control"
-                        placeholder="Enter registered email">
+                      <app-email-domain-auto-suggest formControlName="franklinEmail"
+                        [placeholder]="formPlaceHolders.ENTER_REGISTERED_EMAIL"></app-email-domain-auto-suggest>
                     </mat-form-field>
                   </div>
 
@@ -744,7 +746,8 @@
         <div class="row">
           <div class="col-md-12">
             <!-- <button mat-stroked-button class="btn-primary h-48 lh-48 f-18  br-4">Save & Add more </button> -->
-            <button mat-stroked-button (click)="step=15" class="btn-primary-outline h-48 lh-48 f-18 br-4 ml-20">Save &
+            <button mat-stroked-button (click)="addCredentialsJson(selectedArmOrRiaIndex)"
+              class="btn-primary-outline h-48 lh-48 f-18 br-4 ml-20">Save &
               Proceed </button>
           </div>
         </div>

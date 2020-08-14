@@ -7,6 +7,7 @@ import { SettingsService } from '../../setting/settings.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { element } from 'protractor';
 import { ValidatorType } from 'src/app/services/util.service';
+import { AppConstants } from 'src/app/services/app-constants';
 export interface PeriodicElement {
   name: string;
   position: string;
@@ -141,6 +142,7 @@ export class DashboardGuideDialogComponent implements OnInit {
   arnRiaList = [];
   ArnRiaIndex: any;
   selectedArnRIa: any;
+  formPlaceHolders
 
 
   constructor(private fb: FormBuilder,
@@ -155,9 +157,11 @@ export class DashboardGuideDialogComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.formPlaceHolders = AppConstants.formPlaceHolders;
     this.validatorType = ValidatorType
     this.advisorId = AuthService.getAdvisorId();
-    this.step = 1;
+    this.step = 14;
+    this.selectedArmOrRiaIndex = 0
     this.ArnRiaForm = this.fb.group({
       ArnRiaFormList: new FormArray([])
     })
@@ -355,6 +359,7 @@ export class DashboardGuideDialogComponent implements OnInit {
   getRtaDetails() {
     this.settingService.getArnlist({ advisorId: this.advisorId }).subscribe((data) => {
       if (data) {
+        this.selctedArmOrRia = data[0]
         data.forEach((element, index) => {
           this.addCredentialsForm();
           (index == 0) ? element['colorFlag'] = true : element['colorFlag'] = false;
@@ -372,38 +377,30 @@ export class DashboardGuideDialogComponent implements OnInit {
     });
   }
 
-  addCredentialsJson() {
-    this.credentialsForm = this.fb.group({
-      camsEmail: [],
-      camsPassword: [],
-      karvyID: [],
-      karvyPassword: [],
-      karvyEMail: [],
-      franklinEmail: [],
-      franklinPassword: []
-    })
+  addCredentialsJson(index) {
 
-    if (this.credentialsForm.controls.camsEmail.value != '') {
+    if (this.getCredentialsFormList.controls[index].value.camsEmail != '') {
       let obj =
       {
         advisorId: [this.advisorId],
-        rtTypeMasterid: '',
-        arnOrRia: '',
+        rtTypeMasterid: this.selctedArmOrRia.rtType,
+        arnOrRia: this.selctedArmOrRia.arnOrRia,
         rtExtTypeId: [2], // dbf file extension
-        arnRiaDetailsId: '',
+        arnRiaDetailsId: this.selctedArmOrRia.id,
         registeredEmail: '',
         mailbackPassword: '',
         fileOrderingUseabilityStatusId: [1]
       }
+      this.saveCredentials(obj)
     }
 
-    if (this.credentialsForm.controls.karvyID.value != '') {
+    if (this.getCredentialsFormList.controls[index].value.karvyID != '') {
 
       let obj = {
         advisorId: this.advisorId,
-        arnRiaDetailsId: '',
-        arnOrRia: '',
-        rtTypeMasterid: '',
+        arnRiaDetailsId: this.selctedArmOrRia.id,
+        arnOrRia: this.selctedArmOrRia.arnOrRia,
+        rtTypeMasterid: this.selctedArmOrRia.rtType,
         loginId: '',
         loginPassword: '',
         rtExtTypeId: [2], // dbf file extension
@@ -411,15 +408,16 @@ export class DashboardGuideDialogComponent implements OnInit {
         registeredEmail: '',
         fileOrderingUseabilityStatusId: '',
       }
+      this.saveCredentials(obj)
     }
 
-    if (this.credentialsForm.controls.franklinEmail.value != '') {
+    if (this.getCredentialsFormList.controls[index].value.franklinEmail != '') {
 
       let obj = {
         advisorId: this.advisorId,
-        arnRiaDetailsId: '',
-        arnOrRia: '',
-        rtTypeMasterid: '',
+        arnRiaDetailsId: this.selctedArmOrRia,
+        arnOrRia: this.selctedArmOrRia.arnOrRia,
+        rtTypeMasterid: this.selctedArmOrRia.rtType,
         rtExtTypeId: [2], // dbf file extension
         loginId: '',
         loginPassword: '',
@@ -427,6 +425,7 @@ export class DashboardGuideDialogComponent implements OnInit {
         registeredEmail: '',
         fileOrderingUseabilityStatusId: [1]
       }
+      this.saveCredentials(obj)
     }
 
   }
