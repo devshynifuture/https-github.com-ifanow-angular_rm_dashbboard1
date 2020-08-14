@@ -200,6 +200,7 @@ export class DashboardComponent implements OnInit {
   ];
   todoListFlag: boolean;
   userData: any;
+  taskSummaryDashboardCount: any = null;
   constructor(
     public dialog: MatDialog, private subService: SubscriptionService,
     private eventService: EventService,
@@ -464,11 +465,20 @@ export class DashboardComponent implements OnInit {
     this.getGoalSummaryData();
     this.initPointForTask();
     this.getMisData();
-
-  }
+  } 
 
   initPointForTask() {
+    this.getTaskDashboardCount();
     this.getTodaysTaskList();
+  }
+
+  getTaskDashboardCount(){
+    this.dashboardService.getTaskDashboardCountValues({ advisorId: this.advisorId })
+      .subscribe(res=>{
+        if(res){
+          this.taskSummaryDashboardCount = res;
+        }
+      })
   }
 
   getAssetAllocationData() {

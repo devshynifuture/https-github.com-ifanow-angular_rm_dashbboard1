@@ -523,17 +523,17 @@
           <div class="row">
             <div class="col-md-4 rightBorder d-flex align-items-center justify-content-center flex-column">
               <p class="f-14 mb-5 l-16 text-primitive text-center">This week’s <br> tasks</p>
-              <h4 class="mb-0 f-20">0</h4>
+              <h4 class="mb-0 f-20">{{ taskSummaryDashboardCount ? taskSummaryDashboardCount.weekTaskCount : '-' }}</h4>
             </div>
 
             <div class="col-md-4 rightBorder d-flex align-items-center justify-content-center flex-column">
               <p class="f-14 mb-5 l-16 text-primitive text-center">This month’s <br> tasks</p>
-              <h4 class="mb-0 f-20">0</h4>
+              <h4 class="mb-0 f-20">{{ taskSummaryDashboardCount ? taskSummaryDashboardCount.monthTaskCount : '-' }}</h4>
             </div>
 
             <div class="col-md-4 d-flex align-items-center justify-content-center flex-column">
               <p class="f-14 mb-5 l-16 text-danger text-center">Overdue <br> tasks</p>
-              <h4 class="mb-0 f-20 text-danger">0</h4>
+              <h4 class="mb-0 f-20 text-danger">{{ taskSummaryDashboardCount ? taskSummaryDashboardCount.overDueTaskCount: '-' }}</h4>
             </div>
 
           </div>
