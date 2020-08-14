@@ -135,6 +135,12 @@ export class DashboardGuideDialogComponent implements OnInit {
   selctedRtaDataChoice: any;
   selectedTeamMemberChoice: any;
   step11Flag: boolean;
+  teamOrAloneSelectedData: any = {};
+  selctedArmOrRia: any;
+  selectedArmOrRiaIndex: any;
+  arnRiaList = [];
+  ArnRiaIndex: any;
+  selectedArnRIa: any;
 
 
   constructor(private fb: FormBuilder,
@@ -157,14 +163,7 @@ export class DashboardGuideDialogComponent implements OnInit {
     })
 
     this.credentialsForm = this.fb.group({
-      advisorId: [this.advisorId],
-      camsEmail: [],
-      camsPassword: [],
-      karvyID: [],
-      karvyPassword: [],
-      karvyEMail: [],
-      franklinEmail: [],
-      franklinPassword: []
+      credentialsFormList: new FormArray([])
     })
     this.settingService.getArnGlobalData().subscribe((res) => {
       console.log(res)
@@ -173,11 +172,14 @@ export class DashboardGuideDialogComponent implements OnInit {
         this.addArnRiaForm();
       }
     });
-    // this.getRtaDetails();
+    this.getRtaDetails();
   }
 
   get getArnRiaForm() { return this.ArnRiaForm.controls; }
   get getArnRiaFormList() { return this.getArnRiaForm.ArnRiaFormList as FormArray; }
+
+  get getCredentialsForm() { return this.credentialsForm.controls; }
+  get getCredentialsFormList() { return this.getCredentialsForm.credentialsFormList as FormArray; }
 
   addArnRiaForm() {
     this.getArnRiaFormList.push(this.fb.group({
@@ -189,11 +191,29 @@ export class DashboardGuideDialogComponent implements OnInit {
     }))
   }
 
+  addCredentialsForm() {
+    this.getArnRiaFormList.push(this.fb.group({
+      advisorId: [this.advisorId],
+      camsEmail: [],
+      camsPassword: [],
+      karvyID: [],
+      karvyPassword: [],
+      karvyEMail: [],
+      franklinEmail: [],
+      franklinPassword: []
+    }))
+  }
+
+
   displayedColumns: string[] = ['position', 'name', 'weight'];
   dataSource = ELEMENT_DATA;
 
   showPageByIndex(index) {
     this.page = index;
+  }
+
+  chooseArnRiaForm(index) {
+    this.ArnRiaIndex = index;
   }
 
   changeNumberValidation(value) {
@@ -225,6 +245,7 @@ export class DashboardGuideDialogComponent implements OnInit {
 
   selectSingleOrTeam(singOrTeam) {
     this.step7Flag = true;
+    this.teamOrAloneSelectedData = singOrTeam;
     this.teamAloneList.map(element => {
       (singOrTeam.id == element.id) ? element.selected = true : element.selected = false
     });
@@ -314,10 +335,13 @@ export class DashboardGuideDialogComponent implements OnInit {
     this.settingService.addArn(jsonObj).subscribe((res) => {
       this.eventService.openSnackBar("ARN-RIA Added successfully");
       if (flag == 'addMore') {
-        this.getArnRiaFormList.controls[index].get('arnOrRia').setValue('')
-        this.getArnRiaFormList.controls[index].get('typeId').setValue('')
-        this.getArnRiaFormList.controls[index].get('number').setValue('')
-        this.getArnRiaFormList.controls[index].get('nameOfTheHolder').setValue('')
+        this.arnRiaList.push(jsonObj)
+        this.addArnRiaForm();
+        this.getArnRiaFormList.controls[index + 1].get('arnOrRia').setValue('')
+        this.getArnRiaFormList.controls[index + 1].get('typeId').setValue('')
+        this.getArnRiaFormList.controls[index + 1].get('number').setValue('')
+        this.getArnRiaFormList.controls[index + 1].get('nameOfTheHolder').setValue('');
+        this.selectedArnRIa = jsonObj;
       }
       else {
         this.step++;
@@ -330,9 +354,24 @@ export class DashboardGuideDialogComponent implements OnInit {
 
   getRtaDetails() {
     this.settingService.getArnlist({ advisorId: this.advisorId }).subscribe((data) => {
-      this.arnRtaData = data;
+      if (data) {
+        data.forEach((element, index) => {
+          this.addCredentialsForm();
+          (index == 0) ? element['colorFlag'] = true : element['colorFlag'] = false;
+        });
+        this.arnRtaData = data;
+      }
     });
   }
+
+  selectArnRia(data, selectedIndex) {
+    this.selectedArmOrRiaIndex = selectedIndex;
+    this.selctedArmOrRia = data;
+    this.arnRtaData.forEach((element, index) => {
+      (selectedIndex == index) ? element['colorFlag'] = true : element['colorFlag'] = false;
+    });
+  }
+
   addCredentialsJson() {
     this.credentialsForm = this.fb.group({
       camsEmail: [],
