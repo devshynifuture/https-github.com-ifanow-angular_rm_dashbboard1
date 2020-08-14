@@ -50,7 +50,7 @@
         </div>
       </div>
 
-      <div class="row headerRow">
+      <div  class="row headerRow">
         <div class="col-md-12">
           <h3 *ngIf="step==2" class="mb-0 f-500  text-diff">So {{data.name}}, what best describes you?</h3>
           <h3 *ngIf="step==3" class="m-0 f-500 pb-20 text-diff">Can you tell us about what services you offer? Select
@@ -62,7 +62,7 @@
           <h3 *ngIf="step==5" class=" m-0 f-500 pb-20 text-diff">What kind of products do you primarily advise on?Select
             only the ones that apply</h3>
           <h3 *ngIf="step==6" class=" m-0 f-500 pb-20 text-diff">What best describes your mutual fund practice? </h3>
-          <h3 *ngIf="step==7" class=" m-0 f-500 pb-20 text-diff">{{data.name}}, how are you managing your practice?Like,
+          <h3 *ngIf="step==7" class=" m-0 f-500 pb-20 text-diff">{{data.name}}, how are you managing your practice? Like,
             are you managing it alone or you have a team?</h3>
           <h3 *ngIf="step==8" class=" m-0 f-500 pb-20 text-diff">I suggest you add your team members right away. We’ll
             send them an invite on your
@@ -85,8 +85,27 @@
           <h3 *ngIf="step==18" class="m-0 f-500 pb-20 text-diff">Thank You!</h3>
 
         </div>
-        <button *ngFor="let singleArnRia of arnRtaData" mat-stroked-button
-          class="btn-primary h-48 lh-48 f-18 br-4">{{singleArnRia.number}}</button>
+
+        
+      </div>
+
+      <div *ngIf="step==14" class="row">
+        <div class="col-md-12">
+          <button *ngFor="let singleArnRia of arnRtaData" mat-stroked-button
+        class="btnRTA">{{singleArnRia.number}}</button>
+        </div>
+      </div>
+
+      <div *ngIf="step==12" class="row">
+        <div class="col-md-12 d-flex align-items-center justify-content-end">
+          <mat-form-field class="w-30">
+            <mat-select class="form-control ">
+              <mat-option>
+                ABCD
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
       </div>
     </div>
   </div>
@@ -250,8 +269,8 @@
     <div class="contentGuideBox mt-40">
       <div class="row">
         <div class="col-md-12 d-flex">
-          <div (click)="selectPractice(singleMfPractice)" *ngFor="let singleMfPractice of mutualFundPractices"
-            class="box-1 boxDescribes p-20 mr-20">
+          <div (click)="selectPractice(singleMfPractice)" *ngFor="let singleMfPractice of mutualFundPractices">
+            <div  [ngClass]="{'select-active-border': singleMfPractice.selected}"  class="box-1 boxDescribes p-20 mr-20"> 
             <h5 class="m-0 roboto f-400 lh-19 pb-24">{{singleMfPractice.name}}
             </h5>
             <div class="hw-40 bg-grey lt br-2 bottomPost ">
@@ -259,6 +278,7 @@
             </div>
             <div *ngIf="singleMfPractice.selected" class="ribbon ribbon-bottom-right">
               <span><img src="/assets/images/svg/right-white.svg"></span>
+            </div>
             </div>
           </div>
         </div>
@@ -283,21 +303,29 @@
 
     <div class="contentGuideBox mt-40">
       <div class="row">
-        <div class=" col-md-12 d-flex">
+        <div class=" col-md-8 d-flex">
           <div (click)="selectSingleOrTeam(singleORTeam)" *ngFor="let singleORTeam of teamAloneList">
-            <div
-              [ngClass]="{'box-2': singleORTeam.option=='A','box-2-1':singleORTeam.option=='B','select-active-border':singleORTeam.selected}"
-              class=" mr-20 boxDescribes p-20">
+            <div [ngClass]="{'box-2': singleORTeam.option=='A','box-2-1':singleORTeam.option=='B','select-active-border':singleORTeam.selected}"
+              class=" mr-20 topClickRadius boxDescribes p-20">
               <h5 class="m-0 roboto f-400 lh-19 pb-24 text-diff"> {{singleORTeam.name}} </h5>
               <div class="hw-40 bg-grey bottomPost lt br-2">
                 <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">{{singleORTeam.option}}</h3>
               </div>
+
               <div *ngIf="singleORTeam.selected" class="ribbon ribbon-bottom-right">
                 <span><img src="/assets/images/svg/right-white.svg"></span>
               </div>
             </div>
           </div>
         </div>
+
+        <div class="col-md-4">
+          <p class="mb-40">Fret not. As I said, we’re in this together :) </p>
+
+            <p>Shhhh… we’ll give you superpowers
+            Now, let that be a secret</p>
+        </div>
+
       </div>
 
       <div class="bottomFooterDasb">
@@ -395,12 +423,11 @@
 
 
   <div *ngIf="step==10" class="bg-modal-height">
-
     <div class="contentGuideBox mt-40">
       <div class="row">
         <div class="col-md-12 d-flex">
-          <div (click)="selectarnRiaChoice(choice)" *ngFor="let choice of arnRiaCodeChoiceList"
-            class="box-1 boxDescribes mr-20 p-20">
+          <div (click)="selectarnRiaChoice(choice)" *ngFor="let choice of arnRiaCodeChoiceList">
+            <div [ngClass]="{'select-active-border': choice.selected}"  class="box-1 boxDescribes mr-20 p-20"> 
             <h5 class="m-0 roboto f-400 lh-19 pb-24">{{choice.name}}
             </h5>
             <div class="hw-40 bg-grey lt br-2 bottomPost">
@@ -409,6 +436,7 @@
             <div *ngIf="choice.selected" class="ribbon ribbon-bottom-right"><span><img
                   src="/assets/images/svg/right-white.svg"></span>
             </div>
+          </div>
           </div>
         </div>
       </div>
@@ -425,13 +453,13 @@
     </div>
   </div>
 
-  <div *ngIf="step==11" class="bg-modal-height">
 
+  <div *ngIf="step==11" class="bg-modal-height">
     <div class="contentGuideBox mt-40">
       <div class="row">
         <div class="col-md-12 d-flex">
-          <div (click)="selectbasicDetailsChoice(choice)" *ngFor="let choice of basicDetailsChoiceList"
-            class="box-1 boxDescribes mr-20 p-20">
+          <div (click)="selectbasicDetailsChoice(choice)" *ngFor="let choice of basicDetailsChoiceList">
+          <div  [ngClass]="{'select-active-border': choice.selected}"  class="box-1 boxDescribes mr-20 p-20">
             <h5 class="m-0 roboto f-400 lh-19 pb-24">{{choice.name}}
             </h5>
             <div class="hw-40 bg-grey lt br-2 bottomPost">
@@ -439,6 +467,7 @@
             </div>
             <div *ngIf="choice.selected" class="ribbon ribbon-bottom-right"><span><img
                   src="/assets/images/svg/right-white.svg"></span>
+            </div>
             </div>
           </div>
         </div>
@@ -534,28 +563,29 @@
   <!--end nine slider -->
 
   <!-- 10th slider -->
-  <div *ngIf="step==13">
-    <div class="row pt-40">
-      <div class="col-md-12 p-0 pl-150 pb-20">
-        <p class="text-diff m-0 roboto f-400 lh-16">With these credentials, we will now be able to order RTA files on
-          your
-          behalf.
-        </p>
-        <p class="text-diff m-0 roboto f-400 lh-16"> But since they land in your Gmail inbox, you need to set-up
-          auto-forwarding of these emails.</p>
-        <p class="text-diff m-0 roboto f-400 lh-16 pt-40">You can set-up auto forward with few simple steps.</p>
-        <p class="text-danger m-0 roboto f-400 pt-10 lh-16">Time needed: Around 2 minutes</p>
-      </div>
-    </div>
-    <div class="row pt-20 pb-8">
-      <div class="col-md-12 p-0 pl-150">
-        <div class="d-flex">
-          <div (click)="selectrtaCredentialsChoice(singleChoice)" *ngFor="let singleChoice of rtaCredentialsChoiceList"
-            class="pr-20">
-            <div class="box-1 p-20">
+  <div *ngIf="step==13" class="bg-modal-height">
+      <div class="contentGuideBox mt-40">
+        <div class="row ">
+          <div class="col-md-12">
+            <p class="text-diff m-0 roboto f-400 lh-16">With these credentials, we will now be able to order RTA files on
+              your
+              behalf.
+            </p>
+            <p class="text-diff m-0 roboto f-400 lh-16"> But since they land in your Gmail inbox, you need to set-up
+              auto-forwarding of these emails.</p>
+            <p class="text-diff m-0 roboto f-400 lh-16 pt-20">You can set-up auto forward with few simple steps.</p>
+            <p class="text-danger m-0 roboto f-400 pt-10 lh-16">Time needed: Around 2 minutes</p>
+          </div>
+        </div>
+      
+    
+    <div class="row pt-20">
+      <div class="col-md-12 d-flex">
+          <div (click)="selectrtaCredentialsChoice(singleChoice)" *ngFor="let singleChoice of rtaCredentialsChoiceList">
+            <div [ngClass]="{'select-active-border': singleChoice.selected}"  class="box-1 mr-20 boxDescribes p-20">
               <h5 class="m-0 roboto f-400 lh-19 pb-24 text-diff">{{singleChoice.name}}
               </h5>
-              <div class="hw-40 bg-grey lt br-2 mt-16">
+              <div class="hw-40 bg-grey bottomPost lt br-2 mt-16">
                 <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">{{singleChoice.option}}</h3>
               </div>
               <div *ngIf="singleChoice.selected" class="ribbon ribbon-bottom-right"><span><img
@@ -563,30 +593,25 @@
               </div>
             </div>
           </div>
-          <!-- <div class="pl-20 pr-20">
-            <div class="box-1 p-20">
-              <h5 class="m-0 roboto f-400 lh-19 pb-24 text-diff">I’ll do this later
-              </h5>
-              <div class="hw-40 bg-grey lt br-2 mt-36">
-                <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">B</h3>
-              </div>
-            </div>
-          </div> -->
-        </div>
-      </div>
-      <div class="col-md-12 pr-0 pl-150 pb-28">
-        <p class="m-0 roboto f-400 text-diff pt-8">These credentials are securely encrypted in our database.</p>
       </div>
     </div>
+
+    <div class="row pt-10">
+      <div class="col-md-12">
+        <p class="m-0 roboto f-400 text-diff">These credentials are securely encrypted in our database.</p>
+      </div>
+    </div>
+
     <div class="bottomFooterDasb">
       <div class="row">
         <div class="col-md-12 ">
           <button *ngIf="step11Flag" (click)="step=14;getRtaDetails()" mat-stroked-button
-            class="btn-primary h-48 lh-48 f-18   br-4  ">Proceed
+            class="btn-primary h-48 lh-48 f-18  br-4  ">Proceed
             <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
         </div>
       </div>
     </div>
+</div>
   </div>
 
 
@@ -932,29 +957,39 @@
   </div>
    
   <div *ngIf="step==18" class="bg-modal-height">
+    <div class="contentGuideBox mt-40">
+      <div class="row">
+        <div class="col-md-12">
+          <p class="m-0 f-400 text-diff pt-20">You can watch some video tutorials before moving forward.
+          </p>
+        </div>
+      </div>
 
-    <div class="col-md-12 p-0 pl-150">
-      <p class="m-0 f-400 text-diff pt-20">You can watch some video tutorials before moving forward.
-      </p>
-      <div class="col-md-12 p-0 pt-20">
-        <div class="row text-center">
-          <div class="col-md-3 pl-0">
-            <img src="/assets/images/Group1.png" class="w-100">
-          </div>
-          <div class="col-md-3 pl-0">
-            <img src="/assets/images/Group2.png" class="w-100">
-          </div>
-          <div class="col-md-3 pl-0">
-            <img src="/assets/images/Group1.png" class="w-100">
+      <div class="row">
+        <div class="col-md-3 pl-0">
+          <img src="/assets/images/Group1.png" class="w-100">
+        </div>
+        <div class="col-md-3 pl-0">
+          <img src="/assets/images/Group2.png" class="w-100">
+        </div>
+
+        <div class="col-md-3 pl-0">
+          <img src="/assets/images/Group1.png" class="w-100">
+        </div>
+
+      </div>
+
+      <div class="bottomFooterDasb">
+        <div class="row">
+          <div class="col-md-12 ">
+            <button (click)="onNoClick()" mat-stroked-button class="btn-primary h-48 lh-48 f-18  br-4">Close
+            </button>
           </div>
         </div>
       </div>
-      <div class="col-md-12 p-0 pt-60 pb-28">
-        <button (click)="onNoClick()" mat-stroked-button class="btn-primary h-48 lh-48 f-18 mt-40 br-4">Close
-        </button>
 
-      </div>
     </div>
+     
   </div>
   <!-- end 15th slider -->
 </div>
