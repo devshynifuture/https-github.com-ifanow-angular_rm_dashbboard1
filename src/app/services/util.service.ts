@@ -486,7 +486,7 @@ export class UtilService {
     }
   }
 
-  htmlToPdf(
+  htmlToPdf(header,
     inputData,
     pdfName,
     landscape,
@@ -504,6 +504,7 @@ export class UtilService {
     const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
     const obj = {
       htmlInput: inputData,
+      header:null,
       name: pdfName,
       landscape,
       key,

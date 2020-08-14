@@ -175,7 +175,7 @@ export class MutualFundSummaryComponent implements OnInit {
 
   mutualFund;
   @ViewChild('summaryTemplate', { static: false }) summaryTemplate: ElementRef;
-  @ViewChild('summaryHeader', { static: false }) summaryHeader: ElementRef;
+  @ViewChild('summaryTemplateHeader', { static: false }) summaryTemplateHeader: ElementRef;
   uploadData(data) {
     if (data) {
       this.clientId = data.clientId
@@ -1666,8 +1666,10 @@ export class MutualFundSummaryComponent implements OnInit {
     this.fragmentData.isSpinner = true;
     setTimeout(() => {
       const para = document.getElementById('template');
-      //  const header = document.getElementById('templateheader');
-      this.returnValue = this.utilService.htmlToPdf(para.innerHTML, 'MF summary', 'true', this.fragmentData, '', '');
+      // const header = document.getElementById('templateHeader');
+       const header = this.summaryTemplateHeader.nativeElement.innerHTML
+
+      this.returnValue = this.utilService.htmlToPdf(header,para.innerHTML, 'MF summary', 'true', this.fragmentData, '', '');
     });
 
   }
@@ -1983,11 +1985,12 @@ export class MutualFundSummaryComponent implements OnInit {
     this.showDownload = true
     setTimeout(() => {
       let para = this.summaryTemplate.nativeElement.innerHTML
-      // const header = this.summaryHeader.nativeElement.innerHTML
+       const header = this.summaryTemplateHeader.nativeElement.innerHTML
       let obj = {
         htmlInput: para,
         name: (this.clientData.name) ? this.clientData.name : '' + 's' + 'Summary' + date,
         landscape: true,
+        header:null,
         key: 'showPieChart',
         clientId: this.clientId,
         advisorId: this.advisorId,
