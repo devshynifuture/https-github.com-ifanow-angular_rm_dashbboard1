@@ -163,14 +163,7 @@ export class DashboardGuideDialogComponent implements OnInit {
     })
 
     this.credentialsForm = this.fb.group({
-      advisorId: [this.advisorId],
-      camsEmail: [],
-      camsPassword: [],
-      karvyID: [],
-      karvyPassword: [],
-      karvyEMail: [],
-      franklinEmail: [],
-      franklinPassword: []
+      credentialsFormList: new FormArray([])
     })
     this.settingService.getArnGlobalData().subscribe((res) => {
       console.log(res)
@@ -179,11 +172,14 @@ export class DashboardGuideDialogComponent implements OnInit {
         this.addArnRiaForm();
       }
     });
-    // this.getRtaDetails();
+    this.getRtaDetails();
   }
 
   get getArnRiaForm() { return this.ArnRiaForm.controls; }
   get getArnRiaFormList() { return this.getArnRiaForm.ArnRiaFormList as FormArray; }
+
+  get getCredentialsForm() { return this.credentialsForm.controls; }
+  get getCredentialsFormList() { return this.getCredentialsForm.credentialsFormList as FormArray; }
 
   addArnRiaForm() {
     this.getArnRiaFormList.push(this.fb.group({
@@ -194,6 +190,20 @@ export class DashboardGuideDialogComponent implements OnInit {
       nameOfTheHolder: [, [Validators.required]]
     }))
   }
+
+  addCredentialsForm() {
+    this.getArnRiaFormList.push(this.fb.group({
+      advisorId: [this.advisorId],
+      camsEmail: [],
+      camsPassword: [],
+      karvyID: [],
+      karvyPassword: [],
+      karvyEMail: [],
+      franklinEmail: [],
+      franklinPassword: []
+    }))
+  }
+
 
   displayedColumns: string[] = ['position', 'name', 'weight'];
   dataSource = ELEMENT_DATA;
@@ -346,6 +356,7 @@ export class DashboardGuideDialogComponent implements OnInit {
     this.settingService.getArnlist({ advisorId: this.advisorId }).subscribe((data) => {
       if (data) {
         data.forEach((element, index) => {
+          this.addCredentialsForm();
           (index == 0) ? element['colorFlag'] = true : element['colorFlag'] = false;
         });
         this.arnRtaData = data;

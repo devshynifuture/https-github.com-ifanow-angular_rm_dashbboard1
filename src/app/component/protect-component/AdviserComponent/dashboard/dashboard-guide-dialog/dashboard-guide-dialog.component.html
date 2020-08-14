@@ -46,11 +46,11 @@
           </span>
         </div>
         <div class="col-md-2 primaryProgress pl-0">
-          <mat-progress-bar value="{{step * 7}}" mode="determinate"></mat-progress-bar>
+          <mat-progress-bar value="{{step * 3}}" mode="determinate"></mat-progress-bar>
         </div>
       </div>
 
-      <div class="row headerRow">
+      <div [ngClass]="{'creds-section': step==14,'rta-section':step==12}" class="row headerRow">
         <div class="col-md-12">
           <h3 *ngIf="step==2" class="mb-0 f-500  text-diff">So {{data.name}}, what best describes you?</h3>
           <h3 *ngIf="step==3" class="m-0 f-500 pb-20 text-diff">Can you tell us about what services you offer? Select
@@ -93,7 +93,8 @@
       <div *ngIf="step==14" class="row">
         <div class="col-md-12">
           <div class="btnRTA mt-10">
-            <button *ngFor="let singleArnRia of arnRtaData;index as i" class="btnHeader" (click)="selectArnRia(singleArnRia,i)" mat-stroked-button>{{singleArnRia.number}}</button>
+            <button *ngFor="let singleArnRia of arnRtaData;index as i" class="btnHeader"
+              (click)="selectArnRia(singleArnRia,i)" mat-stroked-button>{{singleArnRia.number}}</button>
           </div>
         </div>
       </div>
