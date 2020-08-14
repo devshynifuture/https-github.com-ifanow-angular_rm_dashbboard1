@@ -1144,49 +1144,49 @@
                         <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px;padding-left: 8px; text-align: left;">
                             b. Switch In
                         </td>
-                        <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px;padding-left: 8px; text-align: right;" appFormatNumber [value]="mfData.total_switch_in"></td>
+                        <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px;padding-left: 8px; text-align: right;" appFormatNumber [value]="mfData.total_cashflow_switch_in"></td>
                     </tr>
 
                     <tr>
                         <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px;padding-left: 8px; text-align: left;">
                             c. Switch Out
                         </td>
-                        <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px;padding-left: 8px; text-align: right;" appFormatNumber [value]="mfData.total_switch_out"></td>
+                        <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px;padding-left: 8px; text-align: right;" appFormatNumber [value]="mfData.total_cashflow_switch_out"></td>
                     </tr>
 
                     <tr>
                         <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px;padding-left: 8px; text-align: left;">
                             d. Redemption
                         </td>
-                        <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px;padding-left: 8px; text-align: right;" appFormatNumber [value]="mfData.total_redemption"></td>
+                        <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px;padding-left: 8px; text-align: right;" appFormatNumber [value]="mfData.total_cashflow_redemption"></td>
                     </tr>
 
                     <tr>
                         <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px;padding-left: 8px; text-align: left;">
                             e. Dividend Payout
                         </td>
-                        <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px;padding-left: 8px; text-align: right;" appFormatNumber [value]="mfData.total_dividend_payout"></td>
+                        <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px;padding-left: 8px; text-align: right;" appFormatNumber [value]="mfData.total_cashflow_dividend_payout"></td>
                     </tr>
 
                     <tr>
                         <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px;padding-left: 8px; text-align: left;">
                             f. Net Investment (a+b-c-d-e)
                         </td>
-                        <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px;padding-left: 8px; text-align: right;" appFormatNumber [value]="mfData.total_net_investment"></td>
+                        <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px;padding-left: 8px; text-align: right;" appFormatNumber [value]="mfData.total_cashflow_net_investment"></td>
                     </tr>
 
                     <tr>
                         <td style="font-size: 13px;  border-bottom: 1px solid #dee5e7; padding: 5px;padding-left: 8px; text-align: left;">
                             g. Market Value
                         </td>
-                        <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px;padding-left: 8px; text-align: right;" appFormatNumber [value]="mfData.total_market_value"></td>
+                        <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px;padding-left: 8px; text-align: right;" appFormatNumber [value]="mfData.total_cashflow_current_value"></td>
                     </tr>
 
                     <tr>
                         <td style="font-size: 13px; border-bottom: 1px solid #dee5e7; padding: 5px;padding-left: 8px;; text-align: left;">
                             h. Net Gain (g-f)
                         </td>
-                        <td style="font-size: 13px;  border-bottom: 1px solid #dee5e7; padding: 5px;padding-left: 8px; text-align: right;" appFormatNumber [value]="total_net_Gain"></td>
+                        <td style="font-size: 13px;  border-bottom: 1px solid #dee5e7; padding: 5px;padding-left: 8px; text-align: right;" appFormatNumber [value]="mfData.total_cashflow_net_gain"></td>
                     </tr>
 
                     <tr>
@@ -1194,7 +1194,7 @@
                             i. Lifetime XIRR (All Transactions)
                         </td>
                         <td style="font-size: 13px; border-bottom: 1px solid #dee5e7;padding: 5px;padding-left: 8px; text-align: right;">
-                            {{(mfData.total_xirr) ? (mfData.total_xirr | number:'1.2-2') : 0}}</td>
+                            {{(cashFlowXirr) ? (cashFlowXirr | number:'1.2-2') : 0}}%</td>
                     </tr>
 
                 </table>
