@@ -192,7 +192,7 @@ export class DashboardGuideDialogComponent implements OnInit {
   }
 
   addCredentialsForm() {
-    this.getArnRiaFormList.push(this.fb.group({
+    this.getCredentialsFormList.push(this.fb.group({
       advisorId: [this.advisorId],
       camsEmail: [],
       camsPassword: [],

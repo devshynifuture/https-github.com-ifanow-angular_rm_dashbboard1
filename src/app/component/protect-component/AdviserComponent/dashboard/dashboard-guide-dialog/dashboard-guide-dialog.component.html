@@ -633,96 +633,101 @@
     <div class="contentGuideBox mt-40">
 
       <div [formGroup]="credentialsForm" class="formBox14">
-        <div class="row cams-advsior">
-          <div class="col-md-4">
-            <div class="row ">
-              <div class="col-md-4 p-0 full-end">
-                <h5 class="m-0 f-500 roboto text-black pt-16">CAMS</h5>
+        <div [formGroup]="singleCredsForm" *ngFor="let singleCredsForm of getCredentialsFormList.controls;index as i">
+          <div *ngIf="i==0">
+            <div class="row cams-advsior">
+              <div class="col-md-4">
+                <div class="row ">
+                  <div class="col-md-4 p-0 full-end">
+                    <h5 class="m-0 f-500 roboto text-black pt-16">CAMS</h5>
+                  </div>
+                  <div class="col-md-8">
+                    <p class="m-0 roboto f-400">Registered email</p>
+                    <mat-form-field floatLabel="never" appearance="standard">
+                      <input matInput formControlName="camsEmail" class="form-control"
+                        placeholder="Enter registered email">
+                    </mat-form-field>
+                  </div>
+
+                </div>
               </div>
-              <div class="col-md-8">
-                <p class="m-0 roboto f-400">Registered email</p>
-                <mat-form-field floatLabel="never" appearance="standard">
-                  <input matInput formControlName="camsEmail" class="form-control" placeholder="Enter registered email">
-                </mat-form-field>
+            </div>
+
+            <div class="row pt-32 cams-advsior">
+              <div class="col-md-4">
+                <div class="row ">
+                  <div class="col-md-4 p-0 full-end">
+                    <h5 class="m-0 f-500 roboto text-black pt-16">Karvy</h5>
+                  </div>
+                  <div class="col-md-8">
+                    <p class="m-0 roboto f-400">Login ID</p>
+                    <mat-form-field floatLabel="never" appearance="standard">
+                      <input matInput formControlName="karvyID" class="form-control" placeholder="Enter Login ID">
+                    </mat-form-field>
+                  </div>
+
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="row ">
+                  <div class="col-md-12">
+                    <p class="m-0 roboto f-400">Login password</p>
+                    <mat-form-field floatLabel="never" appearance="standard">
+                      <input matInput formControlName="karvyPassword" class="form-control"
+                        placeholder="Enter Login password">
+                    </mat-form-field>
+                  </div>
+
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="row ">
+                  <div class="col-md-8">
+                    <p class="m-0 roboto f-400">Registered email</p>
+                    <mat-form-field floatLabel="never" appearance="standard">
+                      <input matInput formControlName="karvyEMail" class="form-control"
+                        placeholder="Enter registered email">
+                    </mat-form-field>
+                  </div>
+
+                </div>
               </div>
 
             </div>
-          </div>
-        </div>
 
-        <div class="row pt-32 cams-advsior">
-          <div class="col-md-4">
-            <div class="row ">
-              <div class="col-md-4 p-0 full-end">
-                <h5 class="m-0 f-500 roboto text-black pt-16">Karvy</h5>
+            <div class="row pt-32 cams-advsior">
+              <div class="col-md-4">
+                <div class="row ">
+                  <div class="col-md-4 p-0 full-end">
+                    <h5 class="m-0 f-500 roboto text-black pt-16">Franklin</h5>
+                  </div>
+                  <div class="col-md-8">
+                    <p class="m-0 roboto f-400">Registered email</p>
+                    <mat-form-field floatLabel="never" appearance="standard">
+                      <input matInput formControlName="franklinEmail" class="form-control"
+                        placeholder="Enter registered email">
+                    </mat-form-field>
+                  </div>
+
+                </div>
               </div>
-              <div class="col-md-8">
-                <p class="m-0 roboto f-400">Login ID</p>
-                <mat-form-field floatLabel="never" appearance="standard">
-                  <input matInput formControlName="karvyID" class="form-control" placeholder="Enter Login ID">
-                </mat-form-field>
+              <div class="col-md-3">
+                <div class="row ">
+
+                  <div class="col-md-12">
+                    <p class="m-0 roboto f-400">Mailback password</p>
+                    <mat-form-field floatLabel="never" appearance="standard">
+                      <input matInput formControlName="franklinPassword" class="form-control"
+                        placeholder="Enter mailback password">
+                    </mat-form-field>
+                  </div>
+
+                </div>
               </div>
+
 
             </div>
           </div>
-          <div class="col-md-3">
-            <div class="row ">
-              <div class="col-md-12">
-                <p class="m-0 roboto f-400">Login password</p>
-                <mat-form-field floatLabel="never" appearance="standard">
-                  <input matInput formControlName="karvyPassword" class="form-control"
-                    placeholder="Enter Login password">
-                </mat-form-field>
-              </div>
-
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="row ">
-              <div class="col-md-8">
-                <p class="m-0 roboto f-400">Registered email</p>
-                <mat-form-field floatLabel="never" appearance="standard">
-                  <input matInput formControlName="karvyEMail" class="form-control"
-                    placeholder="Enter registered email">
-                </mat-form-field>
-              </div>
-
-            </div>
-          </div>
-
-        </div>
-
-        <div class="row pt-32 cams-advsior">
-          <div class="col-md-4">
-            <div class="row ">
-              <div class="col-md-4 p-0 full-end">
-                <h5 class="m-0 f-500 roboto text-black pt-16">Franklin</h5>
-              </div>
-              <div class="col-md-8">
-                <p class="m-0 roboto f-400">Registered email</p>
-                <mat-form-field floatLabel="never" appearance="standard">
-                  <input matInput formControlName="franklinEmail" class="form-control"
-                    placeholder="Enter registered email">
-                </mat-form-field>
-              </div>
-
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="row ">
-
-              <div class="col-md-12">
-                <p class="m-0 roboto f-400">Mailback password</p>
-                <mat-form-field floatLabel="never" appearance="standard">
-                  <input matInput formControlName="franklinPassword" class="form-control"
-                    placeholder="Enter mailback password">
-                </mat-form-field>
-              </div>
-
-            </div>
-          </div>
-
-
         </div>
 
       </div>
