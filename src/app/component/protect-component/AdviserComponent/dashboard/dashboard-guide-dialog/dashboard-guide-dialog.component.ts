@@ -135,6 +135,9 @@ export class DashboardGuideDialogComponent implements OnInit {
   selctedRtaDataChoice: any;
   selectedTeamMemberChoice: any;
   step11Flag: boolean;
+  teamOrAloneSelectedData: any = {};
+  selctedArmOrRia: any;
+  selectedArmOrRiaIndex: any;
 
 
   constructor(private fb: FormBuilder,
@@ -225,6 +228,7 @@ export class DashboardGuideDialogComponent implements OnInit {
 
   selectSingleOrTeam(singOrTeam) {
     this.step7Flag = true;
+    this.teamOrAloneSelectedData = singOrTeam;
     this.teamAloneList.map(element => {
       (singOrTeam.id == element.id) ? element.selected = true : element.selected = false
     });
@@ -330,9 +334,23 @@ export class DashboardGuideDialogComponent implements OnInit {
 
   getRtaDetails() {
     this.settingService.getArnlist({ advisorId: this.advisorId }).subscribe((data) => {
-      this.arnRtaData = data;
+      if (data) {
+        data.forEach((element, index) => {
+          (index == 0) ? element['colorFlag'] = true : element['colorFlag'] = false;
+        });
+        this.arnRtaData = data;
+      }
     });
   }
+
+  selectArnRia(data, selectedIndex) {
+    this.selectedArmOrRiaIndex = selectedIndex;
+    this.selctedArmOrRia = data;
+    this.arnRtaData.forEach((element, index) => {
+      (selectedIndex == index) ? element['colorFlag'] = true : element['colorFlag'] = false;
+    });
+  }
+
   addCredentialsJson() {
     this.credentialsForm = this.fb.group({
       camsEmail: [],
