@@ -62,7 +62,7 @@
                     <div class="col-md-7 pr-0">
                         <mat-radio-group (change)="chngIncomeOption($event)" formControlName="incomeOption"
                             class="d-flex " aria-label="Select an option">
-                            <mat-radio-button class="  f-14" value="1"
+                            <mat-radio-button *ngIf="singleIndividualIncome.finalIncomeList.incomeTypeList==1" class="  f-14" value="1"
                                 [ngClass]="{'b-a-custom': incomeNetForm.get('incomeOption').value=='1','text-primary':incomeNetForm.get('incomeOption').value=='1','b-a':incomeNetForm.get('incomeOption').value=='2'}">
                                 With breakup
                             </mat-radio-button>
@@ -74,7 +74,7 @@
                     </div>
                 </div>
 
-                <div [hidden]="incomeOption=='1'" class="row pt-40">
+                <!-- <div [hidden]="incomeOption=='1'" class="row pt-40">
                     <div class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8">Monthly amount</h5>
                         <p class="m-0 f-12 text-custom">Enter the net income you get in hand</p>
@@ -88,79 +88,410 @@
                             </mat-form-field>
                         </div>
                     </div>
-                </div>
+                </div> -->
+                <div class="row pt-40" [hidden]="incomeOption=='1'">
+                    <div class="col-md-5 pr-0 text-right">
+                        <h5  class="m-0 pt-8">Monthly income</h5>
+                    </div>
+                    <div formArrayName="monthlyIncomeForm" >
+                        <div [ngClass]="{'pt-30': pointIndex > 0}" class="row"
+                            *ngFor="let obj of incomeNetForm.controls['monthlyIncomeForm'].controls; let pointIndex=index"
+                            [formGroupName]="pointIndex">
 
-                <div [hidden]="incomeOption=='2'" class="row pt-40">
-                    <div class="col-md-5 pr-0 text-right">
-                        <h5 class="m-0 pt-8">Basic Income</h5>
-                        <p class="m-0 f-12 text-custom">Enter the net income you get in hand</p>
-                    </div>
-                    <div class="col-md-5">
-                        <div class="form-group mb-0">
-                            <mat-form-field>
-                                <input matInput autocomplete="off" formControlName="basicIncome"
-                                    class="form-control br-0">
-                                <mat-error>This field is required</mat-error>
-                            </mat-form-field>
+                            <div class="col-md-5  pr-0">
+                                <div class="form-group mb-0">
+                                    <mat-form-field>
+                                        <mat-select matInput  formControlName="monthlyIncType" autocomplete="true"
+                                            class="form-control br-0">
+                                            <mat-option (click)="option.disabled =true" *ngFor="let option of monthlyIncArr;index as i" [disabled]="option.disabled" [value]="option.value">
+                                                {{option.name}}</mat-option>
+                                        </mat-select>
+                                        <mat-error>This field is required
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-5 pr-0">
+                                <div class="form-group mb-0 iconRupess">
+                                    <mat-form-field>
+                                        <input matInput type="number" formControlName="monthlyIncAmt"
+                                            [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation
+                                            #monthlyIncAmt autocomplete="true" [maxLength]="10"
+                                            class="form-control rupess br-0">
+                                        <mat-hint align="end" class="f-12">{{monthlyIncAmt.value.length}}/10</mat-hint>
+                                        <mat-error>This field is required
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-2 pr-0 d-flex mt-8">
+                                <i *ngIf="incomeNetForm.value.monthlyIncomeForm.length < 12"
+                                    class="material-icons text-primitive f-20 c-p float-left"
+                                    (click)="addMonthlyIncome(undefined)">add</i>
+                                <i *ngIf="incomeNetForm.value.monthlyIncomeForm.length > 1"
+                                    class="material-icons text-primitive f-20 c-p pl-10"
+                                    (click)="removemonthlyIncome(obj,pointIndex)">remove</i>
+                            </div>
+
                         </div>
                     </div>
                 </div>
-                <div [hidden]="incomeOption=='2'" class="row pt-40">
-                    <div class="col-md-5 pr-0 text-right">
-                        <h5 class="m-0 pt-8">Standard deductions</h5>
+                <!-- <div [hidden]="incomeOption=='2'" class="row pt-40">
+                        <div class="col-md-5 pr-0 text-right">
+                            <h5 class="m-0 pt-8">Basic Income</h5>
+                            <p class="m-0 f-12 text-custom">Enter the net income you get in hand</p>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput autocomplete="off" formControlName="basicIncome"
+                                        class="form-control br-0">
+                                    <mat-error>This field is required</mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-5">
-                        <div class="form-group mb-0">
-                            <mat-form-field>
-                                <input matInput autocomplete="off" formControlName="standardDeduction"
-                                    class="form-control br-0">
-                                <mat-error>This field is required</mat-error>
-                            </mat-form-field>
+                    <div [hidden]="incomeOption=='2'" class="row pt-40">
+                        <div class="col-md-5 pr-0 text-right">
+                            <h5 class="m-0 pt-8">Standard deductions</h5>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput autocomplete="off" formControlName="standardDeduction"
+                                        class="form-control br-0">
+                                    <mat-error>This field is required</mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div> -->
+                <div class="row pt-40" [hidden]="incomeOption=='2'">
+                    <div class="col-md-5 pr-0 text-right">
+                        <h5  class="m-0 pt-8">Basic Salary</h5>
+                    </div>
+                    <div formArrayName="basicSalaryForm" >
+                        <div [ngClass]="{'pt-30': pointIndex > 0}" class="row"
+                            *ngFor="let obj of incomeNetForm.controls['basicSalaryForm'].controls; let pointIndex=index"
+                            [formGroupName]="pointIndex">
+
+                            <div class="col-md-5  pr-0">
+                                <div class="form-group mb-0">
+                                    <mat-form-field>
+                                        <mat-select matInput  formControlName="salaryType" autocomplete="true"
+                                            class="form-control br-0">
+                                            <mat-option (click)="option.disabled =true" *ngFor="let option of basicSalaryArr;index as i" [disabled]="option.disabled" [value]="option.value">
+                                                {{option.name}}</mat-option>
+                                        </mat-select>
+                                        <mat-error>This field is required
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-5 pr-0">
+                                <div class="form-group mb-0 iconRupess">
+                                    <mat-form-field>
+                                        <input matInput type="number" formControlName="amount"
+                                            [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation
+                                            #amount autocomplete="true" [maxLength]="10"
+                                            class="form-control rupess br-0">
+                                        <mat-hint align="end" class="f-12">{{amount.value.length}}/10</mat-hint>
+                                        <mat-error>This field is required
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-2 pr-0 d-flex mt-8">
+                                <i *ngIf="incomeNetForm.value.basicSalaryForm.length < 2"
+                                    class="material-icons text-primitive f-20 c-p float-left"
+                                    (click)="addSalary(undefined)">add</i>
+                                <i *ngIf="incomeNetForm.value.basicSalaryForm.length > 1"
+                                    class="material-icons text-primitive f-20 c-p pl-10"
+                                    (click)="removeSalary(obj,pointIndex)">remove</i>
+                            </div>
+
                         </div>
                     </div>
                 </div>
-                <div [hidden]="incomeOption=='2'" class="row pt-40">
-                    <div class="col-md-5 pr-0 text-right">
-                        <h5 class="m-0 pt-8">Dearness allowance</h5>
+                <div class="row pt-40" [hidden]="incomeOption=='2'">
+                    <div  class="col-md-5 pr-0 text-right">
+                        <h5 class="mb-0 mt-10">Allowances</h5>
                     </div>
-                    <div class="col-md-5">
-                        <div class="form-group mb-0">
-                            <mat-form-field>
-                                <input matInput autocomplete="off" formControlName="deamessAlowance"
-                                    class="form-control br-0">
-                                <mat-error>This field is required</mat-error>
-                            </mat-form-field>
+                    <div formArrayName="allowancesForm" >
+                        <div  [ngClass]="{'pt-30': pointIndex > 0}" class="row"
+                            *ngFor="let obj of incomeNetForm.controls['allowancesForm'].controls; let pointIndex=index"
+                            [formGroupName]="pointIndex">
+
+                            <div class="col-md-5  pr-0">
+                                <div class="form-group mb-0">
+                                    <mat-form-field>
+                                        <mat-select matInput  formControlName="allowancesType" autocomplete="true"
+                                            class="form-control br-0">
+                                            <mat-option (click)="option.disabled =true" *ngFor="let option of allowancesArr;index as i" [disabled]="option.disabled" [value]="option.value">
+                                                {{option.name}}</mat-option>
+
+
+                                        </mat-select>
+                                        <mat-error>This field is required
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-5 pr-0">
+                                <div class="form-group mb-0 iconRupess">
+                                    <mat-form-field>
+                                        <input matInput type="number" formControlName="allowancesAmt"
+                                            [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation
+                                            #allowancesAmt autocomplete="true" [maxLength]="10"
+                                            class="form-control rupess br-0">
+                                        <mat-hint align="end" class="f-12">{{allowancesAmt.value.length}}/10</mat-hint>
+                                        <mat-error>This field is required
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-2 pr-0 d-flex mt-8">
+                                <i *ngIf="incomeNetForm.value.allowancesForm.length < 14"
+                                    class="material-icons text-primitive f-20 c-p float-left"
+                                    (click)="addAllowances(undefined)">add</i>
+                                <i *ngIf="incomeNetForm.value.allowancesForm.length > 1"
+                                    class="material-icons text-primitive f-20 c-p pl-10"
+                                    (click)="removeAllowances(obj,pointIndex)">remove</i>
+                            </div>
+
                         </div>
                     </div>
                 </div>
-                <div [hidden]="incomeOption=='2'" class="row pt-40">
-                    <div class="col-md-5 pr-0 text-right">
-                        <h5 class="m-0 pt-8">HRA recieved</h5>
+                <div class="row pt-40" [hidden]="incomeOption=='2'">
+                    <div  class="col-md-5 pr-0 text-right">
+                        <h5 class="m-0 pt-8">Perquisites</h5>
                     </div>
-                    <div class="col-md-5">
-                        <div class="form-group mb-0">
-                            <mat-form-field>
-                                <input matInput autocomplete="off" formControlName="hraRecieved"
-                                    class="form-control br-0">
-                                <mat-error>This field is required</mat-error>
-                            </mat-form-field>
+                    <div formArrayName="perquisitesForm" >
+                        <div [ngClass]="{'pt-30': pointIndex > 0}" class="row"
+                            *ngFor="let obj of incomeNetForm.controls['perquisitesForm'].controls; let pointIndex=index"
+                            [formGroupName]="pointIndex">
+
+                            <div class="col-md-5  pr-0">
+                                <div class="form-group mb-0">
+                                    <mat-form-field>
+                                        <mat-select matInput  formControlName="perquisitesType" autocomplete="true"
+                                            class="form-control br-0">
+                                            <mat-option (click)="option.disabled =true" *ngFor="let option of perquisitesArr;index as i" [disabled]="option.disabled" [value]="option.value">
+                                                {{option.name}}</mat-option>
+
+                                        </mat-select>
+                                        <mat-error>This field is required
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-5 pr-0">
+                                <div class="form-group mb-0 iconRupess">
+                                    <mat-form-field>
+                                        <input matInput type="number" formControlName="perquisitesAmt"
+                                            [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation
+                                            #perquisitesAmt autocomplete="true" [maxLength]="10"
+                                            class="form-control rupess br-0">
+                                        <mat-hint align="end" class="f-12">{{perquisitesAmt.value.length}}/10</mat-hint>
+                                        <mat-error>This field is required
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-2 pr-0 d-flex mt-8">
+                                <i *ngIf="incomeNetForm.value.perquisitesForm.length < 4"
+                                    class="material-icons text-primitive f-20 c-p float-left"
+                                    (click)="addPerquisites(undefined)">add</i>
+                                <i *ngIf="incomeNetForm.value.perquisitesForm.length > 1"
+                                    class="material-icons text-primitive f-20 c-p pl-10"
+                                    (click)="removePerquisites(obj,pointIndex)">remove</i>
+                            </div>
+
                         </div>
                     </div>
                 </div>
-                <div [hidden]="incomeOption=='2'" class="row pt-40">
-                    <div class="col-md-5 pr-0 text-right">
-                        <h5 class="m-0 pt-8">Total rent paid</h5>
+                <div class="row pt-40" [hidden]="incomeOption=='2'">
+                    <div  class="col-md-5 pr-0 text-right">
+                        <h5 class="m-0 pt-8">Reimbursements</h5>
                     </div>
-                    <div class="col-md-5">
-                        <div class="form-group mb-0">
-                            <mat-form-field>
-                                <input matInput autocomplete="off" formControlName="totalRentPaid"
-                                    class="form-control br-0">
-                                <mat-error>This field is required</mat-error>
-                            </mat-form-field>
+                    <div formArrayName="reimbursementsForm" >
+                        <div [ngClass]="{'pt-30': pointIndex > 0}" class="row"
+                            *ngFor="let obj of incomeNetForm.controls['reimbursementsForm'].controls; let pointIndex=index"
+                            [formGroupName]="pointIndex">
+
+                            <div class="col-md-5  pr-0">
+                                <div class="form-group mb-0">
+                                    <mat-form-field>
+                                        <mat-select matInput  formControlName="reimbursementsType" autocomplete="true"
+                                            class="form-control br-0">
+                                            <mat-option (click)="option.disabled =true" *ngFor="let option of reimbursementsArr;index as i" [disabled]="option.disabled" [value]="option.value">
+                                                {{option.name}}</mat-option>
+                                        </mat-select>
+                                        <mat-error>This field is required
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-5 pr-0">
+                                <div class="form-group mb-0 iconRupess">
+                                    <mat-form-field>
+                                        <input matInput type="number" formControlName="reimbursementsAmt"
+                                            [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation
+                                            #reimbursementsAmt autocomplete="true" [maxLength]="10"
+                                            class="form-control rupess br-0">
+                                        <mat-hint align="end" class="f-12">{{reimbursementsAmt.value.length}}/10</mat-hint>
+                                        <mat-error>This field is required
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-2 pr-0 d-flex mt-8">
+                                <i *ngIf="incomeNetForm.value.reimbursementsForm.length < 5"
+                                    class="material-icons text-primitive f-20 c-p float-left"
+                                    (click)="addReimbursements(undefined)">add</i>
+                                <i *ngIf="incomeNetForm.value.reimbursementsForm.length > 1"
+                                    class="material-icons text-primitive f-20 c-p pl-10"
+                                    (click)="removeReimbursements(obj,pointIndex)">remove</i>
+                            </div>
+
                         </div>
                     </div>
                 </div>
+                <div class="row pt-40" [hidden]="incomeOption=='2'">
+                    <div  class="col-md-5 pr-0 text-right">
+                        <h5 class="m-0 pt-8">Retirals</h5>
+                    </div>
+                    <div formArrayName="retiralsForm" >
+                        <div [ngClass]="{'pt-30': pointIndex > 0}" class="row"
+                            *ngFor="let obj of incomeNetForm.controls['retiralsForm'].controls; let pointIndex=index"
+                            [formGroupName]="pointIndex">
+
+                            <div class="col-md-5 pr-0">
+                                <div class="form-group mb-0">
+                                    <mat-form-field>
+                                        <mat-select matInput   formControlName="retiralsType" autocomplete="true"
+                                            class="form-control br-0">
+                                            <mat-option (click)="option.disabled =true" *ngFor="let option of retiralsArr;index as i" [disabled]="option.disabled" [value]="option.value">
+                                                {{option.name}}</mat-option>
+                                        </mat-select>
+                                        <mat-error>This field is required
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-5 pr-0">
+                                <div class="form-group mb-0 iconRupess">
+                                    <mat-form-field>
+                                        <input matInput type="number" formControlName="retiralsAmt"
+                                            [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation
+                                            #retiralsAmt autocomplete="true" [maxLength]="10"
+                                            class="form-control rupess br-0">
+                                        <mat-hint align="end" class="f-12">{{retiralsAmt.value.length}}/10</mat-hint>
+                                        <mat-error>This field is required
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-2 pr-0 d-flex mt-8">
+                                <i *ngIf="incomeNetForm.value.retiralsForm.length < 4"
+                                    class="material-icons text-primitive f-20 c-p float-left"
+                                    (click)="addRetirals(undefined)">add</i>
+                                <i *ngIf="incomeNetForm.value.retiralsForm.length > 1"
+                                    class="material-icons text-primitive f-20 c-p pl-10"
+                                    (click)="removeRetirals(obj,pointIndex)">remove</i>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row pt-40" [hidden]="incomeOption=='2'">
+                    <div  class="col-md-5 pr-0 text-right">
+                        <h5 class="m-0 pt-8">Others</h5>
+                    </div>
+                    <div formArrayName="othersForm" >
+                        <div [ngClass]="{'pt-30': pointIndex > 0}" class="row"
+                            *ngFor="let obj of incomeNetForm.controls['othersForm'].controls; let pointIndex=index"
+                            [formGroupName]="pointIndex">
+
+                            <div class="col-md-5  pr-0">
+                                <div class="form-group mb-0">
+                                    <mat-form-field>
+                                        <mat-select matInput  formControlName="othersType" autocomplete="true"
+                                            class="form-control br-0">
+                                            <mat-option (click)="option.disabled =true" *ngFor="let option of othersArr;index as i" [disabled]="option.disabled" [value]="option.value">
+                                                {{option.name}}</mat-option>
+                                        </mat-select>
+                                        <mat-error>This field is required
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-5 pr-0">
+                                <div class="form-group mb-0 iconRupess">
+                                    <mat-form-field>
+                                        <input matInput type="number" formControlName="othersAmt"
+                                            [inputValidator]="validatorType.ALPHA_NUMERIC" appInputValueValidation
+                                            #othersAmt autocomplete="true" [maxLength]="10"
+                                            class="form-control rupess br-0">
+                                        <mat-hint align="end" class="f-12">{{othersAmt.value.length}}/10</mat-hint>
+                                        <mat-error>This field is required
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="col-md-2 pr-0 d-flex mt-8">
+                                <i *ngIf="incomeNetForm.value.othersForm.length < 2"
+                                    class="material-icons text-primitive f-20 c-p float-left"
+                                    (click)="addOthers(undefined)">add</i>
+                                <i *ngIf="incomeNetForm.value.othersForm.length > 1"
+                                    class="material-icons text-primitive f-20 c-p pl-10"
+                                    (click)="removeOthers(obj,pointIndex)">remove</i>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- <div [hidden]="incomeOption=='2'" class="row pt-40">
+                        <div class="col-md-5 pr-0 text-right">
+                            <h5 class="m-0 pt-8">Dearness allowance</h5>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput autocomplete="off" formControlName="deamessAlowance"
+                                        class="form-control br-0">
+                                    <mat-error>This field is required</mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div [hidden]="incomeOption=='2'" class="row pt-40">
+                        <div class="col-md-5 pr-0 text-right">
+                            <h5 class="m-0 pt-8">HRA recieved</h5>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput autocomplete="off" formControlName="hraRecieved"
+                                        class="form-control br-0">
+                                    <mat-error>This field is required</mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div [hidden]="incomeOption=='2'" class="row pt-40">
+                        <div class="col-md-5 pr-0 text-right">
+                            <h5 class="m-0 pt-8">Total rent paid</h5>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-group mb-0">
+                                <mat-form-field>
+                                    <input matInput autocomplete="off" formControlName="totalRentPaid"
+                                        class="form-control br-0">
+                                    <mat-error>This field is required</mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div> -->
                 <div class="row pt-40">
                     <div class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8">Income style</h5>
@@ -168,28 +499,37 @@
                     </div>
                     <div class="col-md-7">
                         <div class="form-group  ">
-                            <mat-radio-group class="d-flex align-items-center"  #incomeStyle formControlName="incomeStyle">
+                            <mat-radio-group class="d-flex align-items-center" #incomeStyle
+                                formControlName="incomeStyle">
                                 <div class="checkOne mr-10" (click)="onClickValueChange('1')">
-                                    <img src="assets/images/svg/stable-icn.svg" *ngIf=" incomeNetForm.get('incomeStyle').value == '1' && isStatic == true">
-                                    <img src="assets/images/svg/stable-gry-icon.svg" *ngIf=" incomeNetForm.get('incomeStyle').value == '2' && isStatic == false">
+                                    <img src="assets/images/svg/stable-icn.svg"
+                                        *ngIf=" incomeNetForm.get('incomeStyle').value == '1' && isStatic == true">
+                                    <img src="assets/images/svg/stable-gry-icon.svg"
+                                        *ngIf=" incomeNetForm.get('incomeStyle').value == '2' && isStatic == false">
 
-                                    <mat-radio-button class="example-margin " value="1" [ngClass]="{'radioBtnActive': incomeNetForm.get('incomeStyle').value == '1'}">Stable
+                                    <mat-radio-button class="example-margin " value="1"
+                                        [ngClass]="{'radioBtnActive': incomeNetForm.get('incomeStyle').value == '1'}">
+                                        Stable
                                     </mat-radio-button>
 
                                 </div>
                                 <div class="checkOne" (click)="onClickValueChange('2')">
-                                    <img src="assets/images/svg/erratic-icon.svg" *ngIf=" incomeNetForm.get('incomeStyle').value == '1' && isStatic == true" >
-                                    <img src="assets/images/svg/erratic-icon-active.svg" *ngIf=" incomeNetForm.get('incomeStyle').value == '2' && isErractic == true">
-                                    <mat-radio-button class="example-margin " value="2" [ngClass]="{'radioBtnActive': incomeNetForm.get('incomeStyle').value == '2'}">Erratic
+                                    <img src="assets/images/svg/erratic-icon.svg"
+                                        *ngIf=" incomeNetForm.get('incomeStyle').value == '1' && isStatic == true">
+                                    <img src="assets/images/svg/erratic-icon-active.svg"
+                                        *ngIf=" incomeNetForm.get('incomeStyle').value == '2' && isErractic == true">
+                                    <mat-radio-button class="example-margin " value="2"
+                                        [ngClass]="{'radioBtnActive': incomeNetForm.get('incomeStyle').value == '2'}">
+                                        Erratic
                                     </mat-radio-button>
 
                                 </div>
                             </mat-radio-group>
                             <!-- <mat-form-field>
-                                <input matInput autocomplete="off" formControlName="incomeStyle"
-                                    class="form-control br-0">
-                                <mat-error>This field is required</mat-error>
-                            </mat-form-field> -->
+                                    <input matInput autocomplete="off" formControlName="incomeStyle"
+                                        class="form-control br-0">
+                                    <mat-error>This field is required</mat-error>
+                                </mat-form-field> -->
                         </div>
                     </div>
                 </div>
@@ -203,7 +543,8 @@
                             <div class="col-md-7 pl-0 pr-4">
                                 <div class="form-group mb-0">
                                     <mat-form-field>
-                                        <mat-select matInput formControlName="continousTill" (selectionChange)="changeValidations()" class="form-control  br-0">
+                                        <mat-select matInput formControlName="continousTill"
+                                            (selectionChange)="changeValidations()" class="form-control  br-0">
                                             <mat-option value="1">Retirement</mat-option>
                                             <mat-option value="2">Life time</mat-option>
                                             <mat-option value="3">Number of years</mat-option>
@@ -215,8 +556,10 @@
                             <div *ngIf="incomeNetForm.get('continousTill').value==3" class="col-md-6 pl-4 pr-0">
                                 <div class="form-group mb-0">
                                     <mat-form-field>
-                                        <input matInput type="number" (keyup)="onChange(incomeNetForm,'continousTillYear',$event)" autocomplete="off"
-                                            formControlName="continousTillYear" class="form-control br-0">
+                                        <input matInput type="number"
+                                            (keyup)="onChange(incomeNetForm,'continousTillYear',$event)"
+                                            autocomplete="off" formControlName="continousTillYear"
+                                            class="form-control br-0">
                                         <mat-error>This field is required</mat-error>
                                     </mat-form-field>
                                 </div>
@@ -233,10 +576,12 @@
                         </p>
                     </div>
                     <div class="col-md-7 pr-0">
-                        <div class="form-group mb-0">
+                        <div class="form-group mb-0 iconPetage">
                             <mat-form-field>
-                                <input matInput type="number" autocomplete="off" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" (keyup)="onChange(incomeNetForm,'rate',$event)" formControlName="incomeGrowthRate"
-                                    class="form-control br-0">
+                                <input matInput type="number" autocomplete="off" appInputValueValidation
+                                    [inputValidator]="validatorType.NUMBER_ONLY"
+                                    (keyup)="onChange(incomeNetForm,'rate',$event)" formControlName="incomeGrowthRate"
+                                    class="form-control br-0 percentage">
                                 <mat-error>This field is required</mat-error>
                             </mat-form-field>
                         </div>
@@ -258,8 +603,10 @@
                                             [matDatepicker]="incomeStartdate">
                                         <mat-datepicker-toggle matSuffix [for]="incomeStartdate">
                                         </mat-datepicker-toggle>
-                                        <mat-datepicker #incomeStartdate startView="multi-year" (yearSelected)="chosenYearHandler($event,incomeNetForm,'incomeStartDate')"
-                                        (monthSelected)="chosenMonthHandler($event,incomeStartdate, incomeNetForm,'incomeStartDate')"></mat-datepicker>
+                                        <mat-datepicker #incomeStartdate startView="multi-year"
+                                            (yearSelected)="chosenYearHandler($event,incomeNetForm,'incomeStartDate')"
+                                            (monthSelected)="chosenMonthHandler($event,incomeStartdate, incomeNetForm,'incomeStartDate')">
+                                        </mat-datepicker>
                                         <mat-error class="f-12">This field is required
                                         </mat-error>
                                     </mat-form-field>
@@ -273,8 +620,10 @@
                                             [matDatepicker]="incomeEndDate">
                                         <mat-datepicker-toggle matSuffix [for]="incomeEndDate">
                                         </mat-datepicker-toggle>
-                                        <mat-datepicker #incomeEndDate startView="multi-year"  (yearSelected)="chosenYearHandler($event,incomeNetForm,'incomeEndDate')"
-                                        (monthSelected)="chosenMonthHandler($event,incomeEndDate,incomeNetForm,'incomeEndDate')" ></mat-datepicker>
+                                        <mat-datepicker #incomeEndDate startView="multi-year"
+                                            (yearSelected)="chosenYearHandler($event,incomeNetForm,'incomeEndDate')"
+                                            (monthSelected)="chosenMonthHandler($event,incomeEndDate,incomeNetForm,'incomeEndDate')">
+                                        </mat-datepicker>
                                         <mat-error class="f-12">This field is required
                                         </mat-error>
                                     </mat-form-field>
@@ -336,8 +685,10 @@
                                                 class="form-control br-0 b-0" [matDatepicker]="expectedBonus">
                                             <mat-datepicker-toggle matSuffix [for]="expectedBonus">
                                             </mat-datepicker-toggle>
-                                            <mat-datepicker #expectedBonus startView="multi-year" (yearSelected)="chosenYearHandler($event,singleBonusForm,'receivingDate')"
-                                            (monthSelected)="chosenMonthHandler($event,expectedBonus, singleBonusForm,'receivingDate')"></mat-datepicker>
+                                            <mat-datepicker #expectedBonus startView="multi-year"
+                                                (yearSelected)="chosenYearHandler($event,singleBonusForm,'receivingDate')"
+                                                (monthSelected)="chosenMonthHandler($event,expectedBonus, singleBonusForm,'receivingDate')">
+                                            </mat-datepicker>
                                             <mat-error class="f-12">This field is required
                                             </mat-error>
                                         </mat-form-field>
@@ -353,8 +704,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-2 pt-8">
-                                    <i class="material-icons c-p text-custom"
-                                        (click)="addExpectedBonus()">add</i>
+                                    <i class="material-icons c-p text-custom" (click)="addExpectedBonus()">add</i>
                                     <i class="material-icons c-p text-custom" *ngIf="getBonusList.controls.length > 1"
                                         (click)="removeExpectedBonus(i)">remove</i>
                                 </div>
@@ -363,6 +713,25 @@
 
                         </div>
                     </div>
+                    <div class="row pt-40">
+                            <div class="col-md-5 pr-0 text-right">
+                                <h5 class="m-0 pt-8">Linked bank account</h5>
+                            </div>
+                            <div class="col-md-5 form-group">
+                                <mat-form-field>
+                                    <mat-select class="form-control" formControlName="bankAcNo" matInput>
+                                        <mat-option *ngFor="let option of bankList ;index as i" [value]="option.id">
+                                            {{option.bankNameAndLast4Digit}}</mat-option>
+                                    </mat-select>
+                                    <mat-error>This field is required
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-1 p-0 pt-8 d-flex">
+                                <!--[data]="bankAccountDetails" appBankAccount prod build (inputChange)='bankAccountList($event.value)'-->
+                                <i class="material-icons text-primitive c-p float-left" (click)="openDialog(null)">add</i>
+                            </div>
+                        </div>
                     <div class="row pt-40">
                         <div class="col-md-5 p-0 text-right">
                             <h5 class="m-0 pt-8">Description</h5>

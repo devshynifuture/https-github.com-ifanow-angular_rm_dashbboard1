@@ -32,6 +32,21 @@ export class PlanService {
   deleteBonusInflow(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.DELETE_INFLOW_BONUS+ 'id=' + data,'')
   }
+  deleteOtherIncome(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.INCOME_OTHER_DELETE+ 'id=' + data,'')
+  }
+  deleteAllowanceIncome(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.INCOME_ALLOWANCE_DELETE+ 'id=' + data,'')
+  }
+  deletePerquisitesIncome(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.INCOME_PERQUISITES_DELETE+ 'id=' + data,'')
+  }
+  deleteReimbursementIncome(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.INCOME_REIMBURSEMENT_DELETE+ 'id=' + data,'')
+  }
+  deleteRetiralIncome(data) {
+    return this.http.put(apiConfig.MAIN_URL + appConfig.INCOME_RETIRAL_DELETE+ 'id=' + data,'')
+  }
   getRiskProfile(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_RISK_PROFILE, data)
   }
