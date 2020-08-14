@@ -131,6 +131,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   isRouterLink = false;
   header: any;
   headerHtml: HTMLElement;
+  cashFlowXirr: any;
+  cashFlowObj: { 'cashFlowInvestment': any; 'cashFlowSwitchIn': any; 'cashFlowSwitchOut': any; 'cashFlowRedemption': any; 'cashFlowDividendPayout': any; 'cashFlowNetInvestment': any; 'cashFlowMarketValue': any; 'cashFlowNetGain': any; 'cashFlowLifetimeXirr': any; };
 
   constructor(public dialog: MatDialog, private datePipe: DatePipe,
     private subInjectService: SubscriptionInject, private utilService: UtilService,
@@ -592,7 +594,33 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     this.custumService.getMutualFund(obj).pipe(map((data) => {
       return this.doFiltering(data);
     })).subscribe(
-      data => this.getMutualFundResponse(data), (error) => {
+      data => {
+        this.getMutualFundResponse(data);
+        let cashFlow = data;
+        if (cashFlow.mutualFundCategoryMastersList.length > 0) {
+          if (cashFlow.mutualFundCategoryMastersList[0].currentValue == 0 || cashFlow.mutualFundCategoryMastersList[0].balanceUnits == 0 || cashFlow.mutualFundCategoryMastersList[0].balanceUnits < 0) {
+            if (cashFlow.mutualFundCategoryMastersList.length > 1) {
+              this.cashFlowXirr = cashFlow.mutualFundCategoryMastersList[1].cashFlowxirr;
+            } else {
+              this.cashFlowXirr = cashFlow.mutualFundCategoryMastersList[0].cashFlowxirr;
+            }
+          } else {
+            this.cashFlowXirr = cashFlow.mutualFundCategoryMastersList[0].cashFlowxirr;
+          }
+        }
+        this.cashFlowObj = {
+          'cashFlowInvestment': this.mfData.total_cashflow_amount_inv,
+          'cashFlowSwitchIn': this.mfData.total_cashflow_switch_in,
+          'cashFlowSwitchOut': this.mfData.total_cashflow_switch_out,
+          'cashFlowRedemption': this.mfData.total_cashflow_redemption,
+          'cashFlowDividendPayout': this.mfData.total_cashflow_dividend_payout,
+          'cashFlowNetInvestment': this.mfData.total_cashflow_net_investment,
+          'cashFlowMarketValue': this.mfData.total_cashflow_current_value,
+          'cashFlowNetGain': this.mfData.total_cashflow_net_gain,
+          'cashFlowLifetimeXirr': this.cashFlowXirr,
+        }
+        this.mfService.setCashFlowXirr(this.cashFlowObj);
+      }, (error) => {
         this.eventService.showErrorMessage(error);
       }
     );
