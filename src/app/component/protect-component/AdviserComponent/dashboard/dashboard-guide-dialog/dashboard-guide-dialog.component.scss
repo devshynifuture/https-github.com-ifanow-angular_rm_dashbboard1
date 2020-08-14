@@ -52,6 +52,14 @@
         position: absolute;
         bottom: 24px;
     }
+    .rta-section { 
+      position: initial !important; 
+      padding-top: 40px;
+    }
+      .creds-section {
+        position: initial !important; 
+        padding-top: 65px;
+      }
 
 
 .bg-advisor-modal {
@@ -155,13 +163,18 @@
   }
 
   .btnRTA {
-      .btnHeader{
-        border: transparent;
-    //   border-bottom: 4px solid #008FFF;
-    //   color: #008FFF;
+    display: inline-block;
+    height: 30px;
+     margin-right: 16px;
+     .activeSpan {
+       border-bottom: 4px solid #008FFF;
+       color: #008FFF;
+       padding-bottom: 6px;
+     }
       }
+
       
-  }
+  
 
 
 
