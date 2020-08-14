@@ -264,7 +264,14 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   ngAfterViewInit() {
     let para = document.getElementById('template');
     if (para.innerHTML) {
-      this.generatePdfBulk()
+      if (this.route.url.split('?')[0] == '/pdf/allTransactions' && this.isLoading == false) {
+        this.showDownload = true
+        this.generatePdfBulk()
+      }
+      if (this.route.url.split('?')[0] == '/pdf/unrealisedTransactions' && this.isLoading == false) {
+        this.showDownload = true
+        this.generatePdfBulk()
+      }
     }
   }
 
@@ -1253,12 +1260,12 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     this.fragmentData.isSpinner = true;
     setTimeout(() => {
       const para = document.getElementById('template');
-      // if(this.viewMode == 'Unrealized Transactions'){
-      //   this.headerHtml = document.getElementById('templateHeader');
-      // }else{
-      //   this.headerHtml = document.getElementById('alltemplateHeader');
-      // }
-      this.returnValue = this.utilService.htmlToPdf(para.innerHTML, this.reportName, 'true', this.fragmentData, '', '');
+      if(this.viewMode == 'Unrealized Transactions'){
+        this.headerHtml = document.getElementById('templateHeader');
+      }else{
+        this.headerHtml = document.getElementById('alltemplateHeader');
+      }
+      this.returnValue = this.utilService.htmlToPdf(this.headerHtml.innerHTML,para.innerHTML, this.reportName, 'true', this.fragmentData, '', '');
     }, 200);
 
 
@@ -1470,16 +1477,16 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     setTimeout(() => {
       const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
       let para = this.unrealizedTranTemplate.nativeElement.innerHTML
-      // if(this.viewMode=='Unrealized Transactions'){
-      //    this.header = this.unrealizedTranTemplateHeader.nativeElement.innerHTML
-      // }else{
-      //    this.header = this.allTranTemplateHeader.nativeElement.innerHTML
-      // }
+      if(this.viewMode=='Unrealized Transactions'){
+         this.header = this.unrealizedTranTemplateHeader.nativeElement.innerHTML
+      }else{
+         this.header = this.allTranTemplateHeader.nativeElement.innerHTML
+      }
       let obj = {
         htmlInput: para,
+        header: null,
         name: (this.clientData.name) ? this.clientData.name : '' + 's' + this.mode + date,
         landscape: true,
-        header: this.header,
         key: 'showPieChart',
         clientId: this.clientId,
         advisorId: this.advisorId,

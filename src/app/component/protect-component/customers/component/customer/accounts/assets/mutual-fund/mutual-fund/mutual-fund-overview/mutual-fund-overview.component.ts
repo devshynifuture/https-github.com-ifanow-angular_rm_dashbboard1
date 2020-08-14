@@ -667,7 +667,8 @@ export class MutualFundOverviewComponent implements OnInit {
       key: 'showPieChart',
       svg: this.svg
     };
-    this.returnValue = this.UtilService.htmlToPdf(para.innerHTML, 'MF overview', false, this.fragmentData, 'showPieChart', this.svg);
+    let header = null
+    this.returnValue = this.UtilService.htmlToPdf(header,para.innerHTML, 'MF overview', false, this.fragmentData, 'showPieChart', this.svg);
     console.log('return value ====', this.returnValue);
     return obj;
   }
@@ -996,11 +997,13 @@ export class MutualFundOverviewComponent implements OnInit {
 
     this.svg = this.chart.getSVG();
     const para = document.getElementById('template');
+    
     const obj = {
       htmlInput: para.innerHTML,
       name: (this.clientData.name) ? this.clientData.name : '' + 's' + 'MF_Overview_Report' + date,
       landscape: false,
       key: 'showPieChart',
+      header :null,
       clientId: this.clientId,
       advisorId: this.advisorId,
       fromEmail: this.clientDetails.advisorData.email,

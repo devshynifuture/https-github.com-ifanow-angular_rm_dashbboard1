@@ -599,9 +599,9 @@ export class MfCapitalDetailedComponent implements OnInit {
   generatePdf() {
     this.fragmentData.isSpinner = true
     const para = document.getElementById('template');
-    const header = document.getElementById('templateHeader');
-    
-    this.UtilService.htmlToPdf(para.innerHTML, 'MF capital gain detailed', 'true', this.fragmentData, '', '');
+    //const header = document.getElementById('templateHeader');
+    let header = null
+    this.UtilService.htmlToPdf(header,para.innerHTML, 'MF capital gain detailed', 'true', this.fragmentData, '', '');
   }
   Excel(tableTitle) {
     this.showDownload = true
@@ -624,6 +624,7 @@ export class MfCapitalDetailedComponent implements OnInit {
         htmlInput: para,
         name: (this.clientData.name)?this.clientData.name:''+'s'+'MF capital gain detailed'+date,
         landscape: true,
+        header :null,
         key: 'showPieChart',
         clientId: this.clientId,
         advisorId: this.advisorId,
