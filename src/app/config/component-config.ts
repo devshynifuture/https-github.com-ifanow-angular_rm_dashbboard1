@@ -457,6 +457,12 @@ export const appConfig = {
   GET_GLOBAL_GROWTH_RATE: 'account/income/growth/rate/global/get',
   DELETE_INCOME: 'account/income/delete?',
   DELETE_INFLOW_BONUS: 'account/income/bonusOrInflow/delete?',
+  INCOME_OTHER_DELETE: 'account/income/other/delete?',
+  INCOME_RETIRAL_DELETE: 'account/income/retiral/delete?',
+  INCOME_ALLOWANCE_DELETE: 'account/income/allowance/delete?',
+  INCOME_PERQUISITES_DELETE: 'account/income/perquisites/delete?',
+  INCOME_REIMBURSEMENT_DELETE: 'account/income/reimbursement/delete?',
+
   /////////////////////////Activity///////////////////////////////////
   ADVICE_GET_ALL: 'advice/asset/get',
   ADVICE_ADD_FD: 'advice/asset/fixed-income/suggest-new-fd/add',
