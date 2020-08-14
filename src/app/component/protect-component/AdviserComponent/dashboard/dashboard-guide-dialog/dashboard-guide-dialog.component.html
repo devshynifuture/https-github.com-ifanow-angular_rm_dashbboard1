@@ -815,111 +815,111 @@
       <p class="m-0 roboto f-400 text-black lh-16 pt-8"> Click Open file. Click Create filters. </p>
     </div> -->
   </div>
-  <!--end 12th slider 4 tabs -->
 
+ 
+  <div *ngIf="step==16" class="bg-modal-height">
 
-  <!-- 13th slider -->
-  <!-- <div class="row bg-grey lter">
+    <div class="contentGuideBox mt-40">
+      <div class="row">
+        <div class="col-md-12">
+          <p class="m-0 f-400 text-black roboto">As promised, we can now order and upload your mutual fund files. </p>
+          <p class="m-0 f-400 text-black roboto"> Once done, you will be able to check your client’s portfolios immediately.
+            What say?</p>
+        </div>
+      </div>
 
-    <div class="col-md-12 h-200 p-0 pl-150">
-      <h3 class="m-0 f-500 text-diff pt-150">Congratulations! Hard part over. Now the easy part.</h3>
-
-    </div>
-  </div> -->
-  <div *ngIf="step==16" class="row pt-20">
-    <div class="col-md-12 p-0 pl-150">
-      <p class="m-0 f-400 text-black roboto">As promised, we can now order and upload your mutual fund files. </p>
-      <p class="m-0 f-400 text-black roboto"> Once done, you will be able to check your client’s portfolios immediately.
-        What say?</p>
-    </div>
-    <div class="col-md-12 p-0 pl-150 pt-40">
-      <div class="d-flex">
-        <div class="pr-20">
-          <div class="box-1 p-20">
+      <div class="row pt-20">
+        <div class="col-md-12 d-flex">
+          <div class="box-1 boxDescribes mr-20 p-20">
             <h5 class="m-0 roboto f-400 lh-19 pb-24">Order & Upload files for me please
             </h5>
-            <div class="hw-40 bg-grey lt br-2">
+            <div class="hw-40 bottomPost bg-grey lt br-2">
               <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">A</h3>
             </div>
             <div class="ribbon ribbon-bottom-right mt-16"><span><img src="/assets/images/svg/right-white.svg"></span>
             </div>
           </div>
-        </div>
-        <div class="pl-20">
-          <div class="box-1 p-20">
+
+          <div class="box-1 boxDescribes mr-20 p-20">
             <h5 class="m-0 roboto f-400 lh-19 pb-24">Do not order. I will manually do it.
             </h5>
-            <div class="hw-40 bg-grey lt br-2 mt-20">
+            <div class="hw-40 bg-grey bottomPost lt br-2 mt-20">
               <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">B</h3>
             </div>
           </div>
         </div>
       </div>
-      <p class="m-0 f-400 text-black roboto pt-20">FYI, we’ll order Transaction, Folio Master & AUM files on your
-        behalf.
-      </p>
-    </div>
-    <div class="bottomFooterDasb">
+
       <div class="row">
-        <div class="col-md-12 ">
-          <button (click)="step=17" mat-stroked-button class="btn-primary h-48 lh-48 f-18   br-4  ">Proceed
+        <div class="col-md-12">
+          <p class="mb-0 f-400 text-black roboto mt-20">FYI, we’ll order Transaction, Folio Master & AUM files on your
+            behalf.
+          </p>
+        </div>
+      </div>
+
+
+      <div class="bottomFooterDasb">
+        <div class="row">
+          <div class="col-md-12 ">
+            <button (click)="step=17" mat-stroked-button class="btn-primary h-48 lh-48 f-18   br-4  ">Proceed
+              <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    
+    
+    
+  </div>
+ 
+  <div *ngIf="step==17" class="bg-modal-height">
+
+    <div class="contentGuideBox mt-40">
+      <div class="row">
+        <div class="col-md-8">
+          <p class="m-0 f-500 text-diff"><b>Once done, you will be notified via Email.</b> You can always come back
+            and checkout the People’s tab too.
+            You will see new clients getting created auto-magically. And their MF portfolios will be reflecting as well.</p>
+
+            <p class="mb-0 f-500 f-16 text-black mt-20">FAQs at this stage</p>
+            <p class="mb-0 f-500 roboto text-diff mt-20">How long does this process normally take?</p>
+
+            <p class="mb-0 mt-4 f-400 text-diff">It depends on few things. How big your data is. Secondly, the load on our
+              servers at this point and lastly
+              how the RTA sites are currently functioning. Depending on this, it may take few minutes to a few hours as well.
+            </p>
+
+            <p class="mb-0 mt-20 f-500 text-diff roboto">What else can do I do in the meantime on IFANOW?</p>
+      <p class="mb-0 mt-4 f-400 text-diff ">We have some easy-to-digest video tutorials just for you. Check them out 
+        <u class="c-p">here.</u>
+        </p>
+      <p class="mb-0 f-500 text-diff roboto mt-20">I wan to reach out to the customer support team of IFANOW. How do I do
+        it?
+      </p>
+      <p class="mb-0 f-400 text-diff mt-4">Sure. You can write to us by <u class="c-p"> clicking here</u> or call us on
+        022 6820 2020.</p>
+
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12 pb-24">
+          <button (click)="step=18" mat-stroked-button class="btn-primary h-48 lh-48 f-18 mt-40 br-4">Finish
             <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
+    
         </div>
       </div>
     </div>
+
+    
+    
+   
   </div>
-
-  <!--end 13th slider -->
-
-
-  <!-- 14th slider -->
-  <!-- <div class="row bg-grey lter">
-
-    <div class="col-md-12 h-200 p-0 pl-150">
-      <h3 class="m-0 f-500 text-diff pt-150">Bingo! We’ve started the process of ordering & uploading files for you!
-      </h3>
-
-    </div>
-  </div> -->
-  <div *ngIf="step==17" class="row">
-
-    <div class="col-md-8 p-0 pl-150">
-      <p class="m-0 f-500 text-diff pt-40"><b>Once done, you will be notified via Email.</b> You can always come back
-        and checkout the People’s tab too.
-        You will see new clients getting created auto-magically. And their MF portfolios will be reflecting as well.</p>
-      <p class="m-0 f-500 f-16 text-black pt-20">FAQs at this stage</p>
-      <p class="m-0 f-500 roboto text-diff pt-20">How long does this process normally take?</p>
-      <p class="m-0 f-400 text-diff pt-4">It depends on few things. How big your data is. Secondly, the load on our
-        servers at this point and lastly
-        how the RTA sites are currently functioning. Depending on this, it may take few minutes to a few hours as well.
-      </p>
-      <p class="m-0 f-500 text-diff roboto pt-20">What else can do I do in the meantime on IFANOW?</p>
-      <p class="m-0 f-400 text-diff pt-4">We have some easy-to-digest video tutorials just for you. Check them out <u
-          class="c-p">here.</u></p>
-      <p class="m-0 f-500 text-diff roboto pt-20">I wan to reach out to the customer support team of IFANOW. How do I do
-        it?
-      </p>
-      <p class="m-0 f-400 text-diff pt-4">Sure. You can write to us by <u class="c-p"> clicking here</u> or call us on
-        022 6820 2020.</p>
-    </div>
-    <div class="col-md-12 p-0 pt-60 pl-150 pb-28">
-      <button (click)="step=18" mat-stroked-button class="btn-primary h-48 lh-48 f-18 mt-40 br-4">Finish
-        <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
-
-    </div>
-  </div>
-  <!-- end 14th slider -->
-
-  <!-- 15th slider -->
-  <!-- <div class="row bg-grey lter">
-
-    <div class="col-md-12 h-200 p-0 pl-150">
-      <h3 class="m-0 f-500 text-diff pt-150">Thank You!
-      </h3>
-
-    </div>
-  </div> -->
-  <div *ngIf="step==18" class="row">
+   
+  <div *ngIf="step==18" class="bg-modal-height">
 
     <div class="col-md-12 p-0 pl-150">
       <p class="m-0 f-400 text-diff pt-20">You can watch some video tutorials before moving forward.
