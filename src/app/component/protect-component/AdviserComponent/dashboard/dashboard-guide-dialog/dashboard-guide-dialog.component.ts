@@ -113,6 +113,12 @@ export class DashboardGuideDialogComponent implements OnInit {
     { name: 'I’ll do this later', selected: false, option: 'B', id: 2 },
   ]
 
+  rolesList = [
+    { name: 'Admin', selected: false, option: 'A', id: 1 },
+    { name: 'Back office', selected: false, option: 'B', id: 2 },
+    { name: 'Financial planner', selected: false, option: 'C', id: 3 },
+  ]
+
   ArnRiaForm: FormGroup;
   credentialsForm: FormGroup;
   advisorId: any;
@@ -143,6 +149,9 @@ export class DashboardGuideDialogComponent implements OnInit {
   ArnRiaIndex: any;
   selectedArnRIa: any;
   formPlaceHolders
+  stepRoleChoice: boolean;
+  rolesFlag: boolean = true;
+  addTeamMember;
 
 
   constructor(private fb: FormBuilder,
@@ -285,6 +294,15 @@ export class DashboardGuideDialogComponent implements OnInit {
     this.selctedRtaDataChoice = selectChoice;
     this.rtaCredentialsChoiceList.map(element => {
       (selectChoice.id == element.id) ? element.selected = true : element.selected = false
+    })
+  }
+
+  selectRoles(selectedRole) {
+    this.stepRoleChoice = true;
+    this.editPictureFlag = true
+    this.selctedRtaDataChoice = selectedRole;
+    this.rolesList.map(element => {
+      (selectedRole.id == element.id) ? element.selected = true : element.selected = false
     })
   }
 

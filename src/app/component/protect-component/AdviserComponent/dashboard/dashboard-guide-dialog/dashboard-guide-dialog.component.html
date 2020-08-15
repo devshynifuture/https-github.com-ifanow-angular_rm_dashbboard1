@@ -68,6 +68,8 @@
           <h3 *ngIf="step==8" class=" m-0 f-500 pb-20 text-diff">I suggest you add your team members right away. We’ll
             send them an invite on your
             behalf. What say?</h3>
+          <h3 *ngIf="step==8.5" class=" m-0 f-500 pb-20 text-diff">Good choice. I will help you add team member. Select
+            a role first.</h3>
           <h3 *ngIf="step==9" class=" m-0 f-500 pb-20 text-diff">We’ve got this far and I’m yet to get a glimpse of you!
             Should we add a profile pic of
             yours?</h3>
@@ -384,7 +386,7 @@
       <div class="bottomFooterDasb">
         <div class="row">
           <div class="col-md-12">
-            <button *ngIf="step8Flag" (click)="selectedTeamMemberChoice.id==1?step=9:step=18" mat-stroked-button
+            <button *ngIf="step8Flag" (click)="selectedTeamMemberChoice.id==1?step=8.5:step=18" mat-stroked-button
               class=" btn-primary h-48 lh-48 f-18 br-4">Next
               question<img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
           </div>
@@ -438,6 +440,38 @@
 
 
   <!-- eight silder -->
+  <div *ngIf="step==8.5 && rolesFlag" class="bg-modal-height">
+
+    <div class="contentGuideBox mt-40">
+      <div class="row">
+        <div class="col-md-12 d-flex">
+          <div (click)="selectRoles(choice)" *ngFor="let choice of rolesList" class="box-1 boxDescribes mr-20 p-20">
+            <h5 class="m-0 roboto f-400 lh-19 pb-24">{{choice.name}}
+            </h5>
+            <div class="hw-40 bg-grey lt br-2 bottomPost">
+              <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">{{choice.option}}</h3>
+            </div>
+            <div *ngIf="choice.selected" class="ribbon ribbon-bottom-right"><span><img
+                  src="/assets/images/svg/right-white.svg"></span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="bottomFooterDasb">
+        <div class="row">
+          <div class="col-md-12">
+            <button *ngIf="stepRoleChoice"
+              (click)="selectedTeamMemberChoice.id==1?addTeamMember=true:step=9;rolesFlag=false" mat-stroked-button
+              class=" btn-primary h-48 lh-48 f-18 br-4">Next
+              question<img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
 
 
   <div *ngIf="step==10" class="bg-modal-height">
@@ -505,6 +539,62 @@
   <!-- eight silder -->
 
   <!-- nine slider -->
+
+  <div *ngIf="addTeamMember && rolesFlag==false" class="bg-modal-height">
+    <div>
+      <div class="contentGuideBox mt-40">
+        <div>
+          <div class="row slider-9">
+            <div class="col-md-3 pl-0">
+              <h5 class="m-0 f-400 roboto text-black pb-5">Full name</h5>
+              <mat-form-field floatLabel="never" appearance="standard">
+                <input #number matInput appInputValueValidation [inputValidator]="validatorType.PERSON_NAME"
+                  class="form-control bg-white" placeholder="Enter Full name">
+                <!-- <mat-error *ngIf="singleArnRiaForm.get('arnOrRia').errors?.required">This field is required</mat-error> -->
+              </mat-form-field>
+            </div>
+            <div class="col-md-3 pl-0">
+              <h5 class="m-0 f-400 roboto text-black pb-5">Email</h5>
+              <mat-form-field floatLabel="never" appearance="standard">
+                <mat-select class="form-control">
+                  <mat-option disabled value="">Select ARN/RIA</mat-option>
+                  <mat-option *ngFor="let option of globalData.arn_type_master_list" [value]="option.id">
+                    {{option.type}}</mat-option>
+                </mat-select>
+                <!-- <mat-error *ngIf="singleArnRiaForm.get('typeId').errors?.required">This field is required</mat-error> -->
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row slider-9 pt-40">
+            <div class="col-md-3 pl-0">
+              <h5 class="m-0 f-400 roboto text-black pb-5">Mobile</h5>
+              <mat-form-field floatLabel="never" appearance="standard">
+                <input #number matInput appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
+                  class="form-control bg-white" placeholder="Enter Mobile number">
+                <!-- <mat-hint *ngIf="singleArnRiaForm.get('arnOrRia').value!=''" align="end">
+                  {{number.value.length}}/{{arnRiaMaxlength}}</mat-hint>
+                <mat-error *ngIf="singleArnRiaForm.get('number').errors?.required">This field is required</mat-error>
+                <mat-error
+                  *ngIf="singleArnRiaForm.get('number').errors?.maxlength || singleArnRiaForm.get('number').errors?.minlength">
+                  Please enter valid number</mat-error> -->
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="bottomFooterDasb">
+            <div class="row">
+              <div class="col-md-12  ">
+                <button mat-stroked-button (click)="step=8.5 ; rolesFlag =true ;addTeamMember=false"
+                  class="btn-primary h-48 lh-48 f-18  br-4">Save & Add more </button>
+                <button mat-stroked-button (click)="step=9 ; editPictureFlag=true"
+                  class="btn-primary-outline h-48 lh-48 f-18  br-4 ml-20">Send invite & Proceed </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div *ngIf="step==12" class="bg-modal-height">
     <div [formGroup]="ArnRiaForm">
