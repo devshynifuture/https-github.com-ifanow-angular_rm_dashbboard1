@@ -126,7 +126,8 @@ export class MutualFundSummaryComponent implements OnInit {
   isBulkDataResponse = false; tweleventhArrayGTotal: any;
   tweleventhArrayTotal: any;
   tweleventhArray: any;
-  ;
+  cashFlowObj:any;
+  cashFlowXirr: any;
 
 
   @Input()
@@ -175,7 +176,7 @@ export class MutualFundSummaryComponent implements OnInit {
 
   mutualFund;
   @ViewChild('summaryTemplate', { static: false }) summaryTemplate: ElementRef;
-  @ViewChild('summaryHeader', { static: false }) summaryHeader: ElementRef;
+  @ViewChild('summaryTemplateHeader', { static: false }) summaryTemplateHeader: ElementRef;
   uploadData(data) {
     if (data) {
       this.clientId = data.clientId
@@ -1093,7 +1094,33 @@ export class MutualFundSummaryComponent implements OnInit {
     this.customerService.getMutualFund(obj).pipe(map((data) => {
       return this.doFiltering(data);
     })).subscribe(
-      data => this.getMutualFundResponse(data), (error) => {
+      data => {
+        this.getMutualFundResponse(data);
+        let cashFlow = data;
+        if (cashFlow.mutualFundCategoryMastersList.length > 0) {
+          if (cashFlow.mutualFundCategoryMastersList[0].currentValue == 0 || cashFlow.mutualFundCategoryMastersList[0].balanceUnits == 0 || cashFlow.mutualFundCategoryMastersList[0].balanceUnits < 0) {
+            if (cashFlow.mutualFundCategoryMastersList.length > 1) {
+              this.cashFlowXirr = cashFlow.mutualFundCategoryMastersList[1].cashFlowxirr;
+            } else {
+              this.cashFlowXirr = cashFlow.mutualFundCategoryMastersList[0].cashFlowxirr;
+            }
+          } else {
+            this.cashFlowXirr = cashFlow.mutualFundCategoryMastersList[0].cashFlowxirr;
+          }
+        }
+        this.cashFlowObj = {
+          'cashFlowInvestment': this.mfData.total_cashflow_amount_inv,
+          'cashFlowSwitchIn': this.mfData.total_cashflow_switch_in,
+          'cashFlowSwitchOut': this.mfData.total_cashflow_switch_out,
+          'cashFlowRedemption': this.mfData.total_cashflow_redemption,
+          'cashFlowDividendPayout': this.mfData.total_cashflow_dividend_payout,
+          'cashFlowNetInvestment': this.mfData.total_cashflow_net_investment,
+          'cashFlowMarketValue': this.mfData.total_cashflow_current_value,
+          'cashFlowNetGain': this.mfData.total_cashflow_net_gain,
+          'cashFlowLifetimeXirr': this.cashFlowXirr,
+        }
+        this.mfService.setCashFlowXirr(this.cashFlowObj);
+      }, (error) => {
         this.eventService.showErrorMessage(error);
       }
     );
@@ -1666,8 +1693,10 @@ export class MutualFundSummaryComponent implements OnInit {
     this.fragmentData.isSpinner = true;
     setTimeout(() => {
       const para = document.getElementById('template');
-      //  const header = document.getElementById('templateheader');
-      this.returnValue = this.utilService.htmlToPdf(para.innerHTML, 'MF summary', 'true', this.fragmentData, '', '');
+      // const header = document.getElementById('templateHeader');
+       const header = this.summaryTemplateHeader.nativeElement.innerHTML
+
+      this.returnValue = this.utilService.htmlToPdf(header,para.innerHTML, 'MF summary', 'true', this.fragmentData, '', '');
     });
 
   }
@@ -1983,11 +2012,12 @@ export class MutualFundSummaryComponent implements OnInit {
     this.showDownload = true
     setTimeout(() => {
       let para = this.summaryTemplate.nativeElement.innerHTML
-      // const header = this.summaryHeader.nativeElement.innerHTML
+       const header = this.summaryTemplateHeader.nativeElement.innerHTML
       let obj = {
         htmlInput: para,
         name: (this.clientData.name) ? this.clientData.name : '' + 's' + 'Summary' + date,
         landscape: true,
+        header:null,
         key: 'showPieChart',
         clientId: this.clientId,
         advisorId: this.advisorId,

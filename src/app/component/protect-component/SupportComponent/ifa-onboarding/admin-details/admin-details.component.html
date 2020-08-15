@@ -94,7 +94,7 @@
                   </div>
                   <div *ngIf="activityStage.isEditStage == false">
                     <mat-form-field>
-                      <input matInput type="text" [(ngModel)]="activityStage.commentMsg" class="form-control br-0">
+                      <input matInput type="text" [(ngModel)]="activityStage.commentMsg" class="form-control br-0" (keyup.enter)="activityCommentFunStage(activityStage,true)">
                     </mat-form-field>
                   </div>
                 </div>
@@ -120,7 +120,7 @@
                   <div class="relClass">
                     <div class="bar" [ngClass]="{'height23': isLoading}">
                       <mat-form-field>
-                        <input matInput type="text" [(ngModel)]="CommentStage" class="form-control br-0">
+                        <input matInput type="text" [(ngModel)]="CommentStage" class="form-control br-0" (keyup.enter)="addStageComment(CommentStage,stage)">
                       </mat-form-field>
                     </div>
                   </div>
@@ -148,7 +148,7 @@
               <p *ngIf="activity.isEdit == true">{{activity.commentMsg}}</p>
               <div *ngIf="activity.isEdit == false">
                 <mat-form-field>
-                  <input matInput type="text" [(ngModel)]="activity.commentMsg" class="form-control br-0">
+                  <input matInput type="text" [(ngModel)]="activity.commentMsg" class="form-control br-0" (keyup.enter)="activityCommentFun(activity,true)">
                 </mat-form-field>
               </div>
             </div>
@@ -171,7 +171,7 @@
             </div>
             <div class="col-md-9 p-0">
               <mat-form-field>
-                <input matInput type="text" [(ngModel)]="Comment" class="form-control br-0">
+                <input matInput type="text" [(ngModel)]="Comment" class="form-control br-0" (keyup.enter)="makeComment(Comment,false)">
               </mat-form-field>
             </div>
             <div class="col-md-2 p-0 text-right">

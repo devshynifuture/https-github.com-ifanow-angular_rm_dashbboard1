@@ -7,6 +7,7 @@ import { SettingsService } from '../../setting/settings.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { element } from 'protractor';
 import { ValidatorType } from 'src/app/services/util.service';
+import { AppConstants } from 'src/app/services/app-constants';
 export interface PeriodicElement {
   name: string;
   position: string;
@@ -130,6 +131,18 @@ export class DashboardGuideDialogComponent implements OnInit {
   validatorType;
   arnRiaMaxlength: any;
   arnRtaData: any;
+  selectedArnRIaChoice: any;
+  basicDetailsChoice: any;
+  selctedRtaDataChoice: any;
+  selectedTeamMemberChoice: any;
+  step11Flag: boolean;
+  teamOrAloneSelectedData: any = {};
+  selctedArmOrRia: any;
+  selectedArmOrRiaIndex: any;
+  arnRiaList = [];
+  ArnRiaIndex: any;
+  selectedArnRIa: any;
+  formPlaceHolders
 
 
   constructor(private fb: FormBuilder,
@@ -144,22 +157,17 @@ export class DashboardGuideDialogComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.formPlaceHolders = AppConstants.formPlaceHolders;
     this.validatorType = ValidatorType
     this.advisorId = AuthService.getAdvisorId();
     this.step = 1;
+    this.selectedArmOrRiaIndex = 0
     this.ArnRiaForm = this.fb.group({
       ArnRiaFormList: new FormArray([])
     })
 
     this.credentialsForm = this.fb.group({
-      advisorId: [this.advisorId],
-      camsEmail: [],
-      camsPassword: [],
-      karvyID: [],
-      karvyPassword: [],
-      karvyEMail: [],
-      franklinEmail: [],
-      franklinPassword: []
+      credentialsFormList: new FormArray([])
     })
     this.settingService.getArnGlobalData().subscribe((res) => {
       console.log(res)
@@ -174,6 +182,9 @@ export class DashboardGuideDialogComponent implements OnInit {
   get getArnRiaForm() { return this.ArnRiaForm.controls; }
   get getArnRiaFormList() { return this.getArnRiaForm.ArnRiaFormList as FormArray; }
 
+  get getCredentialsForm() { return this.credentialsForm.controls; }
+  get getCredentialsFormList() { return this.getCredentialsForm.credentialsFormList as FormArray; }
+
   addArnRiaForm() {
     this.getArnRiaFormList.push(this.fb.group({
       advisorId: [this.advisorId, []],
@@ -184,11 +195,29 @@ export class DashboardGuideDialogComponent implements OnInit {
     }))
   }
 
+  addCredentialsForm() {
+    this.getCredentialsFormList.push(this.fb.group({
+      advisorId: [this.advisorId],
+      camsEmail: [],
+      camsPassword: [],
+      karvyID: [],
+      karvyPassword: [],
+      karvyEMail: [],
+      franklinEmail: [],
+      franklinPassword: []
+    }))
+  }
+
+
   displayedColumns: string[] = ['position', 'name', 'weight'];
   dataSource = ELEMENT_DATA;
 
   showPageByIndex(index) {
     this.page = index;
+  }
+
+  chooseArnRiaForm(index) {
+    this.ArnRiaIndex = index;
   }
 
   changeNumberValidation(value) {
@@ -220,6 +249,7 @@ export class DashboardGuideDialogComponent implements OnInit {
 
   selectSingleOrTeam(singOrTeam) {
     this.step7Flag = true;
+    this.teamOrAloneSelectedData = singOrTeam;
     this.teamAloneList.map(element => {
       (singOrTeam.id == element.id) ? element.selected = true : element.selected = false
     });
@@ -228,6 +258,7 @@ export class DashboardGuideDialogComponent implements OnInit {
 
   selectAddTeamMemberChoice(selectChoice) {
     this.step8Flag = true
+    this.selectedTeamMemberChoice = selectChoice
     this.addTeamMemberChoiceList.map(element => {
       (selectChoice.id == element.id) ? element.selected = true : element.selected = false
     })
@@ -235,6 +266,7 @@ export class DashboardGuideDialogComponent implements OnInit {
 
   selectarnRiaChoice(selectChoice) {
     this.step9Flag = true
+    this.selectedArnRIaChoice = selectChoice;
     this.arnRiaCodeChoiceList.map(element => {
       (selectChoice.id == element.id) ? element.selected = true : element.selected = false
     })
@@ -242,13 +274,15 @@ export class DashboardGuideDialogComponent implements OnInit {
 
   selectbasicDetailsChoice(selectChoice) {
     this.step10Flag = true
+    this.basicDetailsChoice = selectChoice;
     this.basicDetailsChoiceList.map(element => {
       (selectChoice.id == element.id) ? element.selected = true : element.selected = false
     })
   }
 
   selectrtaCredentialsChoice(selectChoice) {
-    this.step10Flag = true
+    this.step11Flag = true
+    this.selctedRtaDataChoice = selectChoice;
     this.rtaCredentialsChoiceList.map(element => {
       (selectChoice.id == element.id) ? element.selected = true : element.selected = false
     })
@@ -304,7 +338,18 @@ export class DashboardGuideDialogComponent implements OnInit {
     }
     this.settingService.addArn(jsonObj).subscribe((res) => {
       this.eventService.openSnackBar("ARN-RIA Added successfully");
-      (flag == 'addMore') ? this.getArnRiaFormList.controls[index].reset() : this.step++;
+      if (flag == 'addMore') {
+        this.arnRiaList.push(jsonObj)
+        this.addArnRiaForm();
+        this.getArnRiaFormList.controls[index + 1].get('arnOrRia').setValue('')
+        this.getArnRiaFormList.controls[index + 1].get('typeId').setValue('')
+        this.getArnRiaFormList.controls[index + 1].get('number').setValue('')
+        this.getArnRiaFormList.controls[index + 1].get('nameOfTheHolder').setValue('');
+        this.selectedArnRIa = jsonObj;
+      }
+      else {
+        this.step++;
+      }
     }, err => {
       this.eventService.openSnackBar(err, "Dismiss");
       // this.barButtonOptions.active = false;
@@ -313,41 +358,49 @@ export class DashboardGuideDialogComponent implements OnInit {
 
   getRtaDetails() {
     this.settingService.getArnlist({ advisorId: this.advisorId }).subscribe((data) => {
-      this.arnRtaData = data;
+      if (data) {
+        this.selctedArmOrRia = data[0]
+        data.forEach((element, index) => {
+          this.addCredentialsForm();
+          (index == 0) ? element['colorFlag'] = true : element['colorFlag'] = false;
+        });
+        this.arnRtaData = data;
+      }
     });
   }
-  addCredentialsJson() {
-    this.credentialsForm = this.fb.group({
-      camsEmail: [],
-      camsPassword: [],
-      karvyID: [],
-      karvyPassword: [],
-      karvyEMail: [],
-      franklinEmail: [],
-      franklinPassword: []
-    })
 
-    if (this.credentialsForm.controls.camsEmail.value != '') {
+  selectArnRia(data, selectedIndex) {
+    this.selectedArmOrRiaIndex = selectedIndex;
+    this.selctedArmOrRia = data;
+    this.arnRtaData.forEach((element, index) => {
+      (selectedIndex == index) ? element['colorFlag'] = true : element['colorFlag'] = false;
+    });
+  }
+
+  addCredentialsJson(index) {
+
+    if (this.getCredentialsFormList.controls[index].value.camsEmail != '') {
       let obj =
       {
         advisorId: [this.advisorId],
-        rtTypeMasterid: '',
-        arnOrRia: '',
+        rtTypeMasterid: this.selctedArmOrRia.rtType,
+        arnOrRia: this.selctedArmOrRia.arnOrRia,
         rtExtTypeId: [2], // dbf file extension
-        arnRiaDetailsId: '',
+        arnRiaDetailsId: this.selctedArmOrRia.id,
         registeredEmail: '',
         mailbackPassword: '',
         fileOrderingUseabilityStatusId: [1]
       }
+      this.saveCredentials(obj)
     }
 
-    if (this.credentialsForm.controls.karvyID.value != '') {
+    if (this.getCredentialsFormList.controls[index].value.karvyID != '') {
 
       let obj = {
         advisorId: this.advisorId,
-        arnRiaDetailsId: '',
-        arnOrRia: '',
-        rtTypeMasterid: '',
+        arnRiaDetailsId: this.selctedArmOrRia.id,
+        arnOrRia: this.selctedArmOrRia.arnOrRia,
+        rtTypeMasterid: this.selctedArmOrRia.rtType,
         loginId: '',
         loginPassword: '',
         rtExtTypeId: [2], // dbf file extension
@@ -355,15 +408,16 @@ export class DashboardGuideDialogComponent implements OnInit {
         registeredEmail: '',
         fileOrderingUseabilityStatusId: '',
       }
+      this.saveCredentials(obj)
     }
 
-    if (this.credentialsForm.controls.franklinEmail.value != '') {
+    if (this.getCredentialsFormList.controls[index].value.franklinEmail != '') {
 
       let obj = {
         advisorId: this.advisorId,
-        arnRiaDetailsId: '',
-        arnOrRia: '',
-        rtTypeMasterid: '',
+        arnRiaDetailsId: this.selctedArmOrRia,
+        arnOrRia: this.selctedArmOrRia.arnOrRia,
+        rtTypeMasterid: this.selctedArmOrRia.rtType,
         rtExtTypeId: [2], // dbf file extension
         loginId: '',
         loginPassword: '',
@@ -371,6 +425,7 @@ export class DashboardGuideDialogComponent implements OnInit {
         registeredEmail: '',
         fileOrderingUseabilityStatusId: [1]
       }
+      this.saveCredentials(obj)
     }
 
   }

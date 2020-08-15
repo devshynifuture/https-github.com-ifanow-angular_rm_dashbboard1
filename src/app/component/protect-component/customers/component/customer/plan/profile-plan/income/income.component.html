@@ -296,7 +296,7 @@
                 <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>{{(item.incomeTypeId==1) ? 'Salaried' : (item.incomeTypeId==2) ? 'Business' : (item.incomeTypeId==3) ? 'Profession' : (item.incomeTypeId==4) ? 'Rental' : (item.incomeTypeId==5) ? 'Others' : '-'}} </td>
                 <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>{{(item.monthlyIncome)?item.monthlyIncome:0}}</td>
                 <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-                    {{item.incomeStyleId}}</td>
+                 {{(item.incomeStyleId == 1) ? 'Stable' : 'Erratic'}}</td>
                 <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>
                     {{(item.continueTill==1) ? 'Retirement' : (item.continueTill==2) ? 'Life time' :  (item.numberOfYear)}}</td>
                 <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;" appFormatNumber>

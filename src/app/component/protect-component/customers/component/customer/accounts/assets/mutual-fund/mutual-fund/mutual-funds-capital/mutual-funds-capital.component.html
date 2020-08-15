@@ -471,8 +471,11 @@
                     *ngIf="getOrgData && getOrgData.reportLogoUrl != null && getOrgData.reportLogoUrl !='https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' ">
                     <img width="140px" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
                 </div>
-                <div *ngIf="getOrgData && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
+                <div *ngIf="getOrgData && getOrgData.logoUrl != 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
                     <img width="200px" *ngIf="getOrgData" [src]="getOrgData.logoUrl">
+                </div>
+                <div *ngIf="getOrgData.logoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png' && getOrgData.reportLogoUrl == 'https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png'">
+                    <span width="200px"  style="font-size: 25px;">{{getOrgData.companyName}}</span>
                 </div>
             </td>
             <td style="text-align: right" colspan="6">

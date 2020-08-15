@@ -131,6 +131,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   isRouterLink = false;
   header: any;
   headerHtml: HTMLElement;
+  cashFlowXirr: any;
+  cashFlowObj: { 'cashFlowInvestment': any; 'cashFlowSwitchIn': any; 'cashFlowSwitchOut': any; 'cashFlowRedemption': any; 'cashFlowDividendPayout': any; 'cashFlowNetInvestment': any; 'cashFlowMarketValue': any; 'cashFlowNetGain': any; 'cashFlowLifetimeXirr': any; };
 
   constructor(public dialog: MatDialog, private datePipe: DatePipe,
     private subInjectService: SubscriptionInject, private utilService: UtilService,
@@ -180,8 +182,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       this.clientId = data.clientId
       this.addedData = true;
       this.isBulkEmailing = true;
-      this.toDate = data.toDate;
-      this.reportDate = this.datePipe.transform(new Date(), 'dd-MMM-yyyy')
+      //this.toDate = data.toDate;
+      //this.reportDate = this.datePipe.transform(new Date(), 'dd-MMM-yyyy')
       if (data.mode == 'unrealisedTransactions') {
         this.viewMode = 'Unrealized Transactions'
         this.mode = 'Unrealized Transactions'
@@ -197,6 +199,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
 
   }
   ngOnInit() {
+    this.dataSource.data = ([{}, {}, {}]);
     if (localStorage.getItem('token') != 'authTokenInLoginComponnennt') {
       localStorage.setItem('token', 'authTokenInLoginComponnennt')
     }
@@ -264,7 +267,14 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   ngAfterViewInit() {
     let para = document.getElementById('template');
     if (para.innerHTML) {
-      this.generatePdfBulk()
+      if (this.route.url.split('?')[0] == '/pdf/allTransactions' && this.isLoading == false) {
+        this.showDownload = true
+        this.generatePdfBulk()
+      }
+      if (this.route.url.split('?')[0] == '/pdf/unrealisedTransactions' && this.isLoading == false) {
+        this.showDownload = true
+        this.generatePdfBulk()
+      }
     }
   }
 
@@ -584,7 +594,33 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     this.custumService.getMutualFund(obj).pipe(map((data) => {
       return this.doFiltering(data);
     })).subscribe(
-      data => this.getMutualFundResponse(data), (error) => {
+      data => {
+        this.getMutualFundResponse(data);
+        let cashFlow = data;
+        if (cashFlow.mutualFundCategoryMastersList.length > 0) {
+          if (cashFlow.mutualFundCategoryMastersList[0].currentValue == 0 || cashFlow.mutualFundCategoryMastersList[0].balanceUnits == 0 || cashFlow.mutualFundCategoryMastersList[0].balanceUnits < 0) {
+            if (cashFlow.mutualFundCategoryMastersList.length > 1) {
+              this.cashFlowXirr = cashFlow.mutualFundCategoryMastersList[1].cashFlowxirr;
+            } else {
+              this.cashFlowXirr = cashFlow.mutualFundCategoryMastersList[0].cashFlowxirr;
+            }
+          } else {
+            this.cashFlowXirr = cashFlow.mutualFundCategoryMastersList[0].cashFlowxirr;
+          }
+        }
+        this.cashFlowObj = {
+          'cashFlowInvestment': this.mfData.total_cashflow_amount_inv,
+          'cashFlowSwitchIn': this.mfData.total_cashflow_switch_in,
+          'cashFlowSwitchOut': this.mfData.total_cashflow_switch_out,
+          'cashFlowRedemption': this.mfData.total_cashflow_redemption,
+          'cashFlowDividendPayout': this.mfData.total_cashflow_dividend_payout,
+          'cashFlowNetInvestment': this.mfData.total_cashflow_net_investment,
+          'cashFlowMarketValue': this.mfData.total_cashflow_current_value,
+          'cashFlowNetGain': this.mfData.total_cashflow_net_gain,
+          'cashFlowLifetimeXirr': this.cashFlowXirr,
+        }
+        this.mfService.setCashFlowXirr(this.cashFlowObj);
+      }, (error) => {
         this.eventService.showErrorMessage(error);
       }
     );
@@ -745,7 +781,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         // this.asyncFilter(this.mutualFund.mutualFundList);
         if (this.isBulkEmailing) {
           // this.filterForBulkEmailing(data);
-          this.asyncFilter(data);
+          this.asyncFilter(data); 
         } else {
           this.asyncFilter(data);
         }
@@ -1253,12 +1289,12 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     this.fragmentData.isSpinner = true;
     setTimeout(() => {
       const para = document.getElementById('template');
-      // if(this.viewMode == 'Unrealized Transactions'){
-      //   this.headerHtml = document.getElementById('templateHeader');
-      // }else{
-      //   this.headerHtml = document.getElementById('alltemplateHeader');
-      // }
-      this.returnValue = this.utilService.htmlToPdf(para.innerHTML, this.reportName, 'true', this.fragmentData, '', '');
+      if(this.viewMode == 'Unrealized Transactions'){
+        this.headerHtml = document.getElementById('templateHeader');
+      }else{
+        this.headerHtml = document.getElementById('alltemplateHeader');
+      }
+      this.returnValue = this.utilService.htmlToPdf(this.headerHtml.innerHTML,para.innerHTML, this.reportName, 'true', this.fragmentData, '', '');
     }, 200);
 
 
@@ -1470,16 +1506,16 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     setTimeout(() => {
       const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
       let para = this.unrealizedTranTemplate.nativeElement.innerHTML
-      // if(this.viewMode=='Unrealized Transactions'){
-      //    this.header = this.unrealizedTranTemplateHeader.nativeElement.innerHTML
-      // }else{
-      //    this.header = this.allTranTemplateHeader.nativeElement.innerHTML
-      // }
+      if(this.viewMode=='Unrealized Transactions'){
+         this.header = this.unrealizedTranTemplateHeader.nativeElement.innerHTML
+      }else{
+         this.header = this.allTranTemplateHeader.nativeElement.innerHTML
+      }
       let obj = {
         htmlInput: para,
+        header: null,
         name: (this.clientData.name) ? this.clientData.name : '' + 's' + this.mode + date,
         landscape: true,
-        header: this.header,
         key: 'showPieChart',
         clientId: this.clientId,
         advisorId: this.advisorId,

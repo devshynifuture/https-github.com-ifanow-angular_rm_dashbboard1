@@ -89,6 +89,8 @@ export const appConfig = {
   GET_MUTUAL_FUND_UNMAP_FOLIO_LIST: 'mutual-fund/unmap/folio/list/get',
   GET_MUTUALFUND_UNMAP_USER_DETAIL_LIST: 'mutual-fund/unmap/folio/user-detail/list/get',
   PUT_MUTUALFUND_UNMAP_INVESTOR_DETAIL_UPDATE: 'mutual-fund/unmap/investor-detail/update',
+  GET_MUTUAL_FUND_SIP_CLEANUP_LIST: 'mutual-fund/sip-cleanup/list/get',
+  PUT_MUTUAL_FUND_SIP_CLEANUP_REMOVE_STATUS_UPDATE: 'mutual-fund/sip-cleanup/remove/status/update',  
 
   /////////////////////////////Accounts///////////////////////////////////
   ADD_FIXEDDEPOSIT: 'account/asset/fixed-income/fixed-deposit/add',
@@ -457,6 +459,12 @@ export const appConfig = {
   GET_GLOBAL_GROWTH_RATE: 'account/income/growth/rate/global/get',
   DELETE_INCOME: 'account/income/delete?',
   DELETE_INFLOW_BONUS: 'account/income/bonusOrInflow/delete?',
+  INCOME_OTHER_DELETE: 'account/income/other/delete?',
+  INCOME_RETIRAL_DELETE: 'account/income/retiral/delete?',
+  INCOME_ALLOWANCE_DELETE: 'account/income/allowance/delete?',
+  INCOME_PERQUISITES_DELETE: 'account/income/perquisites/delete?',
+  INCOME_REIMBURSEMENT_DELETE: 'account/income/reimbursement/delete?',
+
   /////////////////////////Activity///////////////////////////////////
   ADVICE_GET_ALL: 'advice/asset/get',
   ADVICE_ADD_FD: 'advice/asset/fixed-income/suggest-new-fd/add',
@@ -881,6 +889,8 @@ export const appConfig = {
   DOCUMENT_TOTAL_COUNT_SIZE: 'document/account/document/total-count-and-size/get',
   LATEST_AUM_RECON: 'admin/dashboard/aum/reconciliation/summary',
   GET_GOAL_SUMMARY: 'admin/dashboard/goal/summary',
+  GET_TASK_DASHBOARD_COUNT: 'admin/dashboard/task/metrics/get',
+
 
   ///////////////////////////// market place //////////////////////////
   GET_CALL_DETAILS: 'marketplace/call/settings/get',

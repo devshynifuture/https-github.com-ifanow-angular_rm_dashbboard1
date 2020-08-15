@@ -136,7 +136,7 @@
                         Billed amount
                     </th>
                     <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element"
-                        class="c-p text-right amt" mat-cell>
+                        class="c-p text-right tdPadding-20 amt" mat-cell>
                         <div class="bar" [ngClass]="{floatRightClass: isLoading}"  > {{isLoading ? '' : '₹' }} <span appFormatNumber>{{element.finalAmount}}</span>
                         </div>
                     </td>
@@ -147,7 +147,7 @@
                         Balance due
                     </th>
                     <td (click)="openInvoice(element,'invoiceSubscription','open')" *matCellDef="let element"
-                        class="text-right amt c-p" mat-cell>
+                        class="text-right tdPadding-20 amt c-p" mat-cell>
                         <div class="bar" [ngClass]="{floatRightClass: isLoading}"> {{isLoading ? '' : '₹' }}<span appFormatNumber>
                                 {{isLoading ? '' : formatter(element.balanceDue) || 0 }}</span> </div>
                     </td>

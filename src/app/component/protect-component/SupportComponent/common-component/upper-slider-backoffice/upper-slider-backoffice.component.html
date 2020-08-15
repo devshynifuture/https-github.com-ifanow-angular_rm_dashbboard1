@@ -303,9 +303,9 @@
                 </div>
             </mat-tab>
 
-            <mat-tab [disabled]="isTabDisabled">
+            <mat-tab [disabled]="isDeleteAndReorderTabDisabled">
                 <ng-template mat-tab-label>
-                    <div matTooltip="Kindly, click on export button" [matTooltipDisabled]="!isTabDisabled">
+                    <div matTooltip="Kindly, click on export button or its a Franklin RTA" [matTooltipDisabled]="!isDeleteAndReorderTabDisabled">
                         <h5 [ngClass]="{'text-custom': isTabDisabled}">
                             Deletion & reordering
                         </h5>

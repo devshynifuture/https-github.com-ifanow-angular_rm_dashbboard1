@@ -106,6 +106,7 @@ export class MutualFundOverviewComponent implements OnInit {
   displayedColumns = ['name', 'amt', 'value', 'abs', 'xirr', 'alloc'];
   displayedColumns1 = ['data', 'amts'];
   mfBulkEmailRequestId: number;
+  cashFlowObj:any;
 
   constructor(private datePipe: DatePipe, public subInjectService: SubscriptionInject, public UtilService: UtilService,
     private mfService: MfServiceService,
@@ -198,6 +199,10 @@ export class MutualFundOverviewComponent implements OnInit {
       .subscribe(res => {
         this.mfGetData = res; // used for gettign data after filterd
       });
+      this.mfService.getCashFlowXirr()
+      .subscribe(res => {
+        this.cashFlowObj = res;
+      })
     if (this.mfGetData && this.mfGetData != '') {
       this.getMutualFundResponse(this.mfGetData);
     } else {
@@ -366,6 +371,30 @@ export class MutualFundOverviewComponent implements OnInit {
     this.custumService.getMutualFund(obj).subscribe(
       data => {
         this.getMutualFundResponse(data)
+        let cashFlow = data;
+        if (cashFlow.mutualFundCategoryMastersList.length > 0) {
+          if (cashFlow.mutualFundCategoryMastersList[0].currentValue == 0 || cashFlow.mutualFundCategoryMastersList[0].balanceUnits == 0 || cashFlow.mutualFundCategoryMastersList[0].balanceUnits < 0) {
+            if (cashFlow.mutualFundCategoryMastersList.length > 1) {
+              this.cashFlowXirr = cashFlow.mutualFundCategoryMastersList[1].cashFlowxirr;
+            } else {
+              this.cashFlowXirr = cashFlow.mutualFundCategoryMastersList[0].cashFlowxirr;
+            }
+          } else {
+            this.cashFlowXirr = cashFlow.mutualFundCategoryMastersList[0].cashFlowxirr;
+          }
+        }
+        this.cashFlowObj = {
+          'cashFlowInvestment': this.mfData.total_cashflow_amount_inv,
+          'cashFlowSwitchIn': this.mfData.total_cashflow_switch_in,
+          'cashFlowSwitchOut': this.mfData.total_cashflow_switch_out,
+          'cashFlowRedemption': this.mfData.total_cashflow_redemption,
+          'cashFlowDividendPayout': this.mfData.total_cashflow_dividend_payout,
+          'cashFlowNetInvestment': this.mfData.total_cashflow_net_investment,
+          'cashFlowMarketValue': this.mfData.total_cashflow_current_value,
+          'cashFlowNetGain': this.mfData.total_cashflow_net_gain,
+          'cashFlowLifetimeXirr': this.cashFlowXirr,
+        }
+        this.mfService.setCashFlowXirr(this.cashFlowObj);
       }, (error) => {
         this.showSummaryBar = false;
         this.dataSource.data = [];
@@ -417,17 +446,17 @@ export class MutualFundOverviewComponent implements OnInit {
       }
       this.asyncFilter(this.filterData.mutualFundList, this.filterData.mutualFundCategoryMastersList);
       this.mfData = data;
-      if (this.mfData.mutualFundCategoryMastersList.length > 0) {
-        if (this.mfData.mutualFundCategoryMastersList[0].currentValue == 0 || this.mfData.mutualFundCategoryMastersList[0].balanceUnits == 0 || this.mfData.mutualFundCategoryMastersList[0].balanceUnits < 0) {
-          if(this.mfData.mutualFundCategoryMastersList.length > 1){
-            this.cashFlowXirr = this.mfData.mutualFundCategoryMastersList[1].cashFlowxirr;
-          }else{
-            this.cashFlowXirr = this.mfData.mutualFundCategoryMastersList[0].cashFlowxirr;
-          }
-        } else {
-          this.cashFlowXirr = this.mfData.mutualFundCategoryMastersList[0].cashFlowxirr;
-        }
-      }
+      // if (this.mfData.mutualFundCategoryMastersList.length > 0) {
+      //   if (this.mfData.mutualFundCategoryMastersList[0].currentValue == 0 || this.mfData.mutualFundCategoryMastersList[0].balanceUnits == 0 || this.mfData.mutualFundCategoryMastersList[0].balanceUnits < 0) {
+      //     if(this.mfData.mutualFundCategoryMastersList.length > 1){
+      //       this.cashFlowXirr = this.mfData.mutualFundCategoryMastersList[1].cashFlowxirr;
+      //     }else{
+      //       this.cashFlowXirr = this.mfData.mutualFundCategoryMastersList[0].cashFlowxirr;
+      //     }
+      //   } else {
+      //     this.cashFlowXirr = this.mfData.mutualFundCategoryMastersList[0].cashFlowxirr;
+      //   }
+      // }
       this.total_net_Gain = (this.mfData.total_market_value - this.mfData.total_net_investment);
       let sortedData = this.MfServiceService.sorting(data.mutualFundCategoryMastersList, 'category');
       sortedData = sortedData.filter((item: any) =>
@@ -514,19 +543,19 @@ export class MutualFundOverviewComponent implements OnInit {
       this.datasource1.data = [
         {
           data: 'a. Investment',
-          amts: (this.mfData.total_cashflow_amount_inv) ? this.mfData.total_cashflow_amount_inv : 0
+          amts: (this.cashFlowObj.cashFlowInvestment) ? this.cashFlowObj.cashFlowInvestment : 0
         },
-        { data: 'b. Switch In', amts: (this.mfData.total_switch_in) ? this.mfData.total_switch_in : 0 },
-        { data: 'c. Switch Out', amts: (this.mfData.total_switch_out) ? this.mfData.total_switch_out : 0 },
-        { data: 'd. Redemption', amts: (this.mfData.total_redemption) ? this.mfData.total_redemption : 0 },
-        { data: 'e. Dividend Payout', amts: (this.mfData.total_dividend_payout) ? this.mfData.total_dividend_payout : 0 },
+        { data: 'b. Switch In', amts: (this.cashFlowObj.cashFlowSwitchIn) ? this.cashFlowObj.cashFlowSwitchIn : 0 },
+        { data: 'c. Switch Out', amts: (this.cashFlowObj.cashFlowSwitchOut) ? this.cashFlowObj.cashFlowSwitchOut : 0 },
+        { data: 'd. Redemption', amts: (this.cashFlowObj.cashFlowRedemption) ? this.cashFlowObj.cashFlowRedemption : 0 },
+        { data: 'e. Dividend Payout', amts: (this.cashFlowObj.cashFlowDividendPayout) ? this.cashFlowObj.cashFlowDividendPayout : 0 },
         {
           data: 'f. Net Investment (a+b-c-d-e)',
-          amts: (this.mfData.total_net_investment) ? this.mfData.total_net_investment : 0
+          amts: (this.cashFlowObj.cashFlowNetInvestment) ? this.cashFlowObj.cashFlowNetInvestment : 0
         },
-        { data: 'g. Market Value', amts: (this.mfData.total_market_value) ? this.mfData.total_market_value : 0 },
-        { data: 'h. Net Gain (g-f)', amts: (this.total_net_Gain) ? this.total_net_Gain : 0 },
-        { data: 'i. Lifetime XIRR (All Transactions)', amts: (this.cashFlowXirr) ? this.cashFlowXirr : 0 },
+        { data: 'g. Market Value', amts: (this.cashFlowObj.cashFlowMarketValue) ? this.cashFlowObj.cashFlowMarketValue : 0 },
+        { data: 'h. Net Gain (g-f)', amts: (this.cashFlowObj.cashFlowNetGain) ? this.cashFlowObj.cashFlowNetGain : 0 },
+        { data: 'i. Lifetime XIRR (All Transactions)', amts: (this.cashFlowObj.cashFlowLifetimeXirr) ? this.cashFlowObj.cashFlowLifetimeXirr : 0 },
 
       ];
 
@@ -667,7 +696,8 @@ export class MutualFundOverviewComponent implements OnInit {
       key: 'showPieChart',
       svg: this.svg
     };
-    this.returnValue = this.UtilService.htmlToPdf(para.innerHTML, 'MF overview', false, this.fragmentData, 'showPieChart', this.svg);
+    let header = null
+    this.returnValue = this.UtilService.htmlToPdf(header,para.innerHTML, 'MF overview', false, this.fragmentData, 'showPieChart', this.svg);
     console.log('return value ====', this.returnValue);
     return obj;
   }
@@ -996,11 +1026,13 @@ export class MutualFundOverviewComponent implements OnInit {
 
     this.svg = this.chart.getSVG();
     const para = document.getElementById('template');
+    
     const obj = {
       htmlInput: para.innerHTML,
       name: (this.clientData.name) ? this.clientData.name : '' + 's' + 'MF_Overview_Report' + date,
       landscape: false,
       key: 'showPieChart',
+      header :null,
       clientId: this.clientId,
       advisorId: this.advisorId,
       fromEmail: this.clientDetails.advisorData.email,
