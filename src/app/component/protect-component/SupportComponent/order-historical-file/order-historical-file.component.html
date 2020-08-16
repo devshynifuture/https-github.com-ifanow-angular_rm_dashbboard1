@@ -2,7 +2,7 @@
     <div class="popup-header-fix w-50">
         <div class="row bb-1">
             <div class="col-md-8 p-0">
-                <h4 class="mb-0 wrapper-20"> Historical file ordering setup</h4>
+                <h4 class="mb-0 wrapper-20"> Order Historical file ordering setup</h4>
             </div>
             <div class="col-md-4 text-right">
                 <div class="wrapper-12">
@@ -239,7 +239,7 @@
                             <h5 class="mb-4 pt-16">To date</h5>
                             <div class="form-group">
                                 <mat-form-field class="ba-date">
-                                    <input class="form-control b-0" [max]="dateToday" [min]="camsAsOnDatePastMaxDate"
+                                    <input class="form-control b-0" [max]="newDateToday" [min]="camsAsOnDatePastMaxDate"
                                         formControlName="toDate" (focus)="picker.open()" matInput
                                         [matDatepicker]="picker">
                                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>

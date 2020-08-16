@@ -52,7 +52,7 @@
         </div>
     </div>
 
-    <div class="row pt-40">
+    <div class="row pt-40"  *ngIf="!asOnDate">
         <div class="col-lg-5 pr-0">
             <h5 class="text-right mb-0 pt-8">From Date</h5>
             <p class="text-primitive text-right roboto f-400">
@@ -74,7 +74,7 @@
         </div>
     </div>
 
-    <div class="row pt-8">
+    <div class="row pt-8" *ngIf="!asOnDate">
         <div class="col-lg-5 pr-0">
             <h5 class="text-right mb-0 pt-8">To Date</h5>
             <p class="text-primitive text-right roboto f-400 m-0">
@@ -92,6 +92,24 @@
                     *ngIf="historicalFileBulkOrderingForm.get('toDate').touched && historicalFileBulkOrderingForm.get('toDate').invalid">
                     This field is required
                 </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row pt-40" *ngIf="asOnDate">
+        <div class="col-lg-5 pr-0">
+            <h5 class="text-right mb-0 pt-8">As On Date</h5>
+            <p class="text-primitive text-right roboto f-400 m-0">
+                The date to which you want bulk ordering to be done
+            </p>
+        </div>
+        <div class="col-lg-5">
+            <mat-form-field class="ba-date">
+                <input (click)="picker3.open()" [min]="lastPastDate" [max]="presentDate" formControlName="asOnDate"
+                    readonly matInput class="form-control b-0" [matDatepicker]="picker3">
+                <mat-datepicker-toggle matSuffix [for]="picker3">
+                </mat-datepicker-toggle>
+                <mat-datepicker #picker3></mat-datepicker>
             </mat-form-field>
         </div>
     </div>
