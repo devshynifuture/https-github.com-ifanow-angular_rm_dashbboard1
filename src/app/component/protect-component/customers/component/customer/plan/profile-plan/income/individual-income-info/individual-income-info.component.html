@@ -93,9 +93,11 @@
                     <div class="col-md-5 pr-0 text-right">
                         <h5  class="m-0 pt-8">Monthly income</h5>
                     </div>
+
+                    <!-- build error in form array removed controls -->
                     <div formArrayName="monthlyIncomeForm" >
                         <div [ngClass]="{'pt-30': pointIndex > 0}" class="row"
-                            *ngFor="let obj of incomeNetForm.get('monthlyIncomeForm').controls; let pointIndex=index"
+                            *ngFor="let obj of incomeNetForm.get('monthlyIncomeForm'); let pointIndex=index"
                             [formGroupName]="pointIndex">
 
                             <div class="col-md-5  pr-0">
@@ -170,9 +172,11 @@
                     <div class="col-md-5 pr-0 text-right">
                         <h5  class="m-0 pt-8">Basic Salary</h5>
                     </div>
+                    <!-- build error in form array removed controls -->
+
                     <div formArrayName="basicSalaryForm" >
                         <div [ngClass]="{'pt-30': pointIndex > 0}" class="row"
-                            *ngFor="let obj of incomeNetForm.get('basicSalaryForm').controls; let pointIndex=index"
+                            *ngFor="let obj of incomeNetForm.get('basicSalaryForm'); let pointIndex=index"
                             [formGroupName]="pointIndex">
 
                             <div class="col-md-5  pr-0">
@@ -219,9 +223,12 @@
                     <div  class="col-md-5 pr-0 text-right">
                         <h5 class="mb-0 mt-10">Allowances</h5>
                     </div>
+
+                    <!-- build error in form array removed controls -->
+
                     <div formArrayName="allowancesForm" >
                         <div  [ngClass]="{'pt-30': pointIndex > 0}" class="row"
-                            *ngFor="let obj of incomeNetForm.get('allowancesForm').controls; let pointIndex=index"
+                            *ngFor="let obj of incomeNetForm.get('allowancesForm'); let pointIndex=index"
                             [formGroupName]="pointIndex">
 
                             <div class="col-md-5  pr-0">
@@ -265,13 +272,15 @@
                         </div>
                     </div>
                 </div>
+                    <!-- build error in form array removed controls -->
+
                 <div class="row pt-40" [hidden]="incomeOption=='2'">
                     <div  class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8">Perquisites</h5>
                     </div>
                     <div formArrayName="perquisitesForm" >
                         <div [ngClass]="{'pt-30': pointIndex > 0}" class="row"
-                            *ngFor="let obj of incomeNetForm.get('perquisitesForm').controls; let pointIndex=index"
+                            *ngFor="let obj of incomeNetForm.get('perquisitesForm'); let pointIndex=index"
                             [formGroupName]="pointIndex">
 
                             <div class="col-md-5  pr-0">
@@ -314,13 +323,16 @@
                         </div>
                     </div>
                 </div>
+                
                 <div class="row pt-40" [hidden]="incomeOption=='2'">
                     <div  class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8">Reimbursements</h5>
                     </div>
+                    <!-- build error in form array removed controls -->
+
                     <div formArrayName="reimbursementsForm" >
                         <div [ngClass]="{'pt-30': pointIndex > 0}" class="row"
-                            *ngFor="let obj of incomeNetForm.get('reimbursementsForm').controls; let pointIndex=index"
+                            *ngFor="let obj of incomeNetForm.get('reimbursementsForm'); let pointIndex=index"
                             [formGroupName]="pointIndex">
 
                             <div class="col-md-5  pr-0">
@@ -366,9 +378,10 @@
                     <div  class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8">Retirals</h5>
                     </div>
+                    <!-- build error removed controls -->
                     <div formArrayName="retiralsForm" >
                         <div [ngClass]="{'pt-30': pointIndex > 0}" class="row"
-                            *ngFor="let obj of incomeNetForm.get('retiralsForm').controls; let pointIndex=index"
+                            *ngFor="let obj of incomeNetForm.get('retiralsForm'); let pointIndex=index"
                             [formGroupName]="pointIndex">
 
                             <div class="col-md-5 pr-0">
@@ -415,9 +428,10 @@
                     <div  class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8">Others</h5>
                     </div>
+                    <!-- build error rmeoved controls -->
                     <div formArrayName="othersForm" >
                         <div [ngClass]="{'pt-30': pointIndex > 0}" class="row"
-                            *ngFor="let obj of incomeNetForm.get('othersForm').controls; let pointIndex=index"
+                            *ngFor="let obj of incomeNetForm.get('othersForm'); let pointIndex=index"
                             [formGroupName]="pointIndex">
 
                             <div class="col-md-5  pr-0">
@@ -447,9 +461,10 @@
                                 </div>
                             </div>
                             <div class="col-md-2 pr-0 d-flex mt-8">
-                                <i *ngIf="incomeNetForm.value.othersForm.length < 2"
+                                <!-- build error -->
+                                <!-- <i *ngIf="incomeNetForm.value.othersForm.length < 2"
                                     class="material-icons text-primitive f-20 c-p float-left"
-                                    (click)="addOthers(undefined)">add</i>
+                                    (click)="addOthers(undefined)">add</i> -->
                                 <i *ngIf="incomeNetForm.value.othersForm.length > 1"
                                     class="material-icons text-primitive f-20 c-p pl-10"
                                     (click)="removeOthers(obj,pointIndex)">remove</i>
