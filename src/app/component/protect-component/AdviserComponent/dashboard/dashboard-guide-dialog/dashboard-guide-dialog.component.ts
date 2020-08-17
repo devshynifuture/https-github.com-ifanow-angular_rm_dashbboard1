@@ -9,6 +9,8 @@ import { element } from 'protractor';
 import { ValidatorType, UtilService } from 'src/app/services/util.service';
 import { AppConstants } from 'src/app/services/app-constants';
 import { OrgSettingServiceService } from '../../setting/org-setting-service.service';
+import { ParsedResponseHeaders, FileItem } from 'ng2-file-upload';
+import { PhotoCloudinaryUploadService } from 'src/app/services/photo-cloudinary-upload.service';
 export interface PeriodicElement {
   name: string;
   position: string;
@@ -176,6 +178,12 @@ export class DashboardGuideDialogComponent implements OnInit {
   isLoading: boolean;
   step17Flag: boolean;
   selectedMfOption: any;
+  finalImage: any;
+  imageUploadEvent: any;
+  showCropper: boolean = false;
+  imgURL = '';
+  cropImage: boolean;
+  showEditOption: boolean = false;
 
 
   constructor(private fb: FormBuilder,
@@ -222,6 +230,7 @@ export class DashboardGuideDialogComponent implements OnInit {
         this.addArnRiaForm();
       }
     });
+    this.getPersonalInfo()
     // this.getRtaDetails();
     this.getEmailVerification();
   }
@@ -276,6 +285,7 @@ export class DashboardGuideDialogComponent implements OnInit {
     }
     this.getArnRiaFormList.controls[this.getArnRiaFormList.length - 1].get('number').setValidators([Validators.maxLength(this.arnRiaMaxlength), Validators.minLength(this.arnRiaMaxlength)])
   }
+
 
   backStep() {
     this.step--;
@@ -607,6 +617,62 @@ export class DashboardGuideDialogComponent implements OnInit {
       this.eventService.openSnackBar(err, "Dismiss");
     });
   }
+
+  showCroppedImage(imageAsBase64) {
+    setTimeout(() => {
+      this.finalImage = imageAsBase64;
+    });
+  }
+
+  uploadImageForCorping(event) {
+    this.imageUploadEvent = event;
+    this.showCropper = true;
+  }
+
+
+  saveImage() {
+    if (this.showCropper) {
+      const tags = this.advisorId + ',advisor_profile_logo,';
+      const file = this.utilService.convertB64toImageFile(this.finalImage);
+      PhotoCloudinaryUploadService.uploadFileToCloudinary([file], 'advisor_profile_logo', tags,
+        (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
+          if (status == 200) {
+            const responseObject = JSON.parse(response);
+            const jsonDataObj = {
+              id: this.advisorId,
+              profilePic: responseObject.url
+            };
+            this.settingService.uploadProfilePhoto(jsonDataObj).subscribe((res) => {
+              this.imgURL = jsonDataObj.profilePic;
+              AuthService.setProfilePic(jsonDataObj.profilePic);
+              this.eventService.openSnackBar('Image uploaded sucessfully', 'Dismiss');
+            });
+          }
+        });
+    }
+  }
+
+  cropImg(data) {
+    this.cropImage = true;
+    this.showCropper = true;
+  }
+
+  editImage() {
+    (this.showEditOption) ? this.showEditOption = false : this.showEditOption = true;
+  }
+  getPersonalInfo() {
+    this.settingService.getProfileDetails({ id: this.advisorId }).subscribe((res) => {
+      this.imgURL = res.profilePic;
+    });
+  }
+
+  resetPageVariables() {
+    this.showCropper = false;
+    this.cropImage = false;
+    this.imageUploadEvent = '';
+    this.finalImage = '';
+  }
+
 
 }
 

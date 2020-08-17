@@ -175,6 +175,31 @@
       }
 
       
+      .image-cropper {
+        position: relative;
+    }
+    
+    .zoomClassPosition {
+        position: absolute;
+        top: 50%;
+        left: 0px;
+        right: 0px;
+        text-align: center;
+    }
+    
+    
+    
+    .textHeading {
+        text-align: right;
+    }
+    
+    .profile-img {
+      // margin-top: 12px;
+      img {
+          max-width: 100%;
+          border-radius: 50%;
+      }
+  }
   
 
 

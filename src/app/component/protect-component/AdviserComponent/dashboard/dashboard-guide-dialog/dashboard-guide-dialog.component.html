@@ -398,7 +398,7 @@
   <!-- seven slider -->
   <div *ngIf="editPictureFlag && step==9" class="bg-modal-height">
     <div class="contentGuideBox mt-40">
-      <div class="row">
+      <div *ngIf="!showEditOption" class="row">
         <div class="col-md-12">
           <p class="text-diff m-0 roboto f-400 lh-16">This pic will be visible when your clients login to the portal.
           </p>
@@ -406,16 +406,67 @@
             etc.</p>
         </div>
       </div>
-      <div class="row pt-20">
-        <div class="col-md-12">
-          <img src="/assets/images/advisor-user.png">
+      <div *ngIf="showEditOption" class="row pt-40 pb-60">
+        <div class="col-md-12 col-lg-5 pr-0 textHeading" *ngIf="!cropImage">
+          <h5 class="m-0 f-14 pt-8">Your profile picture</h5>
+          <p class="f-12 text-primitive">
+            This picture is visible on the top right of web login
+          </p>
+        </div>
+        <div class="col-md-12 col-lg-5 pr-0 textHeading" *ngIf="cropImage">
+          <div *ngIf="!showCropper">
+            <h5 class="m-0 f-14 pt-8">Upload a photo to edit and upload.</h5>
+          </div>
+          <div class="image-cropper">
+            <app-image-cropper [imageURL]="imgURL" [imageChangedEvent]="imageUploadEvent" [showCropper]="showCropper"
+              (croppedImage)="showCroppedImage($event)" #imageCropper>
+            </app-image-cropper>
+
+            <div class="zoomClassPosition" *ngIf="showCropper">
+
+              <i (click)="imageCropper.zoomIn()" class="material-icons mr-12 c-p">
+                zoom_in
+              </i>
+
+              <i (click)="imageCropper.zoomOut()" class="material-icons c-p">
+                zoom_out
+              </i>
+            </div>
+          </div>
+          <div class="profile-img" [hidden]="!showCropper">
+            <img [src]="finalImage" alt="cropped Image">
+          </div>
+          <div class="row pt-24">
+          </div>
+        </div>
+        <div class="col-md-12 col-lg-7" *ngIf="cropImage">
+          <button mat-stroked-button class="btn-primary" (click)="chooseImage.click()">CHOOSE
+            IMAGE</button>
+          <button mat-stroked-button class="bg-white text-inherit ml-12" (click)="resetPageVariables()">CANCEL
+            EDIT</button>
+          <input type="file" #chooseImage (change)="uploadImageForCorping($event)" hidden>
+        </div>
+        <div class="col-md-12 col-lg-7" *ngIf="!cropImage">
+          <div class="profile-img">
+            <img [src]="imgURL">
+          </div>
+          <div class="row pt-24">
+            <button mat-stroked-button class="btn-primary" (click)="cropImg(imgURL)">EDIT
+              IMAGE</button>
+            <button mat-stroked-button (click)="editImage()">CANCEL</button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="!showEditOption" class="row pt-20">
+        <div (click)="editImage()" class="col-md-12">
+          <img class="c-p" src="/assets/images/advisor-user.png">
           <div class="avisor-caption">
             <p class="text-white m-0 roboto f-400 lh-16">Edit picture</p>
           </div>
 
         </div>
       </div>
-      <div class="row pt-10">
+      <div *ngIf="!showEditOption" class="row pt-10">
         <div class="col-md-12">
           <mat-checkbox [(ngModel)]="doItLater" class="text-diff">I will do this later</mat-checkbox>
         </div>
