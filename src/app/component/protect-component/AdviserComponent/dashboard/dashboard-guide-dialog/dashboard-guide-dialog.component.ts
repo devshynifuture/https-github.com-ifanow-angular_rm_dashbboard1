@@ -8,6 +8,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { element } from 'protractor';
 import { ValidatorType, UtilService } from 'src/app/services/util.service';
 import { AppConstants } from 'src/app/services/app-constants';
+import { OrgSettingServiceService } from '../../setting/org-setting-service.service';
 export interface PeriodicElement {
   name: string;
   position: string;
@@ -165,6 +166,9 @@ export class DashboardGuideDialogComponent implements OnInit {
   camsFlag: boolean = false;
   karvyFlag: boolean = false;
   franklinFlag: boolean = false;
+  emailDetails: any;
+  emailList: any;
+  isLoading: boolean;
 
 
   constructor(private fb: FormBuilder,
@@ -172,6 +176,7 @@ export class DashboardGuideDialogComponent implements OnInit {
     private eventService: EventService,
     public dialogRef: MatDialogRef<DashboardGuideDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private orgSetting: OrgSettingServiceService,
     private utilService: UtilService
   ) { }
 
@@ -183,7 +188,7 @@ export class DashboardGuideDialogComponent implements OnInit {
     this.formPlaceHolders = AppConstants.formPlaceHolders;
     this.validatorType = ValidatorType
     this.advisorId = AuthService.getAdvisorId();
-    this.step = 1;
+    this.step = 16;
     this.selectedArmOrRiaIndex = 0
     this.ArnRiaForm = this.fb.group({
       ArnRiaFormList: new FormArray([])
@@ -210,7 +215,8 @@ export class DashboardGuideDialogComponent implements OnInit {
         this.addArnRiaForm();
       }
     });
-    this.getRtaDetails();
+    // this.getRtaDetails();
+    this.getEmailVerification();
   }
 
   get getArnRiaForm() { return this.ArnRiaForm.controls; }
@@ -244,7 +250,7 @@ export class DashboardGuideDialogComponent implements OnInit {
   }
 
 
-  displayedColumns: string[] = ['position', 'name', 'weight'];
+  displayedColumns: string[] = ['position', 'weight'];
   dataSource = ELEMENT_DATA;
 
   showPageByIndex(index) {
@@ -524,6 +530,33 @@ export class DashboardGuideDialogComponent implements OnInit {
   capitalise(event) {
     if (event.target.value != '') {
       event.target.value = event.target.value.replace(/\b\w/g, l => l.toUpperCase());
+    }
+  }
+
+  getEmailVerification() {
+    this.isLoading = true;
+    this.emailList = [{}, {}]
+    let obj = {
+      userId: this.advisorId,
+      // advisorId: this.advisorId
+    }
+    this.orgSetting.getEmailVerification(obj).subscribe(
+      data => {
+        this.getEmailVerificationRes(data);
+      },
+      err => {
+        this.eventService.openSnackBar(err, "Dismiss")
+      }
+    );
+  }
+
+  getEmailVerificationRes(data) {
+    if (data) {
+      this.emailDetails = data
+      this.emailList = data.listItems;
+      this.isLoading = false;
+    } else {
+      this.emailList = []
     }
   }
 

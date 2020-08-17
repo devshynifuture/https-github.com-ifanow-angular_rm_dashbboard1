@@ -46,7 +46,7 @@
           </span> -->
         </div>
         <div class="col-md-2 primaryProgress pl-0">
-          <mat-progress-bar value="{{step * 3}}" mode="determinate"></mat-progress-bar>
+          <mat-progress-bar value="{{step * 5}}" mode="determinate"></mat-progress-bar>
         </div>
       </div>
 
@@ -998,21 +998,32 @@
                     check
                     the
                     status of the verification here</p>
-                  <table mat-table [dataSource]="dataSource" id="table-low">
+                  <table appSkeletonLoading [appSkeletonLoading]="isLoading" class=skeletonAnimation mat-table
+                    [dataSource]="emailList" id="table-low">
                     <ng-container matColumnDef="position">
                       <th mat-header-cell *matHeaderCellDef class="br"> Email </th>
-                      <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+                      <td mat-cell *matCellDef="let element" class="br">
+                        <div class="bar"> {{isLoading ? '' :element.emailAddress}}</div>
+                      </td>
                     </ng-container>
-
+                    <!-- 
                     <ng-container matColumnDef="name">
                       <th mat-header-cell *matHeaderCellDef class="br"> Broker code </th>
                       <td mat-cell *matCellDef="let element" class="br"> {{element.name}} </td>
-                    </ng-container>
+                    </ng-container> -->
 
 
                     <ng-container matColumnDef="weight">
                       <th mat-header-cell *matHeaderCellDef class="br"> Verification status </th>
-                      <td mat-cell *matCellDef="let element" class="br"> {{element.weight}} </td>
+                      <td mat-cell *matCellDef="let element" class="br" (click)="getEmailVerification()">
+                        <div class="bar d-flex align-items-center"
+                          [ngClass]="{'text-danger': element.emailVerificationStatus == 3, 'text-warning': element.emailVerificationStatus == 2, 'text-success': element.emailVerificationStatus == 1}">
+                          {{isLoading?'':(element.emailVerificationStatus == 2)?'Verification pending':(element.emailVerificationStatus == 1)?'Verified':'Verification failed'}}
+                          <span class="c-p" *ngIf="element.emailVerificationStatus != 1  && !isLoading">
+                            <mat-icon>refresh</mat-icon>
+                          </span>
+                        </div>
+                      </td>
                     </ng-container>
 
 
