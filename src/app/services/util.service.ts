@@ -504,7 +504,7 @@ export class UtilService {
     const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
     const obj = {
       htmlInput: inputData,
-      header:null,
+      header:header,
       name: pdfName,
       landscape,
       key,
@@ -541,6 +541,7 @@ export class UtilService {
     const obj = {
       htmlInput: data.htmlInput,
       name: data.name,
+      header:data.header,
       fromEmail: data.fromEmail,
       landscape: data.landscape,
       toEmail: data.toEmail,

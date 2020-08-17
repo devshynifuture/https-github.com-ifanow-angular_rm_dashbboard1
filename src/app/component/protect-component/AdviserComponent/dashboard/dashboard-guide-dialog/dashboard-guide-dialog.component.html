@@ -90,14 +90,10 @@
           <h3 *ngIf="step==19" class="m-0 f-500 pb-20 text-diff">Thank You!</h3>
 
         </div>
-
-
       </div>
 
       <div *ngIf="step==14" class="row">
         <div class="col-md-12">
-
-
           <a class="btnRTA" (click)="selectArnRia(singleArnRia,i)" *ngFor="let singleArnRia of arnRtaData;index as i">
             <span [ngClass]="{'activeSpan': singleArnRia.colorFlag}" class="">
               {{singleArnRia.number}}
@@ -154,12 +150,11 @@
               question<img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
           </div>
 
-          <div class="col-md-6 d-flex align-items-center justify-content-end">
+          <div class="col-md-6 d-flex justify-content-end align-items-end">
             <p class="mb-0 c-p text-primitive" (click)="onNoClick()">Skip this exercise</p>
           </div>
         </div>
       </div>
-
 
     </div>
   </div>
@@ -193,7 +188,7 @@
               <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
           </div>
 
-          <div class="col-md-6 d-flex align-items-center justify-content-end">
+          <div class="col-md-6 d-flex justify-content-end align-items-end">
             <p class="mb-0 c-p text-primitive" (click)="onNoClick()">Skip this exercise</p>
           </div>
         </div>
@@ -230,7 +225,7 @@
               <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
           </div>
 
-          <div class="col-md-6 d-flex align-items-center justify-content-end">
+          <div class="col-md-6 d-flex justify-content-end align-items-end">
             <p class="mb-0 c-p text-primitive" (click)="onNoClick()">Skip this exercise</p>
           </div>
         </div>
@@ -265,7 +260,7 @@
               <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
           </div>
 
-          <div class="col-md-6 d-flex align-items-center justify-content-end">
+          <div class="col-md-6 d-flex justify-content-end align-items-end">
             <p class="mb-0 c-p text-primitive" (click)="onNoClick()">Skip this exercise</p>
           </div>
         </div>
