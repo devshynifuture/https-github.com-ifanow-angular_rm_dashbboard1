@@ -194,7 +194,7 @@ export class TransactionSummaryComponent implements OnInit {
       element.selected = false
     });
     this.bankDetails[0].selected = true
-    this.bankDetailsSend.emit(this.bankDetails);
+    this.bankDetailsSend.emit(this.defaultBank);
     if (this.bankDetails.length > 1) {
       this.showBankEdit = true;
     }
