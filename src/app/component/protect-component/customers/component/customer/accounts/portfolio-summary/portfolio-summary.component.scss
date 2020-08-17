@@ -622,6 +622,8 @@ p {
   //     height: 250px !important;
   //     width: 240px !important;
   // }
+
+
   .myfeedWrapper {
     li.activeClass {
       width: 100%;
@@ -659,7 +661,8 @@ p {
   //  ::ng-deep .heightBox1 svg {
   //     height: 250px !important;
   //     width: 240px !important;
-  // }
+  // } 
+
   .widthValueportfolio {
     width: 33%;
   }
@@ -829,4 +832,7 @@ p {
   }
  
 
-   
+  .h-360 {
+    height: 360px;
+    // overflow: auto;
+  }
