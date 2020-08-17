@@ -647,6 +647,7 @@ export class DashboardGuideDialogComponent implements OnInit {
               AuthService.setProfilePic(jsonDataObj.profilePic);
               this.eventService.openSnackBar('Image uploaded sucessfully', 'Dismiss');
             });
+            this.resetPageVariables()
           }
         });
     }

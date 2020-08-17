@@ -446,6 +446,10 @@
             EDIT</button>
           <input type="file" #chooseImage (change)="uploadImageForCorping($event)" hidden>
         </div>
+        <div class="col-md-12 col-lg-7" *ngIf="cropImage">
+          <button mat-stroked-button class="btn-primary" (click)="saveImage()">SAVE
+            IMAGE</button>
+        </div>
         <div class="col-md-12 col-lg-7" *ngIf="!cropImage">
           <div class="profile-img">
             <img [src]="imgURL">
@@ -459,7 +463,7 @@
       </div>
       <div *ngIf="!showEditOption" class="row pt-20">
         <div (click)="editImage()" class="col-md-12">
-          <img class="c-p" src="/assets/images/advisor-user.png">
+          <img class="c-p" [src]="imgURL">
           <div class="avisor-caption">
             <p class="text-white m-0 roboto f-400 lh-16">Edit picture</p>
           </div>
