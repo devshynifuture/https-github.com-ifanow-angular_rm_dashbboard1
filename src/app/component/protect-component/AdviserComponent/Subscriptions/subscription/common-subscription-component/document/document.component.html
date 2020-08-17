@@ -234,7 +234,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="wrapper-40 pt-0 pr-20 "
+                <div class="wrapper-40 pt-0 pr-20 document-accounts"
                     [ngClass]="{'wrapper-40 pr-20': isAdvisor, 'pl-16 pr-16 ': !isAdvisor}">
                     <div class="row">
                         <div class="col-md-10 p-0">
@@ -288,7 +288,7 @@
 
                     </div>
 
-                    <div class="col-md-12 p-0 overflow-hidden">
+                    <div class="overflow-hidden overflow-y-auto-954">
                         <table matSort mat-table [dataSource]="dataSource" class="mt-8" id="table-low"
                             class="mt-8 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
                             <ng-container matColumnDef="checkbox">
@@ -303,7 +303,7 @@
                                     </mat-checkbox>
                                 </td>
                             </ng-container>
-                            <ng-container matColumnDef="document">
+                            <ng-container matColumnDef="document" sticky>
                                 <th mat-sort-header="documentName" mat-header-cell *matHeaderCellDef class="f-18">
                                     Document name
                                 </th>
@@ -363,7 +363,7 @@
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="status">
-                                <th mat-sort-header="s" *matHeaderCellDef class=" t-10" mat-header-cell class="f-18">
+                                <th mat-sort-header="s" *matHeaderCellDef mat-header-cell class="f-18">
                                     Status
                                 </th>
                                 <td *matCellDef="let element" mat-cell>
@@ -411,6 +411,7 @@
                             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                         </table>
                     </div>
+
                     <!-- <h4 *ngIf="dataSource==undefined" class="text-center pt-72">{{noData}}</h4> -->
                 </div>
             </div>

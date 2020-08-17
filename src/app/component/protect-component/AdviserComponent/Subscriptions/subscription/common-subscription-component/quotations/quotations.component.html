@@ -47,7 +47,7 @@
             </div>
 
 
-            <div class="overflow-hidden">
+            <div class="overflow-hidden overflow-y-auto-1142">
                 <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading class="mt-8"
                     class="mt-8 skeletonAnimation" id="table-low" mat-table matSort>
                     <ng-container matColumnDef="checkbox">
@@ -60,7 +60,7 @@
                             </mat-checkbox>
                         </td>
                     </ng-container>
-                    <ng-container matColumnDef="document">
+                    <ng-container matColumnDef="document" sticky>
                         <th *matHeaderCellDef mat-header-cell mat-sort-header="documentName"> Document name </th>
                         <td (click)="Open('viewQuotation','open',element)" *matCellDef="let element" class="c-p"
                             mat-cell>

@@ -401,15 +401,49 @@
   }
 }
 
+@media(max-width:1172px) {
+  #ui-overview-subscription .vertical-menu {
+    width: 16.45% !important;
+  }
+
+}
+
 @media(max-width:1142px) {
 
   // .mat-radio-button#mat-radio-3 {
   //   min-width: 135px;
   //   width: 165px;
   // }
+  .overflow-y-auto-1142 {
+    overflow: unset !important;
+    overflow-y: auto !important;
+  }
+
   #ui-insurance {
     li {
       padding: 10px !important;
+    }
+  }
+
+  .client-upper-subscription {
+    #table-low {
+      .mat-sort-header-button {
+        white-space: nowrap !important;
+      }
+
+      th {
+        z-index: 100 !important;
+      }
+
+      th.mat-header-cell:first-of-type {
+        z-index: 101 !important;
+
+      }
+
+      td.mat-cell:first-of-type,
+      th.mat-header-cell:first-of-type {
+        left: -2px !important;
+      }
     }
   }
 
@@ -478,7 +512,8 @@
   #ui-overview-subscription,
   #ui-documents-overview,
   #ui-overview-profile,
-  #ui-activity {
+  #ui-activity,
+  #ui-overview-subscription {
     li {
       padding: 0 0px 0px 8px !important;
       font-size: 13px;
@@ -671,7 +706,12 @@
 }
 
 @media(max-width:991px) {
+  .pl-0-991 {
+    padding-left: 0px !important;
+  }
+
   #ui-overview-profile {
+
     // .rs-pl-50 {
     //   padding-left: 25px !important;
     // }
@@ -756,6 +796,40 @@
   .flex-auto-954 {
     flex: auto !important;
   }
+
+  .invoice-accounts,
+  .document-accounts {
+    #table-low .mat-sort-header-button {
+      white-space: nowrap !important;
+    }
+
+    td.mat-cell:first-of-type,
+    th.mat-header-cell:first-of-type {
+      left: -2px !important;
+    }
+  }
+
+  .overflow-y-auto-954 {
+    overflow: inherit !important;
+    overflow-y: auto !important;
+
+  }
+
+  #ui-overview-subscription {
+    .responsive-right-side-top {
+      max-width: 79vw !important;
+    }
+  }
+
+  .settings-account {
+    .wrapper-20 {
+      padding: 16px !important;
+    }
+  }
+
+  .pl-0-954 {
+    padding-left: 0px !important;
+  }
 }
 
 @media(max-width:860px) {
@@ -796,7 +870,8 @@
     max-width: 78vw !important;
   }
 
-  #overview-secondhead {
+  #overview-secondhead,
+  #ui-customer-secondhead {
     .advisorHomeBtn {
       font-size: 13px;
 
@@ -808,6 +883,12 @@
     .mat-tab-link {
       padding: 0px 15px !important;
       font-size: 13px;
+    }
+  }
+
+  #ui-overview-subscription {
+    .responsive-right-side-top {
+      max-width: 77vw !important;
     }
   }
 }
@@ -848,5 +929,11 @@
 
   .responsive-right-side-top {
     max-width: 77vw !important;
+  }
+
+  #ui-overview-subscription {
+    .responsive-right-side-top {
+      max-width: 76vw !important;
+    }
   }
 }

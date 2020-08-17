@@ -834,3 +834,31 @@ button.primary-sm {
 .no-wrap {
   flex-wrap: nowrap !important;
 }
+
+@media(max-width:1200px) {
+  .pl-15-1200 {
+    padding-left: 15px !important;
+  }
+
+  .pl-0-1200 {
+    padding-left: 0px !important;
+  }
+
+  .pr-0-1200 {
+    padding-right: 0px !important;
+  }
+
+  .pt-12-1200 {
+    padding-top: 12px !important;
+  }
+
+  .pl-8-1200 {
+    padding-left: 8px !important;
+  }
+}
+
+@media(max-width:991px) {
+  .ml-25p-992 {
+    margin-left: 25%;
+  }
+}

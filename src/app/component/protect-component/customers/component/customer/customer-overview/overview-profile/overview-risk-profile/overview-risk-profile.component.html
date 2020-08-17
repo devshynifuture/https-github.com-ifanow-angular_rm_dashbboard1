@@ -22,7 +22,7 @@
             <button mat-flat-button class="ba-2xb ml-12 text-primary h-40 lh-38"
                 (click)="open('riskProfile', null)">History</button>
         </div>
-        <div class="col-md-9" *ngIf="!isEmpty">
+        <div class="col-lg-9 col-md-12" *ngIf="!isEmpty">
 
             <!-- results -->
             <div *ngIf="feedsRiskProfile.riskProfileId && !loaderFn.loading && showResults">
@@ -35,11 +35,11 @@
                         </div>
                     </div> -->
                     <div class="row pt-52">
-                        <div class="col-md-6">
+                        <div class="col-lg-6 col-md-5">
                             <div class="row">
-                                <div class="col-md-7"></div>
-                                <div class="col-md-5 p-0">
-                                    <h5 class="m-0 f-500 roboto text-black">Your risk score</h5>
+                                <div class="col-lg-7 col-md-6"></div>
+                                <div class="col-lg-5 col-md-6 p-0">
+                                    <h5 class="m-0 f-500 roboto text-black ws-nowrap">Your risk score</h5>
                                     <div class="ba-3x text-center riskScoreBox mt-12">
                                         <h1 class="f-48 mb-8">{{feedsRiskProfile.riskAssessmentScore}}</h1>
                                         <p class="m-0 text-custom f-12 ">Max:
@@ -48,7 +48,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-lg-6 col-md-7">
 
                             <h5 class="m-0 f-500 roboto text-black pb-20 text-center">Your risk profile:
                                 {{feedsRiskProfile.riskProfileStatus}}
@@ -74,8 +74,8 @@
                     </div>
 
                     <div class="row pt-48">
-                        <div class="col-md-2"></div>
-                        <div class="col-md-10 text-center">
+                        <div class="col-lg-2 d-none-992"></div>
+                        <div class="col-lg-10 col-md-12 text-center">
 
                             <h5 class="mb-4 f-500 roboto pl-52 text-black">Equity asset allocation </h5>
 
@@ -150,7 +150,7 @@
             <!-- questionnaire end -->
         </div>
 
-        <div class="col-md-3 p-0" *ngIf="!isEmpty && !loaderFn.loading">
+        <div class="col-lg-3 p-0 d-none-992" *ngIf="!isEmpty && !loaderFn.loading">
 
 
             <div class="p-20 b-primitive mt-12 sticky-risk-pofile p-12-1262" *ngIf="showQuestionnaire">
