@@ -13,7 +13,7 @@
 </div>
 
 <div class="row pt-100 pb-90">
-    <div class="col-md-3 pr-36 pl-36" [formGroup]="rolesFG">
+    <div class="col-md-4 col-lg-3 pr-36 pl-36" [formGroup]="rolesFG">
         <h5 class="m-0 pt-12 pb-8">Role type</h5>
         <div class="form-group ">
             <mat-form-field>
@@ -45,17 +45,17 @@
         </div>
     </div>
 
-    <div class="col-md-9 p-0 bl-1 add-new-role">
+    <div class="col-md-8 col-lg-9 p-0 bl-1 add-new-role">
         <div class="wrapper-40 pt-24">
             <h5 class="m-0">Manage role based access permissions from here.</h5>
 
             <ng-container *ngFor="let model of dataModels">
                 <div class="row pt-28">
-                    <div class="col-md-5 pl-0">
+                    <div class="col-md-3 col-lg-5 pl-0">
                         <h5 class="m-0 text-black f-500 pt-8">{{model.modelName}}</h5>
                     </div>
-                    <div class="col-md-7 pr-0 text-right">
-                        <mat-button-toggle-group class="w-80" [value]="getModelToggle(model)"
+                    <div class="col-md-9 col-lg-7 pr-0 text-right">
+                        <mat-button-toggle-group class="w-100"  [value]="getModelToggle(model)"
                             (change)="switchAllModelPermissions(model, $event)">
                             <mat-button-toggle class="w-50 f-14" [value]="true">Select all permissions
                             </mat-button-toggle>
