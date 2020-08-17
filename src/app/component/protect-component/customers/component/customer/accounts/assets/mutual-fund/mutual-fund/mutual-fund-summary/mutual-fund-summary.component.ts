@@ -1074,15 +1074,7 @@ export class MutualFundSummaryComponent implements OnInit {
         this.getMutualFundResponse(data);
         let cashFlow = data;
         if (cashFlow.mutualFundCategoryMastersList.length > 0) {
-          if (cashFlow.mutualFundCategoryMastersList[0].currentValue == 0 || cashFlow.mutualFundCategoryMastersList[0].balanceUnits == 0 || cashFlow.mutualFundCategoryMastersList[0].balanceUnits < 0) {
-            if (cashFlow.mutualFundCategoryMastersList.length > 1) {
-              this.cashFlowXirr = cashFlow.mutualFundCategoryMastersList[1].cashFlowxirr;
-            } else {
-              this.cashFlowXirr = cashFlow.mutualFundCategoryMastersList[0].cashFlowxirr;
-            }
-          } else {
-            this.cashFlowXirr = cashFlow.mutualFundCategoryMastersList[0].cashFlowxirr;
-          }
+          this.cashFlowXirr = cashFlow.mutualFundCategoryMastersList[0].cashFlowxirr;
         }
         this.cashFlowObj = {
           'cashFlowInvestment': this.mfData.total_cashflow_amount_inv,
