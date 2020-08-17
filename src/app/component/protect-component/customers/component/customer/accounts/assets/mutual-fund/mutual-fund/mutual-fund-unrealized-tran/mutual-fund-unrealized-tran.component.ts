@@ -178,6 +178,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     return this.inputData;
   }
   uploadData(data) {
+    
     if (data) {
       this.clientId = data.clientId
       this.addedData = true;
