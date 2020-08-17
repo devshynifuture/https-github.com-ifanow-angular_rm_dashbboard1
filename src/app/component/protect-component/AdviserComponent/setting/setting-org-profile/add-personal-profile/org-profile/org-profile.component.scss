@@ -24,3 +24,16 @@
     right: 0px;
     text-align: center;
 }
+
+.textHeading {
+    text-align: right;
+}
+
+
+@media screen and (max-width: 768px)
+{
+ .textHeading {
+        text-align: left;
+    }
+
+	}

@@ -10,11 +10,10 @@
 </div>
 <div class="pt-90 pl-28 pb-90 pr-28 mob-pl-0 mob-pr-0 remove-top" [formGroup]="teamMemberFG" *ngIf="!isLoading">
     <div class="row pt-28">
-        <div class="col-md-3 text-right pr-0 mob-pl-10 mob-pr-10 mob-text-left full-end">
+        <div class="col-md-3 col-lg-3 text-right pr-0 mob-pl-10 mob-pr-10 mob-text-left full-end">
             <h5 class="m-0">Full name</h5>
         </div>
-        <div class="col-md-7 pr-0 mob-pl-10 mob-pr-10">
-
+        <div class="col-md-9 col-lg-7 pr-0 mob-pl-10 mob-pr-10">
             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
                 <input matInput (input)="capitalise($event)" [placeholder]="formPlaceHolders.ENTER_FULL_NAME"
                     formControlName="fullName" class="form-control" [readonly]="!data.is_add_call"
@@ -26,12 +25,12 @@
 
         </div>
     </div>
+
     <div class="row pt-40">
-        <div class="col-md-3 text-right pr-0 mob-text-left mob-pl-10 full-end">
+        <div class="col-md-3 col-lg-3 text-right pr-0 mob-text-left mob-pl-10 full-end">
             <h5 class="m-0">Email</h5>
         </div>
-        <div class="col-md-7 pr-0 mob-pl-10 mob-pr-10">
-
+        <div class="col-md-9 col-lg-7 pr-0 mob-pl-10 mob-pr-10">
             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
                 <app-email-domain-auto-suggest [placeholder]="formPlaceHolders.ENTER_EMAIL_ID" formControlName="emailId"
                     [readonly]="!data.is_add_call"></app-email-domain-auto-suggest>
@@ -42,13 +41,12 @@
 
         </div>
     </div>
+
     <div class="row pt-40">
-        <div class="col-md-3 text-right pr-0 mob-text-left mob-pl-10 mob-pr-10 full-end">
+        <div class="col-md-3 col-lg-3 text-right pr-0 mob-text-left mob-pl-10 mob-pr-10 full-end">
             <h5 class="m-0">Mobile</h5>
         </div>
-
-        <div class="col-md-3 col-4 pr-0">
-
+        <div class="col-md-4 col-lg-3 col-4 pr-0">
             <mat-form-field appearance="standard">
                 <mat-select formControlName="isdCodeId" class="form-control">
                     <mat-option>
@@ -62,8 +60,7 @@
             </mat-form-field>
 
         </div>
-        <div class="col-md-4 col-8 pr-0 mob-pr-10">
-
+        <div class="col-md-5 col-lg-4 pr-0 mob-pr-10">
             <mat-form-field floatLabel="never" appearance="standard" [floatLabel]="'never'">
                 <input matInput [inputValidator]="validatorType.NUMBER_ONLY" maxlength="10" appInputValueValidation
                     #mobileNo formControlName="mobileNo" [placeholder]="formPlaceHolders.ENTER_MOBILE_NUMBER"
@@ -76,11 +73,12 @@
         </div>
 
     </div>
+
     <div class="row pt-40">
-        <div class="col-md-3 text-right pr-0 mob-text-left mob-pl-10 mob-pr-10 full-end">
+        <div class="col-md-3 col-lg-3 text-right pr-0 mob-text-left mob-pl-10 mob-pr-10 full-end">
             <h5 class="m-0">Role</h5>
         </div>
-        <div class="col-md-7 pr-0 mob-pl-10 mob-pr-10">
+        <div class="col-md-9 col-lg-7 pr-0 mob-pl-10 mob-pr-10">
             <div class="role">
                 <mat-form-field floatLabel="never" appearance="standard">
                     <mat-select class="form-control" formControlName="roleId">
@@ -93,8 +91,9 @@
             </div>
         </div>
     </div>
+
     <div class="row pt-40" *ngIf="!data.is_add_call">
-        <div class="col-md-3 text-right pr-0 mob-text-left mob-pl-10 mob-pr-10">
+        <div class="col-md-3  text-right pr-0 mob-text-left mob-pl-10 mob-pr-10">
             <h5 class="m-0 pt-8">Profile Photo</h5>
         </div>
         <div class="col-md-7 pr-0 mob-pl-10 mob-pr-10">
@@ -112,6 +111,7 @@
         </div>
     </div>
 </div>
+
 <div class="row" *ngIf="isLoading">
     <div class="col-md-12 d-flex justify-content-center align-items-center h-80vh">
         <div class="pt-90 pl-28 pr-28">Loading data...</div>

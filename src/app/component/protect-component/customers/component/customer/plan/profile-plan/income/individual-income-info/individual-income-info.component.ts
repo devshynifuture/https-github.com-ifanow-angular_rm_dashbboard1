@@ -237,7 +237,9 @@ export class IndividualIncomeInfoComponent implements OnInit {
       this.incomeNetForm.controls.description.setValue((data.description) ? data.description : '');
       this.incomeNetForm.controls.continousTillYear.setValue((data.numberOfYear) ? data.numberOfYear : '');
       this.incomeNetForm.controls.bankAcNo.setValue((data.userBankMappingId) ? data.userBankMappingId : '');
-      this.basicSalary.removeAt(0);
+      if(data.basicIncome || data.deamessAlowance){
+        this.basicSalary.removeAt(0);
+      }
       if (data.basicIncome) {
         this.addSalary('1', data.basicIncome);
         this.basicSalaryArr[0].disabled = true;
@@ -248,7 +250,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
       }
       if (Object.keys(data.monthlyIncomeOptionList).length > 0) {
         let id = data.monthlyIncomeOptionList.id;
-        if(id){
+        if(data.monthlyIncomeOptionList.interestIncome || data.monthlyIncomeOptionList.dividendIncome || data.monthlyIncomeOptionList.royaltyIncome || data.monthlyIncomeOptionList.annuityIncome || data.monthlyIncomeOptionList.pension ||data.monthlyIncomeOptionList.incomeFromNonProfessional || data.monthlyIncomeOptionList.incomeFromPartTimeJob || data.monthlyIncomeOptionList.investIncome || data.monthlyIncomeOptionList.alimony || data.monthlyIncomeOptionList.farmingOrFishingIncome || data.monthlyIncomeOptionList.winningFromLottery || data.monthlyIncomeOptionList.others){
           this.monthlyIncome.removeAt(0);
         }
         Object.entries(data.monthlyIncomeOptionList).forEach(([key, value]) => {
