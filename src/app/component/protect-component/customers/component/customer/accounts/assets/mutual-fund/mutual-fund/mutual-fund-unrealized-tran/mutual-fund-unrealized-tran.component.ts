@@ -1295,7 +1295,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       }else{
         this.headerHtml = document.getElementById('alltemplateHeader');
       }
-      this.returnValue = this.utilService.htmlToPdf(this.headerHtml.innerHTML,para.innerHTML, this.reportName, 'true', this.fragmentData, '', '');
+      this.returnValue = this.utilService.htmlToPdf(this.headerHtml.innerHTML,para.innerHTML, this.viewMode, 'true', this.fragmentData, '', '');
     }, 200);
 
 
