@@ -1,7 +1,7 @@
 <div class="popup-header-fix-50">
     <div class="row bb-1">
         <div class="col-md-10 p-0">
-            <h4 class="mb-0 wrapper-20">EXPENSE ({{expense.value}})- DETAILED VIEW</h4>
+            <h4 class="mb-0 wrapper-20">{{flag}}</h4>
         </div>
         <div class="col-md-2 text-left">
             <div class="wrapper-12">
@@ -13,99 +13,70 @@
 <div class="pl-20 pr-20 mt-44 pb-48">
     <div class="row pt-40">
         <div class="col-md-12 p-0">
-            <div class="insurance-ui bt">
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Family member
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{expense.ownerName}}
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br" *ngIf="expense.value == 'Transactions' || expense.value =='Budget'">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Date
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                       {{expense.expenseDoneOn ? (expense.expenseDoneOn | date:'dd/MM/yyyy') :  (expense.startsFrom | date:'dd/MM/yyyy') }}
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br" *ngIf="expense.value == 'Transactions' || expense.value =='Budget'">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Time
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{expense.timeInString}}
-                    </div>
-                </div>
+            <div class="insurance-ui">
+                <div >
+                    <h5 class="m-0 text-black">{{startDate}} - {{endDate}}
+                    </h5>
+                    <div class="example-container mt-8 mb-24 other-commitments">
+                        <table matSort   *ngIf="dataSource.filteredData.length > 0" mat-table [dataSource]="dataSource" id="table-low" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                            <ng-container matColumnDef="date">
+                                <th mat-header-cell *matHeaderCellDef class="br"> No </th>
+                                <td mat-cell *matCellDef="let element; let i = index;" class="br">
+                                    <div [ngClass]="{'bar': isLoading}"> {{isLoading ? '' : i + 1 }}
+                                    </div>
 
-                <div class="row bb p-8 b-l br" >
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Category
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                       {{expense.expenseType}}
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br" >
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Enter amount
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{expense.amount}}
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br" *ngIf="expense.value == 'Other commitments' || expense.value == 'Recurring commitments'">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Frequency
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{expense.repeatFrequency == '1' ? 'Daily' : expense.repeatFrequency == '2' ? 'Weekly' :  expense.repeatFrequency == '3' ? 'Monthly' : expense.repeatFrequency == '4' ? 'Yearly' : '-'}}
-                
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br" *ngIf="expense.value == 'Other commitments' || expense.value == 'Recurring commitments'">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Start from
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{expense.startsFrom | date:'dd/MM/yyyy'}}
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br" *ngIf="expense.value == 'Other commitments' || expense.value == 'Recurring commitments'">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Continues till
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{(expense.continueTill == 1) ? 'Retirement' : (expense.continueTill == 2) ? 'Life time' : (expense.continueTill == 3) ? 'No.of yrs' : (expense.continueTill == 4) ? 'No.of times' : '-'}}
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br" *ngIf="(expense.value == 'Other commitments' || expense.value == 'Recurring commitments')">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                       {{ (expense.continueTill == 3) ? 'No.of years' : (expense.continueTill == 4) ? 'No.of times'  :''}}
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{expense.numberOfYearOrNumberOfTime}}
-                    </div>
-                </div>
-                <div class="row bb p-8 b-l br" >
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Payment mode
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{(expense.paymentModeId==1) ? 'Credit card' : (expense.paymentModeId==2) ? 'Debit card' : '-'}}
-                    </div>
-                </div>
-              
-            
-             
-             
-                <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0">
-                        Description
-                    </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{(expense.description)?expense.description:'-'}}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="investorName">
+                                <th mat-sort-header="expenseType" mat-header-cell *matHeaderCellDef class="br"> Category
+                                </th>
+                                <td mat-cell *matCellDef="let element" class="br">
+                                    <div [ngClass]="{'bar': isLoading}">
+                                        {{isLoading ? '' : (element.name ? element.name : '-')}}
+                                    </div>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="schemeName">
+                                <th mat-sort-header="startsFrom" mat-header-cell *matHeaderCellDef class="br text-left">
+                                    Date </th>
+                                <td mat-cell *matCellDef="let element" class="br text-left">
+                                    <div [ngClass]="{'bar': isLoading}">
+                                        {{isLoading ? '' : (element.startsFrom ? (element.startsFrom | date:'dd/MM/yyyy') : '-')}}
+                                    </div>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="folio">
+                                <th mat-sort-header="desc" mat-header-cell *matHeaderCellDef class="br"> Description </th>
+                                <td mat-cell *matCellDef="let element" class="br">
+                                    <div [ngClass]="{'bar': isLoading}">
+                                        {{isLoading ? '' : (element.description ? element.description : '-')}}
+                                    </div>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="sipAmount">
+                                <th mat-sort-header="paymentModeId" mat-header-cell *matHeaderCellDef class="br"> Mode </th>
+                                <td mat-cell *matCellDef="let element" class="br">
+                                    <div [ngClass]="{'bar': isLoading}" *ngIf="!isLoading">
+                                        {{(element.paymentModeId == 2)? 'Debit card':(element.paymentModeId == 1)? 'Credit card':'-'}}
+                                    </div>
+                                    <div class="bar" *ngIf="isLoading">
+                                        {{''}}
+                                    </div>
+                                </td>
+                            </ng-container>
+                       
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true">
+                            </tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;" ></tr>
+                        </table>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div *ngIf="dataSource.data.length == 0 " class="d-flex flex-column align-items-center">
+                                    <img class="width400" src="assets/images/svg/clients-img.svg">
+                                    <h4 class="text-center pt-12">No data found</h4>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
