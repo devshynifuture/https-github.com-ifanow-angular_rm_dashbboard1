@@ -41,7 +41,8 @@ export class AddExpensesComponent implements OnInit {
     this.inputData = data;
 
     if (this.isViewInitCalled) {
-      if (data.isRecuring == true) {
+      if (data.isRecuring == false && data.continueTill && data.repeatFrequency) {
+        data.isRecuring=true;
         this.getdataFormRec(data)
         this.isRecuring = true
       } else {
@@ -58,8 +59,14 @@ export class AddExpensesComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.advisorId = AuthService.getAdvisorId();
     this.getListFamilyMem();
-    this.getdataForm(this.inputData);
-    this.getdataFormRec(this.inputData)
+    if (this.inputData.isRecuring == false && this.inputData.continueTill && this.inputData.repeatFrequency) {
+      this.inputData.isRecuring=true;
+      this.getdataFormRec(this.inputData)
+      this.isRecuring = true
+    } else {
+      this.getdataForm(this.inputData);
+      this.isRecuring = false
+    }
     this.trnFlag='Transaction';
     this.budgetFlag='Budget';
   }
@@ -78,6 +85,7 @@ export class AddExpensesComponent implements OnInit {
   }
 
   getdataForm(data) {
+    this.trnFlag='Transaction';
     this.getFlag = data.flag
 
     if (data == undefined) {
@@ -101,12 +109,13 @@ export class AddExpensesComponent implements OnInit {
     this.familyMemberId = this.expenses.controls.familyMemberId.value
   }
   getdataFormRec(data) {
+    this.trnFlag='Recurring transaction';
     this.getFlag = data.flag
 
     if (data == undefined) {
       data = {};
     } if (this.getFlag == 'editExpenses' || this.getFlag == 'editBudget') {
-      this.isRecuring = data.isRecuring
+      this.isRecuring = true
     }
     this.recuring = this.fb.group({
       timeInMilliSec: [(data == undefined) ? '' : data.timeInString],
