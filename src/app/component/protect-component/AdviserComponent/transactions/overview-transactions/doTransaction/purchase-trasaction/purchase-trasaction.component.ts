@@ -270,7 +270,7 @@ export class PurchaseTrasactionComponent implements OnInit {
   }
 
   getbankDetails(bank) {
-    this.bankDetails = bank[0];
+    this.bankDetails = bank;
   }
 
   onFolioChange(folio) {

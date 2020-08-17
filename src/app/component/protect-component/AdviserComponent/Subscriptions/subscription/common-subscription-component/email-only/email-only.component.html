@@ -21,10 +21,10 @@
     </div>
     <div class="pl-28 pb-12 pt-90">
         <div class="row">
-            <div class="col-md-1 d-flex align-items-center">
+            <div class="col-md-2 col-lg-1 pr-0 d-flex align-items-center justify-content-end">
                 <p class="m-0 text-black roboto f-400">From</p>
             </div>
-            <div class="col-md-9 pl-0">
+            <div class="col-md-9 col-lg-9 pr-0">
                 <!-- <p *ngIf="this.emailData" class="m-0 text-black"> -->
                 <!-- {{(this.emailData) ? this.emailData.fromEmail : 'support@futurewise.co.in'}}</p> -->
                 <mat-select class="form-control" [(ngModel)]="_inputData.fromEmail">
@@ -37,11 +37,11 @@
     </div>
     <div class="pl-28 pb-12 pt-24 new-email-chips-height" *ngIf="_inputData.openedFrom != 'settings'">
         <div class="row">
-            <div class="col-md-1 d-flex align-items-center">
+            <div class="col-md-2 col-lg-1 pr-0 d-flex align-items-center justify-content-end">
                 <p class="m-0 text-black roboto f-400">To</p>
             </div>
 
-            <div class="col-md-9 pl-0" id="new-mail-chips">
+            <div class="col-md-9 col-lg-9  pr-0" id="new-mail-chips">
                 <mat-form-field class="h-auto form-control">
                     <mat-chip-list #chipListEmail>
                         <mat-chip [removable]="true" *ngFor="let singleEmailId of emailIdList; let i = index"
@@ -59,10 +59,10 @@
 
     <div class="pl-28 pb-12 pt-24">
         <div class="row">
-            <div class="col-md-1 d-flex align-items-center pl-0">
+            <div class="col-md-2 col-lg-1 d-flex align-items-center justify-content-end pr-0">
                 <p class="m-0 text-black roboto f-400 pt-8">Subject</p>
             </div>
-            <div class="col-md-9 pl-0">
+            <div class="col-md-9 col-lg-9 pr-0">
                 <mat-form-field>
                     <input matInput [(ngModel)]="_inputData.subject" class="form-control h-40"
                         [readonly]="_inputData.subjectChange" readonly>

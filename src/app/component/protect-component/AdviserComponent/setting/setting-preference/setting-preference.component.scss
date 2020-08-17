@@ -90,9 +90,25 @@
 ::ng-deep .mat-button-toggle-checked {
     background-color: #008FFF;
     color: #fff;
-    border: 1px solid #008FFF;
+   // border: 1px solid #008FFF;
 }
 
-::ng-deep .mat-button-toggle-checked.mat-button-toggle-appearance-standard {
-    color: #FFFFFF;
+// ::ng-deep .mat-button-toggle-checked.mat-button-toggle-appearance-standard {
+//     color: #FFFFFF;
+// }
+
+
+@media screen and (max-width: 768px)
+{
+  .tabWidth {
+      width: 100px;
+  }
+
+    }
+    
+@media (max-width: 1024px) { 
+#ui-setting-preference .mat-radio-button {
+    min-width: 150px;
+}
+
 }

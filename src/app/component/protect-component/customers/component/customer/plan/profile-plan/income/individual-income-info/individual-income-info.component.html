@@ -130,7 +130,7 @@
                                 <!-- error build errro -->
                                 <i *ngIf="incomeNetForm.value.monthlyIncomeForm.length < 12"
                                     class="material-icons text-primitive f-20 c-p float-left"
-                                    (click)="addMonthlyIncome(undefined)">add</i>
+                                    (click)="addMonthlyIncome(undefined,undefined,undefined)">add</i>
                                 <i *ngIf="incomeNetForm.value.monthlyIncomeForm.length > 1"
                                     class="material-icons text-primitive f-20 c-p pl-10"
                                     (click)="removemonthlyIncome(obj,pointIndex)">remove</i>
@@ -209,7 +209,7 @@
                                 <!-- build Error -->
                                 <i *ngIf="incomeNetForm.value.basicSalaryForm.length < 2"
                                     class="material-icons text-primitive f-20 c-p float-left"
-                                    (click)="addSalary(undefined)">add</i>
+                                    (click)="addSalary(undefined,undefined)">add</i>
                                 <i *ngIf="incomeNetForm.value.basicSalaryForm.length > 1"
                                     class="material-icons text-primitive f-20 c-p pl-10"
                                     (click)="removeSalary(obj,pointIndex)">remove</i>
@@ -261,7 +261,7 @@
                                 <!-- build error -->
                                 <i *ngIf="incomeNetForm.value.allowancesForm.length < 14"
                                     class="material-icons text-primitive f-20 c-p float-left"
-                                    (click)="addAllowances(undefined)">add</i>
+                                    (click)="addAllowances(undefined,undefined,undefined)">add</i>
                                 <i *ngIf="incomeNetForm.value.allowancesForm.length > 1"
                                     class="material-icons text-primitive f-20 c-p pl-10"
                                     (click)="removeAllowances(obj,pointIndex)">remove</i>
@@ -311,7 +311,7 @@
                             <!-- build error -->
                                 <i *ngIf="incomeNetForm.value.perquisitesForm.length < 4"
                                     class="material-icons text-primitive f-20 c-p float-left"
-                                    (click)="addPerquisites(undefined)">add</i>
+                                    (click)="addPerquisites(undefined,undefined,undefined)">add</i>
                                 <i *ngIf="incomeNetForm.value.perquisitesForm.length > 1"
                                     class="material-icons text-primitive f-20 c-p pl-10"
                                     (click)="removePerquisites(obj,pointIndex)">remove</i>
@@ -320,7 +320,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="row pt-40" [hidden]="incomeOption=='2'">
                     <div  class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8">Reimbursements</h5>
@@ -361,7 +361,7 @@
                                 <!-- build error -->
                                 <i *ngIf="incomeNetForm.value.reimbursementsForm.length < 5"
                                     class="material-icons text-primitive f-20 c-p float-left"
-                                    (click)="addReimbursements(undefined)">add</i>
+                                    (click)="addReimbursements(undefined,undefined,undefined)">add</i>
                                 <i *ngIf="incomeNetForm.value.reimbursementsForm.length > 1"
                                     class="material-icons text-primitive f-20 c-p pl-10"
                                     (click)="removeReimbursements(obj,pointIndex)">remove</i>
@@ -410,7 +410,7 @@
                                 <!-- build error -->
                                 <i *ngIf="incomeNetForm.value.retiralsForm.length < 4"
                                     class="material-icons text-primitive f-20 c-p float-left"
-                                    (click)="addRetirals(undefined)">add</i>
+                                    (click)="addRetirals(undefined,undefined,undefined)">add</i>
                                 <i *ngIf="incomeNetForm.value.retiralsForm.length > 1"
                                     class="material-icons text-primitive f-20 c-p pl-10"
                                     (click)="removeRetirals(obj,pointIndex)">remove</i>
@@ -458,7 +458,7 @@
                                 <!-- build error -->
                                 <i *ngIf="incomeNetForm.value.othersForm.length < 2"
                                     class="material-icons text-primitive f-20 c-p float-left"
-                                    (click)="addOthers(undefined)">add</i>
+                                    (click)="addOthers(undefined,undefined,undefined)">add</i>
                                 <i *ngIf="incomeNetForm.value.othersForm.length > 1"
                                     class="material-icons text-primitive f-20 c-p pl-10"
                                     (click)="removeOthers(obj,pointIndex)">remove</i>
