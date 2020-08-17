@@ -69,8 +69,11 @@ export class BackofficeFileUploadAumComponent implements OnInit {
     };
     this.reconService.getBackofficeFolioAumList(obj).subscribe((data) => {
       if (data) {
+        console.log("this is aum file uploaded",data);
         data.map((element) => {
-          element.rt = this.getRtNameFromRtId(parseInt(element.rt));
+          if(!isNaN(Number(element.rt))){
+            element.rt = this.getRtNameFromRtId(parseInt(element.rt));
+          }
           if (element.processStatus === 0) {
             element.status = "Pending";
           } else if (element.processStatus === 1) {
@@ -81,9 +84,6 @@ export class BackofficeFileUploadAumComponent implements OnInit {
             element.status = "Failed";
           }
 
-          if (!element.hasOwnProperty("arnRiaNumber")) {
-            element.arnRiaNumber = this.getRtNameFromRtId(element.rt);
-          }
         });
         this.listData = data;
         this.dataSource.data = this.listData;

@@ -49,7 +49,7 @@
                     <td mat-cell *matCellDef="let element" class="br">
                         <div class="bar">
                             <span
-                                *ngIf="!isLoading">{{element.processStatus==0?"Pending":element.processStatus==1? "Success" : "Failed"}}</span>
+                                *ngIf="!isLoading">{{element.status}}</span>
                         </div>
                     </td>
                 </ng-container>

@@ -223,7 +223,7 @@
                             <div class="form-group">
                                 <mat-form-field class="ba-date">
                                     <input class="form-control b-0" [min]="camsAsOnDatePastMaxDate"
-                                        [max]="dateYesterday" formControlName="fromDate" (click)="picker1.open()"
+                                        [max]="dateToday" formControlName="fromDate" (click)="picker1.open()"
                                         matInput [matDatepicker]="picker1">
                                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                                     <mat-datepicker #picker1></mat-datepicker>
