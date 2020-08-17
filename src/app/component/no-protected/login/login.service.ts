@@ -5,13 +5,14 @@ import {appConfig} from 'src/app/config/component-config';
 import {AuthService} from '../../../auth-service/authService';
 import {Router} from '@angular/router';
 import {HttpParams} from '@angular/common/http';
+import {RoleService} from "../../../auth-service/role.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
 
-  constructor(private http: HttpService) {
+  constructor(private http: HttpService, private roleService: RoleService) {
   }
 
   generateOtp(data) {
@@ -43,11 +44,7 @@ export class LoginService {
   }
 
   loginWithPassword(data) {
-    return this.http.getEncoded(apiConfig.USER + appConfig.LOGIN_WITH_PASSWORD, data, 1);
-  }
-
-  supportLogin(data) {
-    return this.http.getEncoded(apiConfig.USER + appConfig.LOGIN_WITH_PASSWORD, data, 1);
+    return this.http.postEncoded(apiConfig.USER + appConfig.LOGIN_WITH_PASSWORD, data, 1);
   }
 
   sendWelcomeEmail(data) {
@@ -71,6 +68,8 @@ export class LoginService {
   handleUserData(authService: AuthService, router: Router, userData) {
     authService.setToken('authTokenInLoginComponnennt');
     authService.setUserInfo(userData);
+    this.roleService.getRoleDetails(userData.roleId);
+
     if (userData.userType == 1 || userData.userType == 8) {
       router.navigate(['admin', 'dashboard']);
     } else if (userData.isRmLogin) {

@@ -22,13 +22,13 @@
             <nav mat-tab-nav-bar>
                 <a [routerLink]="['/customer/detail/overview']" routerLinkActive="successBorder"
                     mat-tab-link>OVERVIEW</a>
-                <a [routerLink]="['/customer/detail/account']" routerLinkActive="successBorder"
+                <a [routerLink]="['/customer/detail/account']" *ngIf="roleService.portfolioPermission.enabled" routerLinkActive="successBorder"
                     mat-tab-link>PORTFOLIO</a>
-                <a class="planWidth" [routerLink]="['/customer/detail/plan']" *ngIf="!enumDataService.PRODUCTION" routerLinkActive="successBorder"
+                <a class="planWidth" [routerLink]="['/customer/detail/plan']" *ngIf="roleService.planPermission.enabled&&!enumDataService.PRODUCTION" routerLinkActive="successBorder"
                     mat-tab-link>PLAN</a>
-                <a [routerLink]="['/customer/detail/activity']" *ngIf="!enumDataService.PRODUCTION" routerLinkActive="successBorder"
+                <a [routerLink]="['/customer/detail/activity']" *ngIf="roleService.activityPermission.enabled&&!enumDataService.PRODUCTION" routerLinkActive="successBorder"
                     mat-tab-link>ACTIVITY</a>
-                <a [routerLink]="['/customer/detail/transact']" mat-tab-link
+                <a [routerLink]="['/customer/detail/transact']" *ngIf="roleService.transactionPermission.enabled"  mat-tab-link
                     routerLinkActive="successBorder">TRANSACT</a>
             </nav>
         </div>

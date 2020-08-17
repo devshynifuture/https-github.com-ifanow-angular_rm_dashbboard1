@@ -178,6 +178,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     return this.inputData;
   }
   uploadData(data) {
+    
     if (data) {
       this.clientId = data.clientId
       this.addedData = true;
@@ -1513,7 +1514,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       }
       let obj = {
         htmlInput: para,
-        header: null,
+        header: this.header,
         name: (this.clientData.name) ? this.clientData.name : '' + 's' + this.mode + date,
         landscape: true,
         key: 'showPieChart',
