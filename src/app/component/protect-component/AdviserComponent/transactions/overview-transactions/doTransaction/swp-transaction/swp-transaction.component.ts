@@ -226,7 +226,7 @@ export class SwpTransactionComponent implements OnInit {
   }
 
   getbankDetails(value) {
-    this.bankDetails = value[0];
+    this.bankDetails = value;
   }
 
   getSchemeDetailsRes(data) {

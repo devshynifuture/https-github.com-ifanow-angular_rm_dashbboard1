@@ -166,6 +166,7 @@
     display: inline-block;
     height: 30px;
      margin-right: 16px;
+     cursor: pointer;
      .activeSpan {
        border-bottom: 4px solid #008FFF;
        color: #008FFF;
@@ -174,6 +175,31 @@
       }
 
       
+      .image-cropper {
+        position: relative;
+    }
+    
+    .zoomClassPosition {
+        position: absolute;
+        top: 50%;
+        left: 0px;
+        right: 0px;
+        text-align: center;
+    }
+    
+    
+    
+    .textHeading {
+        text-align: right;
+    }
+    
+    .profile-img {
+      // margin-top: 12px;
+      img {
+          max-width: 100%;
+          border-radius: 50%;
+      }
+  }
   
 
 

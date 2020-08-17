@@ -120,7 +120,7 @@
 
                 <div class="row">
                     <div *ngIf="showMsg == false && noResult == false && commonFileFolders.data.length > 0"
-                        class="col-lg-9 col-md-10 p-0 documentsTable">
+                        class="col-lg-9 col-md-11 p-0 documentsTable">
                         <div *ngSwitchCase="viewMode">
                             <table [appSkeletonLoading]="isLoading" [dataSource]="commonFileFolders" appSkeletonLoading
                                 class="skeletonAnimation" id="table-low" mat-table matSort>
@@ -274,16 +274,18 @@
                     </div>
 
 
-                    <div class="col-lg-3 col-md-2 pr-0 " *ngIf="showMsg == false && noResult == false">
+                    <div class="col-lg-3 col-md-1 pr-0 " *ngIf="showMsg == false && noResult == false">
                         <div class="bg-grey sticky-top lter mb-16 boxGrey f-14" *ngIf="urlData">
 
                             <p class="selectMoreDetails" *ngIf="urlData != '' && urlData == undefined">
                                 Select a file to see more details
                             </p>
-                            <div *ngIf="selectedElement.fileType == 'jpg' || selectedElement.fileType == 'png' || selectedElement.fileType == 'jpeg'">
+                            <div
+                                *ngIf="selectedElement.fileType == 'jpg' || selectedElement.fileType == 'png' || selectedElement.fileType == 'jpeg'">
                                 <img [src]="urlData" height="200" width="250"> <br />
                             </div>
-                            <div *ngIf="selectedElement.fileType != 'jpg' && selectedElement.fileType != 'png' && selectedElement.fileType != 'jpeg'">
+                            <div
+                                *ngIf="selectedElement.fileType != 'jpg' && selectedElement.fileType != 'png' && selectedElement.fileType != 'jpeg'">
                                 <ngx-doc-viewer [url]="urlData" viewer="google" style="width:275px;height:350px;">
                                 </ngx-doc-viewer>
                             </div>

@@ -226,4 +226,7 @@ export class PlanService {
   getDetailsInsurance(data){
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_DETAILED_INSURANCE, data);
   }
+  getAssetsOfExpense(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.ASSTES_OF_EXPENSE, data)
+  }
 }

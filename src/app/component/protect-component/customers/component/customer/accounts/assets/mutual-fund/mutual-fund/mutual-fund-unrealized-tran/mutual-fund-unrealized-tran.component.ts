@@ -178,6 +178,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     return this.inputData;
   }
   uploadData(data) {
+    
     if (data) {
       this.clientId = data.clientId
       this.addedData = true;
@@ -598,15 +599,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         this.getMutualFundResponse(data);
         let cashFlow = data;
         if (cashFlow.mutualFundCategoryMastersList.length > 0) {
-          if (cashFlow.mutualFundCategoryMastersList[0].currentValue == 0 || cashFlow.mutualFundCategoryMastersList[0].balanceUnits == 0 || cashFlow.mutualFundCategoryMastersList[0].balanceUnits < 0) {
-            if (cashFlow.mutualFundCategoryMastersList.length > 1) {
-              this.cashFlowXirr = cashFlow.mutualFundCategoryMastersList[1].cashFlowxirr;
-            } else {
-              this.cashFlowXirr = cashFlow.mutualFundCategoryMastersList[0].cashFlowxirr;
-            }
-          } else {
-            this.cashFlowXirr = cashFlow.mutualFundCategoryMastersList[0].cashFlowxirr;
-          }
+          this.cashFlowXirr = cashFlow.mutualFundCategoryMastersList[0].cashFlowxirr;
         }
         this.cashFlowObj = {
           'cashFlowInvestment': this.mfData.total_cashflow_amount_inv,
@@ -1294,7 +1287,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       }else{
         this.headerHtml = document.getElementById('alltemplateHeader');
       }
-      this.returnValue = this.utilService.htmlToPdf(this.headerHtml.innerHTML,para.innerHTML, this.reportName, 'true', this.fragmentData, '', '');
+      this.returnValue = this.utilService.htmlToPdf(this.headerHtml.innerHTML,para.innerHTML, this.viewMode, 'true', this.fragmentData, '', '');
     }, 200);
 
 
@@ -1513,7 +1506,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       }
       let obj = {
         htmlInput: para,
-        header: null,
+        header: this.header,
         name: (this.clientData.name) ? this.clientData.name : '' + 's' + this.mode + date,
         landscape: true,
         key: 'showPieChart',

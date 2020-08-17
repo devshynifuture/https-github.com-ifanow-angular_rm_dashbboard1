@@ -4,18 +4,11 @@
 
 #container1 {
   height: 80px !important;
-  width: 650px;
+  // width: 650px;
   margin: 0px auto;
 }
 
-body {
-  font-family: helvetica, sans-serif;
-  font-size: .7em;
-}
 
-p {
-  margin: .5em 1em;
-}
 
 ::ng-deep .mat-progress-spinner circle,
 .mat-spinner circle {

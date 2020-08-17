@@ -451,7 +451,7 @@ export const appConfig = {
   CLIENTLIST_WITH_SUBSCRIPTION: 'subscription/clients/with/subscriptions/get',
   GET_INVOICE_FEE_CALCULATIONS: 'subscription/invoice/fee-calculation/get',
   SEND_INVOICE_EMAIL: 'pdfAndEmail/send',
-  // Plan Module
+  // Plan Module////////////////////////
 
   GET_INCOME_LIST: 'account/income/get',
   ADD_INCOME_LIST: 'account/income/add',
@@ -464,7 +464,7 @@ export const appConfig = {
   INCOME_ALLOWANCE_DELETE: 'account/income/allowance/delete?',
   INCOME_PERQUISITES_DELETE: 'account/income/perquisites/delete?',
   INCOME_REIMBURSEMENT_DELETE: 'account/income/reimbursement/delete?',
-
+  ASSTES_OF_EXPENSE:'account/expense/expense/of/asset/get',
   /////////////////////////Activity///////////////////////////////////
   ADVICE_GET_ALL: 'advice/asset/get',
   ADVICE_ADD_FD: 'advice/asset/fixed-income/suggest-new-fd/add',
