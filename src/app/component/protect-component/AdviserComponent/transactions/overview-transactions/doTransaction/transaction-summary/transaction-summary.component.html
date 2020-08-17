@@ -101,26 +101,24 @@
           </div>
       </div> -->
       <div *ngIf="selectedPlatform== 1 && bankDetails">
-        <div *ngFor="let bank of bankDetails" class="row  pt-16 pb-16">
-          <div class="col-md-10 p-0">
+        <div class="row  pt-16 pb-16">
+          <div class="col-md-10 p-0" *ngIf="bankDetails.length > 1">
             <p class="m-0 roboto text-custom">Bank A/c details</p>
             <h5 class="m-0">
-              <span class="f-500">Bank Name:</span> {{bank.bankName}}
             </h5>
-            <mat-select *ngIf="bankDetails && bankDetails.length > 1" class="form-control">
-              <mat-option (click)="selectBank(bank)" *ngFor="let bank of bankDetails"
-                          [value]="bank.bankName">
-                {{bank.bankName}}
-              </mat-option>
-            </mat-select>
-            <h5 class="m-0">
-              <span class="f-500">Ac no.:</span>
-              {{bank.accountNo}}</h5>
+            <div *ngIf="defaultBank">
+              <h5 class="m-0" >
+                <span class="f-500">Bank name:</span>
+                {{defaultBank.bankName}}</h5>
+              <h5 class="m-0">
+                <span class="f-500">Ac no.:</span>
+                {{defaultBank.accountNo}}</h5>
+            </div>
           </div>
-          <div
-            *ngIf=" transactionSummary && showBankEdit == true && transactionSummary.multiTransact==false && transactionSummary.allEdit == true && (transactionSummary.transactType != 'STP'|| transactionSummary.transactType != 'SWITCH')"
+          <div 
+            *ngIf="bankDetails.length > 1 && transactionSummary && showBankEdit == true && transactionSummary.multiTransact==false && transactionSummary.allEdit == true && (transactionSummary.transactType != 'STP'|| transactionSummary.transactType != 'SWITCH')"
             class="col-md-2">
-            <button (click)="showbank = true;openBank()" class="primary-sm" mat-stroked-button>Edit</button>
+            <button (click)="showbank = true;openBank(bankDetails)" class="primary-sm" mat-stroked-button>Edit</button>
           </div>
         </div>
       </div>

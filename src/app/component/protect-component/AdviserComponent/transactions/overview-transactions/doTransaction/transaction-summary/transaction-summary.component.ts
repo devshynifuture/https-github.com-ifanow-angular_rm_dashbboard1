@@ -49,6 +49,7 @@ export class TransactionSummaryComponent implements OnInit {
   checkAlert: any;
   changeDetails: any;
   advisorId: any;
+  defaultBank: any;
 
   constructor(private onlineTransact: OnlineTransactionService, private processTransaction: ProcessTransactionService,
               private subInjectService: SubscriptionInject, public dialog: MatDialog,
@@ -128,16 +129,16 @@ export class TransactionSummaryComponent implements OnInit {
     });
   }
 
-  openBank(): void {
+  openBank(bankDetails): void {
     const dialogRef = this.dialog.open(BankSelectPopUpComponent, {
       width: '470px',
-      data: {bank: this.bankDetails, animal: this.element}
+      data: {bank: bankDetails, animal: this.element}
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result == undefined) {
         return;
       }
-      this.element = result;
+      this.defaultBank = result;
       this.bankDetailsSend.emit(result);
     });
   }
@@ -185,7 +186,14 @@ export class TransactionSummaryComponent implements OnInit {
   }
 
   getBankDetailsNSERes(data) {
+
     this.bankDetails = data;
+    console.log('bank == ',this.bankDetails)
+    this.defaultBank = this.bankDetails[0]
+    this.bankDetails.forEach(element => {
+      element.selected = false
+    });
+    this.bankDetails[0].selected = true
     this.bankDetailsSend.emit(this.bankDetails);
     if (this.bankDetails.length > 1) {
       this.showBankEdit = true;
