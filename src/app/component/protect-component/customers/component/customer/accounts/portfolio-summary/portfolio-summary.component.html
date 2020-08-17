@@ -1,7 +1,7 @@
 <div id="ui-account-summary">
   <div class="row">
-    <div class="col-xl-2 skeletonAnimation col-lg-3 col-md-3 col-sm-6 p-0 bg-white pb-44"
-         [appSkeletonLoading]="letsideBarLoader" appSkeletonLoading>
+    <div class="col-xl-2 skeletonAnimation col-lg-3 col-md-3 p-0 bg-white pb-44" [appSkeletonLoading]="letsideBarLoader"
+      appSkeletonLoading>
       <div class="wrapper-16 bb-2 c-p overflow-hidden ">
 
         <p class="m-0 text-black roboto">NET WORTH</p>
@@ -11,7 +11,7 @@
             <h1 *ngIf="!letsideBarLoader" class="f-35 m-0 roboto text-black pt-8 ">
               <span>₹</span>
               <span *ngIf="letsideBarLoader==false" appFormatNumber
-                    [value]="totalAssetsWithoutLiability-liabilityTotal">{{totalAssetsWithoutLiability - liabilityTotal}}</span>
+                [value]="totalAssetsWithoutLiability-liabilityTotal">{{totalAssetsWithoutLiability - liabilityTotal}}</span>
             </h1>
           </div>
         </div>
@@ -26,8 +26,8 @@
             <div [ngClass]="{'height23': letsideBarLoader}" class="bar">
               <p *ngIf="letsideBarLoader==false" class="text-black f-12 m-0 text-right roboto ">
                 <span *ngIf="totalAssetsWithoutLiability>0">₹</span><span appFormatNumber
-                                                                          [value]="totalAssetsWithoutLiability+liabilityTotal"
-                                                                          class="bar">{{totalAssetsWithoutLiability + liabilityTotal}}</span>
+                  [value]="totalAssetsWithoutLiability+liabilityTotal"
+                  class="bar">{{totalAssetsWithoutLiability + liabilityTotal}}</span>
               </p>
             </div>
           </div>
@@ -46,7 +46,7 @@
             <div [ngClass]="{'height23': letsideBarLoader}" class="bar">
               <p *ngIf="letsideBarLoader==false" class="text-black f-12 m-0 text-right roboto ">
                 <span *ngIf="liabilityTotal>0">₹</span><span appFormatNumber [value]="liabilityTotal"
-                                                             class="bar">{{liabilityTotal}}</span></p>
+                  class="bar">{{liabilityTotal}}</span></p>
             </div>
           </div>
 
@@ -59,7 +59,7 @@
             <div class="col-md-6 relClass pr-0">
               <div>
                 <a [queryParams]="{ tab: 'tab1'}" class="text-black m-0 roboto"
-                   routerLink="/customer/detail/account/assets">
+                  routerLink="/customer/detail/account/assets">
                   Mutual funds
                 </a>
               </div>
@@ -70,16 +70,14 @@
                   <p *ngIf="letsideBarLoader==false" class=" m-0 roboto pr-8 roboto ">
                     <span *ngIf="mutualFundValue.currentValue!=0">₹</span>
                     <span [value]="mutualFundValue.currentValue"
-                          appFormatNumber>{{mutualFundValue.currentValue == 0 ? '-' : mutualFundValue.currentValue}}
-                                        </span>
+                      appFormatNumber>{{mutualFundValue.currentValue == 0 ? '-' : mutualFundValue.currentValue}}
+                    </span>
                   </p>
-                  <p
-                    [ngClass]="{'text-blue': checkNumberPositiveAndNegative(mutualFundValue.percentage),'text-danger': checkNumberPositiveAndNegative(mutualFundValue.percentage)==false,'': checkNumberPositiveAndNegative(mutualFundValue.percentage)==undefined}"
+                  <p [ngClass]="{'text-blue': checkNumberPositiveAndNegative(mutualFundValue.percentage),'text-danger': checkNumberPositiveAndNegative(mutualFundValue.percentage)==false,'': checkNumberPositiveAndNegative(mutualFundValue.percentage)==undefined}"
                     class="m-0 roboto pr-8 ">
-                                        <span
-                                          *ngIf="letsideBarLoader==false">{{mutualFundValue.percentage == 0 ? '-' : mutualFundValue.percentage}}
-                                          <span
-                                            *ngIf="mutualFundValue.percentage!=0">%</span></span>
+                    <span
+                      *ngIf="letsideBarLoader==false">{{mutualFundValue.percentage == 0 ? '-' : mutualFundValue.percentage}}
+                      <span *ngIf="mutualFundValue.percentage!=0">%</span></span>
                   </p>
                 </div>
               </div>
@@ -90,7 +88,7 @@
             <div class="col-md-6 relClass pr-0">
               <div>
                 <a [queryParams]="{ tab: 'tab2'}" class="text-black m-0 roboto"
-                   routerLink="/customer/detail/account/assets">
+                  routerLink="/customer/detail/account/assets">
                   Stocks
                 </a>
               </div>
@@ -101,16 +99,13 @@
                   <p *ngIf="letsideBarLoader==false" class=" m-0 roboto pr-8 roboto ">
                     <span *ngIf="stocks.currentValue!=0">₹</span>
                     <span [value]="stocks.currentValue"
-                          appFormatNumber>{{stocks.currentValue == 0 ? '-' : stocks.currentValue}}
-                                        </span>
+                      appFormatNumber>{{stocks.currentValue == 0 ? '-' : stocks.currentValue}}
+                    </span>
                   </p>
-                  <p
-                    [ngClass]="{'text-success': checkNumberPositiveAndNegative(stocks.percentage),'text-danger': checkNumberPositiveAndNegative(stocks.percentage)==false,'': checkNumberPositiveAndNegative(stocks.percentage)==undefined}"
+                  <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(stocks.percentage),'text-danger': checkNumberPositiveAndNegative(stocks.percentage)==false,'': checkNumberPositiveAndNegative(stocks.percentage)==undefined}"
                     class="m-0 roboto pr-8 ">
-                                        <span
-                                          *ngIf="letsideBarLoader==false">{{stocks.percentage == 0 ? '-' : stocks.percentage}}
-                                          <span
-                                            *ngIf="stocks.percentage!=0">%</span></span>
+                    <span *ngIf="letsideBarLoader==false">{{stocks.percentage == 0 ? '-' : stocks.percentage}}
+                      <span *ngIf="stocks.percentage!=0">%</span></span>
                   </p>
                 </div>
               </div>
@@ -121,7 +116,7 @@
             <div class="col-md-6 relClass pr-0">
               <div>
                 <a [queryParams]="{ tab: 'tab3'}" class="text-black m-0 roboto"
-                   routerLink="/customer/detail/account/assets">
+                  routerLink="/customer/detail/account/assets">
                   Fixed Income
                 </a>
               </div>
@@ -132,14 +127,13 @@
                   <p *ngIf="letsideBarLoader==false" class="m-0 roboto pr-8">
                     <span *ngIf="fixedIncome.currentValue!=0">₹</span>
                     <span *ngIf="fixedIncome" appFormatNumber
-                          [value]="fixedIncome.currentValue">{{fixedIncome.currentValue == 0 ? '-' : fixedIncome.currentValue}}</span>
+                      [value]="fixedIncome.currentValue">{{fixedIncome.currentValue == 0 ? '-' : fixedIncome.currentValue}}</span>
                   </p>
-                  <p
-                    [ngClass]="{'text-success': checkNumberPositiveAndNegative(fixedIncome.percentage),'text-danger': checkNumberPositiveAndNegative(fixedIncome.percentage)==false}"
+                  <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(fixedIncome.percentage),'text-danger': checkNumberPositiveAndNegative(fixedIncome.percentage)==false}"
                     class="m-0 roboto pr-8">
-                                        <span *ngIf="letsideBarLoader==false">
-                                            {{fixedIncome.percentage == 0 ? '-' : fixedIncome.percentage}}
-                                          <span *ngIf="fixedIncome.percentage!=0">%</span></span>
+                    <span *ngIf="letsideBarLoader==false">
+                      {{fixedIncome.percentage == 0 ? '-' : fixedIncome.percentage}}
+                      <span *ngIf="fixedIncome.percentage!=0">%</span></span>
                   </p>
                 </div>
               </div>
@@ -151,7 +145,7 @@
               <p class="text-black m-0 roboto"></p>
               <div>
                 <a [queryParams]="{ tab: 'tab4'}" class="text-black m-0 roboto"
-                   routerLink="/customer/detail/account/assets">
+                  routerLink="/customer/detail/account/assets">
                   Real estate
                 </a>
               </div>
@@ -161,15 +155,12 @@
                 <p *ngIf="letsideBarLoader==false" class="m-0 roboto pr-8">
                   <span *ngIf="realEstate.currentValue!=0">₹</span>
                   <span appFormatNumber [value]="realEstate.currentValue"
-                        *ngIf="realEstate">{{realEstate.currentValue == 0 ? '-' : realEstate.currentValue}}</span>
+                    *ngIf="realEstate">{{realEstate.currentValue == 0 ? '-' : realEstate.currentValue}}</span>
                 </p>
-                <p
-                  [ngClass]="{'text-success': checkNumberPositiveAndNegative(realEstate.percentage),'text-danger': checkNumberPositiveAndNegative(realEstate.percentage)==false,'': checkNumberPositiveAndNegative(realEstate.percentage)==undefined}"
+                <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(realEstate.percentage),'text-danger': checkNumberPositiveAndNegative(realEstate.percentage)==false,'': checkNumberPositiveAndNegative(realEstate.percentage)==undefined}"
                   class="m-0 roboto pr-8">
-                                    <span
-                                      *ngIf="letsideBarLoader==false">{{realEstate.percentage == 0 ? '-' : realEstate.percentage}}
-                                      <span
-                                        *ngIf="realEstate.percentage!=0">%</span></span>
+                  <span *ngIf="letsideBarLoader==false">{{realEstate.percentage == 0 ? '-' : realEstate.percentage}}
+                    <span *ngIf="realEstate.percentage!=0">%</span></span>
                 </p>
               </div>
             </div>
@@ -179,7 +170,7 @@
             <div class="col-md-6 relClass pr-0">
               <div>
                 <a [queryParams]="{ tab: 'tab5'}" class="text-black m-0 roboto"
-                   routerLink="/customer/detail/account/assets">
+                  routerLink="/customer/detail/account/assets">
                   Retirement a/c
                 </a>
               </div>
@@ -190,15 +181,12 @@
                 <p *ngIf="letsideBarLoader==false" class=" m-0 roboto pr-8 ">
                   <span *ngIf="retirement.currentValue!=0">₹</span>
                   <span appFormatNumber [value]="retirement.currentValue" *ngIf="summaryMap">
-                                        {{retirement.currentValue == 0 ? '-' : retirement.currentValue}}</span>
+                    {{retirement.currentValue == 0 ? '-' : retirement.currentValue}}</span>
                 </p>
-                <p
-                  [ngClass]="{'text-success': checkNumberPositiveAndNegative(retirement.percentage),'text-danger': checkNumberPositiveAndNegative(retirement.percentage)==false,'': checkNumberPositiveAndNegative(retirement.percentage)==undefined}"
+                <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(retirement.percentage),'text-danger': checkNumberPositiveAndNegative(retirement.percentage)==false,'': checkNumberPositiveAndNegative(retirement.percentage)==undefined}"
                   class=" m-0 roboto pr-8">
-                                    <span
-                                      *ngIf="letsideBarLoader==false">{{retirement.percentage == 0 ? '-' : retirement.percentage}}
-                                      <span
-                                        *ngIf="retirement.percentage!=0">%</span></span>
+                  <span *ngIf="letsideBarLoader==false">{{retirement.percentage == 0 ? '-' : retirement.percentage}}
+                    <span *ngIf="retirement.percentage!=0">%</span></span>
                 </p>
               </div>
             </div>
@@ -208,7 +196,7 @@
             <div class="col-md-6 pr-0 ">
               <div class="bar">
                 <a [queryParams]="{ tab: 'tab6'}" class="text-black m-0 roboto"
-                   routerLink="/customer/detail/account/assets">
+                  routerLink="/customer/detail/account/assets">
                   Small savings
                 </a>
               </div>
@@ -218,15 +206,13 @@
                 <p *ngIf="letsideBarLoader==false" class="m-0 roboto pr-8">
                   <span *ngIf="smallSavingScheme.currentValue!=0">₹</span>
                   <span appFormatNumber [value]="smallSavingScheme.currentValue"
-                        *ngIf="smallSavingScheme">{{smallSavingScheme.currentValue == 0 ? '-' : smallSavingScheme.currentValue}}</span>
+                    *ngIf="smallSavingScheme">{{smallSavingScheme.currentValue == 0 ? '-' : smallSavingScheme.currentValue}}</span>
                 </p>
-                <p
-                  [ngClass]="{'text-success': checkNumberPositiveAndNegative(smallSavingScheme.percentage),'text-danger': checkNumberPositiveAndNegative(smallSavingScheme.percentage)==false,'': checkNumberPositiveAndNegative(smallSavingScheme.percentage)==undefined}"
+                <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(smallSavingScheme.percentage),'text-danger': checkNumberPositiveAndNegative(smallSavingScheme.percentage)==false,'': checkNumberPositiveAndNegative(smallSavingScheme.percentage)==undefined}"
                   class="m-0 roboto pr-8 ">
-                                    <span
-                                      *ngIf="letsideBarLoader==false">{{smallSavingScheme.percentage == 0 ? '-' : smallSavingScheme.percentage}}
-                                      <span
-                                        *ngIf="smallSavingScheme.percentage!=0">%</span></span>
+                  <span
+                    *ngIf="letsideBarLoader==false">{{smallSavingScheme.percentage == 0 ? '-' : smallSavingScheme.percentage}}
+                    <span *ngIf="smallSavingScheme.percentage!=0">%</span></span>
                 </p>
               </div>
             </div>
@@ -236,7 +222,7 @@
             <div class="col-md-6 relClass pr-0">
               <div>
                 <a [queryParams]="{ tab: 'tab7'}" class="text-black m-0 roboto"
-                   routerLink="/customer/detail/account/assets">
+                  routerLink="/customer/detail/account/assets">
                   Cash and bank
                 </a>
               </div>
@@ -246,15 +232,12 @@
                 <p *ngIf="letsideBarLoader==false" class="m-0 roboto pr-8 ">
                   <span *ngIf="cashAndFLow.currentValue!=0">₹</span>
                   <span appFormatNumber [value]="cashAndFLow.currentValue"
-                        *ngIf="cashAndFLow">{{cashAndFLow.currentValue == 0 ? '-' : cashAndFLow.currentValue}}</span>
+                    *ngIf="cashAndFLow">{{cashAndFLow.currentValue == 0 ? '-' : cashAndFLow.currentValue}}</span>
                 </p>
-                <p
-                  [ngClass]="{'text-success': checkNumberPositiveAndNegative(cashAndFLow.percentage),'text-danger': checkNumberPositiveAndNegative(cashAndFLow.percentage)==false,'': checkNumberPositiveAndNegative(cashAndFLow.percentage)==undefined}"
+                <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(cashAndFLow.percentage),'text-danger': checkNumberPositiveAndNegative(cashAndFLow.percentage)==false,'': checkNumberPositiveAndNegative(cashAndFLow.percentage)==undefined}"
                   class="m-0 roboto pr-8">
-                                    <span
-                                      *ngIf="letsideBarLoader==false">{{cashAndFLow.percentage == 0 ? '-' : cashAndFLow.percentage}}
-                                      <span
-                                        *ngIf="cashAndFLow.percentage!=0">%</span></span>
+                  <span *ngIf="letsideBarLoader==false">{{cashAndFLow.percentage == 0 ? '-' : cashAndFLow.percentage}}
+                    <span *ngIf="cashAndFLow.percentage!=0">%</span></span>
                 </p>
               </div>
             </div>
@@ -264,7 +247,7 @@
             <div class="col-md-6 relClass pr-0">
               <div>
                 <a [queryParams]="{ tab: 'tab7'}" class="text-black m-0 roboto"
-                   routerLink="/customer/detail/account/assets">
+                  routerLink="/customer/detail/account/assets">
                   Commodities
                 </a>
               </div>
@@ -274,15 +257,12 @@
                 <p *ngIf="letsideBarLoader==false" class="m-0 roboto pr-8">
                   <span *ngIf="Commodities.currentValue!=0">₹</span>
                   <span appFormatNumber [value]="Commodities.currentValue"
-                        *ngIf="Commodities">{{Commodities.currentValue == 0 ? '-' : Commodities.currentValue}}</span>
+                    *ngIf="Commodities">{{Commodities.currentValue == 0 ? '-' : Commodities.currentValue}}</span>
                 </p>
-                <p
-                  [ngClass]="{'text-success': checkNumberPositiveAndNegative(Commodities.percentage),'text-danger': checkNumberPositiveAndNegative(Commodities.percentage)==false,'': checkNumberPositiveAndNegative(Commodities.percentage)==undefined}"
+                <p [ngClass]="{'text-success': checkNumberPositiveAndNegative(Commodities.percentage),'text-danger': checkNumberPositiveAndNegative(Commodities.percentage)==false,'': checkNumberPositiveAndNegative(Commodities.percentage)==undefined}"
                   class="m-0 roboto pr-8">
-                                    <span
-                                      *ngIf="letsideBarLoader==false">{{Commodities.percentage == 0 ? '-' : Commodities.percentage}}
-                                      <span
-                                        *ngIf="Commodities.percentage!=0">%</span></span>
+                  <span *ngIf="letsideBarLoader==false">{{Commodities.percentage == 0 ? '-' : Commodities.percentage}}
+                    <span *ngIf="Commodities.percentage!=0">%</span></span>
                 </p>
               </div>
             </div>
@@ -292,7 +272,7 @@
       </div>
     </div>
 
-    <div class="col-xl-8 col-lg-6 col-md-6 b-l p-0 bg-grey lter">
+    <div class="col-xl-8 col-lg-6 col-md-9 b-l p-0 bg-grey lter">
 
 
       <div class="row bg-white height63 b-b">
@@ -305,8 +285,8 @@
               keyboard_arrow_down
             </i>
             <mat-form-field class="v-h">
-              <input (dateChange)="dateChange($event)" [matDatepicker]="dobAsPerRecord"
-                     class="form-control br-0 b-0" matInput readonly>
+              <input (dateChange)="dateChange($event)" [matDatepicker]="dobAsPerRecord" class="form-control br-0 b-0"
+                matInput readonly>
               <mat-datepicker-toggle matSuffix [for]="dobAsPerRecord">
               </mat-datepicker-toggle>
               <mat-datepicker #dobAsPerRecord></mat-datepicker>
@@ -318,25 +298,23 @@
       </div>
 
       <div [hidden]="letsideBarLoader" class="row">
-        <div class="col-md-7">
+        <div class="col-xl-7 col-lg-12 col-md-12">
           <div class="b-a mt-20 shadowBox bg-white">
             <div class="row">
               <div class="col-md-6 p-0">
                 <h4 class="m-0 wrapper-20">Portfolio growth</h4>
               </div>
               <div class="col-md-6 pl-0">
-                <h2 *ngIf="letsideBarLoader==false"
-                    class="m-0 text-primary text-right f-300 wrapper-20">
+                <h2 *ngIf="letsideBarLoader==false" class="m-0 text-primary text-right f-300 wrapper-20">
                   ₹<span appFormatNumber
-                         [value]="totalAssetsWithoutLiability-liabilityTotal">{{totalAssetsWithoutLiability - liabilityTotal}}</span>
+                    [value]="totalAssetsWithoutLiability-liabilityTotal">{{totalAssetsWithoutLiability - liabilityTotal}}</span>
                 </h2>
               </div>
             </div>
 
             <div *ngIf="finalTotal==0" class="row">
               <div class="col-md-12 p-0">
-                <div
-                  class=" d-flex flex-column  align-items-center justify-content-center text-center h-300 bg-white">
+                <div class=" d-flex flex-column  align-items-center justify-content-center text-center h-300 bg-white">
                   <img src="assets/images/svg/portfolio-growth-icon.svg">
                   <h4 class="f-14 mb-0 mt-20">Not enough data to display</h4>
                   <p class="f-12 text-primitive"> Before we can create any charts, <br> we’ll
@@ -356,15 +334,14 @@
                 <ul *ngIf="nightyDayData && oneDay" class="pl-20 pb-20">
                   <li class="pr-4 text-black">90-days</li>
                   <li *ngIf="letsideBarLoader==false"
-                      [ngClass]="{'text-success': nightyDayData.flag,'text-danger':nightyDayData.flag==false}"
-                      class="text-success pr-24">₹<span appFormatNumber
-                                                        [value]="nightyDayData.value">{{nightyDayData.value}}</span>
+                    [ngClass]="{'text-success': nightyDayData.flag,'text-danger':nightyDayData.flag==false}"
+                    class="text-success pr-24">₹<span appFormatNumber
+                      [value]="nightyDayData.value">{{nightyDayData.value}}</span>
                   </li>
                   <li class="pr-4 text-black">1-days</li>
                   <li *ngIf="letsideBarLoader==false"
-                      [ngClass]="{'text-success': oneDay.flag,'text-danger':oneDay.flag==false}"
-                      class="text-danger">₹<span appFormatNumber
-                                                 [value]="oneDay.value">{{oneDay.value}}</span></li>
+                    [ngClass]="{'text-success': oneDay.flag,'text-danger':oneDay.flag==false}" class="text-danger">
+                    ₹<span appFormatNumber [value]="oneDay.value">{{oneDay.value}}</span></li>
                 </ul>
               </div>
             </div>
@@ -391,7 +368,7 @@
            
           </div>
         </div> -->
-        <div [hidden]="letsideBarLoader" class="col-md-5 pl-0">
+        <div [hidden]="letsideBarLoader" class="col-xl-5  col-lg-12 col-md-12 pl-0 pl-15-1200">
           <div class="b-a mt-20 shadowBox bg-white">
             <h4 class="m-0 wrapper-20 pb-0">Asset allocation</h4>
             <div *ngIf="!assetAllocationRes" class="row">
@@ -407,13 +384,13 @@
             <div *ngIf="assetAllocationRes">
               <div class="borderChatBox bg-white">
                 <div class="row">
-                    <div class="col-md-12 pr-0 heightBox md-text-center">
-                        <div class="piechartMutualFund" *ngIf="!tabsLoaded.portfolioData.isLoading"
-                            [chart]="assetAllocationPieConfig">
-                        </div>
-
+                  <div class="col-md-12 pr-0 heightBox md-text-center">
+                    <div class="piechartMutualFund" *ngIf="!tabsLoaded.portfolioData.isLoading"
+                      [chart]="assetAllocationPieConfig">
                     </div>
-                    <!-- <div class="col-md-12 d-flex align-items-center md-pt-16">
+
+                  </div>
+                  <!-- <div class="col-md-12 d-flex align-items-center md-pt-16">
                         <ul class="pointUl">
                             <li *ngFor="let data of chartData">
                                 <span class="pointNumber" [style.background-color]="data.color">
@@ -425,9 +402,9 @@
                         </ul>
                     </div> -->
                 </div>
-            </div>
               </div>
-           
+            </div>
+
           </div>
         </div>
       </div>
@@ -449,14 +426,14 @@
 
 
       <div [hidden]="letsideBarLoader" class="mtClass" [formGroup]="cashFlowFG">
-        <div class="w-1024 b-a shadowBox wrapper-12 overflow-y bg-white">
+        <div class="b-a shadowBox wrapper-12 bg-white">
 
           <div class="row">
-            <div class="col-md-4 p-0">
-              <h4 class="m-0 pt-8 pl-8">Net cash flow</h4>
+            <div class="col-xl-4 col-lg-6 col-md-6 p-0 d-flex align-items-center">
+              <h4 class="m-0 pl-8">Net cash flow</h4>
             </div>
-            <div *ngIf="!noCashflowData" class="col-md-4 b-a"
-                 [ngClass]="{'b-a': cashFlowViewDataSource.length>0 && !cashflowFlag}">
+            <div *ngIf="!noCashflowData" class="col-xl-4 b-a col-lg-6 col-md-6"
+              [ngClass]="{'b-a': cashFlowViewDataSource.length>0 && !cashflowFlag}">
 
               <div class="row">
                 <div class="col-md-6 p-0 border-right-1 pt-8 pb-8 pr-4">
@@ -471,7 +448,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-4" *ngIf="!noCashflowData">
+            <div class="col-xl-4 col-lg-6 col-md-6 pt-12-1200 pl-8-1200" *ngIf="!noCashflowData">
               <mat-select formControlName="bankfilter" class="form-control">
                 <mat-option [value]="'all'">
                   All banks
@@ -479,7 +456,7 @@
                 <mat-option *ngFor="let bank of allBanks" [value]="bank.id">{{bank.name}}</mat-option>
               </mat-select>
             </div>
-            <div class="col-md-4" *ngIf="!noCashflowData">
+            <div class="col-xl-4 col-lg-6 col-md-6 pt-12-1200 pl-0-1200" *ngIf="!noCashflowData">
               <mat-select formControlName="familyfilter" class="form-control">
                 <mat-option [value]="'all'">
                   All banks
@@ -504,18 +481,18 @@
           </div>
 
           <div class="row pt-20">
-            <div class="col-md-7 pl-8">
-              <table *ngIf="cashFlowViewDataSource.length>0" mat-table
-                     [dataSource]="cashFlowViewDataSource" id="table-low" class="mt-8"
-                     class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="cashflowFlag">
+            <div class="col-xl-7 col-lg-12 col-md-12 pl-8">
+              <table *ngIf="cashFlowViewDataSource.length>0" mat-table [dataSource]="cashFlowViewDataSource"
+                id="table-low" class="mt-8" class="skeletonAnimation" appSkeletonLoading
+                [appSkeletonLoading]="cashflowFlag">
                 <!-- Name Column -->
                 <ng-container matColumnDef="description">
                   <th mat-header-cell *matHeaderCellDef> Description</th>
                   <td mat-cell *matCellDef="let element">
                     <div class="bar">
                       <div>
-                                                <span>{{element.institutionName || element.bankName || element.description}}
-                                                </span>
+                        <span>{{element.institutionName || element.bankName || element.description}}
+                        </span>
                         <span>{{element.serialNumber}}</span>
                       </div>
                       <div>
@@ -539,12 +516,11 @@
                   <th mat-header-cell class="text-right" *matHeaderCellDef> Amount</th>
                   <td mat-cell *matCellDef="let element" class="text-right">
                     <div class="bar">
-                                            <span
-                                              [ngClass]="{'text-success': element.colourFlag,'text-danger':element.colourFlag==false}">
-                                                <span appFormatNumber>
-                                                    {{element.currentValue}}
-                                                </span>
-                                            </span>
+                      <span [ngClass]="{'text-success': element.colourFlag,'text-danger':element.colourFlag==false}">
+                        <span appFormatNumber>
+                          {{element.currentValue}}
+                        </span>
+                      </span>
                     </div>
                   </td>
                 </ng-container>
@@ -554,7 +530,7 @@
               </table>
 
             </div>
-            <div class="col-md-5">
+            <div class="col-xl-5 col-lg-12 col-md-12">
               <div [hidden]="cashFlowViewDataSource.length==0" id="cashFlow"></div>
             </div>
           </div>
@@ -574,12 +550,11 @@
 
 
     </div>
-    <div class="col-xl-2 col-lg-3 col-md-3 col-sm-12 p-0">
+    <div class="col-xl-2 col-lg-3 col-md-9 p-0 ml-25p-992">
       <div class="b-a pl-8 pr-8">
         <div class="row b-b">
           <div class="col-md-3 p-0">
-            <img class="t-85 pt-16 pb-20 pl-8 rounded-circle"
-                 src="http://localhost:4200/assets/images/img1.jpg">
+            <img class="t-85 pt-16 pb-20 pl-8 rounded-circle" src="http://localhost:4200/assets/images/img1.jpg">
           </div>
           <div class="col-md-9 p-0 text-left">
             <p class="text-black m-0 f-500 pt-20 bar">{{userData.name}}</p>
