@@ -50,9 +50,9 @@ export class TransactionsComponent implements OnInit {
   ngOnInit() {
     console.log("this is data what we got::", this.data);
     this.currentValue = this.data.currentValue;
-    this.profitOrLossValue = this.currentValue - this.data.amountInvested;
-    this.currentValue =this.mfService.mutualFundRoundAndFormat(this.currentValue, 0);
-    this.profitOrLossValue =this.mfService.mutualFundRoundAndFormat(this.profitOrLossValue, 0);
+    this.profitOrLossValue = this.data.unrealizedGain;
+    // this.currentValue =this.mfService.mutualFundRoundAndFormat(this.currentValue, 0);
+    // this.profitOrLossValue =this.mfService.mutualFundRoundAndFormat(this.profitOrLossValue, 0);
     this.xirrValue = this.data.xirr;
     this.investorName = this.data.ownerName;
     this.folioNumber = this.data.folioNumber;
