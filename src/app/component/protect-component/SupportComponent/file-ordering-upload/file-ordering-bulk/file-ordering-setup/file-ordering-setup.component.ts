@@ -29,6 +29,7 @@ const moment = _rollupMoment;
   ],
 })
 export class FileOrderingSetupComponent implements OnInit {
+  asOnDate: boolean = false;
 
   constructor(
     private subscriptionInject: SubscriptionInject,
@@ -51,10 +52,11 @@ export class FileOrderingSetupComponent implements OnInit {
     rtId: [, Validators.required],
     fileTypeId: [, Validators.required],
     fromDate: [moment(), Validators.required],
-    toDate: [moment(), Validators.required]
+    toDate: [moment(), Validators.required],
+    asOnDate:[, ]
   });
 
-  rtaList = []
+  rtaList = [];
 
   setDateValidation() {
     this.historicalFileBulkOrderingForm.get('rtId').value === '1' ?
@@ -120,6 +122,18 @@ export class FileOrderingSetupComponent implements OnInit {
       });
       this.fileTypeList = filterArray;
     }
+    let aumIds = [];
+    this.fileTypeList.forEach(value => {
+      if(value.type === 'WBR22' || value.type === 'MFSD203 - Client-wise AUM Report' || value.type === 'aum'){
+        aumIds.push(value);
+      }
+    })
+
+    this.historicalFileBulkOrderingForm.get('fileTypeId').valueChanges.subscribe(res=>{
+      if(aumIds.some(item => item.id === res)){
+        this.asOnDate = true;
+      }
+    });
   }
 
   dialogClose(flag) {
@@ -131,27 +145,56 @@ export class FileOrderingSetupComponent implements OnInit {
       // call api for save
 
       let values = this.historicalFileBulkOrderingForm.value;
-      const data = {
-        rmId: this.rmId,
-        rtId: values.rtId.value,
-        fileTypeId: values.fileTypeId,
-        fromDate: values.fromDate._d.getFullYear() + "-" +
-          this.utilService.addZeroBeforeNumber((values.fromDate._d.getMonth() + 1), 2) + '-' +
-          this.utilService.addZeroBeforeNumber((values.fromDate._d.getDate()), 2),
-        toDate: values.toDate._d.getFullYear() + "-" +
-          this.utilService.addZeroBeforeNumber((values.toDate._d.getMonth() + 1), 2) + '-' +
-          this.utilService.addZeroBeforeNumber((values.toDate._d.getDate()), 2),
-      }
 
+      let data;
 
-      this.fileOrderingService.postFileOrderBulkData(data)
+      if(!this.asOnDate){
+        data = {
+          rmId: this.rmId,
+          rtId: values.rtId.value,
+          fileTypeId: values.fileTypeId,
+          fromDate: values.fromDate._d.getFullYear() + "-" +
+            this.utilService.addZeroBeforeNumber((values.fromDate._d.getMonth() + 1), 2) + '-' +
+            this.utilService.addZeroBeforeNumber((values.fromDate._d.getDate()), 2),
+          toDate: values.toDate._d.getFullYear() + "-" +
+            this.utilService.addZeroBeforeNumber((values.toDate._d.getMonth() + 1), 2) + '-' +
+            this.utilService.addZeroBeforeNumber((values.toDate._d.getDate()), 2),
+        }
+        console.log(data);
+        this.fileOrderingService.postFileOrderBulkData(data)
         .subscribe(res => {
           if (res) {
             console.log("this is response::", res);
             this.dialogClose(true);
           }
         });
-      console.log(data);
+      
+
+      } else {
+        
+        if(values.asOnDate && values.asOnDate !== undefined){
+          data = {
+            rmId: this.rmId,
+            rtId: values.rtId.value,
+            fileTypeId: values.fileTypeId,
+            fromDate: '',
+            toDate: values.asOnDate._d.getFullYear() + "-" +
+              this.utilService.addZeroBeforeNumber((values.asOnDate._d.getMonth() + 1), 2) + '-' +
+              this.utilService.addZeroBeforeNumber((values.asOnDate._d.getDate()), 2),
+          }
+          console.log(data);
+          this.fileOrderingService.postFileOrderBulkData(data)
+          .subscribe(res => {
+            if (res) {
+              console.log("this is response::", res);
+              this.dialogClose(true);
+            }
+          });
+  
+        } else {
+          this.eventService.openSnackBar("Please Select As On Date", "DISMISS");
+        }
+      }
 
     } else {
       console.log('err');

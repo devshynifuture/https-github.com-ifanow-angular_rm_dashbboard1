@@ -9,6 +9,9 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 })
 export class IncomeDetailedViewComponent implements OnInit {
   inputData: any;
+  // build error
+  showInsurance = '';
+  // 
   income: any;
   monthlyContribution: any[];
   incomeArr=[];

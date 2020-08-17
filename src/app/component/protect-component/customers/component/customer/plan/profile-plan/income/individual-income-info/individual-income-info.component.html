@@ -93,9 +93,11 @@
                     <div class="col-md-5 pr-0 text-right">
                         <h5  class="m-0 pt-8">Monthly income</h5>
                     </div>
+
+                    <!-- build error in form array removed controls -->
                     <div formArrayName="monthlyIncomeForm" >
                         <div [ngClass]="{'pt-30': pointIndex > 0}" class="row"
-                            *ngFor="let obj of incomeNetForm.controls['monthlyIncomeForm'].controls; let pointIndex=index"
+                            *ngFor="let obj of monthlyIncome.controls; let pointIndex=index"
                             [formGroupName]="pointIndex">
 
                             <div class="col-md-5  pr-0">
@@ -125,6 +127,7 @@
                                 </div>
                             </div>
                             <div class="col-md-2 pr-0 d-flex mt-8">
+                                <!-- error build errro -->
                                 <i *ngIf="incomeNetForm.value.monthlyIncomeForm.length < 12"
                                     class="material-icons text-primitive f-20 c-p float-left"
                                     (click)="addMonthlyIncome(undefined)">add</i>
@@ -169,9 +172,10 @@
                     <div class="col-md-5 pr-0 text-right">
                         <h5  class="m-0 pt-8">Basic Salary</h5>
                     </div>
+                    <!-- build error in form array removed controls -->
+
                     <div formArrayName="basicSalaryForm" >
-                        <div [ngClass]="{'pt-30': pointIndex > 0}" class="row"
-                            *ngFor="let obj of incomeNetForm.controls['basicSalaryForm'].controls; let pointIndex=index"
+                        <div [ngClass]="{'pt-30': pointIndex > 0}" class="row"  *ngFor="let obj of basicSalary.controls; let pointIndex=index"
                             [formGroupName]="pointIndex">
 
                             <div class="col-md-5  pr-0">
@@ -201,6 +205,8 @@
                                 </div>
                             </div>
                             <div class="col-md-2 pr-0 d-flex mt-8">
+
+                                <!-- build Error -->
                                 <i *ngIf="incomeNetForm.value.basicSalaryForm.length < 2"
                                     class="material-icons text-primitive f-20 c-p float-left"
                                     (click)="addSalary(undefined)">add</i>
@@ -216,9 +222,11 @@
                     <div  class="col-md-5 pr-0 text-right">
                         <h5 class="mb-0 mt-10">Allowances</h5>
                     </div>
+
+                    <!-- build error in form array removed controls -->
+
                     <div formArrayName="allowancesForm" >
-                        <div  [ngClass]="{'pt-30': pointIndex > 0}" class="row"
-                            *ngFor="let obj of incomeNetForm.controls['allowancesForm'].controls; let pointIndex=index"
+                        <div  [ngClass]="{'pt-30': pointIndex > 0}" class="row" *ngFor="let obj of allowances.controls; let pointIndex=index"
                             [formGroupName]="pointIndex">
 
                             <div class="col-md-5  pr-0">
@@ -250,6 +258,7 @@
                                 </div>
                             </div>
                             <div class="col-md-2 pr-0 d-flex mt-8">
+                                <!-- build error -->
                                 <i *ngIf="incomeNetForm.value.allowancesForm.length < 14"
                                     class="material-icons text-primitive f-20 c-p float-left"
                                     (click)="addAllowances(undefined)">add</i>
@@ -261,13 +270,14 @@
                         </div>
                     </div>
                 </div>
+                    <!-- build error in form array removed controls -->
+
                 <div class="row pt-40" [hidden]="incomeOption=='2'">
                     <div  class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8">Perquisites</h5>
                     </div>
                     <div formArrayName="perquisitesForm" >
-                        <div [ngClass]="{'pt-30': pointIndex > 0}" class="row"
-                            *ngFor="let obj of incomeNetForm.controls['perquisitesForm'].controls; let pointIndex=index"
+                        <div [ngClass]="{'pt-30': pointIndex > 0}" class="row" *ngFor="let obj of perquisites.controls; let pointIndex=index"
                             [formGroupName]="pointIndex">
 
                             <div class="col-md-5  pr-0">
@@ -298,6 +308,7 @@
                                 </div>
                             </div>
                             <div class="col-md-2 pr-0 d-flex mt-8">
+                            <!-- build error -->
                                 <i *ngIf="incomeNetForm.value.perquisitesForm.length < 4"
                                     class="material-icons text-primitive f-20 c-p float-left"
                                     (click)="addPerquisites(undefined)">add</i>
@@ -309,13 +320,15 @@
                         </div>
                     </div>
                 </div>
+                
                 <div class="row pt-40" [hidden]="incomeOption=='2'">
                     <div  class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8">Reimbursements</h5>
                     </div>
+                    <!-- build error in form array removed controls -->
+
                     <div formArrayName="reimbursementsForm" >
-                        <div [ngClass]="{'pt-30': pointIndex > 0}" class="row"
-                            *ngFor="let obj of incomeNetForm.controls['reimbursementsForm'].controls; let pointIndex=index"
+                        <div [ngClass]="{'pt-30': pointIndex > 0}" class="row" *ngFor="let obj of reimbursements.controls; let pointIndex=index"
                             [formGroupName]="pointIndex">
 
                             <div class="col-md-5  pr-0">
@@ -345,6 +358,7 @@
                                 </div>
                             </div>
                             <div class="col-md-2 pr-0 d-flex mt-8">
+                                <!-- build error -->
                                 <i *ngIf="incomeNetForm.value.reimbursementsForm.length < 5"
                                     class="material-icons text-primitive f-20 c-p float-left"
                                     (click)="addReimbursements(undefined)">add</i>
@@ -360,9 +374,9 @@
                     <div  class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8">Retirals</h5>
                     </div>
+                    <!-- build error removed controls -->
                     <div formArrayName="retiralsForm" >
-                        <div [ngClass]="{'pt-30': pointIndex > 0}" class="row"
-                            *ngFor="let obj of incomeNetForm.controls['retiralsForm'].controls; let pointIndex=index"
+                        <div [ngClass]="{'pt-30': pointIndex > 0}" class="row" *ngFor="let obj of retirals.controls; let pointIndex=index"
                             [formGroupName]="pointIndex">
 
                             <div class="col-md-5 pr-0">
@@ -392,6 +406,8 @@
                                 </div>
                             </div>
                             <div class="col-md-2 pr-0 d-flex mt-8">
+
+                                <!-- build error -->
                                 <i *ngIf="incomeNetForm.value.retiralsForm.length < 4"
                                     class="material-icons text-primitive f-20 c-p float-left"
                                     (click)="addRetirals(undefined)">add</i>
@@ -407,9 +423,9 @@
                     <div  class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8">Others</h5>
                     </div>
+                    <!-- build error rmeoved controls -->
                     <div formArrayName="othersForm" >
-                        <div [ngClass]="{'pt-30': pointIndex > 0}" class="row"
-                            *ngFor="let obj of incomeNetForm.controls['othersForm'].controls; let pointIndex=index"
+                        <div [ngClass]="{'pt-30': pointIndex > 0}" class="row" *ngFor="let obj of others.controls; let pointIndex=index"
                             [formGroupName]="pointIndex">
 
                             <div class="col-md-5  pr-0">
@@ -439,6 +455,7 @@
                                 </div>
                             </div>
                             <div class="col-md-2 pr-0 d-flex mt-8">
+                                <!-- build error -->
                                 <i *ngIf="incomeNetForm.value.othersForm.length < 2"
                                     class="material-icons text-primitive f-20 c-p float-left"
                                     (click)="addOthers(undefined)">add</i>
