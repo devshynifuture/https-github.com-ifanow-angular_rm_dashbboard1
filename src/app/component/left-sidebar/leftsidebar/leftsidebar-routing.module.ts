@@ -1,6 +1,7 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { LeftsidebarComponent } from './leftsidebar.component';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {LeftsidebarComponent} from './leftsidebar.component';
+import {SubscriptionGuard} from '../../../guards/subscription.guard';
 
 
 const routes: Routes = [
@@ -14,8 +15,8 @@ const routes: Routes = [
         // outlet: 'mainleftbar',
         loadChildren: () => import('src/app/component/protect-component/AdviserComponent/Subscriptions/subscription.module')
           .then(m => m.SubscriptionModule),
-        data: { animation: 'Tab1', preload: true }
-
+        data: {animation: 'Tab1', preload: true},
+        canLoad: [SubscriptionGuard]
         // data: {preload: true}
 
       },
@@ -24,7 +25,7 @@ const routes: Routes = [
         // outlet: 'main-left-router',
         loadChildren: () => import('src/app/component/protect-component/AdviserComponent/Email/email.module')
           .then(m => m.EmailModule),
-        data: { animation: 'Tab1', preload: true }
+        data: {animation: 'Tab1', preload: true}
 
       },
       {
@@ -38,7 +39,7 @@ const routes: Routes = [
       {
         path: 'activies',
         loadChildren: () => import('src/app/component/protect-component/AdviserComponent/Activities/activies.module').then(m => m.ActiviesModule),
-        data: { animation: 'Tab1', preload: true }
+        data: {animation: 'Tab1', preload: true}
       },
       // {
       //   path: 'calendar',
@@ -48,7 +49,7 @@ const routes: Routes = [
       {
         path: 'transactions',
         loadChildren: () => import('src/app/component/protect-component/AdviserComponent/transactions/transactions.module').then(m => m.TransactionsModule),
-        data: { animation: 'Tab1', preload: true }
+        data: {animation: 'Tab1', preload: true}
         //  TransactionsComponent
       },
       {
@@ -92,4 +93,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class LeftsidebarRoutingModule { }
+export class LeftsidebarRoutingModule {
+}

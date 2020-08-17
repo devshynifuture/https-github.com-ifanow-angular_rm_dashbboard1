@@ -147,16 +147,15 @@ export class LoginComponent implements OnInit {
         err => {
           this.getOtpBtnOption.active = false;
           // this.eventService.openSnackBar(err, 'Dismiss')
-          if (err == "Username not found.") {
+          if (err == 'Username not found.') {
             this.userName.setErrors({ incorrect: true });
-          }
-          else {
+          } else {
             this.eventService.openSnackBar(err, 'Dismiss');
           }
         }
       );
       if (this.resendOtpFlag) {
-        this.eventService.openSnackBar("OTP sent successfully", "Dismiss");
+        this.eventService.openSnackBar('OTP sent successfully', 'Dismiss');
       }
     }
   }
@@ -237,9 +236,9 @@ export class LoginComponent implements OnInit {
             }
           },
           err => {
-            if (err == "Something went wrong !") {
-              this.eventService.openSnackBar(err, "Dismiss")
-              return
+            if (err == 'Something went wrong !') {
+              this.eventService.openSnackBar(err, 'Dismiss');
+              return;
             }
             // console.error(err);
             // this.eventService.openSnackBar(err, 'Dismiss');
@@ -257,7 +256,7 @@ export class LoginComponent implements OnInit {
   }
   otpResendCountDown() {
     let timeLeft = 30;
-    let intervallTimer = interval(1000).subscribe(
+    const intervallTimer = interval(1000).subscribe(
       data => {
         if (data == 31) {
           intervallTimer.unsubscribe();
@@ -265,7 +264,7 @@ export class LoginComponent implements OnInit {
           this.showTimeRemaing = timeLeft--;
         }
       }
-    )
+    );
   }
   private createForm() {
     this.loginForm = this.formBuilder.group({
@@ -309,14 +308,13 @@ export class LoginComponent implements OnInit {
       };
       this.isLoading = true;
       // TODO comment for old login
-      this.peopleService.loginWithPassword(loginData).subscribe(data => {
+      this.loginService.loginWithPassword(loginData).subscribe(data => {
         if (data) {
           if (data.forceResetPassword) {
-            data['buttonFlag'] = "reset";
+            data.buttonFlag = 'reset';
             this.router.navigate(['/login/setpassword'],
               { state: { userData: data } });
-          }
-          else {
+          } else {
             this.loginService.handleUserData(this.authService, this.router, data);
           }
           // this.authService.setToken(data.token);
