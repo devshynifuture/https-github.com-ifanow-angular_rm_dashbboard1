@@ -116,7 +116,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
   incomeNetForm = this.fb.group({
     incomeOption: ['2', [Validators.required]],
     // monthlyAmount: [, [Validators.required]],
-    incomeStyle: [, [Validators.required]],
+    incomeStyle: ['1', [Validators.required]],
     continousTill: [String(1), [Validators.required]],
     continousTillYear: [, []],
     incomeGrowthRate: [, [Validators.required]],
@@ -1002,6 +1002,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
     if (this.incomePosition < this.finalIncomeAddList.length) {
       this.singleIndividualIncome = this.finalIncomeAddList[this.incomePosition]
       this.incomeNetForm.reset();
+      this.incomeNetForm.controls.incomeStyle.setValue('1')
       this.incomeNetForm.controls.incomeOption.setValue('2')
       this.getExpectedBonusForm.reset();
     }

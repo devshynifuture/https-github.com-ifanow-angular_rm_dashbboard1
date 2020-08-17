@@ -101,6 +101,7 @@ export class ExpensesComponent implements OnInit {
   assetList: { name: string; }[];
   commitedInvestment: any;
   expenditure: any;
+  expenseAssetData: any;
   // periodSelection: any;
 
   constructor(private fb: FormBuilder,private datePipe: DatePipe,private subInjectService: SubscriptionInject, private planService: PlanService,
@@ -120,7 +121,7 @@ export class ExpensesComponent implements OnInit {
     this.getOrgData = AuthService.getOrgDetails();
     this.getStartAndEndDate('1');
     this.getExpenseGraphValue();
-    this.getBudgetGraphValues();
+    // this.getBudgetGraphValues();
     // this.timePeriodSelection.setValue('1');
     // this.getTimePeriod();
     this.getTransaction();
@@ -286,7 +287,7 @@ export class ExpensesComponent implements OnInit {
   }
   getBugetTab(tab) {
     if (tab == 'Budget') {
-      this.getBudgetGraphValues();
+       this.getBudgetGraphValues();
       this.getBudgetList();
       this.getBugetRecurring();
       setTimeout(() => {
@@ -295,7 +296,7 @@ export class ExpensesComponent implements OnInit {
       }, 300);
     } else {
       this.getTransaction();
-      this.getRecuringTransactions();
+      this.getAssetOfExpense()
       this.getExpenseGraphValue();
       setTimeout(() => {
         this.cashFlow('piechartExpense')
@@ -456,8 +457,6 @@ export class ExpensesComponent implements OnInit {
     );
   }
   getBudgetRes(data) {
-    this.getBudgetGraphValues();
-    // this.budgetChart('bugetChart');
     if (data == undefined) {
       this.noData = 'No data found';
       this.dataSource4.data = [];
@@ -498,8 +497,6 @@ export class ExpensesComponent implements OnInit {
     );
   }
   otherCommitmentsGetRes(data) {
-    this.getBudgetGraphValues();
-    // this.budgetChart('bugetChart');
     if (data == undefined || data == 304) {
       this.noData = 'No data found';
       this.dataSource5.data = [];
@@ -551,7 +548,6 @@ export class ExpensesComponent implements OnInit {
     );
   }
   getRecuringExpenseRes(data) {
-    this.getExpenseGraphValue();
     if (!data) {
       this.noData = 'No data found';
       this.recurringTransaction =data;
@@ -611,7 +607,6 @@ export class ExpensesComponent implements OnInit {
   }
   getTransactionExpenseRes(data) {
     this.getRecuringTransactions();
-    this.getExpenseGraphValue();
     // this.cashFlow('piechartExpense')
     if (data == undefined) {
       this.noData = 'No data found';
@@ -649,6 +644,7 @@ export class ExpensesComponent implements OnInit {
     this.planService.getAssetsOfExpense(obj).subscribe(
       data => {
         if(data){
+          this.expenseAssetData = data;
           let finalArray=[];
           let dataAsset =data;
           this.assetList =[{name:'pord'},{name:'ssy'},{name:'recurringDeposit'},{name:'mutualfund'}]
@@ -762,10 +758,19 @@ export class ExpensesComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            this.getTransaction();
-            // this.getRecuringTransactions();
-            this.getBudgetList();
-            this.getBugetRecurring();
+            if(sideBarData.value == 'editExpense' || sideBarData.value == 'addExpense' ){
+              this.getTransaction();
+              this.getExpenseGraphValue();
+            }else if(sideBarData.value == 'addRecurringTrn' || sideBarData.value == 'editRecurringTrn'){
+              this.getRecuringTransactions();
+              this.getExpenseGraphValue();
+            }else if(sideBarData.value == 'editBudget' || sideBarData.value == 'addBudget'){
+              this.getBudgetList();
+              this.getBudgetGraphValues();
+            }else{
+              this.getBugetRecurring();
+              this.getBudgetGraphValues();
+            }
             console.log('this is sidebardata in subs subs 2: ', sideBarData);
           }
 
@@ -801,9 +806,12 @@ export class ExpensesComponent implements OnInit {
     );
   }
   detailedViewRecurring(data,value){
+    this.expenseAssetData.startDate = this.startDate;
+    this.expenseAssetData.endDate = this.endDate;
+
     const fragmentData = {
       flag: 'detailedView',
-      data,
+      data:this.expenseAssetData,
       id: 1,
       state: 'open50',
       componentName: RecurringCommitmentsDetailedViewComponent

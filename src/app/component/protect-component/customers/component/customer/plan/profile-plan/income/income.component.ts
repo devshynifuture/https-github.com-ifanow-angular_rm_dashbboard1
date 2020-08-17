@@ -95,7 +95,7 @@ export class IncomeComponent implements OnInit {
       this.totalMonthlyIncome = 0;
       this.filterForIncome = data;
       this.dataSource.data.forEach(element => {
-        this.totalMonthlyIncome += element.monthlyIncome;
+        this.totalMonthlyIncome += element.monthlyIncomeToShow ? element.monthlyIncomeToShow : 0;
       });
     }
   }
@@ -110,7 +110,7 @@ export class IncomeComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.dataSource.data);
       this.totalMonthlyIncome = 0;
       this.dataSource.data.forEach(element => {
-        this.totalMonthlyIncome += element.monthlyIncome;
+        this.totalMonthlyIncome += element.monthlyIncomeToShow ? element.monthlyIncomeToShow : 0;
       });
     } else {
       this.eventService.openSnackBar("No data found", "Dismiss")

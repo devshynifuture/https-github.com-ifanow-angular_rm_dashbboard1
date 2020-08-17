@@ -120,14 +120,14 @@
                     </ng-container>
                     <ng-container matColumnDef="amt">
                         <th *matHeaderCellDef class="br right-hcb hide-arrow" mat-header-cell
-                            mat-sort-header="monthlyIncome">
+                            mat-sort-header="monthlyIncomeToShow">
                             Monthly amount
                         </th>
                         <td *matCellDef="let element" class="br text-right" mat-cell>
-                            <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.monthlyIncome }}</span> </div>
+                            <div class="bar">{{!isLoading && element.monthlyIncomeToShow? "₹" : ""}}<span appFormatNumber *ngIf="!isLoading">{{element.monthlyIncomeToShow ? element.monthlyIncomeToShow : '-' }}</span> </div>
                         </td>
                         <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right">
-                                <div>{{isLoading ? ' ' : '₹'}}<span [value]="totalMonthlyIncome" appFormatNumber></span></div>
+                                <div>{{!isLoading && totalMonthlyIncome!=0 ? '₹ ' : ''}}<span [value]="totalMonthlyIncome ? totalMonthlyIncome : '-'" appFormatNumber></span></div>
                             </td>
                     </ng-container>
                     <ng-container matColumnDef="income">
