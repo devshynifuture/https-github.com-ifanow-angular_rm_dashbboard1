@@ -1,11 +1,20 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
-import { Event, NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterOutlet } from '@angular/router';
-import { EventService } from './Data-service/event.service';
-import { RoutingState } from './services/routing-state.service';
-import { PlatformLocation } from '@angular/common';
-import { ConnectionService } from 'ng-connection-service'
-import { from, interval } from 'rxjs';
+import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
+import {
+  Event,
+  NavigationCancel,
+  NavigationEnd,
+  NavigationError,
+  NavigationStart,
+  Router,
+  RouterOutlet
+} from '@angular/router';
+import {EventService} from './Data-service/event.service';
+import {RoutingState} from './services/routing-state.service';
+import {PlatformLocation} from '@angular/common';
+import {ConnectionService} from 'ng-connection-service'
+import {interval} from 'rxjs';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
