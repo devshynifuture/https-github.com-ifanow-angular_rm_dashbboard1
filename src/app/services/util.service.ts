@@ -282,7 +282,38 @@ export class UtilService {
       return 1;
     }
   }
+  segregateNormalAndAdvancedPermissions(data: any[], featureId) {
+    const permissions_json = {
+      view: data.find((permission) => permission.capabilityName == 'View'),
+      add: data.find((permission) => permission.capabilityName == 'Add'),
+      edit: data.find((permission) => permission.capabilityName == 'Edit'),
+      delete: data.find((permission) => permission.capabilityName == 'Delete'),
+    };
+    for (const k in permissions_json) {
+      if (permissions_json[k]) {
+        permissions_json[k].featureId = featureId;
+      } else {
+        delete permissions_json[k];
+      }
+    }
+    const advanced_permissions = data.filter((permission) => permission.basicOrAdvanceCapability == 2);
+    advanced_permissions.forEach((permission) => {
+      permission.featureId = featureId;
+    });
+    return { permissions: permissions_json, advanced_permissions };
+  }
 
+  convertEnabledOrDisabledAsBoolean(segregatedPermissions) {
+    for (const k in segregatedPermissions.permissions) {
+      segregatedPermissions.permissions[k].enabledOrDisabled = segregatedPermissions.permissions[k].enabledOrDisabled == 1 ? true : false;
+    }
+
+    segregatedPermissions.advanced_permissions.forEach((permission) => {
+      permission.enabledOrDisabled = permission.enabledOrDisabled == 1 ? true : false;
+    });
+
+    return segregatedPermissions;
+  }
   setSubscriptionStepData(data) {
     this.subscriptionStepData = data;
   }
