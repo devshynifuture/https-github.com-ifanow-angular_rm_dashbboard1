@@ -463,8 +463,8 @@ export class SipTransactionComponent implements OnInit {
   }
 
   getBankDetails(value) {
-    if (value && value.length > 0) {
-      this.bankDetails = value[0];
+    if (value) {
+      this.bankDetails = value;
     } else {
       this.eventService.openSnackBar('Bank detail not found', 'Dismiss');
     }

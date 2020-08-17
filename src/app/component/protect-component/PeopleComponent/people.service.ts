@@ -86,10 +86,6 @@ export class PeopleService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_EMAIL_LIST, data);
   }
 
-  loginWithPassword(data) {
-    return this.http.postEncoded(apiConfig.USER + appConfig.LOGIN_WITH_PASSWORD, data);
-  }
-
   mergeClient(data) {
     return this.http.postEncoded(apiConfig.USER + appConfig.MERGE_CLIENT, data);
   }

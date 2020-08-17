@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../../../../../auth-service/authService';
-import { DialogContainerComponent } from '../../../../../common/dialog-container/dialog-container.component';
-import { EventService } from '../../../../../Data-service/event.service';
-import { SubscriptionInject } from '../../../AdviserComponent/Subscriptions/subscription-inject.service';
-import { DynamicComponentService } from '../../../../../services/dynamic-component.service';
-import { dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation } from '../../../../../animation/animation';
-import { PeopleService } from '../../../PeopleComponent/people.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { EnumDataService } from '../../../../../services/enum-data.service';
-import { ChangeClientPasswordComponent } from './customer-overview/overview-profile/change-client-password/change-client-password.component';
-import { UtilService } from 'src/app/services/util.service';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {AuthService} from '../../../../../auth-service/authService';
+import {DialogContainerComponent} from '../../../../../common/dialog-container/dialog-container.component';
+import {EventService} from '../../../../../Data-service/event.service';
+import {SubscriptionInject} from '../../../AdviserComponent/Subscriptions/subscription-inject.service';
+import {DynamicComponentService} from '../../../../../services/dynamic-component.service';
+import {dialogContainerOpacity, rightSliderAnimation, upperSliderAnimation} from '../../../../../animation/animation';
+import {PeopleService} from '../../../PeopleComponent/people.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {EnumDataService} from '../../../../../services/enum-data.service';
+import {ChangeClientPasswordComponent} from './customer-overview/overview-profile/change-client-password/change-client-password.component';
+import {UtilService} from 'src/app/services/util.service';
+import {RoleService} from "../../../../../auth-service/role.service";
 
 @Component({
   selector: 'app-customer',
@@ -50,6 +51,7 @@ export class CustomerComponent extends DialogContainerComponent implements OnIni
     private peopleService: PeopleService,
     private _formBuilder: FormBuilder,
     public enumDataService: EnumDataService,
+    public roleService: RoleService
   ) {
     super(eventService, subinject, dynamicComponentService);
     this.user = AuthService.getUserInfo();
