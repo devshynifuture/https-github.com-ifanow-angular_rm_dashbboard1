@@ -1993,7 +1993,7 @@ export class MutualFundSummaryComponent implements OnInit {
         htmlInput: para,
         name: (this.clientData.name) ? this.clientData.name : '' + 's' + 'Summary' + date,
         landscape: true,
-        header:null,
+        header:header,
         key: 'showPieChart',
         clientId: this.clientId,
         advisorId: this.advisorId,
