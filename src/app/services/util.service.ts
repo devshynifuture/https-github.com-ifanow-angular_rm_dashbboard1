@@ -541,6 +541,7 @@ export class UtilService {
     const obj = {
       htmlInput: data.htmlInput,
       name: data.name,
+      header:data.header,
       fromEmail: data.fromEmail,
       landscape: data.landscape,
       toEmail: data.toEmail,
