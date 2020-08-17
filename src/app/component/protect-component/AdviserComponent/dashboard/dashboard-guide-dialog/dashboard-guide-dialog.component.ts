@@ -125,6 +125,11 @@ export class DashboardGuideDialogComponent implements OnInit {
     { name: 'Financial planner', selected: false, option: 'C', id: 3 },
   ]
 
+  uploadMfFIleOption = [
+    { name: 'Order & Upload files for me please', selected: false, option: 'A', id: 1 },
+    { name: 'Do not order. I will manually do it.', selected: false, option: 'B', id: 2 },
+  ]
+
   ArnRiaForm: FormGroup;
   credentialsForm: FormGroup;
   advisorId: any;
@@ -169,6 +174,8 @@ export class DashboardGuideDialogComponent implements OnInit {
   emailDetails: any;
   emailList: any;
   isLoading: boolean;
+  step17Flag: boolean;
+  selectedMfOption: any;
 
 
   constructor(private fb: FormBuilder,
@@ -343,6 +350,14 @@ export class DashboardGuideDialogComponent implements OnInit {
     this.selctedRoleChoice = selectedRole;
     this.rolesList.map(element => {
       (selectedRole.id == element.id) ? element.selected = true : element.selected = false
+    })
+  }
+
+  selectUploadMfOption(selectChoice) {
+    this.step17Flag = true
+    this.selectedMfOption = selectChoice;
+    this.uploadMfFIleOption.map(element => {
+      (selectChoice.id == element.id) ? element.selected = true : element.selected = false
     })
   }
 

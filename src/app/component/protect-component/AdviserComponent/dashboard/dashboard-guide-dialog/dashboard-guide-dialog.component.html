@@ -1015,7 +1015,8 @@
 
                     <ng-container matColumnDef="weight">
                       <th mat-header-cell *matHeaderCellDef class="br"> Verification status </th>
-                      <td mat-cell *matCellDef="let element" class="br" (click)="getEmailVerification()">
+                      <td mat-cell *matCellDef="let element" class="br"
+                        (click)="element.emailVerificationStatus != 1?getEmailVerification():''">
                         <div class="bar d-flex align-items-center"
                           [ngClass]="{'text-danger': element.emailVerificationStatus == 3, 'text-warning': element.emailVerificationStatus == 2, 'text-success': element.emailVerificationStatus == 1}">
                           {{isLoading?'':(element.emailVerificationStatus == 2)?'Verification pending':(element.emailVerificationStatus == 1)?'Verified':'Verification failed'}}
@@ -1110,23 +1111,26 @@
 
       <div class="row pt-20">
         <div class="col-md-12 d-flex">
-          <div class="box-1 boxDescribes mr-20 p-20">
-            <h5 class="m-0 roboto f-400 lh-19 pb-24">Order & Upload files for me please
-            </h5>
-            <div class="hw-40 bottomPost bg-grey lt br-2">
-              <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">A</h3>
-            </div>
-            <div class="ribbon ribbon-bottom-right mt-16"><span><img src="/assets/images/svg/right-white.svg"></span>
+          <div (click)="selectUploadMfOption(singleChoice)" *ngFor="let singleChoice of uploadMfFIleOption">
+            <div [ngClass]="{'select-active-border': singleChoice.selected}" class="box-1 boxDescribes mr-20 p-20">
+              <h5 class="m-0 roboto f-400 lh-19 pb-24">{{singleChoice.name}}
+              </h5>
+              <div class="hw-40 bottomPost bg-grey lt br-2">
+                <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">{{singleChoice.option}}</h3>
+              </div>
+              <div *ngIf="singleChoice.selected" class="ribbon ribbon-bottom-right mt-16"><span><img
+                    src="/assets/images/svg/right-white.svg"></span>
+              </div>
             </div>
           </div>
 
-          <div class="box-1 boxDescribes mr-20 p-20">
+          <!-- <div class="box-1 boxDescribes mr-20 p-20">
             <h5 class="m-0 roboto f-400 lh-19 pb-24">Do not order. I will manually do it.
             </h5>
             <div class="hw-40 bg-grey bottomPost lt br-2 mt-20">
               <h3 class="m-0 roboto f-400 text-primitive pt-8 text-center">B</h3>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
 
@@ -1142,7 +1146,8 @@
       <div class="bottomFooterDasb">
         <div class="row">
           <div class="col-md-12 ">
-            <button (click)="step=18" mat-stroked-button class="btn-primary h-48 lh-48 f-18   br-4  ">Proceed
+            <button *ngIf="step17Flag" (click)="step=18" mat-stroked-button
+              class="btn-primary h-48 lh-48 f-18   br-4  ">Proceed
               <img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
           </div>
         </div>
