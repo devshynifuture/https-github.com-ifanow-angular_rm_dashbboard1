@@ -9,8 +9,6 @@
                             <button mat-button (click)="viewMode='Budget';getBugetTab(viewMode)" [ngClass]="{'mat-stroked-button': viewMode == 'Budget','text-primary':viewMode == 'Budget'}">Budget</button>
                         </div>
 
-
-
                         <div class="col-md-8  d-flex align-items-center justify-content-end pr-0">
 
                             <mat-chip-list class="newDateIcon">
@@ -462,7 +460,7 @@
 <!--------------------------------------------------------PDF------------------------------------------------------>
 
 <!-----------------------------------TRANSACTION AN OTHER Commitmments----------------------------------------------->
-<div #transactionExpens id="template" class="hide" *ngIf="viewMode == 'Transactions'">
+<div #transactionExpens id="template" class="hide"  *ngIf="viewMode == 'Transactions'">
     <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">
 
         <tr>
@@ -470,10 +468,10 @@
                 <table style="width: 100%;">
                     <tr>
                         <td style="vertical-align: top;">
-                            <img style="width: 300px;" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
+                            <img style="width: 120px;" *ngIf="getOrgData" [src]="getOrgData.reportLogoUrl">
                         </td>
-                        <td>
-                            <table style="float: right;">
+                        <td style="vertical-align: top;"> 
+                            <table style="width: 100%;">
                                 <tr *ngIf="userInfo">
                                     <td colspan="2" style="font-weight: 600; font-size: 20px; text-align: right;">
                                         {{(userInfo.name) ? userInfo.name : '-'}}
@@ -505,9 +503,10 @@
         </tr>
 
         <tr>
-            <td colspan="9" style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
+            <td colspan="11" style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
                 Transactions & Recurring commitments</td>
         </tr>
+
         <tr>
             <td colspan="11">
                 <p style="margin: 0px; font-weight: 600;font-size: 14px;padding-top: 10px; padding-bottom: 10px;" *ngIf="clientData">
@@ -515,7 +514,7 @@
             </td>
         </tr>
         <tr>
-            <td colspan="9" style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
+            <td colspan="11" style="font-size: 18px;line-height: 20px;color: #000000 !important;padding-top: 20px;padding-bottom: 20px;">
                 Transactions</td>
         </tr>
         <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;" *ngIf="dataSource.data.length > 0">
@@ -535,7 +534,6 @@
                 Mode </td>
             <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Amount </td>
-
 
         </tr>
         <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;" *ngFor="let item of dataSource.data ;index as i">
@@ -582,7 +580,6 @@
             <td style="padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
                 Amount </td>
 
-
         </tr>
         <tr style="border-left: 1px solid #DADCE0;border-bottom: 1px solid #DADCE0;height: 40px !important;" *ngFor="let item of dataSource1.data ;index as i">
             <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
@@ -616,7 +613,6 @@
    
 </div>
 <!-----------------------------------------BUDGETS AND OTHER COMMITMMENTS------------------------------------->
-
 
 <div #budgetPdf id="template2" class="hide" *ngIf="viewMode == 'Budget'">
     <table style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif;">

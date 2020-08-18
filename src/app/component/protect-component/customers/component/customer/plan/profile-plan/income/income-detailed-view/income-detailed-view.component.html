@@ -145,8 +145,10 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="income.incomeOption == 1">
-            <div class="col-md-12 p-0  mt-24">
+    </div>
+
+        <div class="row pt-24" *ngIf="income.incomeOption == 1">
+            <div class="col-md-12 p-0">
                 <h4 class="f-16 roboto f-500">Basic salary</h4>
                 <div class="insurance-ui bt">
                     <div class="row bb p-8 b-l br" *ngFor="let data of incomeArr; let i = index">
@@ -162,7 +164,8 @@
 
             </div>
         </div>
-        <div *ngIf="income.incomeOption == 1">
+
+        <div class="row pt-20" *ngIf="income.incomeOption == 1">
             <div class="col-md-12 p-0  mt-24">
                 <h4 class="f-16 roboto f-500">Allowances</h4>
                 <div class="insurance-ui bt">
@@ -179,7 +182,8 @@
 
             </div>
         </div>
-        <div *ngIf="income.incomeOption == 1">
+
+        <div class="row pt-20" *ngIf="income.incomeOption == 1">
             <div class="col-md-12 p-0  mt-24">
                 <h4 class="f-16 roboto f-500">Perquisites</h4>
                 <div class="insurance-ui bt">
@@ -196,7 +200,8 @@
 
             </div>
         </div>
-        <div *ngIf="income.incomeOption == 1">
+
+        <div class="row pt-20" *ngIf="income.incomeOption == 1">
             <div class="col-md-12 p-0  mt-24">
                 <h4 class="f-16 roboto f-500">Reimbursements</h4>
                 <div class="insurance-ui bt">
@@ -213,9 +218,10 @@
 
             </div>
         </div>
-        <div *ngIf="income.incomeOption == 1">
-            <div class="col-md-12 p-0  mt-24">
-                <h4 class="f-16 roboto f-500">Retirals</h4>
+
+        <div class="row pt-20" *ngIf="income.incomeOption == 1">
+             <div class="col-md-12 p-0  mt-24">
+                 <h4 class="f-16 roboto f-500">Retirals</h4>
                 <div class="insurance-ui bt">
                     <div class="row bb p-8 b-l br" *ngFor="let data of RetiralsArr; let i = index">
                         <div class="col-md-8 text-left f-14 roboto p-0">
@@ -230,7 +236,8 @@
 
             </div>
         </div>
-        <div *ngIf="income.incomeOption == 1">
+
+        <div class="row pt-20" *ngIf="income.incomeOption == 1">
             <div class="col-md-12 p-0  mt-24">
                 <h4 class="f-16 roboto f-500">Others</h4>
                 <div class="insurance-ui bt">
@@ -247,7 +254,8 @@
 
             </div>
         </div>
-        <div *ngIf="income.incomeOption == 2">
+
+        <div class="row pt-20" *ngIf="income.incomeOption == 2">
             <div class="col-md-12 p-0  mt-24">
                 <h4 class="f-16 roboto f-500">Monthly income</h4>
                 <div class="insurance-ui bt">
@@ -264,6 +272,5 @@
 
             </div>
         </div>
-
-    </div>
+    
 </div>
