@@ -47,9 +47,45 @@
       </div>
     </div> -->
   </div>
-  <app-add-holder-names *ngIf="dematList" [clientName]="clientName" [holderListInput]="dematList.holderNameList"
+  <!-- <app-add-holder-names *ngIf="dematList" [clientName]="clientName" [holderListInput]="dematList.holderNameList"
     (holderList)="getHolderList($event)">
-  </app-add-holder-names>
+  </app-add-holder-names> -->
+  <div formArrayName="getCoOwnerName">
+    <div class="row pt-44" *ngFor="let obj of getCoOwner.controls; let pointIndex=index" [formGroupName]="pointIndex">
+      <div class="col-md-4  text-right d-flex align-items-center justify-content-end mob-pl-10 mob-text-left">
+        <h5 class="m-0 pt-12">
+          <span *ngIf="pointIndex==0">First</span>
+          <span *ngIf="pointIndex==1">Second</span>
+          <span *ngIf="pointIndex==2">Third</span> holder name
+        </h5>
+      </div>
+      <div class="p-0 mob-pl-10 col-10 col-md-6">
+        <div class="form-group mb-0">
+          <mat-form-field>
+            <mat-select appHolderName matInput formControlName="name" [data]='ownerData'
+              (selectionChange)="disabledMember($event.value,'owner')" (valueChange1)='lisNominee1($event)'
+              class="form-control br-0" [callMethod]='callMethod1'>
+              <mat-option value='' disabled>Select family member</mat-option>
+              <mat-option *ngIf="nomineesListFM1==undefined" value='clientData.name'>{{clientData.name}}
+              </mat-option>
+              <mat-option (onSelectionChange)="selectHolder(f,i)" *ngFor="let f of nomineesListFM1;index as i"
+                [disabled]="f.disable" [value]="f.userName">
+                <span>{{f.userName}}</span>
+              </mat-option>
+            </mat-select>
+            <mat-hint>Optional</mat-hint>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="col-md-2 col-2 pr-0 pt-12">
+        <i *ngIf=" pointIndex+1==dematForm.value.getCoOwnerName.length && pointIndex<2" class=" material-icons
+            f-20 c-p" (click)="addNewCoOwner(undefined)">add</i>
+        <i *ngIf="dematForm.value.getCoOwnerName.length>1" class=" material-icons
+            f-20 c-p" (click)="removeCoOwner(pointIndex)">remove</i>
+      </div>
+
+    </div>
+  </div>
 
   <div class="row pt-44">
     <div class="col-md-4 text-right pl-0 mob-text-left mob-pl-10 d-flex align-items-center justify-content-end ">
@@ -135,7 +171,7 @@
 
   <app-add-number *ngIf="dematList" [isResidential]="userData" [numberList]="dematList.mobileDataList"
     [flag]="mobileNumberFlag" (numberArray)="getNumberDetails($event)"></app-add-number>
-   
+
   <div *ngIf="checkNomineeFlag && (userData.userId || userData.familyMemberId)" formArrayName="getNomineeName">
     <div class="row pt-44" *ngFor="let obj of getNominee.controls; let pointIndex=index" [formGroupName]="pointIndex">
       <div class="col-md-4  text-right d-flex align-items-center justify-content-end mob-pl-10 mob-text-left">
@@ -236,7 +272,8 @@
       <h5 (click)="close('close')" class="mb-0 pt-8 text-white c-p">Cancel</h5>
     </div>
     <div class="col-md-8 d-flex align-items-end justify-content-end">
-      <button mat-stroked-button *ngIf="fieldFlag" (click)="saveNext('Next')" class=" br-0 bg-white text-inherit">SAVE &
+      <button mat-stroked-button *ngIf="fieldFlag" (click)="saveNext('Next')" class=" br-0 bg-white text-inherit">SAVE
+        &
         NEXT
       </button>
       <!-- <button *ngIf="fieldFlag!=undefined" mat-raised-button (click)="saveNext('Next')"
