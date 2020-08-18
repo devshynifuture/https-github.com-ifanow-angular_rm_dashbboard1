@@ -86,7 +86,18 @@ export class BackofficeFileUploadTransactionsComponent implements OnInit {
         if (data) {
           console.log(data);
           data.forEach(element => {
-            element.rt = this.getRtNameFromRtId(parseInt(element.rt));
+            if(!isNaN(Number(element.rt))){
+              element.rt = this.getRtNameFromRtId(parseInt(element.rt));
+            }
+            if (element.processStatus === 0) {
+              element.status = "Pending";
+            } else if (element.processStatus === 1) {
+              element.status = "Success";
+            } else if (element.processStatus === -1) {
+              element.status = "Duplicate";
+            } else {
+              element.status = "Failed";
+            }
           });
           this.listData = data;
 

@@ -425,13 +425,13 @@ export class ExcelMisService {
                         headCell = ws.getRow(currentRowPos);
                         headCell.font = { bold: true };
                     } 
-                    // else {
-                    //     currentRowPos = currentRowPos + 2;
-                    //     ws.getRow(currentRowPos).values = arrayOfHeaders[0];
-                    //     ws.columns = arrayOfHeaderStyle[0];
-                    //     headCell = ws.getRow(currentRowPos);
-                    //     headCell.font = { bold: true };
-                    // }
+                    else {
+                        currentRowPos = currentRowPos + 3;
+                        // ws.getRow(currentRowPos).values = arrayOfHeaders[0];
+                        // ws.columns = arrayOfHeaderStyle[0];
+                        // headCell = ws.getRow(currentRowPos);
+                        // headCell.font = { bold: true };
+                    }
 
                     ws.addRow([
                         amcElement.index,
@@ -444,12 +444,14 @@ export class ExcelMisService {
                 if (amcElement.schemeList.length !== 0) {
                     if (!excluded.schemeList) {
                         amcElement.schemeList.forEach((schemeElement, index2) => {
-                            currentRowPos = currentRowPos + 1;
-                            if(index2 === 0){
+                            if(index2 === 0 && index1 === 0){
+                                currentRowPos = currentRowPos + 2;
                                 ws.getRow(currentRowPos).values = arrayOfHeaders[1];
                                 ws.columns = arrayOfHeaderStyle[1];
                                 headCell = ws.getRow(currentRowPos);
                                 headCell.font = { bold: true };
+                            } else {
+                                currentRowPos = currentRowPos + 3;
                             }
                             ws.addRow([
                                 schemeElement.index,
@@ -461,12 +463,14 @@ export class ExcelMisService {
                             if (schemeElement.applicantList.length !== 0) {
                                 if (!excluded.applicantList) {
                                     schemeElement.applicantList.forEach((applicantElement, index3) => {
-                                        currentRowPos = currentRowPos + 1;
-                                        if(index3 === 0){
+                                        if(index3 === 0 && index2===0 &&index1 === 0){
+                                            currentRowPos = currentRowPos + 2;
                                             ws.getRow(currentRowPos).values = arrayOfHeaders[2];
                                             ws.columns = arrayOfHeaderStyle[2];
                                             headCell = ws.getRow(currentRowPos);
                                             headCell.font = { bold: true };
+                                        }else {
+                                            currentRowPos = currentRowPos + 3;
                                         }
                                         ws.addRow([
                                             applicantElement.name,
@@ -484,12 +488,14 @@ export class ExcelMisService {
                             if (schemeElement.applicantList.length !== 0) {
                                 if (!excluded.applicantList) {
                                     schemeElement.applicantList.forEach(applicantElement => {
-                                        currentRowPos = currentRowPos + 1;
-                                        if(index2 === 0){
+                                        if(index2 === 0 && index1 === 0){
+                                            currentRowPos = currentRowPos + 2;
                                             ws.getRow(currentRowPos).values = arrayOfHeaders[2];
                                             ws.columns = arrayOfHeaderStyle[2];
                                             headCell = ws.getRow(currentRowPos);
                                             headCell.font = { bold: true };
+                                        }else {
+                                            currentRowPos = currentRowPos + 3;
                                         }
                                         ws.addRow([
                                             applicantElement.name,
@@ -536,13 +542,15 @@ export class ExcelMisService {
                 if (clientElement.investorList.length !== 0) {
                     if (!excluded.investorList) {
                         clientElement.investorList.forEach((investorElement, index2) => {
-                            currentRowPos = currentRowPos + 1;
-
-                            if(index2 === 0){
+                            
+                            if(index2 === 0 && index1 === 0){
+                                currentRowPos = currentRowPos + 2;
                                 ws.getRow(currentRowPos).values = arrayOfHeaders[1];
                                 ws.columns = arrayOfHeaderStyle[1];
                                 headCell = ws.getRow(currentRowPos);
                                 headCell.font = { bold: true };
+                            } else{
+                                currentRowPos = currentRowPos + 3;
                             }
                             ws.addRow([
                                 investorElement.index,
@@ -554,14 +562,15 @@ export class ExcelMisService {
                             if (investorElement.schemeList.length !== 0) {
                                 if (!excluded.schemeList) {
                                     investorElement.schemeList.forEach((schemeElement, index3) => {
-                                        currentRowPos = currentRowPos + 1;
-                                        if(index3 === 0){
+                                        if(index3 === 0 && index2===0 &&index1===0){
+                                            currentRowPos = currentRowPos + 2;
                                             ws.getRow(currentRowPos).values = arrayOfHeaders[2];
                                             ws.columns = arrayOfHeaderStyle[2];
                                             headCell = ws.getRow(currentRowPos);
                                             headCell.font = { bold: true };
+                                        } else {
+                                            currentRowPos = currentRowPos + 3
                                         }
-
 
                                         ws.addRow([
                                             schemeElement.index,
@@ -581,13 +590,15 @@ export class ExcelMisService {
                                                     // } else {
                                                     // }
 
-                                                    currentRowPos = currentRowPos + 1;
-                                                    if(index4 === 0){
+                                                    if(index4 === 0 && index3 === 0 && index2 === 0 && index1 ===1){
+                                                        currentRowPos = currentRowPos + 2;
                                                         ws.getRow(currentRowPos).values = arrayOfHeaders[3];
     
                                                         ws.columns = arrayOfHeaderStyle[3];
                                                         headCell = ws.getRow(currentRowPos);
                                                         headCell.font = { bold: true };
+                                                    } else {
+                                                        currentRowPos = currentRowPos + 3
                                                     }
                                                     ws.addRow([
                                                         element.index,
@@ -633,14 +644,15 @@ export class ExcelMisService {
                             if (investorElement.schemeList.length !== 0) {
                                 if (!excluded.schemeList) {
                                     investorElement.schemeList.forEach((schemeElement, index3) => {
-                                        currentRowPos = currentRowPos + 1;
-                                        if(index3 === 0){
+                                        if(index3 === 0 && index2 === 0 && index1 === 0){
+                                            currentRowPos = currentRowPos + 2;
                                             ws.getRow(currentRowPos).values = arrayOfHeaders[2];
                                             ws.columns = arrayOfHeaderStyle[2];
                                             headCell = ws.getRow(currentRowPos);
                                             headCell.font = { bold: true };
+                                        } else {
+                                            currentRowPos = currentRowPos + 3;
                                         }
-
 
                                         ws.addRow([
                                             schemeElement.index,
@@ -660,13 +672,15 @@ export class ExcelMisService {
                                                     // } else {
                                                     // }
 
-                                                    currentRowPos = currentRowPos + 1;
-
-                                                    if(index4 === 0){
+                                                    
+                                                    if(index4 === 0 && index3 === 0 && index2 === 0 && index1 === 0){
+                                                        currentRowPos = currentRowPos + 2;
                                                         ws.getRow(currentRowPos).values = arrayOfHeaders[3];
                                                         ws.columns = arrayOfHeaderStyle[3];
                                                         headCell = ws.getRow(currentRowPos);
                                                         headCell.font = { bold: true };
+                                                    } else {
+                                                        currentRowPos = currentRowPos + 2;
                                                     }
 
                                                     ws.addRow([
@@ -682,7 +696,7 @@ export class ExcelMisService {
                                         }
                                     });
                                 } else {
-                                    investorElement.schemeList.forEach(schemeElement => {
+                                    investorElement.schemeList.forEach((schemeElement, index3) => {
                                         if (schemeElement.schemeFolioList.length !== 0) {
                                             if (!excluded.schemeFolioList) {
                                                 schemeElement.schemeFolioList.forEach((element, index4) => {
@@ -693,13 +707,15 @@ export class ExcelMisService {
                                                     // } else {
                                                     // }
 
-                                                    currentRowPos = currentRowPos + 1;
-
-                                                    if(index4 === 0){
+                                                    
+                                                    if(index4 === 0 && index3 === 0 && index2 ===0 && index1 === 0){
+                                                        currentRowPos = currentRowPos + 2;
                                                         ws.getRow(currentRowPos).values = arrayOfHeaders[3];
                                                         ws.columns = arrayOfHeaderStyle[3];
                                                         headCell = ws.getRow(currentRowPos);
                                                         headCell.font = { bold: true };
+                                                    } else {
+                                                        currentRowPos = currentRowPos + 3;
                                                     }
                                                     ws.addRow([
                                                         element.index,
@@ -1477,13 +1493,13 @@ export class ExcelMisService {
                     headCell = ws.getRow(currentRowPos);
                     headCell.font = { bold: true };
                 }
-                //  else {
-                //     currentRowPos = currentRowPos + 2;
-                //     ws.getRow(currentRowPos).values = arrayOfHeaders[0];
-                //     ws.columns = arrayOfHeaderStyle[0];
-                //     headCell = ws.getRow(currentRowPos);
-                //     headCell.font = { bold: true };
-                // } 
+                 else {
+                    currentRowPos = currentRowPos + 1;
+                    ws.getRow(currentRowPos).values = arrayOfHeaders[0];
+                    ws.columns = arrayOfHeaderStyle[0];
+                    headCell = ws.getRow(currentRowPos);
+                    headCell.font = { bold: true };
+                } 
                 ws.addRow([
                     subCatElement.index,
                     subCatElement.name,
@@ -1649,13 +1665,13 @@ export class ExcelMisService {
                     headCell = ws.getRow(currentRowPos);
                     headCell.font = { bold: true };
                 } 
-                // else {
-                //     currentRowPos = currentRowPos + 2;
-                //     ws.getRow(currentRowPos).values = arrayOfHeaders[0];
-                //     ws.columns = arrayOfHeaderStyle[0];
-                //     headCell = ws.getRow(currentRowPos);
-                //     headCell.font = { bold: true };
-                // }
+                else {
+                    currentRowPos = currentRowPos + 1;
+                    ws.getRow(currentRowPos).values = arrayOfHeaders[0];
+                    ws.columns = arrayOfHeaderStyle[0];
+                    headCell = ws.getRow(currentRowPos);
+                    headCell.font = { bold: true };
+                }
                 ws.addRow([
                     schemeElement.index,
                     schemeElement.name,
