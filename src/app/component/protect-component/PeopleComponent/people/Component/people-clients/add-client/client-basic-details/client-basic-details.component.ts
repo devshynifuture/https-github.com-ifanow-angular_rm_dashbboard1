@@ -314,7 +314,7 @@ export class ClientBasicDetailsComponent implements OnInit {
         familyMemberId: [this.basicDetailsData.familyMemberId],
         id: [],
         clientId: [this.basicDetailsData.clientId],
-        guardianClientId: [],
+        guardianClientId: [this.basicDetailsData.clientId],
         guardianFamilyMemberId: ['', [Validators.required]],
         active: true
       })]),
@@ -352,7 +352,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       familyMemberId: [this.basicDetailsData.familyMemberId],
       id: [data ? data.id : 0],
       clientId: [this.basicDetailsData.clientId],
-      guardianClientId: [data ? data.guardianClientId : ''],
+      guardianClientId: [this.basicDetailsData.clientId],
       guardianFamilyMemberId: [data ? data.guardianFamilyMemberId : '', [Validators.required]],
       active: true
     }));
@@ -383,11 +383,6 @@ export class ClientBasicDetailsComponent implements OnInit {
     this.nomineesListFM = Object.assign([], value);
   }
 
-
-  selectHolder(data, index) {
-    this.getCoOwner.controls[index].get('guardianClientId').setValue(data.clientId)
-    this.getCoOwner.controls[index].get('guardianFamilyMemberId').setValue(data.familyMemberId)
-  }
 
   createNonIndividualForm(data) {
     (data == undefined) ? data = {} : '';

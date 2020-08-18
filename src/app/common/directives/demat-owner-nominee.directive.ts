@@ -128,12 +128,6 @@ export class DematOwnerNomineeDirective {
       this.sendData.forEach(element => {
         for (const e of controlsArr) {
           if (element.familyMemberId == e.data.guardianFamilyMemberId) {
-            if (e.type == 'owner') {
-              this.getCoOwner.controls[e.index].get('familyMemberId').setValue(element.familyMemberId);
-              this.getCoOwner.controls[e.index].get('clientId').setValue(element.clientId);
-            } else {
-              this.getNominee.controls[e.index].get('familyMemberId').setValue(element.familyMemberId);
-            }
             element.disable = true;
             return;
           } else {

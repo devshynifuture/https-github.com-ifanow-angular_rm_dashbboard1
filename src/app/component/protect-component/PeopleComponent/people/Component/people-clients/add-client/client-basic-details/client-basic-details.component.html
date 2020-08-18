@@ -493,8 +493,8 @@
                                     (valueChange1)='lisNominee($event)' class="form-control br-0"
                                     [callMethod]='callMethod'>
                                     <mat-option value='' disabled>Select family member</mat-option>
-                                    <mat-option (click)="selectHolder(f,i)" *ngFor="let f of nomineesListFM;index as i"
-                                        [disabled]="f.disable" [value]="f.familyMemberId">
+                                    <mat-option *ngFor="let f of nomineesListFM;index as i" [disabled]="f.disable"
+                                        [value]="f.familyMemberId">
                                         <span>{{f.userName}}</span>
                                     </mat-option>
                                 </mat-select>
