@@ -261,6 +261,15 @@
     }
   }
 
+  .w-1024-1200 {
+    width: 1024px !important;
+  }
+
+  .overflow-y-auto-1200 {
+    overflow: auto;
+    white-space: nowrap;
+  }
+
   #ui-assets-account,
   #ui-profile-plan {
     li {
@@ -304,7 +313,7 @@
     }
   }
 
-  div.overflow-y {
+  div.overflow-y-1200 {
     overflow: auto;
     white-space: nowrap;
 
