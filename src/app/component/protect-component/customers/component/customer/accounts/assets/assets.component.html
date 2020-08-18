@@ -2,7 +2,7 @@
 </div>
 <div id="ui-assets-account">
     <mat-sidenav-container class="sidenav-container" [hasBackdrop]="false">
-        <mat-sidenav class="col-md-2 bg-grey lter overflow-hidden p-0" #sidenav [mode]="sidenavState ? 'over' : 'side'"
+        <mat-sidenav class="col-md-12 col-lg-2 bg-grey lter overflow-hidden p-0" #sidenav [mode]="sidenavState ? 'over' : 'side'"
             role="navigation">
 
             <mat-nav-list class="width-220 pt-0" id="d">
@@ -76,16 +76,14 @@
             </div>
 
         </mat-sidenav>
+
         <mat-sidenav-content class="p-0 pt-122 b-a ng-tns-c1-0" id="left">
-            <div>
+            
                 <div *ngIf="sidenavState" [ngClass]="sidenavState ? '': 'd-none'">
                     <div class="leftside-overlay-toggle-button " (click)="sidenav.toggle()">
                         <i class="material-icons f-30 text-custom"> keyboard_arrow_right </i>
                     </div>
                 </div>
-                <!-- <div class="leftside-overlay-toggle-button" (click)="sidenav.toggle()" *ngIf="sidenavState">
-  <i class="material-icons f-30 text-custom"> keyboard_arrow_right </i>
-  </div> -->
                 <div class="row">
                     <div class="col-md-12 bg-white bb-0 pb-24  pl-0 pr-0 min-height" [ngSwitch]="viewMode">
                         <div *ngSwitchCase="'tab1'">
@@ -127,13 +125,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- <div class="leftside-overlay-toggle-button-close" [ngClass]="sidenavState ? 'd-none': ''"
-  (click)="toggleSideNav()">
-  <i class="material-icons f-30 text-custom">
-      keyboard_arrow_left
-  </i>
-  </div> -->
+              
         </mat-sidenav-content>
     </mat-sidenav-container>
 </div>
