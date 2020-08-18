@@ -17,6 +17,7 @@ import { CustomAutocompleteDirective } from './custom-autocomplete.directive';
 import { DematOwnerNomineeDirective } from './demat-owner-nominee.directive';
 import { PrefixFocusDirective } from './prefix-focus.directive';
 import { ExternalDateFormatDirective } from './external-date-format.directive';
+import { HolderNameDirective } from './holder-name.directive';
 
 // import {AppModule} from "../app.module";
 
@@ -40,7 +41,8 @@ export const directiveList = [
   DematOwnerNomineeDirective,
   PrefixFocusDirective,
   ExternalDateFormatDirective,
-  DateAgoPipe
+  DateAgoPipe,
+  HolderNameDirective
 ];
 
 @NgModule({

@@ -89,9 +89,48 @@
         </div>
     </div>
 
-    <app-add-holder-names class="pt-44" *ngIf="bankList" [clientName]="clientName" [holderListInput]="bankList.holderNameList"
+    <!-- <app-add-holder-names class="pt-44" *ngIf="bankList" [clientName]="clientName" [holderListInput]="bankList.holderNameList"
         (holderList)="getHolderList($event)">
-    </app-add-holder-names>
+    </app-add-holder-names> -->
+
+    <div formArrayName="getNomineeName">
+        <div class="row pt-44" *ngFor="let obj of getNominee.controls; let pointIndex=index"
+            [formGroupName]="pointIndex">
+            <div class="col-md-4  text-right d-flex align-items-center justify-content-end mob-pl-10 mob-text-left">
+                <h5 class="m-0 pt-12">
+                    <span *ngIf="pointIndex==0">First</span>
+                    <span *ngIf="pointIndex==1">Second</span>
+                    <span *ngIf="pointIndex==2">Third</span> holder name
+                </h5>
+            </div>
+            <div class="p-0 mob-pl-10 col-10 col-md-6">
+                <div class="form-group mb-0">
+                    <mat-form-field>
+                        <mat-select appHolderName matInput formControlName="name" [data]='ownerData'
+                            (selectionChange)="disabledMember($event.value,'nominee')"
+                            (valueChange1)='lisNominee($event)' class="form-control br-0" [callMethod]='callMethod'>
+                            <mat-option value='' disabled>Select family member</mat-option>
+                            <!-- <mat-option *ngIf="nomineesListFM==undefined" value='clientData.name'>{{clientData.name}}
+                            </mat-option> -->
+                            <mat-option (click)="selectHolder(f,i)" *ngFor="let f of nomineesListFM;index as i"
+                                [disabled]="f.disable" [value]="f.userName">
+                                <span>{{f.userName}}</span>
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>This field is required</mat-error>
+                        <!-- <mat-hint>Optional</mat-hint> -->
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="col-md-2 col-2 pr-0 pt-12">
+                <i *ngIf=" pointIndex+1==bankForm.value.getNomineeName.length && pointIndex<2" class=" material-icons
+                    f-20 c-p" (click)="addNewNominee(undefined)">add</i>
+                <i *ngIf=" bankForm.value.getNomineeName.length>1" class=" material-icons
+                    f-20 c-p" (click)="removeNewNominee(pointIndex)">remove</i>
+            </div>
+
+        </div>
+    </div>
 
     <div class="row pt-44">
         <div class="col-md-4 text-right mob-pl-10 mob-text-left  d-flex align-items-center justify-content-end">

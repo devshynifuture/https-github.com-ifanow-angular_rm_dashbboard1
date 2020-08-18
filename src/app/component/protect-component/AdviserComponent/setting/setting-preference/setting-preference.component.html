@@ -7,7 +7,7 @@
 <div id="ui-setting-preference" class="bg-white pt-130">
     <div class="wrapper-20">
         <div class="row">
-            <div class="col-md-3 col-lg-2 p-0 pt-1 settingPreference">
+            <div class="col-md-12 col-lg-2 p-0 pt-1 settingPreference">
                 <ul class="vertical-menu">
                     <li (click)="changeView('tab1')" [ngClass]="{'b-outline':viewMode =='tab1','':viewMode =='tab1'}" class="c-p">
                         Portfolio section
@@ -40,14 +40,14 @@
                 </ul>
 
             </div>
-            <div class="col-md-9 col-lg-10 b-a p-0 min-height" [ngSwitch]="viewMode">
+            <div class="col-md-12 col-lg-10 b-a p-0 min-height" [ngSwitch]="viewMode">
                 <div class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading" *ngSwitchCase="'tab1'">
                     <div class="p-20" [hidden]="hasError">
-                        <div class="relClass">
-                            <h5 class="mb-8 bar text-black" [ngClass]="{'height23': isLoading}">
+                        
+                            <h5 class="mb-8 bar text-black"  >
                                 Mutual Fund
                             </h5>
-                        </div>
+                        
 
                         <div class="bar">
                             <mat-checkbox class="text-black" (change)="selectMutualFund($event,mutualFund)" [checked]="mutualFund.selectedOrDeselected">Show absolute returns for new clients
@@ -55,15 +55,14 @@
                             <p class="m-0 text-custom pb-20 bb-1 pl-24">New client is defined as one whose oldest mutual fund transaction is less than one year old.</p>
                         </div>
 
-                        <div class="pt-20 relClass">
-                            <div class="bar">
+                        <div class="pt-20">                           
                                 <mat-checkbox class="text-black" #mutual2 (change)="selectMutualFund($event,mutualFund2)" [checked]="mutualFund2.selectedOrDeselected">Show mutual fund fact sheet
                                 </mat-checkbox>
                                 <p class="m-0 text-custom pl-24">Mutual fund fact sheets are shown when clicked on the mutual fund schemes from the portfolio MF reports section.</p>
-                            </div>
+                             
 
-                            <div class="bb-1 pl-24 pt-12 pb-20 relClass">
-                                <div class="bar" [ngClass]="{'height23': isLoading}">
+                            <div class="bb-1 pl-24 pt-12 pb-20  ">
+                                <div class="bar">
                                     <mat-checkbox class="text-black" (change)="selectMutualFund($event, mutualFund3)" [checked]="mutualFund3.selectedOrDeselected" [disabled]="!mutualFund2.selectedOrDeselected">Show investor returns vs scheme returns widget in fact sheet
                                     </mat-checkbox>
                                 </div>
@@ -164,7 +163,7 @@
                                         <th mat-header-cell class="br w-23" *matHeaderCellDef> Type </th>
                                         <td mat-cell class="br w-23" *matCellDef="let element">
                                             <div class="bar">
-                                                <span class="m-0" [innerHTML]="element.title"> </span>
+                                                <span class="m-0" *ngIf="isLoading == false" [innerHTML]="element.title"> </span>
                                             </div>
                                         </td>
                                     </ng-container>
@@ -173,7 +172,7 @@
                                         <th mat-header-cell class="br w-44" *matHeaderCellDef> Description </th>
                                         <td mat-cell class="br w-44" *matCellDef="let element">
                                             <div class="bar">
-                                                <span [innerHTML]="element.description"></span>
+                                                <span  *ngIf="isLoading == false" [innerHTML]="element.description"></span>
                                             </div>
                                         </td>
                                     </ng-container>
@@ -181,7 +180,7 @@
                                     <ng-container matColumnDef="weight">
                                         <th mat-header-cell class="br w-20" *matHeaderCellDef> From email </th>
                                         <td mat-cell class="br w-20 text-break" *matCellDef="let element">
-                                            <div class="bar tabWidth"> {{element.fromEmail}} </div>
+                                            <div class="bar tabWidth" > <span *ngIf="isLoading == false"> {{element.fromEmail}} </span> </div>
                                         </td>
                                     </ng-container>
 

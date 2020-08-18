@@ -45,6 +45,8 @@ export class ClientDematComponent implements OnInit {
   saveAndNextFlag: any;
   storeTempDematData: any;
   clientName: any;
+  nomineesListFM1: any = [];
+  callMethod1: { methodName: string; ParamValue: any; disControl: any; };
   constructor(private cusService: CustomerService, private fb: FormBuilder,
     private subInjectService: SubscriptionInject, private peopleService: PeopleService,
     private eventService: EventService, public dialog: MatDialog) {
@@ -99,8 +101,13 @@ export class ClientDematComponent implements OnInit {
     }
   }
 
+  lisNominee1(value) {
+    this.ownerData.Fmember = value;
+    this.nomineesListFM1 = Object.assign([], value);
+  }
+
   disabledMember(value, type) {
-    this.callMethod = {
+    this.callMethod1 = {
       methodName: 'disabledMember',
       ParamValue: value,
       disControl: type
@@ -135,7 +142,11 @@ export class ClientDematComponent implements OnInit {
 
   addNewCoOwner(data) {
     this.getCoOwner.push(this.fb.group({
-      name: [data ? data.name : '', [Validators.required]], share: [data ? data.share : '', [Validators.required]], familyMemberId: [data ? data.familyMemberId : 0], id: [data ? data.id : 0], isClient: [data ? data.isClient : 0]
+      name: [data ? data.name : '']
+      , share: [data ? data.share : ''],
+      familyMemberId: [data ? data.familyMemberId : 0],
+      id: [data ? data.id : 0],
+      clientId: [data ? data.clientId : 0]
     }));
     if (data) {
       setTimeout(() => {
@@ -181,6 +192,7 @@ export class ClientDematComponent implements OnInit {
   get getNominee() {
     return this.dematForm.get('getNomineeName') as FormArray;
   }
+
 
   removeNewNominee(item) {
     this.disabledMember(null, null);
@@ -241,12 +253,20 @@ export class ClientDematComponent implements OnInit {
       powerOfAttName: [data.powerOfAttorneyName],
       powerOfAttMasId: [data.powerOfAttorneyMasterId],
       getNomineeName: this.fb.array([this.fb.group({
-        name: [''],
+        name: [],
         sharePercentage: [0],
         familyMemberId: [0],
         id: [0]
       })]),
+      getCoOwnerName: this.fb.array([this.fb.group({
+        name: [this.clientName ? this.clientName : ''],
+        share: [''],
+        familyMemberId: 0,
+        id: 0,
+        clientId: 0
+      })]),
     });
+
 
     // ==============owner-nominee Data ========================\\
     /***owner***/
@@ -256,9 +276,9 @@ export class ClientDematComponent implements OnInit {
         this.getCoOwner.controls['0'].get('share').setValue('100');
       }
 
-      if (data.ownerList) {
+      if (data.holderNameList) {
         this.getCoOwner.removeAt(0);
-        data.ownerList.forEach(element => {
+        data.holderNameList.forEach(element => {
           this.addNewCoOwner(element);
         });
       }
@@ -278,6 +298,12 @@ export class ClientDematComponent implements OnInit {
     this.ownerData = { Fmember: this.nomineesListFM, controleData: this.dematForm };
     // ==============owner-nominee Data ========================\\
   }
+
+  selectHolder(data, index) {
+    this.getCoOwner.controls[index].get('clientId').setValue(data.clientId)
+    this.getCoOwner.controls[index].get('familyMemberId').setValue(data.familyMemberId)
+  }
+
   getDematList(data) {
     const obj = {
       userId: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? this.userData.clientId : this.userData.familyMemberId,
@@ -317,11 +343,8 @@ export class ClientDematComponent implements OnInit {
     // (this.dematForm.value.modeOfHolding == '1') ? this.dematForm.get('holderName').setValidators([Validators.required]) : this.dematForm.get('holderName').clearValidators();
     // this.dematForm.get('holderName').updateValueAndValidity();
     if (this.dematForm.invalid) {
-      this.holderList.markAllAsTouched();
       this.dematForm.markAllAsTouched();
       return;
-    } else if (this.holderList.invalid) {
-      this.holderList.markAllAsTouched();
     } else if (this.mobileData.invalid) {
       this.mobileData.markAllAsTouched();
     } else {
@@ -337,16 +360,16 @@ export class ClientDematComponent implements OnInit {
           });
         });
       }
-      if (this.holderList) {
-        this.holderList.controls.forEach(element => {
-          holderList.push({
-            // fMDetailTypeId: 1,
-            name: element.get('name').value,
-            id: element.get('id').value,
-            dematId: (this.userData.dematData) ? this.userData.dematData.dematId : (this.dematList) ? this.dematList.dematId : null
-          });
-        });
-      }
+      // if (this.holderList) {
+      //   this.holderList.controls.forEach(element => {
+      //     holderList.push({
+      //       // fMDetailTypeId: 1,
+      //       name: element.get('name').value,
+      //       id: element.get('id').value,
+      //       dematId: (this.userData.dematData) ? this.userData.dematData.dematId : (this.dematList) ? this.dematList.dematId : null
+      //     });
+      //   });
+      // }
       //  else {
       //   holderList.push({
       //     // fMDetailTypeId: 1,
@@ -374,7 +397,7 @@ export class ClientDematComponent implements OnInit {
       const obj = {
         depositoryParticipantName: this.dematForm.get('depositoryPartName').value,
         powerOfAttorneyMasterId: this.dematForm.get('depositoryPartId').value,
-        holderNameList: holderList,
+        holderNameList: this.dematForm.value.getCoOwnerName,
         modeOfHolding: this.dematForm.get('modeOfHolding').value,
         mobileDataList: mobileList,
         dematId: (this.userData.dematData) ? this.userData.dematData.dematId : (this.dematList) ? this.dematList.dematId : null,

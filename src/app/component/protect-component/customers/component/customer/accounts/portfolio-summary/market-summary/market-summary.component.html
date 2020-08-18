@@ -43,7 +43,7 @@
 
         <div class="row">
             <div class="col-md-5 pl-5">
-                    <p class="text-black roboto m-0  pb-8 f-300">Nifty 50</p>
+                <p class="text-black roboto m-0  pb-8 f-300">Nifty 50</p>
             </div>
             <div class="col-md-3 pl-0 pr-4">
                 <p class="m-0 f-400 roboto"
@@ -58,7 +58,7 @@
 
         <div class="row">
             <div class="col-md-5 pl-5">
-                    <p class="text-black m-0 roboto  pb-8 f-300">Nifty 500</p>
+                <p class="text-black m-0 roboto  pb-8 f-300">Nifty 500</p>
             </div>
             <div class="col-md-3 pl-0 pr-4">
                 <p [ngClass]="{'greenColor-text': nifty500Data.colourFlag,'text-danger': nifty500Data.colourFlag==false}"
@@ -117,7 +117,7 @@
     <div class="row">
         <div class="col-md-5 pl-5">
             <div>
-                <p class="text-black m-0  roboto pb-8 f-300">Silver</p>
+                <p *ngIf="!isLoading" class="text-black m-0  roboto pb-8 f-300">Silver</p>
             </div>
         </div>
         <div class="col-md-3   pl-0 pr-4">
