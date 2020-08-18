@@ -144,7 +144,9 @@ export class IncomeComponent implements OnInit {
     this.fragmentData.isSpinner = true;
     let para = document.getElementById('template');
     // this.util.htmlToPdf(para.innerHTML, 'Test',this.fragmentData);
-    this.util.htmlToPdf(para.innerHTML, 'Income', 'true', this.fragmentData, '', '');
+    
+    this.util.htmlToPdf('',para.innerHTML, 'Income', 'true', this.fragmentData, '', '');
+
   }
   deleteModal(value, incomeData) {
     const dialogData = {

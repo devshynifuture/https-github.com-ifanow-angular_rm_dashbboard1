@@ -102,6 +102,10 @@ export class ExpensesComponent implements OnInit {
   commitedInvestment: any;
   expenditure: any;
   expenseAssetData: any;
+  isTabLoaded = false;
+  chart: Highcharts.Chart;
+  expenseChart: Highcharts.Chart;
+  budgetChartSvg: Highcharts.Chart;
   // periodSelection: any;
 
   constructor(private fb: FormBuilder,private datePipe: DatePipe,private subInjectService: SubscriptionInject, private planService: PlanService,
@@ -230,17 +234,20 @@ export class ExpensesComponent implements OnInit {
 
   }
   generatePdf(tmp) {
+
     let header;
     this.fragmentData.isSpinner = true;
     let para = document.getElementById(tmp);
     // this.util.htmlToPdf(para.innerHTML, 'Test',this.fragmentData);
     if(tmp == 'template'){
+      let expenseSvg = this.expenseChart.getSVG();
        header = this.transactionExpens.nativeElement.innerHTML
-       this.util.htmlToPdf(header,para.innerHTML, 'Expense', 'true', this.fragmentData, '', '');
+       this.util.htmlToPdf('',para.innerHTML, 'Expense', 'true', this.fragmentData, 'showPieChart', expenseSvg);
 
     }else{
+      let budgetSvg = this.budgetChartSvg.getSVG();
        header = this.budgetPdf.nativeElement.innerHTML
-       this.util.htmlToPdf(header,para.innerHTML, 'Budget', 'true', this.fragmentData, '', '');
+       this.util.htmlToPdf('',para.innerHTML, 'Budget', 'true', this.fragmentData, 'showPieChart', budgetSvg);
 
 
     }
@@ -260,7 +267,7 @@ export class ExpensesComponent implements OnInit {
     // }
   }
   budgetChart(id) {
-    var chart = Highcharts.chart('bugetChart', {
+    this.budgetChartSvg = Highcharts.chart('bugetChart', {
 
       title: {
         text: 'Budget'
@@ -286,6 +293,7 @@ export class ExpensesComponent implements OnInit {
     });
   }
   getBugetTab(tab) {
+    this.isTabLoaded = true;
     if (tab == 'Budget') {
        this.getBudgetGraphValues();
       this.getBudgetList();
@@ -310,7 +318,7 @@ export class ExpensesComponent implements OnInit {
 
   }
   cashFlow(id) {
-    Highcharts.chart('piechartExpense', {
+   this.expenseChart= Highcharts.chart('piechartExpense', {
       chart: {
         plotBackgroundColor: null,
         plotBorderWidth: 0,
