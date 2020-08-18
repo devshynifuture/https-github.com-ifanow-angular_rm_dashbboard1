@@ -370,8 +370,11 @@ export class MutualFundOverviewComponent implements OnInit {
     };
     this.custumService.getMutualFund(obj).subscribe(
       data => {
-        this.getMutualFundResponse(data)
         let cashFlow = data;
+        if (cashFlow.mutualFundCategoryMastersList.length > 0) {
+          this.cashFlowXirr = cashFlow.mutualFundCategoryMastersList[0].cashFlowxirr;
+        }
+        this.getMutualFundResponse(data)
         // if (cashFlow.mutualFundCategoryMastersList.length > 0) {
         //   if (cashFlow.mutualFundCategoryMastersList[0].currentValue == 0 || cashFlow.mutualFundCategoryMastersList[0].balanceUnits == 0 || cashFlow.mutualFundCategoryMastersList[0].balanceUnits < 0) {
         //     if (cashFlow.mutualFundCategoryMastersList.length > 1) {
@@ -383,9 +386,7 @@ export class MutualFundOverviewComponent implements OnInit {
         //     this.cashFlowXirr = cashFlow.mutualFundCategoryMastersList[0].cashFlowxirr;
         //   }
         // }
-        if (cashFlow.mutualFundCategoryMastersList.length > 0) {
-          this.cashFlowXirr = cashFlow.mutualFundCategoryMastersList[0].cashFlowxirr;
-        }
+
         this.cashFlowObj = {
           'cashFlowInvestment': this.mfData.total_cashflow_amount_inv,
           'cashFlowSwitchIn': this.mfData.total_cashflow_switch_in,
