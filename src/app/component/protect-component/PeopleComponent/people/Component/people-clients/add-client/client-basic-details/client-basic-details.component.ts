@@ -14,6 +14,7 @@ import { relationListFilterOnID } from './relationypeMethods';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
 import { MatDialog } from '@angular/material';
+import { element } from 'protractor';
 
 const moment = require('moment');
 
@@ -80,6 +81,7 @@ export class ClientBasicDetailsComponent implements OnInit {
   nomineesListFM: any = [];
   ownerData: any;
   idData
+  removedGaurdianList: any = [];
 
   // advisorId;
 
@@ -364,6 +366,7 @@ export class ClientBasicDetailsComponent implements OnInit {
   }
 
   removeCoOwner(item) {
+    this.removedGaurdianList.push(this.getCoOwner.controls[item].value)
     this.getCoOwner.removeAt(item);
     this.disabledMember(null, null);
   }
@@ -731,6 +734,15 @@ export class ClientBasicDetailsComponent implements OnInit {
         delete element['id']
         gardianObj.push(element);
       });
+      if (this.removedGaurdianList.length > 0) {
+        this.removedGaurdianList.forEach(element => {
+          delete element['name'],
+            delete element['share']
+          delete element['id']
+          element['active'] = false;
+          gardianObj.push(element);
+        })
+      }
       // this.minorForm.get('role').clearValidators();
       // this.minorForm.get('role').updateValueAndValidity();
     } else {
