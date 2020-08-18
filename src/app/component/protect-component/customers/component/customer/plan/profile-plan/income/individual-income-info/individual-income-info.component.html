@@ -74,33 +74,18 @@
                     </div>
                 </div>
 
-                <!-- <div [hidden]="incomeOption=='1'" class="row pt-40">
-                    <div class="col-md-5 pr-0 text-right">
-                        <h5 class="m-0 pt-8">Monthly amount</h5>
-                        <p class="m-0 f-12 text-custom">Enter the net income you get in hand</p>
-                    </div>
-                    <div class="col-md-5">
-                        <div class="form-group mb-0">
-                            <mat-form-field>
-                                <input matInput type="number" autocomplete="off" formControlName="monthlyAmount"
-                                    class="form-control br-0">
-                                <mat-error>This field is required</mat-error>
-                            </mat-form-field>
-                        </div>
-                    </div>
-                </div> -->
+                 
                 <div class="row pt-40" [hidden]="incomeOption=='1'">
                     <div class="col-md-5 pr-0 text-right">
                         <h5  class="m-0 pt-8">Monthly income</h5>
                     </div>
 
                     <!-- build error in form array removed controls -->
-                    <div formArrayName="monthlyIncomeForm" >
-                        <div [ngClass]="{'pt-30': pointIndex > 0}" class="row"
-                            *ngFor="let obj of monthlyIncome.controls; let pointIndex=index"
+                    <div class="col-md-7" formArrayName="monthlyIncomeForm" >
+                        <div [ngClass]="{'pt-30': pointIndex > 0}" class="row" *ngFor="let obj of monthlyIncome.controls; let pointIndex=index"
                             [formGroupName]="pointIndex">
 
-                            <div class="col-md-5  pr-0">
+                            <div class="col-md-5 pr-0">
                                 <div class="form-group mb-0">
                                     <mat-form-field>
                                         <mat-select matInput  formControlName="monthlyIncType" autocomplete="true"
@@ -139,42 +124,14 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div [hidden]="incomeOption=='2'" class="row pt-40">
-                        <div class="col-md-5 pr-0 text-right">
-                            <h5 class="m-0 pt-8">Basic Income</h5>
-                            <p class="m-0 f-12 text-custom">Enter the net income you get in hand</p>
-                        </div>
-                        <div class="col-md-5">
-                            <div class="form-group mb-0">
-                                <mat-form-field>
-                                    <input matInput autocomplete="off" formControlName="basicIncome"
-                                        class="form-control br-0">
-                                    <mat-error>This field is required</mat-error>
-                                </mat-form-field>
-                            </div>
-                        </div>
-                    </div>
-                    <div [hidden]="incomeOption=='2'" class="row pt-40">
-                        <div class="col-md-5 pr-0 text-right">
-                            <h5 class="m-0 pt-8">Standard deductions</h5>
-                        </div>
-                        <div class="col-md-5">
-                            <div class="form-group mb-0">
-                                <mat-form-field>
-                                    <input matInput autocomplete="off" formControlName="standardDeduction"
-                                        class="form-control br-0">
-                                    <mat-error>This field is required</mat-error>
-                                </mat-form-field>
-                            </div>
-                        </div>
-                    </div> -->
+                 
                 <div class="row pt-40" [hidden]="incomeOption=='2'">
                     <div class="col-md-5 pr-0 text-right">
                         <h5  class="m-0 pt-8">Basic Salary</h5>
                     </div>
                     <!-- build error in form array removed controls -->
 
-                    <div formArrayName="basicSalaryForm" >
+                    <div class="col-md-7" formArrayName="basicSalaryForm" >
                         <div [ngClass]="{'pt-30': pointIndex > 0}" class="row"  *ngFor="let obj of basicSalary.controls; let pointIndex=index"
                             [formGroupName]="pointIndex">
 
@@ -225,7 +182,7 @@
 
                     <!-- build error in form array removed controls -->
 
-                    <div formArrayName="allowancesForm" >
+                    <div class="col-md-7" formArrayName="allowancesForm" >
                         <div  [ngClass]="{'pt-30': pointIndex > 0}" class="row" *ngFor="let obj of allowances.controls; let pointIndex=index"
                             [formGroupName]="pointIndex">
 
@@ -276,7 +233,7 @@
                     <div  class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8">Perquisites</h5>
                     </div>
-                    <div formArrayName="perquisitesForm" >
+                    <div class="col-md-7" formArrayName="perquisitesForm" >
                         <div [ngClass]="{'pt-30': pointIndex > 0}" class="row" *ngFor="let obj of perquisites.controls; let pointIndex=index"
                             [formGroupName]="pointIndex">
 
@@ -327,7 +284,7 @@
                     </div>
                     <!-- build error in form array removed controls -->
 
-                    <div formArrayName="reimbursementsForm" >
+                    <div class="col-md-7" formArrayName="reimbursementsForm" >
                         <div [ngClass]="{'pt-30': pointIndex > 0}" class="row" *ngFor="let obj of reimbursements.controls; let pointIndex=index"
                             [formGroupName]="pointIndex">
 
@@ -370,12 +327,13 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="row pt-40" [hidden]="incomeOption=='2'">
                     <div  class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8">Retirals</h5>
                     </div>
                     <!-- build error removed controls -->
-                    <div formArrayName="retiralsForm" >
+                    <div class="col-md-7" formArrayName="retiralsForm" >
                         <div [ngClass]="{'pt-30': pointIndex > 0}" class="row" *ngFor="let obj of retirals.controls; let pointIndex=index"
                             [formGroupName]="pointIndex">
 
@@ -419,12 +377,13 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="row pt-40" [hidden]="incomeOption=='2'">
                     <div  class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8">Others</h5>
                     </div>
                     <!-- build error rmeoved controls -->
-                    <div formArrayName="othersForm" >
+                    <div class="col-md-7" formArrayName="othersForm" >
                         <div [ngClass]="{'pt-30': pointIndex > 0}" class="row" *ngFor="let obj of others.controls; let pointIndex=index"
                             [formGroupName]="pointIndex">
 
@@ -467,48 +426,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div [hidden]="incomeOption=='2'" class="row pt-40">
-                        <div class="col-md-5 pr-0 text-right">
-                            <h5 class="m-0 pt-8">Dearness allowance</h5>
-                        </div>
-                        <div class="col-md-5">
-                            <div class="form-group mb-0">
-                                <mat-form-field>
-                                    <input matInput autocomplete="off" formControlName="deamessAlowance"
-                                        class="form-control br-0">
-                                    <mat-error>This field is required</mat-error>
-                                </mat-form-field>
-                            </div>
-                        </div>
-                    </div>
-                    <div [hidden]="incomeOption=='2'" class="row pt-40">
-                        <div class="col-md-5 pr-0 text-right">
-                            <h5 class="m-0 pt-8">HRA recieved</h5>
-                        </div>
-                        <div class="col-md-5">
-                            <div class="form-group mb-0">
-                                <mat-form-field>
-                                    <input matInput autocomplete="off" formControlName="hraRecieved"
-                                        class="form-control br-0">
-                                    <mat-error>This field is required</mat-error>
-                                </mat-form-field>
-                            </div>
-                        </div>
-                    </div>
-                    <div [hidden]="incomeOption=='2'" class="row pt-40">
-                        <div class="col-md-5 pr-0 text-right">
-                            <h5 class="m-0 pt-8">Total rent paid</h5>
-                        </div>
-                        <div class="col-md-5">
-                            <div class="form-group mb-0">
-                                <mat-form-field>
-                                    <input matInput autocomplete="off" formControlName="totalRentPaid"
-                                        class="form-control br-0">
-                                    <mat-error>This field is required</mat-error>
-                                </mat-form-field>
-                            </div>
-                        </div>
-                    </div> -->
+                
                 <div class="row pt-40">
                     <div class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8">Income style</h5>
@@ -555,7 +473,7 @@
                     <div class="col-md-5 pr-0 text-right">
                         <h5 class="m-0 pt-8">Continues till</h5>
                     </div>
-                    <div class="col-md-7">
+                    <div class="col-md-7 pr-0">
                         <div class="row">
                             <div class="col-md-7 pl-0 pr-4">
                                 <div class="form-group mb-0">
@@ -570,7 +488,7 @@
                                     </mat-form-field>
                                 </div>
                             </div>
-                            <div *ngIf="incomeNetForm.get('continousTill').value==3" class="col-md-6 pl-4 pr-0">
+                            <div *ngIf="incomeNetForm.get('continousTill').value==3" class="col-md-5">
                                 <div class="form-group mb-0">
                                     <mat-form-field>
                                         <input matInput type="number"
