@@ -17,7 +17,7 @@ export class DetailedViewGeneralInsuranceComponent implements OnInit {
   showInsurance: any;
   insuranceSubTypeId: any;
   bankAccountDetails: any;
-  bankList: any;
+  bankList=[];
 
   constructor(private subInjectService: SubscriptionInject,
               private enumService: EnumServiceService,private cusService:CustomerService) {

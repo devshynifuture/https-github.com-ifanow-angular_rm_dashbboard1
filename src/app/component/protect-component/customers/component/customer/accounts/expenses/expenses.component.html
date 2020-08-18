@@ -40,7 +40,7 @@
                                     <h4 class="m-0 text-black roboto pt-8">Transactions</h4>
                                 </div>
                                 <div class="col-md-8 p-0 right text-right justify-content-end d-flex align-items-center" *ngIf="dataSource.data.length > 0">
-                                    <button mat-stroked-button class="br-0 btn-sm p-0 min-52 text-custom">Help</button>
+                                    <!-- <button mat-stroked-button class="br-0 btn-sm p-0 min-52 text-custom">Help</button> -->
                                     <!-- <img src="assets/images/svg/download-bordered.svg" class="c-p"> -->
                                     <div class="pdfClass">
 
@@ -54,7 +54,26 @@
                                         </mat-menu>
                                         <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
                                     </div>
-                                    <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
+                                    <div class="p-0 d-flex align-items-center justify-content-center mt-8">
+                                        <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
+                                    </div>
+                        
+                                    <a class="c-p downloadPdfIcon iconBorderNone " [matMenuTriggerFor]="menu7">
+                                        <img src="assets/images/svg/up-down.svg">
+                                    </a>
+                                    <mat-menu #menu7="matMenu" >
+                                        <button mat-menu-item>Upload file
+                                            <input (change)="fetchData('Expense',$event)" class="uploadInput" id="file-4" multiple
+                                                type="file">
+                                        </button>
+                                    </mat-menu>
+                                    <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu" class="c-p mr-12">
+                                    <mat-menu #menu="matMenu">
+                                        <button mat-menu-item>Email report</button>
+                                        <button mat-menu-item>Option 1</button>
+                                        <button mat-menu-item>Option 2</button>
+                                    </mat-menu>
+                                    <!-- <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12"> -->
                                     <!-- <button mat-stroked-button class="btn-default addon mr-12 v-middle"><i
                                             class="material-icons">filter_list</i>FILTERS</button> -->
                                     <button mat-stroked-button class="btn-primary" (click)="openExpenses('addExpenses',null)">
@@ -267,9 +286,9 @@
                                 <h4 class="m-0 text-black roboto pt-8">Budget</h4>
                             </div>
                             <div class="col-md-8 p-0 right text-right justify-content-end d-flex align-items-center" *ngIf="dataSource4.data.length > 0 || dataSource5.data.length > 0">
-                                <button mat-stroked-button class="br-0 btn-sm p-0 min-52 text-custom">Help</button>
+                                <!-- <button mat-stroked-button class="br-0 btn-sm p-0 min-52 text-custom">Help</button> -->
                                 <!-- <img src="assets/images/svg/download-bordered.svg" class="c-p"> -->
-                                <div class="pdfClass">
+                                <div class="pdfClass ">
 
                                     <a class="c-p downloadPdfIcon" [matMenuTriggerFor]="menu2" *ngIf="!fragmentData.isSpinner">
                                         <img src="assets/images/svg/download-bordered.svg">
@@ -281,7 +300,26 @@
                                     </mat-menu>
                                     <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
                                 </div>
-                                <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12">
+                                <div class="p-0 d-flex align-items-center justify-content-center mt-8">
+                                    <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
+                                </div>
+                    
+                                <a class="c-p downloadPdfIcon iconBorderNone" [matMenuTriggerFor]="menu7">
+                                    <img src="assets/images/svg/up-down.svg">
+                                </a>
+                                <mat-menu #menu7="matMenu">
+                                    <button mat-menu-item>Upload file
+                                        <input (change)="fetchData('Budget',$event)" class="uploadInput" id="file-4" multiple
+                                            type="file">
+                                    </button>
+                                </mat-menu>
+                                <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu" class="c-p mr-12">
+                                <mat-menu #menu="matMenu">
+                                    <button mat-menu-item>Email report</button>
+                                    <button mat-menu-item>Option 1</button>
+                                    <button mat-menu-item>Option 2</button>
+                                </mat-menu>
+                                <!-- <img src="assets/images/svg/three-dot-bordered.svg" class="c-p mr-12"> -->
                                 <!-- <button mat-stroked-button class="btn-default addon mr-12 v-middle">
                                     <i class="material-icons">filter_list</i>
                                     FILTERS
