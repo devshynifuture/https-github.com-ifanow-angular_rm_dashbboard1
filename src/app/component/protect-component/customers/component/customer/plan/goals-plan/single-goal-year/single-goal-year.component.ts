@@ -125,7 +125,7 @@ export class SingleGoalYearComponent implements OnInit {
         break;
       case AppConstants.RETIREMENT_GOAL: // retirement
         obj['currentAge'] = this.singleYearGoalForm.get('goalMember').value.familyMemberAge;
-        obj['goalPresentValue'] = this.singleYearGoalForm.get('cost').value * Math.abs(this.singleYearGoalForm.get('costReduction').value / 100)
+        obj['goalPresentValue'] = (this.singleYearGoalForm.get('cost').value * Math.abs(100+this.singleYearGoalForm.get('costReduction').value))/100
         ageDiff = this.singleYearGoalForm.get('age').value - this.singleYearGoalForm.get('goalMember').value.familyMemberAge;
         futureDate = new Date(currentDate);
         const data = new Date()

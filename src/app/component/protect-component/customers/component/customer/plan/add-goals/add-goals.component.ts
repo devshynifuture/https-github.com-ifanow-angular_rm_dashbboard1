@@ -117,8 +117,8 @@ export class AddGoalsComponent implements OnInit {
           element.validations = {
             minAgeFromPresent: 0,
             maxAgeFromPresent: 60,
-            minCostReduction: 0,
-            maxCostReduction: -50,
+            minCostReduction: 100,
+            maxCostReduction: -100,
             minCost: 500000,
             maxCost: 100000000,
             showAge: true,
