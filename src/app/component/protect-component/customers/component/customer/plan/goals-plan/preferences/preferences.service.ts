@@ -42,7 +42,7 @@ export class PreferencesService {
       isFreezed: goalForm.freezeCalculation || false,
       stepUp: goalForm.stepUp,
       savingStartDate: sStartDate,
-      savindEndDate: sEndtDate,
+      savingEndDate: sEndtDate,
       savingType: goalForm.savingStatus,
     }
 
@@ -83,7 +83,7 @@ export class PreferencesService {
       isFreezed: (goalForm.freezeCalculation ? 1 : 0),
       goalStartDate: gstartDate,
       savingStartDate: sStartDate,
-      savindEndDate: sEndtDate,
+      savingEndDate: sEndtDate,
       savingType: goalForm.savingStatus,
     }
     switch (oldGoalObj.goalType) {

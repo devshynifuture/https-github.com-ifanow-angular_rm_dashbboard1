@@ -1,12 +1,13 @@
-import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {EventService} from 'src/app/Data-service/event.service';
-import {FormBuilder, Validators, FormGroup, FormControl} from '@angular/forms';
-import {AuthService} from 'src/app/auth-service/authService';
-import {PlanService} from '../../plan.service';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { EventService } from 'src/app/Data-service/event.service';
+import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+import { AuthService } from 'src/app/auth-service/authService';
+import { PlanService } from '../../plan.service';
 import { AppConstants } from 'src/app/services/app-constants';
 import { AppComponent } from 'src/app/app.component';
 import { DatePipe } from '@angular/common';
 import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { OrgSettingServiceService } from 'src/app/component/protect-component/AdviserComponent/setting/org-setting-service.service';
 
 @Component({
   selector: 'app-single-goal-year',
@@ -14,16 +15,16 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
   styleUrls: ['./single-goal-year.component.scss']
 })
 export class SingleGoalYearComponent implements OnInit {
-  @Input() goalTypeData:any = {};
-  @Input() familyList:any = {};
-  @Input() statisticalData:any = {};
+  @Input() goalTypeData: any = {};
+  @Input() familyList: any = {};
+  @Input() statisticalData: any = {};
   @Output() output = new EventEmitter<any>();
   @Output() backToaddGoal = new EventEmitter();
   Questions: any;
   familyData: any;
   singleYearGoalForm: FormGroup;
   currentYear: number = new Date().getFullYear();
-  planForFamily:boolean = false;
+  planForFamily: boolean = false;
   imageData: any;
   logoImg: any;
   minAgeYear = 0;
@@ -42,32 +43,57 @@ export class SingleGoalYearComponent implements OnInit {
     disabled: false,
     fullWidth: false,
   };
-  
+  idWiseData: any;
+  getLifeExpentancy: any;
+
   constructor(
-    private eventService: EventService, 
+    private eventService: EventService,
     private datePipe: DatePipe,
-    private fb: FormBuilder, 
-    private planService: PlanService, 
+    private fb: FormBuilder,
+    private orgSetting: OrgSettingServiceService,
+    private planService: PlanService,
   ) {
     this.clientId = AuthService.getClientId();
     this.advisorId = AuthService.getAdvisorId();
   }
-  
+
   ngOnInit() {
     this.Questions = this.goalTypeData.questions;
     this.logoImg = this.goalTypeData.imageUrl;
     this.planForFamily = !!this.goalTypeData.questions.Q; // Plan for family question present or not
     this.initializeForm();
+    if (this.goalTypeData.id == 1) {
+      this.getKeyParameter()
+    }
     this.setDefaultOwner();
   }
-  
+  getKeyParameter() {
+    let obj = {
+      advisorId: this.advisorId
+    }
+    this.orgSetting.getKeyAndParameters(obj).subscribe(
+      data => {
+        this.getKeyAndParametersRes(data)
+      },
+      err => {
+        this.eventService.openSnackBar(err, "Dismiss")
+      }
+    );
+  }
+  getKeyAndParametersRes(data) {
+    if (data) {
+      this.idWiseData = data.key_Params;
+      this.getLifeExpentancy = this.idWiseData.filter(element => element.configurationTypeId == 5)
+      this.getLifeExpentancy = this.getLifeExpentancy[0]
+    }
+  }
   selectOwnerAndUpdateForm(value) {
     this.setMinMaxAgeOrYear(value);
     this.singleYearGoalForm.get('age').setValidators([Validators.required, Validators.min(this.minAgeYear), Validators.max(this.maxAgeYear)])
     this.singleYearGoalForm.get('age').setValue(this.minAgeYear + this.goalTypeData.defaults.ageIncreament);
     this.singleYearGoalForm.updateValueAndValidity();
   }
-  
+
   createGoalObj() {
     const currentDate = new Date();
     let obj = {
@@ -89,7 +115,7 @@ export class SingleGoalYearComponent implements OnInit {
         obj['clientOrFamilyMember'] = (this.singleYearGoalForm.get('goalMember').value.relationshipId === 0) ? 1 : 2;
         obj['whatAgeBuyHouse'] = this.singleYearGoalForm.get('age').value;
         obj['goalPresentValue'] = this.singleYearGoalForm.get('cost').value;
-        
+
         ageDiff = this.singleYearGoalForm.get('age').value - this.singleYearGoalForm.get('goalMember').value.familyMemberAge;
         futureDate = new Date(currentDate);
         futureDate.setFullYear(futureDate.getFullYear() + ageDiff);
@@ -97,7 +123,21 @@ export class SingleGoalYearComponent implements OnInit {
         obj['goalEndDate'] = this.datePipe.transform(futureDate, 'yyyy-MM-dd');
         obj['savingEndDate'] = this.datePipe.transform(futureDate, 'yyyy-MM-dd');
         break;
-
+      case AppConstants.RETIREMENT_GOAL: // retirement
+        obj['currentAge'] = this.singleYearGoalForm.get('goalMember').value.familyMemberAge;
+        obj['goalPresentValue'] = ((this.singleYearGoalForm.get('cost').value) * Math.abs(this.singleYearGoalForm.get('costReduction').value)) / 100;
+        ageDiff = this.singleYearGoalForm.get('age').value - this.singleYearGoalForm.get('goalMember').value.familyMemberAge;
+        futureDate = new Date(currentDate);
+        const data = new Date()
+        futureDate.setFullYear(futureDate.getFullYear() + ageDiff);
+        const dOB = new Date(this.singleYearGoalForm.get('goalMember').value.dateOfBirth).toISOString()
+        const dateF = data.setFullYear(new Date(dOB).getFullYear() + this.getLifeExpentancy.parameter)
+        obj['goalEndDate'] = this.datePipe.transform(dateF, 'yyyy-MM-dd')
+        obj['goalStartDate'] = this.datePipe.transform(futureDate, 'yyyy-MM-dd');
+        obj['savingEndDate'] = this.datePipe.transform(futureDate, 'yyyy-MM-dd');
+        obj['monthlyExpense']= this.singleYearGoalForm.get('cost').value;
+        obj['goalAdditionDate']=this.datePipe.transform(new Date, 'yyyy-MM-dd')
+        break;
       case AppConstants.CAR_GOAL: // Car
         obj['currentAge'] = this.singleYearGoalForm.get('goalMember').value.familyMemberAge;
         obj['whatAgeBuyCar'] = this.singleYearGoalForm.get('age').value;
@@ -117,7 +157,7 @@ export class SingleGoalYearComponent implements OnInit {
         obj['clientOrFamilyMember'] = (this.singleYearGoalForm.get('goalMember').value.relationshipId === 0) ? 1 : 2;
         obj['marryAtAge'] = this.singleYearGoalForm.get('age').value;
         obj['goalPresentValue'] = this.singleYearGoalForm.get('cost').value;
-        
+
         ageDiff = this.singleYearGoalForm.get('age').value - this.singleYearGoalForm.get('goalMember').value.familyMemberAge;
         futureDate = new Date(currentDate);
         futureDate.setFullYear(futureDate.getFullYear() + ageDiff);
@@ -167,7 +207,7 @@ export class SingleGoalYearComponent implements OnInit {
     return obj;
   }
 
-  sendDataObj(obj){
+  sendDataObj(obj) {
     this.barButtonOptions.active = true;
     this.planService.addSingleYearGoal(obj).subscribe(
       data => {
@@ -203,8 +243,8 @@ export class SingleGoalYearComponent implements OnInit {
           default:
             console.error("Unidentified goal id found", this.goalTypeData.id)
             break;
-          }
-          this.eventService.changeUpperSliderState({state: 'close', refreshRequired: true, data: {resetSelectedCursor: true}});
+        }
+        this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: true, data: { resetSelectedCursor: true } });
       },
       error => {
         this.eventService.showErrorMessage(error)
@@ -213,8 +253,8 @@ export class SingleGoalYearComponent implements OnInit {
     );
   }
 
-  saveGoal(){
-    if(this.singleYearGoalForm.invalid || this.barButtonOptions.active) {
+  saveGoal() {
+    if (this.singleYearGoalForm.invalid || this.barButtonOptions.active) {
       this.singleYearGoalForm.markAllAsTouched();
     } else {
       let goalObj = this.createGoalObj();
@@ -223,20 +263,20 @@ export class SingleGoalYearComponent implements OnInit {
   }
 
   // set the validation age for the age form field 
-  setMinMaxAgeOrYear(value){
-    if(this.goalTypeData.validations.showAge) {
+  setMinMaxAgeOrYear(value) {
+    if (this.goalTypeData.validations.showAge) {
       this.minAgeYear = (this.goalTypeData.validations.minAge || (this.goalTypeData.validations.minAgeFromPresent + value.familyMemberAge));
       this.maxAgeYear = (this.goalTypeData.validations.maxAge || (this.goalTypeData.validations.maxAgeFromPresent + value.familyMemberAge));
     } else {
       this.minAgeYear = (this.goalTypeData.validations.minAgeFromPresent + this.currentYear);
       this.maxAgeYear = (this.goalTypeData.validations.maxAgeFromPresent + this.currentYear);
     }
-    if(this.minAgeYear < (value.familyMemberAge + this.goalTypeData.validations.minAgeFromPresent)) {
+    if (this.minAgeYear < (value.familyMemberAge + this.goalTypeData.validations.minAgeFromPresent)) {
       this.minAgeYear = value.familyMemberAge + this.goalTypeData.validations.minAgeFromPresent;
     }
   }
 
-  initializeForm(){
+  initializeForm() {
     this.singleYearGoalForm = this.fb.group({
       goalMember: ['', [Validators.required]], // who the goal is for
       age: ['', [Validators.required]], // age or time
@@ -245,9 +285,9 @@ export class SingleGoalYearComponent implements OnInit {
       goalDescription: [''],  // goal description
       logo: [''],
     });
-    
+
     // if goal is retirement
-    if(this.goalTypeData.id === 1) {
+    if (this.goalTypeData.id === 1) {
       this.singleYearGoalForm.addControl('costReduction', new FormControl(this.goalTypeData.defaults.minReduction, [Validators.required]));
       this.singleYearGoalForm.addControl('milestoneType1', new FormControl());
       this.singleYearGoalForm.addControl('milestoneType2', new FormControl());
@@ -267,16 +307,16 @@ export class SingleGoalYearComponent implements OnInit {
     }
   }
 
-  setDefaultOwner(){
+  setDefaultOwner() {
     let owner = this.familyList.find((member) => this.goalTypeData.defaults.planningForRelative.includes(member.relationshipId));
     this.singleYearGoalForm.get('goalMember').setValue(owner);
     this.selectOwnerAndUpdateForm(owner);
   }
-  
+
   goBack() {
     this.output.emit();
   }
-  
+
   /**
    * returns the age in years given the time (date obj)
    * @param dateString long date - eg: 655516800000
@@ -287,7 +327,7 @@ export class SingleGoalYearComponent implements OnInit {
     var age = today.getFullYear() - birthDate.getFullYear();
     var m = today.getMonth() - birthDate.getMonth();
     if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
+      age--;
     }
     return age;
   }
