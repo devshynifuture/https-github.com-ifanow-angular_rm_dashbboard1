@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { ValidatorType, UtilService } from 'src/app/services/util.service';
 import { SubscriptionService } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription.service';
@@ -40,6 +40,10 @@ export class ClientBankComponent implements OnInit {
   disableBtn: boolean;
   clientName: any;
   accountTypes: any;
+  ownerData: { Fmember: any; controleData: any; };
+  nomineesListFM: any = [];
+  callMethod: { methodName: string; ParamValue: any; disControl: any; };
+  idData: any;
   constructor(private cusService: CustomerService, private eventService: EventService,
     private fb: FormBuilder, private subInjectService: SubscriptionInject,
     private subService: SubscriptionService, private postalService: PostalService,
@@ -62,6 +66,7 @@ export class ClientBankComponent implements OnInit {
     this.userData = data;
     this.clientName = data.displayName
     this.fieldFlag;
+    this.idData = (this.fieldFlag != 'familyMember') ? this.userData.clientId : this.userData.familyMemberId;
     this.createBankForm(data);
     (this.userData.bankData) ? this.bankList = this.userData.bankData : '';
     if (this.userData.bankData == undefined && this.fieldFlag) {
@@ -124,8 +129,62 @@ export class ClientBankComponent implements OnInit {
       branchAddressLine1: [(data.address) ? data.address.address1 : '', [Validators.required]],
       branchAddressLine2: [(data.address) ? data.address.address2 : '', [Validators.required]],
       branchCity: [(data.address) ? data.address.city : '', [Validators.required]],
-      branchState: [(data.address) ? data.address.state : '', [Validators.required]]
+      branchState: [(data.address) ? data.address.state : '', [Validators.required]],
+      getNomineeName: this.fb.array([this.fb.group({
+        name: [this.clientName ? this.clientName : '', [Validators.required]],
+        sharePercentage: [0],
+        familyMemberId: [],
+        id: [0],
+        clientId: [],
+      })]),
     });
+
+    if (data.holderNameList) {
+      this.getNominee.removeAt(0);
+      data.holderNameList.forEach(element => {
+        this.addNewNominee(element);
+      });
+    }
+
+    this.ownerData = { Fmember: this.nomineesListFM, controleData: this.bankForm };
+
+  }
+
+  selectHolder(data, index) {
+    this.getNominee.controls[index].get('clientId').setValue(data.clientId)
+    this.getNominee.controls[index].get('familyMemberId').setValue(data.familyMemberId)
+  }
+
+  get getNominee() {
+    return this.bankForm.get('getNomineeName') as FormArray;
+  }
+
+  addNewNominee(data) {
+    this.getNominee.push(this.fb.group({
+      name: [data ? data.name : ''],
+      sharePercentage: [data ? data.sharePercentage : 0],
+      familyMemberId: [data ? data.familyMemberId : 0],
+      id: [data ? data.id : 0],
+      clientId: [data ? data.clientId : 0]
+    }));
+  }
+
+  removeNewNominee(item) {
+    this.disabledMember(null, null);
+    this.getNominee.removeAt(item);
+  }
+
+  disabledMember(value, type) {
+    this.callMethod = {
+      methodName: 'disabledMember',
+      ParamValue: value,
+      disControl: type
+    };
+  }
+
+  lisNominee(value) {
+    this.ownerData.Fmember = value;
+    this.nomineesListFM = Object.assign([], value);
   }
 
   ngOnInit() {
@@ -227,19 +286,14 @@ export class ClientBankComponent implements OnInit {
   saveNext(flag) {
     if (this.bankForm.invalid) {
       this.bankForm.markAllAsTouched();
-      this.holderList.markAllAsTouched();
       return;
     }
     else {
-      const holderList = [];
-      if (this.holderList) {
-        this.holderList.controls.forEach(element => {
-          holderList.push({
-            name: element.get('name').value,
-            id: element.get('id').value,
-          });
-        });
-      }
+      let holderList = [];
+      this.bankForm.value.getNomineeName.forEach(element => {
+        delete element['sharePercentage'];
+        holderList.push(element)
+      });
       (flag == 'Save') ? this.barButtonOptions.active = true : this.disableBtn = true;;
       let obj = {
         branchCode: (this.bankList) ? this.bankList.branchCode : this.bankDetail.branchCode,

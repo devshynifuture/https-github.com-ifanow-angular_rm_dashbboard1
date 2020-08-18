@@ -3,13 +3,17 @@ import { FormBuilder, FormArray } from '@angular/forms';
 import { CustomerService } from 'src/app/component/protect-component/customers/component/customer/customer.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+
 
 @Directive({
-  selector: '[appDematOwnerNominee]'
+  selector: '[appHolderName]'
 })
-export class DematOwnerNomineeDirective {
 
-  constructor(private fb: FormBuilder, private custumService: CustomerService, private peopleService: PeopleService) {
+export class HolderNameDirective {
+  _requestData: any;
+
+  constructor(private fb: FormBuilder, private custumService: CustomerService, private peopleService: PeopleService, private enumService: EnumServiceService) {
   }
   advisorId: any;
   ownerData: any;
@@ -46,7 +50,7 @@ export class DematOwnerNomineeDirective {
   @Input() userTypeFlag;
   @Output() valueChange3 = new EventEmitter();
   @Output() valueChange1 = new EventEmitter();
-  @Input() guardianFlag;
+
   get getCoOwner() {
     if (this.ownerData) {
       return this.ownerData.get('getCoOwnerName') as FormArray;
@@ -72,18 +76,24 @@ export class DematOwnerNomineeDirective {
     }
   }
   getListFamilyMem(): any {
-    const obj = {
-      userId: this.clientIdData,
-      userType: (this.userTypeFlag == 'client' || this.userTypeFlag == 'lead' || this.userTypeFlag == undefined) ? 2 : 3
+    let obj = {
+      clientId: this.clientId,
     };
-
+    if (this._requestData) {
+      obj = this._requestData;
+    }
     if (this.sendData.length <= 0) {
-      this.peopleService.getClientFamilyMembers(obj).subscribe(
-        data => this.getListOfFamilyByClientRes(data)
+      this.peopleService.getClientFamilyMemberListAsset(obj).subscribe(
+        (data) => {
+          this.enumService.getFamilyList(data);
+          this.getListOfFamilyByClientRes(data);
+        },
+        error => {
+          this.getListOfFamilyByClientRes(this.enumService.FamilyList());
+        }
       );
     }
   }
-
   getListOfFamilyByClientRes(data) {
     if (data) {
       data.forEach((singleData) => {
@@ -124,19 +134,7 @@ export class DematOwnerNomineeDirective {
         controlsArr.push({ type: 'nominee', index: e, data: this.getNominee.controls[e].value });
       }
     }
-    if (this.guardianFlag) {
-      this.sendData.forEach(element => {
-        for (const e of controlsArr) {
-          if (element.familyMemberId == e.data.guardianFamilyMemberId) {
-            element.disable = true;
-            return;
-          } else {
-            element.disable = false;
-          }
-        }
-      });
-      return;
-    }
+
 
     this.sendData.forEach(element => {
       for (const e of controlsArr) {
@@ -144,7 +142,7 @@ export class DematOwnerNomineeDirective {
           if (element.userName == e.data.name) {
             if (e.type == 'owner') {
               this.getCoOwner.controls[e.index].get('familyMemberId').setValue(element.familyMemberId);
-              this.getCoOwner.controls[e.index].get('clientId').setValue(element.relationshipId == 0 ? 1 : 0);
+              this.getCoOwner.controls[e.index].get('clientId').setValue(element.clientId);
             } else {
               this.getNominee.controls[e.index].get('familyMemberId').setValue(element.familyMemberId);
             }
@@ -228,3 +226,4 @@ export class DematOwnerNomineeDirective {
     };
   }
 }
+
