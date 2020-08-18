@@ -254,6 +254,12 @@
 }
 
 @media(max-width:1200px) {
+  .ppf-scheme {
+    #tbs th {
+      white-space: nowrap;
+
+    }
+  }
 
   #ui-assets-account,
   #ui-profile-plan {
@@ -702,6 +708,16 @@
     }
   }
 
+  // .asset-stocks {
+  //   div.overflow-y {
+  //     overflow-y: initial !important;
+  //   }
+
+  //   .w-1024 {
+  //     width: auto !important;
+
+  //   }
+  // }
 
 }
 
