@@ -596,11 +596,11 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       return this.doFiltering(data);
     })).subscribe(
       data => {
-        this.getMutualFundResponse(data);
         let cashFlow = data;
         if (cashFlow.mutualFundCategoryMastersList.length > 0) {
           this.cashFlowXirr = cashFlow.mutualFundCategoryMastersList[0].cashFlowxirr;
         }
+        this.getMutualFundResponse(data);
         this.cashFlowObj = {
           'cashFlowInvestment': this.mfData.total_cashflow_amount_inv,
           'cashFlowSwitchIn': this.mfData.total_cashflow_switch_in,

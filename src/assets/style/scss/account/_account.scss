@@ -254,6 +254,21 @@
 }
 
 @media(max-width:1200px) {
+  .ppf-scheme {
+    #tbs th {
+      white-space: nowrap;
+
+    }
+  }
+
+  .w-1024-1200 {
+    width: 1024px !important;
+  }
+
+  .overflow-y-auto-1200 {
+    overflow: auto;
+    white-space: nowrap;
+  }
 
   #ui-assets-account,
   #ui-profile-plan {
@@ -298,7 +313,7 @@
     }
   }
 
-  div.overflow-y {
+  div.overflow-y-1200 {
     overflow: auto;
     white-space: nowrap;
 
@@ -702,6 +717,16 @@
     }
   }
 
+  // .asset-stocks {
+  //   div.overflow-y {
+  //     overflow-y: initial !important;
+  //   }
+
+  //   .w-1024 {
+  //     width: auto !important;
+
+  //   }
+  // }
 
 }
 
