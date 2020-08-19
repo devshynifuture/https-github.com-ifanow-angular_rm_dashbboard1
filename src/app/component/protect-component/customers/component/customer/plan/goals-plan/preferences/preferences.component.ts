@@ -236,17 +236,18 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     })
   }
   setAssetAllocationListeners() {
-    this.subscription.add(
-      this.assetAllocationFG.controls.staticOrProgressive.valueChanges.subscribe(value => {
-        if (value == 2) {
-          this.assetAllocationFG.controls.equityAllocation.setValue(this.data.remainingData.bifurcation.equity_ratio);
-          this.assetAllocationFG.controls.debtAllocation.setValue(this.data.remainingData.bifurcation.debt_ratio);
+    
+        if (this.assetAllocationFG.controls.strategicOrTactical.value == 2) {
+          // this.assetAllocationFG.controls.equityAllocation.setValue(this.data.remainingData.bifurcation.equity_ratio);
+          // this.assetAllocationFG.controls.debtAllocation.setValue(this.data.remainingData.bifurcation.debt_ratio);
           this.assetAllocationFG.controls.equityAllocation.disable();
           this.assetAllocationFG.controls.debtAllocation.disable();
           this.progressiveStageArrayControl.enable();
         } else {
           this.assetAllocationFG.controls.equityAllocation.enable();
           this.assetAllocationFG.controls.debtAllocation.enable();
+          this.assetAllocationFG.controls.equityAllocation.setValue(this.data.remainingData.bifurcation.equity_ratio);
+          this.assetAllocationFG.controls.debtAllocation.setValue(this.data.remainingData.bifurcation.debt_ratio);
           this.progressiveStageArrayControl.disable();
           for (let i = 1; i < this.progressiveStageArrayControl.controls.length; i++) {
             this.removeStage(i);
@@ -259,8 +260,6 @@ export class PreferencesComponent implements OnInit, OnDestroy {
             });
           })
         }
-      })
-    );
 
     this.subscription.add(
       this.assetAllocationFG.controls.strategicOrTactical.valueChanges.subscribe(value => {
