@@ -2,15 +2,15 @@
     <div class="row">
         <div class="col-md-12 col-lg-2 p-0 pt-8 tabViewLiabilities">
             <ul class="vertical-menu bg-grey lter ">
-                <li (click)="viewMode ='tab1'" (click)="sortTable('tab1')"
+                <li (click)="viewMode ='tab1'" (click)="sortTable('tab1');selectedItem='LIABILITIES'"
                     [ngClass]="{'activeColor':showFilter =='tab1'}" class="c-p">
                     <div class="row">
                         <div class="col-md-9 p-0 f-700">LIABILITIES</div>
                         <div class="col-md-3 pl-0 pr-20 text-right text-custom">{{this.storeData}}</div>
                     </div>
                 </li>
-                <li (click)="viewMode ='tab1'" (click)="sortTable('1')" [ngClass]="{'activeColor':showFilter =='1'}"
-                    class="c-p">
+                <li (click)="viewMode ='tab1'" (click)="sortTable('1');selectedItem='Home'"
+                    [ngClass]="{'activeColor':showFilter =='1'}" class="c-p">
                     <div class="row">
                         <div class="col-md-9 p-0">Home</div>
                         <div class="col-md-3 pl-0 pr-20 text-right text-custom" *ngIf="!isLoading">
@@ -18,24 +18,24 @@
                         </div>
                     </div>
                 </li>
-                <li (click)="viewMode ='tab1'" (click)="sortTable('2')" [ngClass]="{'activeColor':showFilter =='2'}"
-                    class="c-p">
+                <li (click)="viewMode ='tab1'" (click)="sortTable('2');selectedItem='Vehicle'"
+                    [ngClass]="{'activeColor':showFilter =='2'}" class="c-p">
                     <div class="row">
                         <div class="col-md-9 p-0">Vehicle</div>
                         <div class="col-md-3 pl-0 pr-20 text-right text-custom" *ngIf="!isLoading">
                             {{(this.vehicle) ? this.vehicle.length : ''}}</div>
                     </div>
                 </li>
-                <li (click)="viewMode ='tab1'" (click)="sortTable('3')" [ngClass]="{'activeColor':showFilter  =='3'}"
-                    class=" c-p">
+                <li (click)="viewMode ='tab1'" (click)="sortTable('3');selectedItem='Education'"
+                    [ngClass]="{'activeColor':showFilter  =='3'}" class=" c-p">
                     <div class="row">
                         <div class="col-md-9 p-0">Education</div>
                         <div class="col-md-3 pl-0 pr-20 text-right text-custom" *ngIf="!isLoading">
                             {{(this.education) ? this.education.length : ''}}</div>
                     </div>
                 </li>
-                <li (click)="viewMode ='tab1'" (click)="sortTable('5')" [ngClass]="{'activeColor':showFilter =='5'}"
-                    class=" c-p">
+                <li (click)="viewMode ='tab1'" (click)="sortTable('5');selectedItem='Personal'"
+                    [ngClass]="{'activeColor':showFilter =='5'}" class=" c-p">
                     <div class="row">
                         <div class="col-md-9 p-0">Personal</div>
                         <div class="col-md-3 pl-0 pr-20 text-right text-custom" *ngIf="!isLoading">
@@ -49,8 +49,8 @@
                         <div class="col-md-2 p-0 text-custom">{{0}}</div>
                     </div>
                 </li> -->
-                <li (click)="viewMode ='tab1'" (click)="sortTable('4')" [ngClass]="{'activeColor':showFilter =='4'}"
-                    class=" c-p">
+                <li (click)="viewMode ='tab1'" (click)="sortTable('4');selectedItem='Credit card'"
+                    [ngClass]="{'activeColor':showFilter =='4'}" class=" c-p">
                     <div class="row">
                         <div class="col-md-9 p-0">Credit card</div>
                         <div class="col-md-3 pl-0 pr-20 text-right text-custom" *ngIf="!isLoading">
@@ -58,39 +58,45 @@
 
                     </div>
                 </li>
-                <li (click)="viewMode ='tab1'" (click)="sortTable('6')" [ngClass]="{'activeColor':showFilter =='6'}"
-                    class=" c-p">
+                <li (click)="viewMode ='tab1'" (click)="sortTable('6');selectedItem='Mortgage'"
+                    [ngClass]="{'activeColor':showFilter =='6'}" class=" c-p">
                     <div class="row">
                         <div class="col-md-9 p-0">Mortgage</div>
                         <div class="col-md-3 pl-0 pr-20 text-right text-custom" *ngIf="!isLoading">
                             {{(this.mortgage) ? this.mortgage.length : ''}}</div>
                     </div>
                 </li>
-                <li (click)="viewMode ='tab2'" (click)="sortTable('tab2')" [ngClass]="{'activeColor':viewMode =='tab2'}"
-                    class=" c-p">
+                <li (click)="viewMode ='tab2'" (click)="sortTable('tab2');selectedItem='OTHERS'"
+                    [ngClass]="{'activeColor':viewMode =='tab2'}" class=" c-p">
                     <div class="row">
                         <div class="col-md-9 p-0 f-700">OTHERS</div>
                         <div class="col-md-3 pl-0 pr-20 text-right text-custom" *ngIf="!isLoading">{{OtherData}}</div>
                     </div>
                 </li>
             </ul>
-         </div>
+        </div>
 
-         <div class="col-md-12 deskLiabilities text-right">
+        <div class="col-md-12 deskLiabilities text-right">
             <mat-form-field>
-                <mat-select [(ngModel)]="viewMode" class="form-control">
-                    <mat-option [value]="tab1" (click)="viewMode ='tab1'" (click)="sortTable('tab1')">
-                        LIABILITIES
+                <mat-select [(ngModel)]="selectedItem" class="form-control">
+                    <mat-option value="LIABILITIES" (click)="viewMode ='tab1'" (click)="sortTable('1')">LIABILITIES
                     </mat-option>
-
-                    <mat-option [value]="tab1" (click)="viewMode ='tab1'" (click)="sortTable('tab1')">
-                        LIABILITIES
+                    <mat-option value="Home" (click)="viewMode ='tab1'" (click)="sortTable('1')">Home</mat-option>
+                    <mat-option value="Vehicle" (click)="viewMode ='tab1'" (click)="sortTable('2')">Vehicle</mat-option>
+                    <mat-option value="Education" (click)="viewMode ='tab1'" (click)="sortTable('3')">Education
                     </mat-option>
-
+                    <mat-option value="Personal" (click)="viewMode ='tab1'" (click)="sortTable('5')">Personal
+                    </mat-option>
+                    <mat-option value="Credit card" (click)="viewMode ='tab1'" (click)="sortTable('4')">Credit card
+                    </mat-option>
+                    <mat-option value="Mortgage" (click)="viewMode ='tab1'" (click)="sortTable('6')">Mortgage
+                    </mat-option>
+                    <mat-option value="OTHERS" (click)="viewMode ='tab2'" (click)="sortTable('tab2')">OTHERS
+                    </mat-option>
                 </mat-select>
-        </mat-form-field>
-         </div>
-        
+            </mat-form-field>
+        </div>
+
 
         <div class="col-md-12 col-lg-10 b-a p-0 min-height pt-28" [ngSwitch]="viewMode" *ngIf="viewMode=='tab1'">
             <div *ngSwitchCase="'tab1'">
@@ -190,7 +196,8 @@
 
                     <div class="liabilities">
                         <div class="row">
-                            <div [ngClass]="{'table-scroll-liability':isLoading==false }" class="col-md-12 overflow-hidden p-0">
+                            <div [ngClass]="{'table-scroll-liability':isLoading==false }"
+                                class="col-md-12 overflow-hidden p-0">
                                 <table matSort #tableEl mat-table [dataSource]="dataSource"
                                     *ngIf="dataSource.filteredData.length > 0" id="tbs" class="skeletonAnimation"
                                     appSkeletonLoading [appSkeletonLoading]="isLoading">
