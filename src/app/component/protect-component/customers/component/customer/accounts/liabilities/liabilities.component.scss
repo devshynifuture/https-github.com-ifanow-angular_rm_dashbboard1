@@ -74,12 +74,66 @@
     z-index: 1020;
 }
 
-// ::ng-deep .rightText .mat-sort-header-container {
-//     display: block !important;
-// }
-//  ::ng-deep .rightText .mat-sort-header-container .mat-sort-header-arrow {
-//     float: right;
-// }
-//  ::ng-deep .rightText .mat-sort-header-container .mat-sort-header-button {
-//     float: right;
-// }
+#ui-liabilities {
+    .vertical-menu {
+      height: calc(100vh - 126px);
+      position: fixed;
+      width: 16.7%;
+    }
+  }
+
+ 
+#ui-liabilities {
+  .vertical-menu {
+    // height: 100vh;
+    // position: relative;
+    // height: calc(100vh - 147px);
+    display: block;
+   // width: 100%;
+    text-align: left;
+  }
+
+  li {
+    height: 40px;
+    line-height: 40px;
+    padding: 0 0px 0 24px;
+    font-size: 14px;
+    text-align: left;
+    margin-bottom: 10px;
+    font-style: normal;
+    font-weight: normal;
+    border-right: 0px;
+  }
+}
+ 
+.table-scroll-liability {
+    height: auto;
+overflow: auto !important;
+max-height: 600px;
+}
+
+.deskLiabilities {
+    display: none;
+}
+
+
+@media screen and (min-width: 768px) and (max-width: 991px) { 
+    .tabViewLiabilities {
+        display: none;
+    }
+
+    .deskLiabilities {
+        display: block;
+        margin-top: 20px;
+    }
+
+    .deskLiabilities .mat-form-field {
+        width: 300px;
+    }
+
+    .table-scroll-liability {
+        height: auto;
+    overflow: auto !important;
+    max-height: 600px;
+    }
+}
