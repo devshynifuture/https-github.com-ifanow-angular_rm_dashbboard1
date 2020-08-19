@@ -98,7 +98,7 @@ export class MultiYearGoalComponent implements OnInit {
       "goalType": this.goalTypeData.id,
       "planningFor": this.multiYearGoalForm.get('field1').value.id,
       // "goalAdditionDate": this.datePipe.transform(new Date(), 'yyyy-MM-dd'),
-      "frequency": (this.multiYearGoalForm.get('field3').value),
+      //"frequency": (this.multiYearGoalForm.get('field3').value),
     }
 
     const date = new Date();
@@ -109,9 +109,11 @@ export class MultiYearGoalComponent implements OnInit {
         obj['planningforGroupHead'] = 1;
         obj['vacationStartYr'] = this.multiYearGoalForm.get('field2').value[0] + monthAndDayString;
         obj['vacationEndYr'] = this.multiYearGoalForm.get('field2').value[1] + monthAndDayString;
-        obj['frequency'] = parseInt(this.multiYearGoalForm.get('field3').value);
+       
         if (obj['frequency'] == "") {
           obj['frequency'] = (this.multiYearGoalForm.get('field2').value[1] - this.multiYearGoalForm.get('field2').value[0])
+        }else if(this.goalTypeData.goalTypeId == 5){
+          obj['frequency'] = parseInt(this.multiYearGoalForm.get('field3').value);
         }
         if (this.detailedSpendingFormArray.length > 1) {
           let multiObj = {};
@@ -166,6 +168,9 @@ export class MultiYearGoalComponent implements OnInit {
   }
 
   saveGoal() {
+    if(this.goalTypeData.goalTypeId != 5){
+      this.multiYearGoalForm.get('field3').setValue(0);
+    }
     if (this.multiYearGoalForm.invalid || this.barButtonOptions.active) {
       this.multiYearGoalForm.markAllAsTouched();
     } else {
@@ -202,11 +207,14 @@ export class MultiYearGoalComponent implements OnInit {
       detailedSpendings: this.fb.array([
         new FormControl(this.goalTypeData.defaults.cost, [Validators.required, Validators.min(this.goalTypeData.validations.minCost), Validators.max(this.goalTypeData.validations.maxCost)])
       ]),
-      field3: [''],//vacation frequency
+      field3: ['', Validators.required],//vacation frequency
       field4: ['', Validators.required], // goal name
       field5: [''],  // goal description
       logo: ['']
     });
+    if(this.goalTypeData.goalTypeId != 5){
+      this.multiYearGoalForm.get('field3').setValue('')
+    }
   }
 
   setDefaultOwner() {
