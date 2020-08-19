@@ -335,6 +335,7 @@ export class ClientBasicDetailsComponent implements OnInit {
     if (data.guardianClientFamilyMappingModelList && data.guardianClientFamilyMappingModelList.length > 0) {
       this.getCoOwner.removeAt(0);
       data.guardianClientFamilyMappingModelList.forEach(element => {
+        element['disable'] = true;
         this.addNewCoOwner(element);
       });
     }
