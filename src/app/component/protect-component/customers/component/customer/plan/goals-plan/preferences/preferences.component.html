@@ -287,7 +287,7 @@
                     <div class="row">
                         <div class="col-md-12 allocationGoals pl-10">
                             <mat-radio-group aria-label="Select an option" formControlName="strategicOrTactical">
-                                <mat-radio-button [value]="1" class="b-a text-primitive" [ngClass]="{'b-a-custom text-primary': assetAllocationFG.get('strategicOrTactical').value == 1}">Strategic</mat-radio-button>
+                                <mat-radio-button [checked]=true [value]="1" class="b-a text-primitive" [ngClass]="{'b-a-custom text-primary': assetAllocationFG.get('strategicOrTactical').value == 1}">Strategic</mat-radio-button>
                                 <mat-radio-button [value]="2" class="b-a text-primitive" [ngClass]="{'b-a-custom text-primary': assetAllocationFG.get('strategicOrTactical').value == 2}">Tactical</mat-radio-button>
                             </mat-radio-group>
                         </div>
@@ -313,7 +313,7 @@
                             <div class="col-md-12 p-0">
                                 <mat-radio-group aria-label="Select an option" name="allocation_type"
                                     formControlName="staticOrProgressive">
-                                    <mat-radio-button [value]="1" class=" pl-0" [ngClass]="{'text-primary': assetAllocationFG.get('staticOrProgressive').value == 1}">Static asset allocation
+                                    <mat-radio-button [checked]=true [value]="1" class=" pl-0" [ngClass]="{'text-primary': assetAllocationFG.get('staticOrProgressive').value == 1}">Static asset allocation
                                     </mat-radio-button>
                                 </mat-radio-group>
                             </div>
@@ -415,7 +415,8 @@
 
                             <ng-container matColumnDef="name">
                                 <th class="text-center" mat-header-cell *matHeaderCellDef> Assumption </th>
-                                <td mat-cell class="text-center" *matCellDef="let element"> {{element.name}} </td>
+                                <td mat-cell class="text-center" *matCellDef="let element"> 
+                                    <input matInput type="text" class="form-control br-0" [(ngModel)]="element.name"> </td>
                             </ng-container>
                             <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
                             <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
@@ -432,11 +433,13 @@
                             </ng-container>
                             <ng-container matColumnDef="position">
                                 <th mat-header-cell *matHeaderCellDef class="br"></th>
-                                <td mat-cell *matCellDef="let element" class="br"> {{element.position}} </td>
+                                <td mat-cell *matCellDef="let element" class="br" > {{element.position}} </td>
                             </ng-container>
                             <ng-container matColumnDef="name">
                                 <th mat-header-cell class="text-center br" *matHeaderCellDef> Assumption </th>
-                                <td mat-cell class="text-center br" *matCellDef="let element"> {{element.name}} </td>
+                                <td mat-cell class="text-center br" *matCellDef="let element"> 
+                                     <input matInput type="text" class="form-control br-0" [(ngModel)]="element.name"
+                                     > </td>
                             </ng-container>
 
                             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>

@@ -199,6 +199,7 @@ export class AddGoalsComponent implements OnInit {
         case AppConstants.VACATION_GOAL: // Vacation
         element.questions = {
           Q1: 'Which year you plan to travel',
+          Q5: 'Frequency',
           Q2: 'Travel expense in today\'s value',
           Q3: 'Give this goal a name',
           Q4: 'Notes'
