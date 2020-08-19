@@ -264,6 +264,13 @@
                     <tr mat-row *matRowDef="let row; columns: displayedColumns1; when: !isFamilyObj"></tr>
                     <tr mat-row *matRowDef="let row; columns: ['family']; when: isFamilyObj"></tr>
                 </table>
+                <div *ngIf="dataSource1.data.length == 1" class="row pt-70">
+                    <div class="d-flex align-items-center col-md-12 flex-column justify-content-center">
+                        <img src="assets/images/svg/documents-empty-states.svg">
+                        <h4 class="text-center mt-12 mb-20">No schmes Found</h4>
+                    </div>
+            
+                </div>
             </div>
         </div>
     </div>

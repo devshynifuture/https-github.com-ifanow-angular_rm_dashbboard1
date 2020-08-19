@@ -152,7 +152,9 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
   filterAssets(){
     let tableSource = [];
     let family = [];
-
+    if(this.selectedFamFilter =="'all'"){
+      this.selectedFamFilter = 'all'
+    }
     if(this.selectedFamFilter == 'all') {
       family = this.familyList;
     } else {
