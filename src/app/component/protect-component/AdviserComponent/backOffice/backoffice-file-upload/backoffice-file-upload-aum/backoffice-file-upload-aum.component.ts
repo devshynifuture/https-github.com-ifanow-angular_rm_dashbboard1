@@ -14,6 +14,7 @@ export class BackofficeFileUploadAumComponent implements OnInit {
   displayedColumns: string[] = [
     "name",
     "rt",
+    "arnRiaNumber",
     "uploadDate",
     "uploadedBy",
     "status",
@@ -76,12 +77,13 @@ export class BackofficeFileUploadAumComponent implements OnInit {
       if (data) {
         console.log("this is aum file uploaded",data);
         data.map((element) => {
-          if(!isNaN(Number(element.rt))){
-            element.rt = this.getRtNameFromRtId(parseInt(element.rt));
-            element.rt = element.rt + " - " + element.arnRiaNumber ? element.arnRiaNumber: '-';
-          } else {
-            element.rt = `${element.rt + "-" + (element.arnRiaNumber ? element.arnRiaNumber : '-')}`;
-          }
+          // if(!isNaN(Number(element.rt))){
+          //   element.rt = this.getRtNameFromRtId(parseInt(element.rt));
+          //   element.rt = element.rt + " - " + element.arnRiaNumber ? element.arnRiaNumber: '-';
+          // } else {
+          //   element.rt = `${element.rt + "-" + (element.arnRiaNumber ? element.arnRiaNumber : '-')}`;
+          // }
+          element.rt = this.getRtNameFromRtId(parseInt(element.rt));
           if (element.processStatus === 0) {
             element.status = "Pending";
           } else if (element.processStatus === 1) {
@@ -95,7 +97,7 @@ export class BackofficeFileUploadAumComponent implements OnInit {
           } else if(element.processStatus === 5){
             element.status = "Wrong ARN Number";
           } else if(element.processStatus === 6){
-            element.status = "";
+            element.status = "Recent File - Skipped";
           }
 
         });
