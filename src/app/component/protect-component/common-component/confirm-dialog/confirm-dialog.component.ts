@@ -53,6 +53,7 @@ export class ConfirmDialogComponent implements OnInit {
     this.btn1NoData = this.dialogData.btnNo;
     this.btn2YesData = this.dialogData.btnYes;
     this.data = this.dialogData.data;
+    this.barButtonOptions.text = this.btn1NoData
     // this.advisorId = AuthService.getAdvisorId();
 
   }

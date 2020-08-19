@@ -46,7 +46,7 @@ export class DematOwnerNomineeDirective {
   @Input() userTypeFlag;
   @Output() valueChange3 = new EventEmitter();
   @Output() valueChange1 = new EventEmitter();
-
+  @Input() guardianFlag;
   get getCoOwner() {
     if (this.ownerData) {
       return this.ownerData.get('getCoOwnerName') as FormArray;
@@ -124,7 +124,19 @@ export class DematOwnerNomineeDirective {
         controlsArr.push({ type: 'nominee', index: e, data: this.getNominee.controls[e].value });
       }
     }
-
+    if (this.guardianFlag) {
+      this.sendData.forEach(element => {
+        for (const e of controlsArr) {
+          if (element.familyMemberId == e.data.guardianFamilyMemberId) {
+            element.disable = true;
+            return;
+          } else {
+            element.disable = false;
+          }
+        }
+      });
+      return;
+    }
 
     this.sendData.forEach(element => {
       for (const e of controlsArr) {

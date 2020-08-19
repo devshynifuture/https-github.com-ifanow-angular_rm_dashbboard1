@@ -9,6 +9,10 @@ import {
 import { ValidatorType } from "src/app/services/util.service";
 import { MatProgressButtonOptions } from "src/app/common/progress-button/progress-button.component";
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { DatePipe } from '@angular/common';
+import { EventService } from 'src/app/Data-service/event.service';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 
 @Component({
   selector: "app-minor-form",
@@ -59,7 +63,11 @@ export class MinorFormComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   };
-  constructor(private fb: FormBuilder, private subInjectService: SubscriptionInject) { }
+  constructor(private fb: FormBuilder,
+    private subInjectService: SubscriptionInject,
+    private datePipe: DatePipe,
+    private eventService: EventService,
+    private peopleService: PeopleService) { }
   ngOnInit() { }
 
   @Input() set data(data) {
@@ -91,9 +99,7 @@ export class MinorFormComponent implements OnInit {
     return this.minorForm.get("getNomineeName") as FormArray;
   }
 
-  get getCoOwner() {
-    return this.minorForm.get("getCoOwnerName") as FormArray;
-  }
+
 
   display(value) {
     console.log("value selected", value);
@@ -124,27 +130,7 @@ export class MinorFormComponent implements OnInit {
     }
   }
 
-  addNewCoOwner(data) {
-    this.getCoOwner.push(
-      this.fb.group({
-        name: [data ? data.name : "", [Validators.required]],
-        sharePercentage: [0],
-        familyMemberId: [data ? data.familyMemberId : 0],
-        id: [data ? data.id : 0],
-        isClient: [data ? data.isClient : 0],
-      })
-    );
-    if (data) {
-      setTimeout(() => {
-        this.disabledMember(null, null);
-      }, 1300);
-    }
-  }
 
-  removeCoOwner(item) {
-    this.getCoOwner.removeAt(item);
-    this.disabledMember(null, null);
-  }
 
   /***owner***/
 
@@ -166,6 +152,66 @@ export class MinorFormComponent implements OnInit {
       })
     );
   }
+
+
+  editFamilyMember(flag) {
+    const obj = {
+      adminAdvisorId: AuthService.getAdminId(),
+      advisorId: AuthService.getClientData().advisorId,
+      familyMemberId: this.minorData.familyMemberId,
+      clientId: this.minorData.clientId,
+      name: this.minorForm.value.minorFullName,
+      displayName: null,
+      dateOfBirth: this.datePipe.transform(this.minorForm.value.dobAsPerRecord, 'dd/MM/yyyy'),
+      martialStatusId: null,
+      genderId: this.minorForm.value.gender,
+      occupationId: 1,
+      pan: this.minorForm.value.pan,
+      residentFlag: parseInt(this.taxStatus.value),
+      // taxStatusId: taxStatusId,
+      relationshipId: this.minorData.relationshipId,
+      familyMemberType: parseInt(this.invCategory.value),
+      isKycCompliant: 1,
+      aadhaarNumber: null,
+      bio: null,
+      remarks: null,
+      emailList: [
+        {
+          email: null,
+          verificationStatus: 0
+        }
+      ],
+      guardianClientFamilyMappingModelList: [],
+      invTypeCategory: 0,
+      categoryTypeflag: null,
+      anniversaryDate: null,
+    };
+    obj.bio = this.minorData.bio;
+    obj.remarks = this.minorData.remarks;
+    obj.aadhaarNumber = this.minorData.aadhaarNumber;
+    obj.martialStatusId = this.minorData.martialStatusId;
+    obj.occupationId = this.minorData.occupationId;
+    obj.displayName = this.minorData.displayName;
+    obj.anniversaryDate = this.datePipe.transform(this.minorData.anniversaryDate, 'dd/MM/yyyy');
+    this.peopleService.editFamilyMemberDetails(obj).subscribe(
+      data => {
+        data.invTypeCategory = this.invCategory.value;
+        data.categoryTypeflag = 'familyMinor';
+        if (flag == 'Next') {
+          this.tabChange.emit(1);
+          this.saveNextData.emit(true);
+        }
+        else {
+          this.close(data);
+        }
+      },
+      err => {
+        this.barButtonOptions.active = false;
+        this.eventService.openSnackBar(err, 'Dismiss');
+      }
+    );
+  }
+
 
   close(data) {
     (data == 'close') ? this.cancelTab.emit('close') : this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: true });

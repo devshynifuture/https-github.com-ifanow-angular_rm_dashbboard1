@@ -117,8 +117,8 @@ export class AddGoalsComponent implements OnInit {
           element.validations = {
             minAgeFromPresent: 0,
             maxAgeFromPresent: 60,
-            minCostReduction: 0,
-            maxCostReduction: -50,
+            minCostReduction: 100,
+            maxCostReduction: -100,
             minCost: 500000,
             maxCost: 100000000,
             showAge: true,
@@ -345,11 +345,16 @@ export class AddGoalsComponent implements OnInit {
 
   validateIfUserAllowedToCreateGoal(goalTypeData) {
     // family validation
-    let owner = this.familyList.filter((member) => goalTypeData.defaults.planningForRelative.includes(member.relationshipId));
-    if(owner.length == 0) {
-      this.eventService.openSnackBar("No family member found for such goal", "Dismiss");
-      return false;
+    if(goalTypeData.name == 'Marriage'){
+      let owner = this.familyList.filter((member) => goalTypeData.defaults.planningForRelative.includes(member.relationshipId));
+    }else{
+      let owner = this.familyList.filter((member) => goalTypeData.defaults.planningForRelative.includes(member.relationshipId));
+      if(owner.length == 0) {
+        this.eventService.openSnackBar("No family member found for such goal", "Dismiss");
+        return false;
+      }
     }
+   
     return true;
 
     // age validation can also be added?

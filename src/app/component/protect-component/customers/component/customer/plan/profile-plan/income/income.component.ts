@@ -9,6 +9,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { IncomeDetailedViewComponent } from './income-detailed-view/income-detailed-view.component';
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
+import { FileUploadServiceService } from '../../../accounts/assets/file-upload-service.service';
 
 @Component({
   selector: 'app-income',
@@ -18,10 +19,9 @@ import { ExcelGenService } from 'src/app/services/excel-gen.service';
 export class IncomeComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild('tableEl', { static: false }) tableEl;
-  isLoadingUpload;
-  fetchData;
   getOrgData;
   totalAmountOutstandingBalance;
+  isLoadingUpload: boolean = false;
   displayedColumns = ['no', 'owner', 'type', 'amt', 'income', 'till', 'rate', 'status', 'icons'];
   // dataSource = new MatTableDataSource(ELEMENT_DATA);
   advisorId: any;
@@ -38,8 +38,11 @@ export class IncomeComponent implements OnInit {
   details: any;
   reportDate: Date;
   filterForIncome: any;
+  myFiles: any;
+  fileUploadData: any;
+  file: any;
 
-  constructor(private util:UtilService,private excel: ExcelGenService,public dialog: MatDialog, private eventService: EventService, private subInjectService: SubscriptionInject, private planService: PlanService) {
+  constructor(private fileUpload: FileUploadServiceService,private util:UtilService,private excel: ExcelGenService,public dialog: MatDialog, private eventService: EventService, private subInjectService: SubscriptionInject, private planService: PlanService) {
   }
 
   viewMode;
@@ -74,6 +77,24 @@ export class IncomeComponent implements OnInit {
       }
     )
 
+  }
+  fetchData(value, fileName) {
+    this.isLoadingUpload = true
+    let obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      familyMemberId: this.clientData.familyMemberId,
+      asset: value
+    }
+    this.myFiles = fileName.target.files[0]
+    this.fileUploadData = this.fileUpload.fetchFileUploadData(obj, this.myFiles);
+    if (this.fileUploadData) {
+      this.file = fileName
+      this.fileUpload.uploadFile(fileName)
+    }
+    setTimeout(() => {
+      this.isLoadingUpload = false
+    }, 7000);
   }
   Excel(tableTitle) {
     this.fragmentData.isSpinner = true;

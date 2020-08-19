@@ -524,7 +524,8 @@
                 </div>
                 <div class="row pt-40">
                     <div class="col-md-5 pr-0 text-right">
-                        <h5 class="m-0 pt-8">Income period</h5>
+                        <h5 class="m-0 pt-8">Income period
+                        </h5>
                         <p class="m-0 f-12 text-custom">Income start % end dates helps in planning cash flow better
                         </p>
                     </div>
@@ -533,7 +534,7 @@
                             <div class="col-md-6 pl-0 pr-4">
                                 <div class="form-group mb-0">
                                     <mat-form-field class="ba-date">
-                                        <input (dateChange)="checkDateDiff($event)" matInput autocomplete="off"
+                                        <input (focus)="incomeStartDate.open()" (ngModelChange)="checkDateDiff($event)" matInput autocomplete="off" (input)="preventDefault($event)"
                                             formControlName="incomeStartDate" class="form-control br-0 b-0"
                                             [matDatepicker]="incomeStartdate">
                                         <mat-datepicker-toggle matSuffix [for]="incomeStartdate">
@@ -550,7 +551,7 @@
                             <div class="col-md-6 pl-4 pr-0">
                                 <div class="form-group mb-0">
                                     <mat-form-field class="ba-date">
-                                        <input (dateChange)="checkDateDiff($event)" matInput autocomplete="off"
+                                        <input (ngModelChange)="checkDateDiff($event)" matInput autocomplete="off"
                                             formControlName="incomeEndDate" class="form-control br-0 b-0"
                                             [matDatepicker]="incomeEndDate">
                                         <mat-datepicker-toggle matSuffix [for]="incomeEndDate">

@@ -16,6 +16,7 @@ import { DetailedViewExpensesComponent } from '../../../common-component/detaile
 import { FormControl, FormBuilder } from '@angular/forms';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { RecurringCommitmentsDetailedViewComponent } from '../../../common-component/recurring-commitments-detailed-view/recurring-commitments-detailed-view.component';
+import { FileUploadServiceService } from '../assets/file-upload-service.service';
 
 export const MY_FORMATS = {
   parse: {
@@ -106,9 +107,14 @@ export class ExpensesComponent implements OnInit {
   chart: Highcharts.Chart;
   expenseChart: Highcharts.Chart;
   budgetChartSvg: Highcharts.Chart;
+  isLoadingUpload: boolean = false;
+  myFiles: any;
+  fileUploadData: any;
+  file: any;
+
   // periodSelection: any;
 
-  constructor(private fb: FormBuilder,private datePipe: DatePipe,private subInjectService: SubscriptionInject, private planService: PlanService,
+  constructor(private fileUpload: FileUploadServiceService,private fb: FormBuilder,private datePipe: DatePipe,private subInjectService: SubscriptionInject, private planService: PlanService,
     private constantService: ConstantsService, private eventService: EventService, public dialog: MatDialog,private util:UtilService) {
   }
 
@@ -133,10 +139,10 @@ export class ExpensesComponent implements OnInit {
     this.filterDate = [{name:'period'}]
     this.selectedDateRange = { begin: this.startDate, end: this.endDate };
 
-    setTimeout(() => {
-      this.cashFlow('piechartExpense')
+    // setTimeout(() => {
+    //   this.cashFlow('piechartExpense')
 
-    }, 300);
+    // }, 300);
   }
   // getTimePeriod(){
   //   this.periodSelection = this.fb.group({
@@ -171,9 +177,13 @@ export class ExpensesComponent implements OnInit {
           this.housingAmount = data.Housing;
           this.spent = data.total;
           this.cashFlow('piechartExpense')
+        }else{
+          this.cashFlow('piechartExpense')
         }
         console.log(data);
       }, (error) => {
+        this.cashFlow('piechartExpense')
+
         this.eventService.showErrorMessage(error);
         
       }
@@ -188,10 +198,15 @@ export class ExpensesComponent implements OnInit {
     };
     this.planService.getBudgetGraph(obj).subscribe(
       data => {
-        this.budgetAmount = data.budgetAmount
-        this.budgetChart('bugetChart')
-        console.log(data)
+        if(data){
+          this.budgetAmount = data.budgetAmount
+          this.budgetChart('bugetChart')
+        }else{
+          this.budgetChart('bugetChart')
+        }
+
       }, (error) => {
+        this.budgetChart('bugetChart')
         this.eventService.showErrorMessage(error);
       }
     );
@@ -292,24 +307,42 @@ export class ExpensesComponent implements OnInit {
 
     });
   }
+  fetchData(value, fileName) {
+    this.isLoadingUpload = true
+    let obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      familyMemberId: this.clientData.familyMemberId,
+      asset: value
+    }
+    this.myFiles = fileName.target.files[0]
+    this.fileUploadData = this.fileUpload.fetchFileUploadData(obj, this.myFiles);
+    if (this.fileUploadData) {
+      this.file = fileName
+      this.fileUpload.uploadFile(fileName)
+    }
+    setTimeout(() => {
+      this.isLoadingUpload = false
+    }, 7000);
+  }
   getBugetTab(tab) {
     this.isTabLoaded = true;
     if (tab == 'Budget') {
        this.getBudgetGraphValues();
       this.getBudgetList();
       this.getBugetRecurring();
-      setTimeout(() => {
-        this.budgetChart('bugetChart')
+      // setTimeout(() => {
+      //   this.budgetChart('bugetChart')
 
-      }, 300);
+      // }, 300);
     } else {
       this.getTransaction();
       this.getAssetOfExpense()
       this.getExpenseGraphValue();
-      setTimeout(() => {
-        this.cashFlow('piechartExpense')
+      // setTimeout(() => {
+      //   this.cashFlow('piechartExpense')
 
-      }, 300);
+      // }, 300);
     }
   }
   removeDate(item) {

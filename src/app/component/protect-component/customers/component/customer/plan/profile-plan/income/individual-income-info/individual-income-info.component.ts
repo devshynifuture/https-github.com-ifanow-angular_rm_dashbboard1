@@ -24,6 +24,7 @@ const moment = _rollupMoment || _moment;
 import { DatePipe } from '@angular/common';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { LinkBankComponent } from 'src/app/common/link-bank/link-bank.component';
+import { CustomerService } from '../../../../customer.service';
 
 
 export const MY_FORMATS = {
@@ -50,21 +51,25 @@ export class IndividualIncomeInfoComponent implements OnInit {
   date = new FormControl(moment());
   bankList: any;
   id: any;
+  clientData: any;
   chosenYearHandler(normalizedYear: Moment, form, value) {
-    const ctrlValue = this.date.value;
+    const ctrlValue = normalizedYear;
     ctrlValue.year(normalizedYear.year());
     // this.date.setValue(ctrlValue);
     form.get(value).setValue(ctrlValue);
 
   }
   chosenMonthHandler(normalizedMonth: Moment, datepicker: MatDatepicker<Moment>, form, value) {
-    const ctrlValue = this.date.value;
+    const ctrlValue = normalizedMonth;
     ctrlValue.month(normalizedMonth.month());
     this.date.setValue(ctrlValue);
     form.get(value).setValue(ctrlValue);
 
+
+
     datepicker.close();
   }
+  
   individualIncomeData: any;
   finalIncomeAddList = [];
   addMoreFlag: boolean;
@@ -82,9 +87,9 @@ export class IndividualIncomeInfoComponent implements OnInit {
   @ViewChildren(MatInput) inputs: QueryList<MatInput>;
   isStatic = true;
   isErractic = false;
-  constructor(private dialog: MatDialog,private enumService: EnumServiceService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private planService: PlanService, private eventService: EventService) { }
+  constructor(private custumService:CustomerService,private dialog: MatDialog, private enumService: EnumServiceService, private fb: FormBuilder, private subInjectService: SubscriptionInject, private planService: PlanService, private eventService: EventService) { }
   validatorType = ValidatorType;
-  montlyIncomeObj = { "id": null, "interestIncome": null,"dividendIncome": null,"royaltyIncome": null,"annuityIncome": null,"pension": null,"incomeFromNonProfessional": null,"incomeFromPartTimeJob": null,"investIncome": null,"alimony": null,"farmingOrFishingIncome": null,"winningFromLottery": null,"others": null};
+  montlyIncomeObj = { "id": null, "interestIncome": null, "dividendIncome": null, "royaltyIncome": null, "annuityIncome": null, "pension": null, "incomeFromNonProfessional": null, "incomeFromPartTimeJob": null, "investIncome": null, "alimony": null, "farmingOrFishingIncome": null, "winningFromLottery": null, "others": null };
   perquisitesObj = { "id": null, "incomeId": null, "foodCoupon": null, "giftVouchers": null, "driversSalary": null, "otherPerquisites": null };
   allowancesObj = { "id": null, "incomeId": null, "hraReceived": null, "specialAllowance": null, "specialCompensatoryAllowance": null, "educationAllowance": null, "transportAllowance": null, "medicalAllowance": null, "conveyanceAllowance": null, "leaveTravelAllowance": null, "uniformAllowance": null, "carMaintenanceAllowance": null, "residualChoicePay": null, "superannuationAllowance": null, "otherAllowance": null };
   reimbursementsObj = { "id": null, "incomeId": null, "mobileOrTelephone": null, "carCharges": null, "fuelAndMaintenance": null, "entertainmentExpense": null, "otherReimbursement": null };
@@ -110,9 +115,37 @@ export class IndividualIncomeInfoComponent implements OnInit {
       })
     }
     this.bankList = this.enumService.getBank();
+    this.getAccountList(null);
 
 
   }
+  getAccountList(userData) {
+    const self = this;
+    return new Promise(function(resolve, reject) {
+        
+        const obj = {
+          userId:self.singleIndividualIncome.familyMemberId == 0 ? self.singleIndividualIncome.clientId : self.singleIndividualIncome.id,
+          userType: self.singleIndividualIncome.familyMemberId == 0 ? 2 : 3 
+        };
+        self.custumService.getBankList(obj).subscribe(
+          (data) => {
+            if(data){
+              self.bankList = data;
+              resolve(data);
+              self.enumService.addBank(self.bankList);
+            }else{
+              self.bankList = [];
+            }
+
+          },
+          (err) => {
+            reject('failed');
+          }
+        );
+      
+    });
+  }
+
   incomeNetForm = this.fb.group({
     incomeOption: ['2', [Validators.required]],
     // monthlyAmount: [, [Validators.required]],
@@ -132,8 +165,8 @@ export class IndividualIncomeInfoComponent implements OnInit {
     nextAppraisal: [],
     description: [],
     monthlyIncomeForm: this.fb.array([this.fb.group({
-      monthlyIncType: ['',[Validators.required]],
-      monthlyIncAmt: [null,[Validators.required]],
+      monthlyIncType: ['', [Validators.required]],
+      monthlyIncAmt: [null, [Validators.required]],
       id: null,
     })]),
     basicSalaryForm: this.fb.array([this.fb.group({
@@ -236,28 +269,28 @@ export class IndividualIncomeInfoComponent implements OnInit {
       this.incomeNetForm.controls.nextAppraisal.setValue(new Date(data.nextAppraisalOrNextRenewal));
       this.incomeNetForm.controls.description.setValue((data.description) ? data.description : '');
       this.incomeNetForm.controls.continousTillYear.setValue((data.numberOfYear) ? data.numberOfYear : '');
-      this.incomeNetForm.controls.bankAcNo.setValue((data.userBankMappingId) ? data.userBankMappingId : '');
-      if(data.basicIncome || data.deamessAlowance){
+      this.incomeNetForm.controls.bankAcNo.setValue((data.linkedBankAccountNumber) ? data.linkedBankAccountNumber : '');
+      if (data.basicIncome || data.deamessAlowance) {
         this.basicSalary.removeAt(0);
       }
       if (data.basicIncome) {
         this.addSalary('1', data.basicIncome);
         this.basicSalaryArr[0].disabled = true;
       }
-       if(data.deamessAlowance) {
+      if (data.deamessAlowance) {
         this.addSalary('2', data.deamessAlowance);
         this.basicSalaryArr[1].disabled = true;
       }
       if (Object.keys(data.monthlyIncomeOptionList).length > 0) {
         let id = data.monthlyIncomeOptionList.id;
-        if(data.monthlyIncomeOptionList.interestIncome || data.monthlyIncomeOptionList.dividendIncome || data.monthlyIncomeOptionList.royaltyIncome || data.monthlyIncomeOptionList.annuityIncome || data.monthlyIncomeOptionList.pension ||data.monthlyIncomeOptionList.incomeFromNonProfessional || data.monthlyIncomeOptionList.incomeFromPartTimeJob || data.monthlyIncomeOptionList.investIncome || data.monthlyIncomeOptionList.alimony || data.monthlyIncomeOptionList.farmingOrFishingIncome || data.monthlyIncomeOptionList.winningFromLottery || data.monthlyIncomeOptionList.others){
+        if (data.monthlyIncomeOptionList.interestIncome || data.monthlyIncomeOptionList.dividendIncome || data.monthlyIncomeOptionList.royaltyIncome || data.monthlyIncomeOptionList.annuityIncome || data.monthlyIncomeOptionList.pension || data.monthlyIncomeOptionList.incomeFromNonProfessional || data.monthlyIncomeOptionList.incomeFromPartTimeJob || data.monthlyIncomeOptionList.investIncome || data.monthlyIncomeOptionList.alimony || data.monthlyIncomeOptionList.farmingOrFishingIncome || data.monthlyIncomeOptionList.winningFromLottery || data.monthlyIncomeOptionList.others) {
           this.monthlyIncome.removeAt(0);
         }
         Object.entries(data.monthlyIncomeOptionList).forEach(([key, value]) => {
-          let valueOfincome =key ? (key == 'interestIncome' ? '1' : key == 'dividendIncome' ? '2' : key == 'royaltyIncome' ? '3' : key == 'annuityIncome' ? '4' : key == 'pension' ? '5' : key == 'incomeFromNonProfessional' ? '6'  : key == 'incomeFromPartTimeJob' ? '7' : key == 'investIncome' ? '8' : key == 'alimony' ? '9' : key == 'farmingOrFishingIncome' ? '10' : key == 'winningFromLottery' ? '11' : key == 'others' ? '12' : '') : '';
+          let valueOfincome = key ? (key == 'interestIncome' ? '1' : key == 'dividendIncome' ? '2' : key == 'royaltyIncome' ? '3' : key == 'annuityIncome' ? '4' : key == 'pension' ? '5' : key == 'incomeFromNonProfessional' ? '6' : key == 'incomeFromPartTimeJob' ? '7' : key == 'investIncome' ? '8' : key == 'alimony' ? '9' : key == 'farmingOrFishingIncome' ? '10' : key == 'winningFromLottery' ? '11' : key == 'others' ? '12' : '') : '';
           if (value && key != 'id') {
-            this.monthlyIncArr.forEach(ele=>{
-              if(valueOfincome == ele.value){
+            this.monthlyIncArr.forEach(ele => {
+              if (valueOfincome == ele.value) {
                 ele.disabled = true;
               }
             })
@@ -267,14 +300,14 @@ export class IndividualIncomeInfoComponent implements OnInit {
       }
       if (Object.keys(data.incomePerquisites).length > 0) {
         let id = data.incomePerquisites.id;
-        if(id){
+        if (id) {
           this.perquisites.removeAt(0);
         }
         Object.entries(data.incomePerquisites).forEach(([key, value]) => {
-          let valueOfincome =key ? (key == 'foodCoupon' ? '1' : key == 'giftVouchers' ? '2' : key == 'driversSalary' ? '3' : key == 'otherPerquisites' ? '4' : '') : '';
+          let valueOfincome = key ? (key == 'foodCoupon' ? '1' : key == 'giftVouchers' ? '2' : key == 'driversSalary' ? '3' : key == 'otherPerquisites' ? '4' : '') : '';
           if (value && key != 'id') {
-            this.perquisitesArr.forEach(ele=>{
-              if(valueOfincome == ele.value){
+            this.perquisitesArr.forEach(ele => {
+              if (valueOfincome == ele.value) {
                 ele.disabled = true;
               }
             })
@@ -284,14 +317,14 @@ export class IndividualIncomeInfoComponent implements OnInit {
       }
       if (Object.keys(data.incomeAllowance).length > 0) {
         let id = data.incomeAllowance.id;
-        if(id){
+        if (id) {
           this.allowances.removeAt(0);
         }
         Object.entries(data.incomeAllowance).forEach(([key, value]) => {
-          let valueOfincome =key ? (key == 'hraReceived' ? '1' : key == 'specialAllowance' ? '2' : key == 'specialCompensatoryAllowance' ? '3' : key == 'educationAllowance' ? '4' : key == 'transportAllowance' ? '5' : key == 'medicalAllowance' ? '6' : key == 'conveyanceAllowance' ? '7' : key == 'leaveTravelAllowance' ? '8' : key == 'uniformAllowance' ? '9' : key == 'carMaintenanceAllowance' ? '10' : key == 'residualChoicePay' ? '11' : key == 'superannuationAllowance' ? '12' : key == 'otherAllowance' ? '13' : '') : '';
+          let valueOfincome = key ? (key == 'hraReceived' ? '1' : key == 'specialAllowance' ? '2' : key == 'specialCompensatoryAllowance' ? '3' : key == 'educationAllowance' ? '4' : key == 'transportAllowance' ? '5' : key == 'medicalAllowance' ? '6' : key == 'conveyanceAllowance' ? '7' : key == 'leaveTravelAllowance' ? '8' : key == 'uniformAllowance' ? '9' : key == 'carMaintenanceAllowance' ? '10' : key == 'residualChoicePay' ? '11' : key == 'superannuationAllowance' ? '12' : key == 'otherAllowance' ? '13' : '') : '';
           if (value && key != 'id') {
-            this.allowancesArr.forEach(ele=>{
-              if(valueOfincome == ele.value){
+            this.allowancesArr.forEach(ele => {
+              if (valueOfincome == ele.value) {
                 ele.disabled = true;
               }
             })
@@ -301,14 +334,14 @@ export class IndividualIncomeInfoComponent implements OnInit {
       }
       if (Object.keys(data.incomeReimbursement).length > 0) {
         let id = data.incomeReimbursement.id;
-        if(id){
+        if (id) {
           this.reimbursements.removeAt(0);
         }
         Object.entries(data.incomeReimbursement).forEach(([key, value]) => {
-          let valueOfincome =key ? (key == 'mobileOrTelephone' ? '1' : key == 'carCharges' ? '2' : key == 'fuelAndMaintenance' ? '3' : key == 'entertainmentExpense' ? '4' : key == 'otherReimbursement' ? '5' : '') : '';
+          let valueOfincome = key ? (key == 'mobileOrTelephone' ? '1' : key == 'carCharges' ? '2' : key == 'fuelAndMaintenance' ? '3' : key == 'entertainmentExpense' ? '4' : key == 'otherReimbursement' ? '5' : '') : '';
           if (value && key != 'id') {
-            this.reimbursementsArr.forEach(ele=>{
-              if(valueOfincome == ele.value){
+            this.reimbursementsArr.forEach(ele => {
+              if (valueOfincome == ele.value) {
                 ele.disabled = true;
               }
             })
@@ -318,14 +351,14 @@ export class IndividualIncomeInfoComponent implements OnInit {
       }
       if (Object.keys(data.incomeRetirals).length > 0) {
         let id = data.incomeRetirals.id;
-        if(id){
+        if (id) {
           this.retirals.removeAt(0);
         }
         Object.entries(data.incomeRetirals).forEach(([key, value]) => {
-          let valueOfincome =key ? (key == 'gratuity' ? '1' : key == 'superannuation' ? '2' : key == 'nps' ? '3' : key == 'pf' ? '4' : '') : ''
+          let valueOfincome = key ? (key == 'gratuity' ? '1' : key == 'superannuation' ? '2' : key == 'nps' ? '3' : key == 'pf' ? '4' : '') : ''
           if (value && key != 'id') {
-            this.retiralsArr.forEach(ele=>{
-              if(valueOfincome == ele.value){
+            this.retiralsArr.forEach(ele => {
+              if (valueOfincome == ele.value) {
                 ele.disabled = true;
               }
             })
@@ -335,14 +368,14 @@ export class IndividualIncomeInfoComponent implements OnInit {
       }
       if (Object.keys(data.incomeOthers).length > 0) {
         let id = data.incomeOthers.id;
-        if(id){
+        if (id) {
           this.others.removeAt(0);
         }
         Object.entries(data.incomeOthers).forEach(([key, value]) => {
-          let valueOfincome =key ? (key == 'bonus' ? '1' : key == 'performancePay' ? '2' : '') : '';
+          let valueOfincome = key ? (key == 'bonus' ? '1' : key == 'performancePay' ? '2' : '') : '';
           if (value && key != 'id') {
-            this.othersArr.forEach(ele=>{
-              if(valueOfincome == ele.value){
+            this.othersArr.forEach(ele => {
+              if (valueOfincome == ele.value) {
                 ele.disabled = true;
               }
             })
@@ -437,7 +470,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
   }
   addMonthlyIncome(key, value, id) {
     this.monthlyIncome.push(this.fb.group({
-      monthlyIncType:  [key ? (key == 'interestIncome' ? '1' : key == 'dividendIncome' ? '2' : key == 'royaltyIncome' ? '3' : key == 'annuityIncome' ? '4' : key == 'pension' ? '5' : key == 'incomeFromNonProfessional' ? '6'  : key == 'incomeFromPartTimeJob' ? '7' : key == 'investIncome' ? '8' : key == 'alimony' ? '9' : key == 'farmingOrFishingIncome' ? '10' : key == 'winningFromLottery' ? '11' : key == 'others' ? '12' : '') : '', [Validators.required]],
+      monthlyIncType: [key ? (key == 'interestIncome' ? '1' : key == 'dividendIncome' ? '2' : key == 'royaltyIncome' ? '3' : key == 'annuityIncome' ? '4' : key == 'pension' ? '5' : key == 'incomeFromNonProfessional' ? '6' : key == 'incomeFromPartTimeJob' ? '7' : key == 'investIncome' ? '8' : key == 'alimony' ? '9' : key == 'farmingOrFishingIncome' ? '10' : key == 'winningFromLottery' ? '11' : key == 'others' ? '12' : '') : '', [Validators.required]],
       monthlyIncAmt: [(key == 'interestIncome' || key == 'dividendIncome' || key == 'royaltyIncome' || key == 'annuityIncome' || key == 'pension' || key == 'incomeFromNonProfessional' || key == 'incomeFromPartTimeJob' || key == 'investIncome' || key == 'alimony' || key == 'farmingOrFishingIncome' || key == 'winningFromLottery' || key == 'others') ? value : '', [Validators.required]],
       id: [id]
     }));
@@ -558,20 +591,25 @@ export class IndividualIncomeInfoComponent implements OnInit {
     //   this.others.removeAt(item);
     // }
   }
+  preventDefault(e) {
+    e.preventDefault();
+}
+
   openDialog(eventData): void {
     const dialogRef = this.dialog.open(LinkBankComponent, {
-        width: '50%',
-        data:{bankList: this.bankList, userInfo: true} 
+      width: '50%',
+      data: { bankList: this.bankList, userInfo: true }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-        setTimeout(() => {
-            this.bankList = this.enumService.getBank();
-        }, 5000);
+      setTimeout(() => {
+        this.bankList = this.enumService.getBank();
+      }, 5000);
     })
 
-}
+  }
   onClickValueChange(value) {
+    this.incomeNetForm.controls.incomeStyle.setValue(value)
     if (value == '1') {
       this.isStatic = true;
       this.isErractic = false
@@ -579,7 +617,6 @@ export class IndividualIncomeInfoComponent implements OnInit {
       this.isStatic = false;
       this.isErractic = true
     }
-    this.incomeNetForm.controls.incomeStyle.setValue(value)
 
   }
   cancel() {
@@ -689,7 +726,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
     //   this.incomeNetForm.get('incomeEndDate').markAsTouched();
     //   return;
     // }
-    let monthlyIncome= this.incomeNetForm.get('monthlyIncomeForm') as FormArray
+    let monthlyIncome = this.incomeNetForm.get('monthlyIncomeForm') as FormArray
     monthlyIncome.controls.forEach(element => {
       switch (element.get('monthlyIncType').value) {
         case '1':
@@ -704,28 +741,28 @@ export class IndividualIncomeInfoComponent implements OnInit {
         case '4':
           this.montlyIncomeObj.annuityIncome = element.get('monthlyIncAmt').value
           break;
-          case '5':
+        case '5':
           this.montlyIncomeObj.pension = element.get('monthlyIncAmt').value
           break;
-          case '6':
+        case '6':
           this.montlyIncomeObj.incomeFromNonProfessional = element.get('monthlyIncAmt').value
           break;
-          case '7':
+        case '7':
           this.montlyIncomeObj.incomeFromPartTimeJob = element.get('monthlyIncAmt').value
           break;
-          case '8':
+        case '8':
           this.montlyIncomeObj.investIncome = element.get('monthlyIncAmt').value
           break;
-          case '9':
+        case '9':
           this.montlyIncomeObj.alimony = element.get('monthlyIncAmt').value
           break;
-          case '10':
+        case '10':
           this.montlyIncomeObj.farmingOrFishingIncome = element.get('monthlyIncAmt').value
           break;
-          case '11':
+        case '11':
           this.montlyIncomeObj.winningFromLottery = element.get('monthlyIncAmt').value
           break;
-          case '12':
+        case '12':
           this.montlyIncomeObj.others = element.get('monthlyIncAmt').value
           break;
 
@@ -941,7 +978,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
         "description": this.incomeNetForm.get('description').value,
         "monthlyDistributionList": [],
         "bonusOrInflowList": [],
-        
+
         'linkedBankAccountNumber': this.incomeNetForm.controls.bankAcNo.value ? this.incomeNetForm.controls.bankAcNo.value : null,
         // 'userBankMappingId': this.incomeNetForm.controls.bankAcNo.value,
       }
@@ -949,9 +986,9 @@ export class IndividualIncomeInfoComponent implements OnInit {
       array.controls.forEach(element => {
         let val = element.get('salaryType').value
         if (val == '1') {
-          obj.basicIncome = element.get('amount').value
+          obj.basicIncome = element.get('amount').value ? element.get('amount').value : null
         } else {
-          obj.deamessAlowance = element.get('amount').value
+          obj.deamessAlowance = element.get('amount').value ? element.get('amount').value : null
         }
       })
       if (this.getBonusList) {
@@ -1002,9 +1039,14 @@ export class IndividualIncomeInfoComponent implements OnInit {
     if (this.incomePosition < this.finalIncomeAddList.length) {
       this.singleIndividualIncome = this.finalIncomeAddList[this.incomePosition]
       this.incomeNetForm.reset();
-      this.incomeNetForm.controls.incomeStyle.setValue('1')
+      this.incomeNetForm.controls.incomeStyle.setValue('1');
+      this.isStatic = true;
       this.incomeNetForm.controls.incomeOption.setValue('2')
-      this.getExpectedBonusForm.reset();
+      this.nullAllObj();
+      this.disabledAllObj();
+      this.emptyControlsAtMostOn();
+      this.getAccountList('');
+      this.getExpectedBonusForm.bonusList.reset();
     }
     else {
       (this.editApiData) ? this.eventService.openSnackBar("Income is edited") : this.eventService.openSnackBar("Income is added")
@@ -1012,7 +1054,53 @@ export class IndividualIncomeInfoComponent implements OnInit {
     }
   }
   //  expected bonus array logic
-
+  nullAllObj() {
+    this.montlyIncomeObj = this.setAll(this.montlyIncomeObj, null);
+    this.perquisitesObj = this.setAll(this.perquisitesObj, null);
+    this.allowancesObj = this.setAll(this.allowancesObj, null);
+    this.reimbursementsObj = this.setAll(this.reimbursementsObj, null);
+    this.retiralsObj = this.setAll(this.retiralsObj, null);
+    this.othersObj = this.setAll(this.othersObj, null);
+  }
+  disabledAllObj() {
+    this.monthlyIncArr = this.disabledAll(this.monthlyIncArr, false);
+    this.basicSalaryArr = this.disabledAll(this.basicSalaryArr, false);
+    this.perquisitesArr = this.disabledAll(this.perquisitesArr, false);
+    this.reimbursementsArr = this.disabledAll(this.reimbursementsArr, false);
+    this.allowancesArr = this.disabledAll(this.allowancesArr, false);
+    this.retiralsArr = this.disabledAll(this.retiralsArr, false);
+    this.othersArr = this.disabledAll(this.othersArr, false);
+  }
+  emptyControlsAtMostOn() {
+    this.expectedBonusForm.controls.bonusList.clear();
+    this.addExpectedBonus();
+    (this.incomeNetForm.get('basicSalaryForm') as FormArray).clear()
+    this.addSalary(undefined, undefined);
+    (this.incomeNetForm.get('monthlyIncomeForm') as FormArray).clear();
+    this.addMonthlyIncome(undefined,undefined,undefined);
+    (this.incomeNetForm.get('allowancesForm') as FormArray).clear();
+    this.addAllowances(undefined,undefined,undefined);
+    (this.incomeNetForm.get('perquisitesForm') as FormArray).clear();
+    this.addPerquisites(undefined,undefined,undefined);
+    (this.incomeNetForm.get('reimbursementsForm') as FormArray).clear();
+    this.addReimbursements(undefined,undefined,undefined);
+    (this.incomeNetForm.get('retiralsForm') as FormArray).clear();
+    this.addRetirals(undefined,undefined,undefined);
+    (this.incomeNetForm.get('othersForm') as FormArray).clear();
+    this.addOthers(undefined,undefined,undefined);
+  }
+  disabledAll(obj, val) {
+    Object.entries(obj).forEach(([key, value]) => {
+      value['disabled'] = val;
+    });
+    return obj;
+  }
+  setAll(obj, val) {
+    Object.keys(obj).forEach(function (index) {
+      obj[index] = val
+    });
+    return obj;
+  }
   get getExpectedBonusForm() { return this.expectedBonusForm.controls };
   get getBonusList() { return this.getExpectedBonusForm.bonusList as FormArray };
   get monthlyIncome() {
@@ -1048,7 +1136,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
   removeExpectedBonus(index) {
     if (this.getBonusList.controls.length > 1) {
       if (this.getBonusList.controls[index].value.id) {
-      let id = this.getBonusList.controls[index].value.id;
+        let id = this.getBonusList.controls[index].value.id;
         this.planService.deleteBonusInflow(id).subscribe(
           data => {
           }
