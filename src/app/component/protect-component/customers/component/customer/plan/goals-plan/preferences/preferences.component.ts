@@ -138,7 +138,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.inflamationReturnsFG.controls.staticOrProgressive.valueChanges.subscribe(value => {
         this.inflamationReturnsFG.controls.equityAllocation.setValue(0);
-          this.inflamationReturnsFG.controls.debtAllocation.setValue(0);
+        this.inflamationReturnsFG.controls.debtAllocation.setValue(0);
       })
     );
   }
@@ -291,26 +291,32 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     })
   }
   saveInflamatonReturns() {
+    this.obj = {}
     this.barButtonOptions.active = true;
     const remainingData = this.data.remainingData;
     this.dataSource.forEach(element => {
-      if(element.position == 'Debt asset class'){
-        Object.assign(this.obj, { debtAssetClassReturns: element.name });
-      }else if (element.position == 'Equity asset class'){
-        Object.assign(this.obj, { equityAssetClassReturns: element.name });
-      }else if(element.position == 'Debt funds'){
-        Object.assign(this.obj, { debtFundReturns: element.name });
-      }else if(element.position == 'Equity funds'){
-        Object.assign(this.obj, { equityFundReturns: element.name });
-      }else if(element.position == 'Balanced funds'){
-        Object.assign(this.obj, { balancedFundReturns: element.name });
-      }else if(element.position == 'Stocks'){
-        Object.assign(this.obj, { stockReturns: element.name });
+      if (element.position == 'Debt asset class') {
+        Object.assign(this.obj, { debtAssetClassReturns: parseInt(element.name) });
+      } else if (element.position == 'Equity asset class') {
+        Object.assign(this.obj, { equityAssetClassReturns: parseInt(element.name) });
+      } else if (element.position == 'Debt funds') {
+        Object.assign(this.obj, { debtFundReturns: parseInt(element.name) });
+      } else if (element.position == 'Equity funds') {
+        Object.assign(this.obj, { equityFundReturns: parseInt(element.name) });
+      } else if (element.position == 'Balanced funds') {
+        Object.assign(this.obj, { balancedFundReturns: parseInt(element.name) });
+      } else if (element.position == 'Stocks') {
+        Object.assign(this.obj, { stockReturns: parseInt(element.name) });
       }
-      Object.assign(this.obj, { goalId: this.data.remainingData.id });
-      Object.assign(this.obj, { goalType: this.data.goalType});
-      Object.assign(this.obj, { advisorId: this.data.remainingData.advisorId });
     });
+    this.dataSource1.forEach(element => {
+      if (element.position == 'Inflation rate') {
+        Object.assign(this.obj, { inflationRate: parseInt(element.name) });
+      }
+    });
+    Object.assign(this.obj, { goalId: this.data.remainingData.id });
+    Object.assign(this.obj, { goalType: this.data.goalType });
+    Object.assign(this.obj, { advisorId: this.data.remainingData.advisorId });
     console.log('Asset inflamation', this.obj)
     this.planService.saveAssetPreference(this.obj).subscribe(res => {
       this.eventService.openSnackBar("Asset allocation preference saved", "Dismiss");

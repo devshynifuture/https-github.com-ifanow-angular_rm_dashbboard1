@@ -173,7 +173,11 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         let absAllocation = 0;
         if(asset.goalAssetMapping) {
           asset.goalAssetMapping.forEach(element => {
-            absAllocation += element.percentAllocated;
+            if(absAllocation <= 99){
+              absAllocation += element.percentAllocated;
+            }else{
+              this.eventService.openSnackBar('Asset allocation already 100%', "Dismiss")
+            }
           });
         }
         return {absAllocation, ...asset};
@@ -183,7 +187,11 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         let absAllocation = 0;
         if(mf.goalAssetMapping.length > 0) {
           mf.goalAssetMapping.forEach(element => {
-            absAllocation += element.percentAllocated;
+            if(absAllocation <= 99){
+              absAllocation += element.percentAllocated;
+            }else{
+              this.eventService.openSnackBar('Asset allocation already 100%', "Dismiss")
+            }
           });
         }
         return {absAllocation, ...mf};
@@ -420,6 +428,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         ...asset
       }
     });
+    console.log('allocatedList',this.allocatedList)
     this.selectedGoal = goalData;
     this.selectedGoalId = goalData.remainingData.id;
     setTimeout(() => {
