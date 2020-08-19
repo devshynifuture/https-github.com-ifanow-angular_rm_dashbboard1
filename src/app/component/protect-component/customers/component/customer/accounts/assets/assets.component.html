@@ -81,15 +81,18 @@
             <div class="tabViewSelectMenu"> 
            <div class="row">
                <div class="col-md-4">
-                <button mat-stroked-button [matMenuTriggerFor]="menu">Menu</button>
-                <mat-menu class="tabMenuVeiw" #menu="matMenu">
 
-                    <button *ngFor="let singleAssetType of assetSideBarData"
-                    (click)="viewMode =singleAssetType.viewmode;sidenavState = false"
-                    [ngClass]="{'activeColor lt':viewMode ==singleAssetType.viewmode}"  mat-menu-item>
-                    {{ singleAssetType.name }}    
-                </button>
-                </mat-menu>
+                <mat-form-field >
+                     <mat-select class="form-control">
+                        <mat-option value="" *ngFor="let singleAssetType of assetSideBarData"
+                        (click)="viewMode =singleAssetType.viewmode;sidenavState = false"
+                        >
+                        {{ singleAssetType.name }}   
+                    </mat-option> 
+                    </mat-select>
+                  </mat-form-field>
+
+ 
                </div>
            </div>
             </div>
