@@ -85,11 +85,11 @@
                                         'btn-primary': asset.absAllocation == 0}">
                             {{asset.absAllocation}}%
                         </button>
-                        <button mat-stroked-button class="btn-default br-0 mt-12 mb-12">{{asset.maturityDate | date: 'yyyy'}}</button>
+                        <button mat-stroked-button class="btn-default br-0 mt-12 mb-12">{{asset.MaturityYear}}</button>
                     </div>
                     <div class="col-md-4 pt-12 pr-0">
                         <p class="m-0 f-12 roboto text-primitive">Owner</p>
-                        <p class="m-0 roboto text-lighter">{{asset.asset_owner}}</p>
+                        <p class="m-0 roboto text-lighter">{{asset.familyMemberName ? asset.familyMemberName  : asset.ownerInfoName}}</p>
                         <p class="m-0 f-12 roboto text-primitive pt-12">Current value</p>
                         <p class="m-0 roboto text-lighter">₹<span appFormatNumber>{{asset.currentValue}}</span></p>
                     </div>

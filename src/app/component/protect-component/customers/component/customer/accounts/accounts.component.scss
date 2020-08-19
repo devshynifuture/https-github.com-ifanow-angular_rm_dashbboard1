@@ -2,3 +2,11 @@
   background-color: #E2E2E2 !important;
   color: #008FFF !important;
 }
+
+
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .tabDisplay {
+    display: none;
+  }
+}
