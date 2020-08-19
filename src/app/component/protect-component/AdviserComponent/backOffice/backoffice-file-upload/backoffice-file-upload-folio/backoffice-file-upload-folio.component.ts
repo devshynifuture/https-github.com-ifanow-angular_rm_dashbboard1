@@ -84,9 +84,10 @@ export class BackofficeFileUploadFolioComponent implements OnInit {
           element.rt = this.getRtNameFromRtId(parseInt(element.rt));
 
           if(!isNaN(Number(element.rt))){
-            element.rt = this.getRtNameFromRtId(parseInt(element.rt)) + "-" + element.arnRiaNumber ? element.arnRiaNumber : '-';
+            element.rt = this.getRtNameFromRtId(parseInt(element.rt));
+            element.rt = element.rt + " - " + element.arnRiaNumber ? element.arnRiaNumber: '-';
           } else {
-            element.rt = element.rt + "-" + element.arnRiaNumber ? element.arnRiaNumber : '-';
+            element.rt = `${element.rt + "-" + (element.arnRiaNumber ? element.arnRiaNumber : '-')}`;
           }
           if (element.processStatus === 0) {
             element.status = "Pending";

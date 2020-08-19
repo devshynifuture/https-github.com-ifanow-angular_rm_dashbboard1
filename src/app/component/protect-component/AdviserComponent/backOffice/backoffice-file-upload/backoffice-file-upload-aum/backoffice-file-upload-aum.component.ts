@@ -77,9 +77,10 @@ export class BackofficeFileUploadAumComponent implements OnInit {
         console.log("this is aum file uploaded",data);
         data.map((element) => {
           if(!isNaN(Number(element.rt))){
-            element.rt = this.getRtNameFromRtId(parseInt(element.rt)) + " - " +element.arnRiaNumber ? element.arnRiaNumber: '-';
+            element.rt = this.getRtNameFromRtId(parseInt(element.rt));
+            element.rt = element.rt + " - " + element.arnRiaNumber ? element.arnRiaNumber: '-';
           } else {
-            element.rt = element.rt + "-" + element.arnRiaNumber ? element.arnRiaNumber : '-';
+            element.rt = `${element.rt + "-" + (element.arnRiaNumber ? element.arnRiaNumber : '-')}`;
           }
           if (element.processStatus === 0) {
             element.status = "Pending";
