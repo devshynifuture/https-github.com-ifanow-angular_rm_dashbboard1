@@ -220,7 +220,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       equityAllocation: ['', [Validators.required]],
       debtAllocation: ['', [Validators.required]],
       progressiveStages: this.fb.array([this.createStage()]),
-      strategicOrTactical: [this.data.remainingData.strategicOrTactical, [Validators.required]],
+      strategicOrTactical: [1, [Validators.required]],
       staticOrProgressive: [this.data.remainingData.staticOrProgressive, [Validators.required]],
       goalId: [this.data.remainingData.id],
       goalType: [this.data.goalType],
@@ -239,8 +239,8 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.assetAllocationFG.controls.staticOrProgressive.valueChanges.subscribe(value => {
         if (value == 2) {
-          this.assetAllocationFG.controls.equityAllocation.setValue('');
-          this.assetAllocationFG.controls.debtAllocation.setValue('');
+          this.assetAllocationFG.controls.equityAllocation.setValue(this.data.remainingData.bifurcation.equity_ratio);
+          this.assetAllocationFG.controls.debtAllocation.setValue(this.data.remainingData.bifurcation.debt_ratio);
           this.assetAllocationFG.controls.equityAllocation.disable();
           this.assetAllocationFG.controls.debtAllocation.disable();
           this.progressiveStageArrayControl.enable();
