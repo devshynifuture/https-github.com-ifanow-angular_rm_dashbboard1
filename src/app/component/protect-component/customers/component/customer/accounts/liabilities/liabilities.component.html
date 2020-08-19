@@ -78,10 +78,15 @@
 
          <div class="col-md-12 deskLiabilities text-right">
             <mat-form-field>
-                <mat-select class="form-control">
-                    <mat-option (click)="viewMode ='tab1'" (click)="sortTable('tab1')">
+                <mat-select [(ngModel)]="viewMode" class="form-control">
+                    <mat-option [value]="tab1" (click)="viewMode ='tab1'" (click)="sortTable('tab1')">
                         LIABILITIES
                     </mat-option>
+
+                    <mat-option [value]="tab1" (click)="viewMode ='tab1'" (click)="sortTable('tab1')">
+                        LIABILITIES
+                    </mat-option>
+
                 </mat-select>
         </mat-form-field>
          </div>
