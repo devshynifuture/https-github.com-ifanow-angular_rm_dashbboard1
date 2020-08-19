@@ -130,7 +130,7 @@
             <div class="col-md-6" *ngIf="recuring.get('continueTill').value=='3' || recuring.get('continueTill').value=='4'">
                 <div class="form-group mt-35 mb-0">
                     <mat-form-field>
-                        <input matInput class="form-control br-0" formControlName="numberOfYearOrNumberOfTime"
+                        <input matInput  (keyup)="onChange(recuring,'numberOfYearOrNumberOfTime',$event)" class="form-control br-0" formControlName="numberOfYearOrNumberOfTime"
                             type="number">
                         <mat-error class="f-12 pt-4">
                             This field is required
