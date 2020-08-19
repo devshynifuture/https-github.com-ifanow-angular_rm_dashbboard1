@@ -416,6 +416,10 @@
   }
 }
 
+.tabViewSelectMenu {
+  display: none;
+}
+
 
 
 @media screen and (min-width: 768px) and (max-width: 991px) {
@@ -426,14 +430,15 @@
 
   .tabViewSelectMenu {
     margin-top: 20px;
-    position: absolute;
-    top: 105px;
-    left: 0px;
-     background: #fff;
-    height: 300px;
-    z-index: 1;
+     display: block;
+      
   }
 
+  .tabMenuVeiw {
+    ul{
+      display: block;
+    }
+  }
   
 
   #ui-assets-account .vertical-menu {
@@ -443,9 +448,8 @@
       display: none;
     }
 
-    #ui-assets-account .tabViewSelectMenu .vertical-menu li {
-     margin-bottom: 0px !important;
-    }
+    
+    
   }
 
   

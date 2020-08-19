@@ -81,21 +81,15 @@
             <div class="tabViewSelectMenu"> 
            <div class="row">
                <div class="col-md-4">
-                   vai
-                <ul class="vertical-menu ">
-                    <li *ngFor="let singleAssetType of assetSideBarData"
-                        (click)="viewMode =singleAssetType.viewmode;sidenavState = false"
-                        [ngClass]="{'activeColor lt':viewMode ==singleAssetType.viewmode}" class=" c-p">
-                        <div class="row">
-                            <div class="col-md-12 col-lg-9 p-0 ws-nowrap">
-                                {{ singleAssetType.name }}
-                            </div>
-                            <div class="col-md-3 col-lg-3 pl-0 pr-20 text-right NumbrTabNone text-custom">
-                                {{ singleAssetType.count }}
-                            </div>
-                        </div>
-                    </li>
-                </ul>
+                <button mat-stroked-button [matMenuTriggerFor]="menu">Menu</button>
+                <mat-menu class="tabMenuVeiw" #menu="matMenu">
+
+                    <button *ngFor="let singleAssetType of assetSideBarData"
+                    (click)="viewMode =singleAssetType.viewmode;sidenavState = false"
+                    [ngClass]="{'activeColor lt':viewMode ==singleAssetType.viewmode}"  mat-menu-item>
+                    {{ singleAssetType.name }}    
+                </button>
+                </mat-menu>
                </div>
            </div>
             </div>
