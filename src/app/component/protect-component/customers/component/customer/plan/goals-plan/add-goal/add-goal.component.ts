@@ -119,6 +119,7 @@ export class AddGoalComponent implements OnInit {
     this.goalService.getAssetsForAllocation(obj).subscribe((data)=>{
       this.allAssetsList = data;
       this.allAssetsList = this.allAssetsList.map(asset => {
+        asset.MaturityYear = new Date(asset.maturityDate).getFullYear()
         let absAllocation = 0;
         if(asset.goalAssetMapping) {
           asset.goalAssetMapping.forEach(element => {
