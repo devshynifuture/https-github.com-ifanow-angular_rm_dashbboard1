@@ -505,7 +505,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     const dialogData = {
       data: value,
       header: 'EMAIL BULK PASSWORD',
-      body: 'Are you sure you want to send email & password to clients accounts?',
+      body: 'Are you sure you want to send email & password to all clients',
       body2: 'This cannot be undone.',
       btnYes: 'CANCEL',
       btnNo: 'SEND',
