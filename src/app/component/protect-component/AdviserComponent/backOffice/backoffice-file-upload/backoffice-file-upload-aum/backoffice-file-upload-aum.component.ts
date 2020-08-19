@@ -46,6 +46,11 @@ export class BackofficeFileUploadAumComponent implements OnInit {
     this.reconService.getRTListValues({}).subscribe((res) => {
       if (res) {
         this.rtList = res;
+        this.rtList.map(item=> {
+          if(item.name==="FRANKLIN_TEMPLETON"){
+            item.name="FRANKLIN";
+          }
+        })
         this.unSubcrip = this.BackOffice.getFilterData().subscribe((data) => {
           this.filter = data;
           this.getBackOfficeFolio(this.filter);
@@ -73,6 +78,9 @@ export class BackofficeFileUploadAumComponent implements OnInit {
         data.map((element) => {
           if(!isNaN(Number(element.rt))){
             element.rt = this.getRtNameFromRtId(parseInt(element.rt));
+            element.rt = element.rt + " - " + element.arnRiaNumber ? element.arnRiaNumber: '-';
+          } else {
+            element.rt = `${element.rt + "-" + (element.arnRiaNumber ? element.arnRiaNumber : '-')}`;
           }
           if (element.processStatus === 0) {
             element.status = "Pending";
@@ -80,8 +88,14 @@ export class BackofficeFileUploadAumComponent implements OnInit {
             element.status = "Success";
           } else if (element.processStatus === -1) {
             element.status = "Duplicate";
-          } else {
+          } else if(element.processStatus === 3){
             element.status = "Failed";
+          } else if(element.processStatus === 4){
+            element.status = "Backdated - skipped";
+          } else if(element.processStatus === 5){
+            element.status = "Wrong ARN Number";
+          } else if(element.processStatus === 6){
+            element.status = "";
           }
 
         });

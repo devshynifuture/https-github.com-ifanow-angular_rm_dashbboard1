@@ -90,7 +90,7 @@ export const appConfig = {
   GET_MUTUALFUND_UNMAP_USER_DETAIL_LIST: 'mutual-fund/unmap/folio/user-detail/list/get',
   PUT_MUTUALFUND_UNMAP_INVESTOR_DETAIL_UPDATE: 'mutual-fund/unmap/investor-detail/update',
   GET_MUTUAL_FUND_SIP_CLEANUP_LIST: 'mutual-fund/sip-cleanup/list/get',
-  PUT_MUTUAL_FUND_SIP_CLEANUP_REMOVE_STATUS_UPDATE: 'mutual-fund/sip-cleanup/remove/status/update',  
+  PUT_MUTUAL_FUND_SIP_CLEANUP_REMOVE_STATUS_UPDATE: 'mutual-fund/sip-cleanup/remove/status/update',
 
   /////////////////////////////Accounts///////////////////////////////////
   ADD_FIXEDDEPOSIT: 'account/asset/fixed-income/fixed-deposit/add',
@@ -466,7 +466,7 @@ export const appConfig = {
   INCOME_ALLOWANCE_DELETE: 'account/income/allowance/delete?',
   INCOME_PERQUISITES_DELETE: 'account/income/perquisites/delete?',
   INCOME_REIMBURSEMENT_DELETE: 'account/income/reimbursement/delete?',
-  ASSTES_OF_EXPENSE:'account/expense/expense/of/asset/get',
+  ASSTES_OF_EXPENSE: 'account/expense/expense/of/asset/get',
   /////////////////////////Activity///////////////////////////////////
   ADVICE_GET_ALL: 'advice/asset/get',
   ADVICE_ADD_FD: 'advice/asset/fixed-income/suggest-new-fd/add',
@@ -736,6 +736,7 @@ export const appConfig = {
   GET_USER_ROLES: 'setting/users-roles/role/get',
   GET_CLIENT_ROLES: 'setting/users-roles/client-role/get',
   ORDER_SOA_MUTUAL_FUND: 'mutual-fund/SOA/fetch',
+  BULK_EMAIL_PASSWORD: 'pdfAndEmail/new-user-creds/mail/send',
 
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',

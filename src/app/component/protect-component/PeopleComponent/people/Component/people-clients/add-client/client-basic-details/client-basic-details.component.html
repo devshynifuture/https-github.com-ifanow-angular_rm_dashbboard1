@@ -481,7 +481,8 @@
                     [formGroupName]="pointIndex">
                     <div
                         class="col-md-4  text-right d-flex align-items-center justify-content-end mob-pl-10 mob-text-left">
-                        <h5 class="m-0 pt-12">Guardian {{pointIndex + 1}}</h5>
+                        <h5 class="m-0 pt-12">Guardian <span
+                                *ngIf="minorForm.value.getCoOwnerName.length>1">{{pointIndex + 1}}</span></h5>
 
                     </div>
                     <div class="p-0 mob-pl-10 col-10 col-md-6">

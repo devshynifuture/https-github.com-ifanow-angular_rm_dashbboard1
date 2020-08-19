@@ -59,7 +59,7 @@ export class AddExpensesComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.advisorId = AuthService.getAdvisorId();
     this.getListFamilyMem();
-    if (this.inputData.isRecuring == false && this.inputData.continueTill && this.inputData.repeatFrequency) {
+    if (this.inputData.continueTill && this.inputData.repeatFrequency) {
       this.inputData.isRecuring=true;
       this.getdataFormRec(this.inputData)
       this.isRecuring = true
@@ -134,7 +134,7 @@ export class AddExpensesComponent implements OnInit {
       isRecuring: true,
     }); 
     this.expenseList = this.constantService.expenseList
-    this.familyMemberId = this.expenses.controls.familyMemberId.value
+    this.familyMemberId = this.recuring.controls.familyMemberId.value
   }
 
   getFormControl(): any {
@@ -166,8 +166,10 @@ export class AddExpensesComponent implements OnInit {
     this.isRecuring = value.checked;
     if(value.checked == true && (this.getFlag == 'addExpenses' || this.getFlag == 'editExpenses')){
       this.trnFlag = 'Recurring transaction';
+      this.getdataFormRec(this.inputData)
     }else if(value.checked == true && (this.getFlag == 'addBudget' || this.getFlag == 'editBudget')){
       this.budgetFlag = 'Recurring Budget'
+      this.getdataFormRec(this.inputData)
     }else if(value.checked == false && (this.getFlag == 'addExpenses' || this.getFlag == 'editExpenses')){
       this.trnFlag = 'Transaction';
     }else{
@@ -195,6 +197,12 @@ export class AddExpensesComponent implements OnInit {
       // this.recuring.get('UntilDate').setValidators(null);
       // this.recuring.get('UntilDate').updateValueAndValidity();
       // this.recuring.controls['UntilDate'].setErrors(null);
+    }
+  }
+  onChange(form, value, event) {
+    if (parseInt(event.target.value) > 100) {
+      event.target.value = '100';
+      form.get(value).setValue(event.target.value);
     }
   }
   saveRecuringExpense() {
@@ -273,18 +281,20 @@ export class AddExpensesComponent implements OnInit {
     }
   }
   otherCommitmentsEditRes(data) {
-    this.event.openSnackBar('Added successfully!', 'Dismiss');
+    this.event.openSnackBar('Updated successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true,value:'addBudgetTrn' })
   }
   otherCommitmentsAddRes(data) {
-    this.event.openSnackBar('Updated successfully!', 'Dismiss');
+    this.event.openSnackBar('Added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true,value:'editBudgetTrn' })
   }
   addRecuringExpenseRes(data) {
+    this.event.openSnackBar('Added successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true,value:'addRecurringTrn' })
   }
 
   editRecuringExpenseRes(data) {
+    this.event.openSnackBar('Updated successfully!', 'Dismiss');
     this.subInjectService.changeNewRightSliderState({ flag: 'added', state: 'close', data, refreshRequired: true,value:'editRecurringTrn' })
   }
 

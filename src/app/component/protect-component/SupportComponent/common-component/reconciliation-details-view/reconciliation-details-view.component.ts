@@ -59,9 +59,10 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
   filterSub: any;
   filterBasedOnArr: any = [];
   filterSubTab1: any;
-  shouldShowSelectedBalanceUnit: boolean;
+  shouldShowSelectedFilteredUnits: boolean;
   shouldShowMultipleDelete: boolean = false;
   selectedBalanceUnits: any = 0;
+  selectedFolioUnitsFiltered: any = 0;
 
   constructor(
     private eRef: ElementRef,
@@ -425,27 +426,31 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
   filterTableValues(filterBasedOn, whichTable) {
     // this.filteredValues = [];
     // this.filterBasedOn = filterBasedOn;
+    this.selectedFolioUnitsFiltered = 0;
     this.filterOnWhichTable = whichTable;
     if (whichTable === 1) {
       if (filterBasedOn.length<=0) {
         this.dataSource1.data = this.tableData1;
         this.selectedBalanceUnits = 0;
-        this.shouldShowSelectedBalanceUnit = false;
+        this.shouldShowSelectedFilteredUnits = false;
       } else {
         let filteredArray = [];
         filteredArray = this.tableData1.filter((item, index) => {
           if(filterBasedOn.includes(item.transactionType)){
-            if (index === 0) {
-              this.selectedBalanceUnits = String((parseFloat(item.units) * item.effect).toFixed(3));
-            } else {
-              let prevBalUnit = this.tableData1[index - 1].balanceUnits;
-              this.selectedBalanceUnits = String((parseFloat(prevBalUnit) + (parseFloat(item.units) * item.effect)).toFixed(3));
-            }
+            this.selectedFolioUnitsFiltered += (parseFloat(item.units.toFixed(3)) * item.effect);
+            // if (index === 0) {
+            //   this.selectedBalanceUnits = String((parseFloat(item.units) * item.effect).toFixed(3));
+            // } else {
+            //   let prevBalUnit = this.tableData1[index - 1].balanceUnits;
+            //   this.selectedBalanceUnits = String((parseFloat(prevBalUnit) + (parseFloat(item.units) * item.effect)).toFixed(3));
+            // }
             return item;
           }
         });
+
+        this.selectedFolioUnitsFiltered = parseFloat(this.selectedFolioUnitsFiltered.toFixed(3));
         
-        this.shouldShowSelectedBalanceUnit = true;
+        this.shouldShowSelectedFilteredUnits = true;
         this.dataSource1.data = filteredArray;
       }
     }
@@ -457,11 +462,10 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
         let filteredArray = [];
         filteredArray = this.tableData1.filter(item => {
           if(filterBasedOn.includes(item.transactionType)){
-
             return item;
           }
         });
-        this.shouldShowSelectedBalanceUnit = true;
+        this.shouldShowSelectedFilteredUnits = true;
         this.dataSource2.data = filteredArray;
       }
     }
