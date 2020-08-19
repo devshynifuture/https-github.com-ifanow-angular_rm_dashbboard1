@@ -428,9 +428,16 @@
     display: none !important;
   }
 
+  .tabMarBtm {
+    margin-bottom: 10px;
+  }
+
   .tabViewSelectMenu {
     margin-top: 20px;
      display: block;
+     .mat-form-field {
+       width: 300px;
+     }
       
   }
 

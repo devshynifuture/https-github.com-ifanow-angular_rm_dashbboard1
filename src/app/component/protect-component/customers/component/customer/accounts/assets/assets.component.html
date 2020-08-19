@@ -78,32 +78,27 @@
 
         <mat-sidenav-content class="p-0 pt-122 b-a ng-tns-c1-0" id="left">
 
-            <div class="tabViewSelectMenu">
-                <div class="row">
-                    <div class="col-md-4">
-
-                        <mat-form-field>
-                            <mat-select [(ngModel)]="viewMode" class="form-control">
-                                <mat-option value="" [value]="singleAssetType.viewmode"
-                                    *ngFor="let singleAssetType of assetSideBarData"
-                                    (click)="viewMode =singleAssetType.viewmode;sidenavState = false">
-                                    {{ singleAssetType.name }}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-
-
-                    </div>
-                </div>
-            </div>
-
-
             <div *ngIf="sidenavState" [ngClass]="sidenavState ? '': 'd-none'">
                 <div class="leftside-overlay-toggle-button " (click)="sidenav.toggle()">
                     <i class="material-icons f-30 text-custom"> keyboard_arrow_right </i>
                 </div>
             </div>
             <div class="row">
+               
+                 
+                <div class="tabViewSelectMenu col-md-12 pr-8 text-right">
+                    <mat-form-field>
+                        <mat-select [(ngModel)]="viewMode" class="form-control select_menu">
+                      <mat-option value="" [value]="singleAssetType.viewmode"
+                            *ngFor="let singleAssetType of assetSideBarData"
+                            (click)="viewMode =singleAssetType.viewmode;sidenavState = false">
+                            {{ singleAssetType.name }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                 </div>
+                
+
                 <div class="col-md-12 bg-white bb-0 pb-24  pl-0 pr-0 min-height" [ngSwitch]="viewMode">
                     <div *ngSwitchCase="'tab1'">
                         <div>

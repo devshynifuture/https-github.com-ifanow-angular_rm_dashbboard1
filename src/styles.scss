@@ -871,7 +871,7 @@ mat-tab-group[vertical] {
 #onboargings {
   .vertical-menu {
     height: 100vh;
-    display: block !important;
+    display: block;
     width: 100%;
     text-align: center;
   }
@@ -896,7 +896,6 @@ mat-tab-group[vertical] {
 }
 
 #ui-assets,
-#ui-liabilities,
 #ui-income,
 #ui-activity {
   li {
@@ -907,13 +906,12 @@ mat-tab-group[vertical] {
   }
 }
 
-#ui-texes,
-#ui-liabilities {
+#ui-texes{
   .vertical-menu {
     // height: 100vh;
     // position: relative;
     // height: calc(100vh - 147px);
-    display: block !important;
+    display: block;
     width: 100%;
     text-align: left;
   }
@@ -928,13 +926,7 @@ mat-tab-group[vertical] {
   }
 }
 
-#ui-liabilities {
-  .vertical-menu {
-    height: calc(100vh - 126px);
-    position: fixed;
-    width: 16.7%;
-  }
-}
+
 
 #ui-insurance {
   .vertical-menu {
