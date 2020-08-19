@@ -2,8 +2,8 @@
 </div>
 <div id="ui-assets-account">
     <mat-sidenav-container class="sidenav-container" [hasBackdrop]="false">
-        <mat-sidenav class="col-md-12 col-lg-2 bg-grey lter overflow-hidden tabViewSideNav p-0" #sidenav [mode]="sidenavState ? 'over' : 'side'"
-            role="navigation">
+        <mat-sidenav class="col-md-12 col-lg-2 bg-grey lter overflow-hidden tabViewSideNav p-0" #sidenav
+            [mode]="sidenavState ? 'over' : 'side'" role="navigation">
             <mat-nav-list class="width-220 pt-0" id="d">
 
                 <div class="p-0 pt-8 ">
@@ -74,77 +74,77 @@
                 </div>
             </div>
         </mat-sidenav>
- 
+
 
         <mat-sidenav-content class="p-0 pt-122 b-a ng-tns-c1-0" id="left">
 
-            <div class="tabViewSelectMenu"> 
-           <div class="row">
-               <div class="col-md-4">
-
-                <mat-form-field >
-                     <mat-select class="form-control">
-                        <mat-option value="" *ngFor="let singleAssetType of assetSideBarData"
-                        (click)="viewMode =singleAssetType.viewmode;sidenavState = false"
-                        >
-                        {{ singleAssetType.name }}   
-                    </mat-option> 
-                    </mat-select>
-                  </mat-form-field>
-
- 
-               </div>
-           </div>
-            </div>
-            
-            
-                <div *ngIf="sidenavState" [ngClass]="sidenavState ? '': 'd-none'">
-                    <div class="leftside-overlay-toggle-button " (click)="sidenav.toggle()">
-                        <i class="material-icons f-30 text-custom"> keyboard_arrow_right </i>
-                    </div>
-                </div>
+            <div class="tabViewSelectMenu">
                 <div class="row">
-                    <div class="col-md-12 bg-white bb-0 pb-24  pl-0 pr-0 min-height" [ngSwitch]="viewMode">
-                        <div *ngSwitchCase="'tab1'">
-                            <div>
-                                <app-mutual-fund (sendData)="getValue($event)"></app-mutual-fund>
-                            </div>
-                        </div>
-                        <div *ngSwitchCase="'tab2'">
-                            <div>
-                                <app-asset-stocks (changeCount)="getAssetCountGLobalData()"></app-asset-stocks>
-                            </div>
-                        </div>
-                        <div *ngSwitchCase="'tab3'">
-                            <div>
-                                <app-fixed-income (changeCount)="getAssetCountGLobalData()"></app-fixed-income>
-                            </div>
-                        </div>
-                        <div *ngSwitchCase="'tab4'">
-                            <div>
-                                <app-real-estate (changeCount)="getAssetCountGLobalData()"></app-real-estate>
-                            </div>
-                        </div>
-                        <div *ngSwitchCase="'tab5'">
-                            <app-retirement-account (changeCount)="getAssetCountGLobalData()"></app-retirement-account>
-                        </div>
-                        <div *ngSwitchCase="'tab6'">
-                            <div class="wrapper-8">
-                                <app-small-saving-scheme (changeCount)="getAssetCountGLobalData()">
-                                </app-small-saving-scheme>
-                            </div>
-                        </div>
-                        <div *ngSwitchCase="'tab7'">
-                            <app-cash-and-bank (changeCount)="getAssetCountGLobalData()"></app-cash-and-bank>
-                        </div>
-                        <div *ngSwitchCase="'tab8'">
-                            <app-commodities (changeCount)="getAssetCountGLobalData()"></app-commodities>
-                        </div>
-                        <div *ngSwitchCase="'tab9'">
-                        </div>
+                    <div class="col-md-4">
+
+                        <mat-form-field>
+                            <mat-select [(ngModel)]="viewMode" class="form-control">
+                                <mat-option value="" [value]="singleAssetType.viewmode"
+                                    *ngFor="let singleAssetType of assetSideBarData"
+                                    (click)="viewMode =singleAssetType.viewmode;sidenavState = false">
+                                    {{ singleAssetType.name }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+
                     </div>
                 </div>
-              
+            </div>
+
+
+            <div *ngIf="sidenavState" [ngClass]="sidenavState ? '': 'd-none'">
+                <div class="leftside-overlay-toggle-button " (click)="sidenav.toggle()">
+                    <i class="material-icons f-30 text-custom"> keyboard_arrow_right </i>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 bg-white bb-0 pb-24  pl-0 pr-0 min-height" [ngSwitch]="viewMode">
+                    <div *ngSwitchCase="'tab1'">
+                        <div>
+                            <app-mutual-fund (sendData)="getValue($event)"></app-mutual-fund>
+                        </div>
+                    </div>
+                    <div *ngSwitchCase="'tab2'">
+                        <div>
+                            <app-asset-stocks (changeCount)="getAssetCountGLobalData()"></app-asset-stocks>
+                        </div>
+                    </div>
+                    <div *ngSwitchCase="'tab3'">
+                        <div>
+                            <app-fixed-income (changeCount)="getAssetCountGLobalData()"></app-fixed-income>
+                        </div>
+                    </div>
+                    <div *ngSwitchCase="'tab4'">
+                        <div>
+                            <app-real-estate (changeCount)="getAssetCountGLobalData()"></app-real-estate>
+                        </div>
+                    </div>
+                    <div *ngSwitchCase="'tab5'">
+                        <app-retirement-account (changeCount)="getAssetCountGLobalData()"></app-retirement-account>
+                    </div>
+                    <div *ngSwitchCase="'tab6'">
+                        <div class="wrapper-8">
+                            <app-small-saving-scheme (changeCount)="getAssetCountGLobalData()">
+                            </app-small-saving-scheme>
+                        </div>
+                    </div>
+                    <div *ngSwitchCase="'tab7'">
+                        <app-cash-and-bank (changeCount)="getAssetCountGLobalData()"></app-cash-and-bank>
+                    </div>
+                    <div *ngSwitchCase="'tab8'">
+                        <app-commodities (changeCount)="getAssetCountGLobalData()"></app-commodities>
+                    </div>
+                    <div *ngSwitchCase="'tab9'">
+                    </div>
+                </div>
+            </div>
+
         </mat-sidenav-content>
     </mat-sidenav-container>
 </div>
