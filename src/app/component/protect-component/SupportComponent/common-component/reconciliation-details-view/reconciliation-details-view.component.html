@@ -69,14 +69,19 @@
             (click)="deleteSingleOrMultipleTransaction()">Delete selected</button>
         <!-- <span class="text-primitive ml-12 f-14" *ngIf="shouldShowSelectedBalanceUnit"> Selected units: {{ selectedFolioUnits }}
         </span> -->
-        <span class="text-primitive ml-12 f-14" *ngIf="shouldShowSelectedBalanceUnit"> Selected units: {{ selectedBalanceUnits }}
-        </span>
+        <div class="mt-20">
+            <span class="text-primitive ml-12 f-14" *ngIf="shouldShowMultipleDelete"> Selected units: {{ selectedFolioUnits }}
+            </span>
+            <span class="text-primitive ml-12 mb-20 f-14 float-right" *ngIf="shouldShowSelectedFilteredUnits"> Filtered units: {{ selectedFolioUnitsFiltered }}
+            </span>
+        </div>
     </div>
+   
     <div class="col-lg-6" *ngIf="tableEntriesType==2">
         <!-- <mat-checkbox>Show All Transactions</mat-checkbox> -->
     </div>
     <div class="col-lg-6 full-end">
-        <div *ngIf="tableEntriesType == 1" class="w-100">
+        <div *ngIf="tableEntriesType == 1" class="w-100 mb-0">
             <mat-form-field appearance="standard" float="never" class="form-group pr-3">
                 <mat-label>Filter</mat-label>
                 <mat-select [formControl]="filterTransactionListTab1" multiple class="form-control">
@@ -86,7 +91,7 @@
         </div>
         
         <div *ngIf="tableEntriesType == 2" class="w-100">
-            <mat-form-field appearance="standard" float="never" class="form-group pr-3">
+            <mat-form-field appearance="standard" float="never" class="form-group pr-3 mb-0">
                 <mat-label>Filter</mat-label>
                 <mat-select [formControl]="filterTransactionListTab2" multiple class="form-control">
                   <mat-option *ngFor="let item of filterList" [value]="item">{{item}}</mat-option>
