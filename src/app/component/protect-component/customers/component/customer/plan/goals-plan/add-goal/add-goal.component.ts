@@ -97,7 +97,9 @@ export class AddGoalComponent implements OnInit {
           let absAllocation = 0;
           if(asset.goalAssetMapping) {
             asset.goalAssetMapping.forEach(element => {
+              if(absAllocation <= 99){
               absAllocation += element.percentAllocated;
+              }
             });
           }
           return {absAllocation, ...asset};
@@ -123,7 +125,9 @@ export class AddGoalComponent implements OnInit {
         let absAllocation = 0;
         if(asset.goalAssetMapping) {
           asset.goalAssetMapping.forEach(element => {
+            if(absAllocation <= 99){
             absAllocation += element.percentAllocated;
+            }
           });
         }
         return {absAllocation, ...asset};

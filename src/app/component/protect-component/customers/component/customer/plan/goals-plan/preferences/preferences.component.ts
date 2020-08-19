@@ -22,9 +22,10 @@ export class PreferencesComponent implements OnInit, OnDestroy {
   dataSource = ELEMENT_DATA;
   displayedColumns1 = ['position', 'name'];
   dataSource1 = ELEMENT_DATA1;
-  @Input() data:any;
-  goalDetailsFG:FormGroup;
-  assetAllocationFG:FormGroup;
+  @Input() data: any;
+  goalDetailsFG: FormGroup;
+  assetAllocationFG: FormGroup;
+  inflamationReturnsFG: FormGroup;
   validatorType = ValidatorType;
   months = AppConstants.getMonthsArr();
 
@@ -46,6 +47,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     disabled: false,
     fullWidth: false,
   };
+  obj: any;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -58,7 +60,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
   selected = 0;
 
   ngOnInit() {
-    if(this.data.singleOrMulti == 1) {
+    if (this.data.singleOrMulti == 1) {
       this.years = Array((new Date(this.data.remainingData.goalStartDate).getFullYear()) - (new Date().getFullYear()) + 1).fill((new Date().getFullYear())).map((v, idx) => v + idx);
     } else {
       this.years = Array((new Date(this.data.remainingData.goalEndDate).getFullYear()) - (new Date().getFullYear()) + 1).fill((new Date().getFullYear())).map((v, idx) => v + idx);
@@ -67,25 +69,27 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     this.setFormListeners();
   }
 
-  setForms(){
+  setForms() {
     const remainingData = this.data.remainingData;
     this.createKeyParamsForm(remainingData);
     this.createAssetForm(remainingData);
+    this.createAssetFormInflamation(remainingData)
   }
 
-  setFormListeners(){
+  setFormListeners() {
     this.setKeyParamFormListeners();
     this.setAssetAllocationListeners();
+    this.setInflamationReturns();
   }
 
 
   // ----------------- key params ----------------------------
 
-  savingsSDError:boolean = false;
-  savingsEDError:boolean = false;
-  goalSDError:boolean = false;
+  savingsSDError: boolean = false;
+  savingsEDError: boolean = false;
+  goalSDError: boolean = false;
 
-  createKeyParamsForm(remainingData){
+  createKeyParamsForm(remainingData) {
     this.goalDetailsFG = this.fb.group({
       goalValue: [Math.round(this.preferenceService.getGoalValueForForm(this.data)), [Validators.required]],
       savingStartDateYear: [(new Date(remainingData.savingStartDate).getFullYear()), [Validators.required]],
@@ -102,17 +106,17 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       stepUp: [remainingData.stepUp, [Validators.required]]
     })
 
-    if(this.data.singleOrMulti == 2) {
-      this.goalDetailsFG.addControl('goalEndDateYear',this.fb.control(new Date(remainingData.goalEndDate).getFullYear(), [Validators.required]));
-      this.goalDetailsFG.addControl('goalEndDateMonth',this.fb.control(('0' + (new Date(remainingData.goalEndDate).getMonth() + 1)).slice(-2), [Validators.required]));
+    if (this.data.singleOrMulti == 2) {
+      this.goalDetailsFG.addControl('goalEndDateYear', this.fb.control(new Date(remainingData.goalEndDate).getFullYear(), [Validators.required]));
+      this.goalDetailsFG.addControl('goalEndDateMonth', this.fb.control(('0' + (new Date(remainingData.goalEndDate).getMonth() + 1)).slice(-2), [Validators.required]));
     }
   }
-  setKeyParamFormListeners(){
-    if(this.data.singleOrMulti == 1) {
+  setKeyParamFormListeners() {
+    if (this.data.singleOrMulti == 1) {
       this.subscription.add(
         this.goalDetailsFG.controls.goalStartDateYear.valueChanges.subscribe(year => {
           this.years = Array(year + 1 - (new Date().getFullYear())).fill((new Date().getFullYear())).map((v, idx) => v + idx);
-          if(!this.years.includes(this.goalDetailsFG.controls.savingStartDateYear) || !this.years.includes(this.goalDetailsFG.controls.savingEndDateYear)) {
+          if (!this.years.includes(this.goalDetailsFG.controls.savingStartDateYear) || !this.years.includes(this.goalDetailsFG.controls.savingEndDateYear)) {
             this.goalDetailsFG.controls.savingStartDateYear.setValue('');
             this.goalDetailsFG.controls.savingEndDateYear.setValue('');
           }
@@ -122,7 +126,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       this.subscription.add(
         this.goalDetailsFG.controls.goalEndDateYear.valueChanges.subscribe(year => {
           this.years = Array(year + 1 - new Date().getFullYear()).fill((new Date().getFullYear())).map((v, idx) => v + idx);
-          if(!this.years.includes(this.goalDetailsFG.controls.savingStartDateYear) || !this.years.includes(this.goalDetailsFG.controls.savingEndDateYear)) {
+          if (!this.years.includes(this.goalDetailsFG.controls.savingStartDateYear) || !this.years.includes(this.goalDetailsFG.controls.savingEndDateYear)) {
             this.goalDetailsFG.controls.savingStartDateYear.setValue('');
             this.goalDetailsFG.controls.savingEndDateYear.setValue('');
           }
@@ -130,30 +134,37 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       )
     }
   }
-
+  setInflamationReturns() {
+    this.subscription.add(
+      this.inflamationReturnsFG.controls.staticOrProgressive.valueChanges.subscribe(value => {
+        this.inflamationReturnsFG.controls.equityAllocation.setValue(0);
+        this.inflamationReturnsFG.controls.debtAllocation.setValue(0);
+      })
+    );
+  }
   validateGoalDates() {
     const gstartDate = this.goalDetailsFG.controls.goalStartDateYear.value + '-' + this.goalDetailsFG.controls.goalStartDateMonth.value + '-01';
     const sStartDate = this.goalDetailsFG.controls.savingStartDateYear.value + '-' + this.goalDetailsFG.controls.savingStartDateMonth.value + '-01';
     const sEndtDate = this.goalDetailsFG.controls.savingEndDateYear.value + '-' + this.goalDetailsFG.controls.savingEndDateMonth.value + '-01';
 
-    if(this.data.singleOrMulti == 2) {
+    if (this.data.singleOrMulti == 2) {
       const gendtDate = this.goalDetailsFG.controls.goalEndDateYear.value + '-' + this.goalDetailsFG.controls.goalEndDateMonth.value + '-01';
       // goal start date cannot be greater than end date
-      if([-1].includes(UtilService.compareDates(gstartDate, gendtDate))) {
+      if ([-1].includes(UtilService.compareDates(gstartDate, gendtDate))) {
         this.goalSDError = true;
       } else {
         this.goalSDError = false;
       }
 
       // savings SD cannot be greater than goal end date
-      if([-1].includes(UtilService.compareDates(sEndtDate, gendtDate))) {
+      if ([-1].includes(UtilService.compareDates(sEndtDate, gendtDate))) {
         this.savingsEDError = true;
       } else {
         this.savingsEDError = false;
       }
     } else {
       // savings SD cannot be greater than goal start date
-      if([-1].includes(UtilService.compareDates(sEndtDate, gstartDate))) {
+      if ([-1].includes(UtilService.compareDates(sEndtDate, gstartDate))) {
         this.savingsEDError = true;
       } else {
         this.savingsEDError = false;
@@ -161,7 +172,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     }
 
     // savings start date cannot be greater than end date
-    if([-1].includes(UtilService.compareDates(sStartDate, sEndtDate))) {
+    if ([-1].includes(UtilService.compareDates(sStartDate, sEndtDate))) {
       this.savingsSDError = true;
     } else {
       this.savingsSDError = false;
@@ -170,16 +181,16 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     return this.goalSDError || this.savingsEDError || this.savingsSDError;
   }
 
-  savePreference(){
-    if(this.goalDetailsFG.invalid || this.validateGoalDates() || this.barButtonOptions.active) {
+  savePreference() {
+    if (this.goalDetailsFG.invalid || this.validateGoalDates() || this.barButtonOptions.active) {
       this.goalDetailsFG.markAllAsTouched();
       return;
     }
 
     this.barButtonOptions.active = true;
-    let observer:Observable<any>;
+    let observer: Observable<any>;
     const obj = this.preferenceService.createGoalObjForGoalTypes(this.data, this.goalDetailsFG.value);
-    if(this.data.singleOrMulti == 1) {
+    if (this.data.singleOrMulti == 1) {
       this.barButtonOptions.active = false;
       observer = this.planService.saveSingleGoalPreference(obj);
     } else {
@@ -202,26 +213,34 @@ export class PreferencesComponent implements OnInit, OnDestroy {
 
   // ----------------- asset allocation ----------------------
   today = new Date();
-  stages = Array(50).fill(0).map((v, index) => {return {name: index + ' years from today', value: index}});
-  createAssetForm(remainingData){
+  stages = Array(50).fill(0).map((v, index) => { return { name: index + ' years from today', value: index } });
+  createAssetForm(remainingData) {
     this.assetAllocationFG = this.fb.group({
       advisorId: [this.data.remainingData.advisorId],
       equityAllocation: ['', [Validators.required]],
       debtAllocation: ['', [Validators.required]],
       progressiveStages: this.fb.array([this.createStage()]),
-      strategicOrTactical: [this.data.remainingData.strategicOrTactical, [Validators.required]],
+      strategicOrTactical: [1, [Validators.required]],
       staticOrProgressive: [this.data.remainingData.staticOrProgressive, [Validators.required]],
       goalId: [this.data.remainingData.id],
       goalType: [this.data.goalType],
     })
   }
-
-  setAssetAllocationListeners(){
+  createAssetFormInflamation(remainingData) {
+    this.inflamationReturnsFG = this.fb.group({
+      advisorId: [this.data.remainingData.advisorId],
+      name: ['', [Validators.required]],
+      position: ['', [Validators.required]],
+      goalId: [this.data.remainingData.id],
+      goalType: [this.data.goalType],
+    })
+  }
+  setAssetAllocationListeners() {
     this.subscription.add(
       this.assetAllocationFG.controls.staticOrProgressive.valueChanges.subscribe(value => {
-        if(value == 2) {
-          this.assetAllocationFG.controls.equityAllocation.setValue('');
-          this.assetAllocationFG.controls.debtAllocation.setValue('');
+        if (value == 2) {
+          this.assetAllocationFG.controls.equityAllocation.setValue(this.data.remainingData.bifurcation.equity_ratio);
+          this.assetAllocationFG.controls.debtAllocation.setValue(this.data.remainingData.bifurcation.debt_ratio);
           this.assetAllocationFG.controls.equityAllocation.disable();
           this.assetAllocationFG.controls.debtAllocation.disable();
           this.progressiveStageArrayControl.enable();
@@ -229,7 +248,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
           this.assetAllocationFG.controls.equityAllocation.enable();
           this.assetAllocationFG.controls.debtAllocation.enable();
           this.progressiveStageArrayControl.disable();
-          for(let i = 1; i < this.progressiveStageArrayControl.controls.length; i++) {
+          for (let i = 1; i < this.progressiveStageArrayControl.controls.length; i++) {
             this.removeStage(i);
           }
           this.progressiveStageArrayControl.controls.forEach(control => {
@@ -245,7 +264,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
 
     this.subscription.add(
       this.assetAllocationFG.controls.strategicOrTactical.valueChanges.subscribe(value => {
-        if(value == 1) {
+        if (value == 1) {
           // some logic here
         } else {
           // some logic here
@@ -254,7 +273,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     )
   }
 
-  addStages(){
+  addStages() {
     let progressiveStage = this.assetAllocationFG.controls.progressiveStages as FormArray;
     progressiveStage.push(this.createStage());
   }
@@ -264,16 +283,52 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     progressiveStage.removeAt(i);
   }
 
-  createStage(eq = '', db = '', timeline = ''){
+  createStage(eq = '', db = '', timeline = '') {
     return this.fb.group({
       stageTime: [timeline, Validators.required],
       equityAllocation: [eq, Validators.required],
       debtAllocation: [db, Validators.required]
     })
   }
-
-  saveAssetAllocation(){
-    if(this.assetAllocationFG.invalid || this.validateGoalDates() || this.barButtonOptions.active) {
+  saveInflamatonReturns() {
+    this.obj = {}
+    this.barButtonOptions.active = true;
+    const remainingData = this.data.remainingData;
+    this.dataSource.forEach(element => {
+      if (element.position == 'Debt asset class') {
+        Object.assign(this.obj, { debtAssetClassReturns: parseInt(element.name) });
+      } else if (element.position == 'Equity asset class') {
+        Object.assign(this.obj, { equityAssetClassReturns: parseInt(element.name) });
+      } else if (element.position == 'Debt funds') {
+        Object.assign(this.obj, { debtFundReturns: parseInt(element.name) });
+      } else if (element.position == 'Equity funds') {
+        Object.assign(this.obj, { equityFundReturns: parseInt(element.name) });
+      } else if (element.position == 'Balanced funds') {
+        Object.assign(this.obj, { balancedFundReturns: parseInt(element.name) });
+      } else if (element.position == 'Stocks') {
+        Object.assign(this.obj, { stockReturns: parseInt(element.name) });
+      }
+    });
+    this.dataSource1.forEach(element => {
+      if (element.position == 'Inflation rate') {
+        Object.assign(this.obj, { inflationRate: parseInt(element.name) });
+      }
+    });
+    Object.assign(this.obj, { goalId: this.data.remainingData.id });
+    Object.assign(this.obj, { goalType: this.data.goalType });
+    Object.assign(this.obj, { advisorId: this.data.remainingData.advisorId });
+    console.log('Asset inflamation', this.obj)
+    this.planService.saveAssetPreference(this.obj).subscribe(res => {
+      this.eventService.openSnackBar("Asset allocation preference saved", "Dismiss");
+      this.barButtonOptions.active = false;
+      this.subInjectService.setRefreshRequired();
+    }, err => {
+      this.barButtonOptions.active = false;
+      this.eventService.openSnackBar(err, "Dismiss");
+    })
+  }
+  saveAssetAllocation() {
+    if (this.assetAllocationFG.invalid || this.validateGoalDates() || this.barButtonOptions.active) {
       this.assetAllocationFG.markAllAsTouched();
       return
     }
@@ -295,12 +350,12 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     })
   }
 
-  get progressiveStageArrayControl(){
+  get progressiveStageArrayControl() {
     return this.assetAllocationFG.controls.progressiveStages as FormArray;
   }
 
   setOtherBifurcation(mainInput, inputToChange) {
-    if(mainInput.value <= 100) {
+    if (mainInput.value <= 100) {
       const value = 100 - parseInt(mainInput.value);
       inputToChange.setValue(value);
     } else {
@@ -310,13 +365,16 @@ export class PreferencesComponent implements OnInit, OnDestroy {
   }
   // ----------------- asset allocation ----------------------
 
-  save(){
+  save() {
     switch (this.selected) {
       case 0:
         this.savePreference();
         break;
       case 1:
         this.saveAssetAllocation();
+        break;
+      case 2:
+        this.saveInflamatonReturns();
         break;
       default:
         break;
@@ -328,7 +386,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     this.subInjectService.closeNewRightSlider({ state: 'close' });
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 }
@@ -340,12 +398,12 @@ export interface PeriodicElement {
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 'Debt asset class', name: '7%'},
-  {position: 'Equity asset class', name: '17%'},
-  {position: 'Debt funds', name: '12%'},
-  {position: 'Equity funds', name: '10%'},
-  {position: 'Balanced funds', name: '7%'},
-  {position: 'Stocks', name: '7%'},
+  { position: 'Debt asset class', name: '7%' },
+  { position: 'Equity asset class', name: '17%' },
+  { position: 'Debt funds', name: '12%' },
+  { position: 'Equity funds', name: '10%' },
+  { position: 'Balanced funds', name: '7%' },
+  { position: 'Stocks', name: '7%' },
 ];
 export interface PeriodicElement1 {
   name: string;
@@ -354,6 +412,6 @@ export interface PeriodicElement1 {
 }
 
 const ELEMENT_DATA1: PeriodicElement1[] = [
-  {position: 'Inflation rate', name: '6%'},
+  { position: 'Inflation rate', name: '6%' },
 
 ];

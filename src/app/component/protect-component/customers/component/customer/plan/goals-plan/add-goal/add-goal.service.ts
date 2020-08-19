@@ -26,9 +26,8 @@ export class AddGoalService {
     }else{
       this.eventService.openSnackBar("Asset allocation unsuccessful !! your goal is already achieved", "Dismiss");
     }
-    
+
   }
-  
   allocateMFToGoal(mfAsset, advisor_client_id, selectedGoal) {
     let dashBoardData = selectedGoal.dashboardData
     if(dashBoardData.debt_monthly && dashBoardData.equity_monthly &&  dashBoardData.lump_debt && dashBoardData.lump_equity){
