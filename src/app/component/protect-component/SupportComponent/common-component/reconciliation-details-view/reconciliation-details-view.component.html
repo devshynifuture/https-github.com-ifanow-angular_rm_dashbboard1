@@ -69,9 +69,14 @@
             (click)="deleteSingleOrMultipleTransaction()">Delete selected</button>
         <!-- <span class="text-primitive ml-12 f-14" *ngIf="shouldShowSelectedBalanceUnit"> Selected units: {{ selectedFolioUnits }}
         </span> -->
-        <span class="text-primitive ml-12 f-14" *ngIf="shouldShowSelectedBalanceUnit"> Selected units: {{ selectedBalanceUnits }}
-        </span>
+        <div class="mt-20">
+            <span class="text-primitive ml-12 f-14" *ngIf="shouldShowMultipleDelete"> Selected units: {{ selectedFolioUnits }}
+            </span>
+            <span class="text-primitive ml-12 mb-20 f-14 float-right" *ngIf="shouldShowSelectedFilteredUnits"> Filtered units: {{ selectedFolioUnitsFiltered }}
+            </span>
+        </div>
     </div>
+   
     <div class="col-lg-6" *ngIf="tableEntriesType==2">
         <!-- <mat-checkbox>Show All Transactions</mat-checkbox> -->
     </div>

@@ -45,6 +45,11 @@ export class BackofficeFileUploadSipStpComponent implements OnInit {
       .subscribe(data => {
         if (data) {
           this.rtList = data;
+          this.rtList.map(item=> {
+            if(item.name==="FRANKLIN_TEMPLETON"){
+              item.name="FRANKLIN";
+            }
+          })
           this.unSubcrip = this.BackOffice.getFilterData().subscribe((data) => {
             this.filter = data;
             this.getBackOfficeSipStp(this.filter);
@@ -66,7 +71,9 @@ export class BackofficeFileUploadSipStpComponent implements OnInit {
       if (data) {
         data.map(element => {
           if(!isNaN(Number(element.rt))){
-            element.rt = this.getRtNameFromRtId(parseInt(element.rt));
+            element.rt = this.getRtNameFromRtId(parseInt(element.rt)) + "-" + element.arnRiaNumber ? element.arnRiaNumber : '-';
+          } else {
+            element.rt = element.rt + "-" + element.arnRiaNumber ? element.arnRiaNumber : '-';
           }
           if (element.processStatus === 0) {
             element.status = "Pending";
