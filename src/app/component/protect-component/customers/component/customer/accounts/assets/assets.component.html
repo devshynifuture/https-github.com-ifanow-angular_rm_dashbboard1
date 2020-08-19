@@ -2,9 +2,8 @@
 </div>
 <div id="ui-assets-account">
     <mat-sidenav-container class="sidenav-container" [hasBackdrop]="false">
-        <mat-sidenav class="col-md-12 col-lg-2 bg-grey lter overflow-hidden p-0" #sidenav [mode]="sidenavState ? 'over' : 'side'"
+        <mat-sidenav class="col-md-12 col-lg-2 bg-grey lter overflow-hidden tabViewSideNav p-0" #sidenav [mode]="sidenavState ? 'over' : 'side'"
             role="navigation">
-
             <mat-nav-list class="width-220 pt-0" id="d">
 
                 <div class="p-0 pt-8 ">
@@ -74,10 +73,33 @@
                     </i>
                 </div>
             </div>
-
         </mat-sidenav>
+ 
 
         <mat-sidenav-content class="p-0 pt-122 b-a ng-tns-c1-0" id="left">
+
+            <div class="tabViewSelectMenu"> 
+           <div class="row">
+               <div class="col-md-4">
+                   vai
+                <ul class="vertical-menu ">
+                    <li *ngFor="let singleAssetType of assetSideBarData"
+                        (click)="viewMode =singleAssetType.viewmode;sidenavState = false"
+                        [ngClass]="{'activeColor lt':viewMode ==singleAssetType.viewmode}" class=" c-p">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-9 p-0 ws-nowrap">
+                                {{ singleAssetType.name }}
+                            </div>
+                            <div class="col-md-3 col-lg-3 pl-0 pr-20 text-right NumbrTabNone text-custom">
+                                {{ singleAssetType.count }}
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+               </div>
+           </div>
+            </div>
+            
             
                 <div *ngIf="sidenavState" [ngClass]="sidenavState ? '': 'd-none'">
                     <div class="leftside-overlay-toggle-button " (click)="sidenav.toggle()">
