@@ -335,7 +335,9 @@ export class ClientBasicDetailsComponent implements OnInit {
     if (data.guardianClientFamilyMappingModelList && data.guardianClientFamilyMappingModelList.length > 0) {
       this.getCoOwner.removeAt(0);
       data.guardianClientFamilyMappingModelList.forEach(element => {
-        element['disable'] = true;
+        setTimeout(() => {
+          element['disable'] = true;
+        }, 1300);
         this.addNewCoOwner(element);
       });
     }
@@ -367,7 +369,9 @@ export class ClientBasicDetailsComponent implements OnInit {
   }
 
   removeCoOwner(item) {
-    this.removedGaurdianList.push(this.getCoOwner.controls[item].value)
+    if (this.getCoOwner.controls[item].value.id) {
+      this.removedGaurdianList.push(this.getCoOwner.controls[item].value)
+    }
     this.getCoOwner.removeAt(item);
     this.disabledMember(null, null);
   }
@@ -732,14 +736,12 @@ export class ClientBasicDetailsComponent implements OnInit {
       this.getCoOwner.value.forEach(element => {
         delete element['name'],
           delete element['share']
-        delete element['id']
         gardianObj.push(element);
       });
       if (this.removedGaurdianList.length > 0) {
         this.removedGaurdianList.forEach(element => {
           delete element['name'],
             delete element['share']
-          delete element['id']
           element['active'] = false;
           gardianObj.push(element);
         })
@@ -773,12 +775,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       mobileList,
       bio: null,
       remarks: null,
-      emailList: [
-        {
-          email: (this.invTypeCategory == '1') ? this.basicDetails.controls.email.value : (this.invTypeCategory == '2') ? this.minorForm.value.gEmail : this.nonIndividualForm.controls.comEmail.value,
-          verificationStatus: 0
-        }
-      ],
+      emailList: undefined,
       guardianClientFamilyMappingModelList: gardianObj,
       invTypeCategory: 0,
       categoryTypeflag: null,
@@ -786,6 +783,17 @@ export class ClientBasicDetailsComponent implements OnInit {
       gstin: (this.invTypeCategory == '3' || this.invTypeCategory == '4') ? this.nonIndividualForm.controls.gstinNum.value : null,
       companyStatus: ((this.invTypeCategory == '3' || this.invTypeCategory == '4') && this.nonIndividualForm.controls.comStatus.value != '') ? this.nonIndividualForm.controls.comStatus.value : null
     };
+    if (this.invTypeCategory != 2) {
+      obj.emailList = [
+        {
+          email: (this.invTypeCategory == '1') ? this.basicDetails.controls.email.value : (this.invTypeCategory == '2') ? this.minorForm.value.gEmail : this.nonIndividualForm.controls.comEmail.value,
+          verificationStatus: 0
+        }
+      ]
+    }
+    else {
+      delete obj['emailList']
+    }
     obj.bio = this.basicDetailsData.bio;
     obj.remarks = this.basicDetailsData.remarks;
     obj.aadhaarNumber = this.basicDetailsData.aadhaarNumber;
