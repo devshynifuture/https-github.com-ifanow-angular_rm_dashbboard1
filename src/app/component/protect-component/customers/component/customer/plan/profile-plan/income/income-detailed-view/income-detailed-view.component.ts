@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import { EnumServiceService } from 'src/app/services/enum-service.service';
+import { CustomerService } from '../../../../customer.service';
 
 @Component({
   selector: 'app-income-detailed-view',
@@ -21,12 +23,14 @@ export class IncomeDetailedViewComponent implements OnInit {
   RetiralsArr=[];
   OthersArr=[];
   monthlyIncomeArr=[];
-  bankList: any;
+  bankList=[];                                                                                                                                  
 
-  constructor(public utils: UtilService,private subInjectService: SubscriptionInject) { }
+  constructor(private custumService:CustomerService,public utils: UtilService,private subInjectService: SubscriptionInject,private enumService :EnumServiceService) { }
 
   ngOnInit() {
     this.income = this.inputData
+    this.bankAccountList();
+
   }
   @Input()
   set data(data) {
@@ -87,13 +91,31 @@ export class IncomeDetailedViewComponent implements OnInit {
       }
     });
   }
-  bankAccountList(value) {
-    this.bankList = value;
-    this.bankList.forEach(element => {
-      if (element.id == this.income.linkedBankAccountNumber) {
-        this.income.bankName = element.bankName;
-      }
-    });
+  bankAccountList() {
+          
+          const obj = {
+            userId: this.income.familyMemberId == 0 ?this.income.clientId : this.income.id,
+            userType: this.income.familyMemberId == 0 ? 2 : 3 
+          };
+          this.custumService.getBankList(obj).subscribe(
+            (data) => {
+              this.bankList = data;
+              this.bankList.forEach(element => {
+                if (element.id == this.income.linkedBankAccountNumber) {
+                  this.income.bankName = element.bankName;
+                }
+              });
+              this.enumService.addBank(this.bankList);
+            },
+            (err) => {
+              this.bankList=[];
+            }
+          );
+        
+    
+  
+    // this.bankList = value;
+
   }
   close() {
     this.subInjectService.changeNewRightSliderState({state: 'close'});
