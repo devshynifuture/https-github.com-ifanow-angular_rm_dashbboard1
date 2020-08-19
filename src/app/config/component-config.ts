@@ -305,6 +305,8 @@ export const appConfig = {
   EDIT_MULTI_YEAR_GOAL_PREFERENCE: 'goal-planning/multi-year/edit',
   EDIT_SINGLE_YEAR_GOAL_PREFERENCE: 'goal-planning/single-year/edit',
   SAVE_ASSET_ALLOCATION_PREFERENCE: 'goal-planning/asset-allocation/update',
+  // UPDATE_PREF_STATIC_ALLOCATION:'goal-planning/asset-allocation/update',
+  // UPDATE_INFLAMATION_RETURNS:'goal-planning/asset-allocation/update',
   GET_MF_DATA: 'goal-planning/goal/mf/list/get',
   SAVE_ASSET_TO_GOAL: 'goal-planning/asset/allocate',
   REMOVE_ALLOCATION: 'goal-planning/asset/allocate',
