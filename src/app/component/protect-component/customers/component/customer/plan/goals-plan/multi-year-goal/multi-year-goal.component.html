@@ -49,7 +49,27 @@
                             </div>
                         </div>
                     </div>
-
+                    <div class="row pt-20" *ngIf="goalTypeData.goalTypeId==5">
+                        <div class="col-md-12 p-0">
+                            <h5 class="m-0 text-black">{{Questions.Q5}}</h5>
+                            <div class="row pt-8">
+                                <div class="col-md-4 p-0">
+                                    <div class="form-group mb-0">
+                                        <mat-form-field>
+                                            <input formControlName="field3" autocomplete="off" matInput
+                                                class="form-control br-0">
+                                            <mat-error>This field is required</mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <!-- <div class="col-md-8 pr-0">
+                                    <div id="custom-slider">
+                                        <mat-slider></mat-slider>
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
                     <!-- GOAL COST -->
                     <div class="row pt-20" formArrayName="detailedSpendings">
                         <div class="col-md-12 p-0">
