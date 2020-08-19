@@ -18,21 +18,25 @@ export class AddGoalService {
   refreshAssetList = new Subject();
 
   allocateOtherAssetToGoal(event, advisor_client_id, selectedGoal){
-
-    let asset:any = event.item.data;
-    let obj = this.createAllocationObject(asset, advisor_client_id, selectedGoal)
-    asset.goalAssetMapping.forEach(element => {
-     if(element.percentAllocated < 100){
+    let dashBoardData = selectedGoal.dashboardData
+    if(dashBoardData.debt_monthly && dashBoardData.equity_monthly &&  dashBoardData.lump_debt && dashBoardData.lump_equity){
+      let asset:any = event.item.data;
+      let obj = this.createAllocationObject(asset, advisor_client_id, selectedGoal)
       this.allocateAsset(obj);
-     }else{
-      this.eventService.openSnackBar("Asset allocated to goal aready 100%", "Dismiss");
-     }
-    });
+    }else{
+      this.eventService.openSnackBar("Asset allocation unsuccessful !! your goal is already achieved", "Dismiss");
+    }
+
   }
-  
   allocateMFToGoal(mfAsset, advisor_client_id, selectedGoal) {
-    let obj = this.createAllocationObject(mfAsset, advisor_client_id, selectedGoal);
-    this.allocateAsset(obj);
+    let dashBoardData = selectedGoal.dashboardData
+    if(dashBoardData.debt_monthly && dashBoardData.equity_monthly &&  dashBoardData.lump_debt && dashBoardData.lump_equity){
+      let obj = this.createAllocationObjectForMf(mfAsset, advisor_client_id, selectedGoal);
+      this.allocateAsset(obj);
+    }else{
+      this.eventService.openSnackBar("Asset allocation unsuccessful !! your goal is already achieved", "Dismiss");
+    }
+
   }
 
   createAllocationObject(asset, advisor_client_id, selectedGoal){
@@ -43,6 +47,17 @@ export class AddGoalService {
       goalId: selectedGoal.remainingData.id,
       goalType: selectedGoal.goalType,
       percentAllocated: 100
+    }
+  }
+  createAllocationObjectForMf(asset, advisor_client_id, selectedGoal){
+    return {
+      ...advisor_client_id,
+      assetId: asset.id,
+      assetType: asset.assetType,
+      goalId: selectedGoal.remainingData.id,
+      goalType: selectedGoal.goalType,
+      percentAllocated: 100,
+      isMutualFund:1
     }
   }
 
