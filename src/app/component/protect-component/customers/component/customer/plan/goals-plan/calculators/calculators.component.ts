@@ -60,6 +60,7 @@ export class CalculatorsComponent implements OnInit {
     disabled: false,
     fullWidth: false,
   };
+  chart: Highcharts.Chart;
   
   constructor(
     private subInjectService: SubscriptionInject,
@@ -73,6 +74,9 @@ export class CalculatorsComponent implements OnInit {
   }
 
   ngOnInit() {
+    setTimeout(() => {
+      this.pieChart('')
+    }, 300);
     this.getdataForm();
     const yearGap = (new Date(this.data.goalStartDate).getFullYear()) - (new Date().getFullYear());
     for (let index = 0; index < yearGap; index++) {
@@ -100,6 +104,7 @@ export class CalculatorsComponent implements OnInit {
       delay3: ['', [Validators.required]],
       delay4: ['', [Validators.required]],
     })
+
   }
 
   // ---------------------------------- calculator ---------------------------------------
@@ -137,7 +142,71 @@ export class CalculatorsComponent implements OnInit {
       })
     }
   }
-
+  pieChart(id) {
+   Highcharts.chart('piechartMutualFund', {
+      chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: 0,
+        plotShadow: false
+      },
+      title: {
+        text: '',
+        align: 'center',
+        verticalAlign: 'middle',
+        y: 30
+      },
+      exporting: { enabled: false },
+      tooltip: {
+        pointFormat: ' <b>{point.percentage:.1f}%</b>'
+      },
+      plotOptions: {
+        pie: {
+          dataLabels: {
+            enabled: true,
+            distance: -30,
+            style: {
+              fontWeight: 'bold',
+              color: 'white'
+            }
+          },
+          startAngle: 0,
+          endAngle: 360,
+          center: ['52%', '50%'],
+          size: '70%'
+        }
+      },
+      series: [{
+        type: 'pie',
+        name: 'Browser share',
+        innerSize: '30%',
+        animation: false,
+        states: {
+          hover: {
+            enabled: false
+          }
+        },
+        data: [
+          {
+            name: 'Loan amount',
+            // y:20,
+            y:  50,
+            color: '#008FFF',
+            dataLabels: {
+              enabled: false
+            }
+          }, {
+            name: 'Down payment',
+            // y:20,
+            y:  40,
+            color: '#FFC100',
+            dataLabels: {
+              enabled: false
+            }
+          },
+        ]
+      }]
+    });
+  }
   saveEMIToGoal(){
     if(this.incomeFG.invalid || this.loanFG.invalid || this.barButtonOptions.active || this.barButtonOptions1.active) {
       this.incomeFG.markAllAsTouched();
@@ -152,6 +221,7 @@ export class CalculatorsComponent implements OnInit {
         annualInterestRate: this.loanFG.controls.interestRate.value,
         previousEMIs: this.incomeFG.controls.otherEMI.value,
         incomeGrowthRate: this.incomeFG.controls.growthRate.value,
+        downPayment:this.calculatedEMI.downPayment,
         loanAmount: this.loanFG.controls.loanAmt.value,
         goalStartDate: this.datePipe.transform(this.data.remainingData.goalStartDate, AppConstants.DATE_FORMAT_DASHED),
         goalAmount: this.data.gv,

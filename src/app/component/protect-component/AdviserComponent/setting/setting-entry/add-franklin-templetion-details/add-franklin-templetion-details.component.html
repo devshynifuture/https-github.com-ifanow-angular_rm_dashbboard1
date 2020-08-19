@@ -34,7 +34,8 @@
         <div class="col-md-6 col-lg-5">
             <div class="form-group mb-0">
                 <mat-form-field appearance="standard" floatLabel="never">
-                    <input type="text" [placeholder]="formPlaceHolder.ENTER_LOGIN_ID" matInput formControlName="loginId" class="form-control">
+                    <input type="text" [placeholder]="formPlaceHolder.ENTER_LOGIN_ID" matInput formControlName="loginId"
+                        class="form-control">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
@@ -47,9 +48,12 @@
         <div class="col-md-6 col-lg-3">
             <div class="form-group mb-0">
                 <mat-form-field appearance="standard" floatLabel="never">
-                    <input type="text" [placeholder]="formPlaceHolder.ENTER_PASSWORD" matInput formControlName="loginPassword" class="form-control" minlength="8" maxlength="8">
-                    <mat-error *ngIf="franklinFG.get('loginPassword').errors?.required && franklinFG.get('loginPassword').touched">This field is required</mat-error>
-                    <mat-error *ngIf="(franklinFG.get('loginPassword').errors?.minlength || franklinFG.get('loginPassword').errors?.maxlength) && franklinFG.get('loginPassword').touched">Please enter valid password</mat-error>
+                    <input type="text" [placeholder]="formPlaceHolder.ENTER_PASSWORD" matInput
+                        formControlName="loginPassword" class="form-control">
+                    <mat-error
+                        *ngIf="franklinFG.get('loginPassword').errors?.required && franklinFG.get('loginPassword').touched">
+                        This field is required</mat-error>
+                    <!-- <mat-error *ngIf="(franklinFG.get('loginPassword').errors?.minlength || franklinFG.get('loginPassword').errors?.maxlength) && franklinFG.get('loginPassword').touched">Please enter valid password</mat-error> -->
                 </mat-form-field>
             </div>
         </div>
@@ -61,9 +65,11 @@
         <div class="col-md-6 col-lg-4">
             <div class="form-group mb-0">
                 <mat-form-field [floatLabel]="'never'" appearance="standard" floatLabel="never">
-                    <app-email-domain-auto-suggest formControlName="registeredEmail" [placeholder]="formPlaceHolder.ENTER_REGISTERED_EMAIL"></app-email-domain-auto-suggest>
+                    <app-email-domain-auto-suggest formControlName="registeredEmail"
+                        [placeholder]="formPlaceHolder.ENTER_REGISTERED_EMAIL"></app-email-domain-auto-suggest>
 
-                    <mat-error *ngIf="franklinFG.get('registeredEmail').errors?.required && franklinFG.get('registeredEmail').touched">
+                    <mat-error
+                        *ngIf="franklinFG.get('registeredEmail').errors?.required && franklinFG.get('registeredEmail').touched">
                         This field is required
                     </mat-error>
                     <mat-error *ngIf="franklinFG.get('registeredEmail').errors?.pattern">Email is not valid</mat-error>
@@ -78,7 +84,8 @@
         <div class="col-md-6 col-lg-3">
             <div class="form-group mb-0">
                 <mat-form-field appearance="standard" floatLabel="never">
-                    <input type="text" [placeholder]="formPlaceHolder.ENTER_PASSWORD" matInput formControlName="mailbackPassword" class="form-control">
+                    <input type="text" [placeholder]="formPlaceHolder.ENTER_PASSWORD" matInput
+                        formControlName="mailbackPassword" class="form-control">
                     <mat-error>This field is required</mat-error>
                 </mat-form-field>
             </div>
@@ -92,8 +99,7 @@
             <h5 class="mb-0 pt-8 text-white c-p" (click)="Close(false)">Cancel</h5>
         </div>
         <div class="col-md-8 right text-right">
-            <app-progress-button (btnClick)="save()" class="btn-bottom br-0 text-inherit"
-                [options]="barButtonOptions">
+            <app-progress-button (btnClick)="save()" class="btn-bottom br-0 text-inherit" [options]="barButtonOptions">
             </app-progress-button>
         </div>
     </div>
