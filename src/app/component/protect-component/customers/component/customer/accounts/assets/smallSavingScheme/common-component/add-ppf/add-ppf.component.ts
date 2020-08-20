@@ -315,6 +315,9 @@ addNewNominee(data) {
   }
 
   getdataForm(data) {
+    if(data){
+      this.isOptionalField = true;
+    }
     this.flag = data;
     (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : ''
 

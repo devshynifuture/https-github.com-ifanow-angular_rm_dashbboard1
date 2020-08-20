@@ -237,6 +237,7 @@ addNewNominee(data) {
       this.flag = 'addKVP';
     }
     else {
+      this.isOptionalField = true;
       (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : this.editApi = data;
       this.flag = 'editKVP'
     }

@@ -234,6 +234,7 @@ addNewNominee(data) {
       data = {};
       this.flag = "addSCSS";
     } else {
+      this.isOptionalField = true;
       (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : this.editApi = data;
       this.flag = "editSCSS";
     }

@@ -251,6 +251,7 @@ export class OthersComponent implements OnInit {
       this.flag = "addOTHERS";
     }
     else {
+      this.showHide = true;
       this.flag = "editOTHERS";
       (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : this.editData = data;
     }

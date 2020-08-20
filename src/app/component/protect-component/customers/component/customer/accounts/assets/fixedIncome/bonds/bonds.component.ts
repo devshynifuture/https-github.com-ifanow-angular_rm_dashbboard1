@@ -274,6 +274,9 @@ export class BondsComponent implements OnInit {
     if (data == undefined) {
       data = {};
     }
+    else{
+      this.showHide = true;
+    }
     this.bondData = data;
     this.bonds = this.fb.group({
       getCoOwnerName: this.fb.array([this.fb.group({

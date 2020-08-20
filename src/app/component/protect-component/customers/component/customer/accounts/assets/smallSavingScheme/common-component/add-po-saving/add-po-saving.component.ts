@@ -244,6 +244,7 @@ addNewNominee(data) {
       };
       this.flag = "addPOSAVING";
     } else {
+      this.isOptionalField = true;
       this.flag = "editPOSAVING";
       (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : this.editApi = data;
     }
