@@ -385,6 +385,7 @@ export class AmcWiseComponent implements OnInit {
 
   showApplicant(schemeData, index, amcIndex) {
     this.schemeIndex = index;
+    this.selectedAmc = amcIndex;
     schemeData.showScheme = !schemeData.showScheme;
     if (schemeData.showScheme == false) {
       this.isLoadingApplicant = true;

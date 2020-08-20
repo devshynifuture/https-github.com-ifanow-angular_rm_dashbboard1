@@ -35,3 +35,11 @@
 .disabled {
     pointer-events:none;
    }
+
+   .table-scroll-veiw {
+
+     height: auto;
+        overflow: auto !important;
+        // max-height: 400px;
+
+   }

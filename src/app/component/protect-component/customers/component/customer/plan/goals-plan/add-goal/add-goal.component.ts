@@ -97,7 +97,9 @@ export class AddGoalComponent implements OnInit {
           let absAllocation = 0;
           if(asset.goalAssetMapping) {
             asset.goalAssetMapping.forEach(element => {
+              if(absAllocation <= 99){
               absAllocation += element.percentAllocated;
+              }
             });
           }
           return {absAllocation, ...asset};
@@ -119,10 +121,13 @@ export class AddGoalComponent implements OnInit {
     this.goalService.getAssetsForAllocation(obj).subscribe((data)=>{
       this.allAssetsList = data;
       this.allAssetsList = this.allAssetsList.map(asset => {
+        asset.MaturityYear = new Date(asset.maturityDate).getFullYear()
         let absAllocation = 0;
         if(asset.goalAssetMapping) {
           asset.goalAssetMapping.forEach(element => {
+            if(absAllocation <= 99){
             absAllocation += element.percentAllocated;
+            }
           });
         }
         return {absAllocation, ...asset};
@@ -164,9 +169,14 @@ export class AddGoalComponent implements OnInit {
     if(member.asset_owner_id == -1) {
       this.displayedAssets = this.allAssetsList;
     } else {
-      this.displayedAssets = this.allAssetsList.filter((obj) => {
-        return obj.familyMemberId === member.familyMemberId
-      });
+      if(member !='all' ){
+        this.displayedAssets = this.allAssetsList.filter((obj) => {
+          return obj.familyMemberId === member
+        });
+      }else{
+        this.displayedAssets = this.allAssetsList;
+      }
+
     }
   }
 

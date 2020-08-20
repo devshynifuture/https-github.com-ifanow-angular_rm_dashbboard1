@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 
 import { UtilService, LoaderFunction } from "../../../../../../../services/util.service";
 import { SubscriptionInject } from "../../../../../AdviserComponent/Subscriptions/subscription-inject.service";
@@ -16,7 +16,7 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem, copyArrayItem } from '
 import { AuthService } from 'src/app/auth-service/authService';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import * as Highcharts from 'highcharts';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatTableDataSource, MatSort } from '@angular/material';
 import { P } from '@angular/cdk/keycodes';
 import { Subscriber, Subscription, Subject, forkJoin } from 'rxjs';
 import { AddGoalService } from './add-goal/add-goal.service';
@@ -31,9 +31,11 @@ import { ReallocateAssetComponent } from './reallocate-asset/reallocate-asset.co
   providers: [LoaderFunction]
 })
 export class GoalsPlanComponent implements OnInit, OnDestroy {
+  displayedColumns = ['goalYear', 'goalFv', 'goalFvAllocated', 'status'];
   clientFamily: any[];
-
-
+  data: Array<any> = [{}, {}, {}];
+  dataSource = new MatTableDataSource(this.data);
+  isRetirementTab = false;
   isLoading = true;
   advisor_client_id: any = {
     advisorId: '',
@@ -132,7 +134,8 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     this.advisor_client_id.advisorId = AuthService.getAdvisorId();
     this.advisor_client_id.clientId = AuthService.getClientId();
   }
-
+  
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   ngOnInit() {
     this.subscriber.add(
@@ -173,7 +176,11 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         let absAllocation = 0;
         if(asset.goalAssetMapping) {
           asset.goalAssetMapping.forEach(element => {
-            absAllocation += element.percentAllocated;
+            if(absAllocation <= 99){
+              absAllocation += element.percentAllocated;
+            }else{
+              this.eventService.openSnackBar('Asset allocation already 100%', "Dismiss")
+            }
           });
         }
         return {absAllocation, ...asset};
@@ -183,7 +190,11 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         let absAllocation = 0;
         if(mf.goalAssetMapping.length > 0) {
           mf.goalAssetMapping.forEach(element => {
-            absAllocation += element.percentAllocated;
+            if(absAllocation <= 99){
+              absAllocation += element.percentAllocated;
+            }else{
+              this.eventService.openSnackBar('Asset allocation already 100%', "Dismiss")
+            }
           });
         }
         return {absAllocation, ...mf};
@@ -420,8 +431,20 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         ...asset
       }
     });
+    console.log('allocatedList',this.allocatedList)
     this.selectedGoal = goalData;
     this.selectedGoalId = goalData.remainingData.id;
+    if(goalData.remainingData.retirementTableValue){
+      this.isRetirementTab =true;
+      let goalTableData =  goalData.remainingData.retirementTableValue;
+      goalTableData.forEach(element => {
+          element.goalYear = new Date(element.goalStartDate).getFullYear()
+      });
+    }else{
+      this.isRetirementTab =false;
+    }
+    this.dataSource = goalData.remainingData.retirementTableValue ? goalData.remainingData.retirementTableValue : [];
+    this.dataSource.sort = this.sort;
     setTimeout(() => {
       this.createChart(this.selectedGoal);
     }, 100);

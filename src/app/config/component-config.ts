@@ -90,7 +90,7 @@ export const appConfig = {
   GET_MUTUALFUND_UNMAP_USER_DETAIL_LIST: 'mutual-fund/unmap/folio/user-detail/list/get',
   PUT_MUTUALFUND_UNMAP_INVESTOR_DETAIL_UPDATE: 'mutual-fund/unmap/investor-detail/update',
   GET_MUTUAL_FUND_SIP_CLEANUP_LIST: 'mutual-fund/sip-cleanup/list/get',
-  PUT_MUTUAL_FUND_SIP_CLEANUP_REMOVE_STATUS_UPDATE: 'mutual-fund/sip-cleanup/remove/status/update',  
+  PUT_MUTUAL_FUND_SIP_CLEANUP_REMOVE_STATUS_UPDATE: 'mutual-fund/sip-cleanup/remove/status/update',
 
   /////////////////////////////Accounts///////////////////////////////////
   ADD_FIXEDDEPOSIT: 'account/asset/fixed-income/fixed-deposit/add',
@@ -305,6 +305,8 @@ export const appConfig = {
   EDIT_MULTI_YEAR_GOAL_PREFERENCE: 'goal-planning/multi-year/edit',
   EDIT_SINGLE_YEAR_GOAL_PREFERENCE: 'goal-planning/single-year/edit',
   SAVE_ASSET_ALLOCATION_PREFERENCE: 'goal-planning/asset-allocation/update',
+  // UPDATE_PREF_STATIC_ALLOCATION:'goal-planning/asset-allocation/update',
+  // UPDATE_INFLAMATION_RETURNS:'goal-planning/asset-allocation/update',
   GET_MF_DATA: 'goal-planning/goal/mf/list/get',
   SAVE_ASSET_TO_GOAL: 'goal-planning/asset/allocate',
   REMOVE_ALLOCATION: 'goal-planning/asset/allocate',
@@ -464,7 +466,7 @@ export const appConfig = {
   INCOME_ALLOWANCE_DELETE: 'account/income/allowance/delete?',
   INCOME_PERQUISITES_DELETE: 'account/income/perquisites/delete?',
   INCOME_REIMBURSEMENT_DELETE: 'account/income/reimbursement/delete?',
-  ASSTES_OF_EXPENSE:'account/expense/expense/of/asset/get',
+  ASSTES_OF_EXPENSE: 'account/expense/expense/of/asset/get',
   /////////////////////////Activity///////////////////////////////////
   ADVICE_GET_ALL: 'advice/asset/get',
   ADVICE_ADD_FD: 'advice/asset/fixed-income/suggest-new-fd/add',
@@ -734,6 +736,7 @@ export const appConfig = {
   GET_USER_ROLES: 'setting/users-roles/role/get',
   GET_CLIENT_ROLES: 'setting/users-roles/client-role/get',
   ORDER_SOA_MUTUAL_FUND: 'mutual-fund/SOA/fetch',
+  BULK_EMAIL_PASSWORD: 'pdfAndEmail/new-user-creds/mail/send',
 
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',

@@ -58,6 +58,11 @@ export class BackofficeFileUploadTransactionsComponent implements OnInit {
         if (res) {
           console.log("this is rtlist", res);
           this.rtList = res;
+          this.rtList.map(item=> {
+            if(item.name==="FRANKLIN_TEMPLETON"){
+              item.name="FRANKLIN";
+            }
+          })
         }
         this.unSubcrip = this.BackOffice.getFilterData().subscribe((data) => {
           this.filter = data;
@@ -68,6 +73,7 @@ export class BackofficeFileUploadTransactionsComponent implements OnInit {
   }
 
   getRtNameFromRtId(id) {
+    
     return this.rtList.find(c => c.id === id).name;
   }
 
@@ -85,9 +91,12 @@ export class BackofficeFileUploadTransactionsComponent implements OnInit {
         this.isLoading = false;
         if (data) {
           console.log(data);
-          data.forEach(element => {
+          data.map(element => {
             if(!isNaN(Number(element.rt))){
               element.rt = this.getRtNameFromRtId(parseInt(element.rt));
+              element.rt = element.rt + " - " + element.arnRiaNumber ? element.arnRiaNumber: '-';
+            } else {
+              element.rt = `${element.rt + "-" + (element.arnRiaNumber ? element.arnRiaNumber : '-')}`;
             }
             if (element.processStatus === 0) {
               element.status = "Pending";
@@ -95,8 +104,12 @@ export class BackofficeFileUploadTransactionsComponent implements OnInit {
               element.status = "Success";
             } else if (element.processStatus === -1) {
               element.status = "Duplicate";
-            } else {
+            } else if(element.processStatus === 3){
               element.status = "Failed";
+            } else if(element.processStatus === 4){
+              element.status = "Empty File";
+            } else if(element.processStatus === 5){
+              element.status = "Wrong ARN Number";
             }
           });
           this.listData = data;

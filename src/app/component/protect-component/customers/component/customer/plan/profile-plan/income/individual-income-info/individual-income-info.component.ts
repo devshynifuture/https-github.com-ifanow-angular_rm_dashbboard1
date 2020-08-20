@@ -609,6 +609,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
 
   }
   onClickValueChange(value) {
+    this.incomeNetForm.controls.incomeStyle.setValue(value)
     if (value == '1') {
       this.isStatic = true;
       this.isErractic = false
@@ -616,7 +617,6 @@ export class IndividualIncomeInfoComponent implements OnInit {
       this.isStatic = false;
       this.isErractic = true
     }
-    this.incomeNetForm.controls.incomeStyle.setValue(value)
 
   }
   cancel() {
@@ -1039,7 +1039,8 @@ export class IndividualIncomeInfoComponent implements OnInit {
     if (this.incomePosition < this.finalIncomeAddList.length) {
       this.singleIndividualIncome = this.finalIncomeAddList[this.incomePosition]
       this.incomeNetForm.reset();
-      this.incomeNetForm.controls.incomeStyle.setValue('1')
+      this.incomeNetForm.controls.incomeStyle.setValue('1');
+      this.isStatic = true;
       this.incomeNetForm.controls.incomeOption.setValue('2')
       this.nullAllObj();
       this.disabledAllObj();

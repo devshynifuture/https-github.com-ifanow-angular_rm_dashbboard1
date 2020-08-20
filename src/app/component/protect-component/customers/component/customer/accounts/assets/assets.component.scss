@@ -91,9 +91,9 @@ table {
   width: 200px;
 }
 
-.mat-select {
-  padding: 0 !important;
-}
+// .mat-select {
+//   padding: 0 !important;
+// }
 
 .sidenav .mat-toolbar {
   background: #3F51B5;
@@ -500,6 +500,14 @@ mat-drawer-content {
   z-index: 1;
   align-items: center;
   top: 135px;
+}
+
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .leftside-overlay-toggle-button { display: none;}
+  
+   
+
 }
 
 @media(max-width:670px) {

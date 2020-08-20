@@ -8,9 +8,10 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { AuthService } from 'src/app/auth-service/authService';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
 import { UtilService, LoaderFunction } from 'src/app/services/util.service';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatDialog } from '@angular/material';
 import { AddGoalService } from '../add-goal/add-goal.service';
 import { Subscriber } from 'rxjs';
+import { ReallocateAssetComponent } from '../reallocate-asset/reallocate-asset.component';
 
 @Component({
   selector: 'app-mf-allocations',
@@ -47,6 +48,7 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
     private utilService: UtilService,
     public loaderFn: LoaderFunction,
     private allocationService: AddGoalService,
+    private dialog: MatDialog
   ) {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
@@ -115,7 +117,18 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
       }
     );
   }
-
+  reallocateAsset(allocation){
+    const dialogData = {
+      goalData: this.data,
+      allocationData: allocation
+    }
+    this.dialog.open(ReallocateAssetComponent, {
+      width: '600px',
+      height: '400px',
+      data: dialogData,
+      autoFocus: false,
+    });
+  }
   loadMFData(){
     this.loaderFn.increaseCounter();
     this.planService.getMFList({advisorId: this.advisorId, clientId: this.clientId}).subscribe(res => {
@@ -139,7 +152,9 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
   filterAssets(){
     let tableSource = [];
     let family = [];
-
+    if(this.selectedFamFilter =="'all'"){
+      this.selectedFamFilter = 'all'
+    }
     if(this.selectedFamFilter == 'all') {
       family = this.familyList;
     } else {

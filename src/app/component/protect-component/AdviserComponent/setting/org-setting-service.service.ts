@@ -51,13 +51,13 @@ export class OrgSettingServiceService {
   getEmailVerificationReports(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_EMAIL_VERIFICATION_REPORT, data);
   }
-  saveEmailIDReports(data){
+  saveEmailIDReports(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.EDIT_PREF_EMAIL_TEMPLATE, data);
   }
   getEmailTempalate(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_EMAIL_TEMPLATES, data);
   }
-  
+
   editPreEmailTemplate(data) {
     return this.http.put(apiConfig.MAIN_URL + appConfig.SAVE_EMAIL_ID_REPORT, data);
   }
@@ -169,4 +169,9 @@ export class OrgSettingServiceService {
     const httpParams = new HttpParams().set('advisorId', data.advisorId);
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_CLIENT_ROLES, httpParams);
   }
+
+  bulkEmailPassWord(data) {
+    return this.http.post(apiConfig.MAIN_URL + appConfig.BULK_EMAIL_PASSWORD, data);
+  }
+
 }

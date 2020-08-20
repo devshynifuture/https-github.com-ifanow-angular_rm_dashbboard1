@@ -26,13 +26,13 @@ export class MultiYearGoalComponent implements OnInit {
   clientId = AuthService.getClientId();
   advisorId = AuthService.getAdvisorId();
   field3SliderData: any;
-  planForFamily:boolean = false;
+  planForFamily: boolean = false;
   imageData: any;
   logoImg: any;
   giveDetailedPlan: boolean = false;
   startRange: number = 0;
-  detailedPlanning:boolean = false;
-  rangeFieldOptions:Options = {
+  detailedPlanning: boolean = false;
+  rangeFieldOptions: Options = {
     ceil: 60,
     floor: 2,
     step: 1
@@ -50,20 +50,20 @@ export class MultiYearGoalComponent implements OnInit {
     fullWidth: false,
   };
   constructor(
-    private eventService: EventService, 
-    private fb: FormBuilder, 
-    private planService: PlanService, 
+    private eventService: EventService,
+    private fb: FormBuilder,
+    private planService: PlanService,
     private datePipe: DatePipe,
     private utilService: UtilService,
   ) { }
 
-  @Input() goalTypeData:any = {};
-  @Input() familyList:any = {};
-  @Input() statisticalData:any = {};
+  @Input() goalTypeData: any = {};
+  @Input() familyList: any = {};
+  @Input() statisticalData: any = {};
   @Output() output = new EventEmitter<any>();
   minAgeYear = 0;
   maxAgeYear = 100;
-  
+
 
   @Output() backToaddGoal = new EventEmitter();
   ngOnInit() {
@@ -74,15 +74,15 @@ export class MultiYearGoalComponent implements OnInit {
     this.setDefaultOwner();
     this.listenToYearRange();
   }
-  
+
   selectOwnerAndUpdateForm(value) {
     this.setMinMaxAgeOrYear(value);
     this.multiYearGoalForm.controls.field2.setValidators([Validators.required])
-    this.multiYearGoalForm.controls.field2.setValue([this.minAgeYear + this.goalTypeData.defaults.gap, this.minAgeYear + this.goalTypeData.defaults.gap*2]);
+    this.multiYearGoalForm.controls.field2.setValue([this.minAgeYear + this.goalTypeData.defaults.gap, this.minAgeYear + this.goalTypeData.defaults.gap * 2]);
     this.multiYearGoalForm.updateValueAndValidity();
   }
-  
-  get detailedSpendingFormArray(){
+
+  get detailedSpendingFormArray() {
     let arr = this.multiYearGoalForm.get('detailedSpendings') as FormArray
     return arr.controls
   }
@@ -98,29 +98,35 @@ export class MultiYearGoalComponent implements OnInit {
       "goalType": this.goalTypeData.id,
       "planningFor": this.multiYearGoalForm.get('field1').value.id,
       // "goalAdditionDate": this.datePipe.transform(new Date(), 'yyyy-MM-dd'),
-      "frequency": (this.multiYearGoalForm.get('field2').value[1] - this.multiYearGoalForm.get('field2').value[0])
+      //"frequency": (this.multiYearGoalForm.get('field3').value),
     }
-    
-    const date = new Date();
-    const monthAndDayString = '-' + ('0' + (date.getMonth()+1)).slice(-2) + '-01';
 
-    switch(this.goalTypeData.id) {
+    const date = new Date();
+    const monthAndDayString = '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-01';
+
+    switch (this.goalTypeData.id) {
       case AppConstants.VACATION_GOAL:
         obj['planningforGroupHead'] = 1;
         obj['vacationStartYr'] = this.multiYearGoalForm.get('field2').value[0] + monthAndDayString;
         obj['vacationEndYr'] = this.multiYearGoalForm.get('field2').value[1] + monthAndDayString;
-          if(this.detailedSpendingFormArray.length > 1) {
-            let multiObj = {};
-            let startYear = this.multiYearGoalForm.get('field2').value[0];
-            for(let i = 0; i < this.detailedSpendingFormArray.length; i++) {
-              let objId = startYear + monthAndDayString;
-              multiObj[objId] = this.detailedSpendingFormArray[i].value;
-              startYear ++;
-            }
-            obj['goalYrsAndFutureValue'] = multiObj;
-          } else {
-            obj['presentValue'] = this.detailedSpendingFormArray[0].value;
+       
+        if (obj['frequency'] == "") {
+          obj['frequency'] = (this.multiYearGoalForm.get('field2').value[1] - this.multiYearGoalForm.get('field2').value[0])
+        }else if(this.goalTypeData.goalTypeId == 5){
+          obj['frequency'] = parseInt(this.multiYearGoalForm.get('field3').value);
+        }
+        if (this.detailedSpendingFormArray.length > 1) {
+          let multiObj = {};
+          let startYear = this.multiYearGoalForm.get('field2').value[0];
+          for (let i = 0; i < this.detailedSpendingFormArray.length; i++) {
+            let objId = startYear + monthAndDayString;
+            multiObj[objId] = this.detailedSpendingFormArray[i].value;
+            startYear++;
           }
+          obj['goalYrsAndFutureValue'] = multiObj;
+        } else {
+          obj['presentValue'] = this.detailedSpendingFormArray[0].value;
+        }
         break;
 
       case AppConstants.EDUCATION_GOAL:
@@ -136,7 +142,7 @@ export class MultiYearGoalComponent implements OnInit {
     return obj;
   }
 
-  sendDataObj(obj){
+  sendDataObj(obj) {
     this.barButtonOptions.active = true;
     this.planService.addMultiYearGoal(obj).subscribe(
       data => {
@@ -151,7 +157,7 @@ export class MultiYearGoalComponent implements OnInit {
           default:
             break;
         }
-        this.eventService.closeUpperSlider({state: 'close', data: {resetSelectedCursor: true}});
+        this.eventService.closeUpperSlider({ state: 'close', data: { resetSelectedCursor: true } });
         this.barButtonOptions.active = false;
       },
       error => {
@@ -161,8 +167,11 @@ export class MultiYearGoalComponent implements OnInit {
     )
   }
 
-  saveGoal(){
-    if(this.multiYearGoalForm.invalid || this.barButtonOptions.active) {
+  saveGoal() {
+    if(this.goalTypeData.goalTypeId != 5){
+      this.multiYearGoalForm.get('field3').setValue(0);
+    }
+    if (this.multiYearGoalForm.invalid || this.barButtonOptions.active) {
       this.multiYearGoalForm.markAllAsTouched();
     } else {
       let goalObj = this.createGoalObj();
@@ -172,15 +181,15 @@ export class MultiYearGoalComponent implements OnInit {
   }
 
   // set the validation age for the age form field 
-  setMinMaxAgeOrYear(value){
-    if(this.goalTypeData.validations.showAge) {
+  setMinMaxAgeOrYear(value) {
+    if (this.goalTypeData.validations.showAge) {
       this.minAgeYear = (this.goalTypeData.validations.minAge || (this.goalTypeData.validations.minAgeFromPresent + value.familyMemberAge));
       this.maxAgeYear = (this.goalTypeData.validations.maxAge || (this.goalTypeData.validations.maxAgeFromPresent + value.familyMemberAge));
     } else {
       this.minAgeYear = (this.goalTypeData.validations.minAgeFromPresent + this.currentYear);
       this.maxAgeYear = (this.goalTypeData.validations.maxAgeFromPresent + this.currentYear);
     }
-    if(this.minAgeYear < (value.familyMemberAge + this.goalTypeData.validations.minAgeFromPresent)) {
+    if (this.minAgeYear < (value.familyMemberAge + this.goalTypeData.validations.minAgeFromPresent)) {
       this.minAgeYear = value.familyMemberAge + this.goalTypeData.validations.minAgeFromPresent;
     }
 
@@ -190,7 +199,7 @@ export class MultiYearGoalComponent implements OnInit {
     this.rangeFieldOptions = newOptions;
   }
 
-  initializeForm(){
+  initializeForm() {
     this.multiYearGoalForm = this.fb.group({
       field1: ['', [Validators.required]], // who the goal is for
       field2: [[0, 20], [Validators.required]], // age or time
@@ -198,22 +207,26 @@ export class MultiYearGoalComponent implements OnInit {
       detailedSpendings: this.fb.array([
         new FormControl(this.goalTypeData.defaults.cost, [Validators.required, Validators.min(this.goalTypeData.validations.minCost), Validators.max(this.goalTypeData.validations.maxCost)])
       ]),
+      field3: ['', Validators.required],//vacation frequency
       field4: ['', Validators.required], // goal name
       field5: [''],  // goal description
       logo: ['']
     });
+    if(this.goalTypeData.goalTypeId != 5){
+      this.multiYearGoalForm.get('field3').setValue('')
+    }
   }
 
-  setDefaultOwner(){
+  setDefaultOwner() {
     // TODO:- Check condition for when no children found
     let owner = this.familyList.find((member) => this.goalTypeData.defaults.planningForRelative.includes(member.relationshipId));
     this.multiYearGoalForm.get('field1').setValue(owner);
     this.selectOwnerAndUpdateForm(owner);
   }
 
-  listenToYearRange(){
-    this.multiYearGoalForm.controls.field2.valueChanges.pipe(debounceTime(600)).subscribe((value)=>{
-      if(this.detailedPlanning) {
+  listenToYearRange() {
+    this.multiYearGoalForm.controls.field2.valueChanges.pipe(debounceTime(600)).subscribe((value) => {
+      if (this.detailedPlanning) {
         let range = value[1] - value[0];
         this.startRange = value[0];
         let difference = range - this.detailedSpendingFormArray.length;
@@ -227,19 +240,19 @@ export class MultiYearGoalComponent implements OnInit {
   }
 
   addToFormArray(length) {
-    for(let i = 0; i < length; i++) {
+    for (let i = 0; i < length; i++) {
       (this.multiYearGoalForm.controls.detailedSpendings as FormArray).push(new FormControl('', [Validators.required, Validators.min(this.goalTypeData.validations.minCost), Validators.max(this.goalTypeData.validations.maxCost)]))
     }
   }
 
   removeFromFormArray(length) {
-    for(let i = 0; i < length; i++) {
+    for (let i = 0; i < length; i++) {
       (this.multiYearGoalForm.controls.detailedSpendings as FormArray).removeAt((this.multiYearGoalForm.controls.detailedSpendings as FormArray).length - 1);
     }
   }
 
   // toggle between detailed planning vs same amount every year
-  revisePlanning(){
+  revisePlanning() {
     this.detailedPlanning = !this.detailedPlanning;
     if (this.detailedPlanning) {
       let range = this.multiYearGoalForm.value.field2[1] - this.multiYearGoalForm.value.field2[0];
@@ -260,7 +273,7 @@ export class MultiYearGoalComponent implements OnInit {
       reader.readAsDataURL(this.imageData);
     }
   }
-  
+
   goBack() {
     this.output.emit();
   }

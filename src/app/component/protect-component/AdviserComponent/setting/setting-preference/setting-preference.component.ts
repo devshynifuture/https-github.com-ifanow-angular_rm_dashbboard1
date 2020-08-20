@@ -51,12 +51,12 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   showUpdateBrand: boolean = false;
   brandVisible: any;
   counter: number = 0;
-  appearanceFG:FormGroup;
+  appearanceFG: FormGroup;
   appearanceUpdateFlag: boolean;
   hasError: boolean = false;
   constructor(private orgSetting: OrgSettingServiceService,
     public subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog, private fb: FormBuilder, ) {
-      
+
     this.advisorId = AuthService.getAdvisorId()
     this.userId = AuthService.getUserId()
   }
@@ -192,7 +192,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
       }
     );
   }
-  
+
   selectMutualFund(event, value) {
     this.portfolio.forEach(element => {
       if (element.portfolioOptionId == value.portfolioOptionId) {
@@ -202,7 +202,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
       element.advisorId = this.advisorId;
     });
 
-    if(value.portfolioOptionId == 2 && !event.checked) {
+    if (value.portfolioOptionId == 2 && !event.checked) {
       this.mutualFund3.selectedOrDeselected = 0;
       this.mutualFund3 = JSON.parse(JSON.stringify(this.mutualFund3));
       this.portfolio.forEach(element => {
@@ -211,7 +211,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
         }
       });
     }
-    
+
     const obj = this.portfolio
     this.orgSetting.updatePortFolio(obj).subscribe(
       data => this.updatePortFolioRes(data),
@@ -262,7 +262,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     this.getEmailVerification()
   }
   deleteEmailModal(value, data) {
-    if(data.defaultFlag == 1) {
+    if (data.defaultFlag == 1) {
       this.eventService.openSnackBar("Email dependency found!", "Dismiss");
       return;
     }
@@ -307,14 +307,15 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
 
   getEmailVerification() {
     this.loader(1);
-    this.emailList  = [{},{},{}];
+    this.emailList = [{}, {}, {}];
     let obj = {
       userId: this.advisorId,
       // advisorId: this.advisorId
     }
     this.isLoading = true;
     this.orgSetting.getEmailVerification(obj).subscribe(
-      data => { this.getEmailVerificationRes(data); 
+      data => {
+        this.getEmailVerificationRes(data);
         this.isLoading = false;
       },
       err => {
@@ -336,7 +337,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   }
   getEmailTemplate() {
     this.loader(1);
-    this.emailTemplateList = [{},{},{}];
+    this.emailTemplateList = [{}, {}, {}];
     let obj = {
       advisorId: this.advisorId
     }
@@ -363,7 +364,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
       return;
     }
     let obj = {
-      clientData: {documentText: data.body},
+      clientData: { documentText: data.body },
       showfromEmail: true,
       openedFrom: 'settings',
       fromEmail: data.fromEmail || '',
@@ -398,14 +399,14 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
 
   loader(increament) {
     this.counter += increament;
-    if(this.counter == 0) {
+    if (this.counter == 0) {
       this.isLoading = false;
     } else {
       this.isLoading = true;
     }
   }
 
-  getAppearance(){
+  getAppearance() {
     this.loader(1);
     let obj = {
       advisorId: this.advisorId
@@ -434,12 +435,12 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     })
   }
 
-  addAppearanceFormListener(){
+  addAppearanceFormListener() {
     this.subcription.add(
       this.appearanceFG.valueChanges.subscribe(value => {
         let jsonArr = [];
         let counter = 0;
-        for(let k in value) {
+        for (let k in value) {
           counter++;
           jsonArr.push({
             advisorId: this.advisorId,
@@ -448,7 +449,7 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
           })
         }
 
-        if(this.appearanceUpdateFlag)
+        if (this.appearanceUpdateFlag)
           this.orgSetting.updateAppearancePreferance(jsonArr).subscribe();
       })
     );
@@ -457,46 +458,81 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   changeView(tab) {
     this.viewMode = tab;
     this.hasError = false;
-    switch(tab) {
-      case 'tab1': 
+    switch (tab) {
+      case 'tab1':
         this.getPortfolio();
         break;
-        
-      case 'tab2': 
+
+      case 'tab2':
         this.getPlan();
         break;
-        
+
       // case 'tab3': 
       //   this.getPortfolio();
       //   break;
-        
-      case 'tab4': 
+
+      case 'tab4':
         this.getEmailVerification();
         break;
-      
-      case 'tab5': 
+
+      case 'tab5':
         this.getEmailTemplate();
         break;
-        
+
       // case 'tab6': 
       //   this.getPortfolio();
       //   break;
-      
-      case 'tab7': 
+
+      case 'tab7':
         this.getDomain();
         break;
-        
+
       // case 'tab8': 
       //   this.getPortfolio();
       //   break;
-        
-      case 'tab9': 
+
+      case 'tab9':
         this.getAppearance();
         break;
     }
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.subcription.unsubscribe();
+  }
+
+  bulkEmail(value) {
+    const dialogData = {
+      data: value,
+      header: 'EMAIL BULK PASSWORD',
+      body: 'Are you sure you want to send email & password to all clients',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'SEND',
+      positiveMethod: () => {
+        this.orgSetting.bulkEmailPassWord({ advisorId: this.advisorId }).subscribe(
+          data => {
+            this.eventService.openSnackBar(data, "Dismiss")
+            dialogRef.close();
+          },
+          err => { this.eventService.openSnackBar(err, "Dismiss") }
+        )
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
   }
 }
