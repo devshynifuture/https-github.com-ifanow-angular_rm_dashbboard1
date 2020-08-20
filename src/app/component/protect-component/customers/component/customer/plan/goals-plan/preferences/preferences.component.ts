@@ -135,12 +135,26 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     }
   }
   setInflamationReturns() {
-    this.subscription.add(
-      this.inflamationReturnsFG.controls.staticOrProgressive.valueChanges.subscribe(value => {
-        this.inflamationReturnsFG.controls.equityAllocation.setValue(0);
-        this.inflamationReturnsFG.controls.debtAllocation.setValue(0);
-      })
-    );
+      this.dataSource.forEach(element => {
+        if (element.position == 'Debt asset class') {
+          element.name = (this.data.remainingData.returnsAssumptions.debt_return)+"%"
+        } else if (element.position == 'Equity asset class') {
+          element.name = this.data.remainingData.returnsAssumptions.equity_return+"%"
+        } else if (element.position == 'Debt funds') {
+          element.name = this.data.remainingData.returnsAssumptions.debt_fund_returns+"%"
+        } else if (element.position == 'Equity funds') {
+          element.name = this.data.remainingData.returnsAssumptions.equity_fund_returns+"%"
+        } else if (element.position == 'Balanced funds') {
+          element.name = this.data.remainingData.returnsAssumptions.balanced_fund_returns+"%"
+        } else if (element.position == 'Stocks') {
+          element.name = this.data.remainingData.returnsAssumptions.stock_returns+"%"
+        }
+      });
+      this.dataSource1.forEach(element => {
+        if (element.position == 'Inflation rate') {
+          element.name = this.data.remainingData.inflationRateYearly+"%"
+        }
+      });
   }
   validateGoalDates() {
     const gstartDate = this.goalDetailsFG.controls.goalStartDateYear.value + '-' + this.goalDetailsFG.controls.goalStartDateMonth.value + '-01';
@@ -236,30 +250,30 @@ export class PreferencesComponent implements OnInit, OnDestroy {
     })
   }
   setAssetAllocationListeners() {
-    
-        if (this.assetAllocationFG.controls.strategicOrTactical.value == 2) {
-          // this.assetAllocationFG.controls.equityAllocation.setValue(this.data.remainingData.bifurcation.equity_ratio);
-          // this.assetAllocationFG.controls.debtAllocation.setValue(this.data.remainingData.bifurcation.debt_ratio);
-          this.assetAllocationFG.controls.equityAllocation.disable();
-          this.assetAllocationFG.controls.debtAllocation.disable();
-          this.progressiveStageArrayControl.enable();
-        } else {
-          this.assetAllocationFG.controls.equityAllocation.enable();
-          this.assetAllocationFG.controls.debtAllocation.enable();
-          this.assetAllocationFG.controls.equityAllocation.setValue(this.data.remainingData.bifurcation.equity_ratio);
-          this.assetAllocationFG.controls.debtAllocation.setValue(this.data.remainingData.bifurcation.debt_ratio);
-          this.progressiveStageArrayControl.disable();
-          for (let i = 1; i < this.progressiveStageArrayControl.controls.length; i++) {
-            this.removeStage(i);
-          }
-          this.progressiveStageArrayControl.controls.forEach(control => {
-            control.setValue({
-              stageTime: '',
-              equityAllocation: '',
-              debtAllocation: ''
-            });
-          })
-        }
+
+    if (this.assetAllocationFG.controls.strategicOrTactical.value == 2) {
+      // this.assetAllocationFG.controls.equityAllocation.setValue(this.data.remainingData.bifurcation.equity_ratio);
+      // this.assetAllocationFG.controls.debtAllocation.setValue(this.data.remainingData.bifurcation.debt_ratio);
+      this.assetAllocationFG.controls.equityAllocation.disable();
+      this.assetAllocationFG.controls.debtAllocation.disable();
+      this.progressiveStageArrayControl.enable();
+    } else {
+      this.assetAllocationFG.controls.equityAllocation.enable();
+      this.assetAllocationFG.controls.debtAllocation.enable();
+      this.assetAllocationFG.controls.equityAllocation.setValue(this.data.remainingData.bifurcation.equity_ratio);
+      this.assetAllocationFG.controls.debtAllocation.setValue(this.data.remainingData.bifurcation.debt_ratio);
+      this.progressiveStageArrayControl.disable();
+      for (let i = 1; i < this.progressiveStageArrayControl.controls.length; i++) {
+        this.removeStage(i);
+      }
+      this.progressiveStageArrayControl.controls.forEach(control => {
+        control.setValue({
+          stageTime: '',
+          equityAllocation: '',
+          debtAllocation: ''
+        });
+      })
+    }
 
     this.subscription.add(
       this.assetAllocationFG.controls.strategicOrTactical.valueChanges.subscribe(value => {

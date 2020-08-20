@@ -1521,7 +1521,9 @@ export class MutualFundSummaryComponent implements OnInit {
               };
               this.displayColArray.push(obj);
             });
-            this.reponseData = this.doFiltering(this.rightFilterData.mfData)
+            if(this.rightFilterData.mfData){
+              this.reponseData = this.doFiltering(this.rightFilterData.mfData)
+            }
             this.mfData = this.reponseData;
             this.reportDate = this.datePipe.transform(new Date(this.rightFilterData.reportAsOn), 'dd-MMM-yyyy');
             this.setDefaultFilterData = this.mfService.setFilterData(this.mutualFund, this.rightFilterData, this.displayColArray);

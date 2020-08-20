@@ -16,11 +16,11 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
 })
 export class AddCamsDetailsComponent implements OnInit {
 
-  @Input() data:any;
+  @Input() data: any;
   advisorId: any;
 
-  camsFG:FormGroup;
-  formPlaceHolders:any;
+  camsFG: FormGroup;
+  formPlaceHolders: any;
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
     text: 'SAVE',
@@ -35,7 +35,7 @@ export class AddCamsDetailsComponent implements OnInit {
   };
 
   constructor(
-    private subInjectService: SubscriptionInject, 
+    private subInjectService: SubscriptionInject,
     private eventService: EventService,
     private settingService: SettingsService,
     private fb: FormBuilder
@@ -59,37 +59,38 @@ export class AddCamsDetailsComponent implements OnInit {
       mailbackPassword: [this.data.mainData.mailbackPassword || '', [Validators.required]],
       fileOrderingUseabilityStatusId: [1]
     });
+    (this.data.is_add_call) ? '' : this.camsFG.controls.arnRiaDetailsId.disable();
   }
 
-  save(){
-    if(this.camsFG.invalid || this.barButtonOptions.active) {
+  save() {
+    if (this.camsFG.invalid || this.barButtonOptions.active) {
       this.camsFG.markAllAsTouched();
     } else {
       this.barButtonOptions.active = true;
-      let jsonObj:any = {
+      let jsonObj: any = {
         ...this.data.mainData,
         ...this.camsFG.getRawValue()
       };
 
       jsonObj.arnOrRia = this.data.arnData.find((data) => this.camsFG.controls.arnRiaDetailsId.value == data.id).arnOrRia;
       // add action
-      if(this.data.mainData.arnRiaDetailsId) {
+      if (this.data.mainData.arnRiaDetailsId) {
         const editJson = {
           ...this.data.mainData,
           ...jsonObj
         }
-        this.settingService.editMFRTA(editJson).subscribe((res)=> {
+        this.settingService.editMFRTA(editJson).subscribe((res) => {
           this.eventService.openSnackBar("CAMS Modified successfully");
           this.Close(true);
-        }, err=> {
+        }, err => {
           this.eventService.openSnackBar(err, "Dismiss");
           this.barButtonOptions.active = false;
         })
       } else {
-        this.settingService.addMFRTA(jsonObj).subscribe((res)=> {
+        this.settingService.addMFRTA(jsonObj).subscribe((res) => {
           this.eventService.openSnackBar("CAMS Added successfully");
           this.Close(true);
-        }, err=> {
+        }, err => {
           this.eventService.openSnackBar(err, "Dismiss");
           this.barButtonOptions.active = false;
         })
