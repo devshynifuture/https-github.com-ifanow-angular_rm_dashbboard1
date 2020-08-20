@@ -173,12 +173,12 @@
                                 </div>
                                 <div class="col-md-4 relClass ">
                                     <div class="bar height24">
-                                        <p class="text-black mb-0 text-right">{{(isLoading) ? '' : '₹'}}
-                                            <span appFormatNumber *ngIf="this.equityCurrentValue && !isLoading">
+                                        <p class="text-black mb-0 text-right">{{(isLoading) ? '' : '₹'}}<span
+                                             *ngIf="this.equityCurrentValue && !isLoading">
                                                 {{(this.equityCurrentValue)?this.equityCurrentValue:0}}</span><span
-                                                appFormatNumber *ngIf="!this.equityCurrentValue && !isLoading">
-                                                0</span>
+                                             *ngIf="!this.equityCurrentValue && !isLoading"> 0</span>
                                             <span *ngIf="isLoading">{{''}}</span>
+
                                         </p>
                                     </div>
                                 </div>
@@ -1024,7 +1024,7 @@
                                     <td style="font-size: 13px; width: 240px; border-bottom: 1px solid #dee5e7;"> Equity
                                     </td>
                                     <td style="font-size: 13px;border-bottom: 1px solid #dee5e7; width: 250px;"><span
-                                            appFormatNumber *ngIf="this.equityCurrentValue"> {{this.equityCurrentValue}}
+                                         *ngIf="this.equityCurrentValue"> {{this.equityCurrentValue}}
                                         </span><span>0</span></td>
                                     <td style="font-size: 13px;border-bottom: 1px solid #dee5e7;">
                                         {{(this.equityPercentage) ? (this.equityPercentage):'0'}}%</td>

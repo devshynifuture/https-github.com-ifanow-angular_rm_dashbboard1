@@ -517,6 +517,7 @@ export class MutualFundOverviewComponent implements OnInit {
       } else if (element.category == 'EQUITY') {
         this.equityCurrentValue = element.currentValue;
         this.equityPercentage = ((element.currentValue / this.totalValue.currentValue) * 100).toFixed(2);
+        this.equityCurrentValue = this.mfService.mutualFundRoundAndFormat( this.equityCurrentValue, 0);
         this.equityPercentage = parseFloat(this.equityPercentage);
       } else if (element.category == 'HYBRID') {
         this.hybridCurrentValue = element.currentValue;
@@ -948,7 +949,9 @@ export class MutualFundOverviewComponent implements OnInit {
             this.isLoading = true;
             this.changeInput.emit(true);
             this.rightFilterData = sideBarData.data;
-            this.reponseData = this.mfService.doFiltering(this.rightFilterData.mfData);
+            if(this.rightFilterData.mfData){
+              this.reponseData = this.mfService.doFiltering(this.rightFilterData.mfData);
+            }
             this.getMutualFundResponse(this.rightFilterData.mfData);
             this.setDefaultFilterData = this.MfServiceService.setFilterData(this.mutualFund, this.rightFilterData, this.displayedColumns);
             if (this.rightFilterData) {
