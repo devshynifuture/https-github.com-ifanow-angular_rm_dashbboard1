@@ -21,7 +21,8 @@
                         {{i != 0?'Co-o' : 'O'}}wner {{i != 0?i:''}}
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{owner.name}}<span *ngIf="bankAccount.ownerList.length > 1">sharing {{owner.share}}% ownership</span>
+                        {{owner.name}}<span *ngIf="bankAccount.ownerList.length > 1">sharing {{owner.share}}%
+                            ownership</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -39,7 +40,8 @@
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Account balance
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="bankAccount.accountBalance != 0">₹     <span appFormatNumber>{{bankAccount.accountBalance}}</span>
+                    <div class="col-md-4 text-right f-14 roboto p-0" *ngIf="bankAccount.accountBalance != 0">₹ <span
+                            appFormatNumber>{{bankAccount.accountBalance}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -55,7 +57,9 @@
                         Interest rate
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{bankAccount.interestRate | number: '1.2-2'}}{{bankAccount.interestRate ?'%':'-'}}
+                        <span *ngIf="bankAccount.interestRate!=0">
+                            {{bankAccount.interestRate | number: '1.2-2'}}</span><span
+                            *ngIf="bankAccount.interestRate==0">0</span>%
                     </div>
                 </div>
                 <!-- <div class="row bb p-8 b-l br">
@@ -78,7 +82,7 @@
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Link Bank account
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" [hidden]="!bankAccount.userBankMappingId" >
+                    <div class="col-md-4 text-right f-14 roboto p-0" [hidden]="!bankAccount.userBankMappingId">
                         <div *ngFor="let bank of bankList" [ngSwitch]="bankAccount.userBankMappingId">
                             <span *ngSwitchCase="bank.id">{{bank.bankNameAndLast4Digit}}</span>
                         </div>
@@ -96,7 +100,7 @@
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br" *ngIf="!bankAccount.nomineeList">
-                    <div class="col-md-8 text-left f-14 roboto p-0" >
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Nominee
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
@@ -104,7 +108,7 @@
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br" *ngFor="let obj of bankAccount.nomineeList; let i = index">
-                    <div class="col-md-8 text-left f-14 roboto p-0" >
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Nominee {{i + 1}}
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
