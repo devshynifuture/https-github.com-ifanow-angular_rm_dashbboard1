@@ -21,7 +21,8 @@
                         {{i != 0?'Co-o' : 'O'}}wner {{i != 0?i:''}}
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{owner.name}} <span *ngIf="realEstate.ownerList.length > 1">sharing {{owner.share}}% ownership</span>
+                        {{owner.name}} <span *ngIf="realEstate.ownerList.length > 1">sharing {{owner.share}}%
+                            ownership</span>
                     </div>
                 </div>
                 <!-- <div class="row bb p-8 b-l br">
@@ -47,7 +48,7 @@
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Market value
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" >
+                    <div class="col-md-4 text-right f-14 roboto p-0">
                         ₹<span appFormatNumber>{{realEstate.marketValue?realEstate.marketValue:'-'}}</span>
                     </div>
                 </div>
@@ -63,8 +64,9 @@
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Purchase value
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" >
-                        {{realEstate.purchaseValue?'₹':''}}<span appFormatNumber>{{realEstate.purchaseValue?realEstate.purchaseValue:'-'}}</span>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{realEstate.purchaseValue?'₹':''}}<span
+                            appFormatNumber>{{realEstate.purchaseValue?realEstate.purchaseValue:'-'}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -72,7 +74,8 @@
                         Area
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        <span appFormatNumber>{{realEstate.ratePerUnit?realEstate.ratePerUnit:'-'}}</span> {{realEstate.ratePerUnit?this.unit:''}}
+                        <span appFormatNumber>{{realEstate.ratePerUnit?realEstate.ratePerUnit:'-'}}</span>
+                        {{realEstate.ratePerUnit?this.unit:''}}
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -80,15 +83,17 @@
                         Registration
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{realEstate.stampDutyCharge?'₹':''}}<span appFormatNumber>{{realEstate.stampDutyCharge?realEstate.stampDutyCharge:'-'}}</span>
+                        {{realEstate.registrationCharge?'₹':''}}<span
+                            appFormatNumber>{{realEstate.registrationCharge?realEstate.registrationCharge:'-'}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Stamp duty
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" >
-                        {{realEstate.stampDutyCharge?'₹':''}}<span appFormatNumber>{{realEstate.stampDutyCharge?realEstate.stampDutyCharge:'-'}}</span>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{realEstate.stampDutyCharge?'₹':''}}<span
+                            appFormatNumber>{{realEstate.stampDutyCharge?realEstate.stampDutyCharge:'-'}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -96,7 +101,8 @@
                         GST
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0" appFormatNumber>
-                        {{realEstate.gstCharge?'₹':''}}<span appFormatNumber>{{realEstate.gstCharge?realEstate.gstCharge:'-'}}</span>
+                        {{realEstate.gstCharge?'₹':''}}<span
+                            appFormatNumber>{{realEstate.gstCharge?realEstate.gstCharge:'-'}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -116,7 +122,7 @@
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br" *ngIf="realEstate.nomineeList.length == 0 ">
-                    <div class="col-md-8 text-left f-14 roboto p-0" >
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Nominee
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
@@ -124,11 +130,12 @@
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br" *ngFor="let obj of realEstate.nomineeList; let i = index">
-                    <div class="col-md-8 text-left f-14 roboto p-0" >
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Nominee {{i + 1}}
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{obj.name}} <span *ngIf="realEstate.nomineeList.length > 1">sharing {{obj.sharePercentage}}% Nominee share</span>
+                        {{obj.name}} <span *ngIf="realEstate.nomineeList.length > 1">sharing {{obj.sharePercentage}}%
+                            Nominee share</span>
                     </div>
                 </div>
             </div>

@@ -1,9 +1,8 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { SubscriptionService } from '../../AdviserComponent/Subscriptions/subscription.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { AuthService } from 'src/app/auth-service/authService';
-import { MatProgressButtonOptions } from 'src/app/common/delete-progress-button/delete-progress-button.component';
+import {Component, Inject, Input, OnInit} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {SubscriptionService} from '../../AdviserComponent/Subscriptions/subscription.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {MatProgressButtonOptions} from 'src/app/common/delete-progress-button/delete-progress-button.component';
 
 @Component({
   selector: 'app-confirm-dialog',

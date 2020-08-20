@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, Inject } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { ValidatorType, UtilService } from 'src/app/services/util.service';
@@ -52,6 +52,10 @@ export class LinkBankComponent implements OnInit {
   @Output() valueChange = new EventEmitter();
   @Input() fieldFlag;
   accountTypes: any;
+  clientName: any;
+  callMethod: { methodName: string; ParamValue: any; disControl: any; };
+  ownerData: any;
+  nomineesListFM: any = [];
   constructor(private cusService: CustomerService, private eventService: EventService,
     public dialogRef: MatDialogRef<LinkBankComponent>,
     private fb: FormBuilder, private subInjectService: SubscriptionInject, private enumDataService: EnumDataService,
@@ -63,8 +67,9 @@ export class LinkBankComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.createBankForm(null);
     this.userData = AuthService.getClientData();
+    this.clientName = this.userData.displayName;
+    this.createBankForm(null);
     this.accountTypes = this.enumDataService.getBankAccountTypes();
   }
 
@@ -102,7 +107,7 @@ export class LinkBankComponent implements OnInit {
       ifscCode: [data.ifscCode, [Validators.required]],
       bankName: [data.bankName, [Validators.required]],
       micrName: [data.micrNo],
-      accNumber: [data.accountNumber, [Validators.required,Validators.minLength(9), Validators.maxLength(18)]],
+      accNumber: [data.accountNumber, [Validators.required, Validators.minLength(9), Validators.maxLength(18)]],
       accType: [(data.accountType) ? data.accountType : '', [Validators.required]],
       branchName: [data.branchName, [Validators.required]],
       branchCountry: [(data.address) ? data.address.country : '', [Validators.required]],
@@ -111,32 +116,61 @@ export class LinkBankComponent implements OnInit {
       branchAddressLine2: [(data.address) ? data.address.address2 : '', [Validators.required]],
       branchCity: [(data.address) ? data.address.city : '', [Validators.required]],
       branchState: [(data.address) ? data.address.state : '', [Validators.required]],
-      holderNameList: this.fb.array([this.fb.group({
-        name: [data.name, [Validators.required]],
-        id: [data.id]
-      })])
+      getNomineeName: this.fb.array([this.fb.group({
+        name: [this.clientName ? this.clientName : '', [Validators.required]],
+        sharePercentage: [0],
+        familyMemberId: [this.userData.familyMemberId],
+        id: [0],
+        clientId: [this.userData.clientId],
+      })]),
     });
+
+    if (data.holderNameList) {
+      this.getNominee.removeAt(0);
+      data.holderNameList.forEach(element => {
+        this.addNewNominee(element);
+      });
+    }
+
+    this.ownerData = { Fmember: this.nomineesListFM, controleData: this.bankForm };
   }
 
-  addHolders(data) {
-    if (this.bankForm.value.holderNameList.length == 3) {
-      return;
-    }
-    if (!data) {
-      data = {};
-    }
-    this.bankForm.controls.holderNameList.push(this.fb.group({
-      name: [data.name, [Validators.required]],
-      id: [data.id]
+  get getNominee() {
+    return this.bankForm.get('getNomineeName') as FormArray;
+  }
+
+  addNewNominee(data) {
+    this.getNominee.push(this.fb.group({
+      name: [data ? data.name : ''],
+      sharePercentage: [data ? data.sharePercentage : 0],
+      familyMemberId: [data ? data.familyMemberId : 0],
+      id: [data ? data.id : 0],
+      clientId: [data ? data.clientId : 0]
     }));
-    // this.holderList.emit(this.holderNameList);
   }
 
-  removeHolders(index) {
-    if (this.bankForm.value.holderNameList.length == 1) {
-      return;
-    }
-    this.bankForm.controls.holderNameList.removeAt(index);
+  removeNewNominee(item) {
+    this.disabledMember(null, null);
+    this.getNominee.removeAt(item);
+  }
+
+  disabledMember(value, type) {
+    this.callMethod = {
+      methodName: 'disabledMember',
+      ParamValue: value,
+      disControl: type
+    };
+  }
+
+  lisNominee(value) {
+    this.ownerData.Fmember = value;
+    this.nomineesListFM = Object.assign([], value);
+  }
+
+
+  selectHolder(data, index) {
+    this.getNominee.controls[index].get('clientId').setValue(data.clientId)
+    this.getNominee.controls[index].get('familyMemberId').setValue(data.familyMemberId)
   }
 
   getBankAddress(ifsc) {
@@ -216,19 +250,14 @@ export class LinkBankComponent implements OnInit {
   saveNext(flag) {
     if (this.bankForm.invalid) {
       this.bankForm.markAllAsTouched();
-      this.holderList.markAllAsTouched();
       return;
     }
     else {
-      const holderList = [];
-      if (this.holderList) {
-        this.holderList.controls.forEach(element => {
-          holderList.push({
-            name: element.get('name').value,
-            id: element.get('id').value,
-          });
-        });
-      }
+      let holderList = [];
+      this.bankForm.value.getNomineeName.forEach(element => {
+        delete element['sharePercentage'];
+        holderList.push(element)
+      });
       (flag == 'Save') ? this.barButtonOptions.active = true : '';
       const obj = {
         branchCode: (this.bankList) ? this.bankList.branchCode : this.bankDetail.branchCode,
@@ -252,13 +281,13 @@ export class LinkBankComponent implements OnInit {
         userType: (this.fieldFlag == 'client' || this.fieldFlag == 'lead' || this.fieldFlag == undefined) ? 2 : 3,
         minorAccountHolderName: (this.userData.id) ? '' : null,
         guardianAccountHolderName: (this.userData.id) ? '' : null,
-        holderNameList: this.bankForm.get('holderNameList').value,
+        holderNameList: holderList,
         userBankMappingId: null,
         bankId: null,
         addressId: null
       };
       if (this.userInfo) {
-        obj.userId = this.enumDataService.userData[0].id==0?this.enumDataService.userData[0].clientId:this.enumDataService.userData[0].id;
+        obj.userId = this.enumDataService.userData[0].id == 0 ? this.enumDataService.userData[0].clientId : this.enumDataService.userData[0].id;
         obj.userType = this.enumDataService.userData[0].userType;
       }
 

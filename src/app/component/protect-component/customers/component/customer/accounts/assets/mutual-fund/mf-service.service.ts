@@ -292,8 +292,9 @@ export class MfServiceService {
     const category = this.filterArray(mfData.mutualFundCategoryMastersList, 'id', dataForFilter.category, 'categoryId');
     const subCategoryData = this.filter(category, 'mutualFundSubCategoryMaster');
     const schemeWiseFilter = this.filter(subCategoryData, 'mutualFundSchemeMaster');
-    const schemeWise = this.filterArray(schemeWiseFilter, 'amc_id', dataForFilter.amc, 'amc_id');
-    let mutualFundListFilter = this.filter(schemeWiseFilter, 'mutualFund');
+    const amcWise = this.filterArray(schemeWiseFilter, 'amc_id', dataForFilter.amc, 'amc_id');
+    const schemeWise = this.filterArray(amcWise, 'id', dataForFilter.scheme, 'id');
+    let mutualFundListFilter = this.filter(schemeWise, 'mutualFund');
     mutualFundList = this.filterArray(mutualFundListFilter, 'folioNumber', dataForFilter.folio, 'folioNumber');
     // dataForFilter.folio.forEach(element => {
     //   mutualFundList = mutualFundListFilter.filter((item: any) =>

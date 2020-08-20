@@ -16,21 +16,21 @@
             <button (click)="Excel('SCSS')" mat-menu-item>XLS</button>
         </mat-menu>
 
-        <a [matMenuTriggerFor]="menu7" class="c-p downloadPdfIcon iconBorderNone">
+        <!-- <a [matMenuTriggerFor]="menu7" class="c-p downloadPdfIcon iconBorderNone">
             <img src="assets/images/svg/up-down.svg">
-        </a>
+        </a> -->
 
-        <mat-menu #menu7="matMenu">
-            <!-- <button mat-menu-item>Upload file
+        <!-- <mat-menu #menu7="matMenu"> -->
+        <!-- <button mat-menu-item>Upload file
                 <input (change)="fetchData('SCSS',$event)" class="uploadInput" id="file-4" multiple type="file">
             </button> -->
-        </mat-menu>
-        <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6" class="c-p mr-8">
+        <!-- </mat-menu> -->
+        <!-- <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6" class="c-p mr-8">
         <mat-menu #menu6="matMenu">
             <button mat-menu-item>Email Report</button>
             <button mat-menu-item>Option 2</button>
             <button mat-menu-item>Option 3</button>
-        </mat-menu>
+        </mat-menu> -->
         <button mat-stroked-button class="btn-default addon mr-8 v-middle"><i
                 class="material-icons">filter_list</i>FILTERS</button>
         <button mat-stroked-button class="btn-primary addon v-middle" (click)="openAddSCSS(null,'addScss')">ADD
@@ -38,7 +38,8 @@
     </div>
 </div>
 <div [ngClass]="{'table-scroll':isLoading==false }" class=" col-md-12 overflow-hidden p-0 mt-8 scss-scheme">
-    <table #tableEl *ngIf="datasource.filteredData.length > 0" matSort mat-table [dataSource]="datasource" id="tbs" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+    <table #tableEl *ngIf="datasource.filteredData.length > 0" matSort mat-table [dataSource]="datasource" id="tbs"
+        class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
 
         <ng-container matColumnDef="no" sticky>
             <th mat-sort-header="no" mat-header-cell *matHeaderCellDef class="br"> No </th>
@@ -62,10 +63,12 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="cValue">
-            <th mat-sort-header="quarterlyPayout" mat-header-cell *matHeaderCellDef class="br  right-hc w-13 text-right hide-arrow">
+            <th mat-sort-header="quarterlyPayout" mat-header-cell *matHeaderCellDef
+                class="br  right-hc w-13 text-right hide-arrow">
                 Current value </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
-                <div class="bar" >{{!isLoading && element.amountInvested? "₹" : ""}}<span appFormatNumber>{{element.amountInvested?element.amountInvested:!isLoading?'-':''}}</span>
+                <div class="bar">{{!isLoading && element.amountInvested? "₹" : ""}}<span
+                        appFormatNumber>{{element.amountInvested?element.amountInvested:!isLoading?'-':''}}</span>
                 </div>
             </td>
             <td mat-footer-cell class="br text-right f-600 p-8" *matFooterCellDef>
@@ -75,20 +78,23 @@
 
         </ng-container>
         <ng-container matColumnDef="payout">
-            <th mat-sort-header="quarterlyPayout" mat-header-cell *matHeaderCellDef class="br  right-hc w-13 text-right hide-arrow">
+            <th mat-sort-header="quarterlyPayout" mat-header-cell *matHeaderCellDef
+                class="br  right-hc w-13 text-right hide-arrow">
                 Quarterly payout </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.quarterlyPayout }}</span>
                 </div>
             </td>
             <td mat-footer-cell class="br text-right f-600 p-8" *matFooterCellDef>
-                <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfQuarterlyPayout" appFormatNumber>{{sumOfQuarterlyPayout}}</span></div>
+                <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfQuarterlyPayout"
+                        appFormatNumber>{{sumOfQuarterlyPayout}}</span></div>
             </td>
 
         </ng-container>
 
         <ng-container matColumnDef="pdate">
-            <th mat-sort-header="pdate" mat-header-cell *matHeaderCellDef class="br right-hcb w-13 text-right"> Payout date </th>
+            <th mat-sort-header="pdate" mat-header-cell *matHeaderCellDef class="br right-hcb w-13 text-right"> Payout
+                date </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar"> {{element.pdate}} </div>
             </td>
@@ -103,25 +109,29 @@
             <td mat-footer-cell class="br text-left" *matFooterCellDef> </td>
         </ng-container>
         <ng-container matColumnDef="tamt">
-            <th mat-sort-header="totalAmountReceived" mat-header-cell *matHeaderCellDef class="br w-11 right-hcb text-right hide-arrow">
+            <th mat-sort-header="totalAmountReceived" mat-header-cell *matHeaderCellDef
+                class="br w-11 right-hcb text-right hide-arrow">
                 Total payouts <br>received till today</th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.totalAmountReceived }}</span>
                 </div>
             </td>
             <td mat-footer-cell class="br text-right f-600 p-8" *matFooterCellDef>
-                <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfTotalAmountReceived" appFormatNumber>{{sumOfTotalAmountReceived}}</span></div>
+                <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfTotalAmountReceived"
+                        appFormatNumber>{{sumOfTotalAmountReceived}}</span></div>
             </td>
         </ng-container>
         <ng-container matColumnDef="amt">
-            <th mat-sort-header="amountInvested" mat-header-cell *matHeaderCellDef class="br right-hcb w-13 text-right hide-arrow">
+            <th mat-sort-header="amountInvested" mat-header-cell *matHeaderCellDef
+                class="br right-hcb w-13 text-right hide-arrow">
                 Amount invested
             </th>
             <td mat-cell *matCellDef="let element" class="br text-right">
                 <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.amountInvested }}</span> </div>
             </td>
             <td mat-footer-cell class="br text-right f-600 p-8" *matFooterCellDef>
-                <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfAmountInvested" appFormatNumber>{{sumOfAmountInvested}}</span></div>
+                <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfAmountInvested"
+                        appFormatNumber>{{sumOfAmountInvested}}</span></div>
             </td>
         </ng-container>
         <ng-container matColumnDef="mdate">
@@ -141,7 +151,8 @@
                 <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.maturityValue }}</span> </div>
             </td>
             <td mat-footer-cell class="br text-right f-600 p-8" *matFooterCellDef>
-                <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfMaturityValue" appFormatNumber>{{sumOfMaturityValue}}</span></div>
+                <div>{{isLoading ? ' ' : '₹'}}<span [value]="sumOfMaturityValue"
+                        appFormatNumber>{{sumOfMaturityValue}}</span></div>
             </td>
         </ng-container>
 

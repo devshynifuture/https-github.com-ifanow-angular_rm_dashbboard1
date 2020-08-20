@@ -14,8 +14,8 @@
       <!-- <div *ngIf="showTabs" class="pt-16">
   <img class="header-img pt-0 pb-0" src="assets/images/img1.jpg">
  </div> -->
-      <div *ngIf="showTabs" class="main-details min-height">
-        <p class="f-16 f-600 mb-0">{{advisorName}}</p>
+      <div *ngIf="showTabs"  matTooltip="{{advisorName}}" class="main-details min-height">
+        <p class="f-16 text-truncate f-600 mb-0">{{advisorName}}</p>
 
         <button (click)="showsmallNavWrapper()" *ngIf="showTabs" aria-label="Toggle sidenav" class="btn_nav desKBTN"
                 mat-icon-button type="button">

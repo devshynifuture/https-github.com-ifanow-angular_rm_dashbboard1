@@ -19,7 +19,7 @@
                         <th mat-header-cell *matHeaderCellDef class="br"> ARN/RIA </th>
                         <td mat-cell *matCellDef="let element" class="br">
                             <div class="bar">
-                                {{getARNId(element.arnRiaDetailsId)}}
+                                <span *ngIf="!utilService.isLoading"> {{getARNId(element.arnRiaDetailsId)}}</span>
                             </div>
                         </td>
                     </ng-container>
@@ -28,7 +28,8 @@
                     <ng-container matColumnDef="name">
                         <th mat-header-cell *matHeaderCellDef class="br"> Registered email ID </th>
                         <td mat-cell *matCellDef="let element" class="br">
-                            <div class="bar">{{element.registeredEmail}} </div>
+                            <div class="bar">
+                                <span *ngIf="!utilService.isLoading">{{element.registeredEmail}}</span> </div>
                         </td>
                     </ng-container>
 
@@ -52,7 +53,8 @@
                         <td mat-cell *matCellDef="let element" class="text-center c-p" [matMenuTriggerFor]="menu">
                             <div class="bar">
                                 <div [hidden]="utilService.isLoading">
-                                    <img src="/assets/images/svg/dot-menu.svg" class="c-p">
+                                    <img *ngIf="!utilService.isLoading" src="/assets/images/svg/dot-menu.svg"
+                                        class="c-p">
                                     <mat-menu #menu="matMenu">
                                         <button mat-menu-item
                                             (click)="openInSideBar(element.rtTypeMasterid, element, false)">Edit</button>
@@ -78,7 +80,7 @@
                         <th mat-header-cell *matHeaderCellDef class="br"> ARN/RIA </th>
                         <td mat-cell *matCellDef="let element" class="br">
                             <div class="bar">
-                                {{getARNId(element.arnRiaDetailsId)}}
+                                <span *ngIf="!utilService.isLoading"> {{getARNId(element.arnRiaDetailsId)}}</span>
                             </div>
 
                         </td>
@@ -89,7 +91,7 @@
                         <th mat-header-cell *matHeaderCellDef class="br"> Login ID </th>
                         <td mat-cell *matCellDef="let element" class="br">
                             <div class="bar">
-                                {{element.loginId}}
+                                <span *ngIf="!utilService.isLoading"> {{element.loginId}}</span>
                             </div>
                         </td>
                     </ng-container>
@@ -113,7 +115,7 @@
                         <th mat-header-cell *matHeaderCellDef class="br"> Registered email ID </th>
                         <td mat-cell *matCellDef="let element" class="br breakWord">
                             <div class="bar text-break">
-                                {{element.registeredEmail}}
+                                <span *ngIf="!utilService.isLoading"> {{element.registeredEmail}}</span>
                             </div>
                         </td>
                     </ng-container>
@@ -168,7 +170,8 @@
                     <ng-container matColumnDef="position">
                         <th mat-header-cell *matHeaderCellDef class="br"> ARN/RIA </th>
                         <td mat-cell *matCellDef="let element" class="br">
-                            <div class="bar"> {{getARNId(element.arnRiaDetailsId)}} </div>
+                            <div class="bar"><span *ngIf="!utilService.isLoading">
+                                    {{getARNId(element.arnRiaDetailsId)}}</span></div>
                         </td>
                     </ng-container>
 
@@ -176,7 +179,7 @@
                     <ng-container matColumnDef="name">
                         <th mat-header-cell *matHeaderCellDef class="br"> Login ID </th>
                         <td mat-cell *matCellDef="let element" class="br">
-                            <div class="bar"> {{element.loginId}} </div>
+                            <div class="bar"><span *ngIf="!utilService.isLoading">{{element.loginId}}</span> </div>
                         </td>
                     </ng-container>
 
@@ -198,7 +201,8 @@
                     <ng-container matColumnDef="email">
                         <th mat-header-cell *matHeaderCellDef class="br"> Registered email ID </th>
                         <td mat-cell *matCellDef="let element" class="br">
-                            <div class="bar"> {{element.registeredEmail}} </div>
+                            <div class="bar"> <span *ngIf="!utilService.isLoading">{{element.registeredEmail}} </span>
+                            </div>
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="mail">
@@ -244,7 +248,8 @@
                     <ng-container matColumnDef="position">
                         <th mat-header-cell *matHeaderCellDef class="br"> ARN/RIA </th>
                         <td valign="top" mat-cell *matCellDef="let element" class="br">
-                            <div class="bar"> {{getARNId(element.arnRiaDetailsId)}} </div>
+                            <div class="bar"> <span
+                                    *ngIf="!utilService.isLoading">{{getARNId(element.arnRiaDetailsId)}}</span> </div>
                         </td>
                     </ng-container>
 
@@ -252,7 +257,7 @@
                     <ng-container matColumnDef="name">
                         <th mat-header-cell *matHeaderCellDef class="br"> Login ID </th>
                         <td valign="top" mat-cell *matCellDef="let element" class="br">
-                            <div class="bar"> {{element.loginId}} </div>
+                            <div class="bar"><span *ngIf="!utilService.isLoading"> {{element.loginId}} </span></div>
                         </td>
                     </ng-container>
 
