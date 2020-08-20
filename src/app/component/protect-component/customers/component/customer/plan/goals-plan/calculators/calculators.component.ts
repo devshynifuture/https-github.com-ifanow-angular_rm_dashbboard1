@@ -17,22 +17,22 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
   styleUrls: ['./calculators.component.scss']
 })
 export class CalculatorsComponent implements OnInit {
-  
+
   @Input() data: any = {};
   @Input() popupHeaderText: string = 'CALCULATORS';
   validatorType = ValidatorType;
-  
+
   incomeFG: FormGroup;
   loanFG: FormGroup;
   delayFG: FormGroup;
-  advisorId:number;
+  advisorId: number;
   clientId: number;
-  showDelayChart:boolean = false;
+  showDelayChart: boolean = false;
   currentTab = 0;
 
   delayArray = [];
-  
-  calculatedEMI:any = {
+
+  calculatedEMI: any = {
   }
 
   barButtonOptions: MatProgressButtonOptions = {
@@ -61,10 +61,12 @@ export class CalculatorsComponent implements OnInit {
     fullWidth: false,
   };
   chart: Highcharts.Chart;
-  
+  perLoanAmt: number;
+  downPayPer: any;
+
   constructor(
     private subInjectService: SubscriptionInject,
-    private eventService: EventService, 
+    private eventService: EventService,
     private fb: FormBuilder,
     private datePipe: DatePipe,
     private planService: PlanService,
@@ -74,13 +76,11 @@ export class CalculatorsComponent implements OnInit {
   }
 
   ngOnInit() {
-    setTimeout(() => {
-      this.pieChart('')
-    }, 300);
+   
     this.getdataForm();
     const yearGap = (new Date(this.data.goalStartDate).getFullYear()) - (new Date().getFullYear());
     for (let index = 0; index < yearGap; index++) {
-      this.delayArray.push({value: index+1, display: index + 1 + ' Years'});
+      this.delayArray.push({ value: index + 1, display: index + 1 + ' Years' });
     }
   }
 
@@ -104,12 +104,14 @@ export class CalculatorsComponent implements OnInit {
       delay3: ['', [Validators.required]],
       delay4: ['', [Validators.required]],
     })
-
+    setTimeout(() => {
+      this.pieChart('')
+    }, 300);
   }
 
   // ---------------------------------- calculator ---------------------------------------
-  calculateEMI(){
-    if(this.incomeFG.invalid || this.loanFG.invalid || this.barButtonOptions.active || this.barButtonOptions1.active) {
+  calculateEMI() {
+    if (this.incomeFG.invalid || this.loanFG.invalid || this.barButtonOptions.active || this.barButtonOptions1.active) {
       this.incomeFG.markAllAsTouched();
       this.loanFG.markAllAsTouched();
     } else {
@@ -127,7 +129,7 @@ export class CalculatorsComponent implements OnInit {
 
       this.barButtonOptions.active = true;
       this.barButtonOptions1.active = true;
-      this.planService.calculateEMI({loanIpJson: JSON.stringify(emiObj)}).subscribe((res) => {
+      this.planService.calculateEMI({ loanIpJson: JSON.stringify(emiObj) }).subscribe((res) => {
         this.calculatedEMI = {
           ...res,
           ...emiObj
@@ -143,7 +145,12 @@ export class CalculatorsComponent implements OnInit {
     }
   }
   pieChart(id) {
-   Highcharts.chart('piechartMutualFund', {
+
+    this.downPayPer = (this.calculatedEMI.downPayment * 100) / this.loanFG.controls.loanAmt.value
+    this.perLoanAmt = 100 - this.downPayPer
+    console.log('LA',this.perLoanAmt);
+    console.log('DP',this.downPayPer)
+    Highcharts.chart('piechartMutualFund', {
       chart: {
         plotBackgroundColor: null,
         plotBorderWidth: 0,
@@ -189,7 +196,7 @@ export class CalculatorsComponent implements OnInit {
           {
             name: 'Loan amount',
             // y:20,
-            y:  50,
+            y: this.perLoanAmt,
             color: '#008FFF',
             dataLabels: {
               enabled: false
@@ -197,7 +204,7 @@ export class CalculatorsComponent implements OnInit {
           }, {
             name: 'Down payment',
             // y:20,
-            y:  40,
+            y: this.downPayPer,
             color: '#FFC100',
             dataLabels: {
               enabled: false
@@ -207,8 +214,8 @@ export class CalculatorsComponent implements OnInit {
       }]
     });
   }
-  saveEMIToGoal(){
-    if(this.incomeFG.invalid || this.loanFG.invalid || this.barButtonOptions.active || this.barButtonOptions1.active) {
+  saveEMIToGoal() {
+    if (this.incomeFG.invalid || this.loanFG.invalid || this.barButtonOptions.active || this.barButtonOptions1.active) {
       this.incomeFG.markAllAsTouched();
       this.loanFG.markAllAsTouched();
     } else {
@@ -221,7 +228,7 @@ export class CalculatorsComponent implements OnInit {
         annualInterestRate: this.loanFG.controls.interestRate.value,
         previousEMIs: this.incomeFG.controls.otherEMI.value,
         incomeGrowthRate: this.incomeFG.controls.growthRate.value,
-        downPayment:this.calculatedEMI.downPayment,
+        downPayment: this.calculatedEMI.downPayment,
         loanAmount: this.loanFG.controls.loanAmt.value,
         goalStartDate: this.datePipe.transform(this.data.remainingData.goalStartDate, AppConstants.DATE_FORMAT_DASHED),
         goalAmount: this.data.gv,
@@ -243,8 +250,8 @@ export class CalculatorsComponent implements OnInit {
     }
   }
 
-  saveToGoal(){
-    if(this.incomeFG.valid && this.loanFG.valid) {
+  saveToGoal() {
+    if (this.incomeFG.valid && this.loanFG.valid) {
       // combine previous data if needed
       let data = {
         ...this.data,
@@ -253,17 +260,17 @@ export class CalculatorsComponent implements OnInit {
     }
   }
 
-  resetIncome(){
+  resetIncome() {
     this.incomeFG.controls.income.setValue('');
   }
 
-  resetIncomeFG(){
+  resetIncomeFG() {
     this.incomeFG.reset();
   }
   // ---------------------------------- calculator ---------------------------------------
 
   // ---------------------------------- cost of delay ------------------------------------
-  
+
   // options set for bar charts
   // Reference - https://api.highcharts.com/highcharts/
   options: any = {
@@ -273,25 +280,25 @@ export class CalculatorsComponent implements OnInit {
     },
     plotOptions: {
       bar: {
-          dataLabels: {
-              enabled: true,
-              align: 'left',
-              inside: false
-          }
+        dataLabels: {
+          enabled: true,
+          align: 'left',
+          inside: false
+        }
       }
     },
     credits: {
-        enabled: false
+      enabled: false
     },
     title: {
       text: ''
     },
     xAxis: {
-        type: 'category',
-        lineWidth: 0,
-        tickWidth: 0
+      type: 'category',
+      lineWidth: 0,
+      tickWidth: 0
     },
-    yAxis:{
+    yAxis: {
       visible: false
     },
     tooltip: {
@@ -300,16 +307,16 @@ export class CalculatorsComponent implements OnInit {
     legend: {
       enabled: false,
     },
-    series: [{data: []}]
+    series: [{ data: [] }]
   }
-  createChart(res){
+  createChart(res) {
     const colors = ['green', 'blue', 'yellow', 'red'];
 
     let lumpsumSeries = JSON.parse(JSON.stringify(this.options));
     let sipSeries = JSON.parse(JSON.stringify(this.options));
     let count = 0;
-    for(let k in res) {
-      if(res.hasOwnProperty(k)) {
+    for (let k in res) {
+      if (res.hasOwnProperty(k)) {
         lumpsumSeries.series[0].data.push({
           y: Math.round(res[k].lumpsum_total),
           name: k + ' years',
@@ -326,9 +333,9 @@ export class CalculatorsComponent implements OnInit {
     Highcharts.chart('monthly-chart-container', sipSeries);
     Highcharts.chart('lumpsum-chart-container', lumpsumSeries);
   }
-  
-  calculateDelay(){
-    if(this.delayFG.invalid || this.barButtonOptions.active || this.barButtonOptions1.active) {
+
+  calculateDelay() {
+    if (this.delayFG.invalid || this.barButtonOptions.active || this.barButtonOptions1.active) {
       this.delayFG.markAllAsTouched();
       return;
     }
@@ -341,16 +348,16 @@ export class CalculatorsComponent implements OnInit {
       differentGoalYears: subData.differentGoalYears.map(year => this.datePipe.transform(year, AppConstants.DATE_FORMAT_DASHED)),
       targetValueOfRequiredFVDebt: subData.targetValueOfRequiredFVDebt,
       targetValueOfRequiredFVEquity: subData.targetValueOfRequiredFVEquity,
-      advisorId:this.advisorId,
+      advisorId: this.advisorId,
       savingStartDate: this.datePipe.transform(subData.savingStartDate, AppConstants.DATE_FORMAT_DASHED),
       savingEndDate: this.datePipe.transform(subData.savingEndDate, AppConstants.DATE_FORMAT_DASHED),
-      yearStepUps:[0],
+      yearStepUps: [0],
     }
 
-    let formValue:Object = this.delayFG.value;
+    let formValue: Object = this.delayFG.value;
 
-    for(let k in formValue) {
-      if(formValue.hasOwnProperty(k)){
+    for (let k in formValue) {
+      if (formValue.hasOwnProperty(k)) {
         jsonObj.yearStepUps.push(formValue[k]);
       }
     }
@@ -367,8 +374,8 @@ export class CalculatorsComponent implements OnInit {
     })
   }
 
-  saveDelayToGoal(){
-    if(this.delayFG.invalid || this.barButtonOptions.active || this.barButtonOptions1.active) {
+  saveDelayToGoal() {
+    if (this.delayFG.invalid || this.barButtonOptions.active || this.barButtonOptions1.active) {
       this.delayFG.markAllAsTouched();
       return;
     }
@@ -378,16 +385,16 @@ export class CalculatorsComponent implements OnInit {
       goalType: this.data.goalType,
       savingStartDate: this.datePipe.transform(subData.savingStartDate, AppConstants.DATE_FORMAT_DASHED),
       savingEndDate: this.datePipe.transform(subData.savingEndDate, AppConstants.DATE_FORMAT_DASHED),
-      yearStepUps:[0],
+      yearStepUps: [0],
     }
 
-    let formValue:Object = this.delayFG.value;
+    let formValue: Object = this.delayFG.value;
     this.barButtonOptions.active = true;
     this.barButtonOptions1.active = true;
 
-    for(let k in formValue) {
-      if(formValue.hasOwnProperty(k))
-      jsonObj.yearStepUps.push(formValue[k]);
+    for (let k in formValue) {
+      if (formValue.hasOwnProperty(k))
+        jsonObj.yearStepUps.push(formValue[k]);
     }
 
     this.planService.saveCostToDelay(jsonObj).subscribe(res => {
@@ -406,7 +413,7 @@ export class CalculatorsComponent implements OnInit {
   // ---------------------------------- cost of delay ------------------------------------
 
   save() {
-    switch(this.currentTab) {
+    switch (this.currentTab) {
       case 0:
         this.saveEMIToGoal();
         break;
@@ -424,17 +431,17 @@ export class CalculatorsComponent implements OnInit {
   }
 
   initializePage(pg) {
-    switch(pg) {
+    switch (pg) {
       case 0:
       case 4:
-        const costDelay:Object = this.data.remainingData.costDelay;
-        if(costDelay && costDelay.hasOwnProperty(0)) {
+        const costDelay: Object = this.data.remainingData.costDelay;
+        if (costDelay && costDelay.hasOwnProperty(0)) {
           this.showDelayChart = true;
           setTimeout(() => {
             this.createChart(costDelay);
           }, 100);
         }
-      break;
+        break;
     }
   }
 
