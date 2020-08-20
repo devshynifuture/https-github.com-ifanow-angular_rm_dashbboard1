@@ -1409,6 +1409,56 @@ $lineheight:20px;
   }
 }
 
+@media(max-width:992px) {
+  .ml-33-992 {
+    margin-left: 33.333% !important;
+  }
+
+  .d-none-992 {
+    display: none !important;
+  }
+
+  .pl-0-992 {
+    padding-left: 0px !important;
+  }
+
+  .pr-0-992 {
+    padding-right: 0px !important;
+  }
+
+  .pr-15-992 {
+    padding-right: 15px !important;
+  }
+
+  .pl-15-992 {
+    padding-left: 15px !important;
+  }
+
+  .md-text-center {
+    text-align: center !important;
+  }
+
+  .w-auto-992 {
+    width: auto !important;
+  }
+
+  .md-pt-16 {
+    padding-top: 16px !important;
+  }
+}
+
+@media(max-width:991px) {
+  .pl-0-991 {
+    padding-left: 0px !important;
+  }
+}
+
+@media(max-width:954px) {
+  .pl-0-954 {
+    padding-left: 0px !important;
+  }
+}
+
 @media(max-width: 767px) {
   .mobile-none {
     display: none !important;
