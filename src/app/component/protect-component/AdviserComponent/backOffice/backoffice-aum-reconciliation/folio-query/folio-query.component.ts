@@ -192,6 +192,7 @@ export class FolioQueryComponent implements OnInit {
   search(flag, value, searchFrom) {
     // search query logic
     // on hold
+
     this.isMainLoading = true;
     const data = {
       flag_search: flag,

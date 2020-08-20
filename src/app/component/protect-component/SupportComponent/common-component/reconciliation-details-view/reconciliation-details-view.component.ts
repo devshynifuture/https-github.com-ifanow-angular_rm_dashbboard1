@@ -141,11 +141,14 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
   singleSelectionSelect(element, mainIndex) {
     if (element.canDeleteTransaction === true) {
       this.selection.toggle(element);
-      const parsedValue = parseFloat((element.units).toFixed(3));
+      // const parsedValue = parseFloat((element.units).toFixed(3));
       if (this.selection.isSelected(element)) {
 
         this.shouldShowMultipleDelete = true;
-        this.selectedFolioUnits = parseFloat((this.selectedFolioUnits + parsedValue).toFixed(3));
+        this.selectedFolioUnits = this.selectedFolioUnits + (parseFloat(element.units.toFixed(3)) * element.effect);
+        // this.selectedFolioUnits = parseFloat((this.selectedFolioUnits + parsedValue).toFixed(3));
+        this.selectedFolioUnits = parseFloat(this.selectedFolioUnits.toFixed(3));
+        
         this.deleteMultipleTransactionArray.push(element.id);
         this.deletedTransactions.push(mainIndex);
       } else {
@@ -155,16 +158,15 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
 
         const index1 = this.deletedTransactions.indexOf(mainIndex);
         this.deletedTransactions.splice(index1, 1);
-
-        this.selectedFolioUnits = parseFloat((this.selectedFolioUnits - parsedValue).toFixed(3));
-        if (this.selectedFolioUnits < 0.000) {
-          this.selectedFolioUnits = 0.000;
-        }
+        this.selectedFolioUnits = this.selectedFolioUnits - (parseFloat(element.units.toFixed(3)) * element.effect);
+        // this.selectedFolioUnits = parseFloat((this.selectedFolioUnits - parsedValue).toFixed(3));
+        // if (this.selectedFolioUnits < 0.000) {
+        //   this.selectedFolioUnits = 0.000;
+        this.selectedFolioUnits = parseFloat(this.selectedFolioUnits.toFixed(3));
+        // }
         if (this.deleteMultipleTransactionArray.length === 0) {
           this.shouldShowMultipleDelete = false;
         }
-
-        this.shouldShowMultipleDelete = false;
       }
     } else {
       this.selection.clear();
@@ -195,8 +197,9 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
               return;
             }
             this.deletedTransactions.push(index);
-            const parsedValue = parseFloat(parseFloat(row.units).toFixed(3));
-            this.selectedFolioUnits = parseFloat((this.selectedFolioUnits + parsedValue).toFixed(3));
+            // const parsedValue = parseFloat(parseFloat(row.units).toFixed(3));
+            this.selectedFolioUnits = this.selectedFolioUnits + parseFloat(row.units) * row.effect;
+            this.selectedFolioUnits = parseFloat(this.selectedFolioUnits.toFixed(3));
             this.deleteMultipleTransactionArray.push(row.id);
           }
         });
