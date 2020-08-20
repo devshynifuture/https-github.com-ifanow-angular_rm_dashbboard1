@@ -1217,7 +1217,9 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
             //   this.displayColArray.push(obj);
             // });
             // this.type = this.rightFilterData.reportType[0];
-            this.reponseData = this.doFiltering(this.rightFilterData.mfData);
+            if(this.rightFilterData.mfData){
+              this.reponseData = this.doFiltering(this.rightFilterData.mfData);
+            }
             this.mfData = this.reponseData;
             this.displayColArray = [];
             this.rightFilterData.transactionView.forEach(element => {

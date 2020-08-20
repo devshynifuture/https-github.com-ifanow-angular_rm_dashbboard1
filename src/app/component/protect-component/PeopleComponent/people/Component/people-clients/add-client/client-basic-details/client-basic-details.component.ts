@@ -393,6 +393,7 @@ export class ClientBasicDetailsComponent implements OnInit {
 
 
   lisNominee(value) {
+    value = value.filter(element => element.familyMemberType != 2)
     this.ownerData.Fmember = value;
     this.nomineesListFM = Object.assign([], value);
   }

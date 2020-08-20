@@ -16,11 +16,11 @@ import { MatProgressButtonOptions } from 'src/app/common/progress-button/progres
 })
 export class AddFranklinTempletionDetailsComponent implements OnInit, OnDestroy {
 
-  @Input() data:any;
+  @Input() data: any;
 
-  franklinFG:FormGroup;
-  advisorId:any;
-  formPlaceHolder:any;
+  franklinFG: FormGroup;
+  advisorId: any;
+  formPlaceHolder: any;
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
     text: 'SAVE',
@@ -35,7 +35,7 @@ export class AddFranklinTempletionDetailsComponent implements OnInit, OnDestroy 
   };
 
   constructor(
-    private subInjectService: SubscriptionInject, 
+    private subInjectService: SubscriptionInject,
     private eventService: EventService,
     private settingService: SettingsService,
     private fb: FormBuilder
@@ -50,20 +50,20 @@ export class AddFranklinTempletionDetailsComponent implements OnInit, OnDestroy 
     this.formListeners();
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 
-  formListeners(){
-    this.subscription.add(
-      this.franklinFG.controls.arnRiaDetailsId.valueChanges.subscribe(id => {
-        const arn = this.data.arnData.find(data => data.id == id);
-        if(arn.registeredPan && arn.renewalDate) {
-          const loginDate = new Date(arn.renewalDate).getDate() + ('0' + new Date(arn.renewalDate).getMonth() + 1).slice(-2);
-          this.franklinFG.controls.loginPassword.setValue(arn.registeredPan.slice(0,4) + loginDate);
-        }
-      })
-    )
+  formListeners() {
+    // this.subscription.add(
+    //   this.franklinFG.controls.arnRiaDetailsId.valueChanges.subscribe(id => {
+    //     const arn = this.data.arnData.find(data => data.id == id);
+    //     if (arn.registeredPan && arn.renewalDate) {
+    //       const loginDate = new Date(arn.renewalDate).getDate() + ('0' + new Date(arn.renewalDate).getMonth() + 1).slice(-2);
+    //       this.franklinFG.controls.loginPassword.setValue(arn.registeredPan.slice(0, 4) + loginDate);
+    //     }
+    //   })
+    // )
   }
 
   createForm() {
@@ -73,16 +73,18 @@ export class AddFranklinTempletionDetailsComponent implements OnInit, OnDestroy 
       arnOrRia: [this.data.mainData.arnOrRia],
       rtTypeMasterid: [this.data.rtType],
       rtExtTypeId: [2], // dbf file extension
-      loginId: [this.data.mainData.loginId || '', [Validators.required]],
-      loginPassword: [this.data.mainData.loginPassword || '', [Validators.required]],
+      loginId: [this.data.mainData.loginId || ''],
+      loginPassword: [this.data.mainData.loginPassword || ''],
       mailbackPassword: [this.data.mainData.mailbackPassword || '', [Validators.required, Validators.minLength(8), Validators.maxLength(8)]],
       registeredEmail: [this.data.mainData.registeredEmail || '', [Validators.required, Validators.pattern(ValidatorType.EMAIL)]],
       fileOrderingUseabilityStatusId: [1]
     });
+    (this.data.is_add_call) ? '' : this.franklinFG.controls.arnRiaDetailsId.disable();
+
   }
 
-  save(){
-    if(this.franklinFG.invalid || this.barButtonOptions.active) {
+  save() {
+    if (this.franklinFG.invalid || this.barButtonOptions.active) {
       this.franklinFG.markAllAsTouched();
     } else {
       this.barButtonOptions.active = true;
@@ -90,11 +92,11 @@ export class AddFranklinTempletionDetailsComponent implements OnInit, OnDestroy 
       jsonObj.arnOrRia = this.data.arnData.find((data) => this.franklinFG.controls.arnRiaDetailsId.value == data.id).arnOrRia;
 
       // add action
-      if(!this.data.mainData.arnRiaDetailsId) {
-        this.settingService.addMFRTA(jsonObj).subscribe((res)=> {
+      if (!this.data.mainData.arnRiaDetailsId) {
+        this.settingService.addMFRTA(jsonObj).subscribe((res) => {
           this.eventService.openSnackBar("Franklin details Added successfully");
           this.Close(true);
-        }, err=> {
+        }, err => {
           this.eventService.openSnackBar(err, "Dismiss");
           this.barButtonOptions.active = false;
         })
@@ -103,10 +105,10 @@ export class AddFranklinTempletionDetailsComponent implements OnInit, OnDestroy 
           ...this.data.mainData,
           ...jsonObj
         }
-        this.settingService.editMFRTA(editJson).subscribe((res)=> {
+        this.settingService.editMFRTA(editJson).subscribe((res) => {
           this.eventService.openSnackBar("Franklin details Modified successfully");
           this.Close(true);
-        }, err=> {
+        }, err => {
           this.eventService.openSnackBar(err, "Dismiss");
           this.barButtonOptions.active = false;
         })

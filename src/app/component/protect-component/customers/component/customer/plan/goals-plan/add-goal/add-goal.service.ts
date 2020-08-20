@@ -22,7 +22,12 @@ export class AddGoalService {
     if(dashBoardData.debt_monthly && dashBoardData.equity_monthly &&  dashBoardData.lump_debt && dashBoardData.lump_equity){
       let asset:any = event.item.data;
       let obj = this.createAllocationObject(asset, advisor_client_id, selectedGoal)
-      this.allocateAsset(obj);
+      if(asset.absAllocation < 100){
+        this.allocateAsset(obj);
+      }else{
+        this.eventService.openSnackBar("Asset already allocation 100% !!", "Dismiss");
+      }
+     
     }else{
       this.eventService.openSnackBar("Asset allocation unsuccessful !! your goal is already achieved", "Dismiss");
     }
@@ -32,7 +37,11 @@ export class AddGoalService {
     let dashBoardData = selectedGoal.dashboardData
     if(dashBoardData.debt_monthly && dashBoardData.equity_monthly &&  dashBoardData.lump_debt && dashBoardData.lump_equity){
       let obj = this.createAllocationObjectForMf(mfAsset, advisor_client_id, selectedGoal);
-      this.allocateAsset(obj);
+      if(mfAsset.absAllocation < 100){
+        this.allocateAsset(obj);
+      }else{
+        this.eventService.openSnackBar("Asset already allocation 100% !!", "Dismiss");
+      }
     }else{
       this.eventService.openSnackBar("Asset allocation unsuccessful !! your goal is already achieved", "Dismiss");
     }
