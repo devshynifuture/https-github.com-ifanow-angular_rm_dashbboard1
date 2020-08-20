@@ -29,7 +29,7 @@ import { CustomerService } from '../../customers/component/customer/customer.ser
 import { Chart } from 'angular-highcharts';
 import * as Highcharts from 'highcharts';
 import { element } from 'protractor';
-import {EnumDataService} from "../../../../services/enum-data.service";
+import { EnumDataService } from "../../../../services/enum-data.service";
 
 export interface PeriodicElement {
   name: string;
@@ -201,6 +201,8 @@ export class DashboardComponent implements OnInit {
   todoListFlag: boolean;
   userData: any;
   taskSummaryDashboardCount: any = null;
+  mfDataflag: boolean;
+  keyMatrixFlag: boolean = true;
   constructor(
     public dialog: MatDialog, private subService: SubscriptionService,
     private eventService: EventService,
@@ -465,17 +467,17 @@ export class DashboardComponent implements OnInit {
     this.getGoalSummaryData();
     this.initPointForTask();
     this.getMisData();
-  } 
+  }
 
   initPointForTask() {
     this.getTaskDashboardCount();
     this.getTodaysTaskList();
   }
 
-  getTaskDashboardCount(){
+  getTaskDashboardCount() {
     this.dashboardService.getTaskDashboardCountValues({ advisorId: this.advisorId })
-      .subscribe(res=>{
-        if(res){
+      .subscribe(res => {
+        if (res) {
           this.taskSummaryDashboardCount = res;
         }
       })
@@ -1350,7 +1352,8 @@ export class DashboardComponent implements OnInit {
       data => {
         this.isKeyMatrix = false;
         this.keyMetricJson = data;
-        this.keyMetricJson.mfAum = '';
+        // this.keyMetricJson.mfAum = '';
+        this.loaderFun();
       },
       err => {
         this.keyMetricJson = '';
@@ -1372,6 +1375,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getMisData() {
+    this.mfDataflag = true
     const obj = {
       advisorId: (this.parentId == this.advisorId) ? 0 : this.advisorId,
       arnRiaDetailsId: -1,
@@ -1379,9 +1383,11 @@ export class DashboardComponent implements OnInit {
     };
     this.backoffice.getMisData(obj).subscribe(
       data => {
+        this.mfDataflag = false;
         if (data) {
           this.keyMetricJson.mfAum = data.totalAumRupees;
         }
+        this.loaderFun()
         // UtilService.getNumberToWord(this.keyMetricJson.mfAum)
         // this.getFileResponseDataForMis(data)
       },
@@ -1389,6 +1395,14 @@ export class DashboardComponent implements OnInit {
         console.log('dashboard getMisData err : ', err);
       }
     );
+  }
+
+  loaderFun() {
+    if (!this.isKeyMatrix && !this.mfDataflag) {
+      this.keyMatrixFlag = false
+    } else {
+      this.keyMatrixFlag = true;
+    }
   }
 
 

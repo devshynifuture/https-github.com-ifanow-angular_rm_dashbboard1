@@ -32,14 +32,14 @@
 
   <div class="col-md-3 pl-20 pr-20 mt-44">
     <h5 class="m-0 roboto f-500 pb-16">Key metrics</h5>
-    <div appSkeletonLoading [appSkeletonLoading]="isKeyMatrix"
+    <div appSkeletonLoading [appSkeletonLoading]="keyMatrixFlag"
       class="row bg-grey lter text-center ba-primitive br-4 p-8 skeletonAnimation">
       <div class="col-md-6 overflow-hidden pt-24 pb-24 bb-half pl-8">
         <p class="m-0 text-primitive roboto f-400 lh-16">MF AUM</p>
         <div class="relClass">
-          <div class="bar" [ngClass]="{'height24': isKeyMatrix}">
+          <div class="bar" [ngClass]="{'height24': keyMatrixFlag}">
             <h3 class="mb-0 roboto f-400 text-black mt-8">
-              <span *ngIf="!isKeyMatrix" appFormatNumber
+              <span *ngIf="!keyMatrixFlag" appFormatNumber
                 [value]="keyMetricJson.mfAum">{{(keyMetricJson.mfAum) ? keyMetricJson.mfAum : '0'}}</span>
             </h3>
           </div>
@@ -51,9 +51,9 @@
         <p class="m-0 text-primitive roboto f-400 lh-16">SIP book</p>
 
         <div class="relClass">
-          <div class="bar" [ngClass]="{'height24': isKeyMatrix}">
+          <div class="bar" [ngClass]="{'height24': keyMatrixFlag}">
             <h3 class="mb-0 roboto f-400 text-black mt-8">
-              <span *ngIf="!isKeyMatrix">{{(keyMetricJson.sipBook) ? keyMetricJson.sipBook : '0'}}</span>
+              <span *ngIf="!keyMatrixFlag">{{(keyMetricJson.sipBook) ? keyMetricJson.sipBook : '0'}}</span>
             </h3>
           </div>
         </div>
@@ -62,9 +62,9 @@
       <div class="col-md-6 overflow-hidden pt-24 pb-24 pl-8">
         <p class="m-0 text-primitive roboto f-400 lh-16">Clients</p>
         <div class="relClass">
-          <div class="bar" [ngClass]="{'height24': isKeyMatrix}">
+          <div class="bar" [ngClass]="{'height24': keyMatrixFlag}">
             <h3 class="mb-0 roboto f-400 text-black mt-8">
-              <span *ngIf="!isKeyMatrix">{{(keyMetricJson.clientCount) ? keyMetricJson.clientCount : '0'}}</span>
+              <span *ngIf="!keyMatrixFlag">{{(keyMetricJson.clientCount) ? keyMetricJson.clientCount : '0'}}</span>
             </h3>
           </div>
         </div>
@@ -74,8 +74,8 @@
         <p class="m-0 text-primitive roboto f-400 lh-16">Investors</p>
         <h3 class="m-0 roboto f-400 text-black pt-8">
           <div class="relClass">
-            <div class="bar" [ngClass]="{'height24': isKeyMatrix}">
-              <span *ngIf="!isKeyMatrix">{{(keyMetricJson.InvestorCount) ? keyMetricJson.InvestorCount : '0'}}</span>
+            <div class="bar" [ngClass]="{'height24': keyMatrixFlag}">
+              <span *ngIf="!keyMatrixFlag">{{(keyMetricJson.InvestorCount) ? keyMetricJson.InvestorCount : '0'}}</span>
             </div>
           </div>
 
@@ -528,12 +528,14 @@
 
             <div class="col-md-4 rightBorder d-flex align-items-center justify-content-center flex-column">
               <p class="f-14 mb-5 l-16 text-primitive text-center">This month’s <br> tasks</p>
-              <h4 class="mb-0 f-20">{{ taskSummaryDashboardCount ? taskSummaryDashboardCount.monthTaskCount : '-' }}</h4>
+              <h4 class="mb-0 f-20">{{ taskSummaryDashboardCount ? taskSummaryDashboardCount.monthTaskCount : '-' }}
+              </h4>
             </div>
 
             <div class="col-md-4 d-flex align-items-center justify-content-center flex-column">
               <p class="f-14 mb-5 l-16 text-danger text-center">Overdue <br> tasks</p>
-              <h4 class="mb-0 f-20 text-danger">{{ taskSummaryDashboardCount ? taskSummaryDashboardCount.overDueTaskCount: '-' }}</h4>
+              <h4 class="mb-0 f-20 text-danger">
+                {{ taskSummaryDashboardCount ? taskSummaryDashboardCount.overDueTaskCount: '-' }}</h4>
             </div>
 
           </div>

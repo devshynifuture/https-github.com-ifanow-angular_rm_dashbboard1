@@ -84,31 +84,32 @@ export class AddFamilyMemberComponent implements OnInit {
     });
     this.advisorId = AuthService.getAdvisorId();
     this.clientData = AuthService.getUserInfo();
-    if ((this.data.client.martialStatusId == 1 || this.data.client.martialStatusId == 0) && this.data.client.clientType == 1) {
-      if (this.data && this.data.client && this.data.client.duplicateFlag == false) {
-        const genderId = this.data.client.genderId;
-        if (genderId == 2) {
-          this.familyMemberList.firstRow.push({
-            name: 'Husband',
-            imgUrl: '/assets/images/svg/man-profile.svg',
-            selected: false,
-            relationshipTypeId: 2, genderId: 1
-          });
-        } else {
-          this.familyMemberList.firstRow.push({
-            name: 'Wife',
-            imgUrl: '/assets/images/svg/wife-profile.svg',
-            selected: false,
-            relationshipTypeId: 3, genderId: 2
-          }
-          );
+    // if ((this.data.client.martialStatusId == 1 || this.data.client.martialStatusId == 0) && this.data.client.clientType == 1) {
+    if (this.data && this.data.client && this.data.client.duplicateFlag == false) {
+      const genderId = this.data.client.genderId;
+      if (genderId == 2) {
+        this.familyMemberList.firstRow.push({
+          name: 'Husband',
+          imgUrl: '/assets/images/svg/man-profile.svg',
+          selected: false,
+          relationshipTypeId: 2, genderId: 1
+        });
+      } else {
+        this.familyMemberList.firstRow.push({
+          name: 'Wife',
+          imgUrl: '/assets/images/svg/wife-profile.svg',
+          selected: false,
+          relationshipTypeId: 3, genderId: 2
         }
+        );
       }
     }
-    else {
-      this.familyMemberList.firstRow = [];
-      this.familyMemberList.thirdRow = [{ name: 'Others', genderId: 1, imgUrl: '/assets/images/svg/others.svg', selected: false, count: 1, relationshipTypeId: 10 }]
-    }
+    //   }
+    //   else {
+    //     this.familyMemberList.firstRow = [];
+    //     this.familyMemberList.thirdRow = [{ name: 'Others', genderId: 1, imgUrl: '/assets/images/svg/others.svg', selected: false, count: 1, relationshipTypeId: 10 }]
+    //   }
+    // }
   }
 
   addFamilyType(value) {

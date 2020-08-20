@@ -57,12 +57,12 @@ export class DashboardGuideDialogComponent implements OnInit {
   ]
 
   clientsWorkWithList = [
-    { name: 'Salaried workoffice', selected: false },
-    { name: 'Small buisness owners', selected: false },
+    { name: 'Salaried workforce', selected: false },
+    { name: 'Small Business owners', selected: false },
     { name: 'Medical professionals', selected: false },
     { name: 'Finance professionals', selected: false },
     { name: 'Legal professionals', selected: false },
-    { name: 'Buisness executives', selected: false },
+    { name: 'Business executives', selected: false },
     { name: 'Entreprenures', selected: false },
     { name: 'Retirees', selected: false },
     { name: 'Public sector workforce', selected: false },
