@@ -31,6 +31,7 @@
 <div class="row pt-135 pb-28" id="ui-dashboard-advisor">
 
   <div class="col-md-3 pl-20 pr-20 mt-44">
+    
     <h5 class="m-0 roboto f-500 pb-16">Key metrics</h5>
     <div appSkeletonLoading [appSkeletonLoading]="keyMatrixFlag"
       class="row bg-grey lter text-center ba-primitive br-4 p-8 skeletonAnimation">
@@ -137,7 +138,7 @@
     <div appSkeletonLoading [appSkeletonLoading]="subOverviewFlag"
       class="row bg-grey lter text-center ba-primitive br-4 p-8 skeletonAnimation">
       <div class="col-md-6 pt-24 pb-24 bb-half pl-8">
-        <p class="m-0 text-primitive roboto f-400 lh-16">Clients with
+        <p class="m-0 text-primitive roboto f-400 lh-16">Clients with <br>
           subscription</p>
         <h3 class="m-0 roboto f-400 text-black pt-8">
 
@@ -151,7 +152,7 @@
         </h3>
       </div>
       <div class="col-md-6 pt-24 pb-24 bl-half bb-half">
-        <p class="m-0 text-primitive roboto f-400 lh-16">Subscriptions
+        <p class="m-0 text-primitive roboto f-400 lh-16">Subscriptions <br>
           cancelled</p>
         <h3 class="m-0 roboto f-400 text-black pt-8">
           <div class="relClass">
@@ -162,7 +163,7 @@
         </h3>
       </div>
       <div class="col-md-6 pt-24 pb-24 pl-8">
-        <p class="m-0 text-primitive roboto f-400 lh-16">Total fees
+        <p class="m-0 text-primitive roboto f-400 lh-16">Total fees <br>
           charged</p>
         <h3 class="m-0 roboto f-400 text-black pt-8">
           <div class="relClass">
@@ -174,7 +175,7 @@
         </h3>
       </div>
       <div class="col-md-6 pt-24 pb-24 bl-half">
-        <p class="m-0 text-primitive roboto f-400 lh-16">Fees received</p>
+        <p class="m-0 text-primitive roboto f-400 lh-16">Fees <br> received</p>
         <h3 class="m-0 roboto f-400 text-black pt-8">
           <div class="relClass">
             <div class="bar" [ngClass]="{'height24': subOverviewFlag}">
@@ -214,7 +215,7 @@
         <h3 class="m-0 roboto f-400 text-black pt-8">
           <div class="relClass">
             <div class="bar" [ngClass]="{'height24': docOverviewFlag}">
-              <span *ngIf="!docOverviewFlag">{{documentSizeData.totalMbs}}MB</span>
+              <span *ngIf="!docOverviewFlag">{{documentSizeData.totalMbs}} <span class="f-12"> MB </span> </span>
             </div>
           </div>
         </h3>
