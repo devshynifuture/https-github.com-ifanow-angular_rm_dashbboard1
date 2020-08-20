@@ -1,6 +1,6 @@
 <div class="pt-150 investoers">
 
-    <div [ngClass]="{'pe-none': isLoading}" class="row pb-10">
+    <div [ngClass]="{'pe-none': isLoading}" class="row ">
         <!-- <div class="col-md-4  d-flex align-items-center">
                        <h3 class="m-0 pt-6">Investors</h3>
         </div> -->
@@ -13,7 +13,7 @@
     </div>
 </div> -->
 
-        <div *ngIf="credentialData" class="col-md-12 text-right pt-4">
+        <div *ngIf="credentialData" class="col-md-12 text-right pt-4 pb-10">
             <mat-form-field appearance="standard" class=" searchInputWidth" floatLabel="never">
                 <input (keyup)="applyFilter($event)" autocomplete="off" class="form-control br-0" matInput
                     placeholder="Type to filter data">
@@ -49,10 +49,10 @@
 
     <div class="row">
         <div class="col-md-12 investors-transactions">
-            <div [ngClass]="{'table-scroll':isLoading==false }">
+            <div [ngClass]="{'table-scroll':isLoading==false }"
+                class="ox-hide investors-transactions-scroll responsive-table-port ">
                 <table *ngIf="dataSource.filteredData.length > 0" [appSkeletonLoading]="isLoading"
-                    [dataSource]="dataSource" appSkeletonLoading class="skeletonAnimation" id="table-low" mat-table
-                    matSort>
+                    [dataSource]="dataSource" appSkeletonLoading class="skeletonAnimation " id="tbs" mat-table matSort>
                     <ng-container matColumnDef="aggregatorType" sticky>
                         <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="aggregatorType"> Platform</th>
                         <td *matCellDef="let element" class="br" mat-cell>
@@ -62,14 +62,17 @@
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="brokerCode">
-                        <th *matHeaderCellDef class="br w-9" mat-header-cell mat-sort-header="brokerCode"> ARN/RIA</th>
-                        <td *matCellDef="let element" class="br" mat-cell>
+                        <th *matHeaderCellDef mat-header-cell mat-sort-header="brokerCode" class="br" sticky> ARN/RIA
+                        </th>
+                        <td *matCellDef="let element" mat-cell class="br">
                             <div class="bar"> {{isLoading ? '' : (element.brokerCode) ? element.brokerCode : '-'}}
                             </div>
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="name">
-                        <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="firstApplicantName"> Investor
+                        <th *matHeaderCellDef class="br w-9" mat-header-cell mat-sort-header="firstApplicantName"
+                            sticky>
+                            Investor
                             name
                         </th>
                         <td *matCellDef="let element" class="br" mat-cell>
@@ -79,14 +82,16 @@
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="panNo">
-                        <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="firstApplicantPan"> PAN</th>
+                        <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="firstApplicantPan" sticky> PAN
+                        </th>
                         <td *matCellDef="let element" class="br" mat-cell>
                             <div class="bar"> {{(element.firstApplicantPan) ? element.firstApplicantPan : element.pan}}
                             </div>
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="taxStatus">
-                        <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="taxDesc"> Tax status</th>
+                        <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="taxDesc" sticky> Tax status
+                        </th>
                         <td *matCellDef="let element" class="br" mat-cell>
                             <div class="bar">
                                 {{isLoading ? '' : (element.taxDesc) ? element.taxDesc : element.taxStatus}}
@@ -94,7 +99,8 @@
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="holdingType">
-                        <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="holdingType"> Holding nature
+                        <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="holdingType" sticky> Holding
+                            nature
                         </th>
                         <td *matCellDef="let element" class="br" mat-cell>
                             <div class="bar">
@@ -103,7 +109,8 @@
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="clientCode">
-                        <th *matHeaderCellDef class="br textLeft" mat-header-cell mat-sort-header="accountNo"> Account
+                        <th *matHeaderCellDef class="br textLeft" mat-header-cell mat-sort-header="accountNo" sticky>
+                            Account
                             number
                         </th>
                         <td *matCellDef="let element" class="br" mat-cell>
@@ -111,8 +118,9 @@
                             </div>
                         </td>
                     </ng-container>
-                    <ng-container matColumnDef="status">
-                        <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="statusStringTemp"> Status</th>
+                    <ng-container matColumnDef="status" sticky>
+                        <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="statusStringTemp">
+                            Status</th>
                         <td *matCellDef="let element" class="br" mat-cell>
 
                             <div class="bar">
@@ -132,7 +140,7 @@
                         </td>
                     </ng-container>
 
-                    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+                    <tr *matHeaderRowDef="displayedColumns;sticky: true" mat-header-row></tr>
                     <tr (click)="openInvestorDetail(row)" *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
                 </table>
             </div>

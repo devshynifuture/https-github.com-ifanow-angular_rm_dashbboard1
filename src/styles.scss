@@ -439,7 +439,7 @@
     overflow: auto;
   }
 
-  
+
 
   ::-webkit-scrollbar {
     width: 7px;
@@ -906,7 +906,7 @@ mat-tab-group[vertical] {
   }
 }
 
-#ui-texes{
+#ui-texes {
   .vertical-menu {
     // height: 100vh;
     // position: relative;
@@ -2004,7 +2004,7 @@ ngx-slick-carousel>.slick-disabled {
 }
 
 @media(max-width:1124px) {
-  .mainNav table.testing-mob {
+  .mainNav table.responsive-table-port {
     overflow-y: hidden !important;
     height: auto !important;
   }
