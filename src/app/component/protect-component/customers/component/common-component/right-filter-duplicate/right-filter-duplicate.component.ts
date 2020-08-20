@@ -158,11 +158,11 @@ export class RightFilterDuplicateComponent implements OnInit {
     } else {
       console.log('RightFilterComponent ngOninit getSchemeWise data is empty');
     }
-    if (this._data.folioWise) {
-      this.getFamilyMember(this._data.familyMember); // for family memeber
-    } else {
-      console.log('RightFilterComponent ngOninit getFamilyMember foliowise data is empty');
-    }
+    // if (this._data.folioWise) {
+    //   this.getFamilyMember(this._data.familyMember); // for family memeber
+    // } else {
+    //   console.log('RightFilterComponent ngOninit getFamilyMember foliowise data is empty');
+    // }
     if (this._data.transactionView) {
       this.getTransactionView(this._data.transactionView); // for displaying how many columns to show in table
     } else {
@@ -360,7 +360,7 @@ export class RightFilterDuplicateComponent implements OnInit {
     if (this._data.capitalGainData) {
       const redemptionList = this._data.capitalGainData.redemptionList;
       redemptionList.forEach(element => {
-        if (element.purchaceAgainstRedemptionTransactions.length > 0) {
+        if (element && element.hasOwnProperty('purchaceAgainstRedemptionTransactions') && element.purchaceAgainstRedemptionTransactions.length > 0 ) {
           let year = element.financialYear;
           const date = new Date(element.transactionDate);
 
