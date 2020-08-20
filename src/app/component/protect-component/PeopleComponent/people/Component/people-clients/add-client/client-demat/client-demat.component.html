@@ -62,7 +62,7 @@
       <div class="p-0 mob-pl-10 col-10 col-md-6">
         <div class="form-group mb-0">
           <mat-form-field>
-            <mat-select appHolderName matInput formControlName="name" [data]='ownerData'
+            <mat-select appHolderName matInput formControlName="name" [data]='ownerData' [clientIdData]="userData"
               (selectionChange)="disabledMember($event.value,'owner')" (valueChange1)='lisNominee1($event)'
               class="form-control br-0" [callMethod]='callMethod1'>
               <mat-option value='' disabled>Select family member</mat-option>

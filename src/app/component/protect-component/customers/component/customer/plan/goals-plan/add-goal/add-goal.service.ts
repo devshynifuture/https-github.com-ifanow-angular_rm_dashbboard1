@@ -23,6 +23,9 @@ export class AddGoalService {
       let asset:any = event.item.data;
       let obj = this.createAllocationObject(asset, advisor_client_id, selectedGoal)
       if(asset.absAllocation < 100){
+        asset.goalAssetMapping.forEach(element => {
+          obj.percentAllocated = 100-element.percentAllocated
+        });
         this.allocateAsset(obj);
       }else{
         this.eventService.openSnackBar("Asset already allocation 100% !!", "Dismiss");

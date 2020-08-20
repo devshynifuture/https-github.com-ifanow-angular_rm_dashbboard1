@@ -217,6 +217,10 @@ export class InvestorsTransactionsComponent implements OnInit {
     this.isPendingData = true;
     this.onlineTransact.getIINUCCPending(obj).subscribe(
       data => {
+        if (!data) {
+          data = [];
+          this.noData = 'No pending requests found';
+        }
         data.forEach(singleData => {
           if (singleData.tpUserCredFamilyMappingId && singleData.tpUserCredFamilyMappingId > 0) {
             singleData.statusStringTemp = 'Investment ready';
@@ -233,6 +237,8 @@ export class InvestorsTransactionsComponent implements OnInit {
         this.dataSource.sort = this.sort;
       },
       err => {
+        this.noData = 'No pending requests found';
+        this.isLoading = false;
         this.eventService.openSnackBar(err, 'Dismiss');
       }
     );

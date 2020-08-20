@@ -70,14 +70,14 @@ export class HolderNameDirective {
   @Input() set data(data) {
     this.ownerData = data.controleData;
     this.advisorId = AuthService.getAdvisorId();
-    this.clientId = AuthService.getClientId();
-    if ((this.clientId || this.clientIdData) && data.Fmember.length == 0) {
+    // this.clientId = AuthService.getClientId();
+    if ((this.clientIdData.clientId) && data.Fmember.length == 0) {
       this.getListFamilyMem();
     }
   }
   getListFamilyMem(): any {
     let obj = {
-      clientId: this.clientId ? this.clientId : this.clientIdData.clientId,
+      clientId: this.clientIdData.clientId,
     };
     if (this._requestData) {
       obj = this._requestData;
