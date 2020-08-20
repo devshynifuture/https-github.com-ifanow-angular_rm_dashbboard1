@@ -249,6 +249,11 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
         }
         this.planService.allocateOtherAssetToGoal(obj).subscribe(res => {
           // update asset list if user deletes goal and the list is still open
+          this.subscriber.add(
+            this.allocationService.refreshObservable.subscribe(()=>{
+              this.loadMFData();
+            })
+          );
           this.allocationService.refreshAssetList.next();
           this.eventService.openSnackBar("Asset unallocated");
           dialogRef.close();
