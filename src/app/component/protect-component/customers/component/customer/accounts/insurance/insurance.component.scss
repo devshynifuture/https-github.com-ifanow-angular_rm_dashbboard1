@@ -61,3 +61,35 @@
 .dot_bk {
     padding: 0px !important;
 }
+
+.table-scroll-liability {
+    height: auto;
+overflow: auto !important;
+max-height: 600px;
+}
+
+.deskLiabilities {
+    display: none;
+}
+
+
+@media screen and (min-width: 768px) and (max-width: 991px) { 
+    .tabViewLiabilities {
+        display: none;
+    }
+
+    .deskLiabilities {
+        display: block;
+        margin-top: 20px;
+    }
+
+    .deskLiabilities .mat-form-field {
+        width: 300px;
+    }
+
+    .table-scroll-liability {
+        height: auto;
+    overflow: auto !important;
+    max-height: 600px;
+    }
+}

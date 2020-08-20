@@ -68,6 +68,7 @@ export class LiabilitiesComponent implements OnInit {
   details: any;
   reportDate: Date;
   getOrgData: any;
+  selectedItem
 
 
   constructor(private excel: ExcelService, private eventService: EventService, private subInjectService: SubscriptionInject,
@@ -86,6 +87,7 @@ export class LiabilitiesComponent implements OnInit {
   ngOnInit() {
     this.viewMode = 'tab1';
     this.showFilter = 'tab1';
+    this.selectedItem = 'LIABILITIES'
     //this.showLoader = true;
     this.reportDate = new Date();
     this.advisorId = AuthService.getAdvisorId();

@@ -58,8 +58,9 @@
             that
             apply. </h3>
           <h3 *ngIf="step==4" class=" m-0 f-500 pb-20 text-diff">Can you tell us about what kind of clients you mostly
-            work with?Select only ones that apply.</h3>
-          <h3 *ngIf="step==5" class=" m-0 f-500 pb-20 text-diff">What kind of products do you primarily advise on?Select
+            work with? Select only ones that apply.</h3>
+          <h3 *ngIf="step==5" class=" m-0 f-500 pb-20 text-diff">What kind of products do you primarily advise on?
+            Select
             only the ones that apply</h3>
           <h3 *ngIf="step==6" class=" m-0 f-500 pb-20 text-diff">What best describes your mutual fund practice? </h3>
           <h3 *ngIf="step==7" class=" m-0 f-500 pb-20 text-diff">{{data.name}}, how are you managing your practice?
@@ -292,9 +293,12 @@
       </div>
       <div class="bottomFooterDasb">
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-6">
             <button *ngIf="step6Flag" (click)="step=7" mat-stroked-button class="btn-primary h-48 lh-48 f-18 br-4">Next
               question<img src="/assets/images/svg/right-arrow-white.svg" class="pl-12"></button>
+          </div>
+          <div class="col-md-6 d-flex justify-content-end align-items-end">
+            <p class="mb-0 c-p text-primitive" (click)="onNoClick()">Skip this exercise</p>
           </div>
         </div>
       </div>

@@ -42,8 +42,9 @@
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Amount invested
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" >
-                        {{bonds.amountInvested? '₹':''}}<span appFormatNumber>{{(bonds.amountInvested)?bonds.amountInvested:'-'}}</span>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{bonds.amountInvested? '₹':''}}<span
+                            appFormatNumber>{{(bonds.amountInvested)?bonds.amountInvested:'-'}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
@@ -95,7 +96,7 @@
                     </div>
                 </div>
 
-                
+
                 <div *ngIf="bonds.couponPayoutFrequencyId==2" class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Frequency of coupon payouts
@@ -120,19 +121,22 @@
                     <div class="col-md-4 text-right f-14 roboto p-0">
                         <!-- {{bonds.totalAmountReceivedTillToday? '₹':''}}<span appFormatNumber>{{(bonds.totalAmountReceivedTillToday)?bonds.totalAmountReceivedTillToday:'-'}}</span> -->
                         <div *ngIf="!matured">
-                            {{bonds.totalAmountReceivedTillToday? "₹" : ""}}<span appFormatNumber>{{bonds.totalAmountReceivedTillToday}}</span>
+                            {{bonds.totalAmountReceivedTillToday? "₹" : ""}}<span
+                                appFormatNumber>{{bonds.totalAmountReceivedTillToday}}</span>
                         </div>
                         <div *ngIf="matured">
-                            {{bonds.totalAmountReceivedTillMaturity? "₹" : ""}}<span appFormatNumber>{{bonds.totalAmountReceivedTillMaturity}}</span>
+                            {{bonds.totalAmountReceivedTillMaturity? "₹" : ""}}<span
+                                appFormatNumber>{{bonds.totalAmountReceivedTillMaturity}}</span>
                         </div>
                     </div>
                 </div>
-                <div *ngIf="bonds.couponPayoutFrequencyId == 2"F class="row bb p-8 b-l br">
+                <div *ngIf="bonds.couponPayoutFrequencyId == 2" F class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Payout received till maturity
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{bonds.totalAmountReceivedTillMaturity? '₹':''}}<span appFormatNumber>{{(bonds.totalAmountReceivedTillMaturity)?bonds.totalAmountReceivedTillMaturity:'-'}}</span>
+                        {{bonds.totalAmountReceivedTillMaturity? '₹':''}}<span
+                            appFormatNumber>{{(bonds.totalAmountReceivedTillMaturity)?bonds.totalAmountReceivedTillMaturity:'-'}}</span>
                     </div>
                 </div>
 
@@ -140,35 +144,39 @@
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Current value
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" >
-                        {{bonds.currentValue? '₹':''}}<span appFormatNumber>{{(bonds.currentValue)?bonds.currentValue:'-'}}</span>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        {{bonds.currentValue? '₹':''}}<span
+                            appFormatNumber>{{(bonds.currentValue)?bonds.currentValue:'-'}}</span>
                     </div>
                 </div>
                 <div class="row bb p-8 b-l br">
-                    <div class="col-md-8 text-left f-14 roboto p-0" >
+                    <div class="col-md-8 text-left f-14 roboto p-0">
                         Maturity value
                     </div>
                     <div class="col-md-4 text-right f-14 roboto p-0">
-                        {{bonds.maturityValue? '₹':''}}<span appFormatNumber>{{(bonds.maturityValue)?bonds.maturityValue:'-'}}</span>
+                        {{bonds.maturityValue? '₹':''}}<span
+                            appFormatNumber>{{(bonds.maturityValue)?bonds.maturityValue:'-'}}</span>
                     </div>
                 </div>
-                
+
                 <div *ngIf="bonds.couponPayoutFrequencyId == 1" class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
-                        Total interest earned till date  
+                        Total interest earned till date
                     </div>
-                    <div  class="col-md-4 text-right f-14 roboto p-0" >
+                    <div class="col-md-4 text-right f-14 roboto p-0">
                         <!-- ₹{{}} -->
                         <!-- {{bonds.currentValue? '₹':''}}<span appFormatNumber [value]="bonds.currentValue - bonds.amountInvested">{{(bonds.currentValue)?bonds.currentValue - bonds.amountInvested:'-'}}</span> -->
                         <div *ngIf="!matured">
-                            {{bonds.currentValue? "₹" : ""}}<span appFormatNumber>{{bonds.currentValue - bonds.amountInvested}}</span>
+                            {{bonds.currentValue? "₹" : ""}}<span
+                                appFormatNumber>{{bonds.currentValue - bonds.amountInvested}}</span>
                         </div>
                         <div *ngIf="matured">
-                            {{bonds.maturityValue? "₹" : ""}}<span appFormatNumber>{{bonds.maturityValue - bonds.amountInvested}}</span>
+                            {{bonds.maturityValue? "₹" : ""}}<span
+                                appFormatNumber>{{bonds.maturityValue - bonds.amountInvested}}</span>
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Coupon payout
@@ -179,9 +187,9 @@
                 </div>
                  -->
 
-                
 
-                
+
+
                 <!-- <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Coupon amount
@@ -199,13 +207,20 @@
                         {{bonds.maturityDate}}
                     </div>
                 </div> -->
+                <div class="row bb p-8 b-l br">
+                    <div class="col-md-8 text-left f-14 roboto p-0">
+                        Bond number
+                    </div>
+                    <div class="col-md-4 text-right f-14 roboto p-0">
+                        <span>{{(bonds.bondNumber)?bonds.bondNumber:'-'}}</span>
+                    </div>
+                </div>
 
-                
                 <div class="row bb p-8 b-l br">
                     <div class="col-md-8 text-left f-14 roboto p-0">
                         Linked bank account
                     </div>
-                    <div class="col-md-4 text-right f-14 roboto p-0" [hidden]="!bonds.userBankMappingId" >
+                    <div class="col-md-4 text-right f-14 roboto p-0" [hidden]="!bonds.userBankMappingId">
                         <div [ngSwitch]="bonds.userBankMappingId" *ngFor="let bank of clientFamilybankList">
                             <span *ngSwitchCase="bank.id">{{bank.bankNameAndLast4Digit}}</span>
                         </div>
@@ -224,19 +239,20 @@
                 </div>
                 <div *ngIf="bonds.nomineeList">
                     <div class="row bb p-8 b-l br" *ngIf="bonds.nomineeList.length == 0 ">
-                        <div class="col-md-8 text-left f-14 roboto p-0" >
+                        <div class="col-md-8 text-left f-14 roboto p-0">
                             Nominee
                         </div>
                         <div class="col-md-4 text-right f-14 roboto p-0">
                             -
                         </div>
                     </div>
-                    <div class="row bb p-8 b-l br"  *ngFor="let obj of bonds.nomineeList; let i = index">
-                        <div class="col-md-8 text-left f-14 roboto p-0" >
+                    <div class="row bb p-8 b-l br" *ngFor="let obj of bonds.nomineeList; let i = index">
+                        <div class="col-md-8 text-left f-14 roboto p-0">
                             Nominee {{i + 1}}
                         </div>
                         <div class="col-md-4 text-right f-14 roboto p-0">
-                            {{obj.name}} <span *ngIf="bonds.nomineeList.length > 1">sharing {{obj.sharePercentage}}% Nominee share</span>
+                            {{obj.name}} <span *ngIf="bonds.nomineeList.length > 1">sharing {{obj.sharePercentage}}%
+                                Nominee share</span>
                         </div>
                     </div>
                 </div>

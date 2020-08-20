@@ -213,37 +213,43 @@ export class ClientBasicDetailsComponent implements OnInit {
   }
 
   relationshipTypeMethod(gender, age) {
-    if (gender == 1) {
-      this.relationList = [
-        { name: 'Son', value: 4 },
-        { name: 'Husband', value: 2 },
-        { name: 'Father', value: 6 },
-        // { name: 'Other', value: 10 },
-        // { name: 'Son', value: 4 },
-        // { name: 'Other', value: 10 },
-      ]
-    }
-    if (gender == 2) {
-      this.relationList = [
-        { name: 'Daughter', value: 5 },
-        { name: 'Wife', value: 3 },
-        { name: 'Mother', value: 7 },
-        // { name: 'Other', value: 20 },
-        // { name: 'Daughter', value: 5 },
-        // { name: 'Other', value: 10 },
-      ]
-    }
-    if (gender == 3) {
-      this.relationList = [
-        { name: 'Wife', value: 3 },
-        { name: 'Husband', value: 2 },
-        { name: 'Son', value: 4 },
-        { name: 'Daughter', value: 5 },
-        { name: 'Father', value: 6 },
-        { name: 'Mother', value: 7 },
-        { name: 'Other', value: 20 },
-      ]
-    }
+    // if (gender == 1) {
+    //   this.relationList = [
+    //     { name: 'Son', value: 4 },
+    //     { name: 'Husband', value: 2 },
+    //     { name: 'Father', value: 6 },
+    //   ]
+    // }
+    // if (gender == 2) {
+    //   this.relationList = [
+    //     { name: 'Daughter', value: 5 },
+    //     { name: 'Wife', value: 3 },
+    //     { name: 'Mother', value: 7 },
+
+    //   ]
+    // }
+    // if (gender == 3) {
+    this.relationList = [
+      { name: 'Wife', value: 3 },
+      { name: 'Husband', value: 2 },
+      // { name: 'Son', value: 4 },
+      // { name: 'Daughter', value: 5 },
+      // { name: 'Father', value: 6 },
+      // { name: 'Mother', value: 7 },
+      // { name: 'Other', value: 20 },
+
+      { name: 'Father', value: 6 },
+      { name: 'Mother', value: 7 },
+      { name: 'Son', value: 4 },
+      { name: 'Daughter', value: 5 },
+      { name: 'Brother', value: 8 },
+      { name: 'Sister', value: 9 },
+      { name: 'Daughter_In_Law', value: 11 },
+      { name: 'Sister_In_Law', value: 12 },
+      { name: 'Niece', value: 15 },
+      { name: 'Nephew', value: 16 },
+    ]
+    // }
   }
 
   ngOnInit() {
@@ -387,6 +393,7 @@ export class ClientBasicDetailsComponent implements OnInit {
 
 
   lisNominee(value) {
+    value = value.filter(element => element.familyMemberType != 2)
     this.ownerData.Fmember = value;
     this.nomineesListFM = Object.assign([], value);
   }
@@ -760,7 +767,7 @@ export class ClientBasicDetailsComponent implements OnInit {
       familyMemberId: this.basicDetailsData.familyMemberId,
       clientId: this.basicDetailsData.clientId,
       name: (this.invTypeCategory == '1') ? this.basicDetails.controls.fullName.value : (this.invTypeCategory == '2') ? this.minorForm.value.minorFullName : this.nonIndividualForm.controls.comName.value,
-      displayName: null,
+      displayName: (this.invTypeCategory == '1') ? this.basicDetails.controls.fullName.value : (this.invTypeCategory == '2') ? this.minorForm.value.minorFullName : this.nonIndividualForm.controls.comName.value,
       dateOfBirth: this.datePipe.transform((this.invTypeCategory == '1') ? this.basicDetails.controls.dobAsPerRecord.value : (this.invTypeCategory == '2') ? this.minorForm.value.dobAsPerRecord : this.nonIndividualForm.controls.dateOfIncorporation.value, 'dd/MM/yyyy'),
       martialStatusId: null,
       genderId: (this.invTypeCategory == '1') ? this.basicDetails.controls.gender.value : (this.invTypeCategory == '2') ? this.minorForm.value.gender : null,
@@ -799,7 +806,7 @@ export class ClientBasicDetailsComponent implements OnInit {
     obj.aadhaarNumber = this.basicDetailsData.aadhaarNumber;
     obj.martialStatusId = this.basicDetailsData.martialStatusId;
     obj.occupationId = (this.invTypeCategory == '3' || this.invTypeCategory == '4' && this.nonIndividualForm.controls.comOccupation.value != '') ? this.nonIndividualForm.controls.comOccupation.value : this.basicDetailsData.occupationId;
-    obj.displayName = this.basicDetailsData.displayName;
+    // obj.displayName = this.basicDetailsData.displayName;
     obj.anniversaryDate = this.datePipe.transform(this.basicDetailsData.anniversaryDate, 'dd/MM/yyyy');
     this.peopleService.editFamilyMemberDetails(obj).subscribe(
       data => {
