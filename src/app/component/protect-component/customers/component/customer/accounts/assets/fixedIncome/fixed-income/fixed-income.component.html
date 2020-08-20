@@ -25,8 +25,7 @@
                 <h2 class="f-18 m-0 proximaFont ">Fixed deposit</h2>
             </div>
 
-            <div *ngIf="dataSource.filteredData.length > 0"
-                class="col-md-6 p-0  d-flex align-items-center justify-content-end ">
+            <div class="col-md-6 p-0  d-flex align-items-center justify-content-end ">
                 <div class="p-0 d-flex align-items-center justify-content-center mt-8">
                     <mat-spinner *ngIf="isLoadingUpload==true" [diameter]="30"></mat-spinner>
                 </div>
@@ -38,29 +37,29 @@
                     <button (click)="Excel('Fixed deposit')" mat-menu-item>XLS</button>
                 </mat-menu>
 
-                <a [matMenuTriggerFor]="menu7" class="c-p downloadPdfIcon iconBorderNone">
+                <!-- <a [matMenuTriggerFor]="menu7" class="c-p downloadPdfIcon iconBorderNone">
                     <img src="assets/images/svg/up-down.svg">
-                </a>
+                </a> -->
                 <!-- <img src="assets/images/svg/up-down.svg" [matMenuTriggerFor]="menu7" class="c-p"> -->
-                <mat-menu #menu7="matMenu">
-                    <!-- <button mat-menu-item>Upload file
+                <!-- <mat-menu #menu7="matMenu"> -->
+                <!-- <button mat-menu-item>Upload file
                         <input (change)="fetchData('Fixed Deposits',$event)" class="uploadInput" id="file-4" multiple
                             type="file">
                     </button> -->
-                </mat-menu>
+                <!-- </mat-menu> -->
 
-                <a [matMenuTriggerFor]="menu6" class="c-p downloadPdfIcon">
+                <!-- <a [matMenuTriggerFor]="menu6" class="c-p downloadPdfIcon">
                     <img src="assets/images/svg/three-dot-bordered.svg">
-                </a>
+                </a> -->
                 <!-- <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6" class="c-p"> -->
-                <mat-menu #menu6="matMenu">
-                    <button mat-menu-item>Email Report</button>
-                    <!-- <button mat-menu-item>Option 2</button>
+                <!-- <mat-menu #menu6="matMenu">
+                    <button mat-menu-item>Email Report</button> -->
+                <!-- <button mat-menu-item>Option 2</button>
                     <button mat-menu-item>Option 3</button> -->
-                </mat-menu>
-                <!-- <button mat-stroked-button [matMenuTriggerFor]="filterFixedIncomeTable"
+                <!-- </mat-menu> -->
+                <button mat-stroked-button [matMenuTriggerFor]="filterFixedIncomeTable"
                     class="btn-default addon ml-8 mr-8 v-middle"><i class="material-icons">filter_list</i>FILTER
-                </button> -->
+                </button>
 
                 <mat-menu #filterFixedIncomeTable>
                     <!-- <button mat-menu-item (click)="filterFixedIncome('ownerName', 'Vinayak Nerlekar')">
@@ -280,23 +279,23 @@
                     <button (click)="pdf('Recurring deposit')" mat-menu-item>PDF</button>
                     <button (click)="Excel('Recurring deposit')" mat-menu-item>XLS</button>
                 </mat-menu>
-                <a [matMenuTriggerFor]="menu7" class="c-p downloadPdfIcon iconBorderNone">
+                <!-- <a [matMenuTriggerFor]="menu7" class="c-p downloadPdfIcon iconBorderNone">
                     <img src="assets/images/svg/up-down.svg"> </a>
-                <mat-menu #menu7="matMenu">
-                    <!-- <button mat-menu-item>Upload file
+                <mat-menu #menu7="matMenu"> -->
+                <!-- <button mat-menu-item>Upload file
                         <input (change)="fetchData('Recurring Deposits',$event)" class="uploadInput" id="file-4"
                             multiple type="file">
                     </button> -->
-                </mat-menu>
+                <!-- </mat-menu>
                 <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6" class="c-p">
                 <mat-menu #menu6="matMenu">
                     <button mat-menu-item>Email Report</button>
                     <button mat-menu-item>Option 2</button>
                     <button mat-menu-item>Option 3</button>
-                </mat-menu>
-                <!-- <button mat-stroked-button [matMenuTriggerFor]="filterRecurring"
+                </mat-menu> -->
+                <button mat-stroked-button [matMenuTriggerFor]="filterRecurring"
                     class="btn-default addon ml-8 mr-8 v-middle"><i class="material-icons">filter_list</i>FILTER
-                </button> -->
+                </button>
                 <mat-menu #filterRecurring>
                     <button mat-menu-item [ngClass]="activeFilter == 'All'?'filterActive':''"
                         (click)="filterFixedIncome(null, 'All')">
@@ -477,25 +476,25 @@
                     <button (click)="Excel('Bonds')" mat-menu-item>XLS</button>
                 </mat-menu>
 
-                <a [matMenuTriggerFor]="menu7" class="c-p downloadPdfIcon iconBorderNone">
+                <!-- <a [matMenuTriggerFor]="menu7" class="c-p downloadPdfIcon iconBorderNone">
                     <img src="assets/images/svg/up-down.svg">
                 </a>
-                <mat-menu #menu7="matMenu">
-                    <!-- <button mat-menu-item>Upload file
+                <mat-menu #menu7="matMenu"> -->
+                <!-- <button mat-menu-item>Upload file
                         <input (change)="fetchData('Bonds',$event)" class="uploadInput" id="file-4" multiple
                             type="file">
                     </button> -->
-                </mat-menu>
+                <!-- </mat-menu>
                 <img src="assets/images/svg/three-dot-bordered.svg" [matMenuTriggerFor]="menu6" class="c-p">
                 <mat-menu #menu6="matMenu">
                     <button mat-menu-item>Email Report</button>
                     <button mat-menu-item>Option 2</button>
                     <button mat-menu-item>Option 3</button>
-                </mat-menu>
+                </mat-menu> -->
 
-                <!-- <button mat-stroked-button [matMenuTriggerFor]="filterRecurring"
+                <button mat-stroked-button [matMenuTriggerFor]="filterRecurring"
                     class="btn-default addon ml-8 mr-8 v-middle"><i class="material-icons">filter_list</i>FILTER
-                </button> -->
+                </button>
                 <mat-menu #filterRecurring>
                     <button mat-menu-item [ngClass]="activeFilter == 'All'?'filterActive':''"
                         (click)="filterFixedIncome(null, 'All')">
