@@ -80,6 +80,7 @@ export class BackofficeFileUploadFolioComponent implements OnInit {
     }
     this.reconService.getBackOfficeFolio(obj).subscribe((data) => {
       if (data) {
+        console.log(data);
         data.map(element => {
           element.rt = this.getRtNameFromRtId(parseInt(element.rt));
 
@@ -96,6 +97,8 @@ export class BackofficeFileUploadFolioComponent implements OnInit {
             element.status = "Success";
           } else if (element.processStatus === -1) {
             element.status = "Duplicate";
+          } else if (element.processStatus === 2){
+            element.status = "In Progress";
           } else {
             element.status = "Failed";
           }

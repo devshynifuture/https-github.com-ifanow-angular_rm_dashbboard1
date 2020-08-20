@@ -78,13 +78,14 @@ export class AllSipComponent implements OnInit {
     const obj = {
       limit: 20,
       offset: 0,
-      advisorId: (this.parentId == this.advisorId) ? 0 : this.advisorId,
+      advisorId: (this.parentId > 0 )? this.advisorId : 0,
       arnRiaDetailsId: (this.data) ? this.data.arnRiaId : -1,
       parentId: (this.data) ? this.data.parentId : -1
     };
     if (this.mode == 'all') {
       this.backoffice.allSipGet(obj).subscribe(
         data => {
+          console.log(data);
           this.isLoading = false;
           if (data) {
             this.response(data);

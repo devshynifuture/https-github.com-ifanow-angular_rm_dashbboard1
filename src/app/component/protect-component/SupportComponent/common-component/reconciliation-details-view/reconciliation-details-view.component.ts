@@ -141,7 +141,7 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
   singleSelectionSelect(element, mainIndex) {
     if (element.canDeleteTransaction === true) {
       this.selection.toggle(element);
-      const parsedValue = parseFloat((element.balanceUnits).toFixed(3));
+      const parsedValue = parseFloat((element.units).toFixed(3));
       if (this.selection.isSelected(element)) {
 
         this.shouldShowMultipleDelete = true;
@@ -163,6 +163,8 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
         if (this.deleteMultipleTransactionArray.length === 0) {
           this.shouldShowMultipleDelete = false;
         }
+
+        this.shouldShowMultipleDelete = false;
       }
     } else {
       this.selection.clear();
@@ -344,6 +346,13 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
             this.disableFreezeBtn = true;
           }
         });
+
+        this.deleteMultipleTransactionArray = [];
+
+        this.selectedFolioUnits = 0;
+        this.selectedFolioUnitsFiltered = 0;
+
+        this.shouldShowSelectedFilteredUnits = false;
 
         if (value.length === 1) {
           this.calculateBalanceUnitOnSingleDelete(index);
