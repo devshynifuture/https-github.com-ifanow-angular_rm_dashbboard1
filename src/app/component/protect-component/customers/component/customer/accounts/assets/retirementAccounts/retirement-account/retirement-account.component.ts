@@ -229,7 +229,7 @@ export class RetirementAccountComponent implements OnInit {
       clientId: this.clientId,
       advisorId: this.advisorId
     };
-    
+
     this.noData = "No scheme found";
     this.getListEPF();
     this.dataSource = new MatTableDataSource(this.data);
@@ -478,6 +478,7 @@ export class RetirementAccountComponent implements OnInit {
     });
   }
   getListEPF() {
+    this.isLoading = true;
     const obj = this.getObject;
     this.dataSource.data = [{}, {}, {}];
     this.custumService.getEPF_EPS(obj).subscribe(
@@ -493,7 +494,7 @@ export class RetirementAccountComponent implements OnInit {
     if (data != undefined) {
       if (data.assetList) {
         console.log('getEPFRes =', data);
-       this.changeCount.emit("call");
+        this.changeCount.emit("call");
 
         this.sumOfcurrentEpfBalance = data.sumOfEpfBalanceTillToday;
         this.sumOfcurrentEpsBalance = data.sumOfEpsBalanceTillToday;
@@ -540,7 +541,7 @@ export class RetirementAccountComponent implements OnInit {
       this.sumOfAmountReceived = data.sumOfAmountReceived;
       this.sumOfGratuityReceived = data.sumOfGratuityReceived;
       if (data.assetList) {
-      this.changeCount.emit("call");
+        this.changeCount.emit("call");
         console.log('getGrauityRes =', data);
         this.dataSource.data = data.assetList;
         this.dataSource.sort = this.gratuityListTableSort;
@@ -570,7 +571,7 @@ export class RetirementAccountComponent implements OnInit {
 
     if (data != undefined) {
       if (data.assetList) {
-      this.changeCount.emit("call");
+        this.changeCount.emit("call");
         console.log('getNPSRes =', data);
         this.dataSource.data = data.assetList;
         this.dataSource.sort = this.npsListTableSort;
@@ -633,7 +634,7 @@ export class RetirementAccountComponent implements OnInit {
       this.totalNotionalValue = data.totalNotionalValue;
       this.totalPensionAmount = data.totalPensionAmount;
       if (data.epsList) {
-      this.changeCount.emit("call");
+        this.changeCount.emit("call");
         // console.log('getEPSRes =', data);
         this.dataSource.data = data.epsList;
         this.dataSource.sort = this.epsListTableSort;
