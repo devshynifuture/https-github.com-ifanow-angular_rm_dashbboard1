@@ -440,6 +440,7 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
     if (whichTable === 1) {
       if (filterBasedOn.length<=0) {
         this.dataSource1.data = this.tableData1;
+        this.selectedFolioUnitsFiltered = 0;
         this.selectedBalanceUnits = 0;
         this.shouldShowSelectedFilteredUnits = false;
       } else {

@@ -33,6 +33,7 @@ export class UpperSliderBackofficeComponent implements OnInit {
   startReconciliation: any = false;
   // showCelebrationGif: boolean = true;
   subAdvisorList: any;
+  backofficeApiHitCount: number = 0;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -531,11 +532,12 @@ export class UpperSliderBackofficeComponent implements OnInit {
         doneOn: doneOnFormatted,
         rmId: this.rmId
       };
-      if (this.data.startRecon) {
+      if (this.data.startRecon && this.backofficeApiHitCount === 0) {
         this.reconService.putBackofficeReconAdd(data)
           .subscribe(res => {
             console.log('started reconciliation::::::::::::', res);
             this.aumReconId = res;
+            this.backofficeApiHitCount = 1;
             if (this.fromClose) {
               this.postReqForBackOfficeUnmatchedFolios();
             } else {
