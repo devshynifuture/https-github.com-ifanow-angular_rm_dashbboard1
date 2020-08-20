@@ -1150,6 +1150,8 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns5"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns5;"></tr>
           </table>
+
+          
           <div *ngIf="dataSource5.length <= 0" class="noDataFound">
             No Rejected transaction in last 7 days.
             <div>
