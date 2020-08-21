@@ -4,7 +4,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../customer.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatSort, MatTableDataSource, MatBottomSheet } from '@angular/material';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AddInsuranceComponent } from '../../../common-component/add-insurance/add-insurance.component';
 import { AddHealthInsuranceAssetComponent } from './add-health-insurance-asset/add-health-insurance-asset.component';
@@ -20,6 +20,7 @@ import { DetailedViewGeneralInsuranceComponent } from '../assets/smallSavingSche
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
 import { FileUploadServiceService } from '../assets/file-upload-service.service';
 import { EnumDataService } from 'src/app/services/enum-data.service';
+import { BottomSheetComponent } from '../../../common-component/bottom-sheet/bottom-sheet.component';
 
 @Component({
   selector: 'app-insurance',
@@ -99,7 +100,12 @@ export class InsuranceComponent implements OnInit {
 
   constructor(private eventService: EventService, public dialog: MatDialog,
     private fileUpload: FileUploadServiceService,
-    private subInjectService: SubscriptionInject, private cusService: CustomerService, private utils: UtilService, private excelGen: ExcelGenService, private pdfGen: PdfGenService,
+    private subInjectService: SubscriptionInject, 
+    private cusService: CustomerService, 
+    private utils: UtilService,
+     private excelGen: ExcelGenService, 
+     private pdfGen: PdfGenService,
+     private _bottomSheet: MatBottomSheet,
     private enumDataService: EnumDataService) {
     this.clientData = AuthService.getClientData();
 
@@ -144,6 +150,9 @@ export class InsuranceComponent implements OnInit {
     for (let i = 0; i < fileName.target.files.length; i++) {
       this.myFiles.push(fileName.target.files[i]);
     }
+    const bottomSheetRef = this._bottomSheet.open(BottomSheetComponent, {
+      data: this.myFiles,
+    });
     this.fileUploadData = this.fileUpload.fetchFileUploadData(obj, this.myFiles);
     if (this.fileUploadData) {
       this.file = fileName;

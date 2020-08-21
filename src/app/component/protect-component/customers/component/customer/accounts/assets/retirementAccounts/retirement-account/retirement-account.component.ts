@@ -11,7 +11,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { MatTableDataSource } from '@angular/material/table';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog, MatSort } from '@angular/material';
+import { MatDialog, MatSort, MatBottomSheet } from '@angular/material';
 import { NpsSchemeHoldingComponent } from '../add-nps/nps-scheme-holding/nps-scheme-holding.component';
 import { DetailedViewEPFComponent } from '../add-epf/detailed-view-epf/detailed-view-epf.component';
 import { DetailedViewEPSComponent } from '../add-eps/detailed-view-eps/detailed-view-eps.component';
@@ -24,6 +24,7 @@ import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
 import { DatailedViewNpsHoldingsComponent } from '../add-nps/datailed-view-nps-holdings/datailed-view-nps-holdings.component';
 import { FileUploadServiceService } from '../../file-upload-service.service';
+import { BottomSheetComponent } from '../../../../../common-component/bottom-sheet/bottom-sheet.component';
 
 
 @Component({
@@ -203,7 +204,8 @@ export class RetirementAccountComponent implements OnInit {
     private subInjectService: SubscriptionInject,
     private fileUpload: FileUploadServiceService,
     private custumService: CustomerService, private eventService: EventService,
-    public utils: UtilService, public dialog: MatDialog) {
+    public utils: UtilService, public dialog: MatDialog,
+    private _bottomSheet: MatBottomSheet) {
     this.clientData = AuthService.getClientData()
   }
 
@@ -251,6 +253,9 @@ export class RetirementAccountComponent implements OnInit {
     for (let i = 0; i < fileName.target.files.length; i++) {
       this.myFiles.push(fileName.target.files[i]);
     }
+    const bottomSheetRef = this._bottomSheet.open(BottomSheetComponent, {
+      data: this.myFiles,
+    });
     this.fileUploadData = this.fileUpload.fetchFileUploadData(obj, this.myFiles);
     if (this.fileUploadData) {
       this.file = fileName
