@@ -126,6 +126,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
 
   constructor(
     private subInjectService: SubscriptionInject,
+    private UtilService : UtilService,
     private eventService: EventService,
     private plansService: PlanService,
     private dialog: MatDialog,
@@ -264,6 +265,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     this.allGoals = this.allGoals.reverse().map(goal => this.mapGoalDashboardData(goal));
     this.allGoals.map(element => {
       element.gv = UtilService.getNumberToWord(element.gv)
+      element.dashboardData.futureValue = UtilService.getNumberToWord(element.dashboardData.futureValue)
     })
     if (this.selectedGoalId) {
       this.loadSelectedGoalData(this.allGoals.find(goal => goal.remainingData.id == this.selectedGoalId));
