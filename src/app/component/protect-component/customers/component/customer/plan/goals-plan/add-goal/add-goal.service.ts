@@ -65,7 +65,7 @@ export class AddGoalService {
     return {
       ...advisor_client_id,
       assetId: asset.id,
-      assetType: asset.assetType,
+      assetType : 5,
       goalId: selectedGoal.remainingData.id,
       goalType: selectedGoal.goalType,
       percentAllocated: 100,

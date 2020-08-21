@@ -128,7 +128,6 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
     const dialogData = {
       goalData: this.data,
       allocationData: allocation,
-      reallocateAsset:2
     }
     this.dialog.open(ReallocateAssetComponent, {
       width: '600px',
