@@ -1,17 +1,18 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {OnlineTransactionService} from '../../../../online-transaction.service';
-import {AuthService} from 'src/app/auth-service/authService';
-import {FormBuilder, Validators} from '@angular/forms';
-import {EventService} from 'src/app/Data-service/event.service';
-import {FatcaDetailsInnComponent} from '../fatca-details-inn/fatca-details-inn.component';
-import {UtilService, ValidatorType} from 'src/app/services/util.service';
-import {FileUploadService} from '../../../../../../../../services/file-upload.service';
-import {apiConfig} from '../../../../../../../../config/main-config';
-import {appConfig} from '../../../../../../../../config/component-config';
-import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
-import {MatDialog} from '@angular/material';
-import {IinCreationLoaderComponent} from './iin-creation-loader/iin-creation-loader.component';
-import {PeopleService} from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { OnlineTransactionService } from '../../../../online-transaction.service';
+import { AuthService } from 'src/app/auth-service/authService';
+import { FormBuilder, Validators } from '@angular/forms';
+import { EventService } from 'src/app/Data-service/event.service';
+import { FatcaDetailsInnComponent } from '../fatca-details-inn/fatca-details-inn.component';
+import { UtilService, ValidatorType } from 'src/app/services/util.service';
+import { FileUploadService } from '../../../../../../../../services/file-upload.service';
+import { apiConfig } from '../../../../../../../../config/main-config';
+import { appConfig } from '../../../../../../../../config/component-config';
+import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
+import { MatDialog } from '@angular/material';
+import { IinCreationLoaderComponent } from './iin-creation-loader/iin-creation-loader.component';
+import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { ConfirmUploadComponent } from '../../../../investors-transactions/investor-detail/confirm-upload/confirm-upload.component';
 
 @Component({
   selector: 'app-submit-review-inn',
@@ -19,9 +20,11 @@ import {PeopleService} from 'src/app/component/protect-component/PeopleComponent
   styleUrls: ['./submit-review-inn.component.scss']
 })
 export class SubmitReviewInnComponent implements OnInit {
+  barWidth: any = '0%';
+  showLoader: any;
 
   constructor(private onlineTransact: OnlineTransactionService, private fb: FormBuilder,
-              private eventService: EventService, public dialog: MatDialog, private peopleService: PeopleService) {
+    private eventService: EventService, public dialog: MatDialog, private peopleService: PeopleService) {
   }
 
   get data() {
@@ -34,7 +37,7 @@ export class SubmitReviewInnComponent implements OnInit {
     this.doneData = {};
     this.inputData = data;
     console.log('submit and review component inputData : ', this.inputData);
-    this.allData = {...data};
+    this.allData = { ...data };
     this.clientData = this.clientData;
     this.doneData.nominee = true;
     this.doneData.bank = true;
@@ -52,7 +55,7 @@ export class SubmitReviewInnComponent implements OnInit {
     // this.generalDetails = data
   }
 
-  isFileUploading = false;
+  isFileUploading;
   isSuccessful = false;
 
   dialogRef;
@@ -200,7 +203,7 @@ export class SubmitReviewInnComponent implements OnInit {
     this.toSendObjNomineeList = [];
     this.allData.holderList.forEach(element => {
       if (element.email) {
-        this.toSendObjHolderList.push({...element});
+        this.toSendObjHolderList.push({ ...element });
       }
     });
     this.allData.bankDetailList.forEach(element => {
@@ -305,6 +308,8 @@ export class SubmitReviewInnComponent implements OnInit {
   }
 
   getFileDetails(documentType, e, singleBrokerCred) {
+    this.showLoader = true;
+    this.addbarWidth(30);
     console.log('file', e);
     this.file = e.target.files[0];
     console.log('file', e);
@@ -319,6 +324,7 @@ export class SubmitReviewInnComponent implements OnInit {
       documentType
     };
     this.isFileUploading = true;
+    this.addbarWidth(50);
     FileUploadService.uploadFileToServer(apiConfig.TRANSACT + appConfig.UPLOAD_FILE_IMAGE,
       file, requestMap, (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
         console.log('getFileDetails uploadFileToServer callback item : ', item);
@@ -326,6 +332,7 @@ export class SubmitReviewInnComponent implements OnInit {
         console.log('getFileDetails uploadFileToServer callback headers : ', headers);
         console.log('getFileDetails uploadFileToServer callback response : ', response);
         this.isFileUploading = false;
+        this.addbarWidth(100);
         if (status == 200) {
           const responseObject = JSON.parse(response);
           console.log('onChange file upload success response url : ', responseObject.url);
@@ -338,7 +345,7 @@ export class SubmitReviewInnComponent implements OnInit {
   }
 
   openIinUccClient(singleBrokerCred, requestJson) {
-    const data = {singleBrokerCred, requestJson};
+    const data = { singleBrokerCred, requestJson };
     const Fragmentdata = {
       flag: 'IIn',
       ...data
@@ -358,5 +365,67 @@ export class SubmitReviewInnComponent implements OnInit {
       }
     });
   }
+
+
+  openUploadConfirmBox(value, typeId, singleBrokerCred) {
+
+    const dialogData = {
+      data: value,
+      header: 'UPLOAD',
+      body: UtilService.transactionDocumentsRequired(this.allData.taxMasterId),
+      // body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'CHOOSE',
+      positiveMethod: (fileData) => {
+        dialogRef.close();
+
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmUploadComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.numlimit = 30;
+        if (typeId == 1) {
+          this.addbarWidth(1);
+          this.isFileUploading = true
+        }
+        this.getFileDetails(typeId, result, singleBrokerCred)
+      }
+    });
+  }
+
+  num: any = 0;
+  numlimit: any;
+
+  recall() {
+    if (this.num <= this.numlimit) {
+      this.addbarWidth(this.num);
+    }
+  }
+
+  addbarWidth(c) {
+    this.num = c;
+    setTimeout(() => {
+      if (this.num <= 99) {
+        this.num++;
+      }
+      this.barWidth = this.num + '%';
+      console.log("1");
+      this.recall();
+    }, 500);
+
+  }
+
 
 }
