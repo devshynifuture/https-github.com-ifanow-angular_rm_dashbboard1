@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-otp-verify',
@@ -9,7 +9,7 @@ export class OtpVerifyComponent implements OnInit {
   otp: any;
   @Output() otpDataEvent = new EventEmitter();
 
-  @ViewChild('ngOtpInput', {static: true}) ngOtpInput: any;
+  @ViewChild('ngOtpInput', { static: true }) ngOtpInput: any;
   config = {
     allowNumbersOnly: true,
     length: 4,
@@ -21,6 +21,7 @@ export class OtpVerifyComponent implements OnInit {
       'height': '40px'
     }
   };
+  @Output() saveFunction = new EventEmitter();
 
   ngOnInit() {
   }
@@ -31,6 +32,12 @@ export class OtpVerifyComponent implements OnInit {
   @Input() set otpData(data) {
     if (data.length == 0 && this.ngOtpInput.otpForm) {
       this.ngOtpInput.otpForm.reset()
+    }
+  }
+
+  enterFunction(event) {
+    if (event.charCode == 13 && this.otp.length == this.config.length) {
+      this.saveFunction.emit(true);
     }
   }
 
