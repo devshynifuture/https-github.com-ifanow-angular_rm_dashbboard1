@@ -3,6 +3,7 @@ import { SettingsService } from 'src/app/component/protect-component/AdviserComp
 import { AuthService } from 'src/app/auth-service/authService';
 import { BehaviorSubject } from 'rxjs';
 import { DatePipe } from '@angular/common';
+import { ReturnStatement } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
@@ -162,7 +163,6 @@ export class MfServiceService {
           primaryObject[key] = value + secondary[key];
         }
       }
-      console.log(key, value);
     }
     return primaryObject;
   }
@@ -396,7 +396,8 @@ export class MfServiceService {
       categoryWiseMfList: categoryWiseMfList,
       transactionPeriodCheck: dataForFilter.transactionPeriodCheck,
       transactionPeriod: dataForFilter.transactionPeriod,
-      transactionType: dataForFilter.transactionType
+      transactionType: dataForFilter.transactionType,
+      // setTrueKey:dataForFilter.setTrueKey
     };
     return sendData;
   }
@@ -474,7 +475,8 @@ export class MfServiceService {
       overviewFilter: overviewFilter,
       transactionPeriod: (rightSideData) ? rightSideData.transactionPeriod : false,
       transactionPeriodCheck: (rightSideData) ? rightSideData.transactionPeriodCheck : false,
-      transactionTypeList: (rightSideData) ? rightSideData.transactionType : []
+      transactionTypeList: (rightSideData) ? rightSideData.transactionType : [],
+      // setTrueKey:rightSideData ? rightSideData.setTrueKey :false
 
     }
     return obj;
@@ -527,6 +529,17 @@ export class MfServiceService {
     //   }
     // }
 
+    return data;
+  }
+  filterByFolio(data,showZeroFolio,setAllTrue){
+    if(showZeroFolio == false){
+      data = data.filter((item: any) =>
+      item.currentValue != 0 && item.currentValue > 0 || (item.balanceUnits != 0 && item.balanceUnits > 0)
+    );
+    }
+    if(setAllTrue){
+      data.forEach(item => item.selected = true);
+    }
     return data;
   }
   convertInTitleCase(input) {
