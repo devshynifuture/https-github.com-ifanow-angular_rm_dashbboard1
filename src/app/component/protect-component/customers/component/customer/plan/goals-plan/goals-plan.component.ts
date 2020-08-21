@@ -21,6 +21,7 @@ import { P } from '@angular/cdk/keycodes';
 import { Subscriber, Subscription, Subject, forkJoin } from 'rxjs';
 import { AddGoalService } from './add-goal/add-goal.service';
 import { ReallocateAssetComponent } from './reallocate-asset/reallocate-asset.component';
+import { element } from 'protractor';
 
 
 
@@ -465,6 +466,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         this.plansService.deleteGoal(deleteObj).subscribe((data) => {
           this.eventService.openSnackBar("Goal has been deleted successfully", "Dismiss");
           this.allGoals = this.allGoals.filter(goal => goal.remainingData.id != this.selectedGoalId);
+          this.allGoals.forEach(element => element.gv = UtilService.getNumberToWord(element.gv))
           this.selectedGoalId = null;
           if(this.allGoals.length > 0) {
             this.loadSelectedGoalData(this.allGoals[0]);

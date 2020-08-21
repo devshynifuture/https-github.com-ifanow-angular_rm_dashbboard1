@@ -30,8 +30,9 @@
                                     <div class="row pt-8">
                                         <div class="col-md-6 pr-10 pl-0">
                                             <h5 class="m-0 l-18 f-12 text-primitive"> Goal value</h5>
-                                            <h5 class="f-14 m-0"><span class="bar"><span
-                                                        [hidden]="loaderFn.loading">₹</span><span appFormatNumber>{{goal.gv}}</span></span>
+                                            <h5 class="f-14 m-0">
+                                                <span class="bar">
+                                                    <span [hidden]="loaderFn.loading">₹</span><span appFormatNumber> {{goal.gv}}</span></span>
                                             </h5>
                                         </div>
                                         <div class="col-md-6 pr-0 pl-4">
