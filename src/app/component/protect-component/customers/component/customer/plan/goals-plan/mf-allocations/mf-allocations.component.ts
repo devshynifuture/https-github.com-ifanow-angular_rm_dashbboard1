@@ -43,6 +43,7 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
   subscriber = new Subscriber();
 
   isFamilyObj = (index, item) => item.isFamily;
+  selectedAllocation: any;
 
   constructor(
     private subInjectService: SubscriptionInject,
@@ -125,9 +126,16 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
     );
   }
   reallocateAsset(allocation){
+    this.data.goalAssetAllocation.forEach(element => {
+      allocation.goalAssetMapping.forEach(element1 => {
+        if(element.id == element1.id){
+          this.selectedAllocation = element
+        }
+      });
+    });
     const dialogData = {
       goalData: this.data,
-      allocationData: allocation,
+      allocationData:  this.selectedAllocation,
     }
     this.dialog.open(ReallocateAssetComponent, {
       width: '600px',
@@ -246,7 +254,7 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
           goalType: allocatedGoal.goalType,
           percentAllocated: 0
         }
-        this.planService.allocateOtherAssetToGoal(obj).subscribe(res => {
+        this.allocationService.allocateMFToGoal(allocation,{advisorId: this.advisorId, clientId: this.clientId}, allocatedGoal)
           // update asset list if user deletes goal and the list is still open
           this.subscriber.add(
             this.allocationService.refreshObservable.subscribe(()=>{
@@ -256,9 +264,6 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
           this.allocationService.refreshAssetList.next();
           this.eventService.openSnackBar("Asset unallocated");
           dialogRef.close();
-        }, err => {
-          this.eventService.openSnackBar(err);
-        })
       }
     };
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
