@@ -452,11 +452,11 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
 
   deleteGoal() {
     const dialogData = {
-      header: 'DELETE',
+      header: 'UNALLOCATE ASSET',
       body: 'Are you sure you want to delete this goal?',
       body2: 'This cannot be undone.',
       btnYes: 'CANCEL',
-      btnNo: 'DELETE',
+      btnNo: 'UNALLOCATE',
       positiveMethod: () => {
         let deleteObj = {
           goalId: this.selectedGoal.id,
@@ -497,11 +497,11 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
 
   removeAllocation(allocation) {
     const dialogData = {
-      header: 'DELETE RTA',
+      header: 'UNALLOCATE ASSET',
       body: 'Are you sure you want to remove allocation?',
       body2: 'This cannot be undone.',
       btnYes: 'CANCEL',
-      btnNo: 'DELETE',
+      btnNo: 'UNALLOCATE',
       positiveMethod: () => {
         let obj = {
           ...this.advisor_client_id,
@@ -534,7 +534,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
   reallocateAsset(allocation){
     const dialogData = {
       goalData: this.selectedGoal,
-      allocationData: allocation
+      allocationData: allocation,
     }
     this.dialog.open(ReallocateAssetComponent, {
       width: '600px',

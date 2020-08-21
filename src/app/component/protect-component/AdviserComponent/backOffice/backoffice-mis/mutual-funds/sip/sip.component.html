@@ -232,7 +232,7 @@
                             <mat-tab-group class="h-800 borderLine bg-white b-a">
                                 <mat-tab label="Expiring SIP">
                                     <div class="bb-1 d-flex p-8">
-                                        <p class="text-center mb-0 f-12 text-custom pt-2">List of SIP expiring in
+                                        <p class="text-center mb-0 f-12 text-custom pt-2">List of SIP expiring in last
                                             90
                                             days </p>
                                         <div class="text-right " *ngIf="!isExpiringLoading && expiringSip?.length >0">
@@ -282,9 +282,9 @@
                                         No data found
                                     </div>
                                 </mat-tab>
-                                <mat-tab label="Expired SIP ">
+                                <mat-tab label="Expired / CEASED">
                                     <div class="bb-1 p-8 d-flex">
-                                        <p class=" mb-0 f-12 pt-2 text-custom">List of SIP expired in
+                                        <p class=" mb-0 f-12 pt-2 text-custom">List of SIP expired in last
                                             90
                                             days </p>
                                         <div class="text-right" *ngIf="!isExpiredLoading && expiredSip?.length > 0">

@@ -26,7 +26,7 @@ export interface PeriodicElement {
 })
 
 export class BackofficeFileUploadTransactionsComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'rt', 'uploadDate', 'range', 'added', 'txnFile', 'uploadedBy', 'status', 'download'];
+  displayedColumns: string[] = ['name', 'rt', 'arnRiaNumber', 'uploadDate', 'range', 'added', 'txnFile', 'uploadedBy', 'status', 'download'];
   advisorId: any;
   isLoading = false;
   listData: any = [];
@@ -92,12 +92,8 @@ export class BackofficeFileUploadTransactionsComponent implements OnInit {
         if (data) {
           console.log(data);
           data.map(element => {
-            if(!isNaN(Number(element.rt))){
-              element.rt = this.getRtNameFromRtId(parseInt(element.rt));
-              element.rt = element.rt + " - " + element.arnRiaNumber ? element.arnRiaNumber: '-';
-            } else {
-              element.rt = `${element.rt + "-" + (element.arnRiaNumber ? element.arnRiaNumber : '-')}`;
-            }
+            element.rt = this.getRtNameFromRtId(parseInt(element.rt));
+
             if (element.processStatus === 0) {
               element.status = "Pending";
             } else if (element.processStatus === 1) {
@@ -112,6 +108,8 @@ export class BackofficeFileUploadTransactionsComponent implements OnInit {
               element.status = "Wrong ARN Number";
             }
           });
+          console.log(data);
+
           this.listData = data;
 
           this.dataSource.data = this.listData;

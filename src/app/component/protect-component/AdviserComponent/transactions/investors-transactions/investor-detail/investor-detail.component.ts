@@ -78,9 +78,10 @@ export class InvestorDetailComponent implements OnInit {
     const obj = {id: this.details.id};
     this.isLoading = true;
     this.onlineTransact.getInvestorFormUploadDetail(obj).subscribe(resultData => {
-      if (this.details.aggregatorType == 2) {
+      /*if (this.details.aggregatorType == 2) {
         this.statusData[1].checked = true;
-      } else if (resultData.length > 1) {
+      } else*/
+      if (resultData && resultData.length > 1) {
         this.statusData[1].checked = true;
       }
       this.isLoading = false;

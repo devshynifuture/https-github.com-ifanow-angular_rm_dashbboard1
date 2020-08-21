@@ -238,7 +238,7 @@
                             <div class="d-flex" *ngFor="let allocatedGoal of element.goalAssetMapping">
                                 <div><span appFormatNumber [value]="allocatedGoal.percentAllocated ? allocatedGoal.percentAllocated : 100"></span></div>
 
-                                <button class="unallcoateBtn text-danger" (click)="removeFromAllocation(element, allocatedGoal)">Unallocate</button>
+                                <button class="unallcoateBtn text-danger" (click)="removeAllocation(element, allocatedGoal)">Unallocate</button>
                                 <i class="material-icons c-p text-black" [matMenuTriggerFor]="menu4">
                   more_vert
                 </i>

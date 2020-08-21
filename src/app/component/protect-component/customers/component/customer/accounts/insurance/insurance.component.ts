@@ -32,7 +32,7 @@ export class InsuranceComponent implements OnInit {
   isLoadingUpload: boolean;
   isExpandedLife: boolean;
   isExpandedGeneral: boolean;
-  bankList =[];
+  bankList = [];
 
   [x: string]: any;
 
@@ -95,6 +95,7 @@ export class InsuranceComponent implements OnInit {
   file;
   clientData;
   myFiles;
+  selectedInsuranceName = 'LIFE INSURANCE'
 
   constructor(private eventService: EventService, public dialog: MatDialog,
     private fileUpload: FileUploadServiceService,
@@ -162,11 +163,11 @@ export class InsuranceComponent implements OnInit {
         console.log(data);
         if (data && data.length > 0) {
           this.bankList = data;
-         
+
         }
       },
       err => {
-       this.bankList = [];
+        this.bankList = [];
         console.error(err);
       }
     );

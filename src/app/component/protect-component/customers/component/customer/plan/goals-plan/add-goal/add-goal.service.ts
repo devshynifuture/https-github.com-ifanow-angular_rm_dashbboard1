@@ -23,9 +23,12 @@ export class AddGoalService {
       let asset:any = event.item.data;
       let obj = this.createAllocationObject(asset, advisor_client_id, selectedGoal)
       if(asset.absAllocation < 100){
+        asset.goalAssetMapping.forEach(element => {
+          obj.percentAllocated = 100-element.percentAllocated
+        });
         this.allocateAsset(obj);
       }else{
-        this.eventService.openSnackBar("Asset already allocation 100% !!", "Dismiss");
+        this.eventService.openSnackBar("Asset already 100% allocated!!", "Dismiss");
       }
      
     }else{
@@ -40,7 +43,7 @@ export class AddGoalService {
       if(mfAsset.absAllocation < 100){
         this.allocateAsset(obj);
       }else{
-        this.eventService.openSnackBar("Asset already allocation 100% !!", "Dismiss");
+        this.eventService.openSnackBar("Asset already 100% allocated!!", "Dismiss");
       }
     }else{
       this.eventService.openSnackBar("Asset allocation unsuccessful !! your goal is already achieved", "Dismiss");
@@ -62,7 +65,7 @@ export class AddGoalService {
     return {
       ...advisor_client_id,
       assetId: asset.id,
-      assetType: asset.assetType,
+      assetType : 5,
       goalId: selectedGoal.remainingData.id,
       goalType: selectedGoal.goalType,
       percentAllocated: 100,

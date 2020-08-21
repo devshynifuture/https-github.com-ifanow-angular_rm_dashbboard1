@@ -1,14 +1,15 @@
 <div class="row pt-150">
-    <div class="col-md-3 d-flex align-items-center">
+    <div class="col-xl-3 col-lg-3 col-md-12 d-flex align-items-center d-none-992">
         <!--        <h4 class="m-0">All transactions</h4>-->
     </div>
 
     <!-- <div class="col-md-9" *ngIf="(dataSource.filteredData.length > 0 && !isLoading) || dontHide ==true ">
 <div class="row"> -->
 
-    <div *ngIf="!isLoading && ( credentialData||!isAdvisorSection )" class="col-md-9">
+    <div *ngIf="!isLoading && ( credentialData||!isAdvisorSection )" class="col-xl-9 col-lg-9 col-md-12">
         <div class="row">
-            <div [ngClass]="{'v-h': selectedPreviousToShowDate!='custom'}" class="col-md-4 pl-0">
+            <div [ngClass]="{'v-h': selectedPreviousToShowDate!='custom'}"
+                class="col-xl-4 col-lg-4 col-md-12 pl-0 d-none-992">
                 <mat-chip-list>
                     <mat-chip-list class="newDateIcon">
                         <mat-chip class="bg-white b-a c-p f-400 p-12">
@@ -25,7 +26,7 @@
 
 
             <div *ngIf="dataSource.data.length > 0"
-                class="col-md-8  d-flex align-items-center justify-content-end pr-0">
+                class="col-xl-8 col-lg-8 col-md-12 d-flex align-items-center justify-content-end pr-0">
                 <div class="form-group mb-0 advisorSctionClass">
                     <mat-select (selectionChange)="sortDateFilter($event)" [(ngModel)]="selectedPreviousToShowDate"
                         class="form-control br-0">
