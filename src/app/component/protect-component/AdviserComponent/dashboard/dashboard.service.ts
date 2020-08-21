@@ -33,7 +33,7 @@ export class DashboardService {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.LAST_7_DAYS_TRANSACTION, data, 1);
   }
 
-  getLastSevenDaysInvestmentAccounts(data){
+  getLastSevenDaysInvestmentAccounts(data) {
     return this.http.getEncoded(apiConfig.TRANSACT + appConfig.LAST_7_DAYS_INVESTMENT_ACCOUNTS, data, 1);
   }
 
@@ -71,7 +71,13 @@ export class DashboardService {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_GOAL_SUMMARY, httpParams);
   }
 
-  getTaskDashboardCountValues(data){
+  getTaskDashboardCountValues(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.GET_TASK_DASHBOARD_COUNT, data);
   }
+
+  getChartData(data) {
+    let httpParams = new HttpParams().set('advisorId', data.advisorId).set('targetDate', data.targetDate);
+    return this.http.get(apiConfig.MAIN_URL + appConfig.DASHBOARD_CHART, httpParams);
+  }
+
 }
