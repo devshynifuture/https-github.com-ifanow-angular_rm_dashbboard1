@@ -86,6 +86,7 @@ export class ReallocateAssetComponent implements OnInit {
       assetId: this.allocationData.assetId,
       assetType: this.allocationData.assetType,
       goalId: this.goalData.remainingData.id,
+      allocateOrEdit : 2,
       goalType: this.goalData.goalType,
       percentAllocated: parseFloat(parseFloat(this.reallocationFG.controls.allocatedPercentage.value).toFixed(2))
     }

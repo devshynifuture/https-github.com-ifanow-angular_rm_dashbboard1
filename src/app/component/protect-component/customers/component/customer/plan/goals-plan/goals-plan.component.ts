@@ -497,11 +497,11 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
 
   removeAllocation(allocation) {
     const dialogData = {
-      header: 'DELETE RTA',
+      header: 'UNALLOCATE ASSET',
       body: 'Are you sure you want to remove allocation?',
       body2: 'This cannot be undone.',
       btnYes: 'CANCEL',
-      btnNo: 'DELETE',
+      btnNo: 'UNALLOCATE',
       positiveMethod: () => {
         let obj = {
           ...this.advisor_client_id,
@@ -535,7 +535,6 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     const dialogData = {
       goalData: this.selectedGoal,
       allocationData: allocation,
-      allocateOrEdit : 2
     }
     this.dialog.open(ReallocateAssetComponent, {
       width: '600px',

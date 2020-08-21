@@ -211,6 +211,12 @@ export class ForgotPasswordComponent implements OnInit {
     this.otpData = outputData;
   }
 
+  enterEvent(flag) {
+    if (flag == true) {
+      this.verifyWithOtpResponse(this.verifyFlag);
+    }
+  }
+
   verifyWithOtpResponse(flag) {  ///// check user filled otp is correct or not
     const otpString = this.otpData.toString().replace(/,/g, '');
     if (otpString == '') {
