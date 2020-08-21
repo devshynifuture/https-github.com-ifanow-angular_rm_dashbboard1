@@ -262,6 +262,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
 
   afterDataLoadMethod() {
     this.allGoals = this.allGoals.reverse().map(goal => this.mapGoalDashboardData(goal));
+    
     this.allGoals.map(element => {
       element.gv = UtilService.getNumberToWord(element.gv)
     })
