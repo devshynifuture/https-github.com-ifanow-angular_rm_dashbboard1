@@ -34,6 +34,7 @@ export class InsuranceComponent implements OnInit {
   isExpandedLife: boolean;
   isExpandedGeneral: boolean;
   bankList = [];
+  totalFundValues = 0;
 
   [x: string]: any;
 
@@ -267,11 +268,18 @@ export class InsuranceComponent implements OnInit {
       if (dataFiltered.length > 0) {
         this.dataSource.data = dataFiltered;
         this.dataSource = new MatTableDataSource(this.dataSource.data);
-        this.totalCurrentValue = 0;
         this.totalPremiunAmountLifeIns = 0;
         this.totalSumAssuredLifeIns = 0;
+        this.totalCurrentValue = 0;
         this.dataSource.data.forEach(element => {
-          this.totalCurrentValue += (element.vestedBonus != 0) ? element.vestedBonus : element.currentValue,
+          this.totalFundValues=0;
+          if(element.ulipFundDetails.length > 0 && element.insuranceSubTypeId == 3){
+            element.ulipFundDetails.forEach(ele => {
+              this.totalFundValues += (ele.fundValueOrNav == 1) ? (ele.units * ele.nav) : ele.fundValue;
+              element.currentValue =  this.totalFundValues
+            });
+          }
+          this.totalCurrentValue += (this.totalFundValues!=0) ? this.totalFundValues : (element.vestedBonus != 0) ? element.vestedBonus :  element.currentValue,
             this.totalPremiunAmountLifeIns += (element.premiumAmount) ? element.premiumAmount : 0;
           this.totalSumAssuredLifeIns += (element.sumAssured) ? element.sumAssured : 0;
         });
@@ -356,11 +364,18 @@ export class InsuranceComponent implements OnInit {
       this.lifeInsuranceFilter = this.dataSource.data;
       this.getCount();
       this.getStatusId(this.dataSource.data);
-      this.totalCurrentValue = 0;
       this.totalPremiunAmountLifeIns = 0;
       this.totalSumAssuredLifeIns = 0;
+      this.totalCurrentValue = 0;
       this.dataSource.data.forEach(element => {
-        this.totalCurrentValue += (element.vestedBonus != 0) ? element.vestedBonus : element.currentValue,
+        this.totalFundValues=0;
+        if(element.ulipFundDetails.length > 0 && element.insuranceSubTypeId == 3){
+          element.ulipFundDetails.forEach(ele => {
+            this.totalFundValues += (ele.fundValueOrNav == 1) ? (ele.units * ele.nav) : ele.fundValue;
+            element.currentValue =  this.totalFundValues
+          });
+        }
+        this.totalCurrentValue += (this.totalFundValues!=0) ? this.totalFundValues : (element.vestedBonus != 0) ? element.vestedBonus :  element.currentValue,
           this.totalPremiunAmountLifeIns += (element.premiumAmount) ? element.premiumAmount : 0;
         this.totalSumAssuredLifeIns += (element.sumAssured) ? element.sumAssured : 0;
       });
@@ -431,7 +446,14 @@ export class InsuranceComponent implements OnInit {
       this.totalPremiunAmountLifeIns = 0;
       this.totalSumAssuredLifeIns = 0;
       this.dataSource.data.forEach(element => {
-        this.totalCurrentValue += (element.vestedBonus != 0) ? element.vestedBonus : element.currentValue,
+        this.totalFundValues = 0;
+        if(element.ulipFundDetails.length > 0 && element.insuranceSubTypeId == 3){
+          element.ulipFundDetails.forEach(ele => {
+            this.totalFundValues += (ele.fundValueOrNav == 1) ? (ele.units * ele.nav) : ele.fundValue;
+            element.currentValue =  this.totalFundValues
+          });
+        }
+        this.totalCurrentValue += (this.totalFundValues!=0) ? this.totalFundValues : (element.vestedBonus != 0) ? element.vestedBonus :  element.currentValue,
           this.totalPremiunAmountLifeIns += (element.premiumAmount) ? element.premiumAmount : 0;
         this.totalSumAssuredLifeIns += (element.sumAssured) ? element.sumAssured : 0;
       });

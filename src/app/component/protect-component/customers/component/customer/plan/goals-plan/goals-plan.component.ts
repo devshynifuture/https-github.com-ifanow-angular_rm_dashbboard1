@@ -267,6 +267,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     this.allGoals.map(element => {
       element.gv = UtilService.getNumberToWord(element.gv)
       element.dashboardData.futureValue = UtilService.getNumberToWord(element.dashboardData.futureValue)
+      element.dashboardData.achievedValue = UtilService.getNumberToWord(element.dashboardData.achievedValue)
     })
     if (this.selectedGoalId) {
       this.loadSelectedGoalData(this.allGoals.find(goal => goal.remainingData.id == this.selectedGoalId));
