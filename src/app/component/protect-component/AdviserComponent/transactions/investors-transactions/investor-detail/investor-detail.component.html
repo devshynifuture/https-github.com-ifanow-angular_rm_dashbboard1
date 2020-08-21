@@ -11,7 +11,7 @@
     </div>
   </div>
 </div>
-<div class="pl-20 pr-20 pb-48 mt-44">
+<div class="pl-20 pr-20  mt-44">
   <div class="row pt-40">
     <div class="col-md-12 p-0">
       <div class="insurance-ui bt">
@@ -61,8 +61,8 @@
   </div>
 </div>
 <div class="p-28 pb-100">
-  <div class="row">
-    <div class="col-md-4 text-left p-0 pt-12">
+  <div class="row pt-12 ">
+    <div class="col-md-6 text-center pl-0 pr-10">
       <div [hidden]="!loader1" class='loaderWrap'>
         <span class='loadCount'>{{barWidth1}}</span>
         <div class='loaderBar'>
@@ -70,7 +70,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-4 text-left p-0 pt-12">
+    <div class="col-md-6 text-center pl-10 pr-0 ">
       <div [hidden]="!loader2" class='loaderWrap'>
         <span class='loadCount'>{{barWidth2}}</span>
         <div class='loaderBar'>
@@ -79,18 +79,23 @@
       </div>
     </div>
   </div>
-  <div *ngIf="!statusData[1].checked&&!isLoading" class="row">
-    <button (click)="openUploadConfirmBox('AOF',1)" [disabled]="barWidth1>0" class="btnConfirm bg-primary text-white"
+  <div *ngIf="!statusData[1].checked&&!isLoading" class="row pt-12 pb-44 text-center">
+  <div class="col-md-6">
+  <button (click)="openUploadConfirmBox('AOF',1)" [disabled]="barWidth1>0" class="h-40 bg-primary text-white"
       mat-button>
       Upload AOF
       <!-- <input #uploadFileInput1 (change)="getFileDetails(1,$event)" class="uploadInput" id="file-4" type="file"> -->
-    </button>
-
-    <button (click)="openUploadConfirmBox('CHEQUE',4)" *ngIf="details.aggregatorType==1" [disabled]="isFileUploading"
-      class="btnConfirm bg-primary text-white ml-8" mat-button>
+    </button></div>
+  <div class="col-md-6">
+   <button (click)="openUploadConfirmBox('CHEQUE',4)" [disabled]="isFileUploading"
+      class="h-40 bg-primary text-white ml-8" mat-button>
       Upload Cheque
       <!-- <input #uploadFileInput (change)="getFileDetails(4,$event)" class="uploadInput" id="file-5" type="file"> -->
     </button>
+    </div>
+    
+
+   
 
   </div>
   <div class="row">

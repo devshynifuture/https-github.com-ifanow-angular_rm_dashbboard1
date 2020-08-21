@@ -191,7 +191,7 @@
 
         <div *ngIf="singleBrokerCred.tpUserRequestId>0" class="col-md-3 mb-12 pl-0  ">
           <h5>4) Upload forms</h5>
-          <p class="f-12 text-primitive">Upload relevant forms to complete the process</p>
+          <p class="f-12 text-primitive mb-8">Upload relevant forms to complete the process</p>
           <div *ngIf="showLoader" class='loaderWrap'>
             <span class='loadCount'>{{barWidth}}</span>
             <div class='loaderBar'>
@@ -199,7 +199,7 @@
             </div>
           </div>
           <button (click)="openUploadConfirmBox('AOF',1,singleBrokerCred)" [disabled]="isFileUploading"
-            class="btnConfirm bg-primary text-white" mat-button>
+            class="btnConfirm bg-primary text-white mt-12" mat-button>
             Upload AOF
             <!-- <input #uploadFileInput (change)="getFileDetails(1,$event,singleBrokerCred)" class="uploadInput" id="file-4"
               type="file"> -->
@@ -225,7 +225,7 @@
       PREVIOUS
     </button>
 
-    <button (click)="close()" [disabled]="!isSuccessful" class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4"
+    <button (click)="close()" [disabled]="!isSuccessful" class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4 text-white c-p"
       mat-button>CLOSE
     </button>
 
