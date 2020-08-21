@@ -23,6 +23,7 @@ export class FileUploadServiceService {
   familyMemberId: any;
   folderId: any;
   filenm: any;
+  responseData: boolean;
 
   constructor(private custumService: CustomerService,
     private _bottomSheet: MatBottomSheet,
@@ -72,11 +73,6 @@ export class FileUploadServiceService {
       folderId:this.folderId,
       fileName: fileName.name
     };
-    // console.log(this.myFiles);
-    // const bottomSheetRef = this._bottomSheet.open(BottomSheetComponent, {
-    //   data: this.myFiles,
-    // });
-    // console.log('dfh hfdgj  hhgj gfdgh hjhg  hh gfh', bottomSheetRef);
     this.custumService.uploadFile(obj).subscribe(
       data => {
         const fileuploadurl = data;
@@ -89,6 +85,8 @@ export class FileUploadServiceService {
           if (responseData == null) {
             this.eventService.openSnackBar('Uploaded successfully', 'Dismiss');
             this.fileUploadSuccsess = true
+            this.responseData = true
+            this._bottomSheet.dismiss()
             return responseData
           }
         });
@@ -97,6 +95,9 @@ export class FileUploadServiceService {
         this.eventService.openSnackBar(err, 'Dismiss');
       }
     );
+    if(this.responseData == true){
+      return this.responseData
+    }
   }
     // fileUploadClient(value) {
   //   console.log('here its me', value)

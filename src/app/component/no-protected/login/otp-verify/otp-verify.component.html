@@ -1,1 +1,2 @@
-<ng-otp-input #ngOtpInput (onInputChange)="onOtpChange($event)" [config]="config"></ng-otp-input>
+<ng-otp-input #ngOtpInput (keypress)="enterFunction($event)" (onInputChange)="onOtpChange($event)" [config]="config">
+</ng-otp-input>

@@ -133,7 +133,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   headerHtml: HTMLElement;
   cashFlowXirr: any;
   cashFlowObj: { 'cashFlowInvestment': any; 'cashFlowSwitchIn': any; 'cashFlowSwitchOut': any; 'cashFlowRedemption': any; 'cashFlowDividendPayout': any; 'cashFlowNetInvestment': any; 'cashFlowMarketValue': any; 'cashFlowNetGain': any; 'cashFlowLifetimeXirr': any; };
-
+  // setTrueKey = false;
   constructor(public dialog: MatDialog, private datePipe: DatePipe,
     private subInjectService: SubscriptionInject, private utilService: UtilService,
     private mfService: MfServiceService, private excel: ExcelGenService,
@@ -1184,7 +1184,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       transactionPeriod: this.setDefaultFilterData.transactionPeriod,
       transactionPeriodCheck: this.setDefaultFilterData.transactionPeriodCheck,
       selectFilter: (this.saveFilterData) ? this.saveFilterData.selectFilter : null,
-      transactionTypeList: (this.rightFilterData.transactionType) ? this.rightFilterData.transactionType : this.transactionTypeList
+      transactionTypeList: (this.rightFilterData.transactionType) ? this.rightFilterData.transactionType : this.transactionTypeList,
+      // setTrueKey: this.setDefaultFilterData.setTrueKey ? this.setDefaultFilterData.setTrueKey : false ,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -1199,6 +1200,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
             this.isLoading = true;
             this.changeInput.emit(true);
             this.rightFilterData = sideBarData.data;
+            // this.setTrueKey = this.rightFilterData.setTrueKey;
             this.saveFilterData = {};
             // this.columns =[];
             // this.rightFilterData.transactionView.forEach(element => {

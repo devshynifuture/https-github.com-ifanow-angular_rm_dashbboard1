@@ -7,9 +7,9 @@
             {{(this.viewMode == 'Unrealized Transactions') ? 'unrealized transactions' : 'all transactions'}}
          </h4>
       </div>
-      <div *ngIf="!isLoading && (unrealisedData.data.length > 0 || dataSource.data.length > 0)"
+      <div 
          class="col-md-6 p-0 justify-content-end d-flex align-items-center">
-         <div class="pdfClass">
+         <div class="pdfClass" *ngIf="!isLoading && (unrealisedData.data.length > 0 || dataSource.data.length > 0)">
             <a *ngIf="!fragmentData.isSpinner" [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
                <img src="assets/images/svg/download-bordered.svg">
             </a>

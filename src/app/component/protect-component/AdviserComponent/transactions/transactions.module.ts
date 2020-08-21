@@ -21,6 +21,7 @@ import { TransactionMobileViewComponent } from './transaction-mobile-view/transa
 import { TransactionBottomButtonComponent } from './transaction-mobile-view/transaction-bottom-button/transaction-bottom-button.component';
 import { IinCreationLoaderComponent } from './overview-transactions/IIN/UCC-Creation/submit-review-inn/iin-creation-loader/iin-creation-loader.component';
 import { OpenPdfViewComponent } from './open-pdf-view/open-pdf-view.component';
+import { ConfirmUploadComponent } from './investors-transactions/investor-detail/confirm-upload/confirm-upload.component';
 
 // import {IinCreationLoaderComponent} from './overview-transactions/IIN/UCC-Creation/submit-review-inn/iin-creation-loader/iin-creation-loader.component';
 
@@ -38,7 +39,8 @@ import { OpenPdfViewComponent } from './open-pdf-view/open-pdf-view.component';
     TransactionMobileViewComponent,
     TransactionBottomButtonComponent,
     IinCreationLoaderComponent,
-    OpenPdfViewComponent
+    OpenPdfViewComponent,
+    ConfirmUploadComponent
   ],
   imports: [
     CommonModule,
@@ -62,7 +64,7 @@ import { OpenPdfViewComponent } from './open-pdf-view/open-pdf-view.component';
     ScrollDispatchModule,
     ScrollingModule
   ],
-  entryComponents: [TransactionMobileViewComponent,
+  entryComponents: [TransactionMobileViewComponent, ConfirmUploadComponent,
     TransactionBottomButtonComponent, IinCreationLoaderComponent, OpenPdfViewComponent]
   // IinCreationLoaderComponent
 })
