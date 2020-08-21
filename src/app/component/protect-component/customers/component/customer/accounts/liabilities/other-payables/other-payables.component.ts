@@ -5,7 +5,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog, MatTableDataSource, MatSort } from '@angular/material';
+import { MatDialog, MatTableDataSource, MatSort, MatBottomSheet } from '@angular/material';
 import { DetailedViewOtherPayablesComponent } from '../detailed-view-other-payables/detailed-view-other-payables.component';
 import { AddOtherPayablesComponent } from '../add-other-payables/add-other-payables.component';
 import { FormatNumberDirective } from 'src/app/format-number.directive';
@@ -14,6 +14,7 @@ import { MathUtilService } from '../../../../../../../../services/math-util.serv
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
 import { FileUploadServiceService } from '../../assets/file-upload-service.service';
+import { BottomSheetComponent } from '../../../../common-component/bottom-sheet/bottom-sheet.component';
 
 @Component({
   selector: 'app-other-payables',
@@ -57,6 +58,7 @@ export class OtherPayablesComponent implements OnInit {
   reportDate: Date;
   constructor(public custmService: CustomerService, public util: UtilService,
     public subInjectService: SubscriptionInject, public eventService: EventService,
+    private _bottomSheet : MatBottomSheet,
     public dialog: MatDialog, private excel: ExcelGenService, private pdfGen: PdfGenService, private fileUpload: FileUploadServiceService) {
 
     this.clientData = AuthService.getClientData()
@@ -158,6 +160,9 @@ export class OtherPayablesComponent implements OnInit {
       asset: value
     }
     this.myFiles = fileName.target.files[0]
+    const bottomSheetRef = this._bottomSheet.open(BottomSheetComponent, {
+      data: this.myFiles,
+    });
     this.fileUploadData = this.fileUpload.fetchFileUploadData(obj, this.myFiles);
     if (this.fileUploadData) {
       this.file = fileName

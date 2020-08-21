@@ -5,7 +5,7 @@ import { CustomerService } from '../../../../customer.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService } from 'src/app/services/util.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatSort, MatTableDataSource, MatBottomSheet } from '@angular/material';
 import { GoldComponent } from '../gold/gold.component';
 import { OthersComponent } from '../others/others.component';
 import { DetailedViewGoldComponent } from '../gold/detailed-view-gold/detailed-view-gold.component';
@@ -15,6 +15,7 @@ import { ExcelService } from '../../../../excel.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { FileUploadServiceService } from '../../file-upload-service.service';
+import { BottomSheetComponent } from '../../../../../common-component/bottom-sheet/bottom-sheet.component';
 
 @Component({
   selector: 'app-commodities',
@@ -59,7 +60,8 @@ export class CommoditiesComponent implements OnInit {
     private fileUpload : FileUploadServiceService,
      private pdfGen:PdfGenService,  private subInjectService: SubscriptionInject, 
      private custumService: CustomerService, private eventService: EventService, 
-     public utils: UtilService, public dialog: MatDialog) { }
+     public utils: UtilService, public dialog: MatDialog,
+     private _bottomSheet : MatBottomSheet) { }
   ngOnInit() {
     this.showRequring = '1'
     this.advisorId = AuthService.getAdvisorId();
@@ -85,6 +87,9 @@ export class CommoditiesComponent implements OnInit {
     for (let i = 0; i < fileName.target.files.length; i++) {
       this.myFiles.push(fileName.target.files[i]);
     }
+    const bottomSheetRef = this._bottomSheet.open(BottomSheetComponent, {
+      data: this.myFiles,
+    });
     this.fileUploadData = this.fileUpload.fetchFileUploadData(obj, this.myFiles);
     if (this.fileUploadData) {
       this.file = fileName

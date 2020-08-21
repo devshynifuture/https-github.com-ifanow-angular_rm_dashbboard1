@@ -1,18 +1,18 @@
 // tslint:disable:radix
 // tslint:disable:triple-equals
 
-import {ElementRef, Injectable, Input, OnDestroy} from '@angular/core';
-import {DatePipe, DecimalPipe} from '@angular/common';
-import {EventService} from '../Data-service/event.service';
-import {HttpClient, HttpParams} from '@angular/common/http';
-import {SubscriptionService} from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
-import {FormGroup} from '@angular/forms';
-import {BehaviorSubject, Subject} from 'rxjs';
-import {AuthService} from '../auth-service/authService';
-import {quotationTemplate} from './quotationTemplate';
-import {debounceTime} from 'rxjs/operators';
-import {AppConstants} from './app-constants';
-import {apiConfig} from '../config/main-config';
+import { ElementRef, Injectable, Input, OnDestroy } from '@angular/core';
+import { DatePipe, DecimalPipe } from '@angular/common';
+import { EventService } from '../Data-service/event.service';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { SubscriptionService } from '../component/protect-component/AdviserComponent/Subscriptions/subscription.service';
+import { FormGroup } from '@angular/forms';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { AuthService } from '../auth-service/authService';
+import { quotationTemplate } from './quotationTemplate';
+import { debounceTime } from 'rxjs/operators';
+import { AppConstants } from './app-constants';
+import { apiConfig } from '../config/main-config';
 
 @Injectable({
   providedIn: 'root',
@@ -98,7 +98,7 @@ export class UtilService {
   ): object[] {
     const outputArray = [];
     Object.keys(inputObject).map((key) => {
-      const object = {selected: false};
+      const object = { selected: false };
       object[keyNameForOutput] = inputObject[key];
       object[keyValueForOutput] = key;
 
@@ -242,6 +242,41 @@ export class UtilService {
       strNumber = numberValue.toString();
     }
     return strNumber;
+  }
+
+  static transactionDocumentsRequired(taxMasterId) {
+    let headerText
+    if (taxMasterId == 1) {
+      headerText = "AOF and cancelled cheque"
+    }
+    else if (taxMasterId == 2) {
+      headerText = "Birth certificate of the minor/School leaving certificate /Any other suitable proof evidencing the date of birth of the minor. If the guardian is other than natural guardian (Mother/Father) then the court proof of the appointed guardian."
+    }
+    else if (taxMasterId == 3) {
+      headerText = "AOF (signed by the KARTA under his seal), HUF PAN COPYand cancelled cheque."
+    }
+    else if (taxMasterId == 4) {
+      headerText = "AOF (UCC to be created in Firms Name), cancelled cheque, Board of Resolution, Authorised Signatory list."
+    }
+    else if (taxMasterId == 5) {
+      headerText = "AOF and cancelled cheque (UCC to be created in Firms Name)"
+    }
+    else if (taxMasterId == 6) {
+      headerText = "AOF (UCC to be created in Firms Name) PAN copy of Partner Ship Firm, Partnership Deed UCC to be created in Firms Name,AOF and cancelled cheque"
+    }
+    else if (taxMasterId == 8) {
+      headerText = "AOF (UCC to be created in Trust Name) PAN copy of Trust, Board Resolution (BR) & Authorised Signatory list (ASL) and cancelled cheque."
+    }
+    // else if (taxMasterId == 13) {
+    //   headerText = "AOF and cancelled cheque of NRO A/C"
+    // }
+    else if (taxMasterId == 11 && taxMasterId == 14 && taxMasterId == 17 && taxMasterId == 41) {
+      headerText = "AOF and cancelled cheque of NRE A/C"
+    }
+    else if (taxMasterId == 13) {
+      headerText = "AOF signed by proprietor, PAN copy and cancelled cheque."
+    }
+    return headerText;
   }
 
   public static getHttpParam(data) {
@@ -535,7 +570,7 @@ export class UtilService {
     const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
     const obj = {
       htmlInput: inputData,
-      header:header,
+      header: header,
       name: pdfName,
       landscape,
       key,
@@ -551,10 +586,10 @@ export class UtilService {
       .post(
         apiConfig.MAIN_URL + 'subscription/html-to-pdf',
         obj,
-        {responseType: 'blob'}
+        { responseType: 'blob' }
       )
       .subscribe((data) => {
-        const file = new Blob([data], {type: 'application/pdf'});
+        const file = new Blob([data], { type: 'application/pdf' });
         fragData.isSpinner = false;
         // window.open(fileURL,"hello");
         const namePdf = this.client.name + '\'s ' + pdfName + ' as on ' + date;
@@ -572,7 +607,7 @@ export class UtilService {
     const obj = {
       htmlInput: data.htmlInput,
       name: data.name,
-      header:data.header,
+      header: data.header,
       fromEmail: data.fromEmail,
       landscape: data.landscape,
       toEmail: data.toEmail,
@@ -629,8 +664,8 @@ export class UtilService {
     for (let i = 0; i < byteString.length; i++) {
       ia[i] = byteString.charCodeAt(i);
     }
-    const imageBlob = new Blob([ia], {type: mimeString});
-    return new File([imageBlob], imageName, {type: 'image/png'});
+    const imageBlob = new Blob([ia], { type: mimeString });
+    return new File([imageBlob], imageName, { type: 'image/png' });
   }
 
   /**

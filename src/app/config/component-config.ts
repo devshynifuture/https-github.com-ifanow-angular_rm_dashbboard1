@@ -879,7 +879,7 @@ export const appConfig = {
 
 
   ///////////////////////////// To-DO list -dashboard //////////////////////////
-
+  DASHBOARD_CHART: 'account/asset/mutualfund/chart/get',
   ADD_NOTES: 'admin/dashboard/memo/item/add',
   UPDATE_NOTES: 'admin/dashboard/memo/item/update',
   DELETE_NOTES: 'admin/dashboard/memo/item/delete',
