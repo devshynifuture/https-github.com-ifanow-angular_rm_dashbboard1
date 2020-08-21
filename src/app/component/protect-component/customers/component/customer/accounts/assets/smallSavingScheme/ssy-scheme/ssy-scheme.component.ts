@@ -6,13 +6,14 @@ import { SubscriptionInject } from 'src/app/component/protect-component/AdviserC
 import { UtilService } from 'src/app/services/util.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatSort, MatTableDataSource, MatBottomSheet } from '@angular/material';
 import { DetailedSsyComponent } from './detailed-ssy/detailed-ssy.component';
 import { FormatNumberDirective } from 'src/app/format-number.directive';
 import { ExcelService } from '../../../../excel.service';
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
 import { FileUploadServiceService } from '../../file-upload-service.service';
+import { BottomSheetComponent } from '../../../../../common-component/bottom-sheet/bottom-sheet.component';
 
 @Component({
   selector: 'app-ssy-scheme',
@@ -45,7 +46,9 @@ export class SsySchemeComponent implements OnInit {
   constructor(private excel: ExcelGenService,
     private pdfGen: PdfGenService, public dialog: MatDialog,
     private fileUpload: FileUploadServiceService,
-    private cusService: CustomerService, private subInjectService: SubscriptionInject,
+    private cusService: CustomerService,
+    private _bottomSheet : MatBottomSheet,
+     private subInjectService: SubscriptionInject,
     private eventService: EventService) {
     this.clientData = AuthService.getClientData()
   }
@@ -74,6 +77,9 @@ export class SsySchemeComponent implements OnInit {
     for (let i = 0; i < fileName.target.files.length; i++) {
       this.myFiles.push(fileName.target.files[i]);
     }
+    const bottomSheetRef = this._bottomSheet.open(BottomSheetComponent, {
+      data: this.myFiles,
+    });
     this.fileUploadData = this.fileUpload.fetchFileUploadData(obj, this.myFiles);
     if (this.fileUploadData) {
       this.file = fileName

@@ -5,7 +5,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatSort, MatTableDataSource, MatBottomSheet } from '@angular/material';
 import { DetailedViewFixedDepositComponent } from '../fixed-deposit/detailed-view-fixed-deposit/detailed-view-fixed-deposit.component';
 import { FixedDepositComponent } from '../fixed-deposit/fixed-deposit.component';
 import { DetailedViewRecuringDepositComponent } from '../recuring-deposit/detailed-view-recuring-deposit/detailed-view-recuring-deposit.component';
@@ -18,6 +18,7 @@ import { MathUtilService } from "../../../../../../../../../services/math-util.s
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
 import { FileUploadServiceService } from '../../file-upload-service.service';
+import { BottomSheetComponent } from '../../../../../common-component/bottom-sheet/bottom-sheet.component';
 
 
 @Component({
@@ -63,7 +64,8 @@ export class FixedIncomeComponent implements OnInit {
     private customerService: CustomerService, private eventService: EventService,
     private excel: ExcelGenService, private pdfGen: PdfGenService,
     private fileUpload: FileUploadServiceService,
-    public util: UtilService, public dialog: MatDialog) {
+    public util: UtilService, public dialog: MatDialog,
+    private _bottomSheet : MatBottomSheet) {
   }
 
   viewMode;
@@ -100,6 +102,9 @@ export class FixedIncomeComponent implements OnInit {
     for (let i = 0; i < fileName.target.files.length; i++) {
       this.myFiles.push(fileName.target.files[i]);
     }
+    const bottomSheetRef = this._bottomSheet.open(BottomSheetComponent, {
+      data: this.myFiles,
+    });
     // this.myFiles = fileName.target.files[0]
     this.fileUploadData = this.fileUpload.fetchFileUploadData(obj, this.myFiles);
     if (this.fileUploadData) {

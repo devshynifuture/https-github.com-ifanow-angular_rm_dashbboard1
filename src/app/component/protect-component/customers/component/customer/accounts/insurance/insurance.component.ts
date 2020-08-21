@@ -4,7 +4,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../customer.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatSort, MatTableDataSource, MatBottomSheet } from '@angular/material';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AddInsuranceComponent } from '../../../common-component/add-insurance/add-insurance.component';
 import { AddHealthInsuranceAssetComponent } from './add-health-insurance-asset/add-health-insurance-asset.component';
@@ -20,6 +20,7 @@ import { DetailedViewGeneralInsuranceComponent } from '../assets/smallSavingSche
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
 import { FileUploadServiceService } from '../assets/file-upload-service.service';
 import { EnumDataService } from 'src/app/services/enum-data.service';
+import { BottomSheetComponent } from '../../../common-component/bottom-sheet/bottom-sheet.component';
 
 @Component({
   selector: 'app-insurance',
@@ -33,6 +34,7 @@ export class InsuranceComponent implements OnInit {
   isExpandedLife: boolean;
   isExpandedGeneral: boolean;
   bankList = [];
+  totalFundValues = 0;
 
   [x: string]: any;
 
@@ -99,7 +101,12 @@ export class InsuranceComponent implements OnInit {
 
   constructor(private eventService: EventService, public dialog: MatDialog,
     private fileUpload: FileUploadServiceService,
-    private subInjectService: SubscriptionInject, private cusService: CustomerService, private utils: UtilService, private excelGen: ExcelGenService, private pdfGen: PdfGenService,
+    private subInjectService: SubscriptionInject, 
+    private cusService: CustomerService, 
+    private utils: UtilService,
+     private excelGen: ExcelGenService, 
+     private pdfGen: PdfGenService,
+     private _bottomSheet: MatBottomSheet,
     private enumDataService: EnumDataService) {
     this.clientData = AuthService.getClientData();
 
@@ -144,6 +151,9 @@ export class InsuranceComponent implements OnInit {
     for (let i = 0; i < fileName.target.files.length; i++) {
       this.myFiles.push(fileName.target.files[i]);
     }
+    const bottomSheetRef = this._bottomSheet.open(BottomSheetComponent, {
+      data: this.myFiles,
+    });
     this.fileUploadData = this.fileUpload.fetchFileUploadData(obj, this.myFiles);
     if (this.fileUploadData) {
       this.file = fileName;
@@ -258,11 +268,18 @@ export class InsuranceComponent implements OnInit {
       if (dataFiltered.length > 0) {
         this.dataSource.data = dataFiltered;
         this.dataSource = new MatTableDataSource(this.dataSource.data);
-        this.totalCurrentValue = 0;
         this.totalPremiunAmountLifeIns = 0;
         this.totalSumAssuredLifeIns = 0;
+        this.totalCurrentValue = 0;
         this.dataSource.data.forEach(element => {
-          this.totalCurrentValue += (element.vestedBonus != 0) ? element.vestedBonus : element.currentValue,
+          this.totalFundValues=0;
+          if(element.ulipFundDetails.length > 0 && element.insuranceSubTypeId == 3){
+            element.ulipFundDetails.forEach(ele => {
+              this.totalFundValues += (ele.fundValueOrNav == 1) ? (ele.units * ele.nav) : ele.fundValue;
+              element.currentValue =  this.totalFundValues
+            });
+          }
+          this.totalCurrentValue += (this.totalFundValues!=0) ? this.totalFundValues : (element.vestedBonus != 0) ? element.vestedBonus :  element.currentValue,
             this.totalPremiunAmountLifeIns += (element.premiumAmount) ? element.premiumAmount : 0;
           this.totalSumAssuredLifeIns += (element.sumAssured) ? element.sumAssured : 0;
         });
@@ -347,11 +364,18 @@ export class InsuranceComponent implements OnInit {
       this.lifeInsuranceFilter = this.dataSource.data;
       this.getCount();
       this.getStatusId(this.dataSource.data);
-      this.totalCurrentValue = 0;
       this.totalPremiunAmountLifeIns = 0;
       this.totalSumAssuredLifeIns = 0;
+      this.totalCurrentValue = 0;
       this.dataSource.data.forEach(element => {
-        this.totalCurrentValue += (element.vestedBonus != 0) ? element.vestedBonus : element.currentValue,
+        this.totalFundValues=0;
+        if(element.ulipFundDetails.length > 0 && element.insuranceSubTypeId == 3){
+          element.ulipFundDetails.forEach(ele => {
+            this.totalFundValues += (ele.fundValueOrNav == 1) ? (ele.units * ele.nav) : ele.fundValue;
+            element.currentValue =  this.totalFundValues
+          });
+        }
+        this.totalCurrentValue += (this.totalFundValues!=0) ? this.totalFundValues : (element.vestedBonus != 0) ? element.vestedBonus :  element.currentValue,
           this.totalPremiunAmountLifeIns += (element.premiumAmount) ? element.premiumAmount : 0;
         this.totalSumAssuredLifeIns += (element.sumAssured) ? element.sumAssured : 0;
       });
@@ -422,7 +446,14 @@ export class InsuranceComponent implements OnInit {
       this.totalPremiunAmountLifeIns = 0;
       this.totalSumAssuredLifeIns = 0;
       this.dataSource.data.forEach(element => {
-        this.totalCurrentValue += (element.vestedBonus != 0) ? element.vestedBonus : element.currentValue,
+        this.totalFundValues = 0;
+        if(element.ulipFundDetails.length > 0 && element.insuranceSubTypeId == 3){
+          element.ulipFundDetails.forEach(ele => {
+            this.totalFundValues += (ele.fundValueOrNav == 1) ? (ele.units * ele.nav) : ele.fundValue;
+            element.currentValue =  this.totalFundValues
+          });
+        }
+        this.totalCurrentValue += (this.totalFundValues!=0) ? this.totalFundValues : (element.vestedBonus != 0) ? element.vestedBonus :  element.currentValue,
           this.totalPremiunAmountLifeIns += (element.premiumAmount) ? element.premiumAmount : 0;
         this.totalSumAssuredLifeIns += (element.sumAssured) ? element.sumAssured : 0;
       });

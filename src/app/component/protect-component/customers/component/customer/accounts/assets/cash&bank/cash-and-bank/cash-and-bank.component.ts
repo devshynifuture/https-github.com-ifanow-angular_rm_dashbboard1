@@ -5,7 +5,7 @@ import { EventService } from 'src/app/Data-service/event.service';
 import { UtilService } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatSort, MatTableDataSource, MatBottomSheet } from '@angular/material';
 import { BankAccountsComponent } from '../bank-accounts/bank-accounts.component';
 import { CashInHandComponent } from '../cash-in-hand/cash-in-hand.component';
 import { DetailedViewCashInHandComponent } from '../cash-in-hand/detailed-view-cash-in-hand/detailed-view-cash-in-hand.component';
@@ -17,6 +17,7 @@ import { PdfGenService } from 'src/app/services/pdf-gen.service';
 import { FileUploadServiceService } from '../../file-upload-service.service';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { EnumDataService } from 'src/app/services/enum-data.service';
+import { BottomSheetComponent } from '../../../../../common-component/bottom-sheet/bottom-sheet.component';
 
 @Component({
   selector: 'app-cash-and-bank',
@@ -56,7 +57,8 @@ export class CashAndBankComponent implements OnInit {
   constructor(private excel:ExcelGenService,  private pdfGen:PdfGenService, private subInjectService: SubscriptionInject,
     private fileUpload : FileUploadServiceService, private enumService: EnumServiceService,
     private custumService: CustomerService, private eventService: EventService, private enumDataService: EnumDataService,
-    public utils: UtilService, public dialog: MatDialog) {
+    public utils: UtilService, public dialog: MatDialog,
+    private _bottomSheet : MatBottomSheet) {
       this.clientData =AuthService.getClientData()
   }
 
@@ -92,6 +94,9 @@ export class CashAndBankComponent implements OnInit {
     for (let i = 0; i < fileName.target.files.length; i++) {
       this.myFiles.push(fileName.target.files[i]);
     }
+    const bottomSheetRef = this._bottomSheet.open(BottomSheetComponent, {
+      data: this.myFiles,
+    });
     this.fileUploadData = this.fileUpload.fetchFileUploadData(obj, this.myFiles);
     if (this.fileUploadData) {
       this.file = fileName

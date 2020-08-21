@@ -20,26 +20,37 @@ export class TempserviceService {
       Object.keys(catObj).map(key => {
         (reportType == 'ownerName') ? filteredArray.push({groupName: key, pan: catObj[key][0].pan}) : filteredArray.push({groupName: key});
         let totalObj: any = {};
-        catObj[key].forEach((singleData) => {
-          if ((folio == '2') ? (singleData.balanceUnit > 0 && singleData.balanceUnit != 0) : (singleData.balanceUnit < 0 || singleData.balanceUnit == 0 || singleData.balanceUnit > 0)) {
-            array.push(singleData);
-            totalObj = this.addTwoObjectValues(this.calculateTotalValue(singleData), totalObj, {schemeName: true});
-            const obj = this.getAbsAndxirrCategoryWise(singleData, allData, reportType);
-            totalObj.totalXirr = obj.xirr;
-            totalObj.totalAbsoluteReturn = obj.absoluteReturn;
-            totalObj.totalBalanceUnit = catObj[key][catObj[key].length -1].balanceUnit;
-          } else {
-            if (filteredArray.length > 0 && array.length == 0) {
-                if (filteredArray[filteredArray.length - 1].groupName) {
-                  // if(catObj[key].length <= 1){
-                    filteredArray.pop();
-                  // }
-                }
-              
+        const isgreatorThanZero = (number)=> number.balanceUnit <= 0
+        let emptyObjOrNot = catObj[key].every(isgreatorThanZero);
+        if(!emptyObjOrNot){
+          catObj[key].forEach((singleData) => {
+            if ((folio == '2') ? (singleData.balanceUnit > 0 && singleData.balanceUnit != 0) : (singleData.balanceUnit < 0 || singleData.balanceUnit == 0 || singleData.balanceUnit > 0)) {
+              array.push(singleData);
+              totalObj = this.addTwoObjectValues(this.calculateTotalValue(singleData), totalObj, {schemeName: true});
+              const obj = this.getAbsAndxirrCategoryWise(singleData, allData, reportType);
+              totalObj.totalXirr = obj.xirr;
+              totalObj.totalAbsoluteReturn = obj.absoluteReturn;
+              totalObj.totalBalanceUnit = catObj[key][catObj[key].length -1].balanceUnit;
+            } else {
+              if (filteredArray.length > 0 && array.length == 0) {
+                  if (filteredArray[filteredArray.length - 1].groupName) {
+                    if(catObj[key].length < 2){
+                      filteredArray.pop();
+                    }
+                  }
+                
+              }
+            }
+  
+          });
+        }else{
+          if (filteredArray.length > 0 && array.length == 0) {
+            if (filteredArray[filteredArray.length - 1].groupName) {
+              filteredArray.pop();
             }
           }
+        }
 
-        });
         sortedData = this.sorting(array, 'schemeName');
         filteredArray.push(...sortedData);
         array = [];
@@ -389,7 +400,7 @@ export class TempserviceService {
       totalGain += (data.unrealizedGain) ? data.unrealizedGain : 0;
       absReturn += (data.absoluteReturn == 'Infinity' || data.absoluteReturn == '-Infinity' || data.absoluteReturn == 'NaN') ? 0 : (data.absoluteReturn) ? data.absoluteReturn : 0;
       xirr += (data.xirr || data.xirr == 0) ? data.xirr : 0;
-      allocationPer += (data.allocatedPercentage) ? data.allocatedPercentage : 0;
+      allocationPer += (data.allocatedPercentage == 'NaN') ? 0 : (data.allocatedPercentage) ? data.allocatedPercentage : 0;
       withdrawals += (data.switchOut) ? data.switchOut : 0;
       sip += (data.sipAmount) ? data.sipAmount : 0;
       netGain += (data.gainOrLossAmount) ? data.gainOrLossAmount : 0;

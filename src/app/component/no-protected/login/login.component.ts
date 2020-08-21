@@ -201,6 +201,12 @@ export class LoginComponent implements OnInit {
     (this.otpNumber) ? this.otpNumber = false : this.otpNumber = true;
   }
 
+  enterFunction(flag) {
+    if (flag == true) {
+      this.verifyWithOtpResponse();
+    }
+  }
+
   verifyWithOtpResponse() {
     this.barButtonOptions.active = true;
     const otpString = this.otpData.toString().replace(/,/g, '');
