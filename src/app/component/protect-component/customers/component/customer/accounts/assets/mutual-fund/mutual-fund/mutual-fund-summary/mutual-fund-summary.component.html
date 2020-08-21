@@ -4,8 +4,8 @@
             <h4 class="m-0 text-black roboto pt-8">Mutual fund summary</h4>
         </div>
         <div class="col-md-8 p-0 justify-content-end d-flex align-items-center"
-            *ngIf="!isLoading && this.mutualFund.mutualFundList.length > 0 && (summary.data.length > 0)">
-            <div class="pdfClass">
+           >
+            <div class="pdfClass"  *ngIf="!isLoading && this.mutualFund.mutualFundList.length > 0 && (summary.data.length > 0)"> 
                 <a [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon" *ngIf="!fragmentData.isSpinner">
                     <img src="assets/images/svg/download-bordered.svg">
                 </a>
@@ -18,7 +18,7 @@
             </div>
 
             <button class="btn-default addon mr-12 v-middle mat-stroked-button mat-button-base" mat-stroked-button=""
-                (click)="openFilter()">
+                (click)="openFilter()" >
                 <span class="mat-button-wrapper"><i class="material-icons">filter_list</i>FILTERS</span>
                 <div class="mat-button-ripple mat-ripple" matripple="" ng-reflect-centered="false"
                     ng-reflect-disabled="false" ng-reflect-trigger="[object HTMLButtonElement]">
