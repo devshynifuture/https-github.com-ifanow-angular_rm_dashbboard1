@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatSort, MatTableDataSource, MatBottomSheet } from '@angular/material';
 import { AddIncomeComponent } from './add-income/add-income.component';
 import { AuthService } from 'src/app/auth-service/authService';
 import { PlanService } from '../../plan.service';
@@ -10,6 +10,7 @@ import { ConfirmDialogComponent } from 'src/app/component/protect-component/comm
 import { IncomeDetailedViewComponent } from './income-detailed-view/income-detailed-view.component';
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { FileUploadServiceService } from '../../../accounts/assets/file-upload-service.service';
+import { BottomSheetComponent } from '../../../../common-component/bottom-sheet/bottom-sheet.component';
 
 @Component({
   selector: 'app-income',
@@ -42,7 +43,12 @@ export class IncomeComponent implements OnInit {
   fileUploadData: any;
   file: any;
 
-  constructor(private fileUpload: FileUploadServiceService,private util:UtilService,private excel: ExcelGenService,public dialog: MatDialog, private eventService: EventService, private subInjectService: SubscriptionInject, private planService: PlanService) {
+  constructor(private fileUpload: FileUploadServiceService,
+    private util:UtilService,private excel: ExcelGenService,
+    public dialog: MatDialog, private eventService: EventService, 
+    private subInjectService: SubscriptionInject,
+     private planService: PlanService,
+     private _bottomSheet : MatBottomSheet) {
   }
 
   viewMode;
@@ -87,6 +93,9 @@ export class IncomeComponent implements OnInit {
       asset: value
     }
     this.myFiles = fileName.target.files[0]
+    const bottomSheetRef = this._bottomSheet.open(BottomSheetComponent, {
+      data: this.myFiles,
+    });
     this.fileUploadData = this.fileUpload.fetchFileUploadData(obj, this.myFiles);
     if (this.fileUploadData) {
       this.file = fileName

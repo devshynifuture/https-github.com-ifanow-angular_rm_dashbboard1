@@ -5,7 +5,7 @@ import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatSort, MatTableDataSource, MatBottomSheet } from '@angular/material';
 import { EventService } from 'src/app/Data-service/event.service';
 import { DetailedNscComponent } from './detailed-nsc/detailed-nsc.component';
 import { FormatNumberDirective } from 'src/app/format-number.directive';
@@ -13,6 +13,7 @@ import { ExcelService } from '../../../../excel.service';
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
 import { FileUploadServiceService } from '../../file-upload-service.service';
+import { BottomSheetComponent } from '../../../../../common-component/bottom-sheet/bottom-sheet.component';
 
 @Component({
   selector: 'app-nsc-scheme',
@@ -50,7 +51,8 @@ export class NscSchemeComponent implements OnInit {
   constructor( private excel:ExcelGenService, 
     private fileUpload : FileUploadServiceService,
     private pdfGen:PdfGenService, public dialog: MatDialog, private eventService: EventService,
-    private cusService: CustomerService, private subInjectService: SubscriptionInject) {
+    private cusService: CustomerService, private subInjectService: SubscriptionInject,
+    private _bottomSheet : MatBottomSheet) {
       this.clientData = AuthService.getClientData()
     }
 
@@ -79,6 +81,9 @@ export class NscSchemeComponent implements OnInit {
     for (let i = 0; i < fileName.target.files.length; i++) {
       this.myFiles.push(fileName.target.files[i]);
     }
+    const bottomSheetRef = this._bottomSheet.open(BottomSheetComponent, {
+      data: this.myFiles,
+    });
     this.fileUploadData = this.fileUpload.fetchFileUploadData(obj, this.myFiles);
     if (this.fileUploadData) {
       this.file = fileName

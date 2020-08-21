@@ -4,7 +4,7 @@ import { AuthService } from 'src/app/auth-service/authService';
 import { CustomerService } from '../../../../customer.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { UtilService } from 'src/app/services/util.service';
-import { MAT_DATE_FORMATS, MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { MAT_DATE_FORMATS, MatDialog, MatSort, MatTableDataSource, MatBottomSheet } from '@angular/material';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { EventService } from 'src/app/Data-service/event.service';
@@ -14,6 +14,7 @@ import { ExcelService } from '../../../../excel.service';
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
 import { FileUploadServiceService } from '../../file-upload-service.service';
+import { BottomSheetComponent } from '../../../../../common-component/bottom-sheet/bottom-sheet.component';
 
 @Component({
   selector: 'app-scss-scheme',
@@ -49,6 +50,7 @@ export class ScssSchemeComponent implements OnInit {
 
   constructor(private excel:ExcelGenService, 
     private fileUpload : FileUploadServiceService,
+    private _bottomSheet : MatBottomSheet,
      private pdfGen:PdfGenService, public dialog: MatDialog, 
      private eventService: EventService, private cusService: CustomerService, 
      private subInjectService: SubscriptionInject) {
@@ -75,6 +77,9 @@ export class ScssSchemeComponent implements OnInit {
     for (let i = 0; i < fileName.target.files.length; i++) {
       this.myFiles.push(fileName.target.files[i]);
     }
+    const bottomSheetRef = this._bottomSheet.open(BottomSheetComponent, {
+      data: this.myFiles,
+    });
     this.fileUploadData = this.fileUpload.fetchFileUploadData(obj, this.myFiles);
     if (this.fileUploadData) {
       this.file = fileName
