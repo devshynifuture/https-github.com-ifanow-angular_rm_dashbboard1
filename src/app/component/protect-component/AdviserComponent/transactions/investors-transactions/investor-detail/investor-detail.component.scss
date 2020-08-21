@@ -83,3 +83,22 @@
   display: none;
   top: 0;
 }
+
+.loaderWrap {
+  width: 100%;
+  margin: 0px auto;
+  border: solid 1px #008FFF;
+  padding: 9px;
+}
+
+.loaderBar {
+  height: 20px;
+  width: 100%;
+  border: solid 1px #008FFF;
+}
+
+.loaderBarFill {
+  height: 100%;
+  background: #008FFF;
+  transition: width 1s;
+}
