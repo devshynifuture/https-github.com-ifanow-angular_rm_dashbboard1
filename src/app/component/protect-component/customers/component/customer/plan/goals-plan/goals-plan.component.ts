@@ -42,12 +42,12 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     advisorId: '',
     clientId: ''
   }
-  otherAssetAllocationSubscription:Subscription;
+  otherAssetAllocationSubscription: Subscription;
   selectedGoal: any = {};
   allGoals: any[] = [];
-  allAssets:any[] = [];
+  allAssets: any[] = [];
   hasCostOfDelay: boolean = false;
-  inDropZone:boolean = false;
+  inDropZone: boolean = false;
 
   // options set for bar charts
   // Reference - https://api.highcharts.com/highcharts/
@@ -119,9 +119,9 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     },
     series: []
   }
-  allocatedList:Array<any> = [];
+  allocatedList: Array<any> = [];
   assetError = false;
-  selectedGoalId:any = null;
+  selectedGoalId: any = null;
   subscriber = new Subscriber();
 
   constructor(
@@ -135,7 +135,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     this.advisor_client_id.advisorId = AuthService.getAdvisorId();
     this.advisor_client_id.clientId = AuthService.getClientId();
   }
-  
+
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   ngOnInit() {
@@ -150,7 +150,8 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
   }
 
   // load all goals created for the client and select the first goal
-  loadAllGoals() {``
+  loadAllGoals() {
+    ``
     this.allGoals = [{}, {}, {}];
     this.loaderFn.increaseCounter();
     this.selectedGoal = {};
@@ -167,7 +168,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     });
   }
 
-  loadAllAssets(){
+  loadAllAssets() {
     const otherAssets = this.plansService.getAssetsForAllocation(this.advisor_client_id);
     const mfAssets = this.plansService.getMFList(this.advisor_client_id);
 
@@ -175,30 +176,30 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     forkJoin(otherAssets, mfAssets).subscribe(result => {
       let otherAssetRes = result[1].map(asset => {
         let absAllocation = 0;
-        if(asset.goalAssetMapping) {
+        if (asset.goalAssetMapping) {
           asset.goalAssetMapping.forEach(element => {
-            if(absAllocation <= 99){
+            if (absAllocation <= 99) {
               absAllocation += element.percentAllocated;
-            }else{
+            } else {
               this.eventService.openSnackBar('Asset allocation already 100%', "Dismiss")
             }
           });
         }
-        return {absAllocation, ...asset};
+        return { absAllocation, ...asset };
       });
 
       let mfAssetRes = result[1].map(mf => {
         let absAllocation = 0;
-        if(mf.goalAssetMapping.length > 0) {
+        if (mf.goalAssetMapping.length > 0) {
           mf.goalAssetMapping.forEach(element => {
-            if(absAllocation <= 99){
+            if (absAllocation <= 99) {
               absAllocation += element.percentAllocated;
-            }else{
+            } else {
               this.eventService.openSnackBar('Asset allocation already 100%', "Dismiss")
             }
           });
         }
-        return {absAllocation, ...mf};
+        return { absAllocation, ...mf };
       })
 
       this.allAssets = [...otherAssetRes, ...mfAssetRes];
@@ -259,12 +260,15 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     }
   }
 
-  afterDataLoadMethod(){
+  afterDataLoadMethod() {
     this.allGoals = this.allGoals.reverse().map(goal => this.mapGoalDashboardData(goal));
-    if(this.selectedGoalId) {
+    this.allGoals.map(element => {
+      element.gv = UtilService.getNumberToWord(element.gv)
+    })
+    if (this.selectedGoalId) {
       this.loadSelectedGoalData(this.allGoals.find(goal => goal.remainingData.id == this.selectedGoalId));
     } else {
-      if(this.allGoals.length > 0) {
+      if (this.allGoals.length > 0) {
         this.loadSelectedGoalData(this.allGoals[0]);
       } else {
         this.selectedGoalId = null;
@@ -419,7 +423,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         subscription.unsubscribe();
       }
     });
-    if(flag == 'openallocations') {
+    if (flag == 'openallocations') {
       this.otherAssetAllocationSubscription = subscription
     }
   }
@@ -432,17 +436,17 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
         ...asset
       }
     });
-    console.log('allocatedList',this.allocatedList)
+    console.log('allocatedList', this.allocatedList)
     this.selectedGoal = goalData;
     this.selectedGoalId = goalData.remainingData.id;
-    if(goalData.remainingData.retirementTableValue){
-      this.isRetirementTab =true;
-      let goalTableData =  goalData.remainingData.retirementTableValue;
+    if (goalData.remainingData.retirementTableValue) {
+      this.isRetirementTab = true;
+      let goalTableData = goalData.remainingData.retirementTableValue;
       goalTableData.forEach(element => {
-          element.goalYear = new Date(element.goalStartDate).getFullYear()
+        element.goalYear = new Date(element.goalStartDate).getFullYear()
       });
-    }else{
-      this.isRetirementTab =false;
+    } else {
+      this.isRetirementTab = false;
     }
     this.dataSource = goalData.remainingData.retirementTableValue ? goalData.remainingData.retirementTableValue : [];
     this.dataSource.sort = this.sort;
@@ -468,7 +472,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
           this.allGoals = this.allGoals.filter(goal => goal.remainingData.id != this.selectedGoalId);
           this.allGoals.forEach(element => element.gv = UtilService.getNumberToWord(element.gv))
           this.selectedGoalId = null;
-          if(this.allGoals.length > 0) {
+          if (this.allGoals.length > 0) {
             this.loadSelectedGoalData(this.allGoals[0]);
           } else {
             this.selectedGoal = {};
@@ -490,8 +494,8 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
   }
 
   // drag drop for assets brought from allocations tab
-  drop(event: CdkDragDrop<string[]>) {  
-    if(event.previousContainer === event.container || !event.isPointerOverContainer) {
+  drop(event: CdkDragDrop<string[]>) {
+    if (event.previousContainer === event.container || !event.isPointerOverContainer) {
       return;
     }
     this.allocateOtherAssetService.allocateOtherAssetToGoal(event, this.advisor_client_id, this.selectedGoal);
@@ -515,7 +519,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
           percentAllocated: 0
         }
         this.plansService.allocateOtherAssetToGoal(obj).subscribe(res => {
-          const assetIndex =  this.allocatedList.findIndex((asset) => asset.assetId == allocation.assetId);
+          const assetIndex = this.allocatedList.findIndex((asset) => asset.assetId == allocation.assetId);
           this.allocatedList.splice(assetIndex, 1);
           // update asset list if user deletes goal and the list is still open
           this.allocateOtherAssetService.refreshAssetList.next();
@@ -533,7 +537,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     });
   }
 
-  reallocateAsset(allocation){
+  reallocateAsset(allocation) {
     const dialogData = {
       goalData: this.selectedGoal,
       allocationData: allocation,
@@ -550,9 +554,9 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     console.log(e, 'dz method')
   }
 
-  ngOnDestroy(){
-    this.subInjectService.closeNewRightSlider({state: 'close'});
-    if(this.otherAssetAllocationSubscription) {
+  ngOnDestroy() {
+    this.subInjectService.closeNewRightSlider({ state: 'close' });
+    if (this.otherAssetAllocationSubscription) {
       this.otherAssetAllocationSubscription.unsubscribe();
     }
     this.subscriber.unsubscribe();

@@ -551,12 +551,18 @@ export class MutualFundsCapitalComponent implements OnInit {
     // this.getCapitalgainRes(data.capitalGainData.responseData);
   }
   Excel(tableTitle) {
-    let rows = this.tableEl._elementRef.nativeElement.rows;
-    this.excel.generateExcel(rows, tableTitle)
-    let rows2 = this.tableEl._elementRef.nativeElement.rows;
-    this.excel.generateExcel(rows, tableTitle)
-    let rows3 = this.tableEl._elementRef.nativeElement.rows;
-    this.excel.generateExcel(rows, tableTitle)
+    // let rows = this.tableEl._elementRef.nativeElement.rows;
+    // this.excel.generateExcel(rows, tableTitle)
+    // let rows2 = this.tableEl._elementRef.nativeElement.rows;
+    // this.excel.generateExcel(rows, tableTitle)
+    // let rows3 = this.tableEl._elementRef.nativeElement.rows;
+    // this.excel.generateExcel(rows, tableTitle)
+    setTimeout(() => {
+      var blob = new Blob([document.getElementById('template').innerHTML], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+      });
+      saveAs(blob, tableTitle + ".xls");
+    }, 200);
   }
   pdf(tableTitle) {
     this.fragmentData.isSpinner = true;
