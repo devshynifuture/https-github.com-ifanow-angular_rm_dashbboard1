@@ -8,7 +8,7 @@ import { ConstantsService } from "../../../../../../../constants/constants.servi
 import { PlanService } from '../../plan/plan.service';
 import * as Highcharts from 'highcharts';
 import { EventService } from 'src/app/Data-service/event.service';
-import { MatDialog, MatSort, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatSort, MatTableDataSource, MatBottomSheet } from '@angular/material';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 import { DatePipe, formatDate } from '@angular/common';
 import {DateAdapter, MAT_DATE_FORMATS, NativeDateAdapter} from 'saturn-datepicker'
@@ -17,6 +17,7 @@ import { FormControl, FormBuilder } from '@angular/forms';
 import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { RecurringCommitmentsDetailedViewComponent } from '../../../common-component/recurring-commitments-detailed-view/recurring-commitments-detailed-view.component';
 import { FileUploadServiceService } from '../assets/file-upload-service.service';
+import { BottomSheetComponent } from '../../../common-component/bottom-sheet/bottom-sheet.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -114,8 +115,12 @@ export class ExpensesComponent implements OnInit {
 
   // periodSelection: any;
 
-  constructor(private fileUpload: FileUploadServiceService,private fb: FormBuilder,private datePipe: DatePipe,private subInjectService: SubscriptionInject, private planService: PlanService,
-    private constantService: ConstantsService, private eventService: EventService, public dialog: MatDialog,private util:UtilService) {
+  constructor(private fileUpload: FileUploadServiceService,private fb: FormBuilder,
+    private datePipe: DatePipe,private subInjectService: SubscriptionInject, 
+    private planService: PlanService,
+    private _bottomSheet : MatBottomSheet,
+    private constantService: ConstantsService, private eventService: EventService,
+     public dialog: MatDialog,private util:UtilService) {
   }
 
   ngOnInit() {
@@ -316,6 +321,9 @@ export class ExpensesComponent implements OnInit {
       asset: value
     }
     this.myFiles = fileName.target.files[0]
+    const bottomSheetRef = this._bottomSheet.open(BottomSheetComponent, {
+      data: this.myFiles,
+    });
     this.fileUploadData = this.fileUpload.fetchFileUploadData(obj, this.myFiles);
     if (this.fileUploadData) {
       this.file = fileName
