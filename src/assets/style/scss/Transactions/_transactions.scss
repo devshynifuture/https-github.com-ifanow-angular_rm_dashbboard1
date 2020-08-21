@@ -139,3 +139,19 @@
     padding-left: 15px !important;
   }
 }
+
+@media(max-width:1124px) {
+  .centerBox {
+    width: 50% !important;
+  }
+
+
+}
+
+@media(max-width:1024px) {
+  .centerBox {
+    width: 70% !important;
+  }
+
+
+}
