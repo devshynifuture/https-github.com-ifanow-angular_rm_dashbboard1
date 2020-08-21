@@ -6,9 +6,9 @@ import { appConfig } from '../../../../../../config/component-config';
 import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 import { OnlineTransactionService } from '../../online-transaction.service';
 import { EventService } from '../../../../../../Data-service/event.service';
-import { ConfirmUploadComponent } from './confirm-upload/confirm-upload.component';
 import { MatDialog } from '@angular/material';
 import { UtilService } from 'src/app/services/util.service';
+import { ConfirmUploadComponent } from './confirm-upload/confirm-upload.component';
 
 @Component({
   selector: 'app-investor-detail',
