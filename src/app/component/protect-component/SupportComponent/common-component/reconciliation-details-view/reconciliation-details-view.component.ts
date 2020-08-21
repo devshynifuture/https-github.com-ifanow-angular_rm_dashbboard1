@@ -105,7 +105,11 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
     }
 
     if (this.data && this.data.difference === "0.000") {
-      this.disableFreezeBtn = false;
+      if(this.data && this.data.freezeDate === null){
+        this.disableFreezeBtn = false;
+      } else {
+        this.disableFreezeBtn = true;
+      }
     } else {
       this.disableFreezeBtn = true;
     }

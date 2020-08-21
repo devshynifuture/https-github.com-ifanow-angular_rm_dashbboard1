@@ -98,6 +98,18 @@
 
                     </td>
                 </ng-container>
+
+                <ng-container matColumnDef="reason">
+                    <th *matHeaderCellDef class="br textRight t-14" mat-header-cell mat-sort-header="reason">Reason
+                    </th>
+                    <td *matCellDef="let element" class="br t-14 amt text-right" mat-cell>
+                        <div class="bar">
+                            <span>{{element.status}}</span> 
+                        </div>
+                    </td>
+                    <td *matFooterCellDef class="br text-right t-10 f-600 p-8 " mat-footer-cell></td>
+                </ng-container>
+
                 <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr>

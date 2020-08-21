@@ -29,6 +29,9 @@ export class AllSipComponent implements OnInit {
   @ViewChild('tableEl', {static: false}) tableEl;
   arnRiaValue: any;
   viewMode: any;
+  hasEndReached: any;
+  infiniteScrollingFlag: boolean;
+  finalClientList: any;
 
   constructor(
     private backoffice: BackOfficeService,
@@ -41,12 +44,11 @@ export class AllSipComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     if (this.mode == 'expired') {
-      this.displayedColumns = ['no', 'applicantName', 'schemeName', 'folioNumber', 'fromDate', 'toDate', 'ceaseDate', 'amount'];
+      this.displayedColumns = ['no', 'applicantName', 'schemeName', 'folioNumber', 'fromDate', 'toDate', 'ceaseDate', 'amount', 'reason'];
     } else if (this.mode == 'expiring') {
-      this.displayedColumns = ['no', 'applicantName', 'schemeName', 'folioNumber', 'fromDate', 'toDate', 'amount'];
+      this.displayedColumns = ['no', 'applicantName', 'schemeName', 'folioNumber', 'fromDate', 'toDate', 'amount', 'reason'];
     } else {
-      this.displayedColumns = ['no', 'applicantName', 'schemeName', 'folioNumber', 'fromDate', 'toDate',
-        'frequency', 'amount'];
+      this.displayedColumns = ['no', 'applicantName', 'schemeName', 'folioNumber', 'fromDate', 'toDate', 'frequency', 'amount', 'reason'];
     }
 
     if (this.data.hasOwnProperty('arnRiaValue') && this.data.hasOwnProperty('viewMode')) {
@@ -144,6 +146,22 @@ export class AllSipComponent implements OnInit {
     }
 
   }
+
+  onWindowScroll(e: any) {
+    if (this.tableEl._elementRef.nativeElement.querySelector('tbody').querySelector('tr:last-child').offsetTop <= (e.target.scrollTop + e.target.offsetHeight + 200)) {
+      if (!this.hasEndReached) {
+        this.infiniteScrollingFlag = true;
+        this.hasEndReached = true;
+        this.getClientList(this.finalClientList.length);
+        // this.getClientList(this.finalClientList[this.finalClientList.length - 1].clientId)
+      }
+
+    }
+  }
+  getClientList(length: any) {
+    throw new Error("Method not implemented.");
+  }
+
 
   response(data) {
     this.dataSource = new MatTableDataSource(data);

@@ -224,7 +224,8 @@ export class FolioQueryComponent implements OnInit {
               difference: (element.calculatedUnits - element.aumUnits).toFixed(3),
               schemeCode: element.schemeCode,
               aumDate: element.aumDate,
-              id: element.id
+              id: element.id,
+              freezeDate: (element.hasOwnProperty('freezeDate') && element.freezeDate) ? element.freezeDate : null,
             })
           });
           this.dataSource.data = arrValue;
@@ -243,10 +244,9 @@ export class FolioQueryComponent implements OnInit {
 
   openReconDetailView(flag, data) {
     let tableData = data.mutualFundTransaction;
-    let freezeDate = null;
     const fragmentData = {
       flag,
-      data: { ...data, tableType: flag, tableData, freezeDate },
+      data: { ...data, tableType: flag, tableData, freezeDate: data.freezeDate },
       id: 1,
       state: 'open',
       componentName: ReconciliationDetailsViewComponent
