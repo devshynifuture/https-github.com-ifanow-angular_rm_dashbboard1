@@ -256,12 +256,12 @@ export class BackOfficeService {
   }
 
   folioGroupHeadList(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId).set('clientName', data.clientName);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailId', data.arnRiaDetailId).set('parentId', data.parentId).set('clientName', data.clientName);
     return this.http.get(apiConfig.MAIN_URL + appConfig.FOLIO_GROUP_HEAD_LIST, httpParams);
   }
 
   folioApplicantList(data) {
-    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailsId', data.arnRiaDetailsId).set('parentId', data.parentId).set('familyMemberName', data.familyMemberName);
+    const httpParams = new HttpParams().set('advisorId', data.advisorId).set('arnRiaDetailId', data.arnRiaDetailId).set('parentId', data.parentId).set('familyMemberName', data.familyMemberName);
     return this.http.get(apiConfig.MAIN_URL + appConfig.FOLIO_APPLICANT_NAME_LIST, httpParams);
   }
 

@@ -26,7 +26,7 @@
 <div [ngClass]="{'pe-none': isLoading}" class="row">
     <div class="col-md-12 people-clients pb-16">
         <div [ngClass]="{'table-scroll':isLoading==false }" (scroll)="onWindowScroll($event)"
-            class="ox-hide people-clients-scroll testing-mob" *ngIf="clientDatasource.data.length>0">
+            class="ox-hide people-clients-scroll responsive-table-port" *ngIf="clientDatasource.data.length>0">
             <!--  -->
             <table #tableEl matSort #clientTableSort="matSort" mat-table [dataSource]="clientDatasource" id="tbs"
                 appSkeletonLoading [appSkeletonLoading]="isLoading" class="skeletonAnimation">

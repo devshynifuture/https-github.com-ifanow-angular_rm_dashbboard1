@@ -167,20 +167,24 @@ export class FolioQueryComponent implements OnInit {
 
   getGroupHeadNameList(value) {
     const data = {
-      advisorId: (this.parentId) ? -1 : (this.arnRiaValue != -1) ? [this.adminAdvisorIds] : [this.adminAdvisorIds],
+      // advisorId: (this.parentId) ? -1 : (this.arnRiaValue != -1) ? [this.adminAdvisorIds] : [this.adminAdvisorIds],
+      advisorId: this.parentId > 0 ? this.advisorId: -1,
       clientName: value,
       arnRiaDetailId: this.arnRiaValue,
-      parentId: (!this.parentId || this.parentId == 0) ? -1 : this.parentId,
+      parentId: this.parentId ==0 ? this.advisorId : this.parentId
+      // parentId: (!this.parentId || this.parentId == 0) ? -1 : this.parentId,
     }
     return this.reconService.getGroupHeadNameValues(data);
   }
 
   getInvestorNameList(value) {
     const data = {
-      advisorId: (this.parentId) ? -1 : (this.arnRiaValue != -1) ? [this.adminAdvisorIds] : [this.adminAdvisorIds],
+      // advisorId: (this.parentId) ? -1 : (this.arnRiaValue != -1) ? [this.adminAdvisorIds] : [this.adminAdvisorIds],
+      advisorId: this.parentId > 0 ? this.advisorId: -1,
       familyMemberName: value,
       arnRiaDetailId: this.arnRiaValue,
-      parentId: (!this.parentId || this.parentId == 0) ? -1 : this.parentId,
+      parentId: this.parentId ==0 ? this.advisorId : this.parentId
+      // parentId: (!this.parentId || this.parentId == 0) ? -1 : this.parentId,
     }
     return this.reconService.getInvestorNameValues(data);
   }
@@ -188,13 +192,16 @@ export class FolioQueryComponent implements OnInit {
   search(flag, value, searchFrom) {
     // search query logic
     // on hold
+
     this.isMainLoading = true;
     const data = {
       flag_search: flag,
-      advisorId: (this.parentId) ? -1 : (this.arnRiaValue != -1) ? [this.adminAdvisorIds] : [this.adminAdvisorIds],
+      advisorId: this.parentId > 0 ? this.advisorId: -1,
+      // advisorId: (this.parentId) ? -1 : (this.arnRiaValue != -1) ? [this.adminAdvisorIds] : [this.adminAdvisorIds],
       key: value,
       arnRiaDetailId: this.arnRiaValue,
-      parentId: (!this.parentId || this.parentId == 0) ? -1 : this.parentId,
+      parentId: this.parentId === 0 ? this.advisorId : this.parentId
+      // parentId: (!this.parentId || this.parentId == 0) ? -1 : this.parentId,
     };
 
     this.reconService.getFolioQueryDataListValues(data)

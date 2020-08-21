@@ -27,6 +27,8 @@ export class AllSipComponent implements OnInit {
 
   @ViewChild(MatSort, {static: false}) sort: MatSort;
   @ViewChild('tableEl', {static: false}) tableEl;
+  arnRiaValue: any;
+  viewMode: any;
 
   constructor(
     private backoffice: BackOfficeService,
@@ -45,6 +47,14 @@ export class AllSipComponent implements OnInit {
     } else {
       this.displayedColumns = ['no', 'applicantName', 'schemeName', 'folioNumber', 'fromDate', 'toDate',
         'frequency', 'amount'];
+    }
+
+    if (this.data.hasOwnProperty('arnRiaValue') && this.data.hasOwnProperty('viewMode')) {
+      this.arnRiaValue = this.data.arnRiaValue;
+      this.viewMode = this.data.viewMode;
+    } else {
+      this.viewMode = 'All';
+      this.arnRiaValue = -1;
     }
     this.getAllSip();
   }
@@ -78,13 +88,14 @@ export class AllSipComponent implements OnInit {
     const obj = {
       limit: 20,
       offset: 0,
-      advisorId: (this.parentId == this.advisorId) ? 0 : this.advisorId,
+      advisorId: (this.parentId > 0 )? this.advisorId : 0,
       arnRiaDetailsId: (this.data) ? this.data.arnRiaId : -1,
       parentId: (this.data) ? this.data.parentId : -1
     };
     if (this.mode == 'all') {
       this.backoffice.allSipGet(obj).subscribe(
         data => {
+          console.log(data);
           this.isLoading = false;
           if (data) {
             this.response(data);
@@ -143,7 +154,11 @@ export class AllSipComponent implements OnInit {
   }
 
   aumReport() {
-    this.changedValue.emit(true);
+    this.changedValue.emit({
+      value: true,
+      arnRiaValue: this.arnRiaValue,
+      viewMode: this.viewMode
+    });
     //  this.sip.sipComponent=true;
   }
 }

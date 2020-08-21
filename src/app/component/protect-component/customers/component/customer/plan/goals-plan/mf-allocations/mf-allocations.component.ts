@@ -12,6 +12,7 @@ import { MatTableDataSource, MatDialog } from '@angular/material';
 import { AddGoalService } from '../add-goal/add-goal.service';
 import { Subscriber } from 'rxjs';
 import { ReallocateAssetComponent } from '../reallocate-asset/reallocate-asset.component';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-mf-allocations',
@@ -35,6 +36,10 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
   folioFilterValue = 'all';
   assetFilterValue = 'all';
   selectedFamFilter = 'all';
+  advisor_client_id: any = {
+    advisorId: '',
+    clientId: ''
+  }
   subscriber = new Subscriber();
 
   isFamilyObj = (index, item) => item.isFamily;
@@ -52,6 +57,8 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
   ) {
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
+    this.advisor_client_id.advisorId = AuthService.getAdvisorId();
+    this.advisor_client_id.clientId = AuthService.getClientId();
   }
 
   ngOnInit() {
@@ -120,7 +127,8 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
   reallocateAsset(allocation){
     const dialogData = {
       goalData: this.data,
-      allocationData: allocation
+      allocationData: allocation,
+      reallocateAsset:2
     }
     this.dialog.open(ReallocateAssetComponent, {
       width: '600px',
@@ -223,15 +231,44 @@ export class MfAllocationsComponent implements OnInit, OnDestroy {
   }
 
 
-  removeFromAllocation(data, goal){
-    const obj = {
-      advisorId: this.advisorId,
-      clientId: this.clientId,
-      goalId: goal.id,
-      mfId: data.id
-    }
-    
+  removeAllocation(allocation,allocatedGoal) {
+    const dialogData = {
+      header: 'UNALLOCATE MF',
+      body: 'Are you sure you want to remove allocation?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'UNALLOCATE',
+      positiveMethod: () => {
+        let obj = {
+          ...this.advisor_client_id,
+          id: allocatedGoal.id,
+          assetId: allocation.id,
+          goalId: allocatedGoal.goalId,
+          goalType: allocatedGoal.goalType,
+          percentAllocated: 0
+        }
+        this.planService.allocateOtherAssetToGoal(obj).subscribe(res => {
+          // update asset list if user deletes goal and the list is still open
+          this.subscriber.add(
+            this.allocationService.refreshObservable.subscribe(()=>{
+              this.loadMFData();
+            })
+          );
+          this.allocationService.refreshAssetList.next();
+          this.eventService.openSnackBar("Asset unallocated");
+          dialogRef.close();
+        }, err => {
+          this.eventService.openSnackBar(err);
+        })
+      }
+    };
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+    });
   }
+
 
   close() {
     this.subInjectService.changeNewRightSliderState({state: 'close'});

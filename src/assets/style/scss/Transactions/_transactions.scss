@@ -17,6 +17,16 @@
   }
 }
 
+.investors-transactions .investors-transactions-scroll {
+  overflow-y: auto !important;
+  height: calc(100vh - 214px);
+}
+
+.settings-client-mapping .settings-client-mapping-scroll {
+  overflow-y: auto !important;
+  height: calc(100vh - 290px);
+}
+
 // #ui-overview-transactions {
 //   padding-top: 72px;
 //   background-color: #F5F7F7;
