@@ -154,7 +154,7 @@ const ELEMENT_DATA7: PeriodicElement7[] = [
 
 export class DashboardComponent implements OnInit {
   clientData: any;
-  chartTotal: number;
+  chartTotal: number = 0;
   hasError: boolean;
   assetAllocationPieConfig: Chart;
   mfSubCategoryPieConfig: Chart;
@@ -162,35 +162,35 @@ export class DashboardComponent implements OnInit {
   chart: Highcharts.Chart;
   chartData: any[] = [
     {
-      name: 'Equity',
+      name: "EQUITY",
       y: 20,
       color: AppConstants.DONUT_CHART_COLORS[0],
       dataLabels: {
         enabled: false
       }
     }, {
-      name: 'Fixed income',
+      name: "DEBT",
       y: 20,
       color: AppConstants.DONUT_CHART_COLORS[1],
       dataLabels: {
         enabled: false
       }
     }, {
-      name: 'Commodities',
+      name: "HYBRID",
       y: 20,
       color: AppConstants.DONUT_CHART_COLORS[2],
       dataLabels: {
         enabled: false
       }
     }, {
-      name: 'Real estate',
+      name: "OTHERS",
       y: 20,
       color: AppConstants.DONUT_CHART_COLORS[3],
       dataLabels: {
         enabled: false
       }
     }, {
-      name: 'Others',
+      name: "SOLUTION ORIENTED",
       y: 20,
       color: AppConstants.DONUT_CHART_COLORS[4],
       dataLabels: {
@@ -203,6 +203,7 @@ export class DashboardComponent implements OnInit {
   taskSummaryDashboardCount: any = null;
   mfDataflag: boolean;
   keyMatrixFlag: boolean = true;
+  newchartData: any[];
   constructor(
     public dialog: MatDialog, private subService: SubscriptionService,
     private eventService: EventService,
@@ -446,7 +447,7 @@ export class DashboardComponent implements OnInit {
     this.advisorName = AuthService.getUserInfo().name;
     this.userData = AuthService.getUserInfo();
     this.excessAllow = localStorage.getItem('successStoringToken');
-    this.getAssetAllocationData();
+    // this.getAssetAllocationData();
     this.getTotalRecivedByDash();
     this.clientWithSubscription();
     this.getSummaryDataDashboard(); // summry dashbord
@@ -467,12 +468,55 @@ export class DashboardComponent implements OnInit {
     this.getGoalSummaryData();
     this.initPointForTask();
     this.getMisData();
+    this.getChartData()
   }
 
   initPointForTask() {
     this.getTaskDashboardCount();
     this.getTodaysTaskList();
   }
+
+  getChartData() {
+    this.tabsLoaded.portfolioData.isLoading = true
+    const obj =
+    {
+      advisorId: this.advisorId,
+      targetDate: new Date().getTime()
+    }
+    this.dashboardService.getChartData(obj).subscribe(
+      data => {
+        this.tabsLoaded.portfolioData.isLoading = false
+        console.log(data)
+        if (data) {
+          this.tabsLoaded.portfolioData.hasData = true;
+          let chartData = [];
+          this.chartTotal
+          data.forEach((element, index) => {
+            this.chartTotal += Math.round(element.totalAum)
+            chartData.push({
+              y: Math.round(element.totalAum),
+              name: element.name,
+              color: AppConstants.DONUT_CHART_COLORS[index],
+              dataLabels: {
+                enabled: false
+              }
+            })
+          });
+          this.newchartData = chartData
+          this.assetAllocationPieChartDataMgnt(this.newchartData);
+          this.tabsLoaded.portfolioData.dataLoaded = true
+        }
+        else {
+          this.tabsLoaded.portfolioData.hasData = false;
+        }
+      },
+      err => {
+        this.hasError = true;
+        this.tabsLoaded.portfolioData.isLoading = false;
+        // this.loaderFn.decreaseCounter();
+      });
+  }
+
 
   getTaskDashboardCount() {
     this.dashboardService.getTaskDashboardCountValues({ advisorId: this.advisorId })
@@ -549,7 +593,7 @@ export class DashboardComponent implements OnInit {
         if (counter > 0) {
           this.chartTotal = chartTotal;
           this.chartData = chartData;
-          this.assetAllocationPieChartDataMgnt(this.chartData);
+          // this.assetAllocationPieChartDataMgnt(this.chartData);
         }
       }
       this.tabsLoaded.portfolioData.isLoading = false;
@@ -564,10 +608,10 @@ export class DashboardComponent implements OnInit {
   }
 
   assetAllocationPieChartDataMgnt(data) {
-    this.assetAllocationPieConfig.removeSeries(0);
+    // this.assetAllocationPieConfig.removeSeries(0);
     this.assetAllocationPieConfig.addSeries({
       type: 'pie',
-      name: 'Asset allocation',
+      name: 'Asset classes',
       animation: false,
       innerSize: '60%',
       data,
