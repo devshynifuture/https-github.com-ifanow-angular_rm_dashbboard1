@@ -14,7 +14,7 @@
     <div class="row">
         <div class="col-md-12 p-0">
             <div *ngIf="headingData.fieldFlag=='familyMember'" class="right-cross-icons">
-                <span *ngIf="!tabData.mobileNo || !tabData.email" class="material-icons familyDelete c-p"
+                <span *ngIf="!tabData.pan || !tabData.email" class="material-icons familyDelete c-p"
                     (click)="deleteModal('FAMILY MEMBER')">
                     delete
                 </span>

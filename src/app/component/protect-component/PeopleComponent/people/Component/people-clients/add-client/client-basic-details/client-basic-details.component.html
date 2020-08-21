@@ -1,5 +1,5 @@
-<img *ngIf="fieldFlag=='familyMember' && basicDetailsData.mobileNo && basicDetailsData.email"
-    [matMenuTriggerFor]="menu " class="c-p unmap-option" src="/assets/images/svg/dot-menu.svg">
+<img *ngIf="fieldFlag=='familyMember' && basicDetailsData.pan && basicDetailsData.email" [matMenuTriggerFor]="menu "
+    class="c-p unmap-option" src="/assets/images/svg/dot-menu.svg">
 <mat-menu #menu="matMenu">
     <button (click)="unmapFamilyMember('FAMILY MEMBER')" mat-menu-item>
         <span>Unmap</span>
