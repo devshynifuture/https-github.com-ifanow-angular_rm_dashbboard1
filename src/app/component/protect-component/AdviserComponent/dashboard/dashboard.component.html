@@ -299,7 +299,7 @@
       </div>
 
       <div class="mt-40"
-        *ngIf="(tabsLoaded.portfolioData.dataLoaded && tabsLoaded.portfolioData.hasData) && !tabsLoaded.portfolioData.isLoading ">
+        *ngIf="(tabsLoaded.portfolioData.dataLoaded && tabsLoaded.portfolioData.hasData) && !tabsLoaded.portfolioData.isLoading && chartTotal>0">
         <h5 class="text-black f-16 roboto mb-10 f-500"> Asset classses</h5>
         <div class="bg-white br-10">
           <div class="row b-a pt-20 pb-20 br-4">
@@ -310,10 +310,10 @@
             </div>
             <div class="col-md-6 pl-0 flex-column d-flex justify-content-center ">
               <div class="chart-data d-flex" *ngFor="let data of newchartData">
-                  <span class="pointNumber" [style.background-color]="data.color">
-                  </span>
-                  <span class="f-12 lh-12 roboto f-400 m-0"
-                    appFormatNumber>{{(data.y/chartTotal*100) | number : '0.2-2'}}%</span>
+                <span class="pointNumber" [style.background-color]="data.color">
+                </span>
+                <span class="f-12 lh-12 roboto f-400 m-0"
+                  appFormatNumber>{{(data.y/chartTotal*100) | number : '0.2-2'}}%</span>
                 <p class="f-12  lh-12 roboto text-custom m-0 f-400 mb-10 ml-10">{{data.name}}</p>
 
               </div>
