@@ -41,6 +41,9 @@ export class AddGoalService {
     if(dashBoardData.debt_monthly && dashBoardData.equity_monthly &&  dashBoardData.lump_debt && dashBoardData.lump_equity){
       let obj = this.createAllocationObjectForMf(mfAsset, advisor_client_id, selectedGoal);
       if(mfAsset.absAllocation < 100){
+        mfAsset.goalAssetMapping.forEach(element => {
+          obj.percentAllocated = 100-element.percentAllocated
+        });
         this.allocateAsset(obj);
       }else{
         this.eventService.openSnackBar("Asset already 100% allocated!!", "Dismiss");

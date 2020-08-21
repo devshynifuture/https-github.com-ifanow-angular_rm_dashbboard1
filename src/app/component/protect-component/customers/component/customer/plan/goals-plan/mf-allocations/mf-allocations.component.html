@@ -242,12 +242,13 @@
                                 <div><span appFormatNumber
                                         [value]="allocatedGoal.percentAllocated ? allocatedGoal.percentAllocated : 100"></span>
                                 </div>
-
+                                <div class="d-flex" *ngIf="element.absAllocation == 100">
                                 <button class="unallcoateBtn text-danger"*ngIf="element.absAllocation == 100"
                                     (click)="removeAllocation(element, allocatedGoal)">Unallocate</button>
                                 <i class="material-icons c-p text-black" [matMenuTriggerFor]="menu4">
                                     more_vert
                                 </i>
+                                </div>
 
                             </div>
                             <div class="d-flex" *ngIf="element.absAllocation < 100">
