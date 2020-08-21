@@ -61,22 +61,36 @@
   </div>
 </div>
 <div class="p-28 pb-100">
+  <div class="row">
+    <div class="col-md-4 text-left p-0 pt-12">
+      <div [hidden]="!loader1" class='loaderWrap'>
+        <span class='loadCount'>{{barWidth1}}</span>
+        <div class='loaderBar'>
+          <div class="loaderBarFill" [style.width]="barWidth1"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 text-left p-0 pt-12">
+      <div [hidden]="!loader2" class='loaderWrap'>
+        <span class='loadCount'>{{barWidth2}}</span>
+        <div class='loaderBar'>
+          <div class="loaderBarFill" [style.width]="barWidth2"></div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div *ngIf="!statusData[1].checked&&!isLoading" class="row">
-    <button (click)="uploadFileInput1.click()" [disabled]="isFileUploading"
-            class="btnConfirm bg-primary text-white"
-            mat-button>
+    <button (click)="openUploadConfirmBox('AOF',1)" [disabled]="barWidth1>0" class="btnConfirm bg-primary text-white"
+      mat-button>
       Upload AOF
-      <input #uploadFileInput1 (change)="getFileDetails(1,$event)" class="uploadInput" id="file-4" type="file">
+      <!-- <input #uploadFileInput1 (change)="getFileDetails(1,$event)" class="uploadInput" id="file-4" type="file"> -->
     </button>
 
-    <button (click)="uploadFileInput.click()" *ngIf="details.aggregatorType==1"
-            [disabled]="isFileUploading"
-            class="btnConfirm bg-primary text-white ml-8"
-            mat-button>
+    <button (click)="openUploadConfirmBox('CHEQUE',4)" *ngIf="details.aggregatorType==1" [disabled]="isFileUploading"
+      class="btnConfirm bg-primary text-white ml-8" mat-button>
       Upload Cheque
-      <input #uploadFileInput (change)="getFileDetails(4,$event)" class="uploadInput" id="file-5" type="file">
+      <!-- <input #uploadFileInput (change)="getFileDetails(4,$event)" class="uploadInput" id="file-5" type="file"> -->
     </button>
-    <mat-spinner *ngIf="isFileUploading" [diameter]="30" class="mr-4 mb-4"></mat-spinner>
 
   </div>
   <div class="row">

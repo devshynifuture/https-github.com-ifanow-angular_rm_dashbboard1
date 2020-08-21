@@ -128,6 +128,7 @@ export class MutualFundSummaryComponent implements OnInit {
   tweleventhArray: any;
   cashFlowObj:any;
   cashFlowXirr: any;
+  // setTrueKey = false;
 
 
   @Input()
@@ -1490,6 +1491,7 @@ export class MutualFundSummaryComponent implements OnInit {
       toDate: (this.setDefaultFilterData.toDate) ? this.setDefaultFilterData.toDate : this.toDate,
       savedFilterData: this.savedFilterData,
       selectFilter: (this.saveFilterData) ? this.saveFilterData.selectFilter : null,
+      // setTrueKey: this.setDefaultFilterData.setTrueKey ? this.setDefaultFilterData.setTrueKey : false ,
       // transactionTypeList:this.setDefaultFilterData.transactionTypeList
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
@@ -1503,6 +1505,7 @@ export class MutualFundSummaryComponent implements OnInit {
             this.changeInput.emit(true);
             this.resData = sideBarData.data;
             this.rightFilterData = sideBarData.data;
+            // this.setTrueKey = this.rightFilterData.setTrueKey;
             this.columns = [];
             this.displayedColumnsTotal = [];
             this.rightFilterData.transactionView.forEach(element => {

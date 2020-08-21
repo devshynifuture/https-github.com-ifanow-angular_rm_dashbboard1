@@ -65,6 +65,7 @@ export class MutualFundOverviewComponent implements OnInit {
   advisorId: any;
   advisorData: any;
   clientId;
+  // setTrueKey =false;
 
   @Output() changeInput = new EventEmitter();
   @Output() sendData = new EventEmitter();
@@ -107,6 +108,7 @@ export class MutualFundOverviewComponent implements OnInit {
   displayedColumns1 = ['data', 'amts'];
   mfBulkEmailRequestId: number;
   cashFlowObj:any;
+  showZeroFolio = false;
 
   constructor(private datePipe: DatePipe, public subInjectService: SubscriptionInject, public UtilService: UtilService,
     private mfService: MfServiceService,
@@ -208,6 +210,7 @@ export class MutualFundOverviewComponent implements OnInit {
     } else {
       this.getMutualFundData();
     }
+
 
   }
 
@@ -371,7 +374,7 @@ export class MutualFundOverviewComponent implements OnInit {
     this.custumService.getMutualFund(obj).subscribe(
       data => {
         let cashFlow = data;
-        if (cashFlow.mutualFundCategoryMastersList.length > 0) {
+        if (cashFlow && cashFlow.hasOwnProperty('mutualFundCategoryMastersList') && cashFlow.mutualFundCategoryMastersList.length !== 0) {
           this.cashFlowXirr = cashFlow.mutualFundCategoryMastersList[0].cashFlowxirr;
         }
         this.getMutualFundResponse(data)
@@ -417,6 +420,8 @@ export class MutualFundOverviewComponent implements OnInit {
   }
 
   getMutualFundResponse(data) {
+    this.showZeroFolio =this.setDefaultFilterData.showFolio ? (this.setDefaultFilterData.showFolio == '2' ? false:true) : false ; 
+  
     if (data) {
       // this.getNav();
       this.getTransactionTypeData();
@@ -463,9 +468,11 @@ export class MutualFundOverviewComponent implements OnInit {
       // }
       this.total_net_Gain = (this.mfData.total_market_value - this.mfData.total_net_investment);
       let sortedData = this.MfServiceService.sorting(data.mutualFundCategoryMastersList, 'category');
-      sortedData = sortedData.filter((item: any) =>
-        item.currentValue != 0 && item.currentValue > 0
+      if(!this.showZeroFolio){
+        sortedData = sortedData.filter((item: any) =>
+        item.currentValue != 0 && item.currentValue > 0 || (item.balanceUnits != 0 && item.balanceUnits > 0)
       );
+      }
       this.dataSource4 = new MatTableDataSource(sortedData); // category wise allocation
       this.sendaata.dataSource4 = this.dataSource4;
 
@@ -480,6 +487,9 @@ export class MutualFundOverviewComponent implements OnInit {
       this.changeInput.emit(false);
       if (this.dataSource.data.length == 0 && this.dataSource2.data.length == 0 && this.dataSource3.data.length == 0 && this.dataSource4.data.length == 0) {
         this.showSummaryBar = false;
+        this.showCashFlow =false;
+        this.showSchemeWise=false
+        this.datasource1.data =[];
       }
     } else {
       this.showSummaryBar = false;
@@ -588,9 +598,11 @@ export class MutualFundOverviewComponent implements OnInit {
     this.filteredArray = this.MfServiceService.filter(data.mutualFundCategoryMastersList, 'mutualFundSubCategoryMaster');
     if (this.dataSource3.data.length > 0) {
       let sortedData = this.MfServiceService.sorting(this.filteredArray, 'subCategory');
-      sortedData = sortedData.filter((item: any) =>
-        item.currentValue != 0 && item.currentValue > 0
+      if(!this.showZeroFolio){
+        sortedData = sortedData.filter((item: any) =>
+        item.currentValue != 0 && item.currentValue > 0 || (item.balanceUnits != 0 && item.balanceUnits > 0)
       );
+      }
       this.dataSource3 = new MatTableDataSource(sortedData);
       this.sendaata.dataSource3 = this.dataSource3;
 
@@ -609,9 +621,11 @@ export class MutualFundOverviewComponent implements OnInit {
     this.changeInput.emit(true);
     if (this.dataSource.data.length > 0) {
       let sortedData = this.MfServiceService.sorting(data.family_member_list, 'name');
-      sortedData = sortedData.filter((item: any) =>
+      if(!this.showZeroFolio){
+        sortedData = sortedData.filter((item: any) =>
         item.currentValue != 0 && item.currentValue > 0 || (item.balanceUnits != 0 && item.balanceUnits > 0)
       );
+      }
       this.dataSource = new MatTableDataSource(sortedData);
       this.sendaata.dataSource = this.dataSource;
 
@@ -655,9 +669,11 @@ export class MutualFundOverviewComponent implements OnInit {
 
               dataToShow.push(element);
               let sortedData = this.MfServiceService.sorting(dataToShow, 'schemeName');
-              sortedData = sortedData.filter((item: any) =>
-                item.currentValue != 0 && item.currentValue > 0 || (item.balanceUnit != 0 && item.balanceUnit > 0)
+              if(!this.showZeroFolio){
+                sortedData = sortedData.filter((item: any) =>
+                item.currentValue != 0 && item.currentValue > 0 || (item.balanceUnits != 0 && item.balanceUnits > 0)
               );
+              }
               this.dataSource2 = new MatTableDataSource(sortedData);
               this.sendaata.dataSource2 = this.dataSource2;
 
@@ -677,9 +693,11 @@ export class MutualFundOverviewComponent implements OnInit {
       } else {
         dataToShow.push(element);
         let sortedData = this.MfServiceService.sorting(dataToShow, 'schemeName');
-        sortedData = sortedData.filter((item: any) =>
-          (item.currentValue != 0 && item.currentValue > 0) || (item.balanceUnit != 0 && item.balanceUnit > 0)
+        if(!this.showZeroFolio){
+          sortedData = sortedData.filter((item: any) =>
+          item.currentValue != 0 && item.currentValue > 0 || (item.balanceUnits != 0 && item.balanceUnits > 0)
         );
+        }
         this.dataSource2 = new MatTableDataSource(sortedData);
         this.sendaata.dataSource2 = this.dataSource2;
 
@@ -938,6 +956,8 @@ export class MutualFundOverviewComponent implements OnInit {
       transactionPeriod: this.setDefaultFilterData.transactionPeriod,
       transactionPeriodCheck: this.setDefaultFilterData.transactionPeriodCheck,
       selectFilter: (this.saveFilterData) ? this.saveFilterData.selectFilter : null,
+      // setTrueKey: this.setDefaultFilterData.setTrueKey ? this.setDefaultFilterData.setTrueKey : false ,
+
       // transactionTypeList:this.setDefaultFilterData.transactionTypeList
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
@@ -953,6 +973,7 @@ export class MutualFundOverviewComponent implements OnInit {
             this.isLoading = true;
             this.changeInput.emit(true);
             this.rightFilterData = sideBarData.data;
+            // this.setTrueKey = this.rightFilterData.setTrueKey;
             if(this.rightFilterData.mfData){
               this.reponseData = this.mfService.doFiltering(this.rightFilterData.mfData);
             }

@@ -101,6 +101,10 @@ export class RightFilterDuplicateComponent implements OnInit {
   schemeChecked: boolean;
   amcChecked: boolean;
   familyChecked: boolean;
+  showZeroFolio = false;
+  setAllTrue = false;
+  setTrueKey =false;
+
 
   constructor(private subInjectService: SubscriptionInject, private fb: FormBuilder,
     private custumService: CustomerService, private eventService: EventService,
@@ -117,6 +121,8 @@ export class RightFilterDuplicateComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.setTrueKey =this._data.setTrueKey;
+    this.showZeroFolio = this._data.showFolio == '2' ? false : true;
     this.panelOpenState = false;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
@@ -177,9 +183,10 @@ export class RightFilterDuplicateComponent implements OnInit {
   }
 
   getAmc(data) {
-    const myArray = data;
-    const list = [];
+    let myArray = data;
+    let list = [];
     myArray.forEach(val => list.push(Object.assign({}, val)));
+    // list = this.mfService.filterByFolio(list,this.showZeroFolio,this.setTrueKey);
     const filterData = [];
     list.forEach(element => {
       const obj = {
@@ -205,9 +212,10 @@ export class RightFilterDuplicateComponent implements OnInit {
   }
 
   getFolio(data) {
-    const myArray = data;
-    const list = [];
+    let myArray = data;
+    let list = [];
     myArray.forEach(val => list.push(Object.assign({}, val)));
+    // list = this.mfService.filterByFolio(list,this.showZeroFolio,this.setTrueKey);
     const filterData = [];
     list.forEach(element => {
       const obj = {
@@ -222,9 +230,10 @@ export class RightFilterDuplicateComponent implements OnInit {
   }
 
   getCategoryWise(data) {
-    const myArray = data;
-    const list = [];
+    let myArray = data;
+    let list = [];
     myArray.forEach(val => list.push(Object.assign({}, val)));
+    // list = this.mfService.filterByFolio(list,this.showZeroFolio,this.setTrueKey);
     const filterData = [];
     list.forEach(element => {
       const obj = {
@@ -256,6 +265,7 @@ export class RightFilterDuplicateComponent implements OnInit {
 
   getSchemeWise(data) {
     const filterData = [];
+    // data = this.mfService.filterByFolio(data,this.showZeroFolio,this.setTrueKey);
     data.filter(function (element) {
       // const obj = {
       //   id: element.id,
@@ -281,6 +291,7 @@ export class RightFilterDuplicateComponent implements OnInit {
   }
 
   getFamilyMember(data) {
+    // data = this.mfService.filterByFolio(data,this.showZeroFolio,this.setTrueKey);
     let filterData = [];
     if (this._data.name == 'CAPITAL GAIN REPORT') {
       this._data.capitalGainData.mutualFundList.forEach(element => {
@@ -1668,7 +1679,13 @@ export class RightFilterDuplicateComponent implements OnInit {
     }
     this.changeSelect('', '');
   }
-
+  checkLengthAndSetTrue(){
+    if(this.familyMember.length  == this.countFamily && this.amc.length == this.countAmc && this.scheme.length == this.countScheme && this.folio.length == this.countFolio && this.category.length == this.countCategory ){
+      this.setAllTrue=true;
+    }else{
+      this.setAllTrue=false;
+    }
+  }
   generateReport() {
     this.barButtonOptions.active = true;
     const todayDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
@@ -1679,6 +1696,7 @@ export class RightFilterDuplicateComponent implements OnInit {
         return;
       }
     }
+    // this.checkLengthAndSetTrue();
     this.dataToSend = {
       familyMember: (this.familyMemObj) ? this.familyMemObj : this.familyMember,
       amc: (this.amcObj) ? this.amcObj : this.amc,
@@ -1699,7 +1717,8 @@ export class RightFilterDuplicateComponent implements OnInit {
       name: this._data.name,
       transactionPeriodCheck: this.transactionPeriodCheck,
       transactionPeriod: this.transactionPeriod,
-      transactionType: this.transactionType
+      transactionType: this.transactionType,
+      // setTrueKey : this.setAllTrue
     };
     console.log('dataToSend---------->', this.dataToSend);
 
