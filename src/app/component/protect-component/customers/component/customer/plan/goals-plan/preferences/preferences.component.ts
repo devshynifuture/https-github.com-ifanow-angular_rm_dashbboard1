@@ -235,7 +235,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       debtAllocation: ['', [Validators.required]],
       progressiveStages: this.fb.array([this.createStage()]),
       strategicOrTactical: [1, [Validators.required]],
-      staticOrProgressive: [this.data.remainingData.staticOrProgressive, [Validators.required]],
+      staticOrProgressive: [this.data.remainingData.staticOrProgressive,],
       goalId: [this.data.remainingData.id],
       goalType: [this.data.goalType],
     })

@@ -7,9 +7,9 @@
             {{(this.viewMode == 'Unrealized Transactions') ? 'unrealized transactions' : 'all transactions'}}
          </h4>
       </div>
-      <div 
+      <div
          class="col-md-6 p-0 justify-content-end d-flex align-items-center">
-         <div class="pdfClass" *ngIf="!isLoading && (unrealisedData.data.length > 0 || dataSource.data.length > 0)">
+         <div class="pdfClass" *ngIf="!isLoading && (unrealisedArray > 0 || dataSource.data.length > 0)">
             <a *ngIf="!fragmentData.isSpinner" [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
                <img src="assets/images/svg/download-bordered.svg">
             </a>
@@ -171,10 +171,11 @@
 
    <div class="row secoundTable">
       <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 p-0 mb-8">
-         <cdk-virtual-scroll-viewport *ngIf="unrealisedData.data.length>0" class="tran-height-2" tvsItemSize="40">
+         <cdk-virtual-scroll-viewport #cdkVirtualScrollViewport [hidden]="!unrealisedArray.length>0" class="tran-height-2" >
             <!-- <div *ngIf="customDataSource.data.length>0" class="wrapper">-->
-            <table #tableEl [appSkeletonLoading]="isLoading" [dataSource]="unrealisedData" appSkeletonLoading
-               class="mutualfunds-capital-equity skeletonAnimation" id="table-low" mat-table matSort>
+            <table #tableEl [appSkeletonLoading]="isLoading" *ngIf="unrealisedData" [dataSource]="unrealisedData" appSkeletonLoading
+               class="mutualfunds-capital-equity skeletonAnimation" id="table-low" mat-table matSort
+                   [multiTemplateDataRows]="true">
                <ng-container matColumnDef="no" sticky>
                   <th *matHeaderCellDef class="br" mat-header-cell>Sr no.</th>
                   <td *matCellDef="let element;index as i" class="br zIndex" mat-cell>
@@ -485,7 +486,9 @@
                <tr *matRowDef="let row; columns: ['groupHeader']; when: isGroup" mat-row></tr>
                <tr *matRowDef="let row; columns: ['groupHeader2']; when: isGroup2" mat-row></tr>
                <tr *matRowDef="let row; columns: ['groupHeader3']; when: isGroup3" mat-row></tr>
-               <!-- <tr *matRowDef="let row; columns: ['groupHeader4']; when: isGroup4" mat-row></tr> -->
+              <tr [style.height.px]="placeholderHeight" mat-row *matRowDef="let row; let index = index; columns: []; when: placeholderWhen"></tr>
+
+              <!-- <tr *matRowDef="let row; columns: ['groupHeader4']; when: isGroup4" mat-row></tr> -->
                <!-- <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr> -->
             </table>
             <!-- </div>-->

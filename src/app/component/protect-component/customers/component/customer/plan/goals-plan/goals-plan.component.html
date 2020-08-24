@@ -241,7 +241,7 @@
                                     <div class="col-md-3  relClass d-flex align-items-center justify-content-between ">
 
                                         <div class="bar">
-                                            <p class="m-0 roboto" appFormatNumber [value]='allocation.maturityValue'>
+                                            <p class="m-0 roboto" appFormatNumber [value]="(allocation.maturityValue == 0)?'-':allocation.maturityValue">
                                             </p>
                                         </div>
 
