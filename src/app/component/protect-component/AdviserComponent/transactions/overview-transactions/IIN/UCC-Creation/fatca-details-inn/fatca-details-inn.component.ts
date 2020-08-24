@@ -56,6 +56,7 @@ export class FatcaDetailsInnComponent implements OnInit, AfterViewInit {
     code: '08',
     sourceCode: '08'
   }];
+  occupationFilteredArray = [].concat(this.occupationArray);
   fatcaDetails: any;
   inputData: any;
   allData: any;
@@ -164,6 +165,9 @@ export class FatcaDetailsInnComponent implements OnInit, AfterViewInit {
       this.filterCountryName = new Observable().pipe(startWith(''), map(value => {
         return this.processTransaction.filterName(newValue, this.countryList);
       }));
+    });
+    this.fatcaDetails.controls.sourceOfWealth.valueChanges.subscribe(newValue => {
+      this.occupationFilteredArray = this.occupationArray.filter(singleOcc => singleOcc.sourceCode == newValue);
     });
     if (!data && holderData.address) {
       this.fatcaDetails.controls.placeOfBirth.setValue(holderData.address.city);
