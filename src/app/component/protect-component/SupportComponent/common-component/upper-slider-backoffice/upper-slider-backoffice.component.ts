@@ -991,40 +991,46 @@ export class UpperSliderBackofficeComponent implements OnInit {
     }
   }
 
-  openDeleteDialog() {
-    if (this.deleteReorderOrDeleteDisabled !== 'delete') {
-
-      const dialogData = {
-        header: 'DELETE UNMATCHED FOLIOS?',
-        body: 'Are you sure you want to delete the unmatched folios?',
-        body2: '',
-        btnYes: 'CANCEL',
-        btnNo: 'YES',
-        positiveMethod: () => {
-          console.log('successfully deleted');
-          // this.deleteAndReorder();
-          this.deleteUnfreezeTransaction();
-          dialogRef.close();
-        },
-        negativeMethod: () => {
-          console.log('aborted');
-        }
-
-      };
-      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-        width: '400px',
-        data: dialogData,
-        autoFocus: false,
-      });
-
-      dialogRef.afterClosed().subscribe(result => {
-
-      });
-
+  openDeleteDialog(event) {
+    if(this.isFranklinTab){
+      if (this.deleteReorderOrDeleteDisabled !== 'delete') {
+  
+        const dialogData = {
+          header: 'DELETE UNMATCHED FOLIOS?',
+          body: 'Are you sure you want to delete the unmatched folios?',
+          body2: '',
+          btnYes: 'CANCEL',
+          btnNo: 'YES',
+          positiveMethod: () => {
+            console.log('successfully deleted');
+            // this.deleteAndReorder();
+            this.deleteUnfreezeTransaction();
+            dialogRef.close();
+          },
+          negativeMethod: () => {
+            console.log('aborted');
+          }
+  
+        };
+        const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+          width: '400px',
+          data: dialogData,
+          autoFocus: false,
+        });
+  
+        dialogRef.afterClosed().subscribe(result => {
+  
+        });
+  
+      } else {
+        this.eventService.openSnackBar('You can only delete Unmatched folios or Delete and reorder folios', 'DISMISS');
+      }
+      this.deleteReorderOrDeleteDisabled = 'deleteReorder';
     } else {
-      this.eventService.openSnackBar('You can only delete Unmatched folios or Delete and reorder folios', 'DISMISS');
+      event.preventDefault();
+      this.eventService.openSnackBar("Cannot Delete Unmatched Folios","DISMISS");  
     }
-    this.deleteReorderOrDeleteDisabled = 'deleteReorder';
+
   }
 
   deleteUnfreezeTransaction() {

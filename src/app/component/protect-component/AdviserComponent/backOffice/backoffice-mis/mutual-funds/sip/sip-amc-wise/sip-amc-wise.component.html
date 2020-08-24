@@ -3,7 +3,7 @@
         <div class="wrapper-20 bg-white">
             <div class="row">
                 <div class="col-md-12 pr-0 mb-10">
-                    <div class="right text-right">
+                    <div class="right text-right" *ngIf="arnRiaList.length>1">
                         <button [matMenuTriggerFor]="menu" class="ba-black borderLine br-0" mat-stroked-button>
                             {{viewMode}}
                             <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down
@@ -48,10 +48,10 @@
                         id="table-low" *ngIf="filteredArray.length>0">
                         <thead class="text-dark">
                             <tr class="h-40">
-                                <th class="w-10">Sr No.</th>
+                                <th class="w-10">Sr. No.</th>
                                 <th class="w-40 c-p" (click)="sortBy(filteredArray,'amcName')">
                                     <span class="d-flex align-items-center">
-                                        Amc Name
+                                        AMC Name
                                         <i class="material-icons ml-4 f-14 text-primitive"
                                             *ngIf="propertyName=='amcName' && !reverse">
                                             arrow_upward </i>

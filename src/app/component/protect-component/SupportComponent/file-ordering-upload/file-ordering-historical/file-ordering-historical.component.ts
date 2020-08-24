@@ -240,27 +240,21 @@ export class FileOrderingHistoricalComponent implements OnInit {
 		this.fileOrderingUploadService.getFileOrderRefreshPerRowData(data)
 			.subscribe(res => {
 				if (res) {
-					console.log(res);
-					let obj: any = {};
-					obj['advisorName'] = res.advisorName;
-					obj['rta'] = this.getRtName(res.rtId);
-					obj['orderedBy'] = res.rmName;
-					obj['startedOn'] = res.fileOrderDateTime
-					obj['totalFiles'] = res.totalFiles;
-					obj['queue'] = res.inqueue ? element.inqueue : "-";
-					obj['ordering'] = res.orderingFrequency;
-					obj['ordered'] = res.ordered ? element.ordered : "-";
-					obj['failed'] = res.skipped ? element.skipped : "-";
-					obj['uploaded'] = res.uploaded ? element.uploaded : "-";
-					obj['refresh'] = res.refresh ? element.refresh : "-";
-					obj['empty'] = res.empty ? element.empty : "-";
-					obj['rtId'] = res.rtId;
-					obj['rmId'] = res.rmId;
-					obj['days'] = res.days;
-					obj['arnRiaDetailId'] = res.arnRiaDetailId;
-					obj['isLoading'] = false;
-
-					this.dataSource.data.splice(index, 1, obj);
+					element.advisorName = res.advisorName;
+					element.rta = this.getRtName(res.rtId);
+					element.orderedBy = res.rmName;
+					element.startedOn = res.fileOrderDateTime
+					element.totalFiles = res.totalFiles;
+					element.queue = res.inqueue || res.inqueue === 0 ? res.inqueue : "-";
+					element.ordering = res.orderingFrequency;
+					element.ordered = res.ordered || res.ordered === 0 ? res.ordered : "-";
+					element.failed = res.skipped || res.skipped === 0? res.skipped : "-";
+					element.uploaded = res.uploaded || res.uploaded === 0 ? res.uploaded : "-";
+					element.empty = res.empty ? res.empty : "-";
+					element.rtId = res.rtId;
+					element.rmId = res.rmId;
+					element.days = res.days;
+					element.arnRiaDetailId = res.arnRiaDetailId;
 					element.isLoading = false;
 				}
 			})
@@ -297,14 +291,14 @@ export class FileOrderingHistoricalComponent implements OnInit {
 							startedOn: element.fileOrderDateTime
 								? element.fileOrderDateTime
 								: "-",
-							totalFiles: element.totalFiles ? element.totalFiles : "-",
-							queue: element.inqueue ? element.inqueue : "-",
+							totalFiles: element.totalFiles || element.totalFiles ? element.totalFiles : "-",
+							queue: element.inqueue || element.inqueue==0? element.inqueue : "-",
 							ordering: element.orderingFrequency
 								? element.orderingFrequency
 								: "-",
-							ordered: element.ordered ? element.ordered : "-",
-							failed: element.skipped ? element.skipped : "-",
-							uploaded: element.uploaded ? element.uploaded : "-",
+							ordered: element.ordered || element.ordered == 0? element.ordered : "-",
+							failed: element.skipped || element.skipped == 0? element.skipped : "-",
+							uploaded: element.uploaded || element.uploaded == 0? element.uploaded : "-",
 							refresh: element.refresh ? element.refresh : "-",
 							empty: element.empty ? element.empty : "-",
 							rtId: element.rtId,
