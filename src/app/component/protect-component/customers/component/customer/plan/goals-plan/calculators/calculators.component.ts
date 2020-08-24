@@ -99,10 +99,10 @@ export class CalculatorsComponent implements OnInit {
     });
 
     this.delayFG = this.fb.group({
-      delay1: ['', [Validators.required]],
-      delay2: ['', [Validators.required]],
-      delay3: ['', [Validators.required]],
-      delay4: ['', [Validators.required]],
+      delay1: ['', ],
+      delay2: ['', ],
+      delay3: ['', ],
+      delay4: ['', ],
     })
     setTimeout(() => {
       this.pieChart('')
