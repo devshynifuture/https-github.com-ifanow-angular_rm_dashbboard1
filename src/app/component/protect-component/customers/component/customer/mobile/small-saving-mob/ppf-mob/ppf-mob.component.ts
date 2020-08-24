@@ -316,6 +316,9 @@ addNewNominee(data) {
     this.flag = data;
     (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : ''
 
+    if(data){
+      this.isOptionalField = false;
+    }
     this.editApi = data.id ? data : undefined;
 
     this.ppfData = data;

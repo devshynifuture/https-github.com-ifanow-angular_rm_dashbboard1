@@ -258,7 +258,7 @@ addNewNominee(data) {
       this.flag = "addNSC";
     }
     else {
-      this.isOptionalField = true;
+      this.isOptionalField = false;
       this.flag = "editNSC";
       (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : this.editApi = data;
       this.commDate = new Date(data.commencementDate)

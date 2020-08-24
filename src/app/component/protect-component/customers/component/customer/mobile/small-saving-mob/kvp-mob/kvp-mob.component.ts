@@ -72,7 +72,7 @@ export class KvpMobComponent implements OnInit {
     } else {
       this.adviceShowHeaderAndFooter = true;
     }
-    this.isOptionalField = true;
+    this.isOptionalField = false;
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.getdataForm(this.data);

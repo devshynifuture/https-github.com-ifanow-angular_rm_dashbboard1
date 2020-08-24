@@ -438,7 +438,7 @@ export class PoRdMobComponent implements OnInit {
   }
 
   close(flag) {
-    this.isOptionalField = true;
+    this.isOptionalField = false;
     this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: flag});
   }
 

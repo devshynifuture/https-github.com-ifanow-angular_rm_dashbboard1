@@ -14,6 +14,7 @@ import {ExcelGenService} from 'src/app/services/excel-gen.service';
 import {PdfGenService} from 'src/app/services/pdf-gen.service';
 import {FileUploadServiceService} from '../../file-upload-service.service';
 import {EnumServiceService} from '../../../../../../../../../services/enum-service.service';
+import { AssetValidationService } from '../../asset-validation.service';
 
 @Component({
   selector: 'app-real-estate',
@@ -47,7 +48,7 @@ export class RealEstateComponent implements OnInit {
               public custmService: CustomerService, public cusService: CustomerService,
               private excel: ExcelGenService, private pdfGen: PdfGenService,
               private fileUpload: FileUploadServiceService,
-              public enumService: EnumServiceService,
+              public enumService: EnumServiceService, private assetValidation: AssetValidationService,
               public eventService: EventService, public dialog: MatDialog) {
   }
 
@@ -141,7 +142,7 @@ export class RealEstateComponent implements OnInit {
       this.datasource3.data = [];
       this.hideFilter = true;
     } else if (data.assetList.length > 0) {
-      this.changeCount.emit("call");
+      this.assetValidation.getAssetCountGLobalData()
 
       console.log('getRealEstateRes', data);
       this.dataList = data.assetList;

@@ -1,12 +1,20 @@
 import { Injectable } from '@angular/core';
 import { AbstractControl, ValidationErrors } from '@angular/forms';
-
+import { AuthService } from 'src/app/auth-service/authService';
+import { CustomerService } from '../../customer.service';
+import { from, Subject} from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class AssetValidationService {
-
-  constructor() { }
+  advisorId: any;
+  clientId: any;
+  counts:any;
+  updateCounts = new Subject();
+  constructor(private cusService: CustomerService) { 
+    this.advisorId = AuthService.getAdvisorId();
+    this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
+  }
   static ageValidators(age: Number) {
     return (control: AbstractControl): ValidationErrors | null => {
       if (control.value == null) {
@@ -17,5 +25,22 @@ export class AssetValidationService {
       }
       return null;
     }
+  }
+
+  getAssetCountGLobalData() {
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId
+    };
+    this.cusService.getAssetCountGlobalData(obj).subscribe(
+      (data) => {
+        this.counts = data;
+        this.updateCounts.next(this.counts);
+      }
+    );
+  }
+
+  passCounts(){
+    return this.updateCounts.asObservable();
   }
 }

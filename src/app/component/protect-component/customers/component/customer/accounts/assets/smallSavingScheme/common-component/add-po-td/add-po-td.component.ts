@@ -298,7 +298,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.POTDForm}
     this.getdataForm(this.data);
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.isOptionalField = true;
+    this.isOptionalField = false;
     this.bankList = this.enumService.getBank();
 
   }

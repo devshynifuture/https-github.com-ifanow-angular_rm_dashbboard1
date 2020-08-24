@@ -286,7 +286,7 @@ export class AddSsyComponent implements OnInit {
       data = {};
       this.flag = 'addSSY';
     } else {
-      this.isOptionalField = true;
+      this.isOptionalField = false;
       (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : this.editApi = data;
       this.flag = 'editSSY';
     }
