@@ -16,7 +16,7 @@
                         formControlName="displayName" #Name appInputValueValidation
                         [inputValidator]="validatorType.TEXT_ONLY" matInput [maxLength]="50" class="form-control">
                     <mat-hint align="end">{{Name.value.length}}/50</mat-hint>
-                    <mat-hint>Optional</mat-hint>
+                    <mat-hint class="ml-8">Optional</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -35,7 +35,7 @@
                         formControlName="name" #Name appInputValueValidation [inputValidator]="validatorType.TEXT_ONLY"
                         matInput [maxLength]="50" class="form-control">
                     <mat-hint align="end">{{Name.value.length}}/50</mat-hint>
-                    <mat-hint>Optional</mat-hint>
+                    <mat-hint class="ml-8">Optional</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -50,7 +50,7 @@
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input autocomplete="off" formControlName="email" matInput placeholder="Enter email"
                         class="form-control">
-                    <mat-hint>Optional</mat-hint>
+                    <mat-hint class="ml-8">Optional</mat-hint>
                     <mat-error *ngIf="moreInfoForm.get('email').errors?.pattern">Email is not valid</mat-error>
                 </mat-form-field>
             </div>
@@ -72,7 +72,7 @@
                         (input)="toUpperCase(moreInfoForm.get('pan'),$event)" formControlName="pan" #pan
                         appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC" maxlength="10" matInput
                         class="form-control">
-                    <mat-hint>Optional</mat-hint>
+                    <mat-hint class="ml-8">Optional</mat-hint>
                     <mat-error *ngIf="moreInfoForm.get('pan').errors?.pattern">Pan invalid</mat-error>
                     <mat-hint align="end">{{pan.value.length}}/ 10</mat-hint>
                 </mat-form-field>
@@ -93,7 +93,7 @@
                     <input autocomplete="off" appInputValueValidation placeholder="Enter Aadhaar number"
                         [inputValidator]="validatorType.NUMBER_ONLY" formControlName="adhaarNo" maxlength="12" #adharNum
                         matInput class="form-control">
-                    <mat-hint>Optional</mat-hint>
+                    <mat-hint class="ml-8">Optional</mat-hint>
                     <mat-error *ngIf="moreInfoForm.get('adhaarNo').errors?.pattern">Adhaar must be 12 digits</mat-error>
                     <mat-hint align="end">{{adharNum.value.length}} / 12</mat-hint>
                 </mat-form-field>
@@ -115,7 +115,7 @@
                         <mat-option value="3">Director</mat-option>
                         <mat-option value="4">Manager</mat-option>
                     </mat-select>
-                    <mat-hint>Optional</mat-hint>
+                    <mat-hint class="ml-8">Optional</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -169,7 +169,7 @@
                         (click)="anniversaryDate.open()" class="form-control br-0 b-0" matInput readonly>
                     <mat-datepicker-toggle matSuffix [for]="anniversaryDate"></mat-datepicker-toggle>
                     <mat-datepicker #anniversaryDate></mat-datepicker>
-                    <mat-hint>Optional</mat-hint>
+                    <mat-hint class="ml-8">Optional</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -185,7 +185,7 @@
                         (click)="anniversaryDate.open()" class="form-control br-0 b-0" matInput readonly>
                     <mat-datepicker-toggle matSuffix [for]="anniversaryDate"></mat-datepicker-toggle>
                     <mat-datepicker #anniversaryDate></mat-datepicker>
-                    <mat-hint>Optional</mat-hint>
+                    <mat-hint class="ml-8">Optional</mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -201,7 +201,7 @@
                 <mat-form-field>
                     <textarea autocomplete="off" formControlName="bio" maxlength="200" #bio matInput
                         class="form-control" rows="5"></textarea>
-                    <mat-hint>Optional</mat-hint>
+                    <mat-hint class="ml-8">Optional</mat-hint>
                     <mat-hint align="end">{{bio.value.length}}/200</mat-hint>
                 </mat-form-field>
             </div>
@@ -217,7 +217,7 @@
                 <mat-form-field>
                     <textarea #myNotes formControlName="myNotes" maxlength="100" autocomplete="off" matInput
                         class="form-control" rows="5"></textarea>
-                    <mat-hint>Optional</mat-hint>
+                    <mat-hint class="ml-8">Optional</mat-hint>
                     <mat-hint align="end">{{myNotes.value.length}}/100</mat-hint>
                 </mat-form-field>
             </div>

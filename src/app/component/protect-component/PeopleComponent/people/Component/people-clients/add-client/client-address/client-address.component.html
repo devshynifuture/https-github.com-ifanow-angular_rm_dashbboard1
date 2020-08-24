@@ -14,7 +14,7 @@
 </div>
 <div class="pb-12" [ngClass]="{'pb-90': fieldFlag==undefined,'pt-90': fieldFlag==undefined}" [formGroup]="addressForm">
     <h4 class="f-500 text-black pt-20 pl-20 m-0">Permanent address</h4>
-     
+
     <div class="row pt-44">
         <div class="col-md-4 d-flex align-items-center justify-content-end text-right mob-text-left mob-pl-10">
             <h5 class="m-0   mob-pb-5">Address proof type</h5>
@@ -32,7 +32,7 @@
                         <mat-option value="5">NREGA job card</mat-option>
                         <mat-option value="6">Others</mat-option>
                     </mat-select>
-                    <mat-hint>Optional</mat-hint>
+                    <mat-hint class="ml-8">Optional</mat-hint>
                     <!-- <mat-error>This field is required</mat-error> -->
                 </mat-form-field>
             </div>
@@ -50,7 +50,7 @@
                         [inputValidator]="validatorType.ALPHA_NUMERIC" autocomplete="off" matInput
                         formControlName="proofIdNum" class="form-control">
                     <!-- <mat-error *ngIf="addressForm.get('proofIdNum').errors?.required">This field is required</mat-error> -->
-                    <mat-hint>Optional</mat-hint>
+                    <mat-hint class="ml-8">Optional</mat-hint>
                     <mat-error *ngIf="addressForm.get('proofIdNum').errors?.pattern">Invalid proof number</mat-error>
                     <mat-hint *ngIf="maxLength" align="end">{{proofNumber.value.length}}/{{maxLength}}</mat-hint>
                 </mat-form-field>
@@ -81,7 +81,7 @@
                 <mat-form-field floatLabel="never" appearance="standard">
                     <input placeholder="Block/locality" autocomplete="off" #add2 matInput maxlength="100"
                         formControlName="addressLine2" class="form-control">
-                    <mat-hint>Optional</mat-hint>
+                    <mat-hint class="ml-8">Optional</mat-hint>
                     <mat-hint align="end">{{add2.value.length}}/100</mat-hint>
                 </mat-form-field>
             </div>
