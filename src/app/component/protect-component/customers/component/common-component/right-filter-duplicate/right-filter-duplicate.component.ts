@@ -441,7 +441,9 @@ export class RightFilterDuplicateComponent implements OnInit {
       });
       this.financialYears.forEach(item => {
         if (this._data.capitalGainData.fromDateYear >= 2018) {
-          form.get('grandfathering').setValue('1');
+          let grandFatheringEffect;
+          (this._data.capitalGainData.grandFatheringEffect == false) ?  form.get('grandfathering').setValue('2') :   form.get('grandfathering').setValue('1');
+        
         }
       });
     }
