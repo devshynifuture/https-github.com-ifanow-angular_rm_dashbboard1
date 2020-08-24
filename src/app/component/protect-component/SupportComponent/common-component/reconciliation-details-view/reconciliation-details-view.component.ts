@@ -277,10 +277,17 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
           this.disableFreezeBtn = true;
           this.disableUnfreezeBtn = false;
 
-          this.dataSource1.data.map(item => {
-            item.canDeleteTransaction = false
-          });
-          this.tableData1 = this.dataSource1.data;
+          if (this.filterBasedOn && this.filterBasedOn.length!==0 && this.filterOnWhichTable) {
+            this.filterTableValues(this.filterBasedOn, this.filterOnWhichTable);
+          }
+
+          if(this.dataSource1.data.length !== 0){
+            this.dataSource1.data.map(item => {
+              item.canDeleteTransaction = false
+            });
+          }
+
+          this.tableData1 = [...this.dataSource1.data];
           this.sendValueToParent();
           this.eventService.openSnackBar("Freezed Folio Successfully", "DISMISS");
           // this.canDeleteTransaction = false;
@@ -302,10 +309,16 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
           if (Math.round(this.data.difference) === 0) {
             this.disableFreezeBtn = false;
           }
+          
+          if (this.filterBasedOn && this.filterBasedOn.length!==0 && this.filterOnWhichTable) {
+            this.filterTableValues(this.filterBasedOn, this.filterOnWhichTable);
+          }
           // this.canDeleteTransaction = true;
-          this.dataSource1.data.map(item => {
-            item.canDeleteTransaction = true;
-          });
+          if(this.dataSource1.data.length!==0){
+            this.dataSource1.data.map(item => {
+              item.canDeleteTransaction = true;
+            });
+          }
 
           this.tableData1 = this.dataSource1.data;
           this.sendValueToParent();
@@ -336,9 +349,9 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
           return (!value.includes(String(item.id))) ? item : null;
         });
 
-        this.tableData1 = this.dataSource1.data;
+        this.tableData1 = [...this.dataSource1.data];
 
-        if (this.filterBasedOn && this.filterOnWhichTable) {
+        if (this.filterBasedOn && this.filterBasedOn.length!==0 && this.filterOnWhichTable) {
           this.filterTableValues(this.filterBasedOn, this.filterOnWhichTable);
         }
 
