@@ -172,18 +172,22 @@
 
         <div class="row pt-24">
             <div class="col-md-6 pl-0">
-                <h5 class="m-0 pt-8">Family Member</h5>
+                <h5 class="m-0 pt-8">Family member</h5>
                 <div class="form-group mb-0 pt-8">
                     <mat-form-field class="w-100">
-                        <mat-select formControlName="ownerName" class="form-control br-0">
+                        <mat-select formControlName="ownerName"  class="form-control br-0">
                             <mat-option value=''>Search family members</mat-option>
                             <mat-option *ngFor="let f of familyMember" [value]="f.name"
-                                (click)="selectClient($event, f)">
+                                (click)="selectClient($event, f,familyMember)">
                                 <span>{{f.name}}</span>
                             </mat-option>
                         </mat-select>
-                        <mat-error class="f-12 pt-4">
+                        <mat-error class="f-12 pt-4" *ngIf="(recuring.get('ownerName').errors?.required)"> 
                             This field is required
+                        </mat-error>
+                        <mat-error class="f-12" *ngIf="(recuring.get('ownerName').errors?.max)">
+                            already added for this expense category
+
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -319,8 +323,11 @@
                                 <span>{{f.name}}</span>
                             </mat-option>
                         </mat-select>
-                        <mat-error class="f-12 pt-4">
+                        <mat-error class="f-12 pt-4"  *ngIf="(expenses.get('ownerName').errors?.required)">
                             This field is required
+                        </mat-error>
+                        <mat-error class="f-12" *ngIf="(expenses.get('ownerName').errors?.max)">
+                            already added for this expense category
                         </mat-error>
                     </mat-form-field>
                 </div>
