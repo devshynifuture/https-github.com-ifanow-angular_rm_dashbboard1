@@ -303,7 +303,7 @@ export class SipApplicantWiseComponent implements OnInit {
 
   changeCeasedDateDialog(data, parentObj) {
     const dialogRef = this.dialog.open(DateChangeDialogComponent, {
-      width: '663px',
+      width: '300px',
       data
     });
 

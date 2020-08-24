@@ -10,13 +10,13 @@
     </div>
 
     <div class="row">
-        <div class="col-md-3  p-0 br upload-box">
+        <div class="col-md-2  p-0 br upload-box">
 
             <div class="row ">
                 <div class="col-md-12 pr-0">
-                    <h5 class="m-0 pt-12">Please Select File Type</h5>
+                    <h5 class="mb-4 mt-12 f-14">Please Select File Type</h5>
                 </div>
-                <div class="col-md-12 pt-8">
+                <div class="col-md-12 form-group">
                     <mat-form-field>
                         <mat-select class="form-control" [(ngModel)]="selectedFileType">
                             <!-- formControlName="lead" -->
@@ -34,12 +34,12 @@
             </div>
             <div class="row">
                 <div class="col-md-12 pr-0 pt-10">
-                    <h5 class="m-0 pt-12">Please Select Arn Ria...</h5>
+                    <h5 class="mb-4  f-14">Please Select ARN/RIA</h5>
                 </div>
                 <div class="col-md-12 form-group">
                     <mat-form-field appearance="standard" floatLabel="never">
                         <mat-select class="form-control" [(ngModel)]="arnRiaId">
-                            <mat-option value="">Select Arn Ria Code</mat-option>
+                            <mat-option value="">Select ARN/RIA </mat-option>
                             <mat-option *ngFor="let item of arnRiaList" [value]="item.id">
                                 {{ item.number }}
                             </mat-option>
@@ -50,28 +50,28 @@
             </div>
             <div class="row">
                 <div class="col-md-12 pr-0 pt-10">
-                    <h5 class="m-0 pt-12">Please Select a File...</h5>
+                    <h5 class="mb-4   f-14">Please Select a File...</h5>
                 </div>
-                <div class="col-md-12 pt-8">
+                <div class="col-md-12 ">
                     <button [disabled]="selectedFileType == '' || arnRiaId == ''" (click)="file.click()" class="br-0" mat-stroked-button>Choose
                         file</button>
                     <input #file (change)="getFile($event)" style="display: none;" type="file">
                 </div>
             </div>
-            <div class="row  pt-12">
+            <!-- <div class="row  pt-12">
                 <div class="col-md-1 text-left pr-0">
                     <img src="/assets/images/svg/info.svg" class="c-p v-baseline">
                 </div>
                 <div class="col-md-11">
-                    <p class="f-16" matTooltip="DBF File format Supported">Supported Formats</p>
+                    <p class="f-14" matTooltip="DBF File format Supported">Supported Formats</p>
                 </div>
-            </div>
+            </div> -->
             <div class="row">
                 <div *ngIf="fileName" class="col-md-12 text-left pr-0 pt-12">
-                    <p class="f-16 wb-bw"><span class="text-primary">File name:</span> {{fileName}}</p>
+                    <p class="f-14 wb-bw"><span class="text-primary">File name:</span> {{fileName}}</p>
                 </div>
                 <div *ngIf="fileSize" class="col-md-7 text-left pr-0 pt-12">
-                    <p class="f-16"><span class="text-primary">File size:</span> {{fileSize}}</p>
+                    <p class="f-14"><span class="text-primary">File size:</span> {{fileSize}}</p>
                 </div>
                 <div class="col-md-1 text-left pr-0">
                     <mat-spinner *ngIf="!uploadButton && fileSize" [diameter]="30"></mat-spinner>
@@ -91,7 +91,7 @@
             </div>
 
         </div>
-        <div class="col-md-9 p-0 history-box">
+        <div class="col-md-10 p-0 history-box">
             <div class="row pt-24">
                 <div class="col-md-6">
                     <div class="row">
