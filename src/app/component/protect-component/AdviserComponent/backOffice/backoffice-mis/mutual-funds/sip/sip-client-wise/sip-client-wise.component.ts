@@ -326,6 +326,7 @@ export class SipClientWiseComponent implements OnInit {
             this.totalOfSipCount += o.sipCount;
             this.totalWeight += o.weightInPercentage;
           });
+          this.totalWeight = Math.round(this.totalWeight)
           this.filteredArray = [...this.clientList];
         } else {
           this.filteredArray = [];
