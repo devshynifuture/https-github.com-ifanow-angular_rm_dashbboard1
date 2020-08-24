@@ -170,7 +170,7 @@
 
    <div class="row secoundTable">
       <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 p-0 mb-8">
-         <cdk-virtual-scroll-viewport #cdkVirtualScrollViewport [hidden]="!unrealisedArray.length>0"
+         <cdk-virtual-scroll-viewport #cdkVirtualScrollViewport [hidden]="unrealisedArray.length>0==false"
             class="tran-height-2">
             <!-- <div *ngIf="customDataSource.data.length>0" class="wrapper">-->
             <table #tableEl [appSkeletonLoading]="isLoading" *ngIf="unrealisedData" [dataSource]="unrealisedData"
