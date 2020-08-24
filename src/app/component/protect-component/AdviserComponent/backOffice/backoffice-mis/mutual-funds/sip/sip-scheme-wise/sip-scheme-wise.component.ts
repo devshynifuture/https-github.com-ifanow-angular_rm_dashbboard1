@@ -311,6 +311,7 @@ export class SipSchemeWiseComponent implements OnInit {
         this.totalWeight += o.weightInPercentage;
         o.InvestorList = [];
       });
+      this.totalWeight = Math.round(this.totalWeight)
       this.filteredArray = [...this.category];
     } else {
       this.filteredArray = [];
