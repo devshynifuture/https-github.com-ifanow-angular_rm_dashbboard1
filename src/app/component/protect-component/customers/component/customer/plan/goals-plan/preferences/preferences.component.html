@@ -86,7 +86,7 @@
                                 <mat-form-field>
                                     <mat-select class="form-control  " formControlName="savingEndDateYear">
                                         <mat-option value="" disabled>Select option</mat-option>
-                                        <mat-option [value]="year" *ngFor="let year of years">{{year}}</mat-option>
+                                        <mat-option [value]="year" [disabled]="year < (goalDetailsFG.get('savingStartDateYear').value)+1" *ngFor="let year of years">{{year}}</mat-option>
                                     </mat-select>
                                     <mat-error>This field is required</mat-error>
                                 </mat-form-field>

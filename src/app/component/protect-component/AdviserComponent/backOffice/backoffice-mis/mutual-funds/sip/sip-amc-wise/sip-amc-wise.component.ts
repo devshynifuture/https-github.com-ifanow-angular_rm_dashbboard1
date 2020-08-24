@@ -335,6 +335,7 @@ export class SipAmcWiseComponent implements OnInit {
             this.totalWeight += o.weightInPercentage;
 
           });
+          this.totalWeight = Math.round(this.totalWeight)
           this.filteredArray = [...this.amcList];
         } else {
           this.amcList = [];

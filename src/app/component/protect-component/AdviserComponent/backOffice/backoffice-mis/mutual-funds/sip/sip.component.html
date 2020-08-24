@@ -95,7 +95,8 @@
                                                     <p class="text-diff f-14 mb-0 pt-12 l-21">
                                                         Out of {{sipCount ?  sipCount.totalCount:0}} SIP,
                                                         {{sipCount ?  sipCount.sipLinkedToGoalPercent:0}}%
-                                                        ({{sipCount ?  sipCount.sipLinkedToGoalCount : '' }} SIP) are currently
+                                                        ({{sipCount ?  sipCount.sipLinkedToGoalCount : '' }} SIP) are
+                                                        currently
                                                         linked to
                                                         financial goals of your
                                                         clients
@@ -232,7 +233,7 @@
                             <mat-tab-group class="h-800 borderLine bg-white b-a">
                                 <mat-tab label="Expiring SIP">
                                     <div class="bb-1 d-flex p-8">
-                                        <p class="text-center mb-0 f-12 text-custom pt-2">List of SIP expiring in last
+                                        <p class="text-center mb-0 f-12 text-custom pt-2">List of SIP expiring in
                                             90
                                             days </p>
                                         <div class="text-right " *ngIf="!isExpiringLoading && expiringSip?.length >0">
@@ -284,7 +285,7 @@
                                 </mat-tab>
                                 <mat-tab label="Expired / CEASED">
                                     <div class="bb-1 p-8 d-flex">
-                                        <p class=" mb-0 f-12 pt-2 text-custom">List of SIP expired in last
+                                        <p class=" mb-0 f-12 pt-2 text-custom">List of SIP expired in
                                             90
                                             days </p>
                                         <div class="text-right" *ngIf="!isExpiredLoading && expiredSip?.length > 0">

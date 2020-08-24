@@ -189,14 +189,15 @@ export class DashboardComponent implements OnInit {
       dataLabels: {
         enabled: false
       }
-    }, {
-      name: "SOLUTION ORIENTED",
-      y: 20,
-      color: AppConstants.DONUT_CHART_COLORS[4],
-      dataLabels: {
-        enabled: false
-      }
-    }
+    },
+    // {
+    //   name: "SOLUTION ORIENTED",
+    //   y: 20,
+    //   color: AppConstants.DONUT_CHART_COLORS[4],
+    //   dataLabels: {
+    //     enabled: false
+    //   }
+    // }
   ];
   todoListFlag: boolean;
   userData: any;
@@ -493,14 +494,16 @@ export class DashboardComponent implements OnInit {
           this.chartTotal
           data.forEach((element, index) => {
             this.chartTotal += Math.round(element.totalAum)
-            chartData.push({
-              y: Math.round(element.totalAum),
-              name: element.name,
-              color: AppConstants.DONUT_CHART_COLORS[index],
-              dataLabels: {
-                enabled: false
-              }
-            })
+            if (element.name) {
+              chartData.push({
+                y: Math.round(element.totalAum),
+                name: element.name,
+                color: AppConstants.DONUT_CHART_COLORS[index],
+                dataLabels: {
+                  enabled: false
+                }
+              })
+            }
           });
           this.newchartData = chartData
           this.assetAllocationPieChartDataMgnt(this.newchartData);

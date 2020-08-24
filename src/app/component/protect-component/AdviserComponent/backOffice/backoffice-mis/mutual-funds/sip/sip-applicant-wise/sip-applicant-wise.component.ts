@@ -213,6 +213,7 @@ export class SipApplicantWiseComponent implements OnInit {
             this.totalWeight += o.weightInPercentage;
             o.InvestorList = [];
           });
+          this.totalWeight = Math.round(this.totalWeight)
           this.filteredArray = [...this.applicantList];
         } else {
           this.filteredArray = [];

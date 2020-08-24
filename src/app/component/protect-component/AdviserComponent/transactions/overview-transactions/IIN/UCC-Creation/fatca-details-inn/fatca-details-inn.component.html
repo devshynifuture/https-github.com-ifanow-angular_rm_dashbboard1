@@ -115,9 +115,9 @@
                 <mat-option value='02'>
                   Business Income
                 </mat-option>
-                <mat-option value='05'>
-                  Rental Income
-                </mat-option>
+<!--                <mat-option value='05'>-->
+<!--                  Rental Income-->
+<!--                </mat-option>-->
                 <mat-option value='08'>
                   Others
                 </mat-option>
@@ -134,38 +134,8 @@
             <mat-form-field appearance="standard" floatLabel="never">
               <mat-select class="form-control" formControlName="occupationCode">
                 <mat-option disabled value=''>Select occupation</mat-option>
-                <mat-option value="41">
-                  Private Sector
-                </mat-option>
-                <mat-option value="42">
-                  Public Sector
-                </mat-option>
-                <mat-option value="01">
-                  Business
-                </mat-option>
-                <mat-option value="03">
-                  Professional
-                </mat-option>
-                <mat-option value="05">
-                  Retired
-                </mat-option>
-                <mat-option value="06">
-                  Housewife
-                </mat-option>
-                <mat-option value="07">
-                  Student
-                </mat-option>
-                <mat-option value="44">
-                  Government Sector
-                </mat-option>
-                <mat-option value="08">
-                  Others
-                </mat-option>
-                <mat-option value="0">
-                  Self Employed
-                </mat-option>
-                <mat-option value="0">
-                  Not Categorized
+                <mat-option *ngFor="let singleOccupation of occupationFilteredArray" [value]="singleOccupation.code">
+                  {{ singleOccupation.name }}
                 </mat-option>
               </mat-select>
               <mat-error class="f-12">This field is required</mat-error>
