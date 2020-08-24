@@ -95,7 +95,7 @@
                     </div>
                     <div class="col-md-4 pt-58 pr-0">
                         <p class="m-0 f-12 roboto text-primitive">Maturity value</p>
-                        <p class="m-0 roboto text-lighter">₹<span appFormatNumber>{{asset.maturityValue}}</span></p>
+                        <p class="m-0 roboto text-lighter">₹<span appFormatNumber>{{(asset.maturityValue ==0)?'-':asset.maturityValue}}</span></p>
                     </div>
                 </div>
             </div>
