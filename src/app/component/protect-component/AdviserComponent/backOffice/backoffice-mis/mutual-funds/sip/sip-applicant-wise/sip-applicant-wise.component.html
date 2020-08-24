@@ -3,7 +3,7 @@
         <div class="wrapper-20 bg-white">
             <div class="row">
                 <div class="col-md-12 pr-0 mb-10">
-                    <div class="right text-right">
+                    <div class="right text-right" *ngIf="arnRiaList.length>1">
                         <button [matMenuTriggerFor]="menu" class="ba-black borderLine br-0" mat-stroked-button>
                             {{viewMode}}
                             <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down
@@ -45,7 +45,7 @@
                         id="table-low" *ngIf="filteredArray.length>0">
                         <thead class="text-dark">
                             <tr class="h-40">
-                                <th class="c-p" (click)="sortBy(filteredArray,'name')">
+                                <th class="c-p f-500" (click)="sortBy(filteredArray,'name')">
                                     <span class="d-flex align-items-center"> Applicant Name
                                         <i class="material-icons ml-4 f-14 text-primitive"
                                             *ngIf="propertyName=='name' && !reverse">
@@ -53,7 +53,7 @@
                                         <i class="material-icons ml-4 f-14 text-primitive"
                                             *ngIf="propertyName=='name' && reverse">arrow_downward</i> </span>
                                 </th>
-                                <th (click)="sortBy(filteredArray,'totalAum')" class="c-p w-14">
+                                <th (click)="sortBy(filteredArray,'totalAum')" class="c-p f-500 w-14">
                                     <span class="d-flex align-items-center justify-content-end">SIP Amount
                                         <i class="material-icons ml-4 f-14 text-primitive"
                                             *ngIf="propertyName=='totalAum' && !reverse">
@@ -61,7 +61,7 @@
                                         <i class="material-icons ml-4 f-14 text-primitive"
                                             *ngIf="propertyName=='totalAum' && reverse">arrow_downward</i></span>
                                 </th>
-                                <th class="text-right w-14">% Weight</th>
+                                <th class="text-right f-500 w-14">% Weight</th>
                                 <th></th>
                                 <th></th>
                             </tr>
@@ -93,25 +93,25 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="d-block text-right"
+                                    <!-- <div class="d-block text-right"
                                         *ngIf="!data.showScheme && !isLoading && data.schemeList?.length > 0">
                                         <button (click)="exportToExcelSheet('investor-wise', i)" mat-icon-button>
                                             <mat-icon>
                                                 save_alt
                                             </mat-icon>
                                         </button>
-                                    </div>
+                                    </div> -->
                                 </td>
                             </tr>
                             <tr style="border: transparent !important">
                                 <td colspan="5" class="innerTd one">
 
                                     <table *ngIf="data.showScheme == false && data.schemeList?.length > 0"
-                                        class="skeletonAnimation mt-8 mb-8" appSkeletonLoading
+                                        class="skeletonAnimation mt-16 mb-8" appSkeletonLoading
                                         [appSkeletonLoading]="isLoadingApplicant" id="table-low">
                                         <thead class="bg-light text-dark">
                                             <tr class="">
-                                                <th class="w-11 c-p" (click)="sortByApplicant( data.schemeList,'name')">
+                                                <th class="w-11 f-500 c-p" (click)="sortByApplicant( data.schemeList,'name')">
                                                     <span class="d-flex align-items-center"> Applicant Name
                                                         <i class="material-icons ml-4 f-14 text-primitive"
                                                             *ngIf="propertyName2=='name' && !reverse2">
@@ -121,7 +121,7 @@
                                                     </span>
                                                 </th>
                                                 <th (click)="sortByApplicant( data.schemeList,'schemeName')"
-                                                    class="c-p">
+                                                    class="c-p f-500">
                                                     <span class="d-flex align-items-center"> Scheme
                                                         Name
                                                         <i class="material-icons ml-4 f-14 text-primitive"
@@ -132,7 +132,7 @@
                                                     </span>
                                                 </th>
                                                 <th (click)="sortByApplicant( data.schemeList,'folioNumber')"
-                                                    class="c-p">
+                                                    class="c-p f-500">
                                                     <span class="d-flex align-items-center">Folio
                                                         <i class="material-icons ml-4 f-14 text-primitive"
                                                             *ngIf="propertyName2=='folioNumber' && !reverse2">
@@ -142,7 +142,7 @@
                                                     </span>
                                                 </th>
                                                 <th (click)="sortByApplicant( data.schemeList,'registeredDate')"
-                                                    class="c-p">
+                                                    class="c-p f-500">
                                                     <span class="d-flex align-items-center"> Registered Date
                                                         <i class="material-icons ml-4 f-14 text-primitive"
                                                             *ngIf="propertyName2=='registeredDate' && !reverse2">
@@ -151,7 +151,7 @@
                                                             *ngIf="propertyName2=='registeredDate' && reverse2">arrow_downward</i>
                                                     </span>
                                                 </th>
-                                                <th (click)="sortByApplicant( data.schemeList,'from_date')" class="c-p">
+                                                <th (click)="sortByApplicant( data.schemeList,'from_date')" class="f-500 c-p">
                                                     <span class="d-flex align-items-center">From Date
                                                         <i class="material-icons ml-4 f-14 text-primitive"
                                                             *ngIf="propertyName2=='from_date' && !reverse2">
@@ -160,7 +160,7 @@
                                                             *ngIf="propertyName2=='from_date' && reverse2">arrow_downward</i>
                                                     </span>
                                                 </th>
-                                                <th (click)="sortByApplicant( data.schemeList,'to_date')" class="c-p">
+                                                <th (click)="sortByApplicant( data.schemeList,'to_date')" class=" f-500 c-p">
                                                     <span class="d-flex align-items-center"> To Date
                                                         <i class="material-icons ml-4 f-14 text-primitive"
                                                             *ngIf="propertyName2=='to_date' && !reverse2">
@@ -169,7 +169,7 @@
                                                             *ngIf="propertyName2=='to_date' && reverse2">arrow_downward</i></span>
                                                 </th>
                                                 <th (click)="sortByApplicant( data.schemeList,'sipTriggerDay')"
-                                                    class="c-p">
+                                                    class="c-p f-500">
                                                     <span class="d-flex align-items-center"> Trigger Day
                                                         <i class="material-icons ml-4 f-14 text-primitive"
                                                             *ngIf="propertyName2=='sipTriggerDay' && !reverse2">
@@ -178,7 +178,7 @@
                                                             *ngIf="propertyName2=='sipTriggerDay' && reverse2">arrow_downward</i>
                                                     </span>
                                                 </th>
-                                                <th (click)="sortByApplicant( data.schemeList,'frequency')" class="c-p">
+                                                <th (click)="sortByApplicant( data.schemeList,'frequency')" class="c-p f-500">
                                                     <span class="d-flex align-items-center"> Frequency
                                                         <i class="material-icons ml-4 f-14 text-primitive"
                                                             *ngIf="propertyName2=='frequency' && !reverse2">
@@ -187,7 +187,7 @@
                                                             *ngIf="propertyName2=='frequency' && reverse2">arrow_downward</i>
                                                     </span>
                                                 </th>
-                                                <th (click)="sortByApplicant( data.schemeList,'totalAum')" class="c-p">
+                                                <th (click)="sortByApplicant( data.schemeList,'totalAum')" class="c-p w-9 f-500">
                                                     <span class="d-flex align-items-center"> Amount
                                                         <i class="material-icons ml-4 f-14 text-primitive"
                                                             *ngIf="propertyName2=='totalAum' && !reverse2">
@@ -196,8 +196,8 @@
                                                             *ngIf="propertyName2=='totalAum' && reverse2">arrow_downward</i>
                                                     </span>
                                                 </th>
-                                                <th class="w-8">% Weight</th>
-                                                <th>Edit/Delete
+                                                <th class="w-8 f-500">% Weight</th>
+                                                <th>Edit
                                                 </th>
                                             </tr>
                                         </thead>
@@ -257,9 +257,16 @@
                                                 <td>
                                                     <!-- {{(isLoadingApplicant?'':'add cease date') }} -->
                                                     <div [ngClass]="{'bar': isLoadingApplicant }">
-                                                        <div *ngIf="!isLoadingApplicant">
-                                                            <button (click)="changeCeasedDateDialog(scheme, data)"
-                                                                *ngIf="!scheme.isEdit">Add Cease Date</button>
+                                                        <div class="c-p" *ngIf="!isLoadingApplicant">
+                                                            
+
+
+                                                                <span title="Add Cease Date" (click)="changeCeasedDateDialog(scheme, data)"
+                                                                *ngIf="!scheme.isEdit" class="material-icons">
+                                                                    date_range
+                                                                    </span>
+
+
                                                             <span *ngIf="scheme.isEdit">
                                                                 {{ ceasedDate | date:'mediumDate' }}
                                                             </span>
@@ -284,7 +291,7 @@
                         </tbody>
                         <tbody *ngIf="!isLoading && filteredArray.length>0">
                             <tr>
-                                <td class="p-table"><strong>Total</strong></td>
+                                <td class="p-table text-right"><strong>Total</strong></td>
                                 <td class="p-table text-right"><strong>{{'₹ '}}<span appFormatNumber
                                             [value]="totalOfSipAmount"></span></strong>
                                 </td>

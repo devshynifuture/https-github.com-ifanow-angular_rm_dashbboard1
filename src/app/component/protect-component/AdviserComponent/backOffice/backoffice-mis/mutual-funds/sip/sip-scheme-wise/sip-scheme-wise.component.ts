@@ -261,7 +261,7 @@ export class SipSchemeWiseComponent implements OnInit {
 
   changeCeasedDateDialog(data, parentObj) {
     const dialogRef = this.dialog.open(DateChangeDialogComponent, {
-      width: '663px',
+      width: '300px',
       data
     });
 
@@ -283,7 +283,7 @@ export class SipSchemeWiseComponent implements OnInit {
       id: sip.id,
       mutualFundId: sip.mutualFundId,
       amount: sip.amount,
-      ceaseDate: this.datePipe.transform(this.caesedForm.controls.ceaseddate.value, 'yyyy/MM/dd'),
+      ceaseDate: this.datePipe.transform(date, 'yyyy-MM-dd'),
     };
     this.backoffice.addCeasedDate(obj).subscribe(
       data => {

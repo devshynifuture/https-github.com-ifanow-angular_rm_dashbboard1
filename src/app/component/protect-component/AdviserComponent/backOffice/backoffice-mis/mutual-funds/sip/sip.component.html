@@ -10,7 +10,7 @@
                 <div class="col-md-8">
                     <h3 class="mb-0">SIP</h3>
                 </div>
-                <div *ngIf="arnRiaList.length  > 0" class="col-md-4 text-right ">
+                <div *ngIf="arnRiaList.length  > 1" class="col-md-4 text-right ">
                     <button [matMenuTriggerFor]="menu" class="ba-black borderLine br-0" mat-stroked-button>
                         {{viewMode}}
                         <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down</mat-icon>
@@ -285,7 +285,7 @@
                                 </mat-tab>
                                 <mat-tab label="Expired / CEASED">
                                     <div class="bb-1 p-8 d-flex">
-                                        <p class=" mb-0 f-12 pt-2 text-custom">List of SIP expired in
+                                        <p class=" mb-0 f-12 pt-2 text-custom">List of SIP expired in last
                                             90
                                             days </p>
                                         <div class="text-right" *ngIf="!isExpiredLoading && expiredSip?.length > 0">

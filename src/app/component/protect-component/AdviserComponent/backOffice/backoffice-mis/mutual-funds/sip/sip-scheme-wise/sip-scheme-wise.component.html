@@ -3,7 +3,7 @@
         <div class="wrapper-20 bg-white">
             <div class="row">
                 <div class="col-md-12 pr-0 mb-10">
-                    <div class="right text-right">
+                    <div class="right text-right" *ngIf="arnRiaList.length>1">
                         <button [matMenuTriggerFor]="menu" class="ba-black borderLine br-0" mat-stroked-button>
                             {{viewMode}}
                             <mat-icon aria-hidden="false" aria-label="Example home icon">keyboard_arrow_down
@@ -48,8 +48,8 @@
                         id="table-low" *ngIf="filteredArray.length>0">
                         <thead class="text-dark">
                             <tr class="h-40">
-                                <th class="w-10">Sr No.</th>
-                                <th class="w-40 c-p" (click)="sortBy(filteredArray,'schemeName')">
+                                <th class="w-10 f-500">Sr No.</th>
+                                <th class="w-40 f-500 c-p" (click)="sortBy(filteredArray,'schemeName')">
                                     <span class="d-flex align-items-center">Scheme Name
                                         <i class="material-icons ml-4 f-14 text-primitive"
                                             *ngIf="propertyName=='schemeName' && !reverse">
@@ -57,7 +57,7 @@
                                         <i class="material-icons ml-4 f-14 text-primitive"
                                             *ngIf="propertyName=='schemeName' && reverse">arrow_downward</i> </span>
                                 </th>
-                                <th (click)="sortBy(filteredArray,'sipAmount')" class="c-p w-14">
+                                <th (click)="sortBy(filteredArray,'sipAmount')" class="c-p f-500 w-14">
                                     <span class="d-flex justify-content-end align-items-center">SIP Amount
                                         <i class="material-icons ml-4 f-14 text-primitive"
                                             *ngIf="propertyName=='sipAmount' && !reverse">
@@ -66,7 +66,7 @@
                                             *ngIf="propertyName=='sipAmount' && reverse">arrow_downward</i> </span>
                                 </th>
                                 <th style="padding-left: 30px !important;" (click)="sortBy(filteredArray,'sipCount')"
-                                    class="c-p">
+                                    class="c-p f-500">
                                     <span class="d-flex align-items-center">SIP Count
                                         <i class="material-icons ml-4 f-14 text-primitive"
                                             *ngIf="propertyName=='sipCount' && !reverse">
@@ -74,7 +74,7 @@
                                         <i class="material-icons ml-4 f-14 text-primitive"
                                             *ngIf="propertyName=='sipCount' && reverse">arrow_downward</i> </span>
                                 </th>
-                                <th class="text-right w-14">% Weight</th>
+                                <th class="text-right f-500 w-14">% Weight</th>
                                 <th></th>
                                 <th></th>
                             </tr>
@@ -119,7 +119,7 @@
                                 </td>
 
                                 <td>
-                                    <div class="d-block text-right"
+                                    <!-- <div class="d-block text-right"
                                         *ngIf="!data.showCategory && !isLoading && data.subCatList?.length > 0">
                                         <button (click)="exportToExcelSheet('investor-wise', catIndex, null)"
                                             mat-icon-button>
@@ -127,7 +127,7 @@
                                                 save_alt
                                             </mat-icon>
                                         </button>
-                                    </div>
+                                    </div> -->
                                 </td>
 
                             </tr>
@@ -136,12 +136,12 @@
                                 <td colspan="7" class="innerTd one">
 
                                     <table *ngIf="data.showCategory==false && data.subCatList?.length > 0"
-                                        class=" mb-8 mt-8 table98 skeletonAnimation" appSkeletonLoading
+                                        class=" mb-8 mt-16 table98 skeletonAnimation" appSkeletonLoading
                                         [appSkeletonLoading]="isLoadingCategory" id="table-low">
                                         <thead class="bg-light text-dark">
                                             <tr class="h-40">
-                                                <th class="w-10">Sr No.</th>
-                                                <th class="c-p w-40"
+                                                <th class="w-10 f-500">Sr No.</th>
+                                                <th class="c-p f-500 w-40"
                                                     (click)="sortByInvestor(data.subCatList,'investorName')">
                                                     <span class="d-flex align-items-center"> Investor Name
                                                         <i class="material-icons ml-4 f-14 text-primitive"
@@ -152,7 +152,7 @@
                                                     </span>
                                                 </th>
                                                 <th (click)="sortByInvestor(data.subCatList,'sipAmount')"
-                                                    class="c-p w-14">
+                                                    class="c-p f-500 w-14">
                                                     <span class="d-flex align-items-center justify-content-end">SIP
                                                         Amount
                                                         <i class="material-icons ml-4 f-14 text-primitive"
@@ -164,7 +164,7 @@
                                                 </th>
 
                                                 <th style="padding-left: 30px !important;"
-                                                    (click)="sortByInvestor(data.subCatList,'sipCount')" class="c-p">
+                                                    (click)="sortByInvestor(data.subCatList,'sipCount')" class="c-p f-500">
                                                     <span class="d-flex align-items-center"> SIP Count
                                                         <i class="material-icons ml-4 f-14 text-primitive"
                                                             *ngIf="propertyName2=='sipCount' && !reverse2">
@@ -174,7 +174,7 @@
                                                     </span>
                                                 </th>
 
-                                                <th class="text-right w-14">% Weight</th>
+                                                <th class="text-right w-14 f-500">% Weight</th>
                                                 <th></th>
                                                 <th></th>
                                             </tr>
@@ -221,7 +221,7 @@
                                                         class="material-icons   b-a f-14 mt-4 c-p"> remove </i>
                                                 </td>
                                                 <td>
-                                                    <div class="d-block text-right"
+                                                    <!-- <div class="d-block text-right"
                                                         *ngIf="!subInvList.showSubCategory && !isLoadingCategory && subInvList.applicantList?.length > 0">
                                                         <button
                                                             (click)="exportToExcelSheet('applicant-wise', catIndex, investorIndex)"
@@ -230,19 +230,19 @@
                                                                 save_alt
                                                             </mat-icon>
                                                         </button>
-                                                    </div>
+                                                    </div> -->
                                                 </td>
                                             </tr>
                                             <tr style="border: transparent !important">
                                                 <td colspan="7" class="innerTd two">
 
-                                                    <table class="mb-8 mt-8 skeletonAnimation" appSkeletonLoading
+                                                    <table class="mb-8 mt-16 skeletonAnimation" appSkeletonLoading
                                                         [appSkeletonLoading]="isLoadingSubCategory" id="table-low"
                                                         *ngIf="subInvList.showSubCategory==false && subInvList.applicantList?.length > 0">
                                                         <thead>
-                                                            <tr class="h-40">
+                                                            <tr class="h-40 ">
                                                                 <th (click)="sortByApplicant(subInvList.applicantList,'investorName')"
-                                                                    class="c-p">
+                                                                    class="c-p f-500">
                                                                     <span class="d-flex align-items-center">Applicant
                                                                         Name
                                                                         <i class="material-icons ml-4 f-14 text-primitive"
@@ -253,7 +253,7 @@
                                                                     </span>
                                                                 </th>
                                                                 <th (click)="sortByApplicant(subInvList.applicantList,'schemeName')"
-                                                                    class="c-p"> <span
+                                                                    class="c-p f-500"> <span
                                                                         class="d-flex align-items-center"> Scheme Name
                                                                         <i class="material-icons ml-4 f-14 text-primitive"
                                                                             *ngIf="propertyName3=='schemeName' && !reverse3">
@@ -263,7 +263,7 @@
                                                                     </span>
                                                                 </th>
                                                                 <th (click)="sortByApplicant(subInvList.applicantList,'folioNumber')"
-                                                                    class="c-p"> <span
+                                                                    class="c-p f-500"> <span
                                                                         class="d-flex align-items-center"> Folio
                                                                         <i class="material-icons ml-4 f-14 text-primitive"
                                                                             *ngIf="propertyName3=='folioNumber' && !reverse3">
@@ -273,7 +273,7 @@
                                                                     </span>
                                                                 </th>
                                                                 <th (click)="sortByApplicant(subInvList.applicantList,'registeredDate')"
-                                                                    class="c-p"> <span
+                                                                    class="c-p f-500"> <span
                                                                         class="d-flex align-items-center"> Registered
                                                                         Date
                                                                         <i class="material-icons ml-4 f-14 text-primitive"
@@ -284,7 +284,7 @@
                                                                     </span>
                                                                 </th>
                                                                 <th (click)="sortByApplicant(subInvList.applicantList,'from_date')"
-                                                                    class="c-p"> <span
+                                                                    class="c-p f-500"> <span
                                                                         class="d-flex align-items-center"> From Date
                                                                         <i class="material-icons ml-4 f-14 text-primitive"
                                                                             *ngIf="propertyName3=='from_date' && !reverse3">
@@ -294,7 +294,7 @@
                                                                     </span>
                                                                 </th>
                                                                 <th (click)="sortByApplicant(subInvList.applicantList,'to_date')"
-                                                                    class="c-p"> <span
+                                                                    class="c-p f-500"> <span
                                                                         class="d-flex align-items-center"> To Date
                                                                         <i class="material-icons ml-4 f-14 text-primitive"
                                                                             *ngIf="propertyName3=='to_date' && !reverse3">
@@ -304,8 +304,8 @@
                                                                     </span>
                                                                 </th>
                                                                 <th (click)="sortByApplicant(subInvList.applicantList,'sipTriggerDay')"
-                                                                    class="c-p"> <span
-                                                                        class="d-flex align-items-center"> To Trigger
+                                                                    class="c-p f-500"> <span
+                                                                        class="d-flex align-items-center"> Trigger
                                                                         Day
                                                                         <i class="material-icons ml-4 f-14 text-primitive"
                                                                             *ngIf="propertyName3=='sipTriggerDay' && !reverse3">
@@ -315,7 +315,7 @@
                                                                     </span>
                                                                 </th>
                                                                 <th (click)="sortByApplicant(subInvList.applicantList,'frequency')"
-                                                                    class="c-p"> <span
+                                                                    class="c-p f-500"> <span
                                                                         class="d-flex align-items-center"> Frequency
                                                                         <i class="material-icons ml-4 f-14 text-primitive"
                                                                             *ngIf="propertyName3=='frequency' && !reverse3">
@@ -325,7 +325,7 @@
                                                                     </span>
                                                                 </th>
                                                                 <th (click)="sortByApplicant(subInvList.applicantList,'sipAmount')"
-                                                                    class="c-p"> <span
+                                                                    class="c-p w-9 f-500"> <span
                                                                         class="d-flex align-items-center"> Amount
                                                                         <i class="material-icons ml-4 f-14 text-primitive"
                                                                             *ngIf="propertyName3=='sipAmount' && !reverse3">
@@ -334,9 +334,10 @@
                                                                             *ngIf="propertyName3=='sipAmount' && reverse3">arrow_downward</i>
                                                                     </span>
                                                                 </th>
-                                                                <th>% Weight </th>
-                                                                <th>Edit/Delete</th>
+                                                                <th class="f-500 w-9">% Weight </th>
+                                                                <th class="f-500">Edit</th>
                                                                 <th></th>
+                                                                
                                                             </tr>
                                                         </thead>
                                                         <tbody
@@ -398,14 +399,16 @@
                                                                         {{isLoadingSubCategory ? '' : (scheme.weightInPercentage | number:'1.2-2')}}{{(isLoadingSubCategory?'':'%') }}
                                                                     </div>
                                                                 </td>
-                                                                <td>
+                                                                <td class="text-center">
                                                                     <!-- {{(isLoadingSubCategory?'':'Add Ceased') }} -->
                                                                     <div [ngClass]="{'bar': isLoadingSubCategory}">
-                                                                        <div *ngIf="!isLoadingSubCategory">
-                                                                            <button
-                                                                                (click)="changeCeasedDateDialog(scheme, subInvList)"
-                                                                                *ngIf="!scheme.isEdit">Add Cease
-                                                                                Date</button>
+                                                                        <div class="c-p" *ngIf="!isLoadingSubCategory">
+                                                                             
+                                                                                <span title="Add Cease Date" (click)="changeCeasedDateDialog(scheme, subInvList)"  *ngIf="!scheme.isEdit" class="material-icons">
+                                                                                    date_range
+                                                                                    </span>
+
+
                                                                             <span *ngIf="scheme.isEdit">
                                                                                 {{ ceasedDate | date:'mediumDate'}}
                                                                             </span>
@@ -449,12 +452,13 @@
                         <tbody *ngIf="!isLoading && filteredArray.length>0">
                             <tr>
                                 <td class="p-table">&nbsp;</td>
-                                <td class="p-table"><strong>Total</strong></td>
-                                <td class="p-table"><strong>{{'₹ '}}<span appFormatNumber
+                                <td class="p-table text-right"><strong>Total</strong></td>
+                                <td class="p-table text-right"><strong>{{'₹ '}}<span appFormatNumber
                                             [value]="totalOfSipAmount"></span></strong>
                                 </td>
-                                <td class="p-table"><strong>{{totalOfSipCount}}</strong></td>
-                                <td class="p-table"><strong>{{totalWeight | number:'1.2-2'}}%</strong></td>
+                                <td class="p-table " style="padding-left: 30px !important;"><strong>{{totalOfSipCount}}</strong></td>
+                                <td class="p-table text-right"><strong>{{totalWeight | number:'1.2-2'}}%</strong></td>
+                                <td></td>
                                 <td></td>
                             </tr>
                         </tbody>

@@ -44,11 +44,11 @@ export class AllSipComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     if (this.mode == 'expired') {
-      this.displayedColumns = ['no', 'applicantName', 'schemeName', 'folioNumber', 'fromDate', 'toDate', 'ceaseDate', 'amount', 'reason'];
+      this.displayedColumns = ['no', 'applicantName', 'schemeName', 'folioNumber', 'fromDate', 'toDate', 'ceaseDate', 'amount', 'status', 'remark'];
     } else if (this.mode == 'expiring') {
-      this.displayedColumns = ['no', 'applicantName', 'schemeName', 'folioNumber', 'fromDate', 'toDate', 'amount', 'reason'];
+      this.displayedColumns = ['no', 'applicantName', 'schemeName', 'folioNumber', 'fromDate', 'toDate', 'amount',];
     } else {
-      this.displayedColumns = ['no', 'applicantName', 'schemeName', 'folioNumber', 'fromDate', 'toDate', 'frequency', 'amount', 'reason'];
+      this.displayedColumns = ['no', 'applicantName', 'schemeName', 'folioNumber', 'fromDate', 'toDate', 'frequency', 'amount', 'status'];
     }
 
     if (this.data.hasOwnProperty('arnRiaValue') && this.data.hasOwnProperty('viewMode')) {
@@ -97,7 +97,6 @@ export class AllSipComponent implements OnInit {
     if (this.mode == 'all') {
       this.backoffice.allSipGet(obj).subscribe(
         data => {
-          console.log(data);
           this.isLoading = false;
           if (data) {
             this.response(data);
@@ -171,6 +170,7 @@ export class AllSipComponent implements OnInit {
   }
 
   response(data) {
+    console.log(data);
     this.finalSipList = this.finalSipList.concat(data);
     this.dataSource = new MatTableDataSource(this.finalSipList);
     this.dataSource.sort = this.sort;

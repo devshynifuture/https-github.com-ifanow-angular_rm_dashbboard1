@@ -240,35 +240,30 @@ export class FileOrderingBulkComponent implements OnInit {
     this.fileOrderingUploadService.getFileOrderRefreshBulkPerRowData(data)
       .subscribe(res => {
         if (res) {
-          let obj: any = {};
-          obj['advisorName'] = element.advisorName ? element.advisorName : "-";
-          obj['rta'] = this.getRtName(element.rtId);
-          obj['orderedBy'] = element.rmName ? element.rmName : "-";
-          obj['startedOn'] = element.startedOn ? element.startedOn : "-";
-          obj['totalFiles'] = element.totalFiles ? element.totalFiles : "-";
-          obj['queue'] = element.inqueue;
-          obj['ordering'] = element.orderingFrequency
-            ? element.orderingFrequency
+          element.advisorName = res.advisorName ? res.advisorName : "-";
+          element.rta = this.getRtName(res.rtId);
+          element.orderedBy = res.rmName ? res.rmName : "-";
+          element.startedOn = res.startedOn ? res.startedOn : "-";
+          element.totalFiles = res.totalFiles ? res.totalFiles : "-";
+          element.queue = res.inqueue;
+          element.ordering = res.orderingFrequency
+            ? res.orderingFrequency
             : "-",
-            obj['ordered'] = element.ordered;
-          obj['failed'] = element.skipped;
-          obj['uploaded'] = element.uploaded;
-          obj['refresh'] = "";
-          obj['rtId'] = element.rtId;
-          obj['rmId'] = element.rmId;
-          obj['days'] = this.days;
-          obj['arnRiaDetailId'] = element.arnRiaDetailId;
-          obj['description'] = element.description;
-          obj['fromDate'] = element.fromDate;
-          obj['toDate'] = element.toDate;
-          obj['id'] = element.id;
-          obj['isLoading'] = false;
-          this.dataSource.data.splice(index, 1, obj);
+            element.ordered = res.ordered;
+          element.failed = res.skipped;
+          element.uploaded = res.uploaded;
+          element.refresh = "";
+          element.rtId = res.rtId;
+          element.rmId = res.rmId;
+          element.days = this.days;
+          element.arnRiaDetailId = res.arnRiaDetailId;
+          element.description = res.description;
+          element.fromDate = res.fromDate;
+          element.toDate = res.toDate;
+          element.id = res.id;
           element.isLoading = false;
         }
       })
-
-
   }
 
   fileOrderBulkHistoryListGet(data) {
@@ -285,14 +280,14 @@ export class FileOrderingBulkComponent implements OnInit {
               rta: this.getRtName(element.rtId),
               orderedBy: element.rmName ? element.rmName : "-",
               startedOn: element.startedOn ? element.startedOn : "-",
-              totalFiles: element.totalFiles ? element.totalFiles : "-",
-              queue: element.inqueue,
-              ordering: element.orderingFrequency
+              totalFiles: element.totalFiles || element.totalFiles ? element.totalFiles : "-",
+              queue: element.inqueue || element.inqueue == 0 ? element.inqueue: '-',
+              ordering: element.orderingFrequency || element.orderingFrequency == 0
                 ? element.orderingFrequency
                 : "-",
-              ordered: element.ordered,
-              failed: element.skipped,
-              uploaded: element.uploaded,
+              ordered: element.ordered || element.ordered == 0 ? element.ordered:'-',
+              failed: element.skipped || element.skipped == 0 ? element.skipped : '-',
+              uploaded: element.uploaded || element.uploaded == 0? element.uploaded : '-',
               refresh: "",
               rtId: element.rtId,
               rmId: element.rmId,

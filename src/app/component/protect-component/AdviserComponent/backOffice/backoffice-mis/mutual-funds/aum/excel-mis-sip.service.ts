@@ -137,7 +137,9 @@ export class ExcelMisSipService {
                         ws.columns = arrayOfHeaderStyle[0];
                         headCell = ws.getRow(currentRowPos);
                         headCell.font = { bold: true };
-                    } 
+                    } else {
+                        currentRowPos = currentRowPos + 2;
+                    }
                     // else {
                     //     ws.addRow(['', '', '', '']);
                     //     currentRowPos = currentRowPos + 2;
@@ -157,8 +159,8 @@ export class ExcelMisSipService {
                     if (catElement && catElement.hasOwnProperty('subCatList') && catElement.subCatList.length !== 0) {
                         if (!excluded.subCatList) {
                             catElement.subCatList.forEach((subCatElement, index2) => {
-                                currentRowPos = currentRowPos + 1;
-                                if(index2 === 0){
+                                currentRowPos = currentRowPos + 2;
+                                if(index2 === 0 && index1 === 0){
                                     ws.getRow(currentRowPos).values = arrayOfHeaders[1];
                                     ws.columns = arrayOfHeaderStyle[1];
                                     headCell = ws.getRow(currentRowPos);
@@ -176,9 +178,9 @@ export class ExcelMisSipService {
                                 if (subCatElement && subCatElement.hasOwnProperty('schemeList') && subCatElement.schemeList.length !== 0) {
                                     if (!excluded.schemeList) {
                                         subCatElement.schemeList.forEach((schemeElement, index3) => {
-                                            currentRowPos = currentRowPos + 1;
+                                            currentRowPos = currentRowPos + 2;
 
-                                            if(index3 === 0){
+                                            if(index3 === 0 && index2 === 0 && index1 === 0){
                                                 ws.getRow(currentRowPos).values = arrayOfHeaders[2];
                                                 ws.columns = arrayOfHeaderStyle[2];
                                                 headCell = ws.getRow(currentRowPos);
@@ -207,9 +209,9 @@ export class ExcelMisSipService {
                                                 // }
 
                                                 schemeElement.applicantList.forEach((element, index4) => {
-                                                    currentRowPos = currentRowPos + 1;
+                                                    currentRowPos = currentRowPos + 2;
 
-                                                    if(index4 === 0){
+                                                    if(index4 === 0 && index3 ===0 && index3 === 0 && index2 === 0 && index1 === 0){
                                                         ws.getRow(currentRowPos).values = arrayOfHeaders[3];
                                                         ws.columns = arrayOfHeaderStyle[3];
                                                         headCell = ws.getRow(currentRowPos);
@@ -241,8 +243,8 @@ export class ExcelMisSipService {
                     if (catElement && catElement.hasOwnProperty('subCatList') && catElement.subCatList.length !== 0) {
                         if (!excluded.subCatList) {
                             catElement.subCatList.forEach((subCatElement, index2) => {
-                                currentRowPos = currentRowPos + 1;
-                                if(index2 === 0){
+                                currentRowPos = currentRowPos + 2;
+                                if(index2 === 0 && index1 === 0){
                                     ws.getRow(currentRowPos).values = arrayOfHeaders[1];
                                     ws.columns = arrayOfHeaderStyle[1];
                                     headCell = ws.getRow(currentRowPos);
@@ -265,8 +267,8 @@ export class ExcelMisSipService {
                                         // }
 
                                         subCatElement.schemeList.forEach((schemeElement, index3) => {
-                                            currentRowPos = currentRowPos + 1;
-                                            if(index3 === 0){
+                                            currentRowPos = currentRowPos + 2;
+                                            if(index3 === 0 && index2 === 0 && index1 === 0){
                                                 ws.getRow(currentRowPos).values = arrayOfHeaders[2];
                                                 ws.columns = arrayOfHeaderStyle[2];
                                                 headCell = ws.getRow(currentRowPos);
@@ -316,8 +318,8 @@ export class ExcelMisSipService {
                                             if (schemeElement.applicantList.length !== 0) {
 
                                                 schemeElement.applicantList.forEach((element, index4) => {
-                                                    currentRowPos = currentRowPos + 1;
-                                                    if(index4 == 0){
+                                                    currentRowPos = currentRowPos + 2;
+                                                    if(index4 == 0 && index3 === 0&& index2 === 0 && index1 === 0){
                                                         ws.getRow(currentRowPos).values = arrayOfHeaders[3];
                                                         ws.columns = arrayOfHeaderStyle[3];
                                                         headCell = ws.getRow(currentRowPos);
@@ -343,8 +345,8 @@ export class ExcelMisSipService {
 
                                     subCatElement.schemeList.forEach((schemeElement, index3) => {
                                         if (!excluded.schemeList) {
-                                            currentRowPos = currentRowPos + 1;
-                                            if(index3 === 0){
+                                            currentRowPos = currentRowPos + 2;
+                                            if(index3 === 0 && index2 === 0 && index1 === 0){
                                                 ws.getRow(currentRowPos).values = arrayOfHeaders[2];
                                                 ws.columns = arrayOfHeaderStyle[2];
                                                 headCell = ws.getRow(currentRowPos);
@@ -373,8 +375,8 @@ export class ExcelMisSipService {
                                                 // }
 
                                                 schemeElement.applicantList.forEach((element, index4) => {
-                                                    currentRowPos = currentRowPos + 1;
-                                                    if(index4 === 0){
+                                                    currentRowPos = currentRowPos + 2;
+                                                    if(index4 === 0 && index3 === 0 && index2 === 0 && index1 === 0){
                                                         ws.getRow(currentRowPos).values = arrayOfHeaders[3];
                                                         ws.columns = arrayOfHeaderStyle[3];
                                                         headCell = ws.getRow(currentRowPos);
@@ -392,8 +394,8 @@ export class ExcelMisSipService {
                                         } else {
                                             if (schemeElement.applicantList.length !== 0) {
                                                 schemeElement.applicantList.forEach((element, index4) => {
-                                                    currentRowPos = currentRowPos + 1;
-                                                    if(index4 === 0){
+                                                    currentRowPos = currentRowPos + 2;
+                                                    if(index4 === 0 && index3 === 0 && index2 === 0 && index1 === 0){
                                                         ws.getRow(currentRowPos).values = arrayOfHeaders[3];
                                                         ws.columns = arrayOfHeaderStyle[3];
                                                         headCell = ws.getRow(currentRowPos);
@@ -428,7 +430,9 @@ export class ExcelMisSipService {
                         ws.columns = arrayOfHeaderStyle[0];
                         headCell = ws.getRow(currentRowPos);
                         headCell.font = { bold: true };
-                    } 
+                    } else {
+                        currentRowPos = currentRowPos + 2;
+                    }
                     // else {
                     //     currentRowPos = currentRowPos + 2;
                     //     ws.getRow(currentRowPos).values = arrayOfHeaders[0];
@@ -449,8 +453,8 @@ export class ExcelMisSipService {
                 if (amcElement.schemeList.length !== 0) {
                     if (!excluded.schemeList) {
                         amcElement.schemeList.forEach((schemeElement, index2) => {
-                            currentRowPos = currentRowPos + 1;
-                            if(index2 === 0){
+                            currentRowPos = currentRowPos + 2;
+                            if(index2 === 0 && index1 === 0){
                                 ws.getRow(currentRowPos).values = arrayOfHeaders[1];
                                 ws.columns = arrayOfHeaderStyle[1];
                                 headCell = ws.getRow(currentRowPos);
@@ -466,8 +470,8 @@ export class ExcelMisSipService {
                             if (schemeElement.investorList.length !== 0) {
                                 if (!excluded.investorList) {
                                     schemeElement.investorList.forEach((investorElement, index2) => {
-                                        currentRowPos = currentRowPos + 1;
-                                        if(index2 === 0){
+                                        currentRowPos = currentRowPos + 2;
+                                        if(index2 === 0 && index1 === 0){
                                             ws.getRow(currentRowPos).values = arrayOfHeaders[2];
                                             ws.columns = arrayOfHeaderStyle[2];
                                             headCell = ws.getRow(currentRowPos);
@@ -483,8 +487,8 @@ export class ExcelMisSipService {
                                         if (investorElement.applicantList.length !== 0) {
                                             if (!excluded.applicantList) {
                                                 investorElement.applicantList.forEach((applicantElement, index3) => {
-                                                    currentRowPos = currentRowPos + 1;
-                                                    if(index3 === 0){
+                                                    currentRowPos = currentRowPos + 2;
+                                                    if(index3 === 0 && index2 === 0 && index1=== 0){
                                                         ws.getRow(currentRowPos).values = arrayOfHeaders[3];
                                                         ws.columns = arrayOfHeaderStyle[3];
                                                         headCell = ws.getRow(currentRowPos);
@@ -515,8 +519,8 @@ export class ExcelMisSipService {
                             if (schemeElement.investorList.length !== 0) {
                                 if (!excluded.investorList) {
                                     schemeElement.investorList.forEach((investorElement, index3) => {
-                                        currentRowPos = currentRowPos + 1;
-                                        if(index3 === 0){
+                                        currentRowPos = currentRowPos + 2;
+                                        if(index3 === 0 && index2 === 0 && index1 === 0){
                                             ws.getRow(currentRowPos).values = arrayOfHeaders[2];
                                             ws.columns = arrayOfHeaderStyle[2];
                                             headCell = ws.getRow(currentRowPos);
@@ -569,7 +573,9 @@ export class ExcelMisSipService {
                         ws.columns = arrayOfHeaderStyle[0];
                         headCell = ws.getRow(currentRowPos);
                         headCell.font = { bold: true };
-                    } 
+                    }  else {
+                        currentRowPos = currentRowPos + 2;
+                    }
                     // else {
                     //     currentRowPos = currentRowPos + 2;
                     //     ws.getRow(currentRowPos).values = arrayOfHeaders[0];
@@ -589,8 +595,8 @@ export class ExcelMisSipService {
                 if (clientElement.investorList.length !== 0) {
                     if (!excluded.investorList) {
                         clientElement.investorList.forEach((investorElement, index2) => {
-                            currentRowPos = currentRowPos + 1;
-                            if(index2 === 0){
+                            currentRowPos = currentRowPos + 2;
+                            if(index2 === 0 && index1 === 0){
                                 ws.getRow(currentRowPos).values = arrayOfHeaders[1];
                                 ws.columns = arrayOfHeaderStyle[1];
                                 headCell = ws.getRow(currentRowPos);
@@ -614,9 +620,9 @@ export class ExcelMisSipService {
                             if (investorElement.schemeList.length !== 0) {
                                 if (!excluded.schemeList) {
                                     investorElement.schemeList.forEach((schemeElement, index3) => {
-                                        currentRowPos = currentRowPos + 1;
+                                        currentRowPos = currentRowPos + 2;
 
-                                        if(index3 === 0){
+                                        if(index3 === 0 && index2 === 0 && index1 === 0){
                                             ws.getRow(currentRowPos).values = arrayOfHeaders[2];
                                             ws.columns = arrayOfHeaderStyle[2];
                                             headCell = ws.getRow(currentRowPos);
@@ -641,8 +647,8 @@ export class ExcelMisSipService {
                                                     // } else {
                                                     // }
 
-                                                    currentRowPos = currentRowPos + 1;
-                                                    if(index4 === 0){
+                                                    currentRowPos = currentRowPos + 2;
+                                                    if(index4 === 0 && index3 === 0 && index2 === 0 && index1 === 0){
                                                         ws.getRow(currentRowPos).values = arrayOfHeaders[3];
     
                                                         ws.columns = arrayOfHeaderStyle[3];
@@ -672,7 +678,7 @@ export class ExcelMisSipService {
                                                     //     currentRowPos = currentRowPos + investorElement.schemeList.length + schemeElement.schemeFolioList.length + 1;
                                                     // } else {
                                                     // }
-                                                    currentRowPos = currentRowPos + 1;
+                                                    currentRowPos = currentRowPos + 2;
 
                                                     ws.addRow([
                                                         element.index,
@@ -694,8 +700,8 @@ export class ExcelMisSipService {
                             if (investorElement.schemeList.length !== 0) {
                                 if (!excluded.schemeList) {
                                     investorElement.schemeList.forEach((schemeElement, index3) => {
-                                        currentRowPos = currentRowPos + 1;
-                                        if(index3 === 0){
+                                        currentRowPos = currentRowPos + 2;
+                                        if(index3 === 0 && index2 === 0 && index1 === 0){
                                             ws.getRow(currentRowPos).values = arrayOfHeaders[2];
                                             ws.columns = arrayOfHeaderStyle[2];
                                             headCell = ws.getRow(currentRowPos);
@@ -720,8 +726,8 @@ export class ExcelMisSipService {
                                                     // } else {
                                                     // }
 
-                                                    currentRowPos = currentRowPos + 1;
-                                                    if(index4 === 0){
+                                                    currentRowPos = currentRowPos + 2;
+                                                    if(index4 === 0 && index3 === 0 && index2 === 0 && index1 === 0){
                                                         ws.getRow(currentRowPos).values = arrayOfHeaders[3];
                                                         ws.columns = arrayOfHeaderStyle[3];
                                                         headCell = ws.getRow(currentRowPos);
@@ -751,7 +757,7 @@ export class ExcelMisSipService {
                                                     // } else {
                                                     // }
 
-                                                    currentRowPos = currentRowPos + 1;
+                                                    currentRowPos = currentRowPos + 2;
                                                     if(index5 === 0){
                                                         ws.getRow(currentRowPos).values = arrayOfHeaders[3];
                                                         ws.columns = arrayOfHeaderStyle[3];
@@ -787,7 +793,9 @@ export class ExcelMisSipService {
                         ws.columns = arrayOfHeaderStyle[0];
                         headCell = ws.getRow(currentRowPos);
                         headCell.font = { bold: true };
-                    } 
+                    } else {
+                        currentRowPos= currentRowPos +2;
+                    }
                     // else {
                     //     currentRowPos = currentRowPos + 2;
                     //     ws.getRow(currentRowPos).values = arrayOfHeaders[0];
@@ -806,8 +814,8 @@ export class ExcelMisSipService {
                 if (applicantElement && applicantElement.hasOwnProperty('categoryList') && applicantElement.categoryList.length !== 0) {
                     if (!excluded.categoryList) {
                         applicantElement.categoryList.forEach((categoryElement, index2) => {
-                            currentRowPos = currentRowPos + 1;
-                            if(index2 === 0){
+                            currentRowPos = currentRowPos + 2;
+                            if(index2 === 0 && index1 === 0){
                                 ws.getRow(currentRowPos).values = arrayOfHeaders[1];
                                 ws.columns = arrayOfHeaderStyle[1];
                                 headCell = ws.getRow(currentRowPos);
@@ -823,8 +831,8 @@ export class ExcelMisSipService {
                             if (categoryElement.subCategoryList.length !== 0) {
                                 if (!excluded.subCategoryList) {
                                     categoryElement.subCategoryList.forEach((subCatElement, index3) => {
-                                        currentRowPos = currentRowPos + 1;
-                                        if(index3 === 0){
+                                        currentRowPos = currentRowPos + 2;
+                                        if(index3 === 0 && index2 === 0 && index1 === 0){
                                             ws.getRow(currentRowPos).values = arrayOfHeaders[2];
     
                                             ws.columns = arrayOfHeaderStyle[2];
@@ -847,8 +855,8 @@ export class ExcelMisSipService {
                                                     //     currentRowPos = currentRowPos + applicantElement.categoryList.length + categoryElement.subCategoryList.length + 1;
                                                     // } else {
                                                     // }
-                                                    currentRowPos = currentRowPos + 1;
-                                                    if(index4 === 0){
+                                                    currentRowPos = currentRowPos + 2;
+                                                    if(index4 === 0 && index3 ===0 && index2 ===0 && index1 ===0){
                                                         ws.getRow(currentRowPos).values = arrayOfHeaders[3];
                                                         ws.columns = arrayOfHeaderStyle[3];
                                                         headCell = ws.getRow(currentRowPos);
@@ -875,8 +883,8 @@ export class ExcelMisSipService {
                                                         // }
                                                         
                                                         schemeElement.schemeFolioList.forEach((element, index5) => {
-                                                            currentRowPos = currentRowPos + 1;
-                                                            if(index5 === 0){
+                                                            currentRowPos = currentRowPos + 2;
+                                                            if(index5 === 0 && index4 === 0 && index3 ===0 && index2 ===0 && index1 ===0){
                                                                 ws.getRow(currentRowPos).values = arrayOfHeaders[4];
                                                                 ws.columns = arrayOfHeaderStyle[4];
                                                                 headCell = ws.getRow(currentRowPos);
@@ -905,8 +913,8 @@ export class ExcelMisSipService {
                                 if (categoryElement.subCategoryList.length !== 0) {
                                     if (!excluded.subCategoryList) {
                                         categoryElement.subCategoryList.forEach((subCatElement, index3) => {
-                                            currentRowPos = currentRowPos + 1;
-                                            if(index3 === 0){
+                                            currentRowPos = currentRowPos + 2;
+                                            if(index3 ===0 && index2 ===0 && index1 ===0){
                                                 ws.getRow(currentRowPos).values = arrayOfHeaders[2];
     
                                                 ws.columns = arrayOfHeaderStyle[2];
@@ -930,7 +938,7 @@ export class ExcelMisSipService {
                                                         // } else {
                                                         // }
                                                         currentRowPos = currentRowPos + 2;
-                                                        if(index4 === 0){
+                                                        if(index4 === 0 && index3 ===0 && index2 ===0 && index1 ===0){
                                                             ws.getRow(currentRowPos).values = arrayOfHeaders[3];
                                                             ws.columns = arrayOfHeaderStyle[3];
                                                             headCell = ws.getRow(currentRowPos);
@@ -956,8 +964,8 @@ export class ExcelMisSipService {
                                                             // }
                                                             
                                                             schemeElement.schemeFolioList.forEach((element,index5) => {
-                                                                currentRowPos = currentRowPos + 1;
-                                                                if(index5 === 0){
+                                                                currentRowPos = currentRowPos + 2;
+                                                                if(index5 === 0 && index4 === 0 && index3 ===0 && index2 ===0 && index1 ===0){
                                                                     ws.getRow(currentRowPos).values = arrayOfHeaders[4];
                                                                     ws.columns = arrayOfHeaderStyle[4];
                                                                     headCell = ws.getRow(currentRowPos);
@@ -988,8 +996,8 @@ export class ExcelMisSipService {
                                                         //     currentRowPos = currentRowPos + applicantElement.categoryList.length + categoryElement.subCategoryList.length + 1;
                                                         // } else {
                                                         // }
-                                                        currentRowPos = currentRowPos + 1;
-                                                        if(index3 == 0){
+                                                        currentRowPos = currentRowPos + 2;
+                                                        if(index3 ===0 && index2 ===0 && index1 ===0){
                                                             ws.getRow(currentRowPos).values = arrayOfHeaders[3];
                                                             ws.columns = arrayOfHeaderStyle[3];
                                                             headCell = ws.getRow(currentRowPos);
@@ -1014,8 +1022,8 @@ export class ExcelMisSipService {
                                                             // } else {
                                                             // }
                                                             schemeElement.schemeFolioList.forEach((element, index4) => {
-                                                                currentRowPos = currentRowPos + 1;
-                                                                if(index4 === 0){
+                                                                currentRowPos = currentRowPos + 2;
+                                                                if(index4 === 0 && index3 ===0 && index2 ===0 && index1 ===0){
                                                                     ws.getRow(currentRowPos).values = arrayOfHeaders[4];
                                                                     ws.columns = arrayOfHeaderStyle[4];
                                                                     headCell = ws.getRow(currentRowPos);
@@ -1045,8 +1053,8 @@ export class ExcelMisSipService {
                                                             //     currentRowPos = currentRowPos + 2;
                                                             // }
                                                             schemeElement.schemeFolioList.forEach((element, index5) => {
-                                                            currentRowPos = currentRowPos + 1;
-                                                                if(index5 === 0){
+                                                            currentRowPos = currentRowPos + 2;
+                                                                if(index5 === 0 && index2 ===0 && index1 ===0){
                                                                     ws.getRow(currentRowPos).values = arrayOfHeaders[4];
                                                                     ws.columns = arrayOfHeaderStyle[4];
                                                                     headCell = ws.getRow(currentRowPos);
@@ -1154,9 +1162,10 @@ export class ExcelMisSipService {
                     headCell = ws.getRow(currentRowPos);
                     headCell.font = { bold: true };
                 } 
-                // else {
+                else {
                 //     ws.addRow(['', '', '', '']);
-                //     currentRowPos = currentRowPos + 2;
+                    currentRowPos = currentRowPos + 2;
+                }
                 //     ws.getRow(currentRowPos).values = arrayOfHeaders[0];
                 //     ws.columns = arrayOfHeaderStyle[0];
                 //     headCell = ws.getRow(currentRowPos);
@@ -1172,9 +1181,9 @@ export class ExcelMisSipService {
 
                 if (subCatElement && subCatElement.hasOwnProperty('schemeList') && subCatElement.schemeList.length !== 0) {
                     if (!excluded.schemeList) {
-                        subCatElement.schemeList.forEach((schemeElement, index3) => {
-                            currentRowPos = currentRowPos + 1;
-                            if(index3){
+                        subCatElement.schemeList.forEach((schemeElement, index2) => {
+                            currentRowPos = currentRowPos + 2;
+                            if(index2 === 0 && index1=== 0){
                                 ws.getRow(currentRowPos).values = arrayOfHeaders[1];
                                 ws.columns = arrayOfHeaderStyle[1];
                                 headCell = ws.getRow(currentRowPos);
@@ -1202,9 +1211,9 @@ export class ExcelMisSipService {
                                 // } else {
                                 // }
 
-                                schemeElement.applicantList.forEach((element, index4) => {
-                                    currentRowPos = currentRowPos + 1;
-                                    if(index4 === 0){
+                                schemeElement.applicantList.forEach((element, index3) => {
+                                    currentRowPos = currentRowPos + 2;
+                                    if(index3 === 0 && index2 === 0 && index1 === 0){
                                         ws.getRow(currentRowPos).values = arrayOfHeaders[2];
                                         ws.columns = arrayOfHeaderStyle[2];
                                         headCell = ws.getRow(currentRowPos);
@@ -1241,8 +1250,9 @@ export class ExcelMisSipService {
                     headCell = ws.getRow(currentRowPos);
                     headCell.font = { bold: true };
                 } 
-                // else {
-                //     currentRowPos = currentRowPos + 2;
+                else {
+                    currentRowPos = currentRowPos + 2;
+                }
                 //     ws.getRow(currentRowPos).values = arrayOfHeaders[0];
                 //     ws.columns = arrayOfHeaderStyle[0];
                 //     headCell = ws.getRow(currentRowPos);
@@ -1265,8 +1275,8 @@ export class ExcelMisSipService {
                 if (investorElement.schemeList.length !== 0) {
                     if (!excluded.schemeList) {
                         investorElement.schemeList.forEach((schemeElement, index2) => {
-                            currentRowPos = currentRowPos + 1;
-                            if(index2 === 0){
+                            currentRowPos = currentRowPos + 2;
+                            if(index2 === 0 && index1 === 0){
                                 ws.getRow(currentRowPos).values = arrayOfHeaders[2];
                                 ws.columns = arrayOfHeaderStyle[2];
                                 headCell = ws.getRow(currentRowPos);
@@ -1285,8 +1295,8 @@ export class ExcelMisSipService {
 
                                 if (!excluded.schemeFolioList) {
                                     schemeElement.schemeFolioList.forEach((element, index3) => {
-                                        currentRowPos = currentRowPos + 1;
-                                        if(index3 === 0){
+                                        currentRowPos = currentRowPos + 2;
+                                        if(index3 === 0 && index2 === 0 && index1 === 0){
                                             ws.getRow(currentRowPos).values = arrayOfHeaders[3];
     
                                             ws.columns = arrayOfHeaderStyle[3];
@@ -1310,7 +1320,7 @@ export class ExcelMisSipService {
                             if (schemeElement.schemeFolioList.length !== 0) {
                                 if (!excluded.schemeFolioList) {
                                     schemeElement.schemeFolio.forEach((element, index4) => {
-                                        currentRowPos = currentRowPos + 1;
+                                        currentRowPos = currentRowPos + 2;
 
                                         ws.addRow([
                                             element.index,
@@ -1338,8 +1348,9 @@ export class ExcelMisSipService {
                     headCell = ws.getRow(currentRowPos);
                     headCell.font = { bold: true };
                 }
-                //  else {
-                //     currentRowPos = currentRowPos + 2;
+                 else {
+                    currentRowPos = currentRowPos + 2;
+                 }
                 //     ws.getRow(currentRowPos).values = arrayOfHeaders[0];
                 //     ws.columns = arrayOfHeaderStyle[0];
                 //     headCell = ws.getRow(currentRowPos);
@@ -1355,8 +1366,8 @@ export class ExcelMisSipService {
                 if (schemeElement.investorList.length !== 0) {
                     if (!excluded.investorList) {
                         schemeElement.investorList.forEach((investorElement, index2) => {
-                            currentRowPos = currentRowPos + 1;
-                            if(index2 === 0){
+                            currentRowPos = currentRowPos + 2;
+                            if(index2 === 0 && index1 === 0){
                                 ws.getRow(currentRowPos).values = arrayOfHeaders[2];
                                 ws.columns = arrayOfHeaderStyle[2];
                                 headCell = ws.getRow(currentRowPos);
@@ -1373,8 +1384,8 @@ export class ExcelMisSipService {
                             if (investorElement.applicantList.length !== 0) {
                                 if (!excluded.applicantList) {
                                     investorElement.applicantList.forEach((applicantElement, index3) => {
-                                        currentRowPos = currentRowPos + 1;
-                                        if(index3 === 0){
+                                        currentRowPos = currentRowPos + 2;
+                                        if(index3 === 0 && index2 === 0 && index1 === 0){
                                             ws.getRow(currentRowPos).values = arrayOfHeaders[3];
                                             ws.columns = arrayOfHeaderStyle[3];
                                             headCell = ws.getRow(currentRowPos);
@@ -1453,8 +1464,9 @@ export class ExcelMisSipService {
                     ws.columns = arrayOfHeaderStyle[2];
                     headCell = ws.getRow(currentRowPos);
                     headCell.font = { bold: true };
+                }else {
+                    currentRowPos = currentRowPos + 2;
                 }
-                // currentRowPos = currentRowPos + 1;
                 // ws.getRow(currentRowPos).values = arrayOfHeaders[2];
                 // ws.columns = arrayOfHeaderStyle[2];
                 // headCell = ws.getRow(currentRowPos);
@@ -1470,8 +1482,8 @@ export class ExcelMisSipService {
                 if (investorElement.applicantList.length !== 0) {
                     if (!excluded.applicantList) {
                         investorElement.applicantList.forEach((applicantElement, index2) => {
-                            currentRowPos = currentRowPos + 1;
-                            if(index2 === 0){
+                            currentRowPos = currentRowPos + 2;
+                            if(index2 === 0 && index1 === 0){
                                 ws.getRow(currentRowPos).values = arrayOfHeaders[3];
                                 ws.columns = arrayOfHeaderStyle[3];
                                 headCell = ws.getRow(currentRowPos);
