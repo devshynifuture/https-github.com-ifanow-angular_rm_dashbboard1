@@ -23,87 +23,102 @@
     </div>
     <div class="row">
         <div class="col-md-12 overflow-hidden">
-            <table #tableEl matSort  mat-table [dataSource]="dataSource" *ngIf="dataSource.filteredData?.length>0"
-                id="tbs" class=" skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
-                <ng-container matColumnDef="no" sticky>
-                    <th *matHeaderCellDef class="br" mat-header-cell> Index</th>
-                    <td *matCellDef="let element; let i = index;" class="br" mat-cell>
-                        <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
-                    </td>
-                    <td mat-footer-cell *matFooterCellDef class=""> </td>
-                </ng-container>
-                <ng-container matColumnDef="applicantName">
-                    <th mat-sort-header="investorName" mat-header-cell *matHeaderCellDef class="br t-18"> Applicant Name
-                    </th>
-                    <td mat-cell *matCellDef="let element" class="br t-18">
-                        <div class="bar"> {{element.investorName}} </div>
-                    </td>
-                    <td mat-footer-cell *matFooterCellDef class=""> </td>
-                </ng-container>
-                <ng-container matColumnDef="schemeName">
-                    <th mat-sort-header="schemeName" mat-header-cell *matHeaderCellDef class="br t-12"> Scheme Name
-                    </th>
-                    <td mat-cell *matCellDef="let element" class="br t-12">
-                        <div class="bar"> {{element.schemeName}} </div>
-                    </td>
-                    <td *matFooterCellDef class="br text-right t-10" mat-footer-cell></td>
-                </ng-container>
-                <ng-container matColumnDef="folioNumber">
-                    <th mat-sort-header="folioNumber" mat-header-cell *matHeaderCellDef class="br t-18"> Folio Number
-                    </th>
-                    <td mat-cell *matCellDef="let element" class="br t-18">
-                        <div class="bar"> {{element.folioNumber}} </div>
-                    </td>
-                    <td *matFooterCellDef class="br text-right t-10" mat-footer-cell></td>
-                </ng-container>
-                <ng-container matColumnDef="fromDate">
-                    <th mat-sort-header="from_date" mat-header-cell *matHeaderCellDef class="br">From Date </th>
-                    <td *matCellDef="let element" class="br text-right" mat-cell>
-                        <div class="bar" appFormatNumber> {{element.from_date | date:'dd/MM/yyyy'}} </div>
-                    </td>
-                    <td *matFooterCellDef class="br text-right t-10 f-600 p-8 " mat-footer-cell></td>
-                </ng-container>
-                <ng-container matColumnDef="toDate">
-                    <th mat-sort-header="to_date" mat-header-cell *matHeaderCellDef class="br t-14">To Date
-                    </th>
-                    <td mat-cell *matCellDef="let element" class="br t-14 text-right">
-                        <div class="bar"> {{element.to_date | date:'dd/MM/yyyy'}} </div>
-                    </td>
-                    <td *matFooterCellDef class="br text-right t-10" mat-footer-cell></td>
-                </ng-container>
-                <ng-container matColumnDef="frequency">
-                    <th mat-sort-header="frequency" mat-header-cell *matHeaderCellDef class="br">Frequency
-                    </th>
-                    <td mat-cell *matCellDef="let element" class="br">
-                        <div class="bar"> {{element.frequency}} </div>
-                    </td>
-                    <td *matFooterCellDef class="br text-right t-10 f-600 p-8" mat-footer-cell>Total</td>
-                </ng-container>
-                <ng-container matColumnDef="ceaseDate" *ngIf="mode=='expired'">
-                    <th mat-sort-header="ceaseDate" mat-header-cell *matHeaderCellDef class="br">Cease date
-                    </th>
-                    <td mat-cell *matCellDef="let element" class="br">
-                        <div class="bar"> {{element.ceaseDate | date:'dd/MM/yyyy'}} </div>
-                    </td>
-                    <td *matFooterCellDef class="br text-right t-10 f-600 p-8" mat-footer-cell>Total</td>
-                </ng-container>
-                <ng-container matColumnDef="amount">
-                    <th *matHeaderCellDef class="br textRight t-14" mat-header-cell mat-sort-header="amount">Amount
-                    </th>
-                    <td *matCellDef="let element" class="br t-14 amt text-right" mat-cell>
-                        <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.amount}}</span> </div>
-                    </td>
-                    <td *matFooterCellDef class="br text-right t-10 f-600 p-8" mat-footer-cell>
-                        <div>{{isLoading ? ' ' : '₹'}}<span  [value]="totalAmount" appFormatNumber></span></div>
+            <div [ngClass]="{'table-scroll':isLoading==false }" class="example-container" (scroll)="onWindowScroll($event)" *ngIf="finalSipList?.length!==0">
+                <table #tableEl matSort  mat-table [dataSource]="dataSource" 
+                    id="tbs" class=" skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="isLoading">
+                    <ng-container matColumnDef="no" sticky>
+                        <th *matHeaderCellDef class="br" mat-header-cell> Index</th>
+                        <td *matCellDef="let element; let i = index;" class="br" mat-cell>
+                            <div class="bar"> {{isLoading ? '' : i + 1 }} </div>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef class=""> </td>
+                    </ng-container>
+                    <ng-container matColumnDef="applicantName">
+                        <th mat-sort-header="investorName" mat-header-cell *matHeaderCellDef class="br t-18"> Applicant Name
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="br t-18">
+                            <div class="bar"> {{element.investorName}} </div>
+                        </td>
+                        <td mat-footer-cell *matFooterCellDef class=""> </td>
+                    </ng-container>
+                    <ng-container matColumnDef="schemeName">
+                        <th mat-sort-header="schemeName" mat-header-cell *matHeaderCellDef class="br t-12"> Scheme Name
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="br t-12">
+                            <div class="bar"> {{element.schemeName}} </div>
+                        </td>
+                        <td *matFooterCellDef class="br text-right t-10" mat-footer-cell></td>
+                    </ng-container>
+                    <ng-container matColumnDef="folioNumber">
+                        <th mat-sort-header="folioNumber" mat-header-cell *matHeaderCellDef class="br t-18"> Folio Number
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="br t-18">
+                            <div class="bar"> {{element.folioNumber}} </div>
+                        </td>
+                        <td *matFooterCellDef class="br text-right t-10" mat-footer-cell></td>
+                    </ng-container>
+                    <ng-container matColumnDef="fromDate">
+                        <th mat-sort-header="from_date" mat-header-cell *matHeaderCellDef class="br">From Date </th>
+                        <td *matCellDef="let element" class="br text-right" mat-cell>
+                            <div class="bar" appFormatNumber> {{element.from_date | date:'dd/MM/yyyy'}} </div>
+                        </td>
+                        <td *matFooterCellDef class="br text-right t-10 f-600 p-8 " mat-footer-cell></td>
+                    </ng-container>
+                    <ng-container matColumnDef="toDate">
+                        <th mat-sort-header="to_date" mat-header-cell *matHeaderCellDef class="br t-14">To Date
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="br t-14 text-right">
+                            <div class="bar"> {{element.to_date | date:'dd/MM/yyyy'}} </div>
+                        </td>
+                        <td *matFooterCellDef class="br text-right t-10" mat-footer-cell></td>
+                    </ng-container>
+                    <ng-container matColumnDef="frequency">
+                        <th mat-sort-header="frequency" mat-header-cell *matHeaderCellDef class="br">Frequency
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="br">
+                            <div class="bar"> {{element.frequency}} </div>
+                        </td>
+                        <td *matFooterCellDef class="br text-right t-10 f-600 p-8" mat-footer-cell>Total</td>
+                    </ng-container>
+                    <ng-container matColumnDef="ceaseDate" *ngIf="mode=='expired'">
+                        <th mat-sort-header="ceaseDate" mat-header-cell *matHeaderCellDef class="br">Cease date
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="br">
+                            <div class="bar"> {{element.ceaseDate | date:'dd/MM/yyyy'}} </div>
+                        </td>
+                        <td *matFooterCellDef class="br text-right t-10 f-600 p-8" mat-footer-cell>Total</td>
+                    </ng-container>
+                    <ng-container matColumnDef="amount">
+                        <th *matHeaderCellDef class="br textRight t-14" mat-header-cell mat-sort-header="amount">Amount
+                        </th>
+                        <td *matCellDef="let element" class="br t-14 amt text-right" mat-cell>
+                            <div class="bar">{{!isLoading? "₹" : ""}}<span appFormatNumber>{{element.amount}}</span> </div>
+                        </td>
+                        <td *matFooterCellDef class="br text-right t-10 f-600 p-8" mat-footer-cell>
+                            <div>{{isLoading ? ' ' : '₹'}}<span  [value]="totalAmount" appFormatNumber></span></div>
 
-                    </td>
-                </ng-container>
-                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr>
-            </table>
-            <div *ngIf="dataSource.filteredData?.length==0" class="d-flex flex-column align-items-center">
-                <img class="width300" src="assets/images/svg/noDataFound.svg">
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="reason">
+                        <th *matHeaderCellDef class="br textRight t-14" mat-header-cell mat-sort-header="reason">Reason
+                        </th>
+                        <td *matCellDef="let element" class="br t-14 amt text-right" mat-cell>
+                            <div class="bar">
+                                <span>{{element.status}}</span> 
+                            </div>
+                        </td>
+                        <td *matFooterCellDef class="br text-right t-10 f-600 p-8 " mat-footer-cell></td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr>
+                </table>
+
+            </div>
+            <div *ngIf="dataSource.finalSipList?.length==0" class="d-flex flex-column align-items-center b-a">
+                <!-- <img class="width300" src="assets/images/svg/noDataFound.svg"> -->
                 <h4 class="text-center pt-12">No data found</h4>
             </div>
         </div>

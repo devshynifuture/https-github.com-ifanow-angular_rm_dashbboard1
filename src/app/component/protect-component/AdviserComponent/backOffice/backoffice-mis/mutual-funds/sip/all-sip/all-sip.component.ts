@@ -29,6 +29,9 @@ export class AllSipComponent implements OnInit {
   @ViewChild('tableEl', {static: false}) tableEl;
   arnRiaValue: any;
   viewMode: any;
+  hasEndReached: any = false;
+  infiniteScrollingFlag: boolean;
+  finalSipList: any = [];
 
   constructor(
     private backoffice: BackOfficeService,
@@ -41,12 +44,11 @@ export class AllSipComponent implements OnInit {
   ngOnInit() {
     this.advisorId = AuthService.getAdvisorId();
     if (this.mode == 'expired') {
-      this.displayedColumns = ['no', 'applicantName', 'schemeName', 'folioNumber', 'fromDate', 'toDate', 'ceaseDate', 'amount'];
+      this.displayedColumns = ['no', 'applicantName', 'schemeName', 'folioNumber', 'fromDate', 'toDate', 'ceaseDate', 'amount', 'reason'];
     } else if (this.mode == 'expiring') {
-      this.displayedColumns = ['no', 'applicantName', 'schemeName', 'folioNumber', 'fromDate', 'toDate', 'amount'];
+      this.displayedColumns = ['no', 'applicantName', 'schemeName', 'folioNumber', 'fromDate', 'toDate', 'amount', 'reason'];
     } else {
-      this.displayedColumns = ['no', 'applicantName', 'schemeName', 'folioNumber', 'fromDate', 'toDate',
-        'frequency', 'amount'];
+      this.displayedColumns = ['no', 'applicantName', 'schemeName', 'folioNumber', 'fromDate', 'toDate', 'frequency', 'amount', 'reason'];
     }
 
     if (this.data.hasOwnProperty('arnRiaValue') && this.data.hasOwnProperty('viewMode')) {
@@ -56,7 +58,7 @@ export class AllSipComponent implements OnInit {
       this.viewMode = 'All';
       this.arnRiaValue = -1;
     }
-    this.getAllSip();
+    this.getAllSip(0);
   }
 
   Excel(tableTitle) {
@@ -82,12 +84,12 @@ export class AllSipComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
-  getAllSip() {
+  getAllSip(offset) {
     this.isLoading = true;
     this.dataSource = new MatTableDataSource([{}, {}, {}]);
     const obj = {
       limit: 20,
-      offset: 0,
+      offset,
       advisorId: (this.parentId > 0 )? this.advisorId : 0,
       arnRiaDetailsId: (this.data) ? this.data.arnRiaId : -1,
       parentId: (this.data) ? this.data.parentId : -1
@@ -101,12 +103,16 @@ export class AllSipComponent implements OnInit {
             this.response(data);
           } else {
             this.dataSource.filteredData = [];
+            this.dataSource.data = (this.finalSipList.length > 0) ? this.finalSipList : null;
+            this.eventService.openSnackBar('No More Data Found',"DISMISS");
           }
 
         },
         err => {
           this.isLoading = false;
           this.dataSource.filteredData = [];
+          this.dataSource.data = (this.finalSipList.length > 0) ? this.finalSipList : null;
+          this.eventService.openSnackBar('No More Data Found',"DISMISS");
         }
       );
     } else if (this.mode == 'expired') {
@@ -117,6 +123,8 @@ export class AllSipComponent implements OnInit {
             this.response(data);
           } else {
             this.dataSource.filteredData = [];
+            this.dataSource.data = (this.finalSipList.length > 0) ? this.finalSipList : null;
+          this.eventService.openSnackBar('No More Data Found',"DISMISS");
           }
 
         },
@@ -133,6 +141,8 @@ export class AllSipComponent implements OnInit {
             this.response(data);
           } else {
             this.dataSource.filteredData = [];
+            this.dataSource.data = (this.finalSipList.length > 0) ? this.finalSipList : null;
+            this.eventService.openSnackBar('No More Data Found',"DISMISS");
           }
 
         },
@@ -145,8 +155,24 @@ export class AllSipComponent implements OnInit {
 
   }
 
+  onWindowScroll(e: any) {
+
+    console.log(this.tableEl._elementRef.nativeElement.querySelector('tbody').querySelector('tr:last-child').offsetTop, (e.target.scrollTop + e.target.offsetHeight));
+
+    if (this.tableEl._elementRef.nativeElement.querySelector('tbody').querySelector('tr:last-child').offsetTop <= (e.target.scrollTop + e.target.offsetHeight + 200)) {
+      if (!this.hasEndReached) {
+        this.infiniteScrollingFlag = true;
+        this.hasEndReached = true;
+        this.getAllSip(this.finalSipList.length);
+        // this.getClientList(this.finalSipList[this.finalSipList.length - 1].clientId)
+      }
+
+    }
+  }
+
   response(data) {
-    this.dataSource = new MatTableDataSource(data);
+    this.finalSipList = this.finalSipList.concat(data);
+    this.dataSource = new MatTableDataSource(this.finalSipList);
     this.dataSource.sort = this.sort;
     this.dataSource.filteredData.forEach(element => {
       this.totalAmount += element.amount;

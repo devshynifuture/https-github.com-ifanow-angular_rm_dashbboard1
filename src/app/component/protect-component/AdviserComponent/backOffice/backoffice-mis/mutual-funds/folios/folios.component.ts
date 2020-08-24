@@ -123,7 +123,7 @@ export class FoliosComponent implements OnInit {
       if (value == 'groupyHead') {
         const obj = {
           advisorId: this.advisorId,
-          arnRiaDetailId: -1,
+          arnRiaDetailsId: -1,
           parentId: -1,
           clientName: data
         }

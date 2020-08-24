@@ -533,11 +533,16 @@ export class OrderHistoricalFileComponent implements OnInit {
       ((this.orderHistoryFileForm.get('selectRta').value === this.karvyRtId) ? 'karvy' :
         ((this.orderHistoryFileForm.get('selectRta').value === this.franklinRtId) ? 'franklin' : ''));
 
+        
+        
     if (this.orderHistoryFileForm.value.hasOwnProperty('fromDate') && this.orderHistoryFileForm.value.hasOwnProperty('toDate')) {
 
       if (this.orderHistoryFileForm.get('fromDate').value && this.orderHistoryFileForm.get('toDate').value) {
         const fromDateValueObj = this.orderHistoryFileForm.get('fromDate').value._d;
         const toDateValueObj = this.orderHistoryFileForm.get('toDate').value._d;
+        const copytoDateValueObj = new Date(toDateValueObj.getTime());
+
+        let datePastFourDaysOftoDateValObj = new Date(copytoDateValueObj.setDate(copytoDateValueObj.getDate() - 4));
         // adding file Type ids
 
         //  for CAMS
@@ -576,7 +581,7 @@ export class OrderHistoricalFileComponent implements OnInit {
                         rtId,
                         arnRiaDetailId: this.arnRiaDetails,
                         fromDate: null,
-                        toDate: toDateValueObj.getFullYear() + "-" + this.util.addZeroBeforeNumber((toDateValueObj.getMonth() + 1), 2) + "-" + this.util.addZeroBeforeNumber(toDateValueObj.getDate(), 2),
+                        toDate: datePastFourDaysOftoDateValObj.getFullYear() + "-" + this.util.addZeroBeforeNumber((datePastFourDaysOftoDateValObj.getMonth() + 1), 2) + "-" + this.util.addZeroBeforeNumber(datePastFourDaysOftoDateValObj.getDate(), 2),
                         fileTypeId: fileTypeId,
                         orderingFrequency: 3
                       });
@@ -685,7 +690,7 @@ export class OrderHistoricalFileComponent implements OnInit {
                           rtId,
                           arnRiaDetailId: this.arnRiaDetails,
                           fromDate: null,
-                          toDate: toDateValueObj.getFullYear() + "-" + this.util.addZeroBeforeNumber((toDateValueObj.getMonth() + 1), 2) + "-" + this.util.addZeroBeforeNumber(toDateValueObj.getDate(), 2),
+                          toDate: datePastFourDaysOftoDateValObj.getFullYear() + "-" + this.util.addZeroBeforeNumber((datePastFourDaysOftoDateValObj.getMonth() + 1), 2) + "-" + this.util.addZeroBeforeNumber(datePastFourDaysOftoDateValObj.getDate(), 2),
                           fileTypeId: fileTypeId,
                           orderingFrequency: 3
                         });
@@ -750,7 +755,7 @@ export class OrderHistoricalFileComponent implements OnInit {
                           rtId,
                           arnRiaDetailId: this.arnRiaDetails,
                           fromDate: null,
-                          toDate: toDateValueObj.getFullYear() + "-" + this.util.addZeroBeforeNumber((toDateValueObj.getMonth() + 1), 2) + "-" + this.util.addZeroBeforeNumber(toDateValueObj.getDate(), 2),
+                          toDate: datePastFourDaysOftoDateValObj.getFullYear() + "-" + this.util.addZeroBeforeNumber((datePastFourDaysOftoDateValObj.getMonth() + 1), 2) + "-" + this.util.addZeroBeforeNumber(datePastFourDaysOftoDateValObj.getDate(), 2),
                           fileTypeId: fileTypeId,
                           orderingFrequency: 3
                         });
@@ -815,8 +820,7 @@ export class OrderHistoricalFileComponent implements OnInit {
                 }
               }
 
-            }
-            console.log(requestObj);
+            }            
           }
 
         }
@@ -856,7 +860,7 @@ export class OrderHistoricalFileComponent implements OnInit {
                         rtId,
                         arnRiaDetailId: this.arnRiaDetails,
                         fromDate: null,
-                        toDate: toDateValueObj.getFullYear() + "-" + this.util.addZeroBeforeNumber((toDateValueObj.getMonth() + 1), 2) + "-" + this.util.addZeroBeforeNumber(toDateValueObj.getDate(), 2),
+                        toDate: datePastFourDaysOftoDateValObj.getFullYear() + "-" + this.util.addZeroBeforeNumber((datePastFourDaysOftoDateValObj.getMonth() + 1), 2) + "-" + this.util.addZeroBeforeNumber(datePastFourDaysOftoDateValObj.getDate(), 2),
                         fileTypeId: fileTypeId,
                         orderingFrequency: 3
                       });
@@ -970,7 +974,7 @@ export class OrderHistoricalFileComponent implements OnInit {
                             rtId,
                             arnRiaDetailId: this.arnRiaDetails,
                             fromDate: null,
-                            toDate: toDateValueObj.getFullYear() + "-" + this.util.addZeroBeforeNumber((toDateValueObj.getMonth() + 1), 2) + "-" + this.util.addZeroBeforeNumber(toDateValueObj.getDate(), 2),
+                            toDate: datePastFourDaysOftoDateValObj.getFullYear() + "-" + this.util.addZeroBeforeNumber((datePastFourDaysOftoDateValObj.getMonth() + 1), 2) + "-" + this.util.addZeroBeforeNumber(datePastFourDaysOftoDateValObj.getDate(), 2),
                             fileTypeId: fileTypeId,
                             orderingFrequency: 3
                           });
@@ -1032,7 +1036,7 @@ export class OrderHistoricalFileComponent implements OnInit {
                               rtId,
                               arnRiaDetailId: this.arnRiaDetails,
                               fromDate: null,
-                              toDate: toDateValueObj.getFullYear() + "-" + this.util.addZeroBeforeNumber((toDateValueObj.getMonth() + 1), 2) + "-" + this.util.addZeroBeforeNumber(toDateValueObj.getDate(), 2),
+                              toDate: datePastFourDaysOftoDateValObj.getFullYear() + "-" + this.util.addZeroBeforeNumber((datePastFourDaysOftoDateValObj.getMonth() + 1), 2) + "-" + this.util.addZeroBeforeNumber(datePastFourDaysOftoDateValObj.getDate(), 2),
                               fileTypeId: fileTypeId,
                               orderingFrequency: 3
                             });
@@ -1106,7 +1110,7 @@ export class OrderHistoricalFileComponent implements OnInit {
                               rtId,
                               arnRiaDetailId: this.arnRiaDetails,
                               fromDate: null,
-                              toDate: toDateValueObj.getFullYear() + "-" + this.util.addZeroBeforeNumber((toDateValueObj.getMonth() + 1), 2) + "-" + this.util.addZeroBeforeNumber(toDateValueObj.getDate(), 2),
+                              toDate: datePastFourDaysOftoDateValObj.getFullYear() + "-" + this.util.addZeroBeforeNumber((datePastFourDaysOftoDateValObj.getMonth() + 1), 2) + "-" + this.util.addZeroBeforeNumber(datePastFourDaysOftoDateValObj.getDate(), 2),
                               fileTypeId: fileTypeId,
                               orderingFrequency: 3
                             });
@@ -1223,7 +1227,7 @@ export class OrderHistoricalFileComponent implements OnInit {
                             rtId,
                             arnRiaDetailId: this.arnRiaDetails,
                             fromDate: null,
-                            toDate: toDateValueObj.getFullYear() + "-" + this.util.addZeroBeforeNumber((toDateValueObj.getMonth() + 1), 2) + "-" + this.util.addZeroBeforeNumber(toDateValueObj.getDate(), 2),
+                            toDate: datePastFourDaysOftoDateValObj.getFullYear() + "-" + this.util.addZeroBeforeNumber((datePastFourDaysOftoDateValObj.getMonth() + 1), 2) + "-" + this.util.addZeroBeforeNumber(datePastFourDaysOftoDateValObj.getDate(), 2),
                             fileTypeId: fileTypeId,
                             orderingFrequency: 3
                           });
@@ -1328,7 +1332,7 @@ export class OrderHistoricalFileComponent implements OnInit {
                               rtId,
                               arnRiaDetailId: this.arnRiaDetails,
                               fromDate: null,
-                              toDate: toDateValueObj.getFullYear() + "-" + this.util.addZeroBeforeNumber((toDateValueObj.getMonth() + 1), 2) + "-" + this.util.addZeroBeforeNumber(toDateValueObj.getDate(), 2),
+                              toDate: datePastFourDaysOftoDateValObj.getFullYear() + "-" + this.util.addZeroBeforeNumber((datePastFourDaysOftoDateValObj.getMonth() + 1), 2) + "-" + this.util.addZeroBeforeNumber(datePastFourDaysOftoDateValObj.getDate(), 2),
                               fileTypeId: fileTypeId,
                               orderingFrequency: 3
                             });
@@ -1444,7 +1448,7 @@ export class OrderHistoricalFileComponent implements OnInit {
                               rtId,
                               arnRiaDetailId: this.arnRiaDetails,
                               fromDate: null,
-                              toDate: toDateValueObj.getFullYear() + "-" + this.util.addZeroBeforeNumber((toDateValueObj.getMonth() + 1), 2) + "-" + this.util.addZeroBeforeNumber(toDateValueObj.getDate(), 2),
+                              toDate: datePastFourDaysOftoDateValObj.getFullYear() + "-" + this.util.addZeroBeforeNumber((datePastFourDaysOftoDateValObj.getMonth() + 1), 2) + "-" + this.util.addZeroBeforeNumber(datePastFourDaysOftoDateValObj.getDate(), 2),
                               fileTypeId: fileTypeId,
                               orderingFrequency: 3
                             });
@@ -1502,7 +1506,7 @@ export class OrderHistoricalFileComponent implements OnInit {
                       rtId,
                       arnRiaDetailId: this.arnRiaDetails,
                       fromDate: null,
-                      toDate: toDateValueObj.getFullYear() + '-' + this.util.addZeroBeforeNumber((toDateValueObj.getMonth() + 1), 2) + "-" + this.util.addZeroBeforeNumber(toDateValueObj.getDate(), 2),
+                      toDate: datePastFourDaysOftoDateValObj.getFullYear() + '-' + this.util.addZeroBeforeNumber((datePastFourDaysOftoDateValObj.getMonth() + 1), 2) + "-" + this.util.addZeroBeforeNumber(datePastFourDaysOftoDateValObj.getDate(), 2),
                       fileTypeId: fileTypeId,
                       orderingFrequency: 3
                     });
