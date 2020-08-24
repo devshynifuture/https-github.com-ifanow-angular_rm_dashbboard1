@@ -105,7 +105,11 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
     }
 
     if (this.data && this.data.difference === "0.000") {
-      this.disableFreezeBtn = false;
+      if(this.data && this.data.freezeDate === null){
+        this.disableFreezeBtn = false;
+      } else {
+        this.disableFreezeBtn = true;
+      }
     } else {
       this.disableFreezeBtn = true;
     }
@@ -141,11 +145,14 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
   singleSelectionSelect(element, mainIndex) {
     if (element.canDeleteTransaction === true) {
       this.selection.toggle(element);
-      const parsedValue = parseFloat((element.balanceUnits).toFixed(3));
+      // const parsedValue = parseFloat((element.units).toFixed(3));
       if (this.selection.isSelected(element)) {
 
         this.shouldShowMultipleDelete = true;
-        this.selectedFolioUnits = parseFloat((this.selectedFolioUnits + parsedValue).toFixed(3));
+        this.selectedFolioUnits = this.selectedFolioUnits + (parseFloat(element.units.toFixed(3)) * element.effect);
+        // this.selectedFolioUnits = parseFloat((this.selectedFolioUnits + parsedValue).toFixed(3));
+        this.selectedFolioUnits = parseFloat(this.selectedFolioUnits.toFixed(3));
+        
         this.deleteMultipleTransactionArray.push(element.id);
         this.deletedTransactions.push(mainIndex);
       } else {
@@ -155,11 +162,12 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
 
         const index1 = this.deletedTransactions.indexOf(mainIndex);
         this.deletedTransactions.splice(index1, 1);
-
-        this.selectedFolioUnits = parseFloat((this.selectedFolioUnits - parsedValue).toFixed(3));
-        if (this.selectedFolioUnits < 0.000) {
-          this.selectedFolioUnits = 0.000;
-        }
+        this.selectedFolioUnits = this.selectedFolioUnits - (parseFloat(element.units.toFixed(3)) * element.effect);
+        // this.selectedFolioUnits = parseFloat((this.selectedFolioUnits - parsedValue).toFixed(3));
+        // if (this.selectedFolioUnits < 0.000) {
+        //   this.selectedFolioUnits = 0.000;
+        this.selectedFolioUnits = parseFloat(this.selectedFolioUnits.toFixed(3));
+        // }
         if (this.deleteMultipleTransactionArray.length === 0) {
           this.shouldShowMultipleDelete = false;
         }
@@ -193,8 +201,9 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
               return;
             }
             this.deletedTransactions.push(index);
-            const parsedValue = parseFloat(parseFloat(row.units).toFixed(3));
-            this.selectedFolioUnits = parseFloat((this.selectedFolioUnits + parsedValue).toFixed(3));
+            // const parsedValue = parseFloat(parseFloat(row.units).toFixed(3));
+            this.selectedFolioUnits = this.selectedFolioUnits + parseFloat(row.units) * row.effect;
+            this.selectedFolioUnits = parseFloat(this.selectedFolioUnits.toFixed(3));
             this.deleteMultipleTransactionArray.push(row.id);
           }
         });
@@ -268,10 +277,17 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
           this.disableFreezeBtn = true;
           this.disableUnfreezeBtn = false;
 
-          this.dataSource1.data.map(item => {
-            item.canDeleteTransaction = false
-          });
-          this.tableData1 = this.dataSource1.data;
+          if (this.filterBasedOn && this.filterBasedOn.length!==0 && this.filterOnWhichTable) {
+            this.filterTableValues(this.filterBasedOn, this.filterOnWhichTable);
+          }
+
+          if(this.dataSource1.data.length !== 0){
+            this.dataSource1.data.map(item => {
+              item.canDeleteTransaction = false
+            });
+          }
+
+          this.tableData1 = [...this.dataSource1.data];
           this.sendValueToParent();
           this.eventService.openSnackBar("Freezed Folio Successfully", "DISMISS");
           // this.canDeleteTransaction = false;
@@ -293,10 +309,16 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
           if (Math.round(this.data.difference) === 0) {
             this.disableFreezeBtn = false;
           }
+          
+          if (this.filterBasedOn && this.filterBasedOn.length!==0 && this.filterOnWhichTable) {
+            this.filterTableValues(this.filterBasedOn, this.filterOnWhichTable);
+          }
           // this.canDeleteTransaction = true;
-          this.dataSource1.data.map(item => {
-            item.canDeleteTransaction = true;
-          });
+          if(this.dataSource1.data.length!==0){
+            this.dataSource1.data.map(item => {
+              item.canDeleteTransaction = true;
+            });
+          }
 
           this.tableData1 = this.dataSource1.data;
           this.sendValueToParent();
@@ -327,9 +349,9 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
           return (!value.includes(String(item.id))) ? item : null;
         });
 
-        this.tableData1 = this.dataSource1.data;
+        this.tableData1 = [...this.dataSource1.data];
 
-        if (this.filterBasedOn && this.filterOnWhichTable) {
+        if (this.filterBasedOn && this.filterBasedOn.length!==0 && this.filterOnWhichTable) {
           this.filterTableValues(this.filterBasedOn, this.filterOnWhichTable);
         }
 
@@ -344,6 +366,13 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
             this.disableFreezeBtn = true;
           }
         });
+
+        this.deleteMultipleTransactionArray = [];
+
+        this.selectedFolioUnits = 0;
+        this.selectedFolioUnitsFiltered = 0;
+
+        this.shouldShowSelectedFilteredUnits = false;
 
         if (value.length === 1) {
           this.calculateBalanceUnitOnSingleDelete(index);
@@ -431,6 +460,7 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
     if (whichTable === 1) {
       if (filterBasedOn.length<=0) {
         this.dataSource1.data = this.tableData1;
+        this.selectedFolioUnitsFiltered = 0;
         this.selectedBalanceUnits = 0;
         this.shouldShowSelectedFilteredUnits = false;
       } else {

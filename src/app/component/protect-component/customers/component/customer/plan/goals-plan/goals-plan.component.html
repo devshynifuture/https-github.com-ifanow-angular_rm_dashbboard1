@@ -19,22 +19,24 @@
 
             <div class="mt-80 sticky-top ">
                 <div class="leftScroll">
-                    <div class="skeletonAnimation mt-8" appSkeletonLoading [appSkeletonLoading]="loaderFn.loading" *ngFor="let goal of allGoals" (click)="loadSelectedGoalData(goal)">
+                    <div class="skeletonAnimation mt-8" appSkeletonLoading [appSkeletonLoading]="loaderFn.loading"
+                        *ngFor="let goal of allGoals" (click)="loadSelectedGoalData(goal)">
                         <div *ngIf="!loaderFn.loading">
-                            <div class="row bg-grey lter p-8 c-p br-2" [ngClass]="{'b-primitive': goal.id == selectedGoal.id}">
+                            <div class="row bg-grey lter p-8 c-p br-2"
+                                [ngClass]="{'b-primitive': goal.id == selectedGoal.id}">
                                 <div class="col-md-3 p-0">
                                     <img class="maxWidth100" [src]="goal.img">
                                 </div>
                                 <div class="col-md-9 pr-0 pl-10">
                                     <p class="m-0"><span class="bar">{{goal.goalName}}</span></p>
                                     <div class="row pt-8">
-                                        <div class="col-md-6 pr-10 pl-0">
+                                        <div class="col-md-8 pr-10 pl-0">
                                             <h5 class="m-0 l-18 f-12 text-primitive"> Goal value</h5>
                                             <h5 class="f-14 m-0"><span class="bar"><span
-                                                        [hidden]="loaderFn.loading">₹</span><span appFormatNumber>{{goal.gv}}</span></span>
+                                                        [hidden]="loaderFn.loading">₹</span><span>{{goal.gv}}</span></span>
                                             </h5>
                                         </div>
-                                        <div class="col-md-6 pr-0 pl-4">
+                                        <div class="col-md-4 pr-0 pl-4">
                                             <h5 class="m-0 l-18 f-12 text-primitive"> Year</h5>
                                             <h5 class="f-14 m-0"><span class="bar">{{goal.year}}</span></h5>
                                         </div>
@@ -78,7 +80,8 @@
             </div>
 
             <div class="row pt-68">
-                <div class="col-width-68 p-0 pb-44 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="loaderFn.loading">
+                <div class="col-width-68 p-0 pb-44 skeletonAnimation" appSkeletonLoading
+                    [appSkeletonLoading]="loaderFn.loading">
                     <div class="row ">
                         <div class="col-md-6 pl-0 ">
                             <div class="row pt-28">
@@ -87,7 +90,8 @@
                                     <div class="relClass">
                                         <div class="bar" [ngClass]="{'height24': loaderFn.loading}">
                                             <h3 class="m-0  ">
-                                                <span [hidden]="loaderFn.loading">&#8377;</span><span appFormatNumber [value]="selectedGoal?.dashboardData?.futureValue"></span>
+                                                <span [hidden]="loaderFn.loading">&#8377;</span>
+                                                <span appFormatNumber [value]="selectedGoal?.dashboardData?.futureValue"></span>
                                             </h3>
                                         </div>
                                     </div>
@@ -97,7 +101,8 @@
                                     <div class="relClass">
                                         <div class="bar" [ngClass]="{'height24': loaderFn.loading}">
                                             <h3 class="m-0  ">
-                                                <span [hidden]="loaderFn.loading">&#8377;</span><span appFormatNumber [value]="selectedGoal?.dashboardData?.achievedValue"></span>
+                                                <span [hidden]="loaderFn.loading">&#8377;</span><span appFormatNumber
+                                                    [value]="selectedGoal?.dashboardData?.achievedValue"></span>
                                             </h3>
                                         </div>
                                     </div>
@@ -106,7 +111,8 @@
                             <div class="row pt-24">
                                 <div class="col-md-12 p-0">
                                     <h5 class="m-0 text-primitive f-12">GOAL PROGRESS</h5>
-                                    <mat-progress-bar id="bg-primary" mode="determinate" [value]="selectedGoal?.dashboardData?.goalProgress" class="h-30">
+                                    <mat-progress-bar id="bg-primary" mode="determinate"
+                                        [value]="selectedGoal?.dashboardData?.goalProgress" class="h-30">
                                     </mat-progress-bar>
                                 </div>
                             </div>
@@ -124,28 +130,35 @@
                                         <span appFormatNumber [value]="selectedGoal?.dashboardData?.equity_monthly">
                                         </span>
 
-                                        <span class="bar height24" style="display: inline-block;" *ngIf="loaderFn.loading">
+                                        <span class="bar height24" style="display: inline-block;"
+                                            *ngIf="loaderFn.loading">
                                         </span>
                                     </p>
 
                                     <p class="m-0 text-black relClass roboto p-12 bg-white ">
-                                        <span class="bar" appFormatNumber [value]="selectedGoal?.dashboardData?.debt_monthly"> </span>
+                                        <span class="bar" appFormatNumber
+                                            [value]="selectedGoal?.dashboardData?.debt_monthly"> </span>
 
-                                        <span class="bar height24" style="display: inline-block;" *ngIf="loaderFn.loading">
+                                        <span class="bar height24" style="display: inline-block;"
+                                            *ngIf="loaderFn.loading">
                                         </span>
                                     </p>
                                 </div>
                                 <div class="col-md-3   p-0">
                                     <p class="m-0 text-black roboto p-12 f-500 bb">Lumpsum</p>
                                     <p class="m-0 text-black relClass roboto p-12 bg-white bb">
-                                        <span class="bar" appFormatNumber [value]="selectedGoal?.dashboardData?.lump_equity"> </span>
+                                        <span class="bar" appFormatNumber
+                                            [value]="selectedGoal?.dashboardData?.lump_equity"> </span>
 
-                                        <span class="bar height24" style="display: inline-block;" *ngIf="loaderFn.loading">
+                                        <span class="bar height24" style="display: inline-block;"
+                                            *ngIf="loaderFn.loading">
                                         </span>
                                     </p>
                                     <p class="m-0 text-black relClass roboto p-12 bg-white">
-                                        <span class="bar" appFormatNumber [value]="selectedGoal?.dashboardData?.lump_debt"> </span>
-                                        <span class="bar height24" style="display: inline-block;" *ngIf="loaderFn.loading">
+                                        <span class="bar" appFormatNumber
+                                            [value]="selectedGoal?.dashboardData?.lump_debt"> </span>
+                                        <span class="bar height24" style="display: inline-block;"
+                                            *ngIf="loaderFn.loading">
                                         </span>
                                     </p>
                                 </div>
@@ -159,7 +172,9 @@
                         </div>
                     </div>
 
-                    <div cdkDropList id="allottedList" [cdkDropListData]="allocatedList" [cdkDropListSortingDisabled]="true" (cdkDropListDropped)="drop($event)" class="hide-placeholder" (cdkDropListEntered)="inDropZoneMethod($event)" (cdkDropListExited)="inDropZoneMethod($event)">
+                    <div cdkDropList id="allottedList" [cdkDropListData]="allocatedList"
+                        [cdkDropListSortingDisabled]="true" (cdkDropListDropped)="drop($event)" class="hide-placeholder"
+                        (cdkDropListEntered)="inDropZoneMethod($event)" (cdkDropListExited)="inDropZoneMethod($event)">
 
                         <div [ngClass]="{'drop-zone': inDropZone}">
                             <div class="row b-a bg-grey height40 lter">
@@ -176,7 +191,8 @@
                                     <p class="roboto m-0 text-black f-500">Maturity value </p>
                                 </div>
                             </div>
-                            <div class="row height40 bl-1 bb-1 br bg-white" *ngIf="loaderFn.loading" appSkeletonLoading [appSkeletonLoading]="loaderFn.loading">
+                            <div class="row height40 bl-1 bb-1 br bg-white" *ngIf="loaderFn.loading" appSkeletonLoading
+                                [appSkeletonLoading]="loaderFn.loading">
                                 <div class="col-md-3 d-flex align-items-center relClass">
                                     <div class="bar height24"></div>
 
@@ -200,7 +216,7 @@
                                     <div class="col-md-3 d-flex align-items-center">
                                         <div class="relClass">
                                             <div class="bar">
-                                                <p class="mb-0 roboto">{{allocation.assetName}}</p>
+                                                <p class="mb-0 roboto">  {{allocation.assetName}}</p>
                                             </div>
                                         </div>
 
@@ -216,7 +232,8 @@
                                     <div class="col-md-3 d-flex align-items-center">
                                         <div class="relClass">
                                             <div class="bar">
-                                                <p class="mb-0 roboto" appFormatNumber [value]='allocation.currentValue'></p>
+                                                <p class="mb-0 roboto" appFormatNumber
+                                                    [value]='allocation.currentValue'></p>
                                             </div>
                                         </div>
                                     </div>
@@ -224,12 +241,13 @@
                                     <div class="col-md-3  relClass d-flex align-items-center justify-content-between ">
 
                                         <div class="bar">
-                                            <p class="m-0 roboto" appFormatNumber [value]='allocation.maturityValue'>
+                                            <p class="m-0 roboto" appFormatNumber [value]="(allocation.maturityValue == 0)?'-':allocation.maturityValue">
                                             </p>
                                         </div>
 
                                         <div class="bar">
-                                            <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg" class="c-p">
+                                            <img [matMenuTriggerFor]="menu" src="/assets/images/svg/dot-menu.svg"
+                                                class="c-p">
                                             <mat-menu #menu="matMenu">
                                                 <button mat-menu-item (click)="reallocateAsset(allocation)">Change
                                                     allocation percentage</button>
@@ -244,8 +262,9 @@
                                 </div>
                             </ng-container>
 
-                            <div class="row height40 bl-1 bb-1 br bg-white text-center" *ngIf="!loaderFn.loading && allocatedList.length == 0">
-                                <span *ngIf="!assetError">allocate asset</span>
+                            <div class="row height40 bl-1 bb-1 br bg-white text-center"
+                                *ngIf="!loaderFn.loading && allocatedList.length == 0">
+                                <span class="pl-10 d-flex align-items-center" *ngIf="!assetError">allocate asset</span>
                                 <span *ngIf="assetError">Unable to load asset data</span>
                             </div>
                         </div>
@@ -265,33 +284,40 @@
                             <h5 class="m-0 pb-12">Goal year wise details</h5>
                         </div>
                     </div>
-                    <div [ngClass]="{'table-scroll':loaderFn.loading==false }" class="overflow-hidden" *ngIf="!loaderFn.loading && isRetirementTab">
-                        <table  mat-table [dataSource]="dataSource" id="tbs" class="skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="loaderFn.loading">
+                    <div [ngClass]="{'table-scroll':loaderFn.loading==false }" class="overflow-hidden"
+                        *ngIf="!loaderFn.loading && isRetirementTab">
+                        <table mat-table [dataSource]="dataSource" id="tbs" class="skeletonAnimation" appSkeletonLoading
+                            [appSkeletonLoading]="loaderFn.loading">
                             <ng-container matColumnDef="goalYear">
-                                <th *matHeaderCellDef class="br text-center" mat-header-cell> Goal Year</th>
-                                <td *matCellDef="let element; let i = index;" class="br text-center" mat-cell>
+                                <th *matHeaderCellDef class="br  " mat-header-cell> Goal Year</th>
+                                <td *matCellDef="let element; let i = index;" class="br" mat-cell>
                                     <div class="bar"> {{element.goalYear}} </div>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="goalFv">
-                                <th  mat-header-cell *matHeaderCellDef class="br t-15"> Goal FV	</th>
+                                <th mat-header-cell *matHeaderCellDef class="br text-right"> Goal FV </th>
                                 <td mat-cell *matCellDef="let element" class="br text-right">
-                                    <div class="bar">{{!loaderFn.loading? "₹" : ""}}<span appFormatNumber> {{element.fvOnGoalDate}} </span></div>
+                                    <div class="bar">{{!loaderFn.loading? "₹" : ""}}<span appFormatNumber>
+                                            {{element.fvOnGoalDate}} </span></div>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="goalFvAllocated">
-                                <th  mat-header-cell *matHeaderCellDef class="br w-11 text-right"> FV of assets allocated	
+                                <th mat-header-cell *matHeaderCellDef class="br"> 
+                                    FV of assets allocated
                                 </th>
-                                <td mat-cell *matCellDef="let element" class="br  ">
-                                    <div class="bar"> {{loaderFn.loading ? '' : (element.goalFvAllocated ?element.goalFvAllocated :0)}} </div>
+                                <td mat-cell *matCellDef="let element" class="br">
+                                    <div class="bar">
+                                        {{loaderFn.loading ? '' : (element.goalFvAllocated ?element.goalFvAllocated :0)}}
+                                    </div>
                                 </td>
 
                             </ng-container>
-                
+
                             <ng-container matColumnDef="status">
-                                <th mat-header-cell *matHeaderCellDef class="br w-15"> Status</th>
-                                <td mat-cell *matCellDef="let element" class="br text-right">
-                                    <div class="bar"> {{loaderFn.loading ? '' :(element.status ? element.status : 0)}}{{!loaderFn.loading ? '% achievable' : ''}}
+                                <th mat-header-cell *matHeaderCellDef class="br "> Status</th>
+                                <td mat-cell *matCellDef="let element" class="br ">
+                                    <div class="bar">
+                                        {{loaderFn.loading ? '' :(element.status ? element.status : 0)}}{{!loaderFn.loading ? '% achievable' : ''}}
                                     </div>
                                 </td>
 
@@ -299,8 +325,8 @@
                             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                         </table>
-                
-                
+
+
                     </div>
                     <div class=" mt-24 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="loaderFn.loading">
                         <div class="row">
@@ -317,9 +343,12 @@
                             <div class="col-md-12 p-0">
                                 <div class="b-a relClass">
                                     <div class="m-0 p-8 text-black f-14 roboto" [hidden]="loaderFn.loading">
-                                        We have given higher allocations to your retirement goal compared to other goals. We suggest you to first allocate maximum corpus to this goal. We wile update your EPF contributions too once we have the details of the same.
+                                        We have given higher allocations to your retirement goal compared to other
+                                        goals. We suggest you to first allocate maximum corpus to this goal. We wile
+                                        update your EPF contributions too once we have the details of the same.
                                     </div>
-                                    <div class="bar82 p-8" [ngClass]="{'height82': loaderFn.loading}" [hidden]="!loaderFn.loading">
+                                    <div class="bar82 p-8" [ngClass]="{'height82': loaderFn.loading}"
+                                        [hidden]="!loaderFn.loading">
                                     </div>
                                 </div>
                             </div>
@@ -343,24 +372,31 @@
                         </div>
                     </div>
                     <div class="row b-a" *ngIf="selectedGoal?.remainingData?.loan || loaderFn.loading">
-                        <div class="col-md-10 skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="loaderFn.loading">
+                        <div class="col-md-10 skeletonAnimation" appSkeletonLoading
+                            [appSkeletonLoading]="loaderFn.loading">
                             <div class="row pt-16 relClass">
                                 <div class="col-md-4 p-0">
                                     <p class="m-0 f-12 text-primitive">INCOME IN GOAL YEAR</p>
                                     <h5 class="m-0">
-                                        <span class="bar"><span [hidden]="loaderFn.loading">₹</span><span appFormatNumber [value]="selectedGoal?.remainingData?.loan?.netSalary"></span></span>
+                                        <span class="bar"><span [hidden]="loaderFn.loading">₹</span><span
+                                                appFormatNumber
+                                                [value]="selectedGoal?.remainingData?.loan?.netSalary"></span></span>
                                     </h5>
                                 </div>
                                 <div class="col-md-4 p-0">
                                     <p class="m-0 f-12 text-primitive">HIGHEST EMI AVAILABLE</p>
                                     <h5 class="m-0">
-                                        <span class="bar"><span [hidden]="loaderFn.loading">₹</span><span appFormatNumber [value]="selectedGoal?.remainingData?.loan?.highestLoanAndEmiEligible?.highest_emi_eligible"></span></span>
+                                        <span class="bar"><span [hidden]="loaderFn.loading">₹</span><span
+                                                appFormatNumber
+                                                [value]="selectedGoal?.remainingData?.loan?.highestLoanAndEmiEligible?.highest_emi_eligible"></span></span>
                                     </h5>
                                 </div>
                                 <div class="col-md-4 p-0">
                                     <p class="m-0 f-12 text-primitive">HIGHEST LOAN AVAILABLE</p>
                                     <h5 class="m-0">
-                                        <span class="bar"><span [hidden]="loaderFn.loading">₹</span><span appFormatNumber [value]="selectedGoal?.remainingData?.loan?.highestLoanAndEmiEligible?.highest_loan_eligible"></span></span>
+                                        <span class="bar"><span [hidden]="loaderFn.loading">₹</span><span
+                                                appFormatNumber
+                                                [value]="selectedGoal?.remainingData?.loan?.highestLoanAndEmiEligible?.highest_loan_eligible"></span></span>
                                     </h5>
                                 </div>
                             </div>
@@ -368,19 +404,25 @@
                                 <div class="col-md-4 p-0">
                                     <p class="m-0 f-12 text-primitive">LOAN TENURE</p>
                                     <h5 class="m-0">
-                                        <span class="bar"><span [hidden]="loaderFn.loading">₹</span><span appFormatNumber [value]="selectedGoal?.remainingData?.loan?.loanTenure"></span></span>
+                                        <span class="bar"><span [hidden]="loaderFn.loading">₹</span><span
+                                                appFormatNumber
+                                                [value]="selectedGoal?.remainingData?.loan?.loanTenure"></span></span>
                                     </h5>
                                 </div>
                                 <div class="col-md-4 p-0">
                                     <p class="m-0 f-12 text-primitive">EMI PAYABLE</p>
                                     <h5 class="m-0">
-                                        <span class="bar"><span [hidden]="loaderFn.loading">₹</span><span appFormatNumber [value]="selectedGoal?.remainingData?.loan?.emi"></span></span>
+                                        <span class="bar"><span [hidden]="loaderFn.loading">₹</span><span
+                                                appFormatNumber
+                                                [value]="selectedGoal?.remainingData?.loan?.emi"></span></span>
                                     </h5>
                                 </div>
                                 <div class="col-md-4 p-0">
                                     <p class="m-0 f-12 text-primitive">LOAN TO BE TAKEN</p>
                                     <h5 class="m-0">
-                                        <span class="bar"><span [hidden]="loaderFn.loading">₹</span><span appFormatNumber [value]="selectedGoal?.remainingData?.loan?.loanAmount"></span></span>
+                                        <span class="bar"><span [hidden]="loaderFn.loading">₹</span><span
+                                                appFormatNumber
+                                                [value]="selectedGoal?.remainingData?.loan?.loanAmount"></span></span>
                                     </h5>
                                 </div>
                             </div>
@@ -395,7 +437,8 @@
                 <div class="col-width-31  pr-0 pt-20">
                     <div class="fix-sticky">
                         <div class="row">
-                            <div class="col-md-12 p-0  skeletonAnimation" appSkeletonLoading [appSkeletonLoading]="loaderFn.loading">
+                            <div class="col-md-12 p-0  skeletonAnimation" appSkeletonLoading
+                                [appSkeletonLoading]="loaderFn.loading">
 
                                 <div class="imgBoxGoals" [hidden]="loaderFn.loading">
                                     <img [src]="selectedGoal.img">
@@ -425,18 +468,22 @@
 
 
                                 <div class="btnBox" [hidden]="loaderFn.loading">
-                                    <button mat-stroked-button class="in-btn" (click)="openInSideBar(null, 'openallocations')">
+                                    <button mat-stroked-button class="in-btn"
+                                        (click)="openInSideBar(null, 'openallocations')">
                                         <img class="ml-8" src="/assets/images/svg/btn-links.svg">Allocations</button>
 
-                                    <button mat-stroked-button class="in-btn-two" (click)="openInSideBar(null, 'openMfAllocation')">
+                                    <button mat-stroked-button class="in-btn-two"
+                                        (click)="openInSideBar(null, 'openMfAllocation')">
                                         <img class="ml-8" src="/assets/images/svg/btn-links.svg">MF allocations</button>
                                 </div>
 
 
                                 <div class="btnBox" [hidden]="loaderFn.loading">
-                                    <button mat-stroked-button class="in-btn" (click)="openInSideBar(null, 'openKeyinfo')">
+                                    <button mat-stroked-button class="in-btn"
+                                        (click)="openInSideBar(null, 'openKeyinfo')">
                                         <img class="ml-8" src="/assets/images/svg/filter-schemes.svg">Key info</button>
-                                    <button mat-stroked-button class="in-btn-two" (click)="openInSideBar(null, 'openCalculators')">
+                                    <button mat-stroked-button class="in-btn-two"
+                                        (click)="openInSideBar(null, 'openCalculators')">
                                         <img class="ml-8" src="/assets/images/svg/cal-sm.svg">Calculators</button>
                                 </div>
 
@@ -444,7 +491,8 @@
                                 <div class="btnBox" [hidden]="loaderFn.loading">
                                     <button mat-stroked-button class="in-btn">
                                         <img class="ml-8" src="/assets/images/svg/btn-links.svg">Action plan</button>
-                                    <button mat-stroked-button class="in-btn-two" (click)="openInSideBar(null, 'openPreferences')">
+                                    <button mat-stroked-button class="in-btn-two"
+                                        (click)="openInSideBar(null, 'openPreferences')">
                                         <img class="ml-8" src="/assets/images/svg/3lines.svg">Preferences</button>
                                 </div>
 

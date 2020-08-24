@@ -1,8 +1,7 @@
 <div class="dialogclose">
   <div class="row popup-header-fix-100">
     <div class="col-md-2 border-right-1 p-0">
-      <img class="imgAdLogo"
-           src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
+      <img class="imgAdLogo" src="https://res.cloudinary.com/futurewise/image/upload/v1566029063/icons_fakfxf.png">
     </div>
     <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
 
@@ -107,7 +106,7 @@
                 {{singleBrokerCred.brokerCode}}
               </div>
               <div (click)="addNewRow()" *ngIf="brokerCredentials&&selectedCount<brokerCredentials.length"
-                   class="f-14 c-p text-primitive">+ Add more
+                class="f-14 c-p text-primitive">+ Add more
               </div>
             </div>
             <div class="col-md-1 p-0 mt-8">
@@ -121,7 +120,7 @@
           <h5>2) Confirm & submit</h5>
           <p class="f-12 text-primitive">This will send request for IIN creation</p>
           <button (click)="submit(singleBrokerCred)" [disabled]="singleBrokerCred.tpUserRequestId>0"
-                  class="btnConfirm bg-primary text-white" mat-button>Create
+            class="btnConfirm bg-primary text-white" mat-button>Create
             account
           </button>
           <p *ngIf="singleBrokerCred.tpUserRequestId>0" class="f-12 text-primary">Account created successfully
@@ -136,16 +135,16 @@
           <p class="f-12 text-primitive">Upload relevant forms to complete the process</p>
 
           <button (click)="uploadFileInput.click()" [disabled]="isFileUploading"
-                  class="btnConfirm bg-primary mr-10 text-white" mat-button>
+            class="btnConfirm bg-primary mr-10 text-white" mat-button>
             Upload AOF
-            <input #uploadFileInput (change)="getFileDetails(1,$event,singleBrokerCred)" class="uploadInput"
-                   id="file-4" type="file">
+            <input #uploadFileInput (change)="getFileDetails(1,$event,singleBrokerCred)" class="uploadInput" id="file-4"
+              type="file">
           </button>
           <button (click)="uploadFileInput.click()" [disabled]="isFileUploading"
-                  class="btnConfirm bg-primary text-white" mat-button>
+            class="btnConfirm bg-primary text-white" mat-button>
             Upload Cheque
-            <input #uploadFileInput (change)="getFileDetails(4,$event,singleBrokerCred)" class="uploadInput"
-                   id="file-4" type="file">
+            <input #uploadFileInput (change)="getFileDetails(4,$event,singleBrokerCred)" class="uploadInput" id="file-4"
+              type="file">
           </button>
         </div>
       </div>
@@ -172,9 +171,8 @@
           <p class="f-12 text-primitive">This will be displayed as UCC number</p>
           <div class="form-group inputPaddingNone">
             <mat-form-field appearance="standard" floatLabel="never">
-              <input [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="9"
-                     appInputValueValidation class="form-control" formControlName="accountNumber" matInput
-                     placeholder="Enter account number">
+              <input [inputValidator]="validatorType.ALPHA_NUMERIC" [maxLength]="9" appInputValueValidation
+                class="form-control" formControlName="accountNumber" matInput placeholder="Enter account number">
               <mat-error>This field is required</mat-error>
             </mat-form-field>
           </div>
@@ -184,7 +182,7 @@
           <h5>3) Confirm & submit</h5>
           <p class="f-12 text-primitive">This will send request for UCC creation</p>
           <button (click)="submit(singleBrokerCred)" [disabled]="singleBrokerCred.tpUserRequestId>0"
-                  class="btnConfirm bg-primary text-white" mat-button>Create
+            class="btnConfirm bg-primary text-white" mat-button>Create
             account
           </button>
           <p *ngIf="singleBrokerCred.tpUserRequestId>0" class="f-12 text-primary">Account created successfully
@@ -193,13 +191,18 @@
 
         <div *ngIf="singleBrokerCred.tpUserRequestId>0" class="col-md-3 mb-12 pl-0  ">
           <h5>4) Upload forms</h5>
-          <p class="f-12 text-primitive">Upload relevant forms to complete the process</p>
-
-          <button (click)="uploadFileInput.click()" [disabled]="isFileUploading"
-                  class="btnConfirm bg-primary text-white" mat-button>
+          <p class="f-12 text-primitive mb-8">Upload relevant forms to complete the process</p>
+          <div *ngIf="showLoader" class='loaderWrap'>
+            <span class='loadCount'>{{barWidth}}</span>
+            <div class='loaderBar'>
+              <div class="loaderBarFill" [style.width]="barWidth"></div>
+            </div>
+          </div>
+          <button (click)="openUploadConfirmBox('AOF',1,singleBrokerCred)" [disabled]="isFileUploading"
+            class="btnConfirm bg-primary text-white mt-12" mat-button>
             Upload AOF
-            <input #uploadFileInput (change)="getFileDetails(1,$event,singleBrokerCred)" class="uploadInput"
-                   id="file-4" type="file">
+            <!-- <input #uploadFileInput (change)="getFileDetails(1,$event,singleBrokerCred)" class="uploadInput" id="file-4"
+              type="file"> -->
           </button>
         </div>
       </div>
@@ -217,13 +220,13 @@
 
   <div class="col-md-4 p-0 d-flex align-items-center justify-content-end">
 
-    <button (click)="openFatcaDetails()" [disabled]="isSuccessful" class="br-0 perviousBtn text-inherit f-14"
-            mat-button mat-raised-button>
+    <button (click)="openFatcaDetails()" [disabled]="isSuccessful" class="br-0 perviousBtn text-inherit f-14" mat-button
+      mat-raised-button>
       PREVIOUS
     </button>
 
-    <button (click)="close()" [disabled]="!isSuccessful" class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4"
-            mat-button>CLOSE
+    <button (click)="close()" [disabled]="!isSuccessful" class="greenBtn btnwidth br-0 f-14 text-inherit pr-4 pl-4 text-white c-p"
+      mat-button>CLOSE
     </button>
 
 

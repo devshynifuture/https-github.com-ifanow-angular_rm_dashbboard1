@@ -41,6 +41,7 @@ export class SipComponent implements OnInit {
   mode: any;
   objTosend: { arnRiaId: any; parentId: any; adminAdvisorIds: any; arnRiaValue: number; viewMode: string; };
   loaderValue: number;
+  dontShowArnRiaDropdown: boolean;
 
   constructor(private backoffice: BackOfficeService, private dataService: EventService, private reconService: ReconciliationService, private mfService: MfServiceService) {
   }

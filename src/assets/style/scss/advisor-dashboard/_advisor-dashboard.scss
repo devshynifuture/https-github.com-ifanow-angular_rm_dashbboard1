@@ -345,7 +345,7 @@
 
 .box-2-1 {
   background: url(/assets/images/box2.png);
-
+border: 1px solid transparent;
   box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2), 0px 4px 5px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.14);
   border-radius: 4px;
   width: 280px;
@@ -354,10 +354,30 @@
   background-position: center;
 }
 
+.editDasImg {
+  width: 163px;
+  height: 163px;
+  position: relative;
+  img{
+max-width: 100%;
+max-height: 100%;
+  }
+}
+
 .avisor-caption {
   position: absolute;
   margin-top: -28px;
   padding-left: 30px;
+}
+
+.profile-img {
+  width: 163px;
+  height: 163px;
+  position: relative;
+  img{
+max-width: 100%;
+max-height: 100%;
+  }
 }
 
 .slider-9,

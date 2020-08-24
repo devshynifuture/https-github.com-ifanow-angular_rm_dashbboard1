@@ -157,7 +157,7 @@
         <h3 class="m-0 roboto f-400 text-black pt-8">
           <div class="relClass">
             <div class="bar" [ngClass]="{'height24': subOverviewFlag}">
-              <span *ngIf="!subOverviewFlag">41</span>
+              <span *ngIf="!subOverviewFlag">{{dataSourceClientWithSub.cancelledSubscriptions}}</span>
             </div>
           </div>
         </h3>
@@ -299,7 +299,7 @@
       </div>
 
       <div class="mt-40"
-        *ngIf="(tabsLoaded.portfolioData.dataLoaded && tabsLoaded.portfolioData.hasData) && !tabsLoaded.portfolioData.isLoading && chartTotal > 0">
+        *ngIf="(tabsLoaded.portfolioData.dataLoaded && tabsLoaded.portfolioData.hasData) && !tabsLoaded.portfolioData.isLoading && chartTotal>0">
         <h5 class="text-black f-16 roboto mb-10 f-500"> Asset classses</h5>
         <div class="bg-white br-10">
           <div class="row b-a pt-20 pb-20 br-4">
@@ -308,17 +308,13 @@
               <div class="h-200" [chart]="assetAllocationPieConfig">
               </div>
             </div>
-            <div class="col-md-6 pl-0 align-items-center d-flex  ">
-              <div class="chart-data" *ngFor="let data of chartData">
-                <div class="d-flex pt-12">
-                  <!-- <div class="hw-10 bg-1 br-2">
-                                    </div> -->
-                  <span class="pointNumber" [style.background-color]="data.color">
-                  </span>
-                  <span class="f-12 lh-12 roboto f-400 m-0"
-                    appFormatNumber>{{(data.y/chartTotal*100) | number : '0.2-2'}}%</span>
-                </div>
-                <p class="f-12  lh-12 roboto text-custom m-0 f-400 pt-6 pl-10">{{data.name}}</p>
+            <div class="col-md-6 pl-0 flex-column d-flex justify-content-center ">
+              <div class="chart-data d-flex" *ngFor="let data of newchartData">
+                <span class="pointNumber" [style.background-color]="data.color">
+                </span>
+                <span class="f-12 lh-12 roboto f-400 m-0"
+                  appFormatNumber>{{(data.y/chartTotal*100) | number : '0.2-2'}}%</span>
+                <p class="f-12  lh-12 roboto text-custom m-0 f-400 mb-10 ml-10">{{data.name}}</p>
 
               </div>
             </div>
@@ -327,7 +323,7 @@
       </div>
 
       <div class="col-12 p-0 pt-40"
-        *ngIf="(!tabsLoaded.portfolioData.dataLoaded || !tabsLoaded.portfolioData.hasData) && !tabsLoaded.portfolioData.isLoading && chartTotal == 0">
+        *ngIf="(!tabsLoaded.portfolioData.dataLoaded || !tabsLoaded.portfolioData.hasData) && !tabsLoaded.portfolioData.isLoading ">
         <h5 class="m-0 text-black f-16 roboto pb-16 f-500"> Asset allocation</h5>
         <div class="bg-white br-10 ba-primitive">
 
@@ -1103,11 +1099,28 @@
         <div class="col-md-8 p-0">
           <h5 class="m-0 f-500 roboto text-black pt-2">Rejections and Reversals</h5>
         </div>
-        <div class="col-md-4 p-0 text-right" *ngIf="dataSource5.length > 0">
+        <div class="col-md-4 p-0 text-right">
           <button mat-stroked-button class="advisor-view-all">View All</button>
         </div>
-        <div class="col-md-12 p-0">
-          <table mat-table [dataSource]="dataSource5" id="table-low" class="mt-10" *ngIf="dataSource5.length > 0"
+
+
+        <div *ngIf="dataSource5.length <= 0" class="ba-primitive br-4 mt-10 p-18">
+          <div class="row">
+            <div class="col-md-7 p-0">
+              <h3 class="f-16 roboto f-600">No Rejected transaction in last 7 days</h3>
+              <p class="f-14">
+                We could not find any Rejections or reversal transactions to show. Either there is not enough data yet,
+                or you have not provided your RTA details yet.
+              </p>
+            </div>
+            <div class="col-md-5 text-center pr-0">
+              <img src="assets/images/svg/rejections-and-reversals.svg">
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-12 p-0" *ngIf="dataSource5.length > 0">
+          <table mat-table [dataSource]="dataSource5" id="table-low" class="mt-10"
             [appSkeletonLoading]="transactionFlag" appSkeletonLoading class="skeletonAnimation">
             <ng-container matColumnDef="position">
               <th mat-header-cell *matHeaderCellDef class="br"> Client / Scheme</th>
@@ -1150,13 +1163,11 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns5"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns5;"></tr>
           </table>
-          <div *ngIf="dataSource5.length <= 0" class="noDataFound">
-            No Rejected transaction in last 7 days.
-            <div>
-              <img src="assets/images/svg/run.svg">
-            </div>
-          </div>
+
+
+
         </div>
+
       </div>
 
       <div class="dasBoradBox mt-40">

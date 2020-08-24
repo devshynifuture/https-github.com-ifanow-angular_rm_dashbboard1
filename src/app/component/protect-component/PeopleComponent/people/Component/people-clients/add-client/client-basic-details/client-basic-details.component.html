@@ -1,4 +1,4 @@
-<img *ngIf="fieldFlag=='familyMember' && basicDetailsData.mobileNo && basicDetailsData.email"
+<img *ngIf="fieldFlag=='familyMember' && basicDetailsData.pan && basicDetailsData.email && basicDetailsData.familyMemberType!=2"
     [matMenuTriggerFor]="menu " class="c-p unmap-option" src="/assets/images/svg/dot-menu.svg">
 <mat-menu #menu="matMenu">
     <button (click)="unmapFamilyMember('FAMILY MEMBER')" mat-menu-item>
@@ -974,7 +974,7 @@
                             <mat-option value="4">Business</mat-option>
                             <mat-option value="5">Self Employed</mat-option>
                         </mat-select>
-                        <mat-hint>Optional</mat-hint>
+                        <mat-hint class="ml-8">Optional</mat-hint>
                     </mat-form-field>
                 </div>
             </div>

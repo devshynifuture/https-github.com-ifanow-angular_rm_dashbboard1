@@ -467,6 +467,7 @@ export const appConfig = {
   INCOME_PERQUISITES_DELETE: 'account/income/perquisites/delete?',
   INCOME_REIMBURSEMENT_DELETE: 'account/income/reimbursement/delete?',
   ASSTES_OF_EXPENSE: 'account/expense/expense/of/asset/get',
+  EXPENSE_ALL_GET: 'account/expense/graph/detail/of/expense/get',
   /////////////////////////Activity///////////////////////////////////
   ADVICE_GET_ALL: 'advice/asset/get',
   ADVICE_ADD_FD: 'advice/asset/fixed-income/suggest-new-fd/add',
@@ -879,7 +880,7 @@ export const appConfig = {
 
 
   ///////////////////////////// To-DO list -dashboard //////////////////////////
-
+  DASHBOARD_CHART: 'account/asset/mutualfund/chart/get',
   ADD_NOTES: 'admin/dashboard/memo/item/add',
   UPDATE_NOTES: 'admin/dashboard/memo/item/update',
   DELETE_NOTES: 'admin/dashboard/memo/item/delete',

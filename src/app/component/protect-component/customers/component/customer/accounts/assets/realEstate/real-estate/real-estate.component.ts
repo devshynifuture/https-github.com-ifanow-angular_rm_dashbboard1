@@ -5,7 +5,7 @@ import {CustomerService} from '../../../../customer.service';
 import {AuthService} from 'src/app/auth-service/authService';
 import {EventService} from 'src/app/Data-service/event.service';
 import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import {MatDialog, MatSort, MatTableDataSource, MatBottomSheet} from '@angular/material';
 import {AddRealEstateComponent} from '../add-real-estate/add-real-estate.component';
 import {DetailedViewRealEstateComponent} from '../detailed-view-real-estate/detailed-view-real-estate.component';
 import {FormatNumberDirective} from 'src/app/format-number.directive';
@@ -15,6 +15,7 @@ import {PdfGenService} from 'src/app/services/pdf-gen.service';
 import {FileUploadServiceService} from '../../file-upload-service.service';
 import {EnumServiceService} from '../../../../../../../../../services/enum-service.service';
 import { AssetValidationService } from '../../asset-validation.service';
+import { BottomSheetComponent } from '../../../../../common-component/bottom-sheet/bottom-sheet.component';
 
 @Component({
   selector: 'app-real-estate',
@@ -49,7 +50,8 @@ export class RealEstateComponent implements OnInit {
               private excel: ExcelGenService, private pdfGen: PdfGenService,
               private fileUpload: FileUploadServiceService,
               public enumService: EnumServiceService, private assetValidation: AssetValidationService,
-              public eventService: EventService, public dialog: MatDialog) {
+              public eventService: EventService, public dialog: MatDialog,
+              private _bottomSheet : MatBottomSheet) {
   }
 
   ngOnInit() {
@@ -77,6 +79,9 @@ export class RealEstateComponent implements OnInit {
     for (let i = 0; i < fileName.target.files.length; i++) {
       this.myFiles.push(fileName.target.files[i]);
     }
+    const bottomSheetRef = this._bottomSheet.open(BottomSheetComponent, {
+      data: this.myFiles,
+    });
     this.fileUploadData = this.fileUpload.fetchFileUploadData(obj, this.myFiles);
     if (this.fileUploadData) {
       this.file = fileName;

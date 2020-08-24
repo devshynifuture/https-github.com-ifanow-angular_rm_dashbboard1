@@ -117,6 +117,7 @@ export class OverviewProfileComponent implements OnInit {
           (data.martialStatusId == 1 || data.martialStatusId == 0) ? data.martialStatus = 'Married' : (data.martialStatusId == 2) ? data.martialStatus = 'Unmarried' : (data.martialStatusId == 0) ? data.martialStatus = 'N/A' : data.martialStatus = 'Other';
           (data.genderId == 1) ? data.gender = 'Male' : (data.genderId == 2) ? data.gender = 'Female' : data.gender = 'Other';
           this.clientOverviewData = data;
+          this.subInjectService.addSingleProfile(this.clientOverviewData.displayName);
           AuthService.setClientProfilePic(this.clientOverviewData.profilePicUrl)
           this.authService.setClientData(data)
           this.calculateAge(this.clientOverviewData.dateOfBirth);

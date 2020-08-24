@@ -335,6 +335,7 @@ export class SipAmcWiseComponent implements OnInit {
             this.totalWeight += o.weightInPercentage;
 
           });
+          this.totalWeight = Math.round(this.totalWeight)
           this.filteredArray = [...this.amcList];
         } else {
           this.amcList = [];
@@ -421,7 +422,7 @@ export class SipAmcWiseComponent implements OnInit {
       id: sip.id,
       mutualFundId: sip.mutualFundId,
       amount: sip.amount,
-      ceaseDate: this.datePipe.transform(date, 'yyyy/MM/dd'),
+      ceaseDate: this.datePipe.transform(date, 'yyyy-MM-dd'),
     };
     this.backoffice.addCeasedDate(obj).subscribe(
       data => {

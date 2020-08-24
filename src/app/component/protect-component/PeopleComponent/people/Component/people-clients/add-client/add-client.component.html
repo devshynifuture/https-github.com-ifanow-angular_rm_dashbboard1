@@ -14,8 +14,8 @@
     <div class="row">
         <div class="col-md-12 p-0">
             <div *ngIf="headingData.fieldFlag=='familyMember'" class="right-cross-icons">
-                <span *ngIf="!tabData.mobileNo || !tabData.email" class="material-icons familyDelete c-p"
-                    (click)="deleteModal('FAMILY MEMBER')">
+                <span *ngIf="!tabData.pan || !tabData.email || tabData.familyMemberType==2"
+                    class="material-icons familyDelete c-p" (click)="deleteModal('FAMILY MEMBER')">
                     delete
                 </span>
                 <!-- <img *ngIf="tabData.mobileNo && tabData.email" [matMenuTriggerFor]="menu" class="c-p"

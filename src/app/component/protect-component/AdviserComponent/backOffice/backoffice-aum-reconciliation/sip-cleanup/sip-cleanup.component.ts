@@ -3,42 +3,51 @@ import { SelectionModel } from "@angular/cdk/collections";
 import { EventService } from "./../../../../../../Data-service/event.service";
 import { BackOfficeService } from "src/app/component/protect-component/AdviserComponent/backOffice/back-office.service";
 import { AuthService } from "./../../../../../../auth-service/authService";
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import { UtilService } from "src/app/services/util.service";
 import { RecordDetailsComponent } from "./record-details/record-details.component";
 import { SubscriptionInject } from "../../../Subscriptions/subscription-inject.service";
-import { MatTableDataSource } from "@angular/material";
+import { MatTableDataSource, MatSort } from "@angular/material";
 import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
 import { Subscription } from "rxjs";
+import { element } from 'protractor';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: "app-sip-cleanup",
   templateUrl: "./sip-cleanup.component.html",
   styleUrls: ["./sip-cleanup.component.scss"],
 })
-export class SipCleanupComponent implements OnInit , OnDestroy{
+export class SipCleanupComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = [
     "checkbox",
     "position",
     "name",
     "weight",
-    "symbol",
+    "rdate",
+    "fdate",
+    "tdate",
+    // "symbol",
     "tra",
     "action",
-    "menu",
+
+    // "menu",
   ];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   tableData: any;
   showMultipleKeepBtn: boolean;
   selectedData: any;
+  selectedRow: any = [];
 
   constructor(
     private subInjectService: SubscriptionInject,
     private eventService: EventService,
     private backOfficeService: BackOfficeService,
     private fb: FormBuilder,
-    private reconService: ReconciliationService
-  ) {}
+    private reconService: ReconciliationService,
+    private datePipe: DatePipe
+  ) { }
 
   advisorId = AuthService.getAdvisorId();
 
@@ -57,8 +66,8 @@ export class SipCleanupComponent implements OnInit , OnDestroy{
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     let numRows;
-    if(this.dataSource.data!==null){
-       numRows = this.dataSource.data.length;
+    if (this.dataSource.filteredData !== null) {
+      numRows = this.dataSource.filteredData.length;
     } else {
       numRows = 0;
     }
@@ -71,26 +80,26 @@ export class SipCleanupComponent implements OnInit , OnDestroy{
       this.selection.clear();
       this.showMultipleKeepBtn = false;
     } else {
-      this.dataSource.data.forEach((row) => this.selection.select(row));
+      this.dataSource.filteredData.forEach((row) => this.selection.select(row));
       this.showMultipleKeepBtn = true;
     }
   }
 
-  ngOnDestroy(){
-    if(this.filterSub){
+  ngOnDestroy() {
+    if (this.filterSub) {
       this.filterSub.unsubscribe();
     }
-    if(this.filterSub2){
+    if (this.filterSub2) {
       this.filterSub2.unsubscribe();
     }
   }
 
-  setMultipleKeepOrRemove(keepOrRemove){
-    let dataArrayValue= [];
-    if(this.selection.hasValue){
+  setMultipleKeepOrRemove(keepOrRemove) {
+    let dataArrayValue = [];
+    if (this.selection.hasValue) {
       this.selection.selected.forEach(element => {
         dataArrayValue.push({
-          id:element.id,
+          id: element.id,
           removeStatus: keepOrRemove
         })
       });
@@ -105,7 +114,7 @@ export class SipCleanupComponent implements OnInit , OnDestroy{
     }
     return `${this.selection.isSelected(row) ? "deselect" : "select"} row ${
       row.position + 1
-    }`;
+      }`;
   }
 
   ngOnInit() {
@@ -121,22 +130,39 @@ export class SipCleanupComponent implements OnInit , OnDestroy{
 
     this.filterSearchForm = new FormControl();
 
-    this.filterSub2 = this.filterSearchForm.valueChanges.subscribe((res) => {
-      this.filterTableValues(res);
-    });
+    // this.filterSub2 = this.filterSearchForm.valueChanges.subscribe((res) => {
+    //   this.filterTableValues(res);
+    // });
 
     this.reconService
       .getBrokerListValues({ advisorId: this.advisorId })
       .subscribe((res) => {
         if (res) {
           this.brokerList = res;
+          if (this.brokerList.length == 1) {
+            this.filterForm.get("brokerCode").setValue(this.brokerList[0].id);
+            this.filterForm.get("brokerCode").disable()
+          } else {
+            this.filterForm.get("brokerCode").enable();
+            this.filterForm.get("brokerCode").setValue(-1);
+          }
         }
+        this.getSipCleanUpList(true);
       });
 
     this.filterSub = this.filterForm.valueChanges.subscribe((res) => {
       this.getSipCleanUpList(true);
     });
-    this.getSipCleanUpList(false);
+    // this.getSipCleanUpList(false);
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSource.sort = this.sort;
+    // if (this.dataSource.filteredData.length == 0) {
+    //   this.noData = 'No mandates found';
+    // }
   }
 
   getSipCleanUpList(byFilter) {
@@ -164,15 +190,26 @@ export class SipCleanupComponent implements OnInit , OnDestroy{
         this.isLoading = false;
         if (res) {
           console.log("this is backoffice sip cleanup data", res);
+          res.map(element => {
+            element.registeredDate = this.datePipe.transform(element.registeredDate, 'dd/MM/yy');
+            element.from_date = this.datePipe.transform(element.from_date, 'dd/MM/yy')
+            element.to_date = this.datePipe.transform(element.to_date, 'dd/MM/yy')
+          })
           this.dataSource.data = res;
           this.tableData = res;
         } else {
-          this.eventService.openSnackBar("No Data Found!", "DISMISS");
+          // this.eventService.openSnackBar("No Data Found!", "DISMISS");
           this.dataSource.data = null;
+          this.dataSource.filteredData = []
           this.tableData = null;
         }
       },
-      (err) => console.error(err)
+      (err) => {
+        this.dataSource.data = null;
+        this.dataSource.filteredData = []
+        this.tableData = null;
+        console.error(err)
+      }
     );
   }
 
@@ -180,26 +217,25 @@ export class SipCleanupComponent implements OnInit , OnDestroy{
     this.backOfficeService.putSipCleanUpUpdateStatus(value).subscribe((res) => {
       if (res) {
         console.log(res);
-        this.eventService.openSnackBar('Successfully Changed Status.',"DISMISS");
-        if(singleOrMultiple === 'single'){
+        this.eventService.openSnackBar('Successfully Changed Status.', "DISMISS");
+        if (singleOrMultiple === 'single') {
           let index = this.dataSource.data.indexOf(this.selectedData);
           this.dataSource.data[index]['removeStatus'] = value[0].removeStatus;
-          
+
           let index1 = this.tableData.indexOf(this.selectedData);
           this.tableData[index1].removeStatus = value[0].removeStatus;
 
-        } else if(singleOrMultiple == 'multiple'){
-          this.selection.selected.map(item=>{
+        } else if (singleOrMultiple == 'multiple') {
+          this.selection.selected.map(item => {
             item.removeStatus = value[0].removeStatus;
             let objIndex = this.tableData.indexOf(item);
 
             this.tableData[objIndex].removeStatus = value[0].removeStatus;
           });
-          this.initPoint();
         }
-
+        this.getSipCleanUpList(true);
       } else {
-        this.eventService.openSnackBar('Failed to change Status!',"DISMISS");
+        this.eventService.openSnackBar('Failed to change Status!', "DISMISS");
       }
     }, err => console.error(err));
   }
@@ -223,25 +259,62 @@ export class SipCleanupComponent implements OnInit , OnDestroy{
     }
   }
 
+  selectMultipleData(flag, value, index) {
+    (flag == true) ? this.selectedRow.push(value) : this.selectedRow.splice(index, 1)
+  }
+
+  selectAllData(flag) {
+    if (flag == true) {
+      this.selectedRow = []
+      this.dataSource.data.forEach(element => {
+        this, this.selectedRow.push(element)
+      })
+    }
+    else {
+      this.selectedRow = []
+    }
+  }
+
   setKeepOrRemove(data, choice) {
     let index = this.tableData.indexOf(data);
     this.selectedData = data;
     let dataObjArr = [];
+
     if (choice === "keep") {
       // data.removeStatus = 0;
       // this.tableData[index].removeStatus = 0;
-      dataObjArr.push({
-        id:data.id,
-        removeStatus: 0
-      });
+      if (this.selectedRow.length > 0) {
+        this.selectedRow.forEach(element => {
+          dataObjArr.push({
+            id: element.id,
+            removeStatus: 0
+          });
+        });
+      }
+      else {
+        dataObjArr.push({
+          id: data.id,
+          removeStatus: 0
+        });
+      }
 
     } else if (choice === "remove") {
       // data.removeStatus = 1;
       // this.tableData[index].removeStatus = 1;
-      dataObjArr.push({
-        id:data.id,
-        removeStatus: 1
-      })
+      if (this.selectedRow.length > 0) {
+        this.selectedRow.forEach(element => {
+          dataObjArr.push({
+            id: element.id,
+            removeStatus: 1
+          })
+        })
+      }
+      else {
+        dataObjArr.push({
+          id: data.id,
+          removeStatus: 1
+        })
+      }
     }
 
     this.putSipCleanUpFolioKeepOrRemove(dataObjArr, 'single');

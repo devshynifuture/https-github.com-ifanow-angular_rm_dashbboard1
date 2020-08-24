@@ -79,13 +79,14 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        <button mat-stroked-button class="br-0 mt-12" 
+                        <button mat-stroked-button class="br-0 mt-12 text-white" 
                             [ngClass]="{'btn-danger': asset.absAllocation == 100, 
                                         'btn-success': asset.absAllocation > 0 && asset.absAllocation < 100, 
                                         'btn-primary': asset.absAllocation == 0}">
                             {{asset.absAllocation}}%
                         </button>
-                        <button mat-stroked-button class="btn-default br-0 mt-12 mb-12">{{asset.MaturityYear}}</button>
+                        <button *ngIf="asset.maturityValue !=0" mat-stroked-button class="btn-default br-0 mt-12 mb-12">{{asset.MaturityYear}}</button>
+                        <button *ngIf="asset.maturityValue ==0" mat-stroked-button class="btn-default br-0 mt-12 mb-12">-</button>
                     </div>
                     <div class="col-md-4 pt-12 pr-0">
                         <p class="m-0 f-12 roboto text-primitive">Owner</p>
@@ -95,7 +96,8 @@
                     </div>
                     <div class="col-md-4 pt-58 pr-0">
                         <p class="m-0 f-12 roboto text-primitive">Maturity value</p>
-                        <p class="m-0 roboto text-lighter">₹<span appFormatNumber>{{asset.maturityValue}}</span></p>
+                        <p class="m-0 roboto text-lighter" *ngIf="asset.maturityValue !=0">₹<span appFormatNumber>{{asset.maturityValue}}</span></p>
+                        <p class="m-0 roboto text-lighter" *ngIf="asset.maturityValue ==0"><span appFormatNumber>-</span></p>
                     </div>
                 </div>
             </div>

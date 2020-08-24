@@ -20,7 +20,7 @@ export interface PeriodicElement {
   styleUrls: ['./backoffice-file-upload-folio.component.scss']
 })
 export class BackofficeFileUploadFolioComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'rt', 'uploadDate', 'uploadedBy', 'status', 'download'];
+  displayedColumns: string[] = ['name', 'rt', 'arnRiaNumber', 'uploadDate', 'uploadedBy', 'status', 'download'];
   advisorId: any;
   isLoading = false;
   listData: any = [];
@@ -80,21 +80,25 @@ export class BackofficeFileUploadFolioComponent implements OnInit {
     }
     this.reconService.getBackOfficeFolio(obj).subscribe((data) => {
       if (data) {
+        console.log(data);
         data.map(element => {
           element.rt = this.getRtNameFromRtId(parseInt(element.rt));
 
-          if(!isNaN(Number(element.rt))){
-            element.rt = this.getRtNameFromRtId(parseInt(element.rt));
-            element.rt = element.rt + " - " + element.arnRiaNumber ? element.arnRiaNumber: '-';
-          } else {
-            element.rt = `${element.rt + "-" + (element.arnRiaNumber ? element.arnRiaNumber : '-')}`;
-          }
+          // if(!isNaN(Number(element.rt))){
+          //   element.rt = this.getRtNameFromRtId(parseInt(element.rt));
+          //   element.rt = element.rt + " - " + element.arnRiaNumber ? element.arnRiaNumber: '-';
+          // } else {
+          //   element.rt = `${element.rt + "-" + (element.arnRiaNumber ? element.arnRiaNumber : '-')}`;
+          // }
+
           if (element.processStatus === 0) {
             element.status = "Pending";
           } else if (element.processStatus === 1) {
             element.status = "Success";
           } else if (element.processStatus === -1) {
             element.status = "Duplicate";
+          } else if (element.processStatus === 2){
+            element.status = "In Progress";
           } else {
             element.status = "Failed";
           }

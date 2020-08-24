@@ -92,7 +92,7 @@ export class FoliosComponent implements OnInit {
     if (value == 'groupyHead') {
       const obj = {
         advisorId: this.advisorId,
-        arnRiaDetailsId: -1,
+        arnRiaDetailId: -1,
         parentId: -1,
         clientName: data
       }
@@ -104,7 +104,7 @@ export class FoliosComponent implements OnInit {
     } else {
       const obj = {
         advisorId: this.advisorId,
-        arnRiaDetailsId: -1,
+        arnRiaDetailId: -1,
         parentId: -1,
         familyMemberName: data
       }
@@ -142,7 +142,7 @@ export class FoliosComponent implements OnInit {
       } else {
         const obj = {
           advisorId: this.advisorId,
-          arnRiaDetailsId: -1,
+          arnRiaDetailId: -1,
           parentId: -1,
           familyMemberName: data
         }

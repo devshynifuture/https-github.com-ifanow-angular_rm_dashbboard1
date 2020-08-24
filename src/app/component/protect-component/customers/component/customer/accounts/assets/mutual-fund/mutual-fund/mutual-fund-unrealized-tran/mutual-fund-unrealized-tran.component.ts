@@ -1,30 +1,103 @@
-import { AuthService } from './../../../../../../../../../../auth-service/authService';
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
-import { UtilService } from 'src/app/services/util.service';
-import { MatDialog, MatTableDataSource } from '@angular/material';
-import { MfServiceService } from '../../mf-service.service';
-import { RightFilterComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter/right-filter.component';
-import { ExcelGenService } from 'src/app/services/excel-gen.service';
-import { CustomerService } from '../../../../../customer.service';
-import { EventService } from 'src/app/Data-service/event.service';
-import { map } from 'rxjs/operators';
-import { DatePipe } from '@angular/common';
-import { MFSchemeLevelHoldingsComponent } from '../mfscheme-level-holdings/mfscheme-level-holdings.component';
-import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
-import { TableVirtualScrollDataSource } from 'ng-table-virtual-scroll';
-import { RightFilterDuplicateComponent } from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
-import { ActivatedRoute, Router } from '@angular/router';
-import { BackOfficeService } from 'src/app/component/protect-component/AdviserComponent/backOffice/back-office.service';
+import {AuthService} from './../../../../../../../../../../auth-service/authService';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {SubscriptionInject} from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
+import {UtilService} from 'src/app/services/util.service';
+import {MatDialog, MatTableDataSource} from '@angular/material';
+import {MfServiceService} from '../../mf-service.service';
+import {RightFilterComponent} from 'src/app/component/protect-component/customers/component/common-component/right-filter/right-filter.component';
+import {ExcelGenService} from 'src/app/services/excel-gen.service';
+import {CustomerService} from '../../../../../customer.service';
+import {EventService} from 'src/app/Data-service/event.service';
+import {map} from 'rxjs/operators';
+import {DatePipe} from '@angular/common';
+import {MFSchemeLevelHoldingsComponent} from '../mfscheme-level-holdings/mfscheme-level-holdings.component';
+import {ConfirmDialogComponent} from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import {TableVirtualScrollDataSource} from 'ng-table-virtual-scroll';
+import {RightFilterDuplicateComponent} from 'src/app/component/protect-component/customers/component/common-component/right-filter-duplicate/right-filter-duplicate.component';
+import {ActivatedRoute, Router} from '@angular/router';
+import {BackOfficeService} from 'src/app/component/protect-component/AdviserComponent/backOffice/back-office.service';
+
+import {
+  CdkVirtualScrollViewport,
+  FixedSizeVirtualScrollStrategy,
+  VIRTUAL_SCROLL_STRATEGY
+} from "@angular/cdk/scrolling";
+/**
+ * Data source
+ */
+import {DataSource} from '@angular/cdk/collections';
+import {BehaviorSubject, Observable} from 'rxjs';
+
+const PAGESIZE = 20;
+const ROW_HEIGHT = 48;
+
+export class GridTableDataSource extends DataSource<any> {
+  private _data: any[];
+
+  get allData(): any[] {
+    return this._data.slice();
+  }
+
+  set allData(data: any[]) {
+    this._data = data;
+    this.viewport.scrollToOffset(0);
+    this.viewport.setTotalContentSize(this.itemSize * data.length);
+    this.visibleData.next(this._data.slice(0, PAGESIZE));
+  }
+
+  offset = 0;
+  offsetChange = new BehaviorSubject(0);
+
+  constructor(initialData: any[], private viewport: CdkVirtualScrollViewport, private itemSize: number) {
+    super();
+    this._data = initialData;
+    this.viewport.elementScrolled().subscribe((ev: any) => {
+      const start = Math.floor(ev.currentTarget.scrollTop / ROW_HEIGHT);
+      const prevExtraData = start > 5 ? 5 : 0;
+      // const prevExtraData = 0;
+      const slicedData = this._data;
+      // const slicedData = this._data.slice(0, start + (PAGESIZE - prevExtraData));
+      this.offset = ROW_HEIGHT * (start - prevExtraData);
+      this.viewport.setRenderedContentOffset(this.offset);
+      this.offsetChange.next(this.offset);
+      this.visibleData.next(slicedData);
+      console.log(' start ', start, ' prevExtraData ', prevExtraData, ' slicedData ', slicedData);
+      console.log(' offset ', this.offset);
+
+    });
+  }
+
+  private readonly visibleData: BehaviorSubject<any[]> = new BehaviorSubject([]);
+
+  connect(collectionViewer: import('@angular/cdk/collections').CollectionViewer): Observable<any[] | ReadonlyArray<any>> {
+    return this.visibleData;
+  }
+
+  disconnect(collectionViewer: import('@angular/cdk/collections').CollectionViewer): void {
+  }
+}
+
+/**
+ * Virtual Scroll Strategy
+ */
+export class CustomVirtualScrollStrategy extends FixedSizeVirtualScrollStrategy {
+  constructor() {
+    super(ROW_HEIGHT, 1000, 2000);
+  }
+
+  attach(viewport: CdkVirtualScrollViewport): void {
+    this.onDataLengthChanged();
+  }
+}
 
 @Component({
   selector: 'app-mutual-fund-unrealized-tran',
   templateUrl: './mutual-fund-unrealized-tran.component.html',
   styleUrls: ['./mutual-fund-unrealized-tran.component.scss'],
   // changeDetection: ChangeDetectionStrategy.OnPush
-
+  providers: [{provide: VIRTUAL_SCROLL_STRATEGY, useClass: CustomVirtualScrollStrategy}],
 })
-export class MutualFundUnrealizedTranComponent implements OnInit {
+export class MutualFundUnrealizedTranComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['no', 'transactionType', 'transactionDate', 'transactionAmount', 'transactionNav',
     'units', 'balanceUnits', 'days', 'currentValue', 'dividendPayout', 'dividendReinvest', 'totalAmount', 'gain', 'absReturn', 'xirr', 'icons'];
   displayedColumnsTotal: string[] = ['noTotal', 'transactionTypeTotal', 'transactionDateTotal', 'transactionAmountTotal', 'transactionNavTotal',
@@ -42,11 +115,11 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   mutualFundListFilter: any[];
   isSpinner = false;
   customDataHolder = [];
-  @ViewChild('tableEl', { static: false }) tableEl;
-  @ViewChild('unrealizedTranTemplate', { static: false }) unrealizedTranTemplate;
-  @ViewChild('unrealizedTranTemplateHeader', { static: false }) unrealizedTranTemplateHeader;
-  @ViewChild('allTranTemplateHeader', { static: false }) allTranTemplateHeader;
-  rightFilterData: any = { reportType: '' };
+  @ViewChild('tableEl', {static: false}) tableEl;
+  @ViewChild('unrealizedTranTemplate', {static: false}) unrealizedTranTemplate;
+  @ViewChild('unrealizedTranTemplateHeader', {static: false}) unrealizedTranTemplateHeader;
+  @ViewChild('allTranTemplateHeader', {static: false}) allTranTemplateHeader;
+  rightFilterData: any = {reportType: ''};
   adviorData: any;
   @Output() changeInput = new EventEmitter();
   advisorData: any;
@@ -71,7 +144,14 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   addedData: boolean;
   reportDate: any;
   customDataSource: any;
-  unrealisedData: TableVirtualScrollDataSource<any>;
+  unrealisedData: GridTableDataSource;
+  unrealisedArray = [];
+  @ViewChild('cdkVirtualScrollViewport', {
+    read: CdkVirtualScrollViewport,
+    static: false
+  }) viewport: CdkVirtualScrollViewport;
+  placeholderHeight = 0;
+
   dataTransaction: any;
   mode: string;
   isBulkEmailing: boolean;
@@ -84,7 +164,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   getOrgData: any;
   clientDetails: any;
   reportName: any;
-  fragmentData = { isSpinner: false };
+  fragmentData = {isSpinner: false};
   mfBulkEmailRequestId: number;
   firstArrayTran: any;
   firstArrayTotalTran: any;
@@ -134,13 +214,14 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   cashFlowXirr: any;
   cashFlowObj: { 'cashFlowInvestment': any; 'cashFlowSwitchIn': any; 'cashFlowSwitchOut': any; 'cashFlowRedemption': any; 'cashFlowDividendPayout': any; 'cashFlowNetInvestment': any; 'cashFlowMarketValue': any; 'cashFlowNetGain': any; 'cashFlowLifetimeXirr': any; };
 
+  // setTrueKey = false;
   constructor(public dialog: MatDialog, private datePipe: DatePipe,
-    private subInjectService: SubscriptionInject, private utilService: UtilService,
-    private mfService: MfServiceService, private excel: ExcelGenService,
-    private route: Router,
-    private backOfficeService: BackOfficeService,
-    public routerActive: ActivatedRoute,
-    private custumService: CustomerService, private eventService: EventService,
+              private subInjectService: SubscriptionInject, private utilService: UtilService,
+              private mfService: MfServiceService, private excel: ExcelGenService,
+              private route: Router,
+              private backOfficeService: BackOfficeService,
+              public routerActive: ActivatedRoute,
+              private custumService: CustomerService, private eventService: EventService,
               /*private changeDetectorRef: ChangeDetectorRef*/) {
     this.routerActive.queryParamMap.subscribe((queryParamMap) => {
       if (queryParamMap.has('clientId')) {
@@ -153,8 +234,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         this.addedData = true;
         this.isRouterLink = true;
         console.log('2423425', param1)
-      }
-      else {
+      } else {
         this.advisorId = AuthService.getAdvisorId();
         this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
         this.userInfo = AuthService.getUserInfo();
@@ -177,8 +257,9 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
   get data() {
     return this.inputData;
   }
+
   uploadData(data) {
-    
+
     if (data) {
       this.clientId = data.clientId
       this.addedData = true;
@@ -199,6 +280,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     return this.dataTransaction
 
   }
+
   ngOnInit() {
     this.dataSource.data = ([{}, {}, {}]);
     if (localStorage.getItem('token') != 'authTokenInLoginComponnennt') {
@@ -240,7 +322,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     this.setDefaultFilterData = {}
     this.dataTransaction.flag = false
     this.setDefaultFilterData.transactionView = []
-    this.unrealisedData = new TableVirtualScrollDataSource([]);
+    // this.unrealisedData = new GridTableDataSource([]);
+
     this.mfService.getViewMode()
       .subscribe(res => {
         this.viewMode = res;
@@ -265,7 +348,13 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     }
     this.dataTransaction.displayedColumns = this.displayedColumns
   }
+
   ngAfterViewInit() {
+    this.unrealisedData = new GridTableDataSource(this.unrealisedArray, this.viewport, this.unrealisedArray.length);
+    this.unrealisedData.offsetChange.subscribe(offset => {
+      this.placeholderHeight = offset;
+      // console.log(' this.placeholderHeight ', this.placeholderHeight);
+    });
     let para = document.getElementById('template');
     if (para.innerHTML) {
       if (this.route.url.split('?')[0] == '/pdf/allTransactions' && this.isLoading == false) {
@@ -441,6 +530,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     );
 
   }
+
   styleObjectTransaction(header, ind) {
 
     if (header == 'no') {
@@ -487,6 +577,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
 
 
   }
+
   styleObjectUnrealised(header, ind) {
     if (header == 'no') {
       this.customDataSource.data.arrayUnrealised.push({
@@ -555,6 +646,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       // Object.assign(this.customDataSource.data, { xirr: true });
     }
   }
+
   initValueOnInit() {
 
     if (this.mutualFund.mutualFundList.length > 0) {
@@ -574,17 +666,26 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       this.isLoading = false;
       this.changeInput.emit(false);
       // this.customDataSource.data = [];
-      this.unrealisedData = new TableVirtualScrollDataSource([]);
+      // this.unrealisedData = new TableVirtualScrollDataSource([]);
+      this.setUnrealizedDataSource([]);
+
       this.customDataSource.data = [];
       this.customDataHolder = [];
       // this.changeDetectorRef.detectChanges();
     }
   }
 
+  setUnrealizedDataSource(dataArray) {
+    this.unrealisedArray = dataArray;
+    if (this.unrealisedData)
+      this.unrealisedData.allData = this.unrealisedArray;
+  }
+
   getMutualFund() {
     this.isLoading = true;
-    this.unrealisedData = new TableVirtualScrollDataSource([]);
-    this.customDataSource = []
+    // this.unrealisedData = new TableVirtualScrollDataSource([]);
+    // this.setUnrealizedDataSource([]);
+    this.customDataSource = [];
     this.dataSource = new MatTableDataSource([{}, {}, {}]);
 
     const obj = {
@@ -677,6 +778,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       // }
     }
   }
+
   filterForBulkEmailing(data) {
     if (data) {
       let categoryWiseMfList = [];
@@ -695,7 +797,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         data => {
           console.log(data);
           let response = this.mfService.doFiltering(data)
-          Object.assign(response.mutualFundList, { flag: true });
+          Object.assign(response.mutualFundList, {flag: true});
           response.mutualFundList.forEach(element => {
             element.ownerName = this.mfService.convertInTitleCase(element.ownerName);
           });
@@ -705,6 +807,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     }
 
   }
+
   getTransactionTypeData() {
     const obj = {
       advisorIds: [this.advisorId],
@@ -724,6 +827,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       }
     );
   }
+
   // ngOnChanges(changes: SimpleChanges) {
 
   //   for (const propName in changes) {
@@ -761,7 +865,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       }
       element.mutualFundTransactions = [];
       // element.mutualFundTransactions.forEach(element => {
-      //   element.transactionDate = 
+      //   element.transactionDate =
       // });
     });
     const obj = {
@@ -774,7 +878,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         // this.asyncFilter(this.mutualFund.mutualFundList);
         if (this.isBulkEmailing) {
           // this.filterForBulkEmailing(data);
-          this.asyncFilter(data); 
+          this.asyncFilter(data);
         } else {
           this.asyncFilter(data);
         }
@@ -783,7 +887,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         this.isLoading = false;
         this.dataSource.data = [];
         // this.customDataSource.data = [];
-        this.unrealisedData = new TableVirtualScrollDataSource([]);
+        // this.unrealisedData = new TableVirtualScrollDataSource([]);
+        this.setUnrealizedDataSource([]);
         this.customDataSource = [];
         this.customDataHolder = [];
         this.eventService.showErrorMessage(error);
@@ -817,8 +922,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         // mfService: this.mfService
       };
       // Create a new
-      const worker = new Worker('./mutual-fund-unrealized.worker.ts', { type: 'module' });
-      worker.onmessage = ({ data }) => {
+      const worker = new Worker('./mutual-fund-unrealized.worker.ts', {type: 'module'});
+      worker.onmessage = ({data}) => {
         console.log('startTime ', new Date());
         console.log('worker output : ', data);
         this.grandTotal = data.totalValue;
@@ -827,7 +932,9 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
         // this.customDataSource.data = (data.customDataSourceData);
         this.customDataSource = []
         this.customDataSource.data = []
-        this.unrealisedData = new TableVirtualScrollDataSource(data.customDataSourceData);
+        // this.unrealisedData = new TableVirtualScrollDataSource(data.customDataSourceData);
+        // this.unrealisedData.allData = data.customDataSourceData;
+        this.setUnrealizedDataSource(data.customDataSourceData);
         this.customDataSource.data = (data.customDataSourceData);
         this.customDataSource.data.arrayTran = [];
         this.customDataSource.data.arrayUnrealised = [];
@@ -1041,7 +1148,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     const fragmentData = {
       flag: 'editTransaction',
       // data: { family_member_list: ['family_member_list'], flag, ...sendData, ...this.selectedLoadData },
-      data: { family_member_list: ['family_member_list'], flag, ...sendData, ...this.selectedLoadData },
+      data: {family_member_list: ['family_member_list'], flag, ...sendData, ...this.selectedLoadData},
       id: 1,
       state: 'open',
       componentName: MFSchemeLevelHoldingsComponent
@@ -1184,7 +1291,8 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       transactionPeriod: this.setDefaultFilterData.transactionPeriod,
       transactionPeriodCheck: this.setDefaultFilterData.transactionPeriodCheck,
       selectFilter: (this.saveFilterData) ? this.saveFilterData.selectFilter : null,
-      transactionTypeList: (this.rightFilterData.transactionType) ? this.rightFilterData.transactionType : this.transactionTypeList
+      transactionTypeList: (this.rightFilterData.transactionType) ? this.rightFilterData.transactionType : this.transactionTypeList,
+      // setTrueKey: this.setDefaultFilterData.setTrueKey ? this.setDefaultFilterData.setTrueKey : false ,
     };
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
@@ -1195,10 +1303,12 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
             this.dataSource.data = ([{}, {}, {}]);
             // this.customDataSource.data = ([{}, {}, {}]);
             this.customDataSource = [];
-            this.unrealisedData = new TableVirtualScrollDataSource([]);
+            // this.unrealisedData = new TableVirtualScrollDataSource([]);
+            this.setUnrealizedDataSource([]);
             this.isLoading = true;
             this.changeInput.emit(true);
             this.rightFilterData = sideBarData.data;
+            // this.setTrueKey = this.rightFilterData.setTrueKey;
             this.saveFilterData = {};
             // this.columns =[];
             // this.rightFilterData.transactionView.forEach(element => {
@@ -1217,7 +1327,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
             //   this.displayColArray.push(obj);
             // });
             // this.type = this.rightFilterData.reportType[0];
-            if(this.rightFilterData.mfData){
+            if (this.rightFilterData.mfData) {
               this.reponseData = this.doFiltering(this.rightFilterData.mfData);
             }
             this.mfData = this.reponseData;
@@ -1284,12 +1394,12 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     this.fragmentData.isSpinner = true;
     setTimeout(() => {
       const para = document.getElementById('template');
-      if(this.viewMode == 'Unrealized Transactions'){
+      if (this.viewMode == 'Unrealized Transactions') {
         this.headerHtml = document.getElementById('templateHeader');
-      }else{
+      } else {
         this.headerHtml = document.getElementById('alltemplateHeader');
       }
-      this.returnValue = this.utilService.htmlToPdf(this.headerHtml.innerHTML,para.innerHTML, this.viewMode, 'true', this.fragmentData, '', '');
+      this.returnValue = this.utilService.htmlToPdf(this.headerHtml.innerHTML, para.innerHTML, this.viewMode, 'true', this.fragmentData, '', '');
     }, 200);
 
 
@@ -1297,6 +1407,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     //   this.isSpinner = false;
     // }
   }
+
   filterHedaerWise(data) {
     let obj;
     switch (data.name) {
@@ -1343,6 +1454,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
 
     return obj;
   }
+
   filterHedaerWiseTotal(data) {
     let obj;
     switch (data.name) {
@@ -1389,6 +1501,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
 
     return obj;
   }
+
   filterHedaerWiseTran(data) {
     let obj;
     switch (data.name) {
@@ -1421,6 +1534,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
 
     return obj;
   }
+
   filterHedaerWiseTotalTran(data) {
     let obj;
     switch (data.name) {
@@ -1453,6 +1567,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
 
     return obj;
   }
+
   getValuesTran(data, value, isGT) {
     let number;
     if (value == 'transactionDate') {
@@ -1475,6 +1590,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
 
     return number;
   }
+
   getValues(data, value, isGT) {
     let number;
     if (value == 'transactionDate') {
@@ -1497,14 +1613,15 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
 
     return number;
   }
+
   generatePdfBulk() {
     setTimeout(() => {
       const date = this.datePipe.transform(new Date(), 'dd-MMM-yyyy');
       let para = this.unrealizedTranTemplate.nativeElement.innerHTML
-      if(this.viewMode=='Unrealized Transactions'){
-         this.header = this.unrealizedTranTemplateHeader.nativeElement.innerHTML
-      }else{
-         this.header = this.allTranTemplateHeader.nativeElement.innerHTML
+      if (this.viewMode == 'Unrealized Transactions') {
+        this.header = this.unrealizedTranTemplateHeader.nativeElement.innerHTML
+      } else {
+        this.header = this.allTranTemplateHeader.nativeElement.innerHTML
       }
       let obj = {
         htmlInput: para,
@@ -1523,6 +1640,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       // this.utilService.htmlToPdf(para, 'transaction', true, this.fragmentData, '', '')
     }, 200);
   }
+
   getDetails() {
     const obj = {
       clientId: this.clientId,
@@ -1532,6 +1650,7 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
       data => this.getDetailsClientAdvisorRes(data)
     );
   }
+
   getDetailsClientAdvisorRes(data) {
     this.details = {}
     this.details.emailId = {}
@@ -1541,5 +1660,9 @@ export class MutualFundUnrealizedTranComponent implements OnInit {
     this.getOrgData = data.advisorData
     this.userInfo = data.advisorData;
     this.details.emailId = data.advisorData.email;
+  }
+
+  placeholderWhen(index: number, _: any) {
+    return index == 0;
   }
 }

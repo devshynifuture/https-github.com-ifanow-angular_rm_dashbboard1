@@ -271,7 +271,10 @@ export class MutualFundsCapitalComponent implements OnInit {
     this.custumService.capitalGainGet(obj).subscribe(
       data => {
         if (data) {
-          this.capitalGainData = data;
+          const myArray = data
+          const list = [];
+          myArray.forEach(val => list.push(Object.assign({}, val)));
+          this.capitalGainData = list;
           this.mutualFundList = this.MfServiceService.filter(this.capitalGainData, 'mutualFund');
           this.redemption = this.MfServiceService.filter(this.mutualFundList, 'redemptionTransactions');
           this.calculateCapitalGain(this.capitalGainData)
@@ -551,12 +554,18 @@ export class MutualFundsCapitalComponent implements OnInit {
     // this.getCapitalgainRes(data.capitalGainData.responseData);
   }
   Excel(tableTitle) {
-    let rows = this.tableEl._elementRef.nativeElement.rows;
-    this.excel.generateExcel(rows, tableTitle)
-    let rows2 = this.tableEl._elementRef.nativeElement.rows;
-    this.excel.generateExcel(rows, tableTitle)
-    let rows3 = this.tableEl._elementRef.nativeElement.rows;
-    this.excel.generateExcel(rows, tableTitle)
+    // let rows = this.tableEl._elementRef.nativeElement.rows;
+    // this.excel.generateExcel(rows, tableTitle)
+    // let rows2 = this.tableEl._elementRef.nativeElement.rows;
+    // this.excel.generateExcel(rows, tableTitle)
+    // let rows3 = this.tableEl._elementRef.nativeElement.rows;
+    // this.excel.generateExcel(rows, tableTitle)
+    setTimeout(() => {
+      var blob = new Blob([document.getElementById('template').innerHTML], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+      });
+      saveAs(blob, tableTitle + ".xls");
+    }, 200);
   }
   pdf(tableTitle) {
     this.fragmentData.isSpinner = true;

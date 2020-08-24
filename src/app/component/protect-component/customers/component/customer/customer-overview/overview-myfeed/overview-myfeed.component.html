@@ -39,7 +39,7 @@
             </ul>
         </div>
 
-        <div class="col-md-6 mb-20">
+        <div class="col-md-6 mb-20 pl-10">
             <div class="feedInformation">
                 <div class="clientNameBox" #allFeedsSection>
                     <h3 class="m-0 roboto">{{welcomeMessage}} {{clientData.name}}</h3>
@@ -114,8 +114,7 @@
 
 
 
-                            <div class="col-md-12"
-                                *ngIf="!isLoadingAssetAllocation && isAssetAllocationDataLoaded ">
+                            <div class="col-md-12" *ngIf="!isLoadingAssetAllocation && isAssetAllocationDataLoaded ">
                                 <h5 class="roboto mb-0">Asset allocation</h5>
                                 <div class="borderChatBox bg-white">
                                     <div class="row">
@@ -140,8 +139,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-12"
-                                *ngIf="!isAssetAllocationDataLoaded && !isLoadingAssetAllocation">
+                            <div class="col-md-12" *ngIf="!isAssetAllocationDataLoaded && !isLoadingAssetAllocation">
                                 <h5 class="roboto mb-0">Asset allocation</h5>
 
                                 <div class="borderChatBoxEmpty bg-white">
@@ -1048,7 +1046,7 @@
                                 <div class="col-md-4 text-center">
                                     <p class="f-16 roboto mb-8 f-500">Your risk score</p>
                                     <div class="numberBox">
-                                        <h1 class="f-48 mb-12"> {{risk.riskAssessmentScore}} </h1>
+                                        <h1 class="f-48 mb-10"> {{risk.riskAssessmentScore}} </h1>
                                         <p class="f-12 m-0 text-primitive">Max:
                                             {{riskProfileMaxScore(risk.riskProfileId)}}
                                         </p>
@@ -1230,8 +1228,8 @@
             </div>
         </div>
 
-        <div class="col-md-3 pr-0  paddleft30 mt-40">
-            <div  class="sticky-top z-0">
+        <div class="col-md-3 pr-0  pl-30 mt-40">
+            <div class="sticky-top z-0">
                 <div class="mb-20">
                     <div class="row b-b pb-20" *ngIf="appearancePortfolio.advisorOrOrganisation == 2">
                         <div class="col-md-2 p-0">

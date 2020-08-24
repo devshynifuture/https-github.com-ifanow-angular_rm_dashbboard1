@@ -50,9 +50,10 @@
     <div class="row">
         <div class="col-md-12 investors-transactions">
             <div [ngClass]="{'table-scroll':isLoading==false }"
-                class="ox-hide investors-transactions-scroll responsive-table-port ">
-                <table *ngIf="dataSource.filteredData.length > 0" [appSkeletonLoading]="isLoading"
-                    [dataSource]="dataSource" appSkeletonLoading class="skeletonAnimation " id="tbs" mat-table matSort>
+                class="ox-hide investors-transactions-scroll responsive-table-port "
+                *ngIf="dataSource.filteredData.length > 0">
+                <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading
+                    class="skeletonAnimation " id="tbs" mat-table matSort>
                     <ng-container matColumnDef="aggregatorType" sticky>
                         <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="aggregatorType"> Platform</th>
                         <td *matCellDef="let element" class="br" mat-cell>
