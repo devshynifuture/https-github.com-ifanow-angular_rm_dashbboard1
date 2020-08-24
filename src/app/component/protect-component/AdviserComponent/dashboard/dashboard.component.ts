@@ -659,12 +659,10 @@ export class DashboardComponent implements OnInit {
         name: 'Asset allocation',
         animation: false,
         innerSize: '60%',
-        data: this.chartData
+        data: this.newchartData
       }]
     };
     this.assetAllocationPieConfig = new Chart(chartConfig);
-    this.mfAllocationPieConfig = new Chart(chartConfig);
-    this.mfSubCategoryPieConfig = new Chart(chartConfig);
     chartConfig.series = [{
       type: 'pie',
       animation: false,
@@ -672,6 +670,8 @@ export class DashboardComponent implements OnInit {
       innerSize: '60%',
       data: this.mfAllocationData
     }];
+    this.mfAllocationPieConfig = new Chart(chartConfig);
+    this.mfSubCategoryPieConfig = new Chart(chartConfig);
   }
 
   getTodaysTaskList() {

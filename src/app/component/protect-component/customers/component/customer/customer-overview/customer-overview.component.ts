@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { EventService } from 'src/app/Data-service/event.service';
 import { RoutingState } from 'src/app/services/routing-state.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 
 @Component({
   selector: 'app-customer-overview',
@@ -19,8 +20,15 @@ export class CustomerOverviewComponent implements OnInit {
   name: string;
 
   constructor(public authService: AuthService, private router: Router,
-    private eventService: EventService, public routingStateService: RoutingState, private peopleService: PeopleService) {
-
+    private eventService: EventService, public routingStateService: RoutingState,
+    private peopleService: PeopleService, public subInjectService: SubscriptionInject) {
+    this.subInjectService.singleProfileData.subscribe(
+      data => {
+        if (typeof data === 'string') {
+          this.clientData.displayName = data;
+        }
+      }
+    )
   }
 
   _value: any;

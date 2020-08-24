@@ -234,4 +234,7 @@ export class PlanService {
   getAssetsOfExpense(data) {
     return this.http.get(apiConfig.MAIN_URL + appConfig.ASSTES_OF_EXPENSE, data)
   }
+  getAllExpense(data) {
+    return this.http.get(apiConfig.MAIN_URL + appConfig.EXPENSE_ALL_GET, data)
+  }
 }

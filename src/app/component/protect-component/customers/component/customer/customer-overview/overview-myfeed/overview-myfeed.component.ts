@@ -296,9 +296,9 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     this.loadDocumentValutData();
     this.loadRiskProfile();
     this.loadGlobalRiskProfile();
+    this.getMFPortfolioData();
     // this.loadGoalsData(); // Not to be implemented for demo purpose
     this.loadCashFlowSummary(); // needs better implementation
-    this.getMFPortfolioData();
   }
 
   ngAfterViewInit() {
@@ -505,7 +505,17 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
           this.portFolioData = this.portFolioData.filter(d => d.assetType != 6);
           this.portFolioData.unshift(stock);
         }
+        let mfIndex =  this.portFolioData.findIndex( record => record.assetType === 5 );
+
+        // this.portFolioData.forEach((element,ind) => {
+        //   if(element.assetType == 5){
+        //    mfIndex = element[ind]
+        //   }
+        // })
+        this.portFolioData.splice(mfIndex, 1)
+
       }
+      
       this.tabsLoaded.portfolioData.isLoading = false;
       this.tabsLoaded.portfolioData.dataLoaded = true;
       this.loaderFn.decreaseCounter();
@@ -1054,6 +1064,14 @@ export class OverviewMyfeedComponent implements OnInit, AfterViewInit, OnDestroy
     if (data) {
       this.filterData = this.mfServiceService.doFiltering(data);
       this.mutualFund = this.filterData;
+      const obj={
+        assetType : 5,
+        investedAmount:this.mutualFund.total_amount_invested ? this.mutualFund.total_amount_invested : 0,
+        gainAmount:this.mutualFund.total_unrealized_gain ? this.mutualFund.total_unrealized_gain : 0,
+        currentValue:this.mutualFund.total_current_value ? this.mutualFund.total_current_value : 0,
+        assetTypeString:'Mutual funds'
+        }
+      this.portFolioData.push(obj);
       this.asyncFilter(this.filterData.mutualFundList, this.filterData.mutualFundCategoryMastersList);
 
       this.getFamilyMemberWiseAllocation(data); // for FamilyMemberWiseAllocation
