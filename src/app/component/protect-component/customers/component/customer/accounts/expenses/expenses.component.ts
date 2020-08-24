@@ -18,6 +18,7 @@ import { MY_FORMATS2 } from 'src/app/constants/date-format.constant';
 import { RecurringCommitmentsDetailedViewComponent } from '../../../common-component/recurring-commitments-detailed-view/recurring-commitments-detailed-view.component';
 import { FileUploadServiceService } from '../assets/file-upload-service.service';
 import { BottomSheetComponent } from '../../../common-component/bottom-sheet/bottom-sheet.component';
+import { element } from 'protractor';
 
 export const MY_FORMATS = {
   parse: {
@@ -135,6 +136,7 @@ export class ExpensesComponent implements OnInit {
     this.details = AuthService.getProfileDetails();
     this.getOrgData = AuthService.getOrgDetails();
     this.getStartAndEndDate('1');
+    this.getAllExpense();
     this.getExpenseGraphValue();
     // this.getBudgetGraphValues();
     // this.timePeriodSelection.setValue('1');
@@ -191,6 +193,23 @@ export class ExpensesComponent implements OnInit {
 
         this.eventService.showErrorMessage(error);
         
+      }
+    );
+  }
+  getAllExpense(){
+    const obj = {
+      advisorId: this.advisorId,
+      clientId: this.clientId,
+      startDate:this.startDate, 
+      endDate:this.endDate
+    };
+    this.planService.getAllExpense(obj).subscribe(
+      data => {
+        if(data){
+          console.log('All expense data',data);
+        }
+      }, (error) => {
+        this.eventService.showErrorMessage(error);
       }
     );
   }
@@ -512,6 +531,9 @@ export class ExpensesComponent implements OnInit {
     }
     if (data) {
       data.forEach(singleExpense => {
+        singleExpense.progressPercent = 0;
+        singleExpense.progressPercent += (singleExpense.amount)*100 / (singleExpense.amount+singleExpense.spent);
+        singleExpense.progressPercent = Math.round(singleExpense.progressPercent);
         const singleExpenseCategory = this.constantService.expenseJsonMap[singleExpense.budgetCategoryId];
         if (singleExpenseCategory) {
           singleExpense.expenseType = singleExpenseCategory.expenseType;

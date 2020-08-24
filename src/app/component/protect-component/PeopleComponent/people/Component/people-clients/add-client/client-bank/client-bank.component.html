@@ -142,7 +142,7 @@
                     <input #micr autocomplete="off" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
                         [maxLength]="9" placeholder="Enter micr code" formControlName="micrName" matInput
                         class="form-control">
-                    <mat-hint>Optional</mat-hint>
+                    <mat-hint class="ml-8">Optional</mat-hint>
                     <mat-hint align="end">{{micr.value.length}} / 9</mat-hint>
                 </mat-form-field>
             </div>

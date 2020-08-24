@@ -53,7 +53,7 @@
   <div formArrayName="getCoOwnerName">
     <div class="row pt-44" *ngFor="let obj of getCoOwner.controls; let pointIndex=index" [formGroupName]="pointIndex">
       <div class="col-md-4  text-right d-flex align-items-center justify-content-end mob-pl-10 mob-text-left">
-        <h5 class="m-0 pt-12">
+        <h5 class="m-0 pt-8">
           <span *ngIf="pointIndex==0">First</span>
           <span *ngIf="pointIndex==1">Second</span>
           <span *ngIf="pointIndex==2">Third</span> holder name
@@ -73,7 +73,7 @@
                 <span>{{f.userName}}</span>
               </mat-option>
             </mat-select>
-            <mat-hint>Optional</mat-hint>
+            <mat-hint class="ml-8">Optional</mat-hint>
           </mat-form-field>
         </div>
       </div>
@@ -98,7 +98,7 @@
             #nadNameme appInputValueValidation [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPEC_CHAR"
             [maxLength]="50" matInput class="form-control">
           <mat-hint align="end" class="f-12">{{nadNameme.value.length}}/50</mat-hint>
-          <mat-hint>Optional</mat-hint>
+          <mat-hint class="ml-8">Optional</mat-hint>
         </mat-form-field>
       </div>
     </div>
@@ -114,7 +114,7 @@
           <input placeholder="Enter depository id" autocomplete="off" appInputValueValidation
             [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="depositoryPartId" matInput
             class="form-control">
-          <mat-hint>Optional</mat-hint>
+          <mat-hint class="ml-8">Optional</mat-hint>
         </mat-form-field>
       </div>
     </div>
@@ -130,7 +130,7 @@
           <input placeholder="Enter demat client id" autocomplete="off" appInputValueValidation
             [inputValidator]="validatorType.ALPHA_NUMERIC" formControlName="dematClientId" matInput
             class="form-control">
-          <mat-hint>Optional</mat-hint>
+          <mat-hint class="ml-8">Optional</mat-hint>
         </mat-form-field>
       </div>
     </div>
@@ -147,7 +147,7 @@
             [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPEC_CHAR" formControlName="brekerName" matInput
             class="form-control">
           <mat-hint align="end" class="f-12">{{brokerName.value.length}}/50</mat-hint>
-          <mat-hint>Optional</mat-hint>
+          <mat-hint class="ml-8">Optional</mat-hint>
         </mat-form-field>
       </div>
     </div>
@@ -163,7 +163,7 @@
           <input placeholder="Enter broker address" autocomplete="off" #bAddres formControlName="brokerAddress" matInput
             maxlength="200" class="form-control">
           <mat-hint align="end" class="f-12">{{bAddres.value.length}}/20</mat-hint>
-          <mat-hint>Optional</mat-hint>
+          <mat-hint class="ml-8">Optional</mat-hint>
         </mat-form-field>
       </div>
     </div>
@@ -190,7 +190,7 @@
                 <span>{{f.userName}}</span>
               </mat-option>
             </mat-select>
-            <mat-hint>Optional</mat-hint>
+            <mat-hint class="ml-8">Optional</mat-hint>
           </mat-form-field>
         </div>
       </div>
@@ -228,7 +228,7 @@
             appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY" formControlName="linkedBankAccount"
             matInput class="form-control">
           <mat-hint align="end" class="f-12">{{linkedAccNum.value.length}}/16</mat-hint>
-          <mat-hint>Optional</mat-hint>
+          <mat-hint class="ml-8">Optional</mat-hint>
         </mat-form-field>
       </div>
     </div>
@@ -243,7 +243,7 @@
           <input placeholder="Enter power of attorney name" autocomplete="off" #paName appInputValueValidation
             [inputValidator]="validatorType.ALPHA_NUMERIC_WITH_SPEC_CHAR" [maxLength]="50"
             formControlName="powerOfAttName" matInput class="form-control">
-          <mat-hint>Optional</mat-hint>
+          <mat-hint class="ml-8">Optional</mat-hint>
           <mat-hint align="end" class="f-12">{{paName.value.length}}/50</mat-hint>
         </mat-form-field>
       </div>
@@ -259,7 +259,7 @@
           <input autocomplete="off" placeholder="Enter power of attorney master ID" #powerOfAttMasId
             formControlName="powerOfAttMasId" appInputValueValidation [inputValidator]="validatorType.NUMBER_ONLY"
             matInput class="form-control">
-          <mat-hint>Optional</mat-hint>
+          <mat-hint class="ml-8">Optional</mat-hint>
           <mat-hint align="end" class="f-12">{{powerOfAttMasId.value.length}}/10</mat-hint>
         </mat-form-field>
       </div>

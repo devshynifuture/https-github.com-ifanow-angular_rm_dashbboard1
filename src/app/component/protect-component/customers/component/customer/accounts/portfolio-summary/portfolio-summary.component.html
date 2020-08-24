@@ -55,11 +55,10 @@
       <div [appSkeletonLoading]="letsideBarLoader" appSkeletonLoading>
         <div class="height-700 ">
 
-          <div class="row overflow-hidden bb c-p">
+          <div class="row overflow-hidden bb c-p" [queryParams]="{ tab: 'tab1'}" routerLink="/customer/detail/account/assets">
             <div class="col-md-6 relClass pr-0">
               <div>
-                <a [queryParams]="{ tab: 'tab1'}" class="text-black m-0 roboto"
-                  routerLink="/customer/detail/account/assets">
+                <a  class="text-black m-0 roboto">
                   Mutual funds
                 </a>
               </div>
@@ -84,11 +83,10 @@
             </div>
           </div>
 
-          <div class="row overflow-hidden bb c-p">
+          <div class="row overflow-hidden bb c-p" [queryParams]="{ tab: 'tab2'}" routerLink="/customer/detail/account/assets">
             <div class="col-md-6 relClass pr-0">
               <div>
-                <a [queryParams]="{ tab: 'tab2'}" class="text-black m-0 roboto"
-                  routerLink="/customer/detail/account/assets">
+                <a  class="text-black m-0 roboto">
                   Stocks
                 </a>
               </div>
@@ -112,11 +110,10 @@
             </div>
           </div>
 
-          <div class="row overflow-hidden bb c-p">
+          <div class="row overflow-hidden bb c-p" [queryParams]="{ tab: 'tab3'}" routerLink="/customer/detail/account/assets">
             <div class="col-md-6 relClass pr-0">
               <div>
-                <a [queryParams]="{ tab: 'tab3'}" class="text-black m-0 roboto"
-                  routerLink="/customer/detail/account/assets">
+                <a  class="text-black m-0 roboto">
                   Fixed Income
                 </a>
               </div>
@@ -140,12 +137,11 @@
             </div>
           </div>
 
-          <div class="row overflow-hidden bb c-p">
+          <div class="row overflow-hidden bb c-p"  [queryParams]="{ tab: 'tab4'}"  routerLink="/customer/detail/account/assets">
             <div class="col-md-6 relClass pr-0">
               <p class="text-black m-0 roboto"></p>
               <div>
-                <a [queryParams]="{ tab: 'tab4'}" class="text-black m-0 roboto"
-                  routerLink="/customer/detail/account/assets">
+                <a class="text-black m-0 roboto">
                   Real estate
                 </a>
               </div>
@@ -166,11 +162,10 @@
             </div>
           </div>
 
-          <div class="row overflow-hidden bb c-p">
+          <div class="row overflow-hidden bb c-p" [queryParams]="{ tab: 'tab5'}" routerLink="/customer/detail/account/assets">
             <div class="col-md-6 relClass pr-0">
               <div>
-                <a [queryParams]="{ tab: 'tab5'}" class="text-black m-0 roboto"
-                  routerLink="/customer/detail/account/assets">
+                <a  class="text-black m-0 roboto">
                   Retirement a/c
                 </a>
               </div>
@@ -192,11 +187,10 @@
             </div>
           </div>
 
-          <div class="row overflow-hidden bb c-p">
+          <div class="row overflow-hidden bb c-p" [queryParams]="{ tab: 'tab6'}"  routerLink="/customer/detail/account/assets">
             <div class="col-md-6 pr-0 ">
               <div class="bar">
-                <a [queryParams]="{ tab: 'tab6'}" class="text-black m-0 roboto"
-                  routerLink="/customer/detail/account/assets">
+                <a  class="text-black m-0 roboto">
                   Small savings
                 </a>
               </div>
@@ -218,11 +212,10 @@
             </div>
           </div>
 
-          <div class="row overflow-hidden bb c-p">
+          <div class="row overflow-hidden bb c-p" [queryParams]="{ tab: 'tab7'}"   routerLink="/customer/detail/account/assets">
             <div class="col-md-6 relClass pr-0">
               <div>
-                <a [queryParams]="{ tab: 'tab7'}" class="text-black m-0 roboto"
-                  routerLink="/customer/detail/account/assets">
+                <a  class="text-black m-0 roboto">
                   Cash and bank
                 </a>
               </div>
@@ -243,11 +236,10 @@
             </div>
           </div>
 
-          <div class="row overflow-hidden bb c-p">
+          <div class="row overflow-hidden bb c-p" [queryParams]="{ tab: 'tab7'}"  routerLink="/customer/detail/account/assets">
             <div class="col-md-6 relClass pr-0">
               <div>
-                <a [queryParams]="{ tab: 'tab7'}" class="text-black m-0 roboto"
-                  routerLink="/customer/detail/account/assets">
+                <a  class="text-black m-0 roboto">
                   Commodities
                 </a>
               </div>
@@ -280,10 +272,12 @@
           <h3 class="m-0 roboto   f-500 text-black">Portfolio summary</h3>
         </div>
         <div class="col-md-6 d-flex align-items-center justify-content-end">
-          <button (click)="dobAsPerRecord.open()" class="b-a br-0 width180 h-40" mat-button>As on
-            {{asOnDate | date:'dd/MM/yyyy'}} <i class="material-icons text-custom">
+            <!-- (click)="dobAsPerRecord.open()" // asper bug raise in Mf the dropdown to choose date should be removed as we are not going to show any back dated data over here -->
+          <button  class="b-a br-0 width180 h-40" mat-button>As on
+            {{asOnDate | date:'dd/MM/yyyy'}}
+             <!-- <i class="material-icons text-custom">
               keyboard_arrow_down
-            </i>
+            </i> -->
             <mat-form-field class="v-h">
               <input (dateChange)="dateChange($event)" [matDatepicker]="dobAsPerRecord" class="form-control br-0 b-0"
                 matInput readonly>

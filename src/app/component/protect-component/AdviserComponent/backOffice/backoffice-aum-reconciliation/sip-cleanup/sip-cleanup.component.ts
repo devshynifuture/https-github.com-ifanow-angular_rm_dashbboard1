@@ -16,16 +16,20 @@ import { Subscription } from "rxjs";
   templateUrl: "./sip-cleanup.component.html",
   styleUrls: ["./sip-cleanup.component.scss"],
 })
-export class SipCleanupComponent implements OnInit , OnDestroy{
+export class SipCleanupComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = [
     "checkbox",
     "position",
     "name",
     "weight",
-    "symbol",
+    "rdate",
+    "fdate",
+    "tdate",
+    // "symbol",
     "tra",
     "action",
-    "menu",
+
+    // "menu",
   ];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   tableData: any;
@@ -38,7 +42,7 @@ export class SipCleanupComponent implements OnInit , OnDestroy{
     private backOfficeService: BackOfficeService,
     private fb: FormBuilder,
     private reconService: ReconciliationService
-  ) {}
+  ) { }
 
   advisorId = AuthService.getAdvisorId();
 
@@ -57,8 +61,8 @@ export class SipCleanupComponent implements OnInit , OnDestroy{
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     let numRows;
-    if(this.dataSource.data!==null){
-       numRows = this.dataSource.data.length;
+    if (this.dataSource.data !== null) {
+      numRows = this.dataSource.data.length;
     } else {
       numRows = 0;
     }
@@ -76,21 +80,21 @@ export class SipCleanupComponent implements OnInit , OnDestroy{
     }
   }
 
-  ngOnDestroy(){
-    if(this.filterSub){
+  ngOnDestroy() {
+    if (this.filterSub) {
       this.filterSub.unsubscribe();
     }
-    if(this.filterSub2){
+    if (this.filterSub2) {
       this.filterSub2.unsubscribe();
     }
   }
 
-  setMultipleKeepOrRemove(keepOrRemove){
-    let dataArrayValue= [];
-    if(this.selection.hasValue){
+  setMultipleKeepOrRemove(keepOrRemove) {
+    let dataArrayValue = [];
+    if (this.selection.hasValue) {
       this.selection.selected.forEach(element => {
         dataArrayValue.push({
-          id:element.id,
+          id: element.id,
           removeStatus: keepOrRemove
         })
       });
@@ -105,7 +109,7 @@ export class SipCleanupComponent implements OnInit , OnDestroy{
     }
     return `${this.selection.isSelected(row) ? "deselect" : "select"} row ${
       row.position + 1
-    }`;
+      }`;
   }
 
   ngOnInit() {
@@ -130,6 +134,10 @@ export class SipCleanupComponent implements OnInit , OnDestroy{
       .subscribe((res) => {
         if (res) {
           this.brokerList = res;
+          if (this.brokerList.length == 1) {
+            this.filterForm.get("brokerCode").setValue(this.brokerList[0].id);
+            this.filterForm.get("brokerCode").disable()
+          }
         }
       });
 
@@ -180,16 +188,16 @@ export class SipCleanupComponent implements OnInit , OnDestroy{
     this.backOfficeService.putSipCleanUpUpdateStatus(value).subscribe((res) => {
       if (res) {
         console.log(res);
-        this.eventService.openSnackBar('Successfully Changed Status.',"DISMISS");
-        if(singleOrMultiple === 'single'){
+        this.eventService.openSnackBar('Successfully Changed Status.', "DISMISS");
+        if (singleOrMultiple === 'single') {
           let index = this.dataSource.data.indexOf(this.selectedData);
           this.dataSource.data[index]['removeStatus'] = value[0].removeStatus;
-          
+
           let index1 = this.tableData.indexOf(this.selectedData);
           this.tableData[index1].removeStatus = value[0].removeStatus;
 
-        } else if(singleOrMultiple == 'multiple'){
-          this.selection.selected.map(item=>{
+        } else if (singleOrMultiple == 'multiple') {
+          this.selection.selected.map(item => {
             item.removeStatus = value[0].removeStatus;
             let objIndex = this.tableData.indexOf(item);
 
@@ -199,7 +207,7 @@ export class SipCleanupComponent implements OnInit , OnDestroy{
         }
 
       } else {
-        this.eventService.openSnackBar('Failed to change Status!',"DISMISS");
+        this.eventService.openSnackBar('Failed to change Status!', "DISMISS");
       }
     }, err => console.error(err));
   }
@@ -231,7 +239,7 @@ export class SipCleanupComponent implements OnInit , OnDestroy{
       // data.removeStatus = 0;
       // this.tableData[index].removeStatus = 0;
       dataObjArr.push({
-        id:data.id,
+        id: data.id,
         removeStatus: 0
       });
 
@@ -239,7 +247,7 @@ export class SipCleanupComponent implements OnInit , OnDestroy{
       // data.removeStatus = 1;
       // this.tableData[index].removeStatus = 1;
       dataObjArr.push({
-        id:data.id,
+        id: data.id,
         removeStatus: 1
       })
     }

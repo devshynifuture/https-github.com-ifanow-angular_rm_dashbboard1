@@ -189,14 +189,15 @@ export class DashboardComponent implements OnInit {
       dataLabels: {
         enabled: false
       }
-    }, {
-      name: "SOLUTION ORIENTED",
-      y: 20,
-      color: AppConstants.DONUT_CHART_COLORS[4],
-      dataLabels: {
-        enabled: false
-      }
-    }
+    },
+    // {
+    //   name: "SOLUTION ORIENTED",
+    //   y: 20,
+    //   color: AppConstants.DONUT_CHART_COLORS[4],
+    //   dataLabels: {
+    //     enabled: false
+    //   }
+    // }
   ];
   todoListFlag: boolean;
   userData: any;
@@ -493,14 +494,16 @@ export class DashboardComponent implements OnInit {
           this.chartTotal
           data.forEach((element, index) => {
             this.chartTotal += Math.round(element.totalAum)
-            chartData.push({
-              y: Math.round(element.totalAum),
-              name: element.name,
-              color: AppConstants.DONUT_CHART_COLORS[index],
-              dataLabels: {
-                enabled: false
-              }
-            })
+            if (element.name) {
+              chartData.push({
+                y: Math.round(element.totalAum),
+                name: element.name,
+                color: AppConstants.DONUT_CHART_COLORS[index],
+                dataLabels: {
+                  enabled: false
+                }
+              })
+            }
           });
           this.newchartData = chartData
           this.assetAllocationPieChartDataMgnt(this.newchartData);
@@ -659,12 +662,10 @@ export class DashboardComponent implements OnInit {
         name: 'Asset allocation',
         animation: false,
         innerSize: '60%',
-        data: this.chartData
+        data: this.newchartData
       }]
     };
     this.assetAllocationPieConfig = new Chart(chartConfig);
-    this.mfAllocationPieConfig = new Chart(chartConfig);
-    this.mfSubCategoryPieConfig = new Chart(chartConfig);
     chartConfig.series = [{
       type: 'pie',
       animation: false,
@@ -672,6 +673,8 @@ export class DashboardComponent implements OnInit {
       innerSize: '60%',
       data: this.mfAllocationData
     }];
+    this.mfAllocationPieConfig = new Chart(chartConfig);
+    this.mfSubCategoryPieConfig = new Chart(chartConfig);
   }
 
   getTodaysTaskList() {
