@@ -35,7 +35,8 @@
             </div>
             <div class="col-md-4 search-folio pr-0">
                 <mat-form-field floatLabel="never" appearance="standard">
-                    <input matInput class="form-control" placeholder="Search folio" [formControl]="filterSearchForm">
+                    <input matInput autocomplete="off" class="form-control" placeholder="Search folio"
+                        [formControl]="filterSearchForm">
                 </mat-form-field>
             </div>
         </div>
@@ -64,36 +65,40 @@
             [appSkeletonLoading]="isLoading">
             <ng-container matColumnDef="checkbox">
                 <th mat-header-cell *matHeaderCellDef>
-                    <mat-checkbox (change)="$event ? masterToggle() : null"
-                        [checked]="selection.hasValue() && isAllSelected()"
-                        [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()"
-                        *ngIf="!isLoading">
-                    </mat-checkbox>
+                    <span *ngIf="!isLoading">
+                        <mat-checkbox (change)="$event ? masterToggle() : null"
+                            [checked]="selection.hasValue() && isAllSelected()"
+                            [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()"
+                            *ngIf="!isLoading">
+                        </mat-checkbox>
+                    </span>
                 </th>
                 <td mat-cell *matCellDef="let row">
                     <div class="bar">
-                        <mat-checkbox (click)="$event.stopPropagation()"
-                            (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)"
-                            [aria-label]="checkboxLabel(row)">
-                        </mat-checkbox>
+                        <span *ngIf="!isLoading">
+                            <mat-checkbox (click)="$event.stopPropagation()"
+                                (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)"
+                                [aria-label]="checkboxLabel(row)">
+                            </mat-checkbox>
+                        </span>
                     </div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="position">
-                <th mat-header-cell *matHeaderCellDef class="br"> Scheme name details </th>
+                <th mat-header-cell *matHeaderCellDef class="br"> Scheme Details </th>
                 <td mat-cell *matCellDef="let element" class="br c-p" (click)="openRecordDeatils(element)">
-                    <div class="bar" *ngIf="!isLoading">
-                        {{element.schemeName ? element.schemeName: '-'}}
+                    <div class="bar">
+                        <span *ngIf="!isLoading">{{element.schemeName ? element.schemeName: '-'}}</span>
                     </div>
                 </td>
             </ng-container>
 
 
             <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef class="br"> Investor name </th>
+                <th mat-header-cell *matHeaderCellDef class="br"> Investor Name </th>
                 <td mat-cell *matCellDef="let element" class="br">
                     <div class="bar">
-                        {{element.investorName ? element.investorName:'-'}}
+                        <span *ngIf="!isLoading">{{element.investorName ? element.investorName:'-'}}</span>
                     </div>
                 </td>
             </ng-container>
@@ -101,26 +106,42 @@
             <ng-container matColumnDef="weight">
                 <th mat-header-cell *matHeaderCellDef class="br"> Details </th>
                 <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar" *ngIf="!isLoading">
-                        {{element.type}} / &#8377; {{ element.amount }}
+                    <div class="bar">
+                        <span *ngIf="!isLoading">{{element.type}} /
+                            &#8377;{{ element.amount }}</span>
                     </div>
                 </td>
             </ng-container>
 
-            <ng-container matColumnDef="symbol">
-                <th mat-header-cell *matHeaderCellDef class="br"> Regd date / From date / To date </th>
+            <ng-container matColumnDef="rdate">
+                <th mat-header-cell *matHeaderCellDef class="br"> Regd Date </th>
                 <td mat-cell *matCellDef="let element" class="br">
-                    <div class="bar" *ngIf="!isLoading">
-                        {{element.registeredDate|date:'yyyy-MM-dd'}} / {{ element.from_date|date:'yyyy-MM-dd' }} /
-                        {{ element.to_date|date:'yyyy-MM-dd' }}
+                    <div class="bar">
+                        <span *ngIf="!isLoading">{{element.registeredDate|date:'dd-MM-yy'}}</span>
+                    </div>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="fdate">
+                <th mat-header-cell *matHeaderCellDef class="br"> From Date</th>
+                <td mat-cell *matCellDef="let element" class="br">
+                    <div class="bar">
+                        <span *ngIf="!isLoading">{{ element.from_date|date:'dd-MM-yy' }}</span>
+                    </div>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="tdate">
+                <th mat-header-cell *matHeaderCellDef class="br"> To Date </th>
+                <td mat-cell *matCellDef="let element" class="br">
+                    <div class="bar">
+                        <span *ngIf="!isLoading">{{ element.to_date|date:'dd-MM-yy' }}</span>
                     </div>
                 </td>
             </ng-container>
             <ng-container matColumnDef="tra">
-                <th mat-header-cell *matHeaderCellDef class="br"> Transaction # </th>
+                <th mat-header-cell *matHeaderCellDef class="br"> Txn No. </th>
                 <td mat-cell *matCellDef="let element" class="br">
                     <div class="bar">
-                        {{element.transactionNumber}}
+                        <span *ngIf="!isLoading">{{element.transactionNumber}}</span>
                     </div>
                 </td>
             </ng-container>
@@ -142,9 +163,12 @@
                             Remove
                         </button>
                     </div>
+                    <div class="bar">
+                        <span *ngIf="isLoading"></span>
+                    </div>
                 </td>
             </ng-container>
-            <ng-container matColumnDef="menu">
+            <!-- <ng-container matColumnDef="menu">
                 <th mat-header-cell *matHeaderCellDef> </th>
                 <td mat-cell *matCellDef="let element">
                     <span class="material-icons c-p" [matMenuTriggerFor]="menu">
@@ -156,7 +180,7 @@
                         <button mat-menu-item>Item 2</button>
                     </mat-menu>
                 </td>
-            </ng-container>
+            </ng-container> -->
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
