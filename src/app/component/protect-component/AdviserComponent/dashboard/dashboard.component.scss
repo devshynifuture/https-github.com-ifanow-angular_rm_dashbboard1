@@ -1,217 +1,239 @@
 .noDataFound {
-    width: 100%;
-    text-align: center;
-    padding: 10px;
-    img {
-        width: 200px;
-    }
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+
+  img {
+    width: 200px;
+  }
 }
 
 .noTransactionFound {
-    img {
-        width: 138px;
-    }
+  img {
+    width: 138px;
+  }
 }
 
 .noInvAccFound {
-    img {
-        width: 130px;
-    }
+  img {
+    width: 130px;
+  }
+}
+
+.pointNumber {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  border-radius: 50%;
+  margin-right: 8px;
 }
 
 .sticky-top {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 140px;
-    z-index: 1020;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 140px;
+  z-index: 1020;
 }
 
 .max-scroll {
-    height: 590px;
-    overflow-y: auto;
+  height: 590px;
+  overflow-y: auto;
 }
 
 .max-scroll::-webkit-scrollbar {
-    width: 4px;
+  width: 4px;
 }
 
 .max-scroll::-webkit-scrollbar-track {
-    background: #f1f1f1;
+  background: #f1f1f1;
 }
 
 .max-scroll::-webkit-scrollbar-thumb:hover {
-    background: #555;
+  background: #555;
 }
-#piechartMutualFund {
-    height: 100px;
-    width: 100px;
-  }
 
-  .addTo-DO {
-    .form-control {
-        border: transparent !important;
-        border-bottom: 1px solid #2680EB !important;
-    }
+#piechartMutualFund {
+  height: 100px;
+  width: 100px;
+}
+
+.addTo-DO {
+  .form-control {
+    border: transparent !important;
+    border-bottom: 1px solid #2680EB !important;
+  }
 }
 
 .height180 {
-    height: 180px;
-    margin: 20px auto;
-    
+  height: 180px;
+  margin: 20px auto;
+
 }
 
 .skeletonAnimation .relClass {
-    position: relative;
-    .bar {
-        background-color: #E7E7E7;
-        width: 100%;
-        &:after {
-            position: absolute;
-            transform: translateY(-50%);
-            top: 50%;
-            left: 0;
-            content: "";
-            display: block;
-            width: 100%;
-            height: 24px;
-            background-image: linear-gradient(100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0) 80%);
-            background-size: 100px 24px;
-            background-position: -10px 0;
-            background-repeat: no-repeat;
-            animation: loading 1s infinite;
-        }
+  position: relative;
+
+  .bar {
+    background-color: #E7E7E7;
+    width: 100%;
+
+    &:after {
+      position: absolute;
+      transform: translateY(-50%);
+      top: 50%;
+      left: 0;
+      content: "";
+      display: block;
+      width: 100%;
+      height: 24px;
+      background-image: linear-gradient(100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0) 80%);
+      background-size: 100px 24px;
+      background-position: -10px 0;
+      background-repeat: no-repeat;
+      animation: loading 1s infinite;
     }
-    .bar180 {
-        background-color: #E7E7E7;
-        width: 180px;
-        border-radius: 50%;
-        &:after {
-            position: absolute;
-            transform: translateY(-50%);
-            top: 50%;
-            left: 0;
-            content: "";
-            display: block;
-            width: 100%;
-            height: 180px;
-            background-image: linear-gradient(100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0) 80%);
-            background-size: 100px 180px;
-            background-position: -10px 0;
-            background-repeat: no-repeat;
-            animation: loading 1s infinite;
-        }
+  }
+
+  .bar180 {
+    background-color: #E7E7E7;
+    width: 180px;
+    border-radius: 50%;
+
+    &:after {
+      position: absolute;
+      transform: translateY(-50%);
+      top: 50%;
+      left: 0;
+      content: "";
+      display: block;
+      width: 100%;
+      height: 180px;
+      background-image: linear-gradient(100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0) 80%);
+      background-size: 100px 180px;
+      background-position: -10px 0;
+      background-repeat: no-repeat;
+      animation: loading 1s infinite;
     }
-    .bar200 {
-        background-color: #E7E7E7;
-        width: 200px;
-        border-radius: 50%;
-        &:after {
-            position: absolute;
-            transform: translateY(-50%);
-            top: 50%;
-            left: 0;
-            content: "";
-            display: block;
-            width: 100%;
-            height: 200px;
-            background-image: linear-gradient(100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0) 80%);
-            background-size: 100px 200px;
-            background-position: -10px 0;
-            background-repeat: no-repeat;
-            animation: loading 1s infinite;
-        }
+  }
+
+  .bar200 {
+    background-color: #E7E7E7;
+    width: 200px;
+    border-radius: 50%;
+
+    &:after {
+      position: absolute;
+      transform: translateY(-50%);
+      top: 50%;
+      left: 0;
+      content: "";
+      display: block;
+      width: 100%;
+      height: 200px;
+      background-image: linear-gradient(100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0) 80%);
+      background-size: 100px 200px;
+      background-position: -10px 0;
+      background-repeat: no-repeat;
+      animation: loading 1s infinite;
     }
+  }
 }
 
 .height24 {
-    height: 24px;
-    margin-bottom: 6px;
+  height: 24px;
+  margin-bottom: 6px;
 }
 
 .btn40 {
-    height: 40px;
+  height: 40px;
 }
 
 .dasBoradBox {
-    width: 100%;
+  width: 100%;
 }
 
 
 .fundBoxDashboard {
-    min-width: 180px;
-    height: 102px;
-    border-radius: 10px;
-    padding: 10px;
-    border: 1px solid #D9DEE1;
-    margin-right: 10px;
+  min-width: 180px;
+  height: 102px;
+  border-radius: 10px;
+  padding: 10px;
+  border: 1px solid #D9DEE1;
+  margin-right: 10px;
 }
 
-.rightBorder {  border-right: 0.5px dashed #83959D; }
+.rightBorder {
+  border-right: 0.5px dashed #83959D;
+}
+
 .ellipsisClass {
-    width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .pendingClass {
-    background: #FDAF40;
+  background: #FDAF40;
 }
+
 .rejectionsClass {
-    background: #FF7272;
+  background: #FF7272;
 }
 
 
 .fundBoxDashboard_loader {
-    min-width: 155px;
-    height: 102px;
-    border-radius: 10px;
-    padding: 10px;
-    border: 1px solid #D9DEE1;
-    margin-right: 10px;
+  min-width: 155px;
+  height: 102px;
+  border-radius: 10px;
+  padding: 10px;
+  border: 1px solid #D9DEE1;
+  margin-right: 10px;
 }
 
-.height40{
-    height: 40px;
-    width: 100% !important;
-    border-radius: 50%;
+.height40 {
+  height: 40px;
+  width: 100% !important;
+  border-radius: 50%;
 }
 
 .investmentBox {
-    width: 230px !important;
-    margin-right: 15px;
-    padding: 10px 0px;
+  width: 230px !important;
+  margin-right: 15px;
+  padding: 10px 0px;
 }
 
 
 .fundBox {
-    min-width: 240px;
-    height: 170px;
-    border-radius: 4px;
-    padding: 10px;
-    border: 1px solid #D9DEE1;
-    margin-right: 20px; 
+  min-width: 240px;
+  height: 170px;
+  border-radius: 4px;
+  padding: 10px;
+  border: 1px solid #D9DEE1;
+  margin-right: 20px;
 }
 
 .shadowBox {
-    background-color: #fff;
-    box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  background-color: #fff;
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
 }
 
 .openGuideBox {
-    border: 1px solid #FF9F00;
-border-radius: 4px;
-.orangeBox {
+  border: 1px solid #FF9F00;
+  border-radius: 4px;
+
+  .orangeBox {
     background: linear-gradient(180deg, rgba(253, 175, 64, 0.79) 12.92%, #FDAF40 99.1%, rgba(253, 175, 64, 0.890604) 99.11%);
     padding: 20px;
+
     .openGuideBtn {
-        width: 164px;
-        height: 34px;
-        padding: 0px !important;
-        color: #FF9F00;
-        font-size: 14px;
-        background: #fff;
-        border-radius: 4px !important;
+      width: 164px;
+      height: 34px;
+      padding: 0px !important;
+      color: #FF9F00;
+      font-size: 14px;
+      background: #fff;
+      border-radius: 4px !important;
     }
-    }
+  }
 }

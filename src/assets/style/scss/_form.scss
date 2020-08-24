@@ -15,6 +15,14 @@
   outline: none;
 }
 
+.mat-hint {
+  color: #757575 !important;
+}
+
+.mat-form-field .mat-hint {
+  font-weight: 400;
+}
+
 .mat-select-placeholder {
   color: #6c757d;
 }
