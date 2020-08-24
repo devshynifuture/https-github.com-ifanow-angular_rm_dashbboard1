@@ -191,7 +191,7 @@ export class SipClientWiseComponent implements OnInit {
 
   changeCeasedDateDialog(data, parentObj) {
     const dialogRef = this.dialog.open(DateChangeDialogComponent, {
-      width: '663px',
+      width: '300px',
       data
     });
 
@@ -326,6 +326,7 @@ export class SipClientWiseComponent implements OnInit {
             this.totalOfSipCount += o.sipCount;
             this.totalWeight += o.weightInPercentage;
           });
+          this.totalWeight = Math.round(this.totalWeight)
           this.filteredArray = [...this.clientList];
         } else {
           this.filteredArray = [];

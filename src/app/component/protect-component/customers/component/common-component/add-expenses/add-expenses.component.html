@@ -127,11 +127,12 @@
                     </mat-form-field>
                 </div>
             </div>
-            <div class="col-md-6" *ngIf="recuring.get('continueTill').value=='3' || recuring.get('continueTill').value=='4'">
+            <div class="col-md-6"
+                *ngIf="recuring.get('continueTill').value=='3' || recuring.get('continueTill').value=='4'">
                 <div class="form-group mt-35 mb-0">
                     <mat-form-field>
-                        <input matInput  (keyup)="onChange(recuring,'numberOfYearOrNumberOfTime',$event)" class="form-control br-0" formControlName="numberOfYearOrNumberOfTime"
-                            type="number">
+                        <input matInput (keyup)="onChange(recuring,'numberOfYearOrNumberOfTime',$event)"
+                            class="form-control br-0" formControlName="numberOfYearOrNumberOfTime" type="number">
                         <mat-error class="f-12 pt-4">
                             This field is required
                         </mat-error>
@@ -172,7 +173,7 @@
 
         <div class="row pt-24">
             <div class="col-md-6 pl-0">
-                <h5 class="m-0 pt-8">Family Member</h5>
+                <h5 class="m-0 pt-8">Family member</h5>
                 <div class="form-group mb-0 pt-8">
                     <mat-form-field class="w-100">
                         <mat-select formControlName="ownerName" class="form-control br-0">
@@ -182,8 +183,12 @@
                                 <span>{{f.name}}</span>
                             </mat-option>
                         </mat-select>
-                        <mat-error class="f-12 pt-4">
+                        <mat-error class="f-12 pt-4" *ngIf="(recuring.get('ownerName').errors?.required)">
                             This field is required
+                        </mat-error>
+                        <mat-error class="f-12" *ngIf="(recuring.get('ownerName').errors?.max)">
+                            already added for this expense category
+
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -219,13 +224,14 @@
                 <h5 class="m-0 pt-8">Choose a date</h5>
                 <div class="form-group mb-0 pt-4">
                     <mat-form-field class="ba-date">
-                        <input matInput class="form-control b-0 br-0" (focus)="picker.open()" (input)="preventDefault($event)" [matDatepicker]="picker" formControlName="expenseDoneOn">
+                        <input matInput class="form-control b-0 br-0" (focus)="picker.open()"
+                            (input)="preventDefault($event)" [matDatepicker]="picker" formControlName="expenseDoneOn">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                         <mat-error class="f-12 pt-4">
                             This field is required
                         </mat-error>
-                    
+
                     </mat-form-field>
                 </div>
             </div>
@@ -233,7 +239,8 @@
                 <h5 class="m-0 pt-8">Choose a time</h5>
                 <div class="form-group mb-0 pt-4">
                     <mat-form-field>
-                        <input  matInput class="form-control br-0" aria-label="12hr format" [ngxTimepicker]="default" formControlName="timeInMilliSec" readonly>
+                        <input matInput class="form-control br-0" aria-label="12hr format" [ngxTimepicker]="default"
+                            formControlName="timeInMilliSec" readonly>
                         <ngx-material-timepicker #default></ngx-material-timepicker>
                         <!-- <input matInput class="form-control br-0" aria-label="12hr format" [ngxTimepicker]="toggleTimepicker" [disableClick]="true" readonly>
                         <ngx-material-timepicker-toggle [for]="toggleTimepicker"></ngx-material-timepicker-toggle>
@@ -319,8 +326,11 @@
                                 <span>{{f.name}}</span>
                             </mat-option>
                         </mat-select>
-                        <mat-error class="f-12 pt-4">
+                        <mat-error class="f-12 pt-4" *ngIf="(expenses.get('ownerName').errors?.required)">
                             This field is required
+                        </mat-error>
+                        <mat-error class="f-12" *ngIf="(expenses.get('ownerName').errors?.max)">
+                            already added for this expense category
                         </mat-error>
                     </mat-form-field>
                 </div>

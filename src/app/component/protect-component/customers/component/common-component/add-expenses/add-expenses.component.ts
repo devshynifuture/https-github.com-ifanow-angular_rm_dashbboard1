@@ -6,6 +6,7 @@ import { PlanService } from '../../customer/plan/plan.service';
 import { ConstantsService } from "../../../../../../constants/constants.service";
 import { EventService } from 'src/app/Data-service/event.service';
 import { PeopleService } from 'src/app/component/protect-component/PeopleComponent/people.service';
+import { listLazyRoutes } from '@angular/compiler/src/aot/lazy_routes';
 
 @Component({
   selector: 'app-add-expenses',
@@ -160,6 +161,35 @@ export class AddExpensesComponent implements OnInit {
   }
 
   selectClient(event, selected) {
+    if(this.inputData.flag == 'editExpenses'|| this.inputData.flag == 'addExpenses' && this.isRecuring ==true){
+      let List = this.inputData.getData.expenseList
+      List.forEach(element => {
+        if(element.expenseCategoryId == (this.recuring.controls.category.value)&& selected.id == element.familyMemberId){
+          this.recuring.get('ownerName').setErrors({ max: 'cannot add same category' });
+        }
+      });
+    }else if(this.inputData.flag == 'editExpenses'|| this.inputData.flag == 'addExpenses' && this.isRecuring == false){
+      let List = this.inputData.getData.expenseList
+      List.forEach(element => {
+        if(element.expenseCategoryId == (this.expenses.controls.category.value)&& selected.id == element.familyMemberId){
+          this.expenses.get('ownerName').setErrors({ max: 'cannot add same category' });
+        }
+      });
+    }else if(this.inputData.flag == 'addBudget'|| this.inputData.flag == 'editBudget' && this.isRecuring == true){
+      let List = this.inputData.getData.expenseList
+      List.forEach(element => {
+        if(element.expenseCategoryId == (this.recuring.controls.category.value)&& selected.id == element.familyMemberId){
+          this.recuring.get('ownerName').setErrors({ max: 'cannot add same category' });
+        }
+      });
+    }else{
+      let List = this.inputData.getData.expenseList
+      List.forEach(element => {
+        if(element.expenseCategoryId == (this.expenses.controls.category.value)&& selected.id == element.familyMemberId){
+          this.expenses.get('ownerName').setErrors({ max: 'cannot add same category' });
+        }
+      });
+    }
     this.familyMemberId = selected.id
   }
   toggle(value) {
@@ -177,6 +207,9 @@ export class AddExpensesComponent implements OnInit {
 
     }
     
+  }
+  changeSelection(){
+
   }
   continuesTill(value) {
     this.isNoOfYrs = value;
@@ -205,6 +238,8 @@ export class AddExpensesComponent implements OnInit {
       form.get(value).setValue(event.target.value);
     }
   }
+  
+
   saveRecuringExpense() {
     // if (this.recuring.get('repeatFrequency').invalid) {
     //   this.recuring.get('repeatFrequency').markAsTouched();

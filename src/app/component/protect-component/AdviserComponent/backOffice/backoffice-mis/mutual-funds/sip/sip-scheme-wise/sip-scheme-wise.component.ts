@@ -261,7 +261,7 @@ export class SipSchemeWiseComponent implements OnInit {
 
   changeCeasedDateDialog(data, parentObj) {
     const dialogRef = this.dialog.open(DateChangeDialogComponent, {
-      width: '663px',
+      width: '300px',
       data
     });
 
@@ -311,6 +311,7 @@ export class SipSchemeWiseComponent implements OnInit {
         this.totalWeight += o.weightInPercentage;
         o.InvestorList = [];
       });
+      this.totalWeight = Math.round(this.totalWeight)
       this.filteredArray = [...this.category];
     } else {
       this.filteredArray = [];

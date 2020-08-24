@@ -21,7 +21,7 @@
                 </td>
             </ng-container>
             <ng-container matColumnDef="arnRiaNumber">
-                <th mat-header-cell *matHeaderCellDef class="br">Arn Ria Number</th>
+                <th mat-header-cell *matHeaderCellDef class="br">ARN/RIA No.</th>
                 <td mat-cell *matCellDef="let element" class="br">
                     <div class="bar">
                         <p class="rtaClass"> {{element.arnRiaNumber ? element.arnRiaNumber : '-'}} </p>
@@ -64,7 +64,8 @@
 
             <!-- Symbol Column -->
             <ng-container matColumnDef="uploadedBy">
-                <th mat-sort-header="uploadedBy" mat-header-cell *matHeaderCellDef class="br">Uploaded By</th>
+                <th   class="text-left" mat-header-cell *matHeaderCellDef class="br">
+                    Uploaded By</th>
                 <td mat-cell *matCellDef="let element" class="br">
                     <div class="bar">
                         {{element.uploadedBy}}

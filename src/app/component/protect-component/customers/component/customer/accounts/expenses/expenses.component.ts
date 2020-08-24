@@ -113,6 +113,9 @@ export class ExpensesComponent implements OnInit {
   myFiles: any;
   fileUploadData: any;
   file: any;
+  expenseList: any;
+  recurringTrnList: any;
+  expenseGraph: void;
 
   // periodSelection: any;
 
@@ -137,12 +140,12 @@ export class ExpensesComponent implements OnInit {
     this.getOrgData = AuthService.getOrgDetails();
     this.getStartAndEndDate('1');
     this.getAllExpense();
-    this.getExpenseGraphValue();
+    // this.getExpenseGraphValue();
     // this.getBudgetGraphValues();
     // this.timePeriodSelection.setValue('1');
     // this.getTimePeriod();
-    this.getTransaction();
-    this.getAssetOfExpense();
+    // this.getTransaction();
+    // this.getAssetOfExpense();
     this.filterDate = [{name:'period'}]
     this.selectedDateRange = { begin: this.startDate, end: this.endDate };
 
@@ -197,6 +200,9 @@ export class ExpensesComponent implements OnInit {
     );
   }
   getAllExpense(){
+    this.isLoading = true;
+    this.dataSource.data = [{}, {}, {}];
+    this.dataSource1.data = [{}, {}, {}];
     const obj = {
       advisorId: this.advisorId,
       clientId: this.clientId,
@@ -206,12 +212,92 @@ export class ExpensesComponent implements OnInit {
     this.planService.getAllExpense(obj).subscribe(
       data => {
         if(data){
+          this.expenseList = data.expenseList;
+          this.recurringTrnList = data.recurringExpenseList;
+          this.expenseList.forEach(singleExpense => {
+            const singleExpenseCategory = this.constantService.expenseJsonMap[singleExpense.expenseCategoryId];
+            if (singleExpenseCategory) {
+              singleExpense.expenseType = singleExpenseCategory.expenseType;
+            }
+          });
+          this.transaction = this.expenseList;
+          this.recurringTrnList.forEach(singleExpense => {
+            const singleExpenseCategory = this.constantService.expenseJsonMap[singleExpense.expenseCategoryId];
+            if (singleExpenseCategory) {
+              singleExpense.expenseType = singleExpenseCategory.expenseType;
+            }
+          });
+          this.recurringTransaction = this.recurringTrnList;
+          this.dataSource.data = [ ...this.transaction, ...this.recurringTransaction];
+    
+          // this.dataSource.data = data;
+          this.dataSource.sort = this.TransactionSort;
+          this.expenseGraph = data.expenseGraphdATA;
+          this.getExpenseGraphValueNew(this.expenseGraph);
+          this.getAssetData(data);
           console.log('All expense data',data);
         }
+        this.isLoading = false;
       }, (error) => {
         this.eventService.showErrorMessage(error);
       }
     );
+  }
+  getAssetData(data){
+    if(data){
+      let finalArray=[];
+      let committedInvestmentExpense =  data.committedInvestmentExpense;
+      let committedExpenditureExpense =  data.committedExpenditureExpense;
+      let pord =  data.pord;
+      let traditionalLifeInsuranceExpense=  data.traditionalLifeInsuranceExpense.assetList.length > 0 ? data.traditionalLifeInsuranceExpense.assetList : [];
+      let generalInsuranceExpense = data.generalInsuranceExpense.assetList.length > 0 ? data.generalInsuranceExpense.assetList : [];
+      let termLifeInsuranceExpense = data.termLifeInsuranceExpense.assetList.length > 0 ? data.termLifeInsuranceExpense.assetList:[];
+      let ulipLifeInsuranceExpense = data.ulipLifeInsuranceExpense.assetList.length > 0 ? data.ulipLifeInsuranceExpense.assetList : [];
+      let ssy = data.ssy;
+      let loanExpense = data.loanExpense.assetList.length > 0 ? data.loanExpense.assetList : [];
+      let recurringDeposit = data.recurringDeposit;
+      let sipExpense = data.sipExpense.assetList.length > 0 ? data.sipExpense.assetList : [];
+      this.expenseAssetData = data;
+      finalArray = [ ...committedInvestmentExpense, ...committedExpenditureExpense,...pord,...traditionalLifeInsuranceExpense,...termLifeInsuranceExpense,...generalInsuranceExpense,...ulipLifeInsuranceExpense,...ssy,...loanExpense,...recurringDeposit,...sipExpense];
+      console.log(finalArray)
+      // let dataAsset =data;
+      // this.assetList =[{name:'pord'},{name:'ssy'},{name:'recurringDeposit'},{name:'mutualfund'}]
+      // Object.entries(this.assetList).forEach(([key, value]) => {
+
+      //   let  obj = value.name
+      //   let assetData= dataAsset[obj];
+      //   if(assetData){
+      //     assetData.forEach(element => {
+      //       finalArray.push(element)
+      //     });
+      //   }
+
+      //   console.log(key,value);
+      // });
+      this.dataSource1.data = finalArray;
+       this.dataSource1.sort = this.recurringTransactionTabSort;
+
+
+      console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',this.dataSource1.data);
+    }
+  }
+  getExpenseGraphValueNew(data){
+    this.basicAmountPercent =  data.Basic ? data.Basic.categoryWisePercentage : 0
+    this.rdAmountPercent =  data.RECURRING_DEPOSIT ? data.RECURRING_DEPOSIT.categoryWisePercentage : 0
+    this.lifeInsurancePercent = data.LIFE_INSURANCE ? data.LIFE_INSURANCE.expenseAmount : 0
+    this.commitedInvestment = data.COMMITTED_INVESTMENT ? data.COMMITTED_INVESTMENT.expenseAmount : 0
+    this.expenditure = data.COMMITTED_EXPENDITURES ? data.COMMITTED_EXPENDITURES.expenseAmount : 0
+
+    this.generalInsurancePercent = data.GENERAL_INSURANCE ? data.GENERAL_INSURANCE.expenseAmount : 0
+    this.liabilitiesPercent = data.LIABILITIES ? data.LIABILITIES.expenseAmount : 0
+    this.miscellaneousAmount = data.Miscellaneous;
+    this.entertainmentAmount = data.Entertainment;
+    this.educationAmount = data.Education;
+    // this.miscellaneousAmount = data.Billes_&_Utilies;
+    this.transportAmount = data.Transport;
+    this.housingAmount = data.Housing;
+    this.spent = data.total;
+    this.cashFlow('piechartExpense')
   }
   getBudgetGraphValues(){
     const obj = {
@@ -363,9 +449,10 @@ export class ExpensesComponent implements OnInit {
 
       // }, 300);
     } else {
-      this.getTransaction();
-      this.getAssetOfExpense()
-      this.getExpenseGraphValue();
+      // this.getTransaction();
+      // this.getAssetOfExpense();
+      this.getAllExpense();
+      // this.getExpenseGraphValue();
       // setTimeout(() => {
       //   this.cashFlow('piechartExpense')
 
@@ -591,7 +678,7 @@ export class ExpensesComponent implements OnInit {
   addFilterPeriod(value){
     let val=value.value
     this.getStartAndEndDate(val);
-    this.getTransaction();
+    // this.getTransaction();
     // this.getRecuringTransactions();
     this.getBudgetList();
     this.getBugetRecurring();
@@ -769,7 +856,7 @@ export class ExpensesComponent implements OnInit {
             data => {
               this.eventService.openSnackBar('Expense transaction is deleted', 'Dismiss');
               dialogRef.close();
-              this.getTransaction();
+              // this.getTransaction();
             },
             error => this.eventService.showErrorMessage(error)
           );
@@ -824,17 +911,23 @@ export class ExpensesComponent implements OnInit {
       state: 'open35',
       componentName: AddExpensesComponent
     };
+    fragmentData.data.getData = {
+      expenseList:this.dataSource.data,
+      budgetList:this.dataSource4.data,
+      otherCommitments:this.dataSource5.data
+    }
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
             if(sideBarData.value == 'editExpense' || sideBarData.value == 'addExpense' ){
-              this.getTransaction();
-              this.getExpenseGraphValue();
+              // this.getTransaction();
+              this.getAllExpense();
+              // this.getExpenseGraphValue();
             }else if(sideBarData.value == 'addRecurringTrn' || sideBarData.value == 'editRecurringTrn'){
               this.getRecuringTransactions();
-              this.getExpenseGraphValue();
+              // this.getExpenseGraphValue();
             }else if(sideBarData.value == 'editBudget' || sideBarData.value == 'addBudget'){
               this.getBudgetList();
               this.getBudgetGraphValues();
