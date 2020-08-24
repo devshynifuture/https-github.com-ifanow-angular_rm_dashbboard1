@@ -7,9 +7,8 @@
             {{(this.viewMode == 'Unrealized Transactions') ? 'unrealized transactions' : 'all transactions'}}
          </h4>
       </div>
-      <div
-         class="col-md-6 p-0 justify-content-end d-flex align-items-center">
-         <div class="pdfClass" *ngIf="!isLoading && (unrealisedArray > 0 || dataSource.data.length > 0)">
+      <div class="col-md-6 p-0 justify-content-end d-flex align-items-center">
+         <div class="pdfClass" *ngIf="!isLoading && (unrealisedArray.length > 0 || dataSource.data.length > 0)">
             <a *ngIf="!fragmentData.isSpinner" [matMenuTriggerFor]="menu5" class="c-p downloadPdfIcon">
                <img src="assets/images/svg/download-bordered.svg">
             </a>
@@ -171,11 +170,12 @@
 
    <div class="row secoundTable">
       <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 p-0 mb-8">
-         <cdk-virtual-scroll-viewport #cdkVirtualScrollViewport [hidden]="!unrealisedArray.length>0" class="tran-height-2" >
+         <cdk-virtual-scroll-viewport #cdkVirtualScrollViewport [hidden]="!unrealisedArray.length>0"
+            class="tran-height-2">
             <!-- <div *ngIf="customDataSource.data.length>0" class="wrapper">-->
-            <table #tableEl [appSkeletonLoading]="isLoading" *ngIf="unrealisedData" [dataSource]="unrealisedData" appSkeletonLoading
-               class="mutualfunds-capital-equity skeletonAnimation" id="table-low" mat-table matSort
-                   [multiTemplateDataRows]="true">
+            <table #tableEl [appSkeletonLoading]="isLoading" *ngIf="unrealisedData" [dataSource]="unrealisedData"
+               appSkeletonLoading class="mutualfunds-capital-equity skeletonAnimation" id="table-low" mat-table matSort
+               [multiTemplateDataRows]="true">
                <ng-container matColumnDef="no" sticky>
                   <th *matHeaderCellDef class="br" mat-header-cell>Sr no.</th>
                   <td *matCellDef="let element;index as i" class="br zIndex" mat-cell>
@@ -486,9 +486,10 @@
                <tr *matRowDef="let row; columns: ['groupHeader']; when: isGroup" mat-row></tr>
                <tr *matRowDef="let row; columns: ['groupHeader2']; when: isGroup2" mat-row></tr>
                <tr *matRowDef="let row; columns: ['groupHeader3']; when: isGroup3" mat-row></tr>
-              <tr [style.height.px]="placeholderHeight" mat-row *matRowDef="let row; let index = index; columns: []; when: placeholderWhen"></tr>
+               <tr [style.height.px]="placeholderHeight" mat-row
+                  *matRowDef="let row; let index = index; columns: []; when: placeholderWhen"></tr>
 
-              <!-- <tr *matRowDef="let row; columns: ['groupHeader4']; when: isGroup4" mat-row></tr> -->
+               <!-- <tr *matRowDef="let row; columns: ['groupHeader4']; when: isGroup4" mat-row></tr> -->
                <!-- <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr> -->
             </table>
             <!-- </div>-->
@@ -539,67 +540,67 @@
             <b>{{customDataSource.data?.arrayTran[7]?.name}}</b>
          </td>
       </tr>
-</table>
+   </table>
 
 </div>
 
 <div #unrealizedTranTemplateHeader id="templateHeader" class="hide" *ngIf="showDownload == true">
-<table  id="FakeHeaders" style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif; ">
-   <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
-      <td *ngIf="customDataSource.data?.arrayUnrealised[0]?.isCheked == true"
-         style="width: 4%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-         <b>{{customDataSource.data?.arrayUnrealised[0]?.name}}</b>
-      </td>
-      <td *ngIf="customDataSource.data?.arrayUnrealised[1]?.isCheked == true"
-         style="width: 9%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-         <b>{{customDataSource.data?.arrayUnrealised[1]?.name}}</b>
-      </td>
-      <td *ngIf="customDataSource.data?.arrayUnrealised[2]?.isCheked == true"
-         style="width: 9%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-         <b>{{customDataSource.data?.arrayUnrealised[2]?.name}}</b>
-      </td>
-      <td *ngIf="customDataSource.data?.arrayUnrealised[3]?.isCheked == true"
-         style="width: 11%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-         <b>{{customDataSource.data?.arrayUnrealised[3]?.name}}</b>
-      </td>
-      <td *ngIf="customDataSource.data?.arrayUnrealised[4]?.isCheked == true"
-         style="width: 9%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-         <b>{{customDataSource.data?.arrayUnrealised[4]?.name}}</b>
-      </td>
-      <td *ngIf="customDataSource.data?.arrayUnrealised[5]?.isCheked == true"
-         style="width: 8%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-         <b>{{customDataSource.data?.arrayUnrealised[5].name}}</b>
-      </td>
-      <td *ngIf="customDataSource.data?.arrayUnrealised[6]?.isCheked == true"
-         style="width: 6%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-         <b>{{customDataSource.data?.arrayUnrealised[6]?.name}}</b>
-      </td>
-      <td *ngIf="customDataSource.data?.arrayUnrealised[7]?.isCheked == true"
-         style="width: 8%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-         <b>{{customDataSource.data?.arrayUnrealised[7]?.name}}</b>
-      </td>
-      <td *ngIf="customDataSource.data?.arrayUnrealised[8]?.isCheked == true"
-         style="width: 8%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-         <b>{{customDataSource.data?.arrayUnrealised[8]?.name}}</b>
-      </td>
-      <td *ngIf="customDataSource.data?.arrayUnrealised[9]?.isCheked == true"
-         style="width: 8%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-         <b>{{customDataSource.data?.arrayUnrealised[9]?.name}}</b>
-      </td>
-      <td *ngIf="customDataSource.data?.arrayUnrealised[10]?.isCheked == true"
-         style="width: 6%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
-         <b>{{customDataSource.data?.arrayUnrealised[10]?.name}}</b>
-      </td>
-      <td *ngIf="customDataSource.data?.arrayUnrealised[11]?.isCheked == true"
-         style="width: 9%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-         <b>{{customDataSource.data?.arrayUnrealised[11]?.name}}</b>
-      </td>
-      <td *ngIf="customDataSource.data?.arrayUnrealised[12]?.isCheked == true"
-         style="width: 5%;padding: 7px 8px;font-weight: 600; text-align: right; font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
-         <b>{{customDataSource.data?.arrayUnrealised[12]?.name}}</b>
-      </td>
-   </tr>
-</table>
+   <table id="FakeHeaders" style="width: 100%;border-collapse: collapse;font-family: Roboto,sans-serif; ">
+      <tr style="background-color: #F5F7F7;height: 40px;border: 1px solid #DADCE0;">
+         <td *ngIf="customDataSource.data?.arrayUnrealised[0]?.isCheked == true"
+            style="width: 4%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <b>{{customDataSource.data?.arrayUnrealised[0]?.name}}</b>
+         </td>
+         <td *ngIf="customDataSource.data?.arrayUnrealised[1]?.isCheked == true"
+            style="width: 9%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <b>{{customDataSource.data?.arrayUnrealised[1]?.name}}</b>
+         </td>
+         <td *ngIf="customDataSource.data?.arrayUnrealised[2]?.isCheked == true"
+            style="width: 9%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <b>{{customDataSource.data?.arrayUnrealised[2]?.name}}</b>
+         </td>
+         <td *ngIf="customDataSource.data?.arrayUnrealised[3]?.isCheked == true"
+            style="width: 11%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <b>{{customDataSource.data?.arrayUnrealised[3]?.name}}</b>
+         </td>
+         <td *ngIf="customDataSource.data?.arrayUnrealised[4]?.isCheked == true"
+            style="width: 9%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <b>{{customDataSource.data?.arrayUnrealised[4]?.name}}</b>
+         </td>
+         <td *ngIf="customDataSource.data?.arrayUnrealised[5]?.isCheked == true"
+            style="width: 8%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <b>{{customDataSource.data?.arrayUnrealised[5].name}}</b>
+         </td>
+         <td *ngIf="customDataSource.data?.arrayUnrealised[6]?.isCheked == true"
+            style="width: 6%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <b>{{customDataSource.data?.arrayUnrealised[6]?.name}}</b>
+         </td>
+         <td *ngIf="customDataSource.data?.arrayUnrealised[7]?.isCheked == true"
+            style="width: 8%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <b>{{customDataSource.data?.arrayUnrealised[7]?.name}}</b>
+         </td>
+         <td *ngIf="customDataSource.data?.arrayUnrealised[8]?.isCheked == true"
+            style="width: 8%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <b>{{customDataSource.data?.arrayUnrealised[8]?.name}}</b>
+         </td>
+         <td *ngIf="customDataSource.data?.arrayUnrealised[9]?.isCheked == true"
+            style="width: 8%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <b>{{customDataSource.data?.arrayUnrealised[9]?.name}}</b>
+         </td>
+         <td *ngIf="customDataSource.data?.arrayUnrealised[10]?.isCheked == true"
+            style="width: 6%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;">
+            <b>{{customDataSource.data?.arrayUnrealised[10]?.name}}</b>
+         </td>
+         <td *ngIf="customDataSource.data?.arrayUnrealised[11]?.isCheked == true"
+            style="width: 9%;padding: 7px 8px;font-weight: 600;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <b>{{customDataSource.data?.arrayUnrealised[11]?.name}}</b>
+         </td>
+         <td *ngIf="customDataSource.data?.arrayUnrealised[12]?.isCheked == true"
+            style="width: 5%;padding: 7px 8px;font-weight: 600; text-align: right; font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;">
+            <b>{{customDataSource.data?.arrayUnrealised[12]?.name}}</b>
+         </td>
+      </tr>
+   </table>
 
 </div>
 <div #unrealizedTranTemplate id="template" class="hide" *ngIf="showDownload == true">
