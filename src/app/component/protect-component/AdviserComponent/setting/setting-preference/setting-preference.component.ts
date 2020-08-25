@@ -590,6 +590,10 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
           const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
             upperSliderData => {
               if (UtilService.isDialogClose(upperSliderData)) {
+                if (upperSliderData['tab2view']) {
+                  this.viewMode = 'tab4'
+                  this.getEmailVerification();
+                }
                 // this.getClientSubscriptionList();
                 subscription.unsubscribe();
               }
