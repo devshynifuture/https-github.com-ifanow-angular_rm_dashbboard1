@@ -97,6 +97,21 @@
 //     color: #FFFFFF;
 // }
 
+.numBox {
+    margin-right: 20px;
+    text-align: center;
+    span{
+        color: #000000;
+        background-color: #C4C4C4;
+        width: 25px;
+        height: 25px;
+        display: block;
+        border-radius: 50%;
+    }
+}
+
+
+
 
 @media screen and (min-width: 768px) and (max-width: 991px)
 {
