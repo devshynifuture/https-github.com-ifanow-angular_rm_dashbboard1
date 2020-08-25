@@ -2,10 +2,11 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/auth-service/authService';
 import { EventService } from 'src/app/Data-service/event.service';
 import { EnumDataService } from 'src/app/services/enum-data.service';
-import { MatTableDataSource, MatSort } from '@angular/material';
+import { MatTableDataSource, MatSort, MatDialog } from '@angular/material';
 import { element } from 'protractor';
 import { OrgSettingServiceService } from '../../org-setting-service.service';
 import { FormBuilder } from '@angular/forms';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-bulk-email-review-send',
@@ -30,7 +31,8 @@ export class BulkEmailReviewSendComponent implements OnInit {
     protected eventService: EventService,
     public enumDataService: EnumDataService,
     private orgSetting: OrgSettingServiceService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private dialog: MatDialog
   ) { }
 
   logoText = 'Your Logo here';
@@ -129,14 +131,51 @@ export class BulkEmailReviewSendComponent implements OnInit {
       subject: "subject",
       messageBody: "message"
     }
+    this.orgSetting.sendEmailToClients(obj).subscribe(
+      data => {
+        this.eventService.openSnackBar(data, "Dismiss")
+        this.close(true);
+      },
+      err => { this.eventService.openSnackBar(err, "Dismiss") }
+    )
   }
+
+  bulkEmail(value) {
+    const dialogData = {
+      data: value,
+      header: 'EMAIL BULK PASSWORD',
+      body: '',
+      body2: '',
+      btnYes: 'CHANGE',
+      btnNo: 'PROCEED',
+      positiveMethod: () => {
+        this.close(false);
+      },
+      negativeMethod: () => {
+        console.log('2222222222222222222222222222222222222');
+      }
+    };
+    console.log(dialogData + '11111111111111');
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
+  }
+
 
   back() {
     this.step1Flag = true;
     this.step2Flag = false;
   }
 
-  close() {
-    this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: false });
+  close(flag) {
+    this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: flag });
   }
 }
