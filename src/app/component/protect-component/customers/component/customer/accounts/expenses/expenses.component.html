@@ -238,7 +238,7 @@
                                                             <img *ngIf="!isLoading" class="c-p" src="/assets/images/svg/dot-menu.svg">
                                                             <mat-menu #menu4="matMenu">
                                                                 <!-- <button mat-menu-item (click)="element.isRecuring = true;openExpenses('editExpenses',element)">Edit</button> -->
-                                                                <button mat-menu-item (click)="detailedViewRecurring(element,'Recurring commitments')">Detailed
+                                                                <button mat-menu-item (click)="detailedViewRecurring(element.assetList,'Recurring commitments')">Detailed
                                                                     view</button>
                                                                 <!-- <button mat-menu-item (click)="deleteModal('expenseRecuring',element)">Delete</button> -->
                                                             </mat-menu>
