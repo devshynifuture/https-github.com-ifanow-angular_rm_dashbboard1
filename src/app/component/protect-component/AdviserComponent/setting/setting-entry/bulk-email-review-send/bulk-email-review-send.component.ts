@@ -188,11 +188,11 @@ export class BulkEmailReviewSendComponent implements OnInit {
       header: 'EMAIL VERIFICATION REQUIRED',
       body: 'If you wish to send an email with your email address, Please verify it before proceeding. Please make a note the process of verification takes 24 to 48 hours. Would you like to proceed?',
       body2: '',
-      btnYes: 'CHANGE',
+      btnYes: 'CANCEL',
       btnNo: 'PROCEED',
       positiveMethod: () => {
         dialogRef.close();
-        this.close(false);
+        this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: true, tab2view: true });
       },
       negativeMethod: () => {
         console.log('2222222222222222222222222222222222222');
