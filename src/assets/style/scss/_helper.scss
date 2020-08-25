@@ -504,7 +504,7 @@ $lineheight:20px;
   padding-top: $p4*6 !important;
 }
 
-.pt-24 {
+.pt-26 {
   padding-top: 26px !important;
 }
 
@@ -1403,6 +1403,27 @@ $lineheight:20px;
 //     }
 //   }
 // }
+@media(max-width:1200px) {
+  .ml-33p-1200 {
+    margin-left: 33.33% !important;
+  }
+
+  .mt-0-1200 {
+    margin-top: 0px !important;
+
+  }
+
+  .ptb-44-1200 {
+    padding-top: 44px !important;
+    padding-bottom: 44px !important;
+
+  }
+
+  .bl-1-1200 {
+    border-left: 1px solid #ddd !important;
+  }
+}
+
 @media(max-width:1192px) {
   .tab-p-0 {
     padding: 0px !important;
