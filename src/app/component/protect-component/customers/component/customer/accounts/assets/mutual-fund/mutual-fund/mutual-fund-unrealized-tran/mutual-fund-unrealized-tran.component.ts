@@ -950,6 +950,11 @@ export class MutualFundUnrealizedTranComponent implements OnInit, AfterViewInit 
         this.dataTransaction.viewMode = this.mode;
         this.dataTransaction.setDefaultFilterData = this.setDefaultFilterData;
         this.dataTransaction.columnHeader = this.columnHeader;
+        if(!isNaN(this.mfData.total_current_value) && !isNaN(this.mfData.total_amount_invested) && !isNaN(this.mfData.total_unrealized_gain)){
+          this.mfData.total_current_value = this.mfService.mutualFundRoundAndFormat(this.mfData.total_current_value, 0);
+          this.mfData.total_amount_invested = this.mfService.mutualFundRoundAndFormat(this.mfData.total_amount_invested, 0);
+          this.mfData.total_unrealized_gain = this.mfService.mutualFundRoundAndFormat(this.mfData.total_unrealized_gain, 0);
+        }
         this.mfService.setTransactionData(this.dataTransaction);
 
         if (this.viewMode == 'All Transactions' || this.viewMode == 'all transactions') {
