@@ -74,8 +74,9 @@
                         <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>
                         <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
                     </table>
-                    <div *ngIf="dataSource.filteredData.length==0">
-                        No data found
+                    <div class="text-center" *ngIf="dataSource.filteredData.length==0">
+                        <img class="width200" src="assets/images/svg/noDataFound.svg">
+                        <p class="f-14 f-600 pt-28"> No Data Found </p>
                     </div>
                 </div>
             </div>
@@ -152,7 +153,7 @@
                 <div class="row pt-20">
                     <div class="col-md-12 p-0">
                         <form [formGroup]="mailForm">
-                            <app-froala class="event-none" [(model)]="emailBody"></app-froala>
+                            <app-froala class="" [(model)]="emailBody"></app-froala>
                         </form>
                     </div>
                 </div>
