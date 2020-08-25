@@ -188,6 +188,7 @@ export class BulkEmailReviewSendComponent implements OnInit {
       btnYes: 'CHANGE',
       btnNo: 'PROCEED',
       positiveMethod: () => {
+        dialogRef.close();
         this.close(false);
       },
       negativeMethod: () => {
