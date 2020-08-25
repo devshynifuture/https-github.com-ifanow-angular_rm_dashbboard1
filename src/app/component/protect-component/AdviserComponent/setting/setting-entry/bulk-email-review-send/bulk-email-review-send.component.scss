@@ -1,0 +1,29 @@
+.searchInputWidth {
+    width: 300px;
+    margin-right: 8px;
+}
+
+.numBox {
+    margin-right: 10px;
+    text-align: center;
+    span{
+        color: #000000;
+    background-color: #C4C4C4;
+    width: 25px;
+    height: 25px;
+    display: block;
+    border-radius: 50%;
+    }
+}
+
+.italicText {
+    font-style: italic;
+}
+ 
+.z100 {
+    z-index: 100;
+}
+
+.stepTwoBox {
+    border-bottom: 0.5px dashed #000000;
+}
