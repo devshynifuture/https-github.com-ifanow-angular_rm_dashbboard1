@@ -103,7 +103,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       notes: [remainingData.notes || remainingData.goalNote],
       name: [this.data.goalName, [Validators.required]],
       archiveGoal: [],
-      stepUp: [remainingData.stepUp, [Validators.required]]
+      stepUp: [(remainingData.stepUp)?remainingData.stepUp:'', [Validators.required]]
     })
 
     if (this.data.singleOrMulti == 2) {
@@ -235,7 +235,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       debtAllocation: ['', [Validators.required]],
       progressiveStages: this.fb.array([this.createStage()]),
       strategicOrTactical: [1, [Validators.required]],
-      staticOrProgressive: [this.data.remainingData.staticOrProgressive, [Validators.required]],
+      staticOrProgressive: [1, [Validators.required]],
       goalId: [this.data.remainingData.id],
       goalType: [this.data.goalType],
     })

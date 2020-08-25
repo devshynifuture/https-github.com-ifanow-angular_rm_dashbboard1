@@ -65,9 +65,10 @@
 
   .memberList {
     border-radius: 4px;
-    //display: inline-block;
-    width: 148px;
-    display: flex;
+    display: inline-block;
+    width: 160px;
+    margin-top: 6px;
+    //display: flex;
     height: 57px;
     margin-right: 9px;
     // margin-top: 8px;
@@ -83,15 +84,15 @@
     }
 
     img {
-      // float: left;
+       float: left;
       margin-top: 1px;
     }
 
     .familyList {
       margin-left: 0px;
       margin-top: 2px;
-      // float: left;
-      width: 57%;
+      float: left;
+      // width: 57%;
 
       p {
         line-height: 16px;
@@ -157,7 +158,8 @@
   max-width: 83.88%;
   overflow-x: auto;
   white-space: nowrap;
-  display: flex;
+ // display: flex;
+ display: inline-block;
   align-items: center;
 }
 

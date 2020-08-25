@@ -46,6 +46,7 @@ export const PICK_FORMATS = {
   styleUrls: ['./expenses.component.scss'],
 })
 export class ExpensesComponent implements OnInit {
+  
   reportDate;
 
   displayedColumns = ['no', 'expense', 'date', 'desc', 'mode', 'amt', 'icons'];
@@ -232,7 +233,7 @@ export class ExpensesComponent implements OnInit {
     
           // this.dataSource.data = data;
           this.dataSource.sort = this.TransactionSort;
-          this.expenseGraph = data.expenseGraphdATA;
+          this.expenseGraph = data.expenseGraphData;
           this.getExpenseGraphValueNew(this.expenseGraph);
           this.getAssetData(data);
           console.log('All expense data',data);
@@ -246,40 +247,40 @@ export class ExpensesComponent implements OnInit {
   getAssetData(data){
     if(data){
       let finalArray=[];
-      let committedInvestmentExpense =  data.committedInvestmentExpense;
-      let committedExpenditureExpense =  data.committedExpenditureExpense;
-      let pord =  data.pord;
-      let traditionalLifeInsuranceExpense=  data.traditionalLifeInsuranceExpense.assetList.length > 0 ? data.traditionalLifeInsuranceExpense.assetList : [];
-      let generalInsuranceExpense = data.generalInsuranceExpense.assetList.length > 0 ? data.generalInsuranceExpense.assetList : [];
-      let termLifeInsuranceExpense = data.termLifeInsuranceExpense.assetList.length > 0 ? data.termLifeInsuranceExpense.assetList:[];
-      let ulipLifeInsuranceExpense = data.ulipLifeInsuranceExpense.assetList.length > 0 ? data.ulipLifeInsuranceExpense.assetList : [];
-      let ssy = data.ssy;
-      let loanExpense = data.loanExpense.assetList.length > 0 ? data.loanExpense.assetList : [];
-      let recurringDeposit = data.recurringDeposit;
-      let sipExpense = data.sipExpense.assetList.length > 0 ? data.sipExpense.assetList : [];
+      let committedInvestmentExpense =  this.filterAssetData(data.committedInvestmentExpense);
+      let committedExpenditureExpense =  this.filterAssetData(data.committedExpenditureExpense);
+      let pord =  this.filterAssetData(data.pord);
+      let lifeInsuranceList=  this.filterAssetData(data.lifeInsuranceList);
+      let generalInsuranceExpense = this.filterAssetData(data.generalInsurancePremium);
+      let ssy = this.filterAssetData(data.ssy);
+      let loanExpense = this.filterAssetData(data.loanEmi);
+      let recurringDeposit = this.filterAssetData(data.recurringAssetList);
+      let sipExpense = this.filterAssetData(data.mutualFundSipList);
       this.expenseAssetData = data;
-      finalArray = [ ...committedInvestmentExpense, ...committedExpenditureExpense,...pord,...traditionalLifeInsuranceExpense,...termLifeInsuranceExpense,...generalInsuranceExpense,...ulipLifeInsuranceExpense,...ssy,...loanExpense,...recurringDeposit,...sipExpense];
+       finalArray = [...committedInvestmentExpense, ...committedExpenditureExpense,...pord,...lifeInsuranceList,...generalInsuranceExpense,...ssy,...loanExpense,...recurringDeposit,...sipExpense];
+
       console.log(finalArray)
-      // let dataAsset =data;
-      // this.assetList =[{name:'pord'},{name:'ssy'},{name:'recurringDeposit'},{name:'mutualfund'}]
-      // Object.entries(this.assetList).forEach(([key, value]) => {
-
-      //   let  obj = value.name
-      //   let assetData= dataAsset[obj];
-      //   if(assetData){
-      //     assetData.forEach(element => {
-      //       finalArray.push(element)
-      //     });
-      //   }
-
-      //   console.log(key,value);
-      // });
       this.dataSource1.data = finalArray;
        this.dataSource1.sort = this.recurringTransactionTabSort;
 
 
       console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',this.dataSource1.data);
     }
+  }
+  filterAssetData(data){
+    let obj;
+    let filterArray =[]
+    if(data){
+       obj={
+        name:data[1].name,total:data[2].total,assetList:data[0].assetList
+       }
+    }
+    if(obj){
+      // filterArray.push({name:data[1].name},{total:data[2].total},{});
+      filterArray.push(obj);
+
+    }
+    return filterArray
   }
   getExpenseGraphValueNew(data){
     this.basicAmountPercent =  data.Basic ? data.Basic.categoryWisePercentage : 0
@@ -619,7 +620,7 @@ export class ExpensesComponent implements OnInit {
     if (data) {
       data.forEach(singleExpense => {
         singleExpense.progressPercent = 0;
-        singleExpense.progressPercent += (singleExpense.amount)*100 / (singleExpense.amount+singleExpense.spent);
+        singleExpense.progressPercent += (singleExpense.spent/singleExpense.amount)*100;
         singleExpense.progressPercent = Math.round(singleExpense.progressPercent);
         const singleExpenseCategory = this.constantService.expenseJsonMap[singleExpense.budgetCategoryId];
         if (singleExpenseCategory) {
@@ -921,12 +922,9 @@ export class ExpensesComponent implements OnInit {
         console.log('this is sidebardata in subs subs : ', sideBarData);
         if (UtilService.isDialogClose(sideBarData)) {
           if (UtilService.isRefreshRequired(sideBarData)) {
-            if(sideBarData.value == 'editExpense' || sideBarData.value == 'addExpense' ){
+            if(sideBarData.value == 'editExpense' || sideBarData.value == 'addExpense' || sideBarData.value == 'addRecurringTrn' || sideBarData.value == 'editRecurringTrn'){
               // this.getTransaction();
               this.getAllExpense();
-              // this.getExpenseGraphValue();
-            }else if(sideBarData.value == 'addRecurringTrn' || sideBarData.value == 'editRecurringTrn'){
-              this.getRecuringTransactions();
               // this.getExpenseGraphValue();
             }else if(sideBarData.value == 'editBudget' || sideBarData.value == 'addBudget'){
               this.getBudgetList();
@@ -970,17 +968,16 @@ export class ExpensesComponent implements OnInit {
     );
   }
   detailedViewRecurring(data,value){
-    this.expenseAssetData.startDate = this.startDate;
-    this.expenseAssetData.endDate = this.endDate;
+    data.startDate = this.startDateDisp;
+    data.endDate = this.endDateDisp;
 
     const fragmentData = {
       flag: 'detailedView',
-      data:this.expenseAssetData,
+      data:data,
       id: 1,
       state: 'open50',
       componentName: RecurringCommitmentsDetailedViewComponent
     };
-
     const rightSideDataSub = this.subInjectService.changeNewRightSliderState(fragmentData).subscribe(
       sideBarData => {
         console.log('this is sidebardata in subs subs : ', sideBarData);
