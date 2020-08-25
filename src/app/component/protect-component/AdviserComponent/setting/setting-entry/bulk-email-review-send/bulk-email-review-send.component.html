@@ -2,7 +2,7 @@
     <div class="row z100 h-64 popup-header-fix-100">
         <div class="col-md-2 border-right-1 d-flex justify-content-center align-items-center p-0">
             <div class="logoWrap">
-                <img *ngIf="authService.appPic" [src]="authService.appPic" class="logo pr-1"> 
+                <img *ngIf="authService.appPic" [src]="authService.appPic" class="logo pr-1">
                 <h5 *ngIf="!authService.appPic">{{logoText | uppercase}}</h5>
             </div>
         </div>
@@ -113,6 +113,15 @@
                         <span *ngIf="verifiedAccountsList.length==0"> no-reply@my-planner.in</span> <span
                             *ngIf="verifiedAccountsList.length==0" class="text-primary c-p"
                             (click)="bulkEmail('')">Change</span> </p>
+                    <mat-form-field *ngIf="verifiedAccountsList.length>1">
+                        <mat-select class="form-control" formControlName="selectedFromEmail">
+                            <mat-option *ngFor="let singleClient of verifiedAccountsList"
+                                [value]="singleClient.emailAddress">
+                                {{singleClient.emailAddress}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>This field is required</mat-error>
+                    </mat-form-field>
                 </div>
             </div>
 
