@@ -40,6 +40,7 @@ export class BulkEmailReviewSendComponent implements OnInit {
 
 
   logoText = 'Your Logo here';
+  emailBody = '';
 
 
   ngOnInit() {

@@ -1,5 +1,5 @@
 <div class="dialogclose">
-    <div class="row popup-header-fix-100">
+    <div class="row z100 popup-header-fix-100">
         <div class="col-md-2 border-right-1 d-flex justify-content-center align-items-center p-0">
             <div class="logoWrap">
                 <img *ngIf="authService.appPic" [src]="authService.appPic" class="logo pr-1">
@@ -18,7 +18,7 @@
     </div>
 </div>
 <div *ngIf="step1Flag">
-    <div class="pt-90 pb-125">
+    <div class="pt-90 pb-100">
         <div class="row">
             <div class="col-md-3"></div>
             <div class="col-md-6">
@@ -27,7 +27,7 @@
                         <span class="">1</span>
                     </div>
                     <div class="contBox">
-                        <h5 class="roboto f-500">Review client list</h5>
+                        <h5 class="roboto mb-0 f-500">Review client list</h5>
                     </div>
                 </div>
 
@@ -40,7 +40,7 @@
                     </mat-form-field>
                 </div>
                 <div class="mt-16">
-                    <p [hidden]="dataCount==0"  class="text-right italicText text-primitive mb-0 f-14">{{dataCount}} clients
+                    <p [ngClass]="{'v-h': dataCount==0}" class="text-right italicText text-primitive mb-0 f-14">{{dataCount}} clients
                         selected</p>
                     <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading
                         class=" skeletonAnimation" id="tbs" mat-table matSort>
@@ -80,10 +80,10 @@
     </div>
 
     <div class="bottom-fixed  pl-20 pr-20 d-flex  w-100 row">
-        <div class="col-md-6">
+        <div class="col-md-6 d-flex align-items-center">
             <a class="text-white f-300"> Cancel </a>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 d-flex align-items-center justify-content-end">
             <!-- <app-progress-button class="br-0 text-inherit ml-12">
     </app-progress-button> -->
             <button (click)="selectedClientListStep()" mat-stroked-button class="btn-primary btnNewEmail">
@@ -92,6 +92,72 @@
         </div>
     </div>
 </div>
-<div *ngIf="step2Flag">
 
+<div class="pt-90" *ngIf="step2Flag">
+
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="stepTwoBox"> 
+            <div class="d-flex align-items-center mb-8">
+                <div class="numBox">
+                    <span class="">2</span>
+                </div>
+                <div class="contBox">
+                    <h5 class="roboto mb-0 f-500">Verify your FROM email address</h5>
+                </div>
+            </div>
+            <div class="">
+                <p class="mb-22">Since your email is not verified, the bulk email will be sent from no-reply@my-planner.in <span class="text-primary c-p">Change</span>  </p>
+            </div>
+            </div>
+
+            <div class="stepThreeBox mt-24">
+                <div class="d-flex align-items-center mb-8">
+                    <div class="numBox">
+                        <span class="">3</span>
+                    </div>
+                    <div class="contBox">
+                        <h5 class="roboto mb-0 f-500">Review email and send </h5>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-1 p-0 d-flex align-items-center">
+                        <h5 class="f-14">Subject</h5>
+                    </div>
+                    <div class="col-md-11 pr-0">
+                        <mat-form-field>
+                            <input matInput class="form-control">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row pt-20">
+                    <div class="col-md-12 p-0">
+                        <form [formGroup]="mailForm">
+                            <app-froala [(model)]="emailBody" modelChange="saveData($event)"></app-froala>
+                          </form>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+
+    <div class="bottom-fixed  pl-20 pr-20 d-flex  w-100 row">
+        <div class="col-md-6 d-flex align-items-center">
+            <a class="text-white f-300"> Cancel </a>
+        </div>
+        <div class="col-md-6 d-flex align-items-center justify-content-end">
+            <!-- <app-progress-button class="br-0 text-inherit ml-12">
+    </app-progress-button> -->
+            <button (click)="selectedClientListStep()" mat-stroked-button class="btn-primary btnNewEmail">
+                PROCEED
+            </button>
+        </div>
+    </div>
+  
 </div>
