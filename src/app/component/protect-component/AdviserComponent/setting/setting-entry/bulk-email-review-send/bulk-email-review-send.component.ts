@@ -19,15 +19,15 @@ export class BulkEmailReviewSendComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   displayedColumns: string[] = ['checkbox', 'name', 'email'];
   isLoading = false
-  dataCount: number;
+  dataCount: number = 0;
   advisorId: any;
   mailForm: any;
   verifiedAccountsList: any = [];
   step1Flag: boolean;
   step2Flag: boolean;
 
-  
-  
+
+
   constructor(
     public authService: AuthService,
     protected eventService: EventService,
@@ -36,10 +36,11 @@ export class BulkEmailReviewSendComponent implements OnInit {
     private fb: FormBuilder,
     private dialog: MatDialog
   ) { }
- 
-  
+
+
 
   logoText = 'Your Logo here';
+  emailBody = '';
 
 
   ngOnInit() {
@@ -148,7 +149,7 @@ export class BulkEmailReviewSendComponent implements OnInit {
     const dialogData = {
       data: value,
       header: 'EMAIL BULK PASSWORD',
-      body: '',
+      body: 'If you wish to send an email with your email address, Please verify it before proceeding. Please make a note the process of verification takes 24 to 48 hours. Would you like to proceed?',
       body2: '',
       btnYes: 'CHANGE',
       btnNo: 'PROCEED',
@@ -184,7 +185,6 @@ export class BulkEmailReviewSendComponent implements OnInit {
   }
 }
 
- 
 
 
- 
+
