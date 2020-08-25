@@ -1,5 +1,5 @@
 <div class="dialogclose">
-    <div class="row popup-header-fix-100">
+    <div class="row z100 popup-header-fix-100">
         <div class="col-md-2 border-right-1 d-flex justify-content-center align-items-center p-0">
             <div class="logoWrap">
                 <img *ngIf="authService.appPic" [src]="authService.appPic" class="logo pr-1">
@@ -18,7 +18,7 @@
     </div>
 </div>
 
-<div class="pt-90 pb-125"> 
+<div class="pt-90 pb-100"> 
 <div class="row">
     <div class="col-md-3"></div>
     <div class="col-md-6">
@@ -33,7 +33,7 @@
 
         <p class="mb-4"> You can select multiple clients and proceed to the next step on the right</p>
 
-        <div class="form-group mb-28"> 
+        <div class="form-group mb-20"> 
         <mat-form-field appearance="standard" class="searchInputWidth" floatLabel="never">
             <input (keyup)="applyFilter($event)" autocomplete="off" class="form-control br-0 pt-8 mb-0" matInput
                 placeholder="Start typing to see client names">
@@ -78,11 +78,10 @@
 </div>
 
 <div class="bottom-fixed  pl-20 pr-20 d-flex  w-100 row">
-    <div class="col-md-6">
+    <div class="col-md-6 d-flex align-items-center">
         <a class="text-white f-300"> Cancel </a>
     </div>
     <div class="col-md-6">
-        <app-progress-button class="br-0 text-inherit ml-12">
-    </app-progress-button>
+      
     </div>
 </div>
