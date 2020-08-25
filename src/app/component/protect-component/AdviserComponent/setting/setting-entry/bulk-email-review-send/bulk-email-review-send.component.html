@@ -1,0 +1,19 @@
+<div class="dialogclose">
+    <div class="row popup-header-fix-100">
+        <div class="col-md-2 border-right-1 d-flex justify-content-center align-items-center p-0">
+            <div class="logoWrap">
+                <img *ngIf="authService.appPic" [src]="authService.appPic" class="logo pr-1">
+                <h5 *ngIf="!authService.appPic">{{logoText | uppercase}}</h5>
+            </div>
+        </div>
+        <div class="col-md-8 p-0 d-flex justify-content-center align-items-center ">
+            <p class="f-16 mb-0">
+                Bulk welcome email- Review & Send</p>
+        </div>
+        <div class="col-md-2 text-right">
+            <i (click)="close()" class="material-icons pt-16 c-p pr-16">
+                clear
+            </i>
+        </div>
+    </div>
+</div>
