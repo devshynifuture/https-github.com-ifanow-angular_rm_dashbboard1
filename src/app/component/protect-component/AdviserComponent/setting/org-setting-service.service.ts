@@ -174,4 +174,8 @@ export class OrgSettingServiceService {
     return this.http.post(apiConfig.MAIN_URL + appConfig.BULK_EMAIL_PASSWORD, data);
   }
 
+  sendEmailToClients(data) {
+    return null;
+  }
+
 }
