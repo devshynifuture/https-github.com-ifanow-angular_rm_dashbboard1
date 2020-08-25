@@ -1,5 +1,5 @@
 <div class="dialogclose">
-    <div class="row z100 popup-header-fix-100">
+    <div class="row z100 h-64 popup-header-fix-100">
         <div class="col-md-2 border-right-1 d-flex justify-content-center align-items-center p-0">
             <div class="logoWrap">
                 <img *ngIf="authService.appPic" [src]="authService.appPic" class="logo pr-1">
@@ -40,10 +40,11 @@
                     </mat-form-field>
                 </div>
                 <div class="mt-16">
-                    <p [ngClass]="{'v-h': dataCount==0}" class="text-right italicText text-primitive mb-0 f-14">{{dataCount}} clients
+                    <p [ngClass]="{'v-h': dataCount==0}" class="text-right italicText text-primitive mb-0 f-14">
+                        {{dataCount}} clients
                         selected</p>
-                    <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading
-                        class=" skeletonAnimation" id="tbs" mat-table matSort>
+                    <table *ngIf="dataSource.filteredData.length>0" [dataSource]="dataSource" id="tbs" mat-table
+                        matSort>
                         <ng-container matColumnDef="checkbox" sticky>
                             <th mat-header-cell *matHeaderCellDef class="br">
                                 <mat-checkbox (change)="selectAll($event)" name="selectAll"
@@ -60,19 +61,22 @@
                         <ng-container matColumnDef="name">
                             <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="name"> Name</th>
                             <td *matCellDef="let element" class="c-p br" mat-cell>
-                                <div class="bar"> {{element.displayName}} </div>
+                                {{element.displayName}}
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="email">
                             <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="email"> Email
                             </th>
                             <td *matCellDef="let element" class="c-p br" mat-cell>
-                                <div class="bar">{{element.email}} </div>
+                                {{element.email}}
                             </td>
                         </ng-container>
                         <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>
                         <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
                     </table>
+                    <div *ngIf="dataSource.filteredData.length==0">
+                        No data found
+                    </div>
                 </div>
             </div>
             <div class="col-md-3"></div>
@@ -93,23 +97,36 @@
     </div>
 </div>
 
-<div class="pt-90" *ngIf="step2Flag">
+<div class="pt-90 pb-100" *ngIf="step2Flag">
 
     <div class="row">
         <div class="col-md-3"></div>
         <div class="col-md-6">
-            <div class="stepTwoBox"> 
-            <div class="d-flex align-items-center mb-8">
-                <div class="numBox">
-                    <span class="">2</span>
+            <div class="stepTwoBox b-h-dashed">
+                <div class="d-flex align-items-center mb-8">
+                    <div class="numBox">
+                        <span class="">2</span>
+                    </div>
+                    <div class="contBox">
+                        <h5 class="roboto mb-0 f-500">Verify your FROM email address</h5>
+                    </div>
                 </div>
-                <div class="contBox">
-                    <h5 class="roboto mb-0 f-500">Verify your FROM email address</h5>
+                <div class="d-flex align-items-center justify-content-between mb-24">
+                    <p class="mb-0">Since your email is not verified, the bulk email will be sent from
+                        <span *ngIf="verifiedAccountsList.length==1">{{verifiedAccountsList[0].emailAddress}}</span>
+                        <span *ngIf="verifiedAccountsList.length==0"> no-reply@my-planner.in</span> <span
+                            *ngIf="verifiedAccountsList.length==0" class="text-primary c-p"
+                            (click)="bulkEmail('')">Change</span> </p>
+                    <mat-form-field class="w-200" *ngIf="verifiedAccountsList.length>1">
+                        <mat-select class="form-control" [formControl]="selectedFromEmail">
+                            <mat-option *ngFor="let singleClient of verifiedAccountsList"
+                                [value]="singleClient.emailAddress">
+                                {{singleClient.emailAddress}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>This field is required</mat-error>
+                    </mat-form-field>
                 </div>
-            </div>
-            <div class="">
-                <p class="mb-22">Since your email is not verified, the bulk email will be sent from no-reply@my-planner.in <span class="text-primary c-p">Change</span>  </p>
-            </div>
             </div>
 
             <div class="stepThreeBox mt-24">
@@ -124,19 +141,19 @@
 
                 <div class="row">
                     <div class="col-md-1 p-0 d-flex align-items-center">
-                        <h5 class="f-14">Subject</h5>
+                        <h5 class="f-14 mb-0">Subject</h5>
                     </div>
-                    <div class="col-md-11 pr-0">
-                        <mat-form-field>
-                            <input matInput class="form-control">
+                    <div class="col-md-11 pr-0 eventPadd event-none">
+                        <mat-form-field appearance="standard" floatLabel="never">
+                            <input [formControl]="subject" matInput class="form-control">
                         </mat-form-field>
                     </div>
                 </div>
                 <div class="row pt-20">
                     <div class="col-md-12 p-0">
                         <form [formGroup]="mailForm">
-                            <app-froala [(model)]="emailBody" modelChange="saveData($event)"></app-froala>
-                          </form>
+                            <app-froala class="event-none" [(model)]="emailBody"></app-froala>
+                        </form>
                     </div>
                 </div>
 
@@ -149,15 +166,13 @@
 
     <div class="bottom-fixed  pl-20 pr-20 d-flex  w-100 row">
         <div class="col-md-6 d-flex align-items-center">
-            <a class="text-white f-300"> Cancel </a>
+            <a (click)="step1Flag=true;step2Flag=false" class="text-white f-300 c-p"> Back </a>
         </div>
         <div class="col-md-6 d-flex align-items-center justify-content-end">
-            <!-- <app-progress-button class="br-0 text-inherit ml-12">
-    </app-progress-button> -->
-            <button (click)="selectedClientListStep()" mat-stroked-button class="btn-primary btnNewEmail">
-                PROCEED
-            </button>
+            <app-progress-button (btnClick)="sendEmailToclients()" [options]="barButtonOptions"
+                class="br-0 text-inherit ml-12">
+            </app-progress-button>
         </div>
     </div>
-  
+
 </div>
