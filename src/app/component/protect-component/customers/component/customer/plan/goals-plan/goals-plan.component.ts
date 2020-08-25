@@ -313,11 +313,11 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     } else {
       const goalSubData: any = goal.multiYearGoalPlan;
       mapData.img = goalSubData.imageUrl;
-      mapData.year = (new Date(goalSubData.differentGoalYears[0]).getFullYear()) + ' - ' + (new Date(goalSubData.differentGoalYears[goalSubData.differentGoalYears.length - 1]).getFullYear());
+      mapData.year = (goalSubData.differentGoalYears) ? (new Date(goalSubData.differentGoalYears[0]).getFullYear()) + ' - ' + (new Date(goalSubData.differentGoalYears[goalSubData.differentGoalYears.length - 1]).getFullYear()):'-';
       mapData.goalName = goalSubData.name;
       mapData.gv = goalSubData.futureValue;
-      mapData.goalStartDate = goalSubData.differentGoalYears[0];
-      mapData.goalEndDate = goalSubData.differentGoalYears[goalSubData.differentGoalYears.length - 1];
+      mapData.goalStartDate =goalSubData.differentGoalYears? goalSubData.differentGoalYears[0]:'-';
+      mapData.goalEndDate = goalSubData.differentGoalYears ?goalSubData.differentGoalYears[goalSubData.differentGoalYears.length - 1]:0;
       mapData.dashboardData = {
         goalYear: new Date(goalSubData.goalEndDate || goalSubData.vacationEndYr).getFullYear(),
         presentValue: goalSubData.presentValue,

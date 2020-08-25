@@ -25,6 +25,9 @@ export class AddGoalService {
       if(asset.absAllocation < 100){
         asset.goalAssetMapping.forEach(element => {
           obj.percentAllocated = 100-element.percentAllocated
+          obj.lump_debt=selectedGoal.dashboardData.lump_debt
+          obj.lump_equity=selectedGoal.dashboardData.lump_equity
+          obj.currentValue=asset.currentValue
         });
         this.allocateAsset(obj);
       }else{
@@ -43,6 +46,9 @@ export class AddGoalService {
       if(mfAsset.absAllocation < 100){
         mfAsset.goalAssetMapping.forEach(element => {
           obj.percentAllocated = 100-element.percentAllocated
+          obj.lump_debt=selectedGoal.dashboardData.lump_debt
+          obj.lump_equity=selectedGoal.dashboardData.lump_equity
+          obj.currentValue=mfAsset.currentValue
         });
         this.allocateAsset(obj);
       }else{
