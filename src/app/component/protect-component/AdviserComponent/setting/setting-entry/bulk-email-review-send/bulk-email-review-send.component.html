@@ -162,7 +162,7 @@
 
     <div class="bottom-fixed  pl-20 pr-20 d-flex  w-100 row">
         <div class="col-md-6 d-flex align-items-center">
-            <a class="text-white f-300"> Cancel </a>
+            <a (click)="step1Flag=true;step2Flag=false" class="text-white f-300"> Back </a>
         </div>
         <div class="col-md-6 d-flex align-items-center justify-content-end">
             <app-progress-button (btnClick)="sendEmailToclients()" [options]="barButtonOptions"
