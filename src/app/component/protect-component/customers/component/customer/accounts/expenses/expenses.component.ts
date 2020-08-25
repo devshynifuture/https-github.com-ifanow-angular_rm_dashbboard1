@@ -847,8 +847,9 @@ export class ExpensesComponent implements OnInit {
           this.planService.deleteExpenseRecurring(data.id).subscribe(
             data => {
               this.eventService.openSnackBar('Recurring expense transaction is deleted', 'Dismiss');
+              this.getAllExpense();
               dialogRef.close();
-              this.getRecuringTransactions();
+              // this.getRecuringTransactions();
             },
             error => this.eventService.showErrorMessage(error)
           );
@@ -856,6 +857,7 @@ export class ExpensesComponent implements OnInit {
           this.planService.deleteExpenseTransaction(data.id).subscribe(
             data => {
               this.eventService.openSnackBar('Expense transaction is deleted', 'Dismiss');
+              this.getAllExpense();
               dialogRef.close();
               // this.getTransaction();
             },
