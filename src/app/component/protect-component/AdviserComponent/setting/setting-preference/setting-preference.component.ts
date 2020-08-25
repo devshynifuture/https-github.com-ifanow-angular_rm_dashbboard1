@@ -12,6 +12,8 @@ import { ConfirmDialogComponent } from '../../../common-component/confirm-dialog
 import { EmailOnlyComponent } from '../../Subscriptions/subscription/common-subscription-component/email-only/email-only.component';
 import { Subscription } from 'rxjs';
 import { BulkEmailReviewSendComponent } from '../setting-entry/bulk-email-review-send/bulk-email-review-send.component';
+import { PeopleService } from '../../../PeopleComponent/people.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-setting-preference',
@@ -55,8 +57,25 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
   appearanceFG: FormGroup;
   appearanceUpdateFlag: boolean;
   hasError: boolean = false;
+
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'BEGIN',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
+
   constructor(private orgSetting: OrgSettingServiceService,
-    public subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog, private fb: FormBuilder, ) {
+    public subInjectService: SubscriptionInject, private eventService: EventService, public dialog: MatDialog, private fb: FormBuilder, private peopleService: PeopleService) {
 
     this.advisorId = AuthService.getAdvisorId()
     this.userId = AuthService.getUserId()
@@ -537,26 +556,46 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     });
   }
 
-  openFragment(data) {
-    if (!this.isLoading) {
-      const fragmentData = {
-        flag: 'Bulk-Email',
-        id: 1,
-        data,
-        direction: 'top',
-        componentName: BulkEmailReviewSendComponent,
-        state: 'open'
-      };
-      // this.router.navigate(['/subscription-upper'])
-      AuthService.setSubscriptionUpperSliderData(fragmentData);
-      const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
-        upperSliderData => {
-          if (UtilService.isDialogClose(upperSliderData)) {
-            // this.getClientSubscriptionList();
-            subscription.unsubscribe();
-          }
+  openFragment() {
+    this.barButtonOptions.active = true
+    const obj = {
+      advisorId: this.advisorId,
+      status: 1,
+      limit: -1,
+      offset: 0
+    };
+
+    this.peopleService.getClientList(obj).subscribe(
+      data => {
+        // this.isLoading = false;
+        if (data && data.length > 0) {
+          this.barButtonOptions.active = false
+          data.forEach((singleData) => {
+            if (singleData.emailList && singleData.emailList.length > 0) {
+              singleData.email = singleData.emailList[0].email;
+            }
+          });
         }
-      );
-    }
+        if (!this.isLoading) {
+          const fragmentData = {
+            flag: 'Bulk-Email',
+            id: 1,
+            data,
+            direction: 'top',
+            componentName: BulkEmailReviewSendComponent,
+            state: 'open'
+          };
+          // this.router.navigate(['/subscription-upper'])
+          AuthService.setSubscriptionUpperSliderData(fragmentData);
+          const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
+            upperSliderData => {
+              if (UtilService.isDialogClose(upperSliderData)) {
+                // this.getClientSubscriptionList();
+                subscription.unsubscribe();
+              }
+            }
+          );
+        }
+      })
   }
 }
