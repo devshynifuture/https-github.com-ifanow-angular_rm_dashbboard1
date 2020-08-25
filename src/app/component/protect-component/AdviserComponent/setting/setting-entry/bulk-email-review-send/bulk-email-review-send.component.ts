@@ -18,8 +18,7 @@ export class BulkEmailReviewSendComponent implements OnInit {
   isLoading = false
   dataCount: number;
 
-  displayedColumns: string[] = ['checkBox', 'name', 'email' ];
-  dataSource = ELEMENT_DATA;
+  
   
   constructor(
     public authService: AuthService,
@@ -76,17 +75,7 @@ export class BulkEmailReviewSendComponent implements OnInit {
   }
 }
 
-export interface PeriodicElement {
-  checkBox: string;
-  name: string;
-  email: string;
-  
-}
+ 
 
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {checkBox: '', name: 'Ronak Hindocha', email: 'ronak.hindocha@futurewise.co.in'},
-  {checkBox: '', name: 'Abhishek Mane', email: 'abhishek@futurewise.co.in'},
-   
-  
-];
+ 
