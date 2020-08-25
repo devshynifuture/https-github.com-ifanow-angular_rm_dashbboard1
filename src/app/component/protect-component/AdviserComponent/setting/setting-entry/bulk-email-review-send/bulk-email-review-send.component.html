@@ -43,7 +43,8 @@
                     <p [ngClass]="{'v-h': dataCount==0}" class="text-right italicText text-primitive mb-0 f-14">
                         {{dataCount}} clients
                         selected</p>
-                    <table [dataSource]="dataSource" id="tbs" mat-table matSort>
+                    <table *ngIf="dataSource.filteredData.length>0" [dataSource]="dataSource" id="tbs" mat-table
+                        matSort>
                         <ng-container matColumnDef="checkbox" sticky>
                             <th mat-header-cell *matHeaderCellDef class="br">
                                 <mat-checkbox (change)="selectAll($event)" name="selectAll"
@@ -73,6 +74,9 @@
                         <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>
                         <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
                     </table>
+                    <div *ngIf="dataSource.filteredData.length==0">
+                        No data found
+                    </div>
                 </div>
             </div>
             <div class="col-md-3"></div>
@@ -162,7 +166,7 @@
 
     <div class="bottom-fixed  pl-20 pr-20 d-flex  w-100 row">
         <div class="col-md-6 d-flex align-items-center">
-            <a (click)="step1Flag=true;step2Flag=false" class="text-white f-300"> Back </a>
+            <a (click)="step1Flag=true;step2Flag=false" class="text-white f-300 c-p"> Back </a>
         </div>
         <div class="col-md-6 d-flex align-items-center justify-content-end">
             <app-progress-button (btnClick)="sendEmailToclients()" [options]="barButtonOptions"

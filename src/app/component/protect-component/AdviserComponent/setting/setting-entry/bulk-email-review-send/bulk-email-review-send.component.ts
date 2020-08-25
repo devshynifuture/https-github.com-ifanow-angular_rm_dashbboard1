@@ -165,7 +165,7 @@ export class BulkEmailReviewSendComponent implements OnInit {
     {
       advisorId: this.advisorId,
       clientIds: this.clientList,
-      fromEmail: this.verifiedAccountsList.length == 0 ? 'no-reply@my-planner.in' : (this.verifiedAccountsList.length == 1) ? this.verifiedAccountsList[0].emailAddress : '',
+      fromEmail: this.verifiedAccountsList.length == 0 ? 'no-reply@my-planner.in' : (this.verifiedAccountsList.length == 1) ? this.verifiedAccountsList[0].emailAddress : this.selectedFromEmail.value,
       subject: this.subject.value,
       messageBody: this.emailBody
     }
