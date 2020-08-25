@@ -5,8 +5,9 @@ import { EnumDataService } from 'src/app/services/enum-data.service';
 import { MatTableDataSource, MatSort, MatDialog } from '@angular/material';
 import { element } from 'protractor';
 import { OrgSettingServiceService } from '../../org-setting-service.service';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
 
 @Component({
   selector: 'app-bulk-email-review-send',
@@ -25,8 +26,24 @@ export class BulkEmailReviewSendComponent implements OnInit {
   verifiedAccountsList: any = [];
   step1Flag: boolean;
   step2Flag: boolean;
+  subject = new FormControl('Your new money management account is created!');
+  selectedFromEmail = new FormControl('');
 
-
+  barButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: 'SEND',
+    buttonColor: 'accent',
+    barColor: 'accent',
+    raised: true,
+    stroked: false,
+    mode: 'determinate',
+    value: 10,
+    disabled: false,
+    fullWidth: false,
+    // buttonIcon: {
+    //   fontIcon: 'favorite'
+    // }
+  };
 
   constructor(
     public authService: AuthService,
@@ -40,8 +57,16 @@ export class BulkEmailReviewSendComponent implements OnInit {
 
 
   logoText = 'Your Logo here';
-  emailBody = '';
-
+  emailBody = `
+  "<p><span style="color: rgb(29, 28, 29); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: common-ligatures; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(248, 248, 248); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">Dear &lt;client name&gt;,</span></p>
+  <p><span style="color: rgb(29, 28, 29); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: common-ligatures; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(248, 248, 248); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">It gives us great pleasure to invite you to our whole new money management tool.</span></p>
+  <p><span style="color: rgb(29, 28, 29); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: common-ligatures; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(248, 248, 248); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">We have created a dedicated account for you. Please complete the account sign-up process by clicking below.</span></p>
+  <p><span style="color: rgb(29, 28, 29); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: common-ligatures; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(248, 248, 248); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">Button name - &lt;Go to my account&gt;</span></p>
+  <p><span style="color: rgb(29, 28, 29); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: common-ligatures; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(248, 248, 248); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">If the above does not work, please click on the following URL -&nbsp;</span><a data-sk="tooltip_parent" data-stringify-link="https://www.ifanow" href="https://slack-redir.net/link?url=https%3A%2F%2Fwww.ifanow" rel="noopener noreferrer" style="box-sizing: inherit; color: rgba(var(--sk_highlight,18,100,163),1); text-decoration: none; font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: common-ligatures; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(248, 248, 248);" target="_blank">https://www.ifanow</a><span style="color: rgb(29, 28, 29); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: common-ligatures; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(248, 248, 248); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">&hellip;..</span></p>
+  <p><span style="color: rgb(29, 28, 29); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: common-ligatures; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(248, 248, 248); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">We look forward to working with you. See you there!</span></p>
+  <p><span style="color: rgb(29, 28, 29); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: common-ligatures; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(248, 248, 248); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">Regards</span><br style="box-sizing: inherit; color: rgb(29, 28, 29); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: common-ligatures; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(248, 248, 248); text-decoration-style: initial; text-decoration-color: initial;"><span style="color: rgb(29, 28, 29); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: common-ligatures; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(248, 248, 248); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">&lt;Advisor&rsquo;s organisation name, if available, else Admin advisor&rsquo;s full name&gt;</span></p>
+  <p><span style="color: rgb(29, 28, 29); font-family: Slack-Lato, appleLogo, sans-serif; font-size: 15px; font-style: normal; font-variant-ligatures: common-ligatures; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: rgb(248, 248, 248); text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">Footer: For more information, contact &lt;organisation name, if available or personal name&gt; at &lt;organisation mobile, if available or personal mobile&gt; or write an email to &lt;organisation email, if available or personal email&gt;</span></p>
+  "`
 
   ngOnInit() {
   }
@@ -104,12 +129,13 @@ export class BulkEmailReviewSendComponent implements OnInit {
 
   getEmailVerificationRes(data) {
     console.log(data)
-    if (data && data.length > 0) {
-      data.map(element => {
+    if (data.listItems && data.listItems.length > 0) {
+      data.listItems.map(element => {
         if (element.emailVerificationStatus == 1) {
           this.verifiedAccountsList.push(element)
         }
       })
+        (this.verifiedAccountsList.length > 1) ? this.selectedFromEmail.setValidators([Validators.required]) : '';
     }
   }
 
@@ -128,20 +154,28 @@ export class BulkEmailReviewSendComponent implements OnInit {
   }
 
   sendEmailToclients() {
+    if (this.selectedFromEmail.invalid) {
+      return;
+    }
+    this.barButtonOptions.active = true;
     const obj =
     {
       advisorId: this.advisorId,
       clientIds: this.clientList,
-      fromEmail: "email",
-      subject: "subject",
-      messageBody: "message"
+      fromEmail: this.verifiedAccountsList.length == 0 ? 'no-reply@my-planner.in' : (this.verifiedAccountsList.length == 1) ? this.verifiedAccountsList[0].emailAddress : '',
+      subject: this.subject.value,
+      messageBody: this.emailBody
     }
     this.orgSetting.sendEmailToClients(obj).subscribe(
       data => {
         this.eventService.openSnackBar(data, "Dismiss")
         this.close(true);
+        this.barButtonOptions.active = false;
       },
-      err => { this.eventService.openSnackBar(err, "Dismiss") }
+      err => {
+        this.barButtonOptions.active = false;
+        this.eventService.openSnackBar(err, "Dismiss")
+      }
     )
   }
 

@@ -40,10 +40,10 @@
                     </mat-form-field>
                 </div>
                 <div class="mt-16">
-                    <p [ngClass]="{'v-h': dataCount==0}" class="text-right italicText text-primitive mb-0 f-14">{{dataCount}} clients
+                    <p [ngClass]="{'v-h': dataCount==0}" class="text-right italicText text-primitive mb-0 f-14">
+                        {{dataCount}} clients
                         selected</p>
-                    <table [appSkeletonLoading]="isLoading" [dataSource]="dataSource" appSkeletonLoading
-                        class=" skeletonAnimation" id="tbs" mat-table matSort>
+                    <table [dataSource]="dataSource" id="tbs" mat-table matSort>
                         <ng-container matColumnDef="checkbox" sticky>
                             <th mat-header-cell *matHeaderCellDef class="br">
                                 <mat-checkbox (change)="selectAll($event)" name="selectAll"
@@ -60,14 +60,14 @@
                         <ng-container matColumnDef="name">
                             <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="name"> Name</th>
                             <td *matCellDef="let element" class="c-p br" mat-cell>
-                                <div class="bar"> {{element.displayName}} </div>
+                                {{element.displayName}}
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="email">
                             <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="email"> Email
                             </th>
                             <td *matCellDef="let element" class="c-p br" mat-cell>
-                                <div class="bar">{{element.email}} </div>
+                                {{element.email}}
                             </td>
                         </ng-container>
                         <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>
@@ -98,18 +98,22 @@
     <div class="row">
         <div class="col-md-3"></div>
         <div class="col-md-6">
-            <div class="stepTwoBox"> 
-            <div class="d-flex align-items-center mb-8">
-                <div class="numBox">
-                    <span class="">2</span>
+            <div class="stepTwoBox">
+                <div class="d-flex align-items-center mb-8">
+                    <div class="numBox">
+                        <span class="">2</span>
+                    </div>
+                    <div class="contBox">
+                        <h5 class="roboto mb-0 f-500">Verify your FROM email address</h5>
+                    </div>
                 </div>
-                <div class="contBox">
-                    <h5 class="roboto mb-0 f-500">Verify your FROM email address</h5>
+                <div class="">
+                    <p class="mb-22">Since your email is not verified, the bulk email will be sent from
+                        <span *ngIf="verifiedAccountsList.length==1">{{verifiedAccountsList[0].emailAddress}}</span>
+                        <span *ngIf="verifiedAccountsList.length==0"> no-reply@my-planner.in</span> <span
+                            *ngIf="verifiedAccountsList.length==0" class="text-primary c-p"
+                            (click)="bulkEmail('')">Change</span> </p>
                 </div>
-            </div>
-            <div class="">
-                <p class="mb-22">Since your email is not verified, the bulk email will be sent from no-reply@my-planner.in <span class="text-primary c-p">Change</span>  </p>
-            </div>
             </div>
 
             <div class="stepThreeBox mt-24">
@@ -126,17 +130,17 @@
                     <div class="col-md-1 p-0 d-flex align-items-center">
                         <h5 class="f-14">Subject</h5>
                     </div>
-                    <div class="col-md-11 pr-0">
-                        <mat-form-field>
-                            <input matInput class="form-control">
+                    <div class="col-md-11 pr-0 event-none">
+                        <mat-form-field appearance="standard" floatLabel="never">
+                            <input [formControl]="subject" matInput class="form-control">
                         </mat-form-field>
                     </div>
                 </div>
                 <div class="row pt-20">
                     <div class="col-md-12 p-0">
                         <form [formGroup]="mailForm">
-                            <app-froala [(model)]="emailBody" modelChange="saveData($event)"></app-froala>
-                          </form>
+                            <app-froala class="event-none" [(model)]="emailBody"></app-froala>
+                        </form>
                     </div>
                 </div>
 
@@ -152,12 +156,10 @@
             <a class="text-white f-300"> Cancel </a>
         </div>
         <div class="col-md-6 d-flex align-items-center justify-content-end">
-            <!-- <app-progress-button class="br-0 text-inherit ml-12">
-    </app-progress-button> -->
-            <button (click)="selectedClientListStep()" mat-stroked-button class="btn-primary btnNewEmail">
-                PROCEED
-            </button>
+            <app-progress-button (btnClick)="sendEmailToclients()" [options]="barButtonOptions"
+                class="br-0 text-inherit ml-12">
+            </app-progress-button>
         </div>
     </div>
-  
+
 </div>
