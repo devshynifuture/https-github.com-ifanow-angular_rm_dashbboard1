@@ -107,13 +107,13 @@
                         <h5 class="roboto mb-0 f-500">Verify your FROM email address</h5>
                     </div>
                 </div>
-                <div class="">
-                    <p class="mb-22">Since your email is not verified, the bulk email will be sent from
+                <div class="d-flex align-items-center justify-content-between mb-24">
+                    <p class="mb-0">Since your email is not verified, the bulk email will be sent from
                         <span *ngIf="verifiedAccountsList.length==1">{{verifiedAccountsList[0].emailAddress}}</span>
                         <span *ngIf="verifiedAccountsList.length==0"> no-reply@my-planner.in</span> <span
                             *ngIf="verifiedAccountsList.length==0" class="text-primary c-p"
                             (click)="bulkEmail('')">Change</span> </p>
-                    <mat-form-field *ngIf="verifiedAccountsList.length>1">
+                    <mat-form-field class="w-200" *ngIf="verifiedAccountsList.length>1">
                         <mat-select class="form-control" [formControl]="selectedFromEmail">
                             <mat-option *ngFor="let singleClient of verifiedAccountsList"
                                 [value]="singleClient.emailAddress">
@@ -137,9 +137,9 @@
 
                 <div class="row">
                     <div class="col-md-1 p-0 d-flex align-items-center">
-                        <h5 class="f-14">Subject</h5>
+                        <h5 class="f-14 mb-0">Subject</h5>
                     </div>
-                    <div class="col-md-11 pr-0 event-none">
+                    <div class="col-md-11 pr-0 eventPadd event-none">
                         <mat-form-field appearance="standard" floatLabel="never">
                             <input [formControl]="subject" matInput class="form-control">
                         </mat-form-field>
