@@ -13,7 +13,7 @@ import { FormBuilder } from '@angular/forms';
   styleUrls: ['./bulk-email-review-send.component.scss']
 })
 export class BulkEmailReviewSendComponent implements OnInit {
-  clientList: any;
+  clientList: any = [];
   dataSource = new MatTableDataSource();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   displayedColumns: string[] = ['checkbox', 'name', 'email'];
@@ -22,6 +22,8 @@ export class BulkEmailReviewSendComponent implements OnInit {
   advisorId: any;
   mailForm: any;
   verifiedAccountsList: any = [];
+  step1Flag: boolean;
+  step2Flag: boolean;
 
   constructor(
     public authService: AuthService,
@@ -39,6 +41,7 @@ export class BulkEmailReviewSendComponent implements OnInit {
 
   @Input() set data(data) {
     this.advisorId = AuthService.getAdvisorId()
+    this.step1Flag = true;
     if (data && data.length > 0) {
       data.forEach(element => {
         element.selected = false
@@ -101,6 +104,36 @@ export class BulkEmailReviewSendComponent implements OnInit {
         }
       })
     }
+  }
+
+  selectedClientListStep() {
+    if (this.dataCount > 0) {
+      this.dataSource.filteredData.forEach(element => {
+        if (element['selected']) {
+          this.clientList.push(element['clientId'])
+        }
+      })
+      this.step1Flag = false;
+      this.step2Flag = true;
+    } else {
+      this.eventService.openSnackBar("Please select clients", "Dismiss");
+    }
+  }
+
+  sendEmailToclients() {
+    const obj =
+    {
+      advisorId: this.advisorId,
+      clientIds: this.clientList,
+      fromEmail: "email",
+      subject: "subject",
+      messageBody: "message"
+    }
+  }
+
+  back() {
+    this.step1Flag = true;
+    this.step2Flag = false;
   }
 
   close() {
