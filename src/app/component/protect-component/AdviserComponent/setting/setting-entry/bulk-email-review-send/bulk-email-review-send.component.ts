@@ -135,7 +135,10 @@ export class BulkEmailReviewSendComponent implements OnInit {
           this.verifiedAccountsList.push(element)
         }
       })
-        (this.verifiedAccountsList.length > 1) ? this.selectedFromEmail.setValidators([Validators.required]) : '';
+      if (this.verifiedAccountsList.length > 1) {
+        this.selectedFromEmail.setValue(this.verifiedAccountsList[0].emailAddress);
+        this.selectedFromEmail.setValidators([Validators.required]);
+      }
     }
   }
 
