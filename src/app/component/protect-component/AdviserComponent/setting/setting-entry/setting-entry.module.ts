@@ -29,6 +29,7 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MY_FORMATS2 } from '../../../../../constants/date-format.constant';
 import { AddSettingSchemeBasketComponent } from './add-setting-scheme-basket/add-setting-scheme-basket.component';
+import { BulkEmailReviewSendComponent } from './bulk-email-review-send/bulk-email-review-send.component';
 
 export const componentList = [AddReportingManagerComponent, AddNewRoleComponent,
   AddArnRiaDetailsComponent, AddCamsDetailsComponent, AddKarvyDetailsComponent,
@@ -36,7 +37,7 @@ export const componentList = [AddReportingManagerComponent, AddNewRoleComponent,
   AddModelPortfolioComponent,
   AddPersonalProfileComponent, AddTaskTemplateComponent, SettingPreferenceComponent,
   NewTeamMemberComponent, OpenEmailVerificationComponent, OrgProfileComponent, OpenGalleryPlanComponent,
-  TaskTemplateTypeComponent, AddTeamMemberComponent, AddSettingSchemeBasketComponent];
+  TaskTemplateTypeComponent, AddTeamMemberComponent, AddSettingSchemeBasketComponent, BulkEmailReviewSendComponent];
 
 @NgModule({
   declarations: [componentList],
