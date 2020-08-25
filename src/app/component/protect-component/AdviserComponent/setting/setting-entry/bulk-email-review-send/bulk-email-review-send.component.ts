@@ -9,10 +9,15 @@ import { EventService } from 'src/app/Data-service/event.service';
 })
 export class BulkEmailReviewSendComponent implements OnInit {
 
+  displayedColumns: string[] = ['checkBox', 'name', 'email' ];
+  dataSource = ELEMENT_DATA;
+  
   constructor(
     public authService: AuthService,
     protected eventService: EventService
   ) { }
+ 
+  
 
   logoText = 'Your Logo here';
 
@@ -28,3 +33,18 @@ export class BulkEmailReviewSendComponent implements OnInit {
     this.eventService.changeUpperSliderState({ state: 'close', refreshRequired: false });
   }
 }
+
+export interface PeriodicElement {
+  checkBox: string;
+  name: string;
+  email: string;
+  
+}
+
+
+const ELEMENT_DATA: PeriodicElement[] = [
+  {checkBox: '', name: 'Ronak Hindocha', email: 'ronak.hindocha@futurewise.co.in'},
+  {checkBox: '', name: 'Abhishek Mane', email: 'abhishek@futurewise.co.in'},
+   
+  
+];
