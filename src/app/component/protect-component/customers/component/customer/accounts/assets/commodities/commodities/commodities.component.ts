@@ -15,6 +15,7 @@ import { ExcelService } from '../../../../excel.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { FileUploadServiceService } from '../../file-upload-service.service';
+import { AssetValidationService } from '../../asset-validation.service';
 import { BottomSheetComponent } from '../../../../../common-component/bottom-sheet/bottom-sheet.component';
 
 @Component({
@@ -61,7 +62,7 @@ export class CommoditiesComponent implements OnInit {
      private pdfGen:PdfGenService,  private subInjectService: SubscriptionInject, 
      private custumService: CustomerService, private eventService: EventService, 
      public utils: UtilService, public dialog: MatDialog,
-     private _bottomSheet : MatBottomSheet) { }
+     private _bottomSheet : MatBottomSheet, private assetValidation: AssetValidationService) { }
   ngOnInit() {
     this.showRequring = '1'
     this.advisorId = AuthService.getAdvisorId();
@@ -251,7 +252,7 @@ export class CommoditiesComponent implements OnInit {
       clientId: this.clientId,
       advisorId: this.advisorId
     }
-    this.changeCount.emit("call");
+    this.assetValidation.getAssetCountGLobalData()
     this.otherCommodityList.data = [{}, {}, {}];
     this.custumService.getOthers(obj).subscribe(
       data => this.getOthersRes(data), (error) => {

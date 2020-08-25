@@ -170,7 +170,9 @@
 
    <div class="row secoundTable">
       <div [ngClass]="{'table-scroll':isLoading==false }" class="col-md-12 p-0 mb-8">
-         <cdk-virtual-scroll-viewport #cdkVirtualScrollViewport [hidden]="unrealisedArray.length>0==false"
+<!--        <cdk-virtual-scroll-viewport #cdkVirtualScrollViewport [hidden]="unrealisedArray.length>0==false"-->
+
+        <cdk-virtual-scroll-viewport #cdkVirtualScrollViewport [hidden]="unrealisedArray.length>0==false"
             class="tran-height-2">
             <!-- <div *ngIf="customDataSource.data.length>0" class="wrapper">-->
             <table #tableEl [appSkeletonLoading]="isLoading" *ngIf="unrealisedData" [dataSource]="unrealisedData"
@@ -480,14 +482,14 @@
                   </td>
                </ng-container>
                <tr *matHeaderRowDef="displayedColumns; sticky: true" mat-header-row></tr>
-               <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+               <tr *matRowDef="let row; columns: displayedColumns; when: isSimpleRow" mat-row ></tr>
                <tr *matRowDef="let row; columns: displayedColumnsTotal; when: isTotal" mat-row
                   [hidden]="viewMode == 'All Transactions'"></tr>
                <tr *matRowDef="let row; columns: ['groupHeader']; when: isGroup" mat-row></tr>
                <tr *matRowDef="let row; columns: ['groupHeader2']; when: isGroup2" mat-row></tr>
                <tr *matRowDef="let row; columns: ['groupHeader3']; when: isGroup3" mat-row></tr>
-               <tr [style.height.px]="placeholderHeight" mat-row
-                  *matRowDef="let row; let index = index; columns: []; when: placeholderWhen"></tr>
+<!--               <tr [style.height.px]="placeholderHeight" mat-row-->
+<!--                  *matRowDef="let row; let index = index; columns: []; when: placeholderWhen"></tr>-->
 
                <!-- <tr *matRowDef="let row; columns: ['groupHeader4']; when: isGroup4" mat-row></tr> -->
                <!-- <tr mat-footer-row *matFooterRowDef="displayedColumns;sticky: true" [hidden]="isLoading"></tr> -->

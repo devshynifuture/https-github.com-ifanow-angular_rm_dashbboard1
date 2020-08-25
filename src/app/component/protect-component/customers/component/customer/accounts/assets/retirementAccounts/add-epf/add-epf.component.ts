@@ -271,6 +271,9 @@ addNewNominee(data) {
     }
   }
   getdataForm(data) {
+    if(data){
+      this.showHide = true;
+    }
     this.flag = data;
     (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : '';
     this.epf = this.fb.group({

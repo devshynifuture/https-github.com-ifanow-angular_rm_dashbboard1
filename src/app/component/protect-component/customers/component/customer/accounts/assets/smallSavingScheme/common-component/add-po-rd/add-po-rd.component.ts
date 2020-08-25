@@ -266,6 +266,7 @@ export class AddPoRdComponent implements OnInit {
       data = {};
       this.flag = 'addPORD';
     } else {
+      this.isOptionalField = false;
       (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : this.editApi = data;
       this.flag = 'editPORD';
     }

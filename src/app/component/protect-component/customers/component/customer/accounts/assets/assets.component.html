@@ -10,7 +10,7 @@
                     <!-- <div class="leftside-overlay-toggle-button" (click)="sidenav.toggle()" *ngIf="sidenavState">
   <i class="material-icons f-30 text-custom"> keyboard_arrow_right </i>
   </div> -->
-                    <ul class="vertical-menu ">
+                    <!-- <ul class="vertical-menu ">
                         <li *ngFor="let singleAssetType of assetSideBarData"
                             (click)="viewMode =singleAssetType.viewmode;sidenavState = false"
                             [ngClass]="{'activeColor lt':viewMode ==singleAssetType.viewmode}" class=" c-p">
@@ -23,19 +23,20 @@
                                 </div>
                             </div>
                         </li>
-                    </ul>
-                    <!-- <ul class="vertical-menu ">
-                        <li *ngFor="let singleAssetType of assetSideBarData">
+                    </ul> -->
+                    <ul class="vertical-menu ">
+                        <li *ngFor="let singleAssetType of assetSideBarData"  [routerLink]="singleAssetType.link"
+                             class=" c-p">
                             <div class="row">
                                 <div class="col-md-9 p-0 ws-nowrap">
-                                    {{ singleAssetType.name }} 
+                                    {{ singleAssetType.name }}
                                 </div>
                                 <div class="col-md-3 pl-0 pr-20 text-right text-custom">
                                     {{ singleAssetType.count }}
                                 </div>
                             </div>
                         </li>
-                    </ul> -->
+                    </ul>
                 </div>
                 <!-- <div class="col-md-10 bg-white bb-0 pb-24  b-a pl-0 pr-0 min-height" [ngSwitch]="viewMode">
   <div *ngSwitchCase="'tab1'">
@@ -111,7 +112,7 @@
                  </div>
                 
 
-                <div class="col-md-12 bg-white bb-0 pb-24  pl-0 pr-0 min-height" [ngSwitch]="viewMode">
+                <!-- <div class="col-md-12 bg-white bb-0 pb-24  pl-0 pr-0 min-height" [ngSwitch]="viewMode">
                     <div *ngSwitchCase="'tab1'">
                         <div>
                             <app-mutual-fund (sendData)="getValue($event)"></app-mutual-fund>
@@ -149,6 +150,9 @@
                     </div>
                     <div *ngSwitchCase="'tab9'">
                     </div>
+                </div> -->
+                <div class="col-md-12 bg-white bb-0 pb-24  pl-0 pr-0 min-height" >
+                    <router-outlet></router-outlet>
                 </div>
             </div>
 

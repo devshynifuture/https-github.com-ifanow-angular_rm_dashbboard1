@@ -251,6 +251,7 @@ addNewNominee(data) {
       data = {};
     } else {
       this.editApi = data;
+      this.show = true;
     }
     this.pomisForm = this.fb.group({
       getCoOwnerName: this.fb.array([this.fb.group({

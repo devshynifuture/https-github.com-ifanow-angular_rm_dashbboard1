@@ -8,6 +8,7 @@ import { CustomerService } from '../../customer.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UpperCustomerComponent } from '../../../common-component/upper-customer/upper-customer.component';
 import { EnumDataService } from 'src/app/services/enum-data.service';
+import { AssetValidationService } from './asset-validation.service';
 
 @Component({
   selector: 'app-assets',
@@ -20,17 +21,18 @@ export class AssetsComponent implements OnInit {
   matSideNavOpen: boolean = true;
   advisorId: any;
   clientId: any;
+  unSudcripCounts;
   // sidenavState: boolean = false;
   @ViewChild('sidenav', { static: true }) stateOfPanel: MatSidenav;
   assetSideBarData = [
-    { name: 'Mutual funds', viewmode: 'tab1', count: '0' },
-    { name: 'Stocks', viewmode: 'tab2', count: '0' },
-    { name: 'Fixed income', viewmode: 'tab3', count: '0' },
-    { name: 'Real estate', viewmode: 'tab4', count: '0' },
-    { name: 'Retirement accounts', viewmode: 'tab5', count: '0' },
-    { name: 'Small saving scheme', viewmode: 'tab6', count: '0' },
-    { name: 'Cash & Bank', viewmode: 'tab7', count: '0' },
-    { name: 'Commodities', viewmode: 'tab8', count: '0' }
+    { name: 'Mutual funds', viewmode: 'tab1', count: '0', link: './mutual' },
+    { name: 'Stocks', viewmode: 'tab2', count: '0', link: './stock' },
+    { name: 'Fixed income', viewmode: 'tab3', count: '0', link: './fix' },
+    { name: 'Real estate', viewmode: 'tab4', count: '0', link: './real' },
+    { name: 'Retirement accounts', viewmode: 'tab5', count: '0', link: './retire' },
+    { name: 'Small saving scheme', viewmode: 'tab6', count: '0', link: './small' },
+    { name: 'Cash & Bank', viewmode: 'tab7', count: '0', link: './cash_bank' },
+    { name: 'Commodities', viewmode: 'tab8', count: '0', link: './commodities' }
   ];
   tab: any;
   Settab: any;
@@ -43,6 +45,7 @@ export class AssetsComponent implements OnInit {
     public dialog: MatDialog,
     private cusService: CustomerService,
     private route: ActivatedRoute,
+    private assetValidation: AssetValidationService,
     private router: Router, private enumDataService: EnumDataService) {
   }
 
@@ -125,18 +128,21 @@ export class AssetsComponent implements OnInit {
     this.enumDataService.getclientFamilybankList();
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1;
-    this.getAssetCountGLobalData();
+    // this.getAssetCountGLobalData();
     // this.stateOfPanel.mode = 'over';
     // this.stateOfPanel.mode = 'side';
     this.stateOfPanel.open();
-    this.route.queryParams.subscribe((params) => {
-      if (params.tab) {
-        this.Settab = params.tab;
-        this.viewMode = this.Settab;
-        this.eventService.tabData('2');
-      }
-    });
-
+    // this.route.queryParams.subscribe((params) => {
+    //   if (params.tab) {
+    //     this.Settab = params.tab;
+    //     this.viewMode = this.Settab;
+    //     this.eventService.tabData('2');
+    //   }
+    // });
+    this.assetValidation.getAssetCountGLobalData()
+    this.unSudcripCounts = this.assetValidation.passCounts().subscribe((data) => {
+      this.getAssetCountGLobalDataRes(data)
+    })
   }
 
   toggleSideNav() {
@@ -275,6 +281,12 @@ export class AssetsComponent implements OnInit {
         }
       }
     );
+  }
+
+  ngOnDestroy() {
+    this.unSudcripCounts.unsubscribe();
+    console.log("unsubscribe");
+    
   }
 }
 

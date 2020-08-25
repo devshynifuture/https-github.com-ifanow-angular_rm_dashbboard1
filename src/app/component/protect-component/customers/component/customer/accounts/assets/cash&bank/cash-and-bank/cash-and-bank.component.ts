@@ -17,6 +17,7 @@ import { PdfGenService } from 'src/app/services/pdf-gen.service';
 import { FileUploadServiceService } from '../../file-upload-service.service';
 import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { EnumDataService } from 'src/app/services/enum-data.service';
+import { AssetValidationService } from '../../asset-validation.service';
 import { BottomSheetComponent } from '../../../../../common-component/bottom-sheet/bottom-sheet.component';
 
 @Component({
@@ -57,7 +58,7 @@ export class CashAndBankComponent implements OnInit {
   constructor(private excel:ExcelGenService,  private pdfGen:PdfGenService, private subInjectService: SubscriptionInject,
     private fileUpload : FileUploadServiceService, private enumService: EnumServiceService,
     private custumService: CustomerService, private eventService: EventService, private enumDataService: EnumDataService,
-    public utils: UtilService, public dialog: MatDialog,
+    public utils: UtilService, public dialog: MatDialog, private assetValidation: AssetValidationService,
     private _bottomSheet : MatBottomSheet) {
       this.clientData =AuthService.getClientData()
   }
@@ -259,7 +260,7 @@ export class CashAndBankComponent implements OnInit {
     console.log('getBankAccountsRes ####', data);
     this.isLoading = false;
     if (data != undefined) {
-      this.changeCount.emit("call");
+      this.assetValidation.getAssetCountGLobalData()
       this.bankAccountList.data = data.assetList;
       this.bankAccountList.sort = this.bankAccountListTableSort;
       this.totalAccountBalance = data.sumOfAccountBalance;
@@ -293,7 +294,7 @@ export class CashAndBankComponent implements OnInit {
       this.cashInHandList.data = [];
     }
     else if (data.assetList.length != 0) {
-      this.changeCount.emit("call");
+      this.assetValidation.getAssetCountGLobalData()
       this.cashInHandList.data = data.assetList;
       this.cashInHandList.sort = this.cashInHandListTableSort;
       this.sumOfCashValue = data.sumOfCashValue;

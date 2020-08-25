@@ -322,3 +322,52 @@ textarea.mat-input-element {
     padding-top: 0px !important;
   }
 }
+
+@media(max-width:1200px) {
+  .support-login {
+    width: 70% !important;
+  }
+}
+
+@media(max-width:1124px) {
+  .support-login {
+    width: 80% !important;
+  }
+
+  .signup-proccess,
+  .regitser-field,
+  .login-field,
+  .suppor-fileds-width {
+    width: 90% !important;
+  }
+}
+
+@media(max-width:1092px) {
+  .progressbar li:after {
+    left: -38% !important;
+    width: 75% !important;
+  }
+
+  .register-side {
+    padding-left: 25px;
+  }
+
+
+}
+
+@media(max-width:992px) {
+  .register-side {
+    padding-left: 35px;
+  }
+}
+
+@media(max-width:842px) {
+  .progressbar li {
+    font-size: 10px !important;
+  }
+
+  .progressbar li:after {
+    left: -36% !important;
+    width: 70% !important;
+  }
+}

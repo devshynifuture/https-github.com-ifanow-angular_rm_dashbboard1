@@ -289,6 +289,9 @@ export class RecuringDepositComponent implements OnInit {
     if (data == undefined) {
       data = {};
     }
+    else{
+      this.showHide = true;
+    }
     this.depoData = data;
     this.recuringDeposit = this.fb.group({
       getCoOwnerName: this.fb.array([this.fb.group({

@@ -18,6 +18,7 @@ import { MathUtilService } from "../../../../../../../../../services/math-util.s
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
 import { FileUploadServiceService } from '../../file-upload-service.service';
+import { AssetValidationService } from '../../asset-validation.service';
 import { BottomSheetComponent } from '../../../../../common-component/bottom-sheet/bottom-sheet.component';
 
 
@@ -65,7 +66,7 @@ export class FixedIncomeComponent implements OnInit {
     private excel: ExcelGenService, private pdfGen: PdfGenService,
     private fileUpload: FileUploadServiceService,
     public util: UtilService, public dialog: MatDialog,
-    private _bottomSheet : MatBottomSheet) {
+    private _bottomSheet : MatBottomSheet, private assetValidation: AssetValidationService) {
   }
 
   viewMode;
@@ -179,7 +180,8 @@ export class FixedIncomeComponent implements OnInit {
       this.dataSource.data = [];
       this.hideFilter = false;
     } else if (data.assetList) {
-      this.changeCount.emit("call");
+      this.assetValidation.getAssetCountGLobalData()
+
       this.dataList = data.assetList;
       this.dataSource.data = data.assetList;
       this.dataSource.sort = this.fixedIncomeTableSort;
@@ -226,7 +228,7 @@ export class FixedIncomeComponent implements OnInit {
     this.isLoading = false;
     if (data != undefined) {
       if (data.assetList) {
-        this.changeCount.emit("call");
+        this.assetValidation.getAssetCountGLobalData()
 
         console.log('FixedIncomeComponent getRecuringDepositRes data *** ', data);
         this.dataList = data.assetList;
@@ -268,7 +270,7 @@ export class FixedIncomeComponent implements OnInit {
     this.isLoading = false;
     if (data != undefined) {
       if (data.assetList) {
-         this.changeCount.emit("call");
+         this.assetValidation.getAssetCountGLobalData()
 
         console.log('getBondsRes ******** ', data);
         this.dataList = data.assetList;

@@ -402,6 +402,9 @@ export class AddRealEstateComponent implements OnInit {
 
   getRealEstate(data) {
     this.flag = data;
+    if(data){
+      this.showMoreData = true;
+    }
     (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : '';
     this.addOwner = false;
     this.addrealEstateForm = this.fb.group({
