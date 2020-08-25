@@ -114,7 +114,7 @@
                             *ngIf="verifiedAccountsList.length==0" class="text-primary c-p"
                             (click)="bulkEmail('')">Change</span> </p>
                     <mat-form-field *ngIf="verifiedAccountsList.length>1">
-                        <mat-select class="form-control" formControlName="selectedFromEmail">
+                        <mat-select class="form-control" [formControl]="selectedFromEmail">
                             <mat-option *ngFor="let singleClient of verifiedAccountsList"
                                 [value]="singleClient.emailAddress">
                                 {{singleClient.emailAddress}}
