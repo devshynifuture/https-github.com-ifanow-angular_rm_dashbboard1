@@ -147,7 +147,7 @@ export class BulkEmailReviewSendComponent implements OnInit {
   bulkEmail(value) {
     const dialogData = {
       data: value,
-      header: 'EMAIL BULK PASSWORD',
+      header: 'EMAIL VERIFICATION REQUIRED',
       body: 'If you wish to send an email with your email address, Please verify it before proceeding. Please make a note the process of verification takes 24 to 48 hours. Would you like to proceed?',
       body2: '',
       btnYes: 'CHANGE',
