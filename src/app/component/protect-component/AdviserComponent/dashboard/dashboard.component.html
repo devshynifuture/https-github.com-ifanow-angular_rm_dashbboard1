@@ -30,7 +30,7 @@
 
 <div class="row pt-135 pb-28" id="ui-dashboard-advisor">
 
-  <div class="col-md-3 pl-20 pr-20 mt-44">
+  <div class="col-xl-3 col-lg-4 col-md-5 pl-20 pr-20 mt-44">
 
     <h5 class="m-0 roboto f-500 pb-16">Key metrics</h5>
     <div appSkeletonLoading [appSkeletonLoading]="keyMatrixFlag"
@@ -234,7 +234,7 @@
   </div>
 
 
-  <div class="col-md-6 bl-1 br p-0">
+  <div class="col-xl-6 col-lg-8 col-md-7 bl-1 br p-0">
     <div class="pl-24 pr-24">
 
       <div class="advisor-status pl-20 mb-24">
@@ -244,8 +244,8 @@
 
 
       <div class="openGuideBox" *ngIf="!enumDataService.PRODUCTION">
-        <div class="row">
-          <div class="col-md-8 p-0">
+        <div class="row column-reverse-992 text-center-992">
+          <div class="col-xl-8 col-lg-8 col-md-12 p-0">
             <div class="orangeBox">
               <p class="text-white roboto f-500">First things first, {{advisorName}}! We’ve created an onboarding guide
                 for you. </p>
@@ -254,7 +254,7 @@
               <button (click)="openGuideDialog()" class="openGuideBtn" mat-button>Open the guide</button>
             </div>
           </div>
-          <div class="col-md-4 d-flex align-items-center justify-content-center">
+          <div class="col-xl-4 col-lg-4 col-md-12 d-flex align-items-center justify-content-center ptb-20-992">
             <img src="assets/images/svg/sport-cup.svg">
           </div>
         </div>
@@ -273,14 +273,14 @@
             <div class=" skeletonAnimation" [appSkeletonLoading]="tabsLoaded.portfolioData.isLoading"
               appSkeletonLoading>
               <div class="row">
-                <div class="col-md-6 pl-0 text-center">
+                <div class="col-xl-6 col-lg-6 col-md-12 pl-0 text-center">
                   <div class="relClass">
                     <div class="bar180 height180">
                     </div>
                   </div>
                 </div>
-                <div class="col-md-6 pl-0 ">
-                  <div class="mt-60">
+                <div class="col-xl-6 col-lg-6 col-md-12 pl-0 pl-15-992">
+                  <div class="mt-60 mt-0-992 ">
                     <div class="relClass">
                       <div class="bar" [ngClass]="{'height24': tabsLoaded.portfolioData.isLoading}"></div>
                     </div>
@@ -303,12 +303,13 @@
         <h5 class="text-black f-16 roboto mb-10 f-500"> Asset classses</h5>
         <div class="bg-white br-10">
           <div class="row b-a pt-20 pb-20 br-4">
-            <div class="col-md-6">
+            <div class="col-xl-6 col-lg-6 col-md-12 p-0">
               <!-- <div class="highcharts-figure" id="piechartMutualFund"></div> -->
-              <div class="h-200" [chart]="assetAllocationPieConfig">
+              <div class="h-200 w-100-992" [chart]="assetAllocationPieConfig">
               </div>
             </div>
-            <div class="col-md-6 pl-0 flex-column d-flex justify-content-center ">
+            <div
+              class="col-xl-6 col-lg-6 col-md-12 pl-0 flex-column d-flex justify-content-center pl-15-992 align-items-center-992">
               <div class="chart-data d-flex" *ngFor="let data of newchartData">
                 <span class="pointNumber" [style.background-color]="data.color">
                 </span>
@@ -602,8 +603,8 @@
 
 
           <div *ngIf="dataSource2.data == null" class="ba-primitive br-4 p-18">
-            <div class="row">
-              <div class="col-md-7 p-0">
+            <div class="row column-reverse-992 text-center-992">
+              <div class="col-xl-7 col-lg-7 col-md-12 p-0">
                 <h3 class="f-16 roboto f-600"> No tasks added yet </h3>
                 <p class="f-14"> In order to collaborate with your team in an efficient way, you can create tasks and
                   track them here. </p>
@@ -611,7 +612,7 @@
                   Go to task section
                 </button>
               </div>
-              <div class="col-md-5 text-center pr-0">
+              <div class="col-xl-5 col-lg-5 col-md-12 text-center pr-0">
                 <img src="assets/images/svg/today -tasks.svg">
               </div>
             </div>
@@ -728,10 +729,10 @@
       <div class="dasBoradBox mt-40">
 
         <div class="row pb-10">
-          <div class="col-md-8 d-flex align-items-center p-0">
+          <div class="col-md-9 d-flex align-items-center p-0">
             <h5 class="m-0 f-500 roboto text-black">Recent investment accounts</h5>
           </div>
-          <div class="col-md-4 p-0 text-right">
+          <div class="col-md-3 p-0 text-right">
             <button [routerLink]="['/admin/transactions/overview']" mat-stroked-button class="advisor-view-all">View
               All</button>
           </div>
@@ -887,8 +888,8 @@
 
         <div *ngIf="LastSevenDaysInvestmentAccounts && LastSevenDaysInvestmentAccounts.length == 0"
           class="ba-primitive br-4 p-18">
-          <div class="row">
-            <div class="col-md-7 p-0">
+          <div class="row column-reverse-992 text-center-992">
+            <div class="col-xl-7 col-lg-7 col-md-12 p-0">
               <h3 class="f-16 roboto f-600">Not enough data to display</h3>
               <p class="f-14">If you have registered with NSE NMF or BSE Star MF then you can open client’s investmetn
                 accounts from here and track their real time status.</p>
@@ -899,7 +900,7 @@
                 <mat-checkbox></mat-checkbox> <span class="text-primitive pl-4 f-12">Do not show this again</span>
               </div>
             </div>
-            <div class="col-md-5 text-center pr-0">
+            <div class="col-xl-5 col-lg-5 col-md-12 text-center pr-0">
               <img src="assets/images/svg/recent-investment-accounts.svg">
             </div>
           </div>
@@ -910,10 +911,10 @@
 
       <div class="dasBoradBox mt-40">
         <div class="row pb-10">
-          <div class="col-md-8 d-flex align-items-center p-0">
+          <div class="col-md-9 d-flex align-items-center p-0">
             <h5 class="m-0 f-500 roboto text-black">Recent online transactions (MF)</h5>
           </div>
-          <div class="col-md-4 p-0 text-right">
+          <div class="col-md-3 p-0 text-right">
             <button mat-stroked-button [routerLink]="['/admin/transactions/overview']"
               routerLinkActive="router-link-active" class="advisor-view-all">View All
             </button>
@@ -975,8 +976,8 @@
 
 
         <div *ngIf="LastSevenDaysTransactions && LastSevenDaysTransactions.length <= 0" class="ba-primitive br-4 p-18">
-          <div class="row">
-            <div class="col-md-7 p-0">
+          <div class="row column-reverse-992 text-center-992">
+            <div class="col-xl-7 col-lg-7 col-md-12 p-0">
               <h3 class="f-16 roboto f-600">Not enough data to display</h3>
               <p class="f-14">If you have registered with NSE NMF or BSE Star MF then you can initiate online
                 transactions from here and track their real time status.</p>
@@ -987,7 +988,7 @@
                 <mat-checkbox></mat-checkbox> <span class="text-primitive pl-4 f-12">Do not show this again</span>
               </div>
             </div>
-            <div class="col-md-5 text-center pr-0">
+            <div class="col-xl-5 col-lg-5 col-md-12 text-center pr-0">
               <img src="assets/images/svg/recent-online-transactions(MF).svg">
             </div>
           </div>
@@ -1096,24 +1097,24 @@
 
 
       <div class="row pt-40 rejections-advisor">
-        <div class="col-md-8 p-0">
+        <div class="col-md-9 p-0">
           <h5 class="m-0 f-500 roboto text-black pt-2">Rejections and Reversals</h5>
         </div>
-        <div class="col-md-4 p-0 text-right">
+        <div class="col-md-3 p-0 text-right">
           <button mat-stroked-button class="advisor-view-all">View All</button>
         </div>
 
 
         <div *ngIf="dataSource5.length <= 0" class="ba-primitive br-4 mt-10 p-18">
-          <div class="row">
-            <div class="col-md-7 p-0">
+          <div class="row column-reverse-992 text-center-992">
+            <div class="col-xl-7 col-lg-7 col-md-12 p-0">
               <h3 class="f-16 roboto f-600">No Rejected transaction in last 7 days</h3>
               <p class="f-14">
                 We could not find any Rejections or reversal transactions to show. Either there is not enough data yet,
                 or you have not provided your RTA details yet.
               </p>
             </div>
-            <div class="col-md-5 text-center pr-0">
+            <div class="col-xl-5 col-lg-5 col-md-12 text-center pr-0">
               <img src="assets/images/svg/rejections-and-reversals.svg">
             </div>
           </div>
@@ -1171,11 +1172,11 @@
       </div>
 
       <div class="dasBoradBox mt-40">
-        <div class="row">
-          <div class="col-md-6 p-0">
+        <div class="row pb-10">
+          <div class="col-xl-6 col-lg-6 col-md-12 p-0">
             <h5 class="m-0 f-500 text-black roboto pt-8">Subscription summary</h5>
           </div>
-          <div class="col-md-6 p-0 text-right">
+          <div class="col-xl-6 col-lg-6 col-md-12 p-0 text-right">
             <!-- <button mat-stroked-button class="text-primary">Not started</button>
           <button mat-button>Upcoming</button> -->
             <mat-button-toggle-group (change)="getSummaryDataDashboard()" [(ngModel)]="subscriptionSummaryStatusFilter"
@@ -1253,13 +1254,11 @@
           </div>
         </div>
 
-        <div *ngIf="dashBoardSummary" class="col-md-12 text-right pt-8">
-          <div (click)="changeParentsTab(3)" class="c-p">View all</div>
-        </div>
+
 
         <div *ngIf="dashBoardSummary.length ==0" class="ba-primitive br-4 p-18">
-          <div class="row">
-            <div class="col-md-7 p-0">
+          <div class="row column-reverse-992 text-center-992">
+            <div class="col-xl-7 col-lg-7 col-md-12 p-0">
               <h3 class="f-16 roboto f-600">No subscriptions added yet</h3>
               <p class="f-14">
                 Subscriptions is carefully designed for RIAs. You can define your core offerings, fee structure,
@@ -1273,28 +1272,31 @@
                 <mat-checkbox></mat-checkbox> <span class="text-primitive pl-4 f-12">Do not show this again</span>
               </div>
             </div>
-            <div class="col-md-5 text-center pr-0">
+            <div class="col-xl-5 col-lg-5 col-md-12 text-center pr-0">
               <img src="assets/images/svg/Subscription-empty-img.svg">
             </div>
           </div>
+        </div>
+        <div *ngIf="dashBoardSummary" class="col-md-12 text-right pt-8">
+          <div (click)="changeParentsTab(3)" class="c-p">View all</div>
         </div>
 
       </div>
 
       <div class=" dasBoradBox mt-40">
         <div class="row">
-          <div class="col-md-7 p-0">
+          <div class="col-md-9 p-0">
             <h5 class="mb-8 f-500 text-black roboto mt-8">Latest AUM Reconciliation report</h5>
           </div>
 
-          <div class="col-md-5 p-0 text-right">
+          <div class="col-md-3 p-0 text-right">
             <button [routerLink]="['/admin/backoffice-aum-reconciliation/reconciliation']" mat-stroked-button
               class="advisor-view-all">View All</button>
           </div>
         </div>
 
         <div *ngIf="aumReconList.length>0" class="row">
-          <div class="col-md-12 p-0 pt-10">
+          <div class="col-md-12 p-0 pt-10 overflow-y-991">
             <table mat-table [appSkeletonLoading]="aumFlag" appSkeletonLoading class="skeletonAnimation"
               [dataSource]="aumReconList" id="table-low">
 
@@ -1384,7 +1386,7 @@
   </div>
 
 
-  <div class="col-md-3 mt-44">
+  <div class="col-xl-3 col-lg-8 col-md-7 mt-44 ml-33p-1200 mt-0-1200 ptb-44-1200 bl-1-1200 ml-41-991">
     <div class="sticky-top z-0">
       <mat-tab-group animationDuration="0ms" id="advisor-radio">
         <mat-tab label="To-do">

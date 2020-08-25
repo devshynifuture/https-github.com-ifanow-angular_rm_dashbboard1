@@ -38,6 +38,7 @@ export class PreferencesService {
       notes: goalForm.notes,
       frequency: goalForm.goalEndDateYear - goalForm.goalStartDateYear,
       futureValue: goalForm.goalValue,
+      presentValue: goalForm.goalValue,
       isArchived: goalForm.archiveGoal || false,
       isFreezed: goalForm.freezeCalculation || false,
       stepUp: goalForm.stepUp,

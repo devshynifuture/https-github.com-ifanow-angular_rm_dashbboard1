@@ -503,17 +503,83 @@
                     <div class="p-20" [hidden]="hasError">
 
                         <h5 class="mb-8  text-black">
-                            Email bulk password
+                            Want to send welcome email to your clients in bulk?
                         </h5>
 
+                        <p class="mb-28">Through this module, you can do so easily with a simple, 3 step process...</p>
 
-                        <div class="col-md-12 p-0">
+                        <div class="row">
+                            <div class="col-md-4 pl-0">
+                                <img class="ml-48 mb-12" src="assets/images/svg/review-client-list.svg">
+                                <div class="d-flex">
+                                    <div class="numBox">
+                                        <span class="">1</span>
+                                    </div>
+                                    <div class="contBox">
+                                        <h5 class="roboto text-diff f-500">Review client list</h5>
+                                        <p>At first, we’ll show you the list of clients. You can select / deselect and
+                                            proceed</p>
+                                    </div>
+                                </div>
+                            </div>
 
-                            <h5 class=" mt-28 mb-12 f-14"> Send username & password to all your clients in one go. </h5>
-                            <button mat-stroked-button class="btn-primary btnNewEmail" (click)="bulkEmail('')"> SEND
-                            </button>
+
+                            <div class="col-md-4 pl-0">
+                                <img class="ml-48 mb-12" src="assets/images/svg/verify-your-email-address.svg">
+                                <div class="d-flex">
+                                    <div class="numBox">
+                                        <span class="">2</span>
+                                    </div>
+                                    <div class="contBox">
+                                        <h5 class="roboto text-diff f-500">Verify your email address</h5>
+                                        <p> Next, we will show you the email ID from which the email will be sent. If
+                                            your email is not verified, it will be sent from no-reply@my-planner.in </p>
+
+                                        <p>We recommend you to verify and chose the correct “From mail” thru Email
+                                            verification and Email templates section above. </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 pl-0">
+                                <img class="ml-48 mb-12" src="assets/images/svg/review-email-and-send.svg">
+                                <div class="d-flex">
+                                    <div class="numBox">
+                                        <span class="">3</span>
+                                    </div>
+                                    <div class="contBox">
+                                        <h5 class="roboto text-diff f-500">Review email and send</h5>
+                                        <p>Lastly, we will show you the email template. You can review / modify, if
+                                            necessary and hit the send button.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
 
                         </div>
+
+                        <div class="row pt-10">
+                            <div class="col-md-12 text-center">
+                                <!-- <button (click)="openFragment(null)" mat-stroked-button class="btn-primary btnNewEmail">
+                                    BEGIN
+                                </button> -->
+                                <app-progress-button (btnClick)="openFragment()" [options]="barButtonOptions"
+                                    class="br-0 text-inherit ml-12">
+                                </app-progress-button>
+                            </div>
+                        </div>
+
+
+                        <!-- <div class="col-md-12 p-0">
+                            <h5 class=" mt-28 mb-12 f-14"> Send username & password to all your clients in one go. </h5>
+                            <button mat-stroked-button class="btn-primary btnNewEmail" (click)="openFragment(null)">
+                                SEND
+                            </button>
+                        </div> -->
+
+
                     </div>
 
                     <div *ngIf="hasError" class="d-flex flex-column align-items-center">

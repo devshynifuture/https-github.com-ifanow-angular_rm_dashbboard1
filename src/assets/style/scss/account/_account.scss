@@ -434,32 +434,34 @@
 
   .tabViewSelectMenu {
     margin-top: 20px;
-     display: block;
-     .mat-form-field {
-       width: 300px;
-     }
-      
+    display: block;
+
+    .mat-form-field {
+      width: 300px;
+    }
+
   }
 
   .tabMenuVeiw {
-    ul{
+    ul {
       display: block;
     }
   }
-  
+
 
   #ui-assets-account .vertical-menu {
     height: 150px;
     position: static;
+
     .NumbrTabNone {
       display: none;
     }
 
-    
-    
+
+
   }
 
-  
+
 
 
 }
@@ -476,7 +478,7 @@
 
 // @media(max-width:1142px) {
 
-   
+
 //   .overflow-y-auto-1142 {
 //     overflow: unset !important;
 //     overflow-y: auto !important;
@@ -765,7 +767,7 @@
 //     }
 //   }
 
-   
+
 
 // }
 
@@ -776,7 +778,7 @@
 
 //   #ui-overview-profile {
 
-    
+
 
 //     .detailContainer {
 //       .br-primitive:nth-child(1) {
@@ -828,7 +830,7 @@
 //     max-width: 20vw !important;
 //   }
 
- 
+
 
 //   .responsive-right-side-top {
 //     max-width: 80vw !important;
@@ -842,7 +844,7 @@
 
 //   #ui-overview-profile {
 //     .p-20 {
-      
+
 //       padding-right: 12px !important;
 //     }
 //   }
@@ -922,7 +924,7 @@
 //     max-width: 22vw !important;
 //   }
 
- 
+
 
 //   .responsive-right-side-top {
 //     max-width: 78vw !important;
@@ -981,7 +983,7 @@
 //     max-width: 23vw !important;
 //   }
 
-  
+
 
 //   .responsive-right-side-top {
 //     max-width: 77vw !important;
