@@ -153,7 +153,7 @@
                 <div class="row pt-20">
                     <div class="col-md-12 p-0">
                         <form [formGroup]="mailForm">
-                            <app-froala class="" [(model)]="emailBody"></app-froala>
+                            <app-froala class="event-none" [(model)]="emailBody"></app-froala>
                         </form>
                     </div>
                 </div>
@@ -163,7 +163,7 @@
 
         </div>
         <div class="col-md-3">
-            <p class="mb-0 posP text-primary">Email will be sent to 7 clients</p>
+            <p class="mb-0 posP text-primary">Email will be sent to {{dataCount}} clients</p>
         </div>
     </div>
 
