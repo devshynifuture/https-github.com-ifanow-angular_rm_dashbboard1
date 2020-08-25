@@ -454,6 +454,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     }
     this.dataSource = goalData.remainingData.retirementTableValue ? goalData.remainingData.retirementTableValue : [];
     this.dataSource.sort = this.sort;
+    console.log('table',this.dataSource)
     setTimeout(() => {
       this.createChart(this.selectedGoal);
     }, 100);
@@ -461,11 +462,11 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
 
   deleteGoal() {
     const dialogData = {
-      header: 'UNALLOCATE ASSET',
+      header: 'DELETE GOAL',
       body: 'Are you sure you want to delete this goal?',
       body2: 'This cannot be undone.',
       btnYes: 'CANCEL',
-      btnNo: 'UNALLOCATE',
+      btnNo: 'DELETE',
       positiveMethod: () => {
         let deleteObj = {
           goalId: this.selectedGoal.id,

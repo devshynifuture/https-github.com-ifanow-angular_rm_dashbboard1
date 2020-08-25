@@ -103,7 +103,7 @@ export class PreferencesComponent implements OnInit, OnDestroy {
       notes: [remainingData.notes || remainingData.goalNote],
       name: [this.data.goalName, [Validators.required]],
       archiveGoal: [],
-      stepUp: [remainingData.stepUp, [Validators.required]]
+      stepUp: [(remainingData.stepUp)?remainingData.stepUp:'', [Validators.required]]
     })
 
     if (this.data.singleOrMulti == 2) {
