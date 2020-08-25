@@ -289,7 +289,9 @@ addNewNominee(data) {
   }
   getdataForm(data) {
     this.flag = data;
-
+    if(data){
+      this.showHide = true;
+    }
     (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : this.familyMemberId = data.familyMemberId;;
     this.summaryNPS = this.fb.group({
       getCoOwnerName: this.fb.array([this.fb.group({

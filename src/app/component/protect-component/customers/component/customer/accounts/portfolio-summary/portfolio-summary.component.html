@@ -66,14 +66,14 @@
             <div class="col-md-6   text-right">
               <div class="relClass">
                 <div [ngClass]="{'height23': letsideBarLoader}" class="bar">
-                  <p *ngIf="letsideBarLoader==false" class=" m-0 roboto pr-8 roboto ">
+                  <p *ngIf="letsideBarLoader==false" class=" m-0 roboto pr-8 text-right roboto ">
                     <span *ngIf="mutualFundValue.currentValue!=0">₹</span>
                     <span [value]="mutualFundValue.currentValue"
                       appFormatNumber>{{mutualFundValue.currentValue == 0 ? '-' : mutualFundValue.currentValue}}
                     </span>
                   </p>
                   <p [ngClass]="{'text-blue': checkNumberPositiveAndNegative(mutualFundValue.percentage),'text-danger': checkNumberPositiveAndNegative(mutualFundValue.percentage)==false,'': checkNumberPositiveAndNegative(mutualFundValue.percentage)==undefined}"
-                    class="m-0 roboto pr-8 ">
+                    class="m-0 roboto ">
                     <span
                       *ngIf="letsideBarLoader==false">{{mutualFundValue.percentage == 0 ? '-' : mutualFundValue.percentage}}
                       <span *ngIf="mutualFundValue.percentage!=0">%</span></span>

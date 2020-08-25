@@ -273,6 +273,7 @@ export class BankAccountsComponent implements OnInit {
       this.flag = "addBANK";
     }
     else {
+      this.showHide = true;
       this.flag = "editBANK";
       (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : this.editData = data;
       this.bankData = data;

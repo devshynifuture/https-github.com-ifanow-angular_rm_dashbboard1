@@ -240,6 +240,7 @@ export class CashInHandComponent implements OnInit {
       this.flag = "addCASHINHAND";
     }
     else {
+      this.showHide = true;
       this.flag = "editCASHINHAND";
       (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : this.editData = data;
     }

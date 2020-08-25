@@ -220,7 +220,9 @@ addNewNominee(data) {
   getdataForm(data) {
     this.flag = data;
     (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : '';
-
+    if(data){
+      this.isOptionalField = true;
+    }
     this.editApi = data.id ? data : undefined;
     this.potdData = data;
     this.POTDForm = this.fb.group({
@@ -296,7 +298,7 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.POTDForm}
     this.getdataForm(this.data);
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.isOptionalField = true;
+    this.isOptionalField = false;
     this.bankList = this.enumService.getBank();
 
   }

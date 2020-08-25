@@ -428,6 +428,9 @@ export class FixedDepositComponent implements OnInit {
 
   getdataForm(data) {
     this.flag = data;
+    if(data){
+      this.showHide = true;
+    }
     (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : '';
     if (this.dataSource) {
       data = this.dataSource;

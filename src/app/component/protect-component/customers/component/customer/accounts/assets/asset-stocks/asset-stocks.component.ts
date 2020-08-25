@@ -14,6 +14,7 @@ import { pieChart } from './highChart-pichart';
 import { StockDetailsViewComponent } from '../stock-details-view/stock-details-view.component';
 import { StockTransactionDetailsComponent } from './stock-transaction-details/stock-transaction-details.component';
 import { StockHoldingDetailsComponent} from './stock-holding-details/stock-holding-details.component';
+import { AssetValidationService } from '../asset-validation.service';
 
 @Component({
   selector: 'app-asset-stocks',
@@ -37,11 +38,11 @@ export class AssetStocksComponent implements OnInit {
   // build issue
   data;
 
-  constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject,
+  constructor(public dialog: MatDialog, private subInjectService: SubscriptionInject, private assetValidation: AssetValidationService,
     private cusService: CustomerService, private eventService: EventService) {
   }
 
-  ngOnInit() {
+  ngOnInit() { 
     this.dataSource25 = ELEMENT_DATA25;
     console.log(this.dataSource25);
     this.advisorId = AuthService.getAdvisorId();
@@ -63,7 +64,7 @@ export class AssetStocksComponent implements OnInit {
       advisorId: this.advisorId,
       clientId: this.clientId
     };
-    this.changeCount.emit("call");
+    this.assetValidation.getAssetCountGLobalData()
 
     this.cusService.getAssetStockData(obj).subscribe(
       data => {

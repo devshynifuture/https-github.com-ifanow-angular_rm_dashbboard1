@@ -247,6 +247,7 @@ addNewNominee(data) {
     if (data == undefined) {
       data = {};
     } else {
+      this.isOptionalField = false;
       this.editApi = data;
     }
     this.pomisForm = this.fb.group({

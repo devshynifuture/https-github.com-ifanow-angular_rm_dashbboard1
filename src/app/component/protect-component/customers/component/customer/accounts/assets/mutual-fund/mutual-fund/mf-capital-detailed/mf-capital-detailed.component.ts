@@ -215,8 +215,10 @@ export class MfCapitalDetailedComponent implements OnInit {
     this.isLoading = false;
     this.changeInput.emit(false);
     if (data) {
-
-      let catObj = this.MfServiceService.categoryFilter(data, 'category');
+      const myArray = data
+      const list = [];
+      myArray.forEach(val => list.push(Object.assign({}, val)));
+      let catObj = this.MfServiceService.categoryFilter(list, 'category');
       Object.keys(catObj).map(key => {
         if (catObj[key][0].category != 'DEBT') {
           // this.dataSource =  new MatTableDataSource(this.getFilterData(catObj[key], 'EQUITY'));
@@ -352,8 +354,10 @@ export class MfCapitalDetailedComponent implements OnInit {
                   ele.ltLoss = totalObj.ltLoss;
                   ele.indexGain = totalObj.indexGain;
                   ele.indexLoss = totalObj.indexLoss;
-                  ele.purchasePrice = (this.grandFatheringEffect) ? ele.grandFatheringPurchasePrice : ele.purchasePrice;
-                  ele.amount = (this.grandFatheringEffect) ? (ele.unit * ele.grandFatheringPurchasePrice) : ele.amount;
+                  ele.purchasePriceRate = (this.grandFatheringEffect) ? ele.grandFatheringPurchasePrice : ele.purchasePrice;
+                  // ele.purchasePrice = (this.grandFatheringEffect) ? ele.grandFatheringPurchasePrice : ele.purchasePrice;
+                  ele.purchaseAmt = (this.grandFatheringEffect) ? (ele.unit * ele.grandFatheringPurchasePrice) : ele.amount;
+                  // ele.amount = (this.grandFatheringEffect) ? (ele.unit * ele.grandFatheringPurchasePrice) : ele.amount;
                   if (ind == 0) {
                     ele.redeemTransactionDate = (obj.transactionDate) ? obj.transactionDate : 0;
                     ele.transactionType = (obj.fwTransactionType) ? obj.fwTransactionType : 0;
@@ -470,7 +474,8 @@ export class MfCapitalDetailedComponent implements OnInit {
     let totalIndexLoss = 0;
     totalAmount += (data.redeemAmount) ? data.redeemAmount : 0;
     totalStt += (data.redeemStt) ? data.redeemStt : 0;
-    purchaseAmount += (data.amount) ? data.amount : 0;
+    purchaseAmount += (data.purchaseAmt) ? data.purchaseAmt : 0;
+    // purchaseAmount += (data.amount) ? data.amount : 0;
     totalStGain += (data.stGain) ? data.stGain : 0;
     totalLtGain += (data.ltGain) ? data.ltGain : 0;
     totalStLoss += (data.stLoss) ? data.stLoss : 0;

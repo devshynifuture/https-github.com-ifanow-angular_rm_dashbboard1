@@ -236,6 +236,9 @@ addNewNominee(data) {
   //   return this.getDate;
   // }
   getdataForm(data) {
+    if(data){
+      this.showHide = true;
+    }
     this.flag = data;
     (!data) ? data = {} : (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : '';
     this.gratuity = this.fb.group({

@@ -250,6 +250,7 @@ export class GoldComponent implements OnInit {
       this.flag = "addGOLD";
     }
     else {
+      this.showHide = true;
       (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : this.editData = data;
       this.flag = "editGOLD";
     }

@@ -5,17 +5,19 @@
         </div>
         <!-- *ngIf="!isLoading" prod -->
         <div class="col-md-8 p-0 d-flex justify-content-end" *ngIf="!isLoading">
-            <div [matMenuTriggerFor]="menu1" class="c-p downloadPdfIcon" *ngIf="!fragmentData.isSpinner">
-                <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu1">
-            </div>
+            <!-- <img class="c-p" src="assets/images/svg/download-bordered.svg" [matMenuTriggerFor]="menu1"> -->
+
+            <a class="c-p downloadPdfIcon mr-10" [matMenuTriggerFor]="menu1" *ngIf="!fragmentData.isSpinner">
+                <img src="assets/images/svg/download-bordered.svg">
+            </a>
+
             <mat-menu #menu1="matMenu">
                 <button mat-menu-item (click)="generatePdf()">PDF</button>
                 <button mat-menu-item (click)="Excel('detailed Capital')">XLS</button>
             </mat-menu>
             <mat-spinner [diameter]="30" *ngIf="fragmentData.isSpinner"></mat-spinner>
-
             <!-- <img class="c-p" src="assets/images/svg/three-dot-bordered.svg">
-                <img class="c-p mr-12" src="assets/images/svg/up-down.svg"> -->
+            <img class="c-p mr-12" src="assets/images/svg/up-down.svg"> -->
             <button class="btn-default addon v-middle mat-stroked-button mat-button-base" mat-stroked-button=""
                 (click)="openFilter()">
                 <span class="mat-button-wrapper"><i class="material-icons">filter_list</i>FILTERS</span>
@@ -155,11 +157,11 @@
                     <th class="br text-right w-5" mat-header-cell *matHeaderCellDef>Amount
                     </th>
                     <td class="br text-right w-5" mat-cell *matCellDef="let element">
-                        <div class="bar"> <span *ngIf="element.amount || element.amount == 0"
-                                appFormatNumber>{{(isLoading) ? '' : ((element.amount) ? element.amount : 0)}}</span>
+                        <div class="bar"> <span *ngIf="element.purchaseAmt || element.purchaseAmt == 0"
+                                appFormatNumber [value]="element.purchaseAmt ? element.purchaseAmt : 0"></span>
                             <span *ngIf="element.purchaseAmount || element.purchaseAmount == 0"
                                 class=" f-600 amt text-right"
-                                appFormatNumber>{{(isLoading) ? '' : ((element.purchaseAmount) ? element.purchaseAmount : 0)}}</span>
+                                appFormatNumber [value]="element.purchaseAmount ? element.purchaseAmount : 0"></span>
                         </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right" appFormatNumber
@@ -187,7 +189,7 @@
                     <td class="br text-right w-8" mat-cell *matCellDef="let element">
                         <div class="bar">
                             <span
-                                *ngIf="element.purchasePrice || element.purchasePrice == 0">{{(isLoading) ? '' : ((element.purchasePrice) ? (element.purchasePrice | number:'1.2-2') : (element.purchasePrice == 0) ? 0 : 0)}}</span>
+                                *ngIf="element.purchasePriceRate || element.purchasePriceRate == 0">{{(isLoading) ? '' : ((element.purchasePriceRate) ? (element.purchasePriceRate | number:'1.2-2') : (element.purchasePriceRate == 0) ? 0 : 0)}}</span>
                         </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right"></td>
@@ -491,11 +493,11 @@
                     <th class="br text-right w-8" mat-header-cell *matHeaderCellDef>Amount
                     </th>
                     <td class="br text-right" mat-cell *matCellDef="let element">
-                        <div class="bar"> <span *ngIf="element.amount || element.amount == 0"
-                                appFormatNumber>{{(isLoading) ? '' : ((element.amount) ? (element.amount | number:'1.2-2') : 0)}}</span>
+                        <div class="bar"> <span *ngIf="element.purchaseAmt || element.purchaseAmt == 0"
+                                appFormatNumber [value]="element.purchaseAmt ? element.purchaseAmt : 0"></span>
                             <span *ngIf="element.purchaseAmount || element.purchaseAmount == 0"
                                 class=" f-600 amt text-right"
-                                appFormatNumber>{{(isLoading) ? '' : ((element.purchaseAmount) ? (element.purchaseAmount | number:'1.2-2'): 0)}}</span>
+                                appFormatNumber [value]="element.purchaseAmount ? element.purchaseAmount : 0"></span>
                         </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 amt text-right" appFormatNumber
@@ -523,7 +525,7 @@
                     <td class="br text-right" mat-cell *matCellDef="let element">
                         <div class="bar">
                             <span
-                                *ngIf="element.purchasePrice || element.purchasePrice == 0">{{(isLoading) ? '' : ((element.purchasePrice) ? (element.purchasePrice | number:'1.2-2') : (element.purchasePrice == 0) ? 0 : 0)}}</span>
+                                *ngIf="element.purchasePriceRate || element.purchasePriceRate == 0">{{(isLoading) ? '' : ((element.purchasePriceRate) ? (element.purchasePriceRate | number:'1.2-2') : (element.purchasePriceRate == 0) ? 0 : 0)}}</span>
                         </div>
                     </td>
                     <td mat-footer-cell *matFooterCellDef class="br f-600 p-8  text-right"></td>
@@ -975,7 +977,7 @@
                             Report</strong>
                     </p>
                     <p style="margin: 0px; font-size: 14px;padding-top: 12px;"> <strong> Finacial year:
-                            {{fromDateYear-toDateYear}} </strong></p>
+                            {{fromDateYear+' - '+toDateYear}} </strong></p>
                 </td>
             </tr>
 
@@ -1002,6 +1004,26 @@
                 <td style="font-weight: 600; text-align: center;text-align: center; padding-top: 12px !important;padding-bottom: 12px !important;line-height: 16px !important;font-size: 14px;border-left: 1px solid #DADCE0;border-right: 1px solid #DADCE0; font-family: Roboto,sans-serif;"
                     colspan="17">
                     No capital gains for {{fromDateYear}}-{{toDateYear}}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="6"
+                    style="  padding: 8px; font-weight: 600; background: #F5F7F7; font-size: 13px; border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;">
+                    REDEMPTION DETAILS
+                </td>
+
+                <td colspan="4"
+                    style="padding: 8px; font-weight: 600; background: #F5F7F7; font-size: 13px; border-right: 1px solid #dee5e7;">
+                    REDEMPTION AGAINST (PURCHASES)
+
+                    <span *ngIf="(fromDate) ? fromDate.getFullYear() > 2018 : ''">AS
+                        ON 31 JAN
+                        2018</span>
+                </td>
+
+                <td colspan="7"
+                    style=" font-weight: 600; background: #F5F7F7; padding: 8px; font-size: 13px; border-right: 1px solid #dee5e7;border-left: 1px solid #dee5e7;">
+                    GAIN/LOSS
                 </td>
             </tr>
 
@@ -1135,8 +1157,8 @@
 
                             <td valign="top"
                                 style="width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
-                                <span *ngIf="element.amount || element.amount == 0"
-                                    appFormatNumber>{{((element.amount) ? (element.amount | number:'1.2-2') : 0)}}</span>
+                                <span *ngIf="element.purchaseAmt || element.purchaseAmt == 0"
+                                    appFormatNumber [value]="element.purchaseAmt ? element.purchaseAmt : 0"></span>
                             </td>
 
                             <td valign="top"
@@ -1148,7 +1170,7 @@
                             <td valign="top"
                                 style="width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
                                 <span
-                                    *ngIf="element.purchasePrice || element.purchasePrice == 0">{{((element.purchasePrice) ? (element.purchasePrice | number:'1.2-2') : (element.purchasePrice == 0) ? 0 : 0)}}</span>
+                                    *ngIf="element.purchasePriceRate || element.purchasePriceRate == 0">{{((element.purchasePriceRate) ? (element.purchasePriceRate | number:'1.2-2') : (element.purchasePriceRate == 0) ? 0 : 0)}}</span>
                             </td>
 
                             <td valign="top"
@@ -1195,7 +1217,97 @@
                                     *ngIf="element.days || element.days == 0">{{((element.days) ? (element.days) : 'N.A')}}</span>
                             </td>
                         </tr>
+                        <tr *ngIf="element.totalAmt">
 
+                            <td valign="top"
+                                style="width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px; font-weight: 600;"
+                                *ngIf="element.totalAmt">
+                                {{element.totalAmt}}
+                            </td>
+            
+                            <td valign="top"
+                                style="width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
+            
+                            </td>
+            
+                            <td valign="top"
+                                style=" width:10%; font-weight: 600; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;"
+                                *ngIf="element.totalAmount">
+                                {{((element.totalAmount) ? element.totalAmount : '0')}}
+                            </td>
+            
+                            <td valign="top"
+                                style="width:10%;  font-weight: 600;border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;"
+                                *ngIf="element.totalStt">
+                                {{(isLoading) ? '' : ((element.totalStt) ? (element.totalStt | number:'1.2-2') : '0')}}
+                            </td>
+            
+                            <td valign="top"
+                                style="width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
+                            </td>
+            
+                            <td valign="top"
+                                style="width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
+                            </td>
+            
+                            <td valign="top"
+                                style="width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
+                            </td>
+            
+                            <td valign="top"
+                                style="width:10%; font-weight: 600;border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;"
+                                *ngIf="element.purchaseAmount || element.purchaseAmount == 0">
+                                {{((element.purchaseAmount) ? element.purchaseAmount : 0)}}
+                            </td>
+                            <td valign="top"
+                                style="width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
+                            </td>
+            
+                            <td valign="top"
+                                style="width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
+                            </td>
+            
+                            <td valign="top"
+                                style="width:10%; font-weight: 600; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;"
+                                *ngIf="element.totalStGain || element.totalStGain == 0">
+                                {{((element.totalStGain) ? (element.totalStGain | number:'1.2-2') : (element.totalStGain == 0) ? 0 : 0)}}
+                            </td>
+            
+                            <td valign="top"
+                                style="width:10%; font-weight: 600; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;"
+                                *ngIf="element.totalStLoss || element.totalStLoss == 0">
+                                {{((element.totalStLoss) ? (element.totalStLoss | number:'1.2-2') : (element.totalStLoss == 0) ? 0 : 0)}}
+                            </td>
+            
+                            <td valign="top"
+                                style="width:10%; font-weight: 600; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;"
+                                *ngIf="element.totalLtGain || element.totalLtGain == 0">
+                                {{((element.totalLtGain) ? (element.totalLtGain | number:'1.2-2') : (element.totalLtGain == 0) ? 0 : 0)}}
+                            </td>
+            
+                            <td valign="top"
+                                style="width:10%; font-weight: 600; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;"
+                                *ngIf="element.totalStLoss || element.totalStLoss == 0">
+                                {{((element.totalStLoss) ? (element.totalStLoss | number:'1.2-2') : (element.totalStLoss == 0) ? 0 : 0)}}
+                            </td>
+            
+                            <td valign="top"
+                                style="width:10%; font-weight: 600; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;"
+                                *ngIf="element.totalIndexGain || element.totalIndexGain == 0">
+                                {{((element.totalIndexGain) ? (element.totalIndexGain | number:'1.2-2') : (element.totalIndexGain == 0) ? 0 : 0)}}
+                            </td>
+            
+                            <td valign="top"
+                                style="width:10%; font-weight: 600; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;"
+                                *ngIf="element.totalIndexLoss || element.totalIndexLoss == 0">
+                                {{((element.totalIndexLoss) ? (element.totalIndexLoss | number:'1.2-2') : (element.totalIndexLoss == 0) ? 0 : 0)}}
+                            </td>
+            
+                            <td valign="top"
+                                style="width:10%;  border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
+                            </td>
+                        </tr>
+            
                     </table>
                 </td>
 
@@ -1203,97 +1315,7 @@
 
             </tr>
 
-            <tr *ngFor="let element of dataSource.data">
-
-                <td valign="top"
-                    style="width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px; font-weight: 600;"
-                    *ngIf="element.totalAmt">
-                    {{element.totalAmt}}
-                </td>
-
-                <td valign="top"
-                    style="width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
-
-                </td>
-
-                <td valign="top"
-                    style=" width:10%; font-weight: 600; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;"
-                    *ngIf="element.totalAmount">
-                    {{((element.totalAmount) ? element.totalAmount : '0')}}
-                </td>
-
-                <td valign="top"
-                    style="width:10%;  font-weight: 600;border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;"
-                    *ngIf="element.totalStt">
-                    {{(isLoading) ? '' : ((element.totalStt) ? (element.totalStt | number:'1.2-2') : '0')}}
-                </td>
-
-                <td valign="top"
-                    style="width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
-                </td>
-
-                <td valign="top"
-                    style="width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
-                </td>
-
-                <td valign="top"
-                    style="width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
-                </td>
-
-                <td valign="top"
-                    style="width:10%; font-weight: 600;border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;"
-                    *ngIf="element.purchaseAmount || element.purchaseAmount == 0">
-                    {{((element.purchaseAmount) ? element.purchaseAmount : 0)}}
-                </td>
-                <td valign="top"
-                    style="width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
-                </td>
-
-                <td valign="top"
-                    style="width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
-                </td>
-
-                <td valign="top"
-                    style="width:10%; font-weight: 600; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;"
-                    *ngIf="element.totalStGain || element.totalStGain == 0">
-                    {{((element.totalStGain) ? (element.totalStGain | number:'1.2-2') : (element.totalStGain == 0) ? 0 : 0)}}
-                </td>
-
-                <td valign="top"
-                    style="width:10%; font-weight: 600; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;"
-                    *ngIf="element.totalStLoss || element.totalStLoss == 0">
-                    {{((element.totalStLoss) ? (element.totalStLoss | number:'1.2-2') : (element.totalStLoss == 0) ? 0 : 0)}}
-                </td>
-
-                <td valign="top"
-                    style="width:10%; font-weight: 600; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;"
-                    *ngIf="element.totalLtGain || element.totalLtGain == 0">
-                    {{((element.totalLtGain) ? (element.totalLtGain | number:'1.2-2') : (element.totalLtGain == 0) ? 0 : 0)}}
-                </td>
-
-                <td valign="top"
-                    style="width:10%; font-weight: 600; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;"
-                    *ngIf="element.totalStLoss || element.totalStLoss == 0">
-                    {{((element.totalStLoss) ? (element.totalStLoss | number:'1.2-2') : (element.totalStLoss == 0) ? 0 : 0)}}
-                </td>
-
-                <td valign="top"
-                    style="width:10%; font-weight: 600; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;"
-                    *ngIf="element.totalIndexGain || element.totalIndexGain == 0">
-                    {{((element.totalIndexGain) ? (element.totalIndexGain | number:'1.2-2') : (element.totalIndexGain == 0) ? 0 : 0)}}
-                </td>
-
-                <td valign="top"
-                    style="width:10%; font-weight: 600; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;"
-                    *ngIf="element.totalIndexLoss || element.totalIndexLoss == 0">
-                    {{((element.totalIndexLoss) ? (element.totalIndexLoss | number:'1.2-2') : (element.totalIndexLoss == 0) ? 0 : 0)}}
-                </td>
-
-                <td valign="top"
-                    style="width:10%;  border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
-                </td>
-            </tr>
-
+    
             <tr *ngIf="dataSource.data.length > 0">
                 <td valign="top"
                     style="width:10%; font-weight: 600; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
@@ -1403,24 +1425,25 @@
             </tr>
 
             <tr *ngIf="dataSource1.data?.length > 0">
+
                 <td
                     style="background: #F5F7F7; width:10%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                     <b>Date </b> </td>
 
                 <td
-                    style="background: #F5F7F7; width:10%;text-align: right; font-size: 13px; padding: 8px;  border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                    style="background: #F5F7F7; width:10%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                     <b> Transaction type </b> </td>
 
                 <td
-                    style="background: #F5F7F7; width:10%;text-align: right; font-size: 13px; padding: 8px;  border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                    style="background: #F5F7F7; width:10%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                     <b> Amount </b> </td>
 
                 <td
-                    style="background: #F5F7F7; width:10%;text-align: right; font-size: 13px; padding: 8px; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                    style="background: #F5F7F7; width:10%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                     <b> STT </b> </td>
 
                 <td
-                    style="background: #F5F7F7; width:10%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7;">
+                    style="background: #F5F7F7; width:10%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                     <b> Units </b> </td>
 
                 <td
@@ -1428,236 +1451,267 @@
                     <b> Sale rate </b> </td>
 
                 <td
-                    style="background: #F5F7F7;width:10%;text-align: left; font-size: 13px; padding: 8px; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                    style="background: #F5F7F7; width:10%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                     <b>Date </b> </td>
 
                 <td
-                    style="background: #F5F7F7;width:10%;text-align: right; font-size: 13px; padding: 8px; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7;">
+                    style="background: #F5F7F7; width:10%;text-align: left; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                     <b> Amount </b> </td>
 
                 <td
-                    style="background: #F5F7F7;width:10%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                    style="background: #F5F7F7; width:10%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                     <b> Units </b> </td>
 
                 <td
-                    style="background: #F5F7F7;width:10%;text-align: right; font-size: 13px; padding: 8px; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                    style="background: #F5F7F7; width:10%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                     <b> Purchase rate ST </b> </td>
 
                 <td
-                    style="background: #F5F7F7; width:10%;text-align: right; font-size: 13px; padding: 8px;  border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                    style="background: #F5F7F7; width:10%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                     <b> ST gain </b> </td>
 
                 <td
-                    style="background: #F5F7F7;width:10%;text-align: right; font-size: 13px; padding: 8px; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-left: 1px solid #dee5e7;">
+                    style="background: #F5F7F7; width:10%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                     <b> ST loss </b> </td>
 
                 <td
-                    style="background: #F5F7F7;width:10%;text-align: right; font-size: 13px; padding: 8px; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-left: 1px solid #dee5e7;">
+                    style="background: #F5F7F7; width:10%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                     <b> LT gain </b> </td>
 
                 <td
-                    style="background: #F5F7F7;width:10%;text-align: right; font-size: 13px; padding: 8px; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-left: 1px solid #dee5e7;border-right: 1px solid #dee5e7;">
+                    style="background: #F5F7F7; width:10%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                     <b> LT loss </b> </td>
 
                 <td
-                    style="background: #F5F7F7;width:10%;text-align: right; font-size: 13px; padding: 8px; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                    style="background: #F5F7F7; width:10%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-left: 1px solid #dee5e7;">
                     <b> Indexed gain </b> </td>
 
                 <td
-                    style="background: #F5F7F7;width:10%;text-align: right; font-size: 13px; padding: 8px; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                    style="background: #F5F7F7; width:10%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                     <b> Indexed loss </b> </td>
 
                 <td
-                    style="background: #F5F7F7;width:10%;text-align: right; border-right: 1px solid #dee5e7; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
+                    style="background: #F5F7F7; width:10%;text-align: right; font-size: 13px; padding: 8px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; border-top: 1px solid #dee5e7; border-right: 1px solid #dee5e7;">
                     <b> Days </b> </td>
             </tr>
-            <tbody *ngFor="let element of dataSource1.data">
 
-                <tr>
-                    <td *ngIf="element.schemeName || element.folioNumber || element.ownerName" colspan="18"
-                        style="border-right: 1px solid #dee5e7; font-weight: 600; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
-                        {{element.schemeName}} | {{element.folioNumber}} | {{element.ownerName}}
-                    </td>
-                </tr>
+            <tr *ngFor="let element of dataSource1.data">
 
-                <tr *ngIf="element.redeemTransactionDate">
-                    <td valign="top"
-                        style="width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
-                        <span *ngIf="element.redeemTransactionDate">
-                            {{(element.redeemTransactionDate) ? (element.redeemTransactionDate  | date:'dd/MM/yyyy') : ''}}
-                        </span>
-                    </td>
+                <td colspan="18">
+                    <table style="width: 100%">
+                        <tr>
+                            <td colspan="16"
+                                style="border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px; font-weight: 600;"
+                                *ngIf="element.schemeName || element.folioNumber || element.ownerName">
+                                {{element.schemeName}}|{{element.folioNumber}}|{{element.ownerName}}
+                            </td>
+                        </tr>
 
-                    <td valign="top"
-                        style="width:10%;text-align: right; font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                        <span *ngIf="element.transactionType">
-                            {{((element.transactionType) ? element.transactionType : 'N.A')}}</span>
-                    </td>
+                        <tr>
+                            <td valign="top"
+                                style="width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
+                                <span *ngIf="element.redeemTransactionDate">
+                                    {{(element.redeemTransactionDate) ? (element.redeemTransactionDate  | date:'dd/MM/yyyy') : ''}}
+                                </span>
+                            </td>
 
-                    <td valign="top"
-                        style="width:10%;text-align: right; font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                        <span appFormatNumber *ngIf="element.redeemAmount">
-                            {{((element.redeemAmount) ? element.redeemAmount : '0')}}</span>
-                    </td>
+                            <td valign="top"
+                                style="width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
+                                <span *ngIf="element.transactionType">
+                                    {{((element.transactionType) ? element.transactionType : 'N.A')}}</span>
+                            </td>
 
-                    <td valign="top"
-                        style="text-align: right; width:10%;  font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                        <span
-                            *ngIf="element.redeemStt || element.redeemStt == 0">{{((element.redeemStt) ? (element.redeemStt | number:'1.2-2') : '0')}}</span>
-                    </td>
+                            <td valign="top"
+                                style="width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
+                                <span appFormatNumber *ngIf="element.redeemAmount">
+                                    {{((element.redeemAmount) ? element.redeemAmount : '0')}}</span>
 
-                    <td valign="top"
-                        style="text-align: right; width:10%; font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                        <span
-                            *ngIf="element.redeemUnit == 0 || element.redeemUnit">{{((element.redeemUnit == 0 || element.redeemUnit) ? (element.redeemUnit | number:'1.2-2') : '0')}}</span>
-                    </td>
+                            </td>
 
-                    <td valign="top"
-                        style="text-align: right; width:10%;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                        <span
-                            *ngIf="element.redeemRate == 0 || element.redeemRate  ">{{((element.redeemRate == 0 || element.redeemRate) ? (element.redeemRate | number:'1.2-2') : '0')}}</span>
-                    </td>
+                            <td valign="top"
+                                style="width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
+                                <span
+                                    *ngIf="element.redeemStt || element.redeemStt == 0">{{((element.redeemStt) ? (element.redeemStt | number:'1.2-2') : '0')}}</span>
+                            </td>
 
-                    <td valign="top"
-                        style=" width:10%; font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                        <span *ngIf="element.transactionDate || element.transactionDate == ''">
-                            {{((element.transactionDate) ? (element.transactionDate  | date:'dd/MM/yyyy') : 'N.A.') }}</span>
-                    </td>
+                            <td valign="top"
+                                style="width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
+                                <span
+                                    *ngIf="element.redeemUnit == 0 || element.redeemUnit">{{((element.redeemUnit == 0 || element.redeemUnit) ? (element.redeemUnit | number:'1.2-2') : '0')}}</span>
+                            </td>
 
-                    <td valign="top"
-                        style="text-align: right; width:10%;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                        <span *ngIf="element.amount || element.amount == 0"
-                            appFormatNumber>{{((element.amount) ? (element.amount | number:'1.2-2') : 0)}}</span>
-                    </td>
+                            <td valign="top"
+                                style="width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
+                                <span
+                                    *ngIf="element.redeemRate == 0 || element.redeemRate  ">{{((element.redeemRate == 0 || element.redeemRate) ? (element.redeemRate | number:'1.2-2') : '0')}}</span>
+                            </td>
 
-                    <td valign="top"
-                        style=" text-align: right;width:10%;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                        <span
-                            *ngIf="element.unit || element.unit == 0">{{((element.unit) ? (element.unit | number:'1.2-2') : (element.unit == 0) ? 0 : 0)}}</span>
-                    </td>
+                            <td valign="top"
+                                style="width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
+                                <span *ngIf="element.transactionDate || element.transactionDate == ''">
+                                    {{((element.transactionDate) ? (element.transactionDate  | date:'dd/MM/yyyy') : 'N.A.') }}</span>
+                            </td>
 
-                    <td valign="top"
-                        style="text-align: right; width:10%;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                        <span
-                            *ngIf="element.purchasePrice || element.purchasePrice == 0">{{((element.purchasePrice) ? (element.purchasePrice | number:'1.2-2') : (element.purchasePrice == 0) ? 0 : 0)}}</span>
-                    </td>
+                            <td valign="top"
+                                style="width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
+                                <span *ngIf="element.purchaseAmt || element.purchaseAmt == 0"
+                                    appFormatNumber [value]="element.purchaseAmt ? element.purchaseAmt : 0"></span>
+                            </td>
 
-                    <td valign="top"
-                        style="text-align: right;width:10%; font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                        <span *ngIf="element.stGain || element.stGain == 0">
-                            {{((element.stGain) ? (element.stGain | number:'1.2-2') : (element.stGain == 0) ? 0 : 0)}}</span>
-                    </td>
+                            <td valign="top"
+                                style="width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
+                                <span
+                                    *ngIf="element.unit || element.unit == 0">{{((element.unit) ? (element.unit | number:'1.2-2') : (element.unit == 0) ? 0 : 0)}}</span>
+                            </td>
 
-                    <td valign="top"
-                        style="text-align: right; width:10%;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                        <span
-                            *ngIf="element.stLoss == 0">{{((element.stLoss) ? (element.stLoss | number:'1.2-2') : (element.stLoss == 0) ? 0 : 0)}}</span>
-                    </td>
+                            <td valign="top"
+                                style="width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
+                                <span
+                                    *ngIf="element.purchasePriceRate || element.purchasePriceRate == 0">{{((element.purchasePriceRate) ? (element.purchasePriceRate | number:'1.2-2') : (element.purchasePriceRate == 0) ? 0 : 0)}}</span>
+                            </td>
 
-                    <td valign="top"
-                        style="text-align: right; width:10%;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                        <span *ngIf="element.ltGain || element.ltGain == 0">
-                            {{((element.ltGain) ? (element.ltGain | number:'1.2-2') : (element.ltGain == 0) ? 0 : 0)}}</span>
-                    </td>
+                            <td valign="top"
+                                style="width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
+                                <span *ngIf="element.stGain || element.stGain == 0">
+                                    {{((element.stGain) ? (element.stGain | number:'1.2-2') : (element.stGain == 0) ? 0 : 0)}}</span>
 
-                    <td valign="top"
-                        style="text-align: right; width:10%;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                        <span
-                            *ngIf="element.ltLoss || element.ltLoss == 0">{{((element.ltLoss) ? (element.ltLoss | number:'1.2-2') : (element.ltLoss == 0) ? 0 : 0)}}</span>
-                    </td>
+                            </td>
 
-                    <td valign="top"
-                        style="text-align: right; width:10%;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                        <span
-                            *ngIf="element.indexGain || element.indexGain == 0">{{((element.indexGain) ? (element.indexGain | number:'1.2-2') : (element.indexGain == 0) ? 0 : 0)}}</span>
-                    </td>
+                            <td valign="top"
+                                style="width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
+                                <span
+                                    *ngIf="element.stLoss == 0">{{((element.stLoss) ? (element.stLoss | number:'1.2-2') : (element.stLoss == 0) ? 0 : 0)}}</span>
+                            </td>
 
-                    <td valign="top"
-                        style="text-align: right; width:10%;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                        <span *ngIf="element.indexLoss || element.indexLoss == 0">
-                            {{((element.indexLoss) ? (element.indexLoss | number:'1.2-2') : (element.indexLoss == 0) ? 0 : 0)}}</span>
-                    </td>
+                            <td valign="top"
+                                style="border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
+                                <span *ngIf="element.ltGain || element.ltGain == 0">
+                                    {{((element.ltGain) ? (element.ltGain | number:'1.2-2') : (element.ltGain == 0) ? 0 : 0)}}</span>
 
-                    <td valign="top"
-                        style="text-align: right;width:10%; font-size: 13px; border-left: 1px solid #dee5e7; border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                        <span
-                            *ngIf="element.days || element.days == 0">{{((element.days) ? (element.days) : 'N.A')}}</span>
-                    </td>
-                </tr>
-                <tr *ngIf="element.totalAmt">
-                    <td valign="top" *ngIf="element.totalAmt"
-                        style="width:10%; font-size: 13px; font-weight: 600; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                        {{element.totalAmt}}
-                    </td>
+                            </td>
 
-                    <td valign="top"
-                        style="width:10%;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
+                            <td valign="top"
+                                style="width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
+                                <span
+                                    *ngIf="element.ltLoss || element.ltLoss == 0">{{((element.ltLoss) ? (element.ltLoss | number:'1.2-2') : (element.ltLoss == 0) ? 0 : 0)}}</span>
+                            </td>
 
-                    </td>
+                            <td valign="top"
+                                style="width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
+                                <span
+                                    *ngIf="element.indexGain || element.indexGain == 0">{{((element.indexGain) ? (element.indexGain | number:'1.2-2') : (element.indexGain == 0) ? 0 : 0)}}</span>
+                            </td>
 
-                    <td valign="top" *ngIf="element.totalAmount"
-                        style="text-align: right;width:10%;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                        <span appFormatNumber>{{((element.totalAmount) ? element.totalAmount : '0')}}</span>
-                    </td>
+                            <td valign="top"
+                                style="width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
+                                <span *ngIf="element.indexLoss || element.indexLoss == 0">
+                                    {{((element.indexLoss) ? (element.indexLoss | number:'1.2-2') : (element.indexLoss == 0) ? 0 : 0)}}</span>
+                            </td>
 
-                    <td valign="top" *ngIf="element.totalStt"
-                        style="text-align: right;width:10%;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                        {{(isLoading) ? '' : ((element.totalStt) ? (element.totalStt | number:'1.2-2') : '0')}}
-                    </td>
+                            <td valign="top"
+                                style="width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
+                                <span
+                                    *ngIf="element.days || element.days == 0">{{((element.days) ? (element.days) : 'N.A')}}</span>
+                            </td>
+                        </tr>
+                        <tr *ngIf="element.totalAmt">
 
-                    <td valign="top"
-                        style="width:10%;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                    </td>
+                            <td valign="top"
+                                style="width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px; font-weight: 600;"
+                                *ngIf="element.totalAmt">
+                                {{element.totalAmt}}
+                            </td>
+            
+                            <td valign="top"
+                                style="width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
+            
+                            </td>
+            
+                            <td valign="top"
+                                style=" width:10%; font-weight: 600; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;"
+                                *ngIf="element.totalAmount">
+                                {{((element.totalAmount) ? element.totalAmount : '0')}}
+                            </td>
+            
+                            <td valign="top"
+                                style="width:10%;  font-weight: 600;border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;"
+                                *ngIf="element.totalStt">
+                                {{(isLoading) ? '' : ((element.totalStt) ? (element.totalStt | number:'1.2-2') : '0')}}
+                            </td>
+            
+                            <td valign="top"
+                                style="width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
+                            </td>
+            
+                            <td valign="top"
+                                style="width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
+                            </td>
+            
+                            <td valign="top"
+                                style="width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
+                            </td>
+            
+                            <td valign="top"
+                                style="width:10%; font-weight: 600;border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;"
+                                *ngIf="element.purchaseAmount || element.purchaseAmount == 0">
+                                {{((element.purchaseAmount) ? element.purchaseAmount : 0)}}
+                            </td>
+                            <td valign="top"
+                                style="width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
+                            </td>
+            
+                            <td valign="top"
+                                style="width:10%; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
+                            </td>
+            
+                            <td valign="top"
+                                style="width:10%; font-weight: 600; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;"
+                                *ngIf="element.totalStGain || element.totalStGain == 0">
+                                {{((element.totalStGain) ? (element.totalStGain | number:'1.2-2') : (element.totalStGain == 0) ? 0 : 0)}}
+                            </td>
+            
+                            <td valign="top"
+                                style="width:10%; font-weight: 600; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;"
+                                *ngIf="element.totalStLoss || element.totalStLoss == 0">
+                                {{((element.totalStLoss) ? (element.totalStLoss | number:'1.2-2') : (element.totalStLoss == 0) ? 0 : 0)}}
+                            </td>
+            
+                            <td valign="top"
+                                style="width:10%; font-weight: 600; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;"
+                                *ngIf="element.totalLtGain || element.totalLtGain == 0">
+                                {{((element.totalLtGain) ? (element.totalLtGain | number:'1.2-2') : (element.totalLtGain == 0) ? 0 : 0)}}
+                            </td>
+            
+                            <td valign="top"
+                                style="width:10%; font-weight: 600; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;"
+                                *ngIf="element.totalStLoss || element.totalStLoss == 0">
+                                {{((element.totalStLoss) ? (element.totalStLoss | number:'1.2-2') : (element.totalStLoss == 0) ? 0 : 0)}}
+                            </td>
+            
+                            <td valign="top"
+                                style="width:10%; font-weight: 600; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;"
+                                *ngIf="element.totalIndexGain || element.totalIndexGain == 0">
+                                {{((element.totalIndexGain) ? (element.totalIndexGain | number:'1.2-2') : (element.totalIndexGain == 0) ? 0 : 0)}}
+                            </td>
+            
+                            <td valign="top"
+                                style="width:10%; font-weight: 600; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;"
+                                *ngIf="element.totalIndexLoss || element.totalIndexLoss == 0">
+                                {{((element.totalIndexLoss) ? (element.totalIndexLoss | number:'1.2-2') : (element.totalIndexLoss == 0) ? 0 : 0)}}
+                            </td>
+            
+                            <td valign="top"
+                                style="width:10%;  border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; font-size: 13px;">
+                            </td>
+                        </tr>
+            
+                    </table>
+                </td>
 
-                    <td valign="top"
-                        style="width:10%;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                    </td>
 
-                    <td valign="top"
-                        style="width:10%;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                    </td>
 
-                    <td valign="top" *ngIf="element.purchaseAmount || element.purchaseAmount == 0"
-                        style="text-align: right;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px; width:10%;">
-                        {{((element.purchaseAmount) ? element.purchaseAmount : 0)}}
-                    </td>
-                    <td valign="top"
-                        style="font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;width:10%;"
-                        valign="top">
-                    </td>
-                    <td valign="top"
-                        style="width:10%;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;width:10%;">
-                    </td>
-                    <td valign="top" *ngIf="element.totalStGain || element.totalStGain == 0"
-                        style="text-align: right;width:10%;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                        {{((element.totalStGain) ? (element.totalStGain | number:'1.2-2') : (element.totalStGain == 0) ? 0 : 0)}}
-                    </td>
-                    <td valign="top" *ngIf="element.totalStLoss || element.totalStLoss == 0"
-                        style="text-align: right;width:10%;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                        {{((element.totalStLoss) ? (element.totalStLoss | number:'1.2-2') : (element.totalStLoss == 0) ? 0 : 0)}}
-                    </td>
-                    <td valign="top" *ngIf="element.totalLtGain || element.totalLtGain == 0"
-                        style="text-align: right;width:10%;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                        {{((element.totalLtGain) ? (element.totalLtGain | number:'1.2-2') : (element.totalLtGain == 0) ? 0 : 0)}}
-                    </td>
-                    <td valign="top" *ngIf="element.totalStLoss || element.totalStLoss == 0"
-                        style="text-align: right;width:10%;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                        {{((element.totalStLoss) ? (element.totalStLoss | number:'1.2-2') : (element.totalStLoss == 0) ? 0 : 0)}}
-                    </td>
-                    <td valign="top" *ngIf="element.totalIndexGain || element.totalIndexGain == 0"
-                        style="text-align: right;width:10%;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                        {{((element.totalIndexGain) ? (element.totalIndexGain | number:'1.2-2') : (element.totalIndexGain == 0) ? 0 : 0)}}
-                    </td>
-                    <td valign="top" *ngIf="element.totalIndexLoss || element.totalIndexLoss == 0"
-                        style="text-align: right;width:10%;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; padding: 8px;">
-                        {{((element.totalIndexLoss) ? (element.totalIndexLoss | number:'1.2-2') : (element.totalIndexLoss == 0) ? 0 : 0)}}
-                    </td>
-                    <td valign="top"
-                        style="text-align: right;width:10%;font-size: 13px; border-left: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7;border-right: 1px solid #dee5e7; padding: 8px;">
-                    </td>
-                </tr>
+            </tr>
 
-            </tbody>
 
 
 
