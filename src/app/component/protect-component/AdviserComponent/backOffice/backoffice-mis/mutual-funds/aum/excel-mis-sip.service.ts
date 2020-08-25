@@ -199,39 +199,6 @@ export class ExcelMisSipService {
                                                 schemeElement.amount,
                                                 schemeElement.weightInPerc,
                                             ]);
-
-                                            if (schemeElement.applicantList.length !== 0) {
-                                                // if (catElement.subCatList.length !== 0) {
-                                                //     currentRowPos = currentRowPos + catElement.subCatList.length + 1;
-                                                // } else if (catElement.subCatList.length !== 0 && subCatElement.schemeList.length !== 0) {
-                                                //     currentRowPos = currentRowPos + catElement.subCatList.length + subCatElement.schemeList.length + 1;
-                                                // } else {
-                                                // }
-
-                                                schemeElement.applicantList.forEach((element, index4) => {
-                                                    currentRowPos = currentRowPos + 2;
-
-                                                    if(index4 === 0 && index3 ===0 && index3 === 0 && index2 === 0 && index1 === 0){
-                                                        ws.getRow(currentRowPos).values = arrayOfHeaders[3];
-                                                        ws.columns = arrayOfHeaderStyle[3];
-                                                        headCell = ws.getRow(currentRowPos);
-                                                        headCell.font = { bold: true };
-                                                    }
-
-                                                    ws.addRow([
-                                                        element.name,
-                                                        element.schemeName,
-                                                        element.folio,
-                                                        element.registeredDate,
-                                                        element.fromDate,
-                                                        element.toDate,
-                                                        element.toTriggerDay,
-                                                        element.frequency,
-                                                        element.amount,
-                                                        element.weightInPerc,
-                                                    ]);
-                                                });
-                                            }
                                         });
                                     }
                                 }
@@ -288,52 +255,6 @@ export class ExcelMisSipService {
                                                 schemeElement.amount,
                                                 schemeElement.weightInPerc,
                                             ]);
-
-                                            // if (schemeElement.applicantList.length !== 0) {
-                                            //     if (catElement.subCatList.length !== 0) {
-                                            //         currentRowPos = currentRowPos + catElement.subCatList.length + 1;
-                                            //     } else if (catElement.subCatList.length !== 0 && subCatElement.schemeList.length !== 0) {
-                                            //         currentRowPos = currentRowPos + catElement.subCatList.length + subCatElement.schemeList.length + 1;
-                                            //     } else {
-                                            //         currentRowPos = currentRowPos + 2;
-                                            //     }
-
-                                            //     schemeElement.applicantList.forEach((element, index4) => {
-                                            //         ws.getRow(currentRowPos).values = arrayOfHeaders[3];
-                                            //         ws.columns = arrayOfHeaderStyle[3];
-                                            //         headCell = ws.getRow(currentRowPos);
-                                            //         headCell.font = { bold: true };
-                                            //         ws.addRow([
-                                            //             element.name,
-                                            //             element.balanceUnit,
-                                            //             element.folioNumber,
-                                            //             element.totalAum,
-                                            //             element.weightInPerc
-                                            //         ]);
-                                            //     });
-                                            // }
-                                        });
-                                    } else {
-                                        subCatElement.schemeList.forEach((schemeElement, index3) => {
-                                            if (schemeElement.applicantList.length !== 0) {
-
-                                                schemeElement.applicantList.forEach((element, index4) => {
-                                                    currentRowPos = currentRowPos + 2;
-                                                    if(index4 == 0 && index3 === 0&& index2 === 0 && index1 === 0){
-                                                        ws.getRow(currentRowPos).values = arrayOfHeaders[3];
-                                                        ws.columns = arrayOfHeaderStyle[3];
-                                                        headCell = ws.getRow(currentRowPos);
-                                                        headCell.font = { bold: true };
-                                                    }
-                                                    ws.addRow([
-                                                        element.name,
-                                                        element.balanceUnit,
-                                                        element.folioNumber,
-                                                        element.totalAum,
-                                                        element.weightInPerc
-                                                    ]);
-                                                });
-                                            }
                                         });
                                     }
 
@@ -366,51 +287,7 @@ export class ExcelMisSipService {
                                                 schemeElement.weightInPerc,
                                             ]);
 
-                                            if (schemeElement && schemeElement.hasOwnProperty('applicantList') && schemeElement.applicantList.length !== 0) {
-                                                // if (catElement.subCatList.length !== 0) {
-                                                //     currentRowPos = currentRowPos + catElement.subCatList.length + 1;
-                                                // } else if (catElement.subCatList.length !== 0 && subCatElement.schemeList.length !== 0) {
-                                                //     currentRowPos = currentRowPos + catElement.subCatList.length + subCatElement.schemeList.length + 1;
-                                                // } else {
-                                                // }
-
-                                                schemeElement.applicantList.forEach((element, index4) => {
-                                                    currentRowPos = currentRowPos + 2;
-                                                    if(index4 === 0 && index3 === 0 && index2 === 0 && index1 === 0){
-                                                        ws.getRow(currentRowPos).values = arrayOfHeaders[3];
-                                                        ws.columns = arrayOfHeaderStyle[3];
-                                                        headCell = ws.getRow(currentRowPos);
-                                                        headCell.font = { bold: true };
-                                                    }
-                                                    ws.addRow([
-                                                        element.name,
-                                                        element.balanceUnit,
-                                                        element.folioNumber,
-                                                        element.totalAum,
-                                                        element.weightInPerc
-                                                    ]);
-                                                });
-                                            }
-                                        } else {
-                                            if (schemeElement.applicantList.length !== 0) {
-                                                schemeElement.applicantList.forEach((element, index4) => {
-                                                    currentRowPos = currentRowPos + 2;
-                                                    if(index4 === 0 && index3 === 0 && index2 === 0 && index1 === 0){
-                                                        ws.getRow(currentRowPos).values = arrayOfHeaders[3];
-                                                        ws.columns = arrayOfHeaderStyle[3];
-                                                        headCell = ws.getRow(currentRowPos);
-                                                        headCell.font = { bold: true };
-                                                    }
-                                                    ws.addRow([
-                                                        element.name,
-                                                        element.balanceUnit,
-                                                        element.folioNumber,
-                                                        element.totalAum,
-                                                        element.weightInPerc
-                                                    ]);
-                                                });
-                                            }
-                                        }
+                                        } 
                                     });
                                 }
                             });
