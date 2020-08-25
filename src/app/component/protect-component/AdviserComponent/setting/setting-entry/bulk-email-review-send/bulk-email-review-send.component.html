@@ -1,8 +1,8 @@
 <div class="dialogclose">
-    <div class="row z100 popup-header-fix-100">
+    <div class="row z100 h-64 popup-header-fix-100">
         <div class="col-md-2 border-right-1 d-flex justify-content-center align-items-center p-0">
             <div class="logoWrap">
-                <img *ngIf="authService.appPic" [src]="authService.appPic" class="logo pr-1">
+                <img *ngIf="authService.appPic" [src]="authService.appPic" class="logo pr-1"> 
                 <h5 *ngIf="!authService.appPic">{{logoText | uppercase}}</h5>
             </div>
         </div>
@@ -93,12 +93,12 @@
     </div>
 </div>
 
-<div class="pt-90" *ngIf="step2Flag">
+<div class="pt-90 pb-100" *ngIf="step2Flag">
 
     <div class="row">
         <div class="col-md-3"></div>
         <div class="col-md-6">
-            <div class="stepTwoBox"> 
+            <div class="stepTwoBox b-h-dashed"> 
             <div class="d-flex align-items-center mb-8">
                 <div class="numBox">
                     <span class="">2</span>
