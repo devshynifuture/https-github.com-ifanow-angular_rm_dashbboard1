@@ -517,7 +517,8 @@
                                     </div>
                                     <div class="contBox">
                                         <h5 class="roboto text-diff f-500">Review client list</h5>
-                                        <p>At first, we’ll show you the list of clients. You can select / deselect and proceed</p>
+                                        <p>At first, we’ll show you the list of clients. You can select / deselect and
+                                            proceed</p>
                                     </div>
                                 </div>
                             </div>
@@ -531,9 +532,11 @@
                                     </div>
                                     <div class="contBox">
                                         <h5 class="roboto text-diff f-500">Verify your email address</h5>
-                                       <p> Next, we will show you the email ID from which the email will be sent. If your email is not verified, it will be sent from no-reply@my-planner.in </p>
+                                        <p> Next, we will show you the email ID from which the email will be sent. If
+                                            your email is not verified, it will be sent from no-reply@my-planner.in </p>
 
-                                       <p>We recommend you to verify and chose the correct “From mail” thru Email verification and Email templates section above. </p>
+                                        <p>We recommend you to verify and chose the correct “From mail” thru Email
+                                            verification and Email templates section above. </p>
                                     </div>
                                 </div>
                             </div>
@@ -546,21 +549,25 @@
                                     </div>
                                     <div class="contBox">
                                         <h5 class="roboto text-diff f-500">Review email and send</h5>
-                                        <p>Lastly, we will show you the email template. You can review / modify, if necessary and hit the send button.</p>
+                                        <p>Lastly, we will show you the email template. You can review / modify, if
+                                            necessary and hit the send button.</p>
                                     </div>
                                 </div>
                             </div>
 
 
 
-                           
+
                         </div>
 
                         <div class="row pt-28">
                             <div class="col-md-12 text-center">
-                                <button mat-stroked-button class="btn-primary btnNewEmail">
+                                <!-- <button (click)="openFragment(null)" mat-stroked-button class="btn-primary btnNewEmail">
                                     BEGIN
-                                </button>
+                                </button> -->
+                                <app-progress-button (btnClick)="openFragment()" [options]="barButtonOptions"
+                                    class="br-0 text-inherit ml-12">
+                                </app-progress-button>
                             </div>
                         </div>
 
