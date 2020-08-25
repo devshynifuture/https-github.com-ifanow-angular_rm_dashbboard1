@@ -568,8 +568,8 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
     this.peopleService.getClientList(obj).subscribe(
       data => {
         // this.isLoading = false;
+        this.barButtonOptions.active = false
         if (data && data.length > 0) {
-          this.barButtonOptions.active = false
           data.forEach((singleData) => {
             if (singleData.emailList && singleData.emailList.length > 0) {
               singleData.email = singleData.emailList[0].email;
@@ -590,6 +590,10 @@ export class SettingPreferenceComponent implements OnInit, OnDestroy {
           const subscription = this.eventService.changeUpperSliderState(fragmentData).subscribe(
             upperSliderData => {
               if (UtilService.isDialogClose(upperSliderData)) {
+                if (upperSliderData['tab2view']) {
+                  this.viewMode = 'tab4'
+                  this.getEmailVerification();
+                }
                 // this.getClientSubscriptionList();
                 subscription.unsubscribe();
               }
