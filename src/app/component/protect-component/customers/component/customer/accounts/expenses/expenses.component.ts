@@ -232,7 +232,7 @@ export class ExpensesComponent implements OnInit {
     
           // this.dataSource.data = data;
           this.dataSource.sort = this.TransactionSort;
-          this.expenseGraph = data.expenseGraphdATA;
+          this.expenseGraph = data.expenseGraphData;
           this.getExpenseGraphValueNew(this.expenseGraph);
           this.getAssetData(data);
           console.log('All expense data',data);
@@ -246,34 +246,20 @@ export class ExpensesComponent implements OnInit {
   getAssetData(data){
     if(data){
       let finalArray=[];
-      let committedInvestmentExpense =  data.committedInvestmentExpense;
-      let committedExpenditureExpense =  data.committedExpenditureExpense;
-      let pord =  data.pord;
-      let traditionalLifeInsuranceExpense=  data.traditionalLifeInsuranceExpense.assetList.length > 0 ? data.traditionalLifeInsuranceExpense.assetList : [];
-      let generalInsuranceExpense = data.generalInsuranceExpense.assetList.length > 0 ? data.generalInsuranceExpense.assetList : [];
-      let termLifeInsuranceExpense = data.termLifeInsuranceExpense.assetList.length > 0 ? data.termLifeInsuranceExpense.assetList:[];
-      let ulipLifeInsuranceExpense = data.ulipLifeInsuranceExpense.assetList.length > 0 ? data.ulipLifeInsuranceExpense.assetList : [];
-      let ssy = data.ssy;
-      let loanExpense = data.loanExpense.assetList.length > 0 ? data.loanExpense.assetList : [];
-      let recurringDeposit = data.recurringDeposit;
-      let sipExpense = data.sipExpense.assetList.length > 0 ? data.sipExpense.assetList : [];
+      let graphdata = data.expenseGraphData
+      let committedInvestmentExpense =  data.committedInvestmentExpense ? data.committedInvestmentExpense : [];
+      let committedExpenditureExpense =  data.committedExpenditureExpense ? data.committedExpenditureExpense : [];
+      let pord =  data.pord ? data.pord : [];
+      let lifeInsuranceList=  data.lifeInsuranceList.length > 0 ? data.lifeInsuranceList : [];
+      let generalInsuranceExpense = data.generalInsurancePremium.length > 0 ? data.generalInsurancePremium : [];
+      let ssy = data.ssy ? data.ssy : [];
+      let loanExpense = data.loanEmi.length > 0 ? data.loanEmi : [];
+      let recurringDeposit = data.recurringAssetList ?  data.recurringAssetList : [];
+      let sipExpense = data.mutualFundSipList.length > 0 ? data.mutualFundSipList : [];
       this.expenseAssetData = data;
-      finalArray = [ ...committedInvestmentExpense, ...committedExpenditureExpense,...pord,...traditionalLifeInsuranceExpense,...termLifeInsuranceExpense,...generalInsuranceExpense,...ulipLifeInsuranceExpense,...ssy,...loanExpense,...recurringDeposit,...sipExpense];
+       finalArray = [...graphdata,...committedInvestmentExpense, ...committedExpenditureExpense,...pord,...lifeInsuranceList,...generalInsuranceExpense,...ssy,...loanExpense,...recurringDeposit,...sipExpense];
+
       console.log(finalArray)
-      // let dataAsset =data;
-      // this.assetList =[{name:'pord'},{name:'ssy'},{name:'recurringDeposit'},{name:'mutualfund'}]
-      // Object.entries(this.assetList).forEach(([key, value]) => {
-
-      //   let  obj = value.name
-      //   let assetData= dataAsset[obj];
-      //   if(assetData){
-      //     assetData.forEach(element => {
-      //       finalArray.push(element)
-      //     });
-      //   }
-
-      //   console.log(key,value);
-      // });
       this.dataSource1.data = finalArray;
        this.dataSource1.sort = this.recurringTransactionTabSort;
 
