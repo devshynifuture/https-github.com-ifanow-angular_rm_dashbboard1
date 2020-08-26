@@ -898,4 +898,10 @@ button.primary-sm {
   .overflow-y-991 {
     overflow-y: auto !important;
   }
+
+  .full-center-992 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }

@@ -1447,6 +1447,10 @@ $lineheight:20px;
     padding-right: 0px !important;
   }
 
+  .pt-15-992 {
+    padding-top: 15px !important;
+  }
+
   .pr-15-992 {
     padding-right: 15px !important;
   }
@@ -1471,6 +1475,11 @@ $lineheight:20px;
 @media(max-width:991px) {
   .pl-0-991 {
     padding-left: 0px !important;
+  }
+
+  .plr-16-992 {
+    padding-right: 16px !important;
+    padding-left: 16px !important;
   }
 }
 
