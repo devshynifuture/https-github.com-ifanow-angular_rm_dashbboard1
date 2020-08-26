@@ -114,7 +114,12 @@ export class PreferencesService {
 
   getGoalValueForForm(data) {
     if(data.singleOrMulti == 2) {
-      return data.remainingData.futureValue;
+      if(data.remainingData.futureValue){
+        return data.remainingData.futureValue
+      }else{
+        return data.remainingData.goalFV;
+      }
+      
     } else {
       switch (data.goalType) {
         case AppConstants.CAR_GOAL:
@@ -126,6 +131,8 @@ export class PreferencesService {
         case AppConstants.WEALTH_CREATION_GOAL:
         case AppConstants.EMERGENCY_GOAL:
           return data.remainingData.goalFV;
+          case AppConstants.RETIREMENT_GOAL:
+            return data.remainingData.goalFV;
         default:
           console.error('Invalid goal type found', data.goalType);
           return 0;

@@ -264,6 +264,7 @@ export class SingleGoalYearComponent implements OnInit {
 
   // set the validation age for the age form field 
   setMinMaxAgeOrYear(value) {
+ 
     if (this.goalTypeData.validations.showAge) {
       this.minAgeYear = (this.goalTypeData.validations.minAge || (this.goalTypeData.validations.minAgeFromPresent + value.familyMemberAge));
       this.maxAgeYear = (this.goalTypeData.validations.maxAge || (this.goalTypeData.validations.maxAgeFromPresent + value.familyMemberAge));
@@ -271,9 +272,12 @@ export class SingleGoalYearComponent implements OnInit {
       this.minAgeYear = (this.goalTypeData.validations.minAgeFromPresent + this.currentYear);
       this.maxAgeYear = (this.goalTypeData.validations.maxAgeFromPresent + this.currentYear);
     }
-    if (this.minAgeYear < (value.familyMemberAge + this.goalTypeData.validations.minAgeFromPresent)) {
-      this.minAgeYear = value.familyMemberAge + this.goalTypeData.validations.minAgeFromPresent;
+    if(value){
+      if (this.minAgeYear < (value.familyMemberAge + this.goalTypeData.validations.minAgeFromPresent)) {
+        this.minAgeYear = value.familyMemberAge + this.goalTypeData.validations.minAgeFromPresent;
+      }
     }
+   
   }
 
   initializeForm() {
