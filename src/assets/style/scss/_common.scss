@@ -861,4 +861,47 @@ button.primary-sm {
   .ml-25p-992 {
     margin-left: 25%;
   }
+
+  .column-reverse-992 {
+    flex-direction: column-reverse;
+  }
+
+  .text-center-992 {
+    text-align: center;
+  }
+
+  .mt-0-992 {
+    margin-top: 0px !important;
+  }
+
+  .pl-15-992 {
+    padding-left: 15px !important;
+  }
+
+  .align-items-center-992 {
+    align-items: center !important;
+  }
+
+  .ptb-20-992 {
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+  }
+
+  .w-100-992 {
+    width: 100% !important;
+  }
+
+  .ml-41-991 {
+    margin-left: 41.66% !important;
+  }
+
+  .overflow-y-991 {
+    overflow-y: auto !important;
+  }
+
+  .full-center-992 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }

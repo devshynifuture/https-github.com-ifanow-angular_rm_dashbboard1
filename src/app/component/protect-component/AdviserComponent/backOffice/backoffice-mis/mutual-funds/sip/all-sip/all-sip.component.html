@@ -113,11 +113,11 @@
 
 
                     <ng-container matColumnDef="remark">
-                        <th *matHeaderCellDef class="br textRight t-14" mat-header-cell mat-sort-header="remark">Remark
+                        <th *matHeaderCellDef class="br textRight t-14" mat-header-cell mat-sort-header="remark">Remarks
                         </th>
                         <td *matCellDef="let element" class="br t-14 amt text-right" mat-cell>
                             <div class="bar">
-                                <span>{{element.remark}}</span> 
+                                <span>{{element.terminatedRemarks ? element.terminatedRemarks : ' - '}}</span> 
                             </div>
                         </td>
                         <!-- <td *matFooterCellDef class="br text-right t-10 f-600 p-8 " mat-footer-cell></td> -->

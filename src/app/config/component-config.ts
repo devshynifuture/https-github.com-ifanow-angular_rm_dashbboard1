@@ -738,6 +738,7 @@ export const appConfig = {
   GET_CLIENT_ROLES: 'setting/users-roles/client-role/get',
   ORDER_SOA_MUTUAL_FUND: 'mutual-fund/SOA/fetch',
   BULK_EMAIL_PASSWORD: 'pdfAndEmail/new-user-creds/mail/send',
+  CLIENT_SEND_EMAIL: 'setting/bulk/welcome-email/send',
 
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',
@@ -786,7 +787,8 @@ export const appConfig = {
   UPDATE_CLIENT_STATUS: 'user/client/status/update',
   GET_ADDRESS_LIST: 'user/address/list/get',
   GET_DEMAT_LIST: 'user/bank/demat/list/get',
-  GET_BANK_LIST: 'user/bank/list/get',
+  // GET_BANK_LIST: 'user/bank/list/get',
+  GET_BANK_LIST: 'user/multiple-user/bank/list/get',
   GET_CLIENT_FEMILY_BANK_LIST: 'user/bank/list/all/get',
   SEND_WELCOME_EMAIL: 'user/advisor/welcome/email/send',
   CREATE_TEAM_MEMBER: 'user/advisor/team-member/sign-up',

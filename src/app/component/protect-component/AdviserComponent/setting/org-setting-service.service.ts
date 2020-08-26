@@ -175,7 +175,7 @@ export class OrgSettingServiceService {
   }
 
   sendEmailToClients(data) {
-    return null;
+    return this.http.post(apiConfig.MAIN_URL + appConfig.CLIENT_SEND_EMAIL, data);
   }
 
 }

@@ -73,8 +73,8 @@ export class AddScssComponent implements OnInit {
     this.clientId = AuthService.getClientId();
     this.bankList = this.enumService.getBank();
 
-    this.getdataForm(this.data);
     this.isOptionalField = true;
+    this.getdataForm(this.data);
   }
 
   @Input()
@@ -237,6 +237,7 @@ addNewNominee(data) {
       this.isOptionalField = false;
       (data.assetDataOfAdvice) ? data = data.assetDataOfAdvice : this.editApi = data;
       this.flag = "editSCSS";
+
     }
     this.scssData = data;
     this.scssSchemeForm = this.fb.group({

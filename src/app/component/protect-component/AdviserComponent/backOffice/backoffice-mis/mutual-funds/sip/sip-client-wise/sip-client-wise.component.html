@@ -80,8 +80,9 @@
                                 </td>
                                 <td class="text-right">
                                     <div class="bar" [ngClass]="{'floatRight': isLoading}">
-                                        {{isLoading ? ' ' : '₹ '}}<span appFormatNumber *ngIf="!isLoading"
-                                            [value]="category.sipAmount"></span></div>
+                                        {{isLoading ? ' ' : '₹ '}}
+                                        <span *ngIf="!isLoading">{{ category.sipAmount }}</span>
+                                    </div>
                                 </td>
                                 <td class="text-right">
                                     <div class="bar" [ngClass]="{'floatRight': isLoading}">
@@ -256,9 +257,8 @@
                                                 </td>
                                                 <td>
                                                     <div [ngClass]="{'bar': isLoadingApplicant}">
-                                                        {{isLoadingApplicant ? ' ' : '₹ '}} <span appFormatNumber
-                                                            *ngIf="!isLoadingApplicant"
-                                                            [value]="subcategory.sipAmount"></span>
+                                                        {{isLoadingApplicant ? ' ' : '₹ '}} 
+                                                        <span *ngIf="!isLoadingApplicant"> {{ subcategory.sipAmount }}</span>
                                                     </div>
                                                 </td>
                                                 <td>
@@ -300,8 +300,10 @@
                         <tbody *ngIf="!isLoading && filteredArray.length>0">
                             <tr>
                                 <td class="p-table text-right"><strong>Total</strong></td>
-                                <td class="p-table text-right"><strong>{{'₹ '}}<span appFormatNumber
-                                            [value]="totalOfSipAmount"></span></strong>
+                                <td class="p-table text-right">
+                                    <strong>{{'₹ '}}
+                                        <span *ngIf="!isLoading">{{ totalOfSipAmount }}</span>
+                                    </strong>
                                 </td>
                                 <td class="p-table text-right"><strong>{{totalWeight | number:'1.2-2'}}%</strong></td>
                                 <td></td>

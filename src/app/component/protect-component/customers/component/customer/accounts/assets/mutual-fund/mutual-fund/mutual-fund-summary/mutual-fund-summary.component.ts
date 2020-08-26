@@ -1227,17 +1227,19 @@ export class MutualFundSummaryComponent implements OnInit {
         myArray.forEach(val => list.push(Object.assign({}, val)));
         this.summary.data = list;
         console.log('Summmary data get here ===', this.summary)
+        if(!isNaN(this.mfData.total_current_value) && !isNaN(this.mfData.total_amount_invested) && !isNaN(this.mfData.total_unrealized_gain)){
+          this.mfData.total_current_value = this.mfService.mutualFundRoundAndFormat(this.mfData.total_current_value, 0);
+          this.mfData.total_amount_invested = this.mfService.mutualFundRoundAndFormat(this.mfData.total_amount_invested, 0);
+          this.mfData.total_unrealized_gain = this.mfService.mutualFundRoundAndFormat(this.mfData.total_unrealized_gain, 0);
+        }
         this.mfData.withdrawals = this.grandTotal.withdrawals
         this.mfData.withdrawals = this.mfService.mutualFundRoundAndFormat(this.mfData.withdrawals, 0);
         this.mfData.total_dividend_payout = this.mfService.mutualFundRoundAndFormat(this.mfData.total_dividend_payout, 0);
         this.mfData.totalBalanceUnit = this.mfService.mutualFundRoundAndFormat(this.grandTotal.totalBalanceUnit, 3)
-        this.mfData.total_unrealized_gain = this.mfService.mutualFundRoundAndFormat(this.mfData.total_unrealized_gain, 0);
         this.mfData.sip = this.grandTotal.sip
         this.mfData.sip = this.mfService.mutualFundRoundAndFormat(this.mfData.sip, 2);
         this.mfData.total_absolute_return = this.mfService.mutualFundRoundAndFormat(this.mfData.total_absolute_return, 2);
         this.mfData.total_xirr = this.mfService.mutualFundRoundAndFormat(this.mfData.total_xirr, 2)
-        this.mfData.total_current_value = this.mfService.mutualFundRoundAndFormat(this.mfData.total_current_value, 0)
-        this.mfData.total_amount_invested = this.mfService.mutualFundRoundAndFormat(this.mfData.total_amount_invested, 0)
 
         console.log("this is summary Data:::", data.customDataSourceData)
         this.customDataSource.data = data.customDataSourceData;

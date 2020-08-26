@@ -50,7 +50,7 @@
                      </div>
                   </td>
                   <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
-                     <span appFormatNumber [value]="mfData ? mfData.total_amount_invested : 0"></span>
+                     <span>{{mfData ? mfData.total_amount_invested : 0}}</span>
                      <!-- <div appFormatNumber [value]="grandTotal.totalTransactionAmt"></div> -->
                   </td>
                </ng-container>
@@ -65,7 +65,7 @@
                      </div>
                   </td>
                   <td *matFooterCellDef class="br p-8 f-600 text-right" mat-footer-cell>
-                     <span appFormatNumber [value]="mfData ? mfData.total_current_value : '0'"></span>
+                     <span >{{mfData ? mfData.total_current_value : '0'}}</span>
                      <!-- <div>{{ grandTotal.currentValue }}</div>-->
                   </td>
                </ng-container>
@@ -737,11 +737,11 @@
             Grand Total
          </td>
          <td style="text-align: right;padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;"
-            appFormatNumber>
+         >
             {{mfData ? mfData.total_amount_invested : 0}}
          </td>
          <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
-            appFormatNumber>
+         >
             {{mfData ? mfData.total_current_value : '0'}}
          </td>
          <td style="padding: 7px 8px;font-size: 13px !important;line-height: 16px !important;color: #202020;border-right: 1px solid #DADCE0;text-align: right;"
