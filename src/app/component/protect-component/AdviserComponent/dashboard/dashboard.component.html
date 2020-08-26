@@ -30,12 +30,12 @@
 
 <div class="row pt-135 pb-28" id="ui-dashboard-advisor">
 
-  <div class="col-xl-3 col-lg-4 col-md-5 pl-20 pr-20 mt-44">
+  <div class="col-xl-3 col-lg-4 col-md-5 pl-20 pr-20 mt-44 new-grid-842">
 
     <h5 class="m-0 roboto f-500 pb-16">Key metrics</h5>
     <div appSkeletonLoading [appSkeletonLoading]="keyMatrixFlag"
       class="row bg-grey lter text-center ba-primitive br-4 p-8 skeletonAnimation">
-      <div class="col-md-6 overflow-hidden pt-24 pb-24 bb-half pl-8">
+      <div class="col-md-6 overflow-hidden pt-24 pb-24 bb-half pl-8 bb-1-842">
         <p class="m-0 text-primitive roboto f-400 lh-16">MF AUM</p>
         <div class="relClass">
           <div class="bar" [ngClass]="{'height24': keyMatrixFlag}">
@@ -48,7 +48,7 @@
 
       </div>
 
-      <div class="col-md-6 overflow-hidden pt-24 pb-24 bl-half bb-half">
+      <div class="col-md-6 overflow-hidden pt-24 pb-24 bl-half bb-half bb-1-842">
         <p class="m-0 text-primitive roboto f-400 lh-16">SIP book</p>
 
         <div class="relClass">
@@ -60,7 +60,7 @@
         </div>
       </div>
 
-      <div class="col-md-6 overflow-hidden pt-24 pb-24 pl-8">
+      <div class="col-md-6 overflow-hidden pt-24 pb-24 pl-8 bb-1-842">
         <p class="m-0 text-primitive roboto f-400 lh-16">Clients</p>
         <div class="relClass">
           <div class="bar" [ngClass]="{'height24': keyMatrixFlag}">
@@ -71,7 +71,7 @@
         </div>
       </div>
 
-      <div class="col-md-6 overflow-hidden pt-24 pb-24 bl-half">
+      <div class="col-md-6 overflow-hidden pt-24 pb-24 bl-half ">
         <p class="m-0 text-primitive roboto f-400 lh-16">Investors</p>
         <h3 class="m-0 roboto f-400 text-black pt-8">
           <div class="relClass">
@@ -137,7 +137,7 @@
     <h5 class="m-0 roboto f-500 pb-16 pt-28">Subscription overview</h5>
     <div appSkeletonLoading [appSkeletonLoading]="subOverviewFlag"
       class="row bg-grey lter text-center ba-primitive br-4 p-8 skeletonAnimation">
-      <div class="col-md-6 pt-24 pb-24 bb-half pl-8">
+      <div class="col-md-6 pt-24 pb-24 bb-half pl-8 bb-1-842">
         <p class="m-0 text-primitive roboto f-400 lh-16">Clients with <br>
           subscription</p>
         <h3 class="m-0 roboto f-400 text-black pt-8">
@@ -151,7 +151,7 @@
           </div>
         </h3>
       </div>
-      <div class="col-md-6 pt-24 pb-24 bl-half bb-half">
+      <div class="col-md-6 pt-24 pb-24 bl-half bb-half bb-1-842">
         <p class="m-0 text-primitive roboto f-400 lh-16">Subscriptions <br>
           cancelled</p>
         <h3 class="m-0 roboto f-400 text-black pt-8">
@@ -162,7 +162,7 @@
           </div>
         </h3>
       </div>
-      <div class="col-md-6 pt-24 pb-24 pl-8">
+      <div class="col-md-6 pt-24 pb-24 pl-8 bb-1-842">
         <p class="m-0 text-primitive roboto f-400 lh-16">Total fees <br>
           charged</p>
         <h3 class="m-0 roboto f-400 text-black pt-8">
@@ -190,7 +190,7 @@
     <h5 class="m-0 roboto f-500 pb-16 pt-28">Document overview</h5>
     <div appSkeletonLoading [appSkeletonLoading]="docOverviewFlag"
       class="row bg-grey lter text-center ba-primitive br-4 p-8 skeletonAnimation">
-      <div class="col-md-6 pt-24 pb-24 bb-half pl-8">
+      <div class="col-md-6 pt-24 pb-24 bb-half pl-8 bb-1-842">
         <p class="m-0 text-primitive roboto f-400 lh-16 ws-nowrap">Family member<br> count</p>
         <h3 class="m-0 roboto f-400 text-black pt-8">
           <div class="relClass">
@@ -200,7 +200,7 @@
           </div>
         </h3>
       </div>
-      <div class="col-md-6 pt-24 pb-24 bl-half bb-half">
+      <div class="col-md-6 pt-24 pb-24 bl-half bb-half bb-1-842">
         <p class="m-0 text-primitive roboto f-400 lh-16">Total <br>clients</p>
         <h3 class="m-0 roboto f-400 text-black pt-8">
           <div class="relClass">
@@ -210,7 +210,7 @@
           </div>
         </h3>
       </div>
-      <div class="col-md-6 pt-24 pb-24 pl-8">
+      <div class="col-md-6 pt-24 pb-24 pl-8 bb-1-842">
         <p class="m-0 text-primitive roboto f-400 lh-16">Total <br>size</p>
         <h3 class="m-0 roboto f-400 text-black pt-8">
           <div class="relClass">
@@ -235,7 +235,7 @@
 
 
   <div class="col-xl-6 col-lg-8 col-md-7 bl-1 br p-0">
-    <div class="pl-24 pr-24">
+    <div class="pl-24 pr-24 plr-16-992">
 
       <div class="advisor-status pl-20 mb-24">
         <h3 class="m-0 roboto f-500 roboto text-black pt-20">{{greeting}} {{advisorName}}</h3>
@@ -251,7 +251,7 @@
                 for you. </p>
               <p class="text-white roboto f-500"> This will help you get the best out of IFANOW and make your onboarding
                 process super smooth.</p>
-              <button (click)="openGuideDialog()" class="openGuideBtn" mat-button>Open the guide</button>
+              <button (click)="openGuideDialog()" class="openGuideBtn d-none-992" mat-button>Open the guide</button>
             </div>
           </div>
           <div class="col-xl-4 col-lg-4 col-md-12 d-flex align-items-center justify-content-center ptb-20-992">
@@ -303,9 +303,9 @@
         <h5 class="text-black f-16 roboto mb-10 f-500"> Asset classses</h5>
         <div class="bg-white br-10">
           <div class="row b-a pt-20 pb-20 br-4">
-            <div class="col-xl-6 col-lg-6 col-md-12 p-0">
+            <div class="col-xl-6 col-lg-6 col-md-12 p-0 full-center-992">
               <!-- <div class="highcharts-figure" id="piechartMutualFund"></div> -->
-              <div class="h-200 w-100-992" [chart]="assetAllocationPieConfig">
+              <div class="h-200 responsive-asset-chart" [chart]="assetAllocationPieConfig">
               </div>
             </div>
             <div
@@ -328,9 +328,9 @@
         <h5 class="m-0 text-black f-16 roboto pb-16 f-500"> Asset allocation</h5>
         <div class="bg-white br-10 ba-primitive">
 
-          <div class="row pt-20 pb-20">
-            <div class="col-6">
-              <p class="m-0 roboto f-400">Once your data is uploaded, this chart will come to life</p>
+          <div class="row pt-20 pb-20 column-reverse-992 text-center-992">
+            <div class="col-xl-6 col-lg-6 col-md-12">
+              <p class="m-0 roboto f-400 pt-15-992">Once your data is uploaded, this chart will come to life</p>
               <p class="m-0 roboto f-400 pt-16 pb-16">Let’s get some data in here. There are lot’s of
                 things you
                 can add to
@@ -341,9 +341,9 @@
               </button>
 
             </div>
-            <div class="col-6 full-center pl-0">
+            <div class="col-xl-6 col-lg-6 col-md-12 full-center pl-0">
 
-              <img class="w-100" src="assets/images/svg/asset-allocation-empty-state.svg">
+              <img class="w-100 w-auto-992 " src="assets/images/svg/asset-allocation-empty-state.svg">
 
             </div>
           </div>

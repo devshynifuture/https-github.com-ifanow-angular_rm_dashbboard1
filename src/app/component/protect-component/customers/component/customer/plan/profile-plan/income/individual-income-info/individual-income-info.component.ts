@@ -1042,6 +1042,7 @@ export class IndividualIncomeInfoComponent implements OnInit {
       this.incomeNetForm.controls.incomeStyle.setValue('1');
       this.isStatic = true;
       this.incomeNetForm.controls.incomeOption.setValue('2')
+      this.incomeOption = '2';
       this.nullAllObj();
       this.disabledAllObj();
       this.emptyControlsAtMostOn();
