@@ -187,8 +187,7 @@
                             This field is required
                         </mat-error>
                         <mat-error class="f-12" *ngIf="(recuring.get('ownerName').errors?.max)">
-                            already added for this expense category
-
+                            Already added same category for this family member
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -330,7 +329,7 @@
                             This field is required
                         </mat-error>
                         <mat-error class="f-12" *ngIf="(expenses.get('ownerName').errors?.max)">
-                            already added for this expense category
+                            Already added same category for this family member
                         </mat-error>
                     </mat-form-field>
                 </div>

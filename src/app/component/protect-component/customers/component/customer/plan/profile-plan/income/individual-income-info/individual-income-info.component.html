@@ -615,7 +615,7 @@
                             <div *ngFor="let singleBonusForm of getBonusList.controls;index as i"
                                 [formGroup]="singleBonusForm" class="row">
                                 <div class="col-md-5 pl-0 pr-4">
-                                    <div class="form-group mb-0">
+                                    <div class="form-group mb-0 ">
                                         <mat-form-field class="ba-date">
                                             <input matInput formControlName="receivingDate" autocomplete="off"
                                                 class="form-control br-0 b-0" [matDatepicker]="expectedBonus">
@@ -631,10 +631,10 @@
                                     </div>
                                 </div>
                                 <div class="col-md-5 pl-4 pr-0">
-                                    <div class="form-group mb-0">
+                                    <div class="form-group mb-0 iconRupess">
                                         <mat-form-field>
                                             <input matInput formControlName="amount" autocomplete="off" type="number"
-                                                class="form-control br-0">
+                                                class="form-control br-0 rupess">
                                             <mat-error>This field is required</mat-error>
                                         </mat-form-field>
                                     </div>
