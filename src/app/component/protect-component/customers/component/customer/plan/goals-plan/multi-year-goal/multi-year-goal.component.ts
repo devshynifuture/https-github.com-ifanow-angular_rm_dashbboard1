@@ -125,7 +125,7 @@ export class MultiYearGoalComponent implements OnInit {
           }
           obj['goalYrsAndFutureValue'] = multiObj;
         } else {
-          obj['presentValue'] = this.detailedSpendingFormArray[0].value;
+          obj['presentValue'] = (this.detailedSpendingFormArray[0].value)/obj['frequency'];
         }
         break;
 
