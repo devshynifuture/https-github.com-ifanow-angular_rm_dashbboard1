@@ -55,7 +55,7 @@
       <div [appSkeletonLoading]="letsideBarLoader" appSkeletonLoading>
         <div class="height-700 ">
 
-          <div class="row overflow-hidden bb c-p" [queryParams]="{ tab: 'tab1'}" routerLink="/customer/detail/account/assets">
+          <div class="row overflow-hidden bb c-p" routerLink="/customer/detail/account/assets/mutual">
             <div class="col-md-6 relClass pr-0">
               <div>
                 <a  class="text-black m-0 roboto">
@@ -83,7 +83,7 @@
             </div>
           </div>
 
-          <div class="row overflow-hidden bb c-p" [queryParams]="{ tab: 'tab2'}" routerLink="/customer/detail/account/assets">
+          <div class="row overflow-hidden bb c-p" routerLink="/customer/detail/account/assets/stock">
             <div class="col-md-6 relClass pr-0">
               <div>
                 <a  class="text-black m-0 roboto">
@@ -110,7 +110,7 @@
             </div>
           </div>
 
-          <div class="row overflow-hidden bb c-p" [queryParams]="{ tab: 'tab3'}" routerLink="/customer/detail/account/assets">
+          <div class="row overflow-hidden bb c-p" routerLink="/customer/detail/account/assets/fix">
             <div class="col-md-6 relClass pr-0">
               <div>
                 <a  class="text-black m-0 roboto">
@@ -137,7 +137,7 @@
             </div>
           </div>
 
-          <div class="row overflow-hidden bb c-p"  [queryParams]="{ tab: 'tab4'}"  routerLink="/customer/detail/account/assets">
+          <div class="row overflow-hidden bb c-p" routerLink="/customer/detail/account/assets/real">
             <div class="col-md-6 relClass pr-0">
               <p class="text-black m-0 roboto"></p>
               <div>
@@ -162,7 +162,7 @@
             </div>
           </div>
 
-          <div class="row overflow-hidden bb c-p" [queryParams]="{ tab: 'tab5'}" routerLink="/customer/detail/account/assets">
+          <div class="row overflow-hidden bb c-p" routerLink="/customer/detail/account/assets/retire">
             <div class="col-md-6 relClass pr-0">
               <div>
                 <a  class="text-black m-0 roboto">
@@ -187,7 +187,7 @@
             </div>
           </div>
 
-          <div class="row overflow-hidden bb c-p" [queryParams]="{ tab: 'tab6'}"  routerLink="/customer/detail/account/assets">
+          <div class="row overflow-hidden bb c-p" routerLink="/customer/detail/account/assets/small">
             <div class="col-md-6 pr-0 ">
               <div class="bar">
                 <a  class="text-black m-0 roboto">
@@ -212,7 +212,7 @@
             </div>
           </div>
 
-          <div class="row overflow-hidden bb c-p" [queryParams]="{ tab: 'tab7'}"   routerLink="/customer/detail/account/assets">
+          <div class="row overflow-hidden bb c-p" routerLink="/customer/detail/account/assets/cash_bank">
             <div class="col-md-6 relClass pr-0">
               <div>
                 <a  class="text-black m-0 roboto">
@@ -236,7 +236,7 @@
             </div>
           </div>
 
-          <div class="row overflow-hidden bb c-p" [queryParams]="{ tab: 'tab7'}"  routerLink="/customer/detail/account/assets">
+          <div class="row overflow-hidden bb c-p" routerLink="/customer/detail/account/assets/commodities">
             <div class="col-md-6 relClass pr-0">
               <div>
                 <a  class="text-black m-0 roboto">
@@ -359,7 +359,7 @@
             <div *ngIf="assetAllocationRes">
                 <div class="highcharts-figure" id="piechartMutualFund"></div>
               </div>
-           
+
           </div>
         </div> -->
         <div [hidden]="letsideBarLoader" class="col-xl-5  col-lg-12 col-md-12 pl-0 pl-15-1200">

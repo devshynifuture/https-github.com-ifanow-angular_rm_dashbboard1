@@ -1,12 +1,13 @@
 <div class="row" id="overview-secondhead">
-    <div class="col-md-2 d-flex align-items-center">
+    <div class="col-md-1 col-lg-2 d-flex align-items-center">
         <button (click)="goToAdvisorHome()" *ngIf="authService.isAdvisor()"
             class="btn-warning-outline advisorHomeBtn br-2" mat-stroked-button>
-            <i class="material-icons"> keyboard_backspace </i> ADVISOR HOME
+            <i class="material-icons"> keyboard_backspace </i> <span class="tabDisplay">
+                 ADVISOR HOME </span>
         </button>
     </div>
 
-    <div class="col-md-8 p-0 link-width">
+    <div class="col-md-8 col-lg-8 p-0 link-width">
         <nav mat-align-tabs="center" mat-tab-nav-bar>
             <a [routerLink]="['/customer/detail/overview/myfeed']" mat-tab-link routerLinkActive="active">MY FEED</a>
             <a [routerLink]="['/customer/detail/overview/profile']" mat-tab-link routerLinkActive="active">PROFILE</a>
@@ -18,7 +19,7 @@
         </nav>
     </div>
 
-    <div class="col-md-2 d-flex align-items-center borderLeft">
+    <div class="col-md-3 col-lg-2 d-flex align-items-center borderLeft">
         <p class="m-0 f-14 text-white d-flex align-items-center">{{clientData.displayName}}</p>
     </div>
 

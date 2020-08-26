@@ -1,16 +1,16 @@
-import {Component, Input, OnInit, QueryList, ViewChildren} from '@angular/core';
-import {SubscriptionInject} from '../../../subscription-inject.service';
-import {FormBuilder, Validators} from '@angular/forms';
-import {SubscriptionService} from '../../../subscription.service';
-import {AuthService} from '../../../../../../../auth-service/authService';
-import {EventService} from 'src/app/Data-service/event.service';
-import {HttpClient} from '@angular/common/http';
-import {PhotoCloudinaryUploadService} from '../../../../../../../services/photo-cloudinary-upload.service';
-import {FileItem, ParsedResponseHeaders} from 'ng2-file-upload';
-import {UtilService, ValidatorType} from '../../../../../../../services/util.service';
-import {PostalService} from 'src/app/services/postal.service';
-import {MatProgressButtonOptions} from 'src/app/common/progress-button/progress-button.component';
-import {MatInput} from '@angular/material';
+import { Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { SubscriptionInject } from '../../../subscription-inject.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { SubscriptionService } from '../../../subscription.service';
+import { AuthService } from '../../../../../../../auth-service/authService';
+import { EventService } from 'src/app/Data-service/event.service';
+import { HttpClient } from '@angular/common/http';
+import { PhotoCloudinaryUploadService } from '../../../../../../../services/photo-cloudinary-upload.service';
+import { FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
+import { UtilService, ValidatorType } from '../../../../../../../services/util.service';
+import { PostalService } from 'src/app/services/postal.service';
+import { MatProgressButtonOptions } from 'src/app/common/progress-button/progress-button.component';
+import { MatInput } from '@angular/material';
 
 @Component({
   selector: 'app-biller-profile-advisor',
@@ -24,7 +24,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
 
   barButtonOptions: MatProgressButtonOptions = {
     active: false,
-    text: 'Save',
+    text: 'SAVE IMAGE',
     buttonColor: 'primary',
     barColor: 'accent',
     raised: true,
@@ -66,11 +66,17 @@ export class BillerProfileAdvisorComponent implements OnInit {
   profileDetailsForm: any;
   bankDetailsForm: any;
   MiscellaneousData: any;
+  showEditOption: boolean = false;
+  finalImage: any;
+  imageUploadEvent: any;
+  showCropper: boolean = false;
+  imgURL = '';
+  cropImage: boolean;
 
   constructor(public utils: UtilService, public subInjectService: SubscriptionInject,
-              private fb: FormBuilder,
-              private subService: SubscriptionService, private postalService: PostalService,
-              private eventService: EventService, private http: HttpClient) {
+    private fb: FormBuilder,
+    private subService: SubscriptionService, private postalService: PostalService,
+    private eventService: EventService, private http: HttpClient, private utilService: UtilService) {
   }
 
   imageData: File;
@@ -141,19 +147,19 @@ export class BillerProfileAdvisorComponent implements OnInit {
   }
 
   uploadImage() {
-
-    if (this.imageData.type == 'image/png' || this.imageData.type == 'image/jpeg') {
+    if (this.showCropper) {
       this.barButtonOptions.active = true;
-      const files = [this.imageData];
+      const files = this.utilService.convertB64toImageFile(this.finalImage);;
       const tags = this.advisorId + ',biller_profile_logo,';
-      PhotoCloudinaryUploadService.uploadFileToCloudinary(files, 'biller_profile_logo', tags,
+      PhotoCloudinaryUploadService.uploadFileToCloudinary([files], 'biller_profile_logo', tags,
         (item: FileItem, response: string, status: number, headers: ParsedResponseHeaders) => {
           if (status == 200) {
             const responseObject = JSON.parse(response);
-            this.logoImg = responseObject.url;
+            this.imgURL = responseObject.url;
             // this.logUrl.controls.url.setValue(this.imageData);
             this.uploadedImage = JSON.stringify(responseObject);
             this.eventService.openSnackBar('Image uploaded sucessfully', 'Dismiss');
+            this.resetPageVariables()
             if (this.selected == 3) {
               this.addEditBillerForm();
             } else {
@@ -164,6 +170,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
         });
 
     } else {
+
     }
   }
 
@@ -238,7 +245,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
     this.getFormControlBank().address.maxLength = 150;
     this.getFrormControlMisc().footnote.maxLength = 500;
     this.getFrormControlMisc().terms.maxLength = 500;
-    this.logoImg = data.logoUrl;
+    this.imgURL = data.logoUrl;
     if (this.profileDetailsForm.get('gstTreatmentId').value == '4') {
       this.profileDetailsForm.get('gstinNum').setValidators([Validators.required, Validators.pattern('^([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-7]{1})([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$')]);
     } else {
@@ -267,7 +274,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
   }
 
   Close(data) {
-    this.subInjectService.changeNewRightSliderState({state: 'close', refreshRequired: data});
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: data });
 
   }
 
@@ -300,10 +307,10 @@ export class BillerProfileAdvisorComponent implements OnInit {
     this.ifscFlag = true;
     if (ifsc != '') {
       this.subService.getBankAddress(obj).subscribe(data => {
-          this.bankData(data);
-          // this.PinData(data, 'bankDetailsForm')
+        this.bankData(data);
+        // this.PinData(data, 'bankDetailsForm')
 
-        },
+      },
         err => {
           this.ifscFlag = false;
           this.bankData(err);
@@ -406,7 +413,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
     } else {
       this.barButtonOptions.active = true;
 
-      if (!this.validURL(this.logoImg) && this.logoImg != undefined) {
+      if (!this.validURL(this.imgURL) && this.imgURL != undefined) {
         this.uploadImage();
       } else {
         this.addEditBillerForm();
@@ -433,7 +440,7 @@ export class BillerProfileAdvisorComponent implements OnInit {
       gstin: (this.profileDetailsForm.controls.gstTreatmentId.value == '4') ? this.profileDetailsForm.controls.gstinNum.value : null,
       gstTreatmentId: this.profileDetailsForm.controls.gstTreatmentId.value,
       ifscCode: this.bankDetailsForm.controls.ifscCode.value,
-      logoUrl: this.logoImg,
+      logoUrl: this.imgURL,
       nameAsPerBank: this.bankDetailsForm.controls.nameOnBank.value,
       pan: this.profileDetailsForm.controls.panNum.value,
       state: this.profileDetailsForm.controls.state.value,
@@ -476,5 +483,28 @@ export class BillerProfileAdvisorComponent implements OnInit {
 
     }
   }
+
+  cropImg(data) {
+    this.cropImage = true;
+    this.showCropper = true;
+  }
+  resetPageVariables() {
+    this.showCropper = false;
+    this.cropImage = false;
+    this.imageUploadEvent = '';
+    this.finalImage = '';
+  }
+
+  uploadImageForCorping(event) {
+    this.imageUploadEvent = event;
+    this.showCropper = true;
+  }
+
+  showCroppedImage(imageAsBase64) {
+    setTimeout(() => {
+      this.finalImage = imageAsBase64;
+    });
+  }
+
 
 }
