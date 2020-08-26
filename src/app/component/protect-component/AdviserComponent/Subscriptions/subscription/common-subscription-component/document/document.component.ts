@@ -423,6 +423,7 @@ export class DocumentComponent implements OnInit {
   // }
   open(value, data) {
     data['sendEsignFlag'] = true;
+    data['isAdvisor'] = this.isAdvisor;
     data['feeStructureFlag'] = data.documentText.includes('$service_fee');
     // if (this.isLoading || !this.isAdvisor) {
     //   return;

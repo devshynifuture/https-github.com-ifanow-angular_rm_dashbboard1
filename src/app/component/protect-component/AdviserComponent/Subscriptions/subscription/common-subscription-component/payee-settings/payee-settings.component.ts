@@ -311,7 +311,7 @@ export class PayeeSettingsComponent implements OnInit {
       pan: [data.pan, [Validators.required, Validators.pattern("^[A-Za-z]{5}[0-9]{4}[A-z]{1}")]],
       gstTreatment: [data.gstTreatmentId ? data.gstTreatmentId : '', [Validators.required]],
       gstIn: [data.gstin],
-      billingAddress: [data.billerAddress, [Validators.required]],
+      billingAddress: [data.billingAddress, [Validators.required]],
       city: [data.city, [Validators.required]],
       state: [data.state, [Validators.required]],
       country: [data.country, [Validators.required]],
