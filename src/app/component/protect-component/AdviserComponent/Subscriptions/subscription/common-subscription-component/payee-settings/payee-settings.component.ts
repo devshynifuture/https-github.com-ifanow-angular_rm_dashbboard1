@@ -273,14 +273,16 @@ export class PayeeSettingsComponent implements OnInit {
 
   getListOfFamilyByClientRes(data) {
     if (data != undefined) {
-      data.forEach(element => {
-        if (this.payeeList.some(payee => payee.companyDisplayName == element.name)) {
-          element['disableFlag'] = true;
-        }
-        else {
-          element['disableFlag'] = false;
-        }
-      });
+      if (this.payeeList) {
+        data.forEach(element => {
+          if (this.payeeList.some(payee => payee.companyDisplayName == element.name)) {
+            element['disableFlag'] = true;
+          }
+          else {
+            element['disableFlag'] = false;
+          }
+        });
+      }
       this.family = data
     }
   }
