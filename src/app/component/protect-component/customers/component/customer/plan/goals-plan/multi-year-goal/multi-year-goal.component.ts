@@ -125,7 +125,7 @@ export class MultiYearGoalComponent implements OnInit {
           }
           obj['goalYrsAndFutureValue'] = multiObj;
         } else {
-          obj['presentValue'] = this.detailedSpendingFormArray[0].value;
+          obj['presentValue'] = (this.detailedSpendingFormArray[0].value)/obj['frequency'];
         }
         break;
 
@@ -189,9 +189,12 @@ export class MultiYearGoalComponent implements OnInit {
       this.minAgeYear = (this.goalTypeData.validations.minAgeFromPresent + this.currentYear);
       this.maxAgeYear = (this.goalTypeData.validations.maxAgeFromPresent + this.currentYear);
     }
-    if (this.minAgeYear < (value.familyMemberAge + this.goalTypeData.validations.minAgeFromPresent)) {
-      this.minAgeYear = value.familyMemberAge + this.goalTypeData.validations.minAgeFromPresent;
+    if(value){
+      if (this.minAgeYear < (value.familyMemberAge + this.goalTypeData.validations.minAgeFromPresent)) {
+        this.minAgeYear = value.familyMemberAge + this.goalTypeData.validations.minAgeFromPresent;
+      }
     }
+    
 
     const newOptions: Options = Object.assign({}, this.rangeFieldOptions);
     newOptions.floor = this.minAgeYear;

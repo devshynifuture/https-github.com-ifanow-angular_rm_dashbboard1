@@ -295,10 +295,10 @@ this.ownerData = {Fmember: this.nomineesListFM, controleData:this.POTDForm}
     } else {
       this.adviceShowHeaderAndFooter = true;
     }
+    this.isOptionalField = true;
     this.getdataForm(this.data);
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
-    this.isOptionalField = false;
     this.bankList = this.enumService.getBank();
 
   }
