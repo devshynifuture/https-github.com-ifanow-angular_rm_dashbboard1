@@ -5,6 +5,7 @@ import { EnumServiceService } from 'src/app/services/enum-service.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { UtilService, ValidatorType } from 'src/app/services/util.service';
 import { MatInput } from '@angular/material';
+import { CancelFlagService } from 'src/app/component/protect-component/PeopleComponent/people/Component/people-service/cancel-flag.service';
 
 @Component({
   selector: 'app-record-payment',
@@ -43,7 +44,7 @@ export class RecordPaymentComponent implements OnInit {
 
   constructor(public subService: SubscriptionService, private fb: FormBuilder,
     public enumService: EnumServiceService, public AuthService: AuthService,
-    public utils: UtilService) {
+    public utils: UtilService, private cancelFlagService: CancelFlagService) {
   }
 
   @Input() InvRecordData;
@@ -86,14 +87,14 @@ export class RecordPaymentComponent implements OnInit {
 
   getRecordPayment(data) {
     // this.balDue = (data.balanceDue == 0 ) ? data.finalAmount : data.balanceDue ? data.balanceDue : 0;
-    if(data.balanceDue == 0){
+    if (data.balanceDue == 0) {
       this.balDue = data.amountReceived
-    } 
-    if(data.add == false && data.balanceDue != 0){
-      if(data.balanceDue > data.amountReceived){
+    }
+    if (data.add == false && data.balanceDue != 0) {
+      if (data.balanceDue > data.amountReceived) {
         this.balDue = data.balanceDue
-      }else{
-        this.balDue =data.amountReceived + data.balanceDue
+      } else {
+        this.balDue = data.amountReceived + data.balanceDue
       }
     }
     if (data.add == true) {
@@ -275,6 +276,7 @@ export class RecordPaymentComponent implements OnInit {
   }
 
   getSubStagesRecordResponse(data) {
+    this.cancelFlagService.setCancelFlag(true)
     console.log('data', data);
     if (this.isAdded) {
       this.feeCollectionMode.forEach(o => {

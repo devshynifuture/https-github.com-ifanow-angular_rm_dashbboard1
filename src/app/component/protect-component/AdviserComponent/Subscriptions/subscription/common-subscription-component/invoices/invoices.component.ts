@@ -8,6 +8,7 @@ import { UtilService } from 'src/app/services/util.service';
 import { AuthService } from 'src/app/auth-service/authService';
 import { InvoiceComponent } from '../invoice/invoice.component';
 import { EmailOnlyComponent } from '../email-only/email-only.component';
+import { CancelFlagService } from 'src/app/component/protect-component/PeopleComponent/people/Component/people-service/cancel-flag.service';
 
 export interface PeriodicElement {
   Invoicenumber: string;
@@ -40,7 +41,7 @@ export class InvoicesComponent implements OnInit {
   @Input() isAdvisor = true;
 
 
-  constructor(public subInjectService: SubscriptionInject, private eventService: EventService, private subService: SubscriptionService, public dialog: MatDialog) {
+  constructor(private cancelFlagService: CancelFlagService, public subInjectService: SubscriptionInject, private eventService: EventService, private subService: SubscriptionService, public dialog: MatDialog) {
   }
   invoiceDesign: any;
   quotationDesignEmail: any;
@@ -214,7 +215,7 @@ export class InvoicesComponent implements OnInit {
       sideBarData => {
         this.dataTOget = sideBarData;
         if (UtilService.isDialogClose(sideBarData)) {
-          if (UtilService.isRefreshRequired(sideBarData)) {
+          if (UtilService.isRefreshRequired(sideBarData) || this.cancelFlagService.getCancelFlag()) {
             this.getInvoiceList();
           }
           rightSideDataSub.unsubscribe();
