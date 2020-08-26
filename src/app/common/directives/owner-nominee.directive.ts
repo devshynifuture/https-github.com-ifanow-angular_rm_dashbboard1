@@ -87,7 +87,9 @@ export class OwnerNomineeDirective {
     }
   }
 
+ 
   getListFamilyMem(): any {
+   
     let obj = {
       clientId: this.clientId,
     };
@@ -130,8 +132,10 @@ export class OwnerNomineeDirective {
     }));
   }
 
-  userForBank:any;
+  userForBank:any ;
   disabledMember(value) {
+    
+    this.userForBank = [];
     const controlsArr: any = [];
     if (this.getCoOwner) {
       for (const e in this.getCoOwner.controls) {
@@ -148,29 +152,27 @@ export class OwnerNomineeDirective {
     if (this.sendData.length <= 0) {
       this.sendData = this.emitedNOminee;
     }
-    this.sendData.forEach(element => {
-      for (const e of controlsArr) {
+    this.sendData.forEach((element,f) => {
+      for (const [i,e] of controlsArr.entries()) {
         if (e.data.name != '') {
           if (element.userName == e.data.name) {
             if (e.type == 'owner') {
-              if(e.index == "0"){
+              // if(e.index == "0"){
                 setTimeout(() => {
-                  this.userForBank = this.sendData.filter(x => x.id == this.getCoOwner.controls[e.index].get('familyMemberId').value || x.clientId == this.getCoOwner.controls[e.index].get('familyMemberId').value && x.relationshipId == 1);
+                  let owners = this.sendData.filter(x => x.id == this.getCoOwner.controls[e.index].get('familyMemberId').value || (x.clientId == this.getCoOwner.controls[e.index].get('familyMemberId').value && x.relationshipId == 1));
+                  this.userForBank.push(owners[0]);
                   console.log(this.userForBank);
-                  if(this.userForBank){
-                    this.enumDataService.getAccountList(this.userForBank).then((data)=>{
-                         this.emitBank.emit();
-                    });
-                  }
+                  // && controlsArr.length - 1 == i
+                  
                 }, 500);
-              }
+              // }
               this.getCoOwner.controls[e.index].get('familyMemberId').setValue(element.id == 0?element.clientId:element.familyMemberId);
               this.getCoOwner.controls[e.index].get('isClient').setValue(element.relationshipId == 1 ? 1 : 0);
               if (this.getCoOwner.controls[e.index].get('relationshipId')) {
                 this.getCoOwner.controls[e.index].get('relationshipId').setValue(element.relationshipId);
               }
             } else {
-              this.getNominee.controls[e.index].get('familyMemberId').setValue(element.id == 0?element.clientId:element.familyMemberId);
+              this.getNominee.controls[e.index].get('familyMemberId').setValue(element.id);
               if (this.getNominee.controls[e.index].get('relationshipId')) {
                 this.getNominee.controls[e.index].get('relationshipId').setValue(element.relationshipId);
               }
@@ -181,6 +183,14 @@ export class OwnerNomineeDirective {
             element.disable = false;
           }
         }
+        setTimeout(() => {
+          if(this.userForBank.length > 0  && controlsArr.length - 1 == i){
+            
+            this.enumDataService.getAccountList(this.userForBank).then((data)=>{
+                 this.emitBank.emit();
+            });
+          }
+        }, 600);
       }
     });
     if (this.getNominee != null) {
