@@ -294,6 +294,10 @@ export class CreateSubscriptionComponent implements OnInit {
     this.subscriptionDetails.controls.subscription.disable();
     this.billersData = data.billers;
     this.payeesData = data.payees;
+    if (this.billersData.length == 1) {
+      this.billersData[0].selected = true;
+      this.selectedBiller = this.billersData[0]
+    }
   }
 
   Close(flag) {
@@ -327,7 +331,7 @@ export class CreateSubscriptionComponent implements OnInit {
           billingCycle: (this.serviceData.billingNature == '2') ? 0 : this.serviceData.billingCycle,
           billingMode: this.serviceData.billingMode,
           // billingNature: (this.serviceData.billingNature == '2') ? 0 : this.serviceData.billingNature,
-          billingNature:this.serviceData.billingNature,
+          billingNature: this.serviceData.billingNature,
           feeTypeId: this.serviceData.feeTypeId,
           subscriptionAssetPricingList: [
             {
