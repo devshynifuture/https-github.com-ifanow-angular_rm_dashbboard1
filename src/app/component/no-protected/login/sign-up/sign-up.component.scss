@@ -1,115 +1,115 @@
 .loginBox {
-    width: 60%;
-    margin-top: 45px;
-    height: 515px;
+  width: 60%;
+  margin-top: 45px;
+  height: 515px;
 }
 
 .loginBoxverifyOtp {
-    //width: 60%;
-    //margin-top: 45px;
-    margin-top: 25px;
+  //width: 60%;
+  //margin-top: 45px;
+  margin-top: 25px;
 }
 
 .advisorLogo {
-    width: 60px;
+  width: 60px;
 }
 
 .form_container_new_wrapper {
-    width: 80%;
+  width: 80%;
 }
 
 .namebtn {
-    button.mainloginBtn {
-        width: 100% !important;
-    }
+  button.mainloginBtn {
+    width: 100% !important;
+  }
 }
 
 .imgBoxlogin {
-    // height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  // height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .flexLogin {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 ::ng-deep .mat-form-field-appearance-standard .mat-form-field-flex {
-    padding-top: 0px !important;
+  padding-top: 0px !important;
 }
 
 .eyesPassword {
-    position: absolute;
-    top: 8px;
-    right: 8px;
+  position: absolute;
+  top: 8px;
+  right: 8px;
 }
 
 .otpBox {
-    background: #FF7272;
-    width: 176px;
-    height: 40px;
-    border-radius: 4px;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    font-weight: 500;
-    margin-bottom: 87px;
+  background: #FF7272;
+  width: 176px;
+  height: 40px;
+  border-radius: 4px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  font-weight: 500;
+  margin-bottom: 87px;
 }
 
 .lightRead {
-    color: #FF7272;
+  color: #FF7272;
 }
 
 .verifyDiv {
-    width: 35px;
-    text-align: center;
-    margin-right: 10px;
+  width: 35px;
+  text-align: center;
+  margin-right: 10px;
 }
 
 .iconPosition {
-    position: absolute;
-    top: 8px;
-    left: 8px;
+  position: absolute;
+  top: 8px;
+  left: 8px;
 }
 
 // --------------------forgot-password ----------------------
 .verifyBtn {
-    width: 120px;
-    height: 40px;
-    font-size: 16px;
+  width: 120px;
+  height: 40px;
+  font-size: 16px;
 }
 
 .imgLogin {
-    display: none;
+  display: none;
 }
 
 .ds-none {
-    display: none;
+  display: none;
 }
 
 .matErrorCss {
-    font-size: 75%;
-    color: #f44336;
-    font-weight: 600;
+  font-size: 75%;
+  color: #f44336;
+  font-weight: 600;
 }
 
 ::ng-deep .mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
-    line-height: 37px !important;
+  line-height: 37px !important;
 }
 
 ::ng-deep .mat-button-toggle-checked {
-    background-color: #008FFF;
-    color: #fff;
-    border: 1px solid #008FFF;
+  background-color: #008FFF;
+  color: #fff;
+  border: 1px solid #008FFF;
 }
 
 ::ng-deep .mat-button-toggle-checked.mat-button-toggle-appearance-standard {
-    color: #FFFFFF;
+  color: #FFFFFF;
 }
 
 // .progessUi li {
@@ -140,69 +140,83 @@
 //     display: none;
 // }
 @media screen and (max-width: 767px) {
-    .imgLogin {
-        // width: 295px;
-        position: relative;
-        float: right;
-        display: block;
-        margin-bottom: 30px;
-        .bitmapImg {
-            position: absolute;
-            left: -15px;
-            top: 235px;
-        }
+  .imgLogin {
+    // width: 295px;
+    position: relative;
+    float: right;
+    display: block;
+    margin-bottom: 30px;
+
+    .bitmapImg {
+      position: absolute;
+      left: -15px;
+      top: 235px;
     }
-    .mobileCenter {
-        text-align: center;
+  }
+
+  .mobileCenter {
+    text-align: center;
+    width: 100%;
+  }
+
+  .mobilerightText {
+    text-align: right;
+  }
+
+  .mobileNone {
+    display: none;
+  }
+
+  .ds-none {
+    display: block;
+  }
+
+  .loginBox {
+    width: 100%
+  }
+
+  .forgotMobileUi {
+    background: #F2F2F2 !important;
+    // height: 100vh;
+    display: block;
+
+    .loginBoxverifyOtp {
+      width: 100%;
+      margin-top: 0px;
+    }
+
+    .contentText {
+      color: #878787;
+    }
+
+    .mobileUserBox {
+      width: 83%;
+      margin: 0px auto;
+
+      .form_container_new_wrapper {
         width: 100%;
-    }
-    .mobilerightText {
-        text-align: right;
-    }
-    .mobileNone {
-        display: none;
-    }
-    .ds-none {
-        display: block;
-    }
-    .loginBox {
-        width: 100%
-    }
-    .forgotMobileUi {
-        background: #F2F2F2 !important;
-        // height: 100vh;
-        display: block;
-        .loginBoxverifyOtp {
-            width: 100%;
-            margin-top: 0px;
+
+        .form-group {
+          margin-bottom: 30px !important;
         }
-        .contentText {
-            color: #878787;
-        }
-        .mobileUserBox {
-            width: 83%;
-            margin: 0px auto;
-            .form_container_new_wrapper {
-                width: 100%;
-                .form-group {
-                    margin-bottom: 30px !important;
-                }
-            }
-            .form-control {
-                background: #FFFFFF;
-                box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.14);
-                border-radius: 30px !important;
-                padding-left: 25px !important;
-                border: transparent !important;
-            }
-            .bg-primary {
-                font-size: 16px;
-                background: #939393 !important;
-                border-radius: 40px !important;
-                width: 125px;
-                height: 50px;
-                color: #ffffff;
-            }
-        }
+      }
+
+      .form-control {
+        background: #FFFFFF;
+        box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.14);
+        border-radius: 30px !important;
+        padding-left: 25px !important;
+        border: transparent !important;
+      }
+
+      .bg-primary {
+        font-size: 16px;
+        background: #939393 !important;
+        border-radius: 40px !important;
+        width: 125px;
+        height: 50px;
+        color: #ffffff;
+      }
     }
+  }
 }

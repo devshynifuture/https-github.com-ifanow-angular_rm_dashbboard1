@@ -94,8 +94,8 @@
                             <div class="relClass">
                                 <div class="bar" [ngClass]="{'heightNew24': isLoading}">
                                     <h2 class="m-0 f-300 text-black pt-4 pl-8 pb-20 ">
-                                        <span appFormatNumber *ngIf="!isLoading"
-                                            [value]="mfData.total_current_value ? mfData.total_current_value : 0"></span>
+                                        <span  *ngIf="!isLoading"
+                                        >{{mfData.total_current_value ? mfData.total_current_value : 0}}</span>
                                         <!-- <span *ngIf="isLoading"> {{''}}</span> -->
                                         <span *ngIf="!isLoading" class="left">{{'₹'}} </span> <span
                                             *ngIf="isLoading">{{''}}
@@ -112,8 +112,8 @@
                                     <p class="text-custom m-0">Amount invested</p>
                                     <h5 class="m-0 text-black relClass">
                                         <div class="bar height24">
-                                            <span appFormatNumber *ngIf="!isLoading"
-                                                [value]="mfData.total_amount_invested ? mfData.total_amount_invested : 0"></span>
+                                            <span *ngIf="!isLoading"
+                                              >{{mfData.total_amount_invested ? mfData.total_amount_invested : 0}}</span>
                                             <!-- <span *ngIf="isLoading">{{''}}</span> -->
                                             <span *ngIf="!isLoading" class="left">{{'₹'}} </span> <span
                                                 *ngIf="isLoading">{{''}}
@@ -125,10 +125,9 @@
                                     <p class="text-custom m-0">Unrealized gain/loss</p>
                                     <h5 class="m-0 text-success relClass height24">
                                         <div class="bar height24" *ngIf="isLoading"></div>
-                                        <span appFormatNumber
+                                        <span
                                             [ngClass]="{'text-success':  mfData.total_unrealized_gain >= 0,'text-danger': mfData.total_unrealized_gain < 0}"
-                                            [value]="mfData.total_unrealized_gain ? mfData.total_unrealized_gain : 0"
-                                            *ngIf="!isLoading"></span>
+                                            *ngIf="!isLoading">{{mfData.total_unrealized_gain ? mfData.total_unrealized_gain : 0}}</span>
                                         <span *ngIf="!isLoading" class="left"
                                             [ngClass]="{'text-success':  mfData.total_unrealized_gain >= 0,'text-danger': mfData.total_unrealized_gain < 0}">{{'₹'}}
                                         </span>
@@ -344,8 +343,9 @@
                             <!-- <td mat-footer-cell *matFooterCellDef class="br f-600 p-8 proximaFont text-right" appFormatNumber>
                                 <div class="bar">{{(mfData.total_amount_invested)?mfData.total_amount_invested:0}}</div>
                             </td> -->
-                            <td *matFooterCellDef appFormatNumber [value]="mfData.total_amount_invested"
+                            <td *matFooterCellDef
                                 class="br f-600 text-right" mat-footer-cell>
+                                <span>{{mfData.total_amount_invested ? mfData.total_amount_invested : 0}}</span>
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="value">
@@ -360,8 +360,9 @@
                                 <div class="bar">{{(mfData.total_current_value)?mfData.total_current_value:0}}
                                 </div>
                             </td> -->
-                            <td *matFooterCellDef appFormatNumber [value]="mfData.total_current_value"
+                            <td *matFooterCellDef
                                 class="br f-600 text-right" mat-footer-cell>
+                                <span>{{mfData.total_current_value ? mfData.total_current_value : 0}}</span>
                             </td>
                         </ng-container>
                         <ng-container matColumnDef="abs">
@@ -456,8 +457,9 @@
                                 <div class="bar">{{(mfData.totalTransactionAmt)?mfData.totalTransactionAmt:0}}
                                 </div>
                             </td> -->
-                                <td *matFooterCellDef appFormatNumber [value]="mfData.total_amount_invested"
+                                <td *matFooterCellDef
                                     class="br f-600 p-8 text-right c-p" mat-footer-cell>
+                                    <span>{{mfData.total_amount_invested ? mfData.total_amount_invested : 0}}</span>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="value">
@@ -472,8 +474,9 @@
                                 <div class="bar">{{(mfData.currentValue)?mfData.currentValue:0}}
                                 </div>
                             </td> -->
-                                <td *matFooterCellDef appFormatNumber [value]="mfData.total_current_value"
+                                <td *matFooterCellDef 
                                     class="br p-8 f-600 text-right c-p" mat-footer-cell>
+                                    <span>{{mfData.total_current_value ? mfData.total_current_value : 0}}</span>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="abs">
@@ -620,8 +623,9 @@
                                 <div class="bar"> {{(mfData.totalTransactionAmt)?mfData.totalTransactionAmt:0}}
                                 </div>
                             </td> -->
-                                <td *matFooterCellDef appFormatNumber [value]="mfData.total_amount_invested"
+                                <td *matFooterCellDef 
                                     class="br p-8 f-600 text-right c-p" mat-footer-cell>
+                                    <span>{{mfData.total_amount_invested ? mfData.total_amount_invested : 0}}</span>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="value">
@@ -636,8 +640,9 @@
                                 <div class="bar">{{(mfData.currentValue)?mfData.currentValue:0}}
                                 </div>
                             </td> -->
-                                <td *matFooterCellDef appFormatNumber [value]="mfData.total_current_value"
+                                <td *matFooterCellDef 
                                     class="br p-8 f-600 text-right c-p" mat-footer-cell>
+                                    <span>{{mfData.total_current_value ? mfData.total_current_value : 0}}</span>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="abs">
@@ -741,8 +746,9 @@
                                 <div class="bar">{{(mfData.total_amount_invested)?mfData.total_amount_invested:0}}
                                 </div>
                             </td> -->
-                                <td *matFooterCellDef appFormatNumber [value]="mfData.total_amount_invested"
+                                <td *matFooterCellDef 
                                     class="br p-8 f-600 text-right c-p" mat-footer-cell>
+                                    <span>{{mfData.total_amount_invested ? mfData.total_amount_invested : 0}}</span>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="value">
@@ -757,8 +763,9 @@
                                 <div class="bar">{{(mfData.total_current_value)?mfData.total_current_value:0}}
                                 </div>
                             </td> -->
-                                <td *matFooterCellDef appFormatNumber [value]="mfData.total_current_value"
+                                <td *matFooterCellDef
                                     class="br p-8 f-600 text-right c-p" mat-footer-cell>
+                                    <span>{{mfData.total_current_value ? mfData.total_current_value : 0}}</span>
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="abs">
@@ -964,7 +971,7 @@
                                 <tr>
                                     <td valign="top">
                                         <p style="font-size: 14px;color: #757575; margin: 0px;">Current value </p>
-                                        <h2 style="margin: 0px; font-size: 24px; color: #000000;"> <span appFormatNumber
+                                        <h2 style="margin: 0px; font-size: 24px; color: #000000;"> <span 
                                                 *ngIf="mfData.total_current_value">{{(mfData)?(mfData.total_current_value):0}}</span>
                                         </h2>
 
@@ -972,7 +979,7 @@
                                     <td valign="top">
                                         <p style="font-size: 14px; color: #757575; margin: 0px;">Amount invested</p>
                                         <h2 style="margin: 0px; font-size: 24px; color: #000000;">
-                                            <span appFormatNumber *ngIf="mfData.total_amount_invested">
+                                            <span  *ngIf="mfData.total_amount_invested">
                                                 {{(mfData.total_amount_invested)?(mfData.total_amount_invested):0}}</span>
                                         </h2>
                                     </td>
@@ -981,7 +988,7 @@
                                         <p style="font-size: 14px; color: #757575; margin: 0px;">Unrealized gain/loss
                                         </p>
                                         <h2 style="margin: 0px; font-size: 24px; color: #000000;">
-                                            <span appFormatNumber
+                                            <span 
                                                 *ngIf="mfData.total_unrealized_gain">{{(mfData.total_unrealized_gain)?(mfData.total_unrealized_gain):0}}</span>
                                         </h2>
                                     </td>
@@ -1224,10 +1231,11 @@
                             Total
                         </td>
                         <td style="font-weight:bold;text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 700;"
-                            appFormatNumber [value]="mfData.total_amount_invested">
+                        ><span>{{mfData.total_amount_invested ? mfData.total_amount_invested : 0}}</span>
                         </td>
                         <td style="font-weight:bold;text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 700;"
-                            appFormatNumber [value]="mfData.total_current_value">
+                        >
+                        <span>{{mfData.total_current_value ? mfData.total_current_value : 0}}</span>
                         </td>
                         <td
                             style="font-weight:bold;text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 700;">
@@ -1405,10 +1413,10 @@
                             Total
                         </td>
                         <td style="text-align: right;border-top: 1px solid #dee5e7; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7;  font-weight: 700;border-bottom: 1px solid #dee5e7;"
-                            appFormatNumber [value]="mfData.total_amount_invested">
+                        ><span>{{mfData.total_amount_invested ? mfData.total_amount_invested : 0}}</span>
                         </td>
                         <td style="text-align: right;border-top: 1px solid #dee5e7; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7;  font-weight: 700;border-bottom: 1px solid #dee5e7;"
-                            appFormatNumber [value]="mfData.total_current_value">
+                           >  <span>{{mfData.total_current_value ? mfData.total_current_value : 0}}</span>
                         </td>
                         <td
                             style="text-align: right;border-top: 1px solid #dee5e7; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7;  font-weight: 700;border-bottom: 1px solid #dee5e7;">
@@ -1489,10 +1497,10 @@
                             Total
                         </td>
                         <td style="text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 700;border-top: 1px solid #dee5e7;"
-                            appFormatNumber [value]="mfData.total_amount_invested">
+                        ><span>{{mfData.total_amount_invested ? mfData.total_amount_invested : 0}}</span>
                         </td>
                         <td style="text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 700;border-top: 1px solid #dee5e7;"
-                            appFormatNumber [value]="mfData.total_current_value">
+                         >  <span>{{mfData.total_current_value ? mfData.total_current_value : 0}}</span>
                         </td>
                         <td
                             style="text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 700;border-top: 1px solid #dee5e7;">
@@ -1572,10 +1580,11 @@
                             Total
                         </td>
                         <td style="text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7;border-top: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 700;"
-                            appFormatNumber [value]="mfData.total_amount_invested">
+                            >
+                            <span>{{mfData.total_amount_invested ? mfData.total_amount_invested : 0}}</span>
                         </td>
                         <td style="text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7;border-top: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 700;"
-                            appFormatNumber [value]="mfData.total_current_value">
+                        >  <span>{{mfData.total_current_value ? mfData.total_current_value : 0}}</span>
                         </td>
                         <td
                             style="text-align: right; font-size: 13px; padding: 8px;border-right: 1px solid #dee5e7;border-top: 1px solid #dee5e7; border-bottom: 1px solid #dee5e7; font-weight: 700;">

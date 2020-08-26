@@ -738,6 +738,7 @@ export const appConfig = {
   GET_CLIENT_ROLES: 'setting/users-roles/client-role/get',
   ORDER_SOA_MUTUAL_FUND: 'mutual-fund/SOA/fetch',
   BULK_EMAIL_PASSWORD: 'pdfAndEmail/new-user-creds/mail/send',
+  CLIENT_SEND_EMAIL: 'setting/bulk/welcome-email/send',
 
   // gmail
   ACCESS_TOKEN_SAVE: 'user/access-token/gmail/save',

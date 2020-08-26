@@ -3,7 +3,6 @@
         <div class="col-md-6 mobileNone imgBoxlogin p-0 bg-grey lter">
             <img src="assets/images/svg/login-img.svg" class="w-100">
         </div>
-
         <div class="col-md-6 p-0 bg-white forgotMobileUi flexLogin">
             <div class="row ds-none">
                 <div class="col-md-12">
@@ -12,24 +11,18 @@
                     </i>
                 </div>
             </div>
-
-            <app-signup-progress-bar [signUpBarList]="signUpBarList" class="w-80"></app-signup-progress-bar>
-
-
-
-
+            <app-signup-progress-bar [signUpBarList]="signUpBarList" class="w-80 signup-proccess">
+            </app-signup-progress-bar>
             <div class="mobileUserBox">
-                <div class="loginBoxverifyOtp">
-
-
+                <div class="loginBoxverifyOtp register-side">
                     <p class="f-16 mb-12 mobileNone">
                         <img class="advisorLogo "
                             src="https://res.cloudinary.com/futurewise/image/upload/v1568097552/icons_fnvpa7.png">
                     </p>
                     <h1 class="mb-16 mobileNone f-600">Create an account</h1>
-                    <p class="mb-24 mobileNone f-16">Please provide some basic details to help us create your account.
+                    <p class="mb-24 mobileNone f-16 pr-15-992">Please provide some basic details to help us create your
+                        account.
                     </p>
-
                     <div class="row ds-none">
                         <div class="col-md-12 mt-70 text-center">
                             <h4 class="f-18 mb-20">Create an account</h4>
@@ -38,7 +31,6 @@
                             </p>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-md-12 mb-20 p-0">
                             <mat-button-toggle-group class="w-80" [(ngModel)]="typeOfRegister" (change)="resetForm()"
@@ -48,15 +40,11 @@
                             </mat-button-toggle-group>
                         </div>
                     </div>
-
-
                     <!-- <mat-radio-group [(ngModel)]="typeOfRegister" (change)="resetForm()" aria-label="Select an option">
-                        <mat-radio-button value="1">Individual</mat-radio-button>
-                        <mat-radio-button value="2">Non-individual</mat-radio-button>
-                    </mat-radio-group> -->
-
-
-                    <div [formGroup]="signUpForm" class="form_container_new_wrapper">
+              <mat-radio-button value="1">Individual</mat-radio-button>
+              <mat-radio-button value="2">Non-individual</mat-radio-button>
+              </mat-radio-group> -->
+                    <div [formGroup]="signUpForm" class="form_container_new_wrapper regitser-field">
                         <div class="row">
                             <div class="col-md-12 form-group p-0">
                                 <h5 class="pt-12 mobileNone mb-4">Full name</h5>
@@ -95,7 +83,6 @@
                                 </mat-form-field>
                             </div>
                         </div>
-
                         <div class="row">
                             <div class="col-md-12 form-group p-0">
                                 <h5 class="pt-12 mobileNone mb-4">Mobile</h5>
@@ -113,7 +100,6 @@
                                 </mat-form-field>
                             </div>
                         </div>
-
                         <div class="row">
                             <div class="col-md-12 mb-16 mt-10 p-0 f-14">
                                 <!--                <mat-form-field>-->
@@ -123,7 +109,6 @@
                                     </span> & <span (click)="showTermsAndConditions()" class="c-p text-primary"> privacy
                                         policy </span>
                                 </mat-checkbox>
-
                                 <mat-error class="matErrorCss"
                                     *ngIf="!signUpForm.value.termsAgreement&&signUpForm.controls.termsAgreement.touched">
                                     Please accept terms and conditions
@@ -131,35 +116,33 @@
                                 <!--                </mat-form-field>-->
                             </div>
                         </div>
-
                         <div class="row">
                             <div class="col-md-12 p-0">
                                 <!-- <button (click)="createAccount()" class="  bg-primary f-16  text-white w-100 br-4 " mat-button>
-                  <img class="iconPosition mobileNone" src="assets/images/svg/login-btn-icon.svg">
-                  Create account
-                </button> -->
+                    <img class="iconPosition mobileNone" src="assets/images/svg/login-btn-icon.svg">
+                    Create account
+                    </button> -->
                                 <app-progress-button (btnClick)="createAccount()" class="w-100 br-4"
                                     [options]="barButtonOptions">
                                 </app-progress-button>
                             </div>
                         </div>
-
                         <div class="mobileCenter ds-none">
                             <h5 class="mt-20 mb-10"> Already have an account? <span [routerLink]="[ '/login']"
                                     class="text-primary c-p"> Sign in </span>
                             </h5>
                         </div>
-
                         <h5 class="mt-36 mobileNone mb-36"> Already have an account? <span [routerLink]="[ '/login']"
                                 class="text-primary c-p"> Sign in </span>
                         </h5>
                     </div>
                 </div>
             </div>
-
-            <p class="f-12 mobileNone l-18 ml-24 text-primitive">Before logging in, please ensure that the URL on the
+            <p class="f-12 mobileNone l-18 ml-24 text-primitive pr-15-992">Before logging in, please ensure that the URL
+                on the
                 address bar starts with “https” or has a padlock icon. The communication of your private information
-                from any address beginning with "https" is encrypted and secured using SSL.</p>
+                from any address beginning with "https" is encrypted and secured using SSL.
+            </p>
         </div>
     </div>
 </div>

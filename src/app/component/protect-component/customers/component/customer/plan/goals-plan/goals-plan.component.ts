@@ -313,11 +313,11 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     } else {
       const goalSubData: any = goal.multiYearGoalPlan;
       mapData.img = goalSubData.imageUrl;
-      mapData.year = (new Date(goalSubData.differentGoalYears[0]).getFullYear()) + ' - ' + (new Date(goalSubData.differentGoalYears[goalSubData.differentGoalYears.length - 1]).getFullYear());
+      mapData.year = (goalSubData.differentGoalYears) ? (new Date(goalSubData.differentGoalYears[0]).getFullYear()) + ' - ' + (new Date(goalSubData.differentGoalYears[goalSubData.differentGoalYears.length - 1]).getFullYear()):'-';
       mapData.goalName = goalSubData.name;
       mapData.gv = goalSubData.futureValue;
-      mapData.goalStartDate = goalSubData.differentGoalYears[0];
-      mapData.goalEndDate = goalSubData.differentGoalYears[goalSubData.differentGoalYears.length - 1];
+      mapData.goalStartDate =goalSubData.differentGoalYears? goalSubData.differentGoalYears[0]:'-';
+      mapData.goalEndDate = goalSubData.differentGoalYears ?goalSubData.differentGoalYears[goalSubData.differentGoalYears.length - 1]:0;
       mapData.dashboardData = {
         goalYear: new Date(goalSubData.goalEndDate || goalSubData.vacationEndYr).getFullYear(),
         presentValue: goalSubData.presentValue,
@@ -454,6 +454,7 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
     }
     this.dataSource = goalData.remainingData.retirementTableValue ? goalData.remainingData.retirementTableValue : [];
     this.dataSource.sort = this.sort;
+    console.log('table',this.dataSource)
     setTimeout(() => {
       this.createChart(this.selectedGoal);
     }, 100);
@@ -461,11 +462,11 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
 
   deleteGoal() {
     const dialogData = {
-      header: 'UNALLOCATE ASSET',
+      header: 'DELETE GOAL',
       body: 'Are you sure you want to delete this goal?',
       body2: 'This cannot be undone.',
       btnYes: 'CANCEL',
-      btnNo: 'UNALLOCATE',
+      btnNo: 'DELETE',
       positiveMethod: () => {
         let deleteObj = {
           goalId: this.selectedGoal.id,
