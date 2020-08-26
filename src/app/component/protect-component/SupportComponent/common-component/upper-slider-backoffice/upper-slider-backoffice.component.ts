@@ -738,6 +738,8 @@ export class UpperSliderBackofficeComponent implements OnInit {
     ];
     if (this.filteredAumListWithIsMappedToMinusOne.length !== 0) {
       const rtName = this.getRtName(this.data.rtId);
+      let calculatedUnitsTotal = 0;
+      let aumUnitsTotal = 0;
       this.filteredAumListWithIsMappedToMinusOne.forEach(element => {
         const data = [
           element.investorName ? element.investorName : '-',
@@ -753,13 +755,20 @@ export class UpperSliderBackofficeComponent implements OnInit {
           element.calculatedUnits - element.aumUnits,
           ((element.calculatedUnits * element.nav) - (element.aumUnits * element.nav)).toFixed(3)
         ];
-
+        calculatedUnitsTotal = calculatedUnitsTotal + parseFloat(element.calculatedUnits);
+        aumUnitsTotal = aumUnitsTotal + parseFloat(element.aumUnits);
         excelData.push(Object.assign(data));
       });
-      ExcelService.exportExcel(headerData, header, excelData, footer, value, this.data.clientName, this.upperHeaderName);
+      if(calculatedUnitsTotal !==0 && aumUnitsTotal !==0){
+        ExcelService.exportExcel(headerData, header, excelData, footer, value, this.data.clientName, this.upperHeaderName);
+      } else {
+        this.eventService.openSnackBar("The units RTA & units IFAnow is 0", "DISMISS");
+      }
     } else {
       if (this.didAumReportListGot && this.aumListReportValue.length !== 0) {
         const rtName = this.getRtName(this.data.rtId);
+        let calculatedUnitsTotal = 0;
+        let aumUnitsTotal = 0;
         this.aumListReportValue.forEach(element => {
           const data = [
             element.investorName ? element.investorName : '-',
@@ -776,9 +785,15 @@ export class UpperSliderBackofficeComponent implements OnInit {
             ((element.calculatedUnits * element.nav) - (element.aumUnits * element.nav)).toFixed(3)
           ];
           excelData.push(Object.assign(data));
+          calculatedUnitsTotal = calculatedUnitsTotal + parseFloat(element.calculatedUnits);
+          aumUnitsTotal = aumUnitsTotal + parseFloat(element.aumUnits);
         });
         let nameValue = + "-" + this.upperHeaderName;
-        ExcelService.exportExcel(headerData, header, excelData, footer, value, this.data.clientName, this.upperHeaderName);
+        if(calculatedUnitsTotal !==0 && aumUnitsTotal !==0){
+          ExcelService.exportExcel(headerData, header, excelData, footer, value, this.data.clientName, this.upperHeaderName);
+        } else {
+          this.eventService.openSnackBar("The units RTA & units IFAnow is 0", "DISMISS");
+        }
       } else {
         this.eventService.openSnackBar('No Aum Report List Found', 'Dismiss');
       }
