@@ -346,7 +346,7 @@ export class AddGoalsComponent implements OnInit {
 
   validateIfUserAllowedToCreateGoal(goalTypeData) {
     // family validation
-    if(goalTypeData.name == 'Marriage'){
+    if(goalTypeData.name == 'Marriage' || goalTypeData.name == 'Wealth creation'){
       let owner = this.familyList.filter((member) => goalTypeData.defaults.planningForRelative.includes(member.relationshipId));
     }else{
       let owner = this.familyList.filter((member) => goalTypeData.defaults.planningForRelative.includes(member.relationshipId));

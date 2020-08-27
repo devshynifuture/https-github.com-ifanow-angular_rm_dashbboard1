@@ -1,32 +1,24 @@
 <div class="pt-150 investoers">
-
     <div [ngClass]="{'pe-none': isLoading}" class="row ">
         <!-- <div class="col-md-4  d-flex align-items-center">
-                       <h3 class="m-0 pt-6">Investors</h3>
+        <h3 class="m-0 pt-6">Investors</h3>
         </div> -->
         <!-- <div class="col-md-4 pr-0 text-right">
-
-    <div class="form-group mb-0">
-        <mat-form-field floatLabel="never" appearance="standard">
-            <input autocomplete="off" matInput (keyup)="applyFilter($event)" placeholder="Type to filter data" class="form-control br-0">
-        </mat-form-field>
-    </div>
-</div> -->
-
-        <div *ngIf="credentialData" class="col-md-12 text-right pt-4 pb-10">
+        <div class="form-group mb-0">
+            <mat-form-field floatLabel="never" appearance="standard">
+                <input autocomplete="off" matInput (keyup)="applyFilter($event)" placeholder="Type to filter data" class="form-control br-0">
+            </mat-form-field>
+        </div>
+        </div> -->
+        <div *ngIf="credentialData" class="col-md-12 text-right pt-4 pb-10 pr-0">
             <mat-form-field appearance="standard" class=" searchInputWidth" floatLabel="never">
                 <input (keyup)="applyFilter($event)" autocomplete="off" class="form-control br-0" matInput
                     placeholder="Type to filter data">
             </mat-form-field>
-
             <!-- <input  [hidden]="true" class="uploadInput" id="file-4" type="file"> -->
             <img (click)="openPdfPopup()" *ngIf="isAdvisorSection" class="b-a p-5 c-p "
                 src="/assets/images/svg/download-black.svg">
-
-
             <!-- <img (click)="openDialog()" class="b-a p-5 c-p" src="/assets/images/svg/download-black.svg"> -->
-
-
             <img (click)="refresh(true)" class="b-a p-8 c-p" src="/assets/images/svg/reload.svg">
             <button [matMenuTriggerFor]="IINUCCMenu" class="btn-default addon ml-12 mr-12 v-middle"
                 mat-stroked-button><i class="material-icons">filter_list</i>FILTERS
@@ -43,10 +35,8 @@
                 class="btn-primary addon v-middle" mat-stroked-button> ADD
                 NEW
             </button>
-
         </div>
     </div>
-
     <div class="row">
         <div class="col-md-12 investors-transactions">
             <div [ngClass]="{'table-scroll':isLoading==false }"
@@ -121,9 +111,9 @@
                     </ng-container>
                     <ng-container matColumnDef="status" sticky>
                         <th *matHeaderCellDef class="br" mat-header-cell mat-sort-header="statusStringTemp">
-                            Status</th>
+                            Status
+                        </th>
                         <td *matCellDef="let element" class="br" mat-cell>
-
                             <div class="bar">
                                 <span class="text-success  f-400 c-p">{{element.statusStringTemp}}</span>
                             </div>
@@ -137,10 +127,10 @@
                             </div>
                             <div *ngIf="isLoading==false"><i class="material-icons c-p">
                                     more_vert
-                                </i></div>
+                                </i>
+                            </div>
                         </td>
                     </ng-container>
-
                     <tr *matHeaderRowDef="displayedColumns;sticky: true" mat-header-row></tr>
                     <tr (click)="openInvestorDetail(row)" *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
                 </table>
@@ -152,7 +142,6 @@
                 <button *ngIf="noData=='No investors found'&&isAdvisorSection" class="btn-primary addon v-middle  "
                     (click)="openNewCustomerIIN()" mat-stroked-button>
                     <!-- (click)="openTransaction()"for prod build -->
-
                     ADD NEW
                 </button>
                 <button *ngIf="noData=='No credentials found'"
@@ -163,5 +152,4 @@
             </div>
         </div>
     </div>
-
 </div>
