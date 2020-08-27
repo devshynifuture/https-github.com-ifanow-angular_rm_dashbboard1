@@ -647,7 +647,7 @@
             </i>
         </div>
     </div>
-    <div *ngIf="showRecord==false && feeCalc==false" class="row pt-72">
+    <div *ngIf="showRecord==false && feeCalc==false" class="row pt-72 pb-10">
         <div class="col-md-6 text-custom ">
             <img (click)="editInvoice()" *ngIf="storeData.isAdvisor && storeData.status != 1" class="c-p"
                 matTooltip="Edit" src="assets/images/svg/pencil.svg">
@@ -681,9 +681,7 @@
 
     <div class="row">
         <div class="col-md-12">
-
-
-            <table style="width: 100%; margin: 0px auto; border: 1px solid #dee5e7; padding: 10px; " align="center"
+             <table style="width: 100%; margin: 0px auto; border: 1px solid #dee5e7; padding: 10px; " align="center"
                 #invoiceTemplate *ngIf="showRecord==false && feeCalc==false" id="template">
                 <tr>
                     <td colspan="2" style="padding: 8px;">
