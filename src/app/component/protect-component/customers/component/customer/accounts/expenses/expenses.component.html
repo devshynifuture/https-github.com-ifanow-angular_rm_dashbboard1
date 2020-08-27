@@ -415,11 +415,11 @@
                                                 <div [ngClass]="{'bar': isLoading}">
                                                     <div class="row">
                                                             <mat-progress-bar *ngIf="isLoading==false"
-                                                            [matTooltip]="element.spentPer" mode="determinate"
-                                                            [value]="element.spentPer" class="w-20">
+                                                            [matTooltip]="element.spentPer+'%'" mode="determinate"
+                                                            [value]="element.spentPer"  [ngClass]="{'w-50': element.progressPercent > 100,'w-100': element.progressPercent < 100}">
                                                         </mat-progress-bar>
                                                         <mat-progress-bar  *ngIf="isLoading==false && element.progressPercent > 100 "
-                                                            [matTooltip]="element.budgetPer" mode="determinate"
+                                                            [matTooltip]="element.budgetPer+'%'" mode="determinate"
                                                             [value]="100" class="w-50 style1">
                                                         </mat-progress-bar>
                                                     </div>
