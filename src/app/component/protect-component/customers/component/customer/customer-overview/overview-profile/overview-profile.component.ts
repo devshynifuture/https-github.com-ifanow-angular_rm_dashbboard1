@@ -28,7 +28,7 @@ import { ClientSggestionListService } from './client-sggestion-list.service';
 export class OverviewProfileComponent implements OnInit {
   familyMemberList: any;
   selectedFamilyMember: any;
-  clientOverviewData: any = {};
+  clientOverviewData: any;
   addressList: any;
   dematList: any;
   bankList: any;
@@ -63,7 +63,7 @@ export class OverviewProfileComponent implements OnInit {
     this.clientData = AuthService.getClientData();
     this.enumDataService.getRoles();
     this.enumDataService.getProofType();
-    this.enumDataService.getBank();
+    // this.enumDataService.getBank();
     this.enumDataService.getClientRole();
     this.clientSuggeService.setEmptySuggestionList();
     this.route.queryParams.subscribe((params) => {
