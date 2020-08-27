@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UpperCustomerComponent } from '../../../common-component/upper-customer/upper-customer.component';
 import { EnumDataService } from 'src/app/services/enum-data.service';
 import { AssetValidationService } from './asset-validation.service';
+import { MfServiceService } from './mutual-fund/mf-service.service';
 
 @Component({
   selector: 'app-assets',
@@ -46,7 +47,8 @@ export class AssetsComponent implements OnInit {
     private cusService: CustomerService,
     private route: ActivatedRoute,
     private assetValidation: AssetValidationService,
-    private router: Router, private enumDataService: EnumDataService) {
+    private router: Router, private enumDataService: EnumDataService,
+    private mfService:MfServiceService) {
   }
 
   close() {
@@ -131,14 +133,29 @@ export class AssetsComponent implements OnInit {
     // this.getAssetCountGLobalData();
     // this.stateOfPanel.mode = 'over';
     // this.stateOfPanel.mode = 'side';
+    this.mfService.getViewMode()
+    .subscribe(data => {
+      if (data == 'Capital Gains' || data == 'Unrealized Transactions') {
+        this.sidenavState = true;
+        if (this.stateOfPanel._animationState == 'void') {
+          this.stateOfPanel.close();
+        } else {
+          this.toggleSideNav();
+        }
+      } else {
+        this.sidenavState = false;
+        this.stateOfPanel.open();
+  
+      }
+    })
     this.stateOfPanel.open();
-    // this.route.queryParams.subscribe((params) => {
-    //   if (params.tab) {
-    //     this.Settab = params.tab;
-    //     this.viewMode = this.Settab;
-    //     this.eventService.tabData('2');
-    //   }
-    // });
+    this.route.queryParams.subscribe((params) => {
+      if (params.tab) {
+        this.Settab = params.tab;
+        this.viewMode = this.Settab;
+        this.eventService.tabData('2');
+      }
+    });
     this.assetValidation.getAssetCountGLobalData()
     this.unSudcripCounts = this.assetValidation.passCounts().subscribe((data) => {
       this.getAssetCountGLobalDataRes(data)
@@ -206,7 +223,10 @@ export class AssetsComponent implements OnInit {
     this.assetSideBarData[6].count = cashAndBank;
     this.assetSideBarData[7].count = commodities;
   }
-
+  clickable(value){
+    this.sidenavState = false;
+    this.stateOfPanel.open();
+  }
   openFragment(value) {
     const fragmentData = {
       flag: value,

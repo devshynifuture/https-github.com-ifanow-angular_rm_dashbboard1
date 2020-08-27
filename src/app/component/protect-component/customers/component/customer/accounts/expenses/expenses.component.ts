@@ -48,8 +48,8 @@ export const PICK_FORMATS = {
 export class ExpensesComponent implements OnInit {
   
   reportDate;
-  // styleElement: HTMLStyleElement;
-  // colors : Array<string> = ["#FF8C00", "#00ff00"];
+  styleElement: HTMLStyleElement;
+  colors : Array<string> = ["#FF8C00", "#00ff00"];
 
   displayedColumns = ['no', 'expense', 'date', 'desc', 'mode', 'amt', 'icons'];
   displayedColumns1 = ['no', 'expense', 'date', 'desc', 'mode', 'amt','icons'];
@@ -133,8 +133,8 @@ export class ExpensesComponent implements OnInit {
   ngOnInit() {
     this.selectedPeriod = '1'
     this.viewMode = 'Transactions';
-  // this.styleElement = document.createElement('style');
-  // this.changeColors();
+  this.styleElement = document.createElement('style');
+  this.changeColors();
     this.advisorId = AuthService.getAdvisorId();
     this.clientId = AuthService.getClientId();
     this.personalProfileData = AuthService.getProfileDetails();
@@ -164,23 +164,23 @@ export class ExpensesComponent implements OnInit {
 
   //   });
   // }
-  // changeColors() {
-  //   const head = document.getElementsByTagName('head')[0];
-  //   const css = `
-  //   .style1 .mat-progress-bar-fill::after {
-  //     background-color: ${this.colors[0]} !important;
-  //   }
+  changeColors() {
+    const head = document.getElementsByTagName('head')[0];
+    const css = `
+    .style1 .mat-progress-bar-fill::after {
+      background-color: ${this.colors[0]} !important;
+    }
   
-  //   .style2 .mat-progress-bar-fill::after {
-  //     background-color: ${this.colors[1]} !important;
-  //   }
-  //   `;
-  //   this.styleElement.innerHTML = '';
-  //   this.styleElement.type = 'text/css';
-  //   this.styleElement.appendChild(document.createTextNode(css));
-  //   head.appendChild(this.styleElement);
+    .style2 .mat-progress-bar-fill::after {
+      background-color: ${this.colors[1]} !important;
+    }
+    `;
+    this.styleElement.innerHTML = '';
+    this.styleElement.type = 'text/css';
+    this.styleElement.appendChild(document.createTextNode(css));
+    head.appendChild(this.styleElement);
   
-  // }
+  }
   getExpenseGraphValue(){
     const obj = {
       advisorId: this.advisorId,

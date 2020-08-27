@@ -25,7 +25,7 @@
                         </li>
                     </ul> -->
                     <ul class="vertical-menu ">
-                        <li *ngFor="let singleAssetType of assetSideBarData"  [routerLink]="singleAssetType.link"
+                        <li *ngFor="let singleAssetType of assetSideBarData" (click)="clickable(singleAssetType)" [routerLink]="singleAssetType.link"
                              class=" c-p">
                             <div class="row">
                                 <div class="col-md-9 p-0 ws-nowrap">
@@ -101,10 +101,10 @@
                  
                 <div class="tabViewSelectMenu col-md-12 pr-8 text-right">
                     <mat-form-field>
-                        <mat-select [(ngModel)]="viewMode" class="form-control select_menu">
-                      <mat-option value="" [value]="singleAssetType.viewmode"
+                        <mat-select [(ngModel)]="viewMode"   class="form-control select_menu">
+                      <mat-option value=""  [value]="singleAssetType.viewmode"
                             *ngFor="let singleAssetType of assetSideBarData"
-                            (click)="viewMode =singleAssetType.viewmode;sidenavState = false">
+                            (click)="viewMode =singleAssetType.viewmode;sidenavState = false;">
                             {{ singleAssetType.name }}
                         </mat-option>
                     </mat-select>

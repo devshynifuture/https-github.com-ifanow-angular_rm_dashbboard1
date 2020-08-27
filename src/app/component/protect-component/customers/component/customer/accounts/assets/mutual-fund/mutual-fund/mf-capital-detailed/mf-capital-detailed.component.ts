@@ -357,7 +357,7 @@ export class MfCapitalDetailedComponent implements OnInit {
                   ele.indexGain = totalObj.indexGain;
                   ele.indexLoss = totalObj.indexLoss;
                   let purchaseTrnDate = new Date(ele.transactionDate)
-                  if(this.criteriaDate >=  purchaseTrnDate){
+                  if(category == 'EQUITY'  && this.criteriaDate >=  purchaseTrnDate){
                     ele.purchasePriceRate = (this.grandFatheringEffect) ? ele.grandFatheringPurchasePrice : ele.purchasePrice;
                     // ele.purchasePrice = (this.grandFatheringEffect) ? ele.grandFatheringPurchasePrice : ele.purchasePrice;
                     ele.purchaseAmt = (this.grandFatheringEffect) ? (ele.unit * ele.grandFatheringPurchasePrice) : ele.amount;
@@ -451,7 +451,7 @@ export class MfCapitalDetailedComponent implements OnInit {
     let indexGain;
     let indexLoss;
     let purchaseTrnDate = new Date(data.transactionDate)
-    if(this.criteriaDate >=  purchaseTrnDate){
+    if(category == 'EQUITY' && this.criteriaDate >=  purchaseTrnDate){
       gainLossBasedOnGrandfathering = 'grandFatheringGainOrLossAmount'
     }else{
       gainLossBasedOnGrandfathering = 'gainOrLossAmount'
@@ -463,8 +463,10 @@ export class MfCapitalDetailedComponent implements OnInit {
       ltGain = ((data[gainLossBasedOnGrandfathering] >= 0) ? data[gainLossBasedOnGrandfathering] : 0);
       ltLoss = ((data[gainLossBasedOnGrandfathering] < 0) ? data[gainLossBasedOnGrandfathering] : 0);
     }
-    indexGain = ((data.indexGainOrLoss >= 0) ? (data.indexGainOrLoss) : 0)
-    indexLoss = ((data.indexGainOrLoss < 0) ? (data.indexGainOrLoss) : 0)
+    if(ltGain || ltLoss){
+      indexGain = ((data.indexGainOrLoss >= 0) ? (data.indexGainOrLoss) : 0)
+      indexLoss = ((data.indexGainOrLoss < 0) ? (data.indexGainOrLoss) : 0)
+    }
 
     let obj = {
       stGain: (stGain) ? stGain : 0,

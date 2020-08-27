@@ -1,6 +1,6 @@
 <div class="myfeedWrapper">
     <div class="row">
-        <div class="col-md-3  pr-24">
+        <div class="col-md-3 col-lg-3 pr-24">
             <ul class="d-block sticky-top myFeedUi">
                 <li class="c-p" [ngClass]="{'activeClass': currentViewId == 1}" (click)="goToSectionView(60)">
                     <a class="f-14 roboto"> All feeds</a>
@@ -39,7 +39,7 @@
             </ul>
         </div>
 
-        <div class="col-md-6 mb-20 pl-10">
+        <div class="col-md-6 col-lg-6 mb-20 pl-10">
             <div class="feedInformation">
                 <div class="clientNameBox" #allFeedsSection>
                     <h3 class="m-0 roboto">{{welcomeMessage}} {{clientData.name}}</h3>
@@ -95,7 +95,7 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-md-12 md-text-center md-pt-16">
-                                            <div class="mt-40 mr-20">
+                                            <div class="loaderMargin">
                                                 <div class="relClass">
                                                     <div class="bar" [ngClass]="{'height24': isLoading}"></div>
                                                 </div>
@@ -143,7 +143,7 @@
                                 <h5 class="roboto mb-0">Asset allocation</h5>
 
                                 <div class="borderChatBoxEmpty bg-white">
-                                    <div class="row">
+                                    <div class="row column-reverse-tab">
                                         <div class="col-lg-6 col-md-12 md-text-center md-pt-16">
                                             <p>Once your data is uploaded, this chart will come to life
                                             </p>
@@ -1228,27 +1228,27 @@
             </div>
         </div>
 
-        <div class="col-md-3 pr-0  pl-30 mt-40">
+        <div class="col-md-3 col-lg-3 pr-0  pl-30 mt-40">
             <div class="sticky-top z-0">
                 <div class="mb-20">
                     <div class="row b-b pb-20" *ngIf="appearancePortfolio.advisorOrOrganisation == 2">
-                        <div class="col-md-2 p-0">
+                        <div class="col-md-3 col-lg-2 p-0">
                             <div class="advi_name">
                                 <img [src]="orgDetails.reportLogoUrl">
                             </div>
                         </div>
-                        <div class="col-md-9 pl-10 pr-0 text-left">
+                        <div class="col-md-9 col-lg-9 pl-10 pr-0 text-left">
                             <p class="text-black m-0">{{orgDetails.companyDisplayName}}</p>
                             <p class="text-custom m-0">Contact</p>
                         </div>
                     </div>
                     <div class="row b-b pb-20" *ngIf="appearancePortfolio.advisorOrOrganisation != 2">
-                        <div class="col-md-2 p-0">
+                        <div class="col-md-3 col-lg-2 p-0">
                             <div class="advi_name">
                                 <img [src]="advisorImg">
                             </div>
                         </div>
-                        <div class="col-md-9 pl-10 pr-0 text-left">
+                        <div class="col-md-9 col-lg-9 pl-10 pr-0 text-left">
                             <p class="text-black m-0">{{advisorInfo.fullName}}</p>
                             <p class="text-custom m-0">Contact</p>
                         </div>
