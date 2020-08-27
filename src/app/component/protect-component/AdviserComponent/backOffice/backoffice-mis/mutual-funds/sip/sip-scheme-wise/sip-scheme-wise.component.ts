@@ -288,7 +288,8 @@ export class SipSchemeWiseComponent implements OnInit {
     this.backoffice.addCeasedDate(obj).subscribe(
       data => {
         console.log(data);
-        investor.applicantList.splice(investor.applicantList.indexOf(sip), 1);
+        // investor.applicantList.splice(investor.applicantList.indexOf(sip), 1);
+        this.getSchemeWiseGet();
         this.eventService.openSnackBar('Cease date added successfully', 'Dismiss');
       },
       err => {

@@ -163,7 +163,8 @@
 
         </div>
         <div class="col-md-3">
-            <p class="mb-0 posP text-primary">Email will be sent to {{dataCount}} clients</p>
+            <p class="mb-0 posP text-primary">Email will be sent to {{dataCount}} <span
+                    *ngIf="dataCount==1">client</span><span *ngIf="dataCount>1">clients</span></p>
         </div>
     </div>
 

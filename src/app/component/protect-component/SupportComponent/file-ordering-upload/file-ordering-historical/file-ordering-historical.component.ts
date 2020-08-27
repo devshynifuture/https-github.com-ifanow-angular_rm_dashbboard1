@@ -243,7 +243,7 @@ export class FileOrderingHistoricalComponent implements OnInit {
 					element.advisorName = res.advisorName;
 					element.rta = this.getRtName(res.rtId);
 					element.orderedBy = res.rmName;
-					element.startedOn = res.fileOrderDateTime
+					element.startedOn = res.fileOrderDateTime;
 					element.totalFiles = res.totalFiles;
 					element.queue = res.inqueue || res.inqueue === 0 ? res.inqueue : "-";
 					element.ordering = res.orderingFrequency;
@@ -253,7 +253,6 @@ export class FileOrderingHistoricalComponent implements OnInit {
 					element.empty = res.empty ? res.empty : "-";
 					element.rtId = res.rtId;
 					element.rmId = res.rmId;
-					element.days = res.days;
 					element.arnRiaDetailId = res.arnRiaDetailId;
 					element.isLoading = false;
 				}

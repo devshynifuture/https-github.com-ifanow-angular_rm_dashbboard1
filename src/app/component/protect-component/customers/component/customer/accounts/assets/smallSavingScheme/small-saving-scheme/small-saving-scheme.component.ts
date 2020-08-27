@@ -17,6 +17,6 @@ export class SmallSavingSchemeComponent implements OnInit {
   }
 
   getAssetCountGLobalData(){
-    this.changeCount.emit("call");
+    // this.changeCount.emit("call");
   }
 }

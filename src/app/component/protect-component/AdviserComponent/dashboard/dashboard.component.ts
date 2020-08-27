@@ -1435,6 +1435,9 @@ export class DashboardComponent implements OnInit {
         if (data) {
           this.keyMetricJson.mfAum = data.totalAumRupees;
         }
+        else {
+          this.keyMetricJson.mfAum = UtilService.getNumberToWord(this.keyMetricJson.mfAum)
+        }
         this.loaderFun()
         // UtilService.getNumberToWord(this.keyMetricJson.mfAum)
         // this.getFileResponseDataForMis(data)
