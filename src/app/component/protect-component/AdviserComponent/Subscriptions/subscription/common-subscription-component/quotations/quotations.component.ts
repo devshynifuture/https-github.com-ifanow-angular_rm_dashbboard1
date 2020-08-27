@@ -43,7 +43,7 @@ export class QuotationsComponent implements OnInit {
     // );
     this.subInjectService.singleProfileData.subscribe(
       data => {
-        if (data) {
+        if (data == 'true') {
           this.getQuotationsList();
         }
       }
@@ -137,6 +137,9 @@ export class QuotationsComponent implements OnInit {
   }
 
   getQuotationsList() {
+    if (!this._clientData) {
+      return
+    }
     this.isLoading = true;
     const obj = {
       // clientId: 2970

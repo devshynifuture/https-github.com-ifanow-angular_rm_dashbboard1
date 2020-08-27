@@ -266,7 +266,7 @@ addNewNominee(data) {
             investedAmt: [element.investedOrTransactionAmount, [Validators.required]],
             scripNameId: [element.transactionTypeOrScripNameId, [Validators.required]],
             // isDeleted:[element.isDeleted],
-            id: [element.id]
+            id: [s.id]
           })
           this.HoldingArray.push(singleScripData);
         });
@@ -329,7 +329,9 @@ addNewNominee(data) {
   removeHoldings(index) {
     // this.HoldingArray.controls[index].get('isDeleted').setValue(true);
     const reControls = this.HoldingArray.controls[index];
-    this.removed.push(reControls.value);
+    if(reControls.value.id != null){
+      this.removed.push(reControls.value);
+    }
     (this.HoldingArray.length == 1) ? console.log("cannot remove") : this.HoldingArray.removeAt(index)
   }
 

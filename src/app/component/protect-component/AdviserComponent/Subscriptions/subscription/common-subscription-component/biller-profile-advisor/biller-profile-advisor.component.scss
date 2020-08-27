@@ -46,3 +46,221 @@
     .height90 {
         height: 90px;
     }
+
+    .guideBackground {
+        background: url(/assets/images/svg/guide-bg.svg) no-repeat bottom !important;
+        height: 595px;
+    }
+    
+    .headerGuideBox {
+        height: 199px;
+        position: relative;
+    }
+    
+    .headerGuidename {
+        width: calc(100% - 150px);
+        margin: 0px auto 0px;
+        position: absolute;
+        left: 0px;
+        right: 0px;
+        bottom: 15px;
+    }
+    
+    .lets-begin-guide {
+        width: 164px;
+        height: 48px;
+        font-size: 18px;
+        border-radius: 4px !important;
+    }
+    
+    .content-guide {
+        width: calc(100% - 150px);
+        margin: 20px auto 0px;
+    }
+    
+    .headerGuide {
+        width: calc(100% - 150px);
+        margin: 0px auto;
+        
+    }
+    .contentGuideBox {
+        width: calc(100% - 150px);
+        margin: 0px auto;
+    }
+    
+    #advisor-dashboard-popup {
+        .row{
+            margin-right: -15px !important;
+        margin-left: -15px !important;
+        }
+    
+        .posRelative {
+            position: relative;
+        }
+        .headerRow {
+            position: absolute;
+            bottom: 24px;
+        }
+        .rta-section { 
+          position: initial !important; 
+          padding-top: 40px;
+        }
+          .creds-section {
+            position: initial !important; 
+            padding-top: 90px;
+          }
+    
+    
+    .bg-advisor-modal {
+        background: url('/assets/images/bg-advsior-modal.png') no-repeat center;
+        background-repeat: no-repeat;
+        background-position: bottom;
+         height: 402px;
+      
+      }
+    
+      .bg-modal-height{
+        height: 402px; 
+        position: relative;
+        .bottomFooterDasb {
+            position: absolute;
+            bottom: 30px;
+            width: calc(100% - 150px);
+        }
+      }
+    
+      .boxDescribes {
+        position: relative;
+        .bottomPost {
+            position: absolute;
+            bottom: 20px;
+        }
+      
+      }
+    
+      .select-active-border {
+        border: 1px solid #83959D;
+      }
+      .imgHeight {
+          height: 180px; 
+          max-width: 100%;
+      }
+    
+      .topClickRadius {
+        .ribbon {
+            width: 85px;
+            height: 58px;
+            overflow: hidden;
+            position: absolute;
+          }
+        
+          .ribbon::before,
+          .ribbon::after {
+            position: absolute;
+            z-index: -1;
+            content: '';
+            display: block;
+            border: 5px solid #2980b9;
+          }
+        
+          .ribbon span {
+            position: absolute;
+            display: block;
+            width: 100px;
+            padding: 15px 0;
+            background-color: #C4C4C4;
+            color: #fff;
+            font: 700 18px/1 'Lato', sans-serif;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, .2);
+            text-transform: uppercase;
+            text-align: center;
+          }
+        
+          .ribbon-bottom-right {
+            top: 0px;
+            right: 0px;
+          }
+        
+          .ribbon-bottom-right::before,
+          .ribbon-bottom-right::after {
+            border-bottom-color: transparent;
+            border-right-color: transparent;
+          }
+        
+          .ribbon-bottom-right::before {
+            bottom: 0;
+            left: 0;
+            top: -6px;
+          }
+        
+          .ribbon-bottom-right::after {
+            top: 0;
+            right: 0;
+          }
+        
+          .ribbon-bottom-right span {
+            bottom: 23px;
+        transform: rotate(-144deg);
+        right: -34px;
+          }
+        
+          img {
+            position: relative;
+             top: -5px;
+            transform: rotate(152deg);
+          }
+      }
+    
+      .btnRTA {
+        display: inline-block;
+        height: 30px;
+         margin-right: 16px;
+         cursor: pointer;
+         .activeSpan {
+           border-bottom: 4px solid #008FFF;
+           color: #008FFF;
+           padding-bottom: 6px;
+         }
+          }
+    
+          
+          .image-cropper {
+            position: relative;
+        }
+        
+        .zoomClassPosition {
+            position: absolute;
+            top: 50%;
+            left: 0px;
+            right: 0px;
+            text-align: center;
+        }
+        
+        
+        
+        .textHeading {
+            text-align: right;
+        }
+        
+        .profile-img {
+          // margin-top: 12px;
+          img {
+              max-width: 100%;
+              border-radius: 50%;
+          }
+      }
+      
+    
+    
+    
+    
+       
+    }
+    
+    ::ng-deep .primaryProgress .mat-progress-bar-fill::after {
+        background-color: #008FFF;
+    }
+    
+     
+     
+    

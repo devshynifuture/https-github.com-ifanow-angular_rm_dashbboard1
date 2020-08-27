@@ -63,7 +63,7 @@ export class OverviewProfileComponent implements OnInit {
     this.clientData = AuthService.getClientData();
     this.enumDataService.getRoles();
     this.enumDataService.getProofType();
-    this.enumDataService.getBank();
+    // this.enumDataService.getBank();
     this.enumDataService.getClientRole();
     this.clientSuggeService.setEmptySuggestionList();
     this.route.queryParams.subscribe((params) => {
@@ -242,10 +242,10 @@ export class OverviewProfileComponent implements OnInit {
 
   getBankList(data) {
     this.bankFlag = true;
-    const obj = {
+    const obj = [{
       userId: data.clientId,
       userType: data.userType
-    };
+    }];
     this.cusService.getBankList(obj).subscribe(
       data => {
         this.bankFlag = false;

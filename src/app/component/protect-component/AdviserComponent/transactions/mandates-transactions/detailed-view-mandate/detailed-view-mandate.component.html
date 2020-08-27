@@ -10,8 +10,8 @@
         </div>
     </div>
 </div>
-<div class="pl-20 pr-20 pb-10 mt-20">
-    <div class="row pt-40">
+<div class="pl-20 pr-20 pb-10 pt-90">
+    <div class="row">
         <div class="col-md-12 p-0">
             <div class="insurance-ui bt">
                 <div class="row bb p-8 b-l br">
@@ -138,7 +138,9 @@
 
             <div class="row">
                 <div class="col-md-5 mb-10 p-0">
-                    <button (click)="uploadFileInput1.click()" *ngIf="details.aggregatorType==1&&details.chequeUploadFlag == 0" [disabled]="isFileUploading" class="btnConfirm bg-primary text-white" mat-button>
+                    <button (click)="uploadFileInput1.click()"
+                        *ngIf="details.aggregatorType==1&&details.chequeUploadFlag == 0" [disabled]="isFileUploading"
+                        class="btnConfirm bg-primary text-white" mat-button>
                         Upload Cheque
                         <input #uploadFileInput1 (change)="getFileDetails($event,4)" class="uploadInput" id="file-4"
                             type="file">
@@ -160,7 +162,9 @@
 
             <div class="row">
                 <div class="col-md-5 p-0">
-                    <button *ngIf="details.formUploadFlag == 0 && details.status != 0" (click)="uploadFileInput2.click()" [disabled]="isFileUploading" class="btnConfirm bg-primary text-white" mat-button>
+                    <button *ngIf="details.formUploadFlag == 0 && details.status != 0"
+                        (click)="uploadFileInput2.click()" [disabled]="isFileUploading"
+                        class="btnConfirm bg-primary text-white" mat-button>
                         Upload mandate form
                         <input #uploadFileInput2 (change)="getFileDetails($event,2)" class="uploadInput" id="file-4"
                             type="file">

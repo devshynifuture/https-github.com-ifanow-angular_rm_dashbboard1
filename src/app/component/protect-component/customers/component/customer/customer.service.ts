@@ -888,11 +888,17 @@ export class CustomerService {
     return this.http.getEncoded(apiConfig.USER + appConfig.GET_DEMAT_LIST, data, 1)
   }
 
+  // getBankList(data) {
+  //   return this.http.getEncoded(apiConfig.USER + appConfig.GET_BANK_LIST, data, 1)
+  // }
+
   getBankList(data) {
+    console.log('limitedBanks',data);
     return this.http.getEncoded(apiConfig.USER + appConfig.GET_BANK_LIST, data, 1)
   }
 
   getclientFamilybankList(data) {
+    console.log('allbanks',data);
     return this.http.getEncoded(apiConfig.USER + appConfig.GET_CLIENT_FEMILY_BANK_LIST, data, 1)
   }
 

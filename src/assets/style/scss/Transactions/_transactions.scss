@@ -155,3 +155,9 @@
 
 
 }
+
+@media(max-width:992px) {
+  .investors-transactions .investors-transactions-scroll {
+    height: auto !important;
+  }
+}

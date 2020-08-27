@@ -89,16 +89,23 @@ export class EnumDataService {
   userData: any;
 
   clientFamilybankList: any = [];
-
+getAll:boolean;
   getAccountList(userData) {
     const self = this;
+    self.getAll = false;
     if (userData != null) {
       self.userData = userData;
     }
+
+    userData.forEach(u => {
+      if (u.familyMemberAge < 18) {
+        self.getAll = true;
+      }
+    });
     return new Promise(function(resolve, reject) {
       // this.advisorId = AuthService.getAdvisorId();
       // this.clientData = AuthService.getClientData();
-      if (userData[0].familyMemberAge < 18) {
+      if ( self.getAll) {
         // let self = this;
       self.clientData = AuthService.getClientData();
       const obj = {
@@ -114,10 +121,15 @@ export class EnumDataService {
           reject('failed');
         });
       } else {
-        const obj = {
-          userId: self.userData[0].id == 0 ? self.userData[0].clientId : self.userData[0].id,
-          userType: self.userData[0].userType
-        };
+        let obj = [];
+        userData.forEach(u => {
+         let user =  {
+            userId: u.id == 0 ? u.clientId : u.id,
+            userType: u.userType
+          };
+          obj.push(user);
+        });
+        
         self.custumService.getBankList(obj).subscribe(
           (data) => {
             self.bankList = data;

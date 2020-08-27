@@ -469,8 +469,9 @@ export class GoalsPlanComponent implements OnInit, OnDestroy {
       btnNo: 'DELETE',
       positiveMethod: () => {
         let deleteObj = {
-          goalId: this.selectedGoal.id,
-          goalType: this.selectedGoal.goalType
+          goalId: this.selectedGoalId,
+          goalType: this.selectedGoal.goalType,
+          id:this.selectedGoal.id
         }
         this.plansService.deleteGoal(deleteObj).subscribe((data) => {
           this.eventService.openSnackBar("Goal has been deleted successfully", "Dismiss");

@@ -29,8 +29,8 @@ export class AssetValidationService {
 
   getAssetCountGLobalData() {
     const obj = {
-      advisorId: this.advisorId,
-      clientId: this.clientId
+      advisorId:  AuthService.getAdvisorId(),
+      clientId: AuthService.getClientId() !== undefined ? AuthService.getClientId() : -1
     };
     this.cusService.getAssetCountGlobalData(obj).subscribe(
       (data) => {
