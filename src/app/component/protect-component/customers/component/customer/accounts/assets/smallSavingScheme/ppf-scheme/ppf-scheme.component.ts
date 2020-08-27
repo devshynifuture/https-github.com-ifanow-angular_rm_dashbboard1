@@ -13,6 +13,7 @@ import { PdfGenService } from 'src/app/services/pdf-gen.service';
 import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { FileUploadServiceService } from '../../file-upload-service.service';
 import { BottomSheetComponent } from '../../../../../common-component/bottom-sheet/bottom-sheet.component';
+import { AssetValidationService } from '../../asset-validation.service';
 
 @Component({
   selector: 'app-ppf-scheme',
@@ -40,7 +41,8 @@ export class PPFSchemeComponent implements OnInit {
   constructor(private excel:ExcelGenService,  private pdfGen:PdfGenService,
     private fileUpload : FileUploadServiceService,
     private _bottomSheet : MatBottomSheet,
-    public dialog: MatDialog, private cusService: CustomerService, 
+    public dialog: MatDialog, private cusService: CustomerService,
+    private assetValidation: AssetValidationService,
     private eventService: EventService, private subInjectService: SubscriptionInject) { 
 
       this.clientData = AuthService.getClientData()
@@ -107,7 +109,7 @@ export class PPFSchemeComponent implements OnInit {
     this.isLoading = false;
     if (data != undefined) {
       if (data.assetList) {
-        this.changeCount.emit("call");
+        this.assetValidation.getAssetCountGLobalData();
         console.log('getPpfSchemeDataResponse', data);
         this.dataSource.data = data.assetList;
         this.dataSource.sort = this.sort;

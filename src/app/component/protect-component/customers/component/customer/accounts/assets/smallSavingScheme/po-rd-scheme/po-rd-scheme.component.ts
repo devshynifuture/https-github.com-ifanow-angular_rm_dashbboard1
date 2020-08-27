@@ -15,6 +15,7 @@ import { PdfGenService } from 'src/app/services/pdf-gen.service';
 import { DatePipe } from '@angular/common';
 import { FileUploadServiceService } from '../../file-upload-service.service';
 import { BottomSheetComponent } from '../../../../../common-component/bottom-sheet/bottom-sheet.component';
+import { AssetValidationService } from '../../asset-validation.service';
 
 @Component({
   selector: 'app-po-rd-scheme',
@@ -47,6 +48,7 @@ export class PoRdSchemeComponent implements OnInit {
   constructor(private excel:ExcelGenService, 
     private fileUpload : FileUploadServiceService,
     private _bottomSheet : MatBottomSheet,
+    private assetValidation: AssetValidationService,
     private datePipe: DatePipe,  private pdfGen:PdfGenService, public dialog: MatDialog, private eventService: EventService,
     private cusService: CustomerService, private subInjectService: SubscriptionInject) {
       this.clientData = AuthService.getClientData()
@@ -144,7 +146,7 @@ export class PoRdSchemeComponent implements OnInit {
     this.isLoading = false;
     if (data != undefined) {
       if (data.assetList) {
-        this.changeCount.emit("call");
+        this.assetValidation.getAssetCountGLobalData();
         console.log('getPoRdSchemedataResponse :::::::::::::::', data);
         this.dataSource.data = data.assetList;
         this.dataSource.sort = this.sort;

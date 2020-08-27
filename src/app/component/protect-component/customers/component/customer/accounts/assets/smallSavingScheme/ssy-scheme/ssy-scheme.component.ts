@@ -14,6 +14,7 @@ import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
 import { FileUploadServiceService } from '../../file-upload-service.service';
 import { BottomSheetComponent } from '../../../../../common-component/bottom-sheet/bottom-sheet.component';
+import { AssetValidationService } from '../../asset-validation.service';
 
 @Component({
   selector: 'app-ssy-scheme',
@@ -48,6 +49,7 @@ export class SsySchemeComponent implements OnInit {
     private fileUpload: FileUploadServiceService,
     private cusService: CustomerService,
     private _bottomSheet : MatBottomSheet,
+    private assetValidation: AssetValidationService,
      private subInjectService: SubscriptionInject,
     private eventService: EventService) {
     this.clientData = AuthService.getClientData()
@@ -140,7 +142,7 @@ export class SsySchemeComponent implements OnInit {
     this.isLoading = false;
     if (data != undefined) {
       if (data.assetList) {
-        this.changeCount.emit("call");
+        this.assetValidation.getAssetCountGLobalData();
         console.log('getSsySchemedataResponse', data);
         this.datasource.data = data.assetList;
         this.datasource.sort = this.sort;

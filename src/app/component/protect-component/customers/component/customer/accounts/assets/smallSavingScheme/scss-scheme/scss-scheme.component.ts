@@ -15,6 +15,7 @@ import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
 import { FileUploadServiceService } from '../../file-upload-service.service';
 import { BottomSheetComponent } from '../../../../../common-component/bottom-sheet/bottom-sheet.component';
+import { AssetValidationService } from '../../asset-validation.service';
 
 @Component({
   selector: 'app-scss-scheme',
@@ -51,7 +52,8 @@ export class ScssSchemeComponent implements OnInit {
   constructor(private excel:ExcelGenService, 
     private fileUpload : FileUploadServiceService,
     private _bottomSheet : MatBottomSheet,
-     private pdfGen:PdfGenService, public dialog: MatDialog, 
+     private pdfGen:PdfGenService, public dialog: MatDialog,
+     private assetValidation: AssetValidationService, 
      private eventService: EventService, private cusService: CustomerService, 
      private subInjectService: SubscriptionInject) {
       this.clientData = AuthService.getClientData()
@@ -183,7 +185,7 @@ export class ScssSchemeComponent implements OnInit {
     this.isLoading = false;
     if (data != undefined) {
       if (data.assetList) {
-        this.changeCount.emit("call");
+        this.assetValidation.getAssetCountGLobalData();
         console.log('getKvpSchemedataResponse', data);
         this.datasource.data = data.assetList;
         this.datasource.sort = this.sort;

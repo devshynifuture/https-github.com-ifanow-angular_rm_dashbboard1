@@ -14,6 +14,7 @@ import { ExcelGenService } from 'src/app/services/excel-gen.service';
 import { PdfGenService } from 'src/app/services/pdf-gen.service';
 import { FileUploadServiceService } from '../../file-upload-service.service';
 import { BottomSheetComponent } from '../../../../../common-component/bottom-sheet/bottom-sheet.component';
+import { AssetValidationService } from '../../asset-validation.service';
 
 @Component({
   selector: 'app-po-td-scheme',
@@ -47,6 +48,7 @@ export class PoTdSchemeComponent implements OnInit {
     private fileUpload : FileUploadServiceService,
     private eventService: EventService,
     private cusService: CustomerService,
+    private assetValidation: AssetValidationService,
     private _bottomSheet : MatBottomSheet,
     private subInjectService: SubscriptionInject) {
       this.clientData = AuthService.getClientData()
@@ -141,7 +143,7 @@ export class PoTdSchemeComponent implements OnInit {
     this.isLoading = false;
     if (data != undefined) {
       if (data.assetList) {
-        this.changeCount.emit("call");
+        this.assetValidation.getAssetCountGLobalData();
         console.log('getPoTdSchemedataResponse', data);
         this.dataSource.data = data.assetList;
         this.dataSource.sort = this.sort;

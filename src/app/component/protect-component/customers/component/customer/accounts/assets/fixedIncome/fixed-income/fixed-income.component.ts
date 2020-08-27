@@ -270,7 +270,7 @@ export class FixedIncomeComponent implements OnInit {
     this.isLoading = false;
     if (data != undefined) {
       if (data.assetList) {
-         this.assetValidation.getAssetCountGLobalData()
+         this.assetValidation.getAssetCountGLobalData();
 
         console.log('getBondsRes ******** ', data);
         this.dataList = data.assetList;
