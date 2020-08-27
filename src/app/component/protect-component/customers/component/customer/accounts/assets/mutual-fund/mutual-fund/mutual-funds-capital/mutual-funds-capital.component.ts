@@ -504,8 +504,10 @@ export class MutualFundsCapitalComponent implements OnInit {
         ltGain += ((element[gainLossBasedOnGrandfathering] >= 0) ? element[gainLossBasedOnGrandfathering] : 0);
         ltLoss += ((element[gainLossBasedOnGrandfathering] < 0) ? element[gainLossBasedOnGrandfathering] : 0);
       }
-      indexGain += ((element.indexGainOrLoss >= 0) ? (element.indexGainOrLoss) : 0)
-      indexLoss += ((element.indexGainOrLoss < 0) ? (element.indexGainOrLoss) : 0)
+      if(ltGain || ltLoss){
+        indexGain = ((data.indexGainOrLoss >= 0) ? (data.indexGainOrLoss) : 0)
+        indexLoss = ((data.indexGainOrLoss < 0) ? (data.indexGainOrLoss) : 0)
+      }
     });
     let obj = {
       stGain: stGain,

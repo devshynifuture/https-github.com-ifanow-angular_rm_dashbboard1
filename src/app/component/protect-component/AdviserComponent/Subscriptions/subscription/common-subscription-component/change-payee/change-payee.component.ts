@@ -33,7 +33,7 @@ export class ChangePayeeComponent implements OnInit {
     //   fontIcon: 'favorite'
     // }
   }
-  payeeDataRes: any=[];
+  payeeDataRes: any = [];
   noDataMessage: string;
   @Output() subStartNextBtn = new EventEmitter();
   // @Input() set upperData(data) {
@@ -42,26 +42,26 @@ export class ChangePayeeComponent implements OnInit {
   //   }
 
   // }
-  clientData:any;
+  clientData: any;
   @Input()
   set data(payeeData) {
-    if(payeeData != undefined){
+    if (payeeData != undefined) {
       this.isLoading = true;
-        this.payeeDataRes = [{},{}];
-      if(payeeData.id == undefined){
+      this.payeeDataRes = [{}, {}];
+      if (payeeData.id == undefined) {
         if (payeeData.length == 1) {
           payeeData[0].share = 100
           payeeData[0].selected = 1
           this.subStartNextBtn.emit(payeeData[0])
-          
+
         }
         this.payeeDataRes = payeeData;
         this.isLoading = false;
 
       }
-      else{
+      else {
         this.isLoading = true;
-        this.payeeDataRes = [{},{}];
+        this.payeeDataRes = [{}, {}];
         this.clientData = payeeData;
       }
     }
@@ -94,19 +94,19 @@ export class ChangePayeeComponent implements OnInit {
   arraTosend: any;
   dataMatSlider: any;
   clickedOnMatSlider = false;
-  isLoading:boolean =false;
+  isLoading: boolean = false;
   totalValue = 0;
 
   ngOnInit() {
-    if(this.clientData != undefined){
-     this.getPayeeData(this.clientData);
-     
+    if (this.clientData != undefined) {
+      this.getPayeeData(this.clientData);
+
     }
   }
 
   Close(flag) {
-    this.subInjectService.changeUpperRightSliderState({ state: 'close',refreshRequired:flag });
-    this.subInjectService.changeNewRightSliderState({ state: 'close',refreshRequired:flag });
+    this.subInjectService.changeUpperRightSliderState({ state: 'close', refreshRequired: flag });
+    this.subInjectService.changeNewRightSliderState({ state: 'close', refreshRequired: flag });
   }
   getPayeeData(data) {
     this.getRowData = data;
@@ -145,10 +145,10 @@ export class ChangePayeeComponent implements OnInit {
   }
 
   saveChangePayeeSetting() {
-    if(this.totalValue!=100){
+    if (this.totalValue != 100) {
       this.eventService.openSnackBar('Total spliting ratio of selected payee should be equal to 100%', 'Dismiss')
     }
-    else{
+    else {
       this.barButtonOptions.active = true;
       const obj = [];
       this.payeeDataRes.forEach(element => {
@@ -162,11 +162,11 @@ export class ChangePayeeComponent implements OnInit {
         }
       });
       this.subService.changePayeeSetting(obj).subscribe(
-        data =>{
+        data => {
           this.barButtonOptions.active = false;
           this.changePayeeSettingRes(data);
         },
-        err =>{
+        err => {
           this.barButtonOptions.active = false;
         }
       );
@@ -185,18 +185,46 @@ export class ChangePayeeComponent implements OnInit {
       this.clickedOnMatSlider = false;
       return;
     }
-    (data == 1) ? singlePlan.selected = 0 : singlePlan.selected = 1;
-    this.calculateMaxValue(this.payeeDataRes);
+    if (data == 1) {
+      singlePlan.selected = 0
+      singlePlan.share = 0;
+    }
+    else {
+      singlePlan.selected = 1;
+    }
+    // this.calculateMaxValue(this.payeeDataRes);
+    this.equalPercentage(singlePlan)
+  }
+
+  equalPercentage(singlePayee) {
+    let count = 0;
+    if (this.payeeDataRes.length == 1) {
+      singlePayee.share = 100;
+    }
+    else {
+      this.payeeDataRes.forEach(element => {
+        if (element.selected) {
+          count++;
+        }
+      });
+      this.payeeDataRes.forEach((element, index) => {
+        if (element.selected) {
+          element.share = Math.round(100 / count)
+        }
+      });
+    }
+    this.outputData.emit(this.payeeDataRes);
+
   }
 
   matSliderOnChange(data, singlePlan, value) {
     this.clickedOnMatSlider = true;
-    if (data == 1) {
-      singlePlan.selected = 0;
-    } else {
-      singlePlan.selected = 1;
-    }
-    this.calculateMaxValue(this.payeeDataRes);
+    // if (data == 1) {
+    //   singlePlan.selected = 0;
+    // } else {
+    //   singlePlan.selected = 1;
+    // }
+    this.calculateMaxValue(this.payeeDataRes, singlePlan);
   }
 
   openPayeeSettings(profileData, value, state) {
@@ -221,23 +249,42 @@ export class ChangePayeeComponent implements OnInit {
     this.payeeFlag.emit(true);
   }
 
-  calculateMaxValue(data) {
+  calculateMaxValue(data, singlePlan) {
     this.totalValue = 0;
+    let selectedCount = 0
     data.forEach(singlePayee => {
       if (singlePayee.selected == 1) {
+        selectedCount++;
+      }
+    });
+    if (this.totalValue != 100) {
+      data.forEach(element => {
+        if (element.id != singlePlan.id && element.selected == 1) {
+          if (selectedCount == 2) {
+            element.share = 100 - singlePlan.share
+          }
+          else {
+            const divisor = selectedCount - 1
+            element.share = (100 - singlePlan.share)
+            element.share = Math.round(element.share / divisor)
+          }
+        }
+      });
+    }
+
+    data.forEach(singlePayee => {
+      if (singlePayee.selected == 1) {
+        selectedCount++;
         const tempValue = this.totalValue + singlePayee.share;
         if (tempValue >= 100) {
           singlePayee.share = 100 - this.totalValue;
-          if(singlePayee.share == 0 ){
-            singlePayee.selected=false;
+          if (singlePayee.share == 0) {
+            singlePayee.selected = false;
           }
           this.totalValue = 100;
         } else {
           this.totalValue = tempValue;
         }
-        // if (singlePayee.share == 0) {
-        //   singlePayee.selected = 0;
-        // }
       }
     });
 
