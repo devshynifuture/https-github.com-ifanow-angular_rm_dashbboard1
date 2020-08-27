@@ -28,7 +28,7 @@ import { ClientSggestionListService } from './client-sggestion-list.service';
 export class OverviewProfileComponent implements OnInit {
   familyMemberList: any;
   selectedFamilyMember: any;
-  clientOverviewData: any;
+  clientOverviewData: any = {};
   addressList: any;
   dematList: any;
   bankList: any;
@@ -242,10 +242,10 @@ export class OverviewProfileComponent implements OnInit {
 
   getBankList(data) {
     this.bankFlag = true;
-    const obj = {
+    const obj = [{
       userId: data.clientId,
       userType: data.userType
-    };
+    }];
     this.cusService.getBankList(obj).subscribe(
       data => {
         this.bankFlag = false;
