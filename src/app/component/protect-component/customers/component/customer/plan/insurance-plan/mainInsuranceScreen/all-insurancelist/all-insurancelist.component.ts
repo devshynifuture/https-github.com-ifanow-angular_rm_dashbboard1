@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
 import { EventService } from 'src/app/Data-service/event.service';
 import { AddNewInsuranceComponent } from '../../add-new-insurance/add-new-insurance.component';
-import { UtilService } from 'src/app/services/util.service';
+import { UtilService, LoaderFunction } from 'src/app/services/util.service';
 import { AddPlaninsuranceComponent } from '../../add-planinsurance/add-planinsurance.component';
 import { AddInsurancePlanningComponent } from '../../add-insurance-planning/add-insurance-planning.component';
 import { AddInsuranceUpperComponent } from '../../add-insurance-upper/add-insurance-upper.component';
@@ -26,7 +26,7 @@ export class AllInsurancelistComponent implements OnInit {
   displayedColumns2 = ['name', 'annual', 'amt', 'icons'];
   dataSource2 = ELEMENT_DATA2;
   dataSource: any = new MatTableDataSource();
-
+  insurancePlanningList=[{},{},{}]
   insuranceList = [{
     heading: 'Life insurance',
     logo: '/assets/images/svg/LIsmall.svg',
@@ -59,15 +59,15 @@ export class AllInsurancelistComponent implements OnInit {
   showIsurance: boolean = true; //page initial loads blank ..
   constructor(private subInjectService: SubscriptionInject,
     private planService: PlanService,
-    private eventService: EventService) {
+    private eventService: EventService,) {
     this.advisorId = AuthService.getAdvisorId()
     this.clientId = AuthService.getClientId()
   }
 
   isLoading = true;
-
+  isLoadingPlan = false;
   ngOnInit() {
-    this.detailsInsurance = {}
+    // this.detailsInsurance = {}
     this.getInsuranceList()
   }
   openDetailsInsurance(insurance) {
@@ -81,12 +81,14 @@ export class AllInsurancelistComponent implements OnInit {
       advisorId: this.advisorId
     }
     this.loader(1);
+    this.isLoadingPlan = true;
     this.planService.getInsurancePlaningList(obj).subscribe(
       data => this.getInsurancePlaningListRes(data),
       err => {
         this.eventService.openSnackBar(err, 'Dismiss');
         this.insuranceLoader = true;
-        // this.showIsurance = false
+        this.isLoadingPlan = false;
+         this.showIsurance = false
          this.loader(-1);
       }
     );
@@ -97,37 +99,43 @@ export class AllInsurancelistComponent implements OnInit {
     }
   }
   getInsurancePlaningListRes(data) {
+    this.isLoadingPlan = false;
     this.loader(-1);
-    console.log('incurance list', data)
-    this.dataSource = data
-    this.dataSource.forEach(element => {
-      if (element.insuranceType == 1) {
-        element.heading = 'Life insurance'
-        element.logo = '/assets/images/svg/LIsmall.svg'
-      } else if (element.insuranceType == 5) {
-        element.heading = 'Health insurance'
-        element.logo = '/assets/images/svg/HIsmall.svg'
-      } else if (element.insuranceType == 6) {
-        element.heading = 'Critical illness'
-        element.logo = '/assets/images/svg/CIsmall.svg'
-      } else if (element.insuranceType == 4) {
-        element.heading = 'Cancer care'
-        element.logo = '/assets/images/svg/CCsmall.svg'
-      } else if (element.insuranceType == 10) {
-        element.heading = 'Fire insurance'
-        element.logo = '/assets/images/svg/FIsmall.svg'
-      } else if (element.insuranceType = 11) {
-        element.heading = 'Householders'
-        element.logo = '/assets/images/svg/Hsmall.svg'
-      } else if (element.insuranceType = 7) {
-        element.heading = 'Personal accident'
-        element.logo = '/assets/images/svg/PAsmall.svg'
-      }
-    });
-    console.log(this.dataSource)
-    this.insuranceList = this.dataSource
-    this.detailsInsurance = this.insuranceList[0]
-    this.showIsurance = true;
+    if(data.length > 0){
+      console.log('incurance list', data)
+      this.dataSource = data
+      this.dataSource.forEach(element => {
+        if (element.insuranceType == 1) {
+          element.heading = 'Life insurance'
+          element.logo = '/assets/images/svg/LIsmall.svg'
+        } else if (element.insuranceType == 5) {
+          element.heading = 'Health insurance'
+          element.logo = '/assets/images/svg/HIsmall.svg'
+        } else if (element.insuranceType == 6) {
+          element.heading = 'Critical illness'
+          element.logo = '/assets/images/svg/CIsmall.svg'
+        } else if (element.insuranceType == 4) {
+          element.heading = 'Cancer care'
+          element.logo = '/assets/images/svg/CCsmall.svg'
+        } else if (element.insuranceType == 10) {
+          element.heading = 'Fire insurance'
+          element.logo = '/assets/images/svg/FIsmall.svg'
+        } else if (element.insuranceType = 11) {
+          element.heading = 'Householders'
+          element.logo = '/assets/images/svg/Hsmall.svg'
+        } else if (element.insuranceType = 7) {
+          element.heading = 'Personal accident'
+          element.logo = '/assets/images/svg/PAsmall.svg'
+        }
+      });
+      console.log(this.dataSource)
+      this.insuranceList = this.dataSource
+      this.insurancePlanningList =this.dataSource
+      this.detailsInsurance = this.insuranceList[0]
+      this.showIsurance = true;
+    }else{
+      this.showIsurance = false;
+    }
   }
   loader(increamenter) {
     this.counter += increamenter;

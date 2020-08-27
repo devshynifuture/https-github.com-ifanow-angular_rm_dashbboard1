@@ -84,13 +84,15 @@ export class LifeInsuranceComponent implements OnInit {
   }
 
   setDetails(data) {
-    this.getData = data
-    this.setLogo.forEach(element => {
+    if(this.inputData){
+      this.getData = data
+      this.setLogo.forEach(element => {
       if (element.heading == data.heading) {
         this.logo = element.logo
       }
     });
-    this.getDetailsInsurance()
+      this.getDetailsInsurance()
+    }
   }
   deleteInsurance() {
     const dialogData = {
@@ -100,10 +102,7 @@ export class LifeInsuranceComponent implements OnInit {
       btnYes: 'CANCEL',
       btnNo: 'DELETE',
       positiveMethod: () => {
-        let deleteObj = {
-          id:this.inputData.id
-        }
-        this.planService.deleteInsurancePlanning(deleteObj).subscribe((data) => {
+        this.planService.deleteInsurancePlanning(this.inputData.id).subscribe((data) => {
           this.eventService.openSnackBar("insurance has been deleted successfully", "Dismiss");
           this.outputChange.emit(true);
           dialogRef.close()

@@ -17,23 +17,33 @@
 
 
             <!-- Life insurance - Rahul Jain -->
-            <div class="mt-70 leftScroll">
-                <div class="row pt-10 " *ngFor="let insurance of insuranceList">
-                    <div class="col-md-12 p-0 c-p ba-2x br-4 h-105 overflow-hidden" (click)="openDetailsInsurance(insurance)">
-                        <div class="bg-grey lter p-8">
-                            <p class="m-0 f-500 roboto">{{insurance.heading}}</p>
-                            <div class="row pt-4">
-                                <div class="col-md-3 p-0">
-                                    <img src={{insurance.logo}}>
-                                </div>
-                                <div class="col-md-9 pl-10 pr-0">
-                                    <p class="m-0 text-black roboto">{{insurance.holderName}}</p>
-                                    <p class="m-0 text-black roboto pt-16"><span class="f-500">Advice: </span> {{insurance.adviceAmount}}
-                                    </p>
+            <div class="mt-70 leftScroll " >
+                <div class="row pt-10 skeletonAnimation" *ngFor="let insurance of insurancePlanningList" appSkeletonLoading [appSkeletonLoading]="isLoadingPlan">
+                    <div  *ngIf="!isLoadingPlan" class="col-md-12 p-0 c-p ba-2x br-4 h-105 overflow-hidden" (click)="openDetailsInsurance(insurance)">
+                            <div class="bg-grey lter p-8">
+                                <p class="m-0 f-500 roboto">{{insurance.heading}}</p>
+                                <div class="row pt-4">
+                                    <div class="col-md-3 p-0">
+                                        <img src={{insurance.logo}}>
+                                    </div>
+                                    <div class="col-md-9 pl-10 pr-0">
+                                        <p class="m-0 text-black roboto">{{insurance.holderName}}</p>
+                                        <p class="m-0 text-black roboto pt-16"><span class="f-500">Advice: </span> {{insurance.adviceAmount}}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+
+                        <div *ngIf="isLoadingPlan" class="col-md-12 p-0 c-p  h-105 overflow-hidden">
+                                <div class="relClass">
+                                    <div class="bar82" [ngClass]="{'height105': isLoadingPlan}">
+        
+                                    </div>
+                                </div>
+                            </div>
+                       
+                    
                 </div>
             </div>
 
