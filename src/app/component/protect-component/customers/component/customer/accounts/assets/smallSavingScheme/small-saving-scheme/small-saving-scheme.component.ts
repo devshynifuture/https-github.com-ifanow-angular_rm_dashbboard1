@@ -16,7 +16,7 @@ export class SmallSavingSchemeComponent implements OnInit {
     this.selectedTab = 1;
   }
 
-  // getAssetCountGLobalData(){
-  //   this.changeCount.emit("call");
-  // }
+  getAssetCountGLobalData(){
+    // this.changeCount.emit("call");
+  }
 }
