@@ -55,7 +55,8 @@ export class AllInsurancelistComponent implements OnInit {
   insuranceLoader: boolean;
   counter: any;
   data: Array<any> = [{}, {}, {}];
-  showIsurance: boolean = false;
+  // showIsurance: boolean = false;
+  showIsurance: boolean = true; //page initial loads blank ..
   constructor(private subInjectService: SubscriptionInject,
     private planService: PlanService,
     private eventService: EventService) {
@@ -85,9 +86,15 @@ export class AllInsurancelistComponent implements OnInit {
       err => {
         this.eventService.openSnackBar(err, 'Dismiss');
         this.insuranceLoader = true;
-        this.loader(-1);
+        // this.showIsurance = false
+         this.loader(-1);
       }
     );
+  }
+  getOutput(value){
+    if(value){
+      this.getInsuranceList()
+    }
   }
   getInsurancePlaningListRes(data) {
     this.loader(-1);

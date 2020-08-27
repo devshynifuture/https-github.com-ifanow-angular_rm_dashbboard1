@@ -42,7 +42,17 @@
 
         <!-- Life insurance - Rahul Jain -->
         
-            <app-life-insurance class="col-width-79 pb-44" [data]='detailsInsurance'></app-life-insurance>
+            <app-life-insurance class="col-width-79 pb-44" [data]='detailsInsurance' (outputChange)="getOutput($event)"></app-life-insurance>
         
+    </div>
+    <div *ngIf="!showIsurance" class="row pt-70">
+        <div class="d-flex align-items-center col-md-12 flex-column justify-content-center">
+            <img src="assets/images/svg/documents-empty-states.svg">
+            <h4 class="text-center mt-12 mb-20">No Data Found</h4>
+            <button (click)="openUpperInsurance('open70')" class="btn-primary addon v-middle" mat-stroked-button>ADD
+                NEW
+            </button>
+        </div>
+
     </div>
 </div>

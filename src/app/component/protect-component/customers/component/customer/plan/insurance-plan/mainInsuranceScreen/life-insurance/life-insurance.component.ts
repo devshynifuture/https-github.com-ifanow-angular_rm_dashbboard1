@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { AddPlaninsuranceComponent } from '../../add-planinsurance/add-planinsurance.component';
 import { UtilService } from 'src/app/services/util.service';
 import { SubscriptionInject } from 'src/app/component/protect-component/AdviserComponent/Subscriptions/subscription-inject.service';
@@ -8,6 +8,8 @@ import { AddSuggestPolicyComponent } from '../../add-suggest-policy/add-suggest-
 import { AddRecommendationsInsuComponent } from '../../add-recommendations-insu/add-recommendations-insu.component';
 import { PlanService } from '../../../plan.service';
 import { AuthService } from 'src/app/auth-service/authService';
+import { ConfirmDialogComponent } from 'src/app/component/protect-component/common-component/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-life-insurance',
@@ -56,11 +58,13 @@ export class LifeInsuranceComponent implements OnInit {
   counter: any;
   isLoading: boolean;
   insuranceDetails: any;
+  @Output() outputChange = new EventEmitter<any>();
   constructor(private subInjectService: SubscriptionInject, 
     private custumService: CustomerService, 
     private utils: UtilService,
     private eventService: EventService,
     private planService :  PlanService,
+    private dialog: MatDialog,
     ) { 
       this.advisorId = AuthService.getAdvisorId();
       this.clientId = AuthService.getClientId();
@@ -87,6 +91,33 @@ export class LifeInsuranceComponent implements OnInit {
       }
     });
     this.getDetailsInsurance()
+  }
+  deleteInsurance() {
+    const dialogData = {
+      header: 'DELETE INSURANCE',
+      body: 'Are you sure you want to delete this insurance?',
+      body2: 'This cannot be undone.',
+      btnYes: 'CANCEL',
+      btnNo: 'DELETE',
+      positiveMethod: () => {
+        let deleteObj = {
+          id:this.inputData.id
+        }
+        this.planService.deleteInsurancePlanning(deleteObj).subscribe((data) => {
+          this.eventService.openSnackBar("insurance has been deleted successfully", "Dismiss");
+          this.outputChange.emit(true);
+          dialogRef.close()
+        }, (err) => { this.eventService.openSnackBar(err, "Dismiss") })
+      },
+      negativeMethod: () => {
+      }
+    };
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '400px',
+      data: dialogData,
+      autoFocus: false,
+    });
   }
   getDetailsInsurance(){
     let obj = {
@@ -119,7 +150,7 @@ export class LifeInsuranceComponent implements OnInit {
   needAnalysis(data) {
     const fragmentData = {
       flag: 'opencurrentpolicies',
-      data,
+      data:this.inputData,
       componentName: AddPlaninsuranceComponent,
       id: 1,
       state: 'open',
