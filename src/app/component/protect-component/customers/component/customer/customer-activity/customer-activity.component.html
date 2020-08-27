@@ -1,11 +1,11 @@
 <div class="row" id="ui-activity-secondhead">
-    <div class="col-md-2 d-flex align-items-center">
+    <div class="col-md-1 col-lg-2 d-flex align-items-center">
         <button (click)="goToAdvisorHome()" *ngIf="authService.isAdvisor()"
             class="btn-warning-outline advisorHomeBtn br-2" mat-stroked-button>
-            <i class="material-icons"> keyboard_backspace </i> ADVISOR HOME
+            <i class="material-icons"> keyboard_backspace </i> <span class="tabDisplay"> ADVISOR HOME </span>
         </button>
     </div>
-    <div class="col-md-8">
+    <div class="col-md-8 col-lg-8 p-0-992">
         <nav mat-tab-nav-bar mat-align-tabs="center">
 
             <a mat-tab-link routerLinkActive="active" [routerLink]="['/customer/detail/activity/summary']">SUMMARY</a>
@@ -22,7 +22,7 @@
         </nav>
     </div>
 
-    <div class="col-md-2 d-flex align-items-center borderLeft">
+    <div class="col-md-3 col-lg-2 d-flex align-items-center borderLeft">
         <p class="m-0 f-14 text-white d-flex align-items-center">Ronak Hasmukh Hindocha
             <i class="material-icons f-14 ml-4">
                 keyboard_arrow_down
