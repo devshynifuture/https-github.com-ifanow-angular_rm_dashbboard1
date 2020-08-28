@@ -31,207 +31,208 @@
 <div class="row pt-135 pb-28" id="ui-dashboard-advisor">
 
   <div class="col-xl-3 col-lg-4 col-md-5 pl-20 pr-20 mt-44 new-grid-842">
-    <div class="sticky-top z-0"> 
-    <h5 class="m-0 roboto f-500 pb-16">Key metrics</h5>
-    <div appSkeletonLoading [appSkeletonLoading]="keyMatrixFlag"
-      class="row bg-grey lter text-center ba-primitive br-4 p-8 skeletonAnimation">
-      <div class="col-md-6 overflow-hidden pt-24 pb-24 bb-half pl-8 bb-1-842">
-        <p class="m-0 text-primitive roboto f-400 lh-16">MF AUM</p>
-        <div class="relClass">
-          <div class="bar" [ngClass]="{'height24': keyMatrixFlag}">
-            <h3 class="mb-0 roboto f-400 text-black mt-8">
-              <span *ngIf="!keyMatrixFlag" appFormatNumber
-                [value]="keyMetricJson.mfAum">{{(keyMetricJson.mfAum) ? keyMetricJson.mfAum : '0'}}</span>
-            </h3>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="col-md-6 overflow-hidden pt-24 pb-24 bl-half bb-half bb-1-842">
-        <p class="m-0 text-primitive roboto f-400 lh-16">SIP book</p>
-
-        <div class="relClass">
-          <div class="bar" [ngClass]="{'height24': keyMatrixFlag}">
-            <h3 class="mb-0 roboto f-400 text-black mt-8">
-              <span *ngIf="!keyMatrixFlag">{{(keyMetricJson.sipBook) ? keyMetricJson.sipBook : '0'}}</span>
-            </h3>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-6 overflow-hidden pt-24 pb-24 pl-8 bb-1-842">
-        <p class="m-0 text-primitive roboto f-400 lh-16">Clients</p>
-        <div class="relClass">
-          <div class="bar" [ngClass]="{'height24': keyMatrixFlag}">
-            <h3 class="mb-0 roboto f-400 text-black mt-8">
-              <span *ngIf="!keyMatrixFlag">{{(keyMetricJson.clientCount) ? keyMetricJson.clientCount : '0'}}</span>
-            </h3>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-6 overflow-hidden pt-24 pb-24 bl-half ">
-        <p class="m-0 text-primitive roboto f-400 lh-16">Investors</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8">
+    <div class="sticky-top z-0">
+      <h5 class="m-0 roboto f-500 pb-16">Key metrics</h5>
+      <div appSkeletonLoading [appSkeletonLoading]="keyMatrixFlag"
+        class="row bg-grey lter text-center ba-primitive br-4 p-8 skeletonAnimation">
+        <div class="col-md-6 overflow-hidden pt-24 pb-24 bb-half pl-8 bb-1-842">
+          <p class="m-0 text-primitive roboto f-400 lh-16">MF AUM</p>
           <div class="relClass">
             <div class="bar" [ngClass]="{'height24': keyMatrixFlag}">
-              <span *ngIf="!keyMatrixFlag">{{(keyMetricJson.InvestorCount) ? keyMetricJson.InvestorCount : '0'}}</span>
+              <h3 class="mb-0 roboto f-400 text-black mt-8">
+                <span *ngIf="!keyMatrixFlag" appFormatNumber
+                  [value]="keyMetricJson.mfAum">{{(keyMetricJson.mfAum) ? keyMetricJson.mfAum : '0'}}</span>
+              </h3>
             </div>
           </div>
 
-        </h3>
+        </div>
+
+        <div class="col-md-6 overflow-hidden pt-24 pb-24 bl-half bb-half bb-1-842">
+          <p class="m-0 text-primitive roboto f-400 lh-16">SIP book</p>
+
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'height24': keyMatrixFlag}">
+              <h3 class="mb-0 roboto f-400 text-black mt-8">
+                <span *ngIf="!keyMatrixFlag">{{(keyMetricJson.sipBook) ? keyMetricJson.sipBook : '0'}}</span>
+              </h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 overflow-hidden pt-24 pb-24 pl-8 bb-1-842">
+          <p class="m-0 text-primitive roboto f-400 lh-16">Clients</p>
+          <div class="relClass">
+            <div class="bar" [ngClass]="{'height24': keyMatrixFlag}">
+              <h3 class="mb-0 roboto f-400 text-black mt-8">
+                <span *ngIf="!keyMatrixFlag">{{(keyMetricJson.clientCount) ? keyMetricJson.clientCount : '0'}}</span>
+              </h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 overflow-hidden pt-24 pb-24 bl-half ">
+          <p class="m-0 text-primitive roboto f-400 lh-16">Investors</p>
+          <h3 class="m-0 roboto f-400 text-black pt-8">
+            <div class="relClass">
+              <div class="bar" [ngClass]="{'height24': keyMatrixFlag}">
+                <span
+                  *ngIf="!keyMatrixFlag">{{(keyMetricJson.InvestorCount) ? keyMetricJson.InvestorCount : '0'}}</span>
+              </div>
+            </div>
+
+          </h3>
+        </div>
+
       </div>
 
+      <h5 class="m-0 roboto f-500 pb-16 pt-28" *ngIf="false">Activity overview</h5>
+      <div *ngIf="false" class="row bg-grey lter text-center ba-primitive br-4 p-8">
+        <div class="col-md-6 pt-24 pb-24 bb-half pl-8">
+          <p class="m-0 text-primitive roboto f-400 lh-16">Awaiting
+            consent</p>
+          <h3 class="m-0 roboto f-400 text-black pt-8">
+            <div class="relClass">
+              <div class="bar" [ngClass]="{'height24': isLoading}">
+                78
+              </div>
+            </div>
+          </h3>
+        </div>
+        <div class="col-md-6 pt-24 pb-24 bl-half bb-half">
+          <p class="m-0 text-primitive roboto f-400 lh-16">Advice to be
+            reviewed</p>
+          <h3 class="m-0 roboto f-400 text-black pt-8">
+            <div class="relClass">
+              <div class="bar" [ngClass]="{'height24': isLoading}">
+                41
+              </div>
+            </div>
+          </h3>
+        </div>
+        <div class="col-md-6 pt-24 pb-24 pl-8">
+          <p class="m-0 text-primitive roboto f-400 lh-16">Money to
+            be deployed</p>
+          <h3 class="m-0 roboto f-400 text-black pt-8">
+            <div class="relClass">
+              <div class="bar" [ngClass]="{'height24': isLoading}">
+
+                712.35 L
+              </div>
+            </div>
+          </h3>
+        </div>
+        <div class="col-md-6 pt-24 pb-24 bl-half">
+          <p class="m-0 text-primitive roboto f-400 lh-16">Action plans
+            in process</p>
+          <h3 class="m-0 roboto f-400 text-black pt-8">
+            <div class="relClass">
+              <div class="bar" [ngClass]="{'height24': isLoading}">
+                4
+              </div>
+            </div>
+          </h3>
+        </div>
+      </div>
+
+      <h5 class="m-0 roboto f-500 pb-16 pt-28">Subscription overview</h5>
+      <div appSkeletonLoading [appSkeletonLoading]="subOverviewFlag"
+        class="row bg-grey lter text-center ba-primitive br-4 p-8 skeletonAnimation">
+        <div class="col-md-6 pt-24 pb-24 bb-half pl-8 bb-1-842">
+          <p class="m-0 text-primitive roboto f-400 lh-16">Clients with <br>
+            subscription</p>
+          <h3 class="m-0 roboto f-400 text-black pt-8">
+
+            <div class="relClass">
+              <div class="bar" [ngClass]="{'height24': subOverviewFlag}">
+                <span
+                  *ngIf="!subOverviewFlag">{{ (dataSourceClientWithSub && dataSourceClientWithSub.hasOwnProperty('activeClientPer')) ? dataSourceClientWithSub.activeClientPer : 0}}
+                  %</span>
+              </div>
+            </div>
+          </h3>
+        </div>
+        <div class="col-md-6 pt-24 pb-24 bl-half bb-half bb-1-842">
+          <p class="m-0 text-primitive roboto f-400 lh-16">Subscriptions <br>
+            cancelled</p>
+          <h3 class="m-0 roboto f-400 text-black pt-8">
+            <div class="relClass">
+              <div class="bar" [ngClass]="{'height24': subOverviewFlag}">
+                <span *ngIf="!subOverviewFlag">{{dataSourceClientWithSub.cancelledSubscriptions}}</span>
+              </div>
+            </div>
+          </h3>
+        </div>
+        <div class="col-md-6 pt-24 pb-24 pl-8 bb-1-842">
+          <p class="m-0 text-primitive roboto f-400 lh-16">Total fees <br>
+            charged</p>
+          <h3 class="m-0 roboto f-400 text-black pt-8">
+            <div class="relClass">
+              <div class="bar" [ngClass]="{'height24': subOverviewFlag}">
+                <span *ngIf="!subOverviewFlag && totalSales!=0">₹</span>
+                <span *ngIf="!subOverviewFlag" appFormatNumber [value]="totalSales">{{totalSales}}</span>
+              </div>
+            </div>
+          </h3>
+        </div>
+        <div class="col-md-6 pt-24 pb-24 bl-half">
+          <p class="m-0 text-primitive roboto f-400 lh-16">Fees <br> received</p>
+          <h3 class="m-0 roboto f-400 text-black pt-8">
+            <div class="relClass">
+              <div class="bar" [ngClass]="{'height24': subOverviewFlag}">
+                <span *ngIf="!subOverviewFlag && totalSales!=0">₹</span>
+                <span appFormatNumber [value]="feeRecieved" *ngIf="!subOverviewFlag">{{feeRecieved}}</span>
+              </div>
+            </div>
+          </h3>
+        </div>
+      </div>
+
+      <h5 class="m-0 roboto f-500 pb-16 pt-28">Document overview</h5>
+      <div appSkeletonLoading [appSkeletonLoading]="docOverviewFlag"
+        class="row bg-grey lter text-center ba-primitive br-4 p-8 skeletonAnimation">
+        <div class="col-md-6 pt-24 pb-24 bb-half pl-8 bb-1-842">
+          <p class="m-0 text-primitive roboto f-400 lh-16 ws-nowrap">Family member<br> count</p>
+          <h3 class="m-0 roboto f-400 text-black pt-8">
+            <div class="relClass">
+              <div class="bar" [ngClass]="{'height24': docOverviewFlag}">
+                <span *ngIf="!docOverviewFlag">{{documentSizeData.familyMemberCount}}</span>
+              </div>
+            </div>
+          </h3>
+        </div>
+        <div class="col-md-6 pt-24 pb-24 bl-half bb-half bb-1-842">
+          <p class="m-0 text-primitive roboto f-400 lh-16">Total <br>clients</p>
+          <h3 class="m-0 roboto f-400 text-black pt-8">
+            <div class="relClass">
+              <div class="bar" [ngClass]="{'height24': docOverviewFlag}">
+                <span *ngIf="!docOverviewFlag">{{documentSizeData.totalClients}}</span>
+              </div>
+            </div>
+          </h3>
+        </div>
+        <div class="col-md-6 pt-24 pb-24 pl-8 bb-1-842">
+          <p class="m-0 text-primitive roboto f-400 lh-16">Total <br>size</p>
+          <h3 class="m-0 roboto f-400 text-black pt-8">
+            <div class="relClass">
+              <div class="bar" [ngClass]="{'height24': docOverviewFlag}">
+                <span *ngIf="!docOverviewFlag">{{documentSizeData.totalMbs}} <span class="f-12"> MB </span> </span>
+              </div>
+            </div>
+          </h3>
+        </div>
+        <div class="col-md-6 pt-24 pb-24 bl-half">
+          <p class="m-0 text-primitive roboto f-400 lh-16">Total documents</p>
+          <h3 class="m-0 roboto f-400 text-black pt-8">
+            <div class="relClass">
+              <div class="bar" [ngClass]="{'height24': docOverviewFlag}">
+                <span *ngIf="!docOverviewFlag"> {{documentSizeData.totalDocs}}</span>
+              </div>
+            </div>
+          </h3>
+        </div>
+      </div>
     </div>
-
-    <h5 class="m-0 roboto f-500 pb-16 pt-28" *ngIf="false">Activity overview</h5>
-    <div *ngIf="false" class="row bg-grey lter text-center ba-primitive br-4 p-8">
-      <div class="col-md-6 pt-24 pb-24 bb-half pl-8">
-        <p class="m-0 text-primitive roboto f-400 lh-16">Awaiting
-          consent</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8">
-          <div class="relClass">
-            <div class="bar" [ngClass]="{'height24': isLoading}">
-              78
-            </div>
-          </div>
-        </h3>
-      </div>
-      <div class="col-md-6 pt-24 pb-24 bl-half bb-half">
-        <p class="m-0 text-primitive roboto f-400 lh-16">Advice to be
-          reviewed</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8">
-          <div class="relClass">
-            <div class="bar" [ngClass]="{'height24': isLoading}">
-              41
-            </div>
-          </div>
-        </h3>
-      </div>
-      <div class="col-md-6 pt-24 pb-24 pl-8">
-        <p class="m-0 text-primitive roboto f-400 lh-16">Money to
-          be deployed</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8">
-          <div class="relClass">
-            <div class="bar" [ngClass]="{'height24': isLoading}">
-
-              712.35 L
-            </div>
-          </div>
-        </h3>
-      </div>
-      <div class="col-md-6 pt-24 pb-24 bl-half">
-        <p class="m-0 text-primitive roboto f-400 lh-16">Action plans
-          in process</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8">
-          <div class="relClass">
-            <div class="bar" [ngClass]="{'height24': isLoading}">
-              4
-            </div>
-          </div>
-        </h3>
-      </div>
-    </div>
-
-    <h5 class="m-0 roboto f-500 pb-16 pt-28">Subscription overview</h5>
-    <div appSkeletonLoading [appSkeletonLoading]="subOverviewFlag"
-      class="row bg-grey lter text-center ba-primitive br-4 p-8 skeletonAnimation">
-      <div class="col-md-6 pt-24 pb-24 bb-half pl-8 bb-1-842">
-        <p class="m-0 text-primitive roboto f-400 lh-16">Clients with <br>
-          subscription</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8">
-
-          <div class="relClass">
-            <div class="bar" [ngClass]="{'height24': subOverviewFlag}">
-              <span
-                *ngIf="!subOverviewFlag">{{ (dataSourceClientWithSub && dataSourceClientWithSub.hasOwnProperty('activeClientPer')) ? dataSourceClientWithSub.activeClientPer : 0}}
-                %</span>
-            </div>
-          </div>
-        </h3>
-      </div>
-      <div class="col-md-6 pt-24 pb-24 bl-half bb-half bb-1-842">
-        <p class="m-0 text-primitive roboto f-400 lh-16">Subscriptions <br>
-          cancelled</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8">
-          <div class="relClass">
-            <div class="bar" [ngClass]="{'height24': subOverviewFlag}">
-              <span *ngIf="!subOverviewFlag">{{dataSourceClientWithSub.cancelledSubscriptions}}</span>
-            </div>
-          </div>
-        </h3>
-      </div>
-      <div class="col-md-6 pt-24 pb-24 pl-8 bb-1-842">
-        <p class="m-0 text-primitive roboto f-400 lh-16">Total fees <br>
-          charged</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8">
-          <div class="relClass">
-            <div class="bar" [ngClass]="{'height24': subOverviewFlag}">
-              <span *ngIf="!subOverviewFlag && totalSales!=0">₹</span>
-              <span *ngIf="!subOverviewFlag" appFormatNumber [value]="totalSales">{{totalSales}}</span>
-            </div>
-          </div>
-        </h3>
-      </div>
-      <div class="col-md-6 pt-24 pb-24 bl-half">
-        <p class="m-0 text-primitive roboto f-400 lh-16">Fees <br> received</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8">
-          <div class="relClass">
-            <div class="bar" [ngClass]="{'height24': subOverviewFlag}">
-              <span *ngIf="!subOverviewFlag && totalSales!=0">₹</span>
-              <span appFormatNumber [value]="feeRecieved" *ngIf="!subOverviewFlag">{{feeRecieved}}</span>
-            </div>
-          </div>
-        </h3>
-      </div>
-    </div>
-
-    <h5 class="m-0 roboto f-500 pb-16 pt-28">Document overview</h5>
-    <div appSkeletonLoading [appSkeletonLoading]="docOverviewFlag"
-      class="row bg-grey lter text-center ba-primitive br-4 p-8 skeletonAnimation">
-      <div class="col-md-6 pt-24 pb-24 bb-half pl-8 bb-1-842">
-        <p class="m-0 text-primitive roboto f-400 lh-16 ws-nowrap">Family member<br> count</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8">
-          <div class="relClass">
-            <div class="bar" [ngClass]="{'height24': docOverviewFlag}">
-              <span *ngIf="!docOverviewFlag">{{documentSizeData.familyMemberCount}}</span>
-            </div>
-          </div>
-        </h3>
-      </div>
-      <div class="col-md-6 pt-24 pb-24 bl-half bb-half bb-1-842">
-        <p class="m-0 text-primitive roboto f-400 lh-16">Total <br>clients</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8">
-          <div class="relClass">
-            <div class="bar" [ngClass]="{'height24': docOverviewFlag}">
-              <span *ngIf="!docOverviewFlag">{{documentSizeData.totalClients}}</span>
-            </div>
-          </div>
-        </h3>
-      </div>
-      <div class="col-md-6 pt-24 pb-24 pl-8 bb-1-842">
-        <p class="m-0 text-primitive roboto f-400 lh-16">Total <br>size</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8">
-          <div class="relClass">
-            <div class="bar" [ngClass]="{'height24': docOverviewFlag}">
-              <span *ngIf="!docOverviewFlag">{{documentSizeData.totalMbs}} <span class="f-12"> MB </span> </span>
-            </div>
-          </div>
-        </h3>
-      </div>
-      <div class="col-md-6 pt-24 pb-24 bl-half">
-        <p class="m-0 text-primitive roboto f-400 lh-16">Total documents</p>
-        <h3 class="m-0 roboto f-400 text-black pt-8">
-          <div class="relClass">
-            <div class="bar" [ngClass]="{'height24': docOverviewFlag}">
-              <span *ngIf="!docOverviewFlag"> {{documentSizeData.totalDocs}}</span>
-            </div>
-          </div>
-        </h3>
-      </div>
-    </div>
-  </div>
   </div>
 
 
@@ -399,6 +400,9 @@
                       {{singleMember.daysToGo}}
                     </span>
                   </h5>
+                  <p class="m-0 f-12 lh-16 roboto text-custom f-400 f-12">
+                    {{singleMember.dateOfBirth | date:'dd/MM/yyyy'}}
+                  </p>
                   <p *ngIf="singleMember.daysToGo!='N/A'" class="m-0 f-12 lh-16 roboto text-custom f-400 f-12">
                     {{singleMember.age}} years
                   </p>

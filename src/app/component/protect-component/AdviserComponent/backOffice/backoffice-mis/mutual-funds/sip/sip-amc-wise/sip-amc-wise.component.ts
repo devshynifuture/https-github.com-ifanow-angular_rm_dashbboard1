@@ -427,7 +427,7 @@ export class SipAmcWiseComponent implements OnInit {
     this.backoffice.addCeasedDate(obj).subscribe(
       data => {
         console.log(data);
-        investor.applicantList.splice(investor.applicantList.indexOf(sip), 1);
+        this.amcGet();
         this.eventService.openSnackBar('Cease date added successfully', 'Dismiss');
       },
       err => {

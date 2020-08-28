@@ -79,10 +79,12 @@ export class CashAndBankComponent implements OnInit {
     console.log(this.bankList,"this.bankList",this.clientFamilybankList);
     
   }
+
   Excel(tableTitle){
     let rows = this.tableEl._elementRef.nativeElement.rows;
     this.excel.generateExcel(rows,tableTitle)
   }
+  
   fetchData(value, fileName, element) {
     this.isLoadingUpload = true
     let obj = {

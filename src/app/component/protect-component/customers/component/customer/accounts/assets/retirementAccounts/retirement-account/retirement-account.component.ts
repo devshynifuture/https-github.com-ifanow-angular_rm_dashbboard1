@@ -25,6 +25,7 @@ import { PdfGenService } from 'src/app/services/pdf-gen.service';
 import { DatailedViewNpsHoldingsComponent } from '../add-nps/datailed-view-nps-holdings/datailed-view-nps-holdings.component';
 import { FileUploadServiceService } from '../../file-upload-service.service';
 import { BottomSheetComponent } from '../../../../../common-component/bottom-sheet/bottom-sheet.component';
+import { AssetValidationService } from '../../asset-validation.service';
 
 
 @Component({
@@ -205,7 +206,8 @@ export class RetirementAccountComponent implements OnInit {
     private fileUpload: FileUploadServiceService,
     private custumService: CustomerService, private eventService: EventService,
     public utils: UtilService, public dialog: MatDialog,
-    private _bottomSheet: MatBottomSheet) {
+    private _bottomSheet: MatBottomSheet,
+    private assetValidation: AssetValidationService) {
     this.clientData = AuthService.getClientData()
   }
 
@@ -499,7 +501,7 @@ export class RetirementAccountComponent implements OnInit {
     if (data != undefined) {
       if (data.assetList) {
         console.log('getEPFRes =', data);
-        this.changeCount.emit("call");
+        this.assetValidation.getAssetCountGLobalData();
 
         this.sumOfcurrentEpfBalance = data.sumOfEpfBalanceTillToday;
         this.sumOfcurrentEpsBalance = data.sumOfEpsBalanceTillToday;
@@ -546,7 +548,7 @@ export class RetirementAccountComponent implements OnInit {
       this.sumOfAmountReceived = data.sumOfAmountReceived;
       this.sumOfGratuityReceived = data.sumOfGratuityReceived;
       if (data.assetList) {
-        this.changeCount.emit("call");
+        this.assetValidation.getAssetCountGLobalData();
         console.log('getGrauityRes =', data);
         this.dataSource.data = data.assetList;
         this.dataSource.sort = this.gratuityListTableSort;
@@ -576,7 +578,7 @@ export class RetirementAccountComponent implements OnInit {
 
     if (data != undefined) {
       if (data.assetList) {
-        this.changeCount.emit("call");
+        this.assetValidation.getAssetCountGLobalData();
         console.log('getNPSRes =', data);
         this.dataSource.data = data.assetList;
         this.dataSource.sort = this.npsListTableSort;
@@ -639,7 +641,7 @@ export class RetirementAccountComponent implements OnInit {
       this.totalNotionalValue = data.totalNotionalValue;
       this.totalPensionAmount = data.totalPensionAmount;
       if (data.epsList) {
-        this.changeCount.emit("call");
+        this.assetValidation.getAssetCountGLobalData();
         // console.log('getEPSRes =', data);
         this.dataSource.data = data.epsList;
         this.dataSource.sort = this.epsListTableSort;

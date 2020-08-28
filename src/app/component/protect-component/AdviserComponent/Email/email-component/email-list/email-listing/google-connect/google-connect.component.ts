@@ -84,7 +84,7 @@ export class GoogleConnectComponent implements OnInit {
         }
       } else {
         this.isLoading = false;
-        this.eventService.openSnackBarNoDuration('Please Connect Your Gmail Account!!', "DISMISS");
+        this.eventService.openSnackBarNoDuration('Please connect your Gmail account!!', "DISMISS");
         localStorage.removeItem('googleOAuthToken');
         localStorage.removeItem('successStoringToken');
         localStorage.removeItem('associatedGoogleEmailId');
