@@ -222,7 +222,11 @@
                                             <p class="m-0 roboto"
                                                 [ngClass]="{'text-success':  portData.investedAmount >= 0,'text-danger': portData.investedAmount < 0,'':portData.investedAmount==''}">
                                                 <span *ngIf="portData.investedAmount">₹</span><span
-                                                    appFormatNumber>{{portData.investedAmount ? portData.investedAmount : '-'}}</span>
+                                                    *ngIf="portData.investedAmount"
+                                                    appFormatNumber>{{portData.investedAmount}}</span>
+                                                <span *ngIf="!portData.investedAmount" class="material-icons">
+                                                    remove
+                                                </span>
                                             </p>
                                         </div>
                                         <div class="col-md-6 text-right">
@@ -230,7 +234,11 @@
                                             <p class="m-0 roboto"
                                                 [ngClass]="{'text-success':  portData.gainAmount >= 0,'text-danger': portData.gainAmount < 0,'':portData.gainAmount==''}">
                                                 <span *ngIf="portData.gainAmount">₹</span><span
-                                                    appFormatNumber>{{portData.gainAmount ? (portData.gainAmount) : '-'}}</span>
+                                                    *ngIf="portData.gainAmount"
+                                                    appFormatNumber>{{portData.gainAmount}}</span><span
+                                                    *ngIf="!portData.gainAmount" class="material-icons">
+                                                    remove
+                                                </span>
                                             </p>
                                         </div>
                                     </div>
