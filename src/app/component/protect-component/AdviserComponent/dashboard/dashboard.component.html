@@ -1399,12 +1399,21 @@
             <div class="pt-12">
               <div class="row">
                 <div class="col-md-12 pl-0 addTo-DO">
-                  <div (click)="showInput=true" class="d-flex mt-10 mb-8 c-p">
+                  <div class="d-flex mt-10 mb-8 c-p">
                     <img *ngIf="showInput==false" src="/assets/images/svg/add-blue.svg" class="c-p ml-4">
                     <p *ngIf="showInput==false" class="m-0 text-black pl-12 lh-20">Add a to-do</p>
                   </div>
-                  <input *ngIf="showInput" class="form-control" matInput (focusout)="showInput=false" autofocus
+                  <input *ngIf="showInput" class="form-control" [(ngModel)]="todoDescription" matInput autofocus
                     #inputValue (keyup.enter)="addTodoList(inputValue.value)" placeholder="Enter note">
+                  <input *ngIf="showInput" class="form-control" [(ngModel)]="todoDescription" matInput autofocus
+                    #inputValue (keyup.enter)="addTodoList(inputValue.value)" placeholder="Enter note">
+                  <span *ngIf="showInput" (click)="addTodoList(todoDescription)" class="material-icons f-20 c-p">
+                    done
+                  </span>
+                  <span *ngIf="showInput" class="material-icons f-20 c-p pl-8"
+                    (click)="showInput=false;todoDescription=''">
+                    clear
+                  </span>
                 </div>
 
               </div>
@@ -1461,8 +1470,14 @@
                 <img *ngIf="showInput==false" src="/assets/images/svg/add-blue.svg" class="c-p ml-4">
                 <p *ngIf="showInput==false" class="m-0 text-black pl-12 lh-20">Add a to-do</p>
               </div>
-              <input *ngIf="showInput" class="form-control" matInput (focusout)="showInput=false" autofocus #inputValue
+              <input *ngIf="showInput" class="form-control" [(ngModel)]="todoDescription" matInput autofocus #inputValue
                 (keyup.enter)="addTodoList(inputValue.value)" placeholder="Enter note">
+              <span *ngIf="showInput" (click)="addTodoList(todoDescription)" class="material-icons f-20 c-p">
+                done
+              </span>
+              <span *ngIf="showInput" class="material-icons f-20 c-p pl-8" (click)="showInput=false;todoDescription=''">
+                clear
+              </span>
             </div>
 
             <img class="mt-20" src="assets/images/svg/to-do-emptyimg.svg">
