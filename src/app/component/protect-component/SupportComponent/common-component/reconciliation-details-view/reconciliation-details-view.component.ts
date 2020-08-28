@@ -516,8 +516,8 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
         this.isLoading = true;
         this.reconService.getDuplicateFolioDataValues(data)
           .subscribe(res => {
+            this.isLoading = false;
             if (res) {
-              this.isLoading = false;
               if (res[0].mutualFundTransactions.length !== 0) {
                 res[0].mutualFundTransactions.forEach((element, index1) => {
                   if (this.data.hasOwnProperty('freezeDate') && this.data.freezeDate) {
@@ -563,6 +563,10 @@ export class ReconciliationDetailsViewComponent implements OnInit, OnDestroy {
             } else {
               this.eventService.openSnackBar("Transaction Fetch Failed", "DISMISS");
             }
+          }, err => {
+            this.isLoading = false;
+            this.eventService.openSnackBar("ransaction Fetch Failed check errors", "DISMISS");
+            console.error(err);
           })
       } else if (this.data.tableType === "all-folios") {
         this.data.tableData.forEach((element, index1) => {

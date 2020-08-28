@@ -1062,11 +1062,15 @@ export class UpperSliderBackofficeComponent implements OnInit {
 
     this.reconService.deleteUnfreezeTransaction(data)
       .subscribe(res => {
-        console.log('this is delete unfreeze transaction:::', res);
+        if(res){
+          this.eventService.openSnackBar("Successfully Deleted", "DISMISS");
+        } else {
+          this.eventService.openSnackBar("Failed to Delete!", "DISMISS");
+        }
       }, err => {
+        this.eventService.openSnackBar("Failed to Delete check errors!","DISMISS");
         console.error(err);
       });
-
   }
 
   getAumReportList() {
